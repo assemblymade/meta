@@ -1,0 +1,24 @@
+<div class="page-header">
+  <h2 class="page-header-title"><%= @tech.name %> Products</h2>
+  <p>Products being developed in <%= @tech.name %>.</p>
+</div>
+
+<div class="well">
+  None of the currently developed products are using <%= @tech.name %> yet.<br/><br/>
+
+  <% if !signed_in? %>
+    <a class="btn btn-primary" href="<%= new_user_registration_path %>">Sign up</a>
+    to <%= @tech.name %> and we'll drop you a brief note when one starts. Already have an account? <a href="<%= new_user_session_path %>">Sign in</a>
+  <% else %>
+    <% if @saved_search %>
+      We'll let you know when there is one.
+    <% else %>
+      <%= form_for current_user.saved_searches.new do |f| %>
+        <%= f.hidden_field :query, value: "tag:#{@tech.slug}" %>
+
+        <button class="btn btn-primary"> Sign up</button>
+        to <%= @tech.name %> and we'll drop you a brief note when one starts.
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

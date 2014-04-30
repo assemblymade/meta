@@ -46,6 +46,8 @@ ASM::Application.routes.draw do
                                action: 'staff_picks'
                              }
 
+  get '/discover/tech/:tech' => 'discover#tech'
+
   get '/chat' => 'messages#index', as: :chats
   resources :messages
 
@@ -99,6 +101,11 @@ ASM::Application.routes.draw do
     get    '/users/:id' => 'users#show', :as => :user
     patch  '/users/:id' => 'users#update'
     get    '/users/:id/unread' => 'users#unread_content'
+
+    # saved searches
+    scope '/user' do
+      resources :saved_searches, only: [:create, :destroy]
+    end
   end
 
   # Webhooks

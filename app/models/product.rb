@@ -61,13 +61,15 @@ class Product < ActiveRecord::Base
   }
   scope :declined,         -> { where(is_approved: false) }
   scope :greenlit,         -> { where('greenlit_at is not null') }
+  scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
+  scope :public_products,  -> { where.not(slug: PRIVATE).where(flagged_at: nil) }
   scope :since,            ->(time) { where('created_at >= ?', time) }
+  scope :tagged_with_any,  ->(tags) { where('tags && ARRAY[?]::varchar[]', tags) }
   scope :validating,       -> { where(greenlit_at: nil) }
   scope :waiting_approval, -> { where('submitted_at is not null and evaluated_at is null') }
   scope :with_repo,        ->(repo) { where('? = ANY(repos)', repo) }
-  scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
-  scope :with_logo, ->{ where.not(poster: nil).where.not(poster: '') }
-  scope :public_products, -> { where.not(slug: PRIVATE).where(flagged_at: nil) }
+  scope :with_logo,        ->{ where.not(poster: nil).where.not(poster: '') }
+
 
   validates :slug, uniqueness: { allow_nil: true }
   validates :name, presence: true,

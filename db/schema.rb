@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140429214842) do
+ActiveRecord::Schema.define(version: 20140430221817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -329,6 +329,13 @@ ActiveRecord::Schema.define(version: 20140429214842) do
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
   add_index "products", ["repos"], name: "index_products_on_repos", using: :btree
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true, using: :btree
+
+  create_table "saved_searches", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "user_id"
+    t.text     "query"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "showcases", id: false, force: true do |t|
     t.uuid     "id",                     null: false

@@ -20,6 +20,18 @@ class DiscoverController < ApplicationController
                        .page(params[:page])
   end
 
+  def tech
+    @tech = TechFilter.find(params[:tech])
+    if signed_in?
+      @saved_search = current_user.saved_searches.find_by(query: "tag:#{params[:tech]}")
+    end
+    @products = Product.public_products
+                       .where('votes_count >= ?', 10)
+                       .tagged_with_any(@tech.tags)
+                       .order(votes_count: :desc)
+                       .page(params[:page])
+  end
+
   protected
 
   def upgrade_stylesheet?

@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :watchings
   has_many :followed_tags, :through => :watchings, :source => :watchable, :source_type => 'Wip::Tag'
   has_many :product_subscriptions, :class_name => 'Product::Subscription'
+  has_many :saved_searches
   has_many :subscribed_products, :through => :product_subscriptions, :source => :product
   has_many :wips
   has_many :wip_workers, :class_name => 'Wip::Worker'

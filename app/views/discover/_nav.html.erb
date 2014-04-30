@@ -12,3 +12,13 @@
     </li>
   </ul>
 </div>
+<div class="panel panel-default">
+  <div class="panel-heading"><h6 class="panel-title">Technology</h6></div>
+  <ul class="nav nav-pills nav-stacked">
+    <% TechFilter.all.each do |tech| %>
+      <li class="<%= 'active' if params[:tech] == tech.slug %>">
+        <a href="<%= discover_path("tech/#{tech.slug}") %>"><%= tech.name %></a>
+      </li>
+    <% end %>
+  </ul>
+</div>

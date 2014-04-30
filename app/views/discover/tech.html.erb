@@ -1,0 +1,34 @@
+<% title 'Trending Products' %>
+
+<%= render 'shared/navbar' %>
+
+<div class="page">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9">
+        <% if @products.empty? %>
+          <%= render 'empty_search' %>
+        <% else %>
+          <div class="page-header">
+            <h2 class="page-header-title"><%= @tech.name %> Products</h2>
+            <p>Products being developed in <%= @tech.name %>.</p>
+          </div>
+
+          <div class="list-group list-group-breakout">
+            <% @products.each do |product| %>
+              <div class="list-group-item">
+                <%= render 'product', product: product %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-sm-3">
+        <%= render 'nav' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>
