@@ -110,9 +110,11 @@ namespace :metrics do
     end
   end
   
+  task :all => ['metrics:mau','metrics:mac','metrics:mtc','metrics:map','metrics:mtw','metrics:mpd','metrics:mps']
+  
   def by_month
     data = []
-    ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014"].each do |month|
+    ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014", "1-apr-2014"].each do |month|
       data << yield(Date.parse(month))
     end
     data

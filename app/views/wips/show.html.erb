@@ -50,8 +50,7 @@
             Ready for work
           </div>
 
-          <p><strong>We think you'd be a great fit for this task.</strong> Can you help out?</p>
-
+          <p><strong>Think you'd be a great fit for this task?</strong> Jump in and help out.</p>
           <%= button_to 'Work on this task', product_wip_start_work_path(@wip.product, @wip), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-default) %>
 
         <% when 'allocated' %>
