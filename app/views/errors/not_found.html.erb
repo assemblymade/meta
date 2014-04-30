@@ -1,12 +1,16 @@
-<div class="modal modal-warning equator">
+<div class="modal modal-success equator">
   <div class="equator-container">
     <div class="modal-dialog">
       <div class="modal-content text-center">
 
         <div class="modal-body">
-          <a href="<%= root_url %>" title="Home">
-            <%= image_tag '404.png', width: '100%' %>
+          <a href="<%= root_url %>" title="Assembly home">
+            <%= image_tag '404.png', width: '50%' %>
           </a>
+
+          <h3>Not Found</h3>
+          <p>Sorry, what you were looking for doesn't exist.</p>
+          <a href="<%= root_url %>">Assembly home</a>
         </div>
       </div>
     </div>
