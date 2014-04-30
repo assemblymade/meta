@@ -1,0 +1,10 @@
+.l-modal {
+  background-color: rgba(black, 0.8);
+
+  .box {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    margin-left: - (grid-width(3) + $gw-gutter);
+  }
+}

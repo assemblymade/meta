@@ -1,0 +1,121 @@
+/*
+Empty.
+
+Styleguide Callouts.
+*/
+.callout {
+  box-shadow: $shadow;
+  border-radius: $radius;
+}
+
+.callout-content {
+  @include neuter-paragraphs;
+  padding: 30px;
+  position: relative;
+
+  color: darken($gray, 5%);
+  border: 1px solid $gray-light;
+  border-bottom: none;
+  border-radius: $radius $radius 0 0;
+
+  // FIXME: Shouldn't be defined here
+  h1 {
+    margin-top: 0;
+    margin-bottom: 30px;
+
+    font-size: 29px;
+    font-weight: 200;
+
+    width: 80%;
+  }
+}
+
+.split-column {
+  @include box-sizing(padding-box);
+  @include inline-block;
+  margin-right: 30px;
+
+  width: 47%;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: $base-letter-spacing;
+    line-height: 1.5;
+    text-transform: uppercase;
+
+    color: $gray;
+  }
+
+  p {
+    color: $black;
+  }
+}
+
+.close {
+  @include retina-image(
+    'glyph-close', 17px 16px, 'png', 'glyph-close@2x', true
+  );
+  width: 17px;
+  height: 16px;
+  position: absolute;
+  right: 21px;
+  top: 21px;
+  text-indent: -9999px;
+}
+
+.callout-header {
+  @include background(url(image-path('pattern-jumbotron-bg.png')) repeat, linear-gradient(45deg, $home-gradient-from, $home-gradient-to));
+  margin: -31px;
+  margin-bottom: 0;
+  padding: 28px 31px 25px 31px;
+
+  border-radius: $radius $radius 0 0;
+
+  h1 {
+    margin-bottom: 0;
+
+    color: $white;
+
+    line-height: 1.4;
+  }
+
+  .close {
+    @include retina-image(
+      'glyph-close-light', 17px 16px, 'png', 'glyph-close-light@2x', true
+    );
+  }
+}
+
+.callout-content-decorated {
+  // FIXME: Non-standard color
+  background-color: transparentize($gray-lighter, .5);
+  background-image: url(image-path('callout/bg.png'));
+}
+
+.callout-actions {
+  @include clearfix;
+  padding: 20px 30px;
+  border: 1px solid $gray-light;
+  border-radius: 0 0 $radius $radius;
+
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: bold;
+  text-align: right;
+
+  color: $gray-darker;
+  background-color: transparentize($gray-lighter, .5);
+
+  .btn {
+    @include margin-top-bottom(((18px * 1.5) - $btn-default-height) / 2);
+    margin-left: 10px;
+  }
+}

@@ -1,0 +1,24 @@
+/*
+Provide up-to-date feedback on the progress of a workflow or action with simple yet flexible progress bars.
+
+Styleguide Progress.
+*/
+.progress {
+  width: 100%;
+  height: $progressbar-height;
+
+  overflow: hidden;
+
+  background-color: $gray-lighter;
+}
+
+.progress-bar {
+  @include size(0% 100%);
+  background-color: $green;
+  float: left;
+}
+
+.progress,
+.progress-bar {
+  border-radius: $radius;
+}

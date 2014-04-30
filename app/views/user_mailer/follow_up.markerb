@@ -1,0 +1,1 @@
+<%= @user.short_name %>, welcome to Assembly! I'm Matthew, one of the founding team members here - http://assemblymade.com. Just checking in to see if you had any questions?

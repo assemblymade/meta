@@ -1,0 +1,53 @@
+<%= render 'shared/deprecated_navbar' %>
+<%= render 'products/deprecated_navbar' %>
+
+<% cache ['v1', @product], expires_in: 12.hours do %>
+  <div class="container">
+    <h3>Summary</h3>
+    <table class="table">
+      <tr>
+        <th></th>
+        <% @user_metrics.month_ends.each do |month| %>
+        <th class="text-right"><%= month.strftime("%b %y") %></th>
+        <th></th>
+        <% end %>
+        <th class="text-right">% Change</th>
+        <th class="text-right">TSW Average</th>
+      </tr>
+
+      <% @user_metrics.rows.each do |row| %>
+        <tr>
+          <td><%= row[:label] %></td>
+          <% row[:values].each do |val| %>
+            <% if val[:ratio ]%>
+              <td class="text-right">
+                <%= number_with_delimiter val[:raw].to_i %>
+              </td>
+              <td><span class="badge"><%= number_to_percentage(val[:ratio] * 100, precision: 0) %></span></td>
+            <% else %>
+              <td class="text-right">
+                <% if val[:percentage].nil? %>
+                  <%= number_with_delimiter val[:raw].to_i %>
+                <% else %>
+                  <%= number_to_percentage val[:percentage] * 100, precision: 2 %>
+                <% end %>
+              </td>
+              <td></td>
+            <% end %>
+            </td>
+          <% end %>
+          <td class="text-right"><%= number_to_percentage row[:change] * 100, precision: 0 %></td>
+          <td class="text-right">
+            <% if row[:tsw].nil? %>
+              N/A
+            <% else %>
+              <%= number_to_percentage row[:tsw] * 100, precision: 0 %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>
+
+<%= render 'shared/deprecated_footer' %>

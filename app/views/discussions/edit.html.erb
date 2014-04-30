@@ -1,0 +1,26 @@
+<% title "Editing Discussion ##{@wip.number}", @wip.product.name %>
+<%= render 'shared/deprecated_navbar' %>
+<%= render 'products/deprecated_navbar' %>
+
+<div class="page page-padded">
+  <div class="container">
+    <div class="page-heading">
+      <div class="page-heading-title">Editing Discussion #<%= @wip.number %></div>
+    </div>
+
+    <div class="page-content">
+      <%= form_for [@wip.product, @wip], method: :patch do |f| %>
+        <div class="form-group">
+          <%= f.label :title, class: 'form-label' %>
+          <%= f.text_field :title, class: 'form-control' %>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Update task</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/deprecated_footer' %>

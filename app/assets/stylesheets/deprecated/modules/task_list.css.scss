@@ -1,0 +1,239 @@
+$task-list-incomplete-bg: #FFFFCC;
+$task-list-incomplete-text: #bfbf99;
+$task-list-incomplete-copy: #4c4c3d;
+$task-list-complete-bg: lighten($body-bg, 2%);
+
+.task-list {
+  padding: 5px 0;
+  margin: 0;
+  border: 1px solid $gray-lighter;
+  border-top-left-radius: $radius;
+  border-top-right-radius: $radius;
+  box-shadow: $shadow;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.page-content-group.markdown-content {
+  padding-bottom: 40px;
+}
+
+.page-content-group.markdown-content:empty {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border: none;
+}
+
+.task-list-incomplete + .task-list-incomplete {
+  padding-top: 0;
+  margin-top: -5px;
+}
+
+.task-list-incomplete + .task-list-complete {
+  border-radius: 0;
+
+  &:last-child {
+    border-radius: 0 0 $radius $radius;
+  }
+}
+
+.task-list + .task-list {
+  border-top: none;
+}
+
+.task-list-incomplete {
+  background-color: $task-list-incomplete-bg;
+  box-shadow: $shadow;
+
+  .task-list-item-actions {
+    background-color: $task-list-incomplete-bg;
+    &:before {
+      @include background-image(linear-gradient(90deg, transparent, #FFFFCC));
+    }
+  }
+}
+
+.task-list-complete {
+  background-color: $task-list-complete-bg;
+
+  .task-list-item-actions {
+    background-color: $task-list-complete-bg;
+    &:before {
+      @include background-image(linear-gradient(90deg, transparent, #FCFDFD));
+    }
+  }
+}
+
+.task-list-item {
+  list-style-type: none;
+  padding-left: 65px;
+  padding-right: 30px;
+  min-height: 30px;
+
+  background-repeat: no-repeat;
+  background-position: 30px 13px;
+
+  .task-list-item-content {
+    position: relative;
+    padding: 10px 0;
+    border-top: 1px solid rgba($task-list-incomplete-text, 0.18);
+
+    .list-meta {
+      margin-top: 4px;
+    }
+  }
+
+  &:first-child {
+    .task-list-item-content {
+      border-top: 0;
+    }
+  }
+
+
+  .task-list-item-title {
+    @include inline-block;
+    max-width: 80%;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  .title {
+    float: left;
+  }
+
+  .js-input {
+  	display: none;
+  }
+  &.js-editing {
+    .js-view {
+      display: none;
+    }
+    .js-input {
+      display: block;
+    }
+  }
+}
+
+.task-list-incomplete + .task-list-incomplete {
+  margin-top: -5px;
+  .task-list-item:first-child {
+    .task-list-item-content {
+      border-top: 1px dotted rgba($task-list-incomplete-text, 0.4);
+    }
+  }
+}
+
+
+.task-list-item-actions {
+  position: absolute;
+  right: 0;
+
+  &:before {
+    content: "";
+    width: 30px;
+    height: 100%;
+    position: absolute;
+    display: block;
+    left: -30px;
+  }
+}
+
+.task-list-item-incomplete {
+
+  .list-meta {
+    color: $task-list-incomplete-text;
+
+    .list-item + .list-item {
+      border-left-color: rgba($task-list-incomplete-text, 0.3);
+    }
+
+    a {
+      color: inherit;
+    }
+  }
+
+  .task-list-item-title {
+    color: $task-list-incomplete-copy;
+    font-weight: bold;
+  }
+
+  @include retina-image(
+    'unchecked-check',
+    20px 20px,
+    'png',
+    'unchecked-check@2x',
+    true
+  );
+
+}
+
+.task-list-item-complete {
+  .task-list-item-title {
+    color: $gray;
+  }
+  @include retina-image(
+    'checked-check',
+    20px 20px,
+    'png',
+    'checked-check@2x',
+    true
+  );
+}
+
+.task-list-item-remove {
+  background-color: #FCFDFD;
+  text-decoration: line-through;
+
+  .list-meta {
+    display: none;
+  }
+}
+
+input[type="text"].task-list-entry {
+  width: 100%;
+  outline: none;
+  box-shadow: none;
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+
+  &::-webkit-input-placeholder {
+    color: $task-list-incomplete-text;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+.tasks-incomplete,
+.tasks-complete {
+  padding-left: 22px;
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+.tasks-incomplete {
+  @include retina-image(
+    'unchecked-check-small',
+    14px 14px,
+    'png',
+    'unchecked-check-small@2x',
+    true
+  );
+}
+
+.tasks-complete {
+  @include retina-image(
+    'checked-check-small',
+    14px 14px,
+    'png',
+    'checked-check-small@2x',
+    true
+  );
+}

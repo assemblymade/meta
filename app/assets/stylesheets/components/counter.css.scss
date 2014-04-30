@@ -1,0 +1,19 @@
+.counter {
+  @include clearfix;
+  border: 1px solid $gray-light;
+}
+
+.counter-btn {
+  float: left;
+  border: none;
+
+  &.active {
+    cursor: default;
+  }
+}
+
+.counter-badge {
+  float: right;
+  color: $gray-dark;
+  background-color: transparent;
+}

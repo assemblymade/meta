@@ -1,0 +1,96 @@
+<% title 'Settings' %>
+<%= render 'shared/deprecated_navbar' %>
+
+<div class="page page-padded page-flipped">
+  <div class="container">
+    <div class="page-sidebar">
+      <%= render 'users/card', user: @user %>
+    </div>
+
+    <div class="page-content">
+
+      <%= form_for @user do |f| %>
+
+        <h2>Profile</h2>
+
+        <div class="form-group">
+          <%= f.label :name, class: 'form-label' %>
+          <%= f.text_field :name, autocomplete: 'off', class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :username, class: 'form-label' %>
+          <%= f.text_field :username, autocomplete: 'off', class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :location, class: 'form-label' %>
+          <%= f.text_field :location, autocomplete: 'off', class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :bio, class: 'form-label' %>
+          <%= f.text_area :bio, placeholder: 'Short bio', autocomplete: 'off', rows: 2 %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :email, class: 'form-label' %>
+          <%= f.text_area :email, placeholder: 'Email', autocomplete: 'off', rows: 1 %>
+        </div>
+
+        <h2>Notifications</h2>
+
+        <div class="radio">
+          <%= f.label :mail_preference_immediate do %>
+            <%= f.radio_button :mail_preference, :immediate %>
+            Immediately when things happen
+          <% end %>
+        </div>
+
+        <div class="radio">
+          <%= f.label :mail_preference_daily do %>
+            <%= f.radio_button :mail_preference, :daily %>
+            As a daily digest
+          <% end %>
+        </div>
+
+        <div class="radio">
+          <%= f.label :mail_preference_never do %>
+            <%= f.radio_button :mail_preference, :never %>
+            Never
+          <% end %>
+        </div>
+
+        <h2>Payment Information</h2>
+
+        <p>
+          <a class="btn btn-default" href="/settings/payment">
+            Update bank details
+          </a>
+        </p>
+
+        <h2>Security</h2>
+
+        <div class="form-group">
+          <%= f.label :password, 'New Password', class: 'form-label' %>
+          <%= f.password_field :password, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password_confirmation, 'Confirm new password', class: 'form-label' %>
+          <%= f.password_field :password_confirmation, class: 'form-control' %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit 'Update Profile', class: %w(btn btn-primary) %>
+        </div>
+
+      <% end %>
+
+
+
+    </div>
+  </div>
+
+</div>
+
+<%= render 'shared/deprecated_footer' %>

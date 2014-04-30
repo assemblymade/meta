@@ -1,0 +1,88 @@
+.how-wips-work {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.wip-list {
+
+  > .item {
+    @include padding-top-bottom(15px);
+    border-bottom: 1px solid $gray-lighter;
+  }
+
+  > .wip, > .discussion {
+    @include clearfix();
+
+    > .breadcrumb {
+      // padding-left: 7px;
+    }
+
+    > .title, > .meta {
+      // padding-left: 7px;
+    }
+
+    > .title {
+      display: block;
+      color: $black;
+      font-weight: bold;
+      line-height: 1.3;
+      margin-top: 5px;
+      margin-bottom: 5px;
+
+      > .number {
+        float: right;
+        margin-left: $gw-gutter;
+        color: $gray;
+        font-weight: normal;
+        font-size: 14px;
+        position: relative;
+        top: 3px;
+      }
+    }
+
+    > .meta {
+      color: $gray;
+      font-size: 14px;
+
+      a {
+        color: $gray;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .promoted-wip {
+        font-weight: normal;
+        color: $purple;
+      }
+    }
+
+    &[data-promoted] > .meta > .promoted-wip {
+      display: inline;
+    }
+
+    > .watchers {
+      padding-left: 7px;
+      padding-top: 5px;
+    }
+
+    &.unread {
+      position: relative;
+      .dot {
+        position: absolute;
+        top: 27px;
+        left: 40px;
+        background: $blue-light;
+      	width: 6px;
+      	height: 6px;
+      	border-radius: 50%;
+      }
+    }
+
+    &.new-updates {
+      .title {
+        font-weight: bold;
+      }
+    }
+  }
+}

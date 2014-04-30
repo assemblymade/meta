@@ -1,0 +1,115 @@
+.idea-hunt {
+
+  h1 {
+    font-size: 32px;
+    margin-right: 10px - 4px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+}
+
+.side-by-each-together {
+  > * {
+    @include inline-block;
+  }
+}
+
+.day-group {
+  margin-top: $default-margin * 4;
+
+  .featured-date {
+    margin: 0 0 $default-margin * 1.5 0;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: $base-letter-spacing;
+    color: $gray-dark;
+    text-transform: uppercase;
+
+    span {
+      font-weight: normal;
+      color: $gray;
+      margin-left: 4px;
+    }
+  }
+}
+
+.featured-product {
+  padding: $default-margin 0 $default-margin - 2 0;
+  border-bottom: 1px solid $gray-light;
+
+  &:first-of-type {
+    border-top: 1px dotted $gray-lighter;
+  }
+
+  &:last-of-type {
+    border-bottom: 0;
+  }
+
+  .want-module {
+    @include inline-block;
+    margin-right: $default-margin * 1.5;
+  }
+
+  &:hover {
+    .dropdown {
+      opacity: 1;
+    }
+  }
+}
+
+.product-details {
+  @include inline-block;
+  position: relative;
+
+  .side-by-each-together {
+    margin-bottom: 6px;
+  }
+
+  h3,
+  h4 {
+    margin: 0;
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px - 4px;
+  }
+
+  h4 {
+    font-weight: normal;
+    color: $gray;
+  }
+
+  .meta {
+    font-size: 14px;
+    color: $gray;
+
+    .user {
+      color: $gray;
+      font-weight: bold;
+
+      .avatar {
+        @include inline-block;
+        margin-right: 8px - 4px;
+        vertical-align: middle;
+      }
+    }
+
+    .comments {
+      font-weight: bold;
+    }
+  }
+}
+
+.get-involved {
+  @extend .pull-right;
+  position: relative;
+  top: 10px;
+
+  .dropdown {
+    opacity: 0;
+  }
+}

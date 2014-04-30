@@ -1,0 +1,59 @@
+<% title 'FAQ' %>
+<%= render 'shared/navbar' %>
+
+<% cache Question.cache_key(@group) do %>
+  <div class="page">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          
+          <div class="page-header">
+            <ol class="breadcrumb breadcrumb-prepended omega">
+              <li class="active">FAQ</li>
+            </ol>
+            <h1 class="alpha"><%= Question::GROUPS[@group] %></h1>
+          </div>
+
+          <div class="row">
+            <div class="col-md-8 copy">
+              <ul class="list-unstyled">
+                <% @questions.each.with_index do |question, i| %>
+                  <li class="question">
+                    <%= link_to question.title, "##{@group}-#{i+1}" %>
+                  </li>
+                <% end %>
+              </ul>
+
+              <hr style="margin-bottom: 48px">
+
+              <% @questions.each.with_index do |question, i| %>
+                <h3 id="<%= @group %>-<%= i+1 %>">
+                  <%= question.title %>
+                </h3>
+                <%= html_markdown question.body %>
+              <% end %>
+            </div>
+
+            <div class="col-md-3 col-md-offset-1">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h6 class="panel-title">Areas</h6>
+                </div>
+                <ul class="nav nav-pills nav-stacked">
+                  <% @groups.each do |name| %>
+                    <li class="<%= ('active' if @group == name) %>">
+                      <%= link_to Question::GROUPS[name], "/help/#{name}" %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= render 'shared/footer' %>

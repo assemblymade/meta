@@ -1,0 +1,21 @@
+# Ignore bundler config.
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp
+
+/.env
+
+/.rspec
+Procfile.dev
+
+.sass-cache
+.DS_Store
+
+db/*.dump
+
+/.ruby-version
+
+# Dragonfly
+public/system

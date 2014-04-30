@@ -1,0 +1,79 @@
+<div class="card">
+  <div class="lanyard">
+
+    <% if signed_in? && user == current_user %>
+      <!-- FIXME: This URL is a hack -->
+      <a class="btn btn-default btn-small lanyard-edit-btn" href="<%= edit_user_path %>">
+        Edit Profile
+      </a>
+    <% end %>
+
+    <div class="lanyard-person">
+      <div class="avatar avatar-lg">
+        <img src="<%= user.avatar.url(240) %>" alt="@<%= user.username %>" width="120" height="120">
+      </div>
+
+      <% if user.name? %>
+        <div class="name"><%= user.name %></div>
+      <% end %>
+
+      <a class="username" href="<%= user_path(user) %>" title="<%= user.username %>">
+        @<%= user.username %>
+      </a>
+    </div>
+
+
+    <% if user.location? %>
+      <div class="lanyard-location">
+        <%= user.location %>
+      </div>
+    <% end %>
+
+    <% if user.bio? %>
+      <div class="lanyard-bio">
+        <%= markdown(user.bio) %>
+      </div>
+    <% end %>
+
+    <div class="lanyard-social">
+
+      <% if user.twitter_connected? %>
+        <a href="<%= user.twitter_url %>" title="@<%= @user.twitter_nickname %>">
+          <%= image_tag 'social-twitter.png' %>
+        </a>
+      <% elsif signed_in? && @user == current_user %>
+        <a class="connect" href="<%= user_omniauth_authorize_path(:twitter) %>">
+          <%= image_tag 'social-twitter.png' %>
+          Connect
+        </a>
+      <% else %>
+        <a class="disabled">
+          <%= image_tag 'social-twitter.png' %>
+        </a>
+      <% end %>
+
+      <% if user.github_connected? %>
+        <a href="<%= user.github_url %>" title="<%= @user.github_login %>">
+          <%= image_tag 'social-github.png' %>
+        </a>
+      <% elsif signed_in? && @user == current_user %>
+        <a class="connect" href="<%= user_omniauth_authorize_path(:github) %>">
+          <%= image_tag 'social-github.png' %>
+          Connect
+        </a>
+      <% else %>
+        <a class="disabled">
+          <%= image_tag 'social-github.png' %>
+        </a>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+
+<% if Rails.env.development? || (signed_in? && current_user.staff?) %>
+<div class="card">
+  <h6>?auth_token=<%= @user.authentication_token %></h6>
+  <h6><%= @user.email %></h6>
+</div>
+<% end %>

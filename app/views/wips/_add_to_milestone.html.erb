@@ -1,0 +1,20 @@
+<div class="dropdown align-right">
+  <% if @milestone %>
+    <a href="<%= product_milestone_path(@product, @milestone)%>"><%= @milestone.wip.title %></a>
+  <% elsif can?(:edit, @wip) %>
+    <a data-toggle="dropdown" href="#">Add to project</a>
+
+    <ul class="dropdown-menu">
+      <li class='helper'>Projects:</li>
+      <% @product.milestones.open.each do |milestone| %>
+        <li>
+          <a data-remote="true"
+             data-method="patch"
+             href="<%= product_milestone_add_path(@product, milestone, task_id: @wip.id) %>">
+               <%= milestone.wip.title %>
+            </a>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

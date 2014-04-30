@@ -1,0 +1,24 @@
+@font-face {
+  font-family: "Assembly Icons";
+  src: // Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+
+       url(asset-path('assembly.woff')) format('woff'),
+       // Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5
+       url(asset-path('assembly.ttf')) format('truetype');
+}
+
+// Catchall baseclass
+.icon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Assembly Icons';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-logo { &:before { content: "\e604"; } }
+.icon-right-chevron { &:before { content: "\e60e"; } }
+.icon-app-coin { &:before { content: "\e603"; } }

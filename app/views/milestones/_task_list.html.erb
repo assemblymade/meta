@@ -1,0 +1,72 @@
+<script type="text/template" id="task-item-template">
+  <div class="task-list-item-content">
+    <div class="js-view">
+      <div class="pull-right">
+        <ul class="list list-meta show-no-hover">
+          <li class="list-item">
+            <span class="number">
+              <%%= number ? ('#' + number) : 'pending' %>
+            </span>
+          </li>
+        </ul>
+        <ul class="list list-meta show-hover task-list-item-actions">
+          <li class="list-item">
+            <a href="#remove" class="js-edit">Edit Task</a>
+          </li>
+          <li class="list-item">
+            <a href="#remove" class="js-remove">Remove from list</a>
+          </li>
+        </ul>
+      </div>
+      <%% if(url) { %>
+        <a class="js-title task-list-item-title" href="<%%= url %>"><%%= title %></a>
+      <%% } else { %>
+        <span class="js-title task-list-item-title"><%%= title %></span>
+      <%% } %>
+    </div>
+
+    <% if @milestone.nil? %>
+      <input type="hidden" name="wip[milestone_tasks_attributes][][id]" value="<%%= id %>" />
+      <input type="hidden" name="wip[milestone_tasks_attributes][][title]" value="<%%= title %>" />
+    <% end %>
+
+    <input class="task-list-entry js-input textcomplete" type="text" placeholder="Enter a task number, or a title for a new task..." data-product-id="<%= @product.slug %>" value="<%%= title %>">
+  </div>
+</script>
+
+<div data-view="task-list" class="milestone-task-list">
+  <ol class="task-list task-list-incomplete js-incomplete-tasks-list"></ol>
+
+  <ol class="task-list task-list-incomplete">
+    <li class="task-list-item js-editing">
+      <div class="task-list-item-content">
+        <input class="task-list-entry js-new-task-input textcomplete" type="text" placeholder="Enter a task number, or a title for a new task..." data-product-id="<%= @product.slug %>">
+      </div>
+    </li>
+  </ol>
+
+  <ol class="task-list task-list-complete js-complete-tasks-list"></ol>
+</div>
+
+<script>
+  $(document).ready(function() {
+    <% if @milestone.nil? %>
+      var completeTasks = new Tasks();
+      var incompleteTasks = new Tasks();
+    <% else %>
+      var completeTasks = new Tasks([], {url: "<%= product_milestone_tasks_path(@product, @milestone) %>" });
+      var incompleteTasks = new Tasks([], {url: "<%= product_milestone_tasks_path(@product, @milestone) %>" });
+    <% end %>
+
+    new TaskListView({
+      el: $('[data-view=task-list]'),
+      completeTasks: completeTasks,
+      incompleteTasks: incompleteTasks
+    })
+
+    <% if @milestone %>
+      incompleteTasks.set(<%== @milestone.nil? ? [] : @milestone.tasks.open.map{|t| WipSerializer.new(t) }.to_json %>)
+      completeTasks.set(<%== @milestone.nil? ? [] : @milestone.tasks.closed.map{|t| WipSerializer.new(t) }.to_json %>)
+    <% end %>
+  })
+</script>

@@ -1,0 +1,14 @@
+// Catchall baseclass
+
+.brand {
+  font-weight: 800;
+  letter-spacing: 1.5pt;
+  text-transform: uppercase;
+
+  > .icon {
+    font-size: 32px;
+    float: left;
+    margin-top: -4px;
+    margin-right: 6px;
+  }
+}

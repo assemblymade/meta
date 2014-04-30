@@ -1,0 +1,1 @@
+<%= @event.user.name %> referenced this wip from commit [<%= @event.body.split("\n").first.truncate(80) %>](<%= @event.url %>)

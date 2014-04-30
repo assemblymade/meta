@@ -1,0 +1,46 @@
+<div class="activity-group <%= collapsed_activity.classes %>">
+  <div class="activity-group-gutter">
+    <% if timestamp %>
+      <div class="activity-group-timestamp">
+        <%= timestamp %>
+      </div>
+    <% end %>
+
+    <% if collapsed_activity.votable? and collapsed_activity.subject_type != 'Work'%>
+      <%= render 'erb/votes/box', task: collapsed_activity.task %>
+    <% elsif collapsed_activity.votable? and collapsed_activity.subject_type == 'Work'%>
+      <%= render 'erb/votes/workbox', work: collapsed_activity.work %>
+    <% end %>
+  </div>
+
+  <div class="activity-group-content">
+    <div class="activity-group-icon <%= collapsed_activity.icon_class %>"></div>
+
+    <div class="activity-group-title">
+      <%== collapsed_activity.title_html %>
+    </div>
+
+    <% if collapsed_activity.multiple_actors? %>
+
+      <div class="activity-group-avatars">
+        <%== collapsed_activity.avatars_html %>
+      </div>
+    <% end %>
+
+    <% unless @product %>
+      <div class="activity-group-product">
+        <a href="<%= collapsed_activity.target_path %>">
+          <%= collapsed_activity.product_name %>
+        </a>
+      </div>
+    <% end %>
+
+    <% if collapsed_activity.expandable? %>
+      <div class="activity-group-content-embedded" style="display: none">
+        <% collapsed_activity.activities.each do |activity| %>
+          <%= render 'activities/activity', activity: activity %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

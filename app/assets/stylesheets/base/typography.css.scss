@@ -1,0 +1,132 @@
+/*
+  This CSS resource incorporates links to font software which is
+  the valuable copyrighted property of WebType LLC, The Font Bureau
+  and/or their suppliers. You may not
+  attempt to copy, install, redistribute, convert, modify or reverse
+  engineer this font software. Please contact WebType with any
+  questions: http://www.webtype.com
+*/
+
+@font-face {
+  font-family: Solitaire;
+  src: // Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+
+       url(asset-path('mvb-solitaire-book.woff')) format('woff'),
+       // Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5
+       url(asset-path('mvb-solitaire-book.ttf')) format('truetype');
+}
+
+@font-face {
+  font-family: Solitaire;
+  font-style: italic;
+  src: url(asset-path('mvb-solitaire-book-italic.woff')) format('woff'),
+       url(asset-path('mvb-solitaire-book-italic.ttf')) format('truetype');
+}
+
+@font-face {
+  font-family: Solitaire;
+  font-weight: 200;
+  src: url(asset-path('mvb-solitaire-light.woff')) format('woff'),
+       url(asset-path('mvb-solitaire-light.ttf')) format('truetype');
+}
+
+@font-face {
+  font-family: Solitaire;
+  font-weight: bold;
+  src: url(asset-path('mvb-solitaire-semibold.woff')) format('woff'),
+       url(asset-path('mvb-solitaire-semibold.ttf')) format('truetype');
+}
+
+@font-face {
+  font-family: Solitaire;
+  font-weight: 800;
+  src: url(asset-path('mvb-solitaire-black.woff')) format('woff'),
+       url(asset-path('mvb-solitaire-black.ttf')) format('truetype');
+}
+
+// Tiempos
+
+@font-face {
+  font-family: Tiempos;
+  src: url(asset-path('TiemposTextWebLF-Regular.woff')) format('woff'),
+       url(asset-path('TiemposTextWebLF-Regular.ttf')) format('truetype');
+}
+
+@font-face {
+  font-family: Tiempos;
+  font-style: italic;
+  src: url(asset-path('TiemposTextWebLF-RegularItalic.woff')) format('woff'),
+       url(asset-path('TiemposTextWebLF-RegularItalic.ttf')) format('truetype');
+}
+
+@font-face {
+  font-family: Tiempos;
+  font-weight: bold;
+  src: url(asset-path('TiemposTextWebLF-Semibold.woff')) format('woff'),
+       url(asset-path('TiemposTextWebLF-Semibold.ttf')) format('truetype');
+}
+
+@font-face {
+  font-family: Tiempos;
+  font-weight: bold;
+  font-style: italic;
+  src: url(asset-path('TiemposTextWebLF-SemiboldItalic.woff')) format('woff'),
+       url(asset-path('TiemposTextWebLF-SemiboldItalic.ttf')) format('truetype');
+}
+
+h2,
+.h2 {
+  // Enable bolding once we've transitioned to Bootstrap completely
+  // font-weight: bold;
+}
+
+h4,
+.h4 {
+  font-weight: bold;
+}
+
+h6,
+.h6 {
+  text-transform: uppercase;
+  letter-spacing: 0.618pt;
+  font-weight: 600;
+}
+
+.lead {
+  line-height: $line-height-base;
+  margin-bottom: $line-height-computed * 1.556;
+  text-rendering: optimizeLegibility;
+}
+
+.text-serif {
+  font-family: $font-family-serif;
+}
+
+.text-weight-normal {
+  font-weight: 400;
+}
+
+@include text-emphasis-variant('.text-coins', $brand-coins);
+@include text-emphasis-variant('.text-promoted', $brand-promoted);
+
+.list-inline-piped {
+  color: $brand-muted;
+
+  > li {
+
+    & + li {
+      border-left: 1px solid $brand-divider;
+      padding-left: 5px + 4px; // + 4px accounts for inline-block whitespace
+    }
+
+    > a {
+      color: inherit;
+      font-weight: bold;
+    }
+  }
+}
+
+// H4 title and piped nav in cards and lists
+h4 + .list-inline,
+h4 + p {
+  margin-top: -7px;
+}

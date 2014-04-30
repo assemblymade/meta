@@ -1,0 +1,15 @@
+module CurrencyHelper
+
+  def amount_to_currency(amount)
+    precision = (amount % 100) == 0 ? 0 : 2
+    number_to_currency (amount / 100.0), precision: precision
+  end
+
+  alias_method :currency, :amount_to_currency
+
+  def discount(discounted_cost, full_cost)
+    amount = 1 - (discounted_cost / full_cost.to_f)
+    "#{(amount * 100).to_i}%"
+  end
+
+end

@@ -1,0 +1,20 @@
+.list-group-item {
+}
+
+.list-group-breakout {
+  > .list-group-item {
+    padding: 20px 0;
+    border-left: none;
+    border-right: none;
+
+    &:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+}

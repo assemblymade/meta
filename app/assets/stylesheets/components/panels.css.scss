@@ -1,0 +1,35 @@
+.panel-heading {
+  padding: 8px 15px 5px;
+  border-radius: 0;
+}
+
+.panel-default {
+  .panel-heading {
+    border-bottom-color: $panel-inner-border;
+    color: darken($gray-light, 5%);
+  }
+  
+  .panel-title {
+    color: $gray;
+  }
+}
+
+// Hack because we can't modify bootstrap
+h6.panel-title {
+  font-size: $font-size-h6;
+}
+
+.panel-nav {
+  > li > a {
+    font-weight: bold;
+    color: $text-color;
+
+    &:hover {
+      color: $link-color;
+    }
+  }
+}
+
+.panel-body + .panel-heading {
+  border-top: 1px solid $brand-divider;
+}

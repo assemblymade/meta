@@ -1,0 +1,5 @@
+<ul class="tag-list">
+  <% tags.each do |tag| %>
+    <li class="tag tag-<%= tag.parameterize %>"><%= tag %></li>
+  <% end %>
+<ul>

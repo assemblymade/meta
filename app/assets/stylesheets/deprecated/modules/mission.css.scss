@@ -1,0 +1,136 @@
+/*
+Empty.
+
+Styleguide Missions.
+*/
+.mission-heading {
+  @include clearfix;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted $gray-light;
+}
+
+.mission-title {
+  margin-bottom: 15px;
+  color: $gray-darker;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.mission-goal {
+  @include retina-image(
+      'mission/lock', 9px 11px, 'png',
+      'mission/lock@2x',
+      true
+    );
+  background-repeat: no-repeat;
+  background-position: 0 2px;
+  padding-left: 9px + 5px;
+  color: $yellow;
+}
+
+.mission-reward {
+  @include retina-image(
+      'mission/reward', 121px 108px, 'png',
+      'mission/reward@2x',
+      true
+    );
+  background-repeat: no-repeat;
+  padding-left: 121px + (2 * $grid-gutter-width);
+  color: $gray;
+  margin-top: 18px;
+  
+  p {
+    color: darken($gray, 10%);
+    margin-bottom: 30px - 7px;
+    line-height: 1.6;
+  }
+}
+
+.mission-details {
+  @include retina-image(
+    'mission/book', 32px 48px, 'png',
+    'mission/book@2x',
+    true
+  );
+  background-repeat: no-repeat;
+  padding-left: 22px + (2 * $grid-gutter-width);
+}
+
+.mission-intro {
+  p {
+    color: darken($gray, 10%);
+    margin-bottom: 30px - 7px;
+  }
+}
+
+// FIXME: This is a total hack and not reusable
+.mission-hints {
+  background-color: rgba($gray-lighter, 0.3);
+  border-top: 1px solid $gray-light;
+  box-shadow: $inset-shadow;
+  color: $gray;
+
+  .flyout-heading {
+    padding-top: 15px;
+    font-family: $tiempos-family;
+    font-weight: normal;
+  }
+
+  a {
+    display: block;
+    padding: 15px 30px;
+    padding-right: 30px + 15px;
+    font-size: 15px;
+    color: $gray;
+    background-color: transparent;
+    @include transition (background-color 300ms ease-in-out, color 300ms ease-in-out);
+    @include retina-image(
+        'mission/chevron', 6px 10px, 'png',
+        'mission/chevron@2x',
+        true
+      );
+    background-repeat: no-repeat;
+    // FIXME: This is a total hack
+    background-position: (600px - 30px - 6px) center;
+
+    &:hover {
+      @include transition-duration(100ms);
+
+      color: $gray-darker;
+      background-color: $white;
+      cursor: pointer;
+    }
+  }
+}
+
+.mission-progress {
+  // FIXME: 18px is a magic number
+  @include padding-top-bottom(18px);
+  width: 180px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: $gray-darker;
+
+  &:hover {
+    cursor: pointer;
+
+    .progress-bar {
+      background-color: $green-light;
+    }
+  }
+
+  > .progress {
+    margin-top: 5px;
+  }
+}
+
+.mission-creator-intro {
+  @include retina-image(
+    'mission/intro', 99px 132px, 'png',
+    'mission/intro@2x',
+    true
+  );
+  background-repeat: no-repeat;
+  padding-left: 99px + (2 * $grid-gutter-width);
+}
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <% if upgrade_stylesheet? %>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% end %>
+    <title><%= yield(:title) %></title>
+
+    <%= csrf_meta_tags %>
+    <meta name="pusher-key" content="<%= Pusher.key %>" >
+    <meta name="attachment-upload-url" content="<%= ATTACHMENT_UPLOAD_URL %>" >
+
+    <!-- Bootstrap deprecation -->
+    <% if upgrade_stylesheet? %>
+      <%= stylesheet_link_tag 'application' %>
+    <% else %>
+      <%= stylesheet_link_tag 'deprecated_application' %>
+      <%= stylesheet_link_tag 'deprecated_components' %>
+    <% end %>
+    <%= javascript_include_tag 'https://d3dy5gmtp8yhk7.cloudfront.net/2.2/pusher.min.js' %>
+    <%= javascript_include_tag 'application' %>
+
+    <%= render 'shared/social_media_meta_tags' %>
+    <%= render 'shared/bugs' %>
+    <%= render 'shared/analytics' %>
+    <%= render 'shared/twitter' %>
+
+    <%= favicon_link_tag %>
+  </head>
+  <body>
+    <%= yield %>
+
+    <%= render 'shared/facebook' %>
+    <%= render 'shared/live_chat' %>
+
+    <% analytics_track_events %>
+
+    <% if signed_in? && flash[:signed_up] %>
+      <%= render 'users/signed_up' %>
+    <% end %>
+
+    <% unless signed_in? %>
+      <%= render 'users/sessions/modal' %>
+    <% end %>
+
+    <% if signed_in? %>
+      <script>
+        window.app.setCurrentUser(<%= UserSerializer.new(current_user, scope:  current_user).to_json.html_safe %>);
+      </script>
+      <%= render 'analytics/identify' %>
+    <% end %>
+
+    <% unless Rails.env.development? %>
+      <%= render 'shared/perfect_audience' %>
+    <% end %>
+    <%= render 'shared/inspectlet' %>
+    <%= render 'shared/google_fonts' %>
+  </body>
+</html>

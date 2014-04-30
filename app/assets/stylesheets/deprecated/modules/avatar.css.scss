@@ -1,0 +1,68 @@
+/*
+Avatars for users. Defaults to 60px, which is basically the smallest they
+can be where you still recognize the details of a face.
+
+Avatars also include a small sponsorship logo. At the moment this is Assembly
+only.
+
+Styleguide Avatars.
+*/
+.avatar {
+  position: relative;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+    background-color: $avatar-background-color;
+  }
+}
+
+.avatar-sponsor {
+  display: none; //Temporary service
+
+  @include position(absolute, 0 -4px -4px 0);
+  @include size($avatar-sponsor-size);
+  @include retina-image(
+    'avatars/sponsor-assembly',
+    cover,
+    'png',
+    'avatars/sponsor-assembly@2x',
+    true
+  );
+
+  border-radius: 50%;
+  background-color: $gray-light;
+  background-size: cover;
+  box-shadow: 0 0 0 2px $white;
+}
+
+//--
+
+.avatar-default {
+  @include size($avatar-default-size);
+}
+
+.avatar-xl {
+  @include size($avatar-xl-size);
+}
+
+.avatar-lg {
+  @include size($avatar-lg-size);
+}
+
+.avatar-sm {
+  @include size($avatar-sm-size);
+
+  .avatar-sponsor {
+    @include size(12px);
+    bottom: -2px;
+    right: -2px;
+  }
+}
+
+.avatar-xs {
+  @include size($avatar-xs-size);
+}

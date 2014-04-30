@@ -1,0 +1,31 @@
+<% status_message = @product.status_messages.order(:created_at).last || @product.status_messages.new(user: @product.user, body: %Q{We're building #{@product.name}. Jump in and help out with some [tasks &rarr;](#{product_wips_path(@product)})}) %>
+
+<div class="modal fade" id="update-status" tabindex="-1">
+  <div class="modal-dialog">
+    <%= ajax_form_for @product.status_messages.new, url: product_status_messages_path(@product) do |f| %>
+      <div class="modal-content">
+        <div class="modal-body">
+          <%= f.text_field :body, placeholder: "What's happening on #{@product.name}?" %>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" data-dismiss="modal">Close</button>
+          <button class="btn btn-primary" data-disable-with="Publishing...">Publish</button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="alert alert-info page-alert">
+  <% if signed_in? && can?(:update, @product) %>
+    <a class="btn btn-default btn-sm pull-right" href="#" data-toggle="modal" data-target="#update-status">
+      Update
+    </a>
+  <% else %>
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+      &times;
+    </button>
+  <% end %>
+  <img class="img-circle pull-left" src="<%= status_message.user.avatar.url(40) %>" width="20" height="20" style="margin-right:6px">
+  <%= markdown(status_message.body) %>
+</div>

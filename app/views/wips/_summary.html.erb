@@ -1,0 +1,61 @@
+<div class="row" data-number="<%= task.number %>" data-promoted="<%= task.promoted? %>">
+  <div class="col-md-1">
+<!--     <div class="row"> -->
+<!--       <div class="col-xs-6"> -->
+        <div href="<%= product_wip_path(task.product, task) %>/votes"
+            data-mint="<%= task.coins_add %>"
+             data-toggle="button"
+            class="
+              btn btn-sm btn-default
+              <% 'active' if task.has_user_voted?(current_user) %>
+              <%= 'is-promoted' if task.promoted? %>
+            "
+          >
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </div>
+<!--       </div> -->
+<!--       <div class="col-xs-6">
+        <span class="text-coins">
+          <span class="icon icon-app-coin"></span>
+          <%= number_with_delimiter task.coins %>
+        </span>
+      </div> -->
+<!--     </div> -->
+  </div>
+
+  <div class="col-md-11">
+    <div class="summary">
+      <a class="summary-target" href="<%= product_wip_path(task.product, task) %>">
+        <%= task.title %>
+      </a>
+
+      <div class="pull-right">
+        <% if task.promoted? %>
+          <span class="label label-promoted">Promoted 2x</span>
+        <% end %>
+        <%= task.formatted_number %>
+      </div>
+
+      <ul class="list-inline list-inline-piped omega">
+        <li>
+          <span class="text-coins">
+            <span class="icon icon-app-coin"></span>
+            <%= number_with_delimiter task.coins %>
+          </span>
+        </li>
+
+        <li>
+          <a href="<%= user_path(task.user) %>">@<%= task.user.username %></a>
+        </li>
+
+        <li>
+          <a href="<%= product_wip_path(task.product, task, anchor: 'comments') %>">
+            <%= pluralize(task.comments.count, 'comment') %>
+          </a>
+        </li>
+
+        <li><%= task.formatted_watchers_count %></li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+Good news <%= @user.short_name %>!
+
+Your Assembly product [<%= @product.name %>](<%= product_url(@product) %>) is going to be featured in the [Product Showcase](<%= discover_url %>) in <%= time_ago_in_words(@showcase.showcased_at) %>. Could you review the description and get things looking great for new visitors?
+
+We'll contact you again when the feature goes live so you can be around to field questions people have.
+
+Let me know if you have any questions,
+
+Matt

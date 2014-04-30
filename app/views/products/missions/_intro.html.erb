@@ -1,0 +1,25 @@
+<div class="js-mission-step js-mission-step-intro">
+  <div class="flyout-content mission-intro">
+    <div class="mission-title">
+      How can you help <%= @product.name %>?
+    </div>
+    <p>
+      If you're a designer, developer or just a curious soul,
+      <%= @product.name %> needs <em>you</em> to help reach its goals. You can start by reading through recent discussions &amp; tackling small tasks.
+    </p>
+
+    <a class="btn btn-default js-start-mission">
+      Help <%= mission.translate(:name).downcase %>
+    </a>
+  </div>
+
+  <div class="flyout-footer">
+    <div class="pull-left">
+      Current Goal:
+      <strong class="text-black"><%= mission.translate :name %></strong>
+    </div>
+    <div class="mission-goal pull-right">
+      <%= mission.translate :reward %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<% title "Edit project ##{@wip.number}", @product.name %>
+
+<%= render partial: 'shared/deprecated_navbar' %>
+<%= render partial: 'products/deprecated_navbar' %>
+
+<div class="page page-padded page-ruled">
+  <div class="container">
+    <div class="page-heading">
+      <div class="page-heading-title">Edit Project</div>
+    </div>
+
+    <div class="page-content page-ruled">
+      <%= form_for @wip, url: product_milestone_path(@product, @wip) do |f| %>
+
+        <div class="form-group">
+          <%= f.label :title, 'Project Name', class: 'form-label' %>
+          <%= f.text_field :title, autofocus: '', data: { 'validate-length' => 2 } %>
+        </div>
+
+        <div class="form-group">
+          <%= f.fields_for :milestone, @milestone do |f| %>
+            <%= f.label :description, class: 'form-label' %>
+            <%= f.text_area :description, rows: 10, data: { autosize: '' }  %>
+          <% end %>
+        </div>
+
+        <div class="page-content-group">
+          <div class="page-content-group-heading">Task list</div>
+
+          <%= render partial: 'task_list', object: @milestone %>
+        </div>
+
+
+        <div class="form-actions">
+          <button class="btn btn-primary" data-disable-with="Saving...">
+            Save Project
+          </button>
+        </div>
+      <% end %>
+    </div>
+    <div class="page-sidebar">
+      <%= render 'help_module' %>
+    </div>
+  </div>
+</div>
+
+<%= render partial: 'shared/deprecated_footer' %>

@@ -1,0 +1,72 @@
+<div class="navbar navbar-default navbar-static-top">
+  <div class="container-fluid">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#platform-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="text-brand navbar-brand" href="<%= root_path %>">
+        <span class="brand">
+          <span class="icon icon-logo"></span>
+          Assembly
+        </span>
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="platform-navbar-collapse">
+
+      <ul class="nav navbar-nav">
+        <li class="<%= 'active' if discover_controller? %>">
+          <a href="<%= discover_path %>">Discover</a>
+        </li>
+
+        <li>
+          <a href="<%= new_product_path %>">Start</a>
+        </li>
+      </ul>
+
+      <div class="navbar-right">
+        <ul class="nav navbar-nav">
+
+          <li>
+            <a href="<%= faq_path %>">FAQ</a>
+          </li>
+
+          <% if user_signed_in? %>
+
+            <li>
+              <a href="<%= user_path(current_user) %>">
+                <%= current_user.username %>
+              </a>
+            </li>
+
+            <li>
+              <a href="<%= destroy_user_session_path %>" data-method="delete">
+                Logout
+              </a>
+            </li>
+
+          <% else %>
+
+            <li>
+              <a href="<%= new_user_session_path %>">
+                Log in
+              </a>
+            </li>
+
+            <li>
+              <a href="<%= new_user_registration_path %>">
+                Sign up
+              </a>
+            </li>
+
+          <% end %>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

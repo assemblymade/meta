@@ -1,0 +1,154 @@
+@mixin ellipsis {
+  white-space:       nowrap;
+  overflow:          hidden;
+  text-overflow:     ellipsis;
+  -o-text-overflow:  ellipsis;
+  -ms-text-overflow: ellipsis;
+}
+
+@mixin user-select($val) {
+  @include prefixer(user-select, $val, webkit moz ms o spec);
+}
+
+@mixin scaled-box($percent: 100%) {
+  width: $percent;
+  height: 0;
+  padding-bottom: $percent;
+}
+
+// http://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
+@mixin uber-word-wrap {
+  -ms-word-break:  break-all;
+       word-break: break-all;
+
+       /* Non standard for webkit */
+       word-break: break-word;
+
+  -webkit-hyphens: auto;
+     -moz-hyphens: auto;
+          hyphens: auto;
+}
+
+
+// Padding
+
+@mixin padding-left-right($width) {
+  padding-left: $width;
+  padding-right: $width;
+}
+
+@mixin padding-top-bottom($height) {
+  padding-top: $height;
+  padding-bottom: $height;
+}
+
+
+// Margin
+
+@mixin margin-left-right($width) {
+  margin-left: $width;
+  margin-right: $width;
+}
+
+@mixin margin-top-bottom($height) {
+  margin-top: $height;
+  margin-bottom: $height;
+}
+
+
+// Glow
+
+@mixin glow {
+  position: relative;
+
+  &:after {
+    @include position(absolute, 0px 0px 0px 0px);
+    content: '';
+    @content;
+  }
+}
+
+@mixin glow-dark {
+  @include glow {
+    box-shadow: inset 0 0 0 1px rgba(black, 0.06);
+    @content;
+  }
+}
+
+@mixin glow-light {
+  @include glow {
+    box-shadow: inset 0 0 0 1px rgba(white, 0.1);
+    @content;
+  }
+}
+
+
+// Debugging
+
+@mixin debug {
+  background-color: rgba($red, 0.1);
+}
+
+
+// Deprecated: Just use retina-image raw.
+
+@mixin asset-pipeline-retina-image($name, $size: auto, $type: 'png') {
+  @include retina-image($name, $size, $type, null, true);
+}
+
+
+// Paragraph neuterer
+
+@mixin neuter-paragraphs {
+  p:first-child {
+    margin-top: 0;
+  }
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Updated transform mixin that allows us to target transitions within transforms
+
+@function prefix($property, $prefixes: (webkit moz o ms)) {
+    $vendor-prefixed-properties: transform background-clip background-size;
+    $result: ();
+    @each $prefix in $prefixes {
+       @if index($vendor-prefixed-properties, $property) {
+         $property: -#{$prefix}-#{$property}
+       }
+       $result: append($result, $property);
+    }
+    @return $result;
+}
+ 
+@function trans-prefix($transition, $prefix: moz) {
+    $prefixed: ();
+    @each $trans in $transition {
+        $prop-name: nth($trans, 1);
+        $vendor-prop-name: prefix($prop-name, $prefix);
+        $prop-vals: nth($trans, 2);
+        $prefixed: append($prefixed, ($vendor-prop-name $prop-vals), comma);
+    }
+    
+    @return $prefixed;
+}
+ 
+@mixin transition($values...) { 
+    $transitions: ();
+    @each $declaration in $values {
+        $prop: nth($declaration, 1);
+        $prop-opts: ();
+        $length: length($declaration);
+        @for $i from 2 through $length {
+            $prop-opts: append($prop-opts, nth($declaration, $i));   
+        }
+        $trans: ($prop, $prop-opts);
+        $transitions: append($transitions, $trans, comma);
+    }
+      
+    -webkit-transition: trans-prefix($transitions, webkit);
+    -moz-transition: trans-prefix($transitions, moz);
+    -o-transition: trans-prefix($transitions, o);
+    transition: $values;
+}

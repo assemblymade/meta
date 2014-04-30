@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="300px" height="20px" viewBox="0 0 300 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <title>idea-progress-voting </title>
+    <description>Created with Sketch (http://www.bohemiancoding.com/sketch)</description>
+    <defs></defs>
+    <g id="Page 1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="progressbar">
+            <path d="M78,8 L143.876295,8 C144.699972,5.66961193 146.922448,4 149.534884,4 C152.147319,4 154.369795,5.66961193 155.193472,8 L223.610514,8 C224.434191,5.66961193 226.656668,4 229.269103,4 C231.881538,4 234.104015,5.66961193 234.927692,8 L300,8 L300,12 L234.927692,12 C234.104015,14.3303881 231.881538,16 229.269103,16 C226.656668,16 224.434191,14.3303881 223.610514,12 L155.193472,12 C154.369795,14.3303881 152.147319,16 149.534884,16 C146.922448,16 144.699972,14.3303881 143.876295,12 L78,12 Z M78,8" id="bar" fill="#EAEAEA"></path>
+            <path d="M0,8 L60.2000362,8 C61.1265932,3.43550525 65.1620937,0 70,0 C75.5228478,0 80,4.47715223 80,10 C80,15.5228478 75.5228478,20 70,20 C65.1620937,20 61.1265932,16.5644948 60.2000362,12 L0,12 Z M70,16 C73.3137087,16 76,13.3137087 76,10 C76,6.68629134 73.3137087,4 70,4 C66.6862913,4 64,6.68629134 64,10 C64,13.3137087 66.6862913,16 70,16 Z M70,16" id="progress" fill="#23C8A9"></path>
+        </g>
+    </g>
+</svg>

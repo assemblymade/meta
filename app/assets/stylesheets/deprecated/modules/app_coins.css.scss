@@ -1,0 +1,80 @@
+.bounty {
+  color: $bounty;
+  font-weight: bold;
+}
+
+.non-profit .bounty {
+  color: $karma;
+}
+
+
+// Timeline Tipping
+
+.timeline-entry {
+  .add-tip {
+    @include transition-duration(0);
+    visibility: hidden;
+  }
+
+  &:hover {
+    .add-tip {
+      @include transition-duration(0);
+      visibility: visible;
+    }
+  }
+}
+
+
+.timeline-entry-tipping {
+  .avatar-grid {
+    @include inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+    margin-left: 0;
+  }
+
+  .btn-tip {
+    color: $bounty;
+    @include transition(none);
+    &:hover {
+      @include transition(none);
+      color: $bounty;
+    }
+  }
+
+  .pull-right {
+    position: relative;
+    top: 2px;
+  }
+
+  .tip-counter {
+    position: relative;
+
+    input[type="number"] {
+      @include inline-block;
+      vertical-align: middle;
+      border-radius: $radius - 1;
+      font-weight: bold;
+      color: $black;
+      border: 1px solid $gray-light;
+      outline: none;
+      padding: 4px 0 2px 20px;
+      margin-right: 6px - 4px;
+      width: 42px;
+      line-height: 1;
+    }
+
+    &:before {
+      font-family: 'assembly';
+      content: "\e603";
+      color: $bounty;
+      position: absolute;
+      top: 2px;
+      left: 5px;
+      font-size: 14px;
+    }
+
+
+  }
+}

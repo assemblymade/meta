@@ -1,0 +1,27 @@
+.page-header {
+  margin-top: 0;
+  margin-bottom: $line-height-computed * 2;
+  color: $brand-muted;
+  font-size: $font-size-large;
+  box-shadow: 0 1px 0 0 rgba($black, 0.02);
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: $text-color;
+}
+
+.page-header-title {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+// TODO Think about moving in with .summary
+.page-header-meta {
+  margin-top: 5px;
+  font-size: $font-size-small;
+
+  > ul {
+    margin-bottom: 0;
+  }
+}

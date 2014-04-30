@@ -1,0 +1,52 @@
+<div class="page-heading">
+
+  <ol class="breadcrumb">
+    <li><a href="<%= product_discussions_path(@wip.product) %>">Discussions</a></li>
+  </ol>
+
+  <div class="page-heading-actions">
+    <a class="btn btn-default" href="<%= new_product_discussion_path(@wip.product) %>">
+      Create a new discussion
+    </a>
+  </div>
+
+  <div class="page-heading-title">
+    <a href="<%= product_wip_path(@wip.product, @wip) %>">
+      <%= @wip.title %>
+      <small>#<%= @wip.number %></small>
+    </a>
+  </div>
+
+  <div class="page-heading-meta">
+
+    <% if can?(:edit, @wip) %>
+      <ul class="list list-meta pull-right">
+        <li class="list-item">
+          <a class="text-yellow" href="<%= edit_product_discussion_path(@wip.product, @wip) %>">Edit Discussion</a>
+        </li>
+      </ul>
+    <% end %>
+
+    <ul class="list list-meta">
+      <li class="list-item">
+        Created by
+        <a href="<%= user_path(@wip.user) %>"><%= @wip.user.username %></a>
+      </li>
+      <li class="list-item">
+        <%= pluralize(@wip.comments.count, 'comments') %>
+      </li>
+      <li class="list-item">
+        <%= pluralize(@wip.watchers.count, 'watchers') %>
+      </li>
+      <li class="list-item">
+        <div class="label"><%= @wip.deliverable %></div>
+
+        <% if @wip.promoted? %>
+          <div class="label label-promoted">Promoted</div>
+        <% end %>
+      </li>
+    </ul>
+
+  </div>
+
+</div>

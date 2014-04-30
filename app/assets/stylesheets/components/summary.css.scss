@@ -1,0 +1,20 @@
+.summary {
+  color: $brand-muted;
+  font-size: $font-size-small;
+}
+
+.summary-target {
+  display: block;
+  font-size: $font-size-h4;
+  font-weight: bold;
+  color: $link-color;
+  margin-bottom: 5px;
+
+  &:visited {
+    color: $blue-light;
+  }
+
+  &:visited:hover {
+    color: $link-hover-color;
+  }
+}

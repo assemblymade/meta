@@ -1,0 +1,23 @@
+.footer {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  color: $gray-light;
+}
+
+.footer-nav {
+  > li {
+    > a {
+      color: $gray;
+      font-weight: bold;
+
+      &:hover {
+        color: $gray-dark;
+      }
+    }
+  }
+}
+
+.footer-brand {
+  color: $gray;
+  line-height: 32px;
+}

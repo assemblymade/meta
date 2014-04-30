@@ -1,0 +1,1 @@
+Markerb.processing_options = { tables: true }

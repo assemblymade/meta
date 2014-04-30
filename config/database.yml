@@ -1,0 +1,13 @@
+development:
+  adapter: postgresql
+  host: localhost
+  database: asm_development
+  pool: 16
+  timeout: 5000
+
+test:
+  adapter: postgresql
+  host: localhost
+  database: asm_test
+  pool: 16
+  timeout: 5000

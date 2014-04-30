@@ -1,0 +1,127 @@
+<% title "Project ##{@wip.number}", @product.name %>
+
+<%= render 'shared/deprecated_navbar' %>
+<%= render 'products/deprecated_navbar' %>
+
+<div class="page page-padded page-ruled">
+  <div class="container">
+
+    <% cache(@milestone, @milestone.wip) do %>
+      <%= render 'heading' %>
+    <% end %>
+
+    <div class="page-content">
+      <% if image = @milestone.feature_image %>
+        <div class="feature-image">
+          <a data-toggle="lightbox" data-target="#feature-image">
+            <img src="<%= firesize_url %>/630x300/frame_0/<%= URI.escape image.attachment.url %>">
+          </a>
+        </div>
+        <div id="feature-image" class="lightbox fade"  tabindex="-1" role="dialog" aria-hidden="true">
+          <div class='lightbox-dialog'>
+            <div class='lightbox-content'>
+              <img src="<%= firesize_url %>/frame_0/<%= image.attachment.url %>">
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <div class="page-content-group markdown-content"><%== markdown @milestone.description %></div>
+
+      <div class="page-content-group">
+        <div class="page-content-group-heading">Task list</div>
+        <%= render partial: 'task_list', object: @milestone %>
+      </div>
+
+      <div class="page-content-group">
+        <div class="page-content-group-heading">Discussion</div>
+          <div id="discussion-view-el">
+            <div class="timeline" id="discussion-view-el">
+              <% @events.each do |event, html| %>
+                <%= render 'wips/event', event: event, html: html %>
+              <% end %>
+            </div>
+
+            <%= render 'wips/new_event_form' %>
+
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="page-sidebar">
+        <div class="sidebar-module">
+          <div class="progress" style="margin-bottom: 10px;">
+            <div class="progress-bar" style="width:<%= number_to_percentage @milestone.progress * 100, precision: 0 %>;"></div>
+          </div>
+
+          <div class="sidebar-module-heading">
+            <div class="count">
+              <strong><%= number_to_percentage @milestone.progress * 100, precision: 0 %></strong>
+            </div>
+            Progress
+          </div>
+
+          <ul class="dotted-list">
+            <li class="tasks-incomplete">
+              <div class="pull-right"><strong><%= @milestone.tasks.open.count %></strong></div>
+              <strong>Tasks remaining</strong>
+            </li>
+            <li class="tasks-complete">
+              <div class="pull-right"><strong><%= @milestone.tasks.closed.count %></strong></div>
+              <strong>Completed</strong>
+            </li>
+          </ul>
+        </div>
+        <div class="sidebar-module">
+          <div class="sidebar-module-heading">
+            Contributors
+          </div>
+          <div class="avatar-grid">
+            <% @milestone.wip.contributors.each do |contributor| %>
+              <div class="avatar avatar-sm">
+                <img src="<%= contributor.avatar.url(60) %>" title="<%= contributor.username %>" />
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <%= render 'feature_image' %>
+
+        <div class="sidebar-module">
+          <div class="sidebar-module-heading">
+            Assets
+          </div>
+          <div>
+            <% @assets.each do |asset| %>
+              <a href="<%= product_wip_path(@product, asset.wip) %>" style="dislay:block;float:left;margin-right:5px;margin-bottom:5px;">
+                <img src="<%= File.join(firesize_url, "255x255", "g_center", "frame_0", URI.encode(asset.attachment.url)) %>">
+              </a>
+
+            <% end %>
+
+            <p class="small text-muted">Designs added to tasks in this project will be displayed here</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  app.wip = new Wip(<%== WipSerializer.new(@wip).to_json %>);
+  app.wipEvents = new WipEvents(<%== @wip.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
+    url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
+  });
+
+  $(document).ready(function() {
+    new DiscussionView({
+      el: $('#discussion-view-el'),
+      model: app.wip
+    });
+  })
+
+  window.pusher = new Pusher($('meta[name=pusher-key]').attr('content'));
+  analytics.track('product.wip.viewed', <%== WipAnalyticsSerializer.new(@wip, scope: current_user).to_json %>)
+</script>
+<%= render 'shared/deprecated_footer' %>

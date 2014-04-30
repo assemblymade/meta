@@ -1,0 +1,50 @@
+<ul class="deprecated-nav deprecated-nav-stacked deprecated-nav-outline filters">
+
+  <% if signed_in? %>
+    <li class="filter<%= ' active' if params[:state] == 'personally_allocated' %>">
+      <a href="<%= product_wips_path(@product, state: 'personally_allocated') %>">
+        <span class="count"><%= current_user.wips_working_on.by_product(@product).count %></span>
+        Your Tasks
+      </a>
+    </li>
+  <% end %>
+
+  <% cache([@product, params[:state], params[:deliverable]]) do %>
+    <li class="filter<%= ' active' if params[:state] == 'open' %>">
+      <a href="<%= product_wips_path(@product, state: 'open') %>">Open Tasks</a>
+    </li>
+    <li>
+      <ul class="deliverable-filter">
+        <% [:code, :design, :copy, :other].each do |deliverable| %>
+          <li class="<%= 'active' if params[:deliverable] == deliverable.to_s %>">
+            <a href="<%= product_wips_path(@product, deliverable: deliverable.to_s) %>">
+              <%= deliverable.to_s.titleize %>
+              <span class="count"><%= @product.number_of_open_tasks(deliverable) %></span>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+
+    <li class="filter<%= ' active' if params[:state] == 'allocated' %>">
+      <a href="<%= product_wips_path(@product, state: 'allocated') %>">
+        <span class="count"><%= @product.tasks.allocated.count %></span>
+        In Progress
+      </a>
+    </li>
+
+    <li class="filter<%= ' active' if params[:state] == 'reviewing' %>">
+      <a href="<%= product_wips_path(@product, state: 'reviewing') %>">
+        <span class="count"><%= @product.tasks.reviewing.count %></span>
+        Reviewing
+      </a>
+    </li>
+
+    <li class="filter<%= ' active' if params[:state] == 'resolved' %>">
+      <a href="<%= product_wips_path(@product, state: 'resolved') %>">
+        <span class="count"><%= @product.tasks.closed.count %></span>
+        Resolved
+      </a>
+    </li>
+  <% end %>
+</ul>

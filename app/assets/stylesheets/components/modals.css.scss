@@ -1,0 +1,20 @@
+.modal-content {
+  box-shadow: none;
+}
+
+.modal {
+  // Adds a slight vignette to the modal background
+  @include gradient-radial(rgba(black, 0) 60%, $brand-shadow);
+}
+
+.modal-success {
+  background-color: $brand-success;
+}
+
+.modal-warning {
+  background-color: $gray-dark;
+}
+
+.modal-danger {
+  background-color: $gray-darker;
+}

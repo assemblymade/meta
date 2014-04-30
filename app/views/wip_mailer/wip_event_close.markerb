@@ -1,0 +1,3 @@
+<%= @event.user.name %> closed this wip:
+
+<%= @event.body %>

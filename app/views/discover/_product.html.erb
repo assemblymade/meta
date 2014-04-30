@@ -1,0 +1,60 @@
+<% cache product do %>
+  <div class="row">
+
+    <div class="col-sm-2">
+      <img class="img-rounded" src="<%= image_path(product.poster_image.url) %>" width="100%" >
+
+  <!--       <a class="
+             btn btn-xs btn-default btn-block
+             counter-btn
+             js-vote-view
+             <%= 'active' if signed_in? && current_user.voted_for?(product) %>
+           "
+           href="<%= vote_idea_path(product) %>"
+           data-toggle="button"
+        >
+          <span class="text-success">Want</span>
+          <span class="badge counter-badge">
+            <%= product.votes.count %>
+          </span>
+        </a> -->
+    </div>
+
+    <div class="col-sm-10">
+
+      <strong><a href="<%= product_path(product) %>">
+        <%= product.name %>
+      </a></strong>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <h4 class="text-serif text-weight-normal" style="margin-top: 5px;"><%= product.pitch %></h4>
+          <% status_message = product.status_messages.order(created_at: :desc).first %>
+          <% if status_message %>
+            <div class="small neuter-paragraphs">
+              <%== product_markdown(product, status_message.body) %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="col-sm-6" style="margin-top: 3px;">
+          <h6>
+            Latest Activity
+            <span class="text-muted text-weight-normal"><%= product.stream_events.order(created_at: :desc).first.timestamp %></span>
+          </h6>
+          <ul class="list-unstyled hide-long-links">
+            <% product.stream_events.limit(2).each do |event| %>
+              <li class="small" style="margin-bottom:10px; color:#808080;">
+                <a href="<%= user_path(event.actor) %>" title="@<%= event.actor.username %>" style="color:#A6A6A6">
+                  <img class="img-circle" src="<%= event.actor.avatar.url(40) %>" width="20" height="20">
+                  <strong><%= event.actor.username %></strong>
+                </a>
+                <%== event.title_html %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

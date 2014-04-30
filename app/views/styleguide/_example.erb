@@ -1,0 +1,28 @@
+<div class="styleguide-example" id="<%= section.section.underscore %>">
+  <h3><%= section.section %> <em>modules/<%= section.filename %></em></h3>
+  <div class="styleguide-description">
+    <p><%= section.description %></p>
+    <% if section.modifiers.any? %>
+      <ul class="styleguide-modifier">
+        <% section.modifiers.each do |modifier| %>
+          <li><strong><%= modifier.name %></strong> - <%= modifier.description %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
+  <div class="styleguide-element">
+    <%= example_html.html_safe %>
+  </div>
+
+  <pre><code data-language="html"><%= example_html.gsub('$modifier-class', '').strip %></code></pre>
+
+  <% section.modifiers.each do |modifier| %>
+    <div class="styleguide-element styleguide-modifier">
+      <div class="styleguide-modifier-name"><%= modifier.name %></div>
+      <%= example_html.gsub('$modifier-class', modifier.class_name).html_safe %>
+    </div>
+
+    <pre><code data-language="html"><%= example_html.gsub('$modifier-class', modifier.class_name).strip %></code></pre>
+  <% end %>
+</div>

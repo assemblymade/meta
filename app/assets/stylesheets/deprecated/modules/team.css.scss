@@ -1,0 +1,47 @@
+.team {
+  margin-bottom: $default-margin * 4;
+
+  .team-description {
+    @include neuter-paragraphs;
+    margin-bottom: $default-margin + 5px;
+
+    h2 {
+      margin: 0;
+      font-size: 21px;
+      font-weight: bold;
+      color: $black;
+
+      padding-bottom: $default-margin;
+      border-bottom: 1px solid $gray-lighter;
+      margin: 0 0 ($default-margin * 1.5) 0;
+    }
+
+    p {
+      color: $gray;
+    }
+  }
+
+  .team-actions {
+    float: right;
+    position: relative;
+    top: -6px;
+  }
+
+  .avatar-grid {
+    margin: 0;
+    clear: both;
+
+    .avatar {
+      float: left;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .truncated-users {
+      line-height: 34px;
+      text-indent: 2px;
+      color: $gray;
+      font-size: 15px;
+    }
+  }
+}

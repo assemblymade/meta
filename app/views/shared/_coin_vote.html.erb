@@ -1,0 +1,12 @@
+<div class="mint" data-view="coin-vote"
+    data-vote-path="<%= product_wip_path(voteable.product, voteable) %>/votes"
+    data-coins="<%= voteable.coins %>"
+    data-coins-add="<%= voteable.coins_add %>"
+    <% if voteable.downvotable? %>data-vote-downvotable<% end %>
+    <% if voteable.has_user_voted?(current_user) %>data-vote-voted<% end %>
+  >
+  <div class="coin-vote <%= 'coin-vote-promoted' if voteable.promoted? %>">
+    <div class="hover-reveal">+<%= voteable.coins_add %></div>
+  </div>
+  <div class="bounty js-coins"><%= number_with_delimiter voteable.coins %></div>
+</div>

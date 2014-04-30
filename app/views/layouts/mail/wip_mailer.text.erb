@@ -1,0 +1,6 @@
+<%= yield %>
+
+--
+Reply to this email or view WIP on Assembly: <%= url_for([@wip.product, @wip]) %>
+
+Too many emails? Switch to a daily digest: <%= settings_notifications_url(auth_token: @user.authentication_token, preference: User::MAIL_DAILY) %>

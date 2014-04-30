@@ -1,0 +1,49 @@
+<% title "Edit WIP ##{@wip.number}", @product.name %>
+
+<%= render 'shared/deprecated_navbar' %>
+<%= render 'products/deprecated_navbar' %>
+
+<div class="page page-padded">
+  <div class="container">
+    <div class="page-heading">
+      <div class="page-heading-title">Edit task</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <%= form_for [@product, @wip] do |f| %>
+    <div class="form-group">
+      <div class="form-label">
+        <label for="wip_title">Title</label>
+      </div>
+
+      <%= f.text_field :title, 'class' => 'form-control', 'data-validate-length' => '2', 'autofocus' => 'autofocus' %>
+    </div>
+
+    <fieldset>
+      <div class="form-group">
+        <div class="form-label">
+          <label>Deliverable</label>
+        </div>
+
+        <div class="form-control">
+          <div class="btn-group" data-toggle="buttons">
+            <% @wip.class.deliverable_types.each do |deliverable_type| %>
+              <%= f.label :deliverable, 'class' => "btn btn-default #{'active' if @wip.deliverable == deliverable_type}", 'data-click-required' => '' do %>
+                <%= f.radio_button :deliverable, deliverable_type %>
+                <%= deliverable_type.camelcase %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="form-actions">
+      <%= f.button 'Update task', 'class' => 'btn btn-primary', 'data-disable-with' => 'Updating...' %>
+    </div>
+  <% end %>
+</div>
+
+<%= render 'shared/deprecated_footer' %>

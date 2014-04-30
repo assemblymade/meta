@@ -1,0 +1,4 @@
+<script>
+  analytics.alias(<%= current_user.id.to_json.html_safe %>);
+  analytics.track('user.created');
+</script>

@@ -1,0 +1,16 @@
+.jumbotron {
+  margin-bottom: 0;
+  text-align: center;
+
+  h1,
+  .h1 {
+    font-weight: bold;
+  }
+
+  @media screen and (min-width: $screen-sm-min) {
+    h1,
+    .h1 {
+      font-size: $jumbotron-font-size;
+    }
+  }
+}

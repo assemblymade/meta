@@ -1,0 +1,226 @@
+require 'activerecord/uuid'
+require 'avatar'
+require 'stripe'
+
+class User < ActiveRecord::Base
+  include ActiveRecord::UUID
+
+  has_many :core_products, :through => :core_team_memberships, :source => :product
+  has_many :core_team_memberships
+  has_many :products
+  has_many :preorders
+  has_many :watchings
+  has_many :followed_tags, :through => :watchings, :source => :watchable, :source_type => 'Wip::Tag'
+  has_many :product_subscriptions, :class_name => 'Product::Subscription'
+  has_many :subscribed_products, :through => :product_subscriptions, :source => :product
+  has_many :wips
+  has_many :wip_workers, :class_name => 'Wip::Worker'
+  has_many :wips_working_on, ->{ where(state: Task::IN_PROGRESS) }, :through => :wip_workers, :source => :wip
+  has_many :votes
+  has_many :events
+  has_many :wips_contributed_to, -> { where(events: { type: Event::MAILABLE }).uniq.order("created_at DESC") }, :through => :events, :source => :wip
+  has_many :activities,    foreign_key: 'owner_id'
+  has_many :stream_events, foreign_key: 'actor_id'
+
+  devise :confirmable,
+         :database_authenticatable,
+         :omniauthable,
+         :recoverable,
+         :registerable,
+         :rememberable,
+         :token_authenticatable,
+         :trackable,
+         :validatable,
+         :omniauth_providers => [:facebook, :github, :twitter],
+         :authentication_keys => [:login]
+
+  # auto confirm email. If we get a bounce we'll make them confirm, for now
+  # we'll assume the email is correct
+  before_create :skip_confirmation!
+
+  # Everybody gets an authentication token for quick access from emails
+  before_save :ensure_authentication_token
+
+  # default users to immediate email
+  MAIL_DAILY = 'daily'
+  MAIL_IMMEDIATE = 'immediate'
+  MAIL_NEVER = 'never'
+  before_validation -> { self.mail_preference = MAIL_IMMEDIATE }, on: :create
+  validates :mail_preference, inclusion: { in: [MAIL_DAILY, MAIL_IMMEDIATE, MAIL_NEVER] }
+
+  after_save :username_renamed, :if => :username_changed?
+
+  validates :username,
+    presence: true,
+    uniqueness: true,
+    length: { minimum: 2 },
+    format: { with: /\A[a-zA-Z0-9-]+\z/ }
+
+  scope :staff, -> { where(is_staff: true) }
+  scope :wip_creators, -> { joins(:wips) }
+  scope :event_creators, -> { joins(:events) }
+  scope :awaiting_personal_email, -> { where(personal_email_sent_on: nil).where("created_at > ? AND last_request_at < ?", 14.days.ago, 3.days.ago) }
+
+  class << self
+    def find_first_by_auth_conditions(warden_conditions)
+      conditions = warden_conditions.dup
+      if login = conditions.delete(:login)
+        condition = login.uuid? ? "id = ?" : "lower(email) = ?"
+        where(conditions).where(condition, login.downcase).first
+      else
+        where(conditions).first
+      end
+    end
+
+    def by_partial_match(query)
+      where("lower(name) like :query", query: "%#{query.downcase}%")
+    end
+
+    def asm_bot
+      find_by!(username: 'asm-bot')
+    rescue ActiveRecord::RecordNotFound => e
+      raise "You need an asm-bot user in your database. Run db:seeds"
+    end
+
+    def create_asm_bot!
+      User.create!(name: "Assembly Bot",  is_staff: true, email: "asm_bot@assemblymade.com", username: "asm-bot", :password => rand(999999999999).to_s)
+    end
+
+    def contributors
+      union_query = Arel::Nodes::Union.new(wip_creators.arel, event_creators.arel)
+      User.find_by_sql(union_query.to_sql)
+    end
+  end
+
+  def has_github_account?
+    !github_uid.blank?
+  end
+
+  def wips_won
+    Task.won_by(self).order("created_at DESC")
+  end
+
+  def avatar
+    Avatar.new(self)
+  end
+
+  def preordered_perk?(perk)
+    preorders.where(perk_id: perk.id).exists?
+  end
+
+  def staff?
+    is_staff?
+  end
+
+  def paid_via_paypal?
+    payment_option == PaymentOption::PAYPAL && !paypal_email.nil?
+  end
+
+  def paid_via_ach?
+    payment_option == PaymentOption::ACH && bank_account_id && bank_name && bank_last4 && address_line1 && address_city && address_zip
+  end
+
+  def missing_payment_information?
+    !(paid_via_ach? || paid_via_paypal?)
+  end
+
+  def last_contribution
+    events.order("created_at ASC").last
+  end
+
+  def email_failed_at!(time)
+    self.confirmed_at = nil
+    self.confirmation_sent_at = nil
+    self.email_failed_at = time
+    self.save!
+  end
+
+  def email_failed?
+    !!email_failed_at
+  end
+
+  def employment
+    UserEmployment.new(JSON.parse(extra_data)['work']) unless extra_data.nil?
+  end
+
+  def confirmation_sent?
+    !!confirmation_sent_at
+  end
+
+  def influence
+    1
+  end
+
+  def password_required?
+    super unless facebook_uid?
+  end
+
+  def has_voted_for?(product)
+    product.voted_by?(self)
+  end
+
+  # this is used on signup to auto follow a product
+  def follow_product=(slug)
+    Watching.watch!(self, Product.find_by!(slug: slug)) unless slug.blank?
+  end
+
+  def sum_month_points(time)
+    Task.won_by(self).inject(0) {|sum, wip| sum + wip.score }
+  end
+
+  def to_param
+    username
+  end
+
+  def voted_for?(votable)
+    votable.votes.where(user: self).any?
+  end
+
+  attr_reader :stripe_customer
+
+  def ensure_stripe_customer!(token)
+    ensurer = StripeCustomerEnsurer.new(self, token)
+    ensurer.ensure!
+    @stripe_customer = ensurer.customer
+  end
+
+  def username_renamed
+    # UsernameRenameWorker.perform_async self.id, username_was
+  end
+
+  def short_name
+    if name.blank?
+      username
+    else
+      name.split(/ |@/).first.strip
+    end
+  end
+
+  def mail_immediate?
+    mail_preference == 'immediate'
+  end
+
+  def mail_daily?
+    mail_preference == 'daily'
+  end
+
+  def mail_never?
+    mail_preference == 'never'
+  end
+
+  # cancan
+
+  def ability
+    @ability ||= Ability.new(self)
+  end
+
+  delegate :can?, :cannot?, :to => :ability
+
+  def email_address
+    @email_address ||= Mail::Address.new.tap do |addr|
+      addr.address = email
+      addr.display_name = username
+    end
+  end
+
+end

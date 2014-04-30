@@ -1,0 +1,34 @@
+@import 'variables',
+        'bootstrap',
+        'base/*',
+        'components/*';
+
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  right: 30px;
+
+  .btn {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+.hide-long-links {
+  .long-link { display: none; }
+  .stream-event-attachment { display: none; }
+  .commit-message { display: none; }
+  .text-muted { color: $link-color; }
+}
+
+.alpha {
+  margin-top: 0;
+}
+
+.omega {
+  margin-bottom: 0;
+}
+
+.neuter-paragraphs > p:last-child {
+  @extend .omega;
+}

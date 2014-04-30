@@ -1,0 +1,44 @@
+<%= render 'shared/deprecated_navbar' %>
+<%# app/templates/products/_navbar.html.erb %>
+<%= render 'products/deprecated_navbar' %>
+
+<div class="page page-padded">
+  <div class="container">
+    <div class="page-content">
+      <% if flash[:new_job_callout] %>
+        <div class="alert">This is the flash alert</div>
+      <% end %>
+      <div class="page-heading">
+        <div class="page-heading-title">Create a new job</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+    <div class="job new">
+      <%=form_for @product_job, :class => ["form-group"] do |f| %>
+        <div class="form-group">
+          <%=f.label :category, :class => ["form-label"] %>
+          <%=f.select(:category,
+             options_for_select([
+                                 ['Engineer', 'Engineer'],
+                                 ['Designer', 'Designer'],
+                                 ['Sales', 'Sales']
+                                ]),
+                                :class => ["form-control"]
+                                ) %>
+        </div><!-- form-group -->
+        <div class="form-group">
+          <%=f.label :description, :class => ["form-label"] %>
+          <%=f.text_area :description, placeholder: "Fill in a description of the job" %>
+        </div><!-- form-group -->
+        <div class="form-actions">
+          <%=f.submit "Create job", :class => ["btn", "btn-primary", "pull-right"], :disable_with => "Creating job" %>
+        </div><!-- form-actions -->
+      <% end %>
+    </div><!-- job new -->
+  </div><!-- page-content -->
+
+  <div class="page-sidebar">
+  </div><!-- page-sidebar -->
+</div><!-- /page -->

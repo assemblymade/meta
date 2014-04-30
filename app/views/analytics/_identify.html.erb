@@ -1,0 +1,6 @@
+<script>
+  analytics.identify(
+    <%== current_user.id.to_json %>,
+    <%== UserAnalyticsSerializer.new(current_user).to_json %>
+  );
+</script>

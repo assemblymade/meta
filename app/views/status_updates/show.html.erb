@@ -1,0 +1,31 @@
+<% title @status_update.title, @product.name %>
+
+<%= render 'shared/deprecated_navbar' %>
+<%= render 'products/deprecated_navbar' %>
+
+<div class="page page-padded container">
+  <div class="page-heading">
+    <h1><%= @status_update.title %></h1>
+    <p>
+      <time class="timestamp" datetime="<%= @status_update.created_at %>"></time>
+    </p>
+  </div>
+
+  <br>
+
+  <div class="page-content">
+    <div class="markdown-content">
+      <%= @status_update.body_html %>
+    </div>
+  </div>
+
+  <div class="page-sidebar">
+    <div class="author">
+      <%= render 'users/avatars/default', user: @status_update.user %>
+
+      <div class="username"><%= @status_update.user.username %></div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/deprecated_footer' %>

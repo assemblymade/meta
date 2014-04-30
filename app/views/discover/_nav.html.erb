@@ -1,0 +1,14 @@
+<div class="panel panel-default">
+  <div class="panel-heading"><h6 class="panel-title">Featured</h6></div>
+  <ul class="nav nav-pills nav-stacked">
+    <li class="<%= 'active' if controller.action_name == 'staff_picks' %>">
+      <a href="<%= discover_path %>">Staff Picks</a>
+    </li>
+    <li class="<%= 'active' if controller.action_name == 'trending' %>">
+      <a href="<%= discover_path(:trending) %>">Trending</a>
+    </li>
+    <li class="<%= 'active' if controller.action_name == 'most_wanted' %>">
+      <a href="<%= discover_path(:most_wanted) %>">Most Wanted</a>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,531 @@
+.perks {
+
+  .guarantee {
+    font-size: 16px;
+    margin-bottom: 30px;
+
+    .highlight {
+      background-color: $yellow-light;
+    }
+  }
+
+  .list {
+    @include clearfix();
+    line-height: 20px;
+    margin-bottom: -20px;
+
+    .item {
+      margin: 0 -30px;
+      padding: 24px 30px;
+    }
+
+    .perk {
+      display: block;
+      position: relative;
+      border-top: 1px solid $gray-lighter;
+      position: relative;
+
+      > .name {
+        @include font-family-semibold();
+        margin-bottom: 5px;
+        color: $black;
+        font-size: 24px;
+        line-height: 1.3;
+      }
+
+      > .description {
+        color: $gray;
+        font-size: 18px;
+        line-height: 1.5;
+        margin-bottom: 0;
+      }
+
+      > .amount {
+        @include pull-right();
+        @include font-family-semibold;
+        margin-right: 15px;
+      }
+
+      > .discount {
+        padding: 10px 5px 6px 5px;
+        position: absolute;
+        color: white;
+        background-color: $green-light;
+        box-shadow: inset 0 0 0 1px rgba(black, 0.15), 0 0 0 3px white;
+        border-radius: 100%;
+        width: 30px;
+
+        top: -20px;
+        right: -20px;
+
+        line-height: 12px;
+        font-size: 10px;
+        text-align: center;
+
+        > strong {
+          @include font-family-semibold();
+          display: block;
+          font-size: 12px;
+        }
+      }
+
+      &:hover {
+        > .amount {
+          color: $blue;
+        }
+      }
+    }
+  }
+}
+
+.amount {
+  color: $gray-dark;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 24px;
+
+  > .original-amount {
+    color: $gray-light;
+    margin-right: 5px;
+    text-decoration: line-through;
+  }
+
+  > .discount {
+    font-size: 12px;
+    padding-bottom: 2px;
+  }
+}
+
+.simple-card {
+  @include box-sizing(border-box);
+  border: 2px solid $gray-light;
+  padding: 20px - 2px;
+  border-radius: $radius;
+  position: relative;
+
+  .simple-card-heading,
+  .simple-card-body {
+    background-color: white;
+  }
+
+  .simple-card-heading {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    line-height: 1.5;
+
+    > .amount {
+      float: right;
+      color: $black;
+    }
+
+    > .items,
+    > .idea,
+    > .name {
+      display: inline;
+    }
+
+    > .items {
+      color: $gray;
+    }
+
+    > .idea {
+      color: $black;
+    }
+
+    > .name {
+      color: $gray-dark;
+    }
+  }
+
+  .simple-card-body {
+    color: $gray;
+    font-size: 1.6rem;
+    line-height: 1.5;
+  }
+}
+
+.tos {
+  margin-top: 60px;
+  border-top: 1px solid $gray-light;
+  padding: 60px 20px;
+
+  color: $gray;
+  font-size: 1.4rem;
+  line-height: 1.5;
+
+  h2 {
+    font-weight: normal;
+
+    color: $gray-dark;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    text-align: center;
+  }
+  p {
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+}
+
+.track {
+  margin-top: 20px - 2px;
+  margin-bottom: 20px - 2px;
+  border-top: 2px solid $gray-light;
+  border-bottom: 2px solid $gray-light;
+
+  position: relative;
+
+  .kart {
+    @include box-sizing(border-box);
+    width: 20px - 4px - 4px;
+    height: 20px - 4px - 4px;
+    border-radius: 100%;
+    background-color: $gray-light;
+    position: absolute;
+    top: -.5 * (20px - 4px - 4px);
+    margin-left: -.5 * (20px - 4px - 4px);
+
+    &.current,
+    &.leader {
+      width: 20px;
+      height: 20px;
+
+      top: -.5 * 20px;
+      margin-left: -.5 * 20px;
+    }
+
+    &.current {
+      border: 4px solid $green;
+      background-color: white;
+      z-index: 1;
+    }
+
+    &.leader {
+      color: $yellow;
+      background-color: transparent;
+      font-size: 2rem;
+    }
+
+    &.leader.current {
+      border: none;
+      color: $green;
+    }
+  }
+}
+
+.sheet-heading {
+
+  > h1 {
+    @include font-semibold();
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  > .description {
+    @include font-book();
+    color: $gray;
+    line-height: 20px;
+  }
+
+  > .actions {
+    float: right;
+    margin-left: $gw-gutter;
+  }
+}
+
+.product-stage-timeline {
+  @include box-sizing(border-box);
+  padding-top: 20px;
+  margin-top: 22px;
+  width: 300px;
+
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-left: 20px;
+
+  > .product-stage-label {
+    float: left;
+    width: 80px;
+    text-align: center;
+    color: $gray;
+    font-size: 12px;
+
+    margin-top: 3px;
+    line-height: 1.5;
+
+    &.active {
+      color: $gray-dark;
+    }
+  }
+
+  &[data-stage=validating] {
+    background-image: url(image-path('product-validating.svg'));
+  }
+
+  &[data-stage=building] {
+    background-image: url(image-path('product-building.svg'));
+  }
+
+  &[data-stage=shipping] {
+    background-image: url(image-path('product-shipping.svg'));
+  }
+
+  &[data-stage=validating] > .product-stage-label.validating,
+  &[data-stage=building] > .product-stage-label.building,
+  &[data-stage=shipping] > .product-stage-label.shipping {
+    color: $gray-dark;
+  }
+}
+
+.org-chart {
+  @include make-row();
+
+  > .role {
+    @include make-column(3);
+
+    > .title {
+      color: inherit;
+      > .count {
+        @include pull-right();
+        color: $gray;
+      }
+    }
+
+    > .description {
+      color: $gray-dark;
+      font-size: 14px;
+      line-height: 20px;
+      min-height: 80px;
+    }
+
+    > .avatar-grid {
+      margin-bottom: 20px;
+    }
+  }
+
+  .role-design {
+    color: $blue;
+  }
+
+  .role-code {
+    color: $yellow;
+  }
+
+  .role-growth {
+    color: $green;
+  }
+
+  .role-strategy {
+    color: $red;
+  }
+}
+
+
+#blackout {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(black, 0.9);
+  z-index: 10000;
+
+  iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: red;
+
+    width: 960px;
+    height: 540px;
+
+    margin-left: - (960px / 2);
+    margin-top: - (540px / 2);
+  }
+
+  footer a{
+    position: absolute;
+    bottom: 20px;
+    width: 100px;
+    left: 50%;
+    color: rgba(black, 0.8) !important;
+  }
+}
+
+#last-update{
+  margin-top: 20px;
+  margin-bottom: -20px;
+
+  a.github {
+    color: $gray;
+    border-bottom: 1px solid $gray-light;
+    font-size: 14px;
+    margin-left: 10px;
+    &:hover{
+      color: $blue;
+      border-color: $blue-light;
+
+    }
+  }
+}
+
+.social {
+  line-height: 18px;
+
+  .github img {
+    opacity: 0.9;
+    width: 20px;
+    float: left;
+  }
+  .login {
+    font-size: 14px;
+    padding-left: 5px;
+    color: $gray-dark;
+  }
+}
+
+.hack-product-pitch {
+  @include margin-top-bottom(0);
+  margin-bottom: $default-margin / 2;
+  font-size: 26px;
+  line-height: 1.6;
+  font-weight: bold;
+}
+
+.hack-product-lead {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: $default-margin * 2;
+}
+
+.hack-social-buttons {
+  // Double hack to make it line up with the product page title baseline
+  margin-top: 8px;
+  margin-bottom: 30px;
+}
+
+.pull-right {
+  float: right;
+}
+
+.pull-left {
+  float: left;
+}
+
+.product-link-group {
+  @include margin-top-bottom(30px);
+
+  .product-link {
+    @include box-sizing(border-box);
+    @include padding-left-right($default-margin);
+    padding-top: $default-margin / 1.5;
+    padding-bottom: ($default-margin / 1.5) - 2px;
+    margin-bottom: 15px;
+
+    background: $highlight-bg;
+    border: 1px solid $highlight-border;
+    border-radius: $radius;
+    line-height: 32px;
+    display: table;
+    width: 100%;
+
+    &.link-type-product-site a,
+    &.link-type-code-repository a {
+      &:before {
+        @include inline-block;
+        line-height: 32px;
+        vertical-align: top;
+        margin-right: 8px;
+        content: "";
+        width: 32px;
+        height: 32px;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+      }
+    }
+
+    &.link-type-product-site a:before {
+      @include retina-image(
+        'icon-product-site',
+        32px 32px,
+        'png',
+        'icon-product-site@2x',
+        true
+      );
+    }
+
+    &.link-type-code-repository a:before {
+      @include retina-image(
+        'icon-repository',
+        32px 32px,
+        'png',
+        'icon-repository@2x',
+        true
+      );
+    }
+
+    a {
+      line-height: 32px;
+      vertical-align: middle;
+      display: table-cell;
+    }
+
+    .descriptor {
+      display: table-cell;
+      font-size: 13px;
+      line-height: 32px;
+      vertical-align: middle;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: $base-letter-spacing;
+
+      color: $highlight-text;
+      text-align: right;
+      padding-right: 6px;
+    }
+  }
+
+  .product-link + .link-type-code-repository {
+    border-radius: 0;
+    margin-bottom: 0;
+    margin-top: -1px;
+
+    &:last-child {
+      border-radius: 0 0 $radius $radius;
+    }
+  }
+
+  .link-type-product-site + .link-type-code-repository {
+    border-top-left-radius: $radius !important;
+    border-top-right-radius: $radius !important;
+  }
+
+  .link-type-code-repository + .link-type-code-repository {
+    @include padding-top-bottom(4px);
+    font-size: 16px;
+
+    & a {
+      padding-left: 14px;
+
+      &:before {
+        width: 12px;
+        height: 16px;
+        vertical-align: middle;
+        margin-right: 14px;
+
+        @include retina-image(
+          'icon-repository-sm',
+          16px 13px,
+          'png',
+          'icon-repository@2x',
+          true
+        );
+      }
+    }
+
+    .descriptor {
+      display: none;
+    }
+  }
+}

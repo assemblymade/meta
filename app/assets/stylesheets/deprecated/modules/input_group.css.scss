@@ -1,0 +1,59 @@
+/*
+No example.
+
+Styleguide Input Groups.
+*/
+.input-group {
+  display: table;
+  border-collapse: separate;
+
+  .form-control,
+  .input-group-btn {
+    display: table-cell;
+    vertical-align: top;
+    margin-bottom: 0;
+  }
+
+  .input-group-btn {
+    width: 1%;
+
+    > .btn {
+      // FIXME - Hack
+      height: 46px;
+
+      box-shadow: none;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-left: 0;
+    }
+  }
+
+  // Reset rounded corners
+
+  .form-control:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .input-group-btn:last-child > .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+/*
+No example.
+
+Styleguide Input Groups - Small.
+*/
+.input-group-sm {
+  .form-control {
+    font-size: 14px;
+    padding: 7px 12px 5px 12px;
+  }
+
+  .input-group-btn > .btn {
+    // FIXME - Hack
+    height: 36px;
+  }
+}

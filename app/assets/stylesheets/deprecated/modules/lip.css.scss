@@ -1,0 +1,12 @@
+/*
+Empty.
+
+Styleguide Lips.
+*/
+.lip {
+  @include linear-gradient($lip-gradient-color, white);
+}
+
+.lip-reversed {
+  @include linear-gradient(white, $lip-gradient-color);
+}

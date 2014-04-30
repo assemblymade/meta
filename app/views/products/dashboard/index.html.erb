@@ -1,0 +1,51 @@
+<%= content_for(:title, "Activity · #{@product.name}") %>
+<%= render 'shared/deprecated_navbar' %>
+<%= render 'products/deprecated_navbar' %>
+
+<div class="container product-container <%= 'non-profit' if !@product.for_profit?%>">
+  <% if @status_update or @product.core_team?(current_user) %>
+
+  <div class="activity-group">
+    <div class="activity-group-gutter"></div>
+    <div class="activity-group-header">
+      <h2>Latest Project Update</h2>
+    </div>
+  </div>
+
+  <div class="activity-group">
+    <div class="activity-group-gutter">
+      <% if @status_update %>
+        <a href="<%= user_path(@status_update.user) %>">
+          <%= render 'users/avatars/default', user: @status_update.user %>
+          <div class="username"><%= @status_update.user.username %></div>
+        </a>
+      <% end %>
+    </div>
+
+    <div class="activity-group-header">
+      <% if @status_update %>
+        <%= @status_update.summary_html %>
+        <a href="<%= product_status_update_path(@status_update.product, @status_update) %>">Read more&hellip;</a>
+      <% else %>
+        <p class="text-muted">
+          No one has made a project update yet. Have some
+          progress to share?
+          <a href="<%= new_product_status_update_path(@product) %>">Start writing the first product update.</a>
+        </p>
+      <% end %>
+    </div>
+  </div>
+
+  <% end %>
+
+  <div class="activity-group">
+    <div class="activity-group-gutter"></div>
+    <div class="activity-group-header">
+      <h2>Recent Activity</h2>
+    </div>
+  </div>
+  <%= render partial: 'stream_events/stream_event', collection: @stream_events, as: :stream_event %>
+  <%= render partial: 'more_button' %>
+
+</div>
+<%= render 'shared/deprecated_footer' %>

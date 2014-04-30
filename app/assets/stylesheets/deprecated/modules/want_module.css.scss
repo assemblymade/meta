@@ -1,0 +1,81 @@
+.want-module {
+
+  &[data-want-wanted],
+  &.want-module-voted {
+
+    .btn-want {
+      @extend .btn-default.active;
+
+      cursor: default;
+      background-color: rgba($green, .05);
+      border-color: rgba($green, .15);
+      box-shadow: none;
+      color: rgba($green, 0.66);
+
+      &:before {
+        opacity: 0.56;
+      }
+    }
+  }
+
+  .want-module-count,
+  .btn-want {
+    display: block;
+    width: 100;
+  }
+
+  .want-module-count {
+    padding: $want-module-padding;
+    position: relative;
+    margin-bottom: 6px;
+
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: $want-module-line-height;
+    color: $gray-dark;
+
+    border-radius: $radius;
+    border: 1px solid $gray-lighter;
+
+    .arrow {
+      position: absolute;
+      display: block;
+      width: 0;
+      height: 0;
+      border-color: transparent;
+      border-style: solid;
+      border-width: 5px;
+      z-index: 1000;
+
+      bottom: -5px;
+      left: 50%;
+      margin-left: -5px;
+      border-top-color: $white;
+      border-top-color: $gray-light;
+      border-bottom-width: 0;
+
+      &:after {
+        border-width: 4px;
+        content: "";
+
+        position: absolute;
+        display: block;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 5px;
+
+        bottom: 1px;
+        margin-left: -5px;
+        border-top-color: $white;
+        border-bottom-width: 0;
+      }
+    }
+  }
+
+  .btn-want {
+    color: $green;
+  }
+}

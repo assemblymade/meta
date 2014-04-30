@@ -1,0 +1,41 @@
+/*
+Empty.
+
+Styleguide Dividers.
+*/
+%divider {
+  display: block;
+  border: none;
+}
+
+.divider-dotted {
+  @extend %divider;
+  @include retina-image(
+    'divider/dotted-separator',
+    43px 3px,
+    'png',
+    'divider/dotted-separator@2x',
+    true
+  );
+
+  background-repeat: no-repeat;
+  background-position: center 0;
+  height: 3px;
+
+  // FIXME: Change the both top and bottom padding
+  margin-bottom: 13px;
+}
+
+.divider-dotted-vertical {
+  @extend %divider;
+  height: 100%;
+  width: 1px;
+  border-left: 1px dotted $gray-light;
+}
+
+.divider-muted {
+  @extend %divider;
+  border-bottom: 1px solid $gray-lighter;
+  margin-top: 80px;
+  margin-bottom: 0;
+}

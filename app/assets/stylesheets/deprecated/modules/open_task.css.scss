@@ -1,0 +1,73 @@
+.open-tasks {
+  border-top: 1px solid $gray-lighter;
+  width: 300px;
+  border-radius: $radius;
+
+  > .open-tasks-title {
+    border-bottom: 1px dotted $gray-light;
+    color: $gray;
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 8px 0 6px 0;
+    margin: 0 auto;
+    text-align: center;
+    text-transform: uppercase;
+    width: 80%;
+    letter-spacing: $base-letter-spacing;
+  }
+
+  > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.open-task {
+	@include box-sizing(border-box);
+  @include margin-top-bottom(20px);
+  -webkit-backface-visibility: hidden;
+  border-left: 1px dotted $gray-light;
+  width: 33%;
+  float: left;
+  text-align: center;
+
+  &:first-child {
+    border-left: transparent;
+  }
+}
+
+.open-task-muted {
+  .open-task-count {
+    color: $gray-light;
+  }
+}
+
+.open-task-detail {
+  @include margin-left-right(auto);
+  display: inline-block;
+}
+
+.open-task-type-icon {
+  display: inline-block;
+  vertical-align: initial;
+}
+
+.open-task-count {
+  color: $black;
+  display: inline-block;
+  font-family: $tiempos-family;
+  font-size: 20px;
+  margin-left: 5px;
+}
+
+.open-task-type {
+  color: $gray;
+  display: block;
+  font-size: 13px;
+  font-weight: 200;
+  text-transform: uppercase;
+  letter-spacing: $base-letter-spacing;
+  text-align: center;
+}

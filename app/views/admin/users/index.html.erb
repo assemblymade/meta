@@ -1,0 +1,26 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Created</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th></th>
+    </tr>
+  </thead>
+  <% for user in @users %>
+    <tr>
+      <td><%= time_ago_in_words(user.created_at)%> ago</td>
+      <td>
+        <%= link_to user.username, user_path(user) %>
+      </td>
+      <td>
+        <%= mail_to user.email %>
+      </td>
+      <td>
+        <a class="btn btn-default btn-xs" href="<%= root_url(user: ENV['BASIC_USERNAME'], password: ENV['BASIC_PASSWORD'], auth_token: user.authentication_token) %>">
+          Impersonate
+        </a>
+      </td>
+    </tr>
+  <% end %>
+</table>

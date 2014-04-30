@@ -1,0 +1,62 @@
+<div class="navbar navbar-inverse navbar-static-top navbar-lifted">
+  <div class="container">
+    <div class="pull-left">
+
+      <ul class="nav nav-tabs navbar-nav">
+        <li class="<%= "active" if products_controller? %>">
+          <a class="navbar-brand" href="<%= product_path(@product) %>">
+            <%= @product.name %>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <ul class="nav nav-tabs navbar-nav pull-right">
+
+      <% if false # @product.current_mission %>
+        <li>
+          <%= render 'products/mission_progress' %>
+        </li>
+      <% end %>
+
+      <li class="<%= "active" if dashboard_controller? %>">
+        <a href="<%= product_dashboard_path(@product) %>">Activity</a>
+      </li>
+
+      <li class="<%= "active" if milestones_controller? %>">
+        <a href="<%= product_milestones_path(@product) %>">
+          Projects
+          <% if (count = @product.milestones.open.count) > 0 %>
+            <span class="badge"><%= count %></span>
+          <% end %>
+        </a>
+      </li>
+
+      <li class="<%= "active" if discussions_controller? %>">
+        <a href="<%= product_discussions_path(@product) %>">
+          Discussions
+          <% if @product.open_discussions? %>
+            <span class="badge"><%= @product.open_discussions_count %></span>
+          <% end %>
+        </a>
+      </li>
+
+      <li class="<%= "active" if tasks_controller? %>">
+        <a href="<%= product_wips_path(@product) %>">
+          Tasks
+          <% if @product.open_tasks? %>
+            <span class="badge"><%= @product.open_tasks_count %></span>
+          <% end %>
+        </a>
+      </li>
+
+      <li class="nav-item <%= "active" if (jobs_controller? || partners_controller?) %>">
+        <a href="<%= product_jobs_path(@product) %>">
+          People
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<%# render 'products/status_message' %>

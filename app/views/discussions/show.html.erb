@@ -1,0 +1,77 @@
+<% title @wip.title, "##{@wip.number}", @wip.product.name %>
+
+<%= render 'shared/deprecated_navbar' %>
+<%= render 'products/deprecated_navbar' %>
+
+<div class="page page-padded page-ruled">
+  <div class="container">
+
+    <%= render 'heading' %>
+
+    <div class="page-content">
+      <div id="discussion-view-el">
+        <div class="timeline" id="discussion-view-el">
+          <% @events.each do |event, html| %>
+            <div id="entry-<%= event.number %>" class="timeline-entry timeline-entry-<%= 'avatar' if event.is_a? Event::Comment %>">
+              <div class="timeline-entry-actions">
+                <% if signed_in? && event.editable? && current_user.can?(:update, event) %>
+                  <%= link_to 'Edit', edit_product_wip_comment_path(@product, @wip, event), class: 'btn btn-default btn-small' %>
+                <% end %>
+              </div>
+
+              <%== html %>
+
+              <% if event.tippable? %>
+                <div class="timeline-entry-meta">
+                  <%= render 'wips/tip_box', event: event %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <%= render 'new_event_form' %>
+      </div>
+    </div>
+
+
+    <div class="page-sidebar">
+      <div class="sidebar-module">
+        <div class="sidebar-module-heading">
+          Watchers
+        </div>
+        <div class="avatar-grid">
+          <% @wip.watchers.each do |user| %>
+            <a class="avatar avatar-sm" href="<%= user_path(user) %>">
+              <img src="<%= user.avatar.url(30) %>" title="<%= user.username %>" />
+            </a>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<% if signed_in? %>
+  <img class="rawr" src="<%= ReadraptorTracker.new(@wip, current_user.id).url %>" />
+<% end %>
+
+<%= render 'shared/deprecated_footer' %>
+
+<script>
+  app.wip = new Wip(<%== WipSerializer.new(@wip).to_json %>);
+  app.wipEvents = new WipEvents(<%== @wip.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
+    url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
+  });
+
+  $(document).ready(function() {
+    new DiscussionView({
+      el: $('#discussion-view-el'),
+      model: app.wip
+    });
+  })
+
+  window.pusher = new Pusher($('meta[name=pusher-key]').attr('content'));
+  analytics.track('product.wip.viewed', <%== WipAnalyticsSerializer.new(@wip, scope: current_user).to_json %>)
+</script>

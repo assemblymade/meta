@@ -1,0 +1,31 @@
+<% title 'Discover Products' %>
+
+<%= render 'shared/navbar' %>
+
+<div class="page">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9">
+
+        <div class="page-header">
+          <h2 class="page-header-title">Staff Picks</h2>
+          <p>Interesting new products looking for market validation.</p>
+        </div>
+
+        <div class="list-group list-group-breakout">
+          <% @products.each do |product| %>
+            <div class="list-group-item">
+              <%= render 'product', product: product %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <%= render 'nav' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

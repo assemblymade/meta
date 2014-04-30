@@ -1,0 +1,19 @@
+.zen-container {
+  border: 1px solid $gray-light;
+  border-radius: $radius;
+  min-height: 50px;
+  margin-bottom: 20px;
+}
+
+.zen {
+  height: 100%;
+  width: 100%;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+
+.modal-body .zen {
+  margin-bottom: 0;
+}

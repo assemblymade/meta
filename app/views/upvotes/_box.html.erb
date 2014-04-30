@@ -1,0 +1,11 @@
+<div class="modal upvote-modal">
+  <div class="header">
+    Thank you for voting.
+    <div class="x-close-modal icon icon-delete"></div>
+  </div>
+  <% if @product.perks.any? %>
+    <div class="content">
+      Help greenlight <%= @product.name %> by pre-buying perks.
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,40 @@
+<div class="timeline-entry-tipping"
+  data-view="tips"
+  data-balance="<%= @product_balance %>"
+  data-tips-increment="100"
+  data-tips-total="<%= event.total_tips %>"
+  data-tips-url="<%= product_event_tips_path(@product, event.id) %>">
+
+  <% if @product_balance > 0 %>
+    <span class="pull-right js-no-tips text-muted">
+      Be the first person to tip <strong><%= event.user.username %></strong> for this contribution
+    </span>
+  <% end %>
+  <div class="pull-right js-total-tip-view">
+    <span class="bounty js-total-tips"><%= event.total_tips %></span> in tips from<div class="avatar-grid">
+      <% (event.tippers | [current_user]).compact.each do |tipper| %>
+        <a href="<%= user_path(tipper) %>" class="avatar avatar-xs">
+          <img src="<%= tipper.avatar.url(60) %>" title="<%= tipper.username %>" />
+        </a>
+      <% end %>
+    </div><!-- .avatar-grid -->
+  </div><!-- .pull-right -->
+
+  <% if @product_balance > 0 %>
+    <a href="#add-tip" class="btn btn-default btn-small btn-tip add-tip js-add-tip">
+      Tip <span class="bounty">1</span>
+    </a>
+  <% else %>
+  <div class="add-tip">
+    <span class="btn btn-default btn-small btn-tip" disabled style="margin-right: 4px;">
+      Tip <span class="bounty">1</span>
+    </span>
+    <span class="pull-right text-muted">You don't have any <strong><%= @product.name %></strong> coins to tip, yet.</span>
+  </div>
+  <% end %>
+
+  <!-- <div class="tip-counter">
+    <input type="number" min="1" max="999" step="1" class="js-user-tip">
+    <a href="#add-tip" class="btn btn-default btn-small btn-tip js-add-tip">Tip</a>
+  </div> -->
+</div><!-- .timeline-entry-tipping -->

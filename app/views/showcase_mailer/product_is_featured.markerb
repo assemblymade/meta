@@ -1,0 +1,7 @@
+Hi <%= @user.short_name %>,
+
+Check it out, <%= @product.name %> was just featured in the [Product Showcase](<%= discover_url(action: 'staff_picks') %>). Now would be a great time to spread the word on Twitter or Facebook.
+
+Let me know if you have any questions,
+
+Matt

@@ -1,0 +1,17 @@
+.section-heading {
+  margin-bottom: 30px;
+
+  h2 {
+    @include margin-top-bottom(0);
+    color: $gray;
+    font-family: $solitaire-family;
+    font-size: 21px;
+    font-weight: normal;
+    letter-spacing: $base-letter-spacing;
+    text-transform: uppercase;
+  }
+}
+
+.section-heading-center {
+  text-align: center;
+}

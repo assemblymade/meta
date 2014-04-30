@@ -1,0 +1,69 @@
+/*
+Empty.
+
+Styleguide Logo Wordmarks - Default.
+*/
+.logo-wordmark {
+  background-position: left top;
+  background-repeat: no-repeat;
+
+  padding-left: $logo-wordmark-image-width + $grid-gutter-width - 4px;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: $logo-wordmark-height;
+  font-family: $solitaire-family;
+  letter-spacing: 1.5pt;
+  text-transform: uppercase;
+  height: $logo-wordmark-height;
+
+  // Solitaire doesn't quite have even line-height, this just pushes the text
+  // down a little so it lines up with the logo better.
+  padding-top: 1px;
+  margin-bottom: -1px;
+  position: relative;
+}
+
+.logo-wordmark-default {
+  @include retina-image(
+    'logo-wordmark-dark',
+    $logo-wordmark-image-width $logo-wordmark-height,
+    'png',
+    null,
+    true
+  );
+
+  color: $gray-darker;
+}
+
+/*
+Empty.
+
+Styleguide Logo Wordmarks - Muted.
+*/
+
+.logo-wordmark-light {
+  @include retina-image(
+    'logo-wordmark-light',
+    $logo-wordmark-image-width $logo-wordmark-height,
+    'png',
+    null,
+    true
+  );
+
+  color: $white;
+}
+
+.logo-wordmark-muted {
+  @include retina-image(
+    'logo-wordmark-muted',
+    $logo-wordmark-image-width $logo-wordmark-height,
+    'png',
+    null,
+    true
+  );
+
+  color: $gray-light;
+}

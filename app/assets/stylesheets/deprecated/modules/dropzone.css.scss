@@ -1,0 +1,35 @@
+.dropzone {
+  @include box-sizing(border-box);
+  border: 1px solid $gray-light;
+  padding: 15px;
+  border-radius: $radius;
+  box-shadow: $inset-shadow;
+
+  &.dz-drag-hover {
+    background-color: $highlight-bg;
+  }
+}
+
+.dropzone-content {
+  border: dashed 1px $highlight-border;
+  border-radius: $radius;
+  padding: 15px 30px;
+
+  text-align: center;
+  font-size: 14px;
+
+  &,
+  a {
+    color: $blue;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+// Kills some of the HTML that the JS plugin generates
+// FIXME: Remove this from the plugin.
+.dz-preview, .dz-message {
+  display: none;
+}

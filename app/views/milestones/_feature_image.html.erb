@@ -1,0 +1,33 @@
+<div class="sidebar-module">
+  <div class="sidebar-module-heading">
+    Feature Image
+  </div>
+  <div class="sidebar-module-content">
+    <%= form_for @wip, url: product_milestone_images_path(@product, @wip) do |f| %>
+      <div class="dropzone" data-view="milestone-upload">
+        <div class="dropzone-content">
+          <div class="js-ready">
+            Drag &amp; drop file here or <a class="js-select-files" href="#">select it from your computer</a>.
+          </div>
+          <div class="js-uploading">
+            Uploading...
+          </div>
+        </div>
+      </div>
+
+      <input type="hidden" name="wip[milestone_images_attributes][][attachment_id]" class="js-attachment-id">
+    <% end %>
+  </div>
+
+  <script type="text/javascript">
+  $(function(){
+    new UploadView({
+      attachmentUploadUrl: '<%= "https://s3.amazonaws.com/#{ENV['ATTACHMENT_BUCKET']}" %>',
+      el: $('[data-view=milestone-upload]'),
+      onUpload: function(attachment){
+        $('.js-attachment-id').val(attachment.id).parents('form:first').submit()
+      }
+    });
+  });
+  </script>
+</div>

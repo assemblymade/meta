@@ -1,0 +1,17 @@
+.page {
+  background-color: white;
+  padding-top: $line-height-computed * 2.5;
+  padding-bottom: $line-height-computed * 2.5;
+}
+
+.page-with-header {
+  padding-top: 0;
+}
+
+.page-alert {
+  margin-top: - $line-height-computed * 2.5;
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-bottom: $line-height-computed * 2.5;
+}

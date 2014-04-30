@@ -1,0 +1,552 @@
+// Fuck this noise
+
+.textcomplete-wrapper textarea {
+  border: none;
+}
+
+.divided-section {
+  border-top: 1px solid $gray-light;
+  margin-top: 60px;
+}
+
+.sign-up,
+.sign-in {
+
+  .modal-content {
+    border: 1px solid $gray-light;
+    padding: 50px 60px;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .1);
+            box-shadow: 0 3px 9px rgba(0, 0, 0, .1);
+  }
+
+  .modal-header {
+    color: $gray;
+    border-bottom: none;
+    font-family: $tiempos-family;
+    padding: 0;
+    margin-bottom: 40px;
+    text-align: center;
+
+    h1 {
+      font-size: 34px;
+      font-weight: bold;
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+
+    .sign-up,
+    .sign-in {
+      @include inline-block();
+      @include box-sizing(border-box);
+      width: 50%;
+      padding: 5px 20px;
+      float: right;
+      font-size: 16px;
+
+      color: $black;
+
+      &.active {
+        background-color: white;
+        color: $black;
+      }
+    }
+  }
+
+  .modal-body {
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  .signin-or {
+    margin-top: 15px;
+    margin-bottom: 15px + 2px;
+    text-align: center;
+    width: 100%;
+    position: relative;
+
+    > span {
+      color: rgba($black, 0.4);
+      font-weight: 600;
+      font-size: 12px;
+      padding-left: 10px;
+      padding-right: 10px;
+      position: relative;
+
+      &:before,
+      &:after {
+        @include inline-block;
+        @include margin-left-right(10px);
+        content: "";
+        height: 1px;
+        width: 35%;
+        background-color: rgba($black, 0.06);
+        vertical-align: middle;
+      }
+    }
+
+    &.signin-or-light {
+      > span {
+        color: rgba($white, 0.6);
+
+        &:before,
+        &:after {
+          background-color: rgba($white, 0.1);
+        }
+      }
+    }
+  }
+
+  .new-assembly-session,
+  .email-signup,
+  .facebook-sign-form,
+  .facebook-signup-form {
+    color: $gray;
+    font-size: 14px;
+    font-weight: 200;
+    position: relative;
+
+    input {
+      @include placeholder {
+        font-weight: 200;
+      }
+    }
+
+    .inline-error-message {
+      z-index: 2;
+      color: $white;
+    }
+  }
+
+  .sign-in-submit,
+  .sign-up-submit {
+    margin-top: 30px;
+
+    > .btn {
+      margin-bottom: 10px;
+    }
+  }
+
+  .sign-up-choice {
+    text-align: center;
+  }
+}
+
+.email-signup,
+.regular-sign-in,
+.facebook-signup-form,
+.modal .form {
+
+  .label-inline {
+    position: absolute;
+    right: 10px;
+    top: 9px;
+    text-transform: uppercase;
+    @include font-family-semibold();
+    color: $gray;
+  }
+}
+
+.facebook-signup-form {
+
+  h2 {
+    line-height: 1.5;
+  }
+
+  .user {
+    min-height: 60px;
+
+    .avatar {
+      position: absolute;
+    }
+
+    .name {
+      font-weight: bold;
+    }
+
+    .name, .location {
+      margin-left: 70px;
+    }
+  }
+
+  .light {
+    color: $gray-light;
+  }
+}
+
+.form.user-search-form {
+  padding: 0;
+  position: relative;
+
+  .selected-user-avatar {
+    position: absolute;
+    right: 10px;
+    bottom: 27px;
+
+    &[src=""] {
+      display: none;
+    }
+  }
+}
+
+.recent-wips {
+  padding-left: 0;
+  list-style-type: none;
+
+  .timestamp {
+    vertical-align: top;
+    width: 7em;
+  }
+}
+
+.profile-data .body {
+  padding: 20px;
+}
+
+.value-changed {
+  @include animation(value-changed 1s);
+}
+
+@include keyframes(value-changed) {
+  0% { background-color: #F8FB7E; }
+  100% { background-color: none; }
+}
+
+.simple-card {
+  @include clearfix();
+
+  .section-heading {
+    color: $gray-dark;
+  }
+
+  .options {
+    > .option {
+      .btn {
+        display: inline-block;
+        text-align: center;
+        width: 100px;
+      }
+      .description {
+        color: $gray-dark;
+      }
+      .details{
+        color: $gray-dark;
+        font-size: 12px;
+      }
+      margin: 10px 0;
+    }
+  }
+
+  .skip {
+    float: right;
+  }
+}
+
+.subtle {
+  color: $gray;
+}
+
+.highlight {
+  background-color: $color-highlight;
+  color: $yellow;
+  padding: 3px 5px;
+  border-radius: $radius;
+}
+
+
+#new_message {
+  margin-bottom: 20px;
+}
+
+.chat-message {
+  @include padding-top-bottom(10px);
+  border-top: 1px solid $gray-light;
+  .author {
+    font-size: 14px;
+    color: $gray;
+  }
+  .body {
+    @include neuter-paragraphs;
+  }
+}
+
+.presence-user {
+  @include clearfix();
+  @include padding-top-bottom(5px);
+
+  .presence-user-avatar {
+    margin-right: 10px;
+  }
+}
+
+.discover-task-list {
+  header {
+    @include neuter-paragraphs;
+    margin-bottom: 30px;
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 15px;
+
+      font-size: 15px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: $base-letter-spacing;
+    }
+
+    p {
+      color: $gray;
+    }
+}
+
+  .number {
+    display: none;
+  }
+
+  .wip-list > .item {
+    border: 1px solid $gray-light;
+    border-bottom: none;
+    box-shadow: $shadow;
+    padding-left: 55px;
+    padding-bottom: 10px;
+
+    &:first-child {
+      border-radius: $radius $radius 0 0;
+    }
+
+    &:last-child {
+      border-bottom: 1px solid $gray-light;
+      margin-bottom: 60px;
+      border-radius: 0 0 $radius $radius;
+    }
+
+    .title {
+      margin-top: 0;
+    }
+
+    .watchers {
+      margin-bottom: 10px;
+    }
+
+    .vote-box {
+      margin-left: -40px;
+    }
+  }
+}
+
+// (chrislloyd) didn't want to create a new module for this because I feel like
+// it's in flux. Once we've iterated on it a little bit then we can extract
+// it out into a component.
+.new-event {
+  margin-top: 20px;
+  padding-top: 40px;
+  padding-left: 75px;
+
+  .avatar {
+    float: left;
+    margin-left: - ($avatar-default-size + 22px);
+  }
+
+  .actions {
+    border-radius: $radius;
+    @include inline-block;
+    margin-bottom: 6px;
+
+    .work-type-caption{
+      font-size: 14px;
+      font-weight: bold;
+      margin: -25px 0 5px 0;
+      padding: 0;
+
+      &.comment{
+        width: 147px;
+        float: left;
+      }
+
+      &.work{
+        width: 300px;
+        float: left;
+      }
+    }
+
+    .nav {
+      margin-left: 0;
+
+      li {
+        margin-left: 0;
+        border: 1px solid $gray-light;
+
+        background-repeat: no-repeat;
+        background-position: center 7px;
+        font-weight: bold;
+
+        &.nav-item {
+          width: 135px;
+          text-align: center;
+          box-sizing: border-box;
+        }
+
+        &:last-child {
+          border-top-right-radius: $radius;
+          border-bottom-right-radius: $radius;
+        }
+      }
+
+      .active {
+        background-color: $highlight-bg;
+        box-shadow: $inset-shadow;
+        border-color: $highlight-border;
+
+        a {
+          color: $blue;
+        }
+      }
+
+      .discuss {
+        border-radius: $radius;
+        position: relative;
+      }
+
+      .discuss + li {
+        margin-left: 9px; //I had to reduce this from 15 for Firefox compatibility
+        border-left: 1px solid $gray-light;
+        border-top-left-radius: $radius;
+        border-bottom-left-radius: $radius;
+
+        position: relative;
+      }
+
+      li + li {
+        border-left: none;
+      }
+
+      a {
+        padding: 5px 20px;
+        padding-top: 5px + 24px + 5px;
+        font-size: 12px;
+        letter-spacing: $base-letter-spacing;
+        text-transform: uppercase;
+        color: $gray;
+      }
+
+      li:nth-child(1) {
+        @include retina-image('action-comment', 24px 24px, 'png', 'action-comment@2x', true);
+      }
+
+      li:nth-child(2) {
+        @include retina-image('action-code', 24px 24px, 'png', 'action-code@2x', true);
+      }
+
+      li:nth-child(3) {
+        @include retina-image('action-design', 24px 24px, 'png', 'action-design@2x', true);
+      }
+
+      li:nth-child(4) {
+        @include retina-image('action-copy', 24px 24px, 'png', 'action-copy@2x', true);
+      }
+    }
+  }
+}
+
+// This should be in components
+.tab-content {
+  > .tab-pane {
+    display: none;
+
+    &#design {
+      margin-bottom: 20px;
+    }
+  }
+
+  > .active {
+    display: block;
+  }
+}
+
+.form-type-copy {
+  min-height: 158px;
+}
+
+
+.lightbox{
+  z-index:999999;
+}
+
+// God damn I hate CSS
+.page-content > h2.profile-section-title {
+  margin-top: 20px;
+  margin-bottom: 0;
+  border-bottom: 1px dotted $gray-lighter;
+  letter-spacing: $base-letter-spacing;
+
+  text-transform: uppercase;
+  font-size: $font-size-base;
+  padding-bottom: 30px;
+}
+
+.profile-product-row {
+  border-bottom: 1px dotted $gray-lighter;
+  padding-left: 60px + 30px;
+  // padding-right: 120px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  > .logo {
+    float: left;
+    margin-left: - (60px + 30px);
+  }
+
+  > .meta {
+    margin-left: 30px;
+    float: right;
+    text-align: right;
+    font-size: 14px;
+    line-height: 1.7;
+    color: $gray;
+
+    .list-meta {
+      white-space: nowrap;
+      width: 180px;
+      .list-item {
+        float: right;
+      }
+    }
+  }
+
+  > .main {
+    font-size: 14px;
+    a {
+      font-weight: bold;
+    }
+  }
+
+  > .pitch {
+    font-family: $font-family-serif;
+    font-size: 16px;
+  }
+}
+
+.coins {
+  color: $yellow;
+  font-weight: bold;
+}
+
+.dotted-list {
+  margin: 0;
+  padding: 0 0 0 0;
+
+  li {
+    display: block;
+    line-height: 34px;
+    border-bottom: dotted 1px $gray-light;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.textcomplete {
+  display: block;
+  border: none;
+  outline: none;
+}

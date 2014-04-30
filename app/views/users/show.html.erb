@@ -1,0 +1,112 @@
+<% title @user.username %>
+<%= render 'shared/deprecated_navbar' %>
+
+<div class="page page-padded page-flipped">
+  <div class="container">
+    <div class="page-sidebar">
+      <%= render 'users/card', user: @user %>
+    </div>
+
+    <div class="page-content">
+
+      <div class="stats-tabs">
+        <div class="stat">
+          <%= number_with_delimiter(@user.count_contributions) %>
+          <label>Contributions</label>
+        </div>
+        <div class="stat">
+          <%= cents_to_coins(@user.sum_app_cents) %>
+          <label>App Coins</label>
+        </div>
+        <div class="stat">
+          <%= number_to_currency(0) %>
+          <label>Earned</label>
+        </div>
+      </div>
+
+      <% if @products.any? %>
+        <h2 class="profile-section-title">Contributions</h2>
+
+        <% @products.each do |p| %>
+
+          <div class="profile-product-row">
+            <div class="logo">
+              <%= image_tag p[:product].poster_image.url, width: 60 %>
+            </div>
+
+            <div class="meta">
+              <div>
+                <% if p[:product].for_profit? %>
+                  <strong><a class="text-gray" href="<%= product_partners_path(p[:product]) %>"><%= number_to_percentage(p[:stake] * 100, precision: 2, strip_insignificant_zeros: true) %> stake</a></strong>
+                  <span class="pipe-divider"></span>
+                  <span class="coins">
+                    <%= pluralize(cents_to_coins(p[:cents]), 'coin') %>
+                  </span>
+                <% else %>
+                  <%= cents_to_coins(p[:cents]) %> karma
+                <% end %>
+              </div>
+
+              <%= pluralize(p[:contributions], 'contribution') if p[:product].for_profit? %>
+            </div>
+
+            <div class="main">
+              <a href="<%= product_path(p[:product]) %>"><%= p[:product].name %></a>
+              <% if p[:product].user == @user %>
+                <span class="label">Creator</span>
+              <% end %>
+              <% if p[:product].core_team.include?(@user) %>
+                <span class="label">Core Team</span>
+              <% end %>
+            </div>
+            <div class="pitch">
+              <%= p[:product].pitch %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <% if @user.count_contributions == 0 &&  signed_in? && current_user == @user %>
+        <div class="note">
+          <div class="note-icon note-profile"></div>
+          <h3>Earn yourself some App Coins!</h3>
+          <p>Find a product to help out and earn your first app coins. Permission isn’t required to contribute—jump in and help out in any way possible. At the end of every month the product's revenue is split with everyone that owns its coins.</p>
+
+          <div class="actions">
+            <div class="row">
+              <div class="col-2">
+                <a class="btn btn-accent btn-block" href="<%= new_product_path %>">Create a Product</a>
+              </div>
+              <div class="col-4">
+                Kickstart your own idea, have the community rally around it, and keep at least 5% of its earnings.
+              </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+              <div class="col-2">
+                <a class="btn btn-accent btn-block" href="<%= discover_path %>">Discover Products</a>
+              </div>
+              <div class="col-4">
+                Start earning coins by helping an existing app. Earn the most coins when you jump in early & steer its direction.
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <% if @user.stream_events.any? %>
+        <h2 class="profile-section-title user-activity-group-heading">Activity</h2>
+        <div class='user-activity-group'>
+          <%= render @stream_events %>
+          <% unless @stream_events.last_page? %>
+            <%= render partial: 'more_button' %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/deprecated_footer' %>

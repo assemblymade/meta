@@ -1,0 +1,38 @@
+/*
+Empty.
+
+Styleguide Idea Submitters.
+*/
+.idea-submitter {
+  @include clearfix();
+
+  > .panel-heading {
+    margin-bottom: 0;
+    line-height: 1;
+    position: relative;
+    top: 4px;
+  }
+
+  > .avatar {
+    margin-top: -30px;
+    float: right;
+  }
+
+  > .details {
+
+    a {
+      color: $gray-dark;
+    }
+
+    > .name {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    > .location {
+      display: none;
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+    }
+  }
+}

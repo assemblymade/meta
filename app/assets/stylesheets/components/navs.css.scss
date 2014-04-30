@@ -1,0 +1,73 @@
+.nav {
+  > li > a {
+    color: $text-color;
+
+    > .badge:last-child {
+      margin-left: $padding-base-vertical;
+    }
+  }
+
+  > .active {
+    font-weight: bold;
+  }
+}
+
+.nav-pills {
+  > li + li {
+    margin-left: 0;
+  }
+
+  > .active > a > .badge {
+    background-color: $blue;
+    color: white;
+  }
+}
+
+.nav-tabs {
+  border-bottom-width: 0;
+
+  > li {
+    margin-bottom: 0;
+
+    > a {
+      border: none;
+      margin-right: 0;
+
+      @include transition-property(box-shadow);
+      @include transition-duration($transition-out-duration);
+      @include transition-timing-function($transition-function);
+
+      &:hover,
+      &:focus {
+        border-width: 0;
+        border-bottom-width: 1px;
+        border-bottom-color: $nav-tabs-link-hover-border-color;
+        color: inherit;
+        box-shadow: inset 0 -2px 0 0 $nav-tabs-link-hover-border-color;
+        margin-bottom: -1px;
+
+        @include transition-duration($transition-in-duration);
+      }
+    }
+
+    &.active > a,
+    &.active > a:hover,
+    &.active > a:focus {
+      border-width: 0;
+      border-bottom-width: 1px;
+      border-bottom-color: $nav-tabs-active-link-hover-border-color;
+      color: inherit;
+      box-shadow: inset 0 -2px 0 0 $nav-tabs-active-link-hover-border-color;
+      margin-bottom: -1px;
+    }
+  }
+}
+
+.nav-stacked > li + li {
+  margin-top: 0;
+  border-top: 1px solid $gray-lighter;
+}
+
+.nav-stacked > li:last-child > a {
+  border-radius: 0 0 $border-radius-base $border-radius-base;
+}

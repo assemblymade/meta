@@ -1,0 +1,7 @@
+<div class="confirmation">
+  <% if current_user.confirmation_sent? %>
+    <p>A confirmation email has been sent. Please click the link in the email to continue.</p>
+  <% else %>
+    <p>An email we sent <%= time_ago_in_words(current_user.email_failed_at) %> ago failed to deliver. Double check your details below:</p>
+  <% end %>
+</div>

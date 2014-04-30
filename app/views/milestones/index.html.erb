@@ -1,0 +1,56 @@
+<% title 'Projects', @product.name %>
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
+
+<div class="page">
+  <div class="container">
+    <%= render 'products/status_message' %>
+
+    <div class="page-header">
+      <div class="pull-right">
+        <a class="btn btn-success" href="<%= new_product_milestone_path(@product) %>">
+          Start a new project
+        </a>
+      </div>
+
+      <h2 class="page-header-title">Projects</h2>
+
+      <div class="page-header-meta">
+        <ul class="list-inline list-inline-piped">
+          <li>
+            <a href="<%= product_milestones_path(@product) %>">
+              <%= pluralize @product.milestones.open.count, 'active project' %>
+            </a>
+          </li>
+          <li>
+            <a href="<%= product_milestones_path(@product, filter: 'closed') %>">
+              <%= pluralize @product.milestones.closed.count, 'completed project' %>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <% @milestones_with_feature_images.each do |milestone| %>
+        <div class="col-md-3">
+          <%= render 'milestones/milestone', milestone: milestone %>
+        </div>
+      <% end %>
+    </div>
+
+    <% if @milestones_with_feature_images.any? && @milestones.any? %>
+      <hr>
+    <% end %>
+
+    <div class="row">
+      <% @milestones.each do |milestone| %>
+        <div class="col-md-3">
+          <%= render 'milestones/milestone', milestone: milestone %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

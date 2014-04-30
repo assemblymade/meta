@@ -1,0 +1,88 @@
+/*
+  This CSS resource incorporates links to font software which is
+  the valuable copyrighted property of WebType LLC, The Font Bureau
+  and/or their suppliers. You may not
+  attempt to copy, install, redistribute, convert, modify or reverse
+  engineer this font software. Please contact WebType with any
+  questions: http://www.webtype.com
+*/
+
+@import 'addons/font-family';
+
+// MVB Solitaire
+
+@include font-face(
+  $solitaire, 'mvb-solitaire-black', 800,
+  $asset-pipeline: true
+);
+
+@include font-face(
+  $solitaire, 'mvb-solitaire-book-italic', normal, italic,
+  $asset-pipeline: true
+);
+
+@include font-face(
+  $solitaire, 'mvb-solitaire-book', normal,
+  $asset-pipeline: true
+);
+
+@include font-face(
+  $solitaire, 'mvb-solitaire-light', 200,
+  $asset-pipeline: true
+);
+
+@include font-face(
+  $solitaire, 'mvb-solitaire-semibold', bold,
+  $asset-pipeline: true
+);
+
+// Tiempos
+
+@include font-face(
+  $tiempos, 'TiemposTextWebLF-Regular', normal,
+  $asset-pipeline: true
+);
+
+@include font-face(
+  $tiempos, 'TiemposTextWebLF-RegularItalic', normal, italic,
+  $asset-pipeline: true
+);
+
+@include font-face(
+  $tiempos, 'TiemposTextWebLF-Semibold', bold,
+  $asset-pipeline: true
+);
+
+@include font-face(
+  $tiempos, 'TiemposTextWebLF-SemiboldItalic', bold, italic,
+  $asset-pipeline: true
+);
+
+// Batch Icons
+
+@include font-face(
+  $batch, 'batch',
+  $asset-pipeline: true
+);
+
+//// SS Gizmo Icons
+//
+//@include font-face(
+//  $ss-gizmo, 'ss-gizmo',
+//  $asset-pipeline: true
+//);
+//
+// SS Social Regular Icons
+
+@include font-face(
+  $ss-social-regular, 'ss-social-regular',
+  $asset-pipeline: true
+);
+
+
+// Assembly Icons
+
+@include font-face(
+  $assembly, 'assembly',
+  $asset-pipeline: true
+);

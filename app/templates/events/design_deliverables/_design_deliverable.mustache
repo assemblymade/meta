@@ -1,0 +1,25 @@
+<div class="discussion-item discussion-item-event discussion-item-event-review">
+
+  <div class="timeline-entry-symbol">
+    <div class="discussion-item-event-symbol"></div>
+  </div>
+
+  <div class="timeline-entry-content">
+    {{#attachment}}
+    <div class="discussion-item-meta">
+
+      {{#actor}}
+        <a href="{{url}}">{{username}}</a>
+      {{/actor}}
+      submitted a design
+        <a target="_blank" href="{{href}}">{{name}}</a>
+    </div>
+    <div>
+      <a href="{{href}}">
+        <img class="gallery-thumb" src="{{firesize_url}}/300x225/frame_0/g_center/{{href}}" />
+      </a>
+    </div>
+    {{/attachment}}
+  </div>
+
+</div>

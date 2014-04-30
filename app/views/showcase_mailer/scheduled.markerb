@@ -1,0 +1,7 @@
+Hi friends,
+
+[Please review <%= pluralize(@showcases.count, 'new staff pick', 'new staff picks') %>.](<%= admin_showcases_url %>)
+
+<% @showcases.each do |showcase| %>
+- [<%= showcase.product.name %>](<%= product_url(showcase.product) %>)
+<% end %>

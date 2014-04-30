@@ -1,0 +1,37 @@
+<% cache [stream_event, show_event_timestamp(stream_event)] do %>
+  <div class="activity-group <%= stream_event.css_classes %>">
+
+    <div class="activity-group-gutter">
+      <% if show_event_timestamp(stream_event) %>
+        <div class="activity-group-timestamp">
+          <%= show_event_timestamp(stream_event) %>
+        </div>
+      <% end %>
+
+      <% if stream_event.votable? && stream_event.work? %>
+        <%= render 'shared/coin_vote', voteable: stream_event.work %>
+      <% end %>
+    </div>
+
+    <div class="activity-group-content">
+      <div class="activity-group-icon <%= stream_event.icon_class %>"></div>
+
+      <div class="activity-group-title">
+        <div class="avatar avatar-xs">
+          <%= image_tag(stream_event.actor.avatar.url(220), alt: stream_event.actor.username) %>
+        </div>
+        <a href="<%= user_path(stream_event.actor) %>" class="username">
+          <%= stream_event.actor.username %>
+        </a>
+        <%== stream_event.title_html %>
+      </div>
+
+      <div class="activity-group-product">
+        <a href="<%= product_path(stream_event.product) %>">
+          <%= stream_event.product.name %>
+        </a>
+      </div>
+
+    </div>
+  </div>
+<% end %>

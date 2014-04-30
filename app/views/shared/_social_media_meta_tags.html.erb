@@ -1,0 +1,20 @@
+<% if product_show_route? %>
+  <meta name="description" content="<%= @product.social_media_title %>" />
+
+  <meta itemprop="name" content="<%= @product.social_media_title %>">
+  <meta itemprop="description" content="<%= @product.lead %>">
+  <meta itemprop="image" content="">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@asm">
+  <meta name="twitter:creator" content="@asm">
+  <meta name="twitter:title" content="<%= @product.social_media_title %>">
+  <meta name="twitter:description" content="<%= @product.lead %>">
+  <meta name="twitter:image" content="<%= @product.hero_image_url %>">
+
+  <meta property="og:site_name" content="<%= @product.name %>" />
+  <meta property="og:title" content="<%= @product.pitch %>" />
+  <meta property="og:url" content="<%= product_url(@product) %>" />
+  <meta property="og:image" content="<%= @product.hero_image_url %>" />
+  <meta property="og:description" content="<%= @product.lead %>" />
+<% end %>

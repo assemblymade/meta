@@ -1,0 +1,29 @@
+<p>Hi <%= @user.short_name %>,</p>
+
+<%= wip_markdown @status_update.body, product_wips_url(@product) %>
+
+<hr />
+
+<% @wips.each do |set| %>
+  <% if set[:wips].any? %>
+    <h3><%= set[:title] %></h3>
+
+    <ul>
+    <% set[:wips].each do |wip| %>
+      <li>
+        <a href="<%= product_wip_url(wip.product, wip)%>">
+          #<%= wip.number %> <%= wip.title %>
+          <% if not wip.comments.size.zero? %>
+            (<%= pluralize wip.comments.count, 'comment' %>)
+          <% end %>
+        </a>
+      </li>
+    <% end %>
+    </ul>
+  <% end %>
+<% end %>
+
+
+<p style="font-size:small;-webkit-text-size-adjust:none;color:#666;">
+  <a href="<%= settings_notifications_url(auth_token: @user.authentication_token) %>">Update your notification settings</a>.
+</p>

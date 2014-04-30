@@ -1,0 +1,32 @@
+en:
+  activity:
+    feed:
+      wip:
+        created: "created"
+        allocated: "started working on"
+        reviewing: "finished work on"
+
+        comment:
+          created: "commented on"
+
+    campfire:
+      wip:
+        created: "[%{slug}#%{number}] %{title} (%{url})"
+        allocated: "[%{slug}#%{number}] %{username} started working on '%{title}' (%{url})"
+        reviewing: "[%{slug}#%{number}] '%{title}' is ready for review (%{url})"
+
+        comment:
+          commented: "[%{slug}#%{number}] %{username}: %{summary} (%{url})"
+
+  number:
+    currency:
+      format:
+        precision: 0
+
+  activerecord:
+      errors:
+        models:
+          user:
+            attributes:
+              username:
+                invalid: "use only alphanumeric characters"

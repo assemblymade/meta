@@ -1,0 +1,55 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Pitch</th>
+      <th>Activity?</th>
+      <th>Logo?</th>
+      <th>Description?</th>
+      <th>Virgin?</th>
+      <th><span class="sr-only">Actions</span></th>
+    </tr>
+  </thead>
+
+  <% @showcases.each_with_index do |showcase, i| %>
+    <tr>
+      <td>
+        <% if i < 10 %>
+          <%= i+1 %>
+        <% end %>
+      </td>
+      <td>
+        <strong>
+          <%= link_to showcase.product.name, product_path(showcase.product) %>
+        </strong>
+      </td>
+      <td><%= showcase.product.pitch %></td>
+      <td>
+        <% if showcase.product.updated_at >= 1.week.ago %>
+          <span class="glyphicon glyphicon-ok text-success"></span>
+        <% end %>
+      </td>
+      <td>
+        <% if showcase.product.poster.present? %>
+          <span class="glyphicon glyphicon-ok text-success"></span>
+        <% end %>
+      </td>
+      <td>
+        <% if showcase.product.description.present? %>
+          <span class="glyphicon glyphicon-ok text-success"></span>
+        <% end %>
+      </td>
+      <td>
+        <% if showcase.product.showcases.count <= 1 %>
+          <span class="glyphicon glyphicon-ok text-success"></span>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to 'Cancel', admin_staff_pick_path(showcase.id), method: :delete, class: %w(btn btn-xs btn-danger) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= paginate @showcases, theme: 'twitter-bootstrap-3' %>

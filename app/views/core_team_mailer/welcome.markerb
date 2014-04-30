@@ -1,0 +1,11 @@
+Hi <%= @user.username %>,
+
+Welcome to the <%= @product.name %> Core Team! You can now:
+
+1. Award Tasks
+2. Close Tasks
+3. Promote Tasks
+
+Using these three powers, you're now able to control the future direction of <%= @product.name %>. You can also [read more about how you can be a great Core Team member](<%= core_team_url %>).
+
+Also, you're not alone in this process. Take a moment to reply-all to this email and introduce yourself to your other Core Team members!

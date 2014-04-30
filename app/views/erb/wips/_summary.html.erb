@@ -1,0 +1,66 @@
+<% watchers ||= false %>
+<% product ||= false %>
+<% task = summary %>
+<div class="item wip mint-gutter" data-number="<%= task.number %>" data-promoted="<%= task.promoted? %>">
+  <%= render 'shared/coin_vote', voteable: task %>
+
+  <a class="title" href="<%= product_wip_path(task.product, task) %>">
+    <span class="number"><%= task.formatted_number %></span>
+    <%= task.title %>
+
+    <div class="meta">
+      <a href="<%= user_path(task.user) %>">
+        <%= task.user.username %>
+      </a>
+
+      <span class="pipe-divider"></span>
+
+      <a href="<%= product_wip_path(task.product, task) %>">
+        <span class="comments">
+          <%= task.formatted_comments_count %>
+        </span>
+
+        <% if (count = task.new_comments(current_user)) > 0 %>
+          <span class="updates">
+            <span class="new-comments highlight">
+              <%= count %> new
+            </span>
+          </span>
+        <% end %>
+      </a>
+
+      <span class="pipe-divider"></span>
+
+      <span class="watchers">
+        <%= task.formatted_watchers_count %>
+      </span>
+
+      <% if task.promoted? %>
+        <span class="promotion">
+          <span class="pipe-divider"></span>
+          <span class="promoted-wip">Promoted 2x pts</span>
+        </span>
+      <% end %>
+    </div>
+
+    <% if watchers %>
+      <div class="watchers">
+        <div class="avatar-grid">
+          <% task.watchers.each do |watcher| %>
+            <div class="avatar avatar-xs">
+              <img src="<%= watcher.avatar_url %>" title="<%= watcher.username %>" />
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </a>
+
+  <% if product %>
+    <ol class="breadcrumb">
+      <li>
+        <a href="<%= product_path(task.product) %>"><%= task.product.name %></a>
+      </li>
+    </ol>
+  <% end %>
+</div>

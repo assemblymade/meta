@@ -1,0 +1,586 @@
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema.define(version: 20140429214842) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "hstore"
+  enable_extension "pg_stat_statements"
+  enable_extension "uuid-ossp"
+
+  create_table "activities", id: false, force: true do |t|
+    t.uuid     "id",           null: false
+    t.uuid     "owner_id",     null: false
+    t.uuid     "subject_id",   null: false
+    t.string   "subject_type", null: false
+    t.string   "key",          null: false
+    t.hstore   "parameters"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.uuid     "product_id"
+    t.string   "product_name"
+  end
+
+  create_table "allocation_events", id: false, force: true do |t|
+    t.uuid     "id",                                        null: false
+    t.uuid     "allocation_run_id",                         null: false
+    t.uuid     "user_id",                                   null: false
+    t.integer  "score",                                     null: false
+    t.decimal  "stake",             precision: 8, scale: 6, null: false
+    t.datetime "created_at",                                null: false
+  end
+
+  create_table "allocation_runs", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "product_id", null: false
+    t.datetime "created_at", null: false
+    t.hstore   "parameters"
+  end
+
+  create_table "attachments", id: false, force: true do |t|
+    t.uuid     "id",           null: false
+    t.uuid     "user_id"
+    t.string   "asset_path"
+    t.string   "name"
+    t.string   "content_type"
+    t.integer  "size"
+    t.datetime "created_at"
+  end
+
+  create_table "auto_tip_contracts", force: true do |t|
+    t.uuid     "product_id", null: false
+    t.uuid     "user_id",    null: false
+    t.decimal  "amount",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "deleted_at"
+  end
+
+  create_table "code_deliverables", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "wip_id",     null: false
+    t.uuid     "user_id",    null: false
+    t.string   "url",        null: false
+    t.datetime "created_at"
+  end
+
+  create_table "completed_missions", id: false, force: true do |t|
+    t.uuid     "id",           null: false
+    t.uuid     "product_id",   null: false
+    t.string   "mission_id",   null: false
+    t.datetime "created_at",   null: false
+    t.uuid     "completor_id", null: false
+  end
+
+  create_table "copy_deliverables", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "wip_id",     null: false
+    t.uuid     "user_id",    null: false
+    t.text     "body",       null: false
+    t.datetime "created_at"
+  end
+
+  create_table "core_team_memberships", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "product_id", null: false
+    t.uuid     "user_id",    null: false
+    t.datetime "created_at"
+  end
+
+  add_index "core_team_memberships", ["user_id", "product_id"], name: "index_core_team_memberships_on_user_id_and_product_id", unique: true, using: :btree
+
+  create_table "daily_actives", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.integer  "count"
+    t.datetime "created_at"
+  end
+
+  create_table "deliverables", id: false, force: true do |t|
+    t.uuid     "id",            null: false
+    t.uuid     "wip_id",        null: false
+    t.uuid     "attachment_id", null: false
+    t.datetime "created_at"
+  end
+
+  create_table "email_logs", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "user_id",    null: false
+    t.uuid     "email_id",   null: false
+    t.datetime "created_at", null: false
+  end
+
+  add_index "email_logs", ["user_id", "email_id"], name: "index_email_logs_on_user_id_and_email_id", using: :btree
+
+  create_table "events", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.integer  "number",     null: false
+    t.uuid     "wip_id",     null: false
+    t.uuid     "user_id",    null: false
+    t.string   "type",       null: false
+    t.text     "body"
+    t.text     "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.uuid     "event_id"
+  end
+
+  add_index "events", ["wip_id", "number"], name: "index_events_on_wip_id_and_number", unique: true, using: :btree
+
+  create_table "features", id: false, force: true do |t|
+    t.uuid     "id",                      null: false
+    t.uuid     "user_id"
+    t.uuid     "product_id"
+    t.text     "title"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "votes_count", default: 0, null: false
+  end
+
+  create_table "financial_accounts", id: false, force: true do |t|
+    t.uuid     "id",                         null: false
+    t.uuid     "product_id",                 null: false
+    t.string   "name",                       null: false
+    t.string   "type",                       null: false
+    t.boolean  "contra",     default: false, null: false
+    t.datetime "created_at",                 null: false
+  end
+
+  create_table "financial_amounts", id: false, force: true do |t|
+    t.uuid    "id",             null: false
+    t.string  "type",           null: false
+    t.uuid    "account_id",     null: false
+    t.uuid    "transaction_id", null: false
+    t.integer "amount",         null: false
+  end
+
+  create_table "financial_transactions", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "product_id", null: false
+    t.hstore   "details",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "measurements", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "metric_id",  null: false
+    t.decimal  "value",      null: false
+    t.datetime "created_at", null: false
+  end
+
+  create_table "messages", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "author_id",  null: false
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "metrics", id: false, force: true do |t|
+    t.uuid   "id",         null: false
+    t.uuid   "product_id", null: false
+    t.string "name",       null: false
+  end
+
+  create_table "milestone_images", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "user_id",       null: false
+    t.uuid     "milestone_id",  null: false
+    t.uuid     "attachment_id", null: false
+    t.datetime "created_at",    null: false
+  end
+
+  create_table "milestone_tasks", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "milestone_id", null: false
+    t.uuid     "task_id",      null: false
+    t.datetime "created_at"
+  end
+
+  add_index "milestone_tasks", ["milestone_id", "task_id"], name: "index_milestone_tasks_on_milestone_id_and_task_id", unique: true, using: :btree
+
+  create_table "milestones", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "user_id",                            null: false
+    t.uuid     "product_id",                         null: false
+    t.integer  "number"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.uuid     "wip_id",                             null: false
+    t.integer  "milestone_images_count", default: 0, null: false
+  end
+
+  add_index "milestones", ["product_id", "number"], name: "index_milestones_on_product_id_and_number", unique: true, using: :btree
+
+  create_table "newsletters", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "subject"
+    t.text     "body"
+    t.datetime "published_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "cancelled_at"
+  end
+
+  create_table "perks", id: false, force: true do |t|
+    t.uuid     "id",          null: false
+    t.uuid     "product_id"
+    t.integer  "amount"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name",        null: false
+  end
+
+  create_table "preorders", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "vote_id"
+    t.integer  "amount",     null: false
+    t.string   "charge_id"
+    t.string   "card_id",    null: false
+    t.datetime "charged_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.uuid     "user_id",    null: false
+    t.uuid     "perk_id"
+    t.inet     "ip"
+    t.text     "variation"
+  end
+
+  create_table "product_jobs", id: false, force: true do |t|
+    t.uuid     "id",          null: false
+    t.uuid     "user_id",     null: false
+    t.uuid     "product_id",  null: false
+    t.string   "category"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug"
+  end
+
+  add_index "product_jobs", ["slug"], name: "index_product_jobs_on_slug", unique: true, using: :btree
+
+  create_table "product_roles", id: false, force: true do |t|
+    t.uuid     "id",             null: false
+    t.uuid     "product_job_id", null: false
+    t.uuid     "user_id",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.uuid     "product_id",     null: false
+  end
+
+  create_table "product_shortcuts", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid    "product_id",  null: false
+    t.integer "number",      null: false
+    t.text    "target_type", null: false
+    t.uuid    "target_id",   null: false
+  end
+
+  add_index "product_shortcuts", ["product_id", "number"], name: "index_product_shortcuts_on_product_id_and_number", unique: true, using: :btree
+
+  create_table "product_subscriptions", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "product_id", null: false
+    t.uuid     "user_id",    null: false
+    t.datetime "created_at"
+  end
+
+  add_index "product_subscriptions", ["product_id", "user_id"], name: "index_product_subscriptions_on_product_id_and_user_id", unique: true, using: :btree
+
+  create_table "products", id: false, force: true do |t|
+    t.uuid     "id",                                    null: false
+    t.string   "slug",                                  null: false
+    t.string   "name",                                  null: false
+    t.string   "pitch"
+    t.text     "description"
+    t.datetime "submitted_at"
+    t.datetime "evaluated_at"
+    t.boolean  "is_approved"
+    t.integer  "assembly_contribution", default: 0,     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.uuid     "user_id",                               null: false
+    t.text     "lead"
+    t.integer  "view_count",            default: 0
+    t.text     "suggested_perks"
+    t.string   "poster"
+    t.integer  "votes_count",           default: 0,     null: false
+    t.uuid     "evaluator_id"
+    t.datetime "greenlit_at"
+    t.text     "free_perk"
+    t.integer  "watchings_count",       default: 0,     null: false
+    t.text     "repos",                                              array: true
+    t.string   "authentication_token",                  null: false
+    t.datetime "featured_on"
+    t.string   "tags",                  default: [],                 array: true
+    t.boolean  "can_advertise",         default: false
+    t.datetime "flagged_at"
+    t.text     "flagged_reason"
+    t.string   "homepage_url"
+    t.string   "you_tube_video_url"
+  end
+
+  add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
+  add_index "products", ["repos"], name: "index_products_on_repos", using: :btree
+  add_index "products", ["slug"], name: "index_products_on_slug", unique: true, using: :btree
+
+  create_table "showcases", id: false, force: true do |t|
+    t.uuid     "id",                     null: false
+    t.uuid     "product_id"
+    t.uuid     "wip_id"
+    t.datetime "showcased_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "email_upcoming_sent_at"
+    t.datetime "email_public_sent_at"
+  end
+
+  create_table "status_messages", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "product_id", null: false
+    t.uuid     "user_id",    null: false
+    t.string   "body",       null: false
+    t.datetime "created_at", null: false
+  end
+
+  create_table "status_updates", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "product_id", null: false
+    t.uuid     "user_id",    null: false
+    t.text     "body",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "title"
+    t.string   "slug"
+  end
+
+  add_index "status_updates", ["product_id", "slug"], name: "index_status_updates_on_product_id_and_slug", unique: true, using: :btree
+
+  create_table "stream_events", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "actor_id"
+    t.uuid     "product_id"
+    t.uuid     "subject_id",                      null: false
+    t.string   "subject_type",                    null: false
+    t.uuid     "target_id"
+    t.string   "target_type"
+    t.string   "verb",                            null: false
+    t.string   "type",                            null: false
+    t.boolean  "product_flagged", default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tips", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id", null: false
+    t.uuid     "from_id",    null: false
+    t.uuid     "to_id",      null: false
+    t.uuid     "via_id",     null: false
+    t.integer  "cents",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tips", ["product_id", "from_id", "to_id", "via_id"], name: "index_tips_on_product_id_and_from_id_and_to_id_and_via_id", unique: true, using: :btree
+
+  create_table "transaction_log_entries", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id",     null: false
+    t.uuid     "work_id",        null: false
+    t.uuid     "user_id",        null: false
+    t.string   "action",         null: false
+    t.text     "value"
+    t.datetime "created_at"
+    t.uuid     "transaction_id"
+    t.hstore   "extra"
+    t.integer  "cents"
+  end
+
+  create_table "uniques", id: false, force: true do |t|
+    t.uuid     "id",          null: false
+    t.uuid     "metric_id",   null: false
+    t.string   "distinct_id", null: false
+    t.datetime "created_at",  null: false
+  end
+
+  add_index "uniques", ["distinct_id", "created_at"], name: "index_uniques_on_distinct_id_and_created_at", using: :btree
+
+  create_table "users", id: false, force: true do |t|
+    t.uuid     "id",                                       null: false
+    t.string   "name"
+    t.string   "customer_id"
+    t.boolean  "is_staff",               default: false,   null: false
+    t.string   "email",                                    null: false
+    t.string   "encrypted_password"
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at"
+    t.string   "confirmation_token"
+    t.string   "unconfirmed_email"
+    t.datetime "email_failed_at"
+    t.string   "users"
+    t.string   "facebook_uid"
+    t.text     "location"
+    t.datetime "last_request_at"
+    t.string   "avatar_url"
+    t.text     "extra_data"
+    t.string   "authentication_token"
+    t.text     "bio"
+    t.string   "archetype"
+    t.string   "username",                                 null: false
+    t.string   "mail_preference",        default: "daily", null: false
+    t.integer  "github_uid"
+    t.string   "github_login"
+    t.string   "payment_option"
+    t.string   "paypal_email"
+    t.string   "bank_account_id"
+    t.string   "bank_name"
+    t.string   "bank_last4"
+    t.string   "address_line1"
+    t.string   "address_line2"
+    t.string   "address_city"
+    t.string   "address_state"
+    t.string   "address_zip"
+    t.string   "address_country"
+    t.datetime "personal_email_sent_on"
+    t.text     "twitter_uid"
+    t.text     "twitter_nickname"
+  end
+
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["facebook_uid"], name: "index_users_on_facebook_uid", unique: true, using: :btree
+  add_index "users", ["github_uid"], name: "index_users_on_github_uid", unique: true, using: :btree
+  add_index "users", ["name"], name: "index_users_on_name", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
+
+  create_table "versions", id: false, force: true do |t|
+    t.uuid     "id",             null: false
+    t.uuid     "versioned_id",   null: false
+    t.string   "versioned_type", null: false
+    t.uuid     "user_id",        null: false
+    t.text     "modifications",  null: false
+    t.integer  "number",         null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "votes", id: false, force: true do |t|
+    t.uuid     "id",                             null: false
+    t.uuid     "voteable_id",                    null: false
+    t.uuid     "user_id",                        null: false
+    t.inet     "ip",                             null: false
+    t.datetime "created_at",                     null: false
+    t.string   "voteable_type", default: "Idea"
+  end
+
+  add_index "votes", ["user_id", "voteable_id"], name: "index_votes_on_user_id_and_voteable_id", unique: true, using: :btree
+
+  create_table "watchings", id: false, force: true do |t|
+    t.uuid     "id",             null: false
+    t.uuid     "user_id",        null: false
+    t.uuid     "watchable_id",   null: false
+    t.string   "watchable_type", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "whiteboard_assets", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "event_id",   null: false
+    t.string   "image_url",  null: false
+    t.string   "format",     null: false
+    t.integer  "height",     null: false
+    t.integer  "width",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "deleted_at"
+  end
+
+  add_index "whiteboard_assets", ["event_id", "image_url"], name: "index_whiteboard_assets_on_event_id_and_image_url", unique: true, using: :btree
+
+  create_table "wip_taggings", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "wip_tag_id", null: false
+    t.uuid     "wip_id",     null: false
+    t.datetime "created_at"
+  end
+
+  create_table "wip_tags", id: false, force: true do |t|
+    t.uuid     "id",                          null: false
+    t.string   "name",                        null: false
+    t.datetime "created_at"
+    t.integer  "watchings_count", default: 0, null: false
+  end
+
+  add_index "wip_tags", ["name"], name: "index_wip_tags_on_name", unique: true, using: :btree
+
+  create_table "wip_workers", id: false, force: true do |t|
+    t.uuid     "id",                           null: false
+    t.uuid     "wip_id",                       null: false
+    t.uuid     "user_id",                      null: false
+    t.datetime "created_at"
+    t.datetime "last_checkin_at"
+    t.datetime "last_response_at"
+    t.integer  "checkin_count",    default: 0
+  end
+
+  add_index "wip_workers", ["wip_id", "user_id"], name: "index_wip_workers_on_wip_id_and_user_id", unique: true, using: :btree
+
+  create_table "wips", id: false, force: true do |t|
+    t.uuid     "id",                                           null: false
+    t.uuid     "user_id",                                      null: false
+    t.uuid     "product_id",                                   null: false
+    t.text     "title",                                        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "number"
+    t.uuid     "closer_id"
+    t.datetime "closed_at"
+    t.integer  "votes_count",                default: 0,       null: false
+    t.uuid     "winning_event_id"
+    t.datetime "promoted_at"
+    t.integer  "events_count",               default: 0,       null: false
+    t.integer  "comments_count",             default: 0,       null: false
+    t.datetime "pinned_at"
+    t.integer  "trending_score",   limit: 8
+    t.string   "state"
+    t.integer  "watchings_count",            default: 0,       null: false
+    t.string   "type"
+    t.string   "deliverable",                default: "other", null: false
+  end
+
+  add_index "wips", ["product_id", "number"], name: "index_wips_on_product_id_and_number", unique: true, using: :btree
+  add_index "wips", ["product_id", "promoted_at"], name: "index_wips_on_product_id_and_promoted_at", using: :btree
+
+  create_table "work", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id",              null: false
+    t.uuid     "user_id"
+    t.text     "url",                     null: false
+    t.json     "metadata",                null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "votes_count", default: 0, null: false
+  end
+
+  create_table "work_applications", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "user_id",    null: false
+    t.uuid     "product_id", null: false
+    t.datetime "created_at"
+  end
+
+end

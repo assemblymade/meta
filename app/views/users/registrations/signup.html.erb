@@ -1,0 +1,11 @@
+<% title 'Create an account', 'It takes less than a minute' %>
+<%= render 'shared/deprecated_navbar' %>
+
+<script>
+  $(function(){
+    window.signup.options.afterSignInPath = '<%= session[:previous_url] || after_sign_up_path_for_user %>';
+    window.signup.options.tab = 'signin';
+
+    $('.js-sign-up').click();
+  });
+</script>

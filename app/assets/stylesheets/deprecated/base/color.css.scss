@@ -1,0 +1,55 @@
+body {
+  background-color: $white;
+  color: #333;
+}
+
+a {
+  @include transition(color ease-in-out 300ms);
+  color: $blue;
+
+  &:hover,
+  &:active {
+    color: $black;
+    @include transition-duration(100ms);
+  }
+}
+
+// SCSS won't process each lists they they are split into multiple lines :(
+
+// Base Color Pairs
+@each $color-pair in 'black' $black, 'gray' $gray, 'green' $green, 'blue' $blue, 'purple' $purple, 'red' $red, 'orange' $orange, 'yellow' $yellow, 'white' $white {
+
+  .text-#{nth($color-pair, 1)} {
+    color: nth($color-pair, 2) !important;
+  }
+
+  .bg-#{nth($color-pair, 1)} {
+    background-color: nth($color-pair, 2);
+  }
+
+}
+
+// Semantic Color Pairs
+@each $color-pair in 'muted' $color-muted, 'promoted' $color-promoted {
+
+  .text-#{nth($color-pair, 1)} {
+    color: nth($color-pair, 2) !important;
+  }
+
+  .bg-#{nth($color-pair, 1)} {
+    background-color: nth($color-pair, 2);
+  }
+
+}
+
+// FIXME: This is a hack because .text-highlight is incorrectly used around the site. It should be
+//        .bg-highlight (or .higlight if you want to change the text color too.)
+.text-highlight {
+  background-color: $color-highlight;
+}
+
+
+// TODO (whatupdave): I'm not sure what this should be called or where it should live.
+.text-yellow {
+  color: $yellow;
+}

@@ -1,0 +1,30 @@
+<%= render 'shared/deprecated_navbar' %>
+
+<div class="page page-padded container js-chat-view">
+  <div class="page-content">
+
+    <%= form_for Message.new, html: {form: 'form js-chat-new-message-form'} do |f| %>
+      <%= f.text_area :body, placeholder: 'Press ENTER to chat' %>
+    <% end %>
+
+    <div class="js-chat-messages">
+    </div>
+
+    <% @messages.each do |message| %>
+      <div class="chat-message">
+        <div class="author"><%= message.author.username %></div>
+        <div class="body"><%= markdown(message.body) %></div>
+      </div>
+    <% end %>
+
+  </div>
+
+  <div class="page-sidebar">
+    <h2>Currently chatting</h2>
+    <div class="js-chat-presence">
+    </div>
+  </div>
+
+</div>
+
+<%= render 'shared/deprecated_footer' %>

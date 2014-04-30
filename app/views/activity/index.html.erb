@@ -1,0 +1,18 @@
+<% title 'Recent Activity' %>
+<%= render 'shared/deprecated_navbar' %>
+
+<div class="page page-padded page-flipped">
+  <div class="container">
+
+    <div class="activity-group">
+      <div class="activity-group-gutter"></div>
+      <div class="activity-group-header">
+        <h2>Recent Activity</h2>
+      </div>
+    </div>
+    <%= render partial: 'stream_events/stream_event', collection: @stream_events, as: :stream_event %>
+    <%= render partial: 'more_button' %>
+    
+  </div>
+</div>
+<%= render 'shared/deprecated_footer' %>

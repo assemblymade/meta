@@ -1,0 +1,75 @@
+<% page_layout :simple %>
+<% title "Preorder #{@perk.name}", @perk.product.name %>
+<%= javascript_include_tag 'https://checkout.stripe.com/v3/checkout.js' %>
+<div class="simple-heading">
+  <span class="icon large icon-store"></span>
+  <h1>Checkout</h1>
+</div>
+<%= form_tag perk_preorders_path(@perk), :method => :post, data: {name: @perk.name, amount: @perk.discount[:amount]} do %>
+  <%= hidden_field_tag :stripeToken %>
+  <%= hidden_field_tag :perk_id, @perk.id %>
+  <%= hidden_field_tag :variation, @perk.discount[:variation] %>
+  <div class="simple-card">
+    <div class="simple-card-heading">
+      <div class="amount">
+        <%= amount_to_currency @perk.discount[:amount] %>
+      </div>
+      <div class="items">Pre-order</div>
+      <div class="idea">
+        <%= @perk.product.name %>
+      </div>
+      <div class="name">
+        <%= @perk.name %>
+      </div>
+    </div>
+    <div class="simple-card-body">
+      <%= @perk.description %>
+    </div>
+  </div>
+  <div class="original-amount">
+    Expected retail value when launched is
+    <%= amount_to_currency @perk.amount %>
+    <br/>
+    <em>(Lock-in <%= discount(@perk.discount[:amount], @perk.amount) %> savings when you pre-order today)</em>
+  </div>
+  <div class="form-actions">
+    <div class="pull-right">
+      <button class="btn btn-primary">
+        <span class="icon icon-credit-card"></span>
+        Confirm billing info
+      </button>
+    </div>
+    <a class="btn btn-link" href="<%= product_path(@perk.product) %>">Back</a>
+  </div>
+<% end %>
+<div class="tos">
+  <h2>What happens next?</h2>
+  <p>You will only be charged for the pre-order when <%= @perk.product.name %> is green lit. Every pre-order comes with a 100% money back guarantee if <%= @perk.product.name %> doesn't ship within <em>6 months</em> or you don't like the final product. You can learn more about Assembly's <%= link_to(' refund policy', '/help/preordering', target: :faq ) %> at anytime.</p>
+</div>
+<script>
+
+  $('form').submit(function(e) {
+    e.preventDefault();
+
+    var $this = $(this),
+        token = function(response) {
+          $this.find('input[name=stripeToken]').val(response.id);
+          $this[0].submit();
+        },
+        ideaName = <%= @perk.product.name.to_json %>;
+
+    StripeCheckout.open({
+      key:         <%= ENV['STRIPE_PUBLISHABLE'].to_json %>,
+      email:       <%= current_user.email.to_json.html_safe %>,
+      amount:      $this.data('amount'),
+      currency:    'usd',
+      name:        ideaName,
+      description: $this.data('name'),
+      panelLabel:  'Pre-order for',
+      token:       token
+    });
+
+    return false;
+  });
+
+</script>

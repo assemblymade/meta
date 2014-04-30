@@ -1,0 +1,15 @@
+.hover-base {
+  .show-hover {
+    display: none;
+  }
+
+  &:hover {
+    .show-hover {
+      display: block;
+    }
+
+    .show-no-hover {
+      display: none;
+    }
+  }
+}

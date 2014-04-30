@@ -1,0 +1,7 @@
+<%== @mission.translate(:email,
+  completor: @completed_mission.completor.username,
+  reward_description: @mission.translate(:reward_description)) %>
+
+<a href="<%= product_tasks_url(@product) %>">
+  Help out with the next goal
+</a>

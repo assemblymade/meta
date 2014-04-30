@@ -1,0 +1,39 @@
+.card {
+  display: block;
+  color: $text-color;
+  box-shadow: inset 0 0 0 1px $brand-border,
+              0 1px 0 0 $brand-shadow;
+  border-radius: $border-radius-base;
+  background-color: white;
+  overflow: hidden;
+  margin-bottom: $line-height-computed;
+  @include transition-property(box-shadow, translate);
+  @include transition-duration($transition-out-duration);
+  @include transition-timing-function($transition-function);
+
+  &:hover {
+    color: $text-color;
+    text-decoration: none;
+  }
+}
+
+a.card:hover {
+  @include translate(0, -3px);
+  @include transition-duration($transition-in-duration);
+  box-shadow: inset 0 0 0 1px $brand-border,
+              0 3px 3px 0 $brand-shadow;
+}
+
+.card-hero {
+  background-color: $body-bg;
+  width: 100%;
+  height: 0;
+  padding-bottom: percentage(2/3);
+  background-position: center;
+  background-size: cover;
+  box-shadow: inset 0 0 0 1px rgba(black, 0.15);
+}
+
+.card-body {
+  padding: 20px;
+}

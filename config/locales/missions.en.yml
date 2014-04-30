@@ -1,0 +1,150 @@
+en:
+  missions:
+    discussions:
+      name: Start 2 Discussions
+      description: >
+        Start two discussions.
+        Talk to people about %{product} and use their feedback to make it amazing.
+
+      hint_1: >
+        <a href="%{product_path}/discussions/new?title=What+are+the+three+main+features?">
+        What are the three most important features of the product?
+        </a>
+      hint_2: >
+        <a href="%{product_path}/discussions/new?title=What+are+potential+customers?">
+        Who are potential customers and what would they pay?
+        </a>
+      hint_3: >
+        <a href="%{product_path}/discussions/new?title=What+should+the+tech+stack+be?">
+        What technologies should be used to build %{product}?
+        </a>
+
+      reward: Core Team
+      reward_title: >
+        %{product} now has a Core Team!
+      reward_description: >
+        The Core Team can now award, promote and close tasks. They are the stewards of the product
+        and guide it's overall direction.
+      email: >
+        <p>%{product} is underway! Thanks to %{completor} for achieving the first goal.</p>
+        <p>%{reward_description}</p>
+
+    tasks:
+      name: Create 2 tasks
+      description: >
+        Create two tasks.
+        Clearly define work that needs to get done. Hard work builds great products. Get started now!
+
+      hint_1: >
+        <a href="%{product_path}/wips/new?title=Pick+a+new+name">
+          A name helps define a product. Is %{product} the best name?
+        </a>
+      hint_2: >
+        <a href="%{product_path}/wips/new?title=Create+a+mood+board">
+          What is the visual style of %{product}? Start a mood board.
+        </a>
+      hint_3: >
+        <a href="%{product_path}/wips/new?title=Make+the+first+commit">
+          Know how to code? Take a stab and make the first commit
+        </a>
+
+      reward: Code Repository
+      reward_title: >
+        %{product} now has a code repository!
+      reward_description: >
+        There's now a repository on GitHub to collaborate on coding. Time to really start building!
+      email: >
+        <p>%{product} is ready for some real work. Thanks to %{completor} for pushing it for forward.</p>
+        <p>%{reward_description}</p>
+
+
+    contributors:
+      name: Recruit 5 contributors
+      description: >
+        Recruit 5 contributors. The more people who can help build %{product},
+        the better it will be.
+
+      hint_1: >
+        <a href="#">
+          Share %{product} with your followers on Twitter
+        </a>
+      hint_2: >
+        <a href="#">
+          Share %{product} with your friends on Facebook
+        </a>
+      hint_3: >
+        <a href="#">
+          Share %{product} with your peers on Hacker News
+        </a>
+
+      reward: Featured Tasks
+      reward_title: >
+        %{product} can now feature promoted tasks.
+      reward_description: >
+        Tasks promoted by the Core Team now appear on the Explore page and are visible to everyone.
+      email: >
+        <p>%{product} is growing the team. Welcome %{completor} as the newest contributor.</p>
+        <p>%{reward_description}</p>
+
+
+    events:
+      name: Recruit 25 Contributions
+      description: 'Recruit 25 contributions. '
+      recruit_message:        ''
+
+      hint_1: >
+        <a href="#">
+          Specify ambigious tasks.
+        </a>
+      hint_2: >
+        <a href="#">
+          Promote important tasks.
+        </a>
+      hint_3: >
+        <a href="#">
+          Link code from GitHub.
+        </a>
+
+      reward:             'An Assembly Partner'
+      reward_title:       >
+        %{product} now has an Assembly Partner
+      reward_description: >
+        Assembly Partners can help with validating purchases and setting up shared accounts.
+      email: ''
+
+    signups:
+      name:        'Get 50 Signups'
+      description: 'Have 50 users to signup in advance'
+      recruit_message:        ''
+
+      hint_1: >
+        <a href="#">
+          Hustle
+        </a>
+      hint_2: >
+        <a href="http://www.producthunt.co">
+          Submit %{product} to Product Hunt.
+        </a>
+      hint_3: >
+        <a href="#">
+          Hustle
+        </a>
+
+      reward:             'Featured'
+      reward_title:       ''
+      reward_description: ''
+      email: ''
+
+    more_contributors:
+      name:        'Greenlight'
+      description: 'Get 25 contributors'
+      recruit_message: ''
+
+      hint_1: ''
+      hint_2: ''
+      hint_3: ''
+
+      reward:             'Nirvana'
+      reward_title:       ''
+      reward_description: ''
+      email: ''

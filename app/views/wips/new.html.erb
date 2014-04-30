@@ -1,0 +1,83 @@
+<% title ["New Task", @product.name] %>
+
+<%= render 'shared/deprecated_navbar' %>
+<%= render 'products/deprecated_navbar' %>
+
+<div class="page page-padded container">
+  <div class="page-heading">
+    <div class="page-heading-title">Create a Task</div>
+  </div>
+</div>
+
+<div class="container">
+  <%= form_for [@product, @wip] do |f| %>
+    <div class="form-group">
+      <%= f.label :title, 'class' => 'form-label' %>
+      <%= f.text_field :title, 'value' => params[:title], 'class' => 'form-control', 'data-validate-length' => '2', 'autofocus' => 'autofocus' %>
+    </div>
+
+    <div id="description-el" class="form-group">
+      <%= f.label :description, 'class' => 'form-label' do %>
+        Details
+        <span class="help-block">(optional)</span>
+      <% end %>
+
+      <div class="form-control textdrop-control">
+        <%= text_area_tag :description, '', 'class' => 'textcomplete', 'rows' => '4', 'data-autosize' => '', 'data-product-id' => @product.slug %>
+
+        <div class="dropzone js-dropzone">
+          <div class="dropzone-content">
+            To attach files drag &amp; drop here or <a href="#">select files
+            from your computer</a>...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <fieldset>
+      <div class="form-group">
+        <label class="form-label">Deliverable</label>
+
+        <div class="form-control btn-group btn-group-justified" data-toggle="buttons">
+          <% @wip.class.deliverable_types.each do |deliverable_type| %>
+            <%= f.label :deliverable, 'class' => "btn btn-default #{'active' if @wip.deliverable == deliverable_type}", 'data-show-tab' => deliverable_type, 'data-click-required' => '' do %>
+              <%= f.radio_button :deliverable, deliverable_type %>
+              <%= deliverable_type.camelcase %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="help-block tab-content">
+          <p class="tab-pane">
+            What type of work needs to be done to finish this Task?
+          </p>
+          <div class="tab-pane" id="code" style="display:none">
+            Tasks with code deliverables are completed when someone submits a pull request to a code repo.
+          </div>
+          <div class="tab-pane" id="design" style="display:none">
+            Tasks with design deliverables are completed when someone submits a design source file (.PSD, .sketch, .AI).
+          </div>
+          <div class="tab-pane" id="copy" style="display:none">
+            Tasks with copy deliverables are completed when someone submits some text.
+          </div>
+          <div class="tab-pane" id="other" style="display:none">
+            Tasks in this category will accept any kind of deliverable.
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="form-actions">
+      <%= f.button 'Create task', 'class' => 'btn btn-primary', 'data-disable-with' => 'Saving...' %>
+    </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  new CommentView({
+    attachmentUploadUrl: $('meta[name=attachment-upload-url]').attr('content'),
+    el: $('#description-el')
+  });
+</script>
+
+<%= render 'shared/deprecated_footer' %>

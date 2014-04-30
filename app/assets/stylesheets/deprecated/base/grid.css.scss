@@ -1,0 +1,67 @@
+@mixin container($w: $grid-container-width) {
+  @include clearfix();
+  width: $w;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin pull-left() {
+  float: left;
+}
+
+@mixin pull-right() {
+  float: right;
+}
+
+@mixin make-row($gutter: $grid-gutter-width) {
+  @include clearfix();
+
+  margin-left:  - $gutter;
+  margin-right: - $gutter;
+}
+
+@mixin make-column($n, $gutter: $grid-gutter-width) {
+  @include box-sizing(border-box);
+  position: relative;
+  min-height: 1px;
+
+  float: left;
+
+  padding-left: $gutter;
+  width: percentage($n / $grid-columns);
+  padding-right: $gutter;
+}
+
+@mixin make-column-offset($n) {
+  margin-left: percentage($n /  $grid-columns);
+}
+
+@mixin make-column-pull($n) {
+  right: percentage($n /  $grid-columns);
+}
+
+@mixin make-column-push($n) {
+  left: percentage($n /  $grid-columns);
+}
+
+
+.clearfix   { @include clearfix; }
+.container  { @include container; }
+.pull-left  { @include pull-left; }
+.pull-right { @include pull-right; }
+
+.row {
+  @include make-row;
+}
+
+@each $i in 1, 2, 3, 4, 5, 6 {
+
+  .col-#{$i} {
+    @include make-column($i);
+  }
+
+  .col-offset-#{$i} {
+    @include make-column-offset($i);
+  }
+
+}

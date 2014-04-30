@@ -1,0 +1,10 @@
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  right: 150px;
+}
+
+.btn-tall {
+  @include padding-left-right(20px);
+  border-radius: $radius $radius 0 0;
+}

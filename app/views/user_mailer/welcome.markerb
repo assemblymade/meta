@@ -1,0 +1,15 @@
+Hi <%= @user.short_name %> - Welcome to Assembly, the open platform for crowd-founding software products.
+
+Our mission is simple: enable the best people around the world to collaborate together to build great software products. All ideas are crowd-sourced, development is open and collaborative, profits are split, and everything is completely transparent.
+
+Here are 3 quick suggestions to get started:
+
+1. [Explore the latest products](<%= discover_url %>) with the most momentum towards launching. You'll also find the latest open tasks you can quickly jump in on, make an impact, and earn some stake. Tasks range from design work related to logos and wireframes, coding new features and fixing bugs, writing and copy, and countless other ways to move a product forward.
+
+2. [Add your bank account](<%= user_payment_url(auth_token: @user.authentication_token) %>) so you're ready to receive your first check. When you earn stake in an app, its profits will be distributed to you every month.
+
+3. [Follow us on Twitter (@asm)](https://twitter.com/asm) to stay up to date on the latest developments and products.
+
+We're always looking for new ways to make Assembly even better. If you have any questions or comments, check out our [FAQ](https://assemblymade.com/help/general) or just reply to me.
+
+Matt and the team at Assembly

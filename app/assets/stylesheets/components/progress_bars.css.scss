@@ -1,0 +1,14 @@
+// Modify base progress aesthetic
+
+.progress {
+  @include box-shadow(none);
+}
+
+.progress-bar {
+  @include box-shadow(none);  
+}
+
+
+.progress-small {
+  height: 6px;
+}

@@ -1,0 +1,35 @@
+<div class="js-mission-step js-mission-step-description">
+  <div class="flyout-heading">
+    <div class="pull-left">
+      Goal:
+      <strong class="text-black"><%= mission.translate :name %></strong>
+    </div>
+    <div class="mission-goal pull-right">
+      <%= mission.translate :reward %>
+    </div>
+  </div>
+
+  <div class="flyout-content">
+    <div class="mission-details">
+      <p><%= mission.translate :description %></p>
+    </div>
+  </div>
+
+
+  <% if mission.hints.any? %>
+
+    <div class="mission-hints">
+      <div class="flyout-heading">Hints</div>
+
+      <ol class="list list-unstyled list-ruled js-hints">
+        <% mission.hints.each do |hint| %>
+          <li class="list-item">
+            <%= hint.html_safe %>
+          </li>
+        <% end %>
+      </ol>
+    </div>
+
+  <% end %>
+
+</div>

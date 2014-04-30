@@ -1,0 +1,9 @@
+<p>Hey <%= @user.short_name %>,</p>
+
+<p>You might want to check out these WIPs and see if anyone needs help.</p>
+
+<p>
+<% @wips.each do |wip| %>
+  <%= link_to "##{wip.number} #{wip.title}", product_wip_url(wip.product, wip) %> – Last update <%= time_ago_in_words wip.events.order(:created_at).last.created_at %> ago<br/>
+<% end %>
+</p>

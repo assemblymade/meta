@@ -1,0 +1,131 @@
+<% title "People", @product.name %>
+
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
+
+<div class="page">
+  <div class="container">
+    <%= render 'products/status_message' %>
+
+    <div class="page-header">
+      <h2 class="page-header-title">Teams &amp; <%= @product.stakeholders %></h2>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-7">
+
+      <!-- Core Team -->
+      <h3><strong>Core Team</strong></h3>
+      <p style="margin-bottom: 24px">Core Team members are stewards for the product, and set the direction and culture. They award and promote tasks, and push accepted work to code repositories.</p>
+
+      <ul class="list-inline">
+        <% @core_team.each do |user|%>
+          <li style="margin-bottom: 13px;">
+            <%=link_to user_path(user) do %>
+              <img class="img-circle" src="<%= user.avatar.url(60) %>" width="30" height="30" alt="<%= user.username %>" />
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+
+      <hr style='margin-bottom: 38px;'>
+
+
+      <!-- Other Teams -->
+      <% @product_jobs.each do |job| %>
+
+        <h3>
+          <span class="pull-right">
+            <% if job.has_role?(@current_user)%>
+              <%=link_to "Leave Team", product_job_part_path(@product.slug, job.slug), :class => ["btn", "btn-default", "btn-sm"], :action => "post" %>
+            <% else %>
+              <%=link_to "Join Team", product_job_join_path(@product.slug, job.slug), :class => ["btn", "btn-primary", "btn-sm"], :action => "post" %>
+            <% end %>
+          </span>
+
+          <strong><%=job.category %></strong>
+        </h3>
+        <p style="margin-bottom: 24px"><%=job.description%></p>
+
+        <ul class="list-inline">
+          <% job.product_roles.each do |roles|%>
+          <%user = roles.user%>
+            <li style="margin-bottom: 13px;">
+              <%=link_to user_path(user) do %>
+                <img class="img-circle" src="<%= user.avatar.url(60) %>" width="30" height="30" alt="<%= user.username %>" />
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+
+        <hr style='margin-bottom: 38px;'>
+
+      <% end %>
+
+
+        <!-- Watchers -->
+        <h3><strong>Watchers</strong></h3>
+
+        <ul class="list-inline">
+          <% @watchers[0...33].each do |user|%>
+            <li style="margin-bottom: 13px;">
+              <%=link_to user_path(user) do %>
+                <img class="img-circle" src="<%= user.avatar.url(60) %>" width="30" height="30" alt="<%= user.username %>" />
+              <% end %>
+            </li>
+          <% end %>
+          <% if @watchers.count > 33 %>
+            <li>
+              <%="and #{@watchers.count-33} more"%>
+            </li>
+          <% end %>
+        </ul>
+
+      </div><!-- .col-md-8 -->
+
+      <div class="col-md-3 col-md-offset-2">
+        <%= render 'products/subnav' %>
+      </div>
+
+    </div><!-- .row -->
+
+  </div><!-- .container -->
+</div><!-- .page -->
+
+
+<!-- core users add jobs -->
+
+<% if @product.core_team?(current_user) %>
+  <div class="page page-padded container">
+    <div class="page-content">
+
+      <div class="page-heading">
+        <div class="page-heading-title">Create a New Role</div>
+      </div>
+
+      <div class="container page page-padded">
+        <div class="job new">
+          <%=form_for @product_job, :class => ["form-group"] do |f| %>
+            <div class="form-group">
+              <%=f.label :category, :class => ["form-label"] %>
+              <%=f.text_field :category, :class => ["form-control"], :style => ["width: 590px"], :placeholder => "Engineer, Design, Marketing, Sales, Etc" %>
+            </div><!-- form-group -->
+            <div class="form-group">
+              <%=f.label :description, :class => ["form-label"] %>
+              <%=f.text_area :description, placeholder: "Fill in a description of the job", :style => ["width:590px"]%>
+            </div><!-- form-group -->
+            <div class="form-actions" style="width: 590px">
+              <%=f.submit "Create This Role", :class => ["btn", "btn-primary", "pull-right"], :disable_with => "Creating Role" %>
+            </div><!-- form-actions -->
+          <% end %>
+        </div><!-- job new -->
+        <div class="page-sidebar">
+        </div><!-- page-sidebar -->
+      </div>
+    </div><!-- page-content -->
+  </div><!-- page -->
+<% end %>
+
+
+<%= render 'shared/footer' %>

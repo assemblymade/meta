@@ -1,0 +1,37 @@
+<div class="discussion-item discussion-item-comment" id="{{anchor}}">
+
+  <div class="timeline-entry-symbol">
+    {{#actor}}
+      <a href="{{url}}" title="{{username}}">
+        <div class="avatar avatar-default">
+          <img src="{{avatar_url}}" alt="{{username}}" />
+
+          {{#sponsor}}
+            <div class="avatar-sponsor"></div>
+          {{/sponsor}}
+        </div>
+      </a>
+    {{/actor}}
+  </div>
+
+  <div class="timeline-entry-content">
+
+    <div class="discussion-item-meta">
+
+      <!-- Edit Comment and Timestamp -->
+      <div class="pull-right">
+        <time class="timestamp" datetime="{{timestamp}}"></time>
+      </div>
+
+      {{#actor}}
+        <a href="{{url}}">{{username}}</a>
+        wrote:
+      {{/actor}}
+    </div>
+
+    <div class="discussion-item-content markdown-content">
+      {{{body_html}}}
+    </div>
+  </div>
+  <img class="rawr" src="{{readraptor_tracking_url}}" />
+</div>

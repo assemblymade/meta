@@ -1,0 +1,58 @@
+.page-content.help {
+
+  .questions {
+    padding: 25px 30px 25px 47px;
+    margin-top: $default-margin * 3;
+    margin-bottom: $default-margin * 3;
+
+    font-weight: bold;
+    color: $blue-light;
+
+    background: $body-bg;
+    border: 1px solid $gray-lighter;
+    border-radius: $radius * 2;
+
+    .question {
+      padding-left: 5px;
+      margin-bottom: 3px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .answers {
+    .answer {
+      margin-bottom: $default-margin * 3;
+    }
+  }
+
+  .description {
+    font-family: $tiempos-family;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  h2 {
+    font-size: 29px;
+    font-weight: bold;
+    margin-bottom: $default-margin * 2;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: $default-margin;
+  }
+
+  h4 {
+    margin-top: 0;
+    margin-bottom: $default-margin;
+    font-size: 15px;
+    letter-spacing: $base-letter-spacing;
+    text-transform: uppercase;
+    color: $gray;
+  }
+}

@@ -1,0 +1,38 @@
+.sidebar-module {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.sidebar-module-heading {
+  color: $gray;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  font-size: 13px;
+  font-weight: bold;
+  padding-bottom: 10px;
+  
+  .count {
+    float: right;
+    color: $black;
+  }
+}
+.sidebar-module-heading-green {
+  color: $green;
+}
+
+.sidebar-module + .sidebar-module {
+  margin-top: 40px;
+}
+
+
+// --
+.heading-light {
+  font-weight: normal;
+}
+
+// Deprecated. This is a total hack and doesn't belong in this module.
+.sidebar-module-fixed {
+  width: $page-ruled-sidebar-width;
+  top: 30px;
+}
+

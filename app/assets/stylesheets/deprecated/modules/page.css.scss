@@ -1,0 +1,236 @@
+@import 'addons/clearfix';
+
+/*
+Empty.
+
+Styleguide Pages.
+*/
+.page {
+  @include clearfix;
+}
+
+.page-content {
+  float: left;
+  width: $page-content-width;
+}
+
+.page-content-wide {
+  float: left;
+  width: grid-width(5) + 15px;
+}
+
+.page-sidebar {
+  float: right;
+  width: $page-sidebar-width;
+}
+
+.page-sidebar-thin {
+  float: right;
+  width: grid-width(1) + 15px;
+}
+
+.page-sidebar-top-padding {
+  padding-top: 20px;
+}
+
+
+// --
+
+
+.page-padded {
+  @include padding-top-bottom(60px);
+}
+
+.page-flipped {
+  .page-content {
+    float: right;
+  }
+  .page-sidebar {
+    float: left;
+  }
+}
+
+.page-ruled {
+
+  .page-content,
+  .page-sidebar {
+    padding-top: 40px;
+  }
+
+  .page-content {
+    width: $page-ruled-content-width;
+  }
+
+  .page-sidebar {
+    border-left: 1px solid $page-ruled-border-color;
+    width: $page-ruled-sidebar-width;
+    padding-left: 30px - 1px;
+  }
+
+}
+
+
+// ---
+
+.page-module {
+  margin-bottom: $default-margin * 4;
+
+  > .btn {
+    margin-left: 160px;
+    margin-top: $default-margin;
+  }
+}
+
+// TODO: Move to more modular styles
+.page-content > h2,
+.page-module > h2,
+.page-sidebar > h2 {
+  color: $gray;
+  font-size: 21px;
+  line-height: 1.6;
+  font-weight: 500;
+  border-bottom: 1px solid $gray-lighter;
+
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+.page-content > h3 {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+//// TODO Hack for groups page
+//.page-sidebar img {
+//  width: 100%;
+//  display: block;
+//}
+
+.discussion-summary {
+  padding-left: 160px;
+
+  // TODO: Move this magin to the layout
+  margin-bottom: $default-margin - 5px;
+
+  > .author {
+    float: left;
+    margin-left: -160px;
+    padding-left: $avatar-sm-size + 10px;
+
+    > .avatar {
+      float: left;
+      margin-left: - ($avatar-sm-size + 10px);
+    }
+
+    > .username {
+      color: $gray;
+      font-size: 14px;
+      line-height: $avatar-sm-size;
+      font-weight: 600;
+      font-weight: normal;
+    }
+  }
+
+  > .title {
+    line-height: 1.6;
+    margin-bottom: $default-margin;
+    text-decoration: underline;
+    font-size: 16px;
+  }
+
+  > .meta {
+    color: $gray;
+    font-size: 14px;
+  }
+}
+
+.pipe-divider {
+  color: darken($gray-lighter, 5%);
+
+  &:before {
+    content: "|";
+  }
+}
+
+.file-grid {
+  @include clearfix;
+  margin-top: -12px;
+  margin-left: -12px;
+}
+
+.file-grid-item {
+  float: left;
+
+  width: 66px;
+  height: 66px;
+
+  margin-top: 12px;
+  margin-left: 12px;
+
+  overflow: hidden;
+}
+
+.file {
+  border-radius: $radius;
+
+  // TODO: Move this so that it overlaps the image once the image fills to fit
+  //       the container.
+  background-color: $gray-lighter;
+
+  height: 100%;
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
+.status-update-summary {
+  padding-left: 160px;
+  @include neuter-paragraphs;
+
+  > .author {
+    float: left;
+    margin-left: -160px;
+    padding-left: $avatar-sm-size + 10px;
+
+    > .avatar {
+      float: left;
+      margin-left: - ($avatar-sm-size + 10px);
+    }
+
+    > .username {
+      color: $gray;
+      font-size: 14px;
+      line-height: 30px;
+    }
+  }
+
+  > p {
+    font-family: $tiempos-family;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+}
+
+.page-content-group {
+  margin-bottom: 30px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid $gray-lighter;
+}
+.page-content-group + .page-content-group {
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+.page-content-group-heading {
+  text-transform: uppercase;
+  padding-bottom: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}

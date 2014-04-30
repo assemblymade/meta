@@ -1,0 +1,64 @@
+.note {
+  background-color: $white;
+  border-radius: $border-radius-large;
+  border: 1px solid $gray-lighter;
+
+  max-width: 600px;
+
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px 60px;
+  text-align: center;
+
+  // FIXME: This can be deleted when the base font size is 16px
+  font-size: 16px;
+
+  h3 {
+    color: $black;
+    font-size: 26px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+
+  .actions {
+    border-top: 1px solid $gray-lighter;
+    margin-top: 60px;
+    margin-left: -60px;
+    margin-right: -60px;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: $gray;
+    text-align: left;
+
+    // FIXME: Replace with $font-size-small
+    font-size: 14px;
+  }
+}
+
+.note-icon {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.note-start-discussion {
+  @include retina-image('null-states/start-discussion', 60px 60px, 'png', 'null-states/start-discussion@2x', true);
+  height: 60px;
+  width: 60px;
+}
+
+.note-start-task {
+  @include retina-image('null-states/start-task', 60px 60px, 'png', 'null-states/start-task@2x', true);
+  height: 60px;
+  width: 60px;
+}
+
+.note-profile {
+  @include retina-image('null-states/profile', 154px 38px, 'png', 'null-states/profile@2x', true);
+  height: 38px;
+  width: 154px;
+}

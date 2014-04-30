@@ -1,0 +1,5 @@
+Great news! <%= @product.name %> just had someone sign up for early access. Don't worry, that feeling of excitement and exhilaration is normal.
+
+Get more signups when you spread the word by liking [<%= @product.name %>](<%= product_url(@product) %>) on Facebook or sharing it on Twitter.
+
+Your friends at Assembly

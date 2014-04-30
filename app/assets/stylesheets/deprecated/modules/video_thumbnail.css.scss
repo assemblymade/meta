@@ -1,0 +1,36 @@
+.video-thumbnail {
+  @include box-sizing(border-box);
+
+  @include glow {
+    border-radius: $video-thumbnail-border-radius;
+    box-shadow: inset 0 0 0 2px $video-thumbnail-border-color;
+  }
+
+  background-color: $video-thumbnail-border-color;
+  border-radius: $video-thumbnail-border-radius;
+  box-shadow: 0 2px 3px rgba(black, 0.15);
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+  }
+
+  > .play {
+    @include retina-image('video-thumbnail-play', 80px 80px, 'png', null, true);
+    @include size(80px);
+    position: absolute;
+    text-indent: 80px;
+    overflow: hidden;
+
+    top: 50%;
+    left: 50%;
+    margin: -40px;
+
+    background-color: transparent;
+  }
+}
+
+a.video-thumbnail {
+  display: block;
+}

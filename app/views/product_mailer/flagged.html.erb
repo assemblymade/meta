@@ -1,0 +1,19 @@
+<p>Hi <%= @product.user.short_name %>,</p>
+
+<p>
+  Welcome to Assembly and thanks for taking the time to share <%= @product.name %>!
+  We reviewed your app and unfortunately we don't feel its the right fit for the community today.
+</p>
+
+<% unless @message.blank? %>
+  <p><%=@message%></p>
+<% end %>
+
+<p>
+  I hope you still get a chance to check out and help one of the products <a href='<%= discover %>'>currently trending</a>. You can email me anytime if you have any questions.
+</p>
+
+<p>
+  Best<br/>
+  <%= @current_user.short_name %>
+</p>

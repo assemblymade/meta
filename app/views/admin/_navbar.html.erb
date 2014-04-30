@@ -1,0 +1,21 @@
+<div class="navbar navbar-inverse navbar-static-top">
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <li class="<%= "active" if staff_picks_controller? %>">
+        <%= link_to 'Staff Picks', admin_staff_picks_path %>
+      </li>
+      <li class="<%= "active" if newsletters_controller? %>">
+        <%= link_to 'Newsletters', admin_newsletters_path %>
+      </li>
+      <li class="<%= "active" if users_controller? %>">
+        <%= link_to 'Users', admin_users_path %>
+      </li>
+      <li>
+        <%= link_to 'Sidekiq', '/admin/sidekiq' %>
+      </li>
+      <li>
+        <%= link_to 'Split', '/admin/split' %>
+      </li>
+    </ul>
+  </div>
+</div>

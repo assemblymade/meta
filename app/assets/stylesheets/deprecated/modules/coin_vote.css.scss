@@ -1,0 +1,150 @@
+/*
+Empty.
+
+Styleguide Vote Boxes.
+*/
+
+
+.coin-vote {
+  @include box-sizing(border-box);
+  @include user-select(none);
+  @include retina-image(
+    'vote-box/upvote', 10px 7px, 'png',
+    'vote-box/upvote@2x',
+    true
+  );
+
+//  padding-top: 10px + 7px + 10px;
+//  padding-bottom: 7px;
+
+  width: 38px;
+  height: 32px;
+  overflow: hidden;
+
+  border-radius: $radius;
+
+  color: $blue;
+  background-color: $white;
+  border: 1px solid transparentize($blue, .75);
+  box-shadow: $shadow;
+
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 14px;
+  text-align: center;
+
+  cursor: pointer;
+
+  background-repeat: no-repeat;
+  background-position: center 10px;
+}
+
+.coin-vote-promoted {
+  @include retina-image(
+    'vote-box/promoted-upvote', 10px 13px, 'png',
+    'vote-box/promoted-upvote@2x',
+    true
+  );
+
+  background-position: center (((10px + 7px + 10px) - 13px) / 2);
+  border-color: transparentize($purple, .75);
+  color: $color-promoted;
+}
+
+.coin-vote + .coin-vote {
+  margin-top: 5px;
+}
+
+.you-should-preorder{
+  margin-top:10px;
+  font-size:12px;
+  margin-bottom:-10px;
+  display:block
+}
+
+.coin-vote,
+.bounty {
+  @include inline-block;
+  vertical-align: middle;
+}
+
+.mint {
+  position: relative;
+  top: 9px;
+  float: left;
+
+  .coin-vote {
+    margin-right: 15px;
+  }
+
+  .bounty {
+    font-size: 14px;
+  }
+
+  &[data-vote-voted] {
+    .coin-vote {
+      @include retina-image(
+        'vote-box/upvote-voted', 10px 7px, 'png',
+        'vote-box/upvote-voted@2x',
+        true
+      );
+
+      cursor: default;
+      background-color: transparentize($blue, .95);
+      border-color: transparentize($blue, .85);
+      box-shadow: none;
+    }
+
+    .coin-vote-promoted {
+      @include retina-image(
+        'vote-box/promoted-upvote-voted', 10px 13px, 'png',
+        'vote-box/promoted-upvote-voted@2x',
+        true
+      );
+
+      background-color: transparentize($color-promoted, .95);
+      border-color: transparentize($color-promoted, .85);
+      box-shadow: none;
+    }
+
+    .hover-reveal {
+      visibility: hidden;
+    }
+  }
+}
+
+.coin-vote {
+  &:hover {
+    .hover-reveal {
+      top: -17px;
+      @include transition-duration(100ms);
+    }
+  }
+
+  .hover-reveal {
+    color: $purple-light;
+    font-size: 12px;
+    font-weight: bold;
+    background: rgba($purple, 0.05);
+    border: 1px solid rgba($color-promoted, 0.2);
+    padding: 2px 3px 6px 3px;
+    border-radius: 3px 3px 0 0;
+    line-height: 1;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 30px;
+    z-index: -1;
+    @include transition-duration(100ms);
+  }
+}
+
+.mint-gutter {
+  padding-left: 120px;
+
+  > .mint {
+    float: left;
+    margin-left: -120px;
+  }
+}

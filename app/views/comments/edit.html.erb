@@ -1,0 +1,28 @@
+<%= render 'shared/deprecated_navbar' %>
+<%= render 'products/deprecated_navbar' %>
+
+<div class="page page-padded">
+  <div class="container">
+    <div class="page-heading">
+      <div class="page-heading-title">Edit comment</div>
+    </div>
+    <div class="page-content">
+      <div id="discussion-view-el">
+        <div class="edit-comment">
+          <div class="body">
+            <%= form_for @comment, url: product_wip_comment_path(@comment.product, @comment.wip, @comment), method: :patch, class: 'form' do |f| %>
+              <div class="form-group">
+                <%= f.text_area :body, rows: 4, data: {autosize: '', validate_length: 2, product_id: @comment.product.id} %>
+
+              <div class="form-actions">
+                <%= f.submit 'Update comment', class: %w(btn btn-primary) %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/deprecated_footer' %>
