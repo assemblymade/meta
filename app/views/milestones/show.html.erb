@@ -6,7 +6,7 @@
 <div class="page page-padded page-ruled">
   <div class="container">
 
-    <% cache(@milestone, @milestone.wip) do %>
+    <% cache [@milestone, @milestone.wip] do %>
       <%= render 'heading' %>
     <% end %>
 

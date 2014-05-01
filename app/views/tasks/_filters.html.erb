@@ -9,7 +9,7 @@
     </li>
   <% end %>
 
-  <% cache([@product, params[:state], params[:deliverable]]) do %>
+  <% cache [@product, params[:state], params[:deliverable]] do %>
     <li class="filter<%= ' active' if params[:state] == 'open' %>">
       <a href="<%= product_wips_path(@product, state: 'open') %>">Open Tasks</a>
     </li>

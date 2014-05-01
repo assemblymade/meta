@@ -1,4 +1,4 @@
-<% cache(milestone, milestone.wip) do %>
+<% cache [milestone, milestone.wip] do %>
   <a class="card" href="<%= product_milestone_path(milestone.product, milestone) %>">
 
     <% if milestone.milestone_images.any? %>
