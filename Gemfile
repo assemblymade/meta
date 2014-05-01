@@ -74,7 +74,6 @@ group :development, :test do
   gem 'email_spec'
   # gem "letter_opener"
   gem 'machinist', '~> 2'
-  gem 'mail_view', github: '37signals/mail_view'
   gem 'pry'
   gem 'quiet_assets'
   # gem 'rack-mini-profiler'

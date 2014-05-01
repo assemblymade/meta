@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/37signals/mail_view.git
-  revision: 35ca575d6fa4b0410c3bf1d356677585f0a76de1
-  specs:
-    mail_view (2.0.1)
-      tilt
-
-GIT
   remote: git://github.com/kneath/kss.git
   revision: 25e2642ea2f3c7a87873dcfc21d7138213818ec8
   specs:
@@ -424,7 +417,6 @@ DEPENDENCIES
   librato-rails
   lograge
   machinist (~> 2)
-  mail_view!
   mailgun-rails
   markerb
   memcachier
