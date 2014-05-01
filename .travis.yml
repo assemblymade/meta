@@ -6,6 +6,11 @@ addons:
 before_script:
 - psql -c 'create database asm_test;' -U postgres
 - cp config/database.yml.travis config/database.yml
+- bin/rake db:schema:load
+cache: bundler
+services:
+  - redis-server
+  - elasticsearch
 env:
   global:
     secure: e5U3AYlkOhCiDJxHnR+tAkARa+EL3mcKYQujnerIkXxcCHz2D2cRgYutGYb6sfZxZaspZsk62EyxGTeEcCJP5D5ANaOkpQ4qdSjznHRJdjiEcM2+XBUsRXgTQeeXbtpG5uW+gX9DlFf0e1149RHXErdR0WiUdrHpRKnAU8LOV48=
