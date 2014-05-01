@@ -9,6 +9,13 @@ class CoreTeamMembersController < ApplicationController
     if user
       @product.core_team << user
       CoreTeamMailer.delay.welcome(@product.id, user.id)
+
+      if user.has_github_account?
+        Github::AddCollaboratorToProductRepoWorker.perform_async(
+          @product.slug,
+          user.github_login
+        )
+      end
     end
 
     redirect_to edit_product_path(@product)
