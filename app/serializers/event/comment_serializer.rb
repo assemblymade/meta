@@ -1,7 +1,7 @@
 class Event::CommentSerializer < EventSerializer
 
   def anchor
-    "event-#{object.number}"
+    "comment-#{object.number}"
   end
 
 end
