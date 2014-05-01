@@ -91,6 +91,10 @@ group :development do
   gem 'spring'
 end
 
+group :test do
+  gem 'codeclimate-test-reporter', require: nil
+end
+
 group :production do
   gem 'dalli'
   gem 'memcachier'
