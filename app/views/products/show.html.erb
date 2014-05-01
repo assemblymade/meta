@@ -76,7 +76,7 @@
           </div>
         <% end %>
 
-        <% if @product.repos.any? %>
+        <% if @product.for_profit? && @product.repos.any? %>
           <% @product.repos.each do |repo| %>
             <div class="product-link link-type-code-repository">
               <a href="<%= repo.url %>" data-track="product.repo.clicked">asm-products / <strong><%= repo.name %></strong></a>
