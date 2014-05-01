@@ -1,6 +1,9 @@
 class SavedSearchesController < ApplicationController
   def create
     @saved_search = current_user.saved_searches.create(create_params)
+    if @saved_search.valid?
+      ProductMailer.delay.saved_search_created(@saved_search.id)
+    end
     redirect_to (request.referer || user_path(current_user))
   end
 

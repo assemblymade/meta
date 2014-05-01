@@ -1,0 +1,7 @@
+Hey Assembly staffers,
+
+This email is just letting you know that [@<%= @user.username %>](@<%= user_url(@user) %>) signed up to be notified for <%= @saved_search.query %>.
+
+Your pal,
+
+whatupdave

@@ -33,5 +33,9 @@ class ProductMailerPreview < ActionMailer::Preview
     ProductMailer.stale_wips(user.id)
   end
 
+  def saved_search_created
+    ProductMailer.saved_search_created SavedSearch.sample.id
+  end
+
 
 end

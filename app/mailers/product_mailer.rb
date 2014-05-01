@@ -105,6 +105,14 @@ class ProductMailer < ActionMailer::Base
 
   end
 
+  def saved_search_created(saved_search_id)
+    @saved_search = SavedSearch.find(saved_search_id)
+    @user = @saved_search.user
+
+    mail   cc: User.where(is_staff: true).pluck(:email),
+      subject: "User subscribed to #{@saved_search.query}"
+  end
+
   def tag(name)
     headers 'X-Mailgun-Tag' => name.to_s
   end
