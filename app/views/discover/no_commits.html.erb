@@ -1,0 +1,33 @@
+<% title 'Most Wanted Products' %>
+
+<%= render 'shared/navbar' %>
+
+<div class="page">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-xs-9">
+
+        <div class="page-header">
+          <h2 class="page-header-title">Products need code</h2>
+          <p>Ideas ready for their first code contribution.</p>
+        </div>
+
+        <div class="list-group list-group-breakout">
+          <% @products.each do |product| %>
+            <div class="list-group-item">
+              <%= render 'product', product: product %>
+            </div>
+          <% end %>
+        </div>
+
+        <%= paginate @products, theme: 'twitter-bootstrap-3' %>
+      </div>
+
+      <div class="col-sm-3 col-xs-3">
+        <%= render 'nav' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

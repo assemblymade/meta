@@ -20,6 +20,14 @@ class DiscoverController < ApplicationController
                        .page(params[:page])
   end
 
+  def no_commits
+    @products = Product.public_products
+                       .repos_gt(0)
+                       .where(commit_count: 0)
+                       .order(votes_count: :desc)
+                       .page(params[:page])
+  end
+
   def tech
     @tech = TechFilter.find(params[:tech])
     if signed_in?
@@ -30,6 +38,13 @@ class DiscoverController < ApplicationController
                        .tagged_with_any(@tech.tags)
                        .order(votes_count: :desc)
                        .page(params[:page])
+
+    @needing_commit = Product.public_products
+                       .repos_gt(0)
+                       .where('votes_count >= ?', 3)
+                       .where(commit_count: 0)
+                       .order("Random()")
+                       .limit(2)
   end
 
   protected

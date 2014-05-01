@@ -21,6 +21,30 @@
               </div>
             <% end %>
           </div>
+
+          <div class="page">
+            <div class="page-header">
+              <p>
+                Popular products that could be developed in <%= @tech.name %>.<br/>
+                <strong>Go ahead and make the first commit</strong>
+              </p>
+            </div>
+
+
+            <div class="list-group list-group-breakout">
+              <% @needing_commit.each do |product| %>
+                <div class="list-group-item">
+                  <%= render 'product', product: product %>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <a href="<%= discover_path(:no_commits) %>"><strong>View more products needing code</strong></a>
+              </div>
+            </div>
+            </div>
         <% end %>
       </div>
 
