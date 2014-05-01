@@ -46,20 +46,19 @@
           </div>
 
           <div class="form-actions">
-            <%= button_tag 'Comment', name: 'event_comment[type]', value: 'Event::Comment', type: 'submit', class: %w(btn btn-primary) %>
-
-            <% if can?(:update, @wip.product) %>
-              <div class="btn-group pull-left">
+            <div class="btn-group">
+              <%= button_tag 'Comment', name: 'event_comment[type]', value: 'Event::Comment', type: 'submit', class: %w(btn btn-primary) %>
+              <% if can?(:update, @wip.product) %>
                 <% if @wip.resolved? %>
-                  <%= button_tag 'Reopen', name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-default) %>
+                  <%= button_tag 'Comment & Reopen', name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-default) %>
                 <% else %>
-                  <%= button_tag 'Close', name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-default) %>
+                  <%= button_tag 'Comment & Close', name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-default) %>
 
                   <% if @wip.is_a?(Task) %>
                     <% if @wip.promoted? %>
-                      <%= button_tag 'Demote', name: 'event_comment[type]', value: 'Event::Demote', type: 'submit', class: %w(btn btn-default) %>
+                      <%= button_tag 'Comment & Demote', name: 'event_comment[type]', value: 'Event::Demote', type: 'submit', class: %w(btn btn-default) %>
                     <% else %>
-                      <%= button_tag 'Promote', name: 'event_comment[type]', value: 'Event::Promote', type: 'submit', class: %w(btn btn-default) %>
+                      <%= button_tag 'Comment & Promote', name: 'event_comment[type]', value: 'Event::Promote', type: 'submit', class: %w(btn btn-default) %>
                     <% end %>
                   <% end %>
                 <% end %>
