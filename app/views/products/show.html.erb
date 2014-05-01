@@ -255,7 +255,9 @@
     <% if can?(:update, @product) %>
       <div class="panel panel-alert">
         <div class="panel-title">Panel o&rsquo; Power</div>
-        <a class="btn btn-block btn-alert btn-small" href="<%= edit_product_path(@product) %>">Edit Product</a>
+        <a class="btn btn-block btn-alert" href="<%= edit_product_path(@product) %>">Edit Product</a>
+        <br>
+        <a class="btn btn-default btn-block" href="<%=  new_product_post_path(@product) %>">New Post</a>
       </div>
     <% end %>
 

@@ -18,14 +18,14 @@ class Ability
     end
 
     # The creator has edit privelleges until a core team is established.
-    can [:update, :status_update], Product do |product|
+    can [:update, :status_update], [Product, Post] do |product|
       product.core_team?(user) || (product.core_team.empty? && product.user == user)
     end
 
     # WIPs
-    
+
     can :manage, :all if user.staff?
-    
+
     can [:close, :reopen], Wip do |wip|
       wip.user == user
     end
@@ -49,7 +49,7 @@ class Ability
     can [:move], Wip do |wip|
       !wip.awarded?
     end
-    
+
     # Event
     can [:award], Event do |event|
       wip = event.wip

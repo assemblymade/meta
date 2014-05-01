@@ -45,4 +45,9 @@ $copy-line-height-computed: $font-size-base * $copy-line-height-base;
     margin-top: $copy-line-height-computed;
     margin-bottom: $copy-line-height-computed * .594;
   }
+
+  .img,
+  img {
+    max-width: 100%;
+  }
 }

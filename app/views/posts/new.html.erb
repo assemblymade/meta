@@ -1,0 +1,43 @@
+<% title 'New Post', @post.product.name %>
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
+
+<div class="page">
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-header-title">Write a new post for <%= @post.product.name %></h1>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-xs-4 col-xs-push-8">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h6 class="panel-title">Make it awesome</h6>
+          </div>
+          <div class="panel-body">
+            You can include images and use Markdown to make your post awesome.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8 col-xs-8 col-xs-pull-4">
+        <%= form_for [@post.product, @post] do |f| %>
+          <div class="form-group">
+            <%= f.label :title, 'Post title', class: 'form-label' %>
+            <%= f.text_field :title, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.text_field :summary, class: 'form-control', placeholder: 'Tweet sized summary' %>
+          </div>
+          <div class="form-group">
+            <%= f.text_area :body, class: 'form-control', rows: 8, placeholder: 'Post body' %>
+          </div>
+
+          <div class="form-actions">
+            <%= f.submit 'Publish', class: %w(btn btn-primary) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

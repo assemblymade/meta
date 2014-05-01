@@ -1,9 +1,17 @@
 module ProductsHelper
 
-  ["products", "partners", "milestones", "activity", "dashboard", "discussions", "tasks", "jobs"].each do |name|
-    define_method("#{name}_controller?") do
-      controller_name == name
-    end
+  %w(
+    products
+    partners
+    milestones
+    activity
+    dashboard
+    discussions
+    tasks
+    jobs
+    posts
+  ).each do |name|
+    define_method("#{name}_controller?") { controller_name == name }
   end
 
   def product_code_wips_path(product)

@@ -14,36 +14,36 @@ class Product < ActiveRecord::Base
 
   has_many :activities
   has_many :completed_missions
-  has_many :core_team, -> { distinct }, :through => :core_team_memberships, :source => :user
   has_many :core_team_memberships
+  has_many :core_team, -> { distinct }, :through => :core_team_memberships, :source => :user
   has_many :discussions
   has_many :event_activities, through: :events, source: :activities
   has_many :event_creators, -> { distinct }, :through => :events, :source => :user
   has_many :events, :through => :wips
   has_many :financial_accounts, class_name: 'Financial::Account'
   has_many :financial_transactions, class_name: 'Financial::Transaction'
-  has_many :product_jobs
   has_many :metrics
   has_many :milestones
   has_many :perks
+  has_many :posts
   has_many :preorders, :through => :perks
+  has_many :product_jobs
+  has_many :product_jobs
+  has_many :product_roles
   has_many :showcases
-  has_many :status_updates
+  has_many :showcases
   has_many :status_messages
+  has_many :stream_events
   has_many :subscribers, :through => :subscriptions, :source => :user
   has_many :subscriptions
   has_many :tasks
-  has_many :watchings, :as => :watchable
-  has_many :watchers, :through => :watchings, :source => :user
   has_many :votes, :as => :voteable, :after_add => :update_rank
+  has_many :watchers, :through => :watchings, :source => :user
+  has_many :watchings, :as => :watchable
   has_many :wip_activities, through: :wips, source: :activities
   has_many :wip_creators, -> { distinct }, :through => :wips, :source => :user
   has_many :wips
   has_many :work
-  has_many :product_jobs
-  has_many :product_roles
-  has_many :showcases
-  has_many :stream_events
 
   scope :featured,         -> {
     where.not(featured_on: nil).order(featured_on: :desc)

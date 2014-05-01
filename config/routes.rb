@@ -245,7 +245,7 @@ ASM::Application.routes.draw do
 
     resources :whiteboard
 
-    resources :status_updates, only: [:new, :create, :show], path: 'blog'
+    resources :posts
     resources :status_messages, only: [:create]
 
     resources :partners, only: [:index]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140501174749) do
+ActiveRecord::Schema.define(version: 20140501175123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -238,6 +238,20 @@ ActiveRecord::Schema.define(version: 20140501174749) do
     t.string   "name",        null: false
   end
 
+  create_table "posts", id: false, force: true do |t|
+    t.uuid     "id",         null: false
+    t.uuid     "product_id", null: false
+    t.uuid     "author_id",  null: false
+    t.text     "body",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "title"
+    t.string   "slug"
+    t.text     "summary"
+  end
+
+  add_index "posts", ["product_id", "slug"], name: "index_posts_on_product_id_and_slug", unique: true, using: :btree
+
   create_table "preorders", id: false, force: true do |t|
     t.uuid     "id",         null: false
     t.uuid     "vote_id"
@@ -356,19 +370,6 @@ ActiveRecord::Schema.define(version: 20140501174749) do
     t.string   "body",       null: false
     t.datetime "created_at", null: false
   end
-
-  create_table "status_updates", id: false, force: true do |t|
-    t.uuid     "id",         null: false
-    t.uuid     "product_id", null: false
-    t.uuid     "user_id",    null: false
-    t.text     "body",       null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "title"
-    t.string   "slug"
-  end
-
-  add_index "status_updates", ["product_id", "slug"], name: "index_status_updates_on_product_id_and_slug", unique: true, using: :btree
 
   create_table "stream_events", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "actor_id"
