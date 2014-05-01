@@ -3,6 +3,10 @@
         'base/*',
         'components/*';
 
+.container {
+  width: 970px !important;
+}
+
 .fixed-bottom {
   position: fixed;
   bottom: 0;

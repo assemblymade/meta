@@ -1,7 +1,7 @@
 <% cache product do %>
   <div class="row">
 
-    <div class="col-sm-2">
+    <div class="col-sm-2 col-xs-2">
       <img class="img-rounded" src="<%= image_path(product.poster_image.url) %>" width="100%" >
 
   <!--       <a class="
@@ -20,9 +20,9 @@
         </a> -->
     </div>
 
-    <div class="col-sm-10">
+    <div class="col-sm-10 col-xs-10">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-6 col-xs-6">
           <strong><a href="<%= product_path(product) %>">
             <%= product.name %>
           </a></strong>
@@ -36,7 +36,7 @@
           <% end %>
         </div>
 
-        <div class="col-sm-6" style="margin-top: -8px;">
+        <div class="col-sm-6 col-xs-6" style="margin-top: -8px;">
           <h6>
             Latest Activity
             <span class="text-muted text-weight-normal"><%= product.stream_events.order(created_at: :desc).first.timestamp %></span>

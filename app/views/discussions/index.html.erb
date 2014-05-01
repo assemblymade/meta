@@ -6,7 +6,7 @@
 <div class="page">
   <div class="container">
     <%= render 'products/status_message' %>
-    
+
     <div class="page-header">
       <a class="btn btn-success pull-right" href="<%= new_product_discussion_path(@product) %>">
         Start a new discussion
@@ -16,7 +16,7 @@
 
     <% if @wips.empty? %>
       <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
           <div class="well text-center large omega">
             <h3 class="alpha"><strong>Start the first discussion</strong></h3>
             <p class="text-muted omega">
@@ -29,7 +29,7 @@
     <% else %>
       <div class="row">
 
-        <div class="col-md-8">
+        <div class="col-md-8 col-xs-8">
           <ol class="list-group list-group-breakout" id="wips-view-el">
             <% @wips.each do |discussion| %>
               <li class="list-group-item">
@@ -39,7 +39,7 @@
           </ol>
         </div>
 
-        <div class="col-md-3 col-md-offset-1">
+        <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
           <div class="panel panel-default">
             <ul class="nav nav-pills nav-stacked">
               <li class="<%= 'active' if params[:state] == 'open' || params[:state].empty? %>">

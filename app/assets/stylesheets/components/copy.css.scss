@@ -12,10 +12,8 @@ $copy-line-height-computed: $font-size-base * $copy-line-height-base;
 
   ul:not(.list-unstyled),
   ol:not(.list-unstyled) {
-    padding-left: 18px;
-
     > li {
-      margin-bottom: 4.250px;
+      margin-bottom: 4px;
     }
   }
 
@@ -27,7 +25,7 @@ $copy-line-height-computed: $font-size-base * $copy-line-height-base;
   .h1, .h2, .h3, .h4, .h5, .h6 {
     font-weight: bold;
   }
-  
+
   h2,
   .h2 {
     border-bottom: 2px solid $brand-divider;
@@ -41,7 +39,7 @@ $copy-line-height-computed: $font-size-base * $copy-line-height-base;
     margin-top: $copy-line-height-computed * 1.556;
     font-size: 21.82px;
   }
-  
+
   h4,
   .h4 {
     margin-top: $copy-line-height-computed;
