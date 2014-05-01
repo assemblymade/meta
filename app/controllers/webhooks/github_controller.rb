@@ -21,6 +21,7 @@ class Webhooks::GithubController < WebhookController
         # http://developer.github.com/v3/activity/events/types/#pushevent
 
         if type == 'push'
+          Github::UpdateCommitCount.perform_async(product.id)
           payload.commits.each do |commit|
             author = commit['author']
             user = User.find_by(github_login: author['username'])

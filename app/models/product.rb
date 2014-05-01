@@ -61,6 +61,7 @@ class Product < ActiveRecord::Base
   }
   scope :declined,         -> { where(is_approved: false) }
   scope :greenlit,         -> { where('greenlit_at is not null') }
+  scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
   scope :public_products,  -> { where.not(slug: PRIVATE).where(flagged_at: nil) }
   scope :since,            ->(time) { where('created_at >= ?', time) }
