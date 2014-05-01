@@ -10,7 +10,6 @@ class EventSerializer < ActiveModel::Serializer
   attributes :id #, :url
   attributes :anchor, :edit_path
   attributes :body, :body_html, :number, :timestamp, :type
-  attributes :previous_type, :previous_type_name
   attributes :award_path, :can_award
 
   has_one :wip
@@ -22,16 +21,6 @@ class EventSerializer < ActiveModel::Serializer
 
   def award_path
     award_product_wip_path(product, wip)
-  end
-
-  # TODO this stuff is a mess...
-  def previous_type
-    object.previous_type if object.is_a? Event::TypeChange
-  end
-
-  # TODO this stuff is a mess...
-  def previous_type_name
-    object.previous_type_name.singularize if object.is_a? Event::TypeChange
   end
 
   # TODO There's no ? on this method because AMS doesn't serialize question
