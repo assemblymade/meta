@@ -2,11 +2,11 @@ class TechFilter < Struct.new(:name, :slug, :tags)
   def self.all
     [
       ['Ruby', 'ruby', %w(ruby rails Ruby Rails)],
-      ['Go', 'go', %w(Go go golang)],
+      ['Go', 'go', %w(Go GO go golang)],
       ['Node.js', 'nodejs', %w(javascript node Node nodejs Node.js)],
-      ['PHP', 'php', %w(php)],
-      ['iOS', 'ios', %w(ios iphone)],
-      ['Android', 'android', %w(android)],
+      ['PHP', 'php', %w(php PHP)],
+      ['iOS', 'ios', %w(ios iOS iphone iPhone)],
+      ['Android', 'android', %w(android Android)],
     ].map do |args|
       new(*args)
     end
