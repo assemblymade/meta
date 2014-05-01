@@ -26,7 +26,7 @@ class DiscoverController < ApplicationController
       @saved_search = current_user.saved_searches.find_by(query: "tag:#{params[:tech]}")
     end
     @products = Product.public_products
-                       .where('votes_count >= ?', 10)
+                       .where('votes_count >= ?', 5)
                        .tagged_with_any(@tech.tags)
                        .order(votes_count: :desc)
                        .page(params[:page])

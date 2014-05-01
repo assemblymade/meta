@@ -3,7 +3,7 @@ class TechFilter < Struct.new(:name, :slug, :tags)
     [
       ['Ruby', 'ruby', %w(ruby rails Ruby Rails)],
       ['Go', 'go', %w(Go go golang)],
-      ['Node.js', 'nodejs', %w(javascript node nodejs)],
+      ['Node.js', 'nodejs', %w(javascript node Node nodejs Node.js)],
       ['PHP', 'php', %w(php)],
       ['iOS', 'ios', %w(ios iphone)],
       ['Android', 'android', %w(android)],
