@@ -16,8 +16,7 @@ ASM::Application.routes.draw do
     get '/', to: redirect('/discover')
   end
 
-  root :to => 'home#show'
-  get '/home' => 'home#show'
+  root :to => 'pages#home'
 
   get '/still-field' => redirect('/discover') # bad product
 
@@ -29,6 +28,7 @@ ASM::Application.routes.draw do
   get '/blog',    to: redirect('http://blog.assemblymade.com')
 
   # Pages
+  get '/home'        => 'pages#home',        as: :home
   get '/terms'       => 'pages#tos',         as: :tos
   get '/core-team'   => 'pages#core_team',   as: :core_team
   get '/sabbaticals' => 'pages#sabbaticals', as: :sabbaticals

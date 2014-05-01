@@ -1,7 +1,6 @@
 class PagesController < ApplicationController
 
-  def show
-    render :action => params[:page]
+  def home
   end
 
   def sabbaticals
