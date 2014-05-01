@@ -95,3 +95,11 @@ Financial::Liability.blueprint {}
 Financial::Equity.blueprint {}
 Financial::Revenue.blueprint {}
 Financial::Expense.blueprint {}
+
+Post.blueprint do
+  product
+  author
+  title { "My Post #{sn}" }
+  summary { "Post subject #{sn}" }
+  body { Faker::Lorem.paragraphs(3).join }
+end

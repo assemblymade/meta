@@ -7,8 +7,10 @@ class Post < ActiveRecord::Base
   belongs_to :product
   belongs_to :author, class_name: 'User'
 
-  validates :title, uniqueness: true, presence: true
-  validates :slug, presence: true
+  validates :product, presence: true
+  validates :author,  presence: true
+  validates :title,   uniqueness: true, presence: true
+  validates :slug,    presence: true
   validates :summary, length: { minimum: 2, maximum: 140 }, allow_blank: true
 
   friendly_id :title, use: :slugged
