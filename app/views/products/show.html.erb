@@ -45,55 +45,56 @@
 
 <div class="page container container-with-status">
 
-  <div class="page-content">
+  <% cache [@product] do %>
+    <div class="page-content">
 
-    <!-- Pitch -->
-    <!-- FIXME: This class is a hack -->
-    <div class="hack-product-pitch"><%= @product.pitch %></div>
+      <!-- Pitch -->
+      <!-- FIXME: This class is a hack -->
+      <div class="hack-product-pitch"><%= @product.pitch %></div>
 
-    <% unless @product.lead.blank? %>
-      <div class="markdown-content markdown-content-fancy hack-product-lead">
-        <%== @product.lead_html %>
-      </div>
-    <% end %>
+      <% unless @product.lead.blank? %>
+        <div class="markdown-content markdown-content-fancy hack-product-lead">
+          <%== @product.lead_html %>
+        </div>
+      <% end %>
 
-    <!-- Poster Image -->
-    <% if @product.poster? %>
-      <div class="hero-image">
-        <img src="<%= @product.hero_image_path %>" alt="<%= @product.name %>">
-      </div>
-    <% elsif @product.you_tube_video_url? %>
-      <%= you_tube_embed(@product.you_tube_video_embed_url) %>
-    <% end %>
+      <!-- Poster Image -->
+      <% if @product.poster? %>
+        <div class="hero-image">
+          <img src="<%= @product.hero_image_path %>" alt="<%= @product.name %>">
+        </div>
+      <% elsif @product.you_tube_video_url? %>
+        <%= you_tube_embed(@product.you_tube_video_embed_url) %>
+      <% end %>
 
-    <!-- Product Links -->
-    <% if !@product.homepage_url.blank? || @product.repos.any? %>
-      <div class="product-link-group">
-        <% unless @product.homepage_url.blank? %>
-          <div class="product-link link-type-product-site">
-            <a href="<%= @product.homepage_url %>" data-track="product.site.clicked"><strong><%= @product.homepage_url %></strong></a>
-            <span class="descriptor">Product Site</a>
-          </div>
-        <% end %>
-
-        <% if @product.for_profit? && @product.repos.any? %>
-          <% @product.repos.each do |repo| %>
-            <div class="product-link link-type-code-repository">
-              <a href="<%= repo.url %>" data-track="product.repo.clicked">asm-products / <strong><%= repo.name %></strong></a>
-              <span class="descriptor">Code Repository</a>
+      <!-- Product Links -->
+      <% if !@product.homepage_url.blank? || @product.repos.any? %>
+        <div class="product-link-group">
+          <% unless @product.homepage_url.blank? %>
+            <div class="product-link link-type-product-site">
+              <a href="<%= @product.homepage_url %>" data-track="product.site.clicked"><strong><%= @product.homepage_url %></strong></a>
+              <span class="descriptor">Product Site</a>
             </div>
           <% end %>
-        <% end %>
+
+          <% if @product.for_profit? && @product.repos.any? %>
+            <% @product.repos.each do |repo| %>
+              <div class="product-link link-type-code-repository">
+                <a href="<%= repo.url %>" data-track="product.repo.clicked">asm-products / <strong><%= repo.name %></strong></a>
+                <span class="descriptor">Code Repository</a>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <!-- Body -->
+      <div class="markdown-content markdown-content-fancy">
+        <%== @product.description_html %>
       </div>
-    <% end %>
 
-    <!-- Body -->
-    <div class="markdown-content markdown-content-fancy">
-      <%== @product.description_html %>
     </div>
-
-  </div>
-
+  <% end %>
   <div class="page-sidebar">
 
 
