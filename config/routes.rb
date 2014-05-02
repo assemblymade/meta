@@ -251,7 +251,7 @@ ASM::Application.routes.draw do
       resources :transactions, only: [:index, :show, :new, :create]
     end
 
-    get '/groups/:id' => 'products/groups#show', :as => :group
+    get ':number' => 'shortcuts#show'
   end
 
 end

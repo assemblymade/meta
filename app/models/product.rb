@@ -28,9 +28,8 @@ class Product < ActiveRecord::Base
   has_many :posts
   has_many :preorders, :through => :perks
   has_many :product_jobs
-  has_many :product_jobs
   has_many :product_roles
-  has_many :showcases
+  has_many :shortcuts, class_name: 'ProductShortcut'
   has_many :showcases
   has_many :status_messages
   has_many :stream_events
