@@ -9,6 +9,10 @@ describe Wip::Worker do
     task
   end
 
+  before do
+    User.make!(username: "asm-bot")
+  end
+
   describe 'reminding a user about claimed wip' do
     let(:worker) do
       claimed_task.wip_workers.first
