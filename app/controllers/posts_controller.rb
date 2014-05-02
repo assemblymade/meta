@@ -10,19 +10,25 @@ class PostsController < ApplicationController
   def new
     find_product!
     authenticate_user!
-    authorize! :update, @product
+    authorize! :create, Post
     @post = @product.posts.new(author: current_user)
   end
 
   def create
     find_product!
     authenticate_user!
-    authorize! :update, @product
+    authorize! :create, Post
     @post = @product.posts.new(post_params)
     @post.author = current_user
     @post.save!
 
     respond_with @post, location: product_post_path(@post.product, @post)
+  end
+
+  def preview
+    find_product!
+    authenticate_user!
+    authorize :create, Post
   end
 
   def show
@@ -42,7 +48,7 @@ class PostsController < ApplicationController
     authenticate_user!
     @post = @product.posts.find_by_slug!(params.fetch(:id))
     authorize! :update, @post
-  
+
     @post.update_attributes(post_params)
 
     respond_with @post, location: product_post_path(@post.product, @post)
@@ -59,7 +65,7 @@ private
   end
 
   def post_params
-    params.require(:post).permit(:title, :summary, :body)
+    params.require(:post).permit(:title, :summary, :body, :published_at)
   end
 
 end

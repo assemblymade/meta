@@ -18,8 +18,13 @@ class Ability
     end
 
     # The creator has edit privelleges until a core team is established.
-    can [:update, :status_update], [Product, Post] do |product|
+    can [:update, :status_update], Product do |product|
       product.core_team?(user) || (product.core_team.empty? && product.user == user)
+    end
+
+    # Posts
+    can [:create, :update], Post do |post|
+      post.product.core_team?(user)
     end
 
     # WIPs
