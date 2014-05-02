@@ -163,18 +163,6 @@ class Product < ActiveRecord::Base
     TransactionLogEntry.with_cents.where(product: self).group(:user_id).count.keys
   end
 
-  def social_proof
-    proof = []
-    proof << "#{open_tasks_count} tasks" if open_tasks_count > 1
-    proof << "#{open_discussions_count} discussions" if open_discussions_count > 1
-    if greenlit?
-      proof << "#{partner_ids.count} people building it" if partner_ids.count > 1
-    else
-      proof << "#{watchers.count} people involved" if watchers.count > 1
-    end
-    proof.to_sentence
-  end
-
   def open_tasks_count
     tasks.where(closed_at: nil).count
   end
@@ -197,10 +185,6 @@ class Product < ActiveRecord::Base
 
   def number_of_other_tasks
     number_of_open_tasks(:other)
-  end
-
-  def number_of_labeled_tasks
-    number_of_open_tasks([:code, :design, :copy])
   end
 
   def number_of_open_tasks(deliverable_type)
@@ -285,18 +269,6 @@ class Product < ActiveRecord::Base
   def voted_by?(user)
     votes.where(user: user).any?
   end
-
-  # def notify_subscribers(wip)
-  #   (subscribers - [wip.user]).each do |user|
-  #     WipMailer.delay_for(2.seconds).wip_created(user.id, wip.id) if user.mail_immediate?
-  #   end
-  # end
-  #
-  # def notify_watchers(wip)
-  #   (watchers - [wip.user]).each do |user|
-  #     wip.updates.for(user).new_wip!
-  #   end
-  # end
 
   def preorders_by_user(user)
     preorders.find_by(user: user)
