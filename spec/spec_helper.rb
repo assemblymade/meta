@@ -34,11 +34,6 @@ RSpec.configure do |config|
   config.include(EmailSpec::Helpers)
   config.include(EmailSpec::Matchers)
 
-  config.before :all do
-    User.delete_all
-    User.create_asm_bot!
-  end
-
   config.before :each do |example_method|
     ActionMailer::Base.deliveries.clear
 

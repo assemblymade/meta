@@ -13,12 +13,7 @@ module Stake
       return unless %w(validated voted).include? minting_entry.action
 
       work_id = minting_entry.work_id
-
-      info =
-        replay_history_extract_minting_info(
-          work_id,
-          minting_entry.created_at
-        )
+      info = replay_history_extract_minting_info(work_id, minting_entry.created_at)
 
       if info[:worker_id].nil?
         Rails.logger.info("fail=null_worker entry=#{minting_entry.id}")

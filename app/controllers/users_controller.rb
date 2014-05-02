@@ -10,36 +10,9 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.js   { render :layout => false }
       format.html {
-        # @whatupdave magic added by @chrislloyd
-        event_contributions = Event.joins(:wip).where(user_id: @user.id).group(:product_id).count
-        work_contributions = Work.where(user_id: @user.id).group(:product_id).count
-
-        contributions = event_contributions.merge(work_contributions) {|k, v1, v2| v1 + v2 }
-
-        product_cents = Hash[TransactionLogEntry.product_balances(@user)]
-
-        total_cents = TransactionLogEntry.product_totals
-
-        @products = contributions.map do |product_id, contributions|
-          cents = (product_cents[product_id] || 0)
-          h = {
-            product: Product.find(product_id),
-            contributions: contributions,
-            cents: cents,
-          }
-          h[:stake] = if cents > 0
-            (cents / total_cents[product_id].to_f).tap{|v|
-              puts "  #{h[:product].slug}  cents:#{cents}  total:#{total_cents[product_id].to_f}  = #{v}"
-
-            }
-          else
-            0
-          end
-
-          h
-        end.sort_by{|p| -p[:cents]}
-
-        @products.reject!{|p| Product::PRIVATE.include?(p[:product].slug) }
+        @contributions = UserContribution.for(@user).
+                                          sort_by{|c| -c.cents }.
+                                          reject{|c| Product::PRIVATE.include?(c.product.slug) }
         respond_with @user
       }
     end

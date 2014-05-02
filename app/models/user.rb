@@ -83,10 +83,6 @@ class User < ActiveRecord::Base
       raise "You need an asm-bot user in your database. Run db:seeds"
     end
 
-    def create_asm_bot!
-      User.create!(name: "Assembly Bot",  is_staff: true, email: "asm_bot@assemblymade.com", username: "asm-bot", :password => rand(999999999999).to_s)
-    end
-
     def contributors
       union_query = Arel::Nodes::Union.new(wip_creators.arel, event_creators.arel)
       User.find_by_sql(union_query.to_sql)

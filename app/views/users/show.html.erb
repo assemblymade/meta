@@ -24,43 +24,43 @@
         </div>
       </div>
 
-      <% if @products.any? %>
+      <% if @contributions.any? %>
         <h2 class="profile-section-title">Contributions</h2>
 
-        <% @products.each do |p| %>
-
+        <% @contributions.each do |contribution| %>
+          <% product = contribution.product %>
           <div class="profile-product-row">
             <div class="logo">
-              <%= image_tag p[:product].poster_image.url, width: 60 %>
+              <%= image_tag product.poster_image.url, width: 60 %>
             </div>
 
             <div class="meta">
               <div>
-                <% if p[:product].for_profit? %>
-                  <strong><a class="text-gray" href="<%= product_partners_path(p[:product]) %>"><%= number_to_percentage(p[:stake] * 100, precision: 2, strip_insignificant_zeros: true) %> stake</a></strong>
+                <% if product.for_profit? %>
+                  <strong><a class="text-gray" href="<%= product_partners_path(product) %>"><%= number_to_percentage(contribution.stake * 100, precision: 2, strip_insignificant_zeros: true) %> stake</a></strong>
                   <span class="pipe-divider"></span>
                   <span class="coins">
-                    <%= pluralize(cents_to_coins(p[:cents]), 'coin') %>
+                    <%= pluralize(cents_to_coins(contribution.cents), 'coin') %>
                   </span>
                 <% else %>
-                  <%= cents_to_coins(p[:cents]) %> karma
+                  <%= cents_to_coins(contribution.cents) %> karma
                 <% end %>
               </div>
 
-              <%= pluralize(p[:contributions], 'contribution') if p[:product].for_profit? %>
+              <%= pluralize(contribution.contribution_count, 'contribution') if product.for_profit? %>
             </div>
 
             <div class="main">
-              <a href="<%= product_path(p[:product]) %>"><%= p[:product].name %></a>
-              <% if p[:product].user == @user %>
+              <a href="<%= product_path(product) %>"><%= product.name %></a>
+              <% if product.user == @user %>
                 <span class="label">Creator</span>
               <% end %>
-              <% if p[:product].core_team.include?(@user) %>
+              <% if product.core_team.include?(@user) %>
                 <span class="label">Core Team</span>
               <% end %>
             </div>
             <div class="pitch">
-              <%= p[:product].pitch %>
+              <%= product.pitch %>
             </div>
           </div>
         <% end %>
