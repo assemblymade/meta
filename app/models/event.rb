@@ -23,6 +23,10 @@ class Event < ActiveRecord::Base
     Event::Win
   ]
 
+  def self.analytics_name
+    "wip.#{slug}"
+  end
+
   def awardable?
     false
   end
@@ -68,6 +72,10 @@ class Event < ActiveRecord::Base
     number
   end
 
+  def self.slug
+    name.demodulize.underscore.downcase
+  end
+
   def self.render_events(events, current_user)
     # TODO (chrislloyd) This is a hack from the old Mustache days. It could be
     #      really cleaned up.
@@ -79,7 +87,7 @@ class Event < ActiveRecord::Base
         event_data[:readraptor_tracking_url] = tracker.url
       end
 
-      event_name = event.class.name.demodulize.underscore.downcase
+      event_name = event.class.slug
 
       template_root = Rails.root.join('app', 'templates', 'events')
       template_path = template_root.join(
@@ -88,6 +96,28 @@ class Event < ActiveRecord::Base
       )
 
       [event, Mustache.render(File.read(template_path), event_data)]
+    end
+  end
+
+  def self.create_from_comment(wip, type, body, user)
+    case type.to_s
+    when Event::Close.to_s
+      wip.close!(user, body)
+
+    when Event::Reopen.to_s
+      wip.reopen!(user, body)
+
+    when Event::Promotion.to_s
+      wip.promote!(user, body)
+
+    when Event::Demotion.to_s
+      wip.demote!(user, body)
+
+    when Event::Comment.to_s
+      wip.comments.create(user_id: user.id, body: body)
+
+    else
+      raise 'Unknown event'
     end
   end
 end

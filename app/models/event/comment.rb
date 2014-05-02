@@ -8,6 +8,10 @@ class Event::Comment < Event
   after_save :post_process
   after_save :consider_comment_a_check_in
   after_commit -> { track_activity }, on: :create
+  
+  def self.analytics_name
+    'wip.commented'
+  end
 
   def post_process
     add_backreferences

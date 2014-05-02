@@ -227,8 +227,6 @@ ASM::Application.routes.draw do
       patch 'award', :action => :award, :on => :member
       post 'promote'
       post 'demote'
-      patch 'pin'
-      patch 'unpin'
       post 'deliverables'
       post 'copy_deliverables'
       post 'code_deliverables'

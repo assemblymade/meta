@@ -12,5 +12,5 @@ class Event::CodeAdded < Event
   
   def awardable?
     true
-  end
+  end  
 end

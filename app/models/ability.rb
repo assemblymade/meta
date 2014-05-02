@@ -30,6 +30,9 @@ class Ability
     # WIPs
 
     can :manage, :all if user.staff?
+    can [:comment, :allocation], Wip do
+      true
+    end
 
     can [:close, :reopen], Wip do |wip|
       wip.user == user
@@ -43,7 +46,7 @@ class Ability
       user.staff? || wip.product.core_team?(user)
     end
 
-    can [:reopen, :reject, :unallocate, :award, :pin], Wip do |wip|
+    can [:reopen, :rejection, :unallocate], Wip do |wip|
       wip.product.core_team?(user)
     end
 

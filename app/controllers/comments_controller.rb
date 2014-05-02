@@ -8,52 +8,21 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:edit, :update]
 
   def create
+    type = comment_params[:type].constantize
+    authorize! type.slug.to_sym, @wip
     Sequence.save_uniquely do
-      case comment_params[:type]
-      when 'Event::Close'
-        authorize! :close, @wip
-        @event = @wip.close!(current_user, comment_params[:body])
-        @event_name = 'wip.closed'
+      @event = Event.create_from_comment(@wip, type, comment_params[:body], current_user)
+    end
 
-      when 'Event::Reopen'
-        @event = @wip.reopen!(current_user, comment_params[:body])
-        @event_name = 'wip.reopened'
-
-      when 'Event::Rejection'
-        authorize! :reject, @wip
-        @event = @wip.reject!(current_user, comment_params[:body])
-        @event_name = 'wip.rejected'
-
-      when 'Event::Unallocation'
-        authorize! :unallocate, @wip
-        @event = @wip.unallocate!(current_user, comment_params[:body])
-        @event_name = 'wip.unallocated'
-
-      when 'Event::Promote'
-        authorize! :promote, @wip
-        @event = @wip.promote!(current_user, comment_params[:body])
-        @event_name = 'wip.promoted'
-
-      when 'Event::Demote'
-        authorize! :promote, @wip
-        @event = @wip.demote!(current_user, comment_params[:body])
-        @event_name = 'wip.demoted'
-
-      when 'Event::Comment'
-        @event = Event::Comment.new(comment_params.merge(user_id: current_user.id))
-        @wip.events << @event
-        @event_name = 'wip.commented'
-        track_event 'wip.engaged', WipAnalyticsSerializer.new(@wip, scope: current_user).as_json.merge(engagement: 'commented')
-        at_replied_users = @event.notify_users
-        excluded_users = [@event.user, at_replied_users].flatten.compact.uniq
-        ReadRaptorDelivery.new(@wip.watchers - excluded_users).deliver_async(@event)
-      else
-        raise 'Unknown event'
-      end
+    if type == Event::Comment
+      track_event 'wip.engaged', WipAnalyticsSerializer.new(@wip, scope: current_user).as_json.merge(engagement: 'commented')
+      at_replied_users = @event.notify_users
+      excluded_users = [@event.user, at_replied_users].flatten.compact.uniq
+      ReadRaptorDelivery.new(@wip.watchers - excluded_users).deliver_async(@event)
     end
 
     track_params = EventAnalyticsSerializer.new(@event, scope: current_user).as_json
-    track_event @event_name, track_params
+    track_event type.analytics_name, track_params
     if !current_user.staff?
       AsmMetrics.product_enhancement
       AsmMetrics.active_user(current_user)

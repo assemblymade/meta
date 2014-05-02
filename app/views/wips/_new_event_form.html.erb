@@ -56,9 +56,9 @@
 
                   <% if @wip.is_a?(Task) %>
                     <% if @wip.promoted? %>
-                      <%= button_tag 'Comment & Demote', name: 'event_comment[type]', value: 'Event::Demote', type: 'submit', class: %w(btn btn-default) %>
+                      <%= button_tag 'Comment & Demote', name: 'event_comment[type]', value: 'Event::Demotion', type: 'submit', class: %w(btn btn-default) %>
                     <% else %>
-                      <%= button_tag 'Comment & Promote', name: 'event_comment[type]', value: 'Event::Promote', type: 'submit', class: %w(btn btn-default) %>
+                      <%= button_tag 'Comment & Promote', name: 'event_comment[type]', value: 'Event::Promotion', type: 'submit', class: %w(btn btn-default) %>
                     <% end %>
                   <% end %>
                 <% end %>
