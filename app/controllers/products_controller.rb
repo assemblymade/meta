@@ -95,19 +95,6 @@ class ProductsController < ApplicationController
     @product_jobs = ProductJob.find(:all)
   end
 
-  def leaderboard
-    start_time = case params[:period]
-    when 'week' then Time.now.beginning_of_week
-    when 'month' then Time.now.beginning_of_month
-    else
-      redirect_to product_leaderboard_path(@product) + '/week'
-      return
-    end
-
-    @leaderboard = ProductLeaderboard.new(@product,start_time)
-    @leaderboard_serializer = LeaderboardSerializer.new(@leaderboard)
-  end
-
   def follow
     @product.watch!(current_user)
     render nothing: true, :status => :ok

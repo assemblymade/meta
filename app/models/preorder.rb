@@ -15,12 +15,6 @@ class Preorder < ActiveRecord::Base
 
   scope :since, ->(time) { where('created_at >= ?', time) }
 
-  after_create :update_idea_rank
-
-  def update_idea_rank
-    UpdateIdeaRankWorker.perform_async(product.id)
-  end
-
   before_validation :set_amount_from_perk, :on => :create
 
   def set_amount_from_perk

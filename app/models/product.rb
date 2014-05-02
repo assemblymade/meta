@@ -37,7 +37,7 @@ class Product < ActiveRecord::Base
   has_many :subscribers, :through => :subscriptions, :source => :user
   has_many :subscriptions
   has_many :tasks
-  has_many :votes, :as => :voteable, :after_add => :update_rank
+  has_many :votes, :as => :voteable
   has_many :watchers, :through => :watchings, :source => :user
   has_many :watchings, :as => :watchable
   has_many :wip_activities, through: :wips, source: :activities
@@ -85,7 +85,6 @@ class Product < ActiveRecord::Base
   before_create :generate_authentication_token
   after_create  :vote_on_behalf_of_owner
   after_update -> { CreateIdeaWipWorker.perform_async self.id }, :if => :submitted_at_changed?
-  after_update :update_rank
 
   after_commit -> { subscribe_owner_to_notifications }, on: :create
   after_commit -> { add_to_event_stream }, on: :create
@@ -337,10 +336,6 @@ class Product < ActiveRecord::Base
 
   def poster_image
     PosterImage.new(self)
-  end
-
-  def update_rank(*args)
-    UpdateIdeaRankWorker.perform_async(id)
   end
 
   def fill_in_generated_name
