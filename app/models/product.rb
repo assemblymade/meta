@@ -340,7 +340,7 @@ class Product < ActiveRecord::Base
   protected
 
   def vote_on_behalf_of_owner
-    votes.create!(user: user, ip: user.last_sign_in_ip)
+    votes.create!(user: user, ip: user.last_sign_in_ip || '0.0.0.0')
   end
 
   def subscribe_owner_to_notifications

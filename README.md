@@ -8,12 +8,11 @@
 * [foreman](https://toolbelt.heroku.com)
 * [ruby](http://www.ruby-lang.org)
 * [PostgreSQL](http://www.postgresql.org)
-* [bundler](http://gembundler.com)
+* [Redis](http://redis.io/)
+* [Elasticsearch](http://www.elasticsearch.org/)
 
 ## Setup
 
-    # Fetch external dependencies
-    $ git submodule init && git submodule update
     $ bundle install
 
     # Edit your local configuration
