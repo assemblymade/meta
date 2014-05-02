@@ -15,19 +15,12 @@ class CommentsController < ApplicationController
     end
 
     if type == Event::Comment
-      track_event 'wip.engaged', WipAnalyticsSerializer.new(@wip, scope: current_user).as_json.merge(engagement: 'commented')
-      at_replied_users = @event.notify_users
-      excluded_users = [@event.user, at_replied_users].flatten.compact.uniq
-      ReadRaptorDelivery.new(@wip.watchers - excluded_users).deliver_async(@event)
+      track_wip_engaged @wip, 'commented'
+      register_with_readraptor(@event)
+      @event.notify_mentioned_users!
     end
 
-    track_params = EventAnalyticsSerializer.new(@event, scope: current_user).as_json
-    track_event type.analytics_name, track_params
-    if !current_user.staff?
-      AsmMetrics.product_enhancement
-      AsmMetrics.active_user(current_user)
-      AsmMetrics.active_builder(current_user)
-    end
+    track_analytics(@event)
     next_mission_if_complete!(@product.current_mission, current_user)
 
     respond_with @event, location: product_wip_path(@product, @wip), serializer: EventSerializer
@@ -62,5 +55,24 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:event_comment).permit(:body, :type)
+  end
+
+  def track_analytics(event)
+    track_params = EventAnalyticsSerializer.new(event, scope: current_user).as_json
+    track_event event.class.analytics_name, track_params
+    if !current_user.staff?
+      AsmMetrics.product_enhancement
+      AsmMetrics.active_user(current_user)
+      AsmMetrics.active_builder(current_user)
+    end
+  end
+
+  def track_wip_engaged(wip, engagement)
+    track_event 'wip.engaged', WipAnalyticsSerializer.new(wip, scope: current_user).as_json.merge(engagement: 'commented')
+  end
+
+  def register_with_readraptor(event)
+    excluded_users = [event.user, event.mentioned_users].flatten.compact.uniq
+    ReadRaptorDelivery.new(event.wip.watchers - excluded_users).deliver_async(event)
   end
 end

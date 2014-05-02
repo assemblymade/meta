@@ -53,15 +53,15 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def notify_users
-    users = self.body.scan(/\@(\w+)/).flatten
-    # validate users
-    users = User.where(:username => users)
-    # notify users individually
-    users.each do |user|
+  def mentioned_users
+    usernames = self.body.scan(/\@(\w+)/).flatten.uniq
+    User.where(username: usernames)
+  end
+  
+  def notify_mentioned_users!
+    mentioned_users.each do |user|
       self.notify_user!(user)
     end
-    return users
   end
 
   def total_tips
