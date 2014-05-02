@@ -1,5 +1,3 @@
-require 'action_controller/parameters'
-
 class MilestonesController < ApplicationController
   respond_to :html
 

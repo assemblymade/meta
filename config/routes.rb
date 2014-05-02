@@ -243,8 +243,6 @@ ASM::Application.routes.draw do
 
     resources :core_team_members
 
-    resources :whiteboard
-
     resources :posts
     resources :status_messages, only: [:create]
 

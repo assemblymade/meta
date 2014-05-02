@@ -2,7 +2,6 @@ class Event::Comment < Event
   include Versioning
 
   belongs_to :wip, touch: true, counter_cache: true
-  has_many :whiteboard_assets
 
   validates :body, presence: true, length: { minimum: 2 }
 
@@ -39,11 +38,11 @@ class Event::Comment < Event
   def tippable?
     true
   end
-  
+
   def awardable?
     true
   end
-  
+
   def editable?
     true
   end

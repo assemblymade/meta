@@ -54,7 +54,6 @@ gem 'rails_stdout_logging', group: [:development, :production]
 gem 'redcarpet'
 gem 'redis'
 gem 'rinku'
-gem 'rmagick', :require => false
 gem 'sanitize'
 gem 'sass-rails'
 gem 'sequenced', '~> 1.5.0'
