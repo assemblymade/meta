@@ -77,7 +77,7 @@ class ProductDecorator < ApplicationDecorator
 
   def current_exchange_rate
     Rails.cache.fetch([self.id, 'exchange_rate'], expires_in: 12.hours) do
-      Stake::Minter.new(self).exchange_rate_at(Time.now)
+      TransactionLogExchangeRate.at(self.id, Time.now)
     end
   end
 
@@ -88,7 +88,7 @@ class ProductDecorator < ApplicationDecorator
   def currency
     for_profit? ? 'Coins' : 'Karma'
   end
-  
+
   def stakeholders
     for_profit? ? 'Ownership' : 'Contributors'
   end

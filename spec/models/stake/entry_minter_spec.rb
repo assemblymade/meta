@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Stake::Minter do
+describe Stake::EntryMinter do
   let(:product) { Product.make! }
   let(:work) { Task.make!(product: product, user: worker) }
   let(:validator) { User.make! }
@@ -14,8 +14,8 @@ describe Stake::Minter do
     TransactionLogEntry.validated! start_at, product, work.id, validator.id, worker.id
     entry = TransactionLogEntry.voted! start_at + 1.second, product, work.id, voter.id
 
-    minter = Stake::Minter.new(product)
-    entries = minter.mint_coins!(entry)
+    minter = Stake::EntryMinter.new(product, entry)
+    entries = minter.mint_coins!
 
     expect(
       entries.last
@@ -34,8 +34,8 @@ describe Stake::Minter do
     TransactionLogEntry.voted! start_at, product, work.id, voter.id
     entry = TransactionLogEntry.validated! start_at + 1.second, product, work.id, validator.id, worker.id
 
-    minter = Stake::Minter.new(product)
-    entries = minter.mint_coins!(entry)
+    minter = Stake::EntryMinter.new(product, entry)
+    entries = minter.mint_coins!
 
     expect(
       entries.last
@@ -55,8 +55,8 @@ describe Stake::Minter do
     TransactionLogEntry.multiplied! start_at + 1.second, product, work.id, voter.id, 2
     entry = TransactionLogEntry.validated! start_at + 2.seconds, product, work.id, validator.id, worker.id
 
-    minter = Stake::Minter.new(product)
-    entries = minter.mint_coins!(entry)
+    minter = Stake::EntryMinter.new(product, entry)
+    entries = minter.mint_coins!
 
     expect(
       entries.last
@@ -77,12 +77,11 @@ describe Stake::Minter do
     TransactionLogEntry.validated! start_at + 0.seconds, product, work.id, validator.id, worker.id
     entry = TransactionLogEntry.voted! start_at + 1.second, product, work.id, voter.id
 
-    minter = Stake::Minter.new(product)
-    entries = minter.mint_coins!(entry)
+    minter = Stake::EntryMinter.new(product, entry)
+    entries = minter.mint_coins!
 
     expect(
       entries.map(&:cents)
     ).to match_array([250, 250, 9500])
   end
-
 end
