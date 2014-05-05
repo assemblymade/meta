@@ -1,4 +1,4 @@
-<% title 'FAQ' %>
+<% title [Question::GROUPS[@group], 'FAQ'] %>
 <%= render 'shared/navbar' %>
 
 <% cache Question.cache_key(@group) do %>
@@ -40,9 +40,9 @@
                   <h6 class="panel-title">Areas</h6>
                 </div>
                 <ul class="nav nav-pills nav-stacked">
-                  <% @groups.each do |name| %>
-                    <li class="<%= ('active' if @group == name) %>">
-                      <%= link_to Question::GROUPS[name], "/help/#{name}" %>
+                  <% @groups.each do |id, name| %>
+                    <li class="<%= ('active' if @group == id) %>">
+                      <%= link_to name, "/help/#{id}" %>
                     </li>
                   <% end %>
                 </ul>

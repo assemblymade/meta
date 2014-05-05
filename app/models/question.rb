@@ -1,8 +1,8 @@
 class Question
-  GROUPS = {general:     'General',
-            ideas:       'Submitting an idea',
-            building:    'Building apps',
-            preordering: 'Pre-orders & refunds'}
+  GROUPS = {'general'     => 'General',
+            'ideas'       => 'Submitting an idea',
+            'building'    => 'Building apps',
+            'preordering' => 'Pre-orders & refunds'}
 
   cattr_writer :base_path
   def self.base_path
