@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width"/>
+    <%= stylesheet_link_tag 'email' %>
+  </head>
+  <body>
+    <table class="body">
+      <tr>
+        <td class="center" align="center" valign="top">
+          <center>
+            <table class="container">
+              <tr>
+                <td>
+
+                  <!-- Header -->
+
+                  <table class="row header">
+                    <tr>
+                      <td class="wrapper">
+                        <table class="six columns">
+                          <tr>
+                            <td class="left-text-pad">
+                              <a href="<%= root_url(auth_token: @user.authentication_token) %>" target="_blank" title="Assembly">
+                                <img alt="Assembly Logo" src="<%= image_url('logo-wordmark-dark@2x.png') %>" width="36" height="32" />
+                              </a>
+                            </td>
+                            <td class="expander"></td>
+                          </tr>
+                        </table>
+                      </td>
+                      <td class="wrapper last">
+                        <table class="six columns hide-for-small">
+                          <tr>
+                            <td class="text-right right-text-pad header-date">
+                              <% if @product %>
+                                <%= link_to @product.name, product_url(@product) %>
+                              <% else %>
+                                <% @date ||= Date.today %>
+                                <span class="header-date-day">
+                                  <%= @date.strftime('%A').upcase %>
+                                </span>
+                                <span class="text-muted">
+                                  <%= @date.strftime('%B %-d, %Y').upcase %>
+                                </span>
+                              <% end %>
+                            </td>
+                            <td class="expander"></td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Body -->
+
+                  <%= yield %>
+
+                  <!-- Footer -->
+
+                  <table class="row footer">
+                    <tr>
+                      <td class="wrapper">
+                        <table class="six columns">
+                          <tr>
+                            <td class="left-text-pad">
+                              <p>
+                                You're receiving these updates because you signed up for Assembly. <a href="%unsubscribe_url%" target="_blank">Unsubscribe</a>.
+                              </p>
+                            </td>
+                            <td class="expander"></td>
+                          </tr>
+                        </table>
+                      </td>
+
+                      <td class="wrapper last">
+                        <table class="six columns">
+                          <tr>
+                            <td class="right-text-pad text-right">
+                              <strong class="text-muted">Assembly Made, Inc.</strong><br />
+                              3030A 16th Street<br />
+                              San Francisco, 94103<br />
+                              California, USA
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+
+                </td>
+              </tr>
+            </table>
+          </center>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

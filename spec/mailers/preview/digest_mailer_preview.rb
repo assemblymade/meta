@@ -6,18 +6,10 @@ class DigestMailerPreview < ActionMailer::Preview
   end
 
   def daily_with_showcase
-    Showcase.schedule_day
     DigestMailer.daily(user.id, serialize_articles(random_activity(10)))
   end
 
   def weekly
-    Showcase.schedule_day
-    Newsletter.delete_all
-    DigestMailer.weekly(user.id)
-  end
-
-  def weekly_with_broadcast
-    Showcase.schedule_day
     newsletter = create_newsletter!
     DigestMailer.weekly(user.id, newsletter.id)
   end

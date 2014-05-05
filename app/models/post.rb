@@ -15,4 +15,8 @@ class Post < ActiveRecord::Base
 
   friendly_id :title, use: :slugged
 
+  def summary
+    super || body.split("\n").first
+  end
+
 end

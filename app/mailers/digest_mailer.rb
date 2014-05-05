@@ -34,7 +34,7 @@ class DigestMailer < ActionMailer::Base
 
     @newsletter = Newsletter.find(newsletter_id)
 
-    @products = Showcase.week.limit(7).sort_by do |showcase|
+    @products = Showcase.showcasing_in_date_range(Date.today, 1.week.ago).sort_by do |showcase|
       showcase.product.combined_watchers_and_voters.count
     end.reverse.map {|showcase| showcase.product }
 

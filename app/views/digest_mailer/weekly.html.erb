@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width"/>
-    <%= stylesheet_link_tag 'email' %>
+    <%= stylesheet_link_tag 'deprecated_email' %>
 </head>
 <body>
 <div id="page">
@@ -19,32 +19,6 @@
     <tr>
       <td>
         <table class="container" cellspacing="0" cellpadding="0" align="center">
-          <tr>
-            <td class="wrapper">
-              <table cellspacing="0" cellpadding="0">
-                <tr>
-                  <td class="title-box">ASSEMBLY NEWS</td>
-                </tr>
-                <tr>
-                  <td class="paragraph">
-                    <%= markdown(@newsletter.body) %>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-
-    <tr>
-      <td>
-        <table class="container" cellspacing="0" cellpadding="0" align="center">
-
-          <%= render 'product_of_the_week', product: @featured_product %>
-
-          <%= render 'trending_ideas' %>
-
           <tr>
             <td>
               <table class="container" cellspacing="0" cellpadding="0" align="center" id="footer">

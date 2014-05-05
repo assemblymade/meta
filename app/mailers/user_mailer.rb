@@ -1,6 +1,8 @@
 class UserMailer < Devise::Mailer
   helper :markdown, :wip
 
+  layout 'email', only: :welcome
+
   def welcome(user_id)
     tag 'user#welcome'
 

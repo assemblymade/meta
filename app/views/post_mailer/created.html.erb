@@ -1,0 +1,39 @@
+<table class="row">
+  <tbody>
+    <tr>
+      <td class="wrapper last">
+        <table class="twelve columns">
+          <tbody>
+            <tr>
+              <td class="panel panel-default">
+                <div>
+                  <a href="<%= user_url(@post.author) %>">
+                    <img class="img-circle" src="<%= @post.author.avatar.url(48) %>" width="24" height="24" alt="@<%= @post.author.username %>" style="margin-right:5px;">
+                    <%= @post.author.username %>
+                  </a>
+                  wrote a new post in
+                  <a href="<%= product_url(@post.product) %>"><%= @post.product.name %></a>:
+                </div>
+                <br />
+                <blockquote>
+                  <h5 class="alpha" style="margin-top:0"><%= @post.title %></h5>
+                  <%== product_markdown(@post.product, @post.summary) %>
+                </blockquote>
+
+                <table class="button radius">
+                  <tr>
+                    <td>
+                      <a href="<%= product_post_url(@post.product, @post) %>">Read more</a>
+                    </td>
+                  </tr>
+                </table>
+
+              </td>
+              <td class="expander"></td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
