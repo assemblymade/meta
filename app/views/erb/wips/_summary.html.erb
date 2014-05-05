@@ -7,54 +7,45 @@
   <a class="title" href="<%= product_wip_path(task.product, task) %>">
     <span class="number"><%= task.formatted_number %></span>
     <%= task.title %>
-
-    <div class="meta">
-      <a href="<%= user_path(task.user) %>">
-        <%= task.user.username %>
-      </a>
-
-      <span class="pipe-divider"></span>
-
-      <a href="<%= product_wip_path(task.product, task) %>">
-        <span class="comments">
-          <%= task.formatted_comments_count %>
-        </span>
-
-        <% if (count = task.new_comments(current_user)) > 0 %>
-          <span class="updates">
-            <span class="new-comments highlight">
-              <%= count %> new
-            </span>
-          </span>
-        <% end %>
-      </a>
-
-      <span class="pipe-divider"></span>
-
-      <span class="watchers">
-        <%= task.formatted_watchers_count %>
+  </a>
+  <div class="meta">
+    <a href="<%= product_wip_path(task.product, task) %>">
+      <span class="comments">
+        <%= task.formatted_comments_count %>
       </span>
 
-      <% if task.promoted? %>
-        <span class="promotion">
-          <span class="pipe-divider"></span>
-          <span class="promoted-wip">Promoted 2x pts</span>
+      <% if (count = task.new_comments(current_user)) > 0 %>
+        <span class="updates">
+          <span class="new-comments highlight">
+            <%= count %> new
+          </span>
         </span>
       <% end %>
-    </div>
+    </a>
 
-    <% if watchers %>
-      <div class="watchers">
-        <div class="avatar-grid">
-          <% task.watchers.each do |watcher| %>
-            <div class="avatar avatar-xs">
-              <img src="<%= watcher.avatar_url %>" title="<%= watcher.username %>" />
-            </div>
-          <% end %>
-        </div>
+    <span class="pipe-divider"></span>
+
+    <span class="watchers">
+      <%= task.formatted_watchers_count %>
+    </span>
+
+    <% if task.workers.any? %>
+      <% worker = task.workers.first %>
+      <div class="pull-right">
+        assigned to
+        <a href="<%= user_path(worker) %>">@<%= worker.username %></a>
       </div>
     <% end %>
-  </a>
+
+
+    <% if task.promoted? %>
+      <span class="promotion">
+        <span class="pipe-divider"></span>
+        <span class="promoted-wip">Promoted 2x pts</span>
+      </span>
+    <% end %>
+  </div>
+
 
   <% if product %>
     <ol class="breadcrumb">
