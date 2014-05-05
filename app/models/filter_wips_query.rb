@@ -32,8 +32,11 @@ class FilterWipsQuery
   def state_filter
     return unless state
 
-    if personally_allocated?
+    case state
+    when 'personally_allocated'
       user.wips_working_on
+    when 'open'
+      Wip.open
     else
       Wip.where(state: state)
     end
@@ -75,9 +78,5 @@ class FilterWipsQuery
 
   def page
     filters[:page]
-  end
-
-  def personally_allocated?
-    state == 'personally_allocated' && user
   end
 end
