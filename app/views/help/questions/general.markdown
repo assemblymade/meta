@@ -12,17 +12,18 @@ title: How do I earn app coins?
 ---
 App coins are primarily earned through your contributions (e.g. code, design, copy, etc) to the software products being built on Assembly. A contribution made to a product can be awarded app coins by the product's core team. Members may choose tip you for your contributions with their app coins too.
 
-Here is a common example of how Marry might earn app coins in the Helpful product.
+Here is a common example of how Mary might earn app coins in the Helpful product.
 
-  1. Patrick suggests a new task for building a feature for Helpful.
 
-  2. Community members upvote the task because they think it’s valuable to Helpful’s progress. This upvoting process adds app coins to the bounty that’s up for grabs for completing the task.
+1. Patrick suggests a new task for building a feature for Helpful.
 
-  3. Mary jumps in on the task and submits work, completing the task.
+2. Community members upvote the task because they think it’s valuable to Helpful’s progress. This upvoting process adds app coins to the bounty that’s up for grabs for completing the task.
 
-  4. The product’s Core Team then accept Mary’s work, which awards her the task’s bounty of app coins.
+3. Mary jumps in on the task and submits work, completing the task.
 
-  5. Later David comes along and likes Mary's work after it was already awarded. He also upvotes it and Mary earns additional app more coins because the work was already accepted by the Core Team.
+4. The product’s Core Team then accept Mary’s work, which awards her the task’s bounty of app coins.
+
+5. Later David comes along and likes Mary's work after it was already awarded. He also upvotes it and Mary earns additional app more coins because the work was already accepted by the Core Team.
 
 Additionally, most products retain 5% of the app coins for the person that submitted the idea and anyone else they add to the Core Team to help them lead the product development.
 
