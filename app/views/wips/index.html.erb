@@ -7,22 +7,24 @@
   <div class="page page-padded <%= 'non-profit' if !@product.for_profit?%>">
     <div class="container">
       <% if @wips.empty? %>
-        <div class="note">
-          <div class="note-icon note-start-task"></div>
+        <div class="page-content-wide">
+          <div class="note">
+            <div class="note-icon note-start-task"></div>
 
-          <h3>
-            Create the first task
-          </h3>
+            <h3>
+              Create the first task
+            </h3>
 
-          <p class="text-muted">
-            Get started by breaking down a new idea into bite-sized chunks
-            that can upvoted on and prioritized. Writing a great description will
-            make it super easy for anyone to jump in and get to work.
-          </p>
+            <p class="text-muted">
+              Get started by breaking down a new idea into bite-sized chunks
+              that can upvoted on and prioritized. Writing a great description will
+              make it super easy for anyone to jump in and get to work.
+            </p>
 
-          <a class="btn btn-primary" href="<%= new_product_wip_path(@product) %>">
-            Create a task
-          </a>
+            <a class="btn btn-primary" href="<%= new_product_wip_path(@product) %>">
+              Create a task
+            </a>
+          </div>
         </div>
       <% else %>
         <div class="page-heading">
@@ -47,15 +49,15 @@
           <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
 
         </div>
-
-        <div class="page-sidebar-thin page-sidebar-top-padding">
-          <a class="btn btn-primary btn-block" href="<%= new_product_wip_path(@product) %>">Create a Task</a>
-
-          <br>
-
-          <%= render partial: 'tasks/filters' %>
-        </div>
       <% end %>
+
+      <div class="page-sidebar-thin page-sidebar-top-padding">
+        <a class="btn btn-primary btn-block" href="<%= new_product_wip_path(@product) %>">Create a Task</a>
+
+        <br>
+
+        <%= render partial: 'tasks/filters' %>
+      </div>
     </div>
   </div>
 
