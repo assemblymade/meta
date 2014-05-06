@@ -5,7 +5,7 @@
   data-tips-total="<%= event.total_tips %>"
   data-tips-url="<%= product_event_tips_path(@product, event.id) %>">
 
-  <% if @product_balance > 0 %>
+  <% if @product_balance > 0 && event.user != current_user %>
     <span class="pull-right js-no-tips text-muted">
       Be the first person to tip <strong><%= event.user.username %></strong> for this contribution
     </span>
@@ -20,11 +20,11 @@
     </div><!-- .avatar-grid -->
   </div><!-- .pull-right -->
 
-  <% if @product_balance > 0 %>
+  <% if @product_balance > 0 && event.user != current_user %>
     <a href="#add-tip" class="btn btn-default btn-small btn-tip add-tip js-add-tip">
       Tip <span class="bounty">1</span>
     </a>
-  <% else %>
+  <% elsif @product_balance == 0 %>
   <div class="add-tip">
     <span class="btn btn-default btn-small btn-tip" disabled style="margin-right: 4px;">
       Tip <span class="bounty">1</span>
