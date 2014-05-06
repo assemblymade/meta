@@ -1,0 +1,46 @@
+<table class="row">
+  <tbody>
+    <tr>
+      <td class="wrapper last">
+        <table class="twelve columns">
+          <tbody>
+            <tr>
+              <td class="panel panel-default">
+
+                <table>
+                  <tr>
+                    <td width="200"></td>
+                    <td>
+                      <a href="<%= user_url(@tip.from) %>">
+                        <%= image_tag(@tip.from.avatar.url(120), width: 60, height: 60, class: 'img-circle') %>
+                      </a>
+                    </td>
+                    <td width="200"></td>
+                  </tr>
+                </table>
+
+                <h1 class="text-center">
+                  Sweet! <a href="<%= user_url(@tip.from) %>">
+                    @<%= @tip.from.username %>
+                  </a>
+                  just tipped you <%= pluralize(@tip.cents / 100, 'coin') %> for your comment on <a href="<%= product_url(@tip.product) %>"><%= @tip.product.name %></a>.
+                </h1>
+
+                <br/>
+
+                <table class="button success radius">
+                  <tr>
+                    <td>
+                      <a href="<%= product_shortcut_url(@tip.product, @tip.via.wip.number, anchor: "comment-#{@tip.via.number}") %>">Thank @<%= @tip.from.username %>!</a>
+                    </td>
+                  </tr>
+                </table>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

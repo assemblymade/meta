@@ -251,7 +251,9 @@ ASM::Application.routes.draw do
       resources :transactions, only: [:index, :show, :new, :create]
     end
 
-    get '/:number' => 'shortcuts#show', constraints: {number: /\d+/}
+    get '/:number' => 'shortcuts#show',
+      constraints: {number: /\d+/},
+      as: :shortcut
   end
 
 end

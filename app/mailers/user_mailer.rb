@@ -39,7 +39,9 @@ class UserMailer < Devise::Mailer
   end
 
   protected
+
   def tag(name)
     headers 'X-Mailgun-Tag' => name.to_s
   end
+  
 end

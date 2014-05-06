@@ -10,6 +10,8 @@ class TipsController < ApplicationController
         @event,
         add_cents
       )
+
+      TipMailer.delay.tipped(@tip.id)
     end
 
     render nothing: true, status: 200

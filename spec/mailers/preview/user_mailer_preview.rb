@@ -1,11 +1,7 @@
 class UserMailerPreview < ActionMailer::Preview
 
   def welcome
-    UserMailer.welcome(User.sample)
-  end
-
-  def confirmation_instructions
-    UserMailer.confirmation_instructions(User.sample)
+    UserMailer.welcome(User.sample.id)
   end
 
   def reset_password_instructions
@@ -26,4 +22,5 @@ class UserMailerPreview < ActionMailer::Preview
     end
     UserMailer.remind_user_of_their_claimed_work(worker.user.id, worker.wip.id)
   end
+  
 end

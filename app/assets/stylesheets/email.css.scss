@@ -40,8 +40,8 @@ table.button {
 
   & td { background: $brand-primary !important; }
   &.secondary td { background: $brand-muted !important; }
-  &.alert { background: $brand-danger !important; }
-  &.success { background: $brand-success !important; }
+  &.alert td { background: $brand-danger !important; }
+  &.success td { background: $brand-success !important; }
 
   &.secondary a {
     color: $text-color !important;
