@@ -1,0 +1,53 @@
+<table class="row">
+  <tbody>
+    <tr>
+      <td class="wrapper last">
+        <table class="twelve columns">
+          <tbody>
+            <tr>
+              <td class="panel panel-default">
+
+                <table>
+                  <tr>
+                    <td class="center">
+                      <center>
+                        <%= image_tag('null-states/profile@2x.png', width: 154, height: 38, class: %w(center)) %>
+                      </center>
+                    </td>
+                  </tr>
+                </table>
+
+                <h1 class="text-center">
+                  You just earned your first <%= @product.name %> coins.
+                </h1>
+
+                <p class="text-center">
+                  <a href="<%= user_url(@awarder) %>">@<%= @awarder.username %></a>
+                  awarded your recent work on <strong><%= @product.name %></strong> which minted you <strong><%= number_with_delimiter @wip.coins %> coins</strong> - because it was awesome.<br>
+                </p>
+
+                <br/>
+
+
+                <table class="button success radius">
+                  <tr>
+                    <td>
+                      <a href="<%= product_wips_url(@product) %>">Keep up the streak</a>
+                    </td>
+                  </tr>
+                </table>
+
+
+                <br>
+                <br>
+                <p class="text-center">
+                  <a href="<%= help_url(:general) %>">Learn more about coins.</a>
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

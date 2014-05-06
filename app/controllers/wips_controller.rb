@@ -122,7 +122,11 @@ class WipsController < ApplicationController
   def award
     if winner_id = params.fetch(:event_id)
       authorize! :award, @wip
-      @wip.award! current_user, Event.find(winner_id)
+      @event = Event.find(winner_id)
+      @wip.award! current_user, @event
+      if Event::Win.by(@product, current_user).count == 1
+        BadgeMailer.delay.first_win(@event.id)
+      end
       track_wip_event 'awarded'
     end
     respond_to do |format|
