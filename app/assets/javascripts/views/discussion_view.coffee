@@ -11,6 +11,9 @@ class window.DiscussionView extends Backbone.View
   initialize: (options)->
     @eventDefaults = {}
 
+    @children =
+      upvoteReminder: @$('.js-upvote-reminder')
+
     if user = app.currentUser()
       @eventDefaults.author_name = user.get('name')
       @eventDefaults.avatar_url = user.get('avatar_url')
@@ -52,6 +55,7 @@ class window.DiscussionView extends Backbone.View
 
   addComment: (body)->
     @createEvent 'Event::Comment', body
+    @showUpvotePrompt() unless @model.get('voted')
 
   addClose: (body)->
     @createEvent 'Event::Close', body
@@ -131,4 +135,6 @@ class window.DiscussionView extends Backbone.View
   validComment: (body)->
     return body.length > 1
 
+  showUpvotePrompt: ->
+    @children.upvoteReminder.fadeIn()
 

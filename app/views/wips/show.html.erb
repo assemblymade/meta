@@ -32,6 +32,10 @@
           <% end %>
         </div>
 
+        <div class="educational-modal js-upvote-reminder" style="display:none">
+          You've commented on this Task but you haven't upvoted. Your upvotes reward people with more coins for completing Tasks which helps make <%= @product.name %> a better product.
+        </div>
+
         <%= render 'new_event_form' %>
       </div>
     </div>
@@ -107,7 +111,7 @@
             <% else %>
               <p><strong><%= @wip.winner.username %></strong> was awarded <strong><%= pluralize(@wip.score, 'point') %></strong> for completing this task.</p>
             <% end %>
-          <% end %>
+          <% end %>\"\"
         <% end %>
 
       </div>
@@ -137,13 +141,13 @@
 <%= render 'shared/deprecated_footer' %>
 
 <script>
-  app.wip = new Wip(<%== WipSerializer.new(@wip).to_json %>);
+  app.wip = new Wip(<%== WipSerializer.new(@wip, scope: current_user).to_json %>);
   app.wipEvents = new WipEvents(<%== @wip.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
     url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
   });
 
   $(document).ready(function() {
-    new DiscussionView({
+    app.discussionView = new DiscussionView({
       el: $('#discussion-view-el'),
       model: app.wip
     });
