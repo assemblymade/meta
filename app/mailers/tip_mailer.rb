@@ -6,7 +6,7 @@ class TipMailer < ActionMailer::Base
     @tip = Tip.find(tip_id)
     @user = @tip.to
     mail to: @user.email_address,
-         subject: "#{@tip.from.username} tipped you #{@tip.cents} coins"
+         subject: "#{@tip.from.username} tipped you #{pluralize(@tip.cents / 100, 'coins')}"
   end
 
 end
