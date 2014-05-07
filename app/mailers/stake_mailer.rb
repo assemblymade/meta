@@ -10,6 +10,6 @@ class StakeMailer < ActionMailer::Base
     @contribution = UserContribution.for(@user).find{|c| c.product == @product }
 
     mail      to: @user.email_address,
-         subject: "[Assembly] Summary on your #{@product.name} stake"
+         subject: "Summary on your #{@product.name} stake for #{Date.today.strftime('%B')}"
   end
 end
