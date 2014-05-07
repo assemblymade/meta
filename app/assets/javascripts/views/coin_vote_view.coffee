@@ -36,11 +36,13 @@ class window.CoinVoteView extends Backbone.View
     $(@el).attr('data-vote-voted', 'true')
     @children.coins.text(numeral(@coinsVoted).format('0,0'))
     @createVote()
+    window.app.trigger('voted')
 
   unvote: ->
     $(@el).removeAttr('data-vote-voted')
     @children.coins.text(numeral(@coinsUnvoted).format('0,0'))
     @deleteVote()
+    window.app.trigger('unvoted')
 
   createVote: ->
     $.ajax
