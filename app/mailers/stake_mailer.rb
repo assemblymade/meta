@@ -7,7 +7,7 @@ class StakeMailer < ActionMailer::Base
     @user = User.find(user_id)
     @product = Product.find(product_id)
 
-    @contribution = UserContribution.for(@user).find{|c| c.product == @product }
+    @contribution = UserContribution.for_product(@user, @product)
 
     mail      to: @user.email_address,
          subject: "Summary on your #{@product.name} stake for #{Date.today.strftime('%B')}"

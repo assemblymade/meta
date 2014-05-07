@@ -19,10 +19,10 @@
 
                 <h1 class="text-center">
                   Nice work! You own
-                  <br><%= number_with_delimiter @contribution.coins %> <%= @product.name %> coins as of today.
+                  <br><%= number_with_delimiter @contribution.coins.round %> <%= @product.name %> coins as of today.
                 </h1>
                 <p class="text-center">
-                  They represent your <%= number_to_percentage(@contribution.stake * 100) %> stake in <%= @product.name %>'s future profits. You earn <%= @product.name %> coins every time the Core Team awards you the bounty for your work well done. You'll earn more app coins the earlier you contribute in a product's life.
+                  They represent your <%= number_to_percentage(@contribution.stake * 100, precision: 2) %> stake in <%= @product.name %>'s future profits. You earn <%= @product.name %> coins every time the Core Team awards you the bounty for your work well done. You'll earn more app coins the earlier you contribute in a product's life.
                   <a href="https://assemblymade.com/help/general#general-2">Learn more about app coins</a> on our FAQ.
                  </p>
                 <br>
