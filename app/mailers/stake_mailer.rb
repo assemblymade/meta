@@ -10,6 +10,6 @@ class StakeMailer < ActionMailer::Base
     @contribution = UserContribution.for(@user).find{|c| c.product == @product }
 
     mail      to: @user.email_address,
-         subject: "You've banked #{number_with_delimiter @contribution.coins} #{@product.name} coins"
+         subject: "[Assembly] Summary on your #{@product.name} stake"
   end
 end

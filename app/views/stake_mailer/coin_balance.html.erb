@@ -18,28 +18,23 @@
                 </table>
 
                 <h1 class="text-center">
-                  You've banked <%= number_with_delimiter @contribution.coins %> <%= @product.name %> coins.
+                  Nice work! You own
+                  <br><%= number_with_delimiter @contribution.coins %> <%= @product.name %> coins to date.
                 </h1>
                 <p class="text-center">
-                  Just a quick note to let you know that we're now showing you your stake in coins. <strong>Keep up the good work!</strong>
-                </p>
-
+                  They represent your <%= number_to_percentage(@contribution.stake) %> stake in <%= @product.name %>'s future revenue. You earn <%= @product.name %> coins every time the Core Team awards you the bounty for your work well done. You'll earn more app coins the earlier you contribute in a product's life. 
+                  <a href="https://assemblymade.com/help/general#general-2">Learn more about app coins</a> on our FAQ. 
+                 </p>
                 <br>
 
                 <table class="button success radius">
                   <tr>
                     <td>
-                      <a href="<%= product_wips_url(@product) %>">Earn more coins</a>
+                      <a href="<%= product_wips_url(@product) %>">Earn some more coins</a>
                     </td>
                   </tr>
                 </table>
 
-
-                <br>
-                <br>
-                <p class="text-center">
-                  <a href="http://blog.assemblymade.com/introducing-app-coins">Learn more about coins.</a>
-                </p>
               </td>
             </tr>
           </tbody>
