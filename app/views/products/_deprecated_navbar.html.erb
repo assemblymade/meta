@@ -63,6 +63,15 @@
             People
           </a>
         </li>
+
+        <% if @product.posts.any? %>
+          <li class="nav-item <%= 'navbar-tabbed-tab-active' if posts_controller? %>">
+            <a href="<%= product_posts_path(@product) %>">
+              Blog
+            </a>
+          </li>
+        <% end %>
+
       </ul>
     </div>
   </div>
