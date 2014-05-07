@@ -1,4 +1,5 @@
 class TasksController < WipsController
+  wrap_parameters format: [:json]
 
   def show
     @milestone = MilestoneTask.where('task_id = ?', @wip.id).first.try(:milestone)

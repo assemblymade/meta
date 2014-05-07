@@ -44,7 +44,7 @@ class window.TaskItemView extends Backbone.View
 
     val = @$input.val().trim()
     if val
-      @model.save(title: val, id: null)
+      @model.save({title: val}, {patch: true})
     else
       @clear()
 
