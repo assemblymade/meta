@@ -22,4 +22,8 @@ class UserContribution < Struct.new(:product, :contribution_count, :cents, :stak
       )
     end
   end
+
+  def coins
+    cents / 100.to_d
+  end
 end

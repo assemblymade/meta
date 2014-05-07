@@ -1,8 +1,9 @@
 class StakeMailerPreview < ActionMailer::Preview
 
   def stake_updated
-    user = Stake::AllocationEvent.sample.user
-    StakeMailer.stake_updated(user.id)
+    event = Event::Win.sample
+    user = event.user
+    StakeMailer.coin_balance(event.wip.product.id, user.id)
   end
 
 end
