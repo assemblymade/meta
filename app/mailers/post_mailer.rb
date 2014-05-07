@@ -14,6 +14,20 @@ class PostMailer < ActionMailer::Base
     prevent_delivery(@user)
   end
 
+  def preview(product_id, params, author_id)
+    @product = Product.find(product_id)
+    @post = Post.new(params)
+    @user = User.find(author_id)
+
+    @post.product = @product
+    @post.author = @user
+    @post.id = SecureRandom.uuid
+
+    mail(to: @user.email_address, subject: @post.title) do |format|
+      format.html { render template: 'post_mailer/created' }
+    end
+  end
+
 private
 
   def prevent_delivery(user)

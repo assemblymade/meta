@@ -242,7 +242,9 @@ ASM::Application.routes.draw do
 
     resources :core_team_members
 
-    resources :posts
+    resources :posts do
+      post :preview, on: :collection
+    end
     resources :status_messages, only: [:create]
 
     resources :partners, only: [:index]

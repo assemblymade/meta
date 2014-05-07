@@ -28,7 +28,11 @@ class PostsController < ApplicationController
   def preview
     find_product!
     authenticate_user!
-    authorize :create, Post
+    authorize! :create, Post
+
+    PostMailer.delay.preview(@product.id, post_params.to_hash, current_user.id)
+
+    render nothing: true
   end
 
   def show

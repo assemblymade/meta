@@ -32,6 +32,19 @@
           </div>
 
           <div class="form-actions">
+            <div class="pull-left">
+              <a class="btn btn-default" id="preview-post-btn" href="<%= preview_product_posts_path(@product) %>">Send Preview Email</a>
+              <script>
+                $('#preview-post-btn').click(function(e) {
+                  e.preventDefault();
+                  var btn = $(this),
+                      msg = btn.text();
+                  $.post(btn.attr('href') + '?' + $('#new_post').serialize());
+                  btn.text('Sent!');
+                  delay(3000, function() { btn.text(msg); });
+                });
+              </script>
+            </div>
             <%= f.submit 'Publish', class: %w(btn btn-primary) %>
           </div>
         <% end %>
