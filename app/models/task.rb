@@ -98,7 +98,7 @@ class Task < Wip
   end
 
   def promote!(promoter, reason)
-    raise ActiveRecord::RecordNotSaved unless promoter.can? :promote, self
+    raise ActiveRecord::RecordNotSaved unless promoter.can? :promotion, self
 
     add_event ::Event::Promotion.new(user: promoter, body: reason) do
       StreamEvent.add_promoted_event!(actor: promoter, subject: self, target: product)
@@ -108,7 +108,7 @@ class Task < Wip
   end
 
   def demote!(demoter, reason)
-    raise ActiveRecord::RecordNotSaved unless demoter.can? :demote, self
+    raise ActiveRecord::RecordNotSaved unless demoter.can? :demotion, self
 
     add_event ::Event::Demotion.new(user: demoter, body: reason) do
       StreamEvent.add_demoted_event!(actor: demoter, subject: self, target: product)
