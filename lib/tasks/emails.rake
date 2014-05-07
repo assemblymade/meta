@@ -16,6 +16,17 @@ namespace :emails do
     Wip::Worker.mia.each(&:remind!)
   end
 
+  task :stake_updated => :environment do
+    TransactionLogEntry.with_cents.group(:user_id, :product_id).sum(:cents).each do |(user_id, product_id), cents|
+      user = User.find(user_id)
+      product = Product.find(product_id)
+      if cents > 0
+        Rails.logger.info("email=stake_updated user=#{user.username} product=#{product.slug} cents=#{cents}")
+        StakeMailer.delay.coin_balance(product_id, user_id)
+      end
+    end
+  end
+
   namespace :digests do
 
     task :daily => :environment do
