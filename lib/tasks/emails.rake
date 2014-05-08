@@ -31,31 +31,23 @@ namespace :emails do
 
     task :daily => :environment do
 
-      users = if ENV['EMAIL_TEST_MODE']
-        User.where(is_staff: true)
-      else
-        User.where(mail_preference: 'daily')
-      end.to_a
-
       client = ReadRaptorClient.new
 
-      users.each do |user|
-        Rails.logger.debug("Attempting to send out recap to #{user.username} out of #{users.count} total users")
-        unread_articles = ReadRaptorClient.new.unread_entities(user.id)
+      User.where(mail_preference: 'daily').each do |user|
+        unread_article_ids = ReadRaptorClient.new.unread_entities(user.id)
 
-        # Mark all articles as read
-        unless ENV['EMAIL_TEST_MODE']
-          ReadRaptorSerializer.deserialize_articles(unread_articles).each do |entity|
-            client.get(ReadraptorTracker.new(entity, user.id).url)
-          end
-        end
+        unread_articles = ReadRaptorSerializer.deserialize_articles(unread_article_ids)
 
         # Only send out if they have any unread articles
         next if unread_articles.empty?
 
-        DigestMailer.delay.daily(user.id, unread_articles)
+        # Mark all articles as read
+        unread_articles.each do |entity|
+          client.get(ReadraptorTracker.new(entity, user.id).url)
+        end
 
-        Rails.logger.info "daily digest email: #{user.email} unread: #{unread_articles}"
+        DigestMailer.delay.daily(user.id, unread_article_ids)
+        Rails.logger.info "digest email=#{user.email} unread=#{unread_article_ids}"
       end
     end
 

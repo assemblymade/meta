@@ -10,7 +10,7 @@ class ReadRaptorSerializer
     entities = []
     keys.map{|id| id.split('_') }.group_by{|type, id| type }.each do |type, type_ids|
       ids = type_ids.map{|t, id| id }
-      type.constantize.where(id: ids).to_a.compact.each do |o|
+      type.constantize.base_class.where(id: ids).to_a.compact.each do |o|
         entities << o
       end
     end
