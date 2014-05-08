@@ -30,6 +30,10 @@
               <% end %>
             </div>
           <% end %>
+
+          <% if @events.any? %>
+            <%= render 'wips/timestamp', time: @events.last[0].created_at %>
+          <% end %>
         </div>
 
         <div class="educational-modal js-upvote-reminder" style="display:none">

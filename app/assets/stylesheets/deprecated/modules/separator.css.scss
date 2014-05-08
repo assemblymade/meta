@@ -1,0 +1,13 @@
+.separator {
+  border-top: solid 1px $gray-lighter;
+  text-align: center;
+}
+
+.separator-label {
+  font-size: 14px;
+  color: $gray;
+  position: relative;
+  top: -15px;
+  background-color: #fff;
+  padding: 0 10px;
+}

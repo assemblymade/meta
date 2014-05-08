@@ -28,6 +28,10 @@
               <% end %>
             </div>
           <% end %>
+
+          <% if @events.any? %>
+            <%= render 'wips/timestamp', time: @events.last[0].created_at %>
+          <% end %>
         </div>
 
         <%= render 'new_event_form' %>

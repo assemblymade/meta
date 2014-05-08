@@ -39,6 +39,10 @@
               <% @events.each do |event, html| %>
                 <%= render 'wips/event', event: event, html: html %>
               <% end %>
+
+              <% if @events.any? %>
+                <%= render 'wips/timestamp', time: @events.last[0].created_at %>
+              <% end %>
             </div>
 
             <%= render 'wips/new_event_form' %>
