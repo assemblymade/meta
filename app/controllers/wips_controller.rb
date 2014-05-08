@@ -124,7 +124,7 @@ class WipsController < ApplicationController
       authorize! :award, @wip
       @event = Event.find(winner_id)
       @wip.award! current_user, @event
-      if Event::Win.by(@product, current_user).count == 1
+      if Event::Win.by(@product, @event.user).count == 1
         BadgeMailer.delay.first_win(@event.id)
       end
       track_wip_event 'awarded'
