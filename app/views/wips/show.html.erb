@@ -10,31 +10,7 @@
 
     <div class="page-content">
       <div id="discussion-view-el">
-        <div class="timeline" id="discussion-view-el">
-          <% @events.each do |event, html| %>
-            <div id="entry-<%= event.number %>" class="timeline-entry timeline-entry-<%= 'avatar' if event.is_a? Event::Comment %>">
-              <div class="timeline-entry-actions">
-                <% if signed_in? && event.awardable? && current_user.can?(:award, event) && @wip.open? %>
-                  <%= link_to 'Award', award_product_wip_path(@product, @wip, event_id: event.id), remote: true, method: 'patch', class: 'btn btn-default btn-small', data: { confirm: "Are you sure you want to award #{event.user.username}?" } %>
-                <% end %>
-                <% if signed_in? && event.editable? && current_user.can?(:update, event) %>
-                  <%= link_to 'Edit', edit_product_wip_comment_path(@product, @wip, event), class: 'btn btn-default btn-small' %>
-                <% end %>
-              </div>
-              <%== html %>
-
-              <% if event.tippable? %>
-                <div class="timeline-entry-meta">
-                  <%= render 'wips/tip_box', event: event %>
-                </div>
-              <% end %>
-            </div>
-          <% end %>
-
-          <% if @events.any? %>
-            <%= render 'wips/timestamp', time: @events.last[0].created_at %>
-          <% end %>
-        </div>
+        <%= render 'wips/discussion', events: @events %>
 
         <div class="educational-modal js-upvote-reminder" style="display:none">
           You've commented on this Task but you haven't upvoted. Your upvotes reward people with more coins for completing Tasks which helps make <%= @product.name %> a better product.

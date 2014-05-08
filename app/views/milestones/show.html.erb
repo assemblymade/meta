@@ -35,18 +35,9 @@
       <div class="page-content-group">
         <div class="page-content-group-heading">Discussion</div>
           <div id="discussion-view-el">
-            <div class="timeline" id="discussion-view-el">
-              <% @events.each do |event, html| %>
-                <%= render 'wips/event', event: event, html: html %>
-              <% end %>
-
-              <% if @events.any? %>
-                <%= render 'wips/timestamp', time: @events.last[0].created_at %>
-              <% end %>
-            </div>
+            <%= render 'wips/discussion', events: @events %>
 
             <%= render 'wips/new_event_form' %>
-
           </div>
         </div>
 

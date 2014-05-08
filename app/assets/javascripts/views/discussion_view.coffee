@@ -13,6 +13,7 @@ class window.DiscussionView extends Backbone.View
 
     @children =
       upvoteReminder: @$('.js-upvote-reminder')
+      timestamp: @$('.js-timestamp')
 
     if user = app.currentUser()
       @eventDefaults.author_name = user.get('name')
@@ -56,6 +57,7 @@ class window.DiscussionView extends Backbone.View
   addComment: (body)->
     @createEvent 'Event::Comment', body
     @showUpvotePrompt() unless @model.get('voted')
+    @children.timestamp.remove()
 
   addClose: (body)->
     @createEvent 'Event::Close', body
