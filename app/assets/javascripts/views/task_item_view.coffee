@@ -31,7 +31,6 @@ class window.TaskItemView extends Backbone.View
     if !@$input.parent().hasClass('textcomplete-wrapper')
       $.applyTextcomplete(@$input)
 
-    @edit() if @model.isNew()
     @
 
   edit: ->

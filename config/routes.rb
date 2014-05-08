@@ -192,10 +192,10 @@ ASM::Application.routes.draw do
     get 'log' => 'stakes#show'
 
     resources :milestones, only: [:index, :show, :new, :create, :edit, :update], path: 'projects' do
+      put 'tasks/:id' => 'milestones#add'
       resources :tasks, only: [:create, :destroy, :show, :update]
 
       patch :images
-      put 'tasks/:id' => 'milestones#add'
       patch :add
     end
 

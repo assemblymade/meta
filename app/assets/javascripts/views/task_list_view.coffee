@@ -1,7 +1,7 @@
 class window.TaskListView extends Backbone.View
   events:
     'keypress .js-new-task-input': 'createOnEnter'
-    'blur     .js-new-task-input': 'create'
+    # 'blur     .js-new-task-input': 'create'
 
   keys:
     ENTER: 13
@@ -41,9 +41,24 @@ class window.TaskListView extends Backbone.View
       @create()
 
   create: ->
-    if title = @children.newTaskInput.val().trim()
-      @incompleteTasks.create(title: title)
-      @children.newTaskInput.val('')
+    title = @children.newTaskInput.val().trim()
+
+    model = new TaskItem(title: title)
+    @incompleteTasks.add model
+
+    matches = /^#?(\d+)\s*$/.exec(title)
+    if matches
+      model.set('number': matches[1])
+      model.fetch
+        success: => model.save()
+        error: =>
+          model.set('number': null)
+          model.save()
+
+    else
+      model.save()
+
+    @children.newTaskInput.val('')
 
   stateChanged: (task)->
     if task.complete()

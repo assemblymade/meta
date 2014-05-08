@@ -13,22 +13,6 @@ class window.TaskItem extends Backbone.Model
       else
         @collection.url
 
-  sync: (method, model, options)->
-    return if @url() == undefined
-
-    if method == 'create'
-      matches = /^#?(\d+)\s*$/.exec(@get('title'))
-      if matches
-        @set('pending-number', matches[1])
-        @fetch
-          success: =>
-            @save()
-      else
-        Backbone.sync.apply(@, arguments)
-
-    else
-      Backbone.sync.apply(@, arguments)
-
   complete: ->
     @get('state') == 'resolved'
 
