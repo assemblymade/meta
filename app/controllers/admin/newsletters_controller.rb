@@ -10,7 +10,7 @@ class Admin::NewslettersController < AdminController
     @newsletter.save
 
     # Send out dummy newsletter to staff
-    @newsletter.email_to_users(User.where(is_staff: true))
+    @newsletter.send_email_to!(User.where(is_staff: true))
 
     respond_with @newsletter, location: admin_newsletters_path
   end

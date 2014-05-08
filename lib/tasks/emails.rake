@@ -1,9 +1,13 @@
 namespace :emails do
 
   task newsletter: :environment do
-    User.all.each do |user|
-      NewsletterMailer.delay.march_fifth_twenty_fourteen(user.id)
-    end
+    next unless Newsletter.unpublished.any?
+    
+    Newsletter.next_unpublished.publish!(if ENV['EMAIL_TEST_MODE']
+      User.where(is_staff: true)
+    else
+      User.all
+    end)
   end
 
   task :stale_wips => :environment do

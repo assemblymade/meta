@@ -94,6 +94,10 @@ pre {
 
 .panel-success {
   background-color: $brand-success;
+
+  td, p, ul, ol, pre {
+    color: lighten($brand-success, 30%);
+  }
 }
 
 .panel-warning {

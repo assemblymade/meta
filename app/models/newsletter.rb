@@ -4,15 +4,18 @@ class Newsletter < ActiveRecord::Base
   validates :body, presence: true
 
   scope :active, -> { where(cancelled_at: nil) }
-  scope :unpublished, -> { where(published_at: nil) }
-  scope :available, -> { active.unpublished.order(:created_at) }
+  scope :unpublished, -> { active.where(published_at: nil) }
+
+  def self.next_unpublished
+    unpublished.order(:created_at).first
+  end
 
   def published?
     !published_at.nil?
   end
 
   def publish!(users=[])
-    email_to_users(users)
+    send_email_to!(users)
     update_attribute(:published_at, Time.now.utc)
   end
 
@@ -28,8 +31,8 @@ class Newsletter < ActiveRecord::Base
     published_at || Time.now.utc.next_week(:thursday)
   end
 
-  def email_to_users(users)
-    users.each {|user| DigestMailer.delay.weekly(user.id, id) }
+  def send_email_to!(users)
+    users.each {|user| NewsletterMailer.delay.published(id, user.id) }
   end
 
 end
