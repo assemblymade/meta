@@ -13,7 +13,7 @@ class Wip < ActiveRecord::Base
 
   has_many :activities, as: :subject
   has_many :comments, class_name: 'Event::Comment'
-  has_many :events, :after_add => :event_added
+  has_many :events
   has_many :milestones, through: :milestone_tasks
   has_many :milestone_tasks, foreign_key: 'task_id'
   has_many :taggings, class_name: 'Wip::Tagging'
