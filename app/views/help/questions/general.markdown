@@ -42,6 +42,11 @@ title: How are app coins fairly rewarded to early contributors?
 Each product has its own exchange rate for App Coins that is dynamic and adjusts depending on the duration of development, and its rate of progress. Early in development a product tends to have less people upvoting bounties then the more mature products.  Therefore, young products with small communities will see exchange rates where your 1 upvote might mint 90 or more app coins for the person that completes the work. Mature products with a large community will start to see that value go down as low as 1 upvote equaling 1 app coin earned.
 
 ---
+title: How do annuities work?
+---
+Annuities are paid to founders who bring more established products to the platform. They are paid out of the product's profit, after any expenses. If the monthly profit drops below the annuities, they will only be paid up to the available profit and there would be no royalty payout to other contributors for that month.
+
+---
 title: How is Assembly different from a VC or incubator?
 ---
 VCs and Incubators invest capital in a traditional company in exchange for equity. The capital is used to accelerate app growth until there is a liquidity event (IPO or acquisition) where the investors and founders receive most of the reward. Assembly instead provides a platform and backbone services so that anyone, anywhere can work together to build great apps and share the rewards fairly.
