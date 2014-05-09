@@ -18,4 +18,15 @@ class AutoTipContract < ActiveRecord::Base
       errors.add(:user, "existing contract in place for user")
     end
   end
+
+  def self.replace_contracts(product, user_amounts, start_at = Time.now)
+    AutoTipContract.transaction do
+      end_at = start_at - 1
+      AutoTipContract.active_at(product, Time.now).update_all deleted_at: end_at
+
+      user_amounts.each do |user, amount|
+        AutoTipContract.create! product: product, user: user, amount: amount
+      end
+    end
+  end
 end

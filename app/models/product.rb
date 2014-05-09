@@ -14,6 +14,7 @@ class Product < ActiveRecord::Base
 
   has_many :activities
   has_many :completed_missions
+  has_many :contract_holders
   has_many :core_team_memberships
   has_many :core_team, -> { distinct }, :through => :core_team_memberships, :source => :user
   has_many :discussions
@@ -27,6 +28,7 @@ class Product < ActiveRecord::Base
   has_many :perks
   has_many :posts
   has_many :preorders, :through => :perks
+  has_many :profit_reports
   has_many :product_jobs
   has_many :product_roles
   has_many :shortcuts, class_name: 'ProductShortcut'
@@ -112,6 +114,10 @@ class Product < ActiveRecord::Base
     else
       :building
     end
+  end
+
+  def founded_at
+    [created_at.to_date, Date.parse('2013-Nov-01')].max
   end
 
   def for_profit?

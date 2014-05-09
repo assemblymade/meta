@@ -50,12 +50,6 @@
         </a>
       </li>
 
-      <li class="nav-item <%= "active" if (jobs_controller? || partners_controller?) %>">
-        <a href="<%= product_jobs_path(@product) %>">
-          People
-        </a>
-      </li>
-
       <% if @product.posts.any? %>
         <li class="<%= 'active' if posts_controller? %>">
           <a href="<%= product_posts_path(@product) %>">
@@ -63,6 +57,12 @@
           </a>
         </li>
       <% end %>
+
+      <li class="nav-item <%= "active" if (jobs_controller? || partners_controller?) %>">
+        <a href="<%= product_jobs_path(@product) %>">
+          About
+        </a>
+      </li>
     </ul>
   </div>
 </div>

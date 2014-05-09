@@ -100,4 +100,8 @@ class ProductDecorator < ApplicationDecorator
     end
   end
 
+  def sum_active_auto_tips
+    AutoTipContract.active_at(self, Time.now).sum(:amount)
+  end
+
 end

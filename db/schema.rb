@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140501230216) do
+ActiveRecord::Schema.define(version: 20140509213641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,14 @@ ActiveRecord::Schema.define(version: 20140501230216) do
     t.string   "mission_id",   null: false
     t.datetime "created_at",   null: false
     t.uuid     "completor_id", null: false
+  end
+
+  create_table "contract_holders", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id", null: false
+    t.uuid     "user_id",    null: false
+    t.integer  "annuity",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "copy_deliverables", id: false, force: true do |t|
@@ -345,6 +353,13 @@ ActiveRecord::Schema.define(version: 20140501230216) do
   add_index "products", ["repos"], name: "index_products_on_repos", using: :btree
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true, using: :btree
 
+  create_table "profit_reports", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid    "product_id", null: false
+    t.date    "end_at",     null: false
+    t.integer "profit",     null: false
+    t.integer "royalty",    null: false
+  end
+
   create_table "saved_searches", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id"
     t.text     "query"
@@ -440,7 +455,6 @@ ActiveRecord::Schema.define(version: 20140501230216) do
     t.string   "confirmation_token"
     t.string   "unconfirmed_email"
     t.datetime "email_failed_at"
-    t.string   "users"
     t.string   "facebook_uid"
     t.text     "location"
     t.datetime "last_request_at"

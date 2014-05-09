@@ -1,0 +1,35 @@
+<h2><small>Founding</small></h3>
+<p><small>
+  <% if @product.contract_holders.any? %>
+    <%= @product.name %> was founded by <%= render 'users/inline', users: @product.contract_holders.map(&:user) %> on <%= l @product.founded_at, format: :long %>. All initial IP including development and design was created and owned by <%= render 'users/inline', users: @product.contract_holders.map(&:user) %> until <%= @product.name %> became an openly developed Assembly product on <%= l @product.founded_at, format: :long %>.
+  <% else %>
+    <%= @product.name %> was founded by the community as an open Assembly product on <%= l @product.founded_at, format: :long %>.
+  <% end %>
+</small></p>
+
+<h2><small>Contracts</small></h2>
+<p><small>
+  <% if @product.contract_holders.any? %>
+    The <%= @product.name %> Founding Team continues to earn <%= number_to_percentage @product.sum_active_auto_tips * 100, precision: 0 %> of new coins minted to lead and actively support product development.
+  <% else %>
+    The <%= @product.name %> Core Team continues to earn <%= number_to_percentage @product.sum_active_auto_tips * 100, precision: 0 %> of new coins minted to lead and actively support product development.
+  <% end %>
+</small></p>
+
+<h2><small>Revenue Sharing</small></h3>
+<p><small>
+  <% if @product.contract_holders.any? %>
+    Every month up to the first <%= number_to_currency @product.contract_holders.sum(:annuity) %> in profit is paid as an annuity to <%= render 'users/inline', users: @product.contract_holders.map(&:user) %> for the early founding of <%= @product.name %>. All remaining proceeds, after expenses, are shared with the App Coin holders.
+  <% else %>
+    All proceeds, after expenses, are shared with the App Coin holders.
+  <% end %>
+</small></p>
+
+<p><small>
+  <% if @product.profit_reports.any? %>
+    <% report = @product.profit_reports.last %>
+    Last month's shared revenue was <%= number_to_currency (report.profit / 100.0), precision: 2 %>. The App coin royalty was <%= number_to_currency (report.royalty / 100.0), precision: 2 %> per App Coin.
+  <% else %>
+    There was no revenue last month and there were no royalty payouts.
+  <% end %>
+</small></p>
