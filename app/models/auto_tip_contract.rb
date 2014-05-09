@@ -1,5 +1,5 @@
 class AutoTipContract < ActiveRecord::Base
-  belongs_to :product
+  belongs_to :product, touch: true
   belongs_to :user
 
   scope :active_at, -> (product, at) { where(product_id: product.id).where('created_at <= ? and (deleted_at is null or deleted_at > ?)', at, at) }
