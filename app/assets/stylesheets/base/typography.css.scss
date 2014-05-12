@@ -105,23 +105,28 @@ h6,
   font-weight: 400;
 }
 
+.text-large {
+  font-size: $font-size-large;
+}
+
+.text-small {
+  font-size: $font-size-small;
+}
+
 @include text-emphasis-variant('.text-coins', $brand-coins);
 @include text-emphasis-variant('.text-promoted', $brand-promoted);
 
+.text-link-bold a {
+  color: inherit;
+  font-weight: bold;
+}
+
 .list-inline-piped {
-  color: $brand-muted;
+  @extend .text-link-bold;
 
-  > li {
-
-    & + li {
-      border-left: 1px solid $brand-divider;
-      padding-left: 5px + 4px; // + 4px accounts for inline-block whitespace
-    }
-
-    > a {
-      color: inherit;
-      font-weight: bold;
-    }
+  > li + li {
+    border-left: 1px solid $brand-divider;
+    padding-left: 5px + 4px; // + 4px accounts for inline-block whitespace
   }
 }
 

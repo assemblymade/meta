@@ -6,6 +6,10 @@
   box-shadow: 0 1px 0 0 rgba($black, 0.02);
 }
 
+.breadcrumb + .page-heading-title {
+  margin-top: 12px;
+}
+
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   color: $text-color;
@@ -20,6 +24,7 @@ h1, h2, h3, h4, h5, h6,
 .page-header-meta {
   margin-top: 5px;
   font-size: $font-size-small;
+  color: $brand-muted;
 
   > ul {
     margin-bottom: 0;

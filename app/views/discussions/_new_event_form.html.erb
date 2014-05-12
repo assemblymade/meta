@@ -1,0 +1,67 @@
+<div class="media alpha js-new-event">
+
+  <div class="pull-left">
+    <% if signed_in? %>
+      <img class="media-object img-circle" src="<%= current_user.avatar.url(60) %>" width="30" height="30">
+    <% else %>
+      <img class="media-object img-circle"  src="<%= image_path('avatars/default.png') %>" width="30" height="30">
+    <% end %>
+  </div>
+
+    <!-- Comments -->
+
+  <div class="media-body" id="comment">
+    <% if can?(:create, Event::Comment) %>
+      <%= form_tag product_wip_comments_path(@wip.product, @wip), method: :post, class: %w(form new_event_comment) do %>
+
+        <div class="form-control-markdown js-dropzone" id="new-comment-el">
+          <%= text_area_tag 'event_comment[body]', nil, class: 'form-control textcomplete', placeholder: 'Add to the discussion…', data: { :autosize => '', 'product-id' => @product.slug }, rows: 3 %>
+
+          <!-- <div class="dropzone js-dropzone"> -->
+          <div class="dropzone-inner">
+            To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...
+          </div>
+          <!-- </div> -->
+        </div>
+
+        <div class="form-actions">
+          <div class="btn-group">
+            <%= button_tag 'Comment', name: 'event_comment[type]', value: 'Event::Comment', type: 'submit', class: %w(btn btn-primary) %>
+            <% if can?(:update, @wip.product) %>
+              <% if @wip.resolved? %>
+                <%= button_tag 'Comment & Reopen', name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-default) %>
+              <% else %>
+                <%= button_tag 'Comment & Close', name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-default) %>
+
+                <% if @wip.is_a?(Task) %>
+                  <% if @wip.promoted? %>
+                    <%= button_tag 'Comment & Demote', name: 'event_comment[type]', value: 'Event::Demotion', type: 'submit', class: %w(btn btn-default) %>
+                  <% else %>
+                    <%= button_tag 'Comment & Promote', name: 'event_comment[type]', value: 'Event::Promotion', type: 'submit', class: %w(btn btn-default) %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+
+        </div>
+      <% end %>
+    <% else %>
+      <div class="well">
+        <strong><a href="<%= new_user_registration_path %>">Sign up</a> to join the discussion.</strong>
+        <br>
+        <small class="text-muted">
+          Already have an account? <a href="<%= new_user_session_path %>">Log in</a>
+        </small>
+      </div>
+    <% end %>
+  </div>
+
+</div>
+
+<script>
+  new CommentView({
+    attachmentUploadUrl: 'https://s3.amazonaws.com/<%= ENV['ATTACHMENT_BUCKET'] %>',
+    el: $('#new-comment-el')
+  });
+</script>

@@ -38,7 +38,8 @@ Styleguide Discussions.
 }
 
 .timeline-entry-meta {
-  @include padding-top-bottom(6px);
+  padding-top: 6px;
+  padding-bottom: 6px;
   margin-left: 75px;
   border-top: 1px dotted $gray-lighter;
   // border-bottom: 1px solid $gray-lighter;

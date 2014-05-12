@@ -17,3 +17,26 @@
 textarea {
   resize: vertical;
 }
+
+.form-control-markdown {
+  position: relative;
+
+  .form-control {
+    padding-bottom: 65px;
+  }
+
+  &.dz-drag-hover {
+    .form-control {
+      @extend .form-control:focus;
+      background-color: $component-active-bg;
+      box-shadow: none;
+    }
+  }
+
+  > .dropzone-inner {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}

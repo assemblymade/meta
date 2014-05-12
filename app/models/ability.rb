@@ -59,16 +59,19 @@ class Ability
     end
 
     # Event
+
     can [:award], Event do |event|
       wip = event.wip
-      wip.awardable? && wip.open? && wip.product.core_team?(user)
+      wip.awardable? && event.awardable? && wip.open? && wip.product.core_team?(user)
     end
+
     can [:update], Event do |event|
-      event.user == user || event.wip.product.core_team?(user)
+      event.editable? || event.user == user || event.wip.product.core_team?(user)
     end
 
     # Comments
-    can [:update], Event::Comment do |comment|
+    can :create, Event::Comment
+    can :update, Event::Comment do |comment|
       user.staff? || comment.user == user
     end
   end

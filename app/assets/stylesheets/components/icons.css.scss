@@ -19,6 +19,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-wrapper {
+  border-radius: 50%;
+  width: 30px;
+  line-height: 30px;
+  font-size: 13px;
+  text-align: center;
+}
+
 .icon-logo { &:before { content: "\e604"; } }
 .icon-right-chevron { &:before { content: "\e60e"; } }
 .icon-app-coin { &:before { content: "\e603"; } }

@@ -1,6 +1,12 @@
 class DiscussionsController < WipsController
+
   def index
     params[:sort] ||= 'created'
+    @upgrade_stylesheet = true
+    super
+  end
+
+  def show
     @upgrade_stylesheet = true
     super
   end
@@ -30,4 +36,5 @@ class DiscussionsController < WipsController
     @wip.move_to!(Task, current_user)
     respond_with @wip, location: product_wip_path(@wip.product, @wip)
   end
+  
 end

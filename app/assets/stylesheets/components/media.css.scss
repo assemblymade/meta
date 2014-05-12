@@ -1,0 +1,29 @@
+.media {
+  > .pull-left {
+    margin-right: $grid-gutter-width;
+  }
+  > .pull-right {
+    margin-left: $grid-gutter-width;
+  }
+}
+
+// TODO: Line-height is fixed
+.media-heading {
+  padding-top: (30px - 20px) / 2;
+  padding-bottom: (30px - 20px) / 2;
+  margin-bottom: $padding-base-vertical;
+  color: $text-muted;
+  font-size: $font-size-small;
+  line-height: 20px;
+  @extend .text-link-bold;
+}
+
+.media-footer {
+  // FIXME: Make
+  margin-top: $padding-xl-vertical;
+  border-top: 1px solid $brand-divider;
+  padding-top: $padding-base-vertical;
+  padding-bottom: $padding-base-vertical;
+
+  color: $text-muted;
+}

@@ -60,3 +60,9 @@ class window.CommentView extends Backbone.View
       range.select()
 
     @$textarea.trigger('change')
+
+
+$(document).ready ->
+  $('.js-dropzone').dropzone(
+    url: 'foobar'
+  )

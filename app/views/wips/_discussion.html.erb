@@ -1,10 +1,13 @@
-<div class="timeline" id="discussion-view-el">
+<div class="timeline">
   <% events.each.with_index do |(event, html), i| %>
+
     <% if i == events.size - 1 %>
-      <div class="separator js-timestamp">
-        <time class="timestamp separator-label" datetime="<%= event.created_at.iso8601 %>"></time>
+      <div class="timeline-marker js-timestamp">
+        <time class="timestamp" datetime="<%= event.created_at.iso8601 %>"></time>
       </div>
     <% end %>
-    <%= render 'wips/event', event: event, html: html %>
+
+    <%== html %>
+
   <% end %>
 </div>

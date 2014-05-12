@@ -1,0 +1,46 @@
+<div class="page-header">
+
+  <div class="pull-right">
+    <a class="btn btn-default" href="<%= new_product_discussion_path(@wip.product) %>">
+      Create a new discussion
+    </a>
+  </div>
+
+  <ol class="breadcrumb breadcrumb-prepended omega">
+    <li><a href="<%= product_path(@wip.product) %>"><%= @wip.product.name %></a></li>
+    <li><a href="<%= product_discussions_path(@wip.product) %>">Discussions</a></li>
+  </ol>
+
+  <h2 class="page-heading-title">
+    <%= @wip.title %>
+    <small>#<%= @wip.number %></small>
+  </h2>
+
+  <div class="page-header-meta">
+
+    <% if can?(:update, @wip) %>
+      <ul class="list-inline list-inline-piped pull-right">
+        <li>
+          <a href="<%= edit_product_discussion_path(@wip.product, @wip) %>">Edit</a>
+        </li>
+        <li class="text-warning">
+          <%= link_to 'Move to Tasks', product_discussion_to_task_path(@wip.product, @wip), method: :patch, data: {confirm: 'Are you sure?'} %>
+        </li>
+      </ul>
+    <% end %>
+
+    <ul class="list-inline list-inline-piped">
+      <li>
+        Started by
+        <a href="<%= user_path(@wip.user) %>">@<%= @wip.user.username %></a>
+      </li>
+      <li>
+        <%= pluralize(@wip.comments.count, 'comment') %>
+      </li>
+      <li>
+        <%= pluralize(@wip.watchers.count, 'participant') %>
+      </li>
+    </ul>
+  </div>
+
+</div>

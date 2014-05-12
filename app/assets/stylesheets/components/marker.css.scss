@@ -1,0 +1,17 @@
+.marker {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  line-height: 30px;
+  text-align: center;
+  font-size: 16px;
+
+  > .glyphicon {
+    line-height: 30px;
+  }
+}
+
+.marker-yellow {
+  color: white;
+  background: $yellow;
+}

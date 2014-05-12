@@ -1,0 +1,22 @@
+.js-dropzone {
+  padding: 0;
+
+  &.dz-drag-hover {
+    background-color: $component-active-bg;
+    border-color: $component-active-border;
+
+    > .dropzone-inner {
+      border-color: rgba($component-active-border, .3);
+    }
+  }
+}
+
+.dropzone-inner {
+  border: 1px dashed $brand-divider;
+  border-radius: $border-radius-small;
+  margin: $padding-base-vertical;
+  padding: $padding-large-vertical $padding-large-horizontal;
+
+  font-size: $font-size-small;
+  text-align: center;
+}
