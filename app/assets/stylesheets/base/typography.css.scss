@@ -130,6 +130,24 @@ h6,
   }
 }
 
+.list-piped {
+  @extend .list-inline;
+  @extend .text-link-bold;
+
+  > li + li {
+    border-left: 1px solid $brand-divider;
+    padding-left: 5px + 4px; // + 4px accounts for inline-block whitespace
+  }
+}
+
+.list-grid {
+  @extend .list-inline;
+  > li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+}
+
 // H4 title and piped nav in cards and lists
 h4 + .list-inline,
 h4 + p {

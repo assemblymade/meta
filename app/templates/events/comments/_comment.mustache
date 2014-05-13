@@ -1,5 +1,5 @@
-<div class="timeline-item timeline-highlight" id="comment-{{number}}">
-  <div class="media hover-toggle-wrapper" id="{{anchor}}">
+<div class="timeline-item timeline-highlight" id="{{anchor}}">
+  <div class="media hover-toggle-wrapper">
 
     <div class="pull-left">
       {{#actor}}
@@ -13,9 +13,25 @@
       <div class="media-heading">
 
         <div class="pull-right hover-toggle-target">
-          <a href="#{{anchor}}" title="Permalink">
-            <span class="glyphicon glyphicon-link"></span>
-          </a>
+          <ul class="list-piped">
+            {{#award_url}}
+              <li class="text-success">
+                <a href="{{award_url}}" data-method="patch">
+                  Award {{#actor}}@{{username}}{{/actor}}
+                </a>
+              </li>
+            {{/award_url}}
+            {{#edit_url}}
+              <li>
+                <a href="{{edit_url}}">Edit</a>
+              </li>
+            {{/edit_url}}
+            <li>
+              <a href="#{{anchor}}" title="Permalink">
+                <span class="glyphicon glyphicon-link"></span>
+              </a>
+            </li>
+          </ul>
 
           <!-- Award buttons -->
         </div>
@@ -28,10 +44,6 @@
 
       {{{body_html}}}
 
-      <div class="media-footer">
-        <!-- Tips! -->
-        Tips!
-      </div>
     </div>
 
   </div>

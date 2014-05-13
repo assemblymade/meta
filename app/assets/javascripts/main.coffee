@@ -1,3 +1,7 @@
+#= require dropzone
+
+Dropzone.autoDiscover = false
+
 # Fuzzify timestamps
 $.timeago.settings.strings.months = "more than a month"
 $.timeago.settings.strings.days = (n) ->

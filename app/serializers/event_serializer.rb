@@ -8,9 +8,10 @@ class EventSerializer < ActiveModel::Serializer
   end
 
   attributes :id #, :url
-  attributes :anchor, :edit_path
+  attributes :anchor
   attributes :body, :body_html, :number, :timestamp, :type
-  attributes :award_path, :can_award
+  attributes :edit_url
+  attributes :award_url, :can_award
 
   has_one :wip
   has_one :user, :key => :actor
@@ -19,8 +20,8 @@ class EventSerializer < ActiveModel::Serializer
     "event-#{object.number}"
   end
 
-  def award_path
-    award_product_wip_path(product, wip)
+  def award_url
+    award_product_wip_url(product, wip) if wip.awardable?
   end
 
   # TODO There's no ? on this method because AMS doesn't serialize question
@@ -33,14 +34,14 @@ class EventSerializer < ActiveModel::Serializer
     wip_markdown(object.body, product_wips_path(product))
   end
 
-  def edit_path
-    if scope && scope.can?(:update, object)
+  def edit_url
+    if Ability.new(scope).authorize!(:update, object)
       # TODO: (whatupdave) there must be a better way...
       case wip
       when Discussion
-        edit_product_discussion_comment_path(product, wip, object)
+        edit_product_discussion_comment_url(product, wip, object)
       else
-        edit_product_wip_comment_path(product, wip, object)
+        edit_product_wip_comment_url(product, wip, object)
       end
     end
   end

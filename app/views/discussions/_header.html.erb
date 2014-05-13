@@ -2,7 +2,7 @@
 
   <div class="pull-right">
     <a class="btn btn-default" href="<%= new_product_discussion_path(@wip.product) %>">
-      Create a new discussion
+      Start a discussion
     </a>
   </div>
 
@@ -21,7 +21,7 @@
     <% if can?(:update, @wip) %>
       <ul class="list-inline list-inline-piped pull-right">
         <li>
-          <a href="<%= edit_product_discussion_path(@wip.product, @wip) %>">Edit</a>
+          <a href="<%= edit_product_discussion_path(@wip.product, @wip) %>">Edit topic</a>
         </li>
         <li class="text-warning">
           <%= link_to 'Move to Tasks', product_discussion_to_task_path(@wip.product, @wip), method: :patch, data: {confirm: 'Are you sure?'} %>

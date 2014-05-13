@@ -1,18 +1,33 @@
 .timeline {
-  border-left: 2px solid $gray-lighter;
-  margin-left: 15px;
+  position: relative;
+  padding-bottom: $line-height-computed;
+  border-bottom: 2px solid $brand-divider;
+  margin-bottom: $line-height-computed;
 
-  .timeline-item {
-    margin-left: -15px;
-  }
-
-  .timeline-item:last-child {
-    margin-bottom: 0;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: (30px - 2px) / 2;
+    width: 2px;
+    background-color: $brand-divider;
+    z-index: 0;
   }
 }
 
 .timeline-item {
-  margin-bottom: $padding-large-vertical;
+  position: relative;
+  margin-top: $padding-base-vertical;
+  margin-bottom: $padding-base-vertical;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .timeline-highlight {
@@ -28,19 +43,25 @@
   }
 }
 
-.timeline-marker {
+.timeline-insert {
   padding-left: 15px;
 
   border-top: 1px dotted $brand-divider;
+  border-bottom: 1px dotted $brand-divider;
+
   text-align: center;
   position: relative;
+  background-color: white;
+
+  margin-bottom: 10px;
 
   > time {
-    font-size: $font-size-small;
+    font-size: 12px;
+    text-transform: uppercase;
     line-height: $line-height-base * $font-size-small;
     color: $text-muted;
-    position: relative;
-    top: - (($line-height-base * $font-size-small) / 2 + 2px);
+    // position: relative;
+    // top: - (($line-height-base * $font-size-small) / 2 + 2px);
     background-color: white;
     padding-left: $padding-base-horizontal;
     padding-right: $padding-base-horizontal;

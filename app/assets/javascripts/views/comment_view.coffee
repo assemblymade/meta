@@ -1,7 +1,5 @@
 #= require dropzone
 
-Dropzone.autoDiscover = false
-
 class window.CommentView extends Backbone.View
   initialize: (options)->
     @attachments = new Attachments()
@@ -60,9 +58,3 @@ class window.CommentView extends Backbone.View
       range.select()
 
     @$textarea.trigger('change')
-
-
-$(document).ready ->
-  $('.js-dropzone').dropzone(
-    url: 'foobar'
-  )

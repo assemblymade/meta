@@ -259,7 +259,7 @@ GEM
       railties (= 4.1.0)
       sprockets-rails (~> 2.0)
     rails-assets-backbone (1.0.0)
-    rails-assets-dropzone (3.8.3)
+    rails-assets-dropzone (3.9.0)
     rails-assets-ink (1.0.5)
     rails-assets-jquery (2.1.0)
     rails-assets-jquery-cookie (1.4.0)
@@ -436,7 +436,7 @@ DEPENDENCIES
   quiet_assets
   rails (= 4.1.0)
   rails-assets-backbone (= 1.0.0)
-  rails-assets-dropzone (= 3.8.3)
+  rails-assets-dropzone (= 3.9.0)
   rails-assets-ink (= 1.0.5)
   rails-assets-jquery-cookie (= 1.4.0)
   rails-assets-jquery-textcomplete (= 0.1.4)

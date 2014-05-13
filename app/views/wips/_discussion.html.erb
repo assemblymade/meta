@@ -2,12 +2,12 @@
   <% events.each.with_index do |(event, html), i| %>
 
     <% if i == events.size - 1 %>
-      <div class="timeline-marker js-timestamp">
+      <div class="timeline-insert js-timestamp">
         <time class="timestamp" datetime="<%= event.created_at.iso8601 %>"></time>
       </div>
     <% end %>
 
     <%== html %>
-
+    
   <% end %>
 </div>

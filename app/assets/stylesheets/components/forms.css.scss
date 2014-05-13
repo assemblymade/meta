@@ -18,8 +18,9 @@ textarea {
   resize: vertical;
 }
 
-.form-control-markdown {
+.markdown-editor-control {
   position: relative;
+  margin-bottom: $line-height-computed;
 
   .form-control {
     padding-bottom: 65px;
@@ -29,7 +30,6 @@ textarea {
     .form-control {
       @extend .form-control:focus;
       background-color: $component-active-bg;
-      box-shadow: none;
     }
   }
 

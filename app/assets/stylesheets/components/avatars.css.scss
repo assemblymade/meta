@@ -1,0 +1,4 @@
+.avatar {
+  @extend .img-circle;
+  background-color: $body-bg;
+}
