@@ -13,18 +13,3 @@
     }
   }
 }
-
-.breadcrumb-prepended {
-  > li:before {
-    display: none;
-  }
-
-  > li:after {
-    font-family: "Assembly Icons";
-    color: $gray-light;
-    font-size: 85%;
-    padding-left: 3px;
-    padding-right: 5px;
-    content: "\e60e";
-  }
-}

@@ -6,12 +6,12 @@
     </a>
   </div>
 
-  <ol class="breadcrumb breadcrumb-prepended omega">
-    <li><a href="<%= product_path(@wip.product) %>"><%= @wip.product.name %></a></li>
+  <ol class="breadcrumb omega">
     <li><a href="<%= product_discussions_path(@wip.product) %>">Discussions</a></li>
+    <li></li>
   </ol>
 
-  <h2 class="page-heading-title">
+  <h2 class="page-header-title">
     <%= @wip.title %>
     <small>#<%= @wip.number %></small>
   </h2>
@@ -19,7 +19,7 @@
   <div class="page-header-meta">
 
     <% if can?(:update, @wip) %>
-      <ul class="list-inline list-inline-piped pull-right">
+      <ul class="list-piped pull-right">
         <li>
           <a href="<%= edit_product_discussion_path(@wip.product, @wip) %>">Edit topic</a>
         </li>
