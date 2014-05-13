@@ -117,7 +117,7 @@ class Product < ActiveRecord::Base
   end
 
   def founded_at
-    [created_at.to_date, Date.parse('2013-Nov-01')].max
+    read_attribute(:founded_at) || created_at
   end
 
   def for_profit?
