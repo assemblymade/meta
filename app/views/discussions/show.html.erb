@@ -28,7 +28,7 @@
               <% @wip.watchers.each do |user| %>
                 <li>
                   <a href="<%= user_path(user) %>" title="@<%= user.username %>">
-                    <img class="avatar" src="<%= user.avatar.url(30) %>" alt="@<%= user.username %>" />
+                    <%= avatar_tag(user, 30) %>
                   </a>
                 </li>
               <% end %>

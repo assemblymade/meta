@@ -84,7 +84,7 @@ class Task < Wip
   def score
     votes_count * score_multiplier
   end
-  
+
   def score_multiplier
     promoted? ? PROMOTED_WIPS_MULTIPLIER : 1
   end
@@ -248,4 +248,9 @@ class Task < Wip
 
     val
   end
+
+  def real_coin_value
+    product.decorate.current_exchange_rate * score * 100
+  end
+
 end

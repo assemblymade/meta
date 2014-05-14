@@ -6,7 +6,11 @@ module CoinHelper
   end
 
   def format_coins(product, cents)
-    tag(:span, "#{cents_to_coins(cents)} #{product.name} coins", class: 'coins')
+    content_tag(
+      :span,
+      "#{cents_to_coins(cents)} #{product.name} coins",
+      class: 'text-coins'
+    )
   end
 
 end

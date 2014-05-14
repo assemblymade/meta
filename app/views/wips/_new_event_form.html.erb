@@ -14,10 +14,11 @@
       <% end %>
     </div>
 
-    <div class="media-body">
+    <div class="media-body ">
 
       <div class="media-heading">
-        Add to the discussion or share work to earn <span class="text-coins"><%= @wip.coins %></span> <%= @product.name%> coins.
+        Add to the discussion or share work to earn
+        <%= format_coins(@wip.product, @wip.real_coin_value) %>.
       </div>
 
       <ul class="nav nav-tabs text-small" style="border-top: 1px dotted #ebebeb">
