@@ -47,7 +47,7 @@
                   <span class="badge pull-right">
                     <%= @product.discussions.where(state: 'open').count %>
                   </span>
-                  Open
+                  Open Discussions
                 </a>
               </li>
 
@@ -56,7 +56,7 @@
                   <span class="badge pull-right">
                     <%= @product.discussions.where(state: 'resolved').count %>
                   </span>
-                  Closed
+                  Closed Discussions
                 </a>
               </li>
 

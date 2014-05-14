@@ -118,10 +118,8 @@
         <div class="tab-pane" id="copy">
           <%= form_tag product_wip_copy_deliverables_path(@wip.product, @wip), method: :post, class: 'form' do %>
 
-            <div class="markdown-editor-control js-markdown-editor">
-              <%= text_area_tag 'copy_deliverable[body]', nil, class: 'form-control form-type-copy', rows: 3 %>
-            </div>
-
+            <%= text_area_tag 'copy_deliverable[body]', nil, class: 'form-control form-type-copy', rows: 3 %>
+            
             <div class="form-actions">
               <%= submit_tag 'Add Copy', class: %w(btn btn-primary) %>
             </div>

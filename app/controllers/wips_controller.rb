@@ -23,6 +23,7 @@ class WipsController < ApplicationController
   end
 
   def index
+    @upgrade_stylesheet = true
     params[:state] ||= 'open'
     @wips = find_wips
 

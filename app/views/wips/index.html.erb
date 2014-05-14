@@ -1,71 +1,70 @@
 <% title "Tasks", @product.name %>
 
-<%= render 'shared/deprecated_navbar' %>
-<%= render 'products/deprecated_navbar' %>
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
 
-<div class="l-wips"><%# TODO (whatupdave): remove this when mustache is gone %>
-  <div class="page page-padded <%= 'non-profit' if !@product.for_profit?%>">
-    <div class="container">
-      <% if @wips.empty? %>
-        <div class="page-content-wide">
-          <div class="note">
-            <div class="note-icon note-start-task"></div>
+<div class="page">
+  <div class="container">
 
-            <h3>
-              Create the first task
-            </h3>
+    <div class="page-header">
+      <div class="pull-right">
+        <a class="btn btn-success" href="<%= new_product_wip_path(@product) %>">Create a Task</a>
+      </div>
 
-            <p class="text-muted">
+
+      <h2 class="page-header-title"><%= @product.reward %>
+        <small>
+          &mdash;
+          <%= format_coins(@product, @product.real_bounty_value) %>
+          to be earned from
+          <strong><%= pluralize @product.tasks.open.count, 'task' %></strong>
+        </small>
+      </h2>
+    </div>
+
+    <% if @product.wips.any? %>
+      <div class="col-md-8 col-xs-8">
+
+        <ol class="list-group list-group-breakout" id="wips-view-el">
+          <% @wips.each do |task| %>
+            <li class="list-group-item">
+              <%= render 'summary', task: task %>
+            </li>
+          <% end %>
+        </ol>
+
+        <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
+      </div>
+
+      <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+        <div class="panel panel-default">
+          <%= render partial: 'tasks/filters' %>
+        </div>
+      </div>
+
+    <% else %>
+
+      <div class="row">
+        <div class="col-md-6 col-xs-6 col-md-offset-3">
+          <div class="well well-lg omega">
+            <h3 class="alpha"><strong>Create the first task</strong></h3>
+            <p class="text-muted omega">
               Get started by breaking down a new idea into bite-sized chunks
               that can upvoted on and prioritized. Writing a great description will
               make it super easy for anyone to jump in and get to work.
             </p>
-
-            <a class="btn btn-primary" href="<%= new_product_wip_path(@product) %>">
-              Create a task
-            </a>
           </div>
         </div>
-      <% else %>
-        <div class="page-heading">
-          <div class="page-heading-title-no-width">
-            <%= @product.reward %>
-            <span class="division">—</span>
-            <small>
-              <span class="bounty"><%= number_with_delimiter @product.sum_bounties %></span>
-              <%= @product.name %> <%= @product.currency %> to be earned from <strong><%= pluralize @product.tasks.open.count, 'task' %></strong>
-            </small>
-          </div>
-        </div>
-
-        <div class="page-content-wide">
-
-          <div id="wips-view-el" class="list wip-list">
-            <% @wips.each do |wip| %>
-              <%= render partial: 'erb/wips/summary', object: wip %>
-            <% end %>
-          </div>
-
-          <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
-
-        </div>
-      <% end %>
-
-      <div class="page-sidebar-thin page-sidebar-top-padding">
-        <a class="btn btn-primary btn-block" href="<%= new_product_wip_path(@product) %>">Create a Task</a>
-
-        <br>
-
-        <%= render partial: 'tasks/filters' %>
       </div>
-    </div>
+    <% end %>
+    </div><!-- .row -->
   </div>
-
-  <%= render 'shared/deprecated_footer' %>
-
-  <% unless staff? %>
-    <script>
-      analytics.track('product.wips.viewed', <%== ProductAnalyticsSerializer.new(@product).to_json %>)
-    </script>
-  <% end %>
 </div>
+
+<%= render 'shared/footer' %>
+
+<% unless staff? %>
+  <script>
+    analytics.track('product.wips.viewed', <%== ProductAnalyticsSerializer.new(@product).to_json %>)
+  </script>
+<% end %>

@@ -82,7 +82,7 @@ class ProductDecorator < ApplicationDecorator
   end
 
   def reward
-    for_profit? ? 'Bounties' : 'Karma'
+    for_profit? ? 'Tasks' : 'Karma'
   end
 
   def currency
@@ -98,6 +98,10 @@ class ProductDecorator < ApplicationDecorator
       open_score = wips.open.map(&:score).compact.reduce(0, :+)
       current_exchange_rate * open_score
     end
+  end
+
+  def real_bounty_value
+    sum_bounties * 100
   end
 
   def sum_active_auto_tips

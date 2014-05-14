@@ -26,6 +26,15 @@
     background-color: $blue;
     color: white;
   }
+
+  // TODO: This is a hack for submenus on the WIP list page.
+  //       Remove this when that horrible nav is cleaned up.
+  .nav-pills {
+    > li > a {
+      font-size: $font-size-small;
+      padding: 5px 15px 5px 30px;
+    }
+  }
 }
 
 .nav-tabs {

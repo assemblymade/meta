@@ -369,4 +369,5 @@ class Product < ActiveRecord::Base
   def create_auto_tips
     AutoTipContract.create!(product: self, user: self.user, amount: 0.05)
   end
+
 end

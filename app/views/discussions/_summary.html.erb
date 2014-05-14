@@ -1,11 +1,9 @@
 <div class="item discussion <%= 'unread' if signed_in? && discussion.updates.for(current_user).unread? %>" data-number="<%= discussion.number %>">
-  
+
   <div class="summary">
     <a class="summary-target" href="<%= product_discussion_path(discussion.product, discussion) %>">
       <%= discussion.title %>
     </a>
-
-    <span class="text-muted pull-right">#<%= discussion.number %></span>
 
     <ul class="list-inline list-inline-piped omega">
       <li>
@@ -18,6 +16,9 @@
       </li>
       <li>
         <%= pluralize(discussion.watchers.count, 'watcher') %>
+      </li>
+      <li>
+        #<%= discussion.number %>
       </li>
     </ul>
   </div>
