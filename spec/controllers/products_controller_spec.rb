@@ -33,8 +33,28 @@ describe ProductsController do
     before do
       sign_in creator
     end
-    subject { post :create, product: { name: 'Kay Jay Dee Bee' } }
 
-    it 'should redirect to show page'
+    it "create's product" do
+      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
+      expect(assigns(:product)).to be_a(Product)
+      expect(assigns(:product)).to be_persisted
+    end
+
+    it 'should redirect to show page' do
+      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
+      expect(response).to redirect_to(product_path(assigns(:product)))
+    end
+
+    it 'auto upvotes product' do
+      expect {
+        post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
+      }.to change(Vote, :count).by(1)
+    end
+
+    it 'adds validated transaction entry for product' do
+      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
+
+      expect(TransactionLogEntry.validated.count).to eq(1)
+    end
   end
 end

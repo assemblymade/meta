@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
 
   before_action :authenticate_user!, only: [:create, :edit, :update]
   before_action :set_product,
-    only: [:show, :edit, :update, :leaderboard, :follow, :status, :readme, :metrics, :subscribe, :unsubscribe, :flag, :feature, :welcome]
+    only: [:show, :edit, :update, :follow, :metrics, :subscribe, :unsubscribe, :flag, :feature, :welcome]
 
   def new
     @product = Product.new
@@ -23,26 +23,28 @@ class ProductsController < ApplicationController
 
   def create
     @product = current_user.products.create(product_params)
-    if !current_user.staff?
-      track_event 'product.created', ProductAnalyticsSerializer.new(@product).as_json
-      AsmMetrics.active_user(current_user)
-    end
-    categories = {
-                  "Engineering" => "Architects, develops, and maintains software systems. Loves text editors, command lines and making products work.",
-                  "Front-end Development" => "Represents the intersection of Design and Engineering. Often works in HTML, CSS & Javascript implementing design and makeing it work with the system.",
-                  "Design" => "Blends communication, stylizing, and problem-solving through the use of type, space, and image. Loves pushing pixels, creating mockups and sweating the details of user interaction."
-                 }
-    categories.each do |category, description|
-      if @product.product_jobs.where(:category => category).blank?
-        ProductJob.create(:product_id => @product.id, :user_id => current_user.id, :category => category, :description => description)
-      else
+    if @product.valid?
+      if !current_user.staff?
+        track_event 'product.created', ProductAnalyticsSerializer.new(@product).as_json
+        AsmMetrics.active_user(current_user)
       end
+      categories = {
+                    "Engineering" => "Architects, develops, and maintains software systems. Loves text editors, command lines and making products work.",
+                    "Front-end Development" => "Represents the intersection of Design and Engineering. Often works in HTML, CSS & Javascript implementing design and makeing it work with the system.",
+                    "Design" => "Blends communication, stylizing, and problem-solving through the use of type, space, and image. Loves pushing pixels, creating mockups and sweating the details of user interaction."
+                   }
+      categories.each do |category, description|
+        if @product.product_jobs.where(category: category).blank?
+          ProductJob.create(product_id: @product.id, user_id: current_user.id, category: category, description: description)
+        end
+      end
+
+      @product.watch!(current_user)
+      @product.upvote!(current_user, request.remote_ip)
+      TransactionLogEntry.validated!(Time.current, @product, @product.id, @product.user.id, @product.user.id)
+
+      flash[:new_product_callout] = true
     end
-
-    Watching.watch!(current_user, @product)
-    @product.votes.create(user: current_user, ip: request.remote_ip)
-
-    flash[:new_product_callout] = true
     respond_with(@product, location: product_path(@product))
   end
 

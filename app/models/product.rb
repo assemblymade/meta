@@ -84,7 +84,6 @@ class Product < ActiveRecord::Base
 
   before_validation :fill_in_generated_name, :if => :new_record?
   before_create :generate_authentication_token
-  after_create  :vote_on_behalf_of_owner
   after_update -> { CreateIdeaWipWorker.perform_async self.id }, :if => :submitted_at_changed?
 
   after_commit -> { subscribe_owner_to_notifications }, on: :create
@@ -245,10 +244,6 @@ class Product < ActiveRecord::Base
     touch(:featured_on)
   end
 
-  def upvote!(user, ip)
-    votes.create!(user: user, ip: ip)
-  end
-
   def count_presignups
     votes.select(:user_id).distinct.count
   end
@@ -347,11 +342,13 @@ class Product < ActiveRecord::Base
     slug == 'meta'
   end
 
-  protected
-
-  def vote_on_behalf_of_owner
-    votes.create!(user: user, ip: user.last_sign_in_ip || '0.0.0.0')
+  def upvote!(user, ip)
+    votes.create!(user: user, ip: ip)
+    watch!(user)
+    TransactionLogEntry.voted!(Time.current, self, self.id, user.id, 1)
   end
+
+  protected
 
   def subscribe_owner_to_notifications
     subscriptions.create!(user: user)
