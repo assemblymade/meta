@@ -28,17 +28,15 @@
           <div class="panel-body text-small">
             <% case @wip.state %>
             <% when 'open' %>
-              <div class="progressbar">
-                <div class="progressbar-step"></div>
-                <div class="progressbar-step"></div>
-                <div class="progressbar-step"></div>
+              <div class="progress progress-small omega">
+                <!-- <div class="progress-bar" style="width: 0%;"></div> -->
               </div>
               <h6 class="text-muted">
                 Ready for work
               </h6>
 
-              <p class="omega"><strong>Think you'd be a great fit for this task?</strong> Jump in and help out.</p>
-              <%= button_to 'Work on this task', product_wip_start_work_path(@wip.product, @wip), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-default) %>
+              <p><strong>Think you'd be a great fit for this task?</strong> Jump in and help out.</p>
+              <%= button_to 'Work on this task', product_wip_start_work_path(@wip.product, @wip), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-default btn-sm btn-block) %>
 
             <% when 'allocated' %>
               <div class="progress progress-small omega">
@@ -104,14 +102,17 @@
 
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h6 class="panel-title">Watchers</h6>
+            <h6 class="panel-title">
+              <span class="pull-right"><%= @wip.watchers.count %></span>
+              Watchers
+            </h6>
           </div>
           <div class="panel-body">
             <ul class="list-grid omega">
               <% @wip.watchers.each do |user| %>
                 <li>
                   <a href="<%= user_path(user) %>">
-                    <%= avatar_tag(user, 30) %>
+                    <%= avatar_tag(user, 24) %>
                   </a>
                 </li>
               <% end %>

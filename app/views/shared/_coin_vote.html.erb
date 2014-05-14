@@ -1,4 +1,4 @@
-<div class="mint" data-view="coin-vote"
+<!-- <div class="mint" data-view="coin-vote"
     data-vote-path="<%= product_wip_path(voteable.product, voteable) %>/votes"
     data-coins="<%= voteable.coins %>"
     data-coins-add="<%= voteable.coins_add %>"
@@ -10,3 +10,12 @@
   </div>
   <div class="bounty js-coins"><%= number_with_delimiter voteable.coins %></div>
 </div>
+ -->
+
+<a href="#" class="btn btn-default btn-xs">
+  <% if voteable.promoted? %>
+    <span class="icon icon-double-up-chevron text-promoted"></span>
+  <% else %>
+    <span class="icon icon-up-chevron"></span>
+  <% end %>
+</a>

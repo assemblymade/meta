@@ -8,7 +8,10 @@ module CoinHelper
   def format_coins(product, cents)
     content_tag(
       :span,
-      "#{cents_to_coins(cents)} #{product.name} coins",
+      [
+        content_tag(:span, nil, class: 'icon icon-app-coin'),
+        "#{cents_to_coins(cents)} #{product.name} coins"
+      ].join.html_safe,
       class: 'text-coins'
     )
   end

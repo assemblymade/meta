@@ -1,9 +1,9 @@
 @font-face {
   font-family: "Assembly Icons";
   src: // Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+
-       url(asset-path('assembly.woff')) format('woff'),
+       url(asset-path('assembly-icons.woff')) format('woff'),
        // Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5
-       url(asset-path('assembly.ttf')) format('truetype');
+       url(asset-path('assembly-icons.ttf')) format('truetype');
 }
 
 // Catchall baseclass
@@ -19,14 +19,45 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-wrapper {
-  border-radius: 50%;
-  width: 30px;
-  line-height: 30px;
-  font-size: 13px;
-  text-align: center;
+.icon-like:before {
+	content: "\e600";
 }
-
-.icon-logo { &:before { content: "\e604"; } }
-.icon-right-chevron { &:before { content: "\e60e"; } }
-.icon-app-coin { &:before { content: "\e603"; } }
+.icon-wip-copy:before {
+	content: "\e601";
+}
+.icon-wip-design:before {
+	content: "\e602";
+}
+.icon-wip-code:before {
+	content: "\e603";
+}
+.icon-right-chevron:before {
+	content: "\e604";
+}
+.icon-github:before {
+	content: "\e605";
+}
+.icon-facebook:before {
+	content: "\e606";
+}
+.icon-twitter:before {
+	content: "\e607";
+}
+.icon-double-up-chevron:before {
+	content: "\e608";
+}
+.icon-close:before {
+	content: "\e609";
+}
+.icon-promotional-app-coin:before {
+	content: "\e60a";
+}
+.icon-up-chevron:before {
+	content: "\e60b";
+}
+.icon-app-coin:before {
+	content: "\e60c";
+}
+.icon-logo:before {
+	content: "\e60d";
+}
