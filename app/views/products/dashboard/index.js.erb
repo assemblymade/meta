@@ -1,2 +1,1 @@
-$('.more-button').before('<%= escape_javascript render(partial: "stream_events/stream_event", collection: @stream_events, as: :stream_event) %>');
-$('.more-button').html('<%= escape_javascript render(partial: "more_button") %>');
+$('.timeline').append('<%= escape_javascript render(partial: "stream_events/stream_event", collection: @stream_events, as: :stream_event) %>');

@@ -1,16 +1,21 @@
-<%= content_for(:title, "Activity · #{@product.name}") %>
-<%= render 'shared/deprecated_navbar' %>
-<%= render 'products/deprecated_navbar' %>
+<% title 'Activity', @product.name %>
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
 
-<div class="container product-container <%= 'non-profit' if !@product.for_profit?%>">
-  <div class="activity-group">
-    <div class="activity-group-gutter"></div>
-    <div class="activity-group-header">
+<div class="page">
+  <div class="container">
+
+    <div class="page-header">
       <h2>Recent Activity</h2>
     </div>
-  </div>
-  <%= render partial: 'stream_events/stream_event', collection: @stream_events, as: :stream_event %>
-  <%= render partial: 'more_button' %>
 
-</div>
-<%= render 'shared/deprecated_footer' %>
+    <div class="timeline">
+      <% @stream_events.each do |stream_event| %>
+        <%= render 'stream_events/stream_event', stream_event: stream_event %>
+      <% end %>
+    </div>
+    <%= render partial: 'more_button' %>
+
+  </div>
+
+<%= render 'shared/footer' %>

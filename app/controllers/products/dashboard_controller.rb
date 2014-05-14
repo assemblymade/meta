@@ -2,6 +2,7 @@ class Products::DashboardController < ApplicationController
   before_action :set_product
 
   def index
+    @upgrade_stylesheet = true
     @stream_events = @product.stream_events.page(page)
     respond_to do |format|
       format.js   { render :layout => false }
