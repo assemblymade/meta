@@ -23,6 +23,7 @@ class MilestonesController < ApplicationController
   end
 
   def show
+    @upgrade_stylesheet = true
     set_milestone
     @assets = Deliverable.where(wip_id: @milestone.task_ids).includes(:attachment, :wip)
     @events = Event.render_events(@wip.events.order(:number), current_user)

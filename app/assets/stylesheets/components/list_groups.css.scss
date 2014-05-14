@@ -1,19 +1,31 @@
-.list-group-item {
+.list-group-padded {
+  > .list-group-item {
+    padding: 20px 0;
+  }
 }
 
 .list-group-breakout {
   > .list-group-item {
-    padding: 20px 0;
     border-left: none;
     border-right: none;
 
     &:first-child {
       border-top: none;
-      padding-top: 0;
     }
 
     &:last-child {
       border-bottom: none;
+    }
+  }
+}
+
+.list-group-padded.list-group-breakout {
+  > .list-group-item {
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
       padding-bottom: 0;
     }
   }

@@ -1,101 +1,110 @@
 <% title "##{@wip.number}", @wip.title, @product.name %>
 
-<%= render 'shared/deprecated_navbar' %>
-<%= render 'products/deprecated_navbar' %>
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
 
-<div class="page page-padded page-ruled">
+<div class="page">
   <div class="container">
+    <%= render 'header' %>
 
-    <% cache [@milestone, @milestone.wip] do %>
-      <%= render 'heading' %>
-    <% end %>
+    <div class="row">
+      <div class="col-md-8 col-xs-8">
 
-    <div class="page-content">
-      <% if image = @milestone.feature_image %>
-        <div class="feature-image">
-          <a data-toggle="lightbox" data-target="#feature-image">
-            <img src="<%= firesize_url %>/630x300/frame_0/<%= URI.escape image.attachment.url %>">
-          </a>
-        </div>
-        <div id="feature-image" class="lightbox fade"  tabindex="-1" role="dialog" aria-hidden="true">
-          <div class='lightbox-dialog'>
-            <div class='lightbox-content'>
-              <img src="<%= firesize_url %>/frame_0/<%= image.attachment.url %>">
-            </div>
+        <% if @milestone.feature_image.present? %>
+          <div class="well">
+            <img class="img-rounded" src="<%= firesize_url %>/630x300/frame_0/<%= URI.escape @milestone.feature_image.attachment.url %>" style="max-width:100%">
           </div>
-        </div>
-      <% end %>
-      <div class="page-content-group markdown-content"><%== markdown @milestone.description %></div>
 
-      <div class="page-content-group">
-        <div class="page-content-group-heading">Task list</div>
+          <!-- <div id="feature-image" class="lightbox fade"  tabindex="-1" role="dialog" aria-hidden="true">
+            <div class='lightbox-dialog'>
+              <div class='lightbox-content'>
+                <img src="<%= firesize_url %>/frame_0/<%= @milestone.feature_image.attachment.url %>">
+              </div>
+            </div>
+          </div> -->
+        <% end %>
+
+        <%== product_markdown(@milestone.product, @milestone.description) %>
+
+        <h6>Task list</h6>
         <%= render partial: 'task_list', object: @milestone %>
-      </div>
 
-      <div class="page-content-group">
-        <div class="page-content-group-heading">Discussion</div>
-          <div id="discussion-view-el">
-            <%= render 'wips/discussion', events: @events %>
-
-            <%= render 'wips/new_event_form' %>
-          </div>
+        <h6>Discussion</h6>
+        <div id="discussion-view-el">
+          <%= render 'wips/discussion', events: @events %>
+          <%= render 'discussions/new_event_form' %>
         </div>
-
-
       </div>
 
-      <div class="page-sidebar">
-        <div class="sidebar-module">
-          <div class="progress" style="margin-bottom: 10px;">
-            <div class="progress-bar" style="width:<%= number_to_percentage @milestone.progress * 100, precision: 0 %>;"></div>
-          </div>
 
-          <div class="sidebar-module-heading">
-            <div class="count">
-              <strong><%= number_to_percentage @milestone.progress * 100, precision: 0 %></strong>
+      <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+
+            <div class="progress progress-small omega" style="margin-bottom: 10px;">
+              <div class="progress-bar progress-bar-success" style="width:<%= number_to_percentage @milestone.progress * 100, precision: 0 %>;">
+
+              </div>
             </div>
-            Progress
+
+            <h6 class="text-muted omega">
+              <span class="pull-right"><%= number_to_percentage @milestone.progress * 100, precision: 0 %></span>
+              Progress
+            </h6>
           </div>
 
-          <ul class="dotted-list">
-            <li class="tasks-incomplete">
-              <div class="pull-right"><strong><%= @milestone.tasks.open.count %></strong></div>
-              <strong>Tasks remaining</strong>
+          <ul class="list-group list-group-breakout small omega">
+            <li class="list-group-item">
+              <span class="badge"><%= @milestone.tasks.open.count %></span>
+              Tasks remaining
             </li>
-            <li class="tasks-complete">
-              <div class="pull-right"><strong><%= @milestone.tasks.closed.count %></strong></div>
-              <strong>Completed</strong>
+            <li class="list-group-item">
+              <span class="badge"><%= @milestone.tasks.closed.count %></span>
+              Completed
             </li>
           </ul>
+
+        </div><!-- .panel -->
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h6 class="panel-title">Contributors</h6>
+          </div>
+          <div class="panel-body">
+            <ul class="list-grid omega">
+              <% @milestone.wip.contributors.each do |contributor| %>
+                <li>
+                  <%= avatar_tag(contributor, 24) %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
         </div>
-        <div class="sidebar-module">
-          <div class="sidebar-module-heading">
-            Contributors
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h6 class="panel-title">Cover Image</h6>
           </div>
-          <div class="avatar-grid">
-            <% @milestone.wip.contributors.each do |contributor| %>
-              <div class="avatar avatar-sm">
-                <img src="<%= contributor.avatar.url(60) %>" title="<%= contributor.username %>" />
-              </div>
-            <% end %>
-          </div>
+          <%= render 'feature_image' %>
         </div>
 
-        <%= render 'feature_image' %>
-
-        <div class="sidebar-module">
-          <div class="sidebar-module-heading">
-            Assets
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h6 class="panel-title">Assets</h6>
           </div>
-          <div>
-            <% @assets.each do |asset| %>
-              <a href="<%= product_wip_path(@product, asset.wip) %>" style="dislay:block;float:left;margin-right:5px;margin-bottom:5px;">
-                <img src="<%= File.join(firesize_url, "255x255", "g_center", "frame_0", URI.encode(asset.attachment.url)) %>">
-              </a>
+          <div class="panel-body">
+            <ul class="list-grid">
+              <% @assets.each do |asset| %>
+                <li>
+                  <a href="<%= product_wip_path(asset.wip.product, asset.wip) %>">
+                    <img src="<%= File.join(firesize_url, "48x48", "g_center", "frame_0", URI.encode(asset.attachment.url)) %>">
+                  </a>
+                </li>
+              <% end %>
+            </ul>
 
-            <% end %>
-
-            <p class="small text-muted">Designs added to tasks in this project will be displayed here</p>
+            <p class="small text-muted omega">Designs added to tasks in this project will be displayed here</p>
           </div>
         </div>
       </div>
@@ -119,4 +128,4 @@
   window.pusher = new Pusher($('meta[name=pusher-key]').attr('content'));
   analytics.track('product.wip.viewed', <%== WipAnalyticsSerializer.new(@wip, scope: current_user).to_json %>)
 </script>
-<%= render 'shared/deprecated_footer' %>
+<%= render 'shared/footer' %>

@@ -14,7 +14,7 @@
             <p>Products being developed in <%= @tech.name %>.</p>
           </div>
 
-          <div class="list-group list-group-breakout">
+          <div class="list-group list-group-breakout list-group-padded">
             <% @products.each do |product| %>
               <div class="list-group-item">
                 <%= render 'product', product: product %>
@@ -31,7 +31,7 @@
             </div>
 
 
-            <div class="list-group list-group-breakout">
+            <div class="list-group list-group-breakout list-group-padded">
               <% @needing_commit.each do |product| %>
                 <div class="list-group-item">
                   <%= render 'product', product: product %>
