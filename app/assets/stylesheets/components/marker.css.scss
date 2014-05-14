@@ -2,22 +2,24 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  line-height: 30px;
+  line-height: 26px;
   color: white;
   text-align: center;
-  font-size: 16px;
+  font-size: 15px;
+  border: 2px solid transparent;
+  background-color: white;
 
   > .glyphicon,
   > .icon {
-    line-height: 30px;
+    line-height: 26px;
   }
 }
 
-.marker-default { background-color: $gray; }
+.marker-default { border-color: $gray; color: $gray; }
 
-.marker-black { background-color: $gray-darker; }
-.marker-blue { background-color: $blue; }
-.marker-purple { background-color: $purple; }
-.marker-green { background-color: $green; }
-.marker-yellow { background: $yellow; }
-.marker-red { background-color: $red; }
+.marker-black { border-color: $gray-darker; color: $gray-darker; }
+.marker-blue { border-color: $blue; color: $blue; }
+.marker-purple { border-color: $purple; color: $purple; }
+.marker-green { border-color: $green; color: $green; }
+.marker-yellow { background: $yellow; color: $yellow; }
+.marker-red { border-color: $red; color: $red; }

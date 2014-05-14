@@ -1,7 +1,7 @@
 .timeline {
   position: relative;
   padding-bottom: $line-height-computed;
-  border-bottom: 2px solid $brand-divider;
+  border-bottom: 2px dotted $brand-divider;
   margin-bottom: $line-height-computed;
 
   &:before {
