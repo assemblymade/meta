@@ -1,10 +1,10 @@
-<div class="media alpha js-new-event">
+<div class="media js-new-event">
 
   <div class="pull-left">
     <% if signed_in? %>
-      <img class="media-object img-circle" src="<%= current_user.avatar.url(60) %>" width="30" height="30">
+      <img class="media-object avatar" src="<%= current_user.avatar.url(60) %>" width="30" height="30">
     <% else %>
-      <img class="media-object img-circle"  src="<%= image_path('avatars/default.png') %>" width="30" height="30">
+      <img class="media-object avatar"  src="<%= image_path('avatars/default.png') %>" width="30" height="30">
     <% end %>
   </div>
 
@@ -32,14 +32,6 @@
                 <%= button_tag 'Comment & Reopen', name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-primary) %>
               <% else %>
                 <%= button_tag 'Comment & Close', name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-primary) %>
-
-                <% if @wip.is_a?(Task) %>
-                  <% if @wip.promoted? %>
-                    <%= button_tag 'Comment & Demote', name: 'event_comment[type]', value: 'Event::Demotion', type: 'submit', class: %w(btn btn-primary) %>
-                  <% else %>
-                    <%= button_tag 'Comment & Promote', name: 'event_comment[type]', value: 'Event::Promotion', type: 'submit', class: %w(btn btn-primary) %>
-                  <% end %>
-                <% end %>
               <% end %>
             </div>
           <% end %>

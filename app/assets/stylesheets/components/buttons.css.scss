@@ -6,5 +6,6 @@
   &:hover,
   &:active {
     background-color: $btn-default-bg;
+    border-color: darken($btn-default-border, 7%);
   }
 }

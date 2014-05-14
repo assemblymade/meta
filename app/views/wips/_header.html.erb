@@ -1,0 +1,68 @@
+<div class="page-header">
+
+  <div class="pull-right">
+    <a class="btn btn-default" href="<%= new_product_wip_path(@wip.product) %>">
+      Create a new task
+    </a>
+  </div>
+
+  <ol class="breadcrumb omega">
+    <li><a href="<%= product_wips_path(@wip.product) %>">Tasks</a></li>
+    <li></li>
+  </ol>
+
+  <h2 class="page-header-title">
+    <%= @wip.title %>
+    <small>#<%= @wip.number %></small>
+  </h2>
+
+  <div class="page-header-meta">
+    <ul class="list-piped pull-right">
+      <li>
+        <%= render partial: 'add_to_milestone' %>
+      </li>
+      <% if can?(:update, @wip) %>
+        <li>
+          <a href="<%= edit_product_wip_path(@wip.product, @wip) %>">Edit topic</a>
+        </li>
+        <li class="text-warning">
+          <%= link_to 'Move to Discussions', product_task_to_discussion_path(@wip.product, @wip), method: :patch, data: {confirm: 'Are you sure?'} %>
+        </li>
+      <% end %>
+    </ul>
+
+    <!-- <%= render 'shared/coin_vote', voteable: @wip %> -->
+
+    <ul class="list-piped">
+      <li>
+        Created by
+        <a href="<%= user_path(@wip.user) %>"><%= @wip.user.username %></a>
+      </li>
+      <li>
+        <%= pluralize(@wip.comments.count, 'comments') %>
+      </li>
+      <li>
+        <%= pluralize(@wip.watchers.count, 'watchers') %>
+      </li>
+      <li>
+        <span class="label label-default"><%= @wip.deliverable %></span>
+
+        <% if @wip.promoted? %>
+          <span class="label label-promoted">Promoted</span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+  $(document).ready(function(){
+    var top = $('.page-heading-meta').offset().top - 20;
+    $('.page-heading-meta').affix({
+      offset: {
+        top: top
+      }
+    })
+  });
+</script>

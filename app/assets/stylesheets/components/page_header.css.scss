@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6,
 
 // TODO Think about moving in with .summary
 .page-header-meta {
-  margin-top: 5px;
+  margin-top: $line-height-computed / 2;
   font-size: $font-size-small;
   color: $brand-muted;
 

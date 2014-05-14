@@ -44,27 +44,20 @@
 }
 
 .timeline-insert {
-  padding-left: 15px;
-
-  border-top: 1px dotted $brand-divider;
-  border-bottom: 1px dotted $brand-divider;
-
-  text-align: center;
   position: relative;
-  background-color: white;
-
-  margin-bottom: 10px;
+  // margin-left: 60px;
+  margin-bottom: 10px + 6px;
 
   > time {
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
-    line-height: $line-height-base * $font-size-small;
-    color: $text-muted;
-    // position: relative;
-    // top: - (($line-height-base * $font-size-small) / 2 + 2px);
+    letter-spacing: 0.618pt;
+
+    color: $gray;
     background-color: white;
-    padding-left: $padding-base-horizontal;
-    padding-right: $padding-base-horizontal;
+    border: 2px solid $brand-divider;
+    padding: 5px 10px 4px 10px;
+    border-radius: 12px;
   }
 }
 

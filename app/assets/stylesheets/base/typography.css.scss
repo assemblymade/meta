@@ -85,10 +85,11 @@ h4,
 }
 
 h6,
-.h6 {
+.h6,
+.upper-spaced {
   text-transform: uppercase;
   letter-spacing: 0.618pt;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .lead {

@@ -33,6 +33,7 @@ class WipsController < ApplicationController
   end
 
   def show
+    @upgrade_stylesheet = true
     @watchers = @wip.watchers.to_a
 
     @events = Event.render_events(@wip.events.order(:number), current_user)

@@ -7,6 +7,7 @@
   padding-bottom: $line-height-computed;
   border-top: 1px solid $brand-divider;
   text-align: right;
+  margin-top: $line-height-computed * 1.5;
 }
 
 .help-block {
@@ -20,10 +21,9 @@ textarea {
 
 .markdown-editor-control {
   position: relative;
-  margin-bottom: $line-height-computed;
 
   .form-control {
-    padding-bottom: 65px;
+    padding-bottom: 72px;
   }
 
   &.dz-drag-hover {

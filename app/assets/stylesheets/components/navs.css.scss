@@ -2,6 +2,11 @@
   > li > a {
     color: $text-color;
 
+    &:hover,
+    &:focus {
+      background-color: transparent;
+    }
+
     > .badge:last-child {
       margin-left: $padding-base-vertical;
     }
@@ -32,6 +37,7 @@
     > a {
       border: none;
       margin-right: 0;
+      font-weight: bold;
 
       @include transition-property(box-shadow);
       @include transition-duration($transition-out-duration);
@@ -40,11 +46,10 @@
       &:hover,
       &:focus {
         border-width: 0;
-        border-bottom-width: 1px;
+        border-bottom-width: 0px;
         border-bottom-color: $nav-tabs-link-hover-border-color;
         color: inherit;
-        box-shadow: inset 0 -2px 0 0 $nav-tabs-link-hover-border-color;
-        margin-bottom: -1px;
+        box-shadow: inset 0 -3px 0 0 $nav-tabs-link-hover-border-color;
 
         @include transition-duration($transition-in-duration);
       }
@@ -54,11 +59,10 @@
     &.active > a:hover,
     &.active > a:focus {
       border-width: 0;
-      border-bottom-width: 1px;
+      border-bottom-width: 0px;
       border-bottom-color: $nav-tabs-active-link-hover-border-color;
       color: inherit;
-      box-shadow: inset 0 -2px 0 0 $nav-tabs-active-link-hover-border-color;
-      margin-bottom: -1px;
+      box-shadow: inset 0 -3px 0 0 $nav-tabs-active-link-hover-border-color;
     }
   }
 }

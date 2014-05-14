@@ -293,7 +293,7 @@ $nav-open-link-hover-color: #fff;
 // Tabs
 $nav-tabs-border-color: $brand-border;
 
-$nav-tabs-link-hover-border-color: $brand-border;
+$nav-tabs-link-hover-border-color: $brand-divider;
 
 $nav-tabs-active-link-hover-bg:           transparent;
 $nav-tabs-active-link-hover-color:        $gray;
@@ -399,7 +399,7 @@ $popover-arrow-outer-fallback-color: darken($popover-fallback-border-color, 20%)
 
 // Labels
 
-$label-default-bg: $gray-light;
+$label-default-bg: $gray;
 $label-primary-bg: $brand-primary;
 $label-success-bg: $brand-success;
 $label-info-bg:    $brand-info;

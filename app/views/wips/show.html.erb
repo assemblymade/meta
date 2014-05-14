@@ -1,124 +1,124 @@
 <% title @wip.title, "##{@wip.number}", @wip.product.name %>
 
-<%= render 'shared/deprecated_navbar' %>
-<%= render 'products/deprecated_navbar' %>
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
 
-<div class="page page-padded page-ruled <%= 'non-profit' if !@product.for_profit?%>">
+<div class="page <%= 'non-profit' if !@product.for_profit?%>">
   <div class="container">
 
-    <%= render 'heading' %>
+    <%= render 'header' %>
+    <div class="row">
+      <div class="col-md-8 col-xs-8">
+        <div id="discussion-view-el">
+          <%= render 'wips/discussion', events: @events %>
 
-    <div class="page-content">
-      <div id="discussion-view-el">
-        <%= render 'wips/discussion', events: @events %>
+          <div class="educational-modal js-upvote-reminder" style="display:none">
+            You've commented on this Task but you haven't upvoted. Your upvotes reward people with more coins for completing Tasks which helps make <%= @product.name %> a better product.
+          </div>
 
-        <div class="educational-modal js-upvote-reminder" style="display:none">
-          You've commented on this Task but you haven't upvoted. Your upvotes reward people with more coins for completing Tasks which helps make <%= @product.name %> a better product.
+          <%= render 'new_event_form' %>
         </div>
-
-        <%= render 'new_event_form' %>
       </div>
-    </div>
 
 
-    <div class="page-sidebar">
-      <div class="sidebar-module">
-        <% case @wip.state %>
-        <% when 'open' %>
-          <div class="progressbar">
-            <div class="progressbar-step"></div>
-            <div class="progressbar-step"></div>
-            <div class="progressbar-step"></div>
-          </div>
-          <div class="sidebar-module-heading">
-            Ready for work
-          </div>
+      <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+        <div class="panel panel-default">
+          <% case @wip.state %>
+          <% when 'open' %>
+            <div class="progressbar">
+              <div class="progressbar-step"></div>
+              <div class="progressbar-step"></div>
+              <div class="progressbar-step"></div>
+            </div>
+            <div class="sidebar-module-heading">
+              Ready for work
+            </div>
 
-          <p><strong>Think you'd be a great fit for this task?</strong> Jump in and help out.</p>
-          <%= button_to 'Work on this task', product_wip_start_work_path(@wip.product, @wip), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-default) %>
+            <p><strong>Think you'd be a great fit for this task?</strong> Jump in and help out.</p>
+            <%= button_to 'Work on this task', product_wip_start_work_path(@wip.product, @wip), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-default) %>
 
-        <% when 'allocated' %>
-          <div class="progressbar">
-            <div class="progressbar-step progressbar-step-completed"></div>
-            <div class="progressbar-step"></div>
-            <div class="progressbar-step"></div>
-          </div>
-          <div class="sidebar-module-heading">
-            In Progress
-          </div>
+          <% when 'allocated' %>
+            <div class="progressbar">
+              <div class="progressbar-step progressbar-step-completed"></div>
+              <div class="progressbar-step"></div>
+              <div class="progressbar-step"></div>
+            </div>
+            <div class="sidebar-module-heading">
+              In Progress
+            </div>
 
-          <% if signed_in? && @wip.workers.include?(current_user) %>
-            <% worker = @wip.wip_workers.find_by(user: current_user) %>
-            <p>You began working on this task <strong><time class="timestamp" datetime="<%= worker.created_at.iso8601 %>"></time></strong>. How's it shaping up?</p>
+            <% if signed_in? && @wip.workers.include?(current_user) %>
+              <% worker = @wip.wip_workers.find_by(user: current_user) %>
+              <p>You began working on this task <strong><time class="timestamp" datetime="<%= worker.created_at.iso8601 %>"></time></strong>. How's it shaping up?</p>
 
-            <%= button_to 'Stop working on this task', product_wip_stop_work_path(@wip.product, @wip), method: :patch, disable_with: 'Cancelling…', class: %w(btn btn-text) %>
-          <% else %>
-            <% worker = @wip.wip_workers.first %>
-            <p><strong><%= worker.user.username %></strong> began working on this task <strong><time class="timestamp" datetime="<%= worker.created_at.iso8601 %>"></time>.</strong></p>
-          <% end %>
-
-        <% when 'reviewing' %>
-          <div class="progressbar">
-            <div class="progressbar-step progressbar-step-completed"></div>
-            <div class="progressbar-step progressbar-step-completed"></div>
-            <div class="progressbar-step"></div>
-          </div>
-          <div class="sidebar-module-heading">
-            Reviewing
-          </div>
-
-          <!--
-            This isn't perfect, there's no concept of the work that's up for
-            review.
-          -->
-          <p>A submission is currently being reviewed by the Core Team.</p>
-
-        <% when 'resolved' %>
-          <div class="progressbar">
-            <div class="progressbar-step progressbar-step-completed"></div>
-            <div class="progressbar-step progressbar-step-completed"></div>
-            <div class="progressbar-step progressbar-step-completed"></div>
-          </div>
-          <div class="sidebar-module-heading sidebar-module-heading-green">
-            Complete
-          </div>
-          <% if @wip.winner %>
-            <% if signed_in? && @wip.winner == current_user %>
-              <p>
-                You were awarded
-                <strong><%= pluralize(@wip.score, 'point') %></strong> for completing this task.</p>
-              <p><strong>Keep up the great work!</strong></p>
+              <%= button_to 'Stop working on this task', product_wip_stop_work_path(@wip.product, @wip), method: :patch, disable_with: 'Cancelling…', class: %w(btn btn-text) %>
             <% else %>
-              <p><strong><%= @wip.winner.username %></strong> was awarded <strong><%= pluralize(@wip.score, 'point') %></strong> for completing this task.</p>
+              <% worker = @wip.wip_workers.first %>
+              <p><strong><%= worker.user.username %></strong> began working on this task <strong><time class="timestamp" datetime="<%= worker.created_at.iso8601 %>"></time>.</strong></p>
+            <% end %>
+
+          <% when 'reviewing' %>
+            <div class="progressbar">
+              <div class="progressbar-step progressbar-step-completed"></div>
+              <div class="progressbar-step progressbar-step-completed"></div>
+              <div class="progressbar-step"></div>
+            </div>
+            <div class="sidebar-module-heading">
+              Reviewing
+            </div>
+
+            <!--
+              This isn't perfect, there's no concept of the work that's up for
+              review.
+            -->
+            <p>A submission is currently being reviewed by the Core Team.</p>
+
+          <% when 'resolved' %>
+            <div class="progressbar">
+              <div class="progressbar-step progressbar-step-completed"></div>
+              <div class="progressbar-step progressbar-step-completed"></div>
+              <div class="progressbar-step progressbar-step-completed"></div>
+            </div>
+            <div class="sidebar-module-heading sidebar-module-heading-green">
+              Complete
+            </div>
+            <% if @wip.winner %>
+              <% if signed_in? && @wip.winner == current_user %>
+                <p>
+                  You were awarded
+                  <strong><%= pluralize(@wip.score, 'point') %></strong> for completing this task.</p>
+                <p><strong>Keep up the great work!</strong></p>
+              <% else %>
+                <p><strong><%= @wip.winner.username %></strong> was awarded <strong><%= pluralize(@wip.score, 'point') %></strong> for completing this task.</p>
+              <% end %>
             <% end %>
           <% end %>
-        <% end %>
 
-      </div>
-
-
-      <div class="sidebar-module">
-        <div class="sidebar-module-heading">
-          Watchers
         </div>
-        <div class="avatar-grid">
-          <% @wip.watchers.each do |user| %>
-            <a class="avatar avatar-sm" href="<%= user_path(user) %>">
-              <img src="<%= user.avatar.url(30) %>" title="<%= user.username %>" />
-            </a>
-          <% end %>
+
+
+        <div class="sidebar-module">
+          <div class="sidebar-module-heading">
+            Watchers
+          </div>
+          <div class="avatar-grid">
+            <% @wip.watchers.each do |user| %>
+              <a class="avatar avatar-sm" href="<%= user_path(user) %>">
+                <img src="<%= user.avatar.url(30) %>" title="<%= user.username %>" />
+              </a>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
 <% if signed_in? %>
-  <img class="rawr" src="<%= ReadraptorTracker.new(@wip, current_user.id).url %>" />
+  <img class="hidden" src="<%= ReadraptorTracker.new(@wip, current_user.id).url %>" />
 <% end %>
 
-<%= render 'shared/deprecated_footer' %>
+<%= render 'shared/footer' %>
 
 <script>
   app.wip = new Wip(<%== WipSerializer.new(@wip, scope: current_user).to_json %>);
