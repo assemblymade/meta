@@ -1,4 +1,6 @@
 class AutoTipContract < ActiveRecord::Base
+  DEFAULT_SPLIT = 0.05
+
   belongs_to :product, touch: true
   belongs_to :user
 
@@ -17,6 +19,11 @@ class AutoTipContract < ActiveRecord::Base
     if AutoTipContract.active_at(product, (created_at || Time.now)).where(user_id: user.id).exists?
       errors.add(:user, "existing contract in place for user")
     end
+  end
+
+  def self.replace_contracts_with_default_core_team_split(product, start_at = Time.now)
+    user_amounts = product.core_team.inject({}) {|h, u| h[u] = DEFAULT_SPLIT/product.core_team.size.to_f; h }
+    replace_contracts(product, user_amounts, start_at)
   end
 
   def self.replace_contracts(product, user_amounts, start_at = Time.now)
