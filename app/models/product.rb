@@ -343,6 +343,10 @@ class Product < ActiveRecord::Base
     slug == 'asm'
   end
 
+  def meta?
+    slug == 'meta'
+  end
+
   protected
 
   def vote_on_behalf_of_owner

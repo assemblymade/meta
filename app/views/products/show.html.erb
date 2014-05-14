@@ -29,7 +29,7 @@
       </div>
     </div>
   </div>
-<% elsif !signed_in? %>
+<% elsif !signed_in? && !@product.meta? %>
   <br>
   <div class="callout container">
     <div class="callout-content">
