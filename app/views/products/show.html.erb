@@ -97,29 +97,28 @@
 
         <%#= render 'products/social_buttons' %>
 
-
-
-
         <% if !@product.homepage_url.blank? || @product.repos.any? %>
           <div class="panel panel-default">
 
             <div class="panel-heading">
-              <h6 class="panel-title">Product Links</h6>
+              <h6 class="panel-title">Links</h6>
             </div>
-            <div class="panel-body small">
+            <div class="panel-body">
               <% unless @product.homepage_url.blank? %>
-                <a href="<%= @product.homepage_url %>" data-track="product.site.clicked"><%= @product.homepage_url %></a>
+                <a href="<%= @product.homepage_url %>" data-track="product.site.clicked">
+                  <strong><%= @product.homepage_url %></strong>
+                </a>
               <% end %>
               <% unless @product.homepage_url.blank? && @product.repos.any? %>
-                <hr>
+                <hr style="margin-top: 15px; margin-bottom: 15px;">
               <% end %>
               <% if @product.for_profit? && @product.repos.any? %>
                 <ul class="list-unstyled omega">
                   <% @product.repos.each do |repo| %>
                     <li>
+                      <span class="icon icon-github" style="margin-right: 4px;"></span>
                       <a href="<%= repo.url %>" data-track="product.repo.clicked">
-                        <span class="icon icon-github"></span>
-                        <%= repo.name %>
+                        <strong><%= repo.name %></strong>
                       </a>
                     </li>
                   <% end %>
@@ -291,7 +290,7 @@
             <div class="panel-body">
               <ul class="list-grid omega">
                 <% @product.tags.each do |tag| %>
-                  <li><span class="label label-default"><%= tag %></span></li>
+                  <li><span class="label label-info"><%= tag %></span></li>
                 <% end %>
               <ul>
             </div>
