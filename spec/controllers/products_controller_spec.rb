@@ -56,5 +56,11 @@ describe ProductsController do
 
       expect(TransactionLogEntry.validated.count).to eq(1)
     end
+
+    it 'creates a main discussion thread' do
+      expect {
+        post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
+      }.to change(Discussion, :count).by(1)
+    end
   end
 end
