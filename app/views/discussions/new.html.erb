@@ -31,21 +31,13 @@
               </div>
             </div>
           </div>
+        </div>
 
-        <script type="text/javascript">
-          new CommentView({
-            attachmentUploadUrl: $('meta[name=attachment-upload-url]').attr('content'),
-            el: $('#description-el')
-          });
-        </script>
-
-      </div>
-
-      <div class="form-actions">
-        <%= f.submit 'Start Discussion', class: %w(btn btn-primary) %>
-      </div>
-
+        <div class="form-actions">
+          <%= f.submit 'Start Discussion', class: %w(btn btn-primary) %>
+        </div>
       <% end %>
+      
     </div>
   </div>
 </div>
