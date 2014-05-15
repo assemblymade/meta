@@ -9,25 +9,30 @@
         <div class="page-header">
           <h2 class="page-header-title"><%= @post.title %></h2>
 
-          <% if can?(:update, @post) %>
-            <div class="pull-right small">
-              <%= link_to 'Update', edit_product_post_path(@post.product, @post) %>
-            </div>
-          <% end %>
+          <div class="page-header-meta">
 
-          <ul class="list-inline list-inline-piped small omega">
-            <li>
-              <a href="<%= user_path(@post.author) %>" title="@<%= @post.author.username %>">
-                <%= image_tag @post.author.avatar.url(32), width: 16, height: 16, class: 'img-circle', style: 'margin-right:0.5em', alt: "@#{@post.author.username}" %><%= @post.author.username %>
-              </a>
-            </li>
-            <li>
-              <%= time_ago_in_words(@post.created_at) %> ago
-            </li>
-          </ul>
+            <% if can?(:update, @post) %>
+              <ul class="list-piped pull-right">
+                <li>
+                  <%= link_to 'Update', edit_product_post_path(@post.product, @post) %>
+                </li>
+              </ul>
+            <% end %>
+
+            <ul class="list-piped omega">
+              <li>
+                <a href="<%= user_path(@post.author) %>" title="@<%= @post.author.username %>">
+                  <%= image_tag @post.author.avatar.url(40), width: 20, height: 20, class: 'img-circle', style: 'margin-right:0.5em', alt: "@#{@post.author.username}" %><%= @post.author.username %>
+                </a>
+              </li>
+              <li>
+                <%= time_ago_in_words(@post.created_at) %> ago
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div class="copy">
+        <div class="markdown-normalized">
           <%= markdown(@post.body) %>
         </div>
       </div>
@@ -42,20 +47,15 @@
           <div class="panel-heading">
             <h6 class="panel-title">Recent Posts</h6>
           </div>
-          <div class="panel-body">
-            <ul class="list-unstyled">
-              <% @product.posts.order(created_at: :desc).limit(10).each do |post| %>
-                <li>
-                  <a href="<%= product_post_path(post.product, post) %>">
-                    <h5 class="omega"><%= post.title %></h5>
-                  </a>
-                  <a class="small" href="<%= user_path(post.author) %>">
-                    <%= image_tag post.author.avatar.url(32), width: 16, height: 16, class: 'img-circle', style: 'margin-right:0.5em' %><%= post.author.username %>
-                  </a>
-                </li>
-              <% end %>
-            </ul>
+
+          <div class="list-group">
+            <% @product.posts.order(created_at: :desc).limit(10).each do |post| %>
+              <a class="list-group-item" href="<%= product_post_path(post.product, post) %>">
+                <strong class="text-primary"><%= post.title %></strong>
+              </a>
+            <% end %>
           </div>
+
         </div>
       </div>
     </div>

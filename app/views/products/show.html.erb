@@ -84,7 +84,7 @@
         <% end %> -->
 
         <!-- Body -->
-        <div class="markdown-normalizer">
+        <div class="markdown-normalized">
           <%== @product.description_html %>
         </div>
       </div>
@@ -151,9 +151,7 @@
               <ul class="list-grid omega">
                 <% @product.core_team.each do |user| %>
                   <li>
-                    <a href="<%= user_path(user) %>" title="<%= user.username %>">
-                      <%= avatar_tag(user, 24) %>
-                    </a>
+                    <a href="<%= user_path(user) %>" title="<%= user.username %>"><%= avatar_tag(user, 36) %></a>
                   </li>
                 <% end %>
               </ul>
@@ -173,7 +171,7 @@
                 <% @product.important_contributors.each do |user| %>
                   <li>
                     <a href="<%= user_path(user) %>" title="<%= user.username %>">
-                      <%= avatar_tag(user, 24) %>
+                      <%= avatar_tag(user, 21) %>
                     </a>
                   </li>
                 <% end %>

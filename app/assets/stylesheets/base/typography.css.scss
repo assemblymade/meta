@@ -142,11 +142,12 @@ h6,
 }
 
 .list-grid {
-  @extend .list-inline;
+  @extend .list-unstyled;
+  @include clearfix;
 
   > li {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    float: left;
+    padding: $padding-small-vertical;
   }
 }
 
@@ -157,7 +158,7 @@ h4 + p {
 }
 
 // Markdown Normalizer class overrides multiple heading types
-.markdown-normalizer {
+.markdown-normalized {
 
   h1,
   h2,
