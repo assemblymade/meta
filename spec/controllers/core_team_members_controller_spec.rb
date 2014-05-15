@@ -16,7 +16,6 @@ describe CoreTeamMembersController do
         core_team_member: { username: user.username }
       expect(response).to redirect_to(edit_product_path(product))
     end
-
   end
 
 end

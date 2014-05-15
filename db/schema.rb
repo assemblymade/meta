@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140513182211) do
+ActiveRecord::Schema.define(version: 20140514231856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -357,8 +357,9 @@ ActiveRecord::Schema.define(version: 20140513182211) do
   create_table "profit_reports", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid    "product_id", null: false
     t.date    "end_at",     null: false
-    t.integer "profit",     null: false
     t.integer "royalty",    null: false
+    t.integer "revenue",    null: false
+    t.integer "expenses",   null: false
   end
 
   create_table "saved_searches", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

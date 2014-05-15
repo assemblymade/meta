@@ -28,11 +28,11 @@
 <p><small>
   <% if @product.profit_reports.any? %>
     <% report = @product.profit_reports.last %>
-    Last month's shared revenue was <%= number_to_currency (report.profit / 100.0), precision: 2 %>.
-
     <% if report.royalty > 0 %>
+      Last month's shared revenue was <%= number_to_currency (report.profit / 100.0), precision: 2 %>.
       The App coin royalty was <%= number_to_currency (report.royalty / 100.0), precision: 2 %> per App Coin.
     <% else %>
+      Last month's revenue was <%= number_to_currency (report.profit / 100.0), precision: 2 %>.
       There were no royalty payouts.
     <% end %>
   <% else %>
