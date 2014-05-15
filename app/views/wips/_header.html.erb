@@ -47,7 +47,7 @@
         <%= pluralize(@wip.comments.count, 'comments') %>
       </li>
       <li>
-        <span class="label label-default"><%= @wip.deliverable %></span>
+        <span class="label label-default"><%= @wip.deliverable.titleize %></span>
 
         <% if @wip.promoted? %>
           <span class="label label-promoted">Promoted</span>

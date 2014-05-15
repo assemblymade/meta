@@ -1,9 +1,9 @@
 <% title @product.name, @product.pitch %>
 <% @missionAutoOpen = false %>
-<%= render 'shared/deprecated_navbar' %>
-<%= render 'products/deprecated_navbar' %>
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
 
-<% if flash[:new_product_callout] %>
+<!-- <% if flash[:new_product_callout] %>
   <br>
   <div class="callout container">
     <div class="callout-content">
@@ -17,8 +17,6 @@
     <div class="callout-actions">
       <div class="pull-left">
         <span class="text-muted">Current Goal:</span>
-        <!-- FIXME: This is a horrible hack -->
-        <!-- @current_mission.name -->
         <%= ProductMissionDecorator.new(@product.current_mission).translate(:name) %>
       </div>
 
@@ -41,248 +39,292 @@
       </div>
     </div>
   </div>
-<% end %>
+<% end %> -->
 
-<div class="page container container-with-status">
+<div class="page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-xs-8">
 
-  <% cache [@product] do %>
-    <div class="page-content">
+        <!-- Pitch -->
+        <!-- FIXME: This class is a hack -->
+        <div class="hack-product-pitch"><%= @product.pitch %></div>
 
-      <!-- Pitch -->
-      <!-- FIXME: This class is a hack -->
-      <div class="hack-product-pitch"><%= @product.pitch %></div>
+        <% unless @product.lead.blank? %>
+          <div class="markdown-content markdown-content-fancy hack-product-lead">
+            <%== @product.lead_html %>
+          </div>
+        <% end %>
 
-      <% unless @product.lead.blank? %>
-        <div class="markdown-content markdown-content-fancy hack-product-lead">
-          <%== @product.lead_html %>
+        <!-- Poster Image -->
+        <% if @product.poster? %>
+          <img class="img-rounded" src="<%= @product.hero_image_path %>" alt="<%= @product.name %>" style="max-width: 100%;">
+        <% elsif @product.you_tube_video_url? %>
+          <%= you_tube_embed(@product.you_tube_video_embed_url) %>
+        <% end %>
+
+        <hr>
+
+        <% if !@product.homepage_url.blank? || @product.repos.any? %>
+          <div class="list-group small">
+            <% unless @product.homepage_url.blank? %>
+              <!-- <div class="panel-heading">
+                <h6 class="panel-title">Product Homepage</h6>
+              </div> -->
+              <a class="list-group-item" href="<%= @product.homepage_url %>" data-track="product.site.clicked"><%= @product.homepage_url %></a>
+            <% end %>
+
+            <% if @product.for_profit? && @product.repos.any? %>
+              <% @product.repos.each do |repo| %>
+                <a class="list-group-item" href="<%= repo.url %>" data-track="product.repo.clicked"><%= repo.username %> / <%= repo.name %></a>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+
+        <!-- Body -->
+        <div class="markdown-content markdown-content-fancy">
+          <%== @product.description_html %>
         </div>
-      <% end %>
+      </div>
 
-      <!-- Poster Image -->
-      <% if @product.poster? %>
-        <div class="hero-image">
-          <img src="<%= @product.hero_image_path %>" alt="<%= @product.name %>">
-        </div>
-      <% elsif @product.you_tube_video_url? %>
-        <%= you_tube_embed(@product.you_tube_video_embed_url) %>
-      <% end %>
 
-      <!-- Product Links -->
-      <% if !@product.homepage_url.blank? || @product.repos.any? %>
-        <div class="product-link-group">
-          <% unless @product.homepage_url.blank? %>
-            <div class="product-link link-type-product-site">
-              <a href="<%= @product.homepage_url %>" data-track="product.site.clicked"><strong><%= @product.homepage_url %></strong></a>
-              <span class="descriptor">Product Site</a>
+      <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+
+
+        <!-- Social links -->
+
+        <%#= render 'products/social_buttons' %>
+
+        <% if !@product.homepage_url.blank? || @product.repos.any? %>
+          <div class="panel panel-default">
+            <% unless @product.homepage_url.blank? %>
+              <div class="panel-heading">
+                <h6 class="panel-title">Product Homepage</h6>
+              </div>
+              <div class="panel-body small">
+                <a href="<%= @product.homepage_url %>" data-track="product.site.clicked"><%= @product.homepage_url %></a>
+              </div>
+            <% end %>
+
+            <% if @product.for_profit? && @product.repos.any? %>
+              <div class="panel-heading">
+                <h6 class="panel-title">Code Repositories</h6>
+              </div>
+              <div class="panel-body small">
+                <ul class="list-unstyled omega">
+                  <% @product.repos.each do |repo| %>
+                    <li>
+                      <a href="<%= repo.url %>" data-track="product.repo.clicked"><%= repo.name %></a>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% if !@product.for_profit? %>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h6 class="panel-title">Assembly Meta</h6>
             </div>
-          <% end %>
-
-          <% if @product.for_profit? && @product.repos.any? %>
-            <% @product.repos.each do |repo| %>
-              <div class="product-link link-type-code-repository">
-                <a href="<%= repo.url %>" data-track="product.repo.clicked"><%= repo.username %> / <strong><%= repo.name %></strong></a>
-                <span class="descriptor">Code Repository</a>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-      <% end %>
-
-      <!-- Body -->
-      <div class="markdown-content markdown-content-fancy">
-        <%== @product.description_html %>
-      </div>
-
-    </div>
-  <% end %>
-  <div class="page-sidebar">
-
-
-    <!-- Social links -->
-    <%= render 'products/social_buttons' %>
-
-    <% if !@product.for_profit? %>
-      <div class="panel">
-        <div class="panel-title">Assembly Meta</div>
-        Assembly Meta is a special product for providing feedback to Assembly and to join the discussion on upcoming features. This is not intended for revenue so there won't be any royalties paid. App Coins have been replaced with Karma to make this clear.
-      </div>
-    <% end %>
-
-    <!-- People Panel -->
-    <div class="panel-group">
-      <div class="panel">
-        <div class="panel-title">Core Team</div>
-        <% if @product.core_team.empty? %>
-          <div class="well">
-            No core team members yet.
-          </div>
-        <% else %>
-          <div class="avatar-grid">
-            <% @product.core_team.each do |user| %>
-              <a class="avatar-grid-item" href="<%= user_path(user) %>" title="<%= user.username %>">
-                <%= render 'users/avatars/sm', user: user %>
-              </a>
-            <% end %>
+            <div class="panel-body small">
+              <p class="omega">Assembly Meta is a special product for providing feedback to Assembly and to join the discussion on upcoming features. This is not intended for revenue so there won't be any royalties paid. App Coins have been replaced with Karma to make this clear.</p>
+            </div>
           </div>
         <% end %>
-      </div>
 
-      <div class="panel">
-        <div class="panel-title">Contributors</div>
-        <% if @product.contributors.empty? %>
-          <div class="well">
-            No contributors yet.
+        <!-- People Panel -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h6 class="panel-title">Core Team</h6>
           </div>
-        <% else %>
-          <div class="avatar-grid">
-            <% @product.important_contributors.each do |user| %>
-              <a class="avatar-grid-item" href="<%= user_path(user) %>" title="<%= user.username %>">
-                <%= render 'users/avatars/sm', user: user %>
-              </a>
-            <% end %>
-
-            <!-- FIXME: Most of these should be in another decorator -->
-            <% if @product.uninmportant_contributors_count > 0 %>
-              <div class="avatar-grid-more">
-                Plus <%= @product.uninmportant_contributors_count %> more
-              </div>
-            <% end %>
-
-          </div>
-        <% end %>
-      </div>
-    </div>
-
-
-    <% if @product.greenlit? %>
-      <div class="panel-group">
-        <div class="panel">
-          <div class="panel-header">
-            This product is live!
-          </div>
-          <p class="text-muted">
-            To sign up, visit <a href="<%= @product.homepage_url %>" target='product'><strong><%= @product.name %></strong></a> now or you can get started using <%= @product.name %> here with your Assembly account.
-          </p>
-          <form method="post" action="<%= vote_idea_path(@product) %>" data-require-user="<%= product_path(@product) %>">
-            <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-            <% if @product.voted_for_by?(current_user) %>
-              <input type="submit" value="Sign Up" class="btn btn-default btn-block btn-disabled" disabled="disabled">
+          <div class="panel-body small">
+            <% if @product.core_team.empty? %>
+              <p class="omega">No core team members yet.</p>
             <% else %>
-              <input type="submit" value="Sign Up" class="btn btn-default btn-block">
+              <ul class="list-grid omega">
+                <% @product.core_team.each do |user| %>
+                  <li>
+                    <a href="<%= user_path(user) %>" title="<%= user.username %>">
+                      <%= avatar_tag(user, 24) %>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
             <% end %>
-          </form>
+          </div>
+
+          <div class="panel-heading">
+            <h6 class="panel-title">Contributors</h6>
+          </div>
+
+          <div class="panel-body small">
+            <% if @product.contributors.empty? %>
+              <p class="omega">No contributors yet.</p>
+            <% else %>
+
+              <ul class="list-grid omega">
+                <% @product.important_contributors.each do |user| %>
+                  <li>
+                    <a href="<%= user_path(user) %>" title="<%= user.username %>">
+                      <%= avatar_tag(user, 24) %>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+
+              <!-- FIXME: Most of these should be in another decorator -->
+              <% if @product.uninmportant_contributors_count > 0 %>
+                <p class="text-center omega" style="margin-top:15px">
+                  <a href="<%= product_jobs_path(@product) %>">
+                    Plus <%= @product.uninmportant_contributors_count %> more
+                  </a>
+                </p>
+              <% end %>
+            <% end %>
+          </div>
         </div>
-      </div>
 
-      <% if @product.has_metrics? %>
-        <% cache ['v1', @product], expires_in: 12.hours do %>
-          <%= render 'products/panels/metrics' %>
-        <% end %>
-      <% end %>
 
-    <% else %>
-
-      <% if @product.has_metrics? %>
-        <% cache ['v1', @product], expires_in: 12.hours do %>
-          <%= render 'products/panels/metrics' %>
-        <% end %>
-      <% end %>
-
-      <% if @product.has_preorders? %>
-        <!-- Pre-orders Panel -->
-        <div class="panel-group">
-          <div class="panel">
-            <div class="panel-title">Pre-Orders</div>
-            <p>
-              <%= @product.name %> is <span class="text-highlight">100% refundable</span>
-              and will be <span class="text-highlight">100% open</span>
-              so pre-ordering now is <span class="text-highlight">100% risk free</span>.
-              The <span class="text-highlight">60% discount</span> lasts until
-              <%= @product.name %> is a shipping product.
-            </p>
-          </div>
-
-          <div class="panel">
-            <div class="panel-header">
-              Free
-              <div class="amount pull-right">
-                $0.00
-              </div>
+        <% if @product.greenlit? %>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h6 class="panel-title">
+                This product is live!
+              </h6>
             </div>
-            <p class="text-muted">
-              <%= @product.free_perk %>
-            </p>
-            <form method="post" action="<%= vote_idea_path(@product) %>" data-require-user="<%= product_path(@product) %>">
-              <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-              <input type="submit" value="<%= @product.signup_button_copy(current_user) %>" class="btn btn-default btn-block <%= "btn-disabled" if @product.voted_for_by?(current_user) %>">
-            </form>
+            <div class="panel-body small">
+
+              <p>To sign up, visit <a href="<%= @product.homepage_url %>" target='product'><%= @product.name %></a> now or you can get started using <%= @product.name %> here with your Assembly account.</p>
+
+              <form method="post" action="<%= vote_idea_path(@product) %>" data-require-user="<%= product_path(@product) %>">
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                <% if @product.voted_for_by?(current_user) %>
+                  <input type="submit" value="Signed up" class="btn btn-default btn-sm btn-block" disabled="disabled">
+                <% else %>
+                  <input type="submit" value="Sign up" class="btn btn-default btn-sm btn-block">
+                <% end %>
+              </form>
+            </div>
           </div>
 
-          <% @perks.each do |perk| %>
-            <div class="panel">
-              <div class="panel-header">
-                <%= perk.name %>
-                <div class="amount pull-right">
-                  <span class="original-amount"><%= amount_to_currency(perk.amount) %></span>
-                  <span class="discount badge badge-success">
-                    <%= perk.formatted_discount_percent_off %>
-                  </span>
-                </div>
+          <% if @product.has_metrics? %>
+            <% cache ['v1', @product], expires_in: 12.hours do %>
+              <%= render 'products/panels/metrics' %>
+            <% end %>
+          <% end %>
+
+        <% else %>
+
+          <% if @product.has_metrics? %>
+            <% cache ['v1', @product], expires_in: 12.hours do %>
+              <%= render 'products/panels/metrics' %>
+            <% end %>
+          <% end %>
+
+          <% if @product.has_preorders? %>
+            <!-- Pre-orders Panel -->
+            <div class="panel-group">
+              <div class="panel">
+                <div class="panel-title">Pre-Orders</div>
+                <p>
+                  <%= @product.name %> is <span class="text-highlight">100% refundable</span>
+                  and will be <span class="text-highlight">100% open</span>
+                  so pre-ordering now is <span class="text-highlight">100% risk free</span>.
+                  The <span class="text-highlight">60% discount</span> lasts until
+                  <%= @product.name %> is a shipping product.
+                </p>
               </div>
-              <p class="text-muted">
-                <%= perk.description %>
-              </p>
-              <a href="<%= new_perk_preorder_path(perk) %>" class="btn btn-default btn-block <%= "btn-disabled" if current_user && current_user.preordered_perk?(perk) %>" data-authenticate="signup">
-                <%= perk.formatted_amount(current_user) %>
-              </a>
+
+              <div class="panel">
+                <div class="panel-header">
+                  Free
+                  <div class="amount pull-right">
+                    $0.00
+                  </div>
+                </div>
+                <p class="text-muted">
+                  <%= @product.free_perk %>
+                </p>
+                <form method="post" action="<%= vote_idea_path(@product) %>" data-require-user="<%= product_path(@product) %>">
+                  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                  <input type="submit" value="<%= @product.signup_button_copy(current_user) %>" class="btn btn-default btn-block <%= "btn-disabled" if @product.voted_for_by?(current_user) %>">
+                </form>
+              </div>
+
+              <% @perks.each do |perk| %>
+                <div class="panel">
+                  <div class="panel-header">
+                    <%= perk.name %>
+                    <div class="amount pull-right">
+                      <span class="original-amount"><%= amount_to_currency(perk.amount) %></span>
+                      <span class="discount badge badge-success">
+                        <%= perk.formatted_discount_percent_off %>
+                      </span>
+                    </div>
+                  </div>
+                  <p class="text-muted">
+                    <%= perk.description %>
+                  </p>
+                  <a href="<%= new_perk_preorder_path(perk) %>" class="btn btn-default btn-block <%= "btn-disabled" if current_user && current_user.preordered_perk?(perk) %>" data-authenticate="signup">
+                    <%= perk.formatted_amount(current_user) %>
+                  </a>
+                </div>
+              <% end %>
             </div>
           <% end %>
-        </div>
-      <% end %>
-    <% end %>
-
-    <!-- Tags Panel -->
-    <div class="panel">
-      <div class="panel-title">Tags</div>
-      <% if @product.tags.present? %>
-        <%= render 'tags', tags: @product.tags %>
-      <% else %>
-        <div class="well">
-          No tags specified yet.
-        </div>
-      <% end %>
-    </div>
-
-    <% if can?(:update, @product) %>
-      <div class="panel panel-alert">
-        <div class="panel-title">Panel o&rsquo; Power</div>
-        <a class="btn btn-block btn-alert" href="<%= edit_product_path(@product) %>">Edit Product</a>
-        <br>
-        <a class="btn btn-default btn-block" href="<%=  new_product_post_path(@product) %>">Write Post</a>
-      </div>
-    <% end %>
-
-    <% if staff? %>
-      <div class="panel panel-alert">
-        <% if @product.flagged? %>
-          <span class="btn btn-alert btn-small btn-block btn-disabled" href="#>">Product Flagged</span>
-        <% else %>
-          <a class="btn btn-default" href="<%= product_flag_path(@product)%>">Flag Product</a>
         <% end %>
 
-        <br>
-
-        <%= form_for [:admin, @product.showcases.new], url: admin_staff_picks_path do |f| %>
-          <%= f.hidden_field :product_id %>
-          <%= f.submit "Schedule Staff Pick", class: %w(btn btn-default) %>
+        <!-- Tags Panel -->
+        <% if @product.tags.present? %>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h6 class="panel-title">Tags</h6>
+            </div>
+            <div class="panel-body">
+              <ul class="list-grid omega">
+                <% @product.tags.each do |tag| %>
+                  <li><span class="label label-default"><%= tag %></span></li>
+                <% end %>
+              <ul>
+            </div>
+          </div>
         <% end %>
-      </div>
-    <% end %>
 
-  </div>
+        <% if can?(:update, @product) %>
+          <div class="panel panel-alert">
+            <div class="panel-title">Panel o&rsquo; Power</div>
+            <a class="btn btn-block btn-alert" href="<%= edit_product_path(@product) %>">Edit Product</a>
+            <br>
+            <a class="btn btn-default btn-block" href="<%=  new_product_post_path(@product) %>">Write Post</a>
+          </div>
+        <% end %>
+
+        <% if staff? %>
+          <div class="panel panel-alert">
+            <% if @product.flagged? %>
+              <span class="btn btn-alert btn-small btn-block btn-disabled" href="#>">Product Flagged</span>
+            <% else %>
+              <a class="btn btn-default" href="<%= product_flag_path(@product)%>">Flag Product</a>
+            <% end %>
+
+            <br>
+
+            <%= form_for [:admin, @product.showcases.new], url: admin_staff_picks_path do |f| %>
+              <%= f.hidden_field :product_id %>
+              <%= f.submit "Schedule Staff Pick", class: %w(btn btn-default) %>
+            <% end %>
+          </div>
+        <% end %>
+
+      </div>
+    </div><!-- .row -->
+  </div><!-- .container -->
 </div>
 
-<%= render 'shared/deprecated_footer' %>
+<%= render 'shared/footer' %>
 
 <% if current_user.try(:staff?) != true %>
   <script>
