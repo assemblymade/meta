@@ -1,7 +1,7 @@
 <h2><small>Founding</small></h3>
 <p><small>
   <% if @product.contract_holders.any? %>
-    <%= @product.name %> was founded by <%= render 'users/inline', users: @product.contract_holders.map(&:user) %> on <%= l @product.founded_at.to_date, format: :long %>. All initial IP including development and design was created and owned by <%= render 'users/inline', users: @product.contract_holders.map(&:user) %> until <%= @product.name %> became an openly developed Assembly product on <%= l @product.created_at.to_date, format: :long %>.
+    <%= @product.name %> was founded by <%= render 'users/inline', users: @product.contract_holders.map(&:user) %> on <%= l @product.founded_at.to_date, format: :long %>. All initial IP including development and design was created and owned by <%= render 'users/inline', users: @product.contract_holders.map(&:user) %> until <%= @product.name %> became an openly developed Assembly product on <%= l @product.public_at.to_date, format: :long %>.
   <% else %>
     <%= @product.name %> was founded by the community as an open Assembly product on <%= l @product.founded_at.to_date, format: :long %>.
   <% end %>
@@ -28,11 +28,16 @@
 <p><small>
   <% if @product.profit_reports.any? %>
     <% report = @product.profit_reports.last %>
+
+    Last month's profit was was <%= number_to_currency (report.profit / 100.0), precision: 2 %>,
+    based on <%= number_to_currency (report.revenue / 100.0), precision: 2 %> revenue
+    and <%= number_to_currency (report.expenses / 100.0), precision: 2 %> in expenses.
+</small></p>
+
+<p><small>
     <% if report.royalty > 0 %>
-      Last month's shared revenue was <%= number_to_currency (report.profit / 100.0), precision: 2 %>.
       The App coin royalty was <%= number_to_currency (report.royalty / 100.0), precision: 2 %> per App Coin.
     <% else %>
-      Last month's revenue was <%= number_to_currency (report.profit / 100.0), precision: 2 %>.
       There were no royalty payouts.
     <% end %>
   <% else %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140514231856) do
+ActiveRecord::Schema.define(version: 20140515003725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -348,6 +348,7 @@ ActiveRecord::Schema.define(version: 20140514231856) do
     t.string   "you_tube_video_url"
     t.integer  "commit_count",          default: 0,     null: false
     t.datetime "founded_at"
+    t.datetime "public_at"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree

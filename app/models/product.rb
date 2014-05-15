@@ -119,6 +119,10 @@ class Product < ActiveRecord::Base
     read_attribute(:founded_at) || created_at
   end
 
+  def public_at
+    read_attribute(:public_at) || created_at
+  end
+
   def for_profit?
     not NON_PROFIT.include?(slug)
   end
