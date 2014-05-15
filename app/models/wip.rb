@@ -127,6 +127,10 @@ class Wip < ActiveRecord::Base
     # ignore
   end
 
+  def closeable?
+    true
+  end
+
   def awardable?
     false
   end
@@ -195,8 +199,7 @@ class Wip < ActiveRecord::Base
     event.wip.watch!(event.user)
     watch!(event.user)
 
-    # Delay the pusher job so it's not faster than the request. TODO make this better...
-    PusherWorker.perform_in 1.second, push_channel, 'event.added', EventSerializer.for(event, nil).to_json
+    PusherWorker.perform_async push_channel, 'event.added', EventSerializer.for(event, nil).to_json
   end
 
   def vote_added(vote)
@@ -243,6 +246,8 @@ class Wip < ActiveRecord::Base
   # protected
 
   def set_number
+    return unless number.nil?
+
     ProductShortcut.create_for!(product, self).tap do |shortcut|
       self.update_column :number, shortcut.number
     end

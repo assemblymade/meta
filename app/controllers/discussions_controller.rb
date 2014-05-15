@@ -8,6 +8,7 @@ class DiscussionsController < WipsController
 
   def show
     @upgrade_stylesheet = true
+    @threads = find_wips
     super
   end
 
@@ -16,7 +17,7 @@ class DiscussionsController < WipsController
   end
 
   def product_wips
-    @product.discussions
+    @product.discussions.where('wips.number > 0')
   end
 
   def wip_params
@@ -36,5 +37,5 @@ class DiscussionsController < WipsController
     @wip.move_to!(Task, current_user)
     respond_with @wip, location: product_wip_path(@wip.product, @wip)
   end
-  
+
 end

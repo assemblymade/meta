@@ -1,4 +1,4 @@
-<div class="media js-new-event">
+<div class="media new-event js-new-event">
 
   <div class="pull-left">
     <% if signed_in? %>
@@ -27,7 +27,7 @@
         <div class="form-actions">
           <div class="btn-group disabled">
             <%= button_tag 'Comment', name: 'event_comment[type]', value: 'Event::Comment', type: 'submit', class: %w(btn btn-primary) %>
-            <% if can?(:update, @wip.product) %>
+            <% if @wip.closeable? && can?(:close, @wip) %>
               <% if @wip.resolved? %>
                 <%= button_tag 'Comment & Reopen', name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-primary) %>
               <% else %>

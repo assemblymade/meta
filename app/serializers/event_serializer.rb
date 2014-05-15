@@ -35,7 +35,7 @@ class EventSerializer < ActiveModel::Serializer
   end
 
   def edit_url
-    if Ability.new(scope).authorize!(:update, object)
+    if scope && Ability.new(scope).authorize!(:update, object)
       # TODO: (whatupdave) there must be a better way...
       case wip
       when Discussion

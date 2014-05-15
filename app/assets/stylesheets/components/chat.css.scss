@@ -1,0 +1,39 @@
+.chat-top {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+.chat-column {
+  margin-top: 134px;
+  padding-bottom: 180px !important;
+  z-index: 0;
+}
+.chat-bottom {
+  position: fixed;
+  bottom: 0;
+  margin-top: -250px;
+  width: 617px;
+  background-color: #fff;
+}
+.chat-side {
+  position: fixed;
+  top: 200px;
+  right: 20px;
+}
+
+.chat {
+  background-color: #fff;
+
+  .new-event {
+    padding-top: 10px;
+    padding-bottom: 20px;
+  }
+
+  .form-actions {
+    position: absolute;
+    top: -50px;
+    right: -106px;
+    border-top: 0;
+  }
+}

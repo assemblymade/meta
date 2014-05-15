@@ -64,7 +64,7 @@ class CampfireNotifier
   end
 
   def campfire_rooms_env_var
-    ENV['NOTIFY_CAMPFIRE_ROOMS']
+    ENV['NOTIFY_CAMPFIRE_ROOMS'] || ''
   end
 
   def campfire_token

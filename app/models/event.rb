@@ -11,7 +11,7 @@ class Event < ActiveRecord::Base
   has_many :tips, foreign_key: 'via_id'
   has_many :tippers, through: :tips, source: :from
 
-  after_commit -> { self.wip.event_added(self) }, on: :create
+  after_commit -> { self.wip.event_added(self); }, on: :create
 
   delegate :product, :to => :wip
 

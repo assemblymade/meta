@@ -10,13 +10,22 @@
 .fixed-bottom {
   position: fixed;
   bottom: 0;
-  right: 30px;
 
   .btn {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
 }
+
+.fixed-bottom-right {
+  right: 30px;
+}
+
+.fixed-top {
+  position: fixed;
+  top: 0;
+}
+
 
 .hide-long-links {
   .long-link { display: none; }
@@ -40,3 +49,4 @@
 .fb-like {
   top: -7px;
 }
+

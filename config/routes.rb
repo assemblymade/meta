@@ -204,6 +204,8 @@ ASM::Application.routes.draw do
       get 'part'
     end
 
+    get :discuss, to: 'discussions#show', id: '0'
+
     resources :discussions, only: [:index, :show, :new, :edit, :create, :update] do
       resources :comments, only: [:create, :edit, :update]
     end
