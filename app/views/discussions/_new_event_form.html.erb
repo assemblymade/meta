@@ -2,9 +2,9 @@
 
   <div class="pull-left">
     <% if signed_in? %>
-      <img class="media-object avatar" src="<%= current_user.avatar.url(60) %>" width="30" height="30">
+      <%= avatar_tag(current_user, 30) %>
     <% else %>
-      <img class="media-object avatar"  src="<%= image_path('avatars/default.png') %>" width="30" height="30">
+      <img class="avatar"  src="<%= image_path('avatars/default.png') %>" width="30" height="30">
     <% end %>
   </div>
 
