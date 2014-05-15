@@ -38,7 +38,7 @@
         <div class="tab-pane active" id="comment">
           <%= form_tag product_wip_comments_path(@wip.product, @wip), method: :post, class: %w(form new_event_comment) do %>
 
-            <div class="markdown-editor-control js-markdown-editor js-dropzone">
+            <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
               <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Say something awesome!', rows: 3, style: 'border-top-left-radius: 0' %>
 
               <div class="dropzone-inner">
