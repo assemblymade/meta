@@ -103,6 +103,10 @@ class Product < ActiveRecord::Base
         find_by!(slug: id_or_slug)
       end
     end
+
+    def unique_tags
+      pluck('distinct unnest(tags)').sort_by{|t| t.downcase }
+    end
   end
 
   def stage

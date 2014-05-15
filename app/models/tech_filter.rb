@@ -5,6 +5,7 @@ class TechFilter < Struct.new(:name, :slug, :tags)
       ['Go', 'go', %w(Go GO go golang)],
       ['Node.js', 'nodejs', %w(javascript node Node nodejs Node.js)],
       ['PHP', 'php', %w(php PHP)],
+      ['Python', 'python', %w(python Python Django)],
       ['iOS', 'ios', %w(ios iOS iphone iPhone)],
       ['Android', 'android', %w(android Android)],
     ].map do |args|
