@@ -47,30 +47,31 @@
       <div class="col-md-8 col-xs-8">
 
         <!-- Pitch -->
-        <!-- FIXME: This class is a hack -->
-        <div class="hack-product-pitch"><%= @product.pitch %></div>
+
+        <h2 class="alpha"><%= @product.pitch %></h2>
 
         <% unless @product.lead.blank? %>
-          <div class="markdown-content markdown-content-fancy hack-product-lead">
+          <div class="text-large">
             <%== @product.lead_html %>
           </div>
+          <br>
         <% end %>
 
         <!-- Poster Image -->
         <% if @product.poster? %>
-          <img class="img-rounded" src="<%= @product.hero_image_path %>" alt="<%= @product.name %>" style="max-width: 100%;">
+          <img class="img-rounded" src="<%= @product.hero_image_path %>" alt="<%= @product.name %>" style="max-width: 100%; margin-bottom: 24px;">
         <% elsif @product.you_tube_video_url? %>
           <%= you_tube_embed(@product.you_tube_video_embed_url) %>
+        <% else %>
+          <hr class="alpha">
         <% end %>
 
-        <hr>
-
-        <% if !@product.homepage_url.blank? || @product.repos.any? %>
+        <!-- <% if !@product.homepage_url.blank? || @product.repos.any? %>
           <div class="list-group small">
             <% unless @product.homepage_url.blank? %>
-              <!-- <div class="panel-heading">
+              <div class="panel-heading">
                 <h6 class="panel-title">Product Homepage</h6>
-              </div> -->
+              </div>
               <a class="list-group-item" href="<%= @product.homepage_url %>" data-track="product.site.clicked"><%= @product.homepage_url %></a>
             <% end %>
 
@@ -80,10 +81,10 @@
               <% end %>
             <% end %>
           </div>
-        <% end %>
+        <% end %> -->
 
         <!-- Body -->
-        <div class="markdown-content markdown-content-fancy">
+        <div class="markdown-normalizer">
           <%== @product.description_html %>
         </div>
       </div>
@@ -96,31 +97,35 @@
 
         <%#= render 'products/social_buttons' %>
 
+
+
+
         <% if !@product.homepage_url.blank? || @product.repos.any? %>
           <div class="panel panel-default">
-            <% unless @product.homepage_url.blank? %>
-              <div class="panel-heading">
-                <h6 class="panel-title">Product Homepage</h6>
-              </div>
-              <div class="panel-body small">
-                <a href="<%= @product.homepage_url %>" data-track="product.site.clicked"><%= @product.homepage_url %></a>
-              </div>
-            <% end %>
 
-            <% if @product.for_profit? && @product.repos.any? %>
-              <div class="panel-heading">
-                <h6 class="panel-title">Code Repositories</h6>
-              </div>
-              <div class="panel-body small">
+            <div class="panel-heading">
+              <h6 class="panel-title">Product Links</h6>
+            </div>
+            <div class="panel-body small">
+              <% unless @product.homepage_url.blank? %>
+                <a href="<%= @product.homepage_url %>" data-track="product.site.clicked"><%= @product.homepage_url %></a>
+              <% end %>
+              <% unless @product.homepage_url.blank? && @product.repos.any? %>
+                <hr>
+              <% end %>
+              <% if @product.for_profit? && @product.repos.any? %>
                 <ul class="list-unstyled omega">
                   <% @product.repos.each do |repo| %>
                     <li>
-                      <a href="<%= repo.url %>" data-track="product.repo.clicked"><%= repo.name %></a>
+                      <a href="<%= repo.url %>" data-track="product.repo.clicked">
+                        <span class="icon icon-github"></span>
+                        <%= repo.name %>
+                      </a>
                     </li>
                   <% end %>
                 </ul>
-              </div>
-            <% end %>
+              <% end %>
+            </div>
           </div>
         <% end %>
 

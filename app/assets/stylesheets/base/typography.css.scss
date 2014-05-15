@@ -156,3 +156,18 @@ h4 + .list-inline,
 h4 + p {
   margin-top: -7px;
 }
+
+// Markdown Normalizer class overrides multiple heading types
+.markdown-normalizer {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @extend .h4;
+    margin-top: $line-height-computed * 1.5;
+    margin-bottom: $line-height-computed / 2;
+  }
+}
