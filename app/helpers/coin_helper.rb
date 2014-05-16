@@ -23,7 +23,7 @@ module CoinHelper
       :span,
       [
         content_tag(:span, nil, class: 'icon icon-app-coin'),
-        text
+        content_tag(:span, text, class: 'js-coins')
       ].join.html_safe,
       class: (product.for_profit? ? 'text-coins' : 'text-muted')
     )

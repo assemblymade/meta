@@ -23,10 +23,7 @@ $(document).ready ->
       true
     else
       e.preventDefault()
-      window.signup.display
-        afterSignInPath: $(e.target).attr('href')
-        tab: $(e.target).data('authenticate')
-        follow: $(e.target).data('follow')
+      window.location = '/signup'
 
   $('form[data-local-storage]').each ->
     if typeof(localStorage) != 'undefined'

@@ -10,10 +10,11 @@ class window.CoinVoteView extends Backbone.View
       @coinsVoted = @options.coins + @options.coinsAdd
 
     @children =
+      btn: @$('.js-coin-vote-btn')
       coins: @$('.js-coins')
 
-  voted: ->
-    $(@el).attr('data-vote-voted') != undefined
+  voted: =>
+    @children.btn.hasClass('disabled')
 
   canDownvote: ->
     $(@el).attr('data-vote-downvotable') != undefined
@@ -24,7 +25,7 @@ class window.CoinVoteView extends Backbone.View
     if app.isSignedIn()
       @toggleVote()
     else
-      window.signup.display()
+      window.location = '/signup'
 
   toggleVote: ->
     if @voted()
@@ -33,13 +34,13 @@ class window.CoinVoteView extends Backbone.View
       @vote()
 
   vote: ->
-    $(@el).attr('data-vote-voted', 'true')
+    @children.btn.addClass('disabled')
     @children.coins.text(numeral(@coinsVoted).format('0,0'))
     @createVote()
     window.app.trigger('voted')
 
   unvote: ->
-    $(@el).removeAttr('data-vote-voted')
+    @children.btn.removeClass('disabled')
     @children.coins.text(numeral(@coinsUnvoted).format('0,0'))
     @deleteVote()
     window.app.trigger('unvoted')

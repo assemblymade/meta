@@ -19,26 +19,52 @@
       <% end %>
     </ul>
 
-    <div class="pull-left" style="margin-right:6px">
-      <%= render 'shared/coin_vote', voteable: task %>
-    </div>
+    <!-- FIXME: This sucks -->
+    <div data-view="coin-vote"
+         data-vote-path="<%= product_wip_path(task.product, task) %>/votes"
+         data-coins="<%= task.coins %>"
+         data-coins-add="<%= task.coins_add %>"
+    >
 
-    <ul class="list-piped omega">
-      <li>
-        <%= format_coins(task.product, task.real_coin_value, :short) %>
-      </li>
-      <li>
-        <a href="<%= user_path(task.user) %>">
-          @<%= task.user.username %>
-        </a>
-      </li>
-      <li>
-        <%= pluralize(task.comments.count, 'comment') %>
-      </li>
-      <li>
-        <%= pluralize(task.watchers.count, 'watcher') %>
-      </li>
-      <li>#<%= task.number %></li>
-    </ul>
+      <div class="pull-left" style="margin-right:6px">
+        <% if signed_in? %>
+          <a href="<%= product_wip_path(task.product, task) %>" class="btn btn-default btn-xs js-coin-vote-btn <% if task.has_user_voted?(current_user) %>disabled<% end %>" data-remote="true">
+            <% if task.promoted? %>
+              <span class="icon icon-double-up-chevron text-promoted"></span>
+            <% else %>
+              <span class="icon icon-up-chevron"></span>
+            <% end %>
+          </a>
+        <% else %>
+          <a href="<%= new_user_registration_path %>" class="btn btn-default btn-xs disabled">
+            <% if task.promoted? %>
+              <span class="icon icon-double-up-chevron text-promoted"></span>
+            <% else %>
+              <span class="icon icon-up-chevron"></span>
+            <% end %>
+            <span class="sr-only">Upvote</span>
+          </a>
+        <% end %>
+
+      </div>
+
+      <ul class="list-piped omega">
+        <li>
+          <%= format_coins(task.product, task.real_coin_value, :short) %>
+        </li>
+        <li>
+          <a href="<%= user_path(task.user) %>">
+            @<%= task.user.username %>
+          </a>
+        </li>
+        <li>
+          <%= pluralize(task.comments.count, 'comment') %>
+        </li>
+        <li>
+          <%= pluralize(task.watchers.count, 'watcher') %>
+        </li>
+        <li>#<%= task.number %></li>
+      </ul>
+    </div>
   </div>
 </div>
