@@ -1,79 +1,73 @@
-<div class="card">
-  <div class="lanyard">
+<div class="panel panel-default">
+  <div class="panel-body">
 
-    <% if signed_in? && user == current_user %>
-      <!-- FIXME: This URL is a hack -->
-      <a class="btn btn-default btn-small lanyard-edit-btn" href="<%= edit_user_path %>">
-        Edit Profile
-      </a>
-    <% end %>
+    <center>
+      <br>
+      <%= avatar_tag(user, 120) %>
 
-    <div class="lanyard-person">
-      <div class="avatar avatar-lg">
-        <img src="<%= user.avatar.url(240) %>" alt="@<%= user.username %>" width="120" height="120">
-      </div>
+      <h3 class="text-success"><strong><%= user.username %></strong></h3>
 
       <% if user.name? %>
-        <div class="name"><%= user.name %></div>
+        <h6 class="text-muted alpha"><%= user.location %></h6>
       <% end %>
+    </center>
 
-      <a class="username" href="<%= user_path(user) %>" title="<%= user.username %>">
-        @<%= user.username %>
-      </a>
-    </div>
-
-
-    <% if user.location? %>
+    <!-- <% if user.location? %>
       <div class="lanyard-location">
         <%= user.location %>
       </div>
-    <% end %>
-
-    <% if user.bio? %>
-      <div class="lanyard-bio">
-        <%= markdown(user.bio) %>
-      </div>
-    <% end %>
-
-    <div class="lanyard-social">
-
-      <% if user.twitter_connected? %>
-        <a href="<%= user.twitter_url %>" title="@<%= @user.twitter_nickname %>">
-          <%= image_tag 'social-twitter.png' %>
-        </a>
-      <% elsif signed_in? && @user == current_user %>
-        <a class="connect" href="<%= user_omniauth_authorize_path(:twitter) %>">
-          <%= image_tag 'social-twitter.png' %>
-          Connect
-        </a>
-      <% else %>
-        <a class="disabled">
-          <%= image_tag 'social-twitter.png' %>
-        </a>
-      <% end %>
-
-      <% if user.github_connected? %>
-        <a href="<%= user.github_url %>" title="<%= @user.github_login %>">
-          <%= image_tag 'social-github.png' %>
-        </a>
-      <% elsif signed_in? && @user == current_user %>
-        <a class="connect" href="<%= user_omniauth_authorize_path(:github) %>">
-          <%= image_tag 'social-github.png' %>
-          Connect
-        </a>
-      <% else %>
-        <a class="disabled">
-          <%= image_tag 'social-github.png' %>
-        </a>
-      <% end %>
-    </div>
-
+    <% end %> -->
   </div>
+  <hr class="alpha omega">
+  <div class="panel-body">
+    <% if user.bio? %>
+      <center class="text-small">
+        <%= markdown(user.bio) %>
+      </center>
+    <% end %>
+  </div>
+  <div class="list-group small">
+
+    <% if user.twitter_connected? %>
+      <a class="list-group-item" href="<%= user.twitter_url %>" title="@<%= @user.twitter_nickname %>">
+        <span class="icon icon-twitter"></span>
+        <strong><%= user.twitter_nickname %></strong>
+      </a>
+    <% elsif signed_in? && @user == current_user %>
+      <a class="list-group-item" href="<%= user_omniauth_authorize_path(:twitter) %>">
+        <span class="icon icon-twitter"></span>
+        <strong>Connect Twitter account</strong>
+      </a>
+    <% end %>
+
+    <% if user.github_connected? %>
+      <a class="list-group-item" href="<%= user.github_url %>" title="<%= @user.github_login %>">
+        <span class="icon icon-github"></span>
+        <strong><%= @user.github_login %></strong>
+      </a>
+    <% elsif signed_in? && @user == current_user %>
+      <a class="list-group-item" href="<%= user_omniauth_authorize_path(:github) %>">
+        <span class="icon icon-github"></span>
+        <strong>Connect GitHub account</strong>
+      </a>
+    <% end %>
+  </div><!-- .list-group -->
 </div>
+
+
+<% if can?(:update, user) %>
+  <!-- FIXME: This URL is a hack -->
+  <a class="btn btn-default btn-block" href="<%= edit_user_path %>">
+    Edit Profile
+  </a>
+<% end %>
 
 <% if Rails.env.development? || (signed_in? && current_user.staff?) %>
-<div class="card">
-  <h6>?auth_token=<%= @user.authentication_token %></h6>
-  <h6><%= @user.email %></h6>
-</div>
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body small">
+      <p>?auth_token=<%= @user.authentication_token %></p>
+      <p><%= @user.email %></p>
+    </div>
+  </div>
 <% end %>

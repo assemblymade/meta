@@ -1,57 +1,62 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize(current_user)
     can [:read], Product do |product|
       if Product::PRIVATE.include?(product.slug)
-        user && product.core_team?(user)
+        current_user && product.core_team?(current_user)
       else
         true
       end
     end
 
-    return false unless user
+    return false unless current_user
+
+    can :manage, :all if current_user.staff?
+
+    can [:update], User do |user|
+      user == current_user
+    end
 
     # Products
     can [:feature], Product do
-      user.staff?
+      current_user.staff?
     end
 
     # The creator has edit privelleges until a core team is established.
     can [:update, :status_update], Product do |product|
-      product.core_team?(user) || (product.core_team.empty? && product.user == user)
+      product.core_team?(current_user) || (product.core_team.empty? && product.current_user == current_user)
     end
 
     # Posts
     can [:create, :update], Post do |post|
-      post.product.core_team?(user)
+      post.product.core_team?(current_user)
     end
 
     # WIPs
 
-    can :manage, :all if user.staff?
     can [:comment, :allocation], Wip do
       true
     end
 
     can [:close, :reopen], Wip do |wip|
-      wip.user == user
+      wip.user == current_user
     end
 
     can [:promotion, :demotion], Wip do |wip|
-      wip.open? && wip.product.core_team?(user)
+      wip.open? && wip.product.core_team?(current_user)
     end
 
     can [:update, :close], Wip do |wip|
-      user.staff? || wip.product.core_team?(user)
+      current_user.staff? || wip.product.core_team?(current_user)
     end
 
     can [:reopen, :rejection, :unallocate], Wip do |wip|
-      wip.product.core_team?(user)
+      wip.product.core_team?(current_user)
     end
 
     can [:award], Wip do |wip|
-      wip.open? && wip.product.core_team?(user)
+      wip.open? && wip.product.core_team?(current_user)
     end
 
     can [:move], Wip do |wip|
@@ -62,17 +67,17 @@ class Ability
 
     can [:award], Event do |event|
       wip = event.wip
-      wip.awardable? && event.awardable? && wip.open? && wip.product.core_team?(user)
+      wip.awardable? && event.awardable? && wip.open? && wip.product.core_team?(current_user)
     end
 
     can [:update], Event do |event|
-      event.editable? || event.user == user || event.wip.product.core_team?(user)
+      event.editable? || event.user == current_user || event.wip.product.core_team?(current_user)
     end
 
     # Comments
     can :create, Event::Comment
     can :update, Event::Comment do |comment|
-      user.staff? || comment.user == user
+      current_user.staff? || comment.user == current_user
     end
   end
 end

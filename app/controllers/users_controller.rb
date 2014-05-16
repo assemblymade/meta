@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:update, :unread_content]
 
   def show
+    @upgrade_stylesheet = true
     set_user
     @stream_events = viewing_self? ? @user.stream_events : @user.stream_events.visible
     @stream_events = @stream_events.page(page)
