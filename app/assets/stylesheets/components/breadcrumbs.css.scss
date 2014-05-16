@@ -4,12 +4,12 @@
 
   > li {
     + li:before {
-      font-family: "Assembly Icons";
+      @extend .icon;
+      @extend .icon-chevron-right;
+
       color: $gray-light;
-      font-size: 85%;
       padding-left: 2px;
       padding-right: 5px;
-      content: "\e604";
     }
   }
 }

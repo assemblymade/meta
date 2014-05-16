@@ -1,63 +1,98 @@
 @font-face {
-  font-family: "Assembly Icons";
+  font-family: "assembly-icons";
   src: // Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+
        url(asset-path('assembly-icons.woff')) format('woff'),
        // Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5
        url(asset-path('assembly-icons.ttf')) format('truetype');
 }
 
-// Catchall baseclass
 .icon {
-  position: relative;
-  top: 1px;
-  display: inline-block;
-  font-family: 'Assembly Icons';
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-family: 'assembly-icons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-like:before {
-	content: "\e600";
-}
-.icon-wip-copy:before {
+.icon-logo:before {
 	content: "\e601";
 }
-.icon-wip-design:before {
-	content: "\e602";
-}
-.icon-wip-code:before {
-	content: "\e603";
-}
-.icon-right-chevron:before {
-	content: "\e604";
+.icon-app-coin:before {
+	content: "\e600";
+  margin-right: 0.15em;
 }
 .icon-github:before {
-	content: "\e605";
+	content: "\e602";
 }
 .icon-facebook:before {
-	content: "\e606";
+	content: "\e603";
 }
 .icon-twitter:before {
+	content: "\e604";
+}
+.icon-star:before {
+	content: "\e605";
+}
+.icon-document:before {
+	content: "\e606";
+}
+.icon-circle:before {
 	content: "\e607";
 }
-.icon-double-up-chevron:before {
+.icon-disc:before {
 	content: "\e608";
 }
-.icon-close:before {
+.icon-glasses:before {
 	content: "\e609";
 }
-.icon-promotional-app-coin:before {
+.icon-speach-bubble:before {
 	content: "\e60a";
 }
-.icon-up-chevron:before {
+.icon-repository:before {
 	content: "\e60b";
 }
-.icon-app-coin:before {
+.icon-pull-request:before {
 	content: "\e60c";
 }
-.icon-logo:before {
+.icon-pencil:before {
 	content: "\e60d";
+}
+.icon-cross:before {
+	content: "\e60e";
+}
+.icon-arrow-up:before {
+	content: "\e612";
+}
+.icon-arrow-right:before {
+	content: "\e611";
+}
+.icon-arrow-down:before {
+	content: "\e610";
+}
+.icon-arrow-left:before {
+	content: "\e60f";
+}
+.icon-chevron-up:before {
+	content: "\e616";
+}
+.icon-chevron-right:before {
+	content: "\e615";
+}
+.icon-chevron-down:before {
+	content: "\e614";
+}
+.icon-chevron-left:before {
+	content: "\e613";
+}
+.icon-double-chevron-up:before {
+	content: "\e618";
+}
+.icon-double-chevron-down:before {
+	content: "\e617";
 }
