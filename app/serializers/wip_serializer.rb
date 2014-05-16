@@ -2,6 +2,7 @@
 class WipSerializer < ActiveModel::Serializer
   attributes :id, :url
   attributes :product_slug,
+             :product_name,
              :title,
              :number,
              :state,
@@ -28,6 +29,10 @@ class WipSerializer < ActiveModel::Serializer
 
   def product_slug
     product.slug
+  end
+
+  def product_name
+    product.name
   end
 
   def url

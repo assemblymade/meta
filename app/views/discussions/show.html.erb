@@ -19,7 +19,7 @@
         <div id="discussion-view-el">
           <%= render 'wips/discussion', events: @events %>
           <div class="chat-bottom">
-            <%= render 'new_event_form' %>
+            <%= render 'chat_box' %>
           </div>
         </div>
       </div>
@@ -74,7 +74,6 @@
   });
 
   $(document).ready(function() {
-    window.scroll(0, document.documentElement.scrollHeight)
     new DiscussionView({
       el: $('#discussion-view-el'),
       model: app.wip

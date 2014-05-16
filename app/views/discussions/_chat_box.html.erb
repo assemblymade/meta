@@ -2,9 +2,9 @@
 
   <div class="pull-left">
     <% if signed_in? %>
-      <%= avatar_tag(current_user, 30) %>
+      <img class="media-object avatar" src="<%= current_user.avatar.url(60) %>" width="30" height="30">
     <% else %>
-      <img class="avatar"  src="<%= image_path('avatars/default.png') %>" width="30" height="30">
+      <img class="media-object avatar"  src="<%= image_path('avatars/default.png') %>" width="30" height="30">
     <% end %>
   </div>
 
@@ -24,20 +24,13 @@
           </div>
         </div>
 
-        <div class="form-actions">
-          <div class="btn-group disabled">
+        <div class="form-actions text-left">
+          <div class="btn-group-vertical">
             <%= button_tag 'Comment', name: 'event_comment[type]', value: 'Event::Comment', type: 'submit', class: %w(btn btn-primary) %>
-            <% if @wip.closeable? && can?(:close, @wip) %>
-              <% if @wip.resolved? %>
-                <%= button_tag 'Comment & Reopen', name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-primary) %>
-              <% else %>
-                <%= button_tag 'Comment & Close', name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-primary) %>
-              <% end %>
-            </div>
-          <% end %>
+          </div>
+        <% end %>
 
-        </div>
-      <% end %>
+      </div>
     <% else %>
       <div class="well">
         <strong><a href="<%= new_user_registration_path %>">Sign up</a> to join the discussion.</strong>
@@ -50,3 +43,10 @@
   </div>
 
 </div>
+
+<script>
+  new CommentView({
+    attachmentUploadUrl: 'https://s3.amazonaws.com/<%= ENV['ATTACHMENT_BUCKET'] %>',
+    el: $('#new-comment-el')
+  });
+</script>

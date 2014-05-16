@@ -90,3 +90,4 @@ $(document).ready ->
 
   $('[data-dismissable]').each -> new DismissableView(el: @)
   $('[data-view=tips]').each -> new TipBoxView(el: @)
+  new ApplicationView(el: $('body'))

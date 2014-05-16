@@ -1,3 +1,5 @@
+#= require notify.js
+
 class window.DiscussionView extends Backbone.View
   events:
     'click   .js-new-event' : 'onNewCommentClicked'
@@ -32,10 +34,7 @@ class window.DiscussionView extends Backbone.View
       channel = window.pusher.subscribe(@model.get('push_channel'))
 
       channel.bind 'changed', (msg) => @model.set msg
-      channel.bind 'event.added', (msg) =>
-        model = new WipEvent(msg)
-        app.wipEvents.add model unless app.wipEvents.get(model)
-        @model.incrementUnreadCount() unless @foreground
+      channel.bind 'event.added', @eventPushed
 
     @foreground = true
     @originalTitle = document.title
@@ -91,6 +90,14 @@ class window.DiscussionView extends Backbone.View
   wipEventAdded: (wipEvent)->
     view = new WipEventView(model: wipEvent)
     @$('.timeline,.discussion').append view.render().el
+
+  eventPushed: (msg) =>
+    event = new WipEvent(msg)
+    unless app.wipEvents.get(event)
+      app.wipEvents.add(event)
+      unless @foreground
+        @model.incrementUnreadCount()
+        @pushNotification(event)
 
   wipStateChanged: ->
     switch @model.get('state')
@@ -148,6 +155,17 @@ class window.DiscussionView extends Backbone.View
   showUpvotePrompt: ->
     @children.upvoteReminder.fadeIn()
 
+  pushNotification: (event)->
+    n = new Notify "New message on #{event.get('wip').product_name}",
+      body: "#{event.get('actor').username}: #{event.get('body')}"
+      icon: 'https://d8izdk6bl4gbi.cloudfront.net/80x/http://f.cl.ly/items/1I2a1j0M0w0V2p3C3Q0M/Assembly-Twitter-Avatar.png'
+      timeout: 5
+      notifyClick: =>
+        $(window).focus()
+        @scrollToBottom()
+
+    n.show()
+
   onWindowFocused: =>
     @foreground = true
     @model.markAllAsRead()
@@ -161,3 +179,6 @@ class window.DiscussionView extends Backbone.View
       document.title = @originalTitle
     else
       document.title = "(#{count}) #{@originalTitle}"
+
+  scrollToBottom: ->
+    window.scroll(0, document.documentElement.scrollHeight)

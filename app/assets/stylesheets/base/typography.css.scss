@@ -177,3 +177,8 @@ blockquote {
     margin-bottom: $line-height-computed / 2;
   }
 }
+
+// For the tooltip
+.tooltip {
+  font-size: 75%;
+}

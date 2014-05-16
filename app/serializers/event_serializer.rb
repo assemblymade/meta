@@ -13,8 +13,8 @@ class EventSerializer < ActiveModel::Serializer
   attributes :edit_url
   attributes :award_url, :can_award
 
-  has_one :wip
-  has_one :user, :key => :actor
+  has_one :wip, serializer: WipSerializer
+  has_one :user, key: :actor, serializer: UserSerializer
 
   def anchor
     "event-#{object.number}"
