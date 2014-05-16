@@ -22,9 +22,6 @@
       <li class="<%= "active" if discussions_controller? %>">
         <a href="<%= product_discuss_path(@product) %>">
           Discuss
-          <% if @product.open_discussions? %>
-            <span class="badge"><%= @product.open_discussions_count %></span>
-          <% end %>
         </a>
       </li>
 
@@ -44,7 +41,7 @@
       <li class="<%= "active" if tasks_controller? %>">
         <a href="<%= product_wips_path(@product) %>">
           Tasks
-          <% if @product.open_tasks? %>
+          <% if (count = @product.tasks.open.count) > 0 %>
             <span class="badge"><%= @product.open_tasks_count %></span>
           <% end %>
         </a>

@@ -23,6 +23,7 @@ class window.DiscussionView extends Backbone.View
     @validateComment ''
 
     @listenTo(@model, 'change:state', @wipStateChanged)
+    @listenTo(@model, 'change:unreadCount', @unreadCountChanged)
     @listenTo(app.wipEvents, 'add', @wipEventAdded)
 
     @wipStateChanged()
@@ -34,6 +35,13 @@ class window.DiscussionView extends Backbone.View
       channel.bind 'event.added', (msg) =>
         model = new WipEvent(msg)
         app.wipEvents.add model unless app.wipEvents.get(model)
+        @model.incrementUnreadCount() unless @foreground
+
+    @foreground = true
+    @originalTitle = document.title
+
+    $(window).focus @onWindowFocused
+    $(window).blur @onWindowBlurred
 
   onNewCommentClicked: (e)->
     body = $('#event_comment_body').val()
@@ -140,3 +148,16 @@ class window.DiscussionView extends Backbone.View
   showUpvotePrompt: ->
     @children.upvoteReminder.fadeIn()
 
+  onWindowFocused: =>
+    @foreground = true
+    @model.markAllAsRead()
+
+  onWindowBlurred: =>
+    @foreground = false
+
+  unreadCountChanged: =>
+    count = @model.get('unreadCount')
+    if count == 0
+      document.title = @originalTitle
+    else
+      document.title = "(#{count}) #{@originalTitle}"
