@@ -66,23 +66,6 @@
           <hr class="alpha">
         <% end %>
 
-        <!-- <% if !@product.homepage_url.blank? || @product.repos.any? %>
-          <div class="list-group small">
-            <% unless @product.homepage_url.blank? %>
-              <div class="panel-heading">
-                <h6 class="panel-title">Product Homepage</h6>
-              </div>
-              <a class="list-group-item" href="<%= @product.homepage_url %>" data-track="product.site.clicked"><%= @product.homepage_url %></a>
-            <% end %>
-
-            <% if @product.for_profit? && @product.repos.any? %>
-              <% @product.repos.each do |repo| %>
-                <a class="list-group-item" href="<%= repo.url %>" data-track="product.repo.clicked"><%= repo.username %> / <%= repo.name %></a>
-              <% end %>
-            <% end %>
-          </div>
-        <% end %> -->
-
         <!-- Body -->
         <div class="markdown-normalized">
           <%== @product.description_html %>

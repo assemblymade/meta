@@ -10,18 +10,32 @@
 
     <div class="col-md-8 col-xs-8 col-md-offset-1 col-xs-offset-1">
 
-      <div class="stats-tabs">
+      <div class="stat-group">
         <div class="stat">
-          <%= number_with_delimiter(@user.count_contributions) %>
-          <label>Contributions</label>
+          <div class="stat-value">
+            <%= number_with_delimiter(@user.count_contributions) %>
+          </div>
+          <div class="stat-title">
+            Contributions
+          </div>
         </div>
+
         <div class="stat">
-          <%= cents_to_coins(@user.sum_app_cents) %>
-          <label>App Coins</label>
+          <div class="stat-value">
+            <%= cents_to_coins(@user.sum_app_cents) %>
+          </div>
+          <div class="stat-title">
+            App Coins
+          </div>
         </div>
+
         <div class="stat">
-          <%= number_to_currency(0) %>
-          <label>Earned</label>
+          <div class="stat-value">
+            <%= number_to_currency(0) %>
+          </div>
+          <div class="stat-title">
+            Earned
+          </div>
         </div>
       </div>
 
