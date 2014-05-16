@@ -131,9 +131,7 @@ class WipsController < ApplicationController
       end
       track_wip_event 'awarded'
     end
-    respond_to do |format|
-      format.js { render layout: false }
-    end
+    redirect_to product_wip_path(@wip.product, @wip)
   end
 
   def search

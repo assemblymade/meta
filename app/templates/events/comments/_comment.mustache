@@ -16,7 +16,7 @@
           <ul class="list-piped omega">
             {{#award_url}}
               <li class="text-success">
-                <a href="{{award_url}}" data-method="patch">
+                <a href="{{award_url}}?event_id={{id}}" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
                   Award {{#actor}}@{{username}}{{/actor}}
                 </a>
               </li>
