@@ -157,6 +157,12 @@ h4 + p {
   margin-top: -7px;
 }
 
+blockquote {
+  padding: ($line-height-computed / 2) $line-height-computed;
+  margin: $line-height-computed 0;
+  border-width: $blockquote-border-width;
+}
+
 // Markdown Normalizer class overrides multiple heading types
 .markdown-normalized {
 

@@ -1,23 +1,20 @@
-<div class="discussion-item discussion-item-event discussion-item-event-reference">
+<div class="timeline-item">
+  <div class="media">
+    <div class="pull-left">
+      <div class="marker marker-blue">
+        <span class="glyphicon glyphicon-cloud-upload"></span>
+      </div>
+    </div>
 
-  <div class="timeline-entry-symbol">
-    <div class="discussion-item-event-symbol"></div>
-  </div>
-
-  <div class="timeline-entry-content">
-    <div class="discussion-item-meta">
-
-      <!-- FIXME user/repo/hash -->
-      {{#actor}}
-        <a href="{{url}}">{{username}}</a>
-      {{/actor}}
-
-      mentioned this in
-
-      {{target_type}}
-      <a href="{{target_url}}" title="{{target_title}}">{{target_title}}</a>
-
+    <div class="media-body">
+      <div class="media-heading omega">
+        {{#actor}}
+          <a href="{{url}}">{{username}}</a>
+        {{/actor}}
+        mentioned this in
+        {{target_type}}
+        <a href="{{target_url}}" title="{{target_title}}">{{target_title}}</a>
+      </div>
     </div>
   </div>
-
 </div>
