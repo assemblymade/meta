@@ -24,14 +24,14 @@ eventTypeToTemplate = (type)->
 
 class window.WipEventView extends Backbone.View
   initialize: ->
-    @model.on 'change', @render
+    @listenTo @model, 'change', @render
 
   template: ->
     template_name = eventTypeToTemplate(@model.get('type'))
     JST[template_name]
 
   render: =>
-    $(@el).replaceWith($(@template().render(@templateAttributes())))
+    @setElement @template().render(@templateAttributes())
     @$('time').timeago() # display new timestamp
     @
 

@@ -8,7 +8,7 @@ class Discussion < Wip
   end
 
   def chat_events
-    [inception_message] + events.order(:number)
+    [inception_message] + events.where.not(type: [::Event::Close]).order(:number)
   end
 
   def inception_message

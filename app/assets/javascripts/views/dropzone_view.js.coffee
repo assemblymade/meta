@@ -5,7 +5,6 @@ signUpload = (file, xhr, formData) ->
 
 class DropzoneView extends Backbone.View
   initialize: (options) ->
-    console.log 'DropzoneView'
     @dz = new Dropzone(@el,
       accept: @onAccept
       sending: @onSending

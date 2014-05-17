@@ -9,8 +9,6 @@ class window.UploadView extends Backbone.View
       ready: @$('.js-ready')
       uploading: @$('.js-uploading')
 
-    console.log 'UploadView'
-
     dz = @$el.dropzone
       accept: @beforeUpload
       clickable: @$('.js-select-files')[0]

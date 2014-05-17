@@ -167,7 +167,12 @@ class WipsController < ApplicationController
   end
 
   def set_wip
-    @wip = @product.wips.find_by!(number: params[:wip_id] || params[:id]).decorate
+    number = params[:wip_id] || params[:id]
+    if number.to_i.zero?
+      @wip = @product.main_thread.decorate
+    else
+      @wip = @product.wips.find_by!(number: number).decorate
+    end
     @events = @wip.events.order(:number)
 
     # special case redirect to milestones

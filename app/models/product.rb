@@ -11,6 +11,7 @@ class Product < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :evaluator, class_name: 'User'
+  belongs_to :main_thread, class_name: 'Discussion'
 
   has_many :activities
   has_many :completed_missions
