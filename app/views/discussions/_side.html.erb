@@ -4,8 +4,8 @@
       <h6 class="panel-title">Watching</h6>
     </div>
     <div class="panel-body">
-      <ul class="list-grid omega">
-        <% @wip.watchers.each do |user| %>
+      <ul class="list-grid">
+        <% @watchers.each do |user| %>
           <li>
             <a href="<%= user_path(user) %>" title="@<%= user.username %>">
               <%= avatar_tag(user, 24) %>
@@ -13,6 +13,10 @@
           </li>
         <% end %>
       </ul>
+
+      <% if !watching? @wip %>
+        <%= button_to 'Watch this thread', product_wip_watch_path(@wip.product, @wip), method: :patch, disable_with: 'Watching...', class: %w(btn btn-default btn-sm btn-block) %>
+      <% end %>
     </div>
   </div>
 

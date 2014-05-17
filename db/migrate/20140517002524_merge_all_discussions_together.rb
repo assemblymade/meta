@@ -18,6 +18,12 @@ class MergeAllDiscussionsTogether < ActiveRecord::Migration
 
         product.update_attributes main_thread_id: main_thread.id
       end
+
+      product.with_lock do
+        (product.watchers + product.votes.map(&:user)).uniq.compact.each do |watcher|
+          product.main_thread.watch!(watcher)
+        end
+      end
     end
   end
 end

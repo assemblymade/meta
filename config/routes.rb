@@ -233,6 +233,7 @@ ASM::Application.routes.draw do
       post 'deliverables'
       post 'copy_deliverables'
       post 'code_deliverables'
+      patch 'watch'
 
       resources :votes, only: [:create]
       resources :comments, only: [:create, :edit, :update]

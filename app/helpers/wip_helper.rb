@@ -13,11 +13,15 @@ module WipHelper
     COLOR_RULES[text] || Digest::MD5.hexdigest("a#{text}").to_s[0..5].upcase
   end
 
+  def watching?(wip)
+    current_user && wip.watchings.find_by(user_id: current_user.id)
+  end
+
   # TODO remove these when we've removed WIPs
   def product_task_checkin_url(product, wip, options={})
     product_wip_checkin_url(product, wip, options)
   end
-  
+
   def product_task_path(product, wip, options={})
     product_wip_url(product, wip, options)
   end

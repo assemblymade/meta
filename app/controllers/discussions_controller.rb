@@ -10,7 +10,11 @@ class DiscussionsController < WipsController
     @upgrade_stylesheet = true
     @threads = find_wips
     @upgrade_stylesheet = true
-    @watchers = @wip.watchers.to_a
+    @watchers = Watching.includes(:user).
+                         where(watchable: @wip).
+                         order('created_at desc').
+                         first(20).
+                         map(&:user)
 
     events = @wip.chat_events
 

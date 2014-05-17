@@ -147,6 +147,11 @@ class WipsController < ApplicationController
     render json: @results
   end
 
+  def watch
+    @wip.watch!(current_user)
+    respond_with @wip, location: request.referer
+  end
+
   private
 
   def validate_wip_administer
@@ -174,7 +179,7 @@ class WipsController < ApplicationController
       @wip = @product.wips.find_by!(number: number).decorate
     end
     @events = @wip.events.order(:number)
-
+    
     # special case redirect to milestones
     if @wip.type.nil?
       redirect_to product_milestone_path(@product, @wip)
