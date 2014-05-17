@@ -360,7 +360,7 @@ $state-info-text:   $blue;
 $state-info-bg:     lighten($state-info-text, 40%);
 $state-info-border: darken(adjust-hue($state-info-bg, -10), 7%);
 
-$state-warning-text:   $yellow;
+$state-warning-text:   darken($yellow, 10%);
 $state-warning-bg:     lighten($state-warning-text, 40%);
 $state-warning-border: darken(adjust-hue($state-warning-bg, -10), 5%);
 

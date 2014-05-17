@@ -11,9 +11,7 @@
       <div class="col-md-8 col-xs-8">
 
         <% if @milestone.feature_image.present? %>
-          <div class="well">
-            <img class="img-rounded" src="<%= firesize_url %>/630x300/frame_0/<%= URI.escape @milestone.feature_image.attachment.url %>" style="max-width:100%">
-          </div>
+          <img class="img-thumbnail" src="<%= firesize_url %>/630x300/frame_0/<%= URI.escape @milestone.feature_image.attachment.url %>">
 
           <!-- <div id="feature-image" class="lightbox fade"  tabindex="-1" role="dialog" aria-hidden="true">
             <div class='lightbox-dialog'>

@@ -54,17 +54,11 @@
           <div class="text-large">
             <%== @product.lead_html %>
           </div>
-          <br>
         <% end %>
 
         <!-- Poster Image -->
-        <% if @product.poster? %>
-          <img class="img-rounded" src="<%= @product.hero_image_path %>" alt="<%= @product.name %>" style="max-width: 100%; margin-bottom: 24px;">
-        <% elsif @product.you_tube_video_url? %>
-          <%= you_tube_embed(@product.you_tube_video_embed_url) %>
-        <% else %>
-          <hr class="alpha">
-        <% end %>
+        <hr>
+
 
         <!-- Body -->
         <div class="markdown-normalized">
@@ -75,12 +69,16 @@
 
       <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
 
+        <% if @product.poster? %>
+          <img class="img-rounded" src="<%= @product.hero_image_path %>" alt="<%= @product.name %>" width="100%">
+          <hr>
+        <% end %>
 
         <!-- Social links -->
 
         <%#= render 'products/social_buttons' %>
 
-        <% if !@product.homepage_url.blank? || @product.repos.any? %>
+        <% if @product.homepage_url.present? && @product.repos.any? %>
           <div class="panel panel-default">
 
             <div class="panel-heading">
@@ -112,12 +110,12 @@
         <% end %>
 
         <% if !@product.for_profit? %>
-          <div class="panel panel-default">
+          <div class="panel panel-warning">
             <div class="panel-heading">
-              <h6 class="panel-title">Assembly Meta</h6>
+              <h6 class="panel-title">Special Project</h6>
             </div>
             <div class="panel-body small">
-              <p class="omega">Assembly Meta is a special product for providing feedback to Assembly and to join the discussion on upcoming features. This is not intended for revenue so there won't be any royalties paid. App Coins have been replaced with Karma to make this clear.</p>
+              <p class="omega"><strong>Assembly Meta</strong> is a special product for providing feedback to Assembly and to join the discussion on upcoming features. This is not intended for revenue so there won't be any royalties paid. App Coins have been replaced with Karma to make this clear.</p>
             </div>
           </div>
         <% end %>
