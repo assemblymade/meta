@@ -16,16 +16,6 @@ $task-list-complete-bg: lighten($body-bg, 2%);
   }
 }
 
-.page-content-group.markdown-content {
-  padding-bottom: 40px;
-}
-
-.page-content-group.markdown-content:empty {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border: none;
-}
-
 .task-list-incomplete + .task-list-incomplete {
   padding-top: 0;
   margin-top: -5px;
@@ -50,6 +40,7 @@ $task-list-complete-bg: lighten($body-bg, 2%);
   .task-list-item-actions {
     background-color: $task-list-incomplete-bg;
     &:before {
+      @include gradient-horizontal(rgba(black, 0), #FFC);
       // @include background-image(linear-gradient(90deg, transparent, #FFFFCC));
     }
   }
@@ -61,6 +52,8 @@ $task-list-complete-bg: lighten($body-bg, 2%);
   .task-list-item-actions {
     background-color: $task-list-complete-bg;
     &:before {
+      @include gradient-horizontal(rgba(black, 0), #FCFDFD);
+
       // @include background-image(linear-gradient(90deg, transparent, #FCFDFD));
     }
   }
@@ -79,6 +72,10 @@ $task-list-complete-bg: lighten($body-bg, 2%);
     position: relative;
     padding: 10px 0;
     border-top: 1px solid rgba($task-list-incomplete-text, 0.18);
+
+    .textcomplete-wrapper {
+      width: 100%;
+    }
 
     .list-meta {
       margin-top: 4px;
@@ -134,6 +131,7 @@ $task-list-complete-bg: lighten($body-bg, 2%);
 .task-list-item-actions {
   position: absolute;
   right: 0;
+  line-height: 25px;
 
   &:before {
     content: "";
@@ -146,45 +144,24 @@ $task-list-complete-bg: lighten($body-bg, 2%);
 }
 
 .task-list-item-incomplete {
-
-  .list-meta {
-    color: $task-list-incomplete-text;
-
-    .list-item + .list-item {
-      border-left-color: rgba($task-list-incomplete-text, 0.3);
-    }
-
-    a {
-      color: inherit;
-    }
-  }
+  background-image: url(image-path('unchecked-check@2x.png'));
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
 
   .task-list-item-title {
     color: $task-list-incomplete-copy;
     font-weight: bold;
   }
-
-  // @include retina-image(
-  //   'unchecked-check',
-  //   20px 20px,
-  //   'png',
-  //   'unchecked-check@2x',
-  //   true
-  // );
-
 }
 
 .task-list-item-complete {
+  background-image: url(image-path('checked-check@2x.png'));
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+
   .task-list-item-title {
     color: $gray;
   }
-  // @include retina-image(
-  //   'checked-check',
-  //   20px 20px,
-  //   'png',
-  //   'checked-check@2x',
-  //   true
-  // );
 }
 
 .task-list-item-remove {
@@ -215,24 +192,4 @@ input[type="text"].task-list-entry {
   padding-left: 22px;
   background-repeat: no-repeat;
   background-position: left center;
-}
-
-.tasks-incomplete {
-  // @include retina-image(
-  //   'unchecked-check-small',
-  //   14px 14px,
-  //   'png',
-  //   'unchecked-check-small@2x',
-  //   true
-  // );
-}
-
-.tasks-complete {
-  // @include retina-image(
-  //   'checked-check-small',
-  //   14px 14px,
-  //   'png',
-  //   'checked-check-small@2x',
-  //   true
-  // );
 }
