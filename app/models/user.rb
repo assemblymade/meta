@@ -77,10 +77,12 @@ class User < ActiveRecord::Base
       where("lower(name) like :query", query: "%#{query.downcase}%")
     end
 
-    def asm_bot
-      find_by!(username: 'asm-bot')
-    rescue ActiveRecord::RecordNotFound => e
-      raise "You need an asm-bot user in your database. Run db:seeds"
+    %w(asm-bot maeby).each do |username|
+      define_method username.to_sym do
+        find_by(username: username).tap do |user|
+          raise "You need an #{username} user in your database. Run db:seeds" if user.nil?
+        end
+      end
     end
 
     def contributors

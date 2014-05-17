@@ -1,11 +1,12 @@
 .chat-top {
+  background-color: #fff;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
 }
 .chat-column {
-  margin-top: 134px;
+  margin-top: 284px;
   padding-bottom: 180px !important;
   z-index: 0;
 }
@@ -17,9 +18,9 @@
   background-color: #fff;
 }
 .chat-side {
+  width: 213px;
   position: fixed;
-  top: 200px;
-  right: 20px;
+  top: 280px;
 }
 
 .chat {

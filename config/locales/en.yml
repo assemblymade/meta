@@ -1,4 +1,9 @@
 en:
+  product:
+    chat:
+      inception:
+        - This is the very beginning. Where it all started. The B in the Big Bang. The C in the Cambrian Explosion.
+
   activity:
     feed:
       wip:

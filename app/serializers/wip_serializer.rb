@@ -17,7 +17,7 @@ class WipSerializer < ActiveModel::Serializer
              :deliverable
 
   # personalized
-  attributes :voted, :new_comments, :unread
+  attributes :voted, :new_comments, :unread, :own_comments
 
   has_one  :user, :key => :author, serializer: UserSerializer
 
@@ -74,6 +74,10 @@ class WipSerializer < ActiveModel::Serializer
 
   def voted
     Vote.voted?(scope, wip)
+  end
+
+  def own_comments
+    wip.comments.where(user: scope).count if scope
   end
 
   # private

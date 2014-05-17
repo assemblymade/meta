@@ -2,21 +2,13 @@
 
   <div class="pull-left">
     <% if signed_in? %>
-      <img class="media-object avatar" src="<%= current_user.avatar.url(60) %>" width="30" height="30">
+      <%= avatar_tag(current_user, 30) %>
     <% else %>
-      <img class="media-object avatar"  src="<%= image_path('avatars/default.png') %>" width="30" height="30">
+      <img class="avatar"  src="<%= image_path('avatars/default.png') %>" width="30" height="30">
     <% end %>
   </div>
 
-  <!-- Comments -->
-
-  <% if @wip.main_thread? %>
-  <div class="popover js-welcome-chat" style="display:block;top: -118px; left: 60px; max-width: 800px">
-    <h3 class="popover-title">Welcome! Looks like you're new here</h3>
-    <div class="popover-content">This is a great time to briefly introduce yourself, skills you'd like to contribute, and what you'd like to get out of Aged Moon (eg. experience, profit sharing, etc.)
-    </div>
-  </div>
-  <% end %>
+    <!-- Comments -->
 
   <div class="media-body" id="comment">
     <% if can?(:create, Event::Comment) %>
@@ -25,18 +17,25 @@
         <!-- dropzone, autosize, validation -->
 
         <div class="markdown-editor-control js-markdown-editor js-dropzone">
-          <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', rows: 3,
-              placeholder: "Have a thought or question about #{@product.name}? We'd love to hear from you"  %>
+          <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Say something awesome!', rows: 3 %>
 
           <div class="dropzone-inner">
             To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...
           </div>
         </div>
 
-        <div class="form-actions text-left">
-          <div class="btn-group-vertical">
+        <div class="form-actions">
+          <div class="btn-group disabled">
             <%= button_tag 'Comment', name: 'event_comment[type]', value: 'Event::Comment', type: 'submit', class: %w(btn btn-primary) %>
-          </div>
+            <% if @wip.closeable? && can?(:close, @wip) %>
+              <% if @wip.resolved? %>
+                <%= button_tag 'Comment & Reopen', name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-primary) %>
+              <% else %>
+                <%= button_tag 'Comment & Close', name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-primary) %>
+              <% end %>
+            </div>
+          <% end %>
+
         </div>
       <% end %>
     <% else %>
@@ -49,4 +48,5 @@
       </div>
     <% end %>
   </div>
+
 </div>

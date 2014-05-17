@@ -16,6 +16,7 @@ class window.DiscussionView extends Backbone.View
     @children =
       upvoteReminder: @$('.js-upvote-reminder')
       timestamp: @$('.js-timestamp')
+      welcomeBox: @$('.js-welcome-chat')
 
     if user = app.currentUser()
       @eventDefaults.author_name = user.get('name')
@@ -26,9 +27,11 @@ class window.DiscussionView extends Backbone.View
 
     @listenTo(@model, 'change:state', @wipStateChanged)
     @listenTo(@model, 'change:unreadCount', @unreadCountChanged)
+    @listenTo(@model, 'change:own_comments', @ownCommentsChanged)
     @listenTo(app.wipEvents, 'add', @wipEventAdded)
 
     @wipStateChanged()
+    @ownCommentsChanged()
 
     if window.pusher
       channel = window.pusher.subscribe(@model.get('push_channel'))
@@ -65,6 +68,7 @@ class window.DiscussionView extends Backbone.View
     @createEvent 'Event::Comment', body
     @showUpvotePrompt() unless @model.get('voted')
     @children.timestamp.remove()
+    @model.set('own_comments', 1)
 
   addClose: (body)->
     @createEvent 'Event::Close', body
@@ -84,12 +88,12 @@ class window.DiscussionView extends Backbone.View
 
   createEvent: (type, body)->
     event = app.wipEvents.create _(@eventDefaults).extend(type: type, body: body)
-
     @resetCommentForm()
 
   wipEventAdded: (wipEvent)->
     view = new WipEventView(model: wipEvent)
     @$('.timeline,.discussion').append view.render().el
+    delay 150, @scrollToBottom
 
   eventPushed: (msg) =>
     event = new WipEvent(msg)
@@ -182,3 +186,6 @@ class window.DiscussionView extends Backbone.View
 
   scrollToBottom: ->
     window.scroll(0, document.documentElement.scrollHeight)
+
+  ownCommentsChanged: ->
+    @children.welcomeBox.toggle !@model.hasOwnComments()

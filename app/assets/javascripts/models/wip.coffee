@@ -1,5 +1,6 @@
 class window.Wip extends Backbone.Model
   defaults:
+    own_comments: 0
     unreadCount: 0
 
   initialize: ->
@@ -12,3 +13,6 @@ class window.Wip extends Backbone.Model
 
   markAllAsRead: ->
     @set('unreadCount', 0)
+
+  hasOwnComments: ->
+    @get('own_comments') > 0

@@ -9,7 +9,22 @@ class DiscussionsController < WipsController
   def show
     @upgrade_stylesheet = true
     @threads = find_wips
-    super
+    @upgrade_stylesheet = true
+    @watchers = @wip.watchers.to_a
+
+    events = @wip.chat_events
+
+    @events = Event.render_events(events, current_user)
+
+    @product_balance = 0
+    if signed_in?
+      @product_balance = TransactionLogEntry.balance(@product, current_user)
+    end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @wip, serializer: WipSerializer }
+    end
   end
 
   def wip_class

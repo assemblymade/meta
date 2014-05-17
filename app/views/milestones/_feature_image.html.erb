@@ -7,15 +7,3 @@
 
   <input type="hidden" name="wip[milestone_images_attributes][][attachment_id]" class="js-attachment-id">
 <% end %>
-
-<script type="text/javascript">
-  $(function(){
-    new UploadView({
-      attachmentUploadUrl: '<%= "https://s3.amazonaws.com/#{ENV['ATTACHMENT_BUCKET']}" %>',
-      el: $('[data-view=milestone-upload]'),
-      onUpload: function(attachment){
-        $('.js-attachment-id').val(attachment.id).parents('form:first').submit()
-      }
-    });
-  });
-</script>

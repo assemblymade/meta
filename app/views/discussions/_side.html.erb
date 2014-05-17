@@ -1,0 +1,35 @@
+<div class="chat-side">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h6 class="panel-title">Watching</h6>
+    </div>
+    <div class="panel-body">
+      <ul class="list-grid omega">
+        <% @wip.watchers.each do |user| %>
+          <li>
+            <a href="<%= user_path(user) %>" title="@<%= user.username %>">
+              <%= avatar_tag(user, 24) %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <!-- <div class="panel panel-default">
+    <div class="panel-heading">
+      <h6 class="panel-title">Breakout Discussions</h6>
+    </div>
+    <div class="panel-body">
+      <ul class="nav nav-pills nav-stacked">
+        <% @threads.each do |wip| %>
+          <li>
+            <a href="<%= product_discussion_path(@product, wip) %>">
+              <%= wip.title %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div> -->
+</div>

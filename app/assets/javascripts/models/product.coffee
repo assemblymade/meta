@@ -1,0 +1,1 @@
+class window.Product extends Backbone.Model
