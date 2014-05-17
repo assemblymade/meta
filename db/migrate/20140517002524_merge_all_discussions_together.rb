@@ -9,8 +9,12 @@ class MergeAllDiscussionsTogether < ActiveRecord::Migration
           discussion.destroy
         end
 
-        main_thread = product.discussions.order(:events_count).last ||
-                      product.discussions.create!(title: 'Introduce yourself', user: product.user, number: 0)
+        main_thread = product.discussions.order(:events_count).last
+        if main_thread
+          main_thread.update_attributes title: 'Introduce yourself'
+        else
+          main_thread = product.discussions.create!(title: 'Introduce yourself', user: product.user, number: 0)
+        end
 
         product.update_attributes main_thread_id: main_thread.id
       end
