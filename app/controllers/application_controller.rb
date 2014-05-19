@@ -86,10 +86,10 @@ class ApplicationController < ActionController::Base
     product_wip_url(product, wip, options)
   end
 
-  helper_method :upgrade_stylesheet?
+  helper_method :deprecated_stylesheet?
 
-  def upgrade_stylesheet?
-    @upgrade_stylesheet || false
+  def deprecated_stylesheet?
+    @deprecated_stylesheet || false
   end
 
 end

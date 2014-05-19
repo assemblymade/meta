@@ -4,6 +4,7 @@ class Users::SessionsController < Devise::SessionsController
   skip_before_action :validate_confirmed!, only: [:destroy]
 
   def new
+    @deprecated_stylesheet = true
   end
 
   def show

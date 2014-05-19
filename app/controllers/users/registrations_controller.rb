@@ -9,6 +9,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def signup
     @user = User.new
+    @downgrade_stylesheet = true
   end
 
   def create
