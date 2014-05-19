@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
 
   validates :username,
     presence: true,
-    uniqueness: true,
+    uniqueness: { case_sensitive: false },
     length: { minimum: 2 },
     format: { with: /\A[a-zA-Z0-9-]+\z/ }
 
