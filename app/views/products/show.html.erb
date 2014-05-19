@@ -209,53 +209,40 @@
 
           <% if @product.has_preorders? %>
             <!-- Pre-orders Panel -->
-            <div class="panel-group">
-              <div class="panel">
-                <div class="panel-title">Pre-Orders</div>
-                <p>
-                  <%= @product.name %> is <span class="text-highlight">100% refundable</span>
-                  and will be <span class="text-highlight">100% open</span>
-                  so pre-ordering now is <span class="text-highlight">100% risk free</span>.
-                  The <span class="text-highlight">60% discount</span> lasts until
-                  <%= @product.name %> is a shipping product.
-                </p>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h6 class="panel-title">Pre-Orders</h6>
               </div>
 
-              <div class="panel">
-                <div class="panel-header">
+              <div class="list-group small">
+                <div class="list-group-item">
+                  <div class="pull-right">$0.00</div>
                   Free
-                  <div class="amount pull-right">
-                    $0.00
-                  </div>
-                </div>
-                <p class="text-muted">
-                  <%= @product.free_perk %>
-                </p>
-                <form method="post" action="<%= vote_idea_path(@product) %>" data-require-user="<%= product_path(@product) %>">
-                  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-                  <input type="submit" value="<%= @product.signup_button_copy(current_user) %>" class="btn btn-default btn-block <%= "btn-disabled" if @product.voted_for_by?(current_user) %>">
-                </form>
-              </div>
-
-              <% @perks.each do |perk| %>
-                <div class="panel">
-                  <div class="panel-header">
-                    <%= perk.name %>
-                    <div class="amount pull-right">
-                      <span class="original-amount"><%= amount_to_currency(perk.amount) %></span>
-                      <span class="discount badge badge-success">
-                        <%= perk.formatted_discount_percent_off %>
-                      </span>
-                    </div>
-                  </div>
                   <p class="text-muted">
-                    <%= perk.description %>
+                    <%= @product.free_perk %>
                   </p>
-                  <a href="<%= new_perk_preorder_path(perk) %>" class="btn btn-default btn-block <%= "btn-disabled" if current_user && current_user.preordered_perk?(perk) %>" data-authenticate="signup">
-                    <%= perk.formatted_amount(current_user) %>
-                  </a>
+                  <form method="post" action="<%= vote_idea_path(@product) %>" data-require-user="<%= product_path(@product) %>">
+                    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                    <input type="submit" value="<%= @product.signup_button_copy(current_user) %>" class="btn btn-default btn-sm btn-block <%= "disabled" if @product.voted_for_by?(current_user) %>">
+                  </form>
                 </div>
-              <% end %>
+
+
+                <% @perks.each do |perk| %>
+                  <div class="list-group-item">
+                    <div class="pull-right">
+                      <%= amount_to_currency(perk.amount) %>
+                    </div>
+                    <%= perk.name %>
+                    <p class="text-muted">
+                      <%= perk.description %>
+                    </p>
+                    <a href="<%= new_perk_preorder_path(perk) %>" class="btn btn-default btn-block btn-sm <%= "disabled" if current_user && current_user.preordered_perk?(perk) %>">
+                      <%= perk.formatted_amount(current_user) %>
+                    </a>
+                  </div>
+                <% end %>
+              </div>
             </div>
           <% end %>
         <% end %>
@@ -277,28 +264,31 @@
         <% end %>
 
         <% if can?(:update, @product) %>
-          <div class="panel panel-alert">
-            <div class="panel-title">Panel o&rsquo; Power</div>
-            <a class="btn btn-block btn-alert" href="<%= edit_product_path(@product) %>">Edit Product</a>
-            <br>
-            <a class="btn btn-default btn-block" href="<%=  new_product_post_path(@product) %>">Write Post</a>
+          <div class="btn-group-vertical btn-block">
+            <a class="btn btn-default" href="<%= edit_product_path(@product) %>">Edit Product</a>
+            <a class="btn btn-default" href="<%=  new_product_post_path(@product) %>">Write blog post</a>
           </div>
         <% end %>
 
         <% if staff? %>
-          <div class="panel panel-alert">
-            <% if @product.flagged? %>
-              <span class="btn btn-alert btn-small btn-block btn-disabled" href="#>">Product Flagged</span>
-            <% else %>
-              <a class="btn btn-default" href="<%= product_flag_path(@product)%>">Flag Product</a>
-            <% end %>
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h6 class="panel-title">DANGER</h6>
+            </div>
+            <div class="panel-body">
+              <% if @product.flagged? %>
+                <span class="btn btn-alert btn-sm btn-block btn-disabled" href="#>">Product Flagged</span>
+              <% else %>
+                <a class="btn btn-default" href="<%= product_flag_path(@product)%>">Flag Product</a>
+              <% end %>
 
-            <br>
+              <br>
 
-            <%= form_for [:admin, @product.showcases.new], url: admin_staff_picks_path do |f| %>
-              <%= f.hidden_field :product_id %>
-              <%= f.submit "Schedule Staff Pick", class: %w(btn btn-default) %>
-            <% end %>
+              <%= form_for [:admin, @product.showcases.new], url: admin_staff_picks_path do |f| %>
+                <%= f.hidden_field :product_id %>
+                <%= f.submit "Schedule Staff Pick", class: %w(btn btn-default) %>
+              <% end %>
+            </div>
           </div>
         <% end %>
 
