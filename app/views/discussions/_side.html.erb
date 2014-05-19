@@ -20,20 +20,6 @@
     </div>
   </div>
 
-  <!-- <div class="panel panel-default">
-    <div class="panel-heading">
-      <h6 class="panel-title">Breakout Discussions</h6>
-    </div>
-    <div class="panel-body">
-      <ul class="nav nav-pills nav-stacked">
-        <% @threads.each do |wip| %>
-          <li>
-            <a href="<%= product_discussion_path(@product, wip) %>">
-              <%= wip.title %>
-            </a>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  </div> -->
+  <a class="btn btn-default" href="<%= product_discussions_path(@product) %>">All Discussions</a>
+
 </div>
