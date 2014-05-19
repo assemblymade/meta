@@ -165,7 +165,6 @@ blockquote {
 
 // Markdown Normalizer class overrides multiple heading types
 .markdown-normalized {
-
   h1,
   h2,
   h3,
@@ -175,6 +174,10 @@ blockquote {
     @extend .h4;
     margin-top: $line-height-computed * 1.5;
     margin-bottom: $line-height-computed / 2;
+  }
+
+  :last-child {
+    margin-bottom: 0;
   }
 }
 
