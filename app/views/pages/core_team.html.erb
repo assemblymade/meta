@@ -1,15 +1,20 @@
 <% title 'The Core Team' %>
-<%= render 'shared/deprecated_navbar' %>
+<%= render 'shared/navbar' %>
+
 <div class="jumbotron">
   <div class="container">
     <h1>The Core Team</h1>
   </div>
 </div>
-<div class="page page-padded">
+
+<div class="page">
   <div class="container">
-    <div class="page-content">
-      <%= markdown_content 'app/views/pages/core_team_content' %>
+    <div class="row">
+      <div class="col-xs-8">
+        <%= markdown_content 'app/views/pages/core_team_content' %>
+      </div>
     </div>
   </div>
 </div>
-<%= render 'shared/deprecated_footer' %>
+
+<%= render 'shared/footer' %>
