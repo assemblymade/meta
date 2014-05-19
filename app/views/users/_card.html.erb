@@ -53,21 +53,3 @@
     <% end %>
   </div><!-- .list-group -->
 </div>
-
-
-<% if can?(:update, user) %>
-  <!-- FIXME: This URL is a hack -->
-  <a class="btn btn-default btn-block" href="<%= edit_user_path %>">
-    Edit Profile
-  </a>
-<% end %>
-
-<% if Rails.env.development? || (signed_in? && current_user.staff?) %>
-  <br>
-  <div class="panel panel-default">
-    <div class="panel-body small">
-      <p>?auth_token=<%= @user.authentication_token %></p>
-      <p><%= @user.email %></p>
-    </div>
-  </div>
-<% end %>

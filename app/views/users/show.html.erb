@@ -6,6 +6,22 @@
 
     <div class="col-md-3 col-xs-3">
       <%= render 'users/card', user: @user %>
+      <% if can?(:update, @user) %>
+        <!-- FIXME: This URL is a hack -->
+        <a class="btn btn-default btn-block" href="<%= edit_user_path %>">
+          Edit Profile
+        </a>
+      <% end %>
+
+      <% if Rails.env.development? || (signed_in? && current_user.staff?) %>
+        <br>
+        <div class="panel panel-default">
+          <div class="panel-body small">
+            <p>?auth_token=<%= @user.authentication_token %></p>
+            <p><%= @user.email %></p>
+          </div>
+        </div>
+      <% end %>
     </div>
 
     <div class="col-md-8 col-xs-8 col-md-offset-1 col-xs-offset-1">

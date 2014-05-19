@@ -1,96 +1,111 @@
 <% title 'Settings' %>
-<%= render 'shared/deprecated_navbar' %>
+<%= render 'shared/navbar' %>
 
-<div class="page page-padded page-flipped">
+<div class="page">
   <div class="container">
-    <div class="page-sidebar">
-      <%= render 'users/card', user: @user %>
-    </div>
+    <div class="row">
+      <div class="col-md-3 col-xs-3">
+        <%= render 'users/card', user: @user %>
+      </div>
 
-    <div class="page-content">
-
-      <%= form_for @user do |f| %>
-
-        <h2>Profile</h2>
-
-        <div class="form-group">
-          <%= f.label :name, class: 'form-label' %>
-          <%= f.text_field :name, autocomplete: 'off', class: 'form-control' %>
+      <div class="col-md-8 col-xs-8 col-md-offest-1 col-xs-offset-1">
+        <div class="page-header">
+          <h2 class="page-header-title">Profile Settings</h2>
         </div>
 
-        <div class="form-group">
-          <%= f.label :username, class: 'form-label' %>
-          <%= f.text_field :username, autocomplete: 'off', class: 'form-control' %>
-        </div>
+        <%= form_for @user, html: {class: 'form form-horizontal'} do |f| %>
+          <div class="form-group">
+            <%= f.label :username, class: 'control-label col-xs-2' %>
+            <div class="col-xs-6">
+              <%= f.text_field :username, autocomplete: 'off', class: 'form-control' %>
+            </div>
+          </div>
 
-        <div class="form-group">
-          <%= f.label :location, class: 'form-label' %>
-          <%= f.text_field :location, autocomplete: 'off', class: 'form-control' %>
-        </div>
-        <div class="form-group">
-          <%= f.label :bio, class: 'form-label' %>
-          <%= f.text_area :bio, placeholder: 'Short bio', autocomplete: 'off', rows: 2 %>
-        </div>
+          <div class="form-group">
+            <%= f.label :location, class: 'control-label col-xs-2' %>
+            <div class="col-xs-6">
+              <%= f.text_field :location, autocomplete: 'off', class: 'form-control' %>
+            </div>
+          </div>
 
-        <div class="form-group">
-          <%= f.label :email, class: 'form-label' %>
-          <%= f.text_area :email, placeholder: 'Email', autocomplete: 'off', rows: 1 %>
-        </div>
+          <div class="form-group">
+            <%= f.label :email, class: 'control-label col-xs-2' %>
+            <div class="col-xs-6">
+              <%= f.text_area :email, placeholder: 'Email', autocomplete: 'off', rows: 1, class: 'form-control' %>
+            </div>
+          </div>
 
-        <h2>Notifications</h2>
+          <div class="form-group">
+            <%= f.label :bio, class: 'control-label col-xs-2' %>
+            <div class="col-xs-10">
+              <%= f.text_area :bio, placeholder: 'Short bio', autocomplete: 'off', rows: 4, class: 'form-control' %>
+            </div>
+          </div>
 
-        <div class="radio">
-          <%= f.label :mail_preference_immediate do %>
-            <%= f.radio_button :mail_preference, :immediate %>
-            Immediately when things happen
-          <% end %>
-        </div>
+          <div class="form-group">
+            <div class="control-label col-xs-2">
+              Email
+            </div>
 
-        <div class="radio">
-          <%= f.label :mail_preference_daily do %>
-            <%= f.radio_button :mail_preference, :daily %>
-            As a daily digest
-          <% end %>
-        </div>
+            <div class="col-xs-10">
+              <div class="radio">
+                <%= f.label :mail_preference_immediate do %>
+                  <%= f.radio_button :mail_preference, :immediate %>
+                  Immediately when things happen
+                <% end %>
+              </div>
 
-        <div class="radio">
-          <%= f.label :mail_preference_never do %>
-            <%= f.radio_button :mail_preference, :never %>
-            Never
-          <% end %>
-        </div>
+              <div class="radio">
+                <%= f.label :mail_preference_daily do %>
+                  <%= f.radio_button :mail_preference, :daily %>
+                  As a daily digest
+                <% end %>
+              </div>
 
-        <h2>Payment Information</h2>
+              <div class="radio">
+                <%= f.label :mail_preference_never do %>
+                  <%= f.radio_button :mail_preference, :never %>
+                  Never
+                <% end %>
+              </div>
+            </div>
+          </div>
 
-        <p>
-          <a class="btn btn-default" href="/settings/payment">
-            Update bank details
-          </a>
-        </p>
-
-        <h2>Security</h2>
-
-        <div class="form-group">
-          <%= f.label :password, 'New Password', class: 'form-label' %>
-          <%= f.password_field :password, class: 'form-control' %>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :password_confirmation, 'Confirm new password', class: 'form-label' %>
-          <%= f.password_field :password_confirmation, class: 'form-control' %>
-        </div>
-
-        <div class="form-actions">
-          <%= f.submit 'Update Profile', class: %w(btn btn-primary) %>
-        </div>
-
-      <% end %>
-
+          <div class="form-group">
+            <div class="control-label col-xs-2">Payment</div>
+            <div class="col-xs-10">
+              <a class="btn btn-default" href="/settings/payment">
+                Update bank details
+              </a>
+            </div>
+          </div>
 
 
+          <div class="form-group">
+            <%= f.label :password, 'Password', class: 'control-label col-xs-2' %>
+            <div class="col-xs-6">
+              <%= f.password_field :password, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :password_confirmation, 'Confirm', class: 'control-label col-xs-2' %>
+            <div class="col-xs-6">
+              <%= f.password_field :password_confirmation, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <%= f.submit 'Update profile', class: %w(btn btn-primary) %>
+          </div>
+
+        <% end %>
+
+
+
+      </div>
     </div>
   </div>
-
 </div>
 
-<%= render 'shared/deprecated_footer' %>
+<%= render 'shared/footer' %>
