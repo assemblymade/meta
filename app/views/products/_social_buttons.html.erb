@@ -1,36 +1,34 @@
 <% url = product_url(@product) %>
 
-<div class="hack-social-buttons">
-  <ul class="nav nav-horizontal">
-    <li class="nav-item">
-      <a data-href="<%= url %>" data-layout="button_count" class="fb-like" style="margin-top:-6px">
-        Like
-      </a>
-    </li>
-    <li class="nav-item">
-      <a
-        href="https://twitter.com/share"
-        data-lang="en"
-        data-dnt="true"
-        data-count="none"
-        data-text="Check out <%= @product.name %> – <%= @product.pitch %> on Assembly"
-        class="twitter-share-button"
-      >
-        Tweet
-      </a>
-    </li>
-    <li class="nav-item">
-      <a
-        href="https://news.ycombinator.com/submit"
-        data-title="Show HN: <%= @product.name %> – <%= @product.pitch %>"
-        data-url="<%= url %>"
-        class="hn-button"
-      >
-        Vote
-      </a>
-    </li>
-  </ul>
+<ul class="list-inline">
+  <li>
+    <a data-href="<%= url %>" data-layout="button_count" class="fb-like" style="margin-top:-6px">
+      Like
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://twitter.com/share"
+      data-lang="en"
+      data-dnt="true"
+      data-count="none"
+      data-text="Check out <%= @product.name %> – <%= @product.pitch %> on Assembly"
+      class="twitter-share-button"
+    >
+      Tweet
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://news.ycombinator.com/submit"
+      data-title="Show HN: <%= @product.name %> – <%= @product.pitch %>"
+      data-url="<%= url %>"
+      class="hn-button"
+    >
+      Vote
+    </a>
+  </li>
+</ul>
 
-  <!-- TODO: Should probably be moved so it doesn't block (or something) -->
-  <%= render 'shared/hn_button' %>
-</div>
+<!-- TODO: Should probably be moved so it doesn't block (or something) -->
+<%= render 'shared/hn_button' %>
