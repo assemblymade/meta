@@ -1,7 +1,7 @@
 class TransactionLogEntry < ActiveRecord::Base
   belongs_to :product, touch: true
 
-  scope :with_cents, -> { where('cents is not null') }
+  scope :with_cents, -> { where.not(cents: nil) }
   scope :validated, -> { where(action: 'validated') }
 
   def self.balance(product, user)
