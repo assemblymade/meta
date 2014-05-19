@@ -31,7 +31,7 @@ class EventSerializer < ActiveModel::Serializer
   end
 
   def body_html
-    wip_markdown(object.body, product_wips_path(product))
+    product_markdown(product, object.body)
   end
 
   def edit_url

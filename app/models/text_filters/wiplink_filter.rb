@@ -1,5 +1,6 @@
-module Filters
-  class WiplinkFilter < HTML::Pipeline::Filter
+module TextFilters
+  class ShortcutFilter < HTML::Pipeline::Filter
+
     def self.mentioned_wips_in(text)
       text.gsub WipPattern do |match|
         yield match, $1.to_i

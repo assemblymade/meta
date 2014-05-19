@@ -31,7 +31,7 @@
                 <h3 id="<%= @group %>-<%= i+1 %>">
                   <%= question.title %>
                 </h3>
-                <%= html_markdown question.body %>
+                <%= markdown(question.body) %>
               <% end %>
             </div>
 

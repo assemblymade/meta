@@ -1,6 +1,6 @@
 <p>Hi <%= @user.short_name %>,</p>
 
-<%= wip_markdown @status_update.body, product_wips_url(@product) %>
+<%= product_markdown(@status_update.product, @status_update.body) %>
 
 <hr />
 

@@ -1,65 +1,35 @@
-# TODO: Remove the `.html_safe` here. Escaping should be controlled by the
-#       template with the triple-mustache.
 module MarkdownHelper
 
-  MARKDOWN_PIPELINE_FILTERS = [
-    TextFilters::MarkdownFilter
-  ]
-
-  PRODUCT_MARKDOWN_PIPELINE_FILTERS = [
+  DEFAULT_FILTERS = [
     TextFilters::MarkdownFilter,
     HTML::Pipeline::SanitizationFilter,
     HTML::Pipeline::AutolinkFilter,
-    Filters::UserMentionFilter,
-    TextFilters::ShortcutFilter,
-    ::Filters::AssetInlineFilter,
-    ::Filters::LightboxImageFilter
+    TextFilters::ImgThumbnailFilter
   ]
 
-
-  def html_markdown(text)
-    @pipeline ||= HTML::Pipeline.new([
-      TextFilters::MarkdownFilter,
-    ])
-    @pipeline.call(text)[:output].to_s.html_safe
-  end
+  PRODUCT_FILTERS = DEFAULT_FILTERS + [
+    TextFilters::UserMentionFilter,
+    TextFilters::ShortcutFilter,
+    TextFilters::AssetInlineFilter,
+    TextFilters::LightboxImageFilter
+  ]
 
   def markdown(text)
-    unescaped_markdown(text).html_safe
+    @default_pipeline ||= HTML::Pipeline.new(DEFAULT_FILTERS)
+    @default_pipeline.call(text)[:output].to_s.html_safe
   end
 
   def product_markdown(product, text)
-    @product_markdown_pipline ||= HTML::Pipeline.new(
-      PRODUCT_MARKDOWN_PIPELINE_FILTERS,
-      product_url: product_url(product),
+    @product_pipeline ||= HTML::Pipeline.new(PRODUCT_FILTERS,
+      shortcut_root_url: product_url(product),
       # FIXME There is no route "users_path"
       users_base_url: '/users'
     )
 
-    @product_markdown_pipline.call(text)[:output].to_s
+    @product_pipeline.call(text)[:output].to_s.html_safe
   end
 
-  def unescaped_markdown(text)
-    @pipeline ||= HTML::Pipeline.new([
-      TextFilters::MarkdownFilter,
-      HTML::Pipeline::SanitizationFilter,
-    ])
-    @pipeline.call(text)[:output].to_s
-  end
-
-  def wip_markdown(text, wips_base_url)
-    @wip_pipeline ||= HTML::Pipeline.new([
-      TextFilters::MarkdownFilter,
-      HTML::Pipeline::SanitizationFilter,
-      HTML::Pipeline::AutolinkFilter,
-      ::Filters::UserMentionFilter,
-      ::Filters::WiplinkFilter,
-      ::Filters::AssetInlineFilter,
-      ::Filters::LightboxImageFilter
-    ], wips_base_url: wips_base_url, users_base_url: '/users')
-
-    @wip_pipeline.call(text)[:output].to_s.html_safe rescue ''
-  end
+# --
 
   def markdown_mtime(name)
     f = "#{name}.markdown"

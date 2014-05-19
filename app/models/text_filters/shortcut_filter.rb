@@ -40,7 +40,7 @@ module TextFilters
 
     def link_to_shortcut(number)
       result[:shortcuts] |= [number]
-      url = File.join(context[:product_url], number.to_s)
+      url = File.join(context[:shortcut_root_url], number.to_s)
       %{<a href="#{url}" class="shortcut">##{number}</a>}
     end
   end

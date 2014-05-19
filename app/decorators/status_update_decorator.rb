@@ -4,7 +4,7 @@ class StatusUpdateDecorator < WipDecorator
   decorates_association :user
 
   def body_html
-    wip_markdown(body, helpers.product_wips_url(product))
+    product_markdown(product, body)
   end
 
   def summary_html

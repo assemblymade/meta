@@ -1,4 +1,3 @@
 <% if event = @events.first %>
-  <%= wip_markdown(event.body, product_wips_url(@product)) %>
+  <%= product_markdown(event.wip.product, event.body) %>
 <% end %>
-

@@ -1,4 +1,4 @@
-module Filters
+module TextFilters
   class AssetInlineFilter < HTML::Pipeline::Filter
     def call
       result[:assets] ||= { images: [], wips: [], unknown: []}

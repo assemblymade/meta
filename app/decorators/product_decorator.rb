@@ -22,11 +22,11 @@ class ProductDecorator < ApplicationDecorator
   end
 
   def lead_html
-    unescaped_markdown(lead)
+    markdown(lead)
   end
 
   def description_html
-    unescaped_markdown(description)
+    markdown(description)
   end
 
   def important_contributors

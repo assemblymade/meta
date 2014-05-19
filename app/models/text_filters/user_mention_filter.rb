@@ -1,6 +1,6 @@
 require 'set'
 
-module Filters
+module TextFilters
   class UserMentionFilter < HTML::Pipeline::MentionFilter
     MentionPattern = /
         (?:^|\W)                   # beginning of string or non-word char
