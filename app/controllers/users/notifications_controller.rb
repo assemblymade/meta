@@ -4,10 +4,10 @@ class Users::NotificationsController < ApplicationController
   before_action :authenticate_user!
 
   def edit
-    if params[:auth_token] and params[:preference]
+    if params[:preference]
       current_user.update_attributes(mail_preference: params[:preference])
-      redirect_to settings_notifications_path
     end
+    redirect_to settings_path
   end
 
   def update
