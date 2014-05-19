@@ -17,7 +17,7 @@ module Github
     def stats(repo)
       stats = Github::Worker.new.get("/repos/#{repo.full_name}/contributors")
       # will return {"message": "Not Found"} hash if not found
-      if stats.is_a? Hash
+      if stats.nil? || stats.is_a?(Hash)
         []
       else
         stats
