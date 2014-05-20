@@ -185,3 +185,8 @@ blockquote {
 .tooltip {
   font-size: 75%;
 }
+
+code {
+  color: $text-color;
+  background-color: $body-bg;
+}
