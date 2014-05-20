@@ -11,16 +11,16 @@
         <a class="btn btn-default btn-block" href="<%= edit_user_path %>">
           Edit Profile
         </a>
+        <br>
       <% end %>
 
       <% if Rails.env.development? || (signed_in? && current_user.staff?) %>
-        <br>
-        <div class="panel panel-default">
-          <div class="panel-body small">
-            <p>?auth_token=<%= @user.authentication_token %></p>
-            <p><%= @user.email %></p>
-          </div>
-        </div>
+        <dl class="well well-sm">
+          <dt>auth token</dt>
+          <dd><%= @user.authentication_token %></dd>
+          <dt>email</dt>
+          <%= @user.email %>
+        </dl>
       <% end %>
     </div>
 
@@ -56,80 +56,79 @@
       </div>
 
       <% if @contributions.any? %>
-        <h2 class="profile-section-title">Contributions</h2>
+        <hr>
 
-        <% @contributions.each do |contribution| %>
-          <% product = contribution.product %>
-          <div class="profile-product-row">
-            <div class="logo">
-              <%= image_tag product.poster_image.url, width: 60 %>
-            </div>
+        <h6>Contributions</h6>
 
-            <div class="meta">
-              <div>
-                <% if product.for_profit? %>
-                  <strong><a class="text-gray" href="<%= product_partners_path(product) %>"><%= number_to_percentage(contribution.stake * 100, precision: 2, strip_insignificant_zeros: true) %> stake</a></strong>
-                  <span class="pipe-divider"></span>
-                  <span class="coins">
-                    <%= pluralize(cents_to_coins(contribution.cents), 'coin') %>
-                  </span>
-                <% else %>
-                  <%= cents_to_coins(contribution.cents) %> karma
-                <% end %>
+        <div class="list-group">
+          <% @contributions.each do |contribution| %>
+            <% product = contribution.product %>
+            <a class="list-group-item" href="<%= product_path(product) %>">
+              <div class="row">
+                <div class="col-xs-2">
+                  <%= image_tag(product.poster_image.url, class: 'img-rounded', width: '100%') %>
+                </div>
+                <div class="col-xs-10">
+                  <div class="clearfix">
+                    <h6 class="alpha omega text-primary pull-left">
+                      <%= product.name %>
+                    </h6>
+
+                    <ul class="list-piped omega small text-muted pull-right">
+                      <% if product.for_profit? %>
+                        <li>
+                            <%= number_to_percentage(contribution.stake * 100, precision: 2, strip_insignificant_zeros: true) %> stake
+                        </li>
+                      <% end %>
+                      <li>
+                        <%= format_coins(product, contribution.cents, :short) %>
+                      </li>
+                    <ul>
+                  </div>
+                  <h4 class="text-weight-normal alpha omega"><%= product.pitch %></h4>
+                </div>
               </div>
-
-              <%= pluralize(contribution.contribution_count, 'contribution') if product.for_profit? %>
-            </div>
-
-            <div class="main">
-              <a href="<%= product_path(product) %>"><%= product.name %></a>
-              <% if product.user == @user %>
-                <span class="label">Creator</span>
-              <% end %>
-              <% if product.core_team.include?(@user) %>
-                <span class="label">Core Team</span>
-              <% end %>
-            </div>
-            <div class="pitch">
-              <%= product.pitch %>
-            </div>
-          </div>
-        <% end %>
+            </a>
+          <% end %>
+        </div><!-- .list-group -->
       <% end %>
 
       <% if @user.count_contributions == 0 &&  signed_in? && current_user == @user %>
-        <div class="note">
-          <div class="note-icon note-profile"></div>
+        <hr>
+        
+        <div class="well">
+          <%= image_tag 'null-states/profile@2x.png', width: 154, height: 38 %>
           <h3>Earn yourself some App Coins!</h3>
           <p>Find a product to help out and earn your first app coins. Permission isn’t required to contribute—jump in and help out in any way possible. At the end of every month the product's revenue is split with everyone that owns its coins.</p>
 
-          <div class="actions">
-            <div class="row">
-              <div class="col-2">
-                <a class="btn btn-accent btn-block" href="<%= new_product_path %>">Create a Product</a>
-              </div>
-              <div class="col-4">
-                Kickstart your own idea, have the community rally around it, and keep at least 5% of its earnings.
-              </div>
+          <hr>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <a class="btn btn-primary btn-block" href="<%= discover_path %>">Discover Products</a>
             </div>
-
-            <br>
-
-            <div class="row">
-              <div class="col-2">
-                <a class="btn btn-accent btn-block" href="<%= discover_path %>">Discover Products</a>
-              </div>
-              <div class="col-4">
-                Start earning coins by helping an existing app. Earn the most coins when you jump in early & steer its direction.
-              </div>
+            <div class="col-xs-8 text-left small">
+              Start earning coins by helping an existing app. Earn the most coins when you jump in early &amp; steer its direction.
             </div>
           </div>
+
+          <br>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <a class="btn btn-default btn-block" href="<%= new_product_path %>">Start a Product</a>
+            </div>
+            <div class="col-xs-8 text-left small">
+              Kickstart your own idea, have the community rally around it, and keep at least 5% of its earnings.
+            </div>
+          </div>
+
         </div>
       <% end %>
 
       <% if @user.stream_events.any? %>
-        <h2 class="profile-section-title user-activity-group-heading">Activity</h2>
-        <div class='user-activity-group'>
+        <h6>Activity</h6>
+        <div class="timeline">
           <%= render @stream_events %>
           <% unless @stream_events.last_page? %>
             <%= render partial: 'more_button' %>

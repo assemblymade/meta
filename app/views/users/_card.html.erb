@@ -11,17 +11,11 @@
         <h6 class="text-muted alpha"><%= user.location %></h6>
       <% end %>
     </center>
-
-    <!-- <% if user.location? %>
-      <div class="lanyard-location">
-        <%= user.location %>
-      </div>
-    <% end %> -->
   </div>
   <hr class="alpha omega">
   <div class="panel-body">
     <% if user.bio? %>
-      <center class="text-small">
+      <center class="markdown-normalized text-small">
         <%= markdown(user.bio) %>
       </center>
     <% end %>
