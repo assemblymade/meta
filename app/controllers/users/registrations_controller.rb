@@ -39,6 +39,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def welcome
+    @deprecated_stylesheet = true
   end
 
   protected
