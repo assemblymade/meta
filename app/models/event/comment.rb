@@ -44,7 +44,7 @@ class Event::Comment < Event
   end
 
   def awardable?
-    !wip.is_a?(Milestone)
+    wip.is_a?(Task)
   end
 
   def editable?

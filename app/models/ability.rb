@@ -65,7 +65,7 @@ class Ability
 
     # Event
 
-    can [:award], Event do |event|
+    can :award, Event do |event|
       wip = event.wip
       wip.awardable? && event.awardable? && wip.open? && wip.product.core_team?(current_user)
     end

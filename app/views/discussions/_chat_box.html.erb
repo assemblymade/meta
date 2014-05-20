@@ -1,11 +1,7 @@
 <div class="media new-event js-new-event">
 
   <div class="pull-left">
-    <% if signed_in? %>
-      <img class="media-object avatar" src="<%= current_user.avatar.url(60) %>" width="30" height="30">
-    <% else %>
-      <img class="media-object avatar"  src="<%= image_path('avatars/default.png') %>" width="30" height="30">
-    <% end %>
+    <%= avatar_tag(current_user, 30) %>
   </div>
 
   <!-- Comments -->
@@ -22,15 +18,9 @@
     <% if can?(:create, Event::Comment) %>
       <%= form_tag product_wip_comments_path(@wip.product, @wip), method: :post, class: 'form' do %>
 
-        <!-- dropzone, autosize, validation -->
-
-        <div class="markdown-editor-control js-markdown-editor js-dropzone">
-          <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', rows: 3,
+        <div class="js-markdown-editor">
+          <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', rows: 1,
               placeholder: "Have a thought or question about #{@product.name}? We'd love to hear from you"  %>
-
-          <div class="dropzone-inner">
-            To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...
-          </div>
         </div>
 
         <div class="form-actions text-left">

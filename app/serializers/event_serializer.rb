@@ -25,7 +25,7 @@ class EventSerializer < ActiveModel::Serializer
   end
 
   def can_award
-    Ability.new(scope).can?(:award, object)
+    Ability.new(scope).can?(:award, object) && object.awardable?
   end
 
   def body_html
