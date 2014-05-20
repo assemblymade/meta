@@ -21,7 +21,7 @@ module MarkdownHelper
 
   def product_markdown(product, text)
     @product_pipeline ||= HTML::Pipeline.new(PRODUCT_FILTERS,
-      shortcut_root_url: product_url(product),
+      shortcut_root_url:  Rails.application.routes.url_helpers.product_url(product),
       # FIXME There is no route "users_path"
       users_base_url: '/users'
     )

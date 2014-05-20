@@ -26,7 +26,7 @@ class ProductDecorator < ApplicationDecorator
   end
 
   def description_html
-    markdown(description)
+    product_markdown(object, description)
   end
 
   def important_contributors
