@@ -183,8 +183,8 @@ ASM::Application.routes.draw do
 
     post 'feature'
     post 'follow'
-    post 'subscribe'
-    post 'unsubscribe'
+    post 'subscribe', as: :subscribe, on: :member
+    post 'unsubscribe', as: :unsubscribe, on: :member
     get 'leaderboard(/:period)', :to => 'products#leaderboard', :as => :leaderboard
     get :metrics
     get :welcome

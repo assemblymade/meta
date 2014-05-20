@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
 
   before_action :authenticate_user!, only: [:create, :edit, :update]
   before_action :set_product,
-    only: [:show, :edit, :update, :follow, :metrics, :subscribe, :unsubscribe, :flag, :feature, :welcome]
+    only: [:show, :edit, :update, :follow, :metrics, :flag, :feature, :welcome]
 
   def new
     @product = Product.new
@@ -105,13 +105,17 @@ class ProductsController < ApplicationController
   end
 
   def subscribe
+    authenticate_user!
+    set_product
     @product.subscribers << current_user
-    respond_with @product, location: product_wips_path
+    respond_with @product, location: product_wips_path(@product)
   end
 
   def unsubscribe
+    authenticate_user!
+    set_product
     @product.subscribers -= [current_user]
-    respond_with @product, location: product_wips_path
+    respond_with @product, location: product_wips_path(@product)
   end
 
   def metrics
