@@ -182,7 +182,7 @@
 
               <p>To sign up, visit <a href="<%= @product.homepage_url %>" target='product'><%= @product.name %></a> now or you can get started using <%= @product.name %> here with your Assembly account.</p>
 
-              <form method="post" action="<%= vote_idea_path(@product) %>" data-require-user="<%= product_path(@product) %>">
+              <form method="post" action="<%= vote_idea_path(@product) %>">
                 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
                 <% if @product.voted_for_by?(current_user) %>
                   <input type="submit" value="Signed up" class="btn btn-default btn-sm btn-block" disabled="disabled">
@@ -221,7 +221,7 @@
                   <p class="text-muted">
                     <%= @product.free_perk %>
                   </p>
-                  <form method="post" action="<%= vote_idea_path(@product) %>" data-require-user="<%= product_path(@product) %>">
+                  <form method="post" action="<%= vote_idea_path(@product) %>">
                     <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
                     <input type="submit" value="<%= @product.signup_button_copy(current_user) %>" class="btn btn-default btn-sm btn-block <%= "disabled" if @product.voted_for_by?(current_user) %>">
                   </form>

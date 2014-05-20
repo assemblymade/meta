@@ -35,21 +35,6 @@ $(document).ready ->
         localStorage.removeItem(key)
         $(@).submit()
 
-  $('form[data-require-user] button,form[data-require-user] input[type=submit]').click (e)->
-    return if $(e.target).data('require-user') == false
-
-    if app.isSignedIn()
-      true
-    else
-      e.preventDefault()
-      $form = $(e.target).parents('form:first')
-      if key = $form.data('local-storage')
-        if typeof(localStorage) != 'undefined'
-          localStorage.setItem(key, JSON.stringify($form.serializeArray()))
-
-      window.signup.display
-        afterSignInPath: $(e.target).parents('form:first').data('require-user')
-
   $(document).delegate '[data-vote-count]', 'click', (e) ->
     voteView = $(@).data('vote-view') || new VoteView(el: @)
     $(@).data('vote-view', voteView)
