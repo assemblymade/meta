@@ -25,7 +25,7 @@ class Ability
 
     # The creator has edit privelleges until a core team is established.
     can [:update, :status_update], Product do |product|
-      product.core_team?(current_user) || (product.core_team.empty? && product.current_user == current_user)
+      product.core_team?(current_user) || (product.core_team.empty? && product.user == current_user)
     end
 
     # Posts
