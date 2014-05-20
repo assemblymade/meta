@@ -8,7 +8,7 @@ class Event::Comment < Event
   after_save :post_process
   after_save :consider_comment_a_check_in
   after_commit -> { track_activity }, on: :create
-  
+
   def self.analytics_name
     'wip.commented'
   end
@@ -18,11 +18,11 @@ class Event::Comment < Event
   end
 
   def add_backreferences
-    ::Filters::UserMentionFilter.mentioned_usernames_in(body, wip) do |user, _|
+    TextFilters::UserMentionFilter.mentioned_usernames_in(body, wip) do |user, _|
       wip.watch!(user) unless user.nil?
     end
 
-    ::Filters::WiplinkFilter.mentioned_wips_in(body) do |match, wip_number|
+    TextFilters::ShortcutFilter.shortcuts_in(body) do |match, wip_number|
       wip = self.wip.product.wips.find_by(number: wip_number)
       if !wip.nil? && wip != self.wip
         wip.events << Event::CommentReference.new(user: user, event: self)
@@ -44,7 +44,7 @@ class Event::Comment < Event
   end
 
   def awardable?
-    true
+    !wip.is_a?(Milestone)
   end
 
   def editable?
