@@ -28,19 +28,19 @@
 
       <div class="pull-left" style="margin-right:6px">
         <% if signed_in? %>
-          <a href="<%= product_wip_path(task.product, task) %>" class="btn btn-default btn-xs js-coin-vote-btn <% if task.has_user_voted?(current_user) %>disabled<% end %>" data-remote="true">
+          <a href="<%= product_wip_path(task.product, task) %>/votes" class="btn btn-default btn-xs js-coin-vote-btn <% if task.has_user_voted?(current_user) %>disabled<% end %>" data-remote="true" data-method="post">
             <% if task.promoted? %>
-              <span class="icon icon-double-up-chevron text-promoted"></span>
+              <span class="icon icon-double-chevron-up text-promoted"></span>
             <% else %>
-              <span class="icon icon-up-chevron"></span>
+              <span class="icon icon-chevron-up"></span>
             <% end %>
           </a>
         <% else %>
-          <a href="<%= new_user_registration_path %>" class="btn btn-default btn-xs disabled">
+          <a href="<%= new_user_registration_path %>" class="btn btn-default btn-xs">
             <% if task.promoted? %>
-              <span class="icon icon-double-up-chevron text-promoted"></span>
+              <span class="icon icon-double-chevron-up text-promoted"></span>
             <% else %>
-              <span class="icon icon-up-chevron"></span>
+              <span class="icon icon-chevron-up"></span>
             <% end %>
             <span class="sr-only">Upvote</span>
           </a>

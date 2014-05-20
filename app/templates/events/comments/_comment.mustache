@@ -14,6 +14,27 @@
 
         <div class="pull-right hover-toggle-target">
           <ul class="list-piped omega">
+
+            {{#current_user_can_tip}}
+              <li>
+
+                <div class="timeline-entry-tipping"
+                  data-view="tips"
+                  data-tips-increment="100"
+                  data-tips-total="{{total_tips}}"
+                  data-tips-url="{{tip_path}}">
+
+                  <span class="text-primary" style="margin-right:5px">
+                    <a style="cursor:pointer" class="js-add-tip">
+                      +Tip
+                    </a>
+                  </span>
+
+                  <span class="icon icon-app-coin"></span>
+                  <span class="js-total-tips">{{total_tips}}</span>
+                </div>
+              </li>
+            {{/current_user_can_tip}}
             {{#award_url}}
               <li class="text-success">
                 <a href="{{award_url}}?event_id={{id}}" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
@@ -45,6 +66,66 @@
       </div>
 
       <div class="markdown-normalized">{{{body_html}}}</div>
+
+      <!-- <div class="media-footer clearfix">
+        <span class="pull-right text-muted">
+          {{#any_tips}}
+              <span class="text-coins">
+                <span class="icon icon-app-coin"></span>
+                <span class="js-total-tips">{{formatted_total_tips}}</span>
+              </span>
+              in tips from
+            &nbsp;
+            <ul class="list-inline" style="display:inline-block;">
+              {{#tips}}
+                {{#from}}
+                <li><a href="{{url}}"><img class="avatar" src="{{avatar_url}}" title="{{username}}" width="14" height="14"></a></li>
+                {{/from}}
+              {{/tips}}
+            </ul>
+          {{/any_tips}}
+          {{^any_tips}}
+            Be the first to tip
+            {{#actor}}@{{username}}{{/actor}}
+          {{/any_tips}}
+
+          {{#can_tip}}
+            <a href="#add-tip" class="btn btn-xs btn-default js-add-tip">
+              Tip <span class="text-coins"><span class="icon icon-app-coin"></span>1</span>
+            </a>
+          {{/can_tip}}
+        </span>
+
+
+
+
+        <!-- <div data-view="tips"
+             data-balance="<%= @product_balance %>"
+             data-tips-increment="100"
+             data-tips-total="<%= event.total_tips %>"
+             data-tips-url="<%= product_event_tips_path(@product, event.id) %>">
+
+          <% if @product_balance > 0 && event.user != current_user %>
+            <span class="pull-right text-muted js-no-tips">
+              Be the first to tip <strong>@<%= event.user.username %></strong> for this contribution
+            </span>
+          <% end %> -->
+
+          <!-- <% if @product_balance > 0 && event.user != current_user %>
+
+          <% elsif @product_balance == 0 %>
+            <span class="btn btn-default btn-sm" disabled style="margin-right: 4px;">
+              Tip <span class="bounty">1</span>
+            </span>
+
+            <span class="pull-right text-muted">
+              You don't have any
+              <strong><%= @product.name %></strong>
+              coins to tip, yet.
+            </span>
+          <% end %> -->
+        <!-- </div> -->
+      <!-- </div> -->
 
     </div>
 

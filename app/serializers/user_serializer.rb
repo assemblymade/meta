@@ -23,4 +23,10 @@ class UserSerializer < BaseSerializer
     Corporation.new if object.staff?
   end
 
+  attributes :product_balance
+
+  def product_balance
+    TransactionLogEntry.where(user_id: object.id).with_cents.group(:product_id).having('count(*) > 0').count
+  end
+
 end

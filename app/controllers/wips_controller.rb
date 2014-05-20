@@ -38,10 +38,6 @@ class WipsController < ApplicationController
     @watchers = @wip.watchers.to_a
 
     @events = Event.render_events(@wip.events.order(:number), current_user)
-    @product_balance = 0
-    if signed_in?
-      @product_balance = TransactionLogEntry.balance(@product, current_user)
-    end
 
     respond_to do |format|
       format.html

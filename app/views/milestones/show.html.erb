@@ -12,14 +12,6 @@
 
         <% if @milestone.feature_image.present? %>
           <img class="img-thumbnail" src="<%= firesize_url %>/630x300/frame_0/<%= URI.escape @milestone.feature_image.attachment.url %>">
-
-          <!-- <div id="feature-image" class="lightbox fade"  tabindex="-1" role="dialog" aria-hidden="true">
-            <div class='lightbox-dialog'>
-              <div class='lightbox-content'>
-                <img src="<%= firesize_url %>/frame_0/<%= @milestone.feature_image.attachment.url %>">
-              </div>
-            </div>
-          </div> -->
         <% end %>
 
         <%== product_markdown(@milestone.product, @milestone.description) %>

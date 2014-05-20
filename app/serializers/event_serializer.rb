@@ -21,13 +21,11 @@ class EventSerializer < ActiveModel::Serializer
   end
 
   def award_url
-    award_product_wip_url(product, wip) if wip.awardable?
+    award_product_wip_url(product, wip) if can_award
   end
 
-  # TODO There's no ? on this method because AMS doesn't serialize question
-  #      marks
   def can_award
-    scope && scope.can?(:award, object)
+    Ability.new(scope).can?(:award, object)
   end
 
   def body_html
@@ -37,7 +35,7 @@ class EventSerializer < ActiveModel::Serializer
   def edit_url
     return nil if object.id.nil?
 
-    if scope && Ability.new(scope).authorize!(:update, object)
+    if Ability.new(scope).can?(:update, object)
       # TODO: (whatupdave) there must be a better way...
       case wip
       when Discussion

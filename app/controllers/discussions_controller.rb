@@ -2,12 +2,11 @@ class DiscussionsController < WipsController
 
   def index
     params[:sort] ||= 'created'
-    @upgrade_stylesheet = true
+
     super
   end
 
   def show
-    @upgrade_stylesheet = true
     @threads = find_wips
     @upgrade_stylesheet = true
     @watchers = Watching.includes(:user).

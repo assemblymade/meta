@@ -31,28 +31,51 @@
       <% end %>
     </ul>
 
-    <div class="pull-left" style="margin-right: 6px;">
-      <%= render 'shared/coin_vote', voteable: @wip %>
-    </div>
-
-    <ul class="list-piped">
-      <li>
-        <%= format_coins(@wip.product, @wip.real_coin_value) %>
-      </li>
-      <li>
-        Created by
-        <a href="<%= user_path(@wip.user) %>">@<%= @wip.user.username %></a>
-      </li>
-      <li>
-        <%= pluralize(@wip.comments.count, 'comments') %>
-      </li>
-      <li>
-        <span class="label label-default"><%= @wip.deliverable.titleize %></span>
-
-        <% if @wip.promoted? %>
-          <span class="label label-promoted">Promoted</span>
+    <div data-view="coin-vote"
+         data-vote-path="<%= product_wip_path(@wip.product, @wip) %>/votes"
+         data-coins="<%= @wip.coins %>"
+         data-coins-add="<%= @wip.coins_add %>"
+    >
+      <div class="pull-left" style="margin-right: 6px;">
+        <% if signed_in? %>
+          <a href="<%= product_wip_path(@wip.product, @wip) %>/votes" class="btn btn-default btn-xs js-coin-vote-btn <% if @wip.has_user_voted?(current_user) %>disabled<% end %>" data-remote="true" data-method="post">
+            <% if @wip.promoted? %>
+              <span class="icon icon-double-chevron-up text-promoted"></span>
+            <% else %>
+              <span class="icon icon-chevron-up"></span>
+            <% end %>
+          </a>
+        <% else %>
+          <a href="<%= new_user_registration_path %>" class="btn btn-default btn-xs">
+            <% if @wip.promoted? %>
+              <span class="icon icon-double-chevron-up text-promoted"></span>
+            <% else %>
+              <span class="icon icon-chevron-up"></span>
+            <% end %>
+            <span class="sr-only">Upvote</span>
+          </a>
         <% end %>
-      </li>
-    </ul>
+      </div>
+
+      <ul class="list-piped omega">
+        <li>
+          <%= format_coins(@wip.product, @wip.real_coin_value) %>
+        </li>
+        <li>
+          Created by
+          <a href="<%= user_path(@wip.user) %>">@<%= @wip.user.username %></a>
+        </li>
+        <li>
+          <%= pluralize(@wip.comments.count, 'comments') %>
+        </li>
+        <li>
+          <span class="label label-default"><%= @wip.deliverable.titleize %></span>
+
+          <% if @wip.promoted? %>
+            <span class="label label-promoted">Promoted</span>
+          <% end %>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

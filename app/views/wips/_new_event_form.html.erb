@@ -1,6 +1,9 @@
 <% if !signed_in? %>
   <div class="educational-modal">
-    <p><a class="btn btn-accent" href="<%= new_user_registration_path %>">Sign up</a> to join the discussion. Already have an account? <a href="<%= new_user_session_path %>">Sign in</a></p>
+    <p>
+      <strong><a href="<%= new_user_registration_path %>">Sign up</a> to join the discussion.</strong>
+      Already have an account? <a href="<%= new_user_session_path %>">Sign in</a>
+    </p>
   </div>
 
 <% else %>
@@ -89,21 +92,17 @@
 
         <div class="tab-pane" id="design">
 
-          <div class="well js-dropzone" id="design-deliverable-dropzone-el">
+          <div class="well dropzone js-dropzone" id="design-deliverable-dropzone-el">
             <div class="dropzone-inner">
               <div class="upload-state upload-state-ready">
                 Drag &amp; drop a design asset here, or <a class="file-drop-select" href="#">select it from your computer</a>.
               </div>
-              <!-- <div class="upload-state upload-state-uploading">
-                Uploading file...
-              </div> -->
             </div>
           </div>
 
           <script>
             $(function(){
               new DesignDeliverableView({
-                attachmentUploadUrl: '<%= "https://s3.amazonaws.com/#{ENV['ATTACHMENT_BUCKET']}" %>',
                 el: $('#design-deliverable-dropzone-el'),
                 wip_path: '<%= product_wip_path(@wip.product, @wip) %>'
               });
