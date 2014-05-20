@@ -6,7 +6,8 @@
   z-index: 1000;
 }
 .chat-column {
-  margin-top: 284px;
+  margin-top: $navbar-height * 2;
+  padding-top: $line-height-computed;
   padding-bottom: 180px !important;
   z-index: 0;
 }
@@ -20,7 +21,7 @@
 .chat-side {
   width: 213px;
   position: fixed;
-  top: 280px;
+  top: $navbar-height * 2 + $line-height-computed;
 }
 
 .chat {
