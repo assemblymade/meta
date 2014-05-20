@@ -30,7 +30,7 @@ module StreamEvents
         </a>
       HTML
       if display_preview?
-        image = ::Filters::LightboxImageFilter.wrap_image_with_lightbox("<img src='#{preview_image_path}' />")
+        image = TextFilters::LightboxImageFilter.wrap_image_with_lightbox("<img src='#{preview_image_path}' />")
         html << <<-HTML
           <div class="stream-event-attachment">
             #{image}

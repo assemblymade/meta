@@ -5,24 +5,23 @@ module TextFilters
 
     def call
       doc.search("img").each do |img|
-        html = LightboxImageFilter.wrap_image_with_lightbox(img)
+
+        if img['class'].present?
+          classes = img['class'].split(' ')
+          classes.delete('img-thumbnail')
+          img['class'] = classes.join(' ')
+        end
+
+        html = LightboxImageFilter.wrap_image_with_lightbox(img.to_html)
         img.replace(html)
       end
       doc
     end
 
-    def self.wrap_image_with_lightbox(img)
-      if img['class'].present?
-        classes = img['class'].split(' ')
-        classes.delete('img-thumbnail')
-        img['class'] = classes.join(' ')
-      end
-
-      image_html = img.to_html
-
+    def self.wrap_image_with_lightbox(image_html)
       unique_element_id = ['lightbox', SecureRandom.uuid].join('-')
 
-      html = <<-ENDHTML
+      <<-ENDHTML
         <a class="thumbnail" href="##{unique_element_id}" data-toggle="lightbox">
           #{image_html}
         </a>
