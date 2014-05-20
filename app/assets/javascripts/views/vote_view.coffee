@@ -1,6 +1,5 @@
 class window.VoteView extends Backbone.View
   initialize: ->
-    console.log 'init'
     @options = @$el.data()
 
     if @voted()
@@ -11,7 +10,6 @@ class window.VoteView extends Backbone.View
       @scoreVoted = @options.voteCount + @options.voteInc
 
   voted: ->
-    console.log $(@el).attr('data-vote-voted')
     $(@el).attr('data-vote-voted') != undefined
 
   canDownvote: ->

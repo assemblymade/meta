@@ -35,7 +35,6 @@ class window.Application
     @currentUser()?
 
   redirectTo: (path) ->
-    # console.log 'redirect to', path
     window.location = path
     if window.location.hash
       window.location.reload()
