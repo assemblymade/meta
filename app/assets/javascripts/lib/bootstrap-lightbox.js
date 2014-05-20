@@ -250,8 +250,6 @@
 			that.$element.find('.lightbox-dialog').css({
 				'width': preloader.width + padLeft + padRight,
 				'top' : (windowHeight / 2) - ( (preloader.height + padTop + padBottom) / 2),
-				'left' : '50%',
-				'margin-left' : -1 * (preloader.width + padLeft + padRight) / 2
 			});
 			that.$element.find('.lightbox-content').css({
 				'width': preloader.width + padLeft + padRight
