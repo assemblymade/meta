@@ -41,12 +41,6 @@ $(document).ready ->
     voteView.clicked(e)
     return false
 
-  $(document).delegate '[data-view=coin-vote]', 'click', (e)->
-    view = $(@).data('js-data-view') || new CoinVoteView(el: @)
-    $(@).data('js-data-view', view)
-    view.clicked(e)
-    return false
-
   $('[data-autosize]').autosize().css('resize', 'none')
   $('[data-toggle=tooltip]').tooltip()
   $('[data-pluralize-count]').pluralizer()

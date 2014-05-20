@@ -31,14 +31,15 @@
       <% end %>
     </ul>
 
-    <div data-view="coin-vote"
+    <div class="js-coin-vote"
+         data-view="coin-vote"
          data-vote-path="<%= product_wip_path(@wip.product, @wip) %>/votes"
          data-coins="<%= @wip.coins %>"
          data-coins-add="<%= @wip.coins_add %>"
     >
       <div class="pull-left" style="margin-right: 6px;">
         <% if signed_in? %>
-          <a href="<%= product_wip_path(@wip.product, @wip) %>/votes" class="btn btn-default btn-xs js-coin-vote-btn <% if @wip.has_user_voted?(current_user) %>disabled<% end %>" data-remote="true" data-method="post">
+          <a href="#" class="btn btn-default btn-xs js-coin-vote-btn <% if @wip.has_user_voted?(current_user) %>disabled<% end %>">
             <% if @wip.promoted? %>
               <span class="icon icon-double-chevron-up text-promoted"></span>
             <% else %>

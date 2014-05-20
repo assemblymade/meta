@@ -2,6 +2,10 @@ class window.CoinVoteView extends Backbone.View
   initialize: ->
     @options = @$el.data()
 
+    @children =
+      btn: @$('.js-coin-vote-btn')
+      coins: @$('.js-coins')
+
     if @voted()
       @coinsUnvoted = @options.coins - @options.coinsAdd
       @coinsVoted = @options.coins
@@ -9,23 +13,15 @@ class window.CoinVoteView extends Backbone.View
       @coinsUnvoted = @options.coins
       @coinsVoted = @options.coins + @options.coinsAdd
 
-    @children =
-      btn: @$('.js-coin-vote-btn')
-      coins: @$('.js-coins')
-
   voted: =>
     @children.btn.hasClass('disabled')
 
   canDownvote: ->
     $(@el).attr('data-vote-downvotable') != undefined
 
-  clicked: (e)->
+  onClick: (e) =>
     e.preventDefault()
-
-    if app.isSignedIn()
-      @toggleVote()
-    else
-      window.location = '/signup'
+    @toggleVote()
 
   toggleVote: ->
     if @voted()
@@ -56,3 +52,12 @@ class window.CoinVoteView extends Backbone.View
       type: "DELETE"
       url: $(@el).data('vote-path')
       dataType: "json"
+
+$(document).ready ->
+  $(document).on 'click', '.js-coin-vote-btn', (e) ->
+    $el = $(e.target)
+    viewEl = $el.parents('.js-coin-vote')[0]
+    view = $el.data('js-data-view') || new CoinVoteView(el: viewEl)
+    $el.data('js-data-view', view)
+    view.onClick(e)
+    return false
