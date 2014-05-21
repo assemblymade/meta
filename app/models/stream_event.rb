@@ -110,13 +110,13 @@ class StreamEvent < ActiveRecord::Base
   end
 
   def icon_class
-    "glyph-event-#{self.class.name.demodulize.underscore.dasherize}"
+    ""
   end
 
   def notify
     CampfireNotifier.delay.send_activity(self.id)
   end
-  
+
   def chat_message(raw_text)
     "[#{product.slug}] @#{actor.username} #{raw_text}"
   end

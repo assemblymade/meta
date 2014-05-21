@@ -16,5 +16,9 @@ module StreamEvents
         </a>
       HTML
     end
+
+    def icon_class
+      "marker-blue icon-pull-request"
+    end
   end
 end

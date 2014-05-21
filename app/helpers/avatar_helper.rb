@@ -7,11 +7,17 @@ module AvatarHelper
       user.avatar.url(size * 2)
     end
 
+    alt = if user.nil?
+      ""
+    else
+      "@#{user.username}"
+    end
+
     attributes = {
       width:  size,
       height: size,
       class:  %w(avatar img-circle),
-      alt:    "@#{user.username}"
+      alt:    alt
     }.merge(options)
 
     image_tag(url, attributes)

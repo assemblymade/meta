@@ -24,5 +24,9 @@ module StreamEvents
       body = subject.body.gsub(/\s+\r|\n\s+/, ' ').truncate(250)
       "[#{product.slug}##{wip.number}] @#{actor.username}: #{body}"
     end
+
+    def icon_class
+      "marker-default icon-speach-bubble"
+    end
   end
 end

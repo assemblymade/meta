@@ -18,7 +18,7 @@
     <% if can?(:create, Event::Comment) %>
       <%= form_tag product_wip_comments_path(@wip.product, @wip), method: :post, class: 'form' do %>
 
-        <div class="js-markdown-editor">
+        <div class="js-markdown-editor js-dropzone">
           <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', rows: 1,
               placeholder: "Have a thought or question about #{@product.name}? We'd love to hear from you"  %>
         </div>

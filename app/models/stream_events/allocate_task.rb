@@ -15,5 +15,9 @@ module StreamEvents
         </a>
       HTML
     end
+
+    def icon_class
+      "marker-default icon-plus"
+    end
   end
 end

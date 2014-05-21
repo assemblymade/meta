@@ -15,5 +15,9 @@ module StreamEvents
         </a>
       HTML
     end
+
+    def icon_class
+      "marker-blue icon-glasses"
+    end
   end
 end

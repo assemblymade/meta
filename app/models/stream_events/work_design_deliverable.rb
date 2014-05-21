@@ -39,5 +39,9 @@ module StreamEvents
       end
       html
     end
+
+    def icon_class
+      "marker-blue icon-document"
+    end
   end
 end

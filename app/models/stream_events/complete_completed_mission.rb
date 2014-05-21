@@ -27,5 +27,10 @@ module StreamEvents
         </span>
       HTML
     end
+
+    def icon_class
+      "marker-green icon-star"
+    end
+
   end
 end

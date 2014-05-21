@@ -14,7 +14,11 @@
           <img class="img-thumbnail" src="<%= firesize_url %>/630x300/frame_0/<%= URI.escape @milestone.feature_image.attachment.url %>">
         <% end %>
 
-        <%== product_markdown(@milestone.product, @milestone.description) %>
+        <div class="markdown-normalized">
+          <%== product_markdown(@milestone.product, @milestone.description) %>
+        </div>
+
+        <hr>
 
         <h6>Task list</h6>
         <%= render partial: 'task_list', object: @milestone %>

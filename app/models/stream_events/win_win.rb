@@ -16,5 +16,9 @@ module StreamEvents
         </a>
       HTML
     end
+
+    def icon_class
+      "marker-yellow icon-star"
+    end
   end
 end

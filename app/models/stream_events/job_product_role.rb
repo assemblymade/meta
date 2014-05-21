@@ -17,5 +17,9 @@ module StreamEvents
         </a>
       HTML
     end
+
+    def icon_class
+      "marker-default icon-chevron-right"
+    end
   end
 end

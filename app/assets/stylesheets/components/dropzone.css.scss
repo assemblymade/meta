@@ -9,11 +9,11 @@
       border-color: rgba($input-border-focus, .3);
     }
   }
+}
 
-  > .dz-preview,
-  > .dz-default {
-    display: none;
-  }
+.dz-preview,
+.dz-default {
+  display: none;
 }
 
 .dropzone-inner {
