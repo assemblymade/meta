@@ -17,7 +17,7 @@ class EventSerializer < ActiveModel::Serializer
   has_one :user, key: :actor, serializer: UserSerializer
 
   def anchor
-    "event-#{object.number}"
+    "comment-#{object.number}"
   end
 
   def award_url

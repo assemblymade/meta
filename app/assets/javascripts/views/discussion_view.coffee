@@ -83,7 +83,7 @@ class window.DiscussionView extends Backbone.View
     @model.set('state', 'allocated')
 
   createEvent: (type, body)->
-    event = app.wipEvents.create _(@eventDefaults).extend(type: type, body: body)
+    app.wipEvents.create _(@eventDefaults).extend(type: type, body: body)
     @resetCommentForm()
 
   wipEventAdded: (wipEvent)->
