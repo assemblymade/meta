@@ -1,4 +1,4 @@
-<% if @wip.main_thread? %>
+<% if @wip.main_thread? && @wip.product.for_profit? %>
   <div class="panel panel-default">
     <div class="panel-heading">
       <h6 class="panel-title">New here?</h6>
