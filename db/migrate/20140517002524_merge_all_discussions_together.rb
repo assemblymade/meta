@@ -2,6 +2,8 @@ class MergeAllDiscussionsTogether < ActiveRecord::Migration
   def change
     add_column :products, :main_thread_id, :uuid
 
+    active_product_ids = Discussion.where('events_count > 5').group(:product_id).count.keys
+
     Product.find_each do |product|
       product.with_lock do
         if discussion = product.discussions.find_by(number: 0)
@@ -10,7 +12,8 @@ class MergeAllDiscussionsTogether < ActiveRecord::Migration
         end
 
         main_thread = product.discussions.order(:events_count).last
-        if main_thread
+
+        if main_thread && !active_product_ids.include?(product.id)
           main_thread.update_attributes title: 'Introduce yourself'
         else
           main_thread = product.discussions.create!(title: 'Introduce yourself', user: product.user, number: 0)
