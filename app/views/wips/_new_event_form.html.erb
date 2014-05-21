@@ -42,7 +42,7 @@
           <%= form_tag product_wip_comments_path(@wip.product, @wip), method: :post, class: %w(form new_event_comment) do %>
 
             <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
-              <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Say something awesome!', rows: 3, style: 'border-top-left-radius: 0' %>
+              <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Say something awesome!', rows: 3, style: 'border-top-left-radius: 0', "data-product-id" => @wip.product.id %>
 
               <div class="dropzone-inner">
                 To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...

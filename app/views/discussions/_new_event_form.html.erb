@@ -17,7 +17,7 @@
         <!-- dropzone, autosize, validation -->
 
         <div class="markdown-editor-control js-markdown-editor js-dropzone">
-          <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Say something awesome!', rows: 3 %>
+          <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Say something awesome!', rows: 3, "data-product-id" => @wip.product.id %>
 
           <div class="dropzone-inner">
             To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...

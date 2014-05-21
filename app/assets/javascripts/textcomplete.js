@@ -1,6 +1,9 @@
 $.applyTextcomplete = function($element) {
   var textcompletesPath = '/api/textcompletes';
   var productId = $element.attr('data-product-id');
+  if (!productId) {
+    return;
+  }
 
   var strategies = [
     {
