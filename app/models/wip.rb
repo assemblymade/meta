@@ -135,6 +135,10 @@ class Wip < ActiveRecord::Base
     false
   end
 
+  def main_thread?
+    false
+  end
+
   def move_to!(type, mover)
     # don't allow moving closed WIPs
     raise ActiveRecord::RecordNotSaved unless mover.can? :move, self
