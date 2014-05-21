@@ -1,4 +1,4 @@
-<% if @wip.number.zero? %>
+<% if @wip.main_thread? %>
   <% title 'Discuss', @wip.product.name %>
 <% else %>
   <% title @wip.title, "##{@wip.number}", @wip.product.name %>
