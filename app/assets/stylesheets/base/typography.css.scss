@@ -102,6 +102,15 @@ h6,
   font-family: $font-family-serif;
 }
 
+.text-longform {
+  p,
+  ul,
+  ol {
+    @extend .text-serif;
+    line-height: 1.764;
+  }
+}
+
 .text-weight-normal {
   font-weight: 400;
 }
@@ -112,6 +121,10 @@ h6,
 
 .text-small {
   font-size: $font-size-small;
+}
+
+.text-warning {
+  color: $brand-warning;
 }
 
 @include text-emphasis-variant('.text-coins', $brand-coins);
