@@ -30,6 +30,8 @@ class window.DiscussionView extends Backbone.View
     @ownCommentsChanged()
 
     if window.pusher
+      pusher.connection.bind 'connected', => @eventDefaults.socket_id = pusher.connection.socket_id
+
       channel = window.pusher.subscribe(@model.get('push_channel'))
       channel.bind 'changed', (msg) => @model.set msg
       channel.bind 'event.added', @eventPushed
@@ -93,8 +95,9 @@ class window.DiscussionView extends Backbone.View
     @scrollToBottom()
 
   eventPushed: (msg) =>
-    event = new WipEvent(msg)
+    return if msg.socket_id == pusher.connection.socket_id
 
+    event = new WipEvent(msg)
     unless app.wipEvents.get(event)
       app.wipEvents.add(event)
       unless @foreground

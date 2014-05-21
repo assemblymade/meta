@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
     type = comment_params[:type].constantize
     authorize! type.slug.to_sym, @wip
     Sequence.save_uniquely do
-      @event = Event.create_from_comment(@wip, type, comment_params[:body], current_user)
+      @event = Event.create_from_comment(@wip, type, comment_params[:body], current_user, comment_params[:socket_id])
     end
 
     if type == Event::Comment
@@ -56,7 +56,7 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:event_comment).permit(:body, :type)
+    params.require(:event_comment).permit(:body, :type, :socket_id)
   end
 
   def track_analytics(event)

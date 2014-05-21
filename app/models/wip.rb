@@ -203,7 +203,8 @@ class Wip < ActiveRecord::Base
     event.wip.watch!(event.user)
     watch!(event.user)
 
-    PusherWorker.perform_async push_channel, 'event.added', EventSerializer.for(event, nil).to_json
+    PusherWorker.perform_async push_channel, 'event.added',
+      EventSerializer.for(event, nil).as_json.merge(socket_id: event.socket_id).to_json
   end
 
   def vote_added(vote)

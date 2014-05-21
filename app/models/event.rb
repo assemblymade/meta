@@ -25,6 +25,8 @@ class Event < ActiveRecord::Base
     Event::Win
   ]
 
+  attr_accessor :socket_id # for Pusher
+
   def self.analytics_name
     "wip.#{slug}"
   end
@@ -101,7 +103,7 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def self.create_from_comment(wip, type, body, user)
+  def self.create_from_comment(wip, type, body, user, socket_id = nil)
     case type.to_s
     when Event::Close.to_s
       wip.close!(user, body)
@@ -116,7 +118,7 @@ class Event < ActiveRecord::Base
       wip.demote!(user, body)
 
     when Event::Comment.to_s
-      wip.comments.create(user_id: user.id, body: body)
+      wip.comments.create(user_id: user.id, body: body, socket_id: socket_id)
 
     else
       raise 'Unknown event'

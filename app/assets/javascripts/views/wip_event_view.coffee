@@ -32,8 +32,12 @@ class window.WipEventView extends Backbone.View
 
   render: =>
     html = @template().render(@templateAttributes())
-    @setElement html
-    @$el.replaceWith html
+
+    if @$el.html() == ""
+      @setElement($(html))
+    else
+      @$el.replaceWith($(html))
+
     @$('time').timeago() # display new timestamp
     @
 
