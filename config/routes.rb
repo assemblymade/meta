@@ -48,9 +48,6 @@ ASM::Application.routes.draw do
 
   get '/discover/tech/:tech' => 'discover#tech'
 
-  get '/chat' => 'messages#index', as: :chats
-  resources :messages
-
   # Perks
   resources :perks, :only => [] do
     resources :preorders, :module => :perks, :on => :member, :only => [:new, :create]
