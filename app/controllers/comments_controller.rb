@@ -27,10 +27,12 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    authenticate_user!
     authorize! :update, @comment
   end
 
   def update
+    authenticate_user!
     authorize! :update, @comment
 
     @comment.update_attributes(comment_params.merge(updated_by: current_user))
