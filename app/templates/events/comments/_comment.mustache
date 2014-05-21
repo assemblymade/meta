@@ -25,13 +25,15 @@
                   data-tips-url="{{tip_path}}">
 
                   <span class="text-primary" style="margin-right:5px">
-                    <a class="btn btn-default btn-xs" style="cursor:pointer" class="js-add-tip">
+                    <a style="cursor:pointer" class="js-add-tip">
                       +Tip
                     </a>
                   </span>
 
-                  <span class="icon icon-app-coin"></span>
-                  <span class="js-total-tips">{{total_tips}}</span>
+                  <span class="text-coins">
+                    <span class="icon icon-app-coin"></span>
+                    <span class="js-total-tips">{{total_tips}}</span>
+                  </span>
                 </div>
               </li>
             {{/current_user_can_tip}}
