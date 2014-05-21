@@ -45,7 +45,7 @@
 
 <script>
   app.wip = new Wip(<%== WipSerializer.new(@wip, scope: current_user).to_json %>);
-  app.wipEvents = new WipEvents(<%== @wip.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
+  app.wipEvents = new WipEvents(<%== @events.map {|e, _| EventSerializer.for(e, current_user)}.to_json %>, {
     url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
   });
 

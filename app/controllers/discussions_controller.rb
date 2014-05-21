@@ -7,7 +7,6 @@ class DiscussionsController < WipsController
   end
 
   def show
-    @threads = find_wips
     @upgrade_stylesheet = true
     @watchers = Watching.includes(:user).
                          where(watchable: @wip).
