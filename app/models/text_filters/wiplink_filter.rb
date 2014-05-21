@@ -39,7 +39,7 @@ module TextFilters
 
     def link_to_wip(wip)
       result[:mentioned_wips] |= [wip]
-      url = File.join(context[:wips_base_url], wip.to_s)
+      url = File.join(context[:shortcut_root_url], wip.to_s)
       "<a href='#{url}' class='wip-mention'>" +
       "##{wip}" +
       "</a>"
