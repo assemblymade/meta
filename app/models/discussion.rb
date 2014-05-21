@@ -8,7 +8,12 @@ class Discussion < Wip
   end
 
   def chat_events
-    [inception_message] + events.where.not(type: [::Event::Close]).order(:number)
+    e = events.where.not(type: [::Event::Close]).order(:number)
+    if main_thread?
+      e.unshift(inception_message)
+    else
+      e
+    end
   end
 
   def inception_message
@@ -16,6 +21,6 @@ class Discussion < Wip
   end
 
   def main_thread?
-    number.zero?
+    product.main_thread.id == id
   end
 end

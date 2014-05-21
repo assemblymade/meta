@@ -4,16 +4,6 @@
     <%= avatar_tag(current_user, 30) %>
   </div>
 
-  <!-- Comments -->
-
-  <% if @wip.main_thread? %>
-  <div class="popover js-welcome-chat" style="display:block;top: -118px; left: 60px; max-width: 800px">
-    <h3 class="popover-title">Welcome! Looks like you're new here</h3>
-    <div class="popover-content">This is a great time to briefly introduce yourself, skills you'd like to contribute, and what you'd like to get out of Aged Moon (eg. experience, profit sharing, etc.)
-    </div>
-  </div>
-  <% end %>
-
   <div class="media-body" id="comment">
     <% if can?(:create, Event::Comment) %>
       <%= form_tag product_wip_comments_path(@wip.product, @wip), method: :post, class: 'form' do %>

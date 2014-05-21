@@ -14,7 +14,13 @@ class MergeAllDiscussionsTogether < ActiveRecord::Migration
         main_thread = product.discussions.order(:events_count).last
 
         if main_thread && !active_product_ids.include?(product.id)
-          main_thread.update_attributes title: 'Introduce yourself'
+          # main_thread.update_attributes title: 'Introduce yourself'
+          main_thread.comments.create(
+            user: product.user,
+            body: main_thread.title,
+            created_at: product.created_at,
+            updated_at: product.updated_at
+          )
         else
           main_thread = product.discussions.create!(title: 'Introduce yourself', user: product.user, number: 0)
         end
