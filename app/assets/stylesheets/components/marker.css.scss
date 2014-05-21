@@ -15,12 +15,36 @@
   }
 }
 
-.marker-default { border-color: $gray-light; color: $gray-light; }
+.marker-default {
+  border-color: $gray-light;
+  color: $gray-light;
+}
 
-.marker-black { border-color: $gray-darker; color: $gray-darker; }
-.marker-gray { border-color: $gray; color: $gray; }
-.marker-blue { border-color: $blue; color: $blue; }
-.marker-purple { border-color: $purple; color: $purple; }
-.marker-green { border-color: $green; color: $green; }
-.marker-yellow { border-color: $yellow; color: $yellow; }
-.marker-red { border-color: $red; color: $red; }
+.marker-black {
+  border-color: $gray-darker;
+  color: $gray-darker;
+}
+.marker-gray {
+  border-color: $gray;
+  color: $gray;
+}
+.marker-blue {
+  border-color: $blue;
+  color: $blue;
+}
+.marker-purple {
+  border-color: $purple;
+  color: $purple;
+}
+.marker-green {
+  border-color: $green;
+  color: $green;
+}
+.marker-yellow {
+  border-color: $yellow;
+  color: $yellow;
+}
+.marker-red {
+  border-color: $red;
+  color: $red;
+}
