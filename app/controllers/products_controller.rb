@@ -107,14 +107,14 @@ class ProductsController < ApplicationController
   def subscribe
     authenticate_user!
     set_product
-    @product.subscribers << current_user
+    @product.watch!(current_user)
     respond_with @product, location: product_wips_path(@product)
   end
 
   def unsubscribe
     authenticate_user!
     set_product
-    @product.subscribers -= [current_user]
+    @product.unwatch!(current_user)
     respond_with @product, location: product_wips_path(@product)
   end
 

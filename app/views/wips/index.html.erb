@@ -49,20 +49,20 @@
               <h6 class="panel-title">Notifications</h6>
             </div>
             <div class="panel-body small">
-              <% if signed_in? && @product.subscribers.include?(current_user) %>
+              <% if signed_in? && @product.watching?(current_user) %>
                 <a class="btn btn-default btn-block btn-sm" href="<%= unsubscribe_product_path(@product) %>" data-method="post">
                   <span class="glyphicon glyphicon-volume-off"></span>
-                  Unsubscribe
+                  Unwatch
                 </a>
                 <br>
-                <p class="omega">You're not recieving any new task notifications.</p>
+                <p class="omega">You are notified of new tasks.</p>
               <% else %>
                 <a class="btn btn-default btn-block btn-sm" href="<%= subscribe_product_path(@product) %>" data-method="post">
-                  <span class="glyphicon glyphicon-volume-up"></span>
-                  Subscribe
+                  <span class="glyphicon glyphicon-eye-open"></span>
+                  Watch
                 </a>
                 <br>
-                <p class="omega">You're recieving new task notifications.</p>
+                <p class="omega">You'll be notified of new tasks.</p>
               <% end %>
             </div>
           </div>

@@ -315,6 +315,14 @@ class Product < ActiveRecord::Base
     Watching.watch!(user, self)
   end
 
+  def unwatch!(user)
+    Watching.unwatch!(user, self)
+  end
+
+  def watching?(user)
+    Watching.watched?(user, self)
+  end
+
   def poster_image
     PosterImage.new(self)
   end
