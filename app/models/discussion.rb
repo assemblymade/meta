@@ -7,9 +7,9 @@ class Discussion < Wip
     false
   end
 
-  def chat_events
-    e = events.includes(:wip, :tips).where.not(type: [::Event::Close]).order(:number).to_a
-    if main_thread?
+  def chat_events(length = 15)
+    e = events.includes(:wip, :tips).where.not(type: [::Event::Close]).order('number desc').take(length).to_a.reverse
+    if main_thread? && e.size < length
       e.unshift(inception_message)
     else
       e
