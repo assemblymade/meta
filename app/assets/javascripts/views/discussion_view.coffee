@@ -95,6 +95,7 @@ class window.DiscussionView extends Backbone.View
     @scrollToBottom()
 
   eventPushed: (msg) =>
+    console.log msg
     return if msg.socket_id == pusher.connection.socket_id
 
     event = new WipEvent(msg)
