@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
     end
 
     %w(asm-bot maeby).each do |username|
-      define_method username.to_sym do
+      define_method username.underscore.to_sym do
         find_by(username: username).tap do |user|
           raise "You need an #{username} user in your database. Run db:seeds" if user.nil?
         end

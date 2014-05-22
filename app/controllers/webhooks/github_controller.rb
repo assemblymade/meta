@@ -64,7 +64,7 @@ class Webhooks::GithubController < WebhookController
     end
 
     if @wip.awardable?
-      Sequence.save_uniquely do
+      @wip.with_lock do
         @wip.submit_code!({ url: ref.url }, user)
       end
     end

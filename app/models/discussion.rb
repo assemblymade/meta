@@ -21,6 +21,6 @@ class Discussion < Wip
   end
 
   def main_thread?
-    product.main_thread.id == id
+    product.main_thread && (product.main_thread.id == id)
   end
 end

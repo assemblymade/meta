@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
   def create
     type = comment_params[:type].constantize
     authorize! type.slug.to_sym, @wip
-    Sequence.save_uniquely do
+    @wip.with_lock do
       @event = Event.create_from_comment(@wip, type, comment_params[:body], current_user, comment_params[:socket_id])
     end
 
