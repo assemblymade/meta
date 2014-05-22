@@ -10,6 +10,9 @@
   <div class="chat-top">
     <%= render 'shared/navbar' %>
     <%= render 'products/navbar' %>
+    <% unless @wip.main_thread? %>
+      <%= render 'discussions/header' %>
+    <% end %>
   </div>
 
   <div class="chat-column">
@@ -26,9 +29,6 @@
 
         <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
           <div class="chat-side">
-            <% unless @wip.main_thread? %>
-              <h6><%= @wip.title %></h6>
-            <% end %>
             <%= render 'intro_panel' %>
             <%= render 'side' %>
             <a class="btn btn-default btn-block" href="<%= product_discussions_path(@product) %>">All Discussions</a>

@@ -1,25 +1,27 @@
 <div class="container">
   <div class="page-header omega">
 
-    <!-- <div class="pull-right">
-      <a class="btn btn-default" href="<%= new_product_discussion_path(@wip.product) %>">
-        Start a discussion
-      </a>
-    </div> -->
+    <br>
 
-    <!-- <ol class="breadcrumb omega">
+    <ol class="breadcrumb omega">
       <li><a href="<%= product_discussions_path(@wip.product) %>">Discussions</a></li>
-      <li></li>
-    </ol> -->
+      <li>
+        <a href="<%= product_discussion_path(@wip.product, @wip) %>">
+          #<%= @wip.number %>
+        </a>
+      </li>
+    </ol>
 
-    <h2 class="page-header-title">
-      <%= @wip.title %>
-      <!-- <small>#<%= @wip.number %></small> -->
-    </h2>
-
-    <p>
-      This is our virtual "garage" where we get to know each other and discuss anything else related to creating <%= @product.name %>
-    </p>
+    <h2 class="page-header-title"><%= @wip.title %></h2>
 
   </div>
 </div>
+
+<style>
+  .chat-column {
+    margin-top: 124px;
+  }
+  .chat-side {
+    top: 256px;
+  }
+</style>
