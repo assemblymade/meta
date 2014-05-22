@@ -8,4 +8,8 @@
     background-color: $btn-default-bg;
     border-color: darken($btn-default-border, 7%);
   }
+
+  &.disabled {
+    color: $btn-default-border;
+  }
 }
