@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/github/gemoji.git
+  revision: 204ace76dac5ea54ab79a7395640d29b3dd8b0fb
+  specs:
+    gemoji (1.5.0)
+
+GIT
   remote: git://github.com/kneath/kss.git
   revision: 25e2642ea2f3c7a87873dcfc21d7138213818ec8
   specs:
@@ -407,6 +413,7 @@ DEPENDENCIES
   fakeweb
   ffaker
   friendly_id!
+  gemoji!
   git
   github-markdown
   hogan_assets
