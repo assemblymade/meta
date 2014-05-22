@@ -16,8 +16,8 @@
 
 .timeline-item {
   position: relative;
-  margin-top: $padding-base-vertical;
-  margin-bottom: $padding-base-vertical;
+  margin-top: $padding-small-vertical;
+  margin-bottom: $padding-small-vertical;
 
   &:first-child {
     margin-top: 0;
@@ -29,8 +29,8 @@
 }
 
 .timeline-highlight {
-  padding-top: $padding-large-vertical;
-  padding-bottom: $padding-large-vertical;
+  padding-top: $padding-small-vertical;
+  padding-bottom: $padding-small-vertical;
 
   &:first-child {
     padding-top: 0;
