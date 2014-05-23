@@ -2,7 +2,9 @@
   <div class="row">
 
     <div class="col-sm-2 col-xs-2">
-      <img class="img-rounded" src="<%= image_path(product.poster_image.url) %>" width="100%" >
+      <a href="<%= product_path(product) %>">
+        <img class="img-rounded" src="<%= image_path(product.poster_image.url) %>" width="100%" >
+      </a>
 
   <!--       <a class="
              btn btn-xs btn-default btn-block
