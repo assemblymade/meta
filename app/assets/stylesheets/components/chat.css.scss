@@ -8,8 +8,12 @@
 .chat-column {
   margin-top: $navbar-height * 2;
   padding-top: $line-height-computed;
-  padding-bottom: 120px;
+  padding-bottom: 51px;
   z-index: 0;
+
+  .timeline {
+    margin-bottom: 0;
+  }
 }
 .chat-bottom {
   position: fixed;
@@ -28,8 +32,11 @@
   background-color: #fff;
 
   .new-event {
-    padding-top: 10px;
-    padding-bottom: 20px;
+    padding-top: $padding-base-vertical;
+    padding-bottom: $padding-base-vertical;
+    margin-top: 0;
+    border-top: 1px solid $brand-border;
+    box-shadow: 0 -1px $padding-small-vertical $brand-shadow;
   }
 
   .form-actions {

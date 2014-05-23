@@ -14,7 +14,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-xs-8">
-          <div id="discussion-view-el">
+          <div id="chat-view-el">
             <%= render 'wips/discussion', events: @events %>
             <div class="chat-bottom">
               <%= render 'chat_box' %>
@@ -45,8 +45,8 @@
   });
 
   $(document).ready(function() {
-    new DiscussionView({
-      el: $('#discussion-view-el'),
+    new ChatView({
+      el: $('#chat-view-el'),
       model: app.wip
     });
   })

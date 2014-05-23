@@ -1,6 +1,6 @@
 #= require notify.js
 
-class window.DiscussionView extends Backbone.View
+class window.ChatView extends Backbone.View
   events:
     'click   .js-new-event' : 'onNewCommentClicked'
     'keydown .js-new-event' : 'newCommentKeyDown'
@@ -43,6 +43,7 @@ class window.DiscussionView extends Backbone.View
 
     $(window).focus @onWindowFocused
     $(window).blur @onWindowBlurred
+    $(document).ready @scrollToBottom
 
   onNewCommentClicked: (e)->
     body = $('#event_comment_body').val()
@@ -137,9 +138,11 @@ class window.DiscussionView extends Backbone.View
     @$('[name=reject]').hide()
 
   newCommentKeyDown: (e)->
-    cmdEnter = (e.ctrlKey || e.metaKey) && e.which == @keys.enter
+    cmdEnter = (e.which == @keys.enter)
     body = $('#event_comment_body').val()
-    @addComment body if cmdEnter && @validComment(body)
+    if cmdEnter && @validComment(body)
+      e.preventDefault()
+      @addComment(body)
 
   newCommentKeyUp: (e)->
     @validateComment $('#event_comment_body').val()
@@ -185,6 +188,9 @@ class window.DiscussionView extends Backbone.View
       document.title = @originalTitle
     else
       document.title = "(#{count}) #{@originalTitle}"
+
+  scrollToBottom: ->
+    $(document).scrollTop($(document).height())
 
   ownCommentsChanged: ->
     @children.welcomeBox.toggle !@model.hasOwnComments()
