@@ -42,7 +42,8 @@ class ProductsController < ApplicationController
       @product.watch!(current_user)
       @product.upvote!(current_user, request.remote_ip)
       TransactionLogEntry.validated!(Time.current, @product, @product.id, @product.user.id, @product.user.id)
-      @product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
+      @product.update_attributes main_thread: @product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
+
 
       flash[:new_product_callout] = true
     end

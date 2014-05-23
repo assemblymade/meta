@@ -61,6 +61,8 @@ describe ProductsController do
       expect {
         post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
       }.to change(Discussion, :count).by(1)
+
+      expect(assigns(:product).main_thread).to be_persisted
     end
   end
 end
