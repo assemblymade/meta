@@ -29,7 +29,7 @@ module TextFilters
     end
 
     # Don't look for mentions in text nodes that are children of these elements
-    IGNORE_PARENTS = %w(pre code a).to_set
+    IGNORE_USER_PARENTS = %w(pre code a).to_set
 
     def call
       result[:mentioned_usernames] ||= []
@@ -37,7 +37,7 @@ module TextFilters
       doc.search('text()').each do |node|
         content = node.to_html
         next if !content.include?('@')
-        next if has_ancestor?(node, IGNORE_PARENTS)
+        next if has_ancestor?(node, IGNORE_USER_PARENTS)
         html = mention_link_filter(content, context[:users_base_url])
         next if html == content
         node.replace(html)

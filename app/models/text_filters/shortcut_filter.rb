@@ -15,7 +15,7 @@ module TextFilters
       )
     /ix
 
-    IGNORE_PARENTS = %w(pre code a).to_set
+    IGNORE_SHORTCUT_PARENTS = %w(pre code a).to_set
 
     def call
       result[:shortcuts] ||= []
@@ -23,7 +23,7 @@ module TextFilters
       doc.search('text()').each do |node|
         content = node.to_html
         next if !content.include?('#')
-        next if has_ancestor?(node, IGNORE_PARENTS)
+        next if has_ancestor?(node, IGNORE_SHORTCUT_PARENTS)
         html = shortcut_filter(content)
         next if html == content
         node.replace(html)
