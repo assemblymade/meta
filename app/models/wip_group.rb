@@ -8,23 +8,26 @@ class WipGroup
     @entities = entities
 
     @products = {}
-    @watchers = []
+    @watchers = {}
 
     entities.each do |o|
       case o
       when Task, Discussion
-        @products[o.product] ||= {}
-        @products[o.product][o] ||= []
-        @watchers += o.watchers
+        product = o.product
+        @products[product] ||= {}
+        @products[product][o] ||= []
+        @watchers[product.id] ||= o.watcher_ids
       when Event::Comment
-        @products[o.wip.product] ||= {}
-        @products[o.wip.product][o.wip] ||= []
-        @products[o.wip.product][o.wip] << o
-        @watchers += o.wip.watchers
+        wip = o.wip
+        product = wip.product
+        @products[product] ||= {}
+        @products[product][wip] ||= []
+        @products[product][wip] << o
+        @watchers[wip.id] ||= wip.watcher_ids
       end
     end
 
-    @watchers = @watchers.uniq
+    @watchers = User.find(@watchers.values.flatten.uniq)
   end
 
   def count

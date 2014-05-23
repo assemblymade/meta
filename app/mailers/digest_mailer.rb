@@ -14,8 +14,8 @@ class DigestMailer < ActionMailer::Base
                   ReadRaptorSerializer.deserialize_articles(unread_articles)
                 )
     @products = wip_group.products
-
     @watchers = wip_group.watchers
+    
     @recap_time = ActiveSupport::TimeZone["Pacific Time (US & Canada)"].now - 1.day
 
     subject = if @showcase.present?
