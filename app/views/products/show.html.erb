@@ -78,7 +78,7 @@
 
         <%#= render 'products/social_buttons' %>
 
-        <% if @product.homepage_url.present? && @product.repos.any? %>
+        <% if @product.homepage_url.present? || @product.repos.any? %>
           <div class="panel panel-default">
 
             <div class="panel-heading">
