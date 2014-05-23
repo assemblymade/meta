@@ -271,22 +271,23 @@
         <% end %>
 
         <% if staff? %>
+          <br><br>
           <div class="panel panel-danger">
             <div class="panel-heading">
               <h6 class="panel-title">DANGER</h6>
             </div>
             <div class="panel-body">
               <% if @product.flagged? %>
-                <span class="btn btn-alert btn-sm btn-block btn-disabled" href="#>">Product Flagged</span>
+                <span class="btn btn-danger btn-sm btn-block btn-disabled" href="#>">Product Flagged</span>
               <% else %>
-                <a class="btn btn-default" href="<%= product_flag_path(@product)%>">Flag Product</a>
+                <a class="btn btn-danger btn-sm btn-block" href="<%= product_flag_path(@product)%>">Flag Product</a>
               <% end %>
 
               <br>
 
               <%= form_for [:admin, @product.showcases.new], url: admin_staff_picks_path do |f| %>
                 <%= f.hidden_field :product_id %>
-                <%= f.submit "Schedule Staff Pick", class: %w(btn btn-default) %>
+                <%= f.submit "Schedule Staff Pick", class: %w(btn btn-default btn-sm btn-block) %>
               <% end %>
             </div>
           </div>
