@@ -259,7 +259,7 @@ class Wip < ActiveRecord::Base
   end
 
   def add_event(event, &block)
-    transaction do
+    with_lock do
       events << event
       block.call(event) if block
       save!
