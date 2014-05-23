@@ -34,7 +34,6 @@ gem 'mustache'
 gem 'omniauth-facebook', '1.4.0' # http://stackoverflow.com/questions/11597130/omniauth-facebook-keeps-reporting-invalid-credentials
 gem 'omniauth-twitter'
 gem 'omniauth-github'
-gem 'oink' # debugging memory leak
 gem 'opengraph', github: 'whatupdave/opengraph'
 gem 'paperclip'
 gem 'pg'
