@@ -1,4 +1,5 @@
 #= require_tree ../../../templates/events
+#= require views/tips_view
 #= require marked
 
 markdown = (text) ->
@@ -23,25 +24,29 @@ eventTypeToTemplate = (type)->
   "events/#{pluralize(underscored)}/_#{underscored}"
 
 class window.WipEventView extends Backbone.View
+  className: 'timeline-item'
+
   initialize: ->
     @listenTo @model, 'change', @render
+    @subviews = {
+      '.js-tips': new TipsView()
+    }
 
   template: ->
     template_name = eventTypeToTemplate(@model.get('type'))
     JST[template_name]
 
   render: =>
-    html = @template().render(@templateAttributes())
+    @$el.html(@template().render(@templateData()))
 
-    if @$el.html() == ""
-      @setElement($(html))
-    else
-      @$el.replaceWith($(html))
+    for selector, view of @subviews
+      view.setElement(@$(selector))
+      view.render()
 
     @$('time').timeago() # display new timestamp
     @
 
-  templateAttributes: ->
+  templateData: ->
     attrs = @model.attributes
     attrs.body_html = @body_html()
     attrs

@@ -1,0 +1,29 @@
+.activity {
+  @include clearfix;
+  padding-left: 60px;
+
+  > .pull-left {
+    margin-left: -60px;
+  }
+}
+
+.activity-body {
+  background-color: white;
+  border-radius: $border-radius-base;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px $body-bg;
+}
+
+.activity-content {
+  padding: 10px;
+  position: relative;
+  background-color: white;
+}
+
+.activity-actions {
+  @include clearfix;
+  background-color: $body-bg;
+  padding: 5px 10px;
+  font-size: $font-size-small;
+  color: $gray-light;
+}

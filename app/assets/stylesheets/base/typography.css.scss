@@ -133,6 +133,11 @@ h6,
 .text-link-bold a {
   color: inherit;
   font-weight: bold;
+  text-decoration: none;
+  
+  &:hover {
+    color: initial;
+  }
 }
 
 .list-inline-piped {

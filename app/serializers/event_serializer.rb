@@ -12,12 +12,17 @@ class EventSerializer < ActiveModel::Serializer
   attributes :body, :body_html, :number, :timestamp, :type
   attributes :edit_url
   attributes :award_url, :can_award
+  attributes :product_id
 
   has_one :wip, serializer: WipSerializer
   has_one :user, key: :actor, serializer: UserSerializer
 
   def anchor
     "comment-#{object.number}"
+  end
+
+  def product_id
+    object.product.id
   end
 
   def award_url

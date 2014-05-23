@@ -12,7 +12,9 @@ class window.DiscussionView extends Backbone.View
 
   initialize: (options)->
     @eventDefaults =
-      actor: app.currentUser().toJSON()
+      actor: (app.currentUser().toJSON() if app.isSignedIn())
+      total_tips: 0
+      current_user_can_tip: true
 
     @children =
       upvoteReminder: @$('.js-upvote-reminder')
