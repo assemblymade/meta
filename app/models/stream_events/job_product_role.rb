@@ -13,7 +13,7 @@ module StreamEvents
       html =<<-HTML
         joined the
         <a href="#{product_jobs_path(product)}">
-          #{role.product_job.category} team
+          #{h(role.product_job.category)} team
         </a>
       HTML
     end

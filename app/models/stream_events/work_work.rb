@@ -25,10 +25,10 @@ module StreamEvents
     def title_html
       html =<<-HTML
         pushed a new commit
-        <a href="#{subject.url}">#{commit_reference}</a>
+        <a href="#{h(subject.url)}">#{commit_reference}</a>
       HTML
       if comment.present?
-        html << "<div class='commit-message'>#{comment}</div>"
+        html << "<div class='commit-message'>#{h(comment)}</div>"
       end
       html
     end

@@ -1,6 +1,7 @@
 class StreamEvent < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   include Kaminari::ActiveRecordModelExtension
+  include ERB::Util
 
   belongs_to :actor,    class_name:  User.name
   belongs_to :subject,  polymorphic: true

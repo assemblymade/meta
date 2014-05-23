@@ -8,7 +8,7 @@ module StreamEvents
       html =<<-HTML
         created task
         <a class="long-link" href="#{product_wip_path(task.product, task)}">
-          #{task.title}
+          #{h(task.title)}
         </a>
         <span class="text-muted" href="#{product_wip_path(task.product, task)}">
           ##{task.number}
@@ -19,6 +19,6 @@ module StreamEvents
     def icon_class
       "marker-green icon icon-plus"
     end
-    
+
   end
 end

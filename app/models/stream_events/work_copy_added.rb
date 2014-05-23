@@ -8,7 +8,7 @@ module StreamEvents
       html =<<-HTML
         submitted copy for
         <a href="#{product_wip_path(task.product, task)}">
-          #{task.title}
+          #{h(task.title)}
         </a>
         <a class="text-muted" href="#{product_wip_path(task.product, task)}">
           ##{task.number}

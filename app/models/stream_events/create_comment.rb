@@ -12,7 +12,7 @@ module StreamEvents
       html =<<-HTML
         commented on
         <a class="long-link" href="#{product_wip_path(wip.product, wip)}">
-          #{wip.title}
+          #{h(wip.title)}
         </a>
         <a class="text-muted" href="#{product_wip_path(wip.product, wip)}">
           ##{wip.number}

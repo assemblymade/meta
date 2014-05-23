@@ -4,8 +4,6 @@ class window.ChatView extends Backbone.View
   events:
     'click   .js-new-event' : 'onNewCommentClicked'
     'keydown .js-new-event' : 'newCommentKeyDown'
-    'input   .js-new-event' : 'newCommentKeyUp'
-    'change  .js-new-event' : 'newCommentKeyUp'
 
   keys:
     'enter': 13
@@ -46,45 +44,13 @@ class window.ChatView extends Backbone.View
     $(document).ready @scrollToBottom
 
   onNewCommentClicked: (e)->
-    body = $('#event_comment_body').val()
-    switch $(e.target).attr('value')
-      when 'Event::Comment'
-        e.preventDefault()
-        @addComment body
-      when 'Event::Close'
-        e.preventDefault()
-        @addClose body
-      when 'Event::Reopen'
-        e.preventDefault()
-        @addReopen body
-      when 'Event::Unallocation'
-        e.preventDefault()
-        @addUnallocation body
-      when 'Event::Rejection'
-        e.preventDefault()
-        @addRejection body
+    e.preventDefault()
+    @addComment($('#event_comment_body').val())
 
   addComment: (body)->
     @createEvent 'Event::Comment', body
-    @showUpvotePrompt() unless @model.get('voted')
     @children.timestamp.remove()
     @model.set('own_comments', 1)
-
-  addClose: (body)->
-    @createEvent 'Event::Close', body
-    @model.set('state', 'resolved')
-
-  addReopen: (body)->
-    @createEvent 'Event::Reopen', body
-    @model.set('state', 'open')
-
-  addUnallocation: (body)->
-    @createEvent 'Event::Unallocation', body
-    @model.set('state', 'open')
-
-  addRejection: (body)->
-    @createEvent 'Event::Rejection', body
-    @model.set('state', 'allocated')
 
   createEvent: (type, body)->
     app.wipEvents.create _(@eventDefaults).extend(type: type, body: body)
@@ -106,46 +72,14 @@ class window.ChatView extends Backbone.View
         @model.incrementUnreadCount()
         @pushNotification(event)
 
-  wipStateChanged: ->
-    switch @model.get('state')
-      when 'open'      then @onWipOpen()
-      when 'allocated' then @onWipAllocated()
-      when 'reviewing' then @onWipReviewing()
-      when 'resolved'  then @onWipResolved()
-
-  onWipOpen: ->
-    @$('[name=close]').show()
-    @$('[name=reopen]').hide()
-    @$('[name=unallocate]').hide()
-    @$('[name=reject]').hide()
-
-  onWipAllocated: ->
-    @$('[name=close]').show()
-    @$('[name=reopen]').hide()
-    @$('[name=unallocate]').show()
-    @$('[name=reject]').hide()
-
-  onWipReviewing: ->
-    @$('[name=close]').show()
-    @$('[name=reopen]').hide()
-    @$('[name=unallocate]').hide()
-    @$('[name=reject]').show()
-
-  onWipResolved: ->
-    @$('[name=close]').hide()
-    @$('[name=reopen]').show()
-    @$('[name=unallocate]').hide()
-    @$('[name=reject]').hide()
-
-  newCommentKeyDown: (e)->
-    cmdEnter = (e.which == @keys.enter)
+  newCommentKeyDown: (e) ->
+    submitKeyPressed = (
+      e.which == @keys.enter && !(e.ctrlKey || e.shiftKey || e.altKey)
+    )
     body = $('#event_comment_body').val()
-    if cmdEnter && @validComment(body)
+    if submitKeyPressed && @validComment(body)
       e.preventDefault()
       @addComment(body)
-
-  newCommentKeyUp: (e)->
-    @validateComment $('#event_comment_body').val()
 
   resetCommentForm: ->
     @$('#event_comment_body').val('')

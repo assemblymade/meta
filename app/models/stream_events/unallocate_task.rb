@@ -8,7 +8,7 @@ module StreamEvents
       html =<<-HTML
         stopped working on
         <a class="long-link" href="#{product_wip_path(task.product, task)}">
-          #{task.title}
+          #{h(ask.title)}
         </a>
         <a class="text-muted" href="#{product_wip_path(task.product, task)}">
           ##{task.number}

@@ -8,7 +8,7 @@ module StreamEvents
       html =<<-HTML
         started discussion on
         <a class="long-link" href="#{product_wip_path(discussion.product, discussion)}">
-          #{discussion.title}
+          #{h(discussion.title)}
         </a>
         <a class="text-muted" href="#{product_wip_path(discussion.product, discussion)}">
           ##{discussion.number}

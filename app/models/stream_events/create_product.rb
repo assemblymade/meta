@@ -15,7 +15,7 @@ module StreamEvents
         <span class="long-link">
           named
           <a href="#{product_path(product)}">
-            #{product.name}
+            #{h(product.name)}
           </a>
         </span>
       HTML
