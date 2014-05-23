@@ -58,8 +58,11 @@ class Event < ActiveRecord::Base
   end
 
   def mentioned_users
-    usernames = self.body.scan(/\@(\w+)/).flatten.uniq
-    User.where(username: usernames)
+    users = []
+    TextFilters::UserMentionFilter.mentioned_usernames_in(self.body) do |user, username|
+      users << user
+    end
+    users
   end
 
   def notify_mentioned_users!
