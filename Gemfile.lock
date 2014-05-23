@@ -103,7 +103,6 @@ GEM
       currencies (~> 0.4.2)
     css_parser (1.3.5)
       addressable
-    curb (0.8.5)
     currencies (0.4.2)
     dalli (2.6.4)
     devise (3.0.3)
@@ -180,10 +179,9 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mailgun-rails (0.1.1)
-      actionmailer
-      activesupport
-      curb
+    mailgun_rails (0.6.0)
+      rails (>= 3.2.13)
+      rest-client (~> 1.6.7)
     markerb (1.0.1)
       redcarpet (>= 2.0)
     memcachier (0.0.2)
@@ -429,7 +427,7 @@ DEPENDENCIES
   librato-rails
   lograge
   machinist (~> 2)
-  mailgun-rails
+  mailgun_rails
   markerb
   memcachier
   multi_fetch_fragments
