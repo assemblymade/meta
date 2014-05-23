@@ -93,7 +93,7 @@ class Product < ActiveRecord::Base
 
   serialize :repos, Repo::Github
 
-  PRIVATE = %w(asm coderwall asm-ideas really-good-emails)
+  PRIVATE = %w(asm coderwall asm-ideas)
   NON_PROFIT = %w(meta)
 
   class << self
