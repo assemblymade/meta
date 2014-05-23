@@ -1,27 +1,12 @@
-<div class="container">
-  <div class="page-header omega">
+<div class="page-header">
+  <ol class="breadcrumb omega">
+    <li><a href="<%= product_discussions_path(@wip.product) %>">Discussions</a></li>
+    <li>
+      <a href="<%= product_discussion_path(@wip.product, @wip) %>">
+        #<%= @wip.number %>
+      </a>
+    </li>
+  </ol>
 
-    <br>
-
-    <ol class="breadcrumb omega">
-      <li><a href="<%= product_discussions_path(@wip.product) %>">Discussions</a></li>
-      <li>
-        <a href="<%= product_discussion_path(@wip.product, @wip) %>">
-          #<%= @wip.number %>
-        </a>
-      </li>
-    </ol>
-
-    <h2 class="page-header-title"><%= @wip.title %></h2>
-
-  </div>
+  <h2 class="page-header-title"><%= @wip.title %></h2>
 </div>
-
-<style>
-  .chat-column {
-    margin-top: 124px;
-  }
-  .chat-side {
-    top: 256px;
-  }
-</style>

@@ -24,7 +24,13 @@ class DiscussionsController < WipsController
     end
 
     respond_to do |format|
-      format.html
+      format.html {
+        if @wip.main_thread?
+          render template: 'discussions/chat'
+        else
+          render template: 'discussions/show'
+        end
+      }
       format.json { render json: @wip, serializer: WipSerializer }
     end
   end
