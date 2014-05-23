@@ -5,6 +5,7 @@
   width: 100%;
   z-index: 1000;
 }
+
 .chat-column {
   margin-top: $navbar-height * 2;
   padding-top: $line-height-computed;
@@ -15,6 +16,7 @@
     margin-bottom: 0;
   }
 }
+
 .chat-bottom {
   position: fixed;
   bottom: 0;
@@ -22,6 +24,7 @@
   width: 617px;
   background-color: #fff;
 }
+
 .chat-side {
   width: 213px;
   position: fixed;
@@ -32,11 +35,11 @@
   background-color: #fff;
 
   .new-event {
-    padding-top: $padding-base-vertical;
-    padding-bottom: $padding-base-vertical;
+    padding-top: $padding-large-vertical;
+    padding-bottom: $padding-large-vertical;
     margin-top: 0;
-    border-top: 1px solid $brand-border;
-    box-shadow: 0 -1px $padding-small-vertical $brand-shadow;
+    border-top: 1px solid $brand-divider;
+    box-shadow: 0 -1px 0 0 rgba(black, 0.01);
   }
 
   .form-actions {

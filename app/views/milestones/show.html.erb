@@ -18,10 +18,14 @@
           <%== product_markdown(@milestone.product, @milestone.description) %>
         </div>
 
+        <br>
         <hr>
 
         <h6>Task list</h6>
         <%= render partial: 'task_list', object: @milestone %>
+
+        <br>
+        <hr>
 
         <h6>Discussion</h6>
         <div id="discussion-view-el">

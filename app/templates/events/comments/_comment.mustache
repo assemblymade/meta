@@ -2,19 +2,30 @@
 
   <div class="pull-left">
     {{#actor}}
-      <a href="{{url}}" title="@{{username}}" data-toggle="tooltip" data-placement="left">
+      <a href="{{url}}" title="@{{username}}">
         <img class="media-object img-circle" src="{{avatar_url}}" alt="@{{username}}" width="30" height="30">
       </a>
     {{/actor}}
   </div>
 
   <div class="activity-body">
-    <div class="activity-content markdown-normalized">
-      {{{body_html}}}
-    </div>
 
+    <!-- ACTIONS -->
     <div class="activity-actions text-link-bold">
+      {{#actor}}
+        <a href="{{url}}" title="@{{username}}">
+          {{username}}
+        </a>
+      {{/actor}}
+
       <ul class="list-inline pull-right omega">
+        <li>
+          <div class="js-tips"
+               data-tips-total="{{total_tips}}"
+               data-tips-path="{{tip_path}}"
+               data-tips-product-id="{{product_id}}"></div>
+        </li>
+
         {{#award_url}}
           <li class="text-success">
             <a href="{{award_url}}?event_id={{id}}" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
@@ -23,6 +34,7 @@
             </a>
           </li>
         {{/award_url}}
+
         {{#edit_url}}
           <li>
             <a href="{{edit_url}}">
@@ -31,6 +43,7 @@
             </a>
           </li>
         {{/edit_url}}
+
         {{#anchor}}
         <li>
           <a href="#{{anchor}}">
@@ -41,12 +54,14 @@
         {{/anchor}}
       </ul>
 
-      <div class="js-tips"
-           data-tips-total="{{total_tips}}"
-           data-tips-path="{{tip_path}}"
-           data-tips-product-id="{{product_id}}"></div>
-
     </div>
+
+
+    <!-- CONTENT -->
+    <div class="activity-content markdown-normalized">
+      {{{body_html}}}
+    </div>
+
   </div>
 </div>
 

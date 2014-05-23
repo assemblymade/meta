@@ -11,19 +11,35 @@
   background-color: white;
   border-radius: $border-radius-base;
   overflow: hidden;
-  box-shadow: 0 0 0 1px $body-bg;
+  // box-shadow: 0 0 0 1px $brand-divider;
 }
 
 .activity-content {
-  padding: 10px;
+  // padding: 10px 15px;
+  padding: 10px 0;
   position: relative;
   background-color: white;
 }
 
 .activity-actions {
   @include clearfix;
-  background-color: $body-bg;
-  padding: 5px 10px;
+  // background-color: rgba($body-bg, 0.3);
+  border-bottom: 1px dotted $brand-divider;
+  padding-bottom: 4px;
   font-size: $font-size-small;
   color: $gray-light;
+
+  a:hover {
+    color: $link-hover-color;
+  }
+
+  .js-tips:hover a {
+    color: $brand-coins;
+  }
+
+  // FIXME: This is hacky as shit
+  .glyphicon {
+    top: 2px;
+    font-size: 12px;
+  }
 }

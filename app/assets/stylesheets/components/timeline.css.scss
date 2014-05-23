@@ -17,8 +17,8 @@
 
 .timeline-item {
   position: relative;
-  margin-top: $padding-base-vertical;
-  margin-bottom: $padding-base-vertical;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
   &:first-child {
     margin-top: 0;
@@ -36,12 +36,11 @@
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.618pt;
-    line-height: $line-height-computed;
 
     color: $gray;
     background-color: white;
     border: 1px solid $brand-divider;
-    padding: 0 10px;
+    padding: 3px 10px;
     border-radius: $line-height-computed;
 
     display: inline-block;
