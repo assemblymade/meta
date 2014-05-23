@@ -93,7 +93,6 @@ class window.DiscussionView extends Backbone.View
     view = new WipEventView(model: wipEvent)
     el = view.render().el
     @$('.timeline,.discussion').append el
-    @scrollToBottom()
 
   eventPushed: (msg) =>
     return if msg.socket_id == pusher.connection.socket_id
@@ -168,7 +167,6 @@ class window.DiscussionView extends Backbone.View
       timeout: 5
       notifyClick: =>
         $(window).focus()
-        @scrollToBottom()
 
     n.show()
 
