@@ -4,7 +4,7 @@
     <% if signed_in? %>
       <%= avatar_tag(current_user, 30) %>
     <% else %>
-      <img class="avatar"  src="<%= image_path('avatars/default.png') %>" width="30" height="30">
+      <img class="avatar" src="<%= image_path('avatars/default.png') %>" width="30" height="30" alt="avatar">
     <% end %>
   </div>
 
@@ -20,7 +20,8 @@
           <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Say something awesome!', rows: 3, "data-product-id" => @wip.product.id %>
 
           <div class="dropzone-inner">
-            To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...
+            To attach files drag &amp; drop here or
+            <a href="#">select files from your computer</a>...
           </div>
         </div>
 
@@ -33,9 +34,8 @@
               <% else %>
                 <%= button_tag 'Comment & Close', name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-primary) %>
               <% end %>
-            </div>
-          <% end %>
-
+            <% end %>
+          </div>
         </div>
       <% end %>
     <% else %>
