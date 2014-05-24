@@ -12,6 +12,16 @@
   border-radius: $border-radius-base;
   overflow: hidden;
   // box-shadow: 0 0 0 1px $brand-divider;
+
+  &:hover {
+    .activity-actions a {
+      color: $gray;
+
+      &.event-award {
+        color: $brand-success;
+      }
+    }
+  }
 }
 
 .activity-content {
@@ -28,10 +38,6 @@
   padding-bottom: 4px;
   font-size: $font-size-small;
   color: $gray-light;
-
-  a:hover {
-    color: $link-hover-color;
-  }
 
   .js-tips:hover a {
     color: $brand-coins;

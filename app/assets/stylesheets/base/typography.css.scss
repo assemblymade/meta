@@ -134,9 +134,9 @@ h6,
   color: inherit;
   font-weight: bold;
   text-decoration: none;
-  
+
   &:hover {
-    color: initial;
+    color: $link-hover-color;
   }
 }
 
