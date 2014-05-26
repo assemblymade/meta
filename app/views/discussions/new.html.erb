@@ -1,45 +1,43 @@
 <% title 'New Discussion', @wip.product.name %>
-<%= render 'shared/deprecated_navbar' %>
-<%= render 'products/deprecated_navbar' %>
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
 
-<div class="page page-padded">
+<div class="page">
   <div class="container">
-    <div class="page-heading">
-      <div class="page-heading-title">Start a new discussion</div>
+    <div class="page-header">
+      <h2 class="page-header-title">Start a new discussion</h2>
     </div>
 
-    <div class="page-content">
-      <%= form_for [@wip.product, @wip], method: :post, class: 'form' do |f| %>
+    <div class="row">
+      <div class="col-xs-8">
+        <%= form_for [@wip.product, @wip], method: :post, class: 'form' do |f| %>
 
-        <div class="form-group">
-          <%= f.label :title, class: 'form-title' %>
-          <%= f.text_field :title, class: 'form-control' %>
-        </div>
+          <div class="form-group">
+            <%= f.label :title, class: 'form-title' %>
+            <%= f.text_field :title, class: 'form-control' %>
+          </div>
 
-        <div class="form-group" id="description-el">
-          <%= f.label :description, class: 'form-title' do %>
-            Details
-            <span class="help-block">(optional)</span>
-          <% end %>
+          <div class="form-group">
+            <span class="help-block pull-right">(optional)</span>
 
-          <div class="form-control textdrop-control">
-            <%= text_area :discussion, :description, name: 'description', rows: 4, class: 'form-control', data: {autosize: ''} %>
+            <%= f.label :description, 'Details', class: 'form-title' %>
 
-            <div class="dropzone js-dropzone">
-              <div class="dropzone-content">
+            <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
+              <%= text_area :discussion, :description, name: 'description', rows: 4, class: 'form-control', data: {autosize: ''} %>
+
+              <div class="dropzone-inner">
                 To attach file drag &amp; drop here or <a href="#">select it from your computer</a>...
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="form-actions">
-          <%= f.submit 'Start Discussion', class: %w(btn btn-primary) %>
-        </div>
-      <% end %>
-      
+          <div class="form-actions">
+            <%= f.submit 'Start Discussion', class: %w(btn btn-primary) %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
 
-<%= render 'shared/deprecated_footer' %>
+<%= render 'shared/footer' %>

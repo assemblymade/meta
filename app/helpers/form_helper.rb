@@ -1,4 +1,9 @@
 module FormHelper
+
+  def form_for(record, options={}, &block)
+    super(record, {builder: ApplicationFormBuilder}, &block)
+  end
+
   def ajax_form_for(record, options = {}, &block)
     options = options.deep_merge(
       remote: true,

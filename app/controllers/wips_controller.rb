@@ -23,7 +23,6 @@ class WipsController < ApplicationController
   end
 
   def index
-    @upgrade_stylesheet = true
     params[:state] ||= 'open'
     @wips = find_wips
 
@@ -34,7 +33,6 @@ class WipsController < ApplicationController
   end
 
   def show
-    @upgrade_stylesheet = true
     @watchers = @wip.watchers.to_a
 
     @events = Event.render_events(@wip.events.order(:number), current_user)
@@ -173,7 +171,7 @@ class WipsController < ApplicationController
       @wip = @product.wips.find_by!(number: number).decorate
     end
     @events = @wip.events.order(:number)
-    
+
     # special case redirect to milestones
     if @wip.type.nil?
       redirect_to product_milestone_path(@product, @wip)

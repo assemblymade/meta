@@ -7,7 +7,6 @@ class DiscussionsController < WipsController
   end
 
   def show
-    @upgrade_stylesheet = true
     @watchers = Watching.includes(:user).
                          where(watchable: @wip).
                          order('created_at desc').
