@@ -1,6 +1,6 @@
 module SearchHelper
   def first_result(result, field)
-     result.try(:highlight).try(field).try(:join) || result.try(field)
+     result.try(:highlight).try(field).try(:join).try(:html_safe) || result.try(field)
   end
 
   def ellipses_for_highlight(highlight, original)

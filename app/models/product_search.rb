@@ -10,6 +10,7 @@ class ProductSearch
       highlight: {
         pre_tags: ['<span class="highlight">'],
         post_tags: ['</span>'],
+        encoder: 'html',
         fields: { name: {}, pitch: {}, description: {}}
       },
 
