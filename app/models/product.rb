@@ -1,10 +1,13 @@
 require 'activerecord/uuid'
 require 'money'
 require './lib/poster_image'
+require 'elasticsearch/model'
 
 class Product < ActiveRecord::Base
   include ActiveRecord::UUID
   include Kaminari::ActiveRecordModelExtension
+  include Elasticsearch::Model
+
   extend FriendlyId
 
   friendly_id :slug_candidates, use: :slugged
@@ -90,6 +93,7 @@ class Product < ActiveRecord::Base
   after_commit -> { subscribe_owner_to_notifications }, on: :create
   after_commit -> { add_to_event_stream }, on: :create
   after_commit -> { create_auto_tips }, on: :create
+  after_commit -> { Indexer.perform_async(:index,  self.id) }
 
   serialize :repos, Repo::Github
 
@@ -366,6 +370,27 @@ class Product < ActiveRecord::Base
     TransactionLogEntry.voted!(Time.current, self, self.id, user.id, 1)
   end
 
+  # elasticsearch
+  mappings dynamic: false do
+    indexes :name,        analyzer: 'snowball'
+    indexes :pitch,       analyzer: 'snowball'
+    indexes :description, analyzer: 'snowball'
+    indexes :tech,        analyzer: 'keyword'
+  end
+
+  def as_indexed_json(options={})
+    as_json(methods: [:tech], only: [:slug, :name, :pitch, :description, :poster])
+  end
+
+  def tech
+    TechFilter.matching(tags).map(&:slug)
+  end
+
+  def poster_image_url
+    PosterImage.new(self).url
+  end
+
+
   protected
 
   def subscribe_owner_to_notifications
@@ -379,5 +404,4 @@ class Product < ActiveRecord::Base
   def create_auto_tips
     AutoTipContract.create!(product: self, user: self.user, amount: 0.05)
   end
-
 end

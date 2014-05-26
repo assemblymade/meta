@@ -167,6 +167,8 @@ ASM::Application.routes.draw do
     resources :textcompletes, only: [:index]
   end
 
+  get 'search' => 'search#index'
+
   post '/products' => 'products#create', as: :products
   post '/products/generate-name' => 'products#generate_name'
 

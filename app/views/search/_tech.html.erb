@@ -1,0 +1,16 @@
+<% if facets.any? %>
+  <div class="panel panel-default">
+    <div class="panel-heading"><h6 class="panel-title">Technology</h6></div>
+    <ul class="nav nav-pills nav-stacked">
+
+      <% facets.each do |facet| %>
+        <li class="small <%= 'active' if params[:tech] == facet.slug %>">
+          <a href="<%= search_path(q: params[:q], tech: facet.slug) %>">
+            <span class="badge pull-right"><%= facet.count %></span>
+            <%= facet.name %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

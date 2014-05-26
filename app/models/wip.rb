@@ -2,8 +2,6 @@ require 'activerecord/uuid'
 
 class Wip < ActiveRecord::Base
   include ActiveRecord::UUID
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
   include Kaminari::ActiveRecordModelExtension
   include Workflow
 
@@ -224,28 +222,6 @@ class Wip < ActiveRecord::Base
 
   def updates
     Wip::Updates.new(self)
-  end
-
-  # elasticsearch
-
-  tire.mapping do
-    indexes :id,      :index    => :not_analyzed
-    indexes :title,   :boost => 10, :analyzer => 'snowball'
-    indexes :number,  :index => :not_analyzed, type: 'integer'
-    indexes :product, :index => :not_analyzed
-    indexes :comments do
-      indexes :body
-    end
-  end
-
-  def to_indexed_json
-    {
-      title: title,
-      number: number,
-      product: product.to_param,
-      url: Rails.application.routes.url_helpers.product_wip_path(product, self),  # ugh.
-      comments: comments.map { |c| { body: c.body } }
-    }.to_json if number
   end
 
   # protected
