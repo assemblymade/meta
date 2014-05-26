@@ -9,6 +9,7 @@ Bundler.require(:default, Rails.env)
 
 STDOUT.sync = true
 
+require 'elasticsearch/rails/lograge'
 module ASM
   class Application < Rails::Application
 
