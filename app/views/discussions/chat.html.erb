@@ -5,9 +5,6 @@
   <div class="chat-top">
     <%= render 'shared/navbar' %>
     <%= render 'products/navbar' %>
-    <% unless @wip.main_thread? %>
-      <%= render 'discussions/header' %>
-    <% end %>
   </div>
 
   <div class="chat-column">
@@ -15,7 +12,13 @@
       <div class="row">
         <div class="col-md-8 col-xs-8">
           <div id="chat-view-el">
-            <%= render 'wips/discussion', events: @events %>
+            <div class="timeline">
+              <% @activity_stream.last(30).each do |activity| %>
+                <div class="timeline-item">
+                  <%= activity.html(current_user) %>
+                </div>
+              <% end %>
+            </div>
             <div class="chat-bottom">
               <%= render 'chat_box' %>
             </div>

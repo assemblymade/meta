@@ -65,4 +65,14 @@ class EventSerializer < ActiveModel::Serializer
     @product ||= wip.product
   end
 
+  attributes :readraptor_tracking_url
+
+  def readraptor_tracking_url
+    ReadraptorTracker.new(object, scope.id).url
+  end
+
+  def include_readraptor_tracking_url?
+    scope.present?
+  end
+
 end

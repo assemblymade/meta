@@ -1,4 +1,4 @@
-class UserSerializer < BaseSerializer
+class UserSerializer < ApplicationSerializer
   include MarkdownHelper
 
   attributes :url,

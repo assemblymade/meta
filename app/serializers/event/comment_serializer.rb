@@ -17,7 +17,8 @@ class Event::CommentSerializer < EventSerializer
   end
 
   def current_user_can_tip
-    scope && TransactionLogEntry.where(user_id: scope.id, product_id: object.product.id).with_cents.count > 0
+    scope &&
+    TransactionLogEntry.where(user_id: scope.id, product_id: object.product.id).with_cents.count > 0
   end
 
   attributes :tip_path

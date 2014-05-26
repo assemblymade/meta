@@ -1,10 +1,10 @@
-class BaseSerializer < ActiveModel::Serializer
+class ApplicationSerializer < ActiveModel::Serializer
 
   attributes :type, :id
   attributes :created, :updated
 
   def type
-    object.class.name.downcase
+    object.class.name.underscore
   end
 
   def created
@@ -12,7 +12,7 @@ class BaseSerializer < ActiveModel::Serializer
   end
 
   def updated
-    object.updated_at.iso8601
+    object.updated_at.iso8601 if object.respond_to?(:updated_at)
   end
 
 end

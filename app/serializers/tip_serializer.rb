@@ -1,4 +1,4 @@
-class TipSerializer < BaseSerializer
+class TipSerializer < ApplicationSerializer
 
   has_one :from
   has_one :to

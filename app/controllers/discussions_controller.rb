@@ -18,6 +18,9 @@ class DiscussionsController < WipsController
 
     @events = Event.render_events(events, current_user)
 
+    # Undecorate
+    @activity_stream = ActivityStream.new(@product.object)
+
     @product_balance = 0
     if signed_in?
       @product_balance = TransactionLogEntry.balance(@product, current_user)

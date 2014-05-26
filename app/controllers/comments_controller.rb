@@ -18,6 +18,10 @@ class CommentsController < ApplicationController
       track_wip_engaged @wip, 'commented'
       register_with_readraptor(@event)
       @event.notify_mentioned_users!
+
+      if @event.wip.main_thread?
+        Activities::Comment.publish!(actor: @event.user, target: @event)
+      end
     end
 
     track_analytics(@event)

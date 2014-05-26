@@ -1,0 +1,66 @@
+<div class="activity" id="{{anchor}}">
+
+  <div class="pull-left">
+    {{#actor}}
+      <a href="{{url}}" title="@{{username}}">
+        <img class="media-object img-circle" src="{{avatar_url}}" alt="@{{username}}" width="30" height="30">
+      </a>
+    {{/actor}}
+  </div>
+
+  {{#target}}
+    <div class="activity-body">
+
+      <div class="activity-actions text-link-bold">
+        {{#actor}}
+          <a href="{{url}}" title="@{{username}}">
+            {{username}}
+          </a>
+        {{/actor}}
+
+        <ul class="list-inline pull-right omega">
+          <li>
+            <div class="js-tips"
+                 data-tips-total="{{total_tips}}"
+                 data-tips-path="{{tip_path}}"
+                 data-tips-product-id="{{product_id}}"></div>
+          </li>
+
+          {{#award_url}}
+            <li>
+              <a class="event-award" href="{{award_url}}?event_id={{id}}" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
+                <span class="glyphicon glyphicon-star"></span>
+                Award {{#actor}}@{{username}}{{/actor}}
+              </a>
+            </li>
+          {{/award_url}}
+
+          {{#edit_url}}
+            <li>
+              <a href="{{edit_url}}">
+                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="sr-only">Edit comment</span>
+              </a>
+            </li>
+          {{/edit_url}}
+
+          {{#anchor}}
+          <li>
+            <a href="#{{anchor}}">
+              <span class="glyphicon glyphicon-link"></span>
+              <span class="sr-only">Permalink</span>
+            </a>
+          </li>
+          {{/anchor}}
+        </ul>
+
+      </div>
+
+      <div class="activity-content markdown-normalized">
+        {{{body_html}}}
+      </div>
+
+      <img class="hidden" src="{{readraptor_tracking_url}}" width="0" height="0">
+    </div>
+  {{/target}}
+</div>

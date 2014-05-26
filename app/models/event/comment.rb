@@ -51,4 +51,8 @@ class Event::Comment < Event
     true
   end
 
+  def interested
+    [wip.product]
+  end
+
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140523014420) do
+ActiveRecord::Schema.define(version: 20140526214839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,17 +19,15 @@ ActiveRecord::Schema.define(version: 20140523014420) do
   enable_extension "pg_stat_statements"
   enable_extension "uuid-ossp"
 
-  create_table "activities", id: false, force: true do |t|
-    t.uuid     "id",           null: false
-    t.uuid     "owner_id",     null: false
-    t.uuid     "subject_id",   null: false
-    t.string   "subject_type", null: false
-    t.string   "key",          null: false
-    t.hstore   "parameters"
+  create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "type"
+    t.uuid     "actor_id"
+    t.string   "actor_type"
+    t.uuid     "subject_id"
+    t.string   "subject_type"
+    t.uuid     "target_id"
+    t.string   "target_type"
     t.datetime "created_at"
-    t.datetime "updated_at"
-    t.uuid     "product_id"
-    t.string   "product_name"
   end
 
   create_table "allocation_events", id: false, force: true do |t|
