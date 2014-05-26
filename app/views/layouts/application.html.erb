@@ -27,6 +27,10 @@
     <%= favicon_link_tag %>
   </head>
   <body class="<%= yield(:body_class) %>">
+    <% if Rails.env.development? %>
+      <div class="devbar"></div>
+    <% end %>
+
     <%= yield %>
 
     <%= render 'shared/facebook' %>
