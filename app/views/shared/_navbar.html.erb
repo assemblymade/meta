@@ -20,7 +20,8 @@
 
       <form action="<%= polymorphic_path([@product, :search]) %>" class="navbar-form navbar-left">
         <div class="form-group">
-          <input type="text" name="q" value="<%= params[:q] %>" class="form-control" placeholder="Search…" autocomplete="off" />
+          <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off"
+            placeholder="<%= @product ? "Search #{@product.name}…" : "Search…" %>"  />
           <input type="hidden" name="type" value="<%= @type %>">
         </div>
         <!-- <button type="submit" class="btn btn-default">Search</button> -->
