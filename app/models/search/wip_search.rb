@@ -8,7 +8,8 @@ module Search
           multi_match: {
             query: q,
             fields: [ 'title', 'comments.sanitized_body' ],
-            operator: 'or'
+            operator: 'or',
+            fuzziness: 2
           }
         },
 

@@ -10,7 +10,8 @@ module Search
           multi_match: {
             query: q,
             fields: [ 'title', 'pitch', 'sanitized_description' ],
-            operator: 'or'
+            operator: 'or',
+            fuzziness: 2
           }
         },
 
