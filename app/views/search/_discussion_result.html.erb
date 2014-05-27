@@ -7,7 +7,7 @@
   <div class="col-sm-12 col-xs-12">
     <strong>
       <a href="<%= product_wip_path(result.product.slug, result.number) %>">
-        <%= highlight result.title, params[:q] %>
+        <%= (result.try(:highlight).try(:title) ? result.highlight.title.join.html_safe : result.title) %>
       </a>
     </strong>
 

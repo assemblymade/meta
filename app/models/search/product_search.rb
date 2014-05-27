@@ -9,7 +9,7 @@ module Search
         query: {
           multi_match: {
             query: q,
-            fields: [ 'title', 'pitch', 'sanitized_description' ],
+            fields: [ 'name.raw^2', 'name', 'pitch', 'sanitized_description' ],
             operator: 'or',
             fuzziness: 2
           }
@@ -25,6 +25,8 @@ module Search
           pre_tags: ['<mark>'],
           post_tags: ['</mark>'],
           fields: {
+            name: { number_of_fragments: 1 },
+            pitch: { number_of_fragments: 1 },
             sanitized_description: { number_of_fragments: 1 }
           }
         },

@@ -5,7 +5,7 @@
 <div class="page">
   <div class="container">
     <div class="page-header">
-      <form action="/<%= File.join [@product.try(:slug), 'search'].compact %>" class="pull-right form-inline">
+      <form action="<%= polymorphic_path([@product, :search]) %>" class="pull-right form-inline">
         <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off" size="60" />
         <input type="hidden" name="type" value="<%= @type %>">
         <button class="btn btn-default">Search</button>

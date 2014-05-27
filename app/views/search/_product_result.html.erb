@@ -8,11 +8,11 @@
 
   <div class="col-sm-10 col-xs-10">
     <strong><a href="<%= product_path(result.slug) %>">
-      <%= highlight result.name, params[:q] %>
+      <%= (result.try(:highlight).try(:name) ? result.highlight.name.join.html_safe : result.name) %>
     </a></strong>
 
     <h4 class="text-serif text-weight-normal" style="margin-top: 5px;">
-      <%= highlight result.pitch, params[:q] %>
+      <%= (result.try(:highlight).try(:pitch) ? result.highlight.pitch.join.html_safe : result.pitch) %>
     </h4>
     <% if fragments = result.try(:highlight).try(:sanitized_description) %>
       <% fragments.take(2).each do |match| %>

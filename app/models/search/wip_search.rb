@@ -52,7 +52,6 @@ module Search
         @total = Wip.search(search).response['hits']['total']
 
         search[:filter][:bool][:must] << {term: { state: filter.slug }}
-        search[:facets][:state][:facet_filter][:bool][:must] << {term: { state: filter.slug }}
       end
 
       if filter = filters[:product_id]

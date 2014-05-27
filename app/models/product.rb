@@ -372,7 +372,11 @@ class Product < ActiveRecord::Base
 
   # elasticsearch
   mappings do
-    indexes :name,        analyzer: 'snowball'
+    indexes :name, type: 'multi_field' do
+      indexes :name
+      indexes :raw, analyzer: 'keyword'
+    end
+
     indexes :pitch,       analyzer: 'snowball'
     indexes :description, analyzer: 'snowball'
     indexes :tech,        analyzer: 'keyword'
