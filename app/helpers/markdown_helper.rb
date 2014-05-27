@@ -23,6 +23,7 @@ module MarkdownHelper
     @product_pipeline ||= HTML::Pipeline.new(PRODUCT_FILTERS,
       asset_root: 'https://a248.e.akamai.net/assets.github.com/images/icons',
       shortcut_root_url:  Rails.application.routes.url_helpers.product_url(product),
+      firesize_url: ENV['FIRESIZE_URL'],
       # FIXME There is no route "users_path"
       users_base_url: '/users'
     )
