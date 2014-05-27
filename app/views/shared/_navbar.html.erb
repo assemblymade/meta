@@ -18,7 +18,16 @@
 
     <div class="collapse navbar-collapse" id="platform-navbar-collapse">
 
+      <form action="<%= polymorphic_path([@product, :search]) %>" class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" name="q" value="<%= params[:q] %>" class="form-control" placeholder="Search…" autocomplete="off" />
+          <input type="hidden" name="type" value="<%= @type %>">
+        </div>
+        <!-- <button type="submit" class="btn btn-default">Search</button> -->
+      </form>
+
       <ul class="nav navbar-nav">
+
         <li class="<%= 'active' if discover_controller? %>">
           <a href="<%= discover_path %>">Discover</a>
         </li>
@@ -26,14 +35,14 @@
         <li>
           <a href="<%= new_product_path %>">Start</a>
         </li>
+
+        <li>
+          <a href="<%= faq_path %>">FAQ</a>
+        </li>
       </ul>
 
       <div class="navbar-right">
         <ul class="nav navbar-nav">
-
-          <li>
-            <a href="<%= faq_path %>">FAQ</a>
-          </li>
 
           <% if user_signed_in? %>
 

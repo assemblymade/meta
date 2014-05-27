@@ -1,5 +1,6 @@
 .navbar > .container-fluid .navbar-brand {
-  margin-left: 0;
+  padding: 15px;
+  margin-left: -5px;
 }
 
 .navbar-nav {
@@ -9,8 +10,8 @@
 }
 
 .navbar-header {
-  border-right: 1px solid $navbar-default-border;
-  margin-right: 60px;
+  // border-right: 1px solid $navbar-default-border;
+  // margin-right: 60px;
 }
 
 .navbar-lifted {

@@ -208,3 +208,9 @@ code {
   color: $text-color;
   background-color: $body-bg;
 }
+
+mark,
+.mark {
+  border-radius: $border-radius-small;
+  color: darken($brand-warning, 33%);
+}

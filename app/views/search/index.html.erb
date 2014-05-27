@@ -4,17 +4,15 @@
 
 <div class="page">
   <div class="container">
-    <div class="page-header">
-      <form action="<%= polymorphic_path([@product, :search]) %>" class="pull-right form-inline">
-        <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off" size="60" />
-        <input type="hidden" name="type" value="<%= @type %>">
-        <button class="btn btn-default">Search</button>
-      </form>
-
-      <h2 class="page-header-title">Search</h2>
-    </div>
 
     <% if @search %>
+
+      <div class="page-header">
+        <h2 class="page-header-title">Search results for
+          <span class="mark"><%= params[:q] %></span>
+        </h2>
+      </div>
+
       <div class="row">
         <div class="col-md-9 col-xs-9">
 
@@ -34,7 +32,21 @@
           <%= render "#{@type.to_s}_facets", facets: @search.facets %>
         </div>
       </div>
+
+    <% else %>
+
+    <div class="page-header">
+      <form action="<%= polymorphic_path([@product, :search]) %>" class="pull-right form-inline">
+        <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off" placeholder="Search…" />
+        <input type="hidden" name="type" value="<%= @type %>">
+        <!-- <button class="btn btn-default">Search</button> -->
+      </form>
+
+      <h2 class="page-header-title">Search</h2>
+    </div>
+
     <% end %>
+
   </div>
 </div>
 
