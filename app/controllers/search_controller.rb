@@ -1,14 +1,27 @@
 class SearchController < ApplicationController
   def index
+    set_product if params[:product_id]
+
     if params[:q]
+      @filters = { q: params[:q] }
+      @filters[:product_id] = params[:product_id] if params[:product_id]
+      @filters[:state] = params[:state] if params[:state]
+      @filters[:tech] = params[:tech] if params[:tech]
+
+      if @product
+        params[:type] = 'discussion' if params[:type].blank? # default search type on product page is discussion
+      else
+        params[:type] = 'product' if params[:type].blank?
+      end
+
       type = case params[:type]
       when 'discussion'
         @type = :discussion
-        @search = Search::WipSearch.new(params[:q], params[:state])
+        @search = Search::WipSearch.new(params[:q], @filters)
         @discussion_total = @search.total
       else
         @type = :product
-        @search = Search::ProductSearch.new(params[:q], params[:tech])
+        @search = Search::ProductSearch.new(params[:q], @filters)
         @product_total = @search.total
       end
 

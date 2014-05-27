@@ -4,7 +4,7 @@
     <ul class="nav nav-pills nav-stacked">
       <% facets.each do |facet| %>
         <li class="small <%= 'active' if params[:state] == facet.slug %>">
-          <a href="<%= search_path(q: params[:q], type: 'discussion', state: facet.slug) %>">
+          <a href="<%= search_path(@filters.merge(state: facet.slug)) %>">
             <span class="badge pull-right"><%= facet.count %></span>
             <%= facet.name %>
           </a>

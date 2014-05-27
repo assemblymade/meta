@@ -1,13 +1,15 @@
 <div class="panel panel-default">
   <ul class="nav nav-pills nav-stacked">
+    <% if params[:product_id].blank? %>
     <li class="small <%= 'active' if params[:type].blank? || params[:type] == 'product' %>">
-      <a href="<%= search_path(q: params[:q], type: 'product') %>">
+      <a href="<%= search_path(@filters.merge(type: 'product')) %>">
         <span class="badge pull-right"><%= @product_total %></span>
         Products
       </a>
     </li>
+    <% end %>
     <li class="small <%= 'active' if params[:type] == 'discussion' %>">
-      <a href="<%= search_path(q: params[:q], type: 'discussion') %>">
+      <a href="<%= search_path(@filters.merge(type: 'discussion')) %>">
         <span class="badge pull-right"><%= @discussion_total %></span>
         Discussions
       </a>

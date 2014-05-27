@@ -2,14 +2,14 @@ module Search
   class WipSearch
     attr_reader :total, :results, :facets
 
-    def initialize(q, state=nil)
+    def initialize(q, filters={})
       search = {
         query: {
           multi_match: {
             query: q,
             fields: [ 'title', 'comments.sanitized_body' ],
             operator: 'or',
-            fuzziness: 2
+            fuzziness: 1
           }
         },
 
@@ -36,18 +36,28 @@ module Search
               field: 'state'
             },
             facet_filter: {
-              term: { hidden: false }
+              bool: {
+                must: [{
+                  term: { hidden: false }
+                }]
+              }
             }
           },
         }
       }
 
-      if filter = StateFilter.find(state)
+      if filter = StateFilter.find(filters[:state])
         # TODO: (whatupdave) this is an extra call to ES to get the total doc count
         # without the filter. There's probably a more efficient way to get this number
         @total = Wip.search(search).response['hits']['total']
 
         search[:filter][:bool][:must] << {term: { state: filter.slug }}
+        search[:facets][:state][:facet_filter][:bool][:must] << {term: { state: filter.slug }}
+      end
+
+      if filter = filters[:product_id]
+        search[:filter][:bool][:must] << {term: { 'product.slug' => filter }}
+        search[:facets][:state][:facet_filter][:bool][:must] << {term: { 'product.slug' => filter }}
       end
 
 

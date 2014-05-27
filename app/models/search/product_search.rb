@@ -2,8 +2,8 @@ module Search
   class ProductSearch
     attr_reader :total, :results, :facets
 
-    def initialize(q, tech=nil)
-      tech_filter = TechFilter.find(tech)
+    def initialize(q, filters={})
+      tech_filter = TechFilter.find(filters[:tech])
 
       search = {
         query: {

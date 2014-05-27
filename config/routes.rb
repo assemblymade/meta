@@ -189,6 +189,7 @@ ASM::Application.routes.draw do
     get :welcome
     get '/dashboard' => 'products/dashboard#index', :as => :dashboard
     get 'log' => 'stakes#show'
+    get 'search' => 'search#index'
 
     resources :milestones, only: [:index, :show, :new, :create, :edit, :update], path: 'projects' do
       put 'tasks/:id' => 'milestones#add'
