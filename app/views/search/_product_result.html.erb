@@ -8,16 +8,18 @@
 
   <div class="col-sm-10 col-xs-10">
     <strong><a href="<%= product_path(result.slug) %>">
-      <%= first_result result, :name %>
+      <%= highlight result.name, params[:q] %>
     </a></strong>
 
     <h4 class="text-serif text-weight-normal" style="margin-top: 5px;">
-      <%= first_result result, :pitch %>
+      <%= highlight result.pitch, params[:q] %>
     </h4>
-    <% (result.try(:highlight).try(:description) || []).take(2).each do |match| %>
-    <p>
-      <%= ellipses_for_highlight(match, result.description).html_safe %>
-    </p>
+    <% if fragments = result.try(:highlight).try(:sanitized_description) %>
+      <% fragments.take(2).each do |match| %>
+        <p>
+          <%= ellipses_for_highlight(match, result.sanitized_description).html_safe %>
+        </p>
+      <% end %>
     <% end %>
   </div>
 </div>

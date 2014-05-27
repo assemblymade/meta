@@ -1,0 +1,23 @@
+<div class="row search-result">
+
+  <div class="col-sm-12 col-xs-12">
+    <span class="text-muted"><%= result.product.slug %>#<%= result.number %></span>
+  </div>
+
+  <div class="col-sm-12 col-xs-12">
+    <strong>
+      <a href="<%= product_wip_path(result.product.slug, result.number) %>">
+        <%= highlight result.title, params[:q] %>
+      </a>
+    </strong>
+
+    <% if fragments = result.try(:highlight) && result.try(:highlight)['comments.sanitized_body'] %>
+      <% fragments.each do |match| %>
+        <p>
+          <%== match %>
+        </p>
+      <% end %>
+    <% end %>
+
+  </div>
+</div>

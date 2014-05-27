@@ -55,4 +55,7 @@ class Event::Comment < Event
     [wip.product]
   end
 
+  def sanitized_body
+    Search::Sanitizer.new.sanitize(body)
+  end
 end

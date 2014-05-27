@@ -1,7 +1,9 @@
 require 'activerecord/uuid'
+require 'elasticsearch/model'
 
 class Wip < ActiveRecord::Base
   include ActiveRecord::UUID
+  include Elasticsearch::Model
   include Kaminari::ActiveRecordModelExtension
   include Workflow
 
@@ -26,6 +28,7 @@ class Wip < ActiveRecord::Base
 
   after_commit :set_number, on: :create
   after_create :add_watcher!
+  after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.id) }
 
   scope :available,   ->{ where(state: 'open') }
   scope :by_product,  ->(product){ where(product_id: product.id) }
@@ -222,6 +225,30 @@ class Wip < ActiveRecord::Base
 
   def updates
     Wip::Updates.new(self)
+  end
+
+  # elasticsearch
+  mappings do
+    indexes :title,       analyzer: 'snowball'
+    indexes :comments do
+      indexes :body,      analyzer: 'snowball'
+    end
+  end
+
+  def as_indexed_json(options={})
+    as_json(
+      only: [:title, :number, :state],
+      methods: [:hidden],
+
+      include: {
+        comments: {only: [:id, :number], methods: [:sanitized_body]},
+        product: {only: [:slug] }
+      }
+    )
+  end
+
+  def hidden
+    product.try(:hidden)
   end
 
   # protected

@@ -1,9 +1,15 @@
 <div class="panel panel-default">
   <ul class="nav nav-pills nav-stacked">
-    <li class="small active">
-      <a href="<%= search_path(q: params[:q]) %>">
-        <span class="badge pull-right"><%= @search.total %></span>
+    <li class="small <%= 'active' if params[:type].blank? || params[:type] == 'product' %>">
+      <a href="<%= search_path(q: params[:q], type: 'product') %>">
+        <span class="badge pull-right"><%= @product_total %></span>
         Products
+      </a>
+    </li>
+    <li class="small <%= 'active' if params[:type] == 'discussion' %>">
+      <a href="<%= search_path(q: params[:q], type: 'discussion') %>">
+        <span class="badge pull-right"><%= @discussion_total %></span>
+        Discussions
       </a>
     </li>
   </ul>

@@ -93,7 +93,7 @@ class Product < ActiveRecord::Base
   after_commit -> { subscribe_owner_to_notifications }, on: :create
   after_commit -> { add_to_event_stream }, on: :create
   after_commit -> { create_auto_tips }, on: :create
-  after_commit -> { Indexer.perform_async(:index,  self.id) }
+  after_commit -> { Indexer.perform_async(:index, Product.to_s, self.id) }
 
   serialize :repos, Repo::Github
 
@@ -371,7 +371,7 @@ class Product < ActiveRecord::Base
   end
 
   # elasticsearch
-  mappings dynamic: false do
+  mappings do
     indexes :name,        analyzer: 'snowball'
     indexes :pitch,       analyzer: 'snowball'
     indexes :description, analyzer: 'snowball'
@@ -379,17 +379,24 @@ class Product < ActiveRecord::Base
   end
 
   def as_indexed_json(options={})
-    as_json(methods: [:tech], only: [:slug, :name, :pitch, :description, :poster])
+    as_json(root: false, methods: [:tech, :hidden, :sanitized_description], only: [:slug, :name, :pitch, :poster])
   end
 
   def tech
-    TechFilter.matching(tags).map(&:slug)
+    Search::TechFilter.matching(tags).map(&:slug)
   end
 
   def poster_image_url
     PosterImage.new(self).url
   end
 
+  def hidden
+    PRIVATE.include?(slug)
+  end
+
+  def sanitized_description
+    description && Search::Sanitizer.new.sanitize(description)
+  end
 
   protected
 
