@@ -1,4 +1,12 @@
 module SearchHelper
+  def search_path
+    if @product.persisted?
+      polymorphic_path([@product, :search])
+    else
+      super
+    end
+  end
+
   def first_result(result, field)
      result.try(:highlight).try(field).try(:join).try(:html_safe) || result.try(field)
   end
