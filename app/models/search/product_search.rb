@@ -11,7 +11,7 @@ module Search
             query: q,
             fields: [ 'name.raw^2', 'name', 'pitch', 'sanitized_description' ],
             operator: 'or',
-            fuzziness: 2
+            fuzziness: 1
           }
         },
 
