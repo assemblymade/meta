@@ -1,6 +1,6 @@
 module SearchHelper
   def search_path(*args)
-    if @product.persisted?
+    if @product.try(:persisted?)
       polymorphic_path([@product, :search])
     else
       super
