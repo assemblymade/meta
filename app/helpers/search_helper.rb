@@ -4,7 +4,6 @@ module SearchHelper
   end
 
   def ellipses_for_highlight(highlight, original)
-    # raise original.inspect
     stripped = strip_tags(highlight).rstrip
 
     prefix = original.starts_with?(stripped) ? "" : "… "

@@ -46,23 +46,26 @@ module Search
         }
       }
 
-      if filter = StateFilter.find(filters[:state])
-        # TODO: (whatupdave) this is an extra call to ES to get the total doc count
-        # without the filter. There's probably a more efficient way to get this number
-        @total = Wip.search(search).response['hits']['total']
+      filter_terms = []
 
-        search[:filter][:bool][:must] << {term: { state: filter.slug }}
+      if filter = StateFilter.find(filters[:state])
+        filter_terms << { state: filter.slug }
       end
 
       if filter = filters[:product_id]
-        search[:filter][:bool][:must] << {term: { 'product.slug' => filter }}
+        filter_terms << { 'product.slug' => filter }
         search[:facets][:state][:facet_filter][:bool][:must] << {term: { 'product.slug' => filter }}
       end
 
+      filter_terms.each do |filter|
+        search[:filter][:bool][:must] << { term: filter }
+      end
 
       @results = Wip.search(search)
-      @total ||= @results.response['hits']['total']
+
       state_facets = @results.response['facets']['state']
+      @total = state_facets['total']
+
       @facets = state_facets['terms'].map do |term|
         FacetFilter.new(StateFilter.find(term['term']), term['count'])
       end
