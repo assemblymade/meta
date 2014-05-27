@@ -13,8 +13,8 @@
       <div class="col-xs-8">
         <%= form_for [@product, @wip] do |f| %>
           <div class="form-group">
-            <%= f.label :title, class: 'control-label', data: {validate_length: 2} %>
-            <%= f.text_field :title, 'class' => 'form-control', data: {validate_length: 2} %>
+            <%= f.label :title, class: 'control-label' %>
+            <%= f.text_field :title, 'class' => 'form-control', data: {'validate-length' => 2} %>
           </div>
 
           <div class="form-group">
