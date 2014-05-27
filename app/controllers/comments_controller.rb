@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
 
   before_action :authenticate_user!, :only => [:create]
   before_action :set_wip
-  before_action :set_comment, only: [:edit, :update]
+  before_action :set_event, only: [:edit, :update]
 
   def create
     type = comment_params[:type].constantize
@@ -55,8 +55,8 @@ class CommentsController < ApplicationController
     end
   end
 
-  def set_comment
-    @comment = @wip.comments.find_by!(number: params[:id])
+  def set_event
+    @comment = @wip.events.find_by!(number: params[:id])
   end
 
   def comment_params

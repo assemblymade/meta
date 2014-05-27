@@ -7,15 +7,35 @@
       </div>
     </div>
 
-    <div class="media-body">
-      <div class="media-heading">
+    <div class="activity-body">
+      <div class="activity-actions text-link-bold">
         Promoted by
         {{#actor}}
           <a href="{{url}}">{{username}}</a>
         {{/actor}}
+
+        <ul class="list-inline pull-right omega">
+          {{#edit_url}}
+            <li>
+              <a href="{{edit_url}}">
+                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="sr-only">Edit comment</span>
+              </a>
+            </li>
+          {{/edit_url}}
+
+          {{#anchor}}
+          <li>
+            <a href="#{{anchor}}">
+              <span class="glyphicon glyphicon-link"></span>
+              <span class="sr-only">Permalink</span>
+            </a>
+          </li>
+          {{/anchor}}
+        </ul>
       </div>
 
-      <div class="markdown-normalized">{{{body_html}}}</div>
+      <div class="activity-content markdown-normalized">{{{body_html}}}</div>
     </div>
   </div>
 </div>

@@ -3,6 +3,7 @@ require 'activerecord/uuid'
 # TODO: (whatupdave) rename this. These are wip events (comments, opens, awards etc)
 class Event < ActiveRecord::Base
   include ActiveRecord::UUID
+  include Versioning
 
   belongs_to :user
   belongs_to :wip, touch: true, counter_cache: true

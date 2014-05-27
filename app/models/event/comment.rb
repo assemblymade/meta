@@ -1,6 +1,4 @@
 class Event::Comment < Event
-  include Versioning
-
   belongs_to :wip, touch: true, counter_cache: true
 
   validates :body, presence: true, length: { minimum: 2 }
