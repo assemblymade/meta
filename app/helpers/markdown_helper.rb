@@ -3,7 +3,6 @@ module MarkdownHelper
   DEFAULT_FILTERS = [
     TextFilters::MarkdownFilter,
     HTML::Pipeline::SanitizationFilter,
-    HTML::Pipeline::AutolinkFilter,
     TextFilters::ImgThumbnailFilter
   ]
 

@@ -5,7 +5,7 @@ module TextFilters
       @text = @text.gsub "\r", ''
       @engine = Redcarpet::Markdown.new(
         Redcarpet::Render::HTML.new(context.fetch(:markdown, {})),
-        context.fetch(:redcarpet, {})
+        context.fetch(:redcarpet, {}).merge(autolink: true)
       )
     end
 
