@@ -17,6 +17,10 @@
   font-size: $font-size-small;
   line-height: 20px;
   @extend .text-link-bold;
+
+  .event-award:hover {
+    color: $brand-success;
+  }
 }
 
 .media-footer {
