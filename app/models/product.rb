@@ -395,7 +395,11 @@ class Product < ActiveRecord::Base
   end
 
   def hidden
-    PRIVATE.include?(slug)
+    PRIVATE.include?(slug) || flagged?
+  end
+
+  def flagged?
+    !!flagged_at
   end
 
   def sanitized_description

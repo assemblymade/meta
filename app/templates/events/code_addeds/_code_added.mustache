@@ -15,6 +15,13 @@
         {{#deliverable}}
           <a target="_blank" href="{{url}}">pull request</a>
         {{/deliverable}}
+
+        {{#award_url}}
+          <a class="event-award pull-right" href="{{award_url}}?event_id={{id}}" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
+            <span class="glyphicon glyphicon-star"></span>
+            Award {{#actor}}@{{username}}{{/actor}}
+          </a>
+        {{/award_url}}
       </div>
     </div>
   </div>

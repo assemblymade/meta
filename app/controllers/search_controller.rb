@@ -3,10 +3,17 @@ class SearchController < ApplicationController
     set_product if params[:product_id]
 
     if params[:q]
+      @totals = Search::Totals.new(params[:q])
+
       @filters = filters = { q: params[:q] }
+      @filters[:type] = params[:type] if params[:type]
       @filters[:state] = params[:state] if params[:state]
       @filters[:tech] = params[:tech] if params[:tech]
-      filters[:product_id] = params[:product_id] if params[:product_id]
+
+      filters = @filters.clone
+      if params[:product_id]
+        filters[:product_id] = params[:product_id]
+      end
 
       if @product
         params[:type] = 'discussion' if params[:type].blank? # default search type on product page is discussion
@@ -18,15 +25,12 @@ class SearchController < ApplicationController
       when 'discussion'
         @type = :discussion
         @search = Search::WipSearch.new(params[:q], filters)
-        @discussion_total = @search.total
+        @totals.discussions = @search.total
       else
         @type = :product
         @search = Search::ProductSearch.new(params[:q], filters)
-        @product_total = @search.total
+        @totals.products = @search.total
       end
-
-      @product_total ||= Search::ProductSearch.new(params[:q]).total
-      @discussion_total ||= Search::WipSearch.new(params[:q]).total
     end
   end
 end

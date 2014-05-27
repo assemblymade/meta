@@ -20,6 +20,14 @@
           <img class="gallery-thumb" src="{{firesize_url}}/300x225/frame_0/g_center/{{href}}" />
         </a>
       {{/attachment}}
+
+
+      {{#award_url}}
+        <a class="event-award pull-right" href="{{award_url}}?event_id={{id}}" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
+          <span class="glyphicon glyphicon-star"></span>
+          Award {{#actor}}@{{username}}{{/actor}}
+        </a>
+      {{/award_url}}
     </div>
   </div>
 </div>

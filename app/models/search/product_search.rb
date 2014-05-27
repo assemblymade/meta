@@ -44,17 +44,13 @@ module Search
       }
 
       if tech_filter
-        # TODO: (whatupdave) this is an extra call to ES to get the total doc count
-        # without the filter. There's probably a more efficient way to get this number
-        @total = Product.search(search).response['hits']['total']
-
         search[:filter][:term].update tech: tech_filter.slug
       end
 
       @results = Product.search(search)
-      @total ||= @results.response['hits']['total']
 
       tech_facets = @results.response['facets']['tech']
+      @total = tech_facets['total']
 
       @facets = tech_facets['terms'].map do |term|
         FacetFilter.new(TechFilter.find(term['term']), term['count'])
