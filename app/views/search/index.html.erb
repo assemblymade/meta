@@ -14,7 +14,7 @@
       </div>
 
       <div class="row">
-        <div class="col-md-9 col-xs-9">
+        <div class="col-md-8 col-xs-8">
 
           <div class="list-group list-group-breakout list-group-padded">
             <% @search.results.page(params[:page]).each do |result| %>
@@ -27,7 +27,7 @@
           <%= paginate @search.results, theme: 'twitter-bootstrap-3' %>
         </div>
 
-        <div class="col-md-3 col-xs-3">
+        <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
           <%= render 'types' %>
           <%= render "#{@type.to_s}_facets", facets: @search.facets %>
         </div>

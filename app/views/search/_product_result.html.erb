@@ -16,9 +16,11 @@
     </h4>
     <% if fragments = result.try(:highlight).try(:sanitized_description) %>
       <% fragments.take(2).each do |match| %>
-        <p>
-          <%= ellipses_for_highlight(match, result.sanitized_description).html_safe %>
-        </p>
+        <div class="small neuter-paragraphs">
+          <p>
+            <%= ellipses_for_highlight(match, result.sanitized_description).html_safe %>
+          </p>
+        </div>
       <% end %>
     <% end %>
   </div>

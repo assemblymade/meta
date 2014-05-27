@@ -213,4 +213,5 @@ mark,
 .mark {
   border-radius: $border-radius-small;
   color: darken($brand-warning, 33%);
+  background-color: lighten($state-warning-bg, 5%);
 }
