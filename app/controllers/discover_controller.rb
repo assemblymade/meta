@@ -29,7 +29,7 @@ class DiscoverController < ApplicationController
   end
 
   def tech
-    @tech = TechFilter.find(params[:tech])
+    @tech = Search::TechFilter.find(params[:tech])
     if signed_in?
       @saved_search = current_user.saved_searches.find_by(query: "tag:#{params[:tech]}")
     end
