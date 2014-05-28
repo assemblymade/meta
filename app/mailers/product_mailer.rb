@@ -34,7 +34,7 @@ class ProductMailer < ActionMailer::Base
   end
 
   def status_update(user_id, status_update_id)
-    tag 'product#status_update'
+    mailgun_tag 'product#status_update'
 
     @user = User.find(user_id)
     @status_update = StatusUpdate.find(status_update_id)
@@ -81,7 +81,7 @@ class ProductMailer < ActionMailer::Base
   end
 
   def idea_process_update(product_id)
-    tag 'product#idea_process_update'
+    mailgun_tag 'product#idea_process_update'
 
     @product = Product.find(product_id)
     @user = @product.user
@@ -113,7 +113,7 @@ class ProductMailer < ActionMailer::Base
       subject: "User subscribed to #{@saved_search.query}"
   end
 
-  def tag(name)
+  def mailgun_tag(name)
     headers 'X-Mailgun-Tag' => name.to_s
   end
 

@@ -26,7 +26,7 @@
 
     <div class="collapse navbar-collapse" id="platform-navbar-collapse">
 
-      <form action="<%= search_path %>" class="navbar-form navbar-left" style="<% if user_signed_in? %>padding-left: 4px;<% end %>">
+      <form action="<%= scoped_search_path %>" class="navbar-form navbar-left" style="<% if user_signed_in? %>padding-left: 4px;<% end %>">
         <div class="form-group">
           <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off"
             placeholder="<%= @product ? "Search #{@product.name}…" : "Search…" %>"  />

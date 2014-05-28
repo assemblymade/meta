@@ -1,4 +1,4 @@
-class BadgeMailer < ActionMailer::Base
+class BadgeMailer < BaseMailer
   include ActionView::Helpers::TextHelper
 
   layout 'email'

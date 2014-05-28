@@ -1,4 +1,4 @@
-class DigestMailer < ActionMailer::Base
+class DigestMailer < BaseMailer
   include ActionView::Helpers::TextHelper
 
   helper :markdown
@@ -7,7 +7,7 @@ class DigestMailer < ActionMailer::Base
   layout 'mail/newsletter'
 
   def daily(user_id, unread_articles=[])
-    tag 'digest#daily'
+    mailgun_tag 'digest#daily'
 
     @user     = User.find(user_id)
     wip_group = WipGroup.new(
@@ -29,7 +29,7 @@ class DigestMailer < ActionMailer::Base
   end
 
   def weekly(user_id, newsletter_id)
-    tag 'digest#weekly'
+    mailgun_tag 'digest#weekly'
     @user = User.find(user_id)
 
     @newsletter = Newsletter.find(newsletter_id)

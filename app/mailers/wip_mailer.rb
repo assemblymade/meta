@@ -1,11 +1,11 @@
-class WipMailer < ActionMailer::Base
+class WipMailer < BaseMailer
   helper :markdown
   helper :wip
 
   layout 'mail/wip_mailer'
 
   def wip_created(user_id, wip_id)
-    tag 'wip#created'
+    mailgun_tag 'wip#created'
 
     @user = User.find(user_id)
     @wip = Wip.find(wip_id)
@@ -24,7 +24,7 @@ class WipMailer < ActionMailer::Base
   end
 
   def wip_event_added(user_id, event_id)
-    tag "wip#event_added"
+    mailgun_tag "wip#event_added"
 
     @user = User.find(user_id)
     @event = Event.find(event_id)

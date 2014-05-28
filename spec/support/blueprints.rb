@@ -27,7 +27,7 @@ end
 
 Product.blueprint do
   user
-  name  { Faker::Company.name }
+  name  { "Product #{sn}" }
   pitch { Faker::Lorem.paragraph(1) }
   can_advertise { true }
 end

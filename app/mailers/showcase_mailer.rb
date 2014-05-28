@@ -1,4 +1,4 @@
-class ShowcaseMailer < ActionMailer::Base
+class ShowcaseMailer < BaseMailer
   include ActionView::Helpers::DateHelper
 
   default 'X-Mailgun-Tag' => 'showcase#notification'
