@@ -26,7 +26,7 @@
 
     <div class="collapse navbar-collapse" id="platform-navbar-collapse">
 
-      <form action="<%= search_path %>" class="navbar-form navbar-left">
+      <form action="<%= search_path %>" class="navbar-form navbar-left" style="<% if user_signed_in? %>padding-left: 4px;<% end %>">
         <div class="form-group">
           <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off"
             placeholder="<%= @product ? "Search #{@product.name}…" : "Search…" %>"  />
@@ -55,16 +55,26 @@
 
           <% if user_signed_in? %>
 
-            <li>
-              <a href="<%= user_path(current_user) %>">
-                <%= current_user.username %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <%= avatar_tag(current_user, 22) %>
+                <span style="margin-left: 5px;"><%= current_user.username %></span>
+                <b class="caret"></b>
               </a>
-            </li>
 
-            <li>
-              <a href="<%= destroy_user_session_path %>" data-method="delete">
-                Logout
-              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="<%= user_path(current_user) %>">
+                    View Profile
+                  </a>
+                </li>
+                <!-- <li class="divider"></li> -->
+                <li>
+                  <a href="<%= destroy_user_session_path %>" data-method="delete">
+                    Log out
+                  </a>
+                </li>
+              </ul>
             </li>
 
           <% else %>
