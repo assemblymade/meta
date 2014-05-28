@@ -51,6 +51,12 @@ $link-color:       $brand-primary;
 $link-hover-color: darken($link-color, 15%);
 
 
+// Copy Deliverable
+
+$text-copy-bg: #fef4c2;
+$text-copy: darken($text-copy-bg, 75%);
+
+
 // Typography
 
 $font-family-sans-serif: Solitaire, "Helvetica Neue", Helvetica, Arial, sans-serif;
