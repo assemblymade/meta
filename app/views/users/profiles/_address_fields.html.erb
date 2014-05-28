@@ -1,0 +1,40 @@
+<div class="form-group">
+  <%= f.label :address_line1, 'Address line 1', class: 'control-label col-xs-3' %>
+  <div class="col-xs-5">
+    <%= f.text_field :address_line1, autocomplete: 'off', class: 'form-control', placeholder: 'Line 1: Street Address, P.O. box, company name, etc' %>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-xs-offset-3 col-xs-5">
+    <%= f.text_field :address_line2, autocomplete: 'off', class: 'form-control', placeholder: 'Line 2: Apartment, suite, unit, building, floor, etc' %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= f.label :address_city, 'City', class: 'control-label col-xs-3' %>
+  <div class="col-xs-5">
+    <%= f.text_field :address_city, autocomplete: 'off', class: 'form-control' %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= f.label :address_state, 'State / Province / Region', class: 'control-label col-xs-3' %>
+  <div class="col-xs-5">
+    <%= f.text_field :address_state, autocomplete: 'off', class: 'form-control' %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= f.label :address_zip, 'ZIP / Postal Code', class: 'control-label col-xs-3' %>
+  <div class="col-xs-5">
+    <%= f.text_field :address_zip, autocomplete: 'off', class: 'form-control' %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= f.label :address_country, 'Country', class: 'control-label col-xs-3' %>
+  <div class="col-xs-5">
+    <%= country_select('user', 'address_country') %>
+  </div>
+</div>

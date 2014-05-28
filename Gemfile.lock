@@ -110,6 +110,8 @@ GEM
     connection_pool (1.1.0)
     countries (0.9.3)
       currencies (~> 0.4.2)
+    country_select (1.3.1)
+      countries (= 0.9.3)
     css_parser (1.3.5)
       addressable
     currencies (0.4.2)
@@ -412,6 +414,7 @@ DEPENDENCIES
   coffee-script
   connection_pool
   countries
+  country_select
   dalli
   devise (~> 3.0.0.rc)
   draper

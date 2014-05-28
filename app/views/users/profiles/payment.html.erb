@@ -1,0 +1,146 @@
+<% title 'Payment Settings' %>
+<%= render 'shared/navbar' %>
+
+<div class="page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-xs-3">
+        <%= render 'users/card', user: current_user.decorate %>
+      </div>
+
+      <div class="col-md-8 col-xs-8 col-md-offest-1 col-xs-offset-1">
+        <div class="page-header">
+          <h2 class="page-header-title">Payment Settings</h2>
+        </div>
+
+        <form class="payment_option">
+          Receive Assembly payments via:
+          <% @payment_options.each do |option| %>
+            <label>
+              <input type="radio" name="payment_option" value="<%= option[:value] %>" <% if option[:selected] %>checked<% end %>/> <%= option[:name] %>
+            </label>
+          <% end %>
+        </form>
+
+        <div class="payment paypal">
+          <%= form_for @user, url: settings_payment_path, html: {class: 'form form-horizontal'} do |f| %>
+            <%= f.hidden_field :payment_option, value: 'paypal' %>
+
+            <h3>Paypal</h3>
+
+            <div class="form-group">
+              <%= f.label :paypal_email, class: 'control-label col-xs-3' %>
+              <div class="col-xs-5">
+                <%= f.text_field :paypal_email, autocomplete: 'off', class: 'form-control', placeholder: @user.email %>
+              </div>
+            </div>
+
+            <h3>Address</h3>
+            <%= render 'address_fields', f: f %>
+
+            <div class="form-actions">
+                <%= f.submit 'Save settings', class: %w(btn btn-primary), 'data-disable-with' => "Updating..." %>
+            </div>
+
+          <% end %>
+        </div>
+
+        <div class="payment bank">
+          <h3>Bank Account Details</h3>
+
+          <% if @user.bank_account_id %>
+            <p class="stored_bank_account"><%= @user.bank_name %>  xxxx-xxxx-xxxx-<%= @user.bank_last4 %></p>
+            <p><a href="mailto:assembly@helpful.io">Contact support to update your bank account</a></p>
+          <% else %>
+            <p>This form only applies to US bank accounts. For International payments please choose the Paypal option</p>
+
+            <form id="bank-account" class="form form-horizontal">
+              <div class="form-group">
+                <label class="control-label col-xs-3">Account Name</label>
+                <div class="col-xs-6">
+                  <input type="text" id="ba-name" name="bank_account[name]" placeholder="John Doe" class="form-control" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-xs-3">Routing Number</label>
+                <div class="col-xs-6">
+                  <input type="text" id="ba-routing" name="bank_account[routing]" placeholder="322271627" class="form-control" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-xs-3">Account Number</label>
+                <div class="col-xs-6">
+                  <input type="text" id="ba-number" name="bank_account[account_number]" placeholder="8887776665555"  class="form-control" />
+                </div>
+              </div>
+            </form>
+          <% end %>
+
+          <h3>Address</h3>
+          <%= form_for @user, url: settings_payment_path, html: {class: 'form form-horizontal'} do |f| %>
+            <%= f.hidden_field :payment_option, value: 'bank' %>
+            <%= f.hidden_field :bank_account_id %>
+            <%= f.hidden_field :bank_name %>
+            <%= f.hidden_field :bank_last4 %>
+
+            <%= render 'address_fields', f: f %>
+
+            <div class="form-actions">
+              <%= f.submit 'Save settings', class: %w(btn btn-primary), 'data-disable-with' => "Updating..." %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>
+<script type="text/javascript" src="https://js.balancedpayments.com/v1/balanced.js"></script>
+<script type="text/javascript">
+$(function(){
+  var showSelectedOption = function(){
+    $('.payment').hide()
+    $('.payment.'+ $('input:radio[name=payment_option]:checked').val()).show();
+  }
+
+  $("input:radio[name=payment_option]").click(showSelectedOption);
+  showSelectedOption();
+
+  var marketplaceUri = '<%= ENV['BALANCED_MARKETPLACE_URI'] %>';
+  balanced.init(marketplaceUri);
+
+  $addressForm = $('#address')
+
+  if ($('#bank-account').length > 0) {
+    $('#address-submit').click(function (e) {
+      e.preventDefault();
+      $.rails.disableFormElements($addressForm)
+
+      var payload = {
+        name: $('#ba-name').val(),
+        account_number: $('#ba-number').val(),
+        routing_number: $('#ba-routing').val()
+      };
+
+      balanced.bankAccount.create(payload, function (response) {
+        if(response.status === 201 && response.data) {
+          var resp = response.data;
+          $('[name="user[bank_account_id]"]', $addressForm).val(resp.id);
+          $('[name="user[bank_name]"]', $addressForm).val(resp.bank_name);
+          $('[name="user[bank_last4]"]', $addressForm).val(resp.last_four);
+
+          $addressForm.submit();
+
+        } else {
+          alert('Please check your bank details and try again'); // TODO better error handling
+          $.rails.enableFormElements($addressForm)
+        }
+      });
+    });
+  }
+});
+
+</script>
