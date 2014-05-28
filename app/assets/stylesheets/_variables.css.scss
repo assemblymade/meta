@@ -223,24 +223,24 @@ $container-lg:            $container-large-desktop;
 // Navbar
 
 // Basics of a navbar
-$navbar-height:              66px;
+$navbar-height:              50px;
 $navbar-margin-bottom:       0;
 $navbar-border-radius:       $border-radius-base;
 $navbar-padding-horizontal:  floor(($grid-gutter-width / 2));
 $navbar-padding-vertical:    (($navbar-height - $line-height-computed) / 2);
 $navbar-collapse-max-height: 340px;
 
-$navbar-default-color:  #777;
-$navbar-default-bg:     $body-bg;
-$navbar-default-border: darken($navbar-default-bg, 6.5%);
+$navbar-default-color:  $gray-dark;
+$navbar-default-bg:     white;
+$navbar-default-border: $brand-border;
 
 // Navbar links
-$navbar-default-link-color:          $gray;
-$navbar-default-link-hover-color:    $gray-dark;
+$navbar-default-link-color:          $gray-darker;
+$navbar-default-link-hover-color:    $gray-darker;
 $navbar-default-link-hover-bg:       transparent;
 $navbar-default-link-active-color:   $gray-darker;
 $navbar-default-link-active-bg:      transparent;
-$navbar-default-link-disabled-color: #ccc;
+$navbar-default-link-disabled-color: $gray;
 $navbar-default-link-disabled-bg:    transparent;
 
 // Navbar brand label
@@ -255,23 +255,31 @@ $navbar-default-toggle-border-color: #ddd;
 
 // Inverted navbar
 // Reset inverted navbar basics
-$navbar-inverse-color:  $text-color;
-$navbar-inverse-bg:     white;
-$navbar-inverse-border: $brand-border;
+$navbar-inverse-color:  desaturate(darken($brand-primary, 10%), 50%);
+$navbar-inverse-bg:     desaturate(darken($brand-primary, 40%), 30%);
+$navbar-inverse-border: darken($navbar-inverse-bg, 5%);
 
 // Inverted navbar links
-$navbar-inverse-link-color:          $text-color;
-$navbar-inverse-link-hover-color:    $navbar-inverse-link-color;
+$navbar-inverse-link-color:          desaturate(darken($brand-primary, 10%), 50%);
+$navbar-inverse-link-hover-color:    lighten($navbar-inverse-link-color, 15%);
 $navbar-inverse-link-hover-bg:       transparent;
-$navbar-inverse-link-active-color:   $navbar-inverse-link-hover-color;
+$navbar-inverse-link-active-color:   lighten($navbar-inverse-link-hover-color, 15%);
 $navbar-inverse-link-active-bg:      transparent;
 $navbar-inverse-link-disabled-color: #444;
 $navbar-inverse-link-disabled-bg:    transparent;
 
 // Inverted navbar brand label
 $navbar-inverse-brand-color:       $navbar-inverse-link-color;
-$navbar-inverse-brand-hover-color: #fff;
+$navbar-inverse-brand-hover-color: $navbar-inverse-link-hover-color;
 $navbar-inverse-brand-hover-bg:    transparent;
+
+// Inverted navbar search
+$navbar-inverse-search-color:              $navbar-inverse-link-active-color;
+$navbar-inverse-search-bg:                 darken($navbar-inverse-bg, 10%);
+$navbar-inverse-search-bg-focus:           $navbar-inverse-search-bg;
+$navbar-inverse-search-border:             $navbar-inverse-search-bg;
+$navbar-inverse-search-border-focus:       lighten($navbar-inverse-search-bg, 25%);
+$navbar-inverse-search-placeholder-color:  darken($navbar-inverse-link-color, 5%);
 
 // Inverted navbar toggle
 $navbar-inverse-toggle-hover-bg:     #333;
@@ -282,7 +290,7 @@ $navbar-inverse-toggle-border-color: #333;
 // Navs
 
 // Shared nav styles
-$nav-link-padding:  10px 15px;
+$nav-link-padding:  5px 15px;
 $nav-link-hover-bg: rgba($gray-lighter, 0.25);
 
 $nav-disabled-link-color:       $gray-light;

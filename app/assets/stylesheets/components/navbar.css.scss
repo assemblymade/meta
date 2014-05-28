@@ -1,6 +1,10 @@
+.navbar {
+  font-size: 15px;
+}
+
 .navbar > .container-fluid .navbar-brand {
-  padding: 15px;
-  margin-left: -5px;
+  padding: 10px 15px;
+  margin-left: -10px;
 }
 
 .navbar-nav {
@@ -9,10 +13,41 @@
   }
 }
 
-.navbar-header {
-  
-}
-
 .navbar-lifted {
   box-shadow: 0 1px 0 0 $brand-shadow;
+}
+
+.navbar .form-control {
+  font-size: 15px;
+  height: 34px;
+  margin-top: 2px;
+}
+
+.navbar-inverse {
+  ::-webkit-input-placeholder { /* WebKit browsers */
+    color: $navbar-inverse-search-placeholder-color;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: $navbar-inverse-search-placeholder-color;
+    opacity: 1;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: $navbar-inverse-search-placeholder-color;
+    opacity: 1;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: $navbar-inverse-search-placeholder-color;
+  }
+
+  .form-control {
+    border-color: $navbar-inverse-search-border;
+    background-color: $navbar-inverse-search-bg;
+    color: $navbar-inverse-search-color;
+
+    &:focus {
+      border-color: $navbar-inverse-search-border-focus;
+      background-color: $navbar-inverse-search-bg-focus;
+      box-shadow: none;
+    }
+  }
 }

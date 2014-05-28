@@ -1,4 +1,10 @@
-<div class="navbar navbar-default navbar-static-top">
+<div class="navbar
+  <% if user_signed_in? %>
+    navbar-inverse
+  <% else %>
+    navbar-default
+  <% end %>
+  navbar-static-top">
   <div class="container-fluid">
 
     <div class="navbar-header">
@@ -11,7 +17,9 @@
       <a class="text-brand navbar-brand" href="<%= root_path %>">
         <span class="brand">
           <span class="icon icon-logo"></span>
-          Assembly
+          <% if !user_signed_in? %>
+            Assembly
+          <% end %>
         </span>
       </a>
     </div>
