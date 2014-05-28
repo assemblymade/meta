@@ -3,7 +3,7 @@
     <% if @product %>
     <ul class="nav nav-pills nav-stacked">
       <li>
-        <a href="<%= polymorphic_path([:search], @filters.merge(type: 'discussion', state: '')) %>">
+        <a href="<%= search_path(@filters.merge(type: 'discussion', state: '')) %>">
           <span class="badge pull-right"><%= @totals.all_discussions %></span>
           All Products
         </a>

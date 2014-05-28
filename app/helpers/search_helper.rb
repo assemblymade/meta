@@ -1,9 +1,9 @@
 module SearchHelper
-  def search_path(*args)
+  def scoped_search_path(*args)
     if @product.try(:persisted?)
       polymorphic_path([@product, :search])
     else
-      super
+      search_path(args)
     end
   end
 
