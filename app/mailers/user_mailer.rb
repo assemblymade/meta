@@ -4,7 +4,7 @@ class UserMailer < Devise::Mailer
   layout 'email', only: :welcome
 
   def welcome(user_id)
-    tag 'user#welcome'
+    mailgun_tag 'user#welcome'
 
     @user = User.find(user_id)
 
@@ -14,7 +14,7 @@ class UserMailer < Devise::Mailer
   end
 
   def follow_up(user_id)
-    tag 'user#follow_up'
+    mailgun_tag 'user#follow_up'
 
     @user = User.find(user_id)
     @user.touch(:personal_email_sent_on)
@@ -25,7 +25,7 @@ class UserMailer < Devise::Mailer
   end
 
   def remind_user_of_their_claimed_work(user_id, wip_id)
-    tag 'user#remind_user_claimed_work'
+    mailgun_tag 'user#remind_user_claimed_work'
 
     @user     = User.find(user_id)
     @wip      = Wip.find(wip_id)
@@ -40,8 +40,8 @@ class UserMailer < Devise::Mailer
 
   protected
 
-  def tag(name)
+  def mailgun_tag(name)
     headers 'X-Mailgun-Tag' => name.to_s
   end
-  
+
 end

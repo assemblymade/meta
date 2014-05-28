@@ -1,4 +1,4 @@
-class TipMailer < ActionMailer::Base
+class TipMailer < BaseMailer
   include ActionView::Helpers::TextHelper
 
   layout 'email'

@@ -1,4 +1,4 @@
-class CoreTeamMailer < ActionMailer::Base
+class CoreTeamMailer < BaseMailer
 
   def welcome(product_id, user_id)
     @product = Product.find(product_id)

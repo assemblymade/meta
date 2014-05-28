@@ -1,4 +1,4 @@
-class PostMailer < ActionMailer::Base
+class PostMailer < BaseMailer
   include MarkdownHelper
 
   layout 'email'

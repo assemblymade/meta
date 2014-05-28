@@ -1,4 +1,4 @@
-class StakeMailer < ActionMailer::Base
+class StakeMailer < BaseMailer
   include ActionView::Helpers::NumberHelper
 
   layout 'email'
