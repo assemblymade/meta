@@ -48,8 +48,5 @@ class window.WipEventView extends Backbone.View
 
   templateData: ->
     attrs = @model.attributes
-    attrs.body_html = @body_html()
+    attrs.body_html = @model.get('body_html') || markdown(@model.get('body'))
     attrs
-
-  body_html: (text) ->
-    @model.get('body_html') || markdown(@model.get('body'))

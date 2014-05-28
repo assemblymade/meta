@@ -162,7 +162,7 @@ class window.DiscussionView extends Backbone.View
 
   pushNotification: (event)->
     n = new Notify "New message on #{event.get('wip').product_name}",
-      body: "#{event.get('actor').username}: #{event.get('body')}"
+      body: "#{event.get('actor').username}: #{event.get('body_html')}"
       icon: 'https://d8izdk6bl4gbi.cloudfront.net/80x/http://f.cl.ly/items/1I2a1j0M0w0V2p3C3Q0M/Assembly-Twitter-Avatar.png'
       timeout: 5
       notifyClick: =>
