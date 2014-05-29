@@ -39,7 +39,6 @@ var Notifications = React.createClass({
     return _.sortBy(this.state.data, function(entry){ return -entry.messages; });
   },
   fetchNotifications: function() {
-    console.log('fetching')
     $.ajax({
       url: this.props.url,
       dataType: 'json',
