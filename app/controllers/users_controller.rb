@@ -44,12 +44,36 @@ class UsersController < ApplicationController
     }
   end
 
-  def unread_content
-    unread_articles = ReadRaptorClient.new.unread_entities(@user.id)
+  def unread
+    unread_articles = ReadRaptorClient.new.unread_entities(current_user.id)
 
-    @products = WipGroup.new(
-                  ReadRaptorSerializer.deserialize_articles(unread_articles)
-                ).products
+    @main_thread_updates = {}
+    entities = ReadRaptorSerializer.deserialize_articles(unread_articles)
+    entities.each do |o|
+      case o
+      when Event::Comment
+        wip = o.wip
+        product = wip.product
+        if wip == product.main_thread
+          @main_thread_updates[product] ||= 0
+          @main_thread_updates[product] += 1
+        end
+      end
+    end
+
+    entries = current_user.product_cents.map do |product, cents|
+      {
+        product: ProductSerializer.new(product).as_json,
+        cents: cents,
+        messages: @main_thread_updates[product] || 0
+      }
+    end
+
+    render json: entries.sort_by{|e| [-e[:messages], -e[:cents]] }.take(5)
+  end
+
+  def tracking
+    render json: ReadraptorTracker.new(params[:article_id], current_user.id).url
   end
 
   if Rails.env.development?

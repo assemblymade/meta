@@ -97,10 +97,12 @@ ASM::Application.routes.draw do
 
     get    '/users/:id' => 'users#show', :as => :user
     patch  '/users/:id' => 'users#update'
-    get    '/users/:id/unread' => 'users#unread_content'
 
     # saved searches
-    scope '/user' do
+    scope '/user', controller: 'users' do
+      get :unread
+      get 'tracking/:article_id' => 'users#tracking', :as => :readraptor
+
       resources :saved_searches, only: [:create, :destroy]
     end
   end
@@ -207,7 +209,7 @@ ASM::Application.routes.draw do
     get :discuss, to: 'discussions#show', id: '0', as: :discuss
 
     resources :discussions, only: [:index, :show, :new, :edit, :create, :update] do
-      resources :comments, only: [:create, :edit, :update]
+      resources :comments, only: [:show, :create, :edit, :update]
     end
 
     patch '/discussions/:wip_id/to_task' => 'discussions#to_task', as: :discussion_to_task
@@ -236,7 +238,7 @@ ASM::Application.routes.draw do
       patch 'watch'
 
       resources :votes, only: [:create]
-      resources :comments, only: [:create, :edit, :update]
+      resources :comments, only: [:show, :create, :edit, :update]
     end
 
     resources :events, only: [] do

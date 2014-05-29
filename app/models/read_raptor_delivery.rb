@@ -14,7 +14,7 @@ class ReadRaptorDelivery
 
     recipients.group_by{|u| u.mail_preference }.each do |preference, recipients|
       opts = {
-        key: "#{entity.class}_#{entity.id}",
+        key: ReadRaptorSerializer.serialize_entities(entity).first,
         recipients: recipients.map(&:id)
       }
 

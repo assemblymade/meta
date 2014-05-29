@@ -126,7 +126,7 @@
 </div>
 
 <% if signed_in? %>
-  <img class="hidden" src="<%= ReadraptorTracker.new(@wip, current_user.id).url %>" />
+  <img class="hidden" src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@wip).first, current_user.id).url %>" />
 <% end %>
 
 <%= render 'shared/footer' %>

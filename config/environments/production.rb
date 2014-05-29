@@ -83,4 +83,6 @@ ASM::Application.configure do
   config.lograge.enabled = true
 
   config.static_cache_control = "public, max-age=31536000"
+
+  config.react.variant = :production
 end

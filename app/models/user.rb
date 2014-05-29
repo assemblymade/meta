@@ -11,9 +11,7 @@ class User < ActiveRecord::Base
   has_many :preorders
   has_many :watchings
   has_many :followed_tags, :through => :watchings, :source => :watchable, :source_type => 'Wip::Tag'
-  has_many :product_subscriptions, :class_name => 'Product::Subscription'
   has_many :saved_searches
-  has_many :subscribed_products, :through => :product_subscriptions, :source => :product
   has_many :wips
   has_many :wip_workers, :class_name => 'Wip::Worker'
   has_many :wips_working_on, ->{ where(state: Task::IN_PROGRESS) }, :through => :wip_workers, :source => :wip
@@ -22,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :wips_contributed_to, -> { where(events: { type: Event::MAILABLE }).uniq.order("created_at DESC") }, :through => :events, :source => :wip
   has_many :activities,    foreign_key: 'owner_id'
   has_many :stream_events, foreign_key: 'actor_id'
+  has_many :watched_products, :through => :watchings, :source => :watchable, :source_type => Product
 
   devise :confirmable,
          :database_authenticatable,
@@ -152,6 +151,12 @@ class User < ActiveRecord::Base
 
   def password_required?
     super unless facebook_uid?
+  end
+
+  def product_cents
+    product_id_cents = TransactionLogEntry.product_balances(self)
+    products = Hash[Product.find(product_id_cents.keys).map{|p| [p.id, p] }]
+    Hash[product_id_cents.map{|product_id, cents| [products[product_id], cents] }]
   end
 
   def has_voted_for?(product)

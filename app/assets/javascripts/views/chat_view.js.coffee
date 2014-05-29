@@ -102,6 +102,7 @@ class window.ChatView extends Backbone.View
     event = new WipEvent(msg)
     unless app.wipEvents.get(event)
       app.wipEvents.add(event)
+      event.fetch()
       unless @foreground
         @model.incrementUnreadCount()
         @pushNotification(event)
@@ -194,4 +195,4 @@ class window.ChatView extends Backbone.View
 
   ownCommentsChanged: ->
     @children.welcomeBox.toggle !@model.hasOwnComments()
-    
+

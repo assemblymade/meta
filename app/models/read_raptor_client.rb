@@ -14,6 +14,7 @@ class ReadRaptorClient
   end
 
   def request(method, url, body)
+    Rails.logger.info "  [readraptor] #{method} #{url}"
     resp = connection.send(method) do |req|
       req.url url
       req.body = body.to_json

@@ -1,8 +1,8 @@
 class ReadraptorTracker
   attr_reader :article_id, :user_id, :token, :public_key
 
-  def initialize(entity, user_id)
-    @article_id = "#{entity.class}_#{entity.id}"
+  def initialize(article_id, user_id)
+    @article_id = article_id
     @user_id = user_id
     @token = ENV['READRAPTOR_TOKEN']
     @public_key = ENV['READRAPTOR_PUBLIC']

@@ -5,7 +5,11 @@ class CommentsController < ApplicationController
 
   before_action :authenticate_user!, :only => [:create]
   before_action :set_wip
-  before_action :set_event, only: [:edit, :update]
+  before_action :set_event, only: [:show, :edit, :update]
+
+  def show
+    respond_with @comment, location: product_wip_path(@product, @wip), serializer: EventSerializer
+  end
 
   def create
     type = comment_params[:type].constantize
@@ -56,7 +60,7 @@ class CommentsController < ApplicationController
   end
 
   def set_event
-    @comment = @wip.events.find_by!(number: params[:id])
+    @comment = params[:id].uuid? ? @wip.events.find(params[:id]) : @wip.events.find_by(number: params[:id])
   end
 
   def comment_params

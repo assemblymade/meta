@@ -10,6 +10,7 @@
 #= require jquery-cookie
 #= require jquery.autosize
 #= require jquery-timeago
+#= require react
 
 #= require_tree ./lib
 

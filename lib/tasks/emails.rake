@@ -47,7 +47,7 @@ namespace :emails do
 
         # Mark all articles as read
         unread_articles.each do |entity|
-          client.get(ReadraptorTracker.new(entity, user.id).url)
+          client.get(ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(entity).first, user.id).url)
         end
 
         DigestMailer.delay.daily(user.id, unread_article_ids)

@@ -8,6 +8,10 @@
     <%= csrf_meta_tags %>
     <meta name="pusher-key" content="<%= Pusher.key %>" >
     <meta name="attachment-upload-url" content="<%= ATTACHMENT_UPLOAD_URL %>" >
+    <% if signed_in? %>
+      <meta name="user-url" content="<%= user_path(current_user) %>" >
+      <meta name="unread-url" content="<%= unread_path %>" >
+    <% end %>
 
     <% if deprecated_stylesheet? %>
       <%= stylesheet_link_tag 'deprecated_application' %>

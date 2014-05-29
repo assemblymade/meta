@@ -1,4 +1,4 @@
-<div class="activity" id="{{anchor}}">
+<div class="activity" {{#target}}id="{{anchor}}" data-readraptor-track="{{readraptor_track_id}}"{{/target}}>
 
   <div class="pull-left">
     {{#actor}}
@@ -59,8 +59,6 @@
       <div class="activity-content markdown-normalized">
         {{{body_html}}}
       </div>
-
-      <img class="hidden" src="{{readraptor_tracking_url}}" width="0" height="0">
     </div>
   {{/target}}
 </div>

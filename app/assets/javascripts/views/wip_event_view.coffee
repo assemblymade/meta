@@ -39,6 +39,8 @@ class window.WipEventView extends Backbone.View
   render: =>
     @$el.html(@template().render(@templateData()))
 
+    $('.activity', @$el).readraptor()
+
     for selector, view of @subviews
       view.setElement(@$(selector))
       view.render()
