@@ -8,7 +8,7 @@
 #= require numeral
 #= require jquery-textcomplete
 #= require jquery-cookie
-#= require jquery.autosize
+#= require jquery-autosize
 #= require jquery-timeago
 #= require react
 #= require notify.js

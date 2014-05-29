@@ -1,4 +1,4 @@
-#= require jquery.autosize
+#= require jquery-autosize
 #= require dropzone
 
 insertTextAtCursor = (el, text)->
@@ -22,7 +22,7 @@ class MarkdownEditorView extends Backbone.View
 
   initialize: (options) ->
     @textarea = @$('textarea')
-    @textarea.autosize()
+    @textarea.autosize(append: '')
     $.applyTextcomplete(@textarea)
     dropzone = @$el.data('dz')
 
