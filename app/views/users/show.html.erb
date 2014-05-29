@@ -4,7 +4,7 @@
 <div class="page">
   <div class="container">
 
-    <div class="col-md-3 col-xs-3">
+    <div class="col-md-4 col-xs-4">
       <%= render 'users/card', user: @user %>
       <% if can?(:update, @user) %>
         <!-- FIXME: This URL is a hack -->
@@ -15,7 +15,7 @@
       <% end %>
 
       <% if Rails.env.development? || (signed_in? && current_user.staff?) %>
-        <dl class="well well-sm">
+        <dl class="well well-sm small">
           <dt>auth token</dt>
           <dd><%= @user.authentication_token %></dd>
           <dt>email</dt>
@@ -24,7 +24,7 @@
       <% end %>
     </div>
 
-    <div class="col-md-8 col-xs-8 col-md-offset-1 col-xs-offset-1">
+    <div class="col-md-8 col-xs-8">
 
       <div class="stat-group">
         <div class="stat">
@@ -70,9 +70,9 @@
                 </div>
                 <div class="col-xs-10">
                   <div class="clearfix">
-                    <h6 class="alpha omega text-primary pull-left">
-                      <%= product.name %>
-                    </h6>
+                    <p class="alpha omega text-primary pull-left" style="margin-bottom: 6px;">
+                      <strong><%= product.name %></strong>
+                    </p>
 
                     <ul class="list-piped omega small text-muted pull-right">
                       <% if product.for_profit? %>
@@ -85,7 +85,7 @@
                       </li>
                     <ul>
                   </div>
-                  <h4 class="text-weight-normal alpha omega"><%= product.pitch %></h4>
+                  <p class="text-serif alpha omega"><%= product.pitch %></p>
                 </div>
               </div>
             </a>
@@ -95,7 +95,7 @@
 
       <% if @user.count_contributions == 0 &&  signed_in? && current_user == @user %>
         <hr>
-        
+
         <div class="well">
           <%= image_tag 'null-states/profile@2x.png', width: 154, height: 38 %>
           <h3>Earn yourself some App Coins!</h3>

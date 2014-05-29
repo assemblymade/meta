@@ -51,6 +51,12 @@ $link-color:       $brand-primary;
 $link-hover-color: darken($link-color, 15%);
 
 
+// Copy Deliverable
+
+$text-copy-bg: #fef4c2;
+$text-copy: darken($text-copy-bg, 75%);
+
+
 // Typography
 
 $font-family-sans-serif: Solitaire, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -89,6 +95,9 @@ $icon-font-svg-id: "glyphicons_halflingsregular";
 
 $padding-base-vertical:   6px;
 $padding-base-horizontal: 12px;
+
+$padding-xxl-vertical:   36px;
+$padding-xxl-horizontal:  36px;
 
 $padding-xl-vertical:    24px;
 $padding-xl-horizontal:  24px;

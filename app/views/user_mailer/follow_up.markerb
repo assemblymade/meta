@@ -1,1 +1,1 @@
-<%= @user.short_name %>, welcome to Assembly! I'm Matthew, one of the founding team members here - http://assemblymade.com. Just checking in to see if you had any questions?
+Hi <%= @user.username %> -- welcome to Assembly! I'm Austin, a member of the founding team here. Just checking in to see if you have any questions. Have you had a chance to take a look around?

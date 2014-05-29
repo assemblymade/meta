@@ -192,10 +192,39 @@ blockquote {
     @extend .h4;
     margin-top: $line-height-computed * 1.5;
     margin-bottom: $line-height-computed / 2;
+
+    &:first-child {
+      margin-top: $line-height-computed / 2;
+    }
   }
 
   :last-child {
     margin-bottom: 0;
+  }
+}
+
+.text-copy {
+  @extend .text-serif;
+  padding: $padding-xxl-vertical $padding-xxl-horizontal;
+  font-size: 15px;
+  line-height: 1.618;
+  color: $text-copy;
+  border-radius: $border-radius-base;
+  border: 1px solid darken($text-copy-bg, 6%);
+  background-color: $text-copy-bg;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: inherit;
+    color: inherit !important;
+  }
+
+  :first-child {
+    margin-top: 0;
   }
 }
 
