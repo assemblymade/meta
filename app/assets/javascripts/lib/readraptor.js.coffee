@@ -1,31 +1,12 @@
 #= require jquery.inview
 
-visibility = ->
-  keys =
-    hidden: "visibilitychange",
-    webkitHidden: "webkitvisibilitychange",
-    mozHidden: "mozvisibilitychange",
-    msHidden: "msvisibilitychange"
-
-  for stateKey, value of keys
-    if (stateKey of document)
-      eventKey = keys[stateKey]
-      break
-
-  (c) ->
-    if (c)
-      document.addEventListener eventKey, -> c(!document[stateKey])
-    !document[stateKey]
-
-visibility = visibility()
-
 do ($ = jQuery, window, document) ->
 	class Plugin
 		constructor: (@el) ->
       @tracking = $(@el).data('readraptorTrack')
       @tracked = false
 
-      visible = visibility(@onVisibilityChange)
+      visible = window.visibility(@onVisibilityChange)
       @onVisibilityChange(visible)
 
     onVisibilityChange: (visible)=>
@@ -43,14 +24,14 @@ do ($ = jQuery, window, document) ->
 
 		visible: (event, isInView, visiblePartX, visiblePartY)=>
       if (isInView)
-        console.log('view', @tracking)
         $('body').append("<img class='hidden' src='#{@tracking}' width='0' height='0'>")
+        $(document).trigger('readraptor.tracked') # this is a hack to notify that something new is tracked
 
 
-	$.fn.readraptor = (options) ->
+	$.fn.readraptor = () ->
 		@each ->
 			unless $.data @, "plugin_readraptor"
-				$.data @, "plugin_readraptor", new Plugin @, options
+				$.data @, "plugin_readraptor", new Plugin @
 
 
 $(document).ready(->

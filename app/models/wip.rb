@@ -204,8 +204,13 @@ class Wip < ActiveRecord::Base
     event.wip.watch!(event.user)
     watch!(event.user)
 
-    PusherWorker.perform_async push_channel, 'event.added',
-      EventSerializer.for(event, nil).as_json.merge(socket_id: event.socket_id).to_json
+    event_hash = EventSerializer.for(event, nil).as_json.merge(socket_id: event.socket_id)
+    PusherWorker.perform_async push_channel, 'event.added', event_hash.to_json
+    if main_thread?
+      watchers.each do |user|
+        PusherWorker.perform_async "@#{user.username}", 'chat', event_hash.to_json
+      end
+    end
   end
 
   def vote_added(vote)

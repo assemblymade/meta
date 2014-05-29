@@ -144,6 +144,5 @@
     });
   })
 
-  window.pusher = new Pusher($('meta[name=pusher-key]').attr('content'));
   analytics.track('product.wip.viewed', <%== WipAnalyticsSerializer.new(@wip, scope: current_user).to_json %>)
 </script>

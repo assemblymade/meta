@@ -9,7 +9,7 @@
     <meta name="pusher-key" content="<%= Pusher.key %>" >
     <meta name="attachment-upload-url" content="<%= ATTACHMENT_UPLOAD_URL %>" >
     <% if signed_in? %>
-      <meta name="user-url" content="<%= user_path(current_user) %>" >
+      <meta name="user-username" content="<%= current_user.username %>" >
       <meta name="unread-url" content="<%= unread_path %>" >
     <% end %>
 
@@ -53,6 +53,7 @@
     <% if signed_in? %>
       <script>
         window.app.setCurrentUser(<%= UserSerializer.new(current_user, scope:  current_user).to_json.html_safe %>);
+        window.pusher = new Pusher($('meta[name=pusher-key]').attr('content'));
       </script>
       <%= render 'analytics/identify' %>
     <% end %>

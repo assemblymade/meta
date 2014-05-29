@@ -11,15 +11,17 @@ var NotificationsList = React.createClass({
 
       var url = entry.product.url + '/discuss';
 
-      return <li>
+      return <li key={entry.product.slug}>
         <a href={url}>{badge} {entry.product.name}</a>
       </li>
     });
+
+    var productsPath = '/users/'+this.props.username;
     return (
       <ul className="dropdown-menu">
         {productNodes}
         <li className="divider" />
-        <li><a href={this.props.userPath}>All Products</a></li>
+        <li><a href={productsPath}>All Products</a></li>
       </ul>
     );
   }
@@ -37,6 +39,7 @@ var Notifications = React.createClass({
     return _.sortBy(this.state.data, function(entry){ return -entry.messages; });
   },
   fetchNotifications: function() {
+    console.log('fetching')
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -49,8 +52,17 @@ var Notifications = React.createClass({
     });
   },
   componentWillMount: function() {
-    this.fetchNotifications();
-    setInterval(this.fetchNotifications, this.props.pollInterval)
+    var debouncedFetch = _.debounce(this.fetchNotifications, 1000);
+
+    $(document).bind('readraptor.tracked', debouncedFetch);
+    if (window.pusher) {
+      channel = window.pusher.subscribe('@'+this.props.username);
+      channel.bind('chat', debouncedFetch);
+    }
+    window.visibility(function(visible) {
+      if (visible) { debouncedFetch(); }
+    });
+    debouncedFetch();
   },
   render: function() {
     badge = null;
@@ -69,7 +81,7 @@ var Notifications = React.createClass({
             <span className={classes}></span>
             {badge}
           </a>
-          <NotificationsList data={sorted} userPath={this.props.userPath} />
+          <NotificationsList data={sorted} username={this.props.username} />
         </li>
       </ul>
     );
@@ -77,9 +89,9 @@ var Notifications = React.createClass({
 });
 
 var url = $('meta[name=unread-url]').attr('content');
-var userPath = $('meta[name=user-url]').attr('content');
+var username = $('meta[name=user-username]').attr('content');
 React.renderComponent(
-  <Notifications url={url} userPath={userPath} pollInterval={5000} />,
+  <Notifications url={url} username={username} />,
   document.getElementById('js-notifications')
 )
 });
