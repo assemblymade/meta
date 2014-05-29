@@ -195,7 +195,7 @@ blockquote {
   }
 
   :first-child {
-    margin-top: 0;
+    margin-top: $line-height-computed / 2;
   }
 
   :last-child {
@@ -221,6 +221,10 @@ blockquote {
   h6 {
     font-size: inherit;
     color: inherit !important;
+  }
+
+  :first-child {
+    margin-top: 0;
   }
 }
 
