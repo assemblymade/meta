@@ -65,7 +65,7 @@ var Notifications = React.createClass({
   },
   render: function() {
     badge = null;
-    var classes = "glyphicon glyphicon-globe";
+    var classes = "glyphicon glyphicon-bell";
     var total = this.total();
     if (total > 0) {
       badge = <span className="badge">{total}</span>
@@ -74,7 +74,7 @@ var Notifications = React.createClass({
 
     var sorted = this.sortByCount(this.state.data)
     return (
-      <ul className="nav navbar-nav js-notifications">
+      <ul className="nav navbar-nav navbar-notifications js-notifications">
         <li>
           <a href="#notifications" data-toggle="dropdown">
             <span className={classes}></span>
