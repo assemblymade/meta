@@ -192,10 +192,10 @@ blockquote {
     @extend .h4;
     margin-top: $line-height-computed * 1.5;
     margin-bottom: $line-height-computed / 2;
-  }
 
-  :first-child {
-    margin-top: $line-height-computed / 2;
+    &:first-child {
+      margin-top: $line-height-computed / 2;
+    }
   }
 
   :last-child {
