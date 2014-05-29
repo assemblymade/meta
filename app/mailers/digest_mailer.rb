@@ -45,14 +45,4 @@ class DigestMailer < BaseMailer
     end
   end
 
-  private
-
-  def today
-    @today ||= Date.today
-  end
-
-  def tag(name)
-    headers 'X-Mailgun-Tag' => name.to_s
-  end
-
 end
