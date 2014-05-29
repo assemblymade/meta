@@ -19,7 +19,7 @@ class UserMailer < Devise::Mailer
     @user = User.find(user_id)
     @user.touch(:personal_email_sent_on)
 
-    mail from: "matt@assemblymade.com",
+    mail from: "austin@assemblymade.com",
            to:  @user.email,
       subject: "Assembly"
   end
