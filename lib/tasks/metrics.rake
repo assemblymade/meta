@@ -33,27 +33,25 @@ namespace :metrics do
       end
     end
   end
-  
-  
+
+
   task :mau => :environment do
-    mau = User.where("created_at <= ? AND last_request_at >= ? AND last_request_at <= ?", 4.days.ago, 31.days.ago, 2.days.ago).count
+    mau = Metrics::DailyActives.active_between(Date.today.beginning_of_month, Date.today.end_of_month).pluck('sum(count)').first
     puts "Total MAU: #{mau}"
     puts "Total %: #{(mau.to_f / User.count.to_f)}"
-    User.where("created_at <= ?", 4.days.ago).count
   end
-  
+
   desc "Monthly Active Contributors - People who created wips and comment"
   task :mac => :environment do
     data = by_month do |date|
-      total =  Event.joins(:user).where('users.is_staff is false').where("events.created_at >= date(?) and events.created_at <= date(?)", date.beginning_of_month, date.end_of_month).group('events.user_id').count.keys.size
-      total = total + Wip.joins(:user).where('users.is_staff is false').where("wips.created_at >= date(?) and wips.created_at <= date(?)", date.beginning_of_month, date.end_of_month).group('wips.user_id').count.keys.size
+      total = Metrics::Contributors.active_between(date.beginning_of_month, date.end_of_month)
       [Date::MONTHNAMES[date.month], total]
     end
     data.each do |month, total|
       puts "#{month}: #{total} Monthly Active Contributors"
     end
   end
-  
+
   desc "Monthly Total Contributions - create wips and add comments"
   task :mtc => :environment do
     data = by_month do |date|
@@ -65,18 +63,18 @@ namespace :metrics do
       puts "#{month}: #{total} Monthly Total Contributions"
     end
   end
-  
+
   desc "Monthly Active Partners - People who won tasks"
   task :map => :environment do
     data = by_month do |date|
-      total = Task.joins(winning_event: :user).where('users.is_staff is false').where("closed_at >= date(?) and closed_at <= date(?)", date.beginning_of_month, date.end_of_month).won.map{|t| t.winning_event.user.username }.uniq.size
+      total = Metrics::Partners.active_between(date.beginning_of_month, date.end_of_month)
       [Date::MONTHNAMES[date.month], total]
     end
     data.each do |month, total|
       puts "#{month}: #{total} Monthly Active Partners"
     end
   end
-  
+
   desc "Monthly Total Winnings - Actual work accepted & won"
   task :mtw => :environment do
     data = by_month do |date|
@@ -85,9 +83,9 @@ namespace :metrics do
     end
     data.each do |month, total|
       puts "#{month}: #{total} Monthly Total Winnings"
-    end    
+    end
   end
-  
+
   desc "Monthly Products Developed - Products being worked on"
   task :mpd => :environment do
     data = by_month do |date|
@@ -98,7 +96,7 @@ namespace :metrics do
       puts "#{month}: #{total} Monthly Products Developed"
     end
   end
-  
+
   desc "Monthly Products Started"
   task :mps => :environment do
     data = by_month do |date|
@@ -109,14 +107,14 @@ namespace :metrics do
       puts "#{month}: #{total} Products Started"
     end
   end
-  
+
   task :all => ['metrics:mau','metrics:mac','metrics:mtc','metrics:map','metrics:mtw','metrics:mpd','metrics:mps']
-  
+
   def by_month
     data = []
     ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014", "1-apr-2014"].each do |month|
       data << yield(Date.parse(month))
     end
     data
-  end  
+  end
 end
