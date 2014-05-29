@@ -5,14 +5,11 @@
 
 .summary-target {
   display: block;
-  font-size: $font-size-h4;
+  font-size: $font-size-base;
   font-weight: bold;
   color: $link-color;
-  margin-bottom: 5px;
-
-  &:visited {
-    color: $blue-light;
-  }
+  margin-bottom: 8px;
+  line-height: $line-height-computed;
 
   &:visited:hover {
     color: $link-hover-color;
