@@ -1,4 +1,8 @@
 <div class="navbar
+  <% if Rails.env.development? %>
+    devbar
+  <% end %>
+
   <% if user_signed_in? %>
     navbar-inverse
   <% else %>
