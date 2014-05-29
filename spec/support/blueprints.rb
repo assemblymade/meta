@@ -1,5 +1,10 @@
 require 'machinist/active_record'
 
+Activity.blueprint do
+  subject { Event::Comment.make! }
+  actor   { User.make! }
+end
+
 Attachment.blueprint do
   user
   name { Faker::Name.name }

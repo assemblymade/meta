@@ -1,198 +1,90 @@
-#= require notify.js
+#= require collections/activity_stream
+
+ENTER_KEY = 13
 
 class window.ChatView extends Backbone.View
+  collection: ActivityStream
+
   events:
-    'click   .js-new-event' : 'onNewCommentClicked'
-    'keydown .js-new-event' : 'newCommentKeyDown'
-    'input   .js-new-event' : 'newCommentKeyUp'
-    'change  .js-new-event' : 'newCommentKeyUp'
+    'keydown .js-chat-actions'   : 'onKeyDown'
+    'keyup   .js-chat-actions'   : 'onKeyUp'
+    'submit  .js-chat-actions'   : 'onSubmit'
+    'click   .js-chat-load-more' : 'onLoadMore'
 
-  keys:
-    'enter': 13
+  render: =>
+    @$('.js-activity-stream').css(
+      'margin-bottom': @$('.js-chat-actions').outerHeight()
+    )
 
-  initialize: (options)->
-    @eventDefaults =
-      actor: (app.currentUser().toJSON() if app.isSignedIn())
-      total_tips: 0
-      current_user_can_tip: true
+  scrollToLatestActivity: ->
+    $(window).scrollTop($(document).height())
 
-    @children =
-      upvoteReminder: @$('.js-upvote-reminder')
-      timestamp: @$('.js-timestamp')
-      welcomeBox: @$('.js-welcome-chat')
+  clearForm: ->
+    @$('.js-chat-actions form')[0].reset()
+    @$('.js-chat-actions textarea').trigger('autosize.resize')
 
-    @validateComment ''
+  optimisticallyAddComment: (body) ->
+    activity = new Activity(
+      type: 'activities/comment'
+      created: (new Date()).toISOString()
+      actor:  app.currentUser().attributes
+      target: {
+        body: body
+        tips: []
+        total_tips: 0
+      }
+    )
+    @collection.push(activity)
+    # @scrollToLatestActivity()
 
-    @listenTo(@model, 'change:state', @wipStateChanged)
-    @listenTo(@model, 'change:unreadCount', @unreadCountChanged)
-    @listenTo(@model, 'change:own_comments', @ownCommentsChanged)
-    @listenTo(app.wipEvents, 'add', @wipEventAdded)
+  # --
 
-    @wipStateChanged()
-    @ownCommentsChanged()
+  onKeyDown: (e) =>
+    return unless e.which == ENTER_KEY && !e.shiftKey
+    e.preventDefault()
 
-    if window.pusher
-      pusher.connection.bind 'connected', => @eventDefaults.socket_id = pusher.connection.socket_id
+    comment = new Comment(
+      body: @$('.js-chat-actions textarea').val()
+    )
 
-      channel = window.pusher.subscribe(@model.get('push_channel'))
-      channel.bind 'changed', (msg) => @model.set msg
-      channel.bind 'event.added', @eventPushed
+    if comment.isValid()
+      @$('.js-chat-actions form').submit()
 
-    @foreground = true
-    @originalTitle = document.title
+  onSubmit: (e) =>
+    e.preventDefault()
+    body = @$('.js-chat-actions textarea').val()
+    @optimisticallyAddComment(body)
+    $.ajax(
+      data: {
+        socket_id: @collection.socketId
+        comment: {
+          body: body
+        }
+      }
+      dataType: 'json'
+      type: 'POST'
+      url: @$('.js-chat-actions form').attr('action')
+    )
+    delay 0, @clearForm
 
-    $(window).focus @onWindowFocused
-    $(window).blur @onWindowBlurred
-    $(document).ready @scrollToBottom
+  onKeyUp: (e) =>
+    actionsHeight = @$('.chat-bottom').height()
+    @$('.chat-timeline').css('margin-bottom': actionsHeight)
 
-  onNewCommentClicked: (e)->
-    body = $('#event_comment_body').val()
-    switch $(e.target).attr('value')
-      when 'Event::Comment'
-        e.preventDefault()
-        @addComment body
-      when 'Event::Close'
-        e.preventDefault()
-        @addClose body
-      when 'Event::Reopen'
-        e.preventDefault()
-        @addReopen body
-      when 'Event::Unallocation'
-        e.preventDefault()
-        @addUnallocation body
-      when 'Event::Rejection'
-        e.preventDefault()
-        @addRejection body
+  onLoadMore: (e) =>
+    e.preventDefault()
+    $.ajax(
+      type: 'GET'
+      url: $(e.target).attr('href') + "?top_id=#{@collection.first().get('id')}"
+      success: (datas) =>
+        fixScroll =>
+          @collection.unshift(data) for data in datas
+    )
 
-  addComment: (body)->
-    @createEvent 'Event::Comment', body
-    @showUpvotePrompt() unless @model.get('voted')
-    @children.timestamp.remove()
-    @model.set('own_comments', 1)
+# --
 
-  addClose: (body)->
-    @createEvent 'Event::Close', body
-    @model.set('state', 'resolved')
-
-  addReopen: (body)->
-    @createEvent 'Event::Reopen', body
-    @model.set('state', 'open')
-
-  addUnallocation: (body)->
-    @createEvent 'Event::Unallocation', body
-    @model.set('state', 'open')
-
-  addRejection: (body)->
-    @createEvent 'Event::Rejection', body
-    @model.set('state', 'allocated')
-
-  createEvent: (type, body)->
-    app.wipEvents.create _(@eventDefaults).extend(type: type, body: body)
-    @resetCommentForm()
-
-  wipEventAdded: (wipEvent)->
-    view = new WipEventView(model: wipEvent)
-    el = view.render().el
-    @$('.timeline,.discussion').append el
-    @scrollToBottom()
-
-  eventPushed: (msg) =>
-    return if msg.socket_id == pusher.connection.socket_id
-
-    event = new WipEvent(msg)
-    unless app.wipEvents.get(event)
-      app.wipEvents.add(event)
-      event.fetch()
-      unless @foreground
-        @model.incrementUnreadCount()
-        @pushNotification(event)
-
-  wipStateChanged: ->
-    switch @model.get('state')
-      when 'open'      then @onWipOpen()
-      when 'allocated' then @onWipAllocated()
-      when 'reviewing' then @onWipReviewing()
-      when 'resolved'  then @onWipResolved()
-
-  onWipOpen: ->
-    @$('[name=close]').show()
-    @$('[name=reopen]').hide()
-    @$('[name=unallocate]').hide()
-    @$('[name=reject]').hide()
-
-  onWipAllocated: ->
-    @$('[name=close]').show()
-    @$('[name=reopen]').hide()
-    @$('[name=unallocate]').show()
-    @$('[name=reject]').hide()
-
-  onWipReviewing: ->
-    @$('[name=close]').show()
-    @$('[name=reopen]').hide()
-    @$('[name=unallocate]').hide()
-    @$('[name=reject]').show()
-
-  onWipResolved: ->
-    @$('[name=close]').hide()
-    @$('[name=reopen]').show()
-    @$('[name=unallocate]').hide()
-    @$('[name=reject]').hide()
-
-  newCommentKeyDown: (e)->
-    cmdEnter = (e.which == @keys.enter)
-    body = $('#event_comment_body').val()
-    if cmdEnter && @validComment(body)
-      e.preventDefault()
-      @addComment(body)
-
-  newCommentKeyUp: (e)->
-    @validateComment $('#event_comment_body').val()
-
-  resetCommentForm: ->
-    @$('#event_comment_body').val('')
-    @validateComment ''
-
-  validateComment: (body)->
-    $btn = @$('.form-actions button[type=submit]')
-    if @validComment body
-      $btn.removeAttr('disabled')
-    else
-      $btn.attr('disabled', 'disabled')
-
-  validComment: (body)->
-    return body.length > 1
-
-  showUpvotePrompt: ->
-    @children.upvoteReminder.fadeIn()
-
-  pushNotification: (event)->
-    n = new Notify "New message on #{event.get('wip').product_name}",
-      body: "#{event.get('actor').username}: #{event.get('body')}"
-      icon: 'https://d8izdk6bl4gbi.cloudfront.net/80x/http://f.cl.ly/items/1I2a1j0M0w0V2p3C3Q0M/Assembly-Twitter-Avatar.png'
-      timeout: 5
-      notifyClick: =>
-        $(window).focus()
-        @scrollToBottom()
-
-    n.show()
-
-  onWindowFocused: =>
-    @foreground = true
-    @model.markAllAsRead()
-
-  onWindowBlurred: =>
-    @foreground = false
-
-  unreadCountChanged: =>
-    count = @model.get('unreadCount')
-    if count == 0
-      document.title = @originalTitle
-    else
-      document.title = "(#{count}) #{@originalTitle}"
-
-  scrollToBottom: ->
-    $(document).scrollTop($(document).height())
-
-  ownCommentsChanged: ->
-    @children.welcomeBox.toggle !@model.hasOwnComments()
-
+fixScroll = (cb) ->
+  documentHeight = $(document).height()
+  cb()
+  $(document).scrollTop(Math.max(0, $(document).height() - documentHeight))
+>>>>>>> Amazeballs chat.

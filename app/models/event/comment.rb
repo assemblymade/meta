@@ -1,7 +1,7 @@
 class Event::Comment < Event
   belongs_to :wip, touch: true, counter_cache: true
 
-  validates :body, presence: true, length: { minimum: 2 }
+  validates :body, presence: true, length: { minimum: 1 }
 
   after_save :post_process
   after_save :consider_comment_a_check_in

@@ -1,6 +1,5 @@
-<%= form_tag product_wip_comments_path(@wip.product, @wip), method: :post, class: 'form', id: 'new-comment-form' do %>
-  <div class="media new-event js-new-event">
-
+<%= form_tag product_chat_path(@product), method: :post do %>
+  <div class="media alpha js-new-event">
     <div class="pull-left">
       <%= avatar_tag(current_user, 30) %>
     </div>

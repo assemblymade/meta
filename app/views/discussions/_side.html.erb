@@ -13,8 +13,8 @@
       <% end %>
     </ul>
 
-    <% if !watching? @wip %>
-      <%= button_to 'Watch this thread', product_wip_watch_path(@wip.product, @wip), method: :patch, disable_with: 'Watching...', class: %w(btn btn-default btn-sm btn-block) %>
-    <% end %>
+    <%# if !watching? @wip %>
+      <%#= button_to 'Watch this thread', product_wip_watch_path(@wip.product, @wip), method: :patch, disable_with: 'Watching...', class: %w(btn btn-default btn-sm btn-block) %>
+    <%# end %>
   </div>
 </div>

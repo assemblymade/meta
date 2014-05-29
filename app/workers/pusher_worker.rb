@@ -1,8 +1,7 @@
 class PusherWorker
   include Sidekiq::Worker
 
-  def perform(channels, event, payload)
-    Rails.logger.info "  [Pusher] #{channels} #{event} #{payload}"
-    Pusher.trigger(channels, event, payload)
+  def perform(channels, event, payload, options={})
+    Pusher.trigger(channels, event, payload, options)
   end
 end

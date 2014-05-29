@@ -182,6 +182,9 @@ ASM::Application.routes.draw do
   resources :products, path: '/', except: [:index, :create, :destroy] do
     match 'flag',    via: [:get, :post]
 
+    get '/discuss' => 'chat#index', as: :chat
+    post '/discuss' => 'chat#create'
+
     post 'feature'
     post 'follow'
     post 'subscribe', as: :subscribe, on: :member
@@ -205,8 +208,6 @@ ASM::Application.routes.draw do
       get 'join'
       get 'part'
     end
-
-    get :discuss, to: 'discussions#show', id: '0', as: :discuss
 
     resources :discussions, only: [:index, :show, :new, :edit, :create, :update] do
       resources :comments, only: [:show, :create, :edit, :update]

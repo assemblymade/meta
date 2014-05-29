@@ -1,0 +1,87 @@
+<% title 'Discuss', @product.name %>
+
+<div class="chat-wrapper">
+
+  <div class="navbar-fixed-top">
+    <%= render 'shared/navbar' %>
+    <%= render 'products/navbar' %>
+  </div>
+
+  <div class="container">
+    <div class="row" style="position:relative">
+      <div class="col-xs-8">
+        <div class="chat js-chat">
+          <center>
+            <a class="btn btn-default btn-block js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>">Load more</a>
+            <br>
+          </center>
+
+          <div class="timeline chat-timeline js-activity-stream"></div>
+          <div class="chat-actions js-chat-actions is-fixed" style="width:616px">
+            <%= render 'discussions/chat_box' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-3" style="margin-top:120px;position:fixed;margin-left:696px">
+        <%= render 'discussions/intro_panel' %>
+        <%= render 'discussions/side' %>
+        <a class="btn btn-default btn-block" href="<%= product_discussions_path(@product) %>">All Discussions</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  app.product = new Product(<%= ProductSerializer.new(@product, scope: current_user).to_json.html_safe %>);
+  app.wip = new Wip(<%= WipSerializer.new(@product.main_thread, scope: current_user).to_json.html_safe %>);
+</script>
+
+<script>
+  $(document).ready(function() {
+
+    var activityStream = new ActivityStream(<%=
+      @activity_stream.map {|a, _|
+        ActivitySerializer.new(a, scope: current_user)
+      }.to_json.html_safe
+    %>);
+    activityStream.url = '<%= product_wip_comments_path(@product, @product.main_thread) %>';
+    activityStream.product = app.product;
+
+
+    var activityStreamView = new ActivityStreamView({
+      el: $('.js-activity-stream'),
+      collection: activityStream
+    });
+
+    var pusher = new Pusher(
+      $('meta[name=pusher-key]').attr('content')
+    );
+
+    pusher.connection.bind('connected', function() {
+      activityStream.listenForRemote(pusher, pusher.connection);
+    });
+
+    var chatView = new ChatView({
+      el: $('.js-chat'),
+      collection: activityStream
+    });
+
+    window.activityStream = activityStream;
+    window.activityStreamView = activityStreamView;
+    window.chatView = chatView;
+
+    activityStreamView.render();
+    chatView.render();
+
+    $(window).load(function() {
+      delay(1, chatView.scrollToLatestActivity);
+    });
+
+  });
+</script>
+
+<!-- Analytics -->
+<script>
+  analytics.track('product.chat.viewed', <%== ProductSerializer.new(@product, scope: current_user).to_json %>)
+</script>

@@ -10,18 +10,20 @@
   <div class="chat-column">
     <div class="container">
       <div class="row">
-        <div class="col-md-8 col-xs-8">
-          <div id="chat-view-el">
-            <div class="timeline">
-              <% @activity_stream.last(30).each do |activity| %>
-                <div class="timeline-item">
-                  <%= activity.html(current_user) %>
-                </div>
-              <% end %>
-            </div>
-            <div class="chat-bottom">
-              <%= render 'chat_box' %>
-            </div>
+        <div class="col-md-8 col-xs-8 js-chat">
+          <center>
+            <a class="btn btn-default">Load more</a>
+          </center>
+          <hr>
+          <div class="timeline js-chat-timeline">
+            <% @activity_stream.last(30).each do |activity| %>
+              <div class="timeline-item">
+                <%= activity.html(current_user) %>
+              </div>
+            <% end %>
+          </div>
+          <div class="chat-bottom js-chat-actions">
+            <%= render 'chat_box' %>
           </div>
         </div>
 
@@ -43,13 +45,14 @@
 
 <script>
   app.wip = new Wip(<%== WipSerializer.new(@wip, scope: current_user).to_json %>);
+
   app.wipEvents = new WipEvents(<%== @events.map {|e, _| EventSerializer.for(e, current_user)}.to_json %>, {
     url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
   });
 
   $(document).ready(function() {
     new ChatView({
-      el: $('#chat-view-el'),
+      el: $('.js-chat-view'),
       model: app.wip
     });
   })
