@@ -41,7 +41,9 @@ class window.TipsView extends Backbone.View
     app.isSignedIn() && @currentUserHasCoins()
 
   currentUserHasCoins: ->
+    app.isSignedIn() &&
     app.currentUser().get('product_balance')[@$el.data('tips-product-id')] > 0
+
 
   optimisticTip: ->
     @coins += COIN_INCREMENT

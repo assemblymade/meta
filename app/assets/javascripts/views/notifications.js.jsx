@@ -113,8 +113,11 @@ var Notifications = React.createClass({
 
 var url = $('meta[name=unread-url]').attr('content');
 var username = $('meta[name=user-username]').attr('content');
-React.renderComponent(
-  <Notifications url={url} username={username} />,
-  document.getElementById('js-notifications')
-)
+var el = document.getElementById('js-notifications');
+if(el) {
+  React.renderComponent(
+    <Notifications url={url} username={username} />,
+    document.getElementById('js-notifications')
+  )
+}
 });
