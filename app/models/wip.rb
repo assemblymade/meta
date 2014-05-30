@@ -210,7 +210,7 @@ class Wip < ActiveRecord::Base
     watch!(vote.user)
   end
 
-  def notify_user!(user)
+  def notify_by_email(user)
     WipMailer.delay.wip_created(user.id, id) unless user.mail_never?
   end
 
