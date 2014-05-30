@@ -2,6 +2,8 @@
 #= require collections/activity_stream
 #= require views/activity_view
 
+SCROLL_TOLERANCE = 10
+
 class window.ActivityStreamView extends Backbone.View
   collection: ActivityStream
 
@@ -9,15 +11,27 @@ class window.ActivityStreamView extends Backbone.View
     @unreadCount = 0
     @documentTitle = document.title
 
+    @subviews = []
+
+    @collection.each (model, index, collection) =>
+      @buildSubviewForModel(model, index)
+
     @listenTo(@collection, 'add', @onCollectionAdd)
     $(window).on('focus', @onWindowFocus)
 
   render: ->
-    @$el.empty()
-    views = @collection.map (model) -> new ActivityView(model: model)
-    for view in _.sortBy(views, (view) -> view.model.get('created'))
-      @$el.append(view.el)
-      view.render()
+    view.render() for view in @subviews
+
+  buildSubviewForModel: (model, index) ->
+    view = new ActivityView(model: model)
+    @subviews.splice(index, 0, view)
+
+    if index == 0
+      @$el.prepend(view.el)
+    else
+      @$(":nth-child(#{index-1})").after(view.el)
+
+    view.render()
 
   setDocumentTitle: ->
     document.title = unreadDocumentTitle(@documentTitle, @unreadCount)
@@ -32,8 +46,10 @@ class window.ActivityStreamView extends Backbone.View
 
   # Event Handlers
 
-  onCollectionAdd: (model) =>
-    lockScrollToBottom(_.bind(@render, @))
+  onCollectionAdd: (model, collection, info) =>
+    lockScrollToBottom(=>
+      @buildSubviewForModel(model, info.at)
+    )
     @incrementUnread()
 
   onWindowFocus: =>
@@ -55,5 +71,5 @@ lockScrollToBottom = (cb) ->
 
   cb()
 
-  if (scrolled + windowHeight) >= documentHeight
+  if (scrolled + windowHeight) >= (documentHeight - SCROLL_TOLERANCE)
     $(document).scrollTop($(document).height())

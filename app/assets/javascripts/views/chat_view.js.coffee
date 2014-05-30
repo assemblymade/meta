@@ -81,7 +81,8 @@ class window.ChatView extends Backbone.View
       url: $(e.target).attr('href') + "?top_id=#{@collection.first().get('id')}"
       success: (datas) =>
         fixScroll =>
-          @collection.unshift(data) for data in datas
+          for data in _.sortBy(datas, (data) -> data['created']).reverse()
+            @collection.unshift(data)
     )
 
 # --
