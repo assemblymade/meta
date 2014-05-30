@@ -92,7 +92,7 @@ class Event < ActiveRecord::Base
   def mentioned_users
     users = []
     TextFilters::UserMentionFilter.mentioned_usernames_in(self.body) do |user, username|
-      users << user
+      users << user if user
     end
     users
   end
