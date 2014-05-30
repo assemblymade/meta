@@ -15,6 +15,7 @@ class window.ActivityView extends Backbone.View
 
   render: =>
     @$el.html(JST[@model.get('type')].render(@templateData()))
+    $('[data-readraptor-track]', @$el).readraptor()
 
     for selector, view of @subviews
       view.setElement(@$(selector))
