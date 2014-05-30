@@ -15,8 +15,8 @@ module Mailgun
       self.settings = settings
     end
 
-    def api_host
-      self.settings[:api_host]
+    def domain
+      self.settings[:domain]
     end
 
     def api_key
@@ -36,7 +36,7 @@ module Mailgun
         data << Curl::PostField.content("to", destination)
       end
 
-      curl                     = Curl::Easy.new("https://api:#{self.api_key}@api.mailgun.net/v2/#{self.api_host}/messages.mime")
+      curl                     = Curl::Easy.new("https://api:#{self.api_key}@api.mailgun.net/v2/#{self.domain}/messages.mime")
       curl.multipart_form_post = true
       curl.http_post(*data)
 
