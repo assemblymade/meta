@@ -1,0 +1,49 @@
+// Retina image mixin
+
+@mixin background-image-retina($files, $types, $widths, $heights, $repeats, $vendors: webkit moz){
+
+    $urls:   "";
+    $urls2x: "";
+    $sizes:  "";
+    $reps:   "";
+    $len:    length($files);
+
+    @for $i from 0 to $len{
+
+        $index:  $i + 1;
+        $image:  nth($files,  $index);
+        $type:   nth($types,  $index);
+        $width:  nth($widths, $index);
+        $height: nth($heights, $index);
+        $repeat: nth($repeats, $index);
+
+        $seperator: "";
+
+        @if $i < $len - 1{
+            $seperator: ", ";
+        }
+
+        $urls: $urls + (url($image + "." + $type) + $seperator);
+        $urls2x: $urls2x + (url($image + "@2x." + $type) + $seperator);
+        $sizes: $sizes + ($width $height + unquote($seperator));
+        $reps: $reps + ($repeat + unquote($seperator));
+    }
+
+    background-image: unquote($urls);
+    background-repeat: unquote($reps);
+
+    $len: length($vendors);
+
+    @for $i from 0 to $len{
+
+        $vendor: nth($vendors, $i + 1);
+
+        @media (-#{$vendor}-min-device-pixel-ratio: 2){
+            &{
+                background-image: unquote($urls2x) unquote($reps);
+                background-repeat: unquote($reps);
+                -#{$vendor}-background-size: unquote($sizes);
+            }
+        }
+    }
+}

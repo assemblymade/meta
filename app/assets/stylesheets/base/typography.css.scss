@@ -205,13 +205,16 @@ blockquote {
 
 .text-copy {
   @extend .text-serif;
-  padding: $padding-xxl-vertical $padding-xxl-horizontal;
+  // padding: $padding-xxl-vertical $padding-xxl-horizontal;
+  padding: 26px $padding-xxl-horizontal 25px 68px;
   font-size: 15px;
-  line-height: 1.618;
+  line-height: 1.764;
   color: $text-copy;
   border-radius: $border-radius-base;
   border: 1px solid darken($text-copy-bg, 6%);
+  box-shadow: 0 1px 1px 0 $brand-shadow;
   background-color: $text-copy-bg;
+  @include background-image-retina(("copy-deliverable-bg-horizontal", "copy-deliverable-bg"), ("png", "png"), (36px, 1px), (1px, 26px), ("repeat-y", "repeat"));
 
   h1,
   h2,
@@ -221,6 +224,10 @@ blockquote {
   h6 {
     font-size: inherit;
     color: inherit !important;
+  }
+
+  > * {
+    margin-bottom: floor(15px * 1.764);
   }
 
   :first-child {
