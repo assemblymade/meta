@@ -7,6 +7,11 @@ class DiscussionsController < WipsController
   end
 
   def show
+    if @wip.main_thread?
+      redirect_to product_chat_path(@wip.product)
+      return
+    end
+
     @watchers = Watching.includes(:user).
                          where(watchable: @wip).
                          order('created_at desc').
