@@ -31,7 +31,7 @@ class ChatController < ApplicationController
 
     track_wip_engaged @product.main_thread, 'commented'
     register_with_readraptor(@event)
-    @event.notify_mentioned_users!
+    @event.notify_users!(@product.watchers)
 
     @activity = Activities::Comment.publish!(actor: @event.user, target: @event)
 

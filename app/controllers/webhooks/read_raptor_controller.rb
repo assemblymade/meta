@@ -4,7 +4,7 @@ class Webhooks::ReadRaptorController < WebhookController
     user = User.find(params["user"])
 
     entities.each do |entity|
-      entity.notify_user! user
+      entity.notify_by_email user
     end
 
     render nothing: true, status: 200

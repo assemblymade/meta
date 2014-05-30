@@ -48,15 +48,44 @@ class Event < ActiveRecord::Base
     MAILABLE.include? self.class
   end
 
-  def notify_user!(user)
-    return if user.nil?
-
-    if notify_by_email? && !user.mail_never? && !wip.main_thread?
-      WipMailer.delay.wip_event_added(user.id, self.id)
+  # this is called immediately on event created
+  # this  shouldn't email anyone because readraptor will take care of that
+  def notify_users!(users)
+    mentioned = self.mentioned_users
+    users.each do |user|
+      notify_by_email(user) if mentioned.include?(user)
+      update_unreads(user)
     end
 
+    update_pusher(users, mentioned_users)
+  end
+
+  def notify_by_email(user)
+    if notify_by_email? && !user.mail_never?
+      WipMailer.delay.wip_event_added(user.id, self.id)
+    end
+  end
+
+  def update_unreads(user)
     if self.is_a? ::Event::Comment
       wip.updates.for(user).new_comment!
+    end
+  end
+
+  def update_pusher(users, mentioned_users)
+    event_hash = EventSerializer.for(self, nil).as_json.merge(socket_id: self.socket_id)
+    event_hash[:mentions] = mentioned_users.map(&:username)
+
+    if wip.main_thread?
+      # currently on the main thread, pusher pushes a 'chat' event to the user's channel which triggers
+      # it to call for updates. This is part of notifications
+
+      user_channels = users.map{|u| "@#{u.username}"}
+      PusherWorker.perform_async user_channels, 'chat', event_hash.to_json
+    else
+      # on other discussions and tasks, an event is pushed on the wip channel to update the page
+      # this is not covered by the notifications stuff
+      PusherWorker.perform_async wip.push_channel, 'event.added', event_hash.to_json
     end
   end
 
@@ -66,12 +95,6 @@ class Event < ActiveRecord::Base
       users << user
     end
     users
-  end
-
-  def notify_mentioned_users!
-    mentioned_users.each do |user|
-      self.notify_user!(user)
-    end
   end
 
   def total_tips

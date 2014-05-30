@@ -2,7 +2,7 @@ class ReadRaptorClient
 
   def unread_entities(distinct_id)
     body = get("/readers/#{distinct_id}")
-    body.map{|a| a['key'] }
+    (body || []).map{|a| a['key'] }
   end
 
   def post(url, body = {})
