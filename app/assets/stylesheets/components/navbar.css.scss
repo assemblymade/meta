@@ -60,4 +60,13 @@
   .glyphicon {
     font-size: $font-size-large;
   }
+
+  .dropdown-menu {
+    min-width: 180px;
+  }
+
+  > li > a {
+    padding-top: 15px;
+    padding-bottom: 9px;
+  }
 }

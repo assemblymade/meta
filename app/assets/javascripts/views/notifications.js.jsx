@@ -98,15 +98,13 @@ var Notifications = React.createClass({
 
     var sorted = this.sortByCount(this.state.data)
     return (
-      <ul className="nav navbar-nav navbar-notifications js-notifications">
-        <li>
-          <a href="#notifications" data-toggle="dropdown">
-            <span className={classes}></span>
-            {badge}
-          </a>
-          <NotificationsList data={sorted} username={this.props.username} />
-        </li>
-      </ul>
+      <li>
+        <a href="#notifications" data-toggle="dropdown">
+          <span className={classes}></span>
+          {badge}
+        </a>
+        <NotificationsList data={sorted} username={this.props.username} />
+      </li>
     );
   }
 });

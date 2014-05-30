@@ -1,6 +1,7 @@
 class ReadRaptorClient
 
   def unread_entities(distinct_id)
+    return [] unless ENV['READRAPTOR_URL']
     body = get("/readers/#{distinct_id}")
     (body || []).map{|a| a['key'] }
   end

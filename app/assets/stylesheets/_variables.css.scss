@@ -269,7 +269,7 @@ $navbar-inverse-bg:     desaturate(darken($brand-primary, 40%), 30%);
 $navbar-inverse-border: darken($navbar-inverse-bg, 5%);
 
 // Inverted navbar links
-$navbar-inverse-link-color:          desaturate(darken($brand-primary, 10%), 50%);
+$navbar-inverse-link-color:          desaturate(lighten($brand-primary, 10%), 50%);
 $navbar-inverse-link-hover-color:    lighten($navbar-inverse-link-color, 15%);
 $navbar-inverse-link-hover-bg:       transparent;
 $navbar-inverse-link-active-color:   lighten($navbar-inverse-link-hover-color, 15%);
