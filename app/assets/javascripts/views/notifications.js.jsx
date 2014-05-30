@@ -51,18 +51,42 @@ var Notifications = React.createClass({
     });
   },
   componentWillMount: function() {
+    var _this = this;
     var debouncedFetch = _.debounce(this.fetchNotifications, 1000);
 
     $(document).bind('readraptor.tracked', debouncedFetch);
-    if (window.pusher) {
-      channel = window.pusher.subscribe('@'+this.props.username);
-      channel.bind('chat', debouncedFetch);
-    }
+    this.onPush(function(event) {
+      if (_.contains(event.mentions, _this.props.username)) {
+        _this.desktopNotify(event);
+      }
+      debouncedFetch();
+    });
     window.visibility(function(visible) {
       if (visible) { debouncedFetch(); }
     });
     debouncedFetch();
   },
+  onPush: function(fn) {
+    if (window.pusher) {
+      channel = window.pusher.subscribe('@'+this.props.username);
+      channel.bind('chat', fn);
+    }
+  },
+  desktopNotify: function(event) {
+    var n = new Notify("New message on " + (event.wip.product_name), {
+      body: (event.actor.username + ": " + event.body_sanitized),
+      icon: 'https://d8izdk6bl4gbi.cloudfront.net/80x/http://f.cl.ly/items/1I2a1j0M0w0V2p3C3Q0M/Assembly-Twitter-Avatar.png',
+      timeout: 10,
+      notifyClick: function() {
+        $(window).focus();
+        if (window.app.wip.id != event.wip.id) {
+          window.app.redirectTo(event.wip.url);
+        }
+      }
+    });
+    return n.show();
+  },
+
   render: function() {
     badge = null;
     var classes = "glyphicon glyphicon-bell";

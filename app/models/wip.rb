@@ -205,6 +205,8 @@ class Wip < ActiveRecord::Base
     watch!(event.user)
 
     event_hash = EventSerializer.for(event, nil).as_json.merge(socket_id: event.socket_id)
+    event_hash[:mentions] = event_hash[:body].scan(TextFilters::UserMentionFilter::MentionPattern).flatten
+
     PusherWorker.perform_async push_channel, 'event.added', event_hash.to_json
     if main_thread?
       users = product.watchers.pluck(:username).map{|username| "@#{username}"}

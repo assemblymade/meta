@@ -9,7 +9,7 @@ class EventSerializer < ActiveModel::Serializer
 
   attributes :id #, :url
   attributes :anchor
-  attributes :body, :body_html, :number, :timestamp, :type
+  attributes :body, :body_html, :body_sanitized, :number, :timestamp, :type
   attributes :edit_url
   attributes :award_url, :can_award
   attributes :product_id
@@ -35,6 +35,10 @@ class EventSerializer < ActiveModel::Serializer
 
   def body_html
     product_markdown(product, object.body)
+  end
+
+  def body_sanitized
+    Search::Sanitizer.new.sanitize(object.body.to_s)
   end
 
   def edit_url
