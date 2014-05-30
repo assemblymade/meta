@@ -55,21 +55,23 @@ class UsersController < ApplicationController
         wip = o.wip
         product = wip.product
         if wip == product.main_thread
-          @main_thread_updates[product] ||= 0
-          @main_thread_updates[product] += 1
+          @main_thread_updates[product] ||= []
+          @main_thread_updates[product] << o
         end
       end
     end
 
     entries = current_user.recent_products.map.with_index do |product, i|
+      product_events = @main_thread_updates[product] || []
       {
         product: ProductSerializer.new(product).as_json,
-        messages: @main_thread_updates[product] || 0,
+        count: product_events.size,
+        entities: product_events.map{|e| [e.id, e.number] },
         index: i
       }
     end
 
-    render json: entries.sort_by{|e| [-e[:messages], e[:index]]}.take(5)
+    render json: entries.sort_by{|e| [-e[:count], e[:index]]}.take(5)
   end
 
   def tracking

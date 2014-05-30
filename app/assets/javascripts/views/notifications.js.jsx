@@ -5,8 +5,8 @@ var NotificationsList = React.createClass({
   render: function() {
     var productNodes = this.props.data.map(function(entry){
       badge = null;
-      if (entry.messages > 0) {
-        badge = <span className="badge pull-right">{entry.messages}</span>
+      if (entry.count > 0) {
+        badge = <span className="badge pull-right">{entry.count}</span>
       }
 
       var url = entry.product.url + '/discuss';
@@ -32,11 +32,11 @@ var Notifications = React.createClass({
     return { data: [] }
   },
   total: function() {
-    var count = _.countBy(this.state.data, function(entry){ return entry.messages > 0 });
+    var count = _.countBy(this.state.data, function(entry){ return entry.count > 0 });
     return count.true;
   },
   sortByCount: function() {
-    return _.sortBy(this.state.data, function(entry){ return -entry.messages; });
+    return _.sortBy(this.state.data, function(entry){ return -entry.count; });
   },
   fetchNotifications: function() {
     $.ajax({
