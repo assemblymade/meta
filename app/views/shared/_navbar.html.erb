@@ -20,8 +20,10 @@
       </button>
       <a class="text-brand navbar-brand" href="<%= root_path %>">
         <span class="brand">
-          <span class="icon icon-logo"></span>
-          <% if !user_signed_in? %>
+          <% if user_signed_in? %>
+            <span class="icon icon-logo-filled"></span>
+          <% else %>
+            <span class="icon icon-logo"></span>
             Assembly
           <% end %>
         </span>
