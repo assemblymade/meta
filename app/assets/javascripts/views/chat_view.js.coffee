@@ -27,7 +27,7 @@ class window.ChatView extends Backbone.View
     @$('.js-chat-actions form')[0].reset()
     @$('.js-chat-actions textarea').trigger('autosize.resize')
 
-  optimisticallyAddComment: (body) ->
+  optimisticallyCreateActivity: (body) ->
     activity = new Activity(
       type: 'activities/comment'
       created: (new Date()).toISOString()
@@ -39,6 +39,17 @@ class window.ChatView extends Backbone.View
       }
     )
     @collection.push(activity)
+
+    comment = new Comment(
+      body: body
+    )
+
+    comment.url = @$('.js-chat-actions form').attr('action')
+    comment.save({socket_id: @collection.socketId},
+      success: (comment, data) ->
+        activity.set(data)
+    )
+    activity
 
   # --
 
@@ -56,18 +67,7 @@ class window.ChatView extends Backbone.View
   onSubmit: (e) =>
     e.preventDefault()
     body = @$('.js-chat-actions textarea').val()
-    @optimisticallyAddComment(body)
-    $.ajax(
-      data: {
-        socket_id: @collection.socketId
-        comment: {
-          body: body
-        }
-      }
-      dataType: 'json'
-      type: 'POST'
-      url: @$('.js-chat-actions form').attr('action')
-    )
+    @optimisticallyCreateActivity(body)
     delay 0, @clearForm
 
   onKeyUp: (e) =>

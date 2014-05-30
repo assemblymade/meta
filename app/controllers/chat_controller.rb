@@ -24,9 +24,8 @@ class ChatController < ApplicationController
       @event = Event.create_from_comment(
         @product.main_thread,
         Event::Comment,
-        comment_params[:body],
-        current_user,
-        comment_params[:socket_id]
+        params.fetch(:body),
+        current_user
       )
     end
 
