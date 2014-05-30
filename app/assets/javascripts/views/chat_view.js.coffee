@@ -11,10 +11,14 @@ class window.ChatView extends Backbone.View
     'submit  .js-chat-actions'   : 'onSubmit'
     'click   .js-chat-load-more' : 'onLoadMore'
 
+  initialize: ->
+    @listenTo(@collection, 'add', @render)
+
   render: =>
     @$('.js-activity-stream').css(
       'margin-bottom': @$('.js-chat-actions').outerHeight()
     )
+    @$('.js-chat-load-more').toggle(@collection.length >= 25)
 
   scrollToLatestActivity: ->
     $(window).scrollTop($(document).height())
@@ -35,7 +39,6 @@ class window.ChatView extends Backbone.View
       }
     )
     @collection.push(activity)
-    # @scrollToLatestActivity()
 
   # --
 
@@ -87,4 +90,3 @@ fixScroll = (cb) ->
   documentHeight = $(document).height()
   cb()
   $(document).scrollTop(Math.max(0, $(document).height() - documentHeight))
->>>>>>> Amazeballs chat.

@@ -1,33 +1,31 @@
 <% title 'Discuss', @product.name %>
+<% provide :body_class, 'chat-wrapper' %>
 
-<div class="chat-wrapper">
+<div class="navbar-fixed-top">
+  <%= render 'shared/navbar' %>
+  <%= render 'products/navbar' %>
+</div>
 
-  <div class="navbar-fixed-top">
-    <%= render 'shared/navbar' %>
-    <%= render 'products/navbar' %>
-  </div>
+<div class="container">
+  <div class="row" style="position:relative">
+    <div class="col-xs-8">
+      <div class="chat js-chat">
+        <center>
+          <a class="btn btn-default btn-block js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>">Load more</a>
+          <br>
+        </center>
 
-  <div class="container">
-    <div class="row" style="position:relative">
-      <div class="col-xs-8">
-        <div class="chat js-chat">
-          <center>
-            <a class="btn btn-default btn-block js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>">Load more</a>
-            <br>
-          </center>
-
-          <div class="timeline chat-timeline js-activity-stream"></div>
-          <div class="chat-actions js-chat-actions is-fixed" style="width:616px">
-            <%= render 'discussions/chat_box' %>
-          </div>
+        <div class="timeline chat-timeline js-activity-stream"></div>
+        <div class="chat-actions js-chat-actions is-fixed" style="width:616px">
+          <%= render 'discussions/chat_box' %>
         </div>
       </div>
+    </div>
 
-      <div class="col-xs-3" style="margin-top:120px;position:fixed;margin-left:696px">
-        <%= render 'discussions/intro_panel' %>
-        <%= render 'discussions/side' %>
-        <a class="btn btn-default btn-block" href="<%= product_discussions_path(@product) %>">All Discussions</a>
-      </div>
+    <div class="col-xs-3" style="margin-top:120px;position:fixed;margin-left:696px">
+      <%= render 'discussions/intro_panel' %>
+      <%= render 'discussions/side' %>
+      <a class="btn btn-default btn-block" href="<%= product_discussions_path(@product) %>">All Discussions</a>
     </div>
   </div>
 </div>
