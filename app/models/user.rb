@@ -159,6 +159,10 @@ class User < ActiveRecord::Base
     Hash[product_id_cents.map{|product_id, cents| [products[product_id], cents] }]
   end
 
+  def recent_products
+    Product.find(recent_product_ids).sort_by{|p| recent_product_ids.index(p.id) }
+  end
+
   def has_voted_for?(product)
     product.voted_by?(self)
   end

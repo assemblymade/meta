@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_action :store_location
   before_action :validate_confirmed!, :if => :signed_in?
-  after_action :set_last_request_at!, :if => :signed_in?
+  after_action :set_request_info!, :if => :signed_in?
   before_action :strip_auth_token,     :if => :signed_in?
 
   rescue_from CanCan::AccessDenied do |e|
@@ -41,8 +41,8 @@ class ApplicationController < ActionController::Base
     redirect_to :edit_user_email unless current_user.confirmed?
   end
 
-  def set_last_request_at!
-    current_user.delay.update_columns(last_request_at: Time.current)
+  def set_request_info!
+    RequestInfo.perform_async current_user.id, Time.current, @product.try(:id)
   end
 
   def store_location

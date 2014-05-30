@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140526214839) do
+ActiveRecord::Schema.define(version: 20140529231041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -483,6 +483,7 @@ ActiveRecord::Schema.define(version: 20140526214839) do
     t.datetime "personal_email_sent_on"
     t.text     "twitter_uid"
     t.text     "twitter_nickname"
+    t.uuid     "recent_product_ids",                                    array: true
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

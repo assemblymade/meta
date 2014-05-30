@@ -61,15 +61,15 @@ class UsersController < ApplicationController
       end
     end
 
-    entries = current_user.product_cents.map do |product, cents|
+    entries = current_user.recent_products.map.with_index do |product, i|
       {
         product: ProductSerializer.new(product).as_json,
-        cents: cents,
-        messages: @main_thread_updates[product] || 0
+        messages: @main_thread_updates[product] || 0,
+        index: i
       }
     end
 
-    render json: entries.sort_by{|e| [-e[:messages], -e[:cents]] }.take(5)
+    render json: entries.sort_by{|e| [-e[:messages], e[:index]]}.take(5)
   end
 
   def tracking
