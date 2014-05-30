@@ -22,10 +22,6 @@
       <li class="<%= "active" if discussions_controller? %>">
         <a href="<%= product_discuss_path(@product) %>">
           Discuss
-
-          <% if signed_in? %>
-            <span class="glyphicon glyphicon-bell text-muted small js-enable-notifications" data-toggle="tooltip" data-placement="right" title="Enable&nbsp;desktop notifications" style="cursor:pointer; margin-left: 4px"></span>
-          <% end %>
         </a>
       </li>
 

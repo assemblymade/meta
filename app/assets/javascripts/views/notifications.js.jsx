@@ -1,7 +1,15 @@
 /** @jsx React.DOM */
-$(document).ready(function() {
 
 var NotificationsList = React.createClass({
+  getInitialState: function() {
+    return { desktopNotificationsEnabled: false }
+  },
+  componentDidMount: function() {
+    $('[data-toggle]', this.getDOMNode()).tooltip()
+  },
+  handleDesktopNotificationsStateChange: function(isEnabled) {
+    this.setState({desktopNotificationsEnabled: isEnabled})
+  },
   render: function() {
     var productNodes = this.props.data.map(function(entry){
       badge = null;
@@ -17,11 +25,18 @@ var NotificationsList = React.createClass({
     });
 
     var productsPath = '/users/'+this.props.username;
+    var separator = null;
+    if (!this.state.desktopNotificationsEnabled) {
+      separator = (<li className="divider" />)
+    }
+
     return (
       <ul className="dropdown-menu">
         {productNodes}
         <li className="divider" />
         <li><a href={productsPath}>All Products</a></li>
+        {separator}
+        <li><DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} /></li>
       </ul>
     );
   }
@@ -29,7 +44,7 @@ var NotificationsList = React.createClass({
 
 var Notifications = React.createClass({
   getInitialState: function() {
-    return { data: [] }
+    return { data: null }
   },
   total: function() {
     var count = _.countBy(this.state.data, function(entry){ return entry.count > 0 });
@@ -88,6 +103,9 @@ var Notifications = React.createClass({
   },
 
   render: function() {
+    if (!this.state.data) {
+      return (<span />);
+    }
     badge = null;
     var classes = "glyphicon glyphicon-bell";
     var total = this.total();
@@ -109,13 +127,13 @@ var Notifications = React.createClass({
   }
 });
 
-var url = $('meta[name=unread-url]').attr('content');
-var username = $('meta[name=user-username]').attr('content');
-var el = document.getElementById('js-notifications');
-if(el) {
-  React.renderComponent(
-    <Notifications url={url} username={username} />,
-    document.getElementById('js-notifications')
-  )
-}
+$(document).ready(function() {
+  var url = $('meta[name=unread-url]').attr('content');
+  var username = $('meta[name=user-username]').attr('content');
+  var el = document.getElementById('js-notifications');
+  if(el) {
+    React.renderComponent(
+      <Notifications url={url} username={username} />, el
+    )
+  }
 });
