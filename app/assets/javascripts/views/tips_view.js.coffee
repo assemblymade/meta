@@ -12,7 +12,6 @@ class window.TipsView extends Backbone.View
 
   initialize: ->
     @coins = 0
-    @path  = @$el.data('tips-path')
 
   render: =>
     @$el.html(@template.render(@templateData()))
@@ -21,10 +20,13 @@ class window.TipsView extends Backbone.View
     {
       coins: numeral(@totalCoins() / 100).format('0,0')
       "any_coins?": (@totalCoins() > 0)
-      path: @path
+      path: @path()
       "signed_in?": app.isSignedIn()
       "current_user_has_coins?": @currentUserHasCoins()
     }
+
+  path: ->
+    @$el.data('tips-path')
 
   totalCoins: ->
     parseInt(@$el.data('tips-total'), 10) + @coins
@@ -52,7 +54,7 @@ class window.TipsView extends Backbone.View
   save: _.debounce(->
     $.ajax(
       type: "POST"
-      url: @path
+      url: @path()
       data: { tip: { add: @coins } }
       dataType: 'json'
       complete: =>
