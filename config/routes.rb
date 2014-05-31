@@ -178,6 +178,8 @@ ASM::Application.routes.draw do
   get '/products/:product_id/discussions/:id', to: redirect(ProductRedirector.new(:discussion)), as: :full_product_discussion
   get '/products/:product_id/tasks/:id', to: redirect(ProductRedirector.new(:task)), as: :full_product_task
 
+  get '/activities/:id' => 'activity#show'
+
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do
     match 'flag',    via: [:get, :post]
