@@ -26,3 +26,19 @@
     bottom: 0;
   }
 }
+
+.indicator {
+  width: 0.5em;
+  border-radius: 50%;
+  line-height: .5;
+  text-align: center;
+  display: inline-block;
+}
+
+.indicator-default {
+  background-color: $gray-light;
+}
+
+.indicator-success {
+  background-color: $green;
+}

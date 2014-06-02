@@ -33,6 +33,8 @@ module ASM
 
     config.assets.paths << config.root.join('app', 'templates')
 
+    config.react.addons = true
+
     config.exceptions_app = self.routes
 
     config.autoload_paths << config.root.join('lib')
