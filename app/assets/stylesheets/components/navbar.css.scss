@@ -57,8 +57,20 @@
 }
 
 .navbar-notifications {
+  position: relative;
+
   .glyphicon {
-    font-size: $font-size-large;
+    font-size: 20px;
+  }
+
+  .badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    padding: 2px 3px;
+    font-size: 12px;
+    background-color: $yellow;
+    border: 2px solid $navbar-inverse-bg;
   }
 
   .dropdown-menu {
@@ -66,7 +78,7 @@
   }
 
   > li > a {
-    padding-top: 15px;
-    padding-bottom: 9px;
+    padding-top: 14px;
+    padding-bottom: 8px;
   }
 }
