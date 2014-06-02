@@ -1,0 +1,26 @@
+<% if @product.poster? %>
+  <img class="img-rounded" src="<%= @product.hero_image_path %>" alt="<%= @product.name %>" width="100%">
+  <hr>
+<% end %>
+
+<div class="panel panel-default">
+
+  <ul class="nav nav-pills nav-stacked">
+    <li class="<%= 'active' if nav_active?(:product) %>">
+      <a href="<%= product_path(@product) %>">About</a>
+    </li>
+
+    <li class="<%= 'active' if nav_active?(:subnav_blog) %>">
+      <%= link_to 'Blog', product_posts_path(@product) %>
+    </li>
+
+    <li class="<%= 'active' if nav_active?(:subnav_teams) %>">
+      <%= link_to 'Teams', product_jobs_path(@product) %>
+    </li>
+
+    <li class="<%= 'active' if nav_active?(:subnav_people) %>">
+      <%= link_to @product.stakeholders, product_partners_path(@product) %>
+    </li>
+  </ul>
+
+</div>

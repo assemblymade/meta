@@ -47,10 +47,4 @@ class DiscoverController < ApplicationController
                        .limit(2)
   end
 
-  protected
-
-  def upgrade_stylesheet?
-    true
-  end
-
 end

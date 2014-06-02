@@ -13,8 +13,6 @@ class ProductsController < ApplicationController
         'Organize everything you love.',
         'Easily find useful information.'
       ].sample
-
-    @upgrade_stylesheet = true
   end
 
   def welcome
@@ -68,7 +66,6 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @upgrade_stylesheet = true
     @perks = @product.perks.includes(:preorders).order(:amount).decorate
     @user_metrics = UserMetricsSummary.new(@product, Date.today - 1.day)
 

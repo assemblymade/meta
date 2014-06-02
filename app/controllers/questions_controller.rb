@@ -6,10 +6,4 @@ class QuestionsController < ApplicationController
     @groups = Question::GROUPS
   end
 
-protected
-
-  def upgrade_stylesheet?
-    true
-  end
-
 end

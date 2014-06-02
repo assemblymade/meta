@@ -33,15 +33,15 @@
 
       <ul class="nav navbar-nav">
 
-        <li class="<%= 'active' if discover_controller? %>">
+        <li class="<%= 'active' if nav_active?(:platform_discover) %>">
           <a href="<%= discover_path %>">Discover</a>
         </li>
 
-        <li>
+        <li class="<%= 'active' if nav_active?(:platform_start) %>">
           <a href="<%= new_product_path %>">Start</a>
         </li>
 
-        <li>
+        <li class="<%= 'active' if nav_active?(:platform_faq) %>">
           <a href="<%= faq_path %>">FAQ</a>
         </li>
       </ul>
@@ -66,7 +66,12 @@
                     View Profile
                   </a>
                 </li>
-                <!-- <li class="divider"></li> -->
+                <li>
+                  <a href="<%= edit_user_path(current_user) %>">
+                    Settings
+                  </a>
+                </li>
+                <li class="divider"></li>
                 <li>
                   <a href="<%= destroy_user_session_path %>" data-method="delete">
                     Log out

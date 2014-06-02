@@ -1,5 +1,7 @@
 <% title @product.name, @product.pitch %>
+<% activate_nav! :product %>
 <% @missionAutoOpen = false %>
+
 <%= render 'shared/navbar' %>
 <%= render 'products/navbar' %>
 
@@ -68,11 +70,7 @@
 
 
       <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-
-        <% if @product.poster? %>
-          <img class="img-rounded" src="<%= @product.hero_image_path %>" alt="<%= @product.name %>" width="100%">
-          <hr>
-        <% end %>
+        <%= render 'products/sidebar' %>
 
         <!-- Social links -->
 

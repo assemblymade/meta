@@ -1,4 +1,5 @@
 <% title [Question::GROUPS[@group], 'FAQ'] %>
+<% activate_nav! :platform_faq %>
 <%= render 'shared/navbar' %>
 
 <% cache Question.cache_key(@group) do %>

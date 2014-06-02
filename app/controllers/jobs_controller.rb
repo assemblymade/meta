@@ -4,8 +4,6 @@ class JobsController < ApplicationController
   before_action :set_product
 
   def index
-    @upgrade_stylesheet = true
-    
     @product_jobs = ProductJob.where(:product_id => @product.id)
     @product_job = ProductJob.new
     @current_user = current_user

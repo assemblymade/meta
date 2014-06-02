@@ -1,4 +1,5 @@
-<% title "Partners", @product.name %>
+<% title @product.stakeholders, @product.name %>
+<% activate_nav! :subnav_people %>
 
 <%= render 'shared/navbar' %>
 <%= render 'products/navbar' %>
@@ -6,15 +7,13 @@
 <% cache [@product] do %>
   <div class="page">
     <div class="container">
-      <%= render 'products/status_message' %>
-
-      <div class="page-header">
-        <h2 class="page-header-title">Teams &amp; <%= @product.stakeholders %></h2>
-      </div>
-
       <div class="row">
 
         <div class="col-md-8 col-xs-8">
+          <div class="page-header">
+            <h2 class="page-header-title"><%= @product.stakeholders %></h2>
+          </div>
+
           <% if !@product.for_profit? %>
             <%= render 'products/non_profit' %>
           <% end %>
@@ -46,7 +45,7 @@
                         <a href="<%= user_path(user) %>">@<%= user.username %></a>
                       </td>
                       <td class="text-right">
-                        <%= number_to_currency cents / 100.to_d, precision: 2, unit: "" %>
+                        <%= number_to_currency cents / 100.to_d, precision: 2, unit: '' %>
                       </td>
                       <% if @product.for_profit? %>
                         <td class="text-right">
@@ -76,7 +75,7 @@
         </div><!-- .col-md-8 -->
 
         <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-          <%= render 'products/subnav' %>
+          <%= render 'products/sidebar' %>
           <%= render 'products/contract' %>
         </div>
       </div><!-- .row -->

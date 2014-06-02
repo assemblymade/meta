@@ -46,7 +46,6 @@
     > a {
       border: none;
       margin-right: 0;
-      font-weight: bold;
 
       @include transition-property(box-shadow);
       @include transition-duration($transition-out-duration);

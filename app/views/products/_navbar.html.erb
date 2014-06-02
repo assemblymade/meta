@@ -1,40 +1,26 @@
 <div class="navbar navbar-default navbar-static-top navbar-lifted" style="z-index: 1">
   <div class="container">
-    <div class="pull-left">
+    <ul class="nav nav-tabs navbar-nav navbar-left">
+      <li class="<%= "active" if products_controller? || nav_active?(:product) %>">
+        <a class="navbar-brand" href="<%= product_path(@product) %>">
+          <%= @product.name %>
+        </a>
+      </li>
+    </ul>
 
-      <ul class="nav nav-tabs navbar-nav">
-        <li class="<%= "active" if products_controller? %>">
-          <a class="navbar-brand" href="<%= product_path(@product) %>">
-            <%= @product.name %>
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <ul class="nav nav-tabs navbar-nav pull-right">
-
-      <% if false # @product.current_mission %>
-        <li>
-          <%= render 'products/mission_progress' %>
-        </li>
-      <% end %>
-
-      <li class="<%= "active" if discussions_controller? %>">
+    <ul class="nav nav-tabs navbar-nav navbar-right">
+      <li class="<%= "active" if discussions_controller? || nav_active?(:product_discussions) %>">
         <a href="<%= product_discuss_path(@product) %>">
-          Discuss
+          Discussions
+          <% if (count = @product.discussions.open.count) > 0 %>
+            <span class="badge"><%= @product.open_discussions_count %></span>
+          <% end %>
         </a>
       </li>
 
-      <li class="<%= "active" if dashboard_controller? %>">
-        <a href="<%= product_dashboard_path(@product) %>">Activity</a>
-      </li>
-
-      <li class="<%= "active" if milestones_controller? %>">
-        <a href="<%= product_milestones_path(@product) %>">
-          Projects
-          <% if (count = @product.milestones.open.count) > 0 %>
-            <span class="badge"><%= count %></span>
-          <% end %>
+      <li class="<%= "active" if nav_active?(:product_activity) %>">
+        <a href="<%= product_dashboard_path(@product) %>">
+          Activity
         </a>
       </li>
 
@@ -47,19 +33,15 @@
         </a>
       </li>
 
-      <% if @product.posts.any? %>
-        <li class="<%= 'active' if posts_controller? %>">
-          <a href="<%= product_posts_path(@product) %>">
-            Blog
-          </a>
-        </li>
-      <% end %>
-
-      <li class="nav-item <%= "active" if (jobs_controller? || partners_controller?) %>">
-        <a href="<%= product_jobs_path(@product) %>">
-          About
+      <li class="<%= "active" if milestones_controller? %>">
+        <a href="<%= product_milestones_path(@product) %>">
+          Projects
+          <% if (count = @product.milestones.open.count) > 0 %>
+            <span class="badge"><%= count %></span>
+          <% end %>
         </a>
       </li>
+
     </ul>
   </div>
 </div>
