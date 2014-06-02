@@ -34,6 +34,8 @@ class User < ActiveRecord::Base
          :omniauth_providers => [:facebook, :github, :twitter],
          :authentication_keys => [:login]
 
+  attr_accessor :login
+
   # auto confirm email. If we get a bounce we'll make them confirm, for now
   # we'll assume the email is correct
   before_create :skip_confirmation!
@@ -64,9 +66,12 @@ class User < ActiveRecord::Base
   class << self
     def find_first_by_auth_conditions(warden_conditions)
       conditions = warden_conditions.dup
-      if login = conditions.delete(:login)
-        condition = login.uuid? ? "id = ?" : "lower(email) = ?"
-        where(conditions).where(condition, login.downcase).first
+      if login = conditions.delete(:login).try(:downcase)
+        if login.uuid?
+          where(conditions).where("id = ?", login).first
+        else
+          where(conditions).where("lower(email) = ? OR lower(username) = ?", login, login).first
+        end
       else
         where(conditions).first
       end
