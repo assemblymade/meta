@@ -10,9 +10,11 @@
       <a href="<%= product_path(@product) %>">About</a>
     </li>
 
-    <li class="<%= 'active' if nav_active?(:subnav_blog) %>">
-      <%= link_to 'Blog', product_posts_path(@product) %>
-    </li>
+    <% if @product.posts.any? %>
+      <li class="<%= 'active' if nav_active?(:subnav_blog) %>">
+        <%= link_to 'Blog', product_posts_path(@product) %>
+      </li>
+    <% end %>
 
     <li class="<%= 'active' if nav_active?(:subnav_teams) %>">
       <%= link_to 'Teams', product_jobs_path(@product) %>
