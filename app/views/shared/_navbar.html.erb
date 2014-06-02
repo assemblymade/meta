@@ -1,14 +1,4 @@
-<div class="navbar
-  <% if Rails.env.development? %>
-    devbar
-  <% end %>
-
-  <% if user_signed_in? %>
-    navbar-inverse
-  <% else %>
-    navbar-default
-  <% end %>
-  navbar-static-top" data-headroom data-tolerance="5" data-offset="205" data-classes="{"initial":"animated","pinned":"slideDown","unpinned":"slideUp","top":"headroom--top","notTop":"headroom--not-top"}">
+<div class="navbar <% if Rails.env.development? %>devbar<% end %> navbar-inverse navbar-static-top" data-headroom data-tolerance="5" data-offset="205" data-classes="{"initial":"animated","pinned":"slideDown","unpinned":"slideUp","top":"headroom--top","notTop":"headroom--not-top"}">
   <div class="container-fluid">
 
     <div class="navbar-header">
@@ -20,10 +10,8 @@
       </button>
       <a class="text-brand navbar-brand" href="<%= root_path %>">
         <span class="brand">
-          <% if user_signed_in? %>
-            <span class="icon icon-logo-filled"></span>
-          <% else %>
-            <span class="icon icon-logo"></span>
+          <span class="icon icon-logo-filled"></span>
+          <% if !user_signed_in? %>
             Assembly
           <% end %>
         </span>
@@ -32,14 +20,16 @@
 
     <div class="collapse navbar-collapse" id="platform-navbar-collapse">
 
-      <form action="<%= scoped_search_path %>" class="navbar-form navbar-left" style="<% if user_signed_in? %>padding-left: 4px;<% end %>">
-        <div class="form-group">
-          <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off"
-            placeholder="<%= @product ? "Search #{@product.name}…" : "Search…" %>"  />
-          <input type="hidden" name="type" value="<%= @type %>">
-        </div>
-        <!-- <button type="submit" class="btn btn-default">Search</button> -->
-      </form>
+      <% if user_signed_in? %>
+        <form action="<%= scoped_search_path %>" class="navbar-form navbar-left" style="<% if user_signed_in? %>padding-left: 4px;<% end %>">
+          <div class="form-group">
+            <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off"
+              placeholder="<%= @product ? "Search #{@product.name}…" : "Search…" %>"  />
+            <input type="hidden" name="type" value="<%= @type %>">
+          </div>
+          <!-- <button type="submit" class="btn btn-default">Search</button> -->
+        </form>
+      <% end %>
 
       <ul class="nav navbar-nav">
 
