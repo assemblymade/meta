@@ -76,6 +76,8 @@ class window.ChatView extends Backbone.View
 
   onLoadMore: (e) =>
     e.preventDefault()
+    originalText = $('.js-chat-load-more').text()
+    @$('.js-chat-load-more').attr('disabled', true).text('Loading…')
     $.ajax(
       type: 'GET'
       url: $(e.target).attr('href') + "?top_id=#{@collection.first().get('id')}"
@@ -83,6 +85,8 @@ class window.ChatView extends Backbone.View
         fixScroll =>
           for data in _.sortBy(datas, (data) -> data['created']).reverse()
             @collection.unshift(data)
+
+          @$('.js-chat-load-more').text(originalText).attr('disabled', false)
     )
 
 # --
