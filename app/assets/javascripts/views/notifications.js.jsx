@@ -14,7 +14,7 @@ var NotificationsList = React.createClass({
     var productNodes = this.props.data.map(function(entry){
       badge = null;
       if (entry.count > 0) {
-        badge = <span className="badge pull-right">{entry.count}</span>
+        badge = <span className="badge badge-notification pull-right">{entry.count}</span>
       }
 
       var url = entry.product.url + '/discuss';
