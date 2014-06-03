@@ -1,7 +1,7 @@
 .hero {
   // Offset .page top padding
   margin-top: -60px;
-  background: linear-gradient(to bottom, transparent 0%, transparent 70%, #f2f6f7 100%), url(image-path('getting-started/hero.jpg')) no-repeat;
+  background: linear-gradient(to bottom, transparent 0%, transparent 70%, #D0A98D 100%), url(image-path('getting-started/hero.jpg')) no-repeat;
   background-position: top center;
   background-size: cover;
   min-height: 790px;
@@ -15,7 +15,7 @@
     margin-top: 0;
     margin-bottom: 28px;
     font-weight: bold;
-    color: inherit;
+    color: #353439;
 
     &:after {
       content: '';
@@ -46,7 +46,7 @@
 .lead {
   font-size: 23px;
   font-weight: normal;
-  color: #4A646F;
+  color: white;
 }
 
 .section,
@@ -54,13 +54,21 @@
   // @extend .text-serif;
   line-height: 1.618;
   color: #4A646F;
+
+  a {
+    color: #68A565;
+  }
 }
 
 .section {
   // padding: 0 36px;
   line-height: 1.764;
-  margin-bottom: 64px;
+  margin-bottom: 36px;
   @extend .text-serif;
+
+  .table-striped > tbody > tr:nth-child(odd) > td {
+    background-color: lighten(#4A646F, 62%);
+  }
 
   h4 {
     @extend .text-sans;
@@ -85,26 +93,14 @@
     text-transform: uppercase;
     letter-spacing: 0.8pt;
     color: #BC9454;
+    color: #68A565;
+    color: #CBCBBC;
   }
 }
 
 .getting-started {
-  padding: 36px 0;
-  background: #f2f6f7;
+  padding: 0 0 48px 0;
+  background: #D0A98D;
   border: none;
   margin-bottom: 60px;
-}
-
-.nav-getting-started {
-  border-bottom: 1px solid $brand-divider;
-  padding: 10px 0;
-
-  .nav-pills {
-
-    > li.active > a {
-      color: white;
-      background-color: #BC9454;
-      border-radius: $border-radius-base;
-    }
-  }
 }
