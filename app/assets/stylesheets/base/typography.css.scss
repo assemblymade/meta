@@ -98,6 +98,10 @@ h6,
   text-rendering: optimizeLegibility;
 }
 
+.text-sans {
+  font-family: $font-family-sans-serif;
+}
+
 .text-serif {
   font-family: $font-family-serif;
 }
@@ -205,6 +209,12 @@ blockquote {
   :last-child {
     margin-bottom: 0;
   }
+}
+
+.text-small-caps {
+  @extend .text-sans;
+  text-transform: uppercase;
+  font-size: 90%;
 }
 
 .text-copy {

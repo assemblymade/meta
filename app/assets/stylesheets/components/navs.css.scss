@@ -37,6 +37,19 @@
   }
 }
 
+.nav-pills-centered {
+  text-align: center;
+  display: inline-block;
+
+  > li {
+    display: inline;
+  }
+
+  > li > a {
+    float: left;
+  }
+}
+
 .nav-tabs {
   border-bottom-width: 0;
 
