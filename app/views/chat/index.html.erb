@@ -73,7 +73,7 @@
         )
 
         component.setState({
-          members: <%= @product.watchers.map {|w| UserSerializer.new(w) }.to_json.html_safe %>
+          members: <%= @product.watchers.each_with_object({}) {|w, memo| memo[w.id] = UserSerializer.new(w) }.to_json.html_safe %>
         })
 
       })

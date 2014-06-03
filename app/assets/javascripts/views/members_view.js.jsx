@@ -53,7 +53,6 @@ var MembersView = React.createClass({
   },
 
   componentDidMount: function() {
-    this.loadMembersFromServer()
     this.loadMembersFromChannel()
 
     this.props.channel.bind(
@@ -120,9 +119,9 @@ var MembersView = React.createClass({
   },
 
   addMembers: function(members) {
-    this.setState(
-      React.addons.update(this.state, {members: {'$merge': members}})
-    )
+    this.setState({
+      members: _.extend(this.state.members, members)
+    })
   },
 
   addMemberFromPusher: function(member) {

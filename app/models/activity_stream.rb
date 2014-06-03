@@ -14,7 +14,7 @@ class ActivityStream
 
   def self.delete_all
     keys = $redis.keys("#{KEY_PREFIX}:*")
-    $redis.del(*keys)
+    $redis.del(*keys) if keys.any?
   end
 
   def initialize(object)
