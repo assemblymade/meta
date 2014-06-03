@@ -8,7 +8,7 @@ class ChatController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @watchers = @product.watchers.order(last_request_at: :desc).limit(5)
+        @watchers = @product.watchers.order(last_request_at: :desc)
       end
       format.json do
         render json: @activity_stream.map {|a| ActivitySerializer.new(a, scope: current_user)}

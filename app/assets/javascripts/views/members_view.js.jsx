@@ -14,13 +14,12 @@ var MembersView = React.createClass({
 
   render: function() {
     return (
-      <div className="list-group list-group-breakout omega">
+      <div className="">
       {
         _.map(this.sortedMembers(), function(member) {
 
           var classes = React.addons.classSet({
-            'list-group-item': true,
-            'bg-success': member.online,
+            'text-weight-bold': member.online,
             'text-emphasis text-muted': !member.online
           })
 
@@ -31,12 +30,14 @@ var MembersView = React.createClass({
           }
 
           return (
-            <a className={classes} href={member.url} key={member.id}>
-              <div className="pull-right">
-              {marker}
-              </div>
-              @{member.username}
-            </a>
+            <div>
+              <a className={classes} href={member.url} key={member.id}>
+                <div className="pull-right">
+                {marker}
+                </div>
+                @{member.username}
+              </a>
+            </div>
           )
         })
       }

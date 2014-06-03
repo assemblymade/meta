@@ -29,7 +29,9 @@
         <div class="panel-heading">
           <h6 class="panel-title">Members</h6>
         </div>
-        <div class="js-members small"></div>
+        <div class="panel-body">
+          <div class="js-members small"></div>
+        </div>
       </div>
       <a class="btn btn-default btn-block" href="<%= product_discussions_path(@product) %>">All Discussions</a>
     </div>
@@ -71,9 +73,9 @@
 
       var presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
 
-      presenceChannel.bind('pusher:subscription_succeeded', function(chan) {
-        console.log('pusher members', chan.members)
-      });
+      // presenceChannel.bind('pusher:subscription_succeeded', function(chan) {
+      //   console.log('pusher members', chan.members)
+      // });
 
     });
 
