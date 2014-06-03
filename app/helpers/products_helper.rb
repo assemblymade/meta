@@ -1,6 +1,7 @@
 module ProductsHelper
 
   %w(
+    assets
     products
     partners
     milestones

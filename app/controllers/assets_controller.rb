@@ -1,6 +1,7 @@
 class AssetsController < ApplicationController
   respond_to :html
 
+  before_action :authenticate_user!, :except => [:index]
   before_action :set_product
 
   def index

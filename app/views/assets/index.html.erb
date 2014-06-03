@@ -7,17 +7,19 @@
     <%= render 'products/status_message' %>
 
     <div class="page-header">
-      <div class="pull-right">
-        <%= form_for :asset, url: product_assets_path(@product), html: {class: 'js-dropzone-form'} do |f| %>
-          <%= f.hidden_field :attachment_id %>
-          <%= f.hidden_field :name %>
-        <% end %>
-        <div class="js-dropzone" data-target-form=".js-dropzone-form">
-          <span class="btn btn-success js-dropzone-select" data-disable-with="Uploading...">
-            Upload an asset
-          </span>
+      <% if can? :create, Asset %>
+        <div class="pull-right">
+          <%= form_for :asset, url: product_assets_path(@product), html: {class: 'js-dropzone-form'} do |f| %>
+            <%= f.hidden_field :attachment_id %>
+            <%= f.hidden_field :name %>
+          <% end %>
+          <div class="js-dropzone" data-target-form=".js-dropzone-form">
+            <span class="btn btn-success js-dropzone-select" data-disable-with="Uploading...">
+              Upload an asset
+            </span>
+          </div>
         </div>
-      </div>
+      <% end %>
 
       <h2 class="page-header-title">Assets</h2>
     </div>
