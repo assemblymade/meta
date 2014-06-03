@@ -1,7 +1,8 @@
 class UserSerializer < ApplicationSerializer
   include MarkdownHelper
 
-  attributes :url, :username, :avatar_url, :product_balance
+  attributes :url, :username, :avatar_url, :last_online
+  attributes :product_balance
 
   def url
     user_path(object)
@@ -9,6 +10,10 @@ class UserSerializer < ApplicationSerializer
 
   def avatar_url
     object.avatar.url(140).to_s
+  end
+
+  def last_online
+    object.last_request_at.iso8601
   end
 
   def product_balance

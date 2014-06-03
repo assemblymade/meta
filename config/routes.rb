@@ -199,6 +199,7 @@ ASM::Application.routes.draw do
     get 'search' => 'search#index'
 
     resources :assets
+    resources :watchers
 
     resources :milestones, only: [:index, :show, :new, :create, :edit, :update], path: 'projects' do
       put 'tasks/:id' => 'milestones#add'

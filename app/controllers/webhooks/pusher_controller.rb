@@ -5,7 +5,7 @@ class Webhooks::PusherController < WebhookController
       pusher = Pusher[params[:channel_name]]
       response = pusher.authenticate(params[:socket_id],
         user_id: current_user.id,
-        user_info: MemberSerializer.new(current_user)
+        user_info: UserSerializer.new(current_user)
       )
       render json: response
     else

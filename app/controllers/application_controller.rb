@@ -2,9 +2,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :store_location
-  before_action :validate_confirmed!, :if => :signed_in?
-  after_action :set_request_info!, :if => :signed_in?
-  before_action :strip_auth_token,     :if => :signed_in?
+  before_action :validate_confirmed!, if: :signed_in?
+  before_action :strip_auth_token,    if: :signed_in?
+  after_action  :set_request_info!,   if: :signed_in?
 
   rescue_from CanCan::AccessDenied do |e|
     store_location

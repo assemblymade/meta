@@ -25,14 +25,8 @@
 
     <div class="col-xs-3" style="margin-top:136px;width:260px;position:fixed;margin-left:711px">
       <%#= render 'discussions/intro_panel' %>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h6 class="panel-title">Members</h6>
-        </div>
-        <div class="panel-body">
-          <div class="js-members small"></div>
-        </div>
-      </div>
+      <div class="js-members"></div>
+
       <a class="btn btn-default btn-block" href="<%= product_discussions_path(@product) %>">All Discussions</a>
     </div>
   </div>
@@ -59,10 +53,6 @@
       collection: activityStream
     });
 
-    var members = new Members(<%= @watchers.map {|w| MemberSerializer.new(w) }.to_json.html_safe %>)
-
-    window.members = members
-
     // Initialize pusher
     var pusher = new Pusher($('meta[name=pusher-key]').attr('content'), {
       authEndpoint: <%= webhooks_pusher_path.to_json.html_safe %>
@@ -73,9 +63,20 @@
 
       var presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
 
-      // presenceChannel.bind('pusher:subscription_succeeded', function(chan) {
-      //   console.log('pusher members', chan.members)
-      // });
+      $('.js-members').each(function() {
+        var component = React.renderComponent(
+          MembersView({
+            url: '<%= product_watchers_path(@product, format: :json) %>',
+            channel: presenceChannel
+          }),
+          this
+        )
+
+        component.setState({
+          members: <%= @product.watchers.map {|w| UserSerializer.new(w) }.to_json.html_safe %>
+        })
+
+      })
 
     });
 
@@ -96,27 +97,6 @@
     });
 
   });
-</script>
-
-<script>
-  $(document).ready(function() {
-
-    $('.js-members').each(function() {
-      var component = React.renderComponent(
-        MembersView({}),
-        this
-      )
-
-      window.members.each(function(member) {
-        component.addMember(member.attributes)
-      })
-
-      members.on('add', function(event, model, collection) {
-        component.addMember(model.attributes)
-      })
-    })
-
-  })
 </script>
 
 <!-- Analytics -->
