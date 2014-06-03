@@ -29,7 +29,7 @@ class window.ActivityStreamView extends Backbone.View
     if index == 0
       @$el.prepend(view.el)
     else
-      @$(":nth-child(#{index-1})").after(view.el)
+      @$(".timeline-item:nth-child(#{index})").after(view.el)
 
     view.render()
 
