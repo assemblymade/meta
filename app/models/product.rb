@@ -17,6 +17,7 @@ class Product < ActiveRecord::Base
   belongs_to :main_thread, class_name: 'Discussion'
 
   has_many :activities
+  has_many :assets
   has_many :completed_missions
   has_many :contract_holders
   has_many :core_team_memberships

@@ -44,7 +44,7 @@
             <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
               <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Say something awesome!', rows: 3, style: 'border-top-left-radius: 0', "data-product-id" => @wip.product.id %>
 
-              <div class="dropzone-inner">
+              <div class="dropzone-inner js-dropzone-select">
                 To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...
               </div>
             </div>
@@ -90,7 +90,7 @@
         <div class="tab-pane" id="design">
 
           <div class="well dropzone js-dropzone" id="design-deliverable-dropzone-el">
-            <div class="dropzone-inner">
+            <div class="dropzone-inner js-dropzone-select">
               <div class="upload-state upload-state-ready">
                 Drag &amp; drop a design asset here, or <a class="file-drop-select" href="#">select it from your computer</a>.
               </div>

@@ -5,12 +5,16 @@ signUpload = (file, xhr, formData) ->
 
 class DropzoneView extends Backbone.View
   initialize: (options) ->
+    @targetForm = $(options.targetForm)
+
     @dz = new Dropzone(@el,
       accept: @onAccept
       sending: @onSending
-      clickable: @$('.dropzone-inner')[0]
+      clickable: @$('.js-dropzone-select')[0]
       url: options.url
     )
+
+    @dz.on 'complete', @onComplete
 
   onAccept: (file, done) =>
     @accept(file, done)
@@ -34,11 +38,17 @@ class DropzoneView extends Backbone.View
   onSending: (file, xhr, formData) =>
     signUpload(file, xhr, formData)
 
+  onComplete: (file)=>
+    @targetForm.each ->
+      $('[name="asset[attachment_id]"]', @).val(file.attachment.id)
+      $('[name="asset[name]"]', @).val(file.name)
+    @targetForm.submit()
+
 $(document).ready ->
   # FIXME: extract pattern into a helper
   url = $('meta[name=attachment-upload-url]').attr('content')
   thow 'error' unless url
 
   $('.js-dropzone').each ->
-    view = new DropzoneView(el: @, url: url)
+    view = new DropzoneView(el: @, url: url, targetForm: $(@).data('target-form'))
     $(@).data('dz', view.dz)

@@ -1,0 +1,15 @@
+<% cache [asset] do %>
+  <a class="card" href="<%= URI.escape(asset.url) %>">
+
+    <div class="card-hero" style="background-image:url(<%= firesize(asset.url, '426x284', 'g_center', 'frame_0')%>)"></div>
+
+    <div class="card-body">
+
+      <div class="summary">
+        <div class="summary-target" style="min-height:56px">
+          <%= asset.name %>
+        </div>
+      </div>
+    </div>
+  </a>
+<% end %>

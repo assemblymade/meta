@@ -1,0 +1,39 @@
+<% title 'Projects', @product.name %>
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
+
+<div class="page">
+  <div class="container">
+    <%= render 'products/status_message' %>
+
+    <div class="page-header">
+      <div class="pull-right">
+        <%= form_for :asset, url: product_assets_path(@product), html: {class: 'js-dropzone-form'} do |f| %>
+          <%= f.hidden_field :attachment_id %>
+          <%= f.hidden_field :name %>
+        <% end %>
+        <div class="js-dropzone" data-target-form=".js-dropzone-form">
+          <span class="btn btn-success js-dropzone-select" data-disable-with="Uploading...">
+            Upload an asset
+          </span>
+        </div>
+      </div>
+
+      <h2 class="page-header-title">Assets</h2>
+    </div>
+
+    <div class="row">
+      <% @assets.each do |asset| %>
+        <div class="col-md-3 col-xs-3">
+          <%= render 'assets/asset', asset: asset %>
+        </div>
+      <% end %>
+    </div>
+    <%= paginate @assets, theme: 'twitter-bootstrap-3' %>
+
+  </div>
+
+</div>
+
+
+<%= render 'shared/footer' %>
