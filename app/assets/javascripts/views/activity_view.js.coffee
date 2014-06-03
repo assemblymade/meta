@@ -24,7 +24,10 @@ class window.ActivityView extends Backbone.View
 
   partial: =>
     # render an external partial if this stream is not the subject of this activity
-    external = @model.get('subject').id != @subjectId
+    external = false
+    if subject = @model.get('subject')
+      external = subject.id != @subjectId
+
     if external
       "#{@model.get('type')}_ext"
     else

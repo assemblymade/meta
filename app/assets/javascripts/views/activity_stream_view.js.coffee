@@ -42,7 +42,6 @@ class window.ActivityStreamView extends Backbone.View
     lockScrollToBottom(=>
       @buildSubviewForModel(model, collection.indexOf(model))
     )
-    @incrementUnread()
 
 # --
 
