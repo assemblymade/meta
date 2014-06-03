@@ -29,21 +29,16 @@ class ChatController < ApplicationController
       )
     end
 
-    track_wip_engaged @product.main_thread, 'commented'
-    register_with_readraptor(@event)
-    @event.notify_users!(@product.watchers)
+    if @event.valid?
+      track_wip_engaged @product.main_thread, 'commented'
+      register_with_readraptor(@event)
+      @event.notify_users!(@product.watchers)
 
-    @activity = Activities::Comment.publish!(actor: @event.user, target: @event)
+      @activity = Activities::Comment.publish!(actor: @event.user, target: @event, socket_id: params[:socket_id])
 
-    track_analytics(@event)
-    next_mission_if_complete!(@product.current_mission, current_user)
-
-    PusherWorker.perform_async(
-      "activitystream.#{@product.id}",
-      "add",
-      ActivitySerializer.new(@activity).to_json,
-      socket_id: params[:socket_id]
-    )
+      track_analytics(@event)
+      next_mission_if_complete!(@product.current_mission, current_user)
+    end
 
     respond_with @activity, location: product_chat_path(@product), serializer: ActivitySerializer
   end

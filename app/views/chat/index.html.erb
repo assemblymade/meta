@@ -50,7 +50,8 @@
 
     var activityStreamView = new ActivityStreamView({
       el: $('.js-activity-stream'),
-      collection: activityStream
+      collection: activityStream,
+      subjectId: app.wip.id
     });
 
     // Initialize pusher

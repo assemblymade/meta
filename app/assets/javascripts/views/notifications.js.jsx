@@ -114,6 +114,8 @@ var Notifications = React.createClass({
       classes += " glyphicon-highlight";
     }
 
+    this.setTitle(total)
+
     var sorted = this.sortByCount(this.state.data)
     return (
       <li>
@@ -124,7 +126,16 @@ var Notifications = React.createClass({
         <NotificationsList data={sorted} username={this.props.username} />
       </li>
     );
+  },
+
+  setTitle: function(total) {
+    if (total > 0) {
+      document.title = '(' + total + ') ' + this.props.title
+    } else {
+      document.title = this.props.title
+    }
   }
+
 });
 
 $(document).ready(function() {
@@ -133,7 +144,7 @@ $(document).ready(function() {
   var el = document.getElementById('js-notifications');
   if(el) {
     React.renderComponent(
-      <Notifications url={url} username={username} />, el
+      <Notifications url={url} username={username} title={document.title} />, el
     )
   }
 });

@@ -18,19 +18,19 @@ class CommentsController < ApplicationController
       @event = Event.create_from_comment(@wip, type, comment_params[:body], current_user, comment_params[:socket_id])
     end
 
-    if type == Event::Comment
-      track_wip_engaged @wip, 'commented'
-      register_with_readraptor(@event)
-      
-      @event.notify_users!(@wip.watchers)
+    if @event.valid?
+      if type == Event::Comment
+        track_wip_engaged @wip, 'commented'
+        register_with_readraptor(@event)
 
-      if @event.wip.main_thread?
-        Activities::Comment.publish!(actor: @event.user, target: @event)
+        @event.notify_users!(@wip.watchers)
+
+        Activities::Comment.publish!(actor: @event.user, target: @event, socket_id: params[:socket_id])
       end
-    end
 
-    track_analytics(@event)
-    next_mission_if_complete!(@product.current_mission, current_user)
+      track_analytics(@event)
+      next_mission_if_complete!(@product.current_mission, current_user)
+    end
 
     respond_with @event, location: product_wip_path(@product, @wip), serializer: EventSerializer
   end

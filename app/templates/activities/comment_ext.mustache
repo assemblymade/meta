@@ -1,0 +1,27 @@
+<div class="media" {{#target}}id="{{anchor}}"{{/target}}>
+  <div class="pull-left">
+    <div class="marker icon marker-default icon-speach-bubble">
+      <span class="icon icon-right-chevron"></span>
+    </div>
+  </div>
+
+  <div class="media-body">
+    <div class="media-heading omega">
+
+      {{#actor}}
+        <a href="{{url}}" title="@{{username}}">@{{username}}</a>
+      {{/actor}}
+
+      commented on
+
+      {{#subject}}
+      <a class="long-link" href="{{url}}{{#target}}#{{anchor}}{{/target}}">
+        {{title}}
+      </a>
+      <a class="text-muted" href="{{url}}{{#target}}#{{anchor}}{{/target}}">
+        #{{number}}
+      </a>
+      {{/subject}}
+    </div>
+  </div>
+</div>

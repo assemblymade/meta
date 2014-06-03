@@ -8,8 +8,8 @@ class window.ActivityStreamView extends Backbone.View
   collection: ActivityStream
 
   initialize: (options)->
-    @unreadCount = 0
     @documentTitle = document.title
+    @subjectId = options.subjectId
 
     @subviews = []
 
@@ -23,7 +23,7 @@ class window.ActivityStreamView extends Backbone.View
     view.render() for view in @subviews
 
   buildSubviewForModel: (model, index) ->
-    view = new ActivityView(model: model)
+    view = new ActivityView(model: model, subjectId: @subjectId)
     @subviews.splice(index, 0, view)
 
     if index == 0
@@ -32,14 +32,6 @@ class window.ActivityStreamView extends Backbone.View
       @$(".timeline-item:nth-child(#{index})").after(view.el)
 
     view.render()
-
-  setDocumentTitle: ->
-    document.title = unreadDocumentTitle(@documentTitle, @unreadCount)
-
-  incrementUnread: ->
-    if !document.hasFocus()
-      @unreadCount += 1
-      @setDocumentTitle()
 
   scrollToLatestActivity: ->
     $(window).scrollTop($(document).height())
@@ -50,19 +42,9 @@ class window.ActivityStreamView extends Backbone.View
     lockScrollToBottom(=>
       @buildSubviewForModel(model, collection.indexOf(model))
     )
-    @incrementUnread()
-
-  onWindowFocus: =>
-    @unreadCount = 0
-    @setDocumentTitle()
 
 # --
 
-unreadDocumentTitle = (title, unread) ->
-  if unread != 0
-    "(#{unread}) #{title}"
-  else
-    title
 
 lockScrollToBottom = (cb) ->
   scrolled = $(document).scrollTop()
