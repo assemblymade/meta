@@ -24,7 +24,6 @@ class window.DiscussionView extends Backbone.View
     @validateComment ''
 
     @listenTo(@model, 'change:state', @wipStateChanged)
-    @listenTo(@model, 'change:unreadCount', @unreadCountChanged)
     @listenTo(@model, 'change:own_comments', @ownCommentsChanged)
     @listenTo(app.wipEvents, 'add', @wipEventAdded)
 
@@ -102,7 +101,6 @@ class window.DiscussionView extends Backbone.View
       app.wipEvents.add(event)
       unless @foreground
         @model.incrementUnreadCount()
-        @pushNotification(event)
 
   wipStateChanged: ->
     switch @model.get('state')
@@ -160,29 +158,12 @@ class window.DiscussionView extends Backbone.View
   showUpvotePrompt: ->
     @children.upvoteReminder.fadeIn()
 
-  pushNotification: (event)->
-    n = new Notify "New message on #{event.get('wip').product_name}",
-      body: "#{event.get('actor').username}: #{event.get('body_html')}"
-      icon: 'https://d8izdk6bl4gbi.cloudfront.net/80x/http://f.cl.ly/items/1I2a1j0M0w0V2p3C3Q0M/Assembly-Twitter-Avatar.png'
-      timeout: 5
-      notifyClick: =>
-        $(window).focus()
-
-    n.show()
-
   onWindowFocused: =>
     @foreground = true
     @model.markAllAsRead()
 
   onWindowBlurred: =>
     @foreground = false
-
-  unreadCountChanged: =>
-    count = @model.get('unreadCount')
-    if count == 0
-      document.title = @originalTitle
-    else
-      document.title = "(#{count}) #{@originalTitle}"
 
   ownCommentsChanged: ->
     @children.welcomeBox.toggle !@model.hasOwnComments()

@@ -2,6 +2,8 @@ class Activity < ActiveRecord::Base
   belongs_to :actor,   polymorphic: true
   belongs_to :subject, polymorphic: true
   belongs_to :target,  polymorphic: true
+  
+  attr_accessor :socket_id
 
   def self.publish!(opts)
     a = create!(opts)
@@ -20,15 +22,4 @@ class Activity < ActiveRecord::Base
       stream.push(self)
     end
   end
-
-  def html(scope=nil)
-    data = ActivitySerializer.new(self, scope: scope)
-    template_root = Rails.root.join('app', 'templates', 'activities')
-    template_path = template_root.join(
-      "#{type.demodulize.underscore}.mustache"
-    )
-
-    Mustache.render(File.read(template_path), data.as_json).html_safe
-  end
-
 end

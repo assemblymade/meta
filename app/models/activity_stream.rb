@@ -26,12 +26,26 @@ class ActivityStream
   end
 
   def push(activity)
+    redis_push(activity)
+    pusher_push(activity)
+    activity
+  end
+
+  def redis_push(activity)
     $redis.zadd(
       key,
       activity.created_at.to_i,
       self.class.serialize(activity)
     )
-    activity
+  end
+
+  def pusher_push(activity)
+    PusherWorker.perform_async(
+      channel,
+      "add",
+      ActivitySerializer.new(activity).to_json,
+      socket_id: activity.socket_id
+    )
   end
 
   def values
@@ -60,6 +74,10 @@ class ActivityStream
 
   def key
     [KEY_PREFIX, @object.class.name.underscore, @object.id].join(':')
+  end
+
+  def channel
+    [KEY_PREFIX, @object.id].join('.')
   end
 
 end
