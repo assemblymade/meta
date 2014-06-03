@@ -4,8 +4,8 @@ describe User do
   let(:user) { User.make! }
   let(:product) { Product.make! }
 
-  it 'defaults to immediate email' do
-    expect(user.mail_preference).to eq(User::MAIL_IMMEDIATE)
+  it 'sets default mail preference' do
+    expect(user.mail_preference).to eq(User::MAIL_DAILY)
   end
 
   it 'indicates if the user has already voted' do
