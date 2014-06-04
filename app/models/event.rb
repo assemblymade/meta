@@ -27,6 +27,7 @@ class Event < ActiveRecord::Base
   ]
 
   attr_accessor :socket_id # for Pusher
+  attr_accessor :readraptor_tag # set which tag you are viewing
 
   def self.analytics_name
     "wip.#{slug}"
@@ -76,17 +77,10 @@ class Event < ActiveRecord::Base
     event_hash = EventSerializer.for(self, nil).as_json.merge(socket_id: self.socket_id)
     event_hash[:mentions] = mentioned_users.map(&:username)
 
-    if wip.main_thread?
-      # currently on the main thread, pusher pushes a 'chat' event to the user's channel which triggers
-      # it to call for updates. This is part of notifications
-
-      user_channels = users.map{|u| "@#{u.username}"}
-      PusherWorker.perform_async user_channels, 'chat', event_hash.to_json
-    else
-      # on other discussions and tasks, an event is pushed on the wip channel to update the page
-      # this is not covered by the notifications stuff
-      PusherWorker.perform_async wip.push_channel, 'event.added', event_hash.to_json
-    end
+    # pushes a 'chat' event to the user's channel to trigger
+    # it to call for updates. This is part of notifications
+    channels = users.map{|u| "@#{u.username}"} + [wip.push_channel]
+    PusherWorker.perform_async channels, 'event.added', event_hash.to_json
   end
 
   def mentioned_users

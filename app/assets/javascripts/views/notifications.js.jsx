@@ -84,7 +84,7 @@ var Notifications = React.createClass({
   onPush: function(fn) {
     if (window.pusher) {
       channel = window.pusher.subscribe('@'+this.props.username);
-      channel.bind('chat', fn);
+      channel.bind_all(fn);
     }
   },
   desktopNotify: function(event) {

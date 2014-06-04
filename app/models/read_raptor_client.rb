@@ -1,14 +1,13 @@
 class ReadRaptorClient
 
-  def unread_entities(distinct_id)
-    body = get("/readers/#{distinct_id}")
-    (body || []).map{|a| a['key'] }
+  def unread_entities(distinct_id, tag=nil)
+    tagged_unread_articles(distinct_id).select do |article|
+      article[:tags].include?(tag.to_s)
+    end
   end
 
   def undelivered_articles(distinct_id)
     article_ids = unread_entities(distinct_id).map{|id| id.split('_') }
-
-    puts "article_ids #{article_ids}"
 
     undelivered_articles = []
     articles = article_ids.group_by {|_, id, _| id }.select do |id, articles|
@@ -21,6 +20,22 @@ class ReadRaptorClient
       end
     end
     undelivered_articles
+  end
+
+  def tagged_unread_articles(distinct_id)
+    body = get("/readers/#{distinct_id}")
+    group_with_tags (body || []).map{|a| a['key']}
+  end
+
+  def group_with_tags(article_ids)
+    grouped = {}
+    article_ids.map do |article_id|
+      type, id, tag = article_id.split('_')
+      grouped[id] ||= { type: type, id: id }
+      grouped[id][:tags] ||= []
+      grouped[id][:tags] << tag
+    end
+    grouped.values
   end
 
   def post(url, body = {})

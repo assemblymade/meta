@@ -16,7 +16,7 @@ module ReadRaptor
         req.body = body.to_json
       end
 
-      Rails.logger.info "readraptor #{method} #{url}: #{body.to_json} > #{resp.status}"
+      Rails.logger.info "  [ReadRaptor] #{method} #{url}: #{body.to_json} > #{resp.status}"
 
       JSON.load(resp.body) rescue nil
     end

@@ -72,7 +72,7 @@ class EventSerializer < ActiveModel::Serializer
   attributes :readraptor_track_id
 
   def readraptor_track_id
-    ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(object).first, scope.id).url if scope
+    ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(object, object.readraptor_tag).first, scope.id).url if scope
   end
 
   def include_readraptor_tracking_url?

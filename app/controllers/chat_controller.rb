@@ -5,6 +5,7 @@ class ChatController < ApplicationController
   def index
     find_product!
     @activity_stream = ActivityStream.new(@product).page(params[:top_id])
+    @activity_stream.each{|a| a.subject.readraptor_tag = :chat }
 
     respond_to do |format|
       format.html do
@@ -77,7 +78,7 @@ class ChatController < ApplicationController
 
   def register_with_readraptor(event)
     excluded_users = [event.user, event.mentioned_users].flatten.compact.uniq
-    ReadRaptorDelivery.new(event.wip.watchers - excluded_users).deliver_async(event)
+    ReadRaptorDelivery.new(event.wip.watchers - excluded_users, :chat).deliver_async(event)
   end
 
 end

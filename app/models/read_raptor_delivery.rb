@@ -5,19 +5,18 @@ class ReadRaptorDelivery
 
   attr_reader :recipients
 
-  def initialize(recipients, tag=nil)
+  def initialize(recipients, tags=[])
     @recipients = recipients
-    @tag = tag
+    @tags = Array(tags)
   end
 
   def deliver_async(entity)
     return unless ENV['READRAPTOR_URL']
 
     recipients.group_by{|u| u.mail_preference }.each do |preference, recipients|
-      # register the main content article (no tag) + the email article (email tag)
-      [nil, :email].each do |tag|
+      @tags.each do |tag|
         opts = {
-          key: ReadRaptorSerializer.serialize_entities(entity, @tag).first,
+          key: ReadRaptorSerializer.serialize_entities(entity, tag).first,
           recipients: recipients.map(&:id)
         }
 
@@ -29,7 +28,7 @@ class ReadRaptorDelivery
           }]
         end
 
-        ReadRaptor::RegisterArticleWorker.perform_async(opts)
+        ReadRaptor::RegisterArticleWorker.new.perform(opts)
       end
     end
   end

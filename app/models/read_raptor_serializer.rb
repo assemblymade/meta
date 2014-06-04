@@ -6,10 +6,10 @@ class ReadRaptorSerializer
     Array(entities).map{|o| [o.class.base_class.to_s, o.id, tag].compact.join('_') }
   end
 
-  def self.deserialize_articles(keys)
+  def self.deserialize(articles)
     entities = []
-    keys.map{|id| id.split('_') }.group_by{|type, id, _| type }.each do |type, type_ids|
-      ids = type_ids.map{|t, id, tag| id }
+    articles.group_by{|a| a[:type] }.each do |type, articles|
+      ids = articles.map{|a| a[:id] }
       type.constantize.base_class.where(id: ids).to_a.compact.each do |o|
         entities << o
       end

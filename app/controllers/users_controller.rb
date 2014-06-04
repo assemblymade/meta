@@ -45,19 +45,17 @@ class UsersController < ApplicationController
   end
 
   def unread
-    unread_articles = ReadRaptorClient.new.unread_entities(current_user.id)
+    unread_chats = ReadRaptorClient.new.unread_entities(current_user.id, :chat)
 
     @main_thread_updates = {}
-    entities = ReadRaptorSerializer.deserialize_articles(unread_articles)
+    entities = ReadRaptorSerializer.deserialize(unread_chats)
     entities.each do |o|
       case o
       when Event::Comment
         wip = o.wip
         product = wip.product
-        if wip == product.main_thread
-          @main_thread_updates[product] ||= []
-          @main_thread_updates[product] << o
-        end
+        @main_thread_updates[product] ||= []
+        @main_thread_updates[product] << o
       end
     end
 
