@@ -76,9 +76,21 @@
         component.setState({
           members: <%= @product.watchers.each_with_object({}) {|w, memo| memo[w.id] = UserSerializer.new(w) }.to_json.html_safe %>
         })
-
       })
 
+      presenceChannel.bind(
+        'pusher:member_added',
+        function memberJoined(member) {
+          var activity = new Activity({
+            id: member.id + rand(10000),
+            actor: member.info,
+            // TODO: change property to 'verb'
+            type: 'activities/join'
+          });
+          
+          activityStream.add(activity);
+        }
+      );
     });
 
     var chatView = new ChatView({

@@ -164,6 +164,4 @@ var MembersView = React.createClass({
       return member.username.toLowerCase()
     }).value()
   }
-
-
 })
