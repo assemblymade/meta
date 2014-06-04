@@ -1,13 +1,19 @@
+$hero-primary: desaturate(#b57f59, 25%);
+$text-copy: #4A646F;
+$text-accent: #BC9454;
+$text-link: #68A565;
+$text-muted: #CBCBBC;
+
 .hero {
   // Offset .page top padding
   margin-top: -60px;
-  background: linear-gradient(to bottom, transparent 0%, transparent 70%, #D0A98D 100%), url(image-path('getting-started/hero.jpg')) no-repeat;
+  background: linear-gradient(to bottom, transparent 0%, transparent 70%, $hero-primary 100%), url(image-path('getting-started/hero.jpg')) no-repeat;
   background-position: top center;
   background-size: cover;
   min-height: 790px;
   padding-top: 80px;
   position: relative;
-  color: #4A646F;
+  color: $text-copy;
 
   h1 {
     @extend .text-serif;
@@ -22,7 +28,7 @@
       display: block;
       width: 20%;
       height: 2px;
-      background-color: #C7CFD4;
+      background-color: $text-muted;
       margin: 0 auto;
       margin-top: 28px;
       border-radius: 1.5px;
@@ -34,7 +40,7 @@
     letter-spacing: 0.8pt;
     margin: 0;
     margin-bottom: 5px;
-    color: #BC9454;
+    color: $text-accent;
   }
 
   .lead {
@@ -53,24 +59,26 @@
 .sidebar {
   // @extend .text-serif;
   line-height: 1.618;
-  color: #4A646F;
+  color: $text-copy;
 
   a {
-    color: #68A565;
+    color: $text-link;
   }
 }
 
 .section {
-  // padding: 0 36px;
   line-height: 1.764;
+  line-height: 1.618;
   margin-bottom: 36px;
   @extend .text-serif;
 
   .table-striped > tbody > tr:nth-child(odd) > td {
-    background-color: lighten(#4A646F, 62%);
+    background-color: lighten($text-copy, 62%);
   }
 
   .table {
+    @extend .text-sans;
+
     .icon-app-coin {
       opacity: 0.33;
       font-size: 14px;
@@ -79,15 +87,18 @@
     }
   }
 
+  figure {
+    font-size: 14px;
+    font-style: italic;
+    color: $text-muted;
+  }
+
   h4 {
     @extend .text-sans;
     font-weight: bold;
-    font-size: 21px;
-    // font-size: 15px;
-    // text-transform: uppercase;
-    // letter-spacing: 0.8pt;
+    font-size: 24px;
     margin-bottom: $line-height-computed * 1;
-    color: #BC9454;
+    color: $text-accent;
   }
 }
 
@@ -101,15 +112,13 @@
     font-size: 15px;
     text-transform: uppercase;
     letter-spacing: 0.8pt;
-    color: #BC9454;
-    color: #68A565;
-    color: #CBCBBC;
+    color: $text-muted;
   }
 }
 
 .getting-started {
-  padding: 0 0 48px 0;
-  background: #D0A98D;
+  padding: 16px 0 36px 0;
+  background: $hero-primary;
   border: none;
   margin-bottom: 60px;
 }
