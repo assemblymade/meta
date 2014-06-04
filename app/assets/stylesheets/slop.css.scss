@@ -1,13 +1,18 @@
-$hero-primary: desaturate(#b57f59, 25%);
+$hero-primary: desaturate(#b57f59, 20%);
 $text-copy: #4A646F;
 $text-accent: #BC9454;
 $text-link: #68A565;
 $text-muted: #CBCBBC;
 
+$product-helpful: desaturate(#FF4B4E, 30%);
+$product-family-table: #75b5ac;
+$product-buckets: lighten(#353535, 30%);
+
 .hero {
   // Offset .page top padding
   margin-top: -60px;
   background: linear-gradient(to bottom, transparent 0%, transparent 70%, $hero-primary 100%), url(image-path('getting-started/hero.jpg')) no-repeat;
+  background-color: $hero-primary;
   background-position: top center;
   background-size: cover;
   min-height: 790px;
@@ -49,7 +54,8 @@ $text-muted: #CBCBBC;
   }
 }
 
-.lead {
+.lead-hero {
+  @extend .lead;
   font-size: 23px;
   font-weight: normal;
   color: white;
@@ -67,7 +73,6 @@ $text-muted: #CBCBBC;
 }
 
 .section {
-  line-height: 1.764;
   line-height: 1.618;
   margin-bottom: 36px;
   @extend .text-serif;
@@ -78,19 +83,12 @@ $text-muted: #CBCBBC;
 
   .table {
     @extend .text-sans;
-
-    .icon-app-coin {
-      opacity: 0.33;
-      font-size: 14px;
-      top: -1px;
-      position: relative;
-    }
   }
 
   figure {
     font-size: 14px;
     font-style: italic;
-    color: $text-muted;
+    color: $gray;
   }
 
   h4 {
@@ -99,6 +97,65 @@ $text-muted: #CBCBBC;
     font-size: 24px;
     margin-bottom: $line-height-computed * 1;
     color: $text-accent;
+  }
+}
+
+.card-sm {
+  .card-body {
+    padding: 15px 20px;
+  }
+}
+
+.card-colored {
+  @extend .text-sans;
+  margin-bottom: 0;
+  background-color: $gray;
+  box-shadow: inset 0 0 0 1px $brand-shadow,
+              0 1px 0 0 $brand-shadow;
+
+  .card-body {
+    color: white;
+
+    .summary,
+    .summary-target {
+      color: inherit;
+    }
+
+    .summary-target {
+      font-size: $font-size-large;
+      margin-bottom: $padding-large-vertical;
+      min-height: 72px;
+    }
+
+    p {
+      @extend .upper-spaced;
+      line-height: 1;
+      font-weight: bold;
+      color: rgba(0,0,0,0.3);
+    }
+  }
+}
+
+a.card-colored:hover {
+  box-shadow: inset 0 0 0 1px $brand-shadow,
+              0 3px 3px 0 $brand-shadow;
+}
+
+.product-helpful {
+  &.card-colored {
+    background-color: $product-helpful;
+  }
+}
+
+.product-family-table {
+  &.card-colored {
+    background-color: $product-family-table;
+  }
+}
+
+.product-buckets {
+  &.card-colored {
+    background-color: $product-buckets;
   }
 }
 

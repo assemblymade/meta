@@ -1,3 +1,6 @@
+<% @product = Product.find_by(slug: 'family-table') %>
+<% @ownership = ProductOwnership.new(@product) %>
+
 <%= render 'shared/navbar' %>
 
 <div class="page">
@@ -18,111 +21,155 @@
 
   <div class="getting-started">
     <div class="container neuter-paragraphs">
-      <p class="lead">If you want to challenge yourself, learn alongside peers and make a meaningful contribution to a project you believe in, Assembly is for you. <strong>It’s a place to work together and build impactful, profitable software products.</strong></p>
+      <p class="lead-hero">If you want to challenge yourself, learn alongside peers and make a meaningful contribution to a project you believe in, Assembly is for you. <strong>It’s a place to work together and build impactful, profitable software products.</strong></p>
     </div>
   </div>
 
-  <!-- <div class="nav-getting-started">
-    <center class="container">
-      <ul class="nav nav-pills nav-pills-centered">
-        <li class="active"><a href="#dont-be-shy">Don't be shy!</a></li>
-        <li><a href="#collaboration">Collaboration</a></li>
-        <li><a href="#ownership">Ownership</a></li>
-        <li><a href="#what-to-expect">What to expect</a></li>
-      </ul>
-    </center>
-  </div> -->
-
   <div class="container">
     <div class="row">
-      <!-- <div class="col-xs-2">
-        <ul class="nav nav-pills nav-stacked">
-          <li class="active"><a href="#dont-be-shy">Don't be shy!</a></li>
-          <li><a href="#collaboration">Collaboration</a></li>
-          <li><a href="#ownership">Ownership</a></li>
-          <li><a href="#what-to-expect">What to expect</a></li>
-        </ul>
-      </div> -->
-
       <div class="col-xs-8">
 
-        <div class="row">
-          <div class="section col-xs-10 col-xs-offset-2">
-            <h4>Don't be shy!</h4>
-            <p><strong>New here? Hop into a discussion and introduce yourself</strong>. The Assembly community is friendly and welcoming, we promise. Share what you’re interested in – chances are someone will be looking for just the skills you have.</p>
-            <p>Here are a few Assembly projects with active discussions happening right now. Go ahead and introduce yourself!</p>
-            <p>Once you find an exciting product, you’re ready to dive in:</p>
-            <p><strong>Developers:</strong> Pick out a code task, fork the repo, and start writing and committing code.</p>
-            <p><strong>Designers:</strong> Grab a design task, download any design assets, and start creating mockups for new pages.</p>
-          </div>
-        </div>
+        <div class="section">
 
-        <div class="row">
-          <div class="section col-xs-10 col-xs-offset-2">
-            <h4>Collaboration</h4>
-            <p>Products on Assembly are crowd-<strong><em>founded</em></strong>. Anyone can submit an idea, and anyone can join the team and get that product to market.</p>
-            <p>Assembly apps are built by everyone, and like successful Open Source products, each app also has a Core Team of contributors. The Core Team influences the vision of the app and the standards for quality, and determines which contributions are accepted. It consists of the most active and respected contributors on the app. The Core Team may comprise the original creator, Assembly staff members, and members of the community who help make the product a reality (that’s you!).</p>
-            <p>Some people work on Assembly projects for just few hours a month. Some put in 40 hours a week. It’s up to you to work on what you want, when you want, where you want. The best part is that if you step away, the project keeps moving forward.</p>
+          <div class="row" style="margin-bottom: 16px;">
+            <div class="col-xs-10 col-xs-offset-2">
+              <h4>Don't be shy!</h4>
+              <p><strong>New here? Hop into a discussion and introduce yourself</strong>. The Assembly community is friendly and welcoming, we promise. Share what you’re interested in – chances are someone will be looking for just the skills you have.</p>
+              <p>Here are a few Assembly projects with active discussions happening right now. Go ahead and introduce yourself!</p>
+            </div>
           </div>
-        </div>
 
-        <div class="row">
-          <div class="section col-xs-10 col-xs-offset-2">
-            <h4>Ownership</h4>
-            <p>The ownership of an Assembly product is distributed through App Coins. App Coins can be earned primarily by contributing to a product (design, code, copy, etc.). You can also receive “tips” in the form of App Coins when you provide insight, advice &ndash; or simply make someone laugh.</p>
+          <div class="row" style="margin-bottom: 24px;">
+            <div class="col-xs-4">
+              <a href="#" class="card card-sm card-colored product-helpful">
+                <div class="card-body">
+                  <div class="summary">
+                    <div class="summary-target">
+                      Support comes from people, not software
+                    </div>
+                    <p class="omega">
+                      Helpful
+                    </p>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-xs-4">
+              <a href="#" class="card card-sm card-colored product-family-table">
+                <div class="card-body">
+                  <div class="summary">
+                    <div class="summary-target">
+                      One place to organize the whole family
+                    </div>
+                    <p class="omega">
+                      Family Table
+                    </p>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-xs-4">
+              <a href="#" class="card card-sm card-colored product-buckets">
+                <div class="card-body">
+                  <div class="summary">
+                    <div class="summary-target">
+                      Manage content better
+                    </div>
+                    <p class="omega">
+                      Buckets
+                    </p>
+                  </div>
+                </div>
+              </a>
+            </div>
           </div>
-        </div>
+
+          <div class="row">
+            <div class="col-xs-10 col-xs-offset-2">
+              <p>Once you find an exciting product, you’re ready to dive in:</p>
+              <p><strong>Developers:</strong> Pick out a code task, fork the repo, and start writing and committing code.</p>
+              <p><strong>Designers:</strong> Grab a design task, download any design assets, and start creating mockups for new pages.</p>
+            </div>
+          </div>
+
+        </div><!-- .section -->
 
         <div class="section">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th class="text-left">Partner</th>
-                <th class="text-right">App Coins Earned</th>
-                <th class="text-right">Percentage</th>
-              </tr>
-              <tbody>
-                <tr>
-                  <td><a href="#">@davidkaneda</a></td>
-                  <td class="text-right"><i class="icon icon-app-coin"></i> 16,719.03</td>
-                  <td class="text-right">74.68%</td>
-                </tr>
-                <tr>
-                  <td><a href="#">@chrislloyd</a></td>
-                  <td class="text-right"><i class="icon icon-app-coin"></i> 1,743.48</td>
-                  <td class="text-right">7.79%</td>
-                </tr>
-                <tr>
-                  <td><a href="#">@jimmy</a></td>
-                  <td class="text-right"><i class="icon icon-app-coin"></i> 1,317.70</td>
-                  <td class="text-right">5.89%</td>
-                </tr>
-                <tr>
-                  <td><a href="#">@demands</a></td>
-                  <td class="text-right"><i class="icon icon-app-coin"></i> 1,034.55</td>
-                  <td class="text-right">4.62%</td>
-                </tr>
-                <tr>
-                  <td><a href="#">@johnpeele</a></td>
-                  <td class="text-right"><i class="icon icon-app-coin"></i> 569.30</td>
-                  <td class="text-right">2.54%</td>
-                </tr>
-              </tbody>
-            </thead>
-          </table>
-          <figure class="text-right">An example of App Coin distribution for <a href="#">Buckets</a>
-</figure>
-        </div>
 
-        <div class="row">
-          <div class="section col-xs-10 col-xs-offset-2">
-            <p>When an app launches and starts earning money, the profits are split each month among everyone who helped build it &ndash; based on the percentage of ownership each person has.</p>
-            <p>While the emphasis is on collaborating to create apps with sustainable earnings over the long term, people also occasionally ask about acquisitions. The answer is, if a company offers to acquire an Assembly product and the product’s core team decides to accept the offer, that income would be distributed (after expenses are paid) based on App Coin ownership, just like any other revenue.</p>
-            <p>For more info on app ownership and revenue, <a href="#">see our FAQ</a>.</p>
+          <div class="row">
+            <div class="col-xs-10 col-xs-offset-2">
+              <h4>Collaboration</h4>
+              <p>Products on Assembly are crowd-<strong><em>founded</em></strong>. Anyone can submit an idea, and anyone can join the team and get that product to market.</p>
+              <p>Assembly apps are built by everyone, and like successful Open Source products, each app also has a Core Team of contributors. The Core Team influences the vision of the app and the standards for quality, and determines which contributions are accepted. It consists of the most active and respected contributors on the app. The Core Team may comprise the original creator, Assembly staff members, and members of the community who help make the product a reality (that’s you!).</p>
+              <p>Some people work on Assembly projects for just few hours a month. Some put in 40 hours a week. It’s up to you to work on what you want, when you want, where you want. The best part is that if you step away, the project keeps moving forward.</p>
+            </div>
           </div>
-        </div>
 
-      </div>
+        </div><!-- .section -->
+
+        <div class="section">
+
+          <div class="row" style="margin-bottom: 24px;">
+            <div class="col-xs-10 col-xs-offset-2">
+              <h4>Ownership</h4>
+              <p>The ownership of an Assembly product is distributed through App Coins. App Coins can be earned primarily by contributing to a product (design, code, copy, etc.). You can also receive “tips” in the form of App Coins when you provide insight, advice &ndash; or simply make someone laugh.</p>
+            </div>
+          </div>
+
+          <% if @ownership.user_cents.any? %>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th class="text-left">Partner</th>
+                    <th class="text-right">
+                      Coins Earned
+                    </th>
+                    <th class="text-right">
+                      Percentage
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @ownership.user_cents[0...5].each do |user, cents| %>
+                    <tr>
+                      <td>
+                        <a href="<%= user_path(user) %>">
+                          <%= avatar_tag(user, 20) %>
+                          <span style="margin-left: 4px;"><%= user.username %></span>
+                        </a>
+                      </td>
+                      <td class="text-right">
+                        <i class="icon icon-app-coin text-coins small"></i>
+                        <%= number_to_currency cents / 100.to_d, precision: 2, unit: '' %>
+                      </td>
+                      <% if @product.for_profit? %>
+                        <td class="text-right">
+                          <%= number_to_percentage(cents / @ownership.total_cents.to_d * 100, precision: 2) %>
+                        </td>
+                      <% end %>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div><!-- .table-responsive -->
+
+            <figure style="margin-bottom: 36px;">App Coin distribution for <a href="<%= product_path(@product) %>"><%= @product.name %></a></figure>
+          <% end %>
+
+          <div class="row">
+            <div class="col-xs-10 col-xs-offset-2">
+              <p>When an app launches and starts earning money, the profits are split each month among everyone who helped build it &ndash; based on the percentage of ownership each person has.</p>
+              <p>While the emphasis is on collaborating to create apps with sustainable earnings over the long term, people also occasionally ask about acquisitions. The answer is, if a company offers to acquire an Assembly product and the product’s core team decides to accept the offer, that income would be distributed (after expenses are paid) based on App Coin ownership, just like any other revenue.</p>
+              <p>For more info on app ownership and revenue, <a href="#">see our FAQ</a>.</p>
+            </div>
+          </div>
+
+        </div><!-- .section -->
+
+      </div><!-- .col -->
 
       <div class="sidebar col-xs-3 col-xs-offset-1">
         <h5>Shooting for the stars together</h5>
@@ -131,72 +178,9 @@
         <p>It’s an opportunity to have a meaningful stake in projects &ndash; some of which have the potential to make substantial revenue.  And, above all else, it’s an opportunity to create.</p>
       </div>
     </div>
-  </div>
 
-  <!-- <div class="color-block" id="dont-be-shy">
-    <div class="container">
-      <h5>Don't be shy!</h5>
-      <div class="row">
-        <div class="col-xs-4">
-          <p><strong>New here? Hop into a discussion and introduce yourself</strong>. The Assembly community is friendly and welcoming, we promise. Share what you’re interested in – chances are someone will be looking for just the skills you have.</p>
-          <p>Here are a few Assembly projects with active discussions happening right now. Go ahead and introduce yourself!</p>
-        </div>
-        <div class="col-xs-4">
-          <p>Once you find an exciting product, you’re ready to dive in:</p>
-          <p><strong>Developers:</strong> Pick out a code task, fork the repo, and start writing and committing code.</p>
-          <p><strong>Designers:</strong> Grab a design task, download any design assets, and start creating mockups for new pages.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  </div><!-- .row -->
 
-  <div class="color-block" id="collaboration">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-8 col-xs-offset-4">
-          <h5>Collaboration</h5>
-          <p>Products on Assembly are crowd-<strong><em>founded</em></strong>. Anyone can submit an idea, and anyone can join the team and get that product to market.</p>
-          <p>Assembly apps are built by everyone, and like successful Open Source products, each app also has a Core Team of contributors. The Core Team influences the vision of the app and the standards for quality, and determines which contributions are accepted. It consists of the most active and respected contributors on the app. The Core Team may comprise the original creator, Assembly staff members, and members of the community who help make the product a reality (that’s you!).</p>
-          <p>Some people work on Assembly projects for just few hours a month. Some put in 40 hours a week. It’s up to you to work on what you want, when you want, where you want. The best part is that if you step away, the project keeps moving forward.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="color-block" id="ownership">
-    <div class="container">
-      <h5>Ownership</h5>
-      <div class="row">
-        <div class="col-xs-6">
-          <p>The ownership of an Assembly product is distributed through App Coins. App Coins can be earned primarily by contributing to a product (design, code, copy, etc.). You can also receive “tips” in the form of App Coins when you provide insight, advice &ndash; or simply make someone laugh.</p>
-          <p>When an app launches and starts earning money, the profits are split each month among everyone who helped build it &ndash; based on the percentage of ownership each person has.</p>
-        </div>
-        <div class="col-xs-6">
-          <p>While the emphasis is on collaborating to create apps with sustainable earnings over the long term, people also occasionally ask about acquisitions. The answer is, if a company offers to acquire an Assembly product and the product’s core team decides to accept the offer, that income would be distributed (after expenses are paid) based on App Coin ownership, just like any other revenue.</p>
-          <p>For more info on app ownership and revenue, <a href="#">see our FAQ</a>.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="color-block" id="what-to-expect">
-    <div class="container">
-      <h5>What to expect</h5>
-      <div class="row">
-        <div class="col-xs-4">
-          <p>We are on this journey alongside you. Our goal is to create a collaborative, transparent community of makers who seek collaboration, education and creation.</p>
-        </div>
-        <div class="col-xs-4">
-          <p>Joining our community is an opportunity to solve interesting problems, learn valuable lessons and collaborate with great people around the world.</p>
-        </div>
-        <div class="col-xs-4">
-          <p>It’s an opportunity to have a meaningful stake in projects – some of which have the potential to make substantial revenue.  And, above all else, it’s an opportunity to create.</p>
-        </div>
-      </div>
-      <h3 class="t\ext-center">We can't wait to see what you build.</h3>
-    </div>
-  </div> -->
-
-</div>
+</div><!-- .container -->
 
 <%= render 'shared/footer' %>
