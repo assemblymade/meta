@@ -1,0 +1,18 @@
+<div class="media" {{#target}}id="{{anchor}}"{{/target}}>
+  <div class="pull-left">
+    <div class="marker marker-default">
+      <span class="glyphicon glyphicon-log-in"></span>
+    </div>
+  </div>
+
+  <div class="media-body">
+    <div class="media-heading omega">
+
+      {{#actor}}
+        <a href="{{url}}" title="@{{username}}">@{{username}}</a>
+      {{/actor}}
+
+      joined
+    </div>
+  </div>
+</div>
