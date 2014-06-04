@@ -5,7 +5,6 @@
  */
 
 var isMemberOnline = function(member) {
-  if (moment(member.last_online).isAfter(moment().subtract('day', 1))) console.log(member)
   return moment(member.last_online).isAfter(moment().subtract('hour', 1))
 }
 
