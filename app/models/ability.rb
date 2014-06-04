@@ -12,7 +12,11 @@ class Ability
 
     return false unless current_user
 
-    can :manage, :all if current_user.staff?
+    can(:manage, :all) if current_user.staff?
+
+    if current_user.staff?
+      can :read, :playground
+    end
 
     can [:update], User do |user|
       user == current_user

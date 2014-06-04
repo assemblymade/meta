@@ -8,7 +8,6 @@ ASM::Application.routes.draw do
   end
 
   if Rails.env.development?
-    get '/playground/:action', controller: 'playground'
     get "/impersonate/:id", :to => "users#impersonate", :as => :impersonate
   end
 
@@ -20,7 +19,9 @@ ASM::Application.routes.draw do
 
   get '/still-field' => redirect('/discover') # bad product
 
+  # Internal
   get '/styleguide' => 'styleguide#index'
+  get '/playground/:action', controller: 'playground'
 
   # Legacy
   get '/explore', to: redirect('/discover/products')
