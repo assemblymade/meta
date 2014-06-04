@@ -89,6 +89,8 @@ class CommentsController < ApplicationController
 
   def register_with_readraptor(event)
     excluded_users = [event.user, event.mentioned_users].flatten.compact.uniq
-    ReadRaptorDelivery.new(event.wip.watchers - excluded_users).deliver_async(event)
+    recipients = event.wip.watchers - excluded_users
+    ReadRaptorDelivery.new(recipients).deliver_async(event)
+    ReadRaptorDelivery.new(recipients, :email).deliver_async(event)
   end
 end

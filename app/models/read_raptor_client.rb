@@ -1,9 +1,26 @@
 class ReadRaptorClient
 
   def unread_entities(distinct_id)
-    return [] unless ENV['READRAPTOR_URL']
     body = get("/readers/#{distinct_id}")
     (body || []).map{|a| a['key'] }
+  end
+
+  def undelivered_articles(distinct_id)
+    article_ids = unread_entities(distinct_id).map{|id| id.split('_') }
+
+    puts "article_ids #{article_ids}"
+
+    undelivered_articles = []
+    articles = article_ids.group_by {|_, id, _| id }.select do |id, articles|
+      tags = articles.map{|_, _, tag| tag || 'content' }
+
+      # articles we want to email about are ones where the main article is unread (:content)
+      # and the email hasn't been read (:email)
+      if tags.include?('content') && tags.include?('email')
+        undelivered_articles << articles.first.join('_')
+      end
+    end
+    undelivered_articles
   end
 
   def post(url, body = {})
@@ -15,7 +32,9 @@ class ReadRaptorClient
   end
 
   def request(method, url, body)
+    return unless ENV['READRAPTOR_URL']
     Rails.logger.info "  [readraptor] #{method} #{url}"
+
     resp = connection.send(method) do |req|
       req.url url
       req.body = body.to_json
@@ -25,7 +44,6 @@ class ReadRaptorClient
   end
 
   def connection
-    raise 'You need to configure READRAPTOR_URL' if ENV['READRAPTOR_URL'].blank?
     Faraday.new(url: ENV['READRAPTOR_URL']) do |faraday|
       faraday.adapter  :net_http
       faraday.basic_auth(ENV['READRAPTOR_TOKEN'], '')

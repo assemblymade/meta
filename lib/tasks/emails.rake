@@ -2,7 +2,7 @@ namespace :emails do
 
   task newsletter: :environment do
     next unless Newsletter.unpublished.any?
-    
+
     Newsletter.next_unpublished.publish!(if ENV['EMAIL_TEST_MODE']
       User.where(is_staff: true)
     else
@@ -36,18 +36,20 @@ namespace :emails do
     task :daily => :environment do
 
       client = ReadRaptorClient.new
+      users = User.where(mail_preference: 'daily')
+      users = [User.find_by(username: 'whatupdave')]
+      users.each do |user|
 
-      User.where(mail_preference: 'daily').each do |user|
-        unread_article_ids = ReadRaptorClient.new.unread_entities(user.id)
-
+        unread_article_ids = ReadRaptorClient.new.undelivered_articles(user.id)
+        puts "#{user.username} unread_article_ids #{unread_article_ids}"
         unread_articles = ReadRaptorSerializer.deserialize_articles(unread_article_ids)
 
         # Only send out if they have any unread articles
         next if unread_articles.empty?
 
-        # Mark all articles as read
+        # Mark all articles with email tag as read
         unread_articles.each do |entity|
-          client.get(ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(entity).first, user.id).url)
+          client.get(ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(entity, :email).first, user.id).url)
         end
 
         DigestMailer.delay.daily(user.id, unread_article_ids)
