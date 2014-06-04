@@ -11,7 +11,7 @@ class DigestMailer < BaseMailer
 
     @user     = User.find(user_id)
     wip_group = WipGroup.new(
-                  ReadRaptorSerializer.deserialize_articles(unread_articles)
+                  ReadRaptorSerializer.deserialize(unread_articles)
                 )
     @products = wip_group.products
     @watchers = wip_group.watchers.take(30) # 30 happy faces

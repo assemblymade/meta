@@ -5,7 +5,7 @@ describe DigestMailer do
     let(:user) { User.make! }
     let(:product) { Product.make! }
     let(:entities) { [product.discussions.make!(user: user)] }
-    let(:article_ids) { ReadRaptorSerializer.serialize_entities(entities) }
+    let(:article_ids) { entities.map{|e| {type: e.class.to_s, id: e.id }} }
     let(:mail) { DigestMailer.daily(user.id, article_ids) }
 
     it 'renders the subject' do

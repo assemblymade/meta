@@ -17,10 +17,14 @@ class WipFactory
 
     if wip.valid?
       add_description(wip)
+      add_transaction_log_entry(wip)
+
       upvote_creator(wip) if wip.upvotable?
       watch_product
-      register_with_readraptor(wip)
-      add_transaction_log_entry(wip)
+
+      users = @product.watchers - [@creator]
+      register_with_readraptor(wip, users)
+      push(wip, users)
     end
 
     wip
@@ -43,11 +47,16 @@ class WipFactory
     @product.watch!(@creator)
   end
 
-  def register_with_readraptor(wip)
-    ReadRaptorDelivery.new(@product.watchers - [@creator]).deliver_async(wip)
+  def register_with_readraptor(wip, users)
+    ReadRaptorDelivery.new(users, [nil, :email, :chat]).deliver_async(wip)
   end
 
   def add_transaction_log_entry(wip)
     TransactionLogEntry.proposed!(wip.created_at, @product, wip.id, @creator.id)
+  end
+
+  def push(wip, users)
+    channels = users.map{|u| "@#{u.username}"} + [@product.push_channel]
+    PusherWorker.perform_async channels, 'wip.created', TaskSerializer.new(wip).to_json
   end
 end

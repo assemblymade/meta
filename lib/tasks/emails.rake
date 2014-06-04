@@ -37,12 +37,10 @@ namespace :emails do
 
       client = ReadRaptorClient.new
       users = User.where(mail_preference: 'daily')
-      users = [User.find_by(username: 'whatupdave')]
       users.each do |user|
 
         unread_article_ids = ReadRaptorClient.new.undelivered_articles(user.id)
-        puts "#{user.username} unread_article_ids #{unread_article_ids}"
-        unread_articles = ReadRaptorSerializer.deserialize_articles(unread_article_ids)
+        unread_articles = ReadRaptorSerializer.deserialize(unread_article_ids)
 
         # Only send out if they have any unread articles
         next if unread_articles.empty?

@@ -65,6 +65,12 @@ class WipsController < ApplicationController
 
       Vote.clear_cache(current_user, @wip)
       next_mission_if_complete!(@product.current_mission, current_user)
+      @activity = Activities::Start.publish!(
+        actor: current_user,
+        subject: @wip,
+        target: @product,
+        socket_id: params[:socket_id]
+      )
 
       track_params = WipAnalyticsSerializer.new(@wip, scope: current_user).as_json.merge(engagement: 'created')
       track_event 'wip.engaged', track_params

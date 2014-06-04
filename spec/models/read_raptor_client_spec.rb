@@ -13,6 +13,6 @@ describe ReadRaptorClient do
 
     expect(
       client.undelivered_articles(user.id)
-    ).to match_array(["Task_#{entities[0].id}"])
+    ).to match_array([{type: "Task", id: entities[0].id, tags: [nil, "email"]}])
   end
 end

@@ -1,25 +1,17 @@
 class ReadRaptorClient
 
-  def unread_entities(distinct_id, tag=nil)
-    tagged_unread_articles(distinct_id).select do |article|
-      article[:tags].include?(tag.to_s)
+  def unread_articles(distinct_id, tag=nil)
+    tagged_unread_articles(distinct_id).select do |a|
+      a[:tags].include?(tag.to_s)
     end
   end
 
   def undelivered_articles(distinct_id)
-    article_ids = unread_entities(distinct_id).map{|id| id.split('_') }
-
-    undelivered_articles = []
-    articles = article_ids.group_by {|_, id, _| id }.select do |id, articles|
-      tags = articles.map{|_, _, tag| tag || 'content' }
-
+    tagged_unread_articles(distinct_id).select do |a|
       # articles we want to email about are ones where the main article is unread (:content)
       # and the email hasn't been read (:email)
-      if tags.include?('content') && tags.include?('email')
-        undelivered_articles << articles.first.join('_')
-      end
+      a[:tags].include?(nil) && a[:tags].include?('email')
     end
-    undelivered_articles
   end
 
   def tagged_unread_articles(distinct_id)
