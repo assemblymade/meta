@@ -1,8 +1,9 @@
 require 'machinist/active_record'
 
 Activity.blueprint do
-  subject { Event::Comment.make! }
-  actor   { User.make! }
+  subject  { Task.make! }
+  actor    { User.make! }
+  target   { Event::Comment.make! }
 end
 
 Attachment.blueprint do

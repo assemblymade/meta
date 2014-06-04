@@ -1,7 +1,8 @@
 class PlaygroundController < ApplicationController
+  before_action :authorize_staff!
 
-  def upgrade_stylesheet?
-    true
+  def authorize_staff!
+    authorize! :read, :playground
   end
 
 end
