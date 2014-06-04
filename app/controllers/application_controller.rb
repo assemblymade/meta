@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   helper_method :after_welcome_path
 
   def after_sign_up_path_for_user
-    welcome_tour_path
+    after_welcome_path
   end
 
   def strip_auth_token
