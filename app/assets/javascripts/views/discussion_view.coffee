@@ -37,12 +37,6 @@ class window.DiscussionView extends Backbone.View
       channel.bind 'changed', (msg) => @model.set msg
       channel.bind 'event.added', @eventPushed
 
-    @foreground = true
-    @originalTitle = document.title
-
-    $(window).focus @onWindowFocused
-    $(window).blur @onWindowBlurred
-
   onNewCommentClicked: (e)->
     body = $('#event_comment_body').val()
     switch $(e.target).attr('value')
@@ -155,13 +149,6 @@ class window.DiscussionView extends Backbone.View
 
   showUpvotePrompt: ->
     @children.upvoteReminder.fadeIn()
-
-  onWindowFocused: =>
-    @foreground = true
-    @model.markAllAsRead()
-
-  onWindowBlurred: =>
-    @foreground = false
 
   ownCommentsChanged: ->
     @children.welcomeBox.toggle !@model.hasOwnComments()

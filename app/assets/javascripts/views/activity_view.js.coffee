@@ -15,32 +15,20 @@ class window.ActivityView extends Backbone.View
     }
 
   render: =>
-    @$el.html(JST[@partial()].render(@templateData()))
+    @$el.html(JST[@model.get('type')].render(@templateData()))
     $('[data-readraptor-track]', @$el).readraptor()
 
     for selector, view of @subviews
       view.setElement(@$(selector))
       view.render()
 
-  partial: =>
-    # render an external partial if this stream is not the subject of this activity
-    external = false
-    if subject = @model.get('subject')
-      external = subject.id != @subjectId
-
-    if external
-      "#{@model.get('type')}_ext"
-    else
-      @model.get('type')
-
-
   templateData: ->
     data = _.clone(@model.attributes)
-    data.target.body_html = @bodyHTML()
+    data.subject.body_html = @bodyHTML()
     data
 
   bodyHTML: ->
-    @model.get('target').body_html || markdown(@model.get('target').body)
+    @model.get('subject').body_html || markdown(@model.get('subject').body)
 
   offsetTop: ->
     @$el.offset().top

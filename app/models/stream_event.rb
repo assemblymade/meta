@@ -1,3 +1,4 @@
+# TODO: (whatupdave) deprecate this class in favor of Activity
 class StreamEvent < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   include Kaminari::ActiveRecordModelExtension

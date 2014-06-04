@@ -1,0 +1,55 @@
+<div class="activity" {{#subject}}id="{{anchor}}" data-readraptor-track="{{readraptor_track_id}}"{{/subject}}>
+
+  <div class="pull-left">
+    {{#actor}}
+      <a href="{{url}}" title="@{{username}}">
+        <img class="media-object img-circle" src="{{avatar_url}}" alt="@{{username}}" width="30" height="30">
+      </a>
+    {{/actor}}
+  </div>
+
+  {{#subject}}
+    <div class="activity-body">
+
+      <div class="activity-actions text-link-bold">
+        {{#actor}}
+          <a href="{{url}}" title="@{{username}}">
+            @{{username}}
+          </a>
+        {{/actor}}
+
+        <ul class="list-inline pull-right omega">
+          <li>
+            <div class="js-tips"
+                 data-tips-total="{{total_tips}}"
+                 data-tips-path="{{tip_path}}"
+                 data-tips-product-id="{{product_id}}"></div>
+          </li>
+
+          {{#edit_url}}
+            <li>
+              <a href="{{edit_url}}">
+                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="sr-only">Edit comment</span>
+              </a>
+            </li>
+          {{/edit_url}}
+
+          {{#anchor}}
+          <li>
+            <a href="#{{anchor}}">
+              <span class="glyphicon glyphicon-link"></span>
+              <span class="sr-only">Permalink</span>
+            </a>
+          </li>
+          {{/anchor}}
+        </ul>
+
+      </div>
+
+      <div class="activity-content markdown-normalized">
+        {{{body_html}}}
+      </div>
+    </div>
+  {{/subject}}
+</div>

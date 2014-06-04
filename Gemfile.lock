@@ -370,7 +370,6 @@ GEM
       redis-namespace (>= 1.1.0)
       simple-random
       sinatra (>= 1.2.6)
-    spring (1.1.2)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -488,7 +487,6 @@ DEPENDENCIES
   sidekiq
   skylight
   split
-  spring
   stripe
   syntax
   terminal-table

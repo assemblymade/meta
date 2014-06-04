@@ -25,7 +25,12 @@ class CommentsController < ApplicationController
 
         @event.notify_users!(@wip.watchers)
 
-        Activities::Comment.publish!(actor: @event.user, target: @event, socket_id: params[:socket_id])
+        Activities::Comment.publish!(
+          actor: @event.user,
+          subject: @event,
+          target: @wip,
+          socket_id: params[:socket_id]
+        )
       end
 
       track_analytics(@event)

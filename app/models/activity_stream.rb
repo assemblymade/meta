@@ -9,7 +9,7 @@ class ActivityStream
   end
 
   def self.deserialize(*strs)
-    Activity.find(strs)
+    Activity.where(id: strs).includes(:actor, :subject, :target)
   end
 
   def self.delete_all

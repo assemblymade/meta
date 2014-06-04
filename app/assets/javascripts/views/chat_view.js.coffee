@@ -29,10 +29,10 @@ class window.ChatView extends Backbone.View
 
   optimisticallyCreateActivity: (body) ->
     activity = new Activity(
-      type: 'activities/comment'
+      type: 'activities/chat'
       created: (new Date()).toISOString()
       actor:  app.currentUser().attributes
-      target: {
+      subject: {
         body: body
         tips: []
         total_tips: 0
