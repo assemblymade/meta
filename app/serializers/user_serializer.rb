@@ -13,7 +13,7 @@ class UserSerializer < ApplicationSerializer
   end
 
   def last_online
-    object.last_request_at.iso8601 unless object.last_request_at.nil?
+    object.last_request_at.iso8601 if object.last_request_at?
   end
 
   def product_balance
