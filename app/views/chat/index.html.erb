@@ -63,6 +63,7 @@
       activityStream.listenForRemote(pusher, pusher.connection);
 
       var presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
+      var permanentWatchers = <%= @product.watchers.each_with_object({}) {|w, memo| memo[w.id] = UserSerializer.new(w) }.to_json.html_safe %>
 
       $('.js-members').each(function() {
         var component = React.renderComponent(
@@ -74,20 +75,24 @@
         )
 
         component.setState({
-          members: <%= @product.watchers.each_with_object({}) {|w, memo| memo[w.id] = UserSerializer.new(w) }.to_json.html_safe %>
+          members: permanentWatchers
         })
       })
 
       presenceChannel.bind(
         'pusher:member_added',
         function memberJoined(member) {
+          if (permanentWatchers.hasOwnProperty(member.id)) {
+            return;
+          }
+
           var activity = new Activity({
             id: member.id + rand(10000),
             actor: member.info,
-            // TODO: change property to 'verb'
+            // TODO: change 'type' to 'verb'
             type: 'activities/join'
           });
-          
+
           activityStream.add(activity);
         }
       );
