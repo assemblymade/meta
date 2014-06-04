@@ -34,7 +34,11 @@ class ChatController < ApplicationController
       register_with_readraptor(@event)
       @event.notify_users!(@product.watchers)
 
-      @activity = Activities::Comment.publish!(actor: @event.user, target: @event, socket_id: params[:socket_id])
+      @activity = Activities::Chat.publish!(
+        actor: @event.user,
+        subject: @event,
+        target: @product.main_thread,
+        socket_id: params[:socket_id])
 
       track_analytics(@event)
       next_mission_if_complete!(@product.current_mission, current_user)

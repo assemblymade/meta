@@ -33,17 +33,17 @@
 </div>
 
 <script>
-  app.product = new Product(<%= ProductSerializer.new(@product, scope: current_user).to_json.html_safe %>);
-  app.wip = new Wip(<%= WipSerializer.new(@product.main_thread, scope: current_user).to_json.html_safe %>);
+  app.product = new Product(<%= json ProductSerializer.new(@product, scope: current_user) %>);
+  app.wip = new Wip(<%= json WipSerializer.new(@product.main_thread, scope: current_user) %>);
 </script>
 
 <script>
   $(document).ready(function() {
 
     var activityStream = new ActivityStream(<%=
-      @activity_stream.map {|a, _|
+      json @activity_stream.map {|a, _|
         ActivitySerializer.new(a, scope: current_user)
-      }.to_json.html_safe
+      }
     %>);
     activityStream.url = '<%= product_wip_comments_path(@product, @product.main_thread) %>';
     activityStream.product = app.product;

@@ -94,7 +94,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'spring'
+  # gem 'sql-logging'
 end
 
 group :test do

@@ -1,4 +1,4 @@
 module Activities
-  class Comment < Activity
+  class Chat < Activity
   end
 end
