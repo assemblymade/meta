@@ -6,10 +6,8 @@
           <%= @product.name %>
         </a>
       </li>
-    </ul>
 
-    <ul class="nav nav-tabs navbar-nav navbar-right">
-      <li class="<%= "active" if chat_controller?  %>">
+      <li class="<%= "active" if discussions_controller? || nav_active?(:product_discussions) %>">
         <a href="<%= product_discuss_path(@product) %>">
           Chat
         </a>
@@ -38,7 +36,36 @@
           Assets
         </a>
       </li>
+    </ul>
 
+    <ul class="nav nav-pills navbar-nav navbar-right">
+      <li>
+        <% if signed_in? && @product.watching?(current_user) %>
+          <a href="<%= unsubscribe_product_path(@product) %>" data-method="post" >
+            <div class="btn-group" style="width: 100%;">
+              <button class="btn btn-primary">
+                <span class="glyphicon glyphicon-volume-off"></span>
+                Unwatch
+              </button>
+              <button class="btn btn-info">
+                <%= @product.watchers.count %>
+              </button>
+            </div>
+          </a>
+        <% else %>
+          <a href="<%= subscribe_product_path(@product) %>" data-method="post">
+            <div class="btn-group" style="width: 100%;">
+              <button class="btn btn-primary">
+                <span class="glyphicon glyphicon-eye-open"></span>
+                Watch
+              </button>
+              <button class="btn btn-info">
+                <%= @product.watchers.count %>
+              </button>
+            </div>
+          </a>
+        <% end %>
+      </li>
     </ul>
   </div>
 </div>
