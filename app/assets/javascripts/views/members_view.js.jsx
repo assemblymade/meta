@@ -5,6 +5,7 @@
  */
 
 var isMemberOnline = function(member) {
+  if (moment(member.last_online).isAfter(moment().subtract('day', 1))) console.log(member)
   return moment(member.last_online).isAfter(moment().subtract('hour', 1))
 }
 
@@ -125,6 +126,7 @@ var MembersView = React.createClass({
   },
 
   addMemberFromPusher: function(member) {
+    member.info.last_online = (new Date()).toISOString()
     this.addMember(member.id, member.info)
   },
 
