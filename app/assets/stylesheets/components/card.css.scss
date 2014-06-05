@@ -1,5 +1,6 @@
 .card {
   display: block;
+  position: relative;
   color: $text-color;
   box-shadow: inset 0 0 0 1px $brand-border,
               0 1px 0 0 $brand-shadow;
@@ -7,6 +8,7 @@
   background-color: white;
   overflow: hidden;
   margin-bottom: $line-height-computed;
+  opacity: 1;
   @include transition-property(box-shadow, translate);
   @include transition-duration($transition-out-duration);
   @include transition-timing-function($transition-function);
@@ -14,6 +16,11 @@
   &:hover {
     color: $text-color;
     text-decoration: none;
+
+    .card-inner {
+      @include transition-duration($transition-in-duration);
+      opacity: 0.05;
+    }
   }
 }
 

@@ -49,8 +49,7 @@
               <% if signed_in? && @wip.workers.include?(current_user) %>
                 <% worker = @wip.wip_workers.find_by(user: current_user) %>
                 <p class="omega">You began working on this task <strong><time class="timestamp" datetime="<%= worker.created_at.iso8601 %>"></time></strong>. How's it shaping up?</p>
-
-                <%= button_to 'Stop working on this task', product_wip_stop_work_path(@wip.product, @wip), method: :patch, disable_with: 'Cancelling…', class: %w(btn btn-text) %>
+                <%= button_to 'Stop working on this task', product_wip_stop_work_path(@wip.product, @wip), method: :patch, disable_with: 'Cancelling…', class: %w(btn btn-text btn-sm btn-block) %>
               <% else %>
                 <% worker = @wip.wip_workers.first %>
                 <p class="omega"><strong><%= worker.user.username %></strong> began working on this task <strong><time class="timestamp" datetime="<%= worker.created_at.iso8601 %>"></time>.</strong></p>

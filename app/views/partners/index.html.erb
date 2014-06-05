@@ -42,9 +42,13 @@
                   <% @user_cents.each do |user, cents| %>
                     <tr>
                       <td>
-                        <a href="<%= user_path(user) %>">@<%= user.username %></a>
+                        <a href="<%= user_path(user) %>">
+                          <%= avatar_tag(user, 20) %>
+                          <span style="margin-left: 4px;"><%= user.username %></span>
+                        </a>
                       </td>
                       <td class="text-right">
+                        <i class="icon icon-app-coin text-coins small"></i>
                         <%= number_to_currency cents / 100.to_d, precision: 2, unit: '' %>
                       </td>
                       <% if @product.for_profit? %>
