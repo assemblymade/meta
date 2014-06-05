@@ -36,13 +36,20 @@
           {{/edit_url}}
 
           {{#anchor}}
+            <li>
+              <a href="#{{anchor}}">
+                <span class="glyphicon glyphicon-link"></span>
+                <span class="sr-only">Permalink</span>
+              </a>
+            </li>
+          {{/anchor}}
+
           <li>
-            <a href="#{{anchor}}">
-              <span class="glyphicon glyphicon-link"></span>
-              <span class="sr-only">Permalink</span>
+            <a href="#" class="js-chat-create-wip">
+              <span class="glyphicon glyphicon-plus"></span>
+              <span class="sr-only">Create task</span>
             </a>
           </li>
-          {{/anchor}}
         </ul>
 
       </div>

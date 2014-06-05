@@ -10,6 +10,7 @@ class window.ChatView extends Backbone.View
     'keyup   .js-chat-actions'   : 'onKeyUp'
     'submit  .js-chat-actions'   : 'onSubmit'
     'click   .js-chat-load-more' : 'onLoadMore'
+    'click   .js-chat-create-wip': 'onCreateWip'
 
   initialize: ->
     @listenTo(@collection, 'add', @render)
@@ -89,7 +90,13 @@ class window.ChatView extends Backbone.View
           @$('.js-chat-load-more').text(originalText).attr('disabled', false)
     )
 
-# --
+  onCreateWip: (e) ->
+    e.preventDefault()
+    # TODO: Better way to get this text
+    body = $(e.currentTarget).parents('div').siblings('.activity-content').text().trim()
+    token = $('meta[name=csrf-token]').attr('content')
+    renderedModal = JST['activities/wip'].render({ title: body, action: @collection.product.attributes.url, token: token })
+    $('#create-task').html(renderedModal).modal()
 
 fixScroll = (cb) ->
   documentHeight = $(document).height()
