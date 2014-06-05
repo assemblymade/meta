@@ -128,11 +128,19 @@ var Notifications = React.createClass({
     );
   },
 
+  setBadge: function(total) {
+    if (window.fluid) {
+      window.fluid.dockBadge = total
+    }
+  },
+
   setTitle: function(total) {
     if (total > 0) {
       document.title = '(' + total + ') ' + this.props.title
+      this.setBadge(total)
     } else {
       document.title = this.props.title
+      this.setBadge('')
     }
   }
 
