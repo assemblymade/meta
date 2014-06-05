@@ -26,25 +26,34 @@
                  data-tips-product-id="{{product_id}}"></div>
           </li>
 
-          {{#edit_url}}
-            <li>
-              <a href="{{edit_url}}">
-                <span class="glyphicon glyphicon-pencil"></span>
-                <span class="sr-only">Edit comment</span>
-              </a>
-            </li>
-          {{/edit_url}}
-
-          {{#anchor}}
           <li>
-            <a href="#{{anchor}}">
-              <span class="glyphicon glyphicon-link"></span>
-              <span class="sr-only">Permalink</span>
-            </a>
-          </li>
-          {{/anchor}}
-        </ul>
+            <div class="dropdown">
+              <button class="btn btn-link dropdown-toggle" id="comment-actions-dropdown" role="button" data-toggle="dropdown" data-target="#" href="#">
+                More <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="comment-actions-dropdown" style="position: absolute; left: -100px;">
 
+                {{#edit_url}}
+                  <li role="presentation">
+                    <a href="{{edit_url}}" role="menuitem">
+                      <span class="glyphicon glyphicon-pencil dropdown-glyph"></span>
+                      <span>Edit comment</span>
+                    </a>
+                  </li>
+                {{/edit_url}}
+
+                {{#anchor}}
+                <li role="presentation">
+                  <a href="#{{anchor}}" role="menuitem">
+                    <span class="glyphicon glyphicon-link dropdown-glyph"></span>
+                    <span>Permalink</span>
+                  </a>
+                </li>
+                {{/anchor}}
+              </ul>
+            </div>
+          </li>
+        </ul>
       </div>
 
       <div class="activity-content markdown-normalized">
