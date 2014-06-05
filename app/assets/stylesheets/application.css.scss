@@ -9,6 +9,7 @@
 }
 
 .fixed-bottom {
+  z-index: 9999;
   position: fixed;
   bottom: 0;
 
