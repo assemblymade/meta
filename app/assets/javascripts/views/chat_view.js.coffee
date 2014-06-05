@@ -92,8 +92,8 @@ class window.ChatView extends Backbone.View
 
   onCreateWip: (e) ->
     e.preventDefault()
-    # TODO: Better way to get this text
-    body = $(e.currentTarget).parents('div').siblings('.activity-content').text().trim()
+    id = $(e.currentTarget).attr('href')
+    body = $(id + ' .activity-content').text().trim()
     token = $('meta[name=csrf-token]').attr('content')
     renderedModal = JST['activities/wip'].render({ title: body, action: @collection.product.attributes.url, token: token })
     $('#create-task').html(renderedModal).modal()

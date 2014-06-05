@@ -6,13 +6,43 @@
     </div>
     <div class="modal-body">
       <form accept-charset="UTF-8" action="{{action}}/wips" class="new_task" id="new_task" name="task[title]" type="text" method="post">
-        <input name="authenticity_token" type="hidden" value="{{token}}"></input>
+        <input name="authenticity_token" type="hidden" value="{{token}}">
         <div class="form-group">
           <label class="form-label" for="task_title">Title</label>
           <input autofocus="autofocus" value="{{title}}" class="form-control" data-validate-length="2" id="task_title" name="task[title]" type="text">
         </div>
+        <div class="form-group">
+          <span class="help-block pull-right">(optional)</span>
+          <label class="control-label" for="task_description">Details</label>
+          <div class="markdown-editor-control js-markdown-editor">
+            <textarea id="description" name="description" class="form-control" rows="4"></textarea>
+          </div>
+        </div>
+        <fieldset>
+          <div class="form-group">
+            <label class="control-label" for="task_deliverable">Deliverable</label>
+            <div class="btn-group btn-group-justified" data-toggle="buttons">
+              <label class="btn btn-default " data-show-tab="design" for="task_deliverable">
+                <input id="task_deliverable_design" name="task_deliverable" type="radio" value="design">
+                Design
+              </label>
+              <label class="btn btn-default " data-show-tab="code" for="task_deliverable">
+                <input id="task_deliverable_code" name="task_deliverable" type="radio" value="code">
+                Code
+              </label>
+              <label class="btn btn-default " data-show-tab="copy" for="task_deliverable">
+                <input id="task_deliverable_copy" name="task_deliverable" type="radio" value="copy">
+                Copy
+              </label>
+              <label class="btn btn-default active" data-show-tab="other" for="task_deliverable">
+                <input checked="checked" id="task_deliverable_other" name="task_deliverable" type="radio" value="other">
+                Other
+              </label>
+            </div>
+          </div>
+        </fieldset>
         <div class="form-actions">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right:5px; margin-left:5px;">Close</button>
           <button class="btn btn-primary" name="button" type="submit">Create task</button>
         </div>
       </form>

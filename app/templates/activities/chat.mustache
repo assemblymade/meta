@@ -28,10 +28,10 @@
 
           <li>
             <div class="dropdown">
-              <button class="btn btn-link dropdown-toggle" id="comment-actions-dropdown" role="button" data-toggle="dropdown" data-target="#" href="#">
-                More <span class="caret"></span>
+              <button class="btn btn-link dropdown-toggle" id="dropdown-{{anchor}}" role="button" data-toggle="dropdown">
+                <span class="icon icon-ellipsis"></span>
               </button>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="comment-actions-dropdown" style="position: absolute; left: -100px;">
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-{{anchor}}" style="position: absolute; left: -130px;">
 
                 {{#edit_url}}
                   <li role="presentation">
@@ -43,16 +43,16 @@
                 {{/edit_url}}
 
                 {{#anchor}}
-                <li role="presentation">
-                  <a href="#{{anchor}}" role="menuitem">
-                    <span class="glyphicon glyphicon-link dropdown-glyph"></span>
-                    <span>Permalink</span>
-                  </a>
-                </li>
+                  <li role="presentation">
+                    <a href="#{{anchor}}" role="menuitem">
+                      <span class="glyphicon glyphicon-link dropdown-glyph"></span>
+                      <span>Permalink</span>
+                    </a>
+                  </li>
                 {{/anchor}}
 
                 <li role="presentation">
-                  <a href="#" class="js-chat-create-wip" role="menuitem">
+                  <a href="#{{anchor}}" class="js-chat-create-wip" role="menuitem">
                     <span class="glyphicon glyphicon-plus dropdown-glyph"></span>
                     <span>Create task</span>
                   </a>
