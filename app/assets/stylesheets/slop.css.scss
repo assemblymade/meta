@@ -1,5 +1,5 @@
 $hero-primary: desaturate(#b57f59, 20%);
-$text-copy: #4A646F;
+$text-copy: #353439;
 $text-accent: #BC9454;
 $text-link: #68A565;
 $text-muted: #CBCBBC;
@@ -7,6 +7,10 @@ $text-muted: #CBCBBC;
 $product-helpful: desaturate(#FF4B4E, 30%);
 $product-family-table: #83B4AD;
 $product-buckets: lighten(#353535, 30%);
+
+$user-whale: #63a4ae;
+$user-chexee: #98658e;
+$user-davidkaneda: #d08b48;
 
 .hero {
   // Offset .page top padding
@@ -26,7 +30,7 @@ $product-buckets: lighten(#353535, 30%);
     margin-top: 0;
     margin-bottom: 28px;
     font-weight: bold;
-    color: #353439;
+    color: $text-copy;
 
     &:after {
       content: '';
@@ -78,7 +82,7 @@ $product-buckets: lighten(#353535, 30%);
   @extend .text-serif;
 
   .table-striped > tbody > tr:nth-child(odd) > td {
-    background-color: lighten($text-copy, 62%);
+    background-color: lighten($text-copy, 77%);
   }
 
   .table {
@@ -89,6 +93,8 @@ $product-buckets: lighten(#353535, 30%);
     font-size: 14px;
     font-style: italic;
     color: $gray;
+    border-top: 1px dotted $brand-divider;
+    padding: 10px 0;
   }
 
   h4 {
@@ -118,16 +124,18 @@ $product-buckets: lighten(#353535, 30%);
 
     .summary,
     .summary-target {
+      // @extend .text-serif;
       color: inherit;
+      // font-weight: normal;
     }
 
     .summary-target {
       font-size: $font-size-large;
-      margin-bottom: $padding-large-vertical;
       min-height: 72px;
     }
 
     p {
+      @extend .text-sans;
       @extend .upper-spaced;
       line-height: 1;
       font-weight: bold;
@@ -159,6 +167,48 @@ a.card-colored:hover {
   }
 }
 
+.card-inner {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-size: cover !important;
+  background-position: center !important;
+  opacity: 1;
+  @include transition-property(opacity);
+  @include transition-duration($transition-out-duration);
+  @include transition-timing-function($transition-function);
+}
+
+.user-whale {
+  &.card-colored {
+    background-color: $user-whale;
+
+    .card-inner {
+      background: url(image-path('users/whale.jpg')) no-repeat;
+    }
+  }
+}
+
+.user-chexee {
+  &.card-colored {
+    background-color: $user-chexee;
+
+    .card-inner {
+      background: url(image-path('users/chexee.jpeg')) no-repeat;
+    }
+  }
+}
+
+.user-davidkaneda {
+  &.card-colored {
+    background-color: $user-davidkaneda;
+
+    .card-inner {
+      background: url(image-path('users/davidkaneda.png')) no-repeat;
+    }
+  }
+}
+
 .sidebar {
   font-size: 14px;
   border-left: 1px solid $brand-divider;
@@ -178,4 +228,22 @@ a.card-colored:hover {
   background: $hero-primary;
   border: none;
   margin-bottom: 60px;
+}
+
+.cue-container {
+  z-index: 1000;
+  left: 0;
+  right: 0;
+  padding: 24px 0;
+}
+
+.cue {
+  @extend .upper-spaced;
+  margin: 0 auto;
+  color: white;
+  font-size: $font-size-small;
+
+  .icon {
+    font-size: 16px;
+  }
 }
