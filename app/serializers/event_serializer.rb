@@ -1,4 +1,5 @@
 class EventSerializer < ActiveModel::Serializer
+  include ReadraptorTrackable
   include MarkdownHelper
 
   # FIXME Remove `rescue` as a conditional
@@ -68,15 +69,4 @@ class EventSerializer < ActiveModel::Serializer
   def product
     @product ||= wip.product
   end
-
-  attributes :readraptor_track_id
-
-  def readraptor_track_id
-    ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(object).first, scope.id).url if scope
-  end
-
-  def include_readraptor_tracking_url?
-    scope.present?
-  end
-
 end

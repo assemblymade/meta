@@ -6,7 +6,7 @@ class Activity < ActiveRecord::Base
   validates :actor,   presence: true
   validates :subject, presence: true
   validates :target,  presence: true
-  
+
   attr_accessor :socket_id
 
   def self.publish!(opts)

@@ -1,5 +1,7 @@
-class DiscussionSerializer < ActiveModel::Serializer
-  attributes :id, :number, :title, :url
+class DiscussionSerializer < ApplicationSerializer
+  include ReadraptorTrackable
+
+  attributes :number, :title, :url
 
   def url
     product_discussion_path product, number

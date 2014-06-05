@@ -41,6 +41,8 @@ class Wip < ActiveRecord::Base
   scope :tagged_with_any, ->(names) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name' => names) }
   scope :tagged_with_all, ->(names) { joins(:taggings => :tag).where('wip_tags.name' => names).group('wips.id').having('count(distinct wip_taggings.wip_tag_id) = ?', names.size) }
 
+  attr_accessor :readraptor_tag # set which tag you are viewing
+
   # Workflow
   workflow_column :state
   workflow do
@@ -222,6 +224,10 @@ class Wip < ActiveRecord::Base
 
   def updates
     Wip::Updates.new(self)
+  end
+
+  def interested
+    [product]
   end
 
   # elasticsearch

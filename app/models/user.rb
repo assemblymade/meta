@@ -165,7 +165,9 @@ class User < ActiveRecord::Base
   end
 
   def recent_products
-    Product.find(recent_product_ids).sort_by{|p| recent_product_ids.index(p.id) }
+    if recent_product_ids && recent_product_ids.any?
+      Product.find(recent_product_ids).sort_by{|p| recent_product_ids.index(p.id) }
+    end
   end
 
   def has_voted_for?(product)

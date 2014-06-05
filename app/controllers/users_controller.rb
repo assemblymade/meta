@@ -45,31 +45,7 @@ class UsersController < ApplicationController
   end
 
   def unread
-    unread_articles = ReadRaptorClient.new.unread_entities(current_user.id)
-
-    @main_thread_updates = {}
-    entities = ReadRaptorSerializer.deserialize_articles(unread_articles)
-    entities.each do |o|
-      case o
-      when Event::Comment
-        wip = o.wip
-        product = wip.product
-        if wip == product.main_thread
-          @main_thread_updates[product] ||= []
-          @main_thread_updates[product] << o
-        end
-      end
-    end
-
-    entries = current_user.recent_products.take(7).map.with_index do |product, i|
-      product_events = @main_thread_updates[product] || []
-      {
-        product: ProductSerializer.new(product).as_json,
-        count: product_events.size,
-        entities: product_events.map{|e| [e.id, e.number] },
-        index: i
-      }
-    end
+    entries = UnreadChat.for(current_user)
 
     render json: entries.sort_by{|e| [-e[:count], e[:index]]}
   end

@@ -1,6 +1,6 @@
-class ProductSerializer < ActiveModel::Serializer
+class ProductSerializer < ApplicationSerializer
 
-  attributes :id, :url
+  attributes :url
   attributes :name, :pitch, :slug
 
   def url

@@ -1,5 +1,7 @@
-class TaskSerializer < ActiveModel::Serializer
-  attributes :id, :number, :title, :url
+class TaskSerializer < ApplicationSerializer
+  include ReadraptorTrackable
+
+  attributes :number, :title, :url
 
   def url
     product_wip_path product, number

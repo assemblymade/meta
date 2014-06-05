@@ -5,28 +5,31 @@ class ReadRaptorDelivery
 
   attr_reader :recipients
 
-  def initialize(recipients)
+  def initialize(recipients, tags=[])
     @recipients = recipients
+    @tags = Array(tags)
   end
 
   def deliver_async(entity)
     return unless ENV['READRAPTOR_URL']
 
     recipients.group_by{|u| u.mail_preference }.each do |preference, recipients|
-      opts = {
-        key: ReadRaptorSerializer.serialize_entities(entity).first,
-        recipients: recipients.map(&:id)
-      }
+      @tags.each do |tag|
+        opts = {
+          key: ReadRaptorSerializer.serialize_entities(entity, tag).first,
+          recipients: recipients.map(&:id)
+        }
 
-      if callback = callbacks[preference]
-        opts[:via] = [{
-          type: 'webhook',
-          at: callback[:at],
-          url: callback[:url]
-        }]
+        if callback = callbacks[preference]
+          opts[:via] = [{
+            type: 'webhook',
+            at: callback[:at],
+            url: callback[:url]
+          }]
+        end
+
+        ReadRaptor::RegisterArticleWorker.new.perform(opts)
       end
-
-      ReadRaptor::RegisterArticleWorker.perform_async(opts)
     end
   end
 

@@ -407,6 +407,12 @@ class Product < ActiveRecord::Base
     description && Search::Sanitizer.new.sanitize(description)
   end
 
+  # pusher
+
+  def push_channel
+    slug
+  end
+
   protected
 
   def subscribe_owner_to_notifications
