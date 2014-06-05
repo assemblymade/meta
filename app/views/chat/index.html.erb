@@ -7,6 +7,14 @@
   <%= render 'products/navbar' %>
 </div>
 
+<div class="modal fade"
+     id="create-task"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="createTask"
+     aria-hidden="true">
+</div>
+
 <div class="container">
   <div class="row" style="position:relative">
     <div class="col-xs-8">
@@ -113,7 +121,6 @@
     $(window).load(function() {
       delay(1, chatView.scrollToLatestActivity);
     });
-
   });
 </script>
 

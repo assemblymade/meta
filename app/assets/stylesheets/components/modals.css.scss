@@ -7,6 +7,14 @@
   @include gradient-radial(rgba(black, 0) 60%, $brand-shadow);
 }
 
+.modal-backdrop {
+  background-color: #000;
+}
+
+.modal-backdrop.fade {
+  opacity: 0.5;
+}
+
 .modal-success {
   background-color: $brand-success;
 }
