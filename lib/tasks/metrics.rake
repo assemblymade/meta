@@ -33,8 +33,27 @@ namespace :metrics do
       end
     end
   end
-
-
+  
+  task :created => :environment do
+    data = by_month do |date|
+      total = User.where("created_at >= date(?) and created_at <= date(?)", date.beginning_of_month, date.end_of_month).count
+      [Date::MONTHNAMES[date.month], total]
+    end
+    data.each do |month, total|
+      puts "#{month}: #{total} New Users"
+    end
+  end
+  
+  task :total_users => :environment do
+    data = by_month do |date|
+      total = User.where("created_at <= date(?)", date.end_of_month).count
+      [Date::MONTHNAMES[date.month], total]
+    end
+    data.each do |month, total|
+      puts "#{month}: #{total} Total Users"
+    end
+  end
+  
   task :mau => :environment do
     mau = Metrics::DailyActives.active_between(Date.today.beginning_of_month, Date.today.end_of_month).pluck('sum(count)').first
     puts "Total MAU: #{mau}"
@@ -108,11 +127,11 @@ namespace :metrics do
     end
   end
 
-  task :all => ['metrics:mau','metrics:mac','metrics:mtc','metrics:map','metrics:mtw','metrics:mpd','metrics:mps']
+  task :all => ['metrics:total_users', 'metrics:created', 'metrics:mau','metrics:mac','metrics:mtc','metrics:map','metrics:mtw','metrics:mpd','metrics:mps']
 
   def by_month
     data = []
-    ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014", "1-apr-2014"].each do |month|
+    ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014", "1-apr-2014", "1-may-2014"].each do |month|
       data << yield(Date.parse(month))
     end
     data
