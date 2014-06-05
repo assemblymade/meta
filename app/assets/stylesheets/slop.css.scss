@@ -10,7 +10,7 @@ $product-buckets: lighten(#353535, 30%);
 
 $user-whale: #63a4ae;
 $user-chexee: #98658e;
-$user-davidkaneda: #d08b48;
+$user-davidkaneda: darken(saturate(#d08b48, 15%), 5%);
 
 .hero {
   // Offset .page top padding
@@ -107,6 +107,7 @@ $user-davidkaneda: #d08b48;
 }
 
 .card-sm {
+  border-radius: $border-radius-large;
   .card-body {
     padding: 15px 20px;
   }
@@ -231,7 +232,7 @@ a.card-colored:hover {
 }
 
 .cue-container {
-  z-index: 1000;
+  z-index: 0;
   left: 0;
   right: 0;
   padding: 24px 0;
@@ -245,5 +246,9 @@ a.card-colored:hover {
 
   .icon {
     font-size: 16px;
+    border: 2px solid white;
+    border-radius: 50%;
+    padding: 3px;
+    margin: 0 4px;
   }
 }
