@@ -29,11 +29,12 @@ ASM::Application.routes.draw do
   get '/blog',    to: redirect('http://blog.assemblymade.com')
 
   # Pages
-  get '/home'        => 'pages#home',        as: :home
-  get '/terms'       => 'pages#tos',         as: :tos
-  get '/core-team'   => 'pages#core_team',   as: :core_team
-  get '/sabbaticals' => 'pages#sabbaticals', as: :sabbaticals
-  get '/activity'    => 'activity#index',    as: :activity
+  get '/home'             => 'pages#home',        as: :home
+  get '/terms'            => 'pages#tos',         as: :tos
+  get '/core-team'        => 'pages#core_team',   as: :core_team
+  get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
+  get '/activity'         => 'activity#index',    as: :activity
+  get '/getting-started'  => 'pages#getting-started', as: :getting_started
 
   get '/new' => redirect('/start')
   get '/start'        => 'products#new',     :as => :new_idea
