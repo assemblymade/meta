@@ -5,7 +5,7 @@ $text-link: #68A565;
 $text-muted: #CBCBBC;
 
 $product-helpful: desaturate(#FF4B4E, 30%);
-$product-family-table: #75b5ac;
+$product-family-table: #83B4AD;
 $product-buckets: lighten(#353535, 30%);
 
 .hero {
@@ -131,7 +131,7 @@ $product-buckets: lighten(#353535, 30%);
       @extend .upper-spaced;
       line-height: 1;
       font-weight: bold;
-      color: rgba(0,0,0,0.3);
+      color: rgba(0,0,0,0.4);
     }
   }
 }
