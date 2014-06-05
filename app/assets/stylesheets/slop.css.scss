@@ -1,8 +1,7 @@
 $hero-primary: desaturate(#b57f59, 20%);
+$hero-secondary: #CBCBBC;
 $text-copy: #353439;
 $text-accent: #BC9454;
-$text-link: #68A565;
-$text-muted: #CBCBBC;
 
 $product-helpful: desaturate(#FF4B4E, 30%);
 $product-family-table: #83B4AD;
@@ -16,7 +15,6 @@ $user-davidkaneda: darken(saturate(#d08b48, 15%), 5%);
   // Offset .page top padding
   margin-top: -60px;
   background: linear-gradient(to bottom, transparent 0%, transparent 70%, $hero-primary 100%), url(image-path('getting-started/hero.jpg')) no-repeat;
-  background-color: $hero-primary;
   background-position: top center;
   background-size: cover;
   min-height: 790px;
@@ -37,7 +35,7 @@ $user-davidkaneda: darken(saturate(#d08b48, 15%), 5%);
       display: block;
       width: 20%;
       height: 2px;
-      background-color: $text-muted;
+      background-color: $hero-secondary;
       margin: 0 auto;
       margin-top: 28px;
       border-radius: 1.5px;
@@ -50,6 +48,12 @@ $user-davidkaneda: darken(saturate(#d08b48, 15%), 5%);
     margin: 0;
     margin-bottom: 5px;
     color: $text-accent;
+
+    .icon {
+      font-size: 32px;
+      position: relative;
+      bottom: -3px;
+    }
   }
 
   .lead {
@@ -70,16 +74,12 @@ $user-davidkaneda: darken(saturate(#d08b48, 15%), 5%);
   // @extend .text-serif;
   line-height: 1.618;
   color: $text-copy;
-
-  a {
-    color: $text-link;
-  }
 }
 
 .section {
+  @extend .text-serif;
   line-height: 1.618;
   margin-bottom: 36px;
-  @extend .text-serif;
 
   .table-striped > tbody > tr:nth-child(odd) > td {
     background-color: lighten($text-copy, 77%);
@@ -100,8 +100,8 @@ $user-davidkaneda: darken(saturate(#d08b48, 15%), 5%);
   h4 {
     @extend .text-sans;
     font-weight: bold;
-    font-size: 24px;
-    margin-bottom: $line-height-computed * 1;
+    font-size: 22px;
+    margin-bottom: $line-height-computed;
     color: $text-accent;
   }
 }
@@ -168,18 +168,6 @@ a.card-colored:hover {
   }
 }
 
-.card-inner {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-size: cover !important;
-  background-position: center !important;
-  opacity: 1;
-  @include transition-property(opacity);
-  @include transition-duration($transition-out-duration);
-  @include transition-timing-function($transition-function);
-}
-
 .user-whale {
   &.card-colored {
     background-color: $user-whale;
@@ -220,7 +208,7 @@ a.card-colored:hover {
     font-size: 15px;
     text-transform: uppercase;
     letter-spacing: 0.8pt;
-    color: $text-muted;
+    color: $hero-secondary;
   }
 }
 
@@ -236,19 +224,4 @@ a.card-colored:hover {
   left: 0;
   right: 0;
   padding: 24px 0;
-}
-
-.cue {
-  @extend .upper-spaced;
-  margin: 0 auto;
-  color: white;
-  font-size: $font-size-small;
-
-  .icon {
-    font-size: 16px;
-    border: 2px solid white;
-    border-radius: 50%;
-    padding: 3px;
-    margin: 0 4px;
-  }
 }
