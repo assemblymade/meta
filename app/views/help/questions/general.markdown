@@ -5,7 +5,7 @@ Every month a product generates revenue, the bills associated with it (server co
 
 For example,
 
-* A product, called XFoo, generated $10,000 in revenue in May, 2014. Operating costs during that month (including Assembly’s 10% stake) were $1,500. Then, the remaining $8,500 is distributed to everyone who contributed to the product. Your monthly share of the royalty payout will depend on the percentage of the product’s App Coins you own.*
+*A product, called XFoo, generated $10,000 in revenue in May, 2014. Operating costs during that month (including Assembly’s 10% stake) were $1,500. Then, the remaining $8,500 is distributed to everyone who contributed to the product. Your monthly share of the royalty payout will depend on the percentage of the product’s App Coins you own.*
 
 You can request a balance transfer of your Assembly income any time it exceeds US 100.00 USD. Balance transfers are made through either PayPal or an ACH (checking account) payment for US residents. International contributors are paid using PayPal. Transfer fees may apply and are your responsibility.
 

@@ -2,13 +2,14 @@
         'bootstrap',
         'base/*',
         'components/*',
-        'pages/*';
+        'slop';
 
 .container {
   width: 970px !important;
 }
 
 .fixed-bottom {
+  z-index: 9999;
   position: fixed;
   bottom: 0;
 

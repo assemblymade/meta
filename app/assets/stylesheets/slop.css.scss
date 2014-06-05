@@ -1,0 +1,254 @@
+$hero-primary: desaturate(#b57f59, 20%);
+$text-copy: #353439;
+$text-accent: #BC9454;
+$text-link: #68A565;
+$text-muted: #CBCBBC;
+
+$product-helpful: desaturate(#FF4B4E, 30%);
+$product-family-table: #83B4AD;
+$product-buckets: lighten(#353535, 30%);
+
+$user-whale: #63a4ae;
+$user-chexee: #98658e;
+$user-davidkaneda: darken(saturate(#d08b48, 15%), 5%);
+
+.hero {
+  // Offset .page top padding
+  margin-top: -60px;
+  background: linear-gradient(to bottom, transparent 0%, transparent 70%, $hero-primary 100%), url(image-path('getting-started/hero.jpg')) no-repeat;
+  background-color: $hero-primary;
+  background-position: top center;
+  background-size: cover;
+  min-height: 790px;
+  padding-top: 80px;
+  position: relative;
+  color: $text-copy;
+
+  h1 {
+    @extend .text-serif;
+    font-size: 46px;
+    margin-top: 0;
+    margin-bottom: 28px;
+    font-weight: bold;
+    color: $text-copy;
+
+    &:after {
+      content: '';
+      display: block;
+      width: 20%;
+      height: 2px;
+      background-color: $text-muted;
+      margin: 0 auto;
+      margin-top: 28px;
+      border-radius: 1.5px;
+    }
+  }
+
+  h6 {
+    font-size: 15px;
+    letter-spacing: 0.8pt;
+    margin: 0;
+    margin-bottom: 5px;
+    color: $text-accent;
+  }
+
+  .lead {
+    color: inherit;
+    padding: 0 50px;
+  }
+}
+
+.lead-hero {
+  @extend .lead;
+  font-size: 23px;
+  font-weight: normal;
+  color: white;
+}
+
+.section,
+.sidebar {
+  // @extend .text-serif;
+  line-height: 1.618;
+  color: $text-copy;
+
+  a {
+    color: $text-link;
+  }
+}
+
+.section {
+  line-height: 1.618;
+  margin-bottom: 36px;
+  @extend .text-serif;
+
+  .table-striped > tbody > tr:nth-child(odd) > td {
+    background-color: lighten($text-copy, 77%);
+  }
+
+  .table {
+    @extend .text-sans;
+  }
+
+  figure {
+    font-size: 14px;
+    font-style: italic;
+    color: $gray;
+    border-top: 1px dotted $brand-divider;
+    padding: 10px 0;
+  }
+
+  h4 {
+    @extend .text-sans;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: $line-height-computed * 1;
+    color: $text-accent;
+  }
+}
+
+.card-sm {
+  border-radius: $border-radius-large;
+  .card-body {
+    padding: 15px 20px;
+  }
+}
+
+.card-colored {
+  @extend .text-sans;
+  margin-bottom: 0;
+  background-color: $gray;
+  box-shadow: inset 0 0 0 1px $brand-shadow,
+              0 1px 0 0 $brand-shadow;
+
+  .card-body {
+    color: white;
+
+    .summary,
+    .summary-target {
+      // @extend .text-serif;
+      color: inherit;
+      // font-weight: normal;
+    }
+
+    .summary-target {
+      font-size: $font-size-large;
+      min-height: 72px;
+    }
+
+    p {
+      @extend .text-sans;
+      @extend .upper-spaced;
+      line-height: 1;
+      font-weight: bold;
+      color: rgba(0,0,0,0.4);
+    }
+  }
+}
+
+a.card-colored:hover {
+  box-shadow: inset 0 0 0 1px $brand-shadow,
+              0 3px 3px 0 $brand-shadow;
+}
+
+.product-helpful {
+  &.card-colored {
+    background-color: $product-helpful;
+  }
+}
+
+.product-family-table {
+  &.card-colored {
+    background-color: $product-family-table;
+  }
+}
+
+.product-buckets {
+  &.card-colored {
+    background-color: $product-buckets;
+  }
+}
+
+.card-inner {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-size: cover !important;
+  background-position: center !important;
+  opacity: 1;
+  @include transition-property(opacity);
+  @include transition-duration($transition-out-duration);
+  @include transition-timing-function($transition-function);
+}
+
+.user-whale {
+  &.card-colored {
+    background-color: $user-whale;
+
+    .card-inner {
+      background: url(image-path('users/whale.jpg')) no-repeat;
+    }
+  }
+}
+
+.user-chexee {
+  &.card-colored {
+    background-color: $user-chexee;
+
+    .card-inner {
+      background: url(image-path('users/chexee.jpeg')) no-repeat;
+    }
+  }
+}
+
+.user-davidkaneda {
+  &.card-colored {
+    background-color: $user-davidkaneda;
+
+    .card-inner {
+      background: url(image-path('users/davidkaneda.png')) no-repeat;
+    }
+  }
+}
+
+.sidebar {
+  font-size: 14px;
+  border-left: 1px solid $brand-divider;
+  padding-left: 30px;
+
+  h5 {
+    font-weight: bold;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.8pt;
+    color: $text-muted;
+  }
+}
+
+.getting-started {
+  padding: 16px 0 36px 0;
+  background: $hero-primary;
+  border: none;
+  margin-bottom: 60px;
+}
+
+.cue-container {
+  z-index: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 0;
+}
+
+.cue {
+  @extend .upper-spaced;
+  margin: 0 auto;
+  color: white;
+  font-size: $font-size-small;
+
+  .icon {
+    font-size: 16px;
+    border: 2px solid white;
+    border-radius: 50%;
+    padding: 3px;
+    margin: 0 4px;
+  }
+}
