@@ -55,8 +55,7 @@ class FilterWipsQuery
     when 'update'
       Wip.order('wips.updated_at DESC')
     else
-      Wip.select('*, CASE WHEN promoted_at IS NULL THEN wips.votes_count ELSE wips.votes_count * 2 END AS promoted_score').
-        order('promoted_score DESC, promoted_at IS NOT NULL DESC')
+      Wip.order('multiplier DESC, votes_count DESC')
     end
   end
 

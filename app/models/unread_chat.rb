@@ -7,7 +7,7 @@ class UnreadChat
       o.try(:product) || o.try(:wip).try(:product)
     end
 
-    entries = user.recent_products.take(7).map.with_index do |product, i|
+    entries = (user.recent_products || []).take(7).map.with_index do |product, i|
       product_events = entities[product] || []
       {
         product: ProductSerializer.new(product).as_json,

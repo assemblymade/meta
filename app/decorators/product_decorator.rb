@@ -6,7 +6,6 @@ class ProductDecorator < ApplicationDecorator
   decorates_finders
   decorates_association :contributors
   decorates_association :core_team
-  decorates_association :promoted_tasks
   decorates_association :status_updates
 
   def hero_image_path
@@ -82,7 +81,7 @@ class ProductDecorator < ApplicationDecorator
   end
 
   def reward
-    for_profit? ? 'Tasks' : 'Karma'
+    for_profit? ? 'Bounties' : 'Karma'
   end
 
   def currency

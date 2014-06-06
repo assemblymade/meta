@@ -68,7 +68,7 @@ $brand-danger: $red;
 $bounty: $yellow;
 $karma: $gray;
 
-$color-promoted:  $purple;
+$color-promoted:     $purple;
 $color-muted:     $gray;
 $color-highlight: #FFF4CC;
 
@@ -224,10 +224,6 @@ $jumbotron-gradient-to:                 $jumbotron-gradient-from;
 $label-color:                     $green;
 $label-background-color:          rgba($label-color, .05);
 $label-border-color:              rgba($label-color, .2);
-
-$label-promoted-color:            $color-promoted;
-$label-promoted-background-color: rgba($label-promoted-color, .05);
-$label-promoted-border-color:     rgba($label-promoted-color, .2);
 
 $label-radius:                    $radius - 1px;
 

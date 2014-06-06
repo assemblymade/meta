@@ -27,7 +27,7 @@ class EventSerializer < ActiveModel::Serializer
   end
 
   def award_url
-    award_product_wip_url(product, wip) if can_award
+    award_product_wip_url(product, wip) if wip.open? && can_award
   end
 
   def can_award

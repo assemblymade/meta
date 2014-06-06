@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   respond_to :html, :json
 
-  before_action :set_user, only: [:update, :unread_content]
+  before_action :set_user, only: [:update]
 
   def show
     set_user
@@ -45,6 +45,7 @@ class UsersController < ApplicationController
   end
 
   def unread
+    authenticate_user!
     entries = UnreadChat.for(current_user)
 
     render json: entries.sort_by{|e| [-e[:count], e[:index]]}

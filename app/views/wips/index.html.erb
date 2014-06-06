@@ -8,7 +8,7 @@
 
     <div class="page-header">
       <div class="pull-right">
-        <a class="btn btn-success" href="<%= new_product_wip_path(@product) %>">Create a Task</a>
+        <a class="btn btn-success" href="<%= new_product_wip_path(@product) %>">Create a Bounty</a>
       </div>
 
 
@@ -17,7 +17,7 @@
           &mdash;
           <%= format_coins(@product, @product.real_bounty_value) %>
           to be earned from
-          <strong><%= pluralize @product.tasks.open.count, 'task' %></strong>
+          <strong><%= pluralize @product.tasks.open.count, 'bounty' %></strong>
         </small>
       </h2>
     </div>
@@ -55,14 +55,14 @@
                   Unwatch
                 </a>
                 <br>
-                <p class="omega">You are notified of new tasks.</p>
+                <p class="omega">You are notified of new bounties.</p>
               <% else %>
                 <a class="btn btn-default btn-block btn-sm" href="<%= subscribe_product_path(@product) %>" data-method="post">
                   <span class="glyphicon glyphicon-eye-open"></span>
                   Watch
                 </a>
                 <br>
-                <p class="omega">You'll be notified of new tasks.</p>
+                <p class="omega">You'll be notified of new bounties.</p>
               <% end %>
             </div>
           </div>

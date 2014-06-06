@@ -44,12 +44,18 @@ class TasksController < WipsController
     render nothing: true, status: 200
   end
 
+  def urgency
+    authorize! :multiply, @wip
+    @urgency = Urgency.find_by_slug!(params[:urgency])
+    @wip.update_attributes urgency: @urgency
+  end
+
   def wip_class
     Task
   end
 
   def product_wips
-    @product.tasks
+    @product.tasks.includes(:workers, :product, :watchings)
   end
 
   def copy_params

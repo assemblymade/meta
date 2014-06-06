@@ -4,7 +4,7 @@ class TaskSerializer < ApplicationSerializer
   attributes :number, :title, :url
 
   def url
-    product_wip_path product, number
+    product_wip_path product, (number || id)
   end
 
   def product

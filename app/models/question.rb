@@ -1,8 +1,13 @@
 class Question
-  GROUPS = {'general'     => 'General',
-            'ideas'       => 'Submitting an idea',
-            'building'    => 'Building apps',
-            'preordering' => 'Pre-orders & refunds'}
+  GROUPS = {'basics'     => 'The Basics',
+            'building'    => 'Building Apps',
+            'revenue' => 'Revenue and App Coins',
+            'privacy' => 'Privacy and Security',
+             'community' => 'Community',
+             'launching' => 'Launching a Project',
+             'platform' => 'Using the Assembly Platform',
+             'terms'       => 'Terminology'
+        }
 
   cattr_writer :base_path
   def self.base_path
@@ -53,4 +58,3 @@ class Question
     @body = attributes['body']
   end
 end
-

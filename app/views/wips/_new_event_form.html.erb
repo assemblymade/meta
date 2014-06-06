@@ -57,12 +57,6 @@
                     <%= button_tag 'Comment & Reopen', name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-default) %>
                   <% else %>
                     <%= button_tag 'Comment & Close', name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-default) %>
-
-                    <% if @wip.promoted? %>
-                      <%= button_tag 'Comment & Demote', name: 'event_comment[type]', value: 'Event::Demotion', type: 'submit', class: %w(btn btn-default) %>
-                    <% else %>
-                      <%= button_tag 'Comment & Promote', name: 'event_comment[type]', value: 'Event::Promotion', type: 'submit', class: %w(btn btn-default) %>
-                    <% end %>
                   <% end %>
                 <% end %>
               </div>

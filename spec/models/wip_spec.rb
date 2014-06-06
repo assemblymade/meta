@@ -71,48 +71,20 @@ describe Wip do
     before(:each) { Timecop.freeze(start) }
     after(:each) { Timecop.return }
 
-    context 'non core member promotes' do
+    context 'non core member multiplies' do
       it 'raises' do
-        expect { wip.promote!(joe_random, 'reason') }.to raise_error(ActiveRecord::RecordNotSaved)
+        expect { wip.multiply!(joe_random, 2.0) }.to raise_error(ActiveRecord::RecordNotSaved)
       end
     end
 
-    context 'core member promotes' do
+    context 'core member multiplies' do
       context 'with no previously promoted wips' do
         before {
-          wip.promote! core_member, 'reason'
+          wip.multiply! core_member, 2.0
         }
         subject { wip }
 
-        its(:promoted_at) { should be_same_time_as Time.current }
-
-        it 'creates event' do
-          promotion = wip.events.last
-          promotion.class.should == Event::Promotion
-          promotion.user.should == core_member
-        end
-      end
-
-    end
-  end
-
-  describe 'demoting' do
-    context 'non core member demotes' do
-      it 'raises' do
-        expect { wip.demote!(joe_random, 'reason') }.to raise_error(ActiveRecord::RecordNotSaved)
-      end
-    end
-
-    context 'core member demotes' do
-      context 'with no previously promoted wips' do
-        before {
-          wip.demote! core_member, 'reason'
-        }
-        it 'creates event' do
-          demotion = wip.events.last
-          demotion.class.should == Event::Demotion
-          demotion.user.should == core_member
-        end
+        its(:multiplier) { should == 2.0 }
       end
     end
   end

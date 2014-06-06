@@ -29,14 +29,15 @@ ASM::Application.routes.draw do
   get '/blog',    to: redirect('http://blog.assemblymade.com')
 
   # Pages
-  get '/home'        => 'pages#home',        as: :home
-  get '/terms'       => 'pages#tos',         as: :tos
-  get '/core-team'   => 'pages#core_team',   as: :core_team
-  get '/sabbaticals' => 'pages#sabbaticals', as: :sabbaticals
-  get '/activity'    => 'activity#index',    as: :activity
+  get '/home'             => 'pages#home',        as: :home
+  get '/terms'            => 'pages#tos',         as: :tos
+  get '/core-team'        => 'pages#core_team',   as: :core_team
+  get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
+  get '/activity'         => 'activity#index',    as: :activity
+  get '/getting-started'  => 'pages#getting-started', as: :getting_started
 
-  get '/new' => redirect('/start')
-  get '/start'        => 'products#new',     :as => :new_idea
+  get '/new'      => redirect('/create')
+  get '/create'   => 'products#new',     :as => :new_idea
   resources :ideas, :only => [:index] do
     post :vote, :controller => 'ideas/votes', :action => 'create', :on => :member
   end
@@ -135,7 +136,7 @@ ASM::Application.routes.draw do
 
   # Help
   get '/help/:group', :to => 'questions#index', :as => :help
-  get '/help' => redirect('/help/general'), :as => :faq
+  get '/help' => redirect('/help/basics'), :as => :faq
 
   # redirect support-foo to helpful
   get '/support-foo', to: redirect('/helpful')
@@ -246,6 +247,10 @@ ASM::Application.routes.draw do
 
       resources :votes, only: [:create]
       resources :comments, only: [:show, :create, :edit, :update]
+    end
+
+    resources :tasks, only: [] do
+      patch 'urgency/:urgency', action: :urgency, as: :urgency
     end
 
     resources :events, only: [] do

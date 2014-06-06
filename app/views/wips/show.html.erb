@@ -13,7 +13,7 @@
           <%= render 'wips/discussion', events: @events %>
 
           <div class="well js-upvote-reminder" style="display:none">
-            You've commented on this Task but you haven't upvoted. Your upvotes reward people with more coins for completing Tasks which helps make <%= @product.name %> a better product.
+            You've commented on this Bounty but you haven't upvoted. Your upvotes reward people with more coins for completing Tasks which helps make <%= @product.name %> a better product.
           </div>
 
           <%= render 'new_event_form' %>
@@ -35,8 +35,8 @@
                 Ready for work
               </h6>
 
-              <p><strong>Think you'd be a great fit for this task?</strong> Jump in and help out.</p>
-              <%= button_to 'Work on this task', product_wip_start_work_path(@wip.product, @wip), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-default btn-sm btn-block) %>
+              <p><strong>Think you'd be a great fit for this bounty?</strong> Jump in and help out.</p>
+              <%= button_to 'Work on this bounty', product_wip_start_work_path(@wip.product, @wip), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-default btn-sm btn-block) %>
 
             <% when 'allocated' %>
               <div class="progress progress-small omega">
@@ -49,10 +49,10 @@
               <% if signed_in? && @wip.workers.include?(current_user) %>
                 <% worker = @wip.wip_workers.find_by(user: current_user) %>
                 <p class="omega">You began working on this task <strong><time class="timestamp" datetime="<%= worker.created_at.iso8601 %>"></time></strong>. How's it shaping up?</p>
-                <%= button_to 'Stop working on this task', product_wip_stop_work_path(@wip.product, @wip), method: :patch, disable_with: 'Cancelling…', class: %w(btn btn-text btn-sm btn-block) %>
+                <%= button_to 'Stop working on this bounty', product_wip_stop_work_path(@wip.product, @wip), method: :patch, disable_with: 'Cancelling…', class: %w(btn btn-text btn-sm btn-block) %>
               <% else %>
                 <% worker = @wip.wip_workers.first %>
-                <p class="omega"><strong><%= worker.user.username %></strong> began working on this task <strong><time class="timestamp" datetime="<%= worker.created_at.iso8601 %>"></time>.</strong></p>
+                <p class="omega"><strong><%= worker.user.username %></strong> began working on this bounty <strong><time class="timestamp" datetime="<%= worker.created_at.iso8601 %>"></time>.</strong></p>
               <% end %>
 
             <% when 'reviewing' %>
@@ -81,7 +81,7 @@
                   <p>
                     You were awarded
                     <%= format_coins(@wip.product, @wip.real_coin_value) %>
-                    for completing this task.
+                    for completing this bounty.
                   </p>
                   <p class="omega"><strong>Keep up the great work!</strong></p>
                 <% else %>
@@ -89,7 +89,7 @@
                     <strong><%= @wip.winner.username %></strong>
                     was awarded
                     <%= format_coins(@wip.product, @wip.real_coin_value) %>
-                    for completing this task.
+                    for completing this bounty.
                   </p>
                 <% end %>
               <% end %>
