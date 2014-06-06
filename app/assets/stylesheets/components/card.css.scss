@@ -12,7 +12,8 @@
   @include transition-duration($transition-out-duration);
   @include transition-timing-function($transition-function);
 
-  &:hover {
+  &:hover,
+  &.card-active {
     color: $text-color;
     text-decoration: none;
 
