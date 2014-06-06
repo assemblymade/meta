@@ -4,7 +4,7 @@ class Question
             'revenue' => 'Revenue and App Coins',
             'privacy' => 'Privacy and Security',
              'community' => 'Community',
-             'launching' => 'Launching a Project',
+             'launching' => 'Creating a Product',
              'platform' => 'Using the Assembly Platform',
              'terms'       => 'Terminology'
         }

@@ -78,3 +78,15 @@ VCs and Incubators invest capital in a traditional company in exchange for equit
 
 
 On Kickstarter, you can contribute money to help a product or idea launch, and you’ll be rewarded with a prize or an early version of the product. On Assembly, you can contribute your time and talent, and in return you will have actual ownership over that product.
+
+---
+title: Who is legally responsible for each product?
+---
+
+Assembly.
+
+---
+title: Who covers the costs of development?
+---
+
+Assembly. We have restrictions to this, but generally we will pay for anything that helps get your product off the ground.

@@ -8,14 +8,14 @@ The best way to do this is to become an active member. Introduce yourself to the
 title: Where should I communicate with people on Assembly?
 ---
 
-Generally, a product’s chat is the best place to talk to people. If you want to discuss a specific task or project, you can discuss in the comments there.
+Generally, a product’s chat is the best place to talk to people. If you want to discuss a specific bounty or project, you can discuss in the comments there.
 
 
 ---
-title: How can I call attention or assign a task to someone?
+title: How can I call attention or assign a bounty to someone?
 ---
 
-The best way to do this is to @mention the person in the comments below a task.
+The best way to do this is to @mention the person's username in the comments below a bounty.
 
 ---
 title: How can I reward someone for doing something awesome?

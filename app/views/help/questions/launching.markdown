@@ -2,13 +2,13 @@
 title: How do I submit an app idea?
 ---
 
-If you have a great idea for an app to build on Assembly, head over assemblymade.com/new.
+If you have a great idea for an app to build on Assembly, head over [assemblymade.com/new](assemblymade.com/new).
 
 ---
 title: Who will build my app if I submit an idea?
 ---
 
-You will! Products require momentum and community support to succeed on Assembly, you nothing will ever ship if you submit an idea and walk away.
+You, along with the Assembly community! If you have some skills (say, design) but need others to ship the product (say, development), then Assembly is a great place to find those people. Products require momentum and community support to succeed on Assembly, you nothing will ever ship if you submit an idea and walk away.
 
 If you help out on other products, start working on your idea and help people understand your vision, you’ll have no trouble generating interest from a talented group of people to work on your project.
 
@@ -16,7 +16,7 @@ If you help out on other products, start working on your idea and help people un
 title: How much ownership do I get for coming up with the idea?
 ---
 
-You’ll get 5% initially. Over time, as more people are added to the Core Team, this may dilute to a lower percentage of a more valuable product, but each bit of work you do on your product will earn you a bit more ownership.
+The Core Team (which initially is just the creator) always maintains 5%. This number can be changed by the Core Team if they'd like, but 5% tends to leave room to get the community excited about participating. Remember, each bit of work you do will earn you a bit more ownership, so that 5% is just a baseline.
 
 ---
 title: How do I generate interest in my idea?
