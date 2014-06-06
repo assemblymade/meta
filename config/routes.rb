@@ -135,7 +135,7 @@ ASM::Application.routes.draw do
 
   # Help
   get '/help/:group', :to => 'questions#index', :as => :help
-  get '/help' => redirect('/help/general'), :as => :faq
+  get '/help' => redirect('/help/basics'), :as => :faq
 
   # redirect support-foo to helpful
   get '/support-foo', to: redirect('/helpful')
