@@ -19,6 +19,9 @@ ASM::Application.routes.draw do
 
   get '/still-field' => redirect('/discover') # bad product
 
+  # Bugfix. Read more at https://assemblymade.com/meta/198
+  get '/webhooks/pusher' => redirect('/discover')
+
   # Internal
   get '/styleguide' => 'styleguide#index'
   get '/playground/:action', controller: 'playground'
