@@ -15,7 +15,7 @@
         Open Bounties
       </a>
     </li>
-    <li>
+    <!-- <li>
       <ul class="nav nav-pills nav-stacked small">
         <% [:code, :design, :copy, :other].each do |deliverable| %>
           <li class="<%= 'active' if params[:deliverable] == deliverable.to_s %>">
@@ -26,7 +26,7 @@
           </li>
         <% end %>
       </ul>
-    </li>
+    </li> -->
 
     <li class="<%= 'active' if params[:state] == 'allocated' %>">
       <a href="<%= product_wips_path(@product, state: 'allocated') %>">

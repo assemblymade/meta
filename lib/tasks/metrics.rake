@@ -59,6 +59,11 @@ namespace :metrics do
     puts "Total MAU: #{mau}"
     puts "Total %: #{(mau.to_f / User.count.to_f)}"
   end
+  
+  task :mau2 => :environment do
+    last_month = 1.month.ago
+    User.where("created_at < ?", Date.today.beginning_of_month).where("last_request_at >= ?", last_month.beginning_of_month)
+  end
 
   desc "Monthly Active Contributors - People who created wips and comment"
   task :mac => :environment do

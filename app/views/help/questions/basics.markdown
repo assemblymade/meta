@@ -89,4 +89,4 @@ Assembly.
 title: Who covers the costs of development?
 ---
 
-Assembly. We have restrictions to this, but generally we will pay for anything that helps get your product off the ground.
+Assembly. We have restrictions to this, but generally we financially assist growing product get off the ground.
