@@ -27,10 +27,10 @@ As other technologies like [docker](http://www.docker.io/) and [vagrant](http://
 
 
 ---
-title: What if I find work that is clearly needed, but doesn’t have a task assigned to it?
+title: What if I find work that is clearly needed, but doesn’t have a bounty assigned to it?
 ---
 
-Hop into that product’s chat room, and let someone know! If the need exists, the core team can create a task and let you run with it. Once you complete it, you’ll be rewarded with App Coins.
+Hop into that product’s chat room, and let someone know! If the need exists, the Core Team can create a bounty. Or, you can create the bounty yourself. The Assembly community values progress over consensus. Once you complete it, you’ll be rewarded with App Coins.
 
 ---
 title: What happens when there are disagreements?
@@ -42,7 +42,7 @@ The Assembly platform is intended to allow everyone to participate in influencin
 title: What if work needs to get done that nobody is doing?
 ---
 
-If a necessary task goes uncompleted, Assembly may be able to help. We're equipped to handle design, accounting, legal issues, PR, marketing and more. We also may cover the initial infrastructure and marketing costs, at our discretion. As an app begins earning revenue, we pay those costs from the profits and distribute the remaining proceeds back to the contributors. Every app has an Assembly employee assigned as its liaison.
+If a necessary bounty goes uncompleted, Assembly may be able to help. We're equipped to handle design, accounting, legal issues, PR, marketing and more. We also may cover the initial infrastructure and marketing costs, at our discretion. As an app begins earning revenue, we pay those costs from the profits and distribute the remaining proceeds back to the contributors. Every app has an Assembly employee assigned as its liaison.
 
 ---
 title: What happens if development stops on an app?
