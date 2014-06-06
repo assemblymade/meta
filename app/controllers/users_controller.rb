@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   respond_to :html, :json
 
-  before_action :set_user, only: [:update, :unread_content]
+  before_action :set_user, only: [:update, :unread]
 
   def show
     set_user
