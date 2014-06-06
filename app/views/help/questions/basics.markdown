@@ -68,7 +68,7 @@ title: What does transparency mean to Assembly?
 This is really important to us. When a product is built on Assembly, we believe an open, transparent process is key. That means anyone can see progress, discussions, ownership and even revenue.
 
 
-Obviously, we can’t make the claim that building products in public is the best approach if we aren’t doing that ourselves. So, go check out asssemblymade.com/meta. You can scan through our history of development and discussion, even seeing real-time updates as we ship new features.
+Obviously, we can’t make the claim that building products in public is the best approach if we aren’t doing that ourselves. So, go check out [assemblymade.com/meta](https://assemblymade.com/meta). You can scan through our history of development and discussion, even seeing real-time updates as we ship new features.
 
 ---
 title: How is Assembly different from Kickstarter or an Incubator?
