@@ -68,7 +68,7 @@ class Wip < ActiveRecord::Base
     !!self.winner
   end
 
-  def close(closer, reason)
+  def close(closer, reason=nil)
     add_event ::Event::Close.new(user: closer, body: reason) do
       set_closed(closer)
     end

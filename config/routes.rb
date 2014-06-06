@@ -182,6 +182,7 @@ ASM::Application.routes.draw do
 
   get '/activities/:id' => 'activity#show'
 
+
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do
     match 'flag',    via: [:get, :post]
@@ -217,6 +218,7 @@ ASM::Application.routes.draw do
     end
 
     resources :discussions, only: [:index, :show, :new, :edit, :create, :update] do
+      patch :close, on: :member
       resources :comments, only: [:show, :create, :edit, :update]
     end
 

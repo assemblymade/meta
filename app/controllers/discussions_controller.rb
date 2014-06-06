@@ -42,6 +42,17 @@ class DiscussionsController < WipsController
     end
   end
 
+  def close
+    authenticate_user!
+    find_product!
+    find_discussion!
+    authorize! :update, @discussion
+    @discussion.close!(current_user)
+    respond_with(@discussion,
+      location: product_discussion_path(@discussion.product, @discussion)
+    )
+  end
+
   def wip_class
     Discussion
   end
@@ -66,6 +77,16 @@ class DiscussionsController < WipsController
     authorize! :update, @wip
     @wip.move_to!(Task, current_user)
     respond_with @wip, location: product_wip_path(@wip.product, @wip)
+  end
+
+  protected
+
+  def find_product!
+    @product = Product.find_by_slug!(params[:product_id])
+  end
+
+  def find_discussion!
+    @discussion = @product.wips.find_by_number(params[:id])
   end
 
 end
