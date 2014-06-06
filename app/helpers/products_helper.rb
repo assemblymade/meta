@@ -6,6 +6,7 @@ module ProductsHelper
     partners
     milestones
     activity
+    chat
     dashboard
     discussions
     tasks
