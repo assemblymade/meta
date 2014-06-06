@@ -18,49 +18,51 @@
           </a>
         {{/actor}}
 
-        <ul class="list-inline pull-right omega">
-          <li>
-            <div class="js-tips"
-                 data-tips-total="{{total_tips}}"
-                 data-tips-path="{{tip_path}}"
-                 data-tips-product-id="{{product_id}}"></div>
-          </li>
+        {{#if cid}}
+          <ul class="list-inline pull-right omega">
+            <li>
+              <div class="js-tips"
+                   data-tips-total="{{total_tips}}"
+                   data-tips-path="{{tip_path}}"
+                   data-tips-product-id="{{product_id}}"></div>
+            </li>
 
-          <li>
-            <div class="dropdown">
-              <button class="btn btn-link dropdown-toggle" id="dropdown-{{anchor}}" role="button" data-toggle="dropdown">
-                <span class="icon icon-ellipsis"></span><span class="caret" style="margin-left:5px;"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-{{anchor}}" style="position: absolute; left: -130px;">
+            <li>
+              <div class="dropdown">
+                <a href="#" class="dropdown-toggle" id="dropdown-{{cid}}" data-toggle="dropdown">
+                  <span class="icon icon-ellipsis"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-{{cid}}" style="position: absolute; left: -130px;">
 
-                {{#edit_url}}
+                  {{#edit_url}}
+                    <li role="presentation">
+                      <a href="{{edit_url}}" role="menuitem">
+                        <span class="glyphicon glyphicon-pencil dropdown-glyph"></span>
+                        <span>Edit comment</span>
+                      </a>
+                    </li>
+                  {{/edit_url}}
+
+                  {{#anchor}}
+                    <li role="presentation">
+                      <a href="#{{anchor}}" role="menuitem">
+                        <span class="glyphicon glyphicon-link dropdown-glyph"></span>
+                        <span>Permalink</span>
+                      </a>
+                    </li>
+                  {{/anchor}}
+
                   <li role="presentation">
-                    <a href="{{edit_url}}" role="menuitem">
-                      <span class="glyphicon glyphicon-pencil dropdown-glyph"></span>
-                      <span>Edit comment</span>
+                    <a href="#{{cid}}" class="js-chat-create-wip" role="menuitem">
+                      <span class="glyphicon glyphicon-plus dropdown-glyph"></span>
+                      <span>Create bounty</span>
                     </a>
                   </li>
-                {{/edit_url}}
-
-                {{#anchor}}
-                  <li role="presentation">
-                    <a href="#{{anchor}}" role="menuitem">
-                      <span class="glyphicon glyphicon-link dropdown-glyph"></span>
-                      <span>Permalink</span>
-                    </a>
-                  </li>
-                {{/anchor}}
-
-                <li role="presentation">
-                  <a href="#{{anchor}}" class="js-chat-create-wip" role="menuitem">
-                    <span class="glyphicon glyphicon-plus dropdown-glyph"></span>
-                    <span>Create bounty</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </li>
-        </ul>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        {{/if cid}}
       </div>
 
       <div class="activity-content markdown-normalized">

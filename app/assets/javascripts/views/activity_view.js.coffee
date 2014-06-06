@@ -24,6 +24,7 @@ class window.ActivityView extends Backbone.View
 
   templateData: ->
     data = _.clone(@model.attributes)
+    data.cid = @model.cid
     data.subject?.body_html = @bodyHTML()
     data
 

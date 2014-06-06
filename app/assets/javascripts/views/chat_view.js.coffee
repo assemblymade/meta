@@ -39,6 +39,7 @@ class window.ChatView extends Backbone.View
         total_tips: 0
       }
     )
+
     @collection.push(activity)
 
     comment = new Comment(
