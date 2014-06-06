@@ -1,6 +1,8 @@
 <% @product = Product.find_by(slug: 'family-table') %>
 <% @ownership = ProductOwnership.new(@product) %>
 
+<% title 'Getting Started' %>
+
 <%= render 'shared/navbar' %>
 
 <div class="page">
