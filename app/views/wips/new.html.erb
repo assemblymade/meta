@@ -1,4 +1,4 @@
-<% title 'New Task', @product.name %>
+<% title 'New Bounty', @product.name %>
 
 <%= render 'shared/navbar' %>
 <%= render 'products/navbar' %>
@@ -6,7 +6,7 @@
 <div class="page">
   <div class="container">
     <div class="page-header">
-      <h2 class="page-header-title">Create a Task</h2>
+      <h2 class="page-header-title">Create a Bounty</h2>
     </div>
 
     <div class="row">
@@ -46,7 +46,7 @@
           </fieldset>
 
           <div class="form-actions">
-            <%= f.button 'Create task', 'class' => 'btn btn-primary', 'data-disable-with' => 'Saving...' %>
+            <%= f.button 'Create bounty', 'class' => 'btn btn-primary', 'data-disable-with' => 'Saving...' %>
           </div>
         <% end %>
       </div>

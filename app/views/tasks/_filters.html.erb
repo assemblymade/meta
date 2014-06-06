@@ -4,7 +4,7 @@
     <li class="<%= 'active' if params[:state] == 'personally_allocated' %>">
       <a href="<%= product_wips_path(@product, state: 'personally_allocated') %>">
         <span class="badge pull-right"><%= current_user.wips_working_on.by_product(@product).count %></span>
-        Your Tasks
+        Your Bounties
       </a>
     </li>
   <% end %>
@@ -12,7 +12,7 @@
   <% cache [@product, params[:state], params[:deliverable]] do %>
     <li class="<%= 'active' if params[:state] == 'open' %>">
       <a href="<%= product_wips_path(@product, state: 'open') %>">
-        Open Tasks
+        Open Bounties
       </a>
     </li>
     <li>

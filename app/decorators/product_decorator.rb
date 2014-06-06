@@ -81,7 +81,7 @@ class ProductDecorator < ApplicationDecorator
   end
 
   def reward
-    for_profit? ? 'Tasks' : 'Karma'
+    for_profit? ? 'Bounties' : 'Karma'
   end
 
   def currency

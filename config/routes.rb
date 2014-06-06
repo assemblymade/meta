@@ -36,8 +36,8 @@ ASM::Application.routes.draw do
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
 
-  get '/new' => redirect('/start')
-  get '/start'        => 'products#new',     :as => :new_idea
+  get '/new'      => redirect('/create')
+  get '/create'   => 'products#new',     :as => :new_idea
   resources :ideas, :only => [:index] do
     post :vote, :controller => 'ideas/votes', :action => 'create', :on => :member
   end
