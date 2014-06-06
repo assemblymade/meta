@@ -136,7 +136,6 @@ h6,
 }
 
 @include text-emphasis-variant('.text-coins', $brand-coins);
-@include text-emphasis-variant('.text-promoted', $brand-promoted);
 
 .text-link-bold a {
   color: inherit;

@@ -11,18 +11,17 @@ class Task < Wip
   has_many :workers, :through => :wip_workers, :source => :user
 
   validates :deliverable, presence: true
+  validates :multiplier, inclusion: { in: Urgency.multipliers }
 
   before_save :update_trending_score
 
   scope :allocated,   -> { where(state: :allocated) }
   scope :hot,         -> { order(:trending_score => :desc) }
-  scope :promoted,    -> { where("promoted_at is not null") }
   scope :reviewing,   -> { where(state: :reviewing) }
   scope :won,         -> { joins(:winning_event) }
   scope :won_after,   ->(time) { won.where('closed_at >= ?', time) }
   scope :won_by,      ->(user) { won.where('events.user_id = ?', user.id) }
 
-  PROMOTED_WIPS_MULTIPLIER = 2
   IN_PROGRESS = 'allocated'
 
   workflow_column :state
@@ -63,6 +62,14 @@ class Task < Wip
     end
   end
 
+  def urgency
+    Urgency.find(multiplier)
+  end
+
+  def urgency=(urgency)
+    self.multiplier = urgency.multiplier
+  end
+
   def awardable?
     true
   end
@@ -86,7 +93,7 @@ class Task < Wip
   end
 
   def score_multiplier
-    promoted? ? PROMOTED_WIPS_MULTIPLIER : 1
+    multiplier
   end
 
   def has_user_voted?(user)
@@ -97,24 +104,12 @@ class Task < Wip
     !promoted_at.nil?
   end
 
-  def promote!(promoter, reason)
-    raise ActiveRecord::RecordNotSaved unless promoter.can? :promotion, self
+  def multiply!(actor, multiplier)
+    raise ActiveRecord::RecordNotSaved unless actor.can? :promotion, self
 
-    add_event ::Event::Promotion.new(user: promoter, body: reason) do
-      StreamEvent.add_promoted_event!(actor: promoter, subject: self, target: product)
-      self.promoted_at = Time.current
-      TransactionLogEntry.multiplied!(Time.current, product, self.id, user.id, 2)
-    end
-  end
-
-  def demote!(demoter, reason)
-    raise ActiveRecord::RecordNotSaved unless demoter.can? :demotion, self
-
-    add_event ::Event::Demotion.new(user: demoter, body: reason) do
-      StreamEvent.add_demoted_event!(actor: demoter, subject: self, target: product)
-      self.promoted_at = nil
-      TransactionLogEntry.multiplied!(Time.current, product, self.id, user.id, 1)
-    end
+    self.promoted_at = Time.current
+    self.urgency = Urgency.find(multiplier)
+    TransactionLogEntry.multiplied!(Time.current, product, self.id, user.id, multiplier)
   end
 
   def can_vote?(user)

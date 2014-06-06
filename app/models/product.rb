@@ -210,10 +210,6 @@ class Product < ActiveRecord::Base
     tasks.where(state: 'open', deliverable: deliverable_type).count
   end
 
-  def promoted_tasks
-    tasks.where(state: 'open').promoted.limit(3).order("deliverable = 'other'")
-  end
-
   # TODO: (whatupdave) slowish...
   def count_contributors
     (wip_creators.pluck(:id) + event_creators.pluck(:id)).uniq.size

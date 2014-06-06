@@ -2,6 +2,18 @@
   padding: .3em .5em;
 }
 
-.label-promoted {
-  background-color: $brand-promoted;
+.label-urgent {
+  background-color: $red;
+}
+
+.label-now {
+  background-color: $green;
+}
+
+.label-soon {
+  background-color: $gray;
+}
+
+.label-later {
+  background-color: $gray-lighter;
 }

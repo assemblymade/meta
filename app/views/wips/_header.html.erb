@@ -40,19 +40,11 @@
       <div class="pull-left" style="margin-right: 6px;">
         <% if signed_in? %>
           <a href="#" class="btn btn-default btn-xs js-coin-vote-btn <% if @wip.has_user_voted?(current_user) %>disabled<% end %>">
-            <% if @wip.promoted? %>
-              <span class="icon icon-double-chevron-up text-promoted"></span>
-            <% else %>
-              <span class="icon icon-chevron-up"></span>
-            <% end %>
+            <span class="icon icon-chevron-up"></span>
           </a>
         <% else %>
           <a href="<%= new_user_registration_path %>" class="btn btn-default btn-xs">
-            <% if @wip.promoted? %>
-              <span class="icon icon-double-chevron-up text-promoted"></span>
-            <% else %>
-              <span class="icon icon-chevron-up"></span>
-            <% end %>
+            <span class="icon icon-chevron-up"></span>
             <span class="sr-only">Upvote</span>
           </a>
         <% end %>
@@ -70,11 +62,11 @@
           <%= pluralize(@wip.comments.count, 'comments') %>
         </li>
         <li>
+          Priority
+          <%= render 'wips/urgency', task: @wip %>
+        </li>
+        <li>
           <span class="label label-default"><%= @wip.deliverable.titleize %></span>
-
-          <% if @wip.promoted? %>
-            <span class="label label-promoted">Promoted</span>
-          <% end %>
         </li>
       </ul>
     </div>

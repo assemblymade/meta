@@ -134,12 +134,6 @@ class Event < ActiveRecord::Base
     when Event::Reopen.to_s
       wip.reopen!(user, body)
 
-    when Event::Promotion.to_s
-      wip.promote!(user, body)
-
-    when Event::Demotion.to_s
-      wip.demote!(user, body)
-
     when Event::Comment.to_s
       wip.comments.create(user_id: user.id, body: body, socket_id: socket_id)
 

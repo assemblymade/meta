@@ -95,7 +95,7 @@ describe 'log entries' do
 
     it 'adds when task is promoted' do
       product.core_team << product.user
-      wip.promote!(product.user, 'such wow')
+      wip.multiply!(product.user, 2.0)
 
       expect(
         TransactionLogEntry.first
@@ -104,7 +104,7 @@ describe 'log entries' do
           action: 'multiplied',
           work_id: wip.id,
           user_id: wip_creator.id,
-          value: '2'
+          value: '2.0'
       )
     end
   end

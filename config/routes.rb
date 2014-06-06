@@ -248,6 +248,10 @@ ASM::Application.routes.draw do
       resources :comments, only: [:show, :create, :edit, :update]
     end
 
+    resources :tasks, only: [] do
+      patch 'urgency/:urgency', action: :urgency, as: :urgency
+    end
+
     resources :events, only: [] do
       resources :tips, only: [:create]
     end

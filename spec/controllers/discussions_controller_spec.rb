@@ -17,21 +17,4 @@ describe DiscussionsController do
       expect(assigns(:wip))
     end
   end
-
-  context 'completing discussions mission' do
-    before {
-      sign_in user
-
-      post :create, product_id: product.slug, discussion: { title: 'First!' }
-      post :create, product_id: product.slug, discussion: { title: 'Second!', description: 'Such wow' }
-    }
-
-    it 'advances to next mission' do
-      expect(product.current_mission.id).to eq(:tasks)
-    end
-
-    it 'assigns flash message' do
-      expect(flash[:mission_completed]).to be_true
-    end
-  end
 end

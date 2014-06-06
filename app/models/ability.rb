@@ -47,7 +47,7 @@ class Ability
       wip.user == current_user
     end
 
-    can [:promotion, :demotion], Wip do |wip|
+    can [:promotion, :demotion, :multiply], Wip do |wip|
       wip.open? && wip.product.core_team?(current_user)
     end
 

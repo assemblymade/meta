@@ -170,7 +170,7 @@ class WipsController < ApplicationController
   end
 
   def set_wip
-    number = params[:wip_id] || params[:id]
+    number = params[:wip_id] || params[:task_id] || params[:id]
     if number.to_i.zero?
       @wip = @product.main_thread.decorate
     else
