@@ -8,10 +8,10 @@ Every month a product generates revenue, the bills associated with it (server co
 Below is an example.
 
 
-*A product, called XFoo, generated $10,000 in revenue in May, 2014. Operating costs during that month (including Assembly’s 10% stake) were $1,500. Then, the remaining $8,500 is distributed to everyone who contributed to the product. Your monthly share of the royalty payout will depend on the percentage of the product’s App Coins you own.*
+*A product, called XFoo, generated $10,000 in revenue in May, 2014. Operating costs during that month (including Assembly’s 10% transaction fee) were $1,500. Then, the remaining $8,500 is distributed to everyone who contributed to the product. Your monthly share of the royalty payout will depend on the percentage of the product’s App Coins you own.*
 
 
-You can request a balance transfer of your Assembly income any time it exceeds US 100.00 USD. Balance transfers are made through either PayPal or an ACH (checking account) payment for US residents. International contributors are paid using PayPal. Transfer fees may apply and are your responsibility.
+You can request a balance transfer of your Assembly income any time it exceeds 100.00 USD. Balance transfers are made through either PayPal or an ACH (checking account) payment for US residents. International contributors are paid using PayPal. Transfer fees may apply and are your responsibility.
 
 
 ---
@@ -23,13 +23,13 @@ App Coins are primarily earned through your contributions (e.g. code, design, co
 Here is a common example of how Mary might earn App Coins in the Helpful product.
 
 
-1. Patrick suggests a new task for building a feature for Helpful.
+1. Patrick suggests a new bounty for building a feature for Helpful.
 
-2. Community members upvote the task because they think it’s valuable to Helpful’s progress. Each upvote adds App Coins to the bounty for completing the task.
+2. Community members upvote the bounty because they think it’s valuable to Helpful’s progress. Each upvote adds App Coins to the bounty for completing the bounty.
 
-3. Mary jumps in on the task and submits work, completing the task.
+3. Mary jumps in on the bounty and submits work, completing the bounty.
 
-4. The product’s Core Team then accept Mary’s work, which awards her the task’s bounty of App Coins.
+4. The product’s Core Team then accept Mary’s work, which awards her the bounty of App Coins.
 
 5. Later David comes along and likes Mary's work after it was already awarded. He also upvotes it and Mary earns additional app more App Coins because the work was already accepted by the Core Team.
 
