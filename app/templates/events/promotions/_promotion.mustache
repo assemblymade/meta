@@ -15,23 +15,33 @@
         {{/actor}}
 
         <ul class="list-inline pull-right omega">
-          {{#edit_url}}
-            <li>
-              <a href="{{edit_url}}">
-                <span class="glyphicon glyphicon-pencil"></span>
-                <span class="sr-only">Edit comment</span>
-              </a>
-            </li>
-          {{/edit_url}}
 
-          {{#anchor}}
           <li>
-            <a href="#{{anchor}}">
-              <span class="glyphicon glyphicon-link"></span>
-              <span class="sr-only">Permalink</span>
-            </a>
+            <div class="dropdown">
+              <a href="#" class="dropdown-toggle" id="dropdown-{{cid}}" data-toggle="dropdown">
+                <i class="icon icon-ellipsis" style="font-size: 18px;"></i>
+              </a>
+              <ul class="dropdown-menu pull-right text-small" role="menu" aria-labelledby="dropdown-{{cid}}">
+                {{#edit_url}}
+                  <li>
+                    <a href="{{edit_url}}">
+                      <i class="glyphicon glyphicon-pencil dropdown-glyph"></i>
+                      Edit comment
+                    </a>
+                  </li>
+                {{/edit_url}}
+
+                {{#anchor}}
+                <li>
+                  <a href="#{{anchor}}">
+                    <i class="glyphicon glyphicon-link dropdown-glyph"></i>
+                    Permalink
+                  </a>
+                </li>
+                {{/anchor}}
+              </ul>
+            </div>
           </li>
-          {{/anchor}}
         </ul>
       </div>
 

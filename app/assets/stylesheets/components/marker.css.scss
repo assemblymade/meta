@@ -1,17 +1,18 @@
 .marker {
-  width: 30px;
-  height: 30px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  line-height: 28px;
+  line-height: 18px;
   color: white;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   border: 1px solid transparent;
   background-color: white;
+  margin: 0 4px;
 
   > .glyphicon,
   > .icon {
-    line-height: 28px;
+    line-height: 18px;
   }
 }
 

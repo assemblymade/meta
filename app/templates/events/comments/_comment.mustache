@@ -1,6 +1,6 @@
 <div class="activity" id="{{anchor}}" data-readraptor-track="{{readraptor_track_id}}">
 
-  <div class="pull-left">
+  <div class="pull-left activity-avatar">
     {{#actor}}
       <a href="{{url}}" title="@{{username}}">
         <img class="media-object img-circle" src="{{avatar_url}}" alt="@{{username}}" width="30" height="30">
@@ -11,47 +11,64 @@
   <div class="activity-body">
 
     <!-- ACTIONS -->
-    <div class="activity-actions text-link-bold">
-      {{#actor}}
-        <a href="{{url}}" title="@{{username}}">
-          {{username}}
-        </a>
-      {{/actor}}
+    <div class="activity-actions">
 
       <ul class="list-inline pull-right omega">
+        <li>
+          <div class="dropdown">
+            <a href="#" class="dropdown-toggle" id="dropdown-{{cid}}" data-toggle="dropdown">
+              <i class="icon icon-ellipsis" style="font-size: 18px;"></i>
+            </a>
+            <ul class="dropdown-menu pull-right text-small" role="menu" aria-labelledby="dropdown-{{cid}}">
+
+              {{#award_url}}
+                <li>
+                  <a class="event-award" href="{{award_url}}?event_id={{id}}" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
+                    <i class="glyphicon glyphicon-star dropdown-glyph"></i>
+                    Award bounty to {{#actor}}@{{username}}{{/actor}}
+                  </a>
+                </li>
+              {{/award_url}}
+
+              {{#edit_url}}
+                <li>
+                  <a href="{{edit_url}}" role="menuitem">
+                    <i class="glyphicon glyphicon-pencil dropdown-glyph"></i>
+                    Edit comment
+                  </a>
+                </li>
+              {{/edit_url}}
+
+              {{#anchor}}
+                <li>
+                  <a href="#{{anchor}}" role="menuitem">
+                    <i class="glyphicon glyphicon-link dropdown-glyph"></i>
+                    Permalink
+                  </a>
+                </li>
+              {{/anchor}}
+
+            </ul>
+
+          </div>
+        </li>
+      </ul>
+
+      <ul class="list-inline omega">
+        <li>
+          {{#actor}}
+            <a href="{{url}}" title="@{{username}}" class="chat-actor">
+              {{username}}
+            </a>
+          {{/actor}}
+        </li>
+
         <li>
           <div class="js-tips"
                data-tips-total="{{total_tips}}"
                data-tips-path="{{tip_path}}"
                data-tips-product-id="{{product_id}}"></div>
         </li>
-
-        {{#award_url}}
-          <li>
-            <a class="event-award" href="{{award_url}}?event_id={{id}}" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
-              <span class="glyphicon glyphicon-star"></span>
-              Award {{#actor}}@{{username}}{{/actor}}
-            </a>
-          </li>
-        {{/award_url}}
-
-        {{#edit_url}}
-          <li>
-            <a href="{{edit_url}}">
-              <span class="glyphicon glyphicon-pencil"></span>
-              <span class="sr-only">Edit comment</span>
-            </a>
-          </li>
-        {{/edit_url}}
-
-        {{#anchor}}
-        <li>
-          <a href="#{{anchor}}">
-            <span class="glyphicon glyphicon-link"></span>
-            <span class="sr-only">Permalink</span>
-          </a>
-        </li>
-        {{/anchor}}
       </ul>
 
     </div>

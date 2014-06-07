@@ -1,6 +1,6 @@
-<div class="activity" {{#subject}}id="{{anchor}}" data-readraptor-track="{{readraptor_track_id}}"{{/subject}}>
+<div class="activity activity-chat" {{#subject}}id="{{anchor}}" data-readraptor-track="{{readraptor_track_id}}"{{/subject}}>
 
-  <div class="pull-left">
+  <div class="pull-left activity-avatar">
     {{#actor}}
       <a href="{{url}}" title="@{{username}}">
         <img class="media-object img-circle" src="{{avatar_url}}" alt="@{{username}}" width="30" height="30">
@@ -11,34 +11,23 @@
   {{#subject}}
     <div class="activity-body">
 
-      <div class="activity-actions text-link-bold">
-        {{#actor}}
-          <a href="{{url}}" title="@{{username}}">
-            @{{username}}
-          </a>
-        {{/actor}}
+      <!-- Activity Actions -->
+      <div class="activity-actions">
 
         {{#id}}
           <ul class="list-inline pull-right omega">
             <li>
-              <div class="js-tips"
-                   data-tips-total="{{total_tips}}"
-                   data-tips-path="{{tip_path}}"
-                   data-tips-product-id="{{product_id}}"></div>
-            </li>
-
-            <li>
               <div class="dropdown">
                 <a href="#" class="dropdown-toggle" id="dropdown-{{cid}}" data-toggle="dropdown">
-                  <span class="icon icon-ellipsis"></span>
+                  <i class="icon icon-ellipsis" style="font-size: 18px;"></i>
                 </a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-{{cid}}" style="position: absolute; left: -150px;">
+                <ul class="dropdown-menu pull-right text-small" role="menu" aria-labelledby="dropdown-{{cid}}" style="position: absolute; left: -150px;">
 
                   {{#edit_url}}
                     <li role="presentation">
                       <a href="{{edit_url}}" role="menuitem">
-                        <span class="glyphicon glyphicon-pencil dropdown-glyph"></span>
-                        <span>Edit comment</span>
+                        <i class="glyphicon glyphicon-pencil dropdown-glyph"></i>
+                        Edit comment
                       </a>
                     </li>
                   {{/edit_url}}
@@ -46,28 +35,48 @@
                   {{#anchor}}
                     <li role="presentation">
                       <a href="#{{anchor}}" role="menuitem">
-                        <span class="glyphicon glyphicon-link dropdown-glyph"></span>
-                        <span>Permalink</span>
+                        <i class="glyphicon glyphicon-link dropdown-glyph"></i>
+                        Permalink
                       </a>
                     </li>
                   {{/anchor}}
 
                   <li role="presentation">
                     <a href="#{{anchor}}" class="js-chat-create-wip" role="menuitem">
-                      <span class="glyphicon glyphicon-plus dropdown-glyph"></span>
-                      <span>Create bounty</span>
+                      <i class="icon icon-plus dropdown-glyph"></i>
+                      Create bounty
                     </a>
                   </li>
                 </ul>
               </div>
             </li>
           </ul>
+
+          <ul class="list-inline omega">
+            <li>
+              {{#actor}}
+                <a href="{{url}}" title="@{{username}}" class="chat-actor">
+                  {{username}}
+                </a>
+              {{/actor}}
+            </li>
+
+            <li>
+              <div class="js-tips"
+                   data-tips-total="{{total_tips}}"
+                   data-tips-path="{{tip_path}}"
+                   data-tips-product-id="{{product_id}}"></div>
+            </li>
+          </ul>
+
         {{/id}}
       </div>
 
-      <div class="activity-content markdown-normalized">
+      <!-- Activity Content -->
+      <div class="activity-content markdown-normalized" style="padding: 0;">
         {{{body_html}}}
       </div>
+
     </div>
   {{/subject}}
 </div>

@@ -7,16 +7,20 @@
   }
 }
 
+.activity-chat {
+  margin: 10px 0;
+}
+
 .activity-body {
-  background-color: white;
-  border-radius: $border-radius-base;
-  // overflow: hidden;
-  // box-shadow: 0 0 0 1px $brand-divider;
 
   &:hover {
     .activity-actions,
-    .activity-actions a {
+    .activity-actions a:not(.chat-actor) {
       color: $gray;
+
+      .js-tips a {
+        color: $brand-coins;
+      }
 
       &.event-award {
         color: $brand-success;
@@ -27,30 +31,31 @@
 
 .activity-content {
   // padding: 10px 15px;
-  padding: 10px 0;
+  padding-bottom: 10px;
   position: relative;
-  background-color: white;
 }
 
 .activity-actions {
-  @include clearfix;
-  // background-color: rgba($body-bg, 0.3);
-  border-bottom: 1px dotted $brand-divider;
-  padding-bottom: 4px;
-  font-size: $font-size-small;
+  font-size: $font-size-xs;
   color: $gray-light;
 
-  .js-tips:hover a {
-    color: $brand-coins;
+  a {
+    font-weight: bold;
+    color: inherit;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .chat-actor {
+    font-size: 15px;
+    color: $text-color;
   }
 
   // FIXME: This is hacky as shit
   .glyphicon {
     top: 2px;
-    font-size: 12px;
-  }
-
-  a.dropdown-toggle:hover {
-    color: $blue;
+    font-size: $font-size-xs;
   }
 }
