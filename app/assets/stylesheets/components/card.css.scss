@@ -57,3 +57,11 @@ a.card:hover {
 .card-body {
   padding: 20px;
 }
+
+.card-footer {
+  @include clearfix;
+  padding: 10px 20px;
+  border-top: 1px solid $brand-divider;
+  font-size: $font-size-small;
+  color: $brand-muted;
+}

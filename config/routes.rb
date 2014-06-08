@@ -276,7 +276,9 @@ ASM::Application.routes.draw do
       resources :transactions, only: [:index, :show, :new, :create]
     end
 
-    get '/:number' => 'shortcuts#show',
+    resources :rooms
+
+    get '/:number' => 'rooms#deprecated_redirect',
       constraints: {number: /\d+/},
       as: :shortcut
   end

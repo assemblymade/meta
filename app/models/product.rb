@@ -36,7 +36,7 @@ class Product < ActiveRecord::Base
   has_many :profit_reports
   has_many :product_jobs
   has_many :product_roles
-  has_many :shortcuts, class_name: 'ProductShortcut'
+  has_many :rooms
   has_many :showcases
   has_many :status_messages
   has_many :stream_events

@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-body">
+    <h2 class="alpha omega">
+      <%= task.title %>
+      <% if task.deliverable != 'other' %>
+        <span class="text-muted">#<%= task.deliverable %></span>
+      <% end %>
+    </h2>
+  </div>
+  <div class="card-footer">
+    <div class="js-coin-vote"
+         data-view="coin-vote"
+         data-vote-path="<%= product_wip_path(task.product, task) %>/votes"
+         data-coins="<%= task.decorate.coins %>"
+         data-coins-add="<%= task.decorate.coins_add %>"
+    >
+      <div class="pull-left" style="margin-right: 6px;">
+        <% if signed_in? %>
+          <a href="#" class="btn btn-default btn-xs js-coin-vote-btn <% if task.has_user_voted?(current_user) %>disabled<% end %>">
+            <span class="icon icon-chevron-up"></span>
+          </a>
+        <% else %>
+          <a href="<%= new_user_registration_path %>" class="btn btn-default btn-xs">
+            <span class="icon icon-chevron-up"></span>
+            <span class="sr-only">Upvote</span>
+          </a>
+        <% end %>
+      </div>
+
+      <ul class="list-piped omega">
+        <li>
+          <%= format_coins(task.product, task.real_coin_value) %>
+        </li>
+        <li>
+          Created by
+          <a href="<%= user_path(task.user) %>">@<%= task.user.username %></a>
+        </li>
+        <li>
+          <%= pluralize(task.comments.count, 'comments') %>
+        </li>
+        <li>
+          Priority
+          <%= render 'wips/urgency', task: task %>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>

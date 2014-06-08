@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140605213141) do
+ActiveRecord::Schema.define(version: 20140607223548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -303,15 +303,6 @@ ActiveRecord::Schema.define(version: 20140605213141) do
     t.uuid     "product_id",     null: false
   end
 
-  create_table "product_shortcuts", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid    "product_id",  null: false
-    t.integer "number",      null: false
-    t.text    "target_type", null: false
-    t.uuid    "target_id",   null: false
-  end
-
-  add_index "product_shortcuts", ["product_id", "number"], name: "index_product_shortcuts_on_product_id_and_number", unique: true, using: :btree
-
   create_table "product_subscriptions", id: false, force: true do |t|
     t.uuid     "id",         null: false
     t.uuid     "product_id", null: false
@@ -369,6 +360,15 @@ ActiveRecord::Schema.define(version: 20140605213141) do
     t.integer "revenue",    null: false
     t.integer "expenses",   null: false
   end
+
+  create_table "rooms", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid    "product_id",  null: false
+    t.integer "number",      null: false
+    t.text    "target_type", null: false
+    t.uuid    "target_id",   null: false
+  end
+
+  add_index "rooms", ["product_id", "number"], name: "index_rooms_on_product_id_and_number", unique: true, using: :btree
 
   create_table "saved_searches", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id"

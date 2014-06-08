@@ -259,7 +259,7 @@ class Wip < ActiveRecord::Base
   def set_number
     return unless number.nil?
 
-    ProductShortcut.create_for!(product, self).tap do |shortcut|
+    Room.create_for!(product, self).tap do |shortcut|
       self.update_column :number, shortcut.number
     end
   end
