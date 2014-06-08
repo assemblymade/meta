@@ -307,7 +307,7 @@ GEM
       activesupport (= 4.1.0)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (10.3.1)
+    rake (10.3.2)
     react-rails (0.10.0.0)
       execjs
       rails (>= 3.1)
