@@ -12,29 +12,28 @@
         <a href="{{url}}">{{username}}</a>
       {{/actor}}
       submitted a design
-        <a target="_blank" href="{{href}}">{{name}}</a>
+      <a target="_blank" href="{{href}}">{{name}}</a>
 
-        <ul class="list-inline pull-right omega">
-          <li>
-            <div class="dropdown">
-              <a href="#" class="dropdown-toggle" id="dropdown-{{cid}}" data-toggle="dropdown">
-                <i class="icon icon-ellipsis" style="font-size: 18px;"></i>
-              </a>
+      <ul class="list-inline pull-right omega">
+        <li>
+          <div class="dropdown">
+            <a href="#" class="dropdown-toggle" id="dropdown-{{cid}}" data-toggle="dropdown">
+              <i class="icon icon-ellipsis" style="font-size: 18px;"></i>
+            </a>
 
-              <ul class="dropdown-menu pull-right text-small">
-                {{#award_url}}
-                  <li>
-                    <a class="event-award" href="{{award_url}}?event_id={{id}}" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
-                      <i class="glyphicon glyphicon-star dropdown-glyph"></i>
-                      Award bounty to {{#actor}}@{{username}}{{/actor}}
-                    </a>
-                  </li>
-                {{/award_url}}
-              </ul
-            </div>
-          </li>
-        </ul>
-      </div>
+            <ul class="dropdown-menu pull-right text-small">
+              {{#award_url}}
+                <li>
+                  <a class="event-award" href="{{award_url}}?event_id={{id}}" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
+                    <i class="glyphicon glyphicon-star dropdown-glyph"></i>
+                    Award bounty to {{#actor}}@{{username}}{{/actor}}
+                  </a>
+                </li>
+              {{/award_url}}
+            </ul
+          </div>
+        </li>
+      </ul>
     </div>
 
     <div class="activity-content">
