@@ -156,13 +156,15 @@
                 <% end %>
               </ul>
 
-              <!-- FIXME: Most of these should be in another decorator -->
-              <% if @product.uninmportant_contributors_count > 0 %>
-                <p class="text-center omega" style="margin-top:15px">
-                  <a href="<%= product_jobs_path(@product) %>">
-                    Plus <%= @product.uninmportant_contributors_count %> more
-                  </a>
-                </p>
+              <% cache([@product, 'uninportant_contributors'], expires_in: 1.day) do %>
+                <!-- FIXME: Most of these should be in another decorator -->
+                <% if @product.uninmportant_contributors_count > 0 %>
+                  <p class="text-center omega" style="margin-top:15px">
+                    <a href="<%= product_jobs_path(@product) %>">
+                      Plus <%= @product.uninmportant_contributors_count %> more
+                    </a>
+                  </p>
+                <% end %>
               <% end %>
             <% end %>
           </div>
