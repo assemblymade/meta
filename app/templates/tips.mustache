@@ -15,27 +15,19 @@
   </a>
 
   {{#any_coins?}}
-    {{#tips}}
-      <span class="text-muted">&mdash; tipped by
-        <ul class="list-inline-media">
+    <span class="text-muted hidden">&mdash; tipped by
+      <ul class="list-inline-media">
+        {{#tips}}
           <li>
-            <a href="{{url}}" data-toggle="tooltip" title="@{{username}}">
-              <img class="img-circle" src="http://placekitten.com/g/16/16" alt="@{{username}}" width="16" height="16">
-            </a>
+            <img
+              class="img-circle"
+              src="http://placekitten.com/g/300/300"
+              alt="@"
+              width="16" height="16">
           </li>
-          <li>
-            <a href="{{url}}" data-toggle="tooltip" title="@{{username}}">
-              <img class="img-circle" src="http://placekitten.com/g/16/16" alt="@{{username}}" width="16" height="16">
-            </a>
-          </li>
-          <li>
-            <a href="{{url}}" data-toggle="tooltip" title="@{{username}}">
-              <img class="img-circle" src="http://placekitten.com/g/16/16" alt="@{{username}}" width="16" height="16">
-            </a>
-          </li>
-        </ul>
-      </span>
-    {{/tips}}
+        {{/tips}}
+      </ul>
+    </span>
   {{/any_coins?}}
 
 </div>
