@@ -6,19 +6,10 @@ class Event::CommentSerializer < EventSerializer
   end
 
   has_many :tips
-  attributes :total_tips, :formatted_total_tips, :any_tips, :current_user_can_tip
+  attributes :total_tips, :formatted_total_tips
 
   def formatted_total_tips
     object.total_tips / 100
-  end
-
-  def any_tips
-    object.tips.any?
-  end
-
-  def current_user_can_tip
-    scope &&
-    TransactionLogEntry.where(user_id: scope.id, product_id: object.product.id).with_cents.count > 0
   end
 
   attributes :tip_path

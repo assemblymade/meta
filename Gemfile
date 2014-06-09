@@ -83,7 +83,6 @@ group :development, :test do
   gem 'machinist', '~> 2'
   gem 'pry'
   gem 'quiet_assets'
-  # gem 'rack-mini-profiler'
   gem 'rspec-rails'
   gem 'terminal-table'
   gem 'timecop'
@@ -94,7 +93,9 @@ group :development, :test do
 end
 
 group :development do
+  # gem 'rack-mini-profiler'
   # gem 'sql-logging'
+  # gem 'ruby-prof'
 end
 
 group :test do
