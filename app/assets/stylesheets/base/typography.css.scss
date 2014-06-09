@@ -156,6 +156,20 @@ h6,
   }
 }
 
+.list-inline-media {
+  @extend .list-inline;
+  display: inline-block;
+
+  > li {
+    padding-left: 1px;
+    padding-right: 1px;
+
+    &:first-of-type {
+      padding-left: 6px;
+    }
+  }
+}
+
 .list-piped {
   @extend .list-inline;
   @extend .text-link-bold;
@@ -246,11 +260,6 @@ blockquote {
   :first-child {
     margin-top: 0;
   }
-}
-
-// For the tooltip
-.tooltip {
-  font-size: 75%;
 }
 
 code {
