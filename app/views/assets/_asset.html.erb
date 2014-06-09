@@ -8,6 +8,9 @@
       <div class="summary">
         <div class="summary-target" style="min-height:56px">
           <%= asset.name %>
+          <% if asset.room %>
+            <span class="text-muted">#<%= asset.room.number %></span>
+          <% end %>
         </div>
       </div>
     </div>

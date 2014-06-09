@@ -10,6 +10,7 @@ class AssetsController < ApplicationController
 
   def create
     @asset = @product.assets.create(asset_params.merge(user: current_user))
+    @room = Room.create_for!(@asset.product, @asset)
     respond_with @asset, location: product_assets_path(@product)
   end
 
