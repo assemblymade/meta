@@ -18,6 +18,7 @@ class Product < ActiveRecord::Base
 
   has_many :activities
   has_many :assets
+  has_many :auto_tip_contracts
   has_many :completed_missions
   has_many :contract_holders
   has_many :core_team_memberships
