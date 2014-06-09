@@ -22,6 +22,10 @@ class PostsController < ApplicationController
     @post.author = current_user
     @post.save!
 
+    @product.watchers.each do |watcher|
+      PostMailer.delay.created(@post.id, watcher.id)
+    end
+
     respond_with @post, location: product_post_path(@post.product, @post)
   end
 

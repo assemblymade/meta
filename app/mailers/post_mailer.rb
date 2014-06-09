@@ -5,13 +5,13 @@ class PostMailer < BaseMailer
   helper :markdown
 
   def created(post_id, user_id)
+    prevent_delivery(@user)
+
     @post = Post.find(post_id)
     @user = User.find(user_id)
 
     mail to: @user.email_address,
          subject: @post.title
-
-    prevent_delivery(@user)
   end
 
   def preview(product_id, params, author_id)
