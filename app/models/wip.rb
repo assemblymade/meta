@@ -290,6 +290,8 @@ class Wip < ActiveRecord::Base
     # Special case for Projects
     if self.class == Wip
       'projects/project'
+    elsif self.class == Task
+      'bounties/bounty'
     else
       super
     end
