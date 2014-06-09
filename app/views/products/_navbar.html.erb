@@ -7,13 +7,13 @@
         </a>
       </li>
 
-      <li class="<%= "active" if discussions_controller? || nav_active?(:product_discussions) %>">
+      <li class="<%= "active" if chat_controller?">
         <a href="<%= product_discuss_path(@product) %>">
           Chat
         </a>
       </li>
 
-      <li class="<%= "active" if discussions_controller? %>">
+      <li class="<%= "active" if discussions_controller? || nav_active?(:product_discussions) %> %>">
         <a href="<%= product_discussions_path(@product) %>">
           Discussions
         </a>
@@ -38,35 +38,26 @@
       </li>
     </ul>
 
-    <ul class="nav nav-pills navbar-nav navbar-right">
-      <li>
+    <div class="navbar-right navbar-text">
+      <div class="toggler">
         <% if signed_in? && @product.watching?(current_user) %>
-          <a href="<%= unsubscribe_product_path(@product) %>" data-method="post" >
-            <div class="btn-group" style="width: 100%;">
-              <button class="btn btn-primary">
-                <span class="glyphicon glyphicon-volume-off"></span>
-                Unwatch
-              </button>
-              <button class="btn btn-info">
-                <%= @product.watchers.count %>
-              </button>
-            </div>
+          <a class="toggler-btn" href="<%= unsubscribe_product_path(@product) %>" data-method="post" >
+
+            <span class="glyphicon glyphicon-eye-open"></span>
+            Unwatch
           </a>
         <% else %>
-          <a href="<%= subscribe_product_path(@product) %>" data-method="post">
-            <div class="btn-group" style="width: 100%;">
-              <button class="btn btn-primary">
-                <span class="glyphicon glyphicon-eye-open"></span>
-                Watch
-              </button>
-              <button class="btn btn-info">
-                <%= @product.watchers.count %>
-              </button>
-            </div>
+          <a class="toggler-btn" href="<%= subscribe_product_path(@product) %>" data-method="post">
+            <span class="glyphicon glyphicon-eye-open"></span>
+            Watch
           </a>
         <% end %>
-      </li>
-    </ul>
+        <div class="badge toggler-badge">
+          <%= @product.watchers.count %>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 

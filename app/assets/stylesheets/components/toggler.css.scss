@@ -1,0 +1,51 @@
+.toggler {
+  display: table;
+
+  border-radius: $border-radius-base;
+  // height: $line-height-computed;
+
+  font-size: $font-size-small;
+  line-height: $line-height-computed - 2px;
+
+  :first-child {
+    border-radius: $border-radius-base 0 0 $border-radius-base;
+  }
+
+  :last-child {
+    border-radius: 0 $border-radius-base $border-radius-base 0;
+  }
+}
+
+.toggler-btn,
+.toggler-badge {
+  padding: 0 10px;
+}
+
+.toggler-btn {
+  @extend .btn-default;
+  border: none;
+  display: table-cell;
+  box-shadow: none;
+
+  font-weight: bold;
+
+  border: 1px solid $btn-default-border;
+  border-right: 1px solid $brand-border;
+
+  :hover {
+    text-decoration: none;
+    border-color: darken($btn-default-border, 12%);
+  }
+}
+
+.toggler-badge {
+  background-color: transparent;
+  color: $text-muted;
+  display: table-cell;
+  font-weight: normal;
+
+  border: 1px solid $btn-default-border;
+  border-left: none;
+
+  border-radius: 0;
+}
