@@ -18,6 +18,9 @@ class EventSerializer < ActiveModel::Serializer
   has_one :wip, serializer: WipSerializer
   has_one :user, key: :actor, serializer: UserSerializer
 
+  has_many :tips
+  attributes :tips_json
+
   def anchor
     "comment-#{object.number}"
   end
@@ -60,6 +63,10 @@ class EventSerializer < ActiveModel::Serializer
     if object.created_at
       object.created_at.iso8601
     end
+  end
+
+  def tips_json
+    tips.to_json
   end
 
   def wip
