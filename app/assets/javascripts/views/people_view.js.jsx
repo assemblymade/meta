@@ -2,14 +2,13 @@
 
 var People = React.createClass({
   getInitialState: function() {
-    return { filteredMemberships: this.props.memberships }
+    return { filteredMemberships: this.props.memberships, selected: 'all' }
   },
 
   render: function(){
-
     return (
       <div>
-        <PeopleFilter interestFilters={this.props.interestFilters} onFilter={this.onFilter} />
+        <PeopleFilter interestFilters={this.props.interestFilters} selected={this.state.selected} onFilter={this.onFilter} />
         <PeopleList memberships={this.state.filteredMemberships} onFilter={this.onFilter} />
       </div>
     )
@@ -24,13 +23,12 @@ var People = React.createClass({
       })
     }
 
-    this.setState({ filteredMemberships: filteredMemberships });
+    this.setState({ filteredMemberships: filteredMemberships, selected: interest });
   }
 })
 
 var PeopleFilter = React.createClass({
   render: function() {
-    var self = this
     var options = _.map(this.props.interestFilters, function(interest){
       return (
         <option value={interest}>@{interest}</option>
@@ -40,7 +38,7 @@ var PeopleFilter = React.createClass({
     return (
       <div className="page-header-meta">
         Filter By:
-        <select onChange={self.filterChanged.bind(self)}>
+        <select value={this.props.selected} onChange={this.filterChanged.bind(self)}>
           <option value="all">@all</option>
           {options}
         </select>
@@ -112,7 +110,6 @@ var PeopleList = React.createClass({
   handleFilter: function(interest) {
     var self = this;
     return function(e) {
-      console.log(interest, self.props.onFilter)
       self.props.onFilter(interest);
     }
   }
