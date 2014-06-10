@@ -32,7 +32,7 @@
   border: 1px solid $btn-default-border;
   border-right: 1px solid $brand-border;
 
-  :hover {
+  &:hover {
     text-decoration: none;
     border-color: darken($btn-default-border, 12%);
   }

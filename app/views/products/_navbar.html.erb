@@ -41,7 +41,7 @@
     <div class="navbar-right navbar-text">
       <div class="toggler">
         <% if signed_in? && @product.watching?(current_user) %>
-          <a class="toggler-btn" href="<%= unsubscribe_product_path(@product) %>" data-method="post" >
+          <a class="toggler-btn text-muted disabled" href="<%= unsubscribe_product_path(@product) %>" data-method="post" >
 
             <span class="glyphicon glyphicon-eye-open"></span>
             Unwatch
