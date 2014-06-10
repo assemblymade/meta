@@ -5,10 +5,12 @@ class PostMailer < BaseMailer
   helper :markdown
 
   def created(post_id, user_id)
-    prevent_delivery(@user)
-
     @post = Post.find(post_id)
     @user = User.find(user_id)
+
+    mailgun_tag "post##{@post.product.slug}"
+
+    prevent_delivery(@user)
 
     mail to: @user.email_address,
          subject: @post.title
