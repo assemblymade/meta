@@ -1,10 +1,6 @@
 /** @jsx React.DOM */
 
 var People = React.createClass({
-  getInitialState: function() {
-    return { filteredMemberships: this.props.memberships, selected: 'all' }
-  },
-
   render: function(){
     return (
       <div>
@@ -14,10 +10,14 @@ var People = React.createClass({
     )
   },
 
+  componentWillMount: function() {
+    this.onFilter(this.props.selected)
+  },
+
   onFilter: function(interest) {
     var filteredMemberships = this.props.memberships;
 
-    if (interest != 'all') {
+    if (interest !== 'all') {
       filteredMemberships = _.filter(this.props.memberships, function filterMemberships(m) {
         return _.include(m.interests, interest)
       })
@@ -31,14 +31,14 @@ var PeopleFilter = React.createClass({
   render: function() {
     var options = _.map(this.props.interestFilters, function(interest){
       return (
-        <option value={interest}>@{interest}</option>
+        <option value={interest} key={interest}>@{interest}</option>
       )
     })
 
     return (
       <div className="page-header-meta">
         Filter By:
-        <select value={this.props.selected} onChange={this.filterChanged.bind(self)}>
+        <select style={{ 'margin-left': '5px' }} value={this.props.selected} onChange={this.filterChanged}>
           <option value="all">@all</option>
           {options}
         </select>
@@ -64,21 +64,21 @@ var PeopleList = React.createClass({
 
   rows: function(memberships) {
     var self = this;
-    return _.map(memberships, function(membership){
+
+    return _.map(memberships, function(membership, i){
       // <%= 'list-group-item-highlight' if membership.core_team? %>
       var user = membership.user;
       var avatarStyle = {
         width: 60,
-        height: 60,
-        alt: '@' + user.username
+        height: 60
       }
 
       return (
-        <div className="list-group-item">
+        <div className="list-group-item" key={user.id + '-' + i}>
           <div className="row">
             <div className="col-sm-2 col-xs-2">
               <a href={user.url} title={'@' + user.username}>
-                <img src={user.avatar_url} className="avatar img-circle" style={avatarStyle} />
+                <img src={user.avatar_url} className="avatar img-circle" alt={'@' + user.username} style={avatarStyle} />
               </a>
             </div>
             <div className="col-sm-10 col-xs-10">
@@ -103,7 +103,7 @@ var PeopleList = React.createClass({
 
     return _.map(membership.interests, function mapInterests(interest) {
       var label = '@' + interest;
-      return (<a href={'#' + label} onClick={self.handleFilter(interest)}>{label}</a>);
+      return (<a className="list-group-item-interest" href={'#' + label} onClick={self.handleFilter(interest)} key={membership.user.id + '-' + interest}>{label}</a>);
     });
   },
 

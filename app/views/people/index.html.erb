@@ -57,7 +57,8 @@ $(document).ready(function() {
   $('.js-people').each(function(){
     React.renderComponent(People({
       interestFilters: <%== @interest_filters.map(&:slug).to_json %>,
-      memberships: <%== ActiveModel::ArraySerializer.new(@memberships).to_json %>
+      memberships: <%== ActiveModel::ArraySerializer.new(@memberships).to_json %>,
+      selected: "<%= @selected_filter %>"
     }), this)
   })
 });
