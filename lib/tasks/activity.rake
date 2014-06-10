@@ -2,7 +2,7 @@ namespace :activity do
 
   desc "Builds all the ActivityStreams in Redis"
   task :build => :environment do
-    Activity.all.each do |activity|
+    Activity.all.includes(:actor, :subject, :target).each do |activity|
       activity.publish
     end
   end

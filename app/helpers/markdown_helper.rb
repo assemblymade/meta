@@ -28,7 +28,13 @@ module MarkdownHelper
       users_base_url: '/users'
     )
 
-    @product_pipeline.call(text)[:output].to_s.html_safe
+    begin
+      result = @product_pipeline.call(text)
+      result[:output].to_s.html_safe
+    rescue => e
+      Rails.logger.error("pipeline=#{e.message} text=#{text}")
+      text
+    end
   end
 
 # --
