@@ -1,0 +1,50 @@
+<!-- People Panel -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h6 class="panel-title">Core Team</h6>
+  </div>
+  <div class="panel-body small">
+    <% if @product.core_team.empty? %>
+      <p class="omega">No core team members yet.</p>
+    <% else %>
+      <ul class="list-grid omega">
+        <% @product.core_team.each do |user| %>
+          <li>
+            <a href="<%= user_path(user) %>" title="<%= user.username %>"><%= avatar_tag(user, 36) %></a>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
+  <div class="panel-heading">
+    <h6 class="panel-title">Contributors</h6>
+  </div>
+
+  <div class="panel-body small">
+    <% if @product.contributors.empty? %>
+      <p class="omega">No contributors yet.</p>
+    <% else %>
+      <% cache([@product, 'contributors'], expires_in: 1.day) do %>
+        <ul class="list-grid omega">
+          <% @product.important_contributors.each do |user| %>
+            <li>
+              <a href="<%= user_path(user) %>" title="<%= user.username %>">
+                <%= avatar_tag(user, 21) %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+
+        <!-- FIXME: Most of these should be in another decorator -->
+        <% if @product.uninmportant_contributors_count > 0 %>
+          <p class="text-center omega" style="margin-top:15px">
+            <a href="<%= product_jobs_path(@product) %>">
+              Plus <%= @product.uninmportant_contributors_count %> more
+            </a>
+          </p>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
