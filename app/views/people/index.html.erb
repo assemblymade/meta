@@ -1,0 +1,64 @@
+<% title 'People', @product.name %>
+<% activate_nav! :subnav_people %>
+
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
+
+<div class="page">
+  <div class="container">
+    <%= render 'products/status_message' %>
+
+    <div class="row">
+
+      <div class="col-md-8 col-xs-8">
+        <div class="js-people"></div>
+      </div>
+
+
+      <div class="col-md-3 col-xs-3">
+        <%= render 'products/sidebar' %>
+
+        <% if @product.core_team?(current_user) %>
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h6 class="panel-title">
+                Create a New Team
+              </h6>
+            </div>
+            <div class="panel-body">
+              <%= form_for @product_job, class: 'form' do |f| %>
+                <div class="form-group">
+                  <%= f.label :category, class: 'form-label' %>
+                  <%=f.text_field :category, class: 'form-control', placeholder: "Engineer, Design, Marketing, Sales, Etc" %>
+                </div><!-- form-group -->
+
+                <div class="form-group">
+                  <%=f.label :description, :class => ["form-label"] %>
+                  <%=f.text_area :description, placeholder: "Fill in a description of the job", class: 'form-control' %>
+                </div><!-- form-group -->
+
+                <%= f.submit "Create team", class: %w(btn btn-primary btn-sm) %>
+              <% end %>
+            </div><!-- .panel-body -->
+          </div><!-- .panel -->
+        <% end %>
+
+      </div><!-- .col-3 -->
+
+    </div><!-- .row -->
+  </div>
+</div>
+
+<%= render 'shared/footer' %>
+
+<script>
+$(document).ready(function() {
+
+  $('.js-people').each(function(){
+    React.renderComponent(People({
+      interestFilters: <%== @interest_filters.map(&:slug).to_json %>,
+      memberships: <%== ActiveModel::ArraySerializer.new(@memberships).to_json %>
+    }), this)
+  })
+});
+</script>

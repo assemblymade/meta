@@ -16,11 +16,11 @@
       </li>
     <% end %>
 
-    <li class="<%= 'active' if nav_active?(:subnav_teams) %>">
-      <%= link_to 'Teams', product_jobs_path(@product) %>
+    <li class="<%= 'active' if nav_active?(:subnav_people) %>">
+      <%= link_to 'People', product_people_path(@product) %>
     </li>
 
-    <li class="<%= 'active' if nav_active?(:subnav_people) %>">
+    <li class="<%= 'active' if nav_active?(:subnav_partners) %>">
       <%= link_to @product.stakeholders, product_partners_path(@product) %>
     </li>
   </ul>
