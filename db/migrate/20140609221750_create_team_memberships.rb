@@ -9,6 +9,6 @@ class CreateTeamMemberships < ActiveRecord::Migration
       t.timestamps
     end
 
-
+    add_index :team_memberships, [:user_id, :product_id], unique: true
   end
 end

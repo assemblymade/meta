@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140609232657) do
+ActiveRecord::Schema.define(version: 20140610204411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -429,7 +429,10 @@ ActiveRecord::Schema.define(version: 20140609232657) do
     t.text     "bio"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
+
+  add_index "team_memberships", ["user_id", "product_id"], name: "index_team_memberships_on_user_id_and_product_id", unique: true, using: :btree
 
   create_table "tips", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "product_id", null: false

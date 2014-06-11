@@ -20,9 +20,13 @@ class CreateProductInterests < ActiveRecord::Migration
       "Recruiter"=>'recruiting'
     }
 
-    CoreTeamMembership.find_each do |membership|
-      if membership.product
-        membership.product.team_memberships.find_or_create_by!(user: membership.user, is_core: true)
+    CoreTeamMembership.find_each do |ctm|
+      if product = ctm.product
+        if membership = product.team_memberships.find_by(user: ctm.user)
+          membership.update_attributes is_core: true
+        else
+          product.team_memberships.create!(user: ctm.user, is_core: true)
+        end
       end
     end
 
@@ -32,7 +36,10 @@ class CreateProductInterests < ActiveRecord::Migration
         interest = Interest.find_or_create_by!(slug: slug)
 
         job.product_roles.each do |role|
-          product.team_memberships.find_or_create_by!(user: role.user, is_core: false)
+          if product.team_memberships.find_by(user: role.user).nil?
+            product.team_memberships.create!(user: role.user, is_core: false)
+          end
+
           product.product_interests.find_or_create_by!(user: role.user, interest: interest)
         end
       end

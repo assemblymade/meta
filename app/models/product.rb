@@ -164,6 +164,11 @@ class Product < ActiveRecord::Base
     core_team_memberships.where(user_id: user.id).any?
   end
 
+  def member?(user)
+    return false if user.nil?
+    team_memberships.active.where(user_id: user.id).any?
+  end
+
   def submit_for_approval!
     self.submitted_at = Time.now
     save!

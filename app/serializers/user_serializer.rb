@@ -1,7 +1,7 @@
 class UserSerializer < ApplicationSerializer
   include MarkdownHelper
 
-  attributes :url, :username, :avatar_url, :last_online
+  attributes :url, :username, :avatar_url, :last_online, :bio
   attributes :product_balance
 
   def url

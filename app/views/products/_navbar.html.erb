@@ -41,7 +41,7 @@
     <div class="navbar-right navbar-text">
       <div class="toggler">
         <% if signed_in? && @product.watching?(current_user) %>
-          <a class="toggler-btn btn btn-default disabled" href="<%= unsubscribe_product_path(@product) %>" data-method="post" >
+          <a class="toggler-btn btn btn-default disabled" href="<%= unsubscribe_product_path(@product) %>" data-method="post">
 
             <span class="glyphicon glyphicon-eye-open"></span>
             Unwatch
@@ -56,7 +56,17 @@
           <%= @product.watchers.count %>
         </div>
       </div>
-
+      <% if signed_in? %>
+        <div style="display:inline; margin-left: 5px;"
+             data-react-class="JoinTeam"
+             data-react-props="<%= {
+               :count => @product.team_memberships.active.count,
+               :join_path => product_people_path(@product),
+               :leave_path => product_person_path(@product, current_user),
+               :is_member => @product.member?(current_user)
+             }.to_json %>">
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
