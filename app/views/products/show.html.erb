@@ -76,14 +76,14 @@
 
         <%#= render 'products/social_buttons' %>
 
-        <% cache @product do %>
+        <% cache [@product, 'links'] do %>
           <%= render 'products/links' %>
           <%= render 'products/people' %>
         <% end %>
 
         <%= render 'products/metrics' %>
 
-        <% cache @product do %>
+        <% cache [@product, 'tags'] do %>
           <%= render 'products/tags_panel' %>
         <% end %>
 
