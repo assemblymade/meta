@@ -3,8 +3,9 @@ module TextFilters
     def initialize(text, context = {}, result = nil)
       super text, context, result
       @text = @text.gsub "\r", ''
+      @renderer = Redcarpet::Render::HTML.new(context.fetch(:markdown, {}).merge(filter_html: false))
       @engine = Redcarpet::Markdown.new(
-        Redcarpet::Render::HTML.new(context.fetch(:markdown, {})),
+        @renderer,
         context.fetch(:redcarpet, {}).merge(autolink: true)
       )
     end

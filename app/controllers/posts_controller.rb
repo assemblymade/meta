@@ -20,7 +20,11 @@ class PostsController < ApplicationController
     authorize! :create, Post
     @post = @product.posts.new(post_params)
     @post.author = current_user
-    @post.save!
+    @post.save
+
+    @product.watchers.each do |watcher|
+      PostMailer.delay.created(@post.id, watcher.id)
+    end
 
     respond_with @post, location: product_post_path(@post.product, @post)
   end

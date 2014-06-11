@@ -1,0 +1,41 @@
+<% if @product.homepage_url.present? || @product.repos.any? %>
+  <div class="panel panel-default">
+
+    <div class="panel-heading">
+      <h6 class="panel-title">Links</h6>
+    </div>
+    <div class="panel-body">
+      <% unless @product.homepage_url.blank? %>
+        <a href="<%= @product.homepage_url %>" data-track="product.site.clicked">
+          <strong><%= @product.homepage_url %></strong>
+        </a>
+      <% end %>
+      <% unless @product.homepage_url.blank? && @product.repos.any? %>
+        <hr style="margin-top: 15px; margin-bottom: 15px;">
+      <% end %>
+      <% if @product.for_profit? && @product.repos.any? %>
+        <ul class="list-unstyled omega">
+          <% @product.repos.each do |repo| %>
+            <li>
+              <span class="icon icon-github" style="margin-right: 4px;"></span>
+              <a href="<%= repo.url %>" data-track="product.repo.clicked">
+                <strong><%= repo.name %></strong>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if !@product.for_profit? %>
+  <div class="panel panel-warning">
+    <div class="panel-heading">
+      <h6 class="panel-title">Special Project</h6>
+    </div>
+    <div class="panel-body small">
+      <p class="omega"><strong>Assembly Meta</strong> is a special product for providing feedback to Assembly and to join the discussion on upcoming features. This is not intended for revenue so there won't be any royalties paid. App Coins have been replaced with Karma to make this clear.</p>
+    </div>
+  </div>
+<% end %>

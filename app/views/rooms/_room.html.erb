@@ -7,12 +7,15 @@
 
 <%= render room.target %>
 
+<hr>
+
 <div class="row">
   <div class="col-xs-8">
 
     <% case room.target %>
-    <% when Task, Discussion %>
+    <% when Task, Discussion, Wip %>
       <%= render 'rooms/events', room: room %>
+    <%# when Product %>
     <% else %>
       YO! Weird event stream.
     <% end %>
@@ -42,6 +45,25 @@
         </ul>
       </div>
     </div><!-- .panel -->
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h6 class="panel-title">
+          References
+        </h6>
+      </div>
+      <div class="panel-body">
+        <ul class="list-grid omega">
+          <li>
+            <a href="#">
+              <span class="label label-success">#645</span>
+              Updated Homepage
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div><!-- .panel -->
+
 
   </div>
 </div>

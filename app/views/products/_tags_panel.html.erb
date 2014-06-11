@@ -1,0 +1,14 @@
+<% if @product.tags.present? %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h6 class="panel-title">Tags</h6>
+    </div>
+    <div class="panel-body">
+      <ul class="list-grid omega">
+        <% @product.tags.each do |tag| %>
+          <li><span class="label label-info"><%= tag %></span></li>
+        <% end %>
+      <ul>
+    </div>
+  </div>
+<% end %>

@@ -23,6 +23,7 @@ class window.TipsView extends Backbone.View
       path: @path()
       "signed_in?": app.isSignedIn()
       "current_user_has_coins?": @currentUserHasCoins()
+      "tips": @$el.data('tips')
     }
 
   path: ->

@@ -11,13 +11,13 @@
                     <img class="img-circle" src="<%= @post.author.avatar.url(48) %>" width="24" height="24" alt="@<%= @post.author.username %>" style="margin-right:5px;">
                     <%= @post.author.username %>
                   </a>
-                  wrote a new post in
+                  wrote a new post for
                   <a href="<%= product_url(@post.product) %>"><%= @post.product.name %></a>:
                 </div>
                 <br />
                 <blockquote>
                   <h5 class="alpha" style="margin-top:0"><%= @post.title %></h5>
-                  <%== product_markdown(@post.product, @post.summary) %>
+                  <%= product_markdown(@post.product, @post.summary) %>
                 </blockquote>
 
                 <table class="button radius">

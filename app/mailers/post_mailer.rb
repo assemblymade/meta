@@ -8,10 +8,12 @@ class PostMailer < BaseMailer
     @post = Post.find(post_id)
     @user = User.find(user_id)
 
-    mail to: @user.email_address,
-         subject: @post.title
+    mailgun_tag "post##{@post.product.slug}"
 
     prevent_delivery(@user)
+
+    mail to: @user.email_address,
+         subject: @post.title
   end
 
   def preview(product_id, params, author_id)

@@ -6,10 +6,8 @@
           <%= @product.name %>
         </a>
       </li>
-    </ul>
 
-    <ul class="nav nav-tabs navbar-nav navbar-right">
-      <li class="<%= "active" if chat_controller?  %>">
+      <li class="<%= "active" if chat_controller? %>">
         <a href="<%= product_discuss_path(@product) %>">
           Chat
         </a>
@@ -38,8 +36,28 @@
           Assets
         </a>
       </li>
-
     </ul>
+
+    <div class="navbar-right navbar-text">
+      <div class="toggler">
+        <% if signed_in? && @product.watching?(current_user) %>
+          <a class="toggler-btn btn btn-default disabled" href="<%= unsubscribe_product_path(@product) %>" data-method="post" >
+
+            <span class="glyphicon glyphicon-eye-open"></span>
+            Unwatch
+          </a>
+        <% else %>
+          <a class="toggler-btn btn btn-primary" href="<%= subscribe_product_path(@product) %>" data-method="post">
+            <span class="glyphicon glyphicon-eye-open"></span>
+            Watch
+          </a>
+        <% end %>
+        <div class="badge toggler-badge">
+          <%= @product.watchers.count %>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 

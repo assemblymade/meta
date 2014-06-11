@@ -20,14 +20,14 @@
       </div>
       <div class="col-md-8 col-xs-8 col-xs-pull-4">
         <%= form_for [@post.product, @post] do |f| %>
-          <div class="form-group">
+          <div class="form-group <%= 'has-error' if @post.errors[:title].any? %>">
             <%= f.label :title, 'Post title', class: 'form-label' %>
             <%= f.text_field :title, class: 'form-control' %>
           </div>
-          <div class="form-group">
+          <div class="form-group <%= 'has-error' if @post.errors[:summary].any? %>">
             <%= f.text_field :summary, class: 'form-control', placeholder: 'Tweet sized summary' %>
           </div>
-          <div class="form-group">
+          <div class="form-group <%= 'has-error' if @post.errors[:title].any? %>">
             <%= f.text_area :body, class: 'form-control', rows: 8, placeholder: 'Post body' %>
           </div>
 

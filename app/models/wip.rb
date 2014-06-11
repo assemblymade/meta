@@ -285,4 +285,16 @@ class Wip < ActiveRecord::Base
   def track_activity
     StreamEvent.add_create_event!(actor: user, subject: self, target: product)
   end
+
+  def to_partial_path
+    # Special case for Projects
+    if self.class == Wip
+      'projects/project'
+    elsif self.class == Task
+      'bounties/bounty'
+    else
+      super
+    end
+  end
+
 end

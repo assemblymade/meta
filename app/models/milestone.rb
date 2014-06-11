@@ -35,4 +35,5 @@ class Milestone < ActiveRecord::Base
   def set_number_from_wip
     update_column :number, wip.number
   end
+
 end

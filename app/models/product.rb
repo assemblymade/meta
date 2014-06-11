@@ -18,6 +18,7 @@ class Product < ActiveRecord::Base
 
   has_many :activities
   has_many :assets
+  has_many :auto_tip_contracts
   has_many :completed_missions
   has_many :contract_holders
   has_many :core_team_memberships
@@ -33,6 +34,7 @@ class Product < ActiveRecord::Base
   has_many :perks
   has_many :posts
   has_many :preorders, :through => :perks
+  has_many :product_interests
   has_many :profit_reports
   has_many :product_jobs
   has_many :product_roles
@@ -43,6 +45,7 @@ class Product < ActiveRecord::Base
   has_many :subscribers, :through => :subscriptions, :source => :user
   has_many :subscriptions
   has_many :tasks
+  has_many :team_memberships
   has_many :votes, :as => :voteable
   has_many :watchers, :through => :watchings, :source => :user
   has_many :watchings, :as => :watchable

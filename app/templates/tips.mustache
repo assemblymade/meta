@@ -10,7 +10,24 @@
       title="You have no coins to tip"
     {{/current_user_has_coins?}}
   >
-    <span class="icon icon-app-coin"></span>
+    <i class="icon icon-app-coin"></i>
     {{coins}}
   </a>
+
+  {{#any_coins?}}
+    <span class="text-muted hidden">&mdash; tipped by
+      <ul class="list-inline-media">
+        {{#tips}}
+          <li>
+            <img
+              class="img-circle"
+              src="http://placekitten.com/g/300/300"
+              alt="@"
+              width="16" height="16">
+          </li>
+        {{/tips}}
+      </ul>
+    </span>
+  {{/any_coins?}}
+
 </div>
