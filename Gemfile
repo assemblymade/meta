@@ -95,7 +95,7 @@ end
 group :development do
   # gem 'rack-mini-profiler'
   # gem 'sql-logging'
-  # gem 'ruby-prof'
+  gem 'ruby-prof'
 end
 
 group :test do

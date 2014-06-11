@@ -11,7 +11,7 @@ class window.ActivityView extends Backbone.View
     @listenTo(@model, 'change', @render)
     @subjectId = options.subjectId
     @subviews = {
-      '.js-tips': new TipsView()
+      '.js-tips': new TipsView(tips: @model.get('subject').tips)
     }
 
   render: =>

@@ -2,7 +2,7 @@ class Tip < ActiveRecord::Base
   belongs_to :product
   belongs_to :from, class_name: 'User'
   belongs_to :to,   class_name: 'User'
-  belongs_to :via,  class_name: 'Event'
+  belongs_to :via,  class_name: 'Event', touch: true
 
   def self.perform!(product, from, event, add_cents)
     to = event.user
