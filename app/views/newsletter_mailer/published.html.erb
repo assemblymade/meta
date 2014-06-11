@@ -6,6 +6,8 @@
           <tbody>
             <tr>
               <td class="panel panel-default">
+                <p>Hi <%= @user.username %>,</p>
+
                 <%= markdown(@newsletter.body) %>
               </td>
             </tr>
