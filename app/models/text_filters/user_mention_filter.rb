@@ -40,7 +40,7 @@ module TextFilters
         next if has_ancestor?(node, IGNORE_USER_PARENTS)
         html = mention_link_filter(content, context[:users_base_url])
         next if html == content
-        node.replace(html)
+        node.swap(Nokogiri::XML::DocumentFragment.new(doc, html))
       end
       doc
     end
