@@ -114,7 +114,7 @@ var PeopleList = React.createClass({
 
       var row = (
         <div className="row"
-          key={'row-' + leftUser.id + rightUser.id}
+          key={'row-' + leftUser.id + (rightUser && rightUser.id)}
           style={{
             'padding-top': '15px',
             'padding-bottom': '15px',
