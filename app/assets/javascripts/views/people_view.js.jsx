@@ -39,6 +39,7 @@ var People = React.createClass({
 var PeopleFilter = React.createClass({
   render: function() {
     var self = this;
+    var highlightAll = self.props && !self.props.selected ? 'primary': 'default';
 
     var tags = _.map(this.props.interestFilters, function(interest){
       var label = '@' + interest;
@@ -60,8 +61,8 @@ var PeopleFilter = React.createClass({
           Browse by:
         </div>
         <div className="col-xs-10 btn-group btn-group-sm">
+            <a className={'text-muted btn btn-' + highlightAll} onClick={this.clearInterest} style={{cursor: 'pointer'}}>All</a>
             {tags}
-            <a className="text-muted btn btn-default" onClick={this.clearInterest} href="#">All</a>
         </div>
       </div>
     )
@@ -100,7 +101,7 @@ var PeopleList = React.createClass({
       var rightUser = rightMember && rightMember.user;
 
       var row = (
-        <div className="row" style={{'margin-bottom': '30px', 'border-bottom': '1px solid #d9d9d9'}}>
+        <div className="row" style={{'padding-top': '15px', 'padding-bottom': '15px', 'border-bottom': '1px solid #d9d9d9'}}>
           {this.avatar(leftUser)}
           {this.member(leftMember)}
           {this.avatar(rightUser)}
@@ -122,7 +123,11 @@ var PeopleList = React.createClass({
     return (
       <div className="col-sm-1 col-xs-1">
         <a href={user.url} title={'@' + user.username}>
-          <img src={user.avatar_url} className="avatar" alt={'@' + user.username} width="30" height="30" />
+          <img src={user.avatar_url}
+              className="avatar"
+              alt={'@' + user.username}
+              width="30"
+              height="30" />
         </a>
       </div>
     );

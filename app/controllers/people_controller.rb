@@ -21,11 +21,10 @@ class PeopleController < ApplicationController
   end
 
   def destroy
-    @membership = @product.team_memberships.find_by(user: current_user)
+    @membership = @product.team_memberships.find_by(user: current_user, is_core: false)
 
     unless @membership.nil?
-      @membership.deleted_at = Time.now
-      @membership.save!
+      @membership.update_attributes deleted_at: Time.now
     end
 
     respond_to do |format|

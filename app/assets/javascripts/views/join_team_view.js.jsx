@@ -35,7 +35,7 @@ var JoinTeam = React.createClass({
     $.ajax({
       url: url,
       method: method,
-      success: function() {},
+      success: function(data) {},
       error: function(jqxhr, status) {
         self.setState(currentState);
         console.error(status)
