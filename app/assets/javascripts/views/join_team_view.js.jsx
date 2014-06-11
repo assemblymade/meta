@@ -8,7 +8,7 @@ var JoinTeam = React.createClass({
   render: function() {
     return (
       <div className="toggler">
-        <a className="toggler-btn btn btn-primary" href="#" onClick={this.click()}>
+        <a className={"toggler-btn btn btn-" + this.button()} href="#" onClick={this.click()}>
           <span className="glyphicon glyphicon-user"></span>
           {this.label()}
         </a>
@@ -23,6 +23,10 @@ var JoinTeam = React.createClass({
     return this.state.is_member ? 'Leave Team' : 'Join Team';
   },
 
+  button: function() {
+    return this.state.is_member ? 'default inactive' : 'primary';
+  },
+
   click: function() {
     return this.state.is_member ? this.onLeave : this.onJoin;
   },
@@ -35,7 +39,9 @@ var JoinTeam = React.createClass({
     $.ajax({
       url: url,
       method: method,
-      success: function(data) {},
+      success: function(data) {
+        // update PeopleList
+      },
       error: function(jqxhr, status) {
         self.setState(currentState);
         console.error(status)

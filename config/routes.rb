@@ -215,7 +215,7 @@ ASM::Application.routes.draw do
       patch :add
     end
 
-    resources :people, only: [:index, :create, :destroy]
+    resources :people, only: [:index, :create, :update, :destroy]
 
     resources :team, only: [:index, :show, :new, :edit, :create, :update], controller: 'jobs', as: :jobs  do
       get 'join'

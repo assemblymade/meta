@@ -30,6 +30,18 @@ describe PeopleController do
     end
   end
 
+  describe 'PATCH #update' do
+    before do
+      sign_in user
+    end
+
+    it 'updates a user' do
+      patch :update, product_id: product.slug, id: user.id, bio: 'foo', format: :json
+
+      expect(response).to be_successful
+    end
+  end
+
   describe 'DELETE #destroy' do
     before do
       sign_in user

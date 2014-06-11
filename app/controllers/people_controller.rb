@@ -6,7 +6,7 @@ class PeopleController < ApplicationController
   def index
     @interest_filters = Interest.joins(:product_interests).where('product_interests.product_id = ?', @product.id).distinct
 
-    @memberships = @product.team_memberships
+    @memberships = @product.team_memberships.active
 
     @selected_filter = params[:filter]
   end
@@ -17,6 +17,18 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       format.json { render json: { count: @product.team_memberships.active.count } }
+    end
+  end
+
+  def update
+    @membership = @product.team_memberships.find_by(user: current_user)
+
+    unless @membership.nil?
+      @membership.update_attribute(:bio, params[:bio])
+    end
+
+    respond_to do |format|
+      format.json { render json: { user: @membership } }
     end
   end
 

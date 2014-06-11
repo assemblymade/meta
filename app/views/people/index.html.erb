@@ -32,7 +32,9 @@ $(document).ready(function() {
     React.renderComponent(People({
       interestFilters: <%== @interest_filters.map(&:slug).to_json %>,
       memberships: <%== ActiveModel::ArraySerializer.new(@memberships).to_json %>,
-      selected: "<%= @selected_filter %>"
+      selected: "<%= @selected_filter %>",
+      currentUser: <%== current_user.to_json %>,
+      updatePath: "<%= product_person_path(@product, current_user) %>"
     }), this)
   })
 });
