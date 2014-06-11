@@ -70,9 +70,9 @@ var Notifications = React.createClass({
     var debouncedFetch = _.debounce(this.fetchNotifications, 1000);
 
     $(document).bind('readraptor.tracked', debouncedFetch);
-    this.onPush(function(event) {
-      if (_.contains(event.mentions, _this.props.username)) {
-        _this.desktopNotify(event);
+    this.onPush(function(event, msg) {
+      if (_.contains(msg.mentions, _this.props.username)) {
+        var result = _this.desktopNotify(msg);
       }
       debouncedFetch();
     });
@@ -99,6 +99,7 @@ var Notifications = React.createClass({
         }
       }
     });
+
     return n.show();
   },
 
