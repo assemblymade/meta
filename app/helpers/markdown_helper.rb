@@ -25,10 +25,17 @@ module MarkdownHelper
       shortcut_root_url:  Rails.application.routes.url_helpers.product_url(product),
       firesize_url: ENV['FIRESIZE_URL'],
       # FIXME There is no route "users_path"
-      users_base_url: '/users'
+      users_base_url: '/users',
+      whitelist: html_whitelist
     )
 
-    @product_pipeline.call(text)[:output].to_s.html_safe
+    begin
+      result = @product_pipeline.call(text)
+      result[:output].to_s.html_safe
+    rescue => e
+      Rails.logger.error("pipeline=#{e.message} text=#{text}")
+      text
+    end
   end
 
 # --
@@ -43,6 +50,41 @@ module MarkdownHelper
     Rails.cache.fetch("#{f}#{markdown_mtime(name)}") do
       markdown(File.read(f))
     end
+  end
+
+  def html_whitelist
+    {
+      :elements => %w(
+        h1 h2 h3 h4 h5 h6 h7 h8 br b i strong em a pre code img tt
+        div ins del sup sub p ol ul table thead tbody tfoot blockquote
+        dl dt dd kbd q samp var hr ruby rt rp li tr td th s strike
+        iframe
+      ),
+      :remove_contents => ['script'],
+      :attributes => {
+        'a' => ['href'],
+        'img' => ['src'],
+        'iframe' => %w(src webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder),
+        'div' => ['itemscope', 'itemtype'],
+        :all  => ['abbr', 'accept', 'accept-charset',
+                  'accesskey', 'action', 'align', 'alt', 'axis',
+                  'border', 'cellpadding', 'cellspacing', 'char',
+                  'charoff', 'charset', 'checked', 'cite',
+                  'clear', 'cols', 'colspan', 'color',
+                  'compact', 'coords', 'datetime', 'dir',
+                  'disabled', 'enctype', 'for', 'frame',
+                  'headers', 'height', 'hreflang',
+                  'hspace', 'ismap', 'label', 'lang',
+                  'longdesc', 'maxlength', 'media', 'method',
+                  'multiple', 'name', 'nohref', 'noshade',
+                  'nowrap', 'prompt', 'readonly', 'rel', 'rev',
+                  'rows', 'rowspan', 'rules', 'scope',
+                  'selected', 'shape', 'size', 'span',
+                  'start', 'summary', 'tabindex', 'target',
+                  'title', 'type', 'usemap', 'valign', 'value',
+                  'vspace', 'width', 'itemprop']
+      }
+    }
   end
 
 end
