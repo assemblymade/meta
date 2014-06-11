@@ -5,76 +5,8 @@
         <table class="twelve columns">
           <tbody>
             <tr>
-              <td class="panel panel-success">
-                <h1>Assembly Weekly Newsletter</h1>
-
-                <p>Hi! It's been a great week at Assembly with a mix of magic happening on both established products like <a href="https://assemblymade.com/helpful?auth_token=<%= @user.authentication_token %>">Helpful</a> &amp; new products like <a href="https://assemblymade.com/buckets?auth_token=<%= @user.authentication_token %>">Buckets</a>. With Assembly itself, we've rolled out two new features last week, <a href="http://blog.assemblymade.com/new-feature-projects">Projects</a> and <a href="https://assemblymade.com/meta/posts/introducing-products-blogs?auth_token=<%= @user.authentication_token %>">Blog Posts</a>.
-                </p>
-
-              </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<table class="row">
-  <tbody>
-    <tr>
-      <td class="wrapper last">
-        <table class="twelve columns">
-          <tbody>
-            <tr>
               <td class="panel panel-default">
-
-                <h1><a href="https://assemblymade.com/helpful?auth_token=<%= @user.authentication_token %>">Helpful</a></h1>
-
-                <a href="https://helpful.io">
-                  <img alt="Helpful homepage" src="http://cl.ly/image/3Z132L0v0n0S/Image%202014-05-02%20at%2011.54.37%20AM.png" width="460" height="313" />
-                </a>
-
-                <p>
-                  Helpful is moving quickly towards a solid 1.0 release. <a href="https://assemblymade.com/users/whale?auth_token=<%= @user.authentication_token %>">@whale</a>, <a href="https://assemblymade.com/users/bjessbrown?auth_token=<%= @user.authentication_token %>">@bjessbrown</a>, and <a href="https://assemblymade.com/users/vanstee?auth_token=<%= @user.authentication_token %>">@vanstee</a> just got back from the first Assembly meetup in Greenville where they started tackling the new home page (above). If you want to keep tabs on our progress and take a look at the new designs, check out the <a href="https://assemblymade.com/helpful/projects/432?auth_token=<%= @user.authentication_token %>">home page project</a>. They also still need to finish up a few tasks related to <a href="https://assemblymade.com/helpful/projects/411?auth_token=<%= @user.authentication_token %>">billing</a> and <a href="https://assemblymade.com/helpful/projects/441?auth_token=<%= @user.authentication_token %>">sign up</a>. And, if you want some insight into where Helpful is heading, they received some <a href="https://assemblymade.com/helpful/discussions/457?auth_token=<%= @user.authentication_token %>">great feedback from an Airbnb customer service alum</a> that is totally worth a look.
-                </p>
-
-                <h1><a href="https://assemblymade.com/buckets?auth_token=<%= @user.authentication_token %>">Buckets</a></h1>
-
-                <a href="https://assemblymade.com/buckets?auth_token=<%= @user.authentication_token %>">
-                  <img alt="Buckets logo" src="https://d1015h9unskp4y.cloudfront.net/attachments/945e7298-b1d2-4ebe-bf8c-36142a62268a/buckets2.png" width="460"  />
-                </a>
-
-                <p>
-                  Buckets is a fresh take on the CMS. You may know <a href="https://assemblymade.com/users/davidkaneda?auth_token=<%= @user.authentication_token %>">@davidkaneda</a> from his work on <a href="http://jqtjs.com">jQT</a> or as Creative Director at <a href="http://www.sencha.com">Sencha</a>. He started working on Buckets last year and has now offered it up for the community to own. Work is just starting but, in my opinion, it's already shaping up to be one of Assembly's most interesting Node.js projects. If you're curious about the startup process, @davidkaneda shared <a href="http://cl.ly/VE9R">a pitch deck for Buckets</a> that is a rare glimpse into how to effectively communicate your idea to investors.
-                </p>
-
-                <h1>Other awesome products this week</h1>
-
-                <p>
-                  <a href="https://assemblymade.com/confy?auth_token=<%= @user.authentication_token %>">Confy</a>
-                  <br/>
-                  Helping developers seperate config from code (Node.js, CouchDB). <em>Just finished their backend API and has starting build a Heroku Addon this week.</em>
-                </p>
-                <p>
-                  <a href="https://assemblymade.com/firesize?auth_token=<%= @user.authentication_token %>">Firesize</a>
-                  <br/>
-                  Image Resizing as a Service (Go, API). <em>Deployed for its first live customer - Assembly itself!</em>
-                </p>
-                <p>
-                  <a href="https://assemblymade.com/dawn?auth_token=<%= @user.authentication_token %>">Dawn</a>
-                  <br/>
-                  An assistant for your email (Fresh). <em>Introduced by this <a href="https://medium.com/p/1bccaf2b55b7">rad blog post</a> that topped Hacker News.</em>
-                </p>
-
-                <p>Cheers!</p>
-
-                <p>
-                  <a href="https://assemblymade.com/users/chrislloyd?auth_token=<%= @user.authentication_token %>">@chrislloyd</a>
-                </p>
-
+                <%= markdown(@newsletter.body) %>
               </td>
             </tr>
           </tbody>
