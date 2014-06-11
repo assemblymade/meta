@@ -286,13 +286,6 @@ ActiveRecord::Schema.define(version: 20140610204411) do
     t.text     "variation"
   end
 
-  create_table "product_interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "product_id",  null: false
-    t.uuid     "user_id",     null: false
-    t.uuid     "interest_id", null: false
-    t.datetime "created_at",  null: false
-  end
-
   create_table "product_jobs", id: false, force: true do |t|
     t.uuid     "id",          null: false
     t.uuid     "user_id",     null: false
@@ -420,6 +413,12 @@ ActiveRecord::Schema.define(version: 20140610204411) do
     t.boolean  "product_flagged", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "team_membership_interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "team_membership_id", null: false
+    t.uuid     "interest_id",        null: false
+    t.datetime "created_at",         null: false
   end
 
   create_table "team_memberships", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

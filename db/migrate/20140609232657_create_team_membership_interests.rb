@@ -1,10 +1,9 @@
-class CreateProductInterests < ActiveRecord::Migration
+class CreateTeamMembershipInterests < ActiveRecord::Migration
   def change
-    create_table :product_interests, id: :uuid do |t|
-      t.uuid :product_id,   null: false
-      t.uuid :user_id,      null: false
-      t.uuid :interest_id,  null: false
-      t.datetime :created_at, null: false
+    create_table :team_membership_interests, id: :uuid do |t|
+      t.uuid :team_membership_id,   null: false
+      t.uuid :interest_id,          null: false
+      t.datetime :created_at,       null: false
     end
 
     names = {
@@ -36,11 +35,12 @@ class CreateProductInterests < ActiveRecord::Migration
         interest = Interest.find_or_create_by!(slug: slug)
 
         job.product_roles.each do |role|
-          if product.team_memberships.find_by(user: role.user).nil?
-            product.team_memberships.create!(user: role.user, is_core: false)
+          membership = product.team_memberships.find_by(user: role.user)
+          if membership.nil?
+            membership = product.team_memberships.create!(user: role.user, is_core: false)
           end
 
-          product.product_interests.find_or_create_by!(user: role.user, interest: interest)
+          membership.team_membership_interests.find_or_create_by!(interest: interest)
         end
       end
     end

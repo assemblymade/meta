@@ -34,7 +34,6 @@ class Product < ActiveRecord::Base
   has_many :perks
   has_many :posts
   has_many :preorders, :through => :perks
-  has_many :product_interests
   has_many :profit_reports
   has_many :product_jobs
   has_many :product_roles

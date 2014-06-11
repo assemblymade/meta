@@ -1,3 +1,3 @@
 class Interest < ActiveRecord::Base
-  has_many :product_interests
+  has_many :team_membership_interests
 end

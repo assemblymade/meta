@@ -3,6 +3,6 @@ class TeamMembershipSerializer < ApplicationSerializer
   attributes :interests, :core_team?, :bio
 
   def interests
-    ProductInterest.where(user: user, product: object.product).map(&:interest).map(&:slug)
+    object.team_membership_interests.map(&:interest).map(&:slug)
   end
 end
