@@ -11,7 +11,6 @@
 #= require jquery-autosize
 #= require jquery-timeago
 #= require react
-#= require react_ujs
 #= require notify.js
 
 #= require_tree ./lib

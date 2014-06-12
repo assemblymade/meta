@@ -14,62 +14,61 @@
       <!-- Activity Actions -->
       <div class="activity-actions">
 
-        {{#id}}
-          <ul class="list-inline pull-right omega">
-            <li>
-              <div class="dropdown">
-                <a href="#" class="dropdown-toggle" id="dropdown-{{cid}}" data-toggle="dropdown">
-                  <i class="icon icon-ellipsis" style="font-size: 18px;"></i>
-                </a>
-                <ul class="dropdown-menu pull-right text-small" role="menu" aria-labelledby="dropdown-{{cid}}" style="position: absolute; left: -150px;">
+        <ul class="list-inline pull-right omega">
+          <li>
+            <div class="dropdown">
+              <a href="#" class="dropdown-toggle" id="dropdown-{{cid}}" data-toggle="dropdown">
+                <i class="icon icon-ellipsis" style="font-size: 18px;"></i>
+              </a>
+              <ul class="dropdown-menu pull-right text-small" role="menu" aria-labelledby="dropdown-{{cid}}" style="position: absolute; left: -150px;">
 
-                  {{#edit_url}}
-                    <li role="presentation">
-                      <a href="{{edit_url}}" role="menuitem">
-                        <i class="glyphicon glyphicon-pencil dropdown-glyph"></i>
-                        Edit comment
-                      </a>
-                    </li>
-                  {{/edit_url}}
-
-                  {{#anchor}}
-                    <li role="presentation">
-                      <a href="#{{anchor}}" role="menuitem">
-                        <i class="glyphicon glyphicon-link dropdown-glyph"></i>
-                        Permalink
-                      </a>
-                    </li>
-                  {{/anchor}}
-
+                {{#edit_url}}
                   <li role="presentation">
-                    <a href="#{{anchor}}" class="js-chat-create-wip" role="menuitem">
-                      <i class="icon icon-plus dropdown-glyph"></i>
-                      Create bounty
+                    <a href="{{edit_url}}" role="menuitem">
+                      <i class="glyphicon glyphicon-pencil dropdown-glyph"></i>
+                      Edit comment
                     </a>
                   </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
+                {{/edit_url}}
 
-          <ul class="list-inline omega">
-            <li>
-              {{#actor}}
-                <a href="{{url}}" title="@{{username}}" class="chat-actor">
-                  {{username}}
-                </a>
-              {{/actor}}
-            </li>
+                {{#anchor}}
+                  <li role="presentation">
+                    <a href="#{{anchor}}" role="menuitem">
+                      <i class="glyphicon glyphicon-link dropdown-glyph"></i>
+                      Permalink
+                    </a>
+                  </li>
+                {{/anchor}}
 
+                <li role="presentation">
+                  <a href="#{{anchor}}" class="js-chat-create-wip" role="menuitem">
+                    <i class="icon icon-plus dropdown-glyph"></i>
+                    Create bounty
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+
+        <ul class="list-inline omega">
+          <li>
+            {{#actor}}
+              <a href="{{url}}" title="@{{username}}" class="chat-actor">
+                {{username}}
+              </a>
+            {{/actor}}
+          </li>
+
+          {{#id}}
             <li>
               <div class="js-tips"
                    data-tips-to="{{#actor}}{{username}}{{/actor}}"
                    data-tips-path="{{tip_path}}"
                    data-tips-product-id="{{product_id}}"></div>
             </li>
-          </ul>
-
-        {{/id}}
+          {{/id}}
+        </ul>
       </div>
 
       <!-- Activity Content -->
