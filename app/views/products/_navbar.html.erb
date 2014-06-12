@@ -6,6 +6,38 @@
           <%= @product.name %>
         </a>
       </li>
+      <li class="<%= "active" if chat_controller? %>">
+        <a href="<%= product_discuss_path(@product) %>">
+          Chat
+        </a>
+      </li>
+
+      <li class="<%= "active" if discussions_controller? %>">
+        <a href="<%= product_discussions_path(@product) %>">
+          Discussions
+        </a>
+      </li>
+
+      <li class="<%= "active" if tasks_controller? %>">
+        <a href="<%= product_wips_path(@product) %>">
+          Bounties
+        </a>
+      </li>
+
+      <li class="<%= "active" if milestones_controller? %>">
+        <a href="<%= product_milestones_path(@product) %>">
+          Projects
+        </a>
+      </li>
+
+      <li class="<%= "active" if assets_controller? %>">
+        <a href="<%= product_assets_path(@product) %>">
+          Assets
+        </a>
+      </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
       <li class="navbar-text">
         <div class="toggler">
           <% if signed_in? && @product.watching?(current_user) %>
@@ -38,40 +70,6 @@
                }.to_json %>">
           </div>
         </div>
-      </li>
-
-    </ul>
-
-    <ul class="nav nav-tabs navbar-nav navbar-right">
-
-      <li class="<%= "active" if chat_controller? %>">
-        <a href="<%= product_discuss_path(@product) %>">
-          Chat
-        </a>
-      </li>
-
-      <li class="<%= "active" if discussions_controller? %>">
-        <a href="<%= product_discussions_path(@product) %>">
-          Discussions
-        </a>
-      </li>
-
-      <li class="<%= "active" if tasks_controller? %>">
-        <a href="<%= product_wips_path(@product) %>">
-          Bounties
-        </a>
-      </li>
-
-      <li class="<%= "active" if milestones_controller? %>">
-        <a href="<%= product_milestones_path(@product) %>">
-          Projects
-        </a>
-      </li>
-
-      <li class="<%= "active" if assets_controller? %>">
-        <a href="<%= product_assets_path(@product) %>">
-          Assets
-        </a>
       </li>
     </ul>
   </div>
