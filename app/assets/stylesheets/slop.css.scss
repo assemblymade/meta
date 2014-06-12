@@ -9,7 +9,7 @@ $product-buckets: lighten(#353535, 30%);
 
 $user-whale: #63a4ae;
 $user-chexee: #98658e;
-$user-davidkaneda: darken(saturate(#d08b48, 15%), 5%);
+$user-davidkaneda: #848C24;
 
 .hero {
   // Offset .page top padding
@@ -224,4 +224,18 @@ a.card-colored:hover {
   left: 0;
   right: 0;
   padding: 24px 0;
+}
+
+
+.page-home {
+
+  .header {
+    padding: 50px 0;
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: $line-height-computed;
+    }
+  }
+
 }

@@ -9,21 +9,28 @@
       data-toggle="tooltip"
       title="You have no coins to tip"
     {{/current_user_has_coins?}}
+    {{#current_user_owner?}}
+      data-toggle="tooltip"
+      title="You can't tip yourself"
+    {{/current_user_owner?}}
   >
     <i class="icon icon-app-coin"></i>
     {{coins}}
   </a>
 
   {{#any_coins?}}
-    <span class="text-muted hidden">&mdash; tipped by
+    <span class="text-muted">&mdash; tipped by
       <ul class="list-inline-media">
         {{#tips}}
           <li>
-            <img
-              class="img-circle"
-              src="http://placekitten.com/g/300/300"
-              alt="@"
-              width="16" height="16">
+            {{#from}}
+              <img
+                class="img-circle"
+                src="{{avatar_url}}"
+                alt="@{{username}}"
+                title="@{{username}}"
+                width="16" height="16">
+            {{/from}}
           </li>
         {{/tips}}
       </ul>

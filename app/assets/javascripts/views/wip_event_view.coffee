@@ -29,7 +29,7 @@ class window.WipEventView extends Backbone.View
   initialize: ->
     @listenTo @model, 'change', @render
     @subviews = {
-      '.js-tips': new TipsView()
+      '.js-tips': new TipsView(tips: @model.get('tips'))
     }
 
   template: ->

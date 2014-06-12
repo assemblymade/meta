@@ -1,4 +1,4 @@
-<% if can? :multiply, @wip %>
+<% if can? :multiply, task %>
   <div class="dropdown" style="display:inline-block">
     <a data-toggle="dropdown" href="#">
       <span class="label label-<%= task.urgency.label.downcase %>"><%= task.urgency.label %></span>

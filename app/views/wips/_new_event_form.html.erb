@@ -28,7 +28,7 @@
         <li class="active"><a href="#comment" data-toggle="tab">Comment</a></li>
         <li><a href="#code" data-toggle="tab">Code</a></li>
         <li><a href="#design" data-toggle="tab">Design</a></li>
-        <li><a href="#copy" data-toggle="tab">Copy</a></li>
+        <li><a href="#copy" data-toggle="tab">Text</a></li>
       </ul>
 
 
@@ -111,7 +111,7 @@
             <%= text_area_tag 'copy_deliverable[body]', nil, class: 'form-control form-type-copy', rows: 3 %>
 
             <div class="form-actions">
-              <%= submit_tag 'Add Copy', class: %w(btn btn-primary) %>
+              <%= submit_tag 'Add Text', class: %w(btn btn-primary) %>
             </div>
           <% end %>
         </div>

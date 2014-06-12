@@ -10,8 +10,8 @@ class window.TipsView extends Backbone.View
   events:
     'click a': 'onClick'
 
-  initialize: ->
-    @coins = 0
+  initialize: (@options)->
+    @addCents = 0
 
   render: =>
     @$el.html(@template.render(@templateData()))
@@ -23,14 +23,18 @@ class window.TipsView extends Backbone.View
       path: @path()
       "signed_in?": app.isSignedIn()
       "current_user_has_coins?": @currentUserHasCoins()
-      "tips": @$el.data('tips')
+      "current_user_owner?": @currentUserOwner()
+      "tips": @tips()
     }
 
   path: ->
     @$el.data('tips-path')
 
   totalCoins: ->
-    parseInt(@$el.data('tips-total'), 10) + @coins
+    _.reduce(@tips(), ((sum, tip) -> sum + tip.cents), 0)
+
+  tips: ->
+    @$el.data('tips') || @options.tips
 
   onClick: (e) ->
     e.preventDefault()
@@ -41,26 +45,41 @@ class window.TipsView extends Backbone.View
       @$('[data-toggle=tooltip]').tooltip('show')
 
   currentUserCanTip: ->
-    app.isSignedIn() && @currentUserHasCoins()
+    app.isSignedIn() && @currentUserHasCoins() && !@currentUserOwner()
 
   currentUserHasCoins: ->
     app.isSignedIn() &&
     app.currentUser().get('product_balance')[@$el.data('tips-product-id')] > 0
 
+  currentUserOwner: ->
+    app.isSignedIn() &&
+    app.currentUser().get('username') == @$el.data('tips-to')
 
   optimisticTip: ->
-    @coins += COIN_INCREMENT
+    @addCents += COIN_INCREMENT
+    @updateUserTip(COIN_INCREMENT)
     @render()
+
+  updateUserTip: (cents)->
+    @userTip().cents += cents
+
+  userTip: ->
+    user = app.currentUser().attributes
+    tip = _.find(@tips(), (tip)-> tip.from.username == user.username )
+    if !tip
+      tip = {from: user, cents: 0}
+      @tips().push(tip)
+    tip
 
   save: _.debounce(->
     $.ajax(
       type: "POST"
       url: @path()
-      data: { tip: { add: @coins } }
+      data: { tip: { add: @addCents } }
       dataType: 'json'
       complete: =>
-        @$el.data('coins', @coins)
-        @coins = 0
+        @$el.data('coins', @addCents)
+        @addCents = 0
     )
   , DEBOUNCE_TIMEOUT)
 

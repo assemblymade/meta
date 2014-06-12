@@ -1,5 +1,15 @@
 .modal-content {
-  box-shadow: none;
+  // box-shadow: none;
+  overflow: hidden;
+}
+
+.modal-header {
+  background-color: $modal-header-bg;
+}
+
+.modal-footer {
+  padding: $modal-footer-padding;
+  background-color: $modal-footer-bg;
 }
 
 .modal {

@@ -112,6 +112,7 @@ class Event < ActiveRecord::Base
       if current_user
         tracker = ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(event).first, current_user.id)
         event_data[:readraptor_tracking_url] = tracker.url
+        event_data[:tips] = event_data[:tips].to_json
       end
 
       event_name = event.class.slug

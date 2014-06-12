@@ -3,7 +3,7 @@ module TextFilters
 
     def call
       doc.css('img').each do |element|
-        if element['src']
+        if context[:firesize_url] && element['src']
           element['src'] = File.join(context[:firesize_url], 'frame_0', element['src'])
         end
         element['class'] = 'img-thumbnail'
