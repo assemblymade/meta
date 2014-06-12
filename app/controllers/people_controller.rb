@@ -4,8 +4,6 @@ class PeopleController < ApplicationController
   before_action :set_product
 
   def index
-    @interest_filters = Interest.joins(team_membership_interests: :team_membership).where('team_memberships.product_id = ?', @product.id).distinct
-
     @memberships = @product.team_memberships.active
 
     @selected_filter = params[:filter]
@@ -13,10 +11,20 @@ class PeopleController < ApplicationController
 
   def create
     @membership = @product.team_memberships.find_or_create_by!(user: current_user, is_core: false)
-    @membership.update_attributes(deleted_at: nil)
+
+    membership = params[:membership]
+    interests = params[:membership][:interest_ids] unless membership.nil?
+
+    update_interests(interests)
+
+    @membership.update_attributes({
+      deleted_at: nil,
+      bio: params[:bio]
+    })
 
     respond_to do |format|
       format.json { render json: { count: @product.team_memberships.active.count } }
+      format.html { redirect_to request.referrer }
     end
   end
 
@@ -42,6 +50,31 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.json { render json: { count: @product.team_memberships.active.count } }
     end
+  end
+
+  private
+
+  def update_interests(interests)
+    current_interests = @membership.team_membership_interests.all
+    added_interests = add_interests(interests)
+    remove_interests(current_interests - added_interests)
+  end
+
+  def add_interests(interests)
+    added_interests = []
+
+    unless interests.nil?
+      interests.each do |i|
+        interest = Interest.find_or_create_by!(slug: i)
+        added_interests << @membership.team_membership_interests.find_or_create_by!(interest: interest)
+      end
+    end
+
+    added_interests
+  end
+
+  def remove_interests(interests)
+    @membership.team_membership_interests.destroy(interests)
   end
 
 end

@@ -217,12 +217,12 @@ var BioEditor = React.createClass({
     var member = this.state.member;
 
     if (!member || !currentUser) {
-      return;
+      return <div />;
     }
 
     if (currentUser.id === member.user.id) {
       return (
-        <div className="js-edit-bio text-muted" key={'b-' + currentUser.id}>
+        <div className="js-edit-bio" key={'b-' + currentUser.id}>
           {member.bio}
           {this.state.editing ? this.saveButton() : this.editButton()}
         </div>
@@ -230,7 +230,7 @@ var BioEditor = React.createClass({
     }
 
     return (
-      <p className="text-muted" key={'b-' + member.user.id}>
+      <p key={'b-' + member.user.id}>
         {member.bio}
       </p>
     )
