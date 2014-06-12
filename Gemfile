@@ -59,7 +59,7 @@ gem 'rails-assets-jquery-timeago'
 gem 'rails-assets-jquery.inview',       '1.0.0'
 gem 'rails-assets-underscore',          '1.5.2'
 gem 'rails_stdout_logging', group: [:development, :production]
-gem 'react-rails'
+gem 'react-rails', '~> 0.10.0.0'
 gem 'redcarpet'
 gem 'redis'
 gem 'rinku'

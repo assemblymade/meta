@@ -12,7 +12,7 @@ class UnreadChat
       {
         product: ProductSerializer.new(product).as_json,
         count: product_events.size,
-        entities: product_events.map{|e| [e.id, e.number] },
+        entities: ActiveModel::ArraySerializer.new(product_events, each_serializer: UnreadSerializer).as_json,
         index: i
       }
     end
