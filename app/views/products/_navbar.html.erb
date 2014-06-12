@@ -5,8 +5,9 @@
         <a class="navbar-brand" href="<%= product_path(@product) %>">
           <%= @product.name %>
         </a>
-
-        <div class="toggler" style="position: relative; top: 13px;">
+      </li>
+      <li class="navbar-text">
+        <div class="toggler">
           <% if signed_in? && @product.watching?(current_user) %>
             <a class="toggler-btn btn btn-default disabled" href="<%= unsubscribe_product_path(@product) %>" data-method="post" >
 
@@ -21,6 +22,20 @@
           <% end %>
           <div class="badge toggler-badge">
             <%= @product.watchers.count %>
+          </div>
+        </div>
+      </li>
+      <li class="navbar-text">
+        <div class="toggler">
+          <div style="display:inline; margin-left: 5px; margin-top: 13px;"
+               data-react-class="JoinTeam"
+               data-react-props="<%= {
+                 :count => @product.team_memberships.active.count,
+                 :join_path => product_people_path(@product),
+                 :leave_path => current_user ? product_person_path(@product, current_user) : nil,
+                 :is_member => @product.member?(current_user),
+                 :membership => TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user)).as_json
+               }.to_json %>">
           </div>
         </div>
       </li>
@@ -59,36 +74,6 @@
         </a>
       </li>
     </ul>
-
-    <div class="navbar-right navbar-text">
-      <div class="toggler">
-        <% if signed_in? && @product.watching?(current_user) %>
-          <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post">
-
-            <span class="glyphicon glyphicon-eye-open"></span>
-            Unwatch
-          </a>
-        <% else %>
-          <a class="toggler-btn btn btn-primary" href="<%= subscribe_product_path(@product) %>" data-method="post">
-            <span class="glyphicon glyphicon-eye-open"></span>
-            Watch
-          </a>
-        <% end %>
-        <div class="badge toggler-badge">
-          <%= @product.watchers.count %>
-        </div>
-      </div>
-      <div style="display:inline; margin-left: 5px;"
-           data-react-class="JoinTeam"
-           data-react-props="<%= {
-             :count => @product.team_memberships.active.count,
-             :join_path => product_people_path(@product),
-             :leave_path => current_user ? product_person_path(@product, current_user) : nil,
-             :is_member => @product.member?(current_user),
-             :membership => TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user)).as_json
-           }.to_json %>">
-      </div>
-    </div>
   </div>
 </div>
 
