@@ -48,6 +48,7 @@ var PeopleFilter = React.createClass({
   render: function() {
     var self = this;
     var highlightAll = self.props && !self.props.selected ? 'primary': 'default';
+    var highlightCore = self.props && self.props.selected === 'core' ? 'primary': 'default';
 
     var tags = _.map(this.props.interestFilters, function(interest){
       var label = '@' + interest;
@@ -74,6 +75,11 @@ var PeopleFilter = React.createClass({
                 style={{cursor: 'pointer'}}>
               All
             </a>
+            <a className={'text-muted btn btn-' + highlightCore}
+                onClick={this.highlightCore}
+                style={{cursor: 'pointer'}}>
+              @core
+            </a>
             {tags}
         </div>
       </div>
@@ -89,6 +95,10 @@ var PeopleFilter = React.createClass({
 
   clearInterest: function(e) {
     this.props.onFilter();
+  },
+
+  highlightCore: function(e) {
+    this.props.onFilter('core')
   }
 })
 
@@ -139,7 +149,7 @@ var PeopleList = React.createClass({
     }
 
     return (
-      <div className="col-sm-1 col-xs-1">
+      <div className="col-sm-1 col-xs-1 ">
         <a href={user.url} title={'@' + user.username}>
           <img src={user.avatar_url}
               className="avatar"
@@ -190,6 +200,12 @@ var PeopleList = React.createClass({
 
   skills: function(membership) {
     var self = this;
+
+    if (membership.core_team && membership.interests.indexOf('core') < 0) {
+      membership.interests.push('core')
+    }
+
+    membership.interests.sort();
 
     return _.map(membership.interests, function mapInterests(interest) {
       var label = '@' + interest;

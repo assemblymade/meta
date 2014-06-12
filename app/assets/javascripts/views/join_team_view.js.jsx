@@ -48,7 +48,11 @@ var JoinTeam = React.createClass({
       create_option: function(term) {
         var chosen = this
 
-        term = term.replace(/[^\w-]+/g, '')
+        term = term.replace(/[^\w-]+/g, '').toLowerCase()
+
+        if (term === 'core') {
+          return;
+        }
 
         chosen.append_option({
           value: term,
@@ -62,6 +66,7 @@ var JoinTeam = React.createClass({
       create_option_text: 'Add interest'
     })
 
+    // TODO: Move default bio some place saner.
     var bio = 'My favorite HTTP status code is 418. I miss the cgi-bin, and I use GOTO liberally.'
     var membership = this.props.membership
 
