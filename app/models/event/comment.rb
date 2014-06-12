@@ -16,7 +16,7 @@ class Event::Comment < Event
   end
 
   def add_backreferences
-    TextFilters::UserMentionFilter.mentioned_usernames_in(body, wip) do |user, _|
+    TextFilters::UserMentionFilter.mentioned_usernames_in(body, wip.product) do |user, _|
       wip.watch!(user) unless user.nil?
     end
 

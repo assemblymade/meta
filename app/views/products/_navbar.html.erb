@@ -58,9 +58,58 @@
           Assets
         </a>
       </li>
-
     </ul>
+
+    <div class="navbar-right navbar-text">
+      <div class="toggler">
+        <% if signed_in? && @product.watching?(current_user) %>
+          <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post">
+
+            <span class="glyphicon glyphicon-eye-open"></span>
+            Unwatch
+          </a>
+        <% else %>
+          <a class="toggler-btn btn btn-primary" href="<%= subscribe_product_path(@product) %>" data-method="post">
+            <span class="glyphicon glyphicon-eye-open"></span>
+            Watch
+          </a>
+        <% end %>
+        <div class="badge toggler-badge">
+          <%= @product.watchers.count %>
+        </div>
+      </div>
+      <div style="display:inline; margin-left: 5px;"
+           data-react-class="JoinTeam"
+           data-react-props="<%= {
+             :count => @product.team_memberships.active.count,
+             :join_path => product_people_path(@product),
+             :leave_path => current_user ? product_person_path(@product, current_user) : nil,
+             :is_member => @product.member?(current_user),
+             :membership => TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user)).as_json
+           }.to_json %>">
+      </div>
+    </div>
   </div>
 </div>
+
+<!-- TODO: use a form helper -->
+<script type="text/template" id="join-team-template">
+  <form role="form" style="width: 250px" method="post" action="<%= product_people_path(@product) %>">
+    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+    <div class="form-group" style="margin-bottom: 15px">
+      <label for="join-bio-editor"><strong>What would you like to work on? What are your strengths?</strong></label>
+      <textarea name="bio" id="join-bio-editor" class="form-control bio-editor" style="height: 100px"></textarea>
+    </div>
+    <div class="form-group" style="margin-bottom: 15px">
+      <label for="join-interests">What are you interested in?</label>
+      <% interest_filters = product_membership_interests(@product, true) %>
+      <%= select_tag 'membership[interest_ids][]',
+        options_for_select(interest_filters.map { |interest| ['@' + interest, interest]}),
+        'data-placeholder' => ' ',
+        :class => 'form-control chosen-select',
+        :multiple => true %>
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm btn-block">Introduce yourself</button>
+</script>
 
 <%# render 'products/status_message' %>

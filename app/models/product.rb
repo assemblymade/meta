@@ -34,7 +34,6 @@ class Product < ActiveRecord::Base
   has_many :perks
   has_many :posts
   has_many :preorders, :through => :perks
-  has_many :product_interests
   has_many :profit_reports
   has_many :product_jobs
   has_many :product_roles
@@ -162,6 +161,11 @@ class Product < ActiveRecord::Base
   def core_team?(user)
     return false if user.nil?
     core_team_memberships.where(user_id: user.id).any?
+  end
+
+  def member?(user)
+    return false if user.nil?
+    team_memberships.active.where(user_id: user.id).any?
   end
 
   def submit_for_approval!

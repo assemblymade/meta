@@ -14,11 +14,11 @@ module TextFilters
         )
       /ix
 
-    def self.mentioned_usernames_in(text, wip = nil)
+    def self.mentioned_usernames_in(text, product = nil)
       text.gsub MentionPattern do |match|
         login = $1
-        if $1.downcase == 'core' && !wip.nil?
-          wip.product.core_team.each do |user|
+        if $1.downcase == 'core' && !product.nil?
+          product.core_team.each do |user|
             yield user, $1
           end
         else

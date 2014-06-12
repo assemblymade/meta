@@ -28,4 +28,19 @@ module ProductsHelper
     product_wips_path(product, deliverable: :design)
   end
 
+  def product_membership_interests(product, with_defaults=false)
+    existing_interests = Interest.
+      joins(team_membership_interests: :team_membership).
+      where('team_memberships.deleted_at is null').
+      where('team_memberships.product_id = ?', product.id).distinct.map(&:slug)
+
+    interests = if with_defaults
+      existing_interests | Interest::DEFAULT_INTERESTS # union
+    else
+      existing_interests.empty? ? Interest::DEFAULT_INTERESTS : existing_interests
+    end
+
+    interests.sort
+  end
+
 end
