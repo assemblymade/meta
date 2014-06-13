@@ -2,6 +2,7 @@ class PeopleController < ApplicationController
   respond_to :html, :json
 
   before_action :set_product
+  before_action :authenticate_user!, :except => [:index]
 
   def index
     @memberships = @product.team_memberships.active
