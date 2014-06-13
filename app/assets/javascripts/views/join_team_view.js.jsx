@@ -152,6 +152,10 @@ var JoinTeam = React.createClass({
   },
 
   onLeave: function(e) {
+    if (this.props.membership.core_team) {
+      return
+    }
+
     this.handleJoinOrLeave(
       this.props.leave_path,
       { count: (this.state.count - 1) , is_member: false },
