@@ -1,18 +1,12 @@
 <% if can? :multiply, task %>
-  <div class="dropdown" style="display:inline-block">
-    <a data-toggle="dropdown" href="#">
-      <span class="label label-<%= task.urgency.label.downcase %>"><%= task.urgency.label %></span>
-    </a>
-    <ul class="dropdown-menu">
-      <% Urgency.all.each do |u| %>
-        <li>
-          <a href="<%= product_task_urgency_path(@product, task, u.label.downcase) %>" data-remote="true" data-method="patch">
-            <span class="label label-<%= u.label.downcase %>"><%= u.label %></span>
-          </a>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+  <div style="display:inline-block;"
+       data-react-class="Urgency"
+       data-react-props="<%= {
+         initialLabel: task.urgency.label,
+         urgencies: Urgency.all.map(&:label),
+         url: product_task_urgency_path(@product, task)
+       }.to_json %>">
+
 <% else %>
   <span class="label label-<%= task.urgency.label.downcase %>"><%= task.urgency.label %></span>
 <% end %>

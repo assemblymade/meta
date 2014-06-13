@@ -12,6 +12,7 @@ class Task < Wip
 
   validates :deliverable, presence: true
   validates :multiplier, inclusion: { in: Urgency.multipliers }
+  validate :multiplier_not_changed
 
   before_save :update_trending_score
 
@@ -105,10 +106,11 @@ class Task < Wip
   end
 
   def multiply!(actor, multiplier)
-    raise ActiveRecord::RecordNotSaved unless actor.can? :promotion, self
+    raise ActiveRecord::RecordNotSaved unless actor.can? :multiply, self
 
     self.promoted_at = Time.current
     self.urgency = Urgency.find(multiplier)
+    self.save!
     TransactionLogEntry.multiplied!(Time.current, product, self.id, user.id, multiplier)
   end
 
@@ -247,6 +249,12 @@ class Task < Wip
 
   def real_coin_value
     product.decorate.current_exchange_rate * score * 100
+  end
+
+  def multiplier_not_changed
+    if multiplier_changed? && !open?
+      errors.add(:multiplier, "cannot be changed on closed Bounty")
+    end
   end
 
 end

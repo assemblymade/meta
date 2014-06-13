@@ -258,7 +258,7 @@ ASM::Application.routes.draw do
     end
 
     resources :tasks, only: [] do
-      patch 'urgency/:urgency', action: :urgency, as: :urgency
+      patch 'urgency', action: :urgency, as: :urgency
     end
 
     resources :events, only: [] do
