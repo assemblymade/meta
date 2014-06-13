@@ -4,9 +4,8 @@
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h4 class="modal-title" id="createTask">Create a bounty</h3>
     </div>
-
-    <div class="modal-body">
-      <form accept-charset="UTF-8" action="{{action}}/wips" class="new_task" id="new_task" name="task[title]" type="text" method="post">
+    <form accept-charset="UTF-8" action="{{action}}/wips" class="new_task" id="new_task" name="task[title]" type="text" method="post">
+      <div class="modal-body">
         <input name="authenticity_token" type="hidden" value="{{token}}">
 
         <div class="form-group">
@@ -50,11 +49,11 @@
             </div>
           </div>
         </fieldset>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      <button class="btn btn-primary" name="button" type="submit">Create bounty</button>
-    </div>
+      </div>
+      <div class="modal-footer form-actions">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" name="button" type="submit">Create bounty</button>
+      </div>
+    </form>
   </div>
 </div>
