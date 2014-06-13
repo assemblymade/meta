@@ -52,6 +52,13 @@ ASM::Application.configure do
   # Use a different cache store in production.
   config.cache_store = :dalli_store
 
+  # Configure Rack::Cache (rack middleware, whole page / static assets) (we set
+  # value_max_bytes to 10MB, most memcache servers won't allow values larger
+  # than 1MB but this stops Rack::Cache returning a 5xx error. With this
+  # option, Rack::Cache just returns a miss).
+  client = Dalli::Client.new(ENV['MEMCACHIER_SERVERS'], value_max_bytes: 10485760)
+  config.action_dispatch.rack_cache = { metastore: client, entitystore: client }
+
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
   # config.assets.precompile += %w( search.js )

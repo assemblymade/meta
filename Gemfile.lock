@@ -175,6 +175,7 @@ GEM
     kaminari (0.15.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    kgio (2.9.2)
     launchy (2.4.2)
       addressable (~> 2.3)
     leftronic (0.0.3)
@@ -438,6 +439,7 @@ DEPENDENCIES
   html-pipeline
   jquery-rails
   kaminari
+  kgio
   kss!
   leftronic
   librato-rails
