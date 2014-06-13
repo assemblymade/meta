@@ -13,6 +13,7 @@ var People = React.createClass({
             memberships={this.state.filteredMemberships}
             selected={this.state.selected}
             onFilter={this.onFilter}
+            interestFilters={this.props.interestFilters}
             currentUser={this.props.currentUser}
             updatePath={this.props.updatePath} />
       </div>
@@ -25,6 +26,7 @@ var People = React.createClass({
 
   onFilter: function(interest) {
     var filteredMemberships = this.props.memberships;
+    var self = this;
 
     if (interest) {
       if (this.state && this.state.selected === interest) {
@@ -35,13 +37,16 @@ var People = React.createClass({
         if (interest === 'core') {
           return m.core_team;
         }
-        
+
         return _.include(m.interests, interest)
       })
     }
 
     var sortedMemberships = _.sortBy(filteredMemberships, function(m) {
-      return (m.core_team ? '0' : '1') + m.user.username.toLowerCase()
+      return (self.props.currentUser.id === m.user.id ?
+        '-1' :
+        m.core_team ? '0' : '1') +
+        m.user.username.toLowerCase()
     })
 
     this.setState({ filteredMemberships: sortedMemberships, selected: interest });
@@ -191,8 +196,59 @@ var PeopleList = React.createClass({
               member={member}
               currentUser={this.props.currentUser}
               updatePath={this.props.updatePath}
-              originalBio={member.bio} />
+              originalBio={member.bio}
+              interestFilters={this.props.interestFilters}
+              updateSkills={this.updateSkills} />
         </div>
+      </div>
+    )
+  },
+
+  updateSkills: function() {}
+})
+
+var BioEditor = React.createClass({
+  componentWillMount: function() {
+    this.setState({
+      currentUser: this.props.currentUser,
+      member: this.props.member,
+      editing: false
+    })
+  },
+
+  componentDidUpdate: function() {
+    this.setUpChosen()
+  },
+
+  render: function() {
+    var currentUser = this.state.currentUser;
+    var member = this.state.member;
+
+    if (!member || !currentUser) {
+      return <div />;
+    }
+
+    if (currentUser.id === member.user.id) {
+      return (
+        <div>
+          <div className="js-edit-bio" key={'b-' + currentUser.id}>
+            {member.bio}
+            {this.state.editing ? this.saveButton() : this.editButton()}
+          </div>
+          <p style={{position: 'absolute', bottom: '0px'}}>
+            <ul className="list-inline">
+              {this.skills(member)}
+            </ul>
+          </p>
+        </div>
+      )
+    }
+
+    return (
+      <div>
+        <p key={'b-' + member.user.id}>
+          {member.bio}
+        </p>
         <p style={{position: 'absolute', bottom: '0px'}}>
           <ul className="list-inline">
             {this.skills(member)}
@@ -224,36 +280,6 @@ var PeopleList = React.createClass({
         </li>
       );
     });
-  }
-})
-
-var BioEditor = React.createClass({
-  componentWillMount: function() {
-    this.setState({ currentUser: this.props.currentUser, member: this.props.member, editing: false })
-  },
-
-  render: function() {
-    var currentUser = this.state.currentUser;
-    var member = this.state.member;
-
-    if (!member || !currentUser) {
-      return <div />;
-    }
-
-    if (currentUser.id === member.user.id) {
-      return (
-        <div className="js-edit-bio" key={'b-' + currentUser.id}>
-          {member.bio}
-          {this.state.editing ? this.saveButton() : this.editButton()}
-        </div>
-      )
-    }
-
-    return (
-      <p key={'b-' + member.user.id}>
-        {member.bio}
-      </p>
-    )
   },
 
   editButton: function() {
@@ -278,12 +304,63 @@ var BioEditor = React.createClass({
     var bio = this.props.originalBio;
 
     var editableBio = (
-      <textarea className="form-control bio-editor" rows="2" defaultValue={bio}></textarea>
+      <div>
+        <textarea className="form-control bio-editor" rows="2" defaultValue={bio}></textarea>
+        <select
+            name="membership[interest_ids][]"
+            data-placeholder=" "
+            className="form-control chosen-select"
+            id="join-interests"
+            multiple="true">
+          {this.skillsOptions()}
+        </select>
+      </div>
     )
 
     member.bio = editableBio;
 
-    this.setState({ member: member, editing: true });
+    this.setState({ member: member, editing: true })
+  },
+
+  skillsOptions: function() {
+    var options = _.map(this.props.interestFilters, function(interest) {
+      return <option value={interest}>{'@' + interest}</option>
+    })
+
+    return options
+  },
+
+  setUpChosen: function() {
+    var chosenSelect = $('.chosen-select')
+
+    chosenSelect.chosen({
+      create_option: function(term) {
+        var chosen = this
+
+        term = term.replace(/[^\w-]+/g, '').toLowerCase()
+
+        if (term === 'core') {
+          return;
+        }
+
+        chosen.append_option({
+          value: term,
+          text: '@' + term
+        })
+      },
+
+      persistent_create_option: true,
+      skip_no_results: true,
+      search_contains: true,
+      create_option_text: 'Add interest'
+    })
+
+    var member = this.state.member;
+
+    if (member.interests && member.interests.length) {
+      chosenSelect.val(member.interests)
+      chosenSelect.trigger('chosen:updated')
+    }
   },
 
   makeUneditable: function(e) {
@@ -297,14 +374,21 @@ var BioEditor = React.createClass({
   saveBio: function(e) {
     var self = this;
     var bio = $('.bio-editor').val();
+    var interests = $('#join-interests').val()
     var member = this.state.member;
 
     $.ajax({
       url: this.props.updatePath,
       method: 'PATCH',
-      data: { bio: bio },
+      data: {
+        membership: {
+          bio: bio,
+          interests: interests
+        }
+      },
       success: function(data) {
-        member.bio = data.user.bio;
+        member.bio = data.bio
+        member.interests = data.interests
         self.setState({ member: member, editing: false })
       },
       error: function(data, status) {

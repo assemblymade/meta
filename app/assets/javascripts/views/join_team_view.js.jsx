@@ -66,6 +66,10 @@ var JoinTeam = React.createClass({
       create_option_text: 'Add interest'
     })
 
+    this.setUpEditor(chosenSelect)
+  },
+
+  setUpEditor: function(chosenSelect) {
     // TODO: Move default bio some place saner.
     var bio = 'My favorite HTTP status code is 418. I miss the cgi-bin, and I use GOTO liberally.'
     var membership = this.props.membership

@@ -33,11 +33,20 @@ class PeopleController < ApplicationController
     @membership = @product.team_memberships.find_by(user: current_user)
 
     unless @membership.nil?
-      @membership.update_attribute(:bio, params[:bio])
+      membership = params[:membership]
+
+      unless membership.nil?
+        interests = params[:membership][:interests]
+        bio = params[:membership][:bio]
+      end
+
+      update_interests(interests)
+
+      @membership.update_attribute(:bio, bio)
     end
 
     respond_to do |format|
-      format.json { render json: { user: @membership } }
+      format.json { render json: @membership, serializer: TeamMembershipSerializer }
     end
   end
 
@@ -58,7 +67,9 @@ class PeopleController < ApplicationController
   def update_interests(interests)
     current_interests = @membership.team_membership_interests.all
     added_interests = add_interests(interests)
-    remove_interests(current_interests - added_interests)
+    updated_interests = current_interests - added_interests
+    remove_interests(updated_interests)
+    updated_interests
   end
 
   def add_interests(interests)
