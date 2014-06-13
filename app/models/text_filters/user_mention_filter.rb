@@ -16,14 +16,24 @@ module TextFilters
 
     def self.mentioned_usernames_in(text, product = nil)
       text.gsub MentionPattern do |match|
-        login = $1
-        if $1.downcase == 'core' && !product.nil?
-          product.core_team.each do |user|
-            yield user, $1
+        mention = $1.downcase
+
+        puts "  >>>>>>#{mention}"
+
+        if mention == 'core'
+          if product
+            yield $1, nil, Interest.new(slug: 'core')
           end
+
+        elsif user = User.find_by('lower(username) = ?', mention)
+          yield $1, user
+
+        elsif interest = Interest.find_by(slug: mention)
+          yield $1, nil, interest
+
         else
-          user = User.find_by('username ilike ?', login)
-          yield user, $1
+          yield $1
+
         end
       end
     end
@@ -38,7 +48,7 @@ module TextFilters
         content = node.to_html
         next if !content.include?('@')
         next if has_ancestor?(node, IGNORE_USER_PARENTS)
-        html = mention_link_filter(content, context[:users_base_url])
+        html = mention_link_filter(content, context[:users_base_url], context[:people_base_url])
         next if html == content
         node.swap(Nokogiri::XML::DocumentFragment.new(doc, html))
       end
@@ -48,29 +58,36 @@ module TextFilters
     # Replace user @mentions in text with links to the mentioned user's
     # profile page.
     #
-    # text      - String text to replace @mention usernames in.
-    # base_url  - The base URL used to construct user profile URLs.
+    # text            - String text to replace @mention usernames in.
+    # users_base_url  - The base URL used to construct user profile URLs.
+    # people_base_url - The base URL used to construct people URLs.
     #
     # Returns a string with @mentions replaced with links. All links have a
     # 'user-mention' class name attached for styling.
-    def mention_link_filter(text, base_url='/')
-      self.class.mentioned_usernames_in(text) do |user, unmatched|
+    def mention_link_filter(text, users_base_url='/', people_base_url='/')
+      self.class.mentioned_usernames_in(text, context[:product]) do |unmatched, user, interest|
+
+        puts "******** interest=#{interest}  user=#{user}  unmatched=#{unmatched}"
         if user
-          link_to_mentioned_user(user, unmatched)
-        elsif unmatched == 'core'
-          " <a href='/core-team' class='user-mention'>@core</a>"
+          link_to_mention(
+            File.join(context[:users_base_url], user.to_param),
+            user.username
+          )
+
+        elsif interest
+          link_to_mention(
+            "#{context[:people_base_url]}?filter=#{interest.slug}",
+            interest.slug
+          )
+
         else
           " @#{unmatched}"
         end
       end
     end
 
-    def link_to_mentioned_user(user, unmatched)
-      result[:mentioned_usernames] |= [user.name]
-      url = File.join(context[:users_base_url], user.to_param)
-      " <a href='#{url}' class='user-mention'>" +
-        "@#{user.username}" +
-      ["</a>"].join(' ')
+    def link_to_mention(url, label)
+      " <a href='#{url}' class='user-mention'>@#{label}</a>"
     end
   end
 end

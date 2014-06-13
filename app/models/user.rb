@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :watchings
   has_many :followed_tags, :through => :watchings, :source => :watchable, :source_type => 'Wip::Tag'
   has_many :saved_searches
+  has_many :team_memberships
   has_many :wips
   has_many :wip_workers, :class_name => 'Wip::Worker'
   has_many :wips_working_on, ->{ where(state: Task::IN_PROGRESS) }, :through => :wip_workers, :source => :wip

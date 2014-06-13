@@ -32,6 +32,10 @@ var People = React.createClass({
       }
 
       filteredMemberships = _.filter(this.props.memberships, function filterMemberships(m) {
+        if (interest === 'core') {
+          return m.core_team;
+        }
+        
         return _.include(m.interests, interest)
       })
     }

@@ -22,4 +22,14 @@ class Interest < ActiveRecord::Base
     uniqueness: { case_sensitive: false },
     length: { minimum: 2 },
     format: { with: /\A[a-zA-Z0-9-]+\z/ }
+
+  def to_param
+    slug
+  end
+
+  def members_in_product(product)
+    User.joins(team_memberships: :team_membership_interests).
+      where('team_memberships.product_id = ?', product.id).
+      where('team_membership_interests.interest_id = ?', self.id)
+  end
 end

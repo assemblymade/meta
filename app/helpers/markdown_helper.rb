@@ -1,4 +1,5 @@
 module MarkdownHelper
+  extend Rails.application.routes.url_helpers
 
   DEFAULT_FILTERS = [
     TextFilters::MarkdownFilter,
@@ -22,10 +23,12 @@ module MarkdownHelper
   def product_markdown(product, text)
     @product_pipeline ||= HTML::Pipeline.new(PRODUCT_FILTERS,
       asset_root: 'https://a248.e.akamai.net/assets.github.com/images/icons',
-      shortcut_root_url:  Rails.application.routes.url_helpers.product_url(product),
+      shortcut_root_url:  product_url(product),
       firesize_url: ENV['FIRESIZE_URL'],
       # FIXME There is no route "users_path"
+      product: product,
       users_base_url: '/users',
+      people_base_url: product_people_path(product),
       whitelist: html_whitelist
     )
 

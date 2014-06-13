@@ -16,8 +16,13 @@ class Event::Comment < Event
   end
 
   def add_backreferences
-    TextFilters::UserMentionFilter.mentioned_usernames_in(body, wip.product) do |user, _|
+    TextFilters::UserMentionFilter.mentioned_usernames_in(body, wip.product) do |_, user, interest|
       wip.watch!(user) unless user.nil?
+      if interest
+        interest.members_in_product(wip.product).each do |user|
+          wip.watch!(user)
+        end
+      end
     end
 
     TextFilters::ShortcutFilter.shortcuts_in(body) do |match, wip_number|

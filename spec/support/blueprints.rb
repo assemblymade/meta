@@ -24,6 +24,10 @@ Milestone.blueprint do
   wip
 end
 
+Interest.blueprint do
+  slug { "interest_#{sn}"}
+end
+
 Perk.blueprint do
   product
   amount      { sn.to_i * 100 }
