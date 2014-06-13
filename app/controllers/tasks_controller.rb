@@ -47,7 +47,7 @@ class TasksController < WipsController
   def urgency
     authorize! :multiply, @wip
     @urgency = Urgency.find_by_slug!(params[:urgency])
-    @wip.update_attributes urgency: @urgency
+    @wip.multiply!(current_user, @urgency.multiplier)
   end
 
   def wip_class
