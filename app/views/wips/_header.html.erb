@@ -59,7 +59,7 @@
           <a href="<%= user_path(@wip.user) %>">@<%= @wip.user.username %></a>
         </li>
         <li>
-          <%= pluralize(@wip.comments.count, 'comments') %>
+          <%= pluralize(@wip.comments.count, 'comment') %>
         </li>
         <li>
           Priority
