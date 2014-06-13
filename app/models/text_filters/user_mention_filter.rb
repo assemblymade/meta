@@ -18,8 +18,6 @@ module TextFilters
       text.gsub MentionPattern do |match|
         mention = $1.downcase
 
-        puts "  >>>>>>#{mention}"
-
         if mention == 'core'
           if product
             yield $1, nil, Interest.new(slug: 'core')
@@ -66,8 +64,6 @@ module TextFilters
     # 'user-mention' class name attached for styling.
     def mention_link_filter(text, users_base_url='/', people_base_url='/')
       self.class.mentioned_usernames_in(text, context[:product]) do |unmatched, user, interest|
-
-        puts "******** interest=#{interest}  user=#{user}  unmatched=#{unmatched}"
         if user
           link_to_mention(
             File.join(context[:users_base_url], user.to_param),
