@@ -50,7 +50,7 @@ namespace :emails do
           client.get(ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(entity, :email).first, user.id).url)
         end
 
-        DigestMailer.delay.hourly(user.id, unread_article_ids)
+        UnreadMailer.delay.hourly(user.id, unread_article_ids)
         Rails.logger.info "digest=hourly email=#{user.email} unread=#{unread_article_ids}"
       end
     end
