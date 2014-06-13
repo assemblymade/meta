@@ -198,7 +198,8 @@ var PeopleList = React.createClass({
               updatePath={this.props.updatePath}
               originalBio={member.bio}
               interestFilters={this.props.interestFilters}
-              updateSkills={this.updateSkills} />
+              updateSkills={this.updateSkills}
+              selected={this.props.selected} />
         </div>
       </div>
     )
