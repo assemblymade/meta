@@ -33,6 +33,28 @@ namespace :emails do
 
   namespace :digests do
 
+    task :hourly => :environment do
+      client = ReadRaptorClient.new
+      users = User.where(username: 'whatupdave')
+      users.each do |user|
+        next if user.last_request_at < 2.hours.ago
+
+        unread_article_ids = ReadRaptorClient.new.undelivered_articles(user.id)
+        unread_articles = ReadRaptorSerializer.deserialize(unread_article_ids)
+
+        # Only send out if they have any unread articles
+        next if unread_articles.empty?
+
+        # Mark all articles with email tag as read
+        unread_articles.each do |entity|
+          client.get(ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(entity, :email).first, user.id).url)
+        end
+
+        DigestMailer.delay.hourly(user.id, unread_article_ids)
+        Rails.logger.info "digest=hourly email=#{user.email} unread=#{unread_article_ids}"
+      end
+    end
+
     task :daily => :environment do
 
       client = ReadRaptorClient.new

@@ -1,0 +1,68 @@
+<table class="row">
+  <tbody>
+    <tr>
+      <td class="wrapper last">
+        <% if @mentions.any? %>
+          <table class="twelve columns">
+            <tbody>
+              <tr>
+                <td class="panel panel-default panel-success">
+                  <% @mentions.each do |event, mentions| %>
+                    <p style="">
+                      from @<%= event.user.username %><br/>
+                      <a href="<%= product_wip_url(event.wip.product, event.wip) %>" style="">
+                        [<%= event.wip.product.slug %>#<%= event.wip.number %>] <%= event.wip.title %>
+                      </a>
+                      <br/>
+                      <% mentions.each do |mention| %>
+                        <% text = excerpt event.sanitized_body, mention %>
+                        <%== text %>
+                      <% end %>
+                    </p>
+                  <% end %>
+                <td>
+              </tr>
+            </tbody>
+          </table>
+        <% end %>
+
+        <table class="twelve columns">
+          <tbody>
+            <tr>
+              <td class="panel panel-default">
+                <p style="clear:both;">
+                  <h1>New Activity on 5 products</h1>
+                </p>
+
+                <% @watchers.each do |watcher| %>
+                  <div style="float:left;">
+                    <img src="<%= watcher.avatar.url(40) %>" style="width:20px;height:20px;border-radius:50%" />
+                  </div>
+                <% end %>
+
+                <div style="padding-top:20px;clear:both;">
+                  <% @products.each do |product, wips| %>
+                    <p style="margin-top:30px">
+                      <h4><%= product.name %></h4>
+                    </p>
+                    <% wips.each do |wip, new_comments| %>
+                      <p style="font-size:14px;line-height:18px;color:#2B2F3E;">
+                        <a href="<%= product_wip_url(product, wip) %>" style="" ><%= wip.title %></a>
+                        <% if new_comments.size > 0 %>
+                          <br/><%= pluralize(wip.comments.size, 'comment') %> – <%= new_comments.size %> new
+                        <% else %>
+                          <br/>by <%= wip.user.username %>
+                        <% end %>
+                      </p>
+                    <% end %>
+                  <% end %>
+                </div>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

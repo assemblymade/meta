@@ -1,12 +1,25 @@
 class DigestMailerPreview < ActionMailer::Preview
 
   def daily
-    Showcase.delete_all
     DigestMailer.daily(user.id, serialize_articles(random_activity(10)))
   end
 
   def daily_with_showcase
     DigestMailer.daily(user.id, serialize_articles(random_activity(10)))
+  end
+
+  def hourly
+    comments = []
+    activity = random_activity(10) + comments
+
+    UnreadMailer.hourly(User.find_by(username: 'whatupdave').id, serialize_articles(activity))
+  end
+
+  def hourly_with_mentions
+    comments = comments_that_contain(%w(@whatupdave @design @core), 3)
+    activity = random_activity(10) + comments
+
+    UnreadMailer.hourly(User.find_by(username: 'whatupdave').id, serialize_articles(activity))
   end
 
   def weekly
@@ -35,16 +48,26 @@ class DigestMailerPreview < ActionMailer::Preview
       .order('random()')
       .take(wip_limit)
 
-    comments = Event::Comment
-      .joins(:wip)
-      .order('random()')
-      .take(comment_limit)
+    comments = Event::Comment.
+      includes(wip: :product).
+      order('random()').
+      take(comment_limit)
 
     wips + comments
   end
 
+  def comments_that_contain(snippets, limit=5)
+    clause = snippets.map{ 'body ilike ?' }.join(' or ')
+    query = Event::Comment.
+      includes(wip: :product).
+      where(clause, *snippets.map{|s| "%#{s}%" }).
+      order('random()').take(limit)
+  end
+
   def serialize_articles(articles)
-    ReadRaptorSerializer.serialize_entities(articles)
+    ReadRaptorClient.new.group_with_tags(
+      ReadRaptorSerializer.serialize_entities(articles)
+    )
   end
 
 end

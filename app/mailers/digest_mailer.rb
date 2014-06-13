@@ -16,8 +16,6 @@ class DigestMailer < BaseMailer
     @products = wip_group.products
     @watchers = wip_group.watchers.take(30) # 30 happy faces
 
-    @recap_time = ActiveSupport::TimeZone["Pacific Time (US & Canada)"].now - 1.day
-
     subject = if @showcase.present?
       "What do you think of \"#{@showcase.first.product.pitch}\"?"
     else
