@@ -119,7 +119,15 @@ var JoinTeam = React.createClass({
   },
 
   button: function() {
-    return this.state.is_member ? 'default inactive' : 'primary'
+    if (this.state.is_member) {
+      if (this.props.membership.core_team) {
+        return 'default disabled'
+      } else {
+        return 'default inactive'
+      }
+    }
+
+    return 'primary'
   },
 
   click: function() {
