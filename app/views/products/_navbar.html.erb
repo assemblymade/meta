@@ -79,6 +79,7 @@
 <script type="text/template" id="join-team-template">
   <form role="form" style="width: 250px" method="post" action="<%= product_people_path(@product) %>">
     <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+    <input name="introduction" value="true" type="hidden">
     <div class="form-group" style="margin-bottom: 15px">
       <label for="join-bio-editor"><strong>What would you like to work on? What are your strengths?</strong></label>
       <textarea name="bio" id="join-bio-editor" class="form-control bio-editor" style="height: 100px"></textarea>

@@ -54,6 +54,12 @@
       <%= render 'analytics/identify' %>
     <% end %>
 
+    <% if @product %>
+      <script>
+        window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);
+      </script>
+    <% end %>
+
     <% unless Rails.env.development? %>
       <%= render 'shared/perfect_audience' %>
     <% end %>

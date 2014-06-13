@@ -33,6 +33,14 @@ class window.Application
   currentUser: ->
     @_currentUser
 
+  setCurrentAnalyticsProduct: (product) ->
+    @_currentAnalyticsProduct = new Product(product)
+    @trigger 'change:currentAnalyticsProduct', @_currentAnalyticsProduct
+    @_currentAnalyticsProduct
+
+  currentAnalyticsProduct: ->
+    @_currentAnalyticsProduct
+
   isSignedIn: ->
     @currentUser()?
 

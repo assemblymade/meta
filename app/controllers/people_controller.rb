@@ -16,12 +16,17 @@ class PeopleController < ApplicationController
     membership = params[:membership]
     interests = params[:membership][:interest_ids] unless membership.nil?
 
-    update_interests(interests)
+    updated_interests = update_interests(interests)
 
     @membership.update_attributes({
       deleted_at: nil,
       bio: params[:bio]
     })
+
+    if params[:introduction]
+      track_params = ProductAnalyticsSerializer.new(@product, scope: current_user).as_json
+      track_event 'product.team.introduced', track_params
+    end
 
     respond_to do |format|
       format.json { render json: { count: @product.team_memberships.active.count } }

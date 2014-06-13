@@ -134,7 +134,7 @@ var JoinTeam = React.createClass({
     return this.state.is_member ? this.onLeave : this.onJoin
   },
 
-  handleJoinOrLeave: function(url, newState, method) {
+  handleJoinOrLeave: function(url, newState, method, callback) {
     var self = this
     var currentState = this.state
     this.setState(newState)
@@ -143,10 +143,11 @@ var JoinTeam = React.createClass({
       url: url,
       method: method,
       success: function(data) {
+        callback(null, data)
       },
       error: function(jqxhr, status) {
         self.setState(currentState)
-        console.error(status)
+        callback(new Error(status))
       }
     })
   },
@@ -155,7 +156,15 @@ var JoinTeam = React.createClass({
     this.handleJoinOrLeave(
       this.props.join_path,
       { count: (this.state.count + 1), is_member: true },
-      'POST'
+      'POST',
+      function joined(err, data) {
+        if (err) {
+          return console.error(err);
+        }
+
+        var product = app.currentAnalyticsProduct()
+        analytics.track('product.team.joined', product)
+      }
     )
   },
 
@@ -167,7 +176,15 @@ var JoinTeam = React.createClass({
     this.handleJoinOrLeave(
       this.props.leave_path,
       { count: (this.state.count - 1) , is_member: false },
-      'DELETE'
+      'DELETE',
+      function left(err, data) {
+        if (err) {
+          return console.error(err);
+        }
+
+        var product = app.currentAnalyticsProduct()
+        analytics.track('product.team.left', product)
+      }
     )
   }
 })
