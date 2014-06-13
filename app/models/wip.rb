@@ -71,6 +71,7 @@ class Wip < ActiveRecord::Base
   def close(closer, reason=nil)
     add_event ::Event::Close.new(user: closer, body: reason) do
       set_closed(closer)
+      milestones.each(&:touch)
     end
   end
 
@@ -79,8 +80,8 @@ class Wip < ActiveRecord::Base
       self.closer = nil
       self.closed_at = nil
       self.winning_event = nil
+      milestones.each(&:touch)
     end
-    milestones.each(&:touch)
   end
 
   def update_title!(author, new_title)
@@ -128,10 +129,6 @@ class Wip < ActiveRecord::Base
 
   def winning_event=(something)
     # ignore
-  end
-
-  def closeable?
-    true
   end
 
   def awardable?

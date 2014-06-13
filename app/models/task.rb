@@ -159,6 +159,7 @@ class Task < Wip
       set_closed(closer)
       self.winning_event = winning_event
       TransactionLogEntry.validated!(Time.current, product, self.id, closer.id, winning_event.user.id)
+      milestones.each(&:touch)
     end
   end
 

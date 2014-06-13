@@ -28,11 +28,11 @@
         <div class="form-actions">
           <div class="btn-group disabled">
             <%= button_tag 'Comment', name: 'event_comment[type]', value: 'Event::Comment', type: 'submit', class: %w(btn btn-primary) %>
-            <% if @wip.closeable? && can?(:close, @wip) %>
+            <% if can?(:close, @wip) %>
               <% if @wip.resolved? %>
-                <%= button_tag 'Comment & Reopen', name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-primary) %>
+                <%= button_tag 'Comment & Reopen', name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-default) %>
               <% else %>
-                <%= button_tag 'Comment & Close', name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-primary) %>
+                <%= button_tag 'Comment & Close', name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-default) %>
               <% end %>
             <% end %>
           </div>

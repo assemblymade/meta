@@ -12,34 +12,7 @@ class DiscussionsController < WipsController
       return
     end
 
-    @watchers = Watching.includes(:user).
-                         where(watchable: @wip).
-                         order('created_at desc').
-                         first(20).
-                         map(&:user)
-
-    events = @wip.chat_events
-
-    @events = Event.render_events(events, current_user)
-
-    # Undecorate
-    @activity_stream = ActivityStream.new(@product.object)
-
-    @product_balance = 0
-    if signed_in?
-      @product_balance = TransactionLogEntry.balance(@product, current_user)
-    end
-
-    respond_to do |format|
-      format.html {
-        if @wip.main_thread?
-          render template: 'discussions/chat'
-        else
-          render template: 'discussions/show'
-        end
-      }
-      format.json { render json: @wip, serializer: WipSerializer }
-    end
+    super
   end
 
   def close

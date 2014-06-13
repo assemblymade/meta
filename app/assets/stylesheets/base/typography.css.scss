@@ -251,6 +251,12 @@ blockquote {
   h6 {
     font-size: inherit;
     color: inherit !important;
+    line-height: 1.764;
+    margin-bottom: floor(15px * 1.764);
+
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
   > * {

@@ -1,5 +1,6 @@
 class MinterWorker
   include Sidekiq::Worker
+  sidekiq_options queue: 'critical'
 
   def perform(transaction_log_entry_id)
     entry = TransactionLogEntry.find(transaction_log_entry_id)
