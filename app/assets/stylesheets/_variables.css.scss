@@ -266,12 +266,12 @@ $navbar-default-toggle-border-color: #ddd;
 
 // Inverted navbar
 // Reset inverted navbar basics
-$navbar-inverse-color:  desaturate(darken($brand-primary, 10%), 40%);
-$navbar-inverse-bg:     desaturate(darken($brand-primary, 40%), 30%);
-$navbar-inverse-border: darken($navbar-inverse-bg, 5%);
+$navbar-inverse-color:  $gray;
+$navbar-inverse-bg:     $black;
+$navbar-inverse-border: darken($navbar-inverse-bg, 2%);
 
 // Inverted navbar links
-$navbar-inverse-link-color:          desaturate(lighten($brand-primary, 10%), 40%);
+$navbar-inverse-link-color:          lighten($navbar-inverse-bg, 50%);
 $navbar-inverse-link-hover-color:    lighten($navbar-inverse-link-color, 15%);
 $navbar-inverse-link-hover-bg:       transparent;
 $navbar-inverse-link-active-color:   lighten($navbar-inverse-link-hover-color, 15%);
@@ -280,7 +280,7 @@ $navbar-inverse-link-disabled-color: #444;
 $navbar-inverse-link-disabled-bg:    transparent;
 
 // Inverted navbar brand label
-$navbar-inverse-brand-color:       desaturate(lighten($brand-primary, 10%), 40%);
+$navbar-inverse-brand-color:       $navbar-inverse-link-color;
 $navbar-inverse-brand-hover-color: white;
 $navbar-inverse-brand-hover-bg:    transparent;
 
@@ -289,7 +289,7 @@ $navbar-inverse-search-color:              $navbar-inverse-link-active-color;
 $navbar-inverse-search-bg:                 darken($navbar-inverse-bg, 10%);
 $navbar-inverse-search-bg-focus:           $navbar-inverse-search-bg;
 $navbar-inverse-search-border:             $navbar-inverse-search-bg;
-$navbar-inverse-search-border-focus:       lighten($navbar-inverse-search-bg, 25%);
+$navbar-inverse-search-border-focus:       lighten($navbar-inverse-search-bg, 35%);
 $navbar-inverse-search-placeholder-color:  darken($navbar-inverse-link-color, 5%);
 
 // Inverted navbar toggle

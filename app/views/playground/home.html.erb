@@ -2,23 +2,31 @@
 
 <%= render 'shared/navbar' %>
 
-<div class="page page-home">
-  <div class="header header-inverted text-serif">
+<div class="page page-with-header page-home">
+  <div class="container cue-container fixed-bottom" style="z-index: 1;">
+    <center class="cue">
+      Scroll down
+      <i class="icon icon-arrow-down"></i>
+      to see more
+    </center>
+  </div>
+
+  <div class="block block-inverted block-image-bg">
     <div class="container">
       <div class="row">
-        <center class="col-xs-10 col-xs-push-1">
-          <h1 class="alpha"><strong>Assembly is a worldwide community of crowd-made products and their makers.</strong></h1>
-          <div class="row">
-            <p class="col-xs-10 col-xs-push-1 text-large omega">A crowd-made product is built and owned by it's makers, together. Everyone can make an impact, and both success and profit are shared equitably. A crowd-made product brings talented minds together to solve tough problems – but frees makers from the normal limitations of geography, a full-time commitment, and and business logistics.</p>
-          </div>
-        </center>
+        <h1 class="col-xs-9">Assembly is a global community of <em class="text-serif">crowd-made</em> startups.</h1>
       </div><!-- .row -->
+      <p class="lead">A <strong>crowd-made</strong> startup is a software product built and owned by its makers, together. Everyone can make an impact, and success is shared equitably. Without the limitations of geography, time, and logistics, a crowd-made startup connects talented minds to build great products.</p>
     </div><!-- .container -->
-  </div><!-- .header -->
+  </div><!-- .block -->
+
+
+
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <div class="section">
+
+        <!-- <div class="section">
           <h4>Assembly is different</h4>
           <div class="row">
             <div class="col-xs-5">
@@ -39,15 +47,16 @@
                 <li>Contributors earn ownership that translates to a percentage of all future revenue including acquisitions</li>
               </ul>
             </div>
-          </div><!-- .row -->
+          </div>
           <p class="lead text-sans">Together, we can work harder and build better software. As we learn together and challenge one another, we’re also maximizing serendipitous interactions between talented people. It’s a new way of looking at entrepreneurship.</p>
-        </div><!-- .section -->
+        </div> -->
 
         <div class="section">
-          <h4>Assembly startups being build</h4>
+          <h3>Startups <span>currently being built</span></h3>
           <div class="row">
             <div class="col-xs-3">
-              <a href="<%= product_path('helpful') %>" class="card card-sm card-colored product-helpful">
+              <a href="<%= product_path('helpful') %>" class="card card-sm card-col\ored product-helpful">
+                <div class="card-hero" style="background-image: url('http://cl.ly/image/173v2r04391P/Screen%20Shot%202014-05-10%20at%209.47.51%20AM.png');"></div>
                 <div class="card-body">
                   <div class="summary">
                     <div class="summary-target">
@@ -62,14 +71,15 @@
             </div>
 
             <div class="col-xs-3">
-              <a href="<%= product_path('helpful') %>" class="card card-sm card-colored product-helpful">
+              <a href="<%= product_path('helpful') %>" class="card card-sm card-col\ored product-family-table">
+                <div class="card-hero" style="background-image: url('http://f.cl.ly/items/3c3E0P371c2f3D1z3z3n/familytable.jpg');"></div>
                 <div class="card-body">
                   <div class="summary">
                     <div class="summary-target">
-                      Support comes from people, not software
+                      One place to organize the whole family
                     </div>
                     <p class="summary-name omega">
-                      Helpful
+                      Family Table
                     </p>
                   </div>
                 </div>
@@ -77,14 +87,15 @@
             </div>
 
             <div class="col-xs-3">
-              <a href="<%= product_path('helpful') %>" class="card card-sm card-colored product-helpful">
+              <a href="<%= product_path('helpful') %>" class="card card-sm card-co\lored product-buckets">
+                <div class="card-hero" style="background-image: url('http://f.cl.ly/items/3f402s282b3N201g3p3H/Logo.png');"></div>
                 <div class="card-body">
                   <div class="summary">
-                    <div class="summary-target">
-                      Support comes from people, not software
+                    <div class="summary-target" style="min-height: 48px;">
+                      Manage content better
                     </div>
                     <p class="summary-name omega">
-                      Helpful
+                      Buckets
                     </p>
                   </div>
                 </div>
@@ -92,14 +103,15 @@
             </div>
 
             <div class="col-xs-3">
-              <a href="<%= product_path('helpful') %>" class="card card-sm card-colored product-helpful">
+              <a href="<%= product_path('helpful') %>" class="card card-sm card-col\ored product-really-good-emails">
+                <div class="card-hero" style="background-image: url('http://cl.ly/image/1Z1a1N450G43/Screen%20Shot%202014-05-09%20at%201.02.18%20PM.png');"></div>
                 <div class="card-body">
                   <div class="summary">
                     <div class="summary-target">
-                      Support comes from people, not software
+                      The best Showcase of Product Emails
                     </div>
                     <p class="summary-name omega">
-                      Helpful
+                      Really Good Emails
                     </p>
                   </div>
                 </div>
@@ -109,7 +121,7 @@
           </div><!-- .row -->
         </div><!-- .section -->
 
-        <div class="section">
+        <!-- <div class="section">
           <h4>Work with amazing people</h4>
 
         </div><!-- .section -->
