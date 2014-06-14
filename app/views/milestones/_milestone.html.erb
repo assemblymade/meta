@@ -24,6 +24,9 @@
           <% else %>
             <%= pluralize(milestone.tasks.open.count, 'open task') %>
           <% end %>
+          <% if urgency = milestone.urgency %>
+            <span class="pull-right label label-<%= urgency.slug %>"><%= urgency.label %></span>
+          <% end %>
         </p>
       </div>
     </div><!-- .card-body -->

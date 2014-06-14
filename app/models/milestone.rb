@@ -26,6 +26,16 @@ class Milestone < ActiveRecord::Base
     tasks.closed.count / (milestone_tasks.count).to_f
   end
 
+  def multiplier
+    urgency.try(:multiplier) || 0
+  end
+
+  def urgency
+    if task = tasks.open.order(multiplier: :desc).first
+      task.urgency
+    end
+  end
+
   def to_param
     number || id
   end
@@ -35,5 +45,4 @@ class Milestone < ActiveRecord::Base
   def set_number_from_wip
     update_column :number, wip.number
   end
-
 end

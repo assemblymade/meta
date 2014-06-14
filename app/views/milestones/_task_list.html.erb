@@ -19,7 +19,9 @@
         </ul>
       </div>
       <%% if(url) { %>
-        <a class="js-title task-list-item-title" href="<%%= url %>"><%%= title %></a>
+        <a class="js-title task-list-item-title" href="<%%= url %>">
+          <%%= title %>
+        </a>
       <%% } else { %>
         <span class="js-title task-list-item-title"><%%= title %></span>
       <%% } %>
@@ -65,8 +67,8 @@
     })
 
     <% if @milestone %>
-      incompleteTasks.set(<%== @milestone.nil? ? [] : @milestone.tasks.open.map{|t| WipSerializer.new(t) }.to_json %>)
-      completeTasks.set(<%== @milestone.nil? ? [] : @milestone.tasks.closed.map{|t| WipSerializer.new(t) }.to_json %>)
+      incompleteTasks.set(<%== @milestone.nil? ? [] : json(@milestone.tasks.open) %>)
+      completeTasks.set(<%== @milestone.nil? ? [] : json(@milestone.tasks.closed) %>)
     <% end %>
   })
 </script>

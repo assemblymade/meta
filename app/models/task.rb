@@ -112,6 +112,7 @@ class Task < Wip
     self.urgency = Urgency.find(multiplier)
     self.save!
     TransactionLogEntry.multiplied!(Time.current, product, self.id, user.id, multiplier)
+    milestones.each(&:touch)
   end
 
   def can_vote?(user)

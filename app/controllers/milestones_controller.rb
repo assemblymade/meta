@@ -12,8 +12,8 @@ class MilestonesController < ApplicationController
         @product.milestones.open
       end
 
-    @milestones_with_feature_images = milestones.with_images.order('updated_at desc')
-    @milestones = milestones.without_images.order('updated_at desc')
+    @milestones_with_feature_images = milestones.with_images.sort_by{|m| -m.multiplier }
+    @milestones = milestones.without_images.sort_by{|m| -m.multiplier }
   end
 
   def new
