@@ -41,8 +41,8 @@
 </div>
 
 <script>
-  app.product = new Product(<%= json ProductSerializer.new(@product, scope: current_user) %>);
-  app.wip = new Wip(<%= json WipSerializer.new(@product.main_thread, scope: current_user) %>);
+  app.product = new Product(<%= json @product, scope: current_user %>);
+  app.wip = new Wip(<%= json @product.main_thread, scope: current_user %>);
 </script>
 
 <script>
