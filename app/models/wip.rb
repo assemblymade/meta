@@ -228,10 +228,17 @@ class Wip < ActiveRecord::Base
   end
 
   # elasticsearch
-  mappings do
-    indexes :title,       analyzer: 'snowball'
+  mappings dynamic: false do
+    indexes :title,  analyzer: 'snowball'
+    indexes :hidden, index: 'not_analyzed'
+    indexes :state,  index: 'not_analyzed'
+
     indexes :comments do
-      indexes :body,      analyzer: 'snowball'
+      indexes :sanitized_body, analyzer: 'snowball'
+    end
+
+    indexes :product do
+      indexes :slug, index: 'not_analyzed'
     end
   end
 
