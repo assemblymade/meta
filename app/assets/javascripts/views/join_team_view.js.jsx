@@ -71,7 +71,7 @@ var JoinTeam = React.createClass({
 
   setUpEditor: function(chosenSelect) {
     // TODO: Move default bio some place saner.
-    var bio = 'My favorite HTTP status code is 418. I miss the cgi-bin, and I use GOTO liberally.'
+    var bio = "Hi! My name is Maeby. I can catch mice, have lots of time and I'm looking for cuddles."
     var membership = this.props.membership
 
     if (membership) {
@@ -83,7 +83,7 @@ var JoinTeam = React.createClass({
       chosenSelect.trigger('chosen:updated')
     }
 
-    $('#join-bio-editor').val(bio)
+    $('#join-bio-editor').attr({placeholder: bio})
   },
 
   componentDidMount: function() {

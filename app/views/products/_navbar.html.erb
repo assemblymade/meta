@@ -62,11 +62,11 @@
           <div style="display:inline; margin-left: 5px; margin-top: 13px;"
                data-react-class="JoinTeam"
                data-react-props="<%= {
-                 :count => @product.team_memberships.active.count,
-                 :join_path => product_people_path(@product),
-                 :leave_path => current_user ? product_person_path(@product, current_user) : nil,
-                 :is_member => @product.member?(current_user),
-                 :membership => TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user)).as_json
+                 count: @product.team_memberships.active.count,
+                 join_path: product_people_path(@product),
+                 leave_path: (current_user && product_person_path(@product, current_user)),
+                 is_member: @product.member?(current_user),
+                 membership:  TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user)).as_json
                }.to_json %>">
           </div>
         </div>
@@ -81,7 +81,12 @@
     <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
     <input name="introduction" value="true" type="hidden">
     <div class="form-group" style="margin-bottom: 15px">
-      <label for="join-bio-editor"><strong>What would you like to work on? What are your strengths?</strong></label>
+      <label class="control-label omega" for="join-bio-editor">
+        Introduce yourself
+      </label>
+      <small class="help-block alpha">
+        What skills can you contribute, how much time do you have have and what are you looking to get out of the experience?
+      </small>
       <textarea name="bio" id="join-bio-editor" class="form-control bio-editor" style="height: 100px"></textarea>
     </div>
     <div class="form-group" style="margin-bottom: 15px">
