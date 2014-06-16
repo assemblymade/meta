@@ -48,6 +48,6 @@ class Work < ActiveRecord::Base
 
   protected
   def auto_upvote
-    upvote!(user, user.last_sign_in_ip)
+    upvote!(user, user.last_sign_in_ip || '0.0.0.0')
   end
 end
