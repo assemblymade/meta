@@ -57,6 +57,6 @@ class WipFactory
 
   def push(wip, users)
     channels = users.map{|u| "@#{u.username}"} + [@product.push_channel]
-    PusherWorker.perform_async channels, 'wip.created', TaskSerializer.new(wip).to_json
+    PusherWorker.perform_async channels, 'wip.created', WipSerializer.new(wip).to_json
   end
 end
