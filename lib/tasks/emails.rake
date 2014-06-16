@@ -35,7 +35,7 @@ namespace :emails do
 
     task :hourly => :environment do
       recently_active_users = User.
-        where(username: 'whatupdave').
+        staff.
         where('last_request_at > ?', 2.hours.ago)
 
       recently_active_users.each do |user|
