@@ -6,7 +6,7 @@ class Webhooks::GithubController < WebhookController
 
       product = Product.with_repo(payload.repo).first
       if product.nil?
-        log "Product not found: #{ref.repo}"
+        log "Product not found: #{payload.repo}"
         return
       end
 
