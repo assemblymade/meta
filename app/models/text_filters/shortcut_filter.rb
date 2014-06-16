@@ -26,7 +26,7 @@ module TextFilters
         next if has_ancestor?(node, IGNORE_SHORTCUT_PARENTS)
         html = shortcut_filter(content)
         next if html == content
-        node.replace(html)
+        node.swap(Nokogiri::XML::DocumentFragment.new(doc, html))
       end
 
       doc
