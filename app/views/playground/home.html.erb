@@ -3,59 +3,25 @@
 <%= render 'shared/navbar' %>
 
 <div class="page page-with-header page-home">
-  <div class="container cue-container fixed-bottom" style="z-index: 1;">
-    <center class="cue">
-      Scroll down
-      <i class="icon icon-arrow-down"></i>
-      to see more
-    </center>
-  </div>
 
   <div class="block block-inverted block-image-bg">
     <div class="container">
       <div class="row">
-        <h1 class="col-xs-9">Assembly is a global community of <em class="text-serif">crowd-made</em> startups.</h1>
+        <h1 class="col-xs-12">Assembly is a global community of <em class="inline-serif">crowd-made</em> startups.</h1>
       </div><!-- .row -->
-      <p class="lead">A <strong>crowd-made</strong> startup is a software product built and owned by its makers, together. Everyone can make an impact, and success is shared equitably. Without the limitations of geography, time, and logistics, a crowd-made startup connects talented minds to build great products.</p>
+      <p class="lead">A <em class="inline-serif">crowd-made</em> startup is a software product built and owned by its makers, together. Everyone can make an impact, and success is shared equitably. Without the limitations of geography, time, and logistics, a crowd-made startup connects talented minds to build great products.</p>
     </div><!-- .container -->
   </div><!-- .block -->
-
-
 
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
 
-        <!-- <div class="section">
-          <h4>Assembly is different</h4>
-          <div class="row">
-            <div class="col-xs-5">
-              <h6>Traditional companies</h6>
-              <ul class="list-none">
-                <li>Top-down control and ownership</li>
-                <li>Rigid organizational structure</li>
-                <li>Work typically happens 9&ndash;5, in the office</li>
-                <li>Employees earn salary and bonuses</li>
-              </ul>
-            </div>
-            <div class="col-xs-7">
-              <h6>Assembly Startups</h6>
-              <ul class="list-none">
-                <li>Community control and ownership</li>
-                <li>Everyone has a say</li>
-                <li>Teams are globally distributed and work when they choose</li>
-                <li>Contributors earn ownership that translates to a percentage of all future revenue including acquisitions</li>
-              </ul>
-            </div>
-          </div>
-          <p class="lead text-sans">Together, we can work harder and build better software. As we learn together and challenge one another, we’re also maximizing serendipitous interactions between talented people. It’s a new way of looking at entrepreneurship.</p>
-        </div> -->
-
-        <div class="section">
-          <h3>Startups <span>currently being built</span></h3>
+        <div class="section section-rule\d" style="margin-top: 3\6px;">
+          <h3 class="Text-cente">What's brewing</h3>
           <div class="row">
             <div class="col-xs-3">
-              <a href="<%= product_path('helpful') %>" class="card card-sm card-col\ored product-helpful">
+              <a href="<%= product_path('helpful') %>" class="card card-sm card-product product-helpful">
                 <div class="card-hero" style="background-image: url('http://cl.ly/image/173v2r04391P/Screen%20Shot%202014-05-10%20at%209.47.51%20AM.png');"></div>
                 <div class="card-body">
                   <div class="summary">
@@ -71,7 +37,7 @@
             </div>
 
             <div class="col-xs-3">
-              <a href="<%= product_path('helpful') %>" class="card card-sm card-col\ored product-family-table">
+              <a href="<%= product_path('helpful') %>" class="card card-sm card-product product-family-table">
                 <div class="card-hero" style="background-image: url('http://f.cl.ly/items/3c3E0P371c2f3D1z3z3n/familytable.jpg');"></div>
                 <div class="card-body">
                   <div class="summary">
@@ -87,11 +53,11 @@
             </div>
 
             <div class="col-xs-3">
-              <a href="<%= product_path('helpful') %>" class="card card-sm card-co\lored product-buckets">
+              <a href="<%= product_path('helpful') %>" class="card card-sm card-product product-buckets">
                 <div class="card-hero" style="background-image: url('http://f.cl.ly/items/3f402s282b3N201g3p3H/Logo.png');"></div>
                 <div class="card-body">
                   <div class="summary">
-                    <div class="summary-target" style="min-height: 48px;">
+                    <div class="summary-target">
                       Manage content better
                     </div>
                     <p class="summary-name omega">
@@ -103,7 +69,7 @@
             </div>
 
             <div class="col-xs-3">
-              <a href="<%= product_path('helpful') %>" class="card card-sm card-col\ored product-really-good-emails">
+              <a href="<%= product_path('helpful') %>" class="card card-sm card-product product-really-good-emails">
                 <div class="card-hero" style="background-image: url('http://cl.ly/image/1Z1a1N450G43/Screen%20Shot%202014-05-09%20at%201.02.18%20PM.png');"></div>
                 <div class="card-body">
                   <div class="summary">
@@ -121,10 +87,66 @@
           </div><!-- .row -->
         </div><!-- .section -->
 
-        <!-- <div class="section">
-          <h4>Work with amazing people</h4>
+      </div><!-- .col-* -->
+    </div><!-- .row -->
+  </div><!-- .container -->
 
-        </div><!-- .section -->
+  <div class="block block-colored block-bordered" style="margin-bottom: 36px;">
+    <div class="container">
+      <p class="lead omega">Together, we can work harder and build better software. As we learn together and challenge one another, we’re also maximizing serendipitous interactions between talented people. It’s a new way of looking at entrepreneurship.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+
+        <div class="section">
+          <div class="row">
+            <div class="col-xs-12">
+              <h3 class="text-center">Work differently</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-4 text-right" style="margin-top: 20px;">
+              <h6 class="text-sans text-mute\d">Traditional companies</h6>
+              <ul class="list-unstyled list-ruled text-sans">
+                <li>Owned by investors and founders</li>
+                <li>Complex organizational structure</li>
+                <li>Most work happens in the office, during the day</li>
+                <li>Employment contracts</li>
+              </ul>
+            </div>
+            <div class="col-xs-4">
+              <div class="card card-color\ed card-lg text-center">
+                <div class="card-body">
+                  <h6 class="text-sans text-mute\d">Assembly startups</h6>
+                  <ul class="list-unstyled list-ruled t\ext-serif omega">
+                    <li>Owned by everyone</li>
+                    <li>Everyone does the work they do best</li>
+                    <li>Products are built around-the-clock by distributed teams, on their own schedules</li>
+                    <li>Revenue is split equitable between contributors</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-4 text-cen\ter" style="margin-top: 20px;">
+              <h6 class="text-sans text-mute\d">Side projects</h6>
+              <ul class="list-unstyled list-ruled text-sans">
+                <li>Owned by their maker</li>
+                <li>One-person team</li>
+                <li>Work happens at home, on nights and weekends</li>
+                <li>Revenue is rare</li>
+              </ul>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+              <h5 class="text-center text-large">Magic happens when we work together. We’re smarter and more driven. We move faster, think bigger, and go further.</h5>
+            </div>
+          </div>
+        </div>
 
       </div><!-- .col-* -->
     </div><!-- .row -->

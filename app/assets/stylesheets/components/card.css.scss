@@ -66,3 +66,15 @@ a.card:hover {
   font-size: $font-size-small;
   color: $brand-muted;
 }
+
+.card-sm {
+  border-radius: $border-radius-base;
+
+  .card-body {
+    padding: 15px 20px;
+  }
+}
+
+.card-lg {
+  border-radius: $border-radius-large;
+}
