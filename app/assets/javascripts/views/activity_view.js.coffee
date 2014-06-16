@@ -10,9 +10,9 @@ class window.ActivityView extends Backbone.View
   initialize: (options)->
     @listenTo(@model, 'change', @render)
     @subjectId = options.subjectId
-    @subviews = {
-      '.js-tips': new TipsView(tips: @model.get('subject').tips)
-    }
+    @subviews = {}
+    if subject = @model.get('subject')
+      @subviews['.js-tips'] = new TipsView(tips: subject.tips) if subject.tips
 
   render: =>
     @$el.html(JST[@model.get('type')].render(@templateData()))
