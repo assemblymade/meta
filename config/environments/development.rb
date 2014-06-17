@@ -41,4 +41,10 @@ ASM::Application.configure do
   config.assets.debug = false
 
   config.react.variant = :development
+
+  # config.middleware.use StackProf::Middleware,
+  #                           enabled: true,
+  #                           mode: :cpu,
+  #                           interval: 1000,
+  #                           save_every: 5
 end
