@@ -121,7 +121,7 @@ class Task < Wip
 
   def start_work!(worker)
     self.workers << worker
-    allocate!(worker)
+    allocate!(worker) unless self.workers.count > 1
   end
 
   def stop_work!(worker)

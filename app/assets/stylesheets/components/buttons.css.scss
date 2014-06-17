@@ -12,11 +12,13 @@
   &.disabled {
     color: $btn-default-border;
   }
-  
-  // Bootstrap's .disabled now attempts to render
-  // a button unclickable using pointer-events.
-  // When you want a button to appear faded out
-  // but to still be clickable, use .inactive instead.
+
+  /*
+    Bootstrap's .disabled now attempts to render
+    a button unclickable using pointer-events.
+    When you want a button to appear faded out
+    but to still be clickable, use .inactive instead.
+  */
   &.inactive {
     color: $btn-default-border;
     opacity: 0.65;
