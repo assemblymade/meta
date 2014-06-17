@@ -403,7 +403,8 @@ figure,
     text-transform: none;
     letter-spacing: 0;
 
-    span {
+    span,
+    span a {
       color: $gray;
       font-weight: normal;
       font-size: 92.5%;
