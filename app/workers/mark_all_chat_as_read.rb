@@ -5,11 +5,12 @@ class MarkAllChatAsRead
     @user = User.find(user_id)
     @product = Product.find(product_id)
 
-    ReadRaptorSerializer.serialize_entities(unread_product_entities, :chat).each do |id|
+    ids = ReadRaptorSerializer.serialize_entities(unread_product_entities, :chat)
+    ids.each do |id|
       client.get(ReadraptorTracker.new(id, @user.id).url)
     end
 
-    PusherWorker.perform_async("@#{@user.username}", 'unread.updated', {})
+    PusherWorker.perform_async("@#{@user.username}", 'unread.updated', {}) if ids.any?
   end
 
   def unread_product_entities
