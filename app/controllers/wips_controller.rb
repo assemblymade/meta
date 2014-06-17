@@ -102,7 +102,8 @@ class WipsController < ApplicationController
   end
 
   def stop_work
-    @wip.stop_work!(current_user)
+    user = User.find_by(username: params[:user])
+    @wip.stop_work!(user || current_user)
     respond_with @wip, location: product_wip_path(@product, @wip)
   end
 
