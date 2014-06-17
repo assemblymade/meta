@@ -12,8 +12,8 @@ module StreamEvents
     def title_html
       html =<<-HTML
         joined the
-        <a href="#{product_jobs_path(product)}">
-          #{h(role.product_job.category)} team
+        <a href="#{product_people_path(product)}">
+          team
         </a>
       HTML
     end

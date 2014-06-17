@@ -39,7 +39,7 @@
         <!-- FIXME: Most of these should be in another decorator -->
         <% if @product.uninmportant_contributors_count > 0 %>
           <p class="text-center omega" style="margin-top:15px">
-            <a href="<%= product_jobs_path(@product) %>">
+            <a href="<%= product_people_path(@product) %>">
               Plus <%= @product.uninmportant_contributors_count %> more
             </a>
           </p>
