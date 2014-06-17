@@ -47,14 +47,14 @@
               </h6>
               <table class="table table-condensed">
                 <tbody>
-                  <% @wip.workers.each do |worker| %>
+                  <% @wip.wip_workers.each do |worker| %>
                     <tr>
                       <td class="omega">
-                      <% if signed_in? && worker == current_user %>
+                      <% if signed_in? && worker.user == current_user %>
                           <a href="<%= user_path(worker) %>">You</a>
                       <% else %>
                         <a href="<%= user_path(worker) %>">
-                          <strong>@<%= worker.username %></strong>
+                          <strong>@<%= worker.user.username %></strong>
                         </a>
                       <% end %>
                           started this
@@ -64,7 +64,7 @@
                       </td>
                       <% if signed_in? && @wip.product.core_team?(current_user) %>
                         <td>
-                          <% unless worker == current_user %>
+                          <% unless worker.user == current_user %>
                             <a title="remove" href="<%= product_wip_stop_work_path(@wip.product, @wip, user: worker) %>" data-method="patch" class="text-danger">
                               <span class="glyphicon glyphicon-remove"></span>
                             </a>
