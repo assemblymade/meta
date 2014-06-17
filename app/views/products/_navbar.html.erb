@@ -87,7 +87,7 @@
       <small class="help-block alpha">
         What skills can you contribute, how much time do you have have and what are you looking to get out of the experience?
       </small>
-      <textarea name="bio" id="join-bio-editor" class="form-control bio-editor" style="height: 100px"></textarea>
+      <textarea name="bio" id="join-bio-editor" class="form-control bio-editor" style="height: 100px" maxlength="200"></textarea>
     </div>
     <div class="form-group" style="margin-bottom: 15px">
       <label for="join-interests">What are you interested in?</label>
@@ -99,7 +99,8 @@
         :id => 'join-interests',
         :multiple => true %>
     </div>
-    <button type="submit" class="btn btn-primary btn-sm btn-block">Introduce yourself</button>
+    <button type="submit" class="btn btn-primary btn-sm btn-block" id="join-intro">Introduce yourself</button>
+  </form>
 </script>
 
 <%# render 'products/status_message' %>

@@ -21,6 +21,7 @@ var JoinTeam = React.createClass({
       trigger: 'click',
       placement: 'bottom',
       html: true,
+      container: 'body',
       content: function() {
         return $('#join-team-template').html()
       }
@@ -70,8 +71,8 @@ var JoinTeam = React.createClass({
   },
 
   setUpEditor: function(chosenSelect) {
-    // TODO: Move default bio some place saner.
-    var bio = "Hi! My name is Maeby. I can catch mice, have lots of time and I'm looking for cuddles."
+    // TODO: Move default bio someplace saner.
+    var bio = "Hi! My name is Maeby. I do all of my design in Dreamweaver. What's version control?"
     var membership = this.props.membership
 
     if (membership) {
@@ -101,18 +102,18 @@ var JoinTeam = React.createClass({
   label: function() {
     if (this.state.is_member) {
       return (
-        <a className={"toggler-btn btn btn-" + this.button()} onClick={this.click()}>
-          <span className="glyphicon glyphicon-user"></span>
+        <a className={"toggler-btn btn btn-" + this.button()} style={{width: '120px', 'max-width': '120px'}} onClick={this.click()}>
+          <span className="glyphicon glyphicon-user" style={{'margin-right': '2px'}}></span>
           Leave Team
         </a>
       )
     }
 
     return (
-      <a className={"toggler-btn btn btn-" + this.button()} onClick={this.click()}
+      <a className={"toggler-btn btn btn-" + this.button()} style={{width: '120px', 'max-width': '120px'}} onClick={this.click()}
           role="button"
           id="js-join-popover">
-        <span className="glyphicon glyphicon-user"></span>
+        <span className="glyphicon glyphicon-user" style={{'margin-right': '2px'}}></span>
         Join Team
       </a>
     )
