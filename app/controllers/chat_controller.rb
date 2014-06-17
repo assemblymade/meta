@@ -82,7 +82,12 @@ class ChatController < ApplicationController
 
   def register_with_readraptor(event)
     excluded_users = [event.user, event.mentioned_users].flatten.compact.uniq
-    ReadRaptorDelivery.new(event.wip.watchers - excluded_users, :chat).deliver_async(event)
+    RegisterArticleWithRecipients.perform_async(
+      (event.wip.watchers - excluded_users).map(&:id),
+      :chat,
+      Event,
+      event.id
+    )
   end
 
 end

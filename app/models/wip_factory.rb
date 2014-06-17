@@ -48,7 +48,12 @@ class WipFactory
   end
 
   def register_with_readraptor(wip, users)
-    ReadRaptorDelivery.new(users, [nil, :email, :chat]).deliver_async(wip)
+    RegisterArticleWithRecipients.perform_async(
+      users.map(&:id),
+      [nil, :email, :chat],
+      Wip,
+      wip.id
+    )
   end
 
   def add_transaction_log_entry(wip)

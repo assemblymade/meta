@@ -6,6 +6,9 @@ module ReadraptorTrackable
   end
 
   def readraptor_track_id
-    ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(object, object.readraptor_tag).first, scope.id).url if scope
+    if scope
+      ReadraptorTracker.new(
+        ReadRaptorSerializer.serialize_entities(object, object.readraptor_tag).first, scope.id).url
+    end
   end
 end
