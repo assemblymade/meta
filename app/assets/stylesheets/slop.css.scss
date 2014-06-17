@@ -6,10 +6,10 @@ $text-accent: #BC9454;
 $home-primary: desaturate(darken($text-accent, 30%), 15%);
 $home-primary: desaturate(darken($brand-primary, 30%), 35%);
 
-$product-helpful: lighten(#494d52, 5%);
-$product-family-table: #83B4AD;
-$product-buckets: darken(#f9d233, 15%);
-$product-really-good-emails: desaturate(#f75853, 10%);
+$product-helpful: lighten(#494d52, 7%);
+$product-family-table: darken(#83B4AD, 5%);
+$product-buckets: darken(#f9d233, 12%);
+$product-really-good-emails: darken(desaturate(#f75853, 12%), 3%);
 
 $user-whale: #63a4ae;
 $user-chexee: #98658e;
@@ -83,6 +83,10 @@ $user-davidkaneda: #848C24;
   line-height: 1.618;
   margin-bottom: 48px;
 
+  .lead {
+    @extend .text-sans;
+  }
+
   .table-striped > tbody > tr:nth-child(odd) > td {
     background-color: lighten($text-copy, 77%);
   }
@@ -99,6 +103,14 @@ $user-davidkaneda: #848C24;
     padding: 10px 0;
   }
 
+  h2 {
+    @extend .text-sans;
+    color: $black;
+    font-weight: 200;
+    margin-bottom: $line-height-computed * 2;
+    font-size: 42px;
+  }
+
   h3 {
     @extend .text-sans;
     color: $black;
@@ -110,6 +122,7 @@ $user-davidkaneda: #848C24;
       color: $gray-light;
     }
   }
+
 
   h4 {
     @extend .text-sans;
@@ -145,8 +158,8 @@ $user-davidkaneda: #848C24;
   @extend .text-sans;
   margin-bottom: 0;
   background-color: $gray;
-  box-shadow: inset 0 0 0 1px $brand-shadow,
-              0 1px 0 0 $brand-shadow;
+  box-shadow:
+    0 1px 0 0 $brand-shadow;
 
   .card-hero {
     box-shadow: none;
@@ -166,10 +179,10 @@ $user-davidkaneda: #848C24;
 
     p {
       @extend .text-sans;
-      @extend .upper-spaced;
+      text-transform: uppercase;
       line-height: 1;
       font-weight: bold;
-      color: rgba(0,0,0,0.4);
+      color: white;
     }
   }
 }
@@ -296,7 +309,7 @@ a.card-colored:hover {
     color: inherit;
 
     em {
-      color: $yellow;
+      border-bottom: 3px solid lighten($home-primary, 8%);
     }
   }
 }
@@ -304,13 +317,12 @@ a.card-colored:hover {
 .block-colored {
   background: $body-bg;
   color: $gray-dark;
-  // box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.015);
 }
 
 .block-bordered {
   box-shadow:
-    inset 0 1px 0 0 rgba(0,0,0,0.025),
-    inset 0 -1px 0 0 rgba(0,0,0,0.025);
+    inset 0 1px 0 0 rgba(0,0,0,0.04),
+    inset 0 -1px 0 0 rgba(0,0,0,0.04);
 }
 
 .block-image-bg {
@@ -339,25 +351,15 @@ a.card-colored:hover {
 
     h1 {
       margin-top: $line-height-computed * 2;
+      margin-bottom: $line-height-computed * 2;
       font-size: 68px;
       line-height: 1.25;
       font-weight: 200;
-
-      &:after {
-        content: '';
-        display: block;
-        width: 15%;
-        height: 2px;
-        background-color: rgba(white, 0.15);
-        border-radius: 1px;
-        margin: $line-height-computed * 1.5 0;
-      }
     }
 
     .lead {
       font-size: 26px;
       font-weight: 400;
-      // color: lighten($home-primary, 50%);
     }
   }
 
@@ -373,7 +375,7 @@ a.card-colored:hover {
 .list-ruled {
 
   li {
-    border-bottom: 1px solid $brand-divider;
+    border-bottom: 1px dotted $brand-divider;
     padding: 8px 0;
 
     &:last-child {
