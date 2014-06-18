@@ -16,7 +16,7 @@ class PeopleController < ApplicationController
     membership = params[:membership]
     interests = params[:membership][:interest_ids] unless membership.nil?
 
-    updated_interests = update_interests(interests)
+    update_interests(interests)
 
     @membership.update_attributes({
       deleted_at: nil,
@@ -35,20 +35,11 @@ class PeopleController < ApplicationController
   end
 
   def update
-    @membership = @product.team_memberships.find_by(user: current_user)
+    @membership = @product.team_memberships.find_by!(user: current_user)
 
-    unless @membership.nil?
-      membership = params[:membership]
+    update_interests(params[:membership][:interests])
 
-      unless membership.nil?
-        interests = params[:membership][:interests]
-        bio = params[:membership][:bio]
-      end
-
-      update_interests(interests)
-
-      @membership.update_attribute(:bio, bio)
-    end
+    @membership.update_attributes(bio: params[:membership][:bio])
 
     respond_to do |format|
       format.json { render json: @membership, serializer: TeamMembershipSerializer }
@@ -72,15 +63,13 @@ class PeopleController < ApplicationController
   def update_interests(interests)
     current_interests = @membership.team_membership_interests.all
     added_interests = add_interests(interests)
-    updated_interests = current_interests - added_interests
-    remove_interests(updated_interests)
-    updated_interests
+    remove_interests(current_interests - added_interests)
   end
 
   def add_interests(interests)
     added_interests = []
 
-    unless interests.nil?
+    unless interests.blank?
       interests.each do |i|
         interest = Interest.find_or_create_by!(slug: i)
         added_interests << @membership.team_membership_interests.find_or_create_by!(interest: interest)
@@ -92,6 +81,10 @@ class PeopleController < ApplicationController
 
   def remove_interests(interests)
     @membership.team_membership_interests.destroy(interests)
+  end
+
+  def membership_params
+    params.require(:membership).permit(:interests, :bio)
   end
 
 end

@@ -286,7 +286,7 @@ var BioEditor = React.createClass({
   editButton: function() {
     return (
       <div className="btn-group btn-group-sm">
-        <a className="btn btn-link" style={{'box-shadow': 'none'}} onClick={this.makeEditable}>Edit</a>
+        <a className="btn btn-link" style={{'box-shadow': 'none'}} onClick={this.makeEditable}>Edit profile</a>
       </div>
     )
   },
