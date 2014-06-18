@@ -13,7 +13,7 @@
           <div class="section" style="margin-bottom: 36px;">
             <div class="row">
               <div class="col-xs-3">
-                <a href="<%= product_path('helpful') %>" class="card card-sm card-colored card-p\roduct product-helpful">
+                <a href="<%= product_path('helpful') %>" class="card card-sm card-colored product-helpful">
                   <div class="card-hero" style="background-image: url('http://cl.ly/image/173v2r04391P/Screen%20Shot%202014-05-10%20at%209.47.51%20AM.png');"></div>
                   <div class="card-body">
                     <div class="summary">
@@ -29,7 +29,7 @@
               </div>
 
               <div class="col-xs-3">
-                <a href="<%= product_path('helpful') %>" class="card card-sm card-colored card-p\roduct product-family-table">
+                <a href="<%= product_path('family-table') %>" class="card card-sm card-colored product-family-table">
                   <div class="card-hero" style="background-image: url('http://f.cl.ly/items/3c3E0P371c2f3D1z3z3n/familytable.jpg');"></div>
                   <div class="card-body">
                     <div class="summary">
@@ -45,7 +45,7 @@
               </div>
 
               <div class="col-xs-3">
-                <a href="<%= product_path('helpful') %>" class="card card-sm card-colored card-p\roduct product-buckets">
+                <a href="<%= product_path('buckets') %>" class="card card-sm card-colored product-buckets">
                   <div class="card-hero" style="background-image: url('http://f.cl.ly/items/3f402s282b3N201g3p3H/Logo.png');"></div>
                   <div class="card-body">
                     <div class="summary">
@@ -61,7 +61,7 @@
               </div>
 
               <div class="col-xs-3">
-                <a href="<%= product_path('helpful') %>" class="card card-sm card-colored card-p\roduct product-really-good-emails">
+                <a href="<%= product_path('really-good-emails') %>" class="card card-sm card-colored product-really-good-emails">
                   <div class="card-hero" style="background-image: url('http://cl.ly/image/1Z1a1N450G43/Screen%20Shot%202014-05-09%20at%201.02.18%20PM.png');"></div>
                   <div class="card-body">
                     <div class="summary">
@@ -168,6 +168,7 @@
       <div class="row seven-cols text-center list-team" style="margin-bottom: 16px">
         <div class="col-xs-1 team-person">
           <a href="<%= user_path('mdeiters') %>">
+            <!-- <%= avatar_tag(User.find_by_username('mdeiters'), 400, :class => 'img-responsive img-circle') %> -->
             <%= image_tag("/assets/team/matt.png", :class => "img-responsive img-circle") %>
           </a>
           <h6>Matt Deiters<br><span><a href="<%= user_path('mdeiters') %>">@mdeiters</a></span></h6>
@@ -175,6 +176,7 @@
 
         <div class="col-xs-1 team-person">
           <a href="<%= user_path('whatupdave') %>">
+            <!-- <%= avatar_tag(User.find_by_username('whatupdave'), 400, :class => 'img-responsive img-circle') %> -->
             <%= image_tag("/assets/team/dave.png", :class => "img-responsive img-circle") %>
           </a>
           <h6>Dave Newman<br><span><a href="<%= user_path('whatupdave') %>">@whatupdave</a></span></h6>
@@ -182,6 +184,7 @@
 
         <div class="col-xs-1 team-person">
           <a href="<%= user_path('chrislloyd') %>">
+            <!-- <%= avatar_tag(User.find_by_username('chrislloyd'), 400, :class => 'img-responsive img-circle') %> -->
             <%= image_tag("/assets/team/chris.png", :class => "img-responsive img-circle") %>
           </a>
           <h6>Chris Lloyd<br><span><a href="<%= user_path('chrislloyd') %>">@chrislloyd</a></span></h6>
@@ -189,6 +192,7 @@
 
         <div class="col-xs-1 team-person">
           <a href="<%= user_path('jessedodds') %>">
+            <!-- <%= avatar_tag(User.find_by_username('jessedodds'), 400, :class => 'img-responsive img-circle') %> -->
             <%= image_tag("/assets/team/jesse.png", :class => "img-responsive img-circle") %>
           </a>
           <h6>Jesse Dodds<br><span><a href="<%= user_path('jessedodds') %>">@jessedodds</a></span></h6>
@@ -196,6 +200,7 @@
 
         <div class="col-xs-1 team-person">
           <a href="<%= user_path('vanstee') %>">
+            <!-- <%= avatar_tag(User.find_by_username('vanstee'), 400, :class => 'img-responsive img-circle') %> -->
             <%= image_tag("/assets/team/patrick.png", :class => "img-responsive img-circle") %>
           </a>
           <h6>Patrick Van Stee<br><span><a href="<%= user_path('vanstee') %>">@vanstee</a></span></h6>
@@ -203,6 +208,7 @@
 
         <div class="col-xs-1 team-person">
           <a href="<%= user_path('awwstn') %>">
+            <!-- <%= avatar_tag(User.find_by_username('awwstn'), 400, :class => 'img-responsive img-circle') %> -->
             <%= image_tag("/assets/team/austin.png", :class => "img-responsive img-circle") %>
           </a>
           <h6>Austin Smith<br><span><a href="<%= user_path('awwstn') %>">@awwstn</a></span></h6>
@@ -210,6 +216,7 @@
 
         <div class="col-xs-1 team-person">
           <a href="<%= user_path('pletcher') %>">
+            <!-- <%= avatar_tag(User.find_by_username('pletcher'), 400, :class => 'img-responsive img-circle') %> -->
             <%= image_tag("/assets/team/pletcher.png", :class => "img-responsive img-circle") %>
           </a>
           <h6>Charles Pletcher<br><span><a href="<%= user_path('pletcher') %>">@pletcher</a></span></h6>

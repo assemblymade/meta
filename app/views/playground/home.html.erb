@@ -167,38 +167,52 @@
 
       <div class="row seven-cols text-center list-team" style="margin-bottom: 16px">
         <div class="col-xs-1 team-person">
-          <%= image_tag("/assets/team/matt.png", :class => "img-responsive img-circle") %>
-          <h6>Matt Deiters<br><span>Founder &amp; CEO</span></h6>
+          <a href="<%= user_path('mdeiters') %>">
+            <%= image_tag("/assets/team/matt.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Matt Deiters<br><span><a href="<%= user_path('mdeiters') %>">@mdeiters</a></span></h6>
         </div>
 
         <div class="col-xs-1 team-person">
-          <%= image_tag("/assets/team/dave.png", :class => "img-responsive img-circle") %>
-          <h6>Dave Newman<br><span>Founder &amp; CTO</span></h6>
+          <a href="<%= user_path('whatupdave') %>">
+            <%= image_tag("/assets/team/dave.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Dave Newman<br><span><a href="<%= user_path('whatupdave') %>">@whatupdave</a></span></h6>
         </div>
 
         <div class="col-xs-1 team-person">
-          <%= image_tag("/assets/team/chris.png", :class => "img-responsive img-circle") %>
-          <h6>Chris Lloyd<br><span>Founder</span></h6>
+          <a href="<%= user_path('chrislloyd') %>">
+            <%= image_tag("/assets/team/chris.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Chris Lloyd<br><span><a href="<%= user_path('chrislloyd') %>">@chrislloyd</a></span></h6>
         </div>
 
         <div class="col-xs-1 team-person">
-          <%= image_tag("/assets/team/jesse.png", :class => "img-responsive img-circle") %>
-          <h6>Jesse Dodds<br><span>Founding Designer</span></h6>
+          <a href="<%= user_path('jessedodds') %>">
+            <%= image_tag("/assets/team/jesse.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Jesse Dodds<br><span><a href="<%= user_path('jessedodds') %>">@jessedodds</a></span></h6>
         </div>
 
         <div class="col-xs-1 team-person">
-          <%= image_tag("/assets/team/patrick.png", :class => "img-responsive img-circle") %>
-          <h6>Patrick Van Stee<br><span>Engineer</span></h6>
+          <a href="<%= user_path('vanstee') %>">
+            <%= image_tag("/assets/team/patrick.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Patrick Van Stee<br><span><a href="<%= user_path('vanstee') %>">@vanstee</a></span></h6>
         </div>
 
         <div class="col-xs-1 team-person">
-          <%= image_tag("/assets/team/austin.png", :class => "img-responsive img-circle") %>
-          <h6>Austin Smith<br><span>Marketing Lead</span></h6>
+          <a href="<%= user_path('awwstn') %>">
+            <%= image_tag("/assets/team/austin.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Austin Smith<br><span><a href="<%= user_path('awwstn') %>">@awwstn</a></span></h6>
         </div>
 
         <div class="col-xs-1 team-person">
-          <%= image_tag("/assets/team/pletcher.png", :class => "img-responsive img-circle") %>
-          <h6>Charles Pletcher<br><span>Engineer</span></h6>
+          <a href="<%= user_path('pletcher') %>">
+            <%= image_tag("/assets/team/pletcher.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Charles Pletcher<br><span><a href="<%= user_path('pletcher') %>">@pletcher</a></span></h6>
         </div>
 
       </div>
