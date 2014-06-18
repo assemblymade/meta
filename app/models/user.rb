@@ -46,10 +46,11 @@ class User < ActiveRecord::Base
 
   # default users to immediate email
   MAIL_DAILY = 'daily'
+  MAIL_HOURLY = 'hourly'
   MAIL_IMMEDIATE = 'immediate'
   MAIL_NEVER = 'never'
   before_validation -> { self.mail_preference = MAIL_DAILY }, on: :create
-  validates :mail_preference, inclusion: { in: [MAIL_DAILY, MAIL_IMMEDIATE, MAIL_NEVER] }
+  validates :mail_preference, inclusion: { in: [MAIL_DAILY, MAIL_HOURLY, MAIL_IMMEDIATE, MAIL_NEVER] }
 
   after_save :username_renamed, :if => :username_changed?
 

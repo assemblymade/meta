@@ -52,7 +52,7 @@ namespace :emails do
 
     task :hourly => :environment do
       recently_active_users = User.
-        staff.
+        where(mail_preference: 'daily').
         where('last_request_at > ?', 2.hours.ago)
 
       recently_active_users.each do |user|
