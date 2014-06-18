@@ -30,7 +30,10 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       format.json { render json: { count: @product.team_memberships.active.count } }
-      format.html { redirect_to request.referrer }
+      format.html { 
+        flash[:joined] = true
+        redirect_to product_people_path(@product) 
+      }
     end
   end
 
