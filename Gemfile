@@ -106,6 +106,7 @@ end
 
 group :production do
   gem 'dalli'
+  gem 'kgio'
   gem 'memcachier'
   gem 'newrelic_rpm'
   gem 'rails_12factor'
