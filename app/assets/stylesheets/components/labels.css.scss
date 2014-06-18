@@ -2,18 +2,20 @@
   padding: .3em .5em;
 }
 
+
+
 .label-urgent {
   background-color: $red;
 }
 
-.label-now {
+.label-today {
   background-color: $green;
 }
 
-.label-soon {
+.label-next {
   background-color: $gray;
 }
 
-.label-later {
+.label-someday {
   background-color: $gray-lighter;
 }
