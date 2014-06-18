@@ -32,8 +32,6 @@ namespace :emails do
   end
 
   task :joined_team_no_work_yet => :environment do
-    include ActionView::Helpers::DateHelper
-
     User.find(TeamMembership.where('created_at < ?', 1.day.ago).group(:user_id).count.keys).each do |user|
       if Task.won_by(user).empty? &&                          # no bounties won
          Event::ReviewReady.where(user_id: user.id).empty? && # no work submitted
