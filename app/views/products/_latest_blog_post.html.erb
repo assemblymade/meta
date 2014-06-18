@@ -1,0 +1,11 @@
+<div class="alert alert-info page-alert">
+  <% if signed_in? && can?(:update, @product) %>
+    <a class="btn btn-default btn-sm pull-right" href="<%= new_product_post_path(@product) %>">
+      Update
+    </a>
+  <% end %>
+  <p>
+    <strong>New post:</strong>
+    <a href="product_post_path(@product, post) %>"><%= post.title %></a>
+  </p>
+</div>

@@ -1,0 +1,3 @@
+<% if post = @product.posts.order(created_at: :desc).first %>
+  <%= render 'products/latest_blog_post', post: post %>
+<% end %>
