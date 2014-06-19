@@ -3,6 +3,14 @@
 }
 
 
+.label-urgent,
+.label-today,
+.label-next,
+.label-someday {
+  min-width: 49px;
+  display: inline-block;
+}
+
 
 .label-urgent {
   background-color: $red;
