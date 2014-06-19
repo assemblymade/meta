@@ -47,7 +47,16 @@
         </div>
       </div>
     <% else %>
-      <table class="table">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Project</th>
+            <th></th>
+            <th class="text-right" style="padding-right: 30px;">Bounties</th>
+            <th>Completion</th>
+          </tr>
+        </thead>
         <% @milestones.each do |milestone| %>
           <% cache [milestone, milestone.wip] do %>
             <tr>
@@ -65,7 +74,7 @@
                   <%= image_tag url, width: 60, height: 60 %>
                 <% end %>
               </td>
-              <td>
+              <td class="text-right" style="padding-right: 30px;">
                 <strong class="text-success"><%= milestone.tasks.closed.count %></strong>
                 <span class="text-muted">
                   /
@@ -73,15 +82,14 @@
                 </span>
               </td>
               <td>
-
-                  <div class="progress omega" style="min-width:200px">
-                    <div class="progress-bar progress-bar-success" style="width:<%= number_to_percentage(milestone.progress * 100, precision: 0) %>">
-                      <% if milestone.progress > 0 %>
-                        <%= number_to_percentage(milestone.progress * 100, precision: 0) %>
-                      <% end %>
-                    </div>
-
+                <div class="progress omega" style="min-width:200px">
+                  <div class="progress-bar progress-bar-success" style="width:<%= number_to_percentage(milestone.progress * 100, precision: 0) %>">
+                    <% if milestone.progress > 0 %>
+                      <%= number_to_percentage(milestone.progress * 100, precision: 0) %>
+                    <% end %>
                   </div>
+
+                </div>
               </td>
             </tr>
           <% end %>
