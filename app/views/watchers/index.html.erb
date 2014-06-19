@@ -21,14 +21,12 @@
           <div class="row" style="padding-top:15px;padding-bottom:15px;border-bottom:1px solid #d9d9d9;">
             <% users.each do |user| %>
               <div class="col-sm-1 col-xs-1">
-                <%= user_link(user) do %>
-                  <%= avatar_tag(user, 30) %>
-                <% end %>
+                <%= user_link(user) do %><%= avatar_tag(user, 30) %><% end %>
               </div>
               <div class="col-sm-5 col-xs-5">
                 <p>
-                  <strong><%= user_link(user) do %><%= user.username%><% end %></strong>
-                  <span class="text-muted text-small"><%= user.bio %></span>
+                  <strong><%= user_link(user) do %><%= user.username %><% end %></strong>
+                  <span class="text-muted text-small"><%== markdown user.bio %></span>
                 </p>
               </div>
             <% end %>

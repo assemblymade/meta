@@ -10,7 +10,7 @@ var JoinTeam = React.createClass({
       <div className="toggler">
         {this.label()}
         <div className="badge toggler-badge">
-          {this.state.count}
+          <a href={this.props.join_path}>{this.state.count}</a>
         </div>
       </div>
     )
