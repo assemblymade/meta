@@ -15,7 +15,7 @@
                 <a href="{{url}}" title="@{{username}}" class="chat-actor text-muted" style="font-weight: bold; color: #d3d3d3">
                   @{{username}}
                 </a>
-                is new
+                joined the team
               {{/actor}}
             </li>
             {{#id}}
@@ -31,10 +31,11 @@
             {{/id}}
           </ul>
         </div>
-
-        <div class="media-object omega" style="margin-left: 10px;">
-          {{#subject}}{{bio}}{{/subject}}
-        </div>
+        {{#subject}}{{#bio}}
+          <div class="well well-sm media-object omega text-left" style="color: #393939; text-align: left; background-color: #fff">
+            {{bio}}
+          </div>
+        {{/bio}}{{/subject}}
       </div>
 
     </div>
