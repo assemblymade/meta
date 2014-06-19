@@ -156,8 +156,16 @@ you can use the generic selector below, but it's slower:
 
   &.dropdown-glyph {
     vertical-align: text-bottom;
+    color: $gray;
   }
 }
+
+.active {
+  .dropdown-glyph {
+    color: $link-color;
+  }
+}
+
 .icon-user-female:before {
 	content: "\e000";
 }
