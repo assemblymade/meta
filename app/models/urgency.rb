@@ -17,7 +17,7 @@ class Urgency
   def self.all
     [
       Urgency.new(multiplier: 2.00, label: 'Urgent'),
-      Urgency.new(multiplier: 1.00, label: 'Today'),
+      Urgency.new(multiplier: 1.00, label: 'Now'),
       Urgency.new(multiplier: 0.75, label: 'Next'),
       Urgency.new(multiplier: 0.50, label: 'Someday'),
     ]
