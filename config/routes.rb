@@ -27,8 +27,8 @@ ASM::Application.routes.draw do
   get '/playground/:action', controller: 'playground'
 
   # Legacy
-  get '/explore', to: redirect('/discover/products')
-  get '/ideas',   to: redirect('/discover/products')
+  get '/explore', to: redirect('/discover')
+  get '/ideas',   to: redirect('/discover')
   get '/blog',    to: redirect('http://blog.assemblymade.com')
 
   # Pages
@@ -38,7 +38,7 @@ ASM::Application.routes.draw do
   get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
-  get '/chat' => redirect('/meta/discuss')
+  get '/chat' => redirect('/meta/chat')
 
   get '/new'      => redirect('/create')
   get '/create'   => 'products#new',     :as => :new_idea
@@ -191,8 +191,8 @@ ASM::Application.routes.draw do
   resources :products, path: '/', except: [:index, :create, :destroy] do
     match 'flag',    via: [:get, :post]
 
-    get '/discuss' => 'chat#index', as: :chat
-    post '/discuss' => 'chat#create'
+    get '/chat' => 'chat#index', as: :chat
+    post '/chat' => 'chat#create'
 
     post 'feature'
     post 'follow'
@@ -278,6 +278,9 @@ ASM::Application.routes.draw do
     end
 
     resources :rooms
+
+    # legacy
+    get '/discuss', to: redirect(path: '%{product_id}/chat')
 
     get '/:number' => 'rooms#deprecated_redirect',
       constraints: {number: /\d+/},

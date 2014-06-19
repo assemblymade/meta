@@ -17,7 +17,7 @@ title: How are payments processed in apps?
 We set up a merchant account on behalf of each Assembly app, typically with Stripe. That way, revenue goes directly to Assembly and can be distributed to all contributors on a monthly basis. In some cases, Assembly also handles invoicing for an app.
 
 
-If you are ready to implement payment processing into your app, [let us know in chat](http://assemblymade.com/meta/discuss) and we’ll get you set up.
+If you are ready to implement payment processing into your app, [let us know in chat](http://assemblymade.com/meta/chat) and we’ll get you set up.
 
 ---
 title: Can I delete my account?
