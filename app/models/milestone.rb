@@ -15,6 +15,11 @@ class Milestone < ActiveRecord::Base
   scope :closed, -> { joins(:wip).where('wips.closed_at is not null') }
   scope :with_images, -> { where('milestone_images_count > 0') }
   scope :without_images, -> { where('milestone_images_count = 0') }
+  scope :with_open_tasks, -> {
+    joins(milestone_tasks: 'task').where('tasks_milestone_tasks.closed_at is null').group('milestones.id').having('count(tasks_milestone_tasks.*) > 0')
+  }
+
+  delegate :title, to: :wip
 
   def feature_image
     milestone_images.order(:created_at).last

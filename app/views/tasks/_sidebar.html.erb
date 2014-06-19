@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+  <%= render partial: 'tasks/state_filters' %>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h6 class="panel-title">Projects</h6>
+  </div>
+  <ul class="nav nav-pills nav-stacked text-small">
+    <% @milestones.sort_by{|m| -m.multiplier }.each do |m| %>
+      <li class="<%= 'active' if params[:bounty].to_i == m.number %>">
+        <a href="<%= product_wips_path(@product, bounty: m.number) %>">
+          <span class="pull-right label label-<%= m.urgency.slug %>"><%= m.urgency.label %></span>
+          <%= m.title %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -6,6 +6,19 @@ class TasksController < WipsController
     super
   end
 
+  def index
+    if params[:state].blank? && params[:bounty].blank?
+      params[:state] = 'open'
+    end
+    @wips = find_wips
+    @milestones = @product.milestones.open.with_open_tasks
+
+    respond_to do |format|
+      format.html { expires_now }
+      format.json { render json: @wips.map{|w| WipSearchSerializer.new(w) } }
+    end
+  end
+
   def start_work
     @wip.start_work!(current_user)
     track_event 'wip.engaged', WipAnalyticsSerializer.new(@wip, scope: current_user).as_json.merge(engagement:'started_work')
