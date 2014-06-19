@@ -7,8 +7,9 @@
   position: absolute;
   top: 6px;
   right: 6px;
-  padding: 2px 3px;
+  padding: 2px 5px;
   font-size: 12px;
   background-color: $yellow;
   border: 2px solid $navbar-inverse-bg;
+  border-radius: 50%;
 }

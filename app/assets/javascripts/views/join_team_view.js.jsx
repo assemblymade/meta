@@ -106,7 +106,7 @@ var JoinTeam = React.createClass({
     if (this.state.is_member) {
       return (
         <a className={"toggler-btn btn btn-" + this.button()} style={{width: '120px', 'max-width': '120px'}} onClick={this.click()}>
-          <span className="glyphicon glyphicon-user" style={{'margin-right': '2px'}}></span>
+          <i className="icon-user-unfollow" style={{'margin-right': '6px'}}></i>
           Leave Team
         </a>
       )
@@ -116,7 +116,7 @@ var JoinTeam = React.createClass({
       <a className={"toggler-btn btn btn-" + this.button()} style={{width: '120px', 'max-width': '120px'}} onClick={this.click()}
           role="button"
           id="js-join-popover">
-        <span className="glyphicon glyphicon-user" style={{'margin-right': '2px'}}></span>
+        <i className="icon-user-follow" style={{'margin-right': '6px'}}></i>
         Join Team
       </a>
     )

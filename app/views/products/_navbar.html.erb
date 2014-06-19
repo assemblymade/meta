@@ -11,7 +11,7 @@
           Chat
         </a>
       </li>
-      
+
       <li class="<%= "active" if milestones_controller? %>">
         <a href="<%= product_milestones_path(@product) %>">
           Projects
@@ -38,17 +38,17 @@
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
-      <li class="navbar-text">
+      <li class="navbar-text" style="margin-right: 0;">
         <div class="toggler">
           <% if signed_in? && @product.watching?(current_user) %>
             <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post" >
 
-              <span class="glyphicon glyphicon-eye-open"></span>
+              <i class="icon-eye" style="margin-right: 2px;"></i>
               Unwatch
             </a>
           <% else %>
             <a class="toggler-btn btn btn-primary" href="<%= subscribe_product_path(@product) %>" data-method="post">
-              <span class="glyphicon glyphicon-eye-open"></span>
+              <i class="icon-eye" style="margin-right: 2px;"></i>
               Watch
             </a>
           <% end %>
