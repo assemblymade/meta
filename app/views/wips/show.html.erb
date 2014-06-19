@@ -51,16 +51,16 @@
                     <tr>
                       <td class="omega">
                       <% if signed_in? && worker.user == current_user %>
-                          <a href="<%= user_path(worker) %>">You</a>
+                          <a href="<%= user_path(worker.user) %>">You</a>
                       <% else %>
-                        <a href="<%= user_path(worker) %>">
+                        <a href="<%= user_path(worker.user) %>">
                           <strong>@<%= worker.user.username %></strong>
                         </a>
                       <% end %>
-                          started this
-                          <strong>
-                            <time class="timestamp" datetime="<%= worker.created_at.iso8601 %>"></time>
-                          </strong>
+                      started this
+                      <strong>
+                        <time class="timestamp" datetime="<%= worker.created_at.iso8601 %>"></time>
+                      </strong>
                       </td>
                       <% if signed_in? && @wip.product.core_team?(current_user) %>
                         <td>
@@ -161,7 +161,7 @@
   app.wipEvents = new WipEvents(<%== ActiveModel::ArraySerializer.new(@wip.events).to_json %>, {
     url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
   });
-  
+
   $(document).ready(function() {
     app.discussionView = new DiscussionView({
       el: $('#discussion-view-el'),

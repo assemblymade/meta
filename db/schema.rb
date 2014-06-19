@@ -297,7 +297,7 @@ ActiveRecord::Schema.define(version: 20140619214525) do
     t.uuid     "id",                                    null: false
     t.string   "slug",                                  null: false
     t.string   "name",                                  null: false
-    t.string   "pitch"]
+    t.string   "pitch"
     t.text     "description"
     t.datetime "submitted_at"
     t.datetime "evaluated_at"
