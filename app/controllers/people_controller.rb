@@ -21,7 +21,7 @@ class PeopleController < ApplicationController
       format.json { render json: { count: @product.team_memberships.active.count } }
       format.html {
         flash[:joined] = true
-        redirect_to product_people_path(@product)
+        redirect_to product_chat_path(@product)
       }
     end
   end
@@ -35,13 +35,11 @@ class PeopleController < ApplicationController
       introduce()
     end
 
-    update_interests(membership_params[:interests])
-
     @membership.update_attributes(bio: membership_params[:bio])
 
     respond_to do |format|
       format.json { render json: @membership, serializer: TeamMembershipSerializer }
-      format.html { redirect_to request.referrer }
+      format.html { redirect_to product_chat_path(@product) }
     end
   end
 
@@ -91,7 +89,7 @@ class PeopleController < ApplicationController
   end
 
   def membership_params
-    params.require(:membership).permit(:interests, :bio)
+    params.require(:membership).permit({:interests => []}, :bio)
   end
 
 end
