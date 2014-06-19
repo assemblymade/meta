@@ -6,11 +6,13 @@ $text-accent: #BC9454;
 // $home-primary: desaturate(darken($text-accent, 30%), 15%);
 // $home-primary: desaturate(darken($brand-primary, 35%), 20%);
 $home-primary: darken(#3E90CA, 30%);
+$home-secondary: #A8D7F9;
 
 $product-helpful: lighten(#494d52, 7%);
 $product-family-table: darken(#83B4AD, 5%);
 $product-buckets: darken(#f9d233, 12%);
 $product-really-good-emails: darken(desaturate(#f75853, 12%), 3%);
+$product-assembly-meta: darken(#2b8ec3, 2%);
 
 $user-whale: #63a4ae;
 $user-chexee: #98658e;
@@ -170,12 +172,13 @@ $user-davidkaneda: #848C24;
       min-height: 72px;
     }
 
-    p {
+    p,
+    .summary-name {
       @extend .text-sans;
-      text-transform: uppercase;
+      @extend .upper-spaced;
+      letter-spacing: 0.2pt;
       line-height: 1;
-      font-weight: bold;
-      color: white;
+      color: rgba(white, 0.6);
     }
   }
 }
@@ -234,6 +237,19 @@ a.card-colored:hover {
 
   &.card-colored {
     background-color: $product-really-good-emails;
+  }
+}
+
+.product-assembly-meta {
+
+  &.card:not(.card-colored) {
+    .summary-name {
+      color: $product-assembly-meta;
+    }
+  }
+
+  &.card-colored {
+    background-color: $product-assembly-meta;
   }
 }
 
@@ -298,8 +314,8 @@ figure,
 }
 
 .figure-inverted {
-  color: desaturate(lighten($home-primary, 40%), 15%);
-  border-top: 1px dotted lighten($home-primary, 8%);
+  color: $home-secondary;
+  border-top: 1px dotted rgba($home-secondary, 0.3);
 
   a {
     color: white;
@@ -355,22 +371,24 @@ figure,
 
   .block-image-bg {
     background: linear-gradient(140deg, rgba($home-primary, 0.92), rgba(desaturate(darken($home-primary, 15%), 10%), 0.92)), url(image-path('home/home.jpg'));
-    min-height: 500px;
     background-size: cover;
-    margin-bottom: $line-height-computed * 1.5;
+    // margin-bottom: $line-height-computed * 1.5;
     position: relative;
 
     h1 {
-      margin-top: $line-height-computed * 2;
-      margin-bottom: $line-height-computed * 2;
-      font-size: 68px;
+      margin-top: $line-height-computed * 1.5;
+      margin-bottom: $line-height-computed * 1.5;
+      font-size: 60px;
       line-height: 1.25;
-      font-weight: 200;
+      font-weight: 400;
+      font-style: italic;
+
     }
 
     .lead {
-      font-size: 26px;
-      font-weight: 400;
+      color: $home-secondary;
+      font-size: 32px;
+      line-height: 1.4;
     }
   }
 
