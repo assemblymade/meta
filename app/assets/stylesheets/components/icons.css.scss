@@ -113,7 +113,6 @@
 // LINE ICONS
 
 @font-face {
-
 	font-family: 'Simple-Line-Icons';
 	src: url(asset-path('Simple-Line-Icons.eot'));
 	src: url(asset-path('Simple-Line-Icons.eot?#iefix')) format('embedded-opentype'),
@@ -135,6 +134,7 @@
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+  vertical-align: middle;
 }
 
 /* Use the following CSS code if you want to have a class per icon */
@@ -640,7 +640,7 @@ you can use the generic selector below, but it's slower:
 	content: "\e001";
 }
 
-.navbar-nav [class*="icon-"] {
+.navbar-notifications [class*="icon-"] {
   font-size: 21px;
   position: relative;
   top: 1px;

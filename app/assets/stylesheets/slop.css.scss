@@ -100,7 +100,7 @@ $user-davidkaneda: #848C24;
 
   h2 {
     @extend .text-sans;
-    color: darken($gray-light, 8%);
+    color: $black;
     font-weight: 200;
     margin-bottom: $line-height-computed * 2;
     font-size: 42px;
