@@ -403,17 +403,17 @@ $tooltip-arrow-color: $tooltip-bg;
 
 $popover-bg:                    #fff;
 $popover-max-width:             400px;
-$popover-border-color:          rgba(0,0,0,.2);
-$popover-fallback-border-color: #ccc;
+$popover-border-color:          rgba(0,0,0,.1);
+$popover-fallback-border-color: $brand-divider;
 
 $popover-title-bg: darken($popover-bg, 3%);
 
-$popover-arrow-width: 10px;
+$popover-arrow-width: 8px;
 $popover-arrow-color: #fff;
 
 $popover-arrow-outer-width:          ($popover-arrow-width + 1);
-$popover-arrow-outer-color:          rgba($popover-border-color, 0.05);
-$popover-arrow-outer-fallback-color: darken($popover-fallback-border-color, 20%);
+$popover-arrow-outer-color:          rgba(0,0,0,.16);
+$popover-arrow-outer-fallback-color: $brand-divider;
 
 
 // Labels

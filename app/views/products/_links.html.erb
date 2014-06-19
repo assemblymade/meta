@@ -6,7 +6,8 @@
     </div>
     <div class="panel-body">
       <% unless @product.homepage_url.blank? %>
-        <a href="<%= @product.homepage_url %>" data-track="product.site.clicked">
+        <i class="icon-home dropdown-glyph"></i>
+        <a class="small" href="<%= @product.homepage_url %>" data-track="product.site.clicked">
           <strong><%= @product.homepage_url %></strong>
         </a>
       <% end %>
@@ -14,12 +15,12 @@
         <hr style="margin-top: 15px; margin-bottom: 15px;">
       <% end %>
       <% if @product.for_profit? && @product.repos.any? %>
-        <ul class="list-unstyled omega">
+        <ul class="list-unstyled omega small">
           <% @product.repos.each do |repo| %>
             <li>
-              <span class="icon icon-github" style="margin-right: 4px;"></span>
+              <i class="icon icon-github dropdown-glyph"></i>
               <a href="<%= repo.url %>" data-track="product.repo.clicked">
-                <strong><%= repo.name %></strong>
+                <%= repo.name %>
               </a>
             </li>
           <% end %>

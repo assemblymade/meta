@@ -185,7 +185,7 @@ var NotificationsList = React.createClass({
     }
 
     return (
-      <ul className="dropdown-menu">
+      <ul className="dropdown-menu" style={{"margin-top": 4}}>
         {productNodes}
         <li className="divider" />
         <li><a href={productsPath}>All Products</a></li>

@@ -83,13 +83,14 @@
       <input name="introduction" value="true" type="hidden">
       <input name="_method" value="patch" type="hidden">
       <div class="form-group" style="margin-bottom: 15px">
-        <label class="control-label omega" for="join-bio-editor">
+        <label class="control-label" for="join-bio-editor">
           Introduce yourself
         </label>
-        <small class="help-block alpha">
-          What skills can you contribute, how much time do you have have and what are you looking to get out of the experience?
-        </small>
+
         <textarea name="membership[bio]" id="join-bio-editor" class="form-control bio-editor" style="height: 100px" maxlength="200"></textarea>
+        <small class="help-block">
+          What skills can you contribute, how much time do you have and what are you looking to get out of the experience?
+        </small>
       </div>
       <div class="form-group" style="margin-bottom: 15px">
         <label for="join-interests">What are you interested in?</label>
@@ -101,7 +102,7 @@
           :id => 'join-interests',
           :multiple => true %>
       </div>
-      <button type="submit" class="btn btn-primary btn-sm btn-block" id="join-intro">Introduce yourself</button>
+      <button type="submit" class="btn btn-primary btn-block" id="join-intro">Introduce yourself</button>
     </form>
   <% end %>
 </script>
