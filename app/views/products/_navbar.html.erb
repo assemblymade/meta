@@ -53,7 +53,9 @@
             </a>
           <% end %>
           <div class="badge toggler-badge">
-            <%= @product.watchers.count %>
+            <a href="<%= product_watchers_path(@product) %>">
+              <%= @product.watchers.count %>
+            </a>
           </div>
         </div>
       </li>

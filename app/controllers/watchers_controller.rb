@@ -1,15 +1,9 @@
 class WatchersController < ApplicationController
-
-  respond_to :json
+  respond_to :json, :html
 
   def index
-    find_product!
-    @watchers = @product.watchers
+    set_product
+    @watchers = @product.watchers.order('lower(username)')
     respond_with(@watchers)
   end
-
-  def find_product!
-    @product = Product.find_by_slug(params.fetch(:product_id))
-  end
-
 end

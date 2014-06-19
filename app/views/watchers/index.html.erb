@@ -1,0 +1,46 @@
+<% title 'Watchers', @product.name %>
+
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
+
+<div class="page">
+  <div class="container">
+    <%= render 'products/alert' %>
+
+    <div class="page-header">
+      <h2 class="page-header-title">
+        <i class="icon-users text-muted" style="vertical-align: text-bottom; margin-right: 4px;"></i>
+        Watchers
+      </h2>
+    </div>
+
+    <div class="row">
+
+      <div class="col-xs-8">
+        <% @watchers.each_slice(2) do |users| %>
+          <div class="row" style="padding-top:15px;padding-bottom:15px;border-bottom:1px solid #d9d9d9;">
+            <% users.each do |user| %>
+              <div class="col-sm-1 col-xs-1">
+                <%= user_link(user) do %>
+                  <%= avatar_tag(user, 30) %>
+                <% end %>
+              </div>
+              <div class="col-sm-5 col-xs-5">
+                <p>
+                  <strong><%= user_link(user) do %><%= user.username%><% end %></strong>
+                  <span class="text-muted text-small"><%= user.bio %></span>
+                </p>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-xs-3 col-xs-offset-1">
+        <%= render 'products/sidebar' %>
+      </div><!-- .col-3 -->
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>
