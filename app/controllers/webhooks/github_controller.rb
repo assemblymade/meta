@@ -66,6 +66,7 @@ class Webhooks::GithubController < WebhookController
     if @wip.awardable?
       @wip.with_lock do
         @wip.submit_code!({ url: ref.url }, user)
+        # TODO: create activity
       end
     end
   end

@@ -18,7 +18,7 @@ var JoinTeam = React.createClass({
 
   setUpPopover: function(node) {
     node.popover({
-      trigger: 'click',
+      trigger: 'manual',
       placement: 'bottom',
       html: true,
       container: 'body',
@@ -38,6 +38,7 @@ var JoinTeam = React.createClass({
         return app.redirectTo('/login')
       }
 
+      $(this).popover('show')
       self.setUpChosen()
     })
   },
@@ -124,7 +125,7 @@ var JoinTeam = React.createClass({
 
   button: function() {
     if (this.state.is_member) {
-      if (this.props.membership.core_team) {
+      if (this.props.membership && this.props.membership.core_team) {
         return 'default disabled'
       } else {
         return 'default inactive'
@@ -173,7 +174,7 @@ var JoinTeam = React.createClass({
   },
 
   onLeave: function(e) {
-    if (this.props.membership.core_team) {
+    if (this.props.membership && this.props.membership.core_team) {
       return
     }
 

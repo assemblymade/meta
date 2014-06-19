@@ -45,7 +45,7 @@ var People = React.createClass({
     }
 
     var sortedMemberships = _.sortBy(filteredMemberships, function(m) {
-      return (self.props.currentUser.id === m.user.id ?
+      return (self.props.currentUser && self.props.currentUser.id === m.user.id ?
         '-1' :
         m.core_team ? '0' : '1') +
         m.user.username.toLowerCase()
