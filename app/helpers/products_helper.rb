@@ -10,7 +10,6 @@ module ProductsHelper
     dashboard
     discussions
     tasks
-    jobs
     posts
   ).each do |name|
     define_method("#{name}_controller?") { controller_name == name }

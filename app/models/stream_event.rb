@@ -59,10 +59,6 @@ class StreamEvent < ActiveRecord::Base
     def add_work_event!(params)
       create!(params.merge(verb: 'work'))
     end
-
-    def add_job_event!(params)
-      create!(params.merge(verb: 'job'))
-    end
   end
 
   def product_name

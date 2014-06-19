@@ -26,22 +26,11 @@ class ProductsController < ApplicationController
         track_event 'product.created', ProductAnalyticsSerializer.new(@product).as_json
         AsmMetrics.active_user(current_user)
       end
-      categories = {
-                    "Engineering" => "Architects, develops, and maintains software systems. Loves text editors, command lines and making products work.",
-                    "Front-end Development" => "Represents the intersection of Design and Engineering. Often works in HTML, CSS & Javascript implementing design and makeing it work with the system.",
-                    "Design" => "Blends communication, stylizing, and problem-solving through the use of type, space, and image. Loves pushing pixels, creating mockups and sweating the details of user interaction."
-                   }
-      categories.each do |category, description|
-        if @product.product_jobs.where(category: category).blank?
-          ProductJob.create(product_id: @product.id, user_id: current_user.id, category: category, description: description)
-        end
-      end
 
       @product.watch!(current_user)
       @product.upvote!(current_user, request.remote_ip)
       TransactionLogEntry.validated!(Time.current, @product, @product.id, @product.user.id, @product.user.id)
       @product.update_attributes main_thread: @product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
-
 
       flash[:new_product_callout] = true
     end
@@ -91,10 +80,6 @@ class ProductsController < ApplicationController
     authorize! :update, @product
     @product.update_attributes(product_params)
     respond_with(@product)
-  end
-
-  def jobs
-    @product_jobs = ProductJob.find(:all)
   end
 
   def follow
