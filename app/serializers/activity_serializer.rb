@@ -1,4 +1,6 @@
 class ActivitySerializer < ApplicationSerializer
+  include TippableSerializer
+
   attributes :verb
   has_one :actor
   has_one :subject

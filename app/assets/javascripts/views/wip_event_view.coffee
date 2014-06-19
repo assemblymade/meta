@@ -26,10 +26,15 @@ eventTypeToTemplate = (type)->
 class window.WipEventView extends Backbone.View
   className: 'timeline-item'
 
-  initialize: ->
+  initialize: (@options) ->
     @listenTo @model, 'change', @render
     @subviews = {
-      '.js-tips': new TipsView(tips: @model.get('tips'))
+      '.js-tips': new TipsView(
+          tips: @model.get('tips'),
+          tipsPath: @options.tipsPath,
+          viaType: @model.get('type'),
+          viaId: @options.id
+        )
     }
 
   template: ->

@@ -14,7 +14,7 @@ class PeopleController < ApplicationController
     @membership = @product.team_memberships.find_or_create_by!(user: current_user, is_core: false)
 
     membership = params[:membership]
-    interests = params[:membership][:interest_ids] unless membership.nil?
+    interests = params[:membership][:interests] unless membership.nil?
 
     updated_interests = update_interests(interests)
 
@@ -41,17 +41,24 @@ class PeopleController < ApplicationController
       membership = params[:membership]
 
       unless membership.nil?
-        interests = params[:membership][:interests]
-        bio = params[:membership][:bio]
+        interests = membership[:interests]
+        bio = membership[:bio]
       end
 
       update_interests(interests)
 
       @membership.update_attribute(:bio, bio)
+
+      if params[:introduction]
+        track_params = ProductAnalyticsSerializer.new(@product, scope: current_user).as_json
+        track_event 'product.team.introduced', track_params
+        introduce()
+      end
     end
 
     respond_to do |format|
       format.json { render json: @membership, serializer: TeamMembershipSerializer }
+      format.html { redirect_to request.referrer }
     end
   end
 
@@ -92,6 +99,14 @@ class PeopleController < ApplicationController
 
   def remove_interests(interests)
     @membership.team_membership_interests.destroy(interests)
+  end
+
+  def introduce
+    Activities::Introduce.publish!(
+      actor: @membership.user,
+      subject: @membership,
+      target: @product
+    )
   end
 
 end

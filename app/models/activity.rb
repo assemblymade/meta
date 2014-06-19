@@ -16,14 +16,21 @@ class Activity < ActiveRecord::Base
   end
 
   def streams
-    [actor, subject, target].compact.each_with_object(Set.new) do |o, set|
-      set.merge(o.interested) if o.respond_to?(:interested)
-    end.map {|o| ActivityStream.new(o) }
+    stream_targets.map {|o| ActivityStream.new(o) }
+  end
+
+  def stream_targets
+    [actor, target]
   end
 
   def publish
     streams.each do |stream|
       stream.push(self)
     end
+  end
+
+  # make this object tippable
+  def tip_receiver
+    actor
   end
 end

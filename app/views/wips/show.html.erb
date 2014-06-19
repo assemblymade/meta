@@ -161,10 +161,11 @@
   app.wipEvents = new WipEvents(<%== ActiveModel::ArraySerializer.new(@wip.events).to_json %>, {
     url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
   });
-
+  
   $(document).ready(function() {
     app.discussionView = new DiscussionView({
       el: $('#discussion-view-el'),
+      tipsPath: '<%= product_tips_path(@wip.product) %>',
       model: app.wip
     });
   })

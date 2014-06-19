@@ -5,7 +5,9 @@ class ChatController < ApplicationController
   def index
     find_product!
     @activity_stream = ActivityStream.new(@product).page(params[:top_id])
-    @activity_stream.each{|a| a.subject.readraptor_tag = :chat }
+    @activity_stream.each do |a|
+      a.subject.readraptor_tag = :chat if a.subject.try(:readraptor_tag)
+    end
 
     respond_to do |format|
       format.html do

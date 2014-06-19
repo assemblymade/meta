@@ -28,7 +28,7 @@ class window.TipsView extends Backbone.View
     }
 
   path: ->
-    @$el.data('tips-path')
+    @options.tipsPath || @$el.data('tips-path')
 
   totalCoins: ->
     _.reduce(@tips(), ((sum, tip) -> sum + tip.cents), 0)
@@ -75,7 +75,13 @@ class window.TipsView extends Backbone.View
     $.ajax(
       type: "POST"
       url: @path()
-      data: { tip: { add: @addCents } }
+      data: {
+        tip: {
+          add: @addCents,
+          via_type: @options.viaType,
+          via_id: @options.viaId
+        }
+      }
       dataType: 'json'
       complete: =>
         @$el.data('coins', @addCents)
@@ -83,9 +89,17 @@ class window.TipsView extends Backbone.View
     )
   , DEBOUNCE_TIMEOUT)
 
+# TODO: Remove this check and initialize Discussion as Backbone Views
+
 $(document).ready(->
   $('.js-tips').each ->
     $el = $(@)
-    view = new TipsView(el: $el)
+
+    view = new TipsView(
+      el: $el,
+      tipsPath: $el.attr('data-tips-path'),
+      viaType: $el.attr('data-via-type'),
+      viaId: $el.attr('data-via-id')
+    )
     view.render()
 )

@@ -4,7 +4,10 @@ class ActivityController < ApplicationController
     # this gets called to fetch an activity after it has been pushed into the browser. The fetch
     # is needed to generate the read raptor tracking id
     @activity = Activity.find(params[:id])
-    @activity.subject.readraptor_tag = :chat
+    case @activity.subject
+    when Event::Comment
+      @activity.subject.readraptor_tag = :chat
+    end
     render json: @activity, serializer: ActivitySerializer
   end
 

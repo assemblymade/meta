@@ -59,7 +59,8 @@
     var activityStreamView = new ActivityStreamView({
       el: $('.js-activity-stream'),
       collection: activityStream,
-      subjectId: app.wip.id
+      subjectId: app.wip.id,
+      tipsPath: "<%= product_tips_path(@product) %>"
     });
 
     // Initialize pusher

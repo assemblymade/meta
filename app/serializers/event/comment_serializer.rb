@@ -1,5 +1,6 @@
 class Event::CommentSerializer < EventSerializer
   include CoinHelper
+  include TippableSerializer
 
   def anchor
     "comment-#{object.number}"
@@ -15,13 +16,7 @@ class Event::CommentSerializer < EventSerializer
 
   def tip_path
     if object.id # This check is crazy, it's only if fake events get pushed into the stream (like maeby's first comment)
-      product_event_tips_path(object.product, object.id)
-    end
-  end
-
-  def tips
-    Rails.cache.fetch([object, 'tips']) do
-      ActiveModel::ArraySerializer.new(object.tips).as_json
+      product_tips_path(object.product, object.id)
     end
   end
 

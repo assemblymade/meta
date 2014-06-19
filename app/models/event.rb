@@ -41,6 +41,11 @@ class Event < ActiveRecord::Base
     false
   end
 
+  # make events tippable
+  def tip_receiver
+    user
+  end
+
   def editable?
     false
   end
@@ -91,6 +96,7 @@ class Event < ActiveRecord::Base
     users
   end
 
+  # TODO: Remove knowledge of tips
   def total_tips
     tips.sum(:cents)
   end

@@ -1,0 +1,42 @@
+<div class="media" {{#subject}}id="{{anchor}}" data-readraptor-track="{{readraptor_track_id}}"{{/subject}}>
+  <div class="pull-left">
+    <div class="marker marker-default">
+      <i class="glyphicon glyphicon-hand-right"></i>
+    </div>
+  </div>
+
+  <div class="media-body">
+    <div class="media-heading omega">
+      <div class="activity-body">
+        <div class="activity-actions">
+          <ul class="list-inline omega text-muted">
+            <li>
+              {{#actor}}
+                <a href="{{url}}" title="@{{username}}" class="chat-actor text-muted" style="font-weight: bold; color: #d3d3d3">
+                  @{{username}}
+                </a>
+                is new
+              {{/actor}}
+            </li>
+            {{#id}}
+              <li>
+                <div class="js-tips"
+                     data-tips-to="{{#actor}}{{username}}{{/actor}}"
+                     {{#target}}
+                       data-tips-path="{{url}}/tips"
+                       data-tips-product-id="{{id}}"
+                     {{/target}}>
+                </div>
+              </li>
+            {{/id}}
+          </ul>
+        </div>
+
+        <div class="media-object omega" style="margin-left: 10px;">
+          {{#subject}}{{bio}}{{/subject}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

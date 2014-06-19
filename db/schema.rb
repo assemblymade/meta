@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140610204411) do
+ActiveRecord::Schema.define(version: 20140618173903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,14 +125,12 @@ ActiveRecord::Schema.define(version: 20140610204411) do
     t.datetime "created_at"
   end
 
-  create_table "email_logs", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "email_logs", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id",    null: false
-    t.uuid     "email_id",   null: false
+    t.text     "key",        null: false
+    t.hstore   "params",     null: false
     t.datetime "created_at", null: false
   end
-
-  add_index "email_logs", ["user_id", "email_id"], name: "index_email_logs_on_user_id_and_email_id", using: :btree
 
   create_table "events", id: false, force: true do |t|
     t.uuid     "id",         null: false
@@ -434,13 +432,14 @@ ActiveRecord::Schema.define(version: 20140610204411) do
   add_index "team_memberships", ["user_id", "product_id"], name: "index_team_memberships_on_user_id_and_product_id", unique: true, using: :btree
 
   create_table "tips", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "product_id", null: false
-    t.uuid     "from_id",    null: false
-    t.uuid     "to_id",      null: false
-    t.uuid     "via_id",     null: false
-    t.integer  "cents",      null: false
+    t.uuid     "product_id",                      null: false
+    t.uuid     "from_id",                         null: false
+    t.uuid     "to_id",                           null: false
+    t.uuid     "via_id",                          null: false
+    t.integer  "cents",                           null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "via_type",   default: "Activity", null: false
   end
 
   add_index "tips", ["product_id", "from_id", "to_id", "via_id"], name: "index_tips_on_product_id_and_from_id_and_to_id_and_via_id", unique: true, using: :btree

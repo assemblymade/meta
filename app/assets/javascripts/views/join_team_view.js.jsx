@@ -74,17 +74,20 @@ var JoinTeam = React.createClass({
     // TODO: Move default bio someplace saner.
     var bio = "Hi! My name is Maeby. I do all of my design in Dreamweaver. What's version control?"
     var membership = this.props.membership
+    var bioEditor = $('#join-bio-editor')
 
     if (membership) {
-      if (membership.bio) {
-        bio = membership.bio
-      }
-
       chosenSelect.val(membership.interests)
       chosenSelect.trigger('chosen:updated')
+
+      if (membership.bio) {
+        bio = membership.bio
+
+        return $(bioEditor).val(bio)
+      }
     }
 
-    $('#join-bio-editor').attr({placeholder: bio})
+    $(bioEditor).attr({placeholder: bio})
   },
 
   componentDidMount: function() {

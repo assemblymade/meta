@@ -2,13 +2,13 @@ class Tip < ActiveRecord::Base
   belongs_to :product
   belongs_to :from, class_name: 'User'
   belongs_to :to,   class_name: 'User'
-  belongs_to :via,  class_name: 'Event', touch: true
+  belongs_to :via,  touch: true, polymorphic: true
 
-  def self.perform!(product, from, event, add_cents)
-    to = event.user
+  def self.perform!(product, from, via, add_cents)
+    to = via.tip_receiver
     created_at = Time.now
 
-    tip = Tip.find_or_initialize_by(product: product, from: from, to: to, via_id: event.id)
+    tip = Tip.find_or_initialize_by(product: product, from: from, to: to, via: via)
     tip.cents ||= 0
 
     tip.with_lock do
@@ -26,7 +26,7 @@ class Tip < ActiveRecord::Base
         created_at: created_at,
         product: product,
         action: 'credit',
-        work_id: event.id,
+        work_id: via.id,
         user_id: to.id,
         cents: add_cents
       )
@@ -36,7 +36,7 @@ class Tip < ActiveRecord::Base
         created_at: created_at,
         product: product,
         action: 'debit',
-        work_id: event.id,
+        work_id: via.id,
         user_id: from.id,
         cents: (-1 * add_cents)
       )

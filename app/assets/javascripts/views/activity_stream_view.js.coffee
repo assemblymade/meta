@@ -10,6 +10,7 @@ class window.ActivityStreamView extends Backbone.View
   initialize: (options)->
     @documentTitle = document.title
     @subjectId = options.subjectId
+    @tipsPath = options.tipsPath
 
     @subviews = []
 
@@ -23,7 +24,7 @@ class window.ActivityStreamView extends Backbone.View
     view.render() for view in @subviews
 
   buildSubviewForModel: (model, index) ->
-    view = new ActivityView(model: model, subjectId: @subjectId)
+    view = new ActivityView(model: model, subjectId: @subjectId, tipsPath: @tipsPath)
     @subviews.splice(index, 0, view)
 
     if index == 0

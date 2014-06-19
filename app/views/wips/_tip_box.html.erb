@@ -3,7 +3,7 @@
   data-balance="<%= @product_balance %>"
   data-tips-increment="100"
   data-tips-total="<%= event.total_tips %>"
-  data-tips-url="<%= product_event_tips_path(@product, event.id) %>">
+  data-tips-url="<%= product_tips_path(@product, event.id) %>">
 
   <% if @product_balance > 0 && event.user != current_user %>
     <span class="pull-right text-muted js-no-tips">

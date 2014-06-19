@@ -129,7 +129,7 @@ describe 'log entries' do
 
   context 'transfer entries from tipping' do
     let(:wip) { Task.make! product: product, user: wip_creator }
-    let(:comment) { Event::Comment.make! }
+    let(:comment) { Activity.make! }
     let(:from) { User.make! }
 
     it 'creates debit and credit when task is promoted' do
@@ -146,7 +146,7 @@ describe 'log entries' do
           product_id: product.id,
           action: 'credit',
           work_id: comment.id,
-          user_id: comment.user.id,
+          user_id: comment.actor.id,
           cents: 3
       )
       expect(

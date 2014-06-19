@@ -77,30 +77,33 @@
 
 <!-- TODO: use a form helper -->
 <script type="text/template" id="join-team-template">
-  <form role="form" style="width: 250px" method="post" action="<%= product_people_path(@product) %>">
-    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-    <input name="introduction" value="true" type="hidden">
-    <div class="form-group" style="margin-bottom: 15px">
-      <label class="control-label omega" for="join-bio-editor">
-        Introduce yourself
-      </label>
-      <small class="help-block alpha">
-        What skills can you contribute, how much time do you have have and what are you looking to get out of the experience?
-      </small>
-      <textarea name="bio" id="join-bio-editor" class="form-control bio-editor" style="height: 100px" maxlength="200"></textarea>
-    </div>
-    <div class="form-group" style="margin-bottom: 15px">
-      <label for="join-interests">What are you interested in?</label>
-      <% interest_filters = product_membership_interests(@product, true) %>
-      <%= select_tag 'membership[interest_ids][]',
-        options_for_select(interest_filters.map { |interest| ['@' + interest, interest]}),
-        'data-placeholder' => ' ',
-        :class => 'form-control chosen-select',
-        :id => 'join-interests',
-        :multiple => true %>
-    </div>
-    <button type="submit" class="btn btn-primary btn-sm btn-block" id="join-intro">Introduce yourself</button>
-  </form>
+  <% if current_user %>
+    <form role="form" style="width: 250px" method="post" action="<%= product_person_path(@product, current_user) %>">
+      <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+      <input name="introduction" value="true" type="hidden">
+      <input name="_method" value="patch" type="hidden">
+      <div class="form-group" style="margin-bottom: 15px">
+        <label class="control-label omega" for="join-bio-editor">
+          Introduce yourself
+        </label>
+        <small class="help-block alpha">
+          What skills can you contribute, how much time do you have have and what are you looking to get out of the experience?
+        </small>
+        <textarea name="membership[bio]" id="join-bio-editor" class="form-control bio-editor" style="height: 100px" maxlength="200"></textarea>
+      </div>
+      <div class="form-group" style="margin-bottom: 15px">
+        <label for="join-interests">What are you interested in?</label>
+        <% interest_filters = product_membership_interests(@product, true) %>
+        <%= select_tag 'membership[interests][]',
+          options_for_select(interest_filters.map { |interest| ['@' + interest, interest]}),
+          'data-placeholder' => ' ',
+          :class => 'form-control chosen-select',
+          :id => 'join-interests',
+          :multiple => true %>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm btn-block" id="join-intro">Introduce yourself</button>
+    </form>
+  <% end %>
 </script>
 
 <%# render 'products/status_message' %>

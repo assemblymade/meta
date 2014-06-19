@@ -54,10 +54,6 @@ class Event::Comment < Event
     true
   end
 
-  def interested
-    [wip.product]
-  end
-
   def sanitized_body
     Search::Sanitizer.new.sanitize(body)
   end

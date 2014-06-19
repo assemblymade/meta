@@ -261,9 +261,7 @@ ASM::Application.routes.draw do
       patch 'urgency', action: :urgency, as: :urgency
     end
 
-    resources :events, only: [] do
-      resources :tips, only: [:create]
-    end
+    resources :tips, only: [:create]
 
     resources :core_team_members
 

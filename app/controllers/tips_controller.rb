@@ -1,13 +1,15 @@
 class TipsController < ApplicationController
-  def create
-    @event = Event.joins(wip: :product).where('products.slug = ?', params[:product_id]).find(params[:event_id])
+  before_action :set_product
 
-    add_cents = params[:tip][:add].to_i
+  def create
+    @via = tip_params[:via_type].constantize.find(tip_params[:via_id])
+
+    add_cents = tip_params[:add].to_i
     if add_cents > 0
       @tip = Tip.perform!(
-        @event.wip.product,
+        @product,
         current_user,
-        @event,
+        @via,
         add_cents
       )
 
@@ -15,5 +17,9 @@ class TipsController < ApplicationController
     end
 
     render nothing: true, status: 200
+  end
+
+  def tip_params
+    params.require(:tip).permit(:add, :via_type, :via_id)
   end
 end

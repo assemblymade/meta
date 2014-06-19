@@ -6,8 +6,8 @@
 
     <div class="media-body" id="comment">
       <div class="js-markdown-editor js-dropzone">
-        <% if signed_in? %>
-          <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', rows: 1 %>
+      <% if signed_in? %>
+        <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', rows: 1 %>
       <% else %>
         <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', rows: 1, placeholder: "Introduce yourself, we'd love to hear from you", disabled: true %>
       <% end %>

@@ -223,10 +223,6 @@ class Wip < ActiveRecord::Base
     Wip::Updates.new(self)
   end
 
-  def interested
-    [product]
-  end
-
   # elasticsearch
   mappings dynamic: false do
     indexes :title,  analyzer: 'snowball'

@@ -10,7 +10,7 @@ class window.DiscussionView extends Backbone.View
   keys:
     'enter': 13
 
-  initialize: (options)->
+  initialize: (@options)->
     @eventDefaults =
       actor: (app.currentUser().toJSON() if app.isSignedIn())
       total_tips: 0
@@ -83,7 +83,12 @@ class window.DiscussionView extends Backbone.View
     @resetCommentForm()
 
   wipEventAdded: (wipEvent)->
-    view = new WipEventView(model: wipEvent)
+    # TODO: Initialize WipEventViews more like regular TipViews
+    view = new WipEventView(
+      model: wipEvent,
+      id: @model.get('id'),
+      tipsPath: @options.tipsPath
+    )
     el = view.render().el
     @$('.timeline,.discussion').append el
 

@@ -11,13 +11,19 @@ class window.ActivityView extends Backbone.View
     @listenTo(@model, 'change', @render)
     @subjectId = options.subjectId
     @subviews = {}
-    if subject = @model.get('subject')
-      @subviews['.js-tips'] = new TipsView(tips: subject.tips) if subject.tips
+
+    if tips = @model.get('tips') || @model.get('subject')?.tips
+      @subviews['.js-tips'] = new TipsView(
+        tips: tips,
+        tipsPath: options.tipsPath,
+        viaType: @model.get('verb'),
+        viaId: @model.get('id')
+      )
+
 
   render: =>
     @$el.html(JST[@model.get('type')].render(@templateData()))
     $('[data-readraptor-track]', @$el).readraptor()
-
     for selector, view of @subviews
       view.setElement(@$(selector))
       view.render()

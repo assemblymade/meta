@@ -56,6 +56,13 @@ Task.blueprint do
   deliverable { 'design' }
 end
 
+TeamMembership.blueprint do
+  user
+  product
+  is_core { false }
+  bio { Faker::Lorem.paragraph(1) }
+end
+
 User.blueprint do
   name     { Faker::Name.name }
   username { "#{Faker::Name.first_name.gsub(/\W/, '').downcase}#{sn}" }
