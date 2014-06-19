@@ -3,8 +3,9 @@ $hero-secondary: #CBCBBC;
 $text-copy: #353439;
 $text-accent: #BC9454;
 
-$home-primary: desaturate(darken($text-accent, 30%), 15%);
-$home-primary: desaturate(darken($brand-primary, 30%), 35%);
+// $home-primary: desaturate(darken($text-accent, 30%), 15%);
+// $home-primary: desaturate(darken($brand-primary, 35%), 20%);
+$home-primary: darken(#3E90CA, 30%);
 
 $product-helpful: lighten(#494d52, 7%);
 $product-family-table: darken(#83B4AD, 5%);
@@ -93,14 +94,6 @@ $user-davidkaneda: #848C24;
 
   .table {
     @extend .text-sans;
-  }
-
-  figure {
-    font-size: 14px;
-    font-style: italic;
-    color: $gray;
-    border-top: 1px dotted $brand-divider;
-    padding: 10px 0;
   }
 
   h2 {
@@ -295,11 +288,29 @@ a.card-colored:hover {
   margin-bottom: 60px;
 }
 
+figure,
+.figure {
+  font-size: $font-size-small;
+  font-style: italic;
+  color: $gray;
+  border-top: 1px dotted $brand-divider;
+  padding: 10px 0;
+}
+
+.figure-inverted {
+  color: desaturate(lighten($home-primary, 40%), 15%);
+  border-top: 1px dotted lighten($home-primary, 8%);
+
+  a {
+    color: white;
+  }
+}
+
 .block {
   background-color: white;
   z-index: 1;
   position: relative;
-  padding: 48px 0;
+  padding: 36px 0;
 }
 
 .block-inverted {
@@ -383,3 +394,54 @@ a.card-colored:hover {
     }
   }
 }
+
+.list-team {
+
+  h6 {
+    @extend .text-sans;
+    margin-top: $line-height-computed * 0.75;
+    text-transform: none;
+    letter-spacing: 0;
+
+    span,
+    span a {
+      color: $gray;
+      font-weight: normal;
+      font-size: 92.5%;
+    }
+  }
+
+  .team-person {
+
+  }
+}
+
+// @media (max-width: $screen-xs-max) {
+//   .seven-cols .col-md-1,
+//   .seven-cols .col-sm-1,
+//   .seven-cols .col-xs-1,
+//   .seven-cols .col-lg-1  {
+//     width: 100%;
+//     *width: 100%;
+//   }
+// }
+//
+// @media (min-width: $screen-sm-min) {
+//   .seven-cols .col-md-1,
+//   .seven-cols .col-sm-1,
+//   .seven-cols .col-xs-1,
+//   .seven-cols .col-lg-1  {
+//     width: 25%;
+//     *width: 25%;
+//   }
+// }
+
+// @media (min-width: $screen-md-min) {
+  .seven-cols .col-md-1,
+  .seven-cols .col-sm-1,
+  .seven-cols .col-xs-1,
+  .seven-cols .col-lg-1 {
+    width: 14.285714285714285714285714285714%;
+    *width: 14.285714285714285714285714285714%;
+  }
+// }

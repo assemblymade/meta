@@ -33,10 +33,11 @@ describe PeopleController do
   describe 'PATCH #update' do
     before do
       sign_in user
+      post :create, product_id: product.slug, format: :json
     end
 
     it 'updates a user' do
-      patch :update, product_id: product.slug, id: user.id, bio: 'foo', format: :json
+      patch :update, product_id: product.slug, id: user.id, membership: { bio: 'foo' }, format: :json
 
       expect(response).to be_successful
     end

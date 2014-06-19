@@ -92,6 +92,11 @@ class CommentsController < ApplicationController
     recipients = event.wip.watchers - excluded_users
 
     # register the main content article (no tag) + the email article (email tag) + chat
-    ReadRaptorDelivery.new(recipients, [nil, :email, :chat]).deliver_async(event)
+    RegisterArticleWithRecipients.perform_async(
+      recipients.map(&:id),
+      [nil, :email, :chat],
+      Event,
+      event.id
+    )
   end
 end

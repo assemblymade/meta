@@ -31,11 +31,28 @@ namespace :emails do
     end
   end
 
+  task :joined_team_no_work_yet => :environment do
+    User.find(TeamMembership.where('created_at < ?', 1.day.ago).group(:user_id).count.keys).each do |user|
+      if Task.won_by(user).empty? &&                          # no bounties won
+         Event::ReviewReady.where(user_id: user.id).empty? && # no work submitted
+         Wip::Worker.where(user_id: user.id).empty?           # no work started
+
+         # we'll only send this once per user. Even though they join multiple products
+         unless EmailLog.sent_to(user, :joined_team_no_work_yet).any?
+           EmailLog.log_send user, :joined_team_no_work_yet do
+             membership = user.team_memberships.order(created_at: :desc).first
+             UserMailer.delay.joined_team_no_work_yet membership.id
+           end
+         end
+      end
+    end
+  end
+
   namespace :digests do
 
     task :hourly => :environment do
       recently_active_users = User.
-        staff.
+        where(mail_preference: 'daily').
         where('last_request_at > ?', 2.hours.ago)
 
       recently_active_users.each do |user|

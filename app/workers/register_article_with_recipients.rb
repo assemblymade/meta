@@ -1,22 +1,26 @@
 require 'core_ext/time_ext'
 
-class ReadRaptorDelivery
+class RegisterArticleWithRecipients
+  include Sidekiq::Worker
   include Rails.application.routes.url_helpers
 
   attr_reader :recipients
 
-  def initialize(recipients, tags=[])
-    @recipients = recipients
+  def perform(recipient_ids, tags=[], entity_type, entity_id)
+    @recipients = User.find(recipient_ids)
     @tags = Array(tags)
+    @entity_type = entity_type
+    @entity_id = entity_id
+    deliver!
   end
 
-  def deliver_async(entity)
+  def deliver!
     return unless ENV['READRAPTOR_URL']
 
-    recipients.group_by{|u| u.mail_preference }.each do |preference, recipients|
+    @recipients.group_by{|u| u.mail_preference }.each do |preference, recipients|
       @tags.each do |tag|
         opts = {
-          key: ReadRaptorSerializer.serialize_entities(entity, tag).first,
+          key: ReadRaptorSerializer.serialize_entity(@entity_type, @entity_id, tag),
           recipients: recipients.map(&:id)
         }
 
@@ -28,7 +32,7 @@ class ReadRaptorDelivery
           }]
         end
 
-        ReadRaptor::RegisterArticleWorker.new.perform(opts)
+        ReadRaptor::RegisterArticleWorker.perform_async(opts)
       end
     end
   end

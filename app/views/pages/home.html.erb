@@ -1,171 +1,247 @@
-<% title "The world's platform for crowd-founding software products" %>
+<% title 'Assembly is a community of crowd-made startups' %>
 
-<header class="header-home">
-  <div class="nav-section">
+<%= render 'shared/navbar' %>
+
+<div class="page page-with-header page-home">
+
+  <div class="block block-inverted block-image-bg">
     <div class="container">
-      <nav class="col-6">
-        <a class="navbar-logo" href="<%= root_path %>">
-          <div class="logo-wordmark logo-wordmark-light">
-            Assembly
-          </div>
-        </a>
-        <a class="btn btn-see-through" href="<%= login_path %>">
-          Log in
-        </a>
-      </nav>
-    </div>
-  </div>
-  <div class="container">
-    <hgroup class="col-4">
-      <h1>Apps made by anyone, owned by everyone.</h1>
-      <h2>Assembly is an open platform for crowd-<i>founding</i> software products.</h2>
-    </hgroup>
-    <div class="sign-up col-2">
-      <div class="section facebook">
-        <div class="facebook-signin-form">
+      <h1>Assembly is a global community of <em class="inline-serif">crowd-made</em> startups.</h1>
 
-          <a class="btn btn-default btn-facebook btn-block btn-large facebook-signin">
-            <span>
-              Sign up with Facebook
-            </span>
-          </a>
+      <div class="row" style="padding: 24px 0">
+        <div class="col-xs-12">
+          <div class="section" style="margin-bottom: 36px;">
+            <div class="row">
+              <div class="col-xs-3">
+                <a href="<%= product_path('helpful') %>" class="card card-sm card-colored product-helpful">
+                  <div class="card-hero" style="background-image: url('http://cl.ly/image/173v2r04391P/Screen%20Shot%202014-05-10%20at%209.47.51%20AM.png');"></div>
+                  <div class="card-body">
+                    <div class="summary">
+                      <div class="summary-target">
+                        Support comes from people, not software
+                      </div>
+                      <p class="summary-name omega">
+                        Helpful
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </div>
 
-          <a class="btn btn-default btn-facebook btn-block btn-large facebook-busy" style="display: none">
-            <span>
-              Connecting...
-            </span>
-          </a>
+              <div class="col-xs-3">
+                <a href="<%= product_path('family-table') %>" class="card card-sm card-colored product-family-table">
+                  <div class="card-hero" style="background-image: url('http://f.cl.ly/items/3c3E0P371c2f3D1z3z3n/familytable.jpg');"></div>
+                  <div class="card-body">
+                    <div class="summary">
+                      <div class="summary-target">
+                        One place to organize the whole family
+                      </div>
+                      <p class="summary-name omega">
+                        Family Table
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </div>
 
-        </div>
+              <div class="col-xs-3">
+                <a href="<%= product_path('buckets') %>" class="card card-sm card-colored product-buckets">
+                  <div class="card-hero" style="background-image: url('http://f.cl.ly/items/3f402s282b3N201g3p3H/Logo.png');"></div>
+                  <div class="card-body">
+                    <div class="summary">
+                      <div class="summary-target">
+                        Manage content better
+                      </div>
+                      <p class="summary-name omega">
+                        Buckets
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </div>
 
-      </div>
+              <div class="col-xs-3">
+                <a href="<%= product_path('really-good-emails') %>" class="card card-sm card-colored product-really-good-emails">
+                  <div class="card-hero" style="background-image: url('http://cl.ly/image/1Z1a1N450G43/Screen%20Shot%202014-05-09%20at%201.02.18%20PM.png');"></div>
+                  <div class="card-body">
+                    <div class="summary">
+                      <div class="summary-target">
+                        The best Showcase of Product Emails
+                      </div>
+                      <p class="summary-name omega">
+                        Really Good Emails
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </div>
 
-      <div class="signin-or signin-or-light">
-        <span>OR</span>
-      </div>
+            </div><!-- .row -->
 
-      <div class="new-user">
-        <div class="email-signup">
-          <%= ajax_form_for(:user, url: new_user_registration_path, redirect: after_sign_up_path_for_user, html: { class: 'form-horizontal' }) do |f| %>
-            <%= hidden_field_tag 'user[follow_product]' %>
+            <figure class="figure-inverted" style="margin-top: 30px;">Four of many products currently being built collaboratively on Assembly. <a href="<%= discover_path %>">Explore more products &rarr;</a></figure>
 
-            <div class="form-group input-group-control">
-              <input type="text" class="form-control" name="user[username]" autocomplete="off" autofocus="true" placeholder="Choose a username">
-              <input type="email" class="form-control" name="user[email]" autocomplete="off" placeholder="Your email">
-              <input type="password" class="form-control" name="user[password]" placeholder="Create a password">
-            </div>
+          </div><!-- .section -->
 
-            <div class="sign-up-submit">
-              <button class="btn btn-large btn-default btn-block" data-disable-with="Signing up...">
-                Sign up
-              </button>
+        </div><!-- .col-* -->
+      </div><!-- .row -->
 
-              <%= render 'users/sessions/disclaimer' %>
-            </div>
-          <% end %>
-        </div>
+      <p class="lead">A <em class="inline-serif">crowd-made</em> startup is a software product built and owned by its makers, together. Everyone can make an impact, and success is shared equitably. Without the limitations of geography, time, and logistics, a crowd-made startup connects talented minds to build great products.</p>
+    </div><!-- .container -->
+  </div><!-- .block -->
 
-        <div class="facebook-signup-form" style="display: none">
-          <div class="user medium light">
-            <div class="avatar">
-              <img src="//www.gravatar.com/avatar/default?s=40">
-            </div>
-            <div class="name"></div>
-            <div class="location"></div>
-          </div>
-
-          <%= ajax_form_for(:user, url: new_user_registration_path, redirect: after_sign_up_path_for_user) do |f| %>
-            <%= f.hidden_field :facebook_uid %>
-            <%= f.hidden_field :extra_data %>
-            <%= f.hidden_field :location %>
-            <%= f.hidden_field :name %>
-            <%= hidden_field_tag 'user[follow_product]' %>
-
-            <div class="form-group input-group-control">
-              <input type="text" class="form-control" id="user_username" name="user[username]" autocomplete="off" autofocus="true" placeholder="Choose a username">
-              <input type="email" class="form-control" id="user_email" name="user[email]" autocomplete="off" placeholder="Your email">
-            </div>
-
-            <div class="sign-up-submit">
-              <button class="btn btn-large btn-default btn-block">
-                Sign up
-              </button>
-
-              <%= render 'users/sessions/disclaimer' %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
-
-<% ab_test(SplitTests::HOMEPAGE_VARIATION, 'three-features', 'how-it-works') do |variation| %>
-  <script>analytics.track('home.viewed', {"variation": "<%= variation %>"});</script>
-  <% if variation == 'how it works' %>
-    <div class="container">
-      <div class="feature-list">
-        <center class="feature row">
-          <h2>How it works</h2>
-          <div class="col-4 col-offset-1">
-            <p>
-              Designers and developers all over the world openly develop real software products on Assembly. At the end of every month revenue is collected and the proceeds are split among the people that built it.
-            </p>
-          </div>
-        </center>
-      </div>
-    </div>
-  <% else %>
-  <div class="container">
-      <div class="feature-list">
-        <center class="feature row">
-          <h2>Make something you care about</h2>
-          <div class="col-4 col-offset-1">
-            <p>
-              People share their best ideas for SAAS apps to mobile apps on Assembly.
-              <br/>
-              Jump-in and help code and design the ones you love or share your own.
-            </p>
-          </div>
-        </center>
-
-        <center class="feature row">
-          <h2>Build greater things—together</h2>
-          <div class="col-4 col-offset-1">
-            <p>
-              Never build alone again. Collaborate when and where you want with a community of great developers and designers all around the world.
-            </p>
-          </div>
-        </center>
-
-        <center class="feature row">
-          <h2>Learn new skills &amp; share in success</h2>
-          <div class="col-4 col-offset-1">
-            <p>
-              Development is open so you can tackle new challenges. Assembly transparently splits apps' profits at the end of every month with everyone that built it.
-            </p>
-          </div>
-        </center>
-      </div>
-    </div>
-  <% end %>
-<% end %>
-
-<div class="call-to-action">
   <div class="container">
     <div class="row">
-      <h3 class="col-4"><strong>Join Assembly.</strong> It takes less than a minute.</h3>
-      <div class="col-2">
-        <a class="btn btn-large btn-primary btn-accent btn-block pull-right" href="<%= new_user_registration_path %>">Sign up</a>
+      <div class="col-xs-12">
+
+        <div class="section section-r\uled" style="margin-bottom: 64px;">
+          <h2 class="text-center">Build differently</h2>
+
+          <div class="row">
+            <div class="col-xs-4 text-right" style="margin-top: 20px;">
+              <h6>Traditional companies</h6>
+              <ul class="list-unstyled list-ruled text-sans">
+                <li>Owned by investors and founders</li>
+                <li>Complex organizational structure</li>
+                <li>Most work happens in the office,<br>during the day</li>
+                <li>Employment contracts</li>
+              </ul>
+            </div>
+
+            <div class="col-xs-4">
+              <div class="card card-lg text-center">
+                <div class="card-body">
+                  <h6 class="text-serif">Assembly startups</h6>
+                  <ul class="list-unstyled list-ruled text-success omega">
+                    <li>Owned by everyone</li>
+                    <li>Everyone does the work they do best</li>
+                    <li>Products are built around-the-clock by distributed teams</li>
+                    <li>Revenue is split equitable between contributors</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-4 text-cente\r" style="margin-top: 20px;">
+              <h6>Side projects</h6>
+              <ul class="list-unstyled list-ruled text-sans">
+                <li>Owned by their maker</li>
+                <li>One-person team</li>
+                <li>Work happens at home, on nights<br>and weekends</li>
+                <li>Revenue is rare</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- <hr style="margin: 36px 0;">
+          <p class="lead text-center omega">The internet has broken barriers and leveled the playing field across industries. Assembly aims to accelerate that shift and connect talented people around the world to make an impact together. Since we see this as a better way to build a company, we’re also building Assembly openly and transparently on Assembly. <a href="#">Check out the project &rarr;</a></p> -->
+        </div>
+
+      </div><!-- .col-* -->
+    </div><!-- .row -->
+
+  </div><!-- .container -->
+
+  <div class="block block-colored block-bordered" style="margin-bottom: 48px;">
+    <div class="container">
+      <div class="row">
+        <h3 class="col-xs-8 alpha omega text-muted" style="margin-top: 4px;"><strong>Join Assembly.</strong> It takes less than a minute.</h3>
+        <div class="col-xs-4">
+          <a class="btn btn-success btn-block" href="<%= new_user_registration_path %>">Join our community of makers</a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<center class="container">
-  <div class="row">
-    <p class="email-block">Have any questions or concerns? <a href="mailto:assembly@helpful.io">Shoot us an email</a>.</p>
+  <div class="container">
+    <div class="section">
+      <h2 class="text-center">Build transparently</h2>
+
+      <div class="row" style="margin-bottom: 64px;">
+        <div class="col-xs-5 col-xs-offset-1">
+          <p class="omega">The internet has broken barriers and leveled the playing field across industries. Assembly aims to accelerate that shift and connect talented people around the world to make an impact together.</p>
+        </div>
+        <div class="col-xs-5">
+          <p class="omega">Since we see this as a better way to build a company, we’re also building Assembly openly and transparently on Assembly. <a href="<%= product_path('meta') %>">Check out the Assembly Meta project &rarr;</a></p>
+        </div>
+      </div>
+
+      <div class="row seven-cols text-center list-team" style="margin-bottom: 16px">
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('mdeiters') %>">
+            <!-- <%= avatar_tag(User.find_by_username('mdeiters'), 400, :class => 'img-responsive img-circle') %> -->
+            <%= image_tag("/assets/team/matt.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Matt Deiters<br><span><a href="<%= user_path('mdeiters') %>">@mdeiters</a></span></h6>
+        </div>
+
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('whatupdave') %>">
+            <!-- <%= avatar_tag(User.find_by_username('whatupdave'), 400, :class => 'img-responsive img-circle') %> -->
+            <%= image_tag("/assets/team/dave.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Dave Newman<br><span><a href="<%= user_path('whatupdave') %>">@whatupdave</a></span></h6>
+        </div>
+
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('chrislloyd') %>">
+            <!-- <%= avatar_tag(User.find_by_username('chrislloyd'), 400, :class => 'img-responsive img-circle') %> -->
+            <%= image_tag("/assets/team/chris.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Chris Lloyd<br><span><a href="<%= user_path('chrislloyd') %>">@chrislloyd</a></span></h6>
+        </div>
+
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('jessedodds') %>">
+            <!-- <%= avatar_tag(User.find_by_username('jessedodds'), 400, :class => 'img-responsive img-circle') %> -->
+            <%= image_tag("/assets/team/jesse.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Jesse Dodds<br><span><a href="<%= user_path('jessedodds') %>">@jessedodds</a></span></h6>
+        </div>
+
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('vanstee') %>">
+            <!-- <%= avatar_tag(User.find_by_username('vanstee'), 400, :class => 'img-responsive img-circle') %> -->
+            <%= image_tag("/assets/team/patrick.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Patrick Van Stee<br><span><a href="<%= user_path('vanstee') %>">@vanstee</a></span></h6>
+        </div>
+
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('awwstn') %>">
+            <!-- <%= avatar_tag(User.find_by_username('awwstn'), 400, :class => 'img-responsive img-circle') %> -->
+            <%= image_tag("/assets/team/austin.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Austin Smith<br><span><a href="<%= user_path('awwstn') %>">@awwstn</a></span></h6>
+        </div>
+
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('pletcher') %>">
+            <!-- <%= avatar_tag(User.find_by_username('pletcher'), 400, :class => 'img-responsive img-circle') %> -->
+            <%= image_tag("/assets/team/pletcher.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Charles Pletcher<br><span><a href="<%= user_path('pletcher') %>">@pletcher</a></span></h6>
+        </div>
+
+      </div>
+
+      <figure style="margin-bottom: 36px;">The team building Assembly.</figure>
+
+    </div>
   </div>
-</center>
 
-<%= render 'shared/deprecated_footer' %>
+  <!-- <div class="block block-bordered" style="margin-bottom: 36px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-8">
+
+        </div>
+
+        <div class="col-xs-4">
+
+        </div>
+    </div>
+  </div> -->
+
+</div><!-- .page -->
+
+<%= render 'shared/footer' %>

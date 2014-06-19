@@ -5,15 +5,12 @@ class MilestonesController < ApplicationController
 
   def index
     @upgrade_stylesheet = true
-    milestones = case params[:filter]
+    @milestones = case params[:filter]
       when 'closed'
         @product.milestones.closed
       else
         @product.milestones.open
-      end
-
-    @milestones_with_feature_images = milestones.with_images.sort_by{|m| -m.multiplier }
-    @milestones = milestones.without_images.sort_by{|m| -m.multiplier }
+      end.sort_by{|m| -m.multiplier }
   end
 
   def new

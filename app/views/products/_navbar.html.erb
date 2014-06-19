@@ -11,10 +11,10 @@
           Chat
         </a>
       </li>
-
-      <li class="<%= "active" if discussions_controller? %>">
-        <a href="<%= product_discussions_path(@product) %>">
-          Discussions
+      
+      <li class="<%= "active" if milestones_controller? %>">
+        <a href="<%= product_milestones_path(@product) %>">
+          Projects
         </a>
       </li>
 
@@ -24,9 +24,9 @@
         </a>
       </li>
 
-      <li class="<%= "active" if milestones_controller? %>">
-        <a href="<%= product_milestones_path(@product) %>">
-          Projects
+      <li class="<%= "active" if discussions_controller? %>">
+        <a href="<%= product_discussions_path(@product) %>">
+          Discussions
         </a>
       </li>
 
@@ -105,5 +105,3 @@
     </form>
   <% end %>
 </script>
-
-<%# render 'products/status_message' %>

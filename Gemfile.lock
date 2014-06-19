@@ -76,6 +76,7 @@ GEM
       faraday_middleware (>= 0.8, < 0.10)
       multi_json (~> 1.0)
     arel (5.0.1.20140414130214)
+    autotest-standalone (4.5.11)
     aws-sdk (1.11.1)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
@@ -409,6 +410,7 @@ DEPENDENCIES
   active_model_serializers
   active_record_query_trace
   analytics-ruby (< 1.0)
+  autotest-standalone
   aws-sdk (~> 1.0)
   bootstrap-kaminari-views
   bootstrap-sass

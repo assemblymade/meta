@@ -9,6 +9,8 @@ var People = React.createClass({
             selected={this.state.selected}
             onFilter={this.onFilter} />
         <hr/>
+        <p>Tip: You can use @mentions to get the attention of {this.filterLabel()} in chat or Bounties.</p>
+        <hr/>
         <PeopleList
             memberships={this.state.filteredMemberships}
             selected={this.state.selected}
@@ -50,6 +52,14 @@ var People = React.createClass({
     })
 
     this.setState({ filteredMemberships: sortedMemberships, selected: interest });
+  },
+
+  filterLabel: function() {
+    if (this.state.selected) {
+      return (<span> the <a href="javascript:;">@{this.state.selected}</a> team</span>)
+    } else {
+      return 'these teams'
+    }
   }
 })
 
@@ -286,7 +296,7 @@ var BioEditor = React.createClass({
   editButton: function() {
     return (
       <div className="btn-group btn-group-sm">
-        <a className="btn btn-link" style={{'box-shadow': 'none'}} onClick={this.makeEditable}>Edit</a>
+        <a className="btn btn-link" style={{'box-shadow': 'none'}} onClick={this.makeEditable}>Edit profile</a>
       </div>
     )
   },

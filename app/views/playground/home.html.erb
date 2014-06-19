@@ -1,4 +1,4 @@
-<% title 'Welcome to Assembly' %>
+<% title 'Assembly is a community of crowd-made startups' %>
 
 <%= render 'shared/navbar' %>
 
@@ -10,7 +10,7 @@
 
       <div class="row" style="padding: 24px 0">
         <div class="col-xs-12">
-          <div class="section">
+          <div class="section" style="margin-bottom: 36px;">
             <div class="row">
               <div class="col-xs-3">
                 <a href="<%= product_path('helpful') %>" class="card card-sm card-colored card-p\roduct product-helpful">
@@ -77,6 +77,9 @@
               </div>
 
             </div><!-- .row -->
+
+            <figure class="figure-inverted" style="margin-top: 30px;">Four of many products currently being built collaboratively on Assembly. <a href="<%= discover_path %>">Explore more products &rarr;</a></figure>
+
           </div><!-- .section -->
 
         </div><!-- .col-* -->
@@ -90,7 +93,7 @@
     <div class="row">
       <div class="col-xs-12">
 
-        <div class="section">
+        <div class="section section-r\uled" style="margin-bottom: 64px;">
           <h2 class="text-center">Build differently</h2>
 
           <div class="row">
@@ -129,8 +132,8 @@
             </div>
           </div>
 
-          <hr style="margin: 36px 0;">
-          <p class="lead text-center omega">Together, we can work harder and build better software. As we learn together and challenge one another, we’re also maximizing serendipitous interactions between talented people.<br><strong>It’s a new way of looking at entrepreneurship.</strong></p>
+          <!-- <hr style="margin: 36px 0;">
+          <p class="lead text-center omega">The internet has broken barriers and leveled the playing field across industries. Assembly aims to accelerate that shift and connect talented people around the world to make an impact together. Since we see this as a better way to build a company, we’re also building Assembly openly and transparently on Assembly. <a href="#">Check out the project &rarr;</a></p> -->
         </div>
 
       </div><!-- .col-* -->
@@ -138,18 +141,97 @@
 
   </div><!-- .container -->
 
-
-  <!-- <div class="block block-colore\d block-bordere\d" style="margin-bottom: 36px;">
+  <div class="block block-colored block-bordered" style="margin-bottom: 48px;">
     <div class="container">
+      <div class="row">
+        <h3 class="col-xs-8 alpha omega text-muted" style="margin-top: 4px;"><strong>Join Assembly.</strong> It takes less than a minute.</h3>
+        <div class="col-xs-4">
+          <a class="btn btn-success btn-block" href="<%= new_user_registration_path %>">Join our community of makers</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+      <h2 class="text-center">Build transparently</h2>
+
+      <div class="row" style="margin-bottom: 64px;">
+        <div class="col-xs-5 col-xs-offset-1">
+          <p class="omega">The internet has broken barriers and leveled the playing field across industries. Assembly aims to accelerate that shift and connect talented people around the world to make an impact together.</p>
+        </div>
+        <div class="col-xs-5">
+          <p class="omega">Since we see this as a better way to build a company, we’re also building Assembly openly and transparently on Assembly. <a href="<%= product_path('meta') %>">Check out the Assembly Meta project &rarr;</a></p>
+        </div>
+      </div>
+
+      <div class="row seven-cols text-center list-team" style="margin-bottom: 16px">
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('mdeiters') %>">
+            <%= image_tag("/assets/team/matt.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Matt Deiters<br><span><a href="<%= user_path('mdeiters') %>">@mdeiters</a></span></h6>
+        </div>
+
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('whatupdave') %>">
+            <%= image_tag("/assets/team/dave.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Dave Newman<br><span><a href="<%= user_path('whatupdave') %>">@whatupdave</a></span></h6>
+        </div>
+
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('chrislloyd') %>">
+            <%= image_tag("/assets/team/chris.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Chris Lloyd<br><span><a href="<%= user_path('chrislloyd') %>">@chrislloyd</a></span></h6>
+        </div>
+
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('jessedodds') %>">
+            <%= image_tag("/assets/team/jesse.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Jesse Dodds<br><span><a href="<%= user_path('jessedodds') %>">@jessedodds</a></span></h6>
+        </div>
+
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('vanstee') %>">
+            <%= image_tag("/assets/team/patrick.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Patrick Van Stee<br><span><a href="<%= user_path('vanstee') %>">@vanstee</a></span></h6>
+        </div>
+
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('awwstn') %>">
+            <%= image_tag("/assets/team/austin.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Austin Smith<br><span><a href="<%= user_path('awwstn') %>">@awwstn</a></span></h6>
+        </div>
+
+        <div class="col-xs-1 team-person">
+          <a href="<%= user_path('pletcher') %>">
+            <%= image_tag("/assets/team/pletcher.png", :class => "img-responsive img-circle") %>
+          </a>
+          <h6>Charles Pletcher<br><span><a href="<%= user_path('pletcher') %>">@pletcher</a></span></h6>
+        </div>
+
+      </div>
+
+      <figure style="margin-bottom: 36px;">The team building Assembly.</figure>
 
     </div>
-  </div> -->
+  </div>
 
-  <!-- <div class="container">
-    <div class="row">
-      <div class="col-xs-8 col-xs-offset-2">
-        <h5 class="text-center text-large">Magic happens when we work together. We’re smarter and more driven. We move faster, think bigger, and go further.</h5>
-      </div>
+  <!-- <div class="block block-bordered" style="margin-bottom: 36px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-8">
+
+        </div>
+
+        <div class="col-xs-4">
+
+        </div>
     </div>
   </div> -->
 

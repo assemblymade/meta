@@ -1,9 +1,5 @@
 class PagesController < ApplicationController
 
-  def home
-    @deprecated_stylesheet = true
-  end
-
   def sabbaticals
   end
 

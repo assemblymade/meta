@@ -101,6 +101,7 @@ end
 
 group :test do
   gem 'codeclimate-test-reporter', require: nil
+  gem 'autotest-standalone'
 end
 
 group :production do

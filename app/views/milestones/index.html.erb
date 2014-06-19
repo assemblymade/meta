@@ -4,7 +4,7 @@
 
 <div class="page">
   <div class="container">
-    <%= render 'products/status_message' %>
+    <%= render 'products/alert' %>
 
     <div class="page-header">
       <div class="pull-right">
@@ -19,19 +19,19 @@
         <ul class="list-inline list-inline-piped">
           <li>
             <a href="<%= product_milestones_path(@product) %>">
-              <%= pluralize @product.milestones.open.count, 'active project' %>
+              <%= @product.milestones.open.count %> open
             </a>
           </li>
           <li>
             <a href="<%= product_milestones_path(@product, filter: 'closed') %>">
-              <%= pluralize @product.milestones.closed.count, 'completed project' %>
+              <%= @product.milestones.closed.count %> closed
             </a>
           </li>
         </ul>
       </div>
     </div>
 
-    <% if @milestones_with_feature_images.empty? && @milestones.empty? %>
+    <% if @milestones.empty? %>
       <div class="row">
         <div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
           <div class="well well-lg omega">
@@ -44,25 +44,46 @@
         </div>
       </div>
     <% else %>
-      <div class="row">
-        <% @milestones_with_feature_images.each do |milestone| %>
-          <div class="col-md-3 col-xs-3">
-            <%= render 'milestones/milestone', milestone: milestone %>
-          </div>
-        <% end %>
-      </div>
-
-      <% if @milestones_with_feature_images.any? && @milestones.any? %>
-        <hr>
-      <% end %>
-
-      <div class="row">
+      <table class="table">
         <% @milestones.each do |milestone| %>
-          <div class="col-md-3 col-xs-3">
-            <%= render 'milestones/milestone', milestone: milestone %>
-          </div>
+          <% cache [milestone, milestone.wip] do %>
+            <tr>
+              <td>
+                <% if urgency = milestone.urgency %>
+                  <span class="label label-<%= urgency.slug %>"><%= urgency.label %></span>
+                <% end %>
+              </td>
+              <td>
+                <a href="<%= product_milestone_path(milestone.product, milestone.wip) %>"><strong><%= milestone.wip.title %></strong></a>
+              </td>
+              <td>
+                <% if milestone.milestone_images.any? %>
+                  <% url = File.join(firesize_url, "60x60", "g_north", "frame_0", URI.escape(milestone.feature_image.attachment.url)) %>
+                  <%= image_tag url, width: 60, height: 60 %>
+                <% end %>
+              </td>
+              <td>
+                <strong class="text-success"><%= milestone.tasks.closed.count %></strong>
+                <span class="text-muted">
+                  /
+                  <%= milestone.tasks.count %>
+                </span>
+              </td>
+              <td>
+
+                  <div class="progress omega" style="min-width:200px">
+                    <div class="progress-bar progress-bar-success" style="width:<%= number_to_percentage(milestone.progress * 100, precision: 0) %>">
+                      <% if milestone.progress > 0 %>
+                        <%= number_to_percentage(milestone.progress * 100, precision: 0) %>
+                      <% end %>
+                    </div>
+
+                  </div>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
-      </div>
+      </table>
     <% end %>
   </div>
 </div>
