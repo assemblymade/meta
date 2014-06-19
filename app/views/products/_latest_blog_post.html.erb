@@ -1,7 +1,7 @@
 <div class="alert alert-info page-alert">
   <% if signed_in? && can?(:update, @product) %>
-    <a class="btn btn-default btn-sm pull-right" href="<%= new_product_post_path(@product) %>">
-      Update
+    <a class="btn btn-default btn-sm pull-right" data-toggle="tooltip" data-placement="top" title="Update Status" href="<%= new_product_post_path(@product) %>">
+      <i class="icon-note"></i>
     </a>
   <% end %>
   <p>

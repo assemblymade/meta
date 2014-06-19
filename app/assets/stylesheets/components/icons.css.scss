@@ -152,6 +152,7 @@ you can use the generic selector below, but it's slower:
 	text-transform: none;
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
+  vertical-align: middle;
 }
 .icon-user-female:before {
 	content: "\e000";
@@ -642,6 +643,4 @@ you can use the generic selector below, but it's slower:
 
 .navbar-notifications [class*="icon-"] {
   font-size: 21px;
-  position: relative;
-  top: 1px;
 }
