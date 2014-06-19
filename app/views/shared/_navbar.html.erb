@@ -64,17 +64,20 @@
               <ul class="dropdown-menu">
                 <li>
                   <a href="<%= user_path(current_user) %>">
-                    View Profile
+                    <i class="icon-user dropdown-glyph"></i>
+                    Profile
                   </a>
                 </li>
                 <li>
                   <a href="<%= edit_user_path(current_user) %>">
+                    <i class="icon-settings dropdown-glyph"></i>
                     Settings
                   </a>
                 </li>
                 <li class="divider"></li>
                 <li>
                   <a href="<%= destroy_user_session_path %>" data-method="delete">
+                    <i class="icon-logout dropdown-glyph"></i>
                     Log out
                   </a>
                 </li>
