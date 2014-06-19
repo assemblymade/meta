@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140618173903) do
+ActiveRecord::Schema.define(version: 20140619214525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -284,28 +284,6 @@ ActiveRecord::Schema.define(version: 20140618173903) do
     t.text     "variation"
   end
 
-  create_table "product_jobs", id: false, force: true do |t|
-    t.uuid     "id",          null: false
-    t.uuid     "user_id",     null: false
-    t.uuid     "product_id",  null: false
-    t.string   "category"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "slug"
-  end
-
-  add_index "product_jobs", ["slug"], name: "index_product_jobs_on_slug", unique: true, using: :btree
-
-  create_table "product_roles", id: false, force: true do |t|
-    t.uuid     "id",             null: false
-    t.uuid     "product_job_id", null: false
-    t.uuid     "user_id",        null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.uuid     "product_id",     null: false
-  end
-
   create_table "product_subscriptions", id: false, force: true do |t|
     t.uuid     "id",         null: false
     t.uuid     "product_id", null: false
@@ -319,7 +297,7 @@ ActiveRecord::Schema.define(version: 20140618173903) do
     t.uuid     "id",                                    null: false
     t.string   "slug",                                  null: false
     t.string   "name",                                  null: false
-    t.string   "pitch"
+    t.string   "pitch"]
     t.text     "description"
     t.datetime "submitted_at"
     t.datetime "evaluated_at"

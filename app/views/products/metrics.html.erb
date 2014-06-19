@@ -1,5 +1,5 @@
-<%= render 'shared/deprecated_navbar' %>
-<%= render 'products/deprecated_navbar' %>
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
 
 <% cache ['v1', @product], expires_in: 12.hours do %>
   <div class="container">
@@ -50,4 +50,4 @@
   </div>
 <% end %>
 
-<%= render 'shared/deprecated_footer' %>
+<%= render 'shared/footer' %>

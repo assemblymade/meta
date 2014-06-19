@@ -20,7 +20,7 @@ Upvote it. Each upvote increases the number of App Coins assigned to a bounty, a
 title: Where can I request features for Assembly?
 ---
 
-You can [submit a bounty](assemblymade.com/meta/wips), or you can [hop into our chat](assemblymade.com/meta/discuss) and let us know.
+You can [submit a bounty](assemblymade.com/meta/wips), or you can [hop into our chat](assemblymade.com/meta/chat) and let us know.
 
 ---
 title: How can I change my account settings?

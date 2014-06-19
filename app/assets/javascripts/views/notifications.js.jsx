@@ -171,7 +171,7 @@ var NotificationsList = React.createClass({
         badge = <span className="badge pull-right">{entry.count}</span>
       }
 
-      var url = entry.product.url + '/discuss';
+      var url = entry.product.url + '/chat';
 
       return <li key={entry.product.slug}>
         <a href={url}>{badge} {entry.product.name}</a>

@@ -13,7 +13,7 @@ class RoomsController < ProductController
     @room = @product.rooms.find_by(number: params[:number])
 
     if @room.nil? || @room.root?
-      redirect_to product_discuss_path(@product)
+      redirect_to product_chat_path(@product)
     else
       redirect_to [@product, @room.target]
     end

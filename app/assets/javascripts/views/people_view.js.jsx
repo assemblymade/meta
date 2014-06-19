@@ -196,7 +196,7 @@ var PeopleList = React.createClass({
             </a>
           </strong>
 
-          <span className="text-muted">
+          <span className="text-muted text-small">
             {user.bio ? '—' + user.bio : ''}
           </span>
         </p>
