@@ -153,6 +153,10 @@ you can use the generic selector below, but it's slower:
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
   vertical-align: middle;
+
+  &.dropdown-glyph {
+    vertical-align: text-bottom;
+  }
 }
 .icon-user-female:before {
 	content: "\e000";
