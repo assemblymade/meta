@@ -97,7 +97,7 @@ var Notifications = React.createClass({
       return (<span />);
     }
     badge = null;
-    var classes = "glyphicon glyphicon-bell";
+    var classes = "icon-bell";
     var total = this.badgeCount();
     if (total > 0) {
       badge = <span className="badge badge-notification">{total}</span>
