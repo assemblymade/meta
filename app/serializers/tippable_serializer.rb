@@ -2,15 +2,18 @@ module TippableSerializer
   extend ActiveSupport::Concern
 
   included do
-    attributes :total_tips
-    has_many :tips
+    attributes :total_tips, :tips
   end
 
   def total_tips
-    tips.sum(:cents)
+    raw_tips.sum(:cents)
+  end
+
+  def raw_tips
+    Tip.where(via: object)
   end
 
   def tips
-    Tip.where(via: object)
+    ActiveModel::ArraySerializer.new(raw_tips).as_json
   end
 end

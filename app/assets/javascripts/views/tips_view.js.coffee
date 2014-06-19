@@ -24,14 +24,20 @@ class window.TipsView extends Backbone.View
       "signed_in?": app.isSignedIn()
       "current_user_has_coins?": @currentUserHasCoins()
       "current_user_owner?": @currentUserOwner()
-      "tips": @tips()
+      tips: @tips()
     }
 
   path: ->
     @options.tipsPath || @$el.data('tips-path')
 
   totalCoins: ->
-    _.reduce(@tips(), ((sum, tip) -> sum + tip.cents), 0)
+    _.reduce(
+      @tips(),
+      (sum, tip) ->
+        sum + tip.cents
+      ,
+      0
+    )
 
   tips: ->
     @$el.data('tips') || @options.tips

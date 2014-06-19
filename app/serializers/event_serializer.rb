@@ -14,6 +14,7 @@ class EventSerializer < ActiveModel::Serializer
   attributes :edit_url
   attributes :award_url, :can_award
   attributes :product_id
+  attributes :tips_json
 
   has_one :wip, serializer: WipSerializer
   has_one :user, key: :actor, serializer: UserSerializer
@@ -38,6 +39,10 @@ class EventSerializer < ActiveModel::Serializer
     Rails.cache.fetch([object, 'body']) do
       product_markdown(product, object.body)
     end
+  end
+
+  def tips_json
+    tips.to_json
   end
 
   def body_sanitized
