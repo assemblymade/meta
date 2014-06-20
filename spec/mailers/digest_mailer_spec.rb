@@ -13,7 +13,7 @@ describe UnreadMailer do
     end
 
     it 'sets unsubscribe tag' do
-      expect(mail.header.find{|h| h.name == 'X-Mailgun-Tag'}.value).to eq('digest#daily')
+      expect(mail.header.find{|h| h.name == 'X-Mailgun-Tag'}.value).to eq('digest#unread')
     end
   end
 end
