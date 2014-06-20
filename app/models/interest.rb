@@ -15,6 +15,7 @@ class Interest < ActiveRecord::Base
     api
     ios
     android
+    code
   )
 
   validates :slug,

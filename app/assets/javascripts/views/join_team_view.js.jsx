@@ -38,8 +38,12 @@ var JoinTeam = React.createClass({
         return app.redirectTo('/login')
       }
 
-      $(this).popover('show')
-      self.setUpChosen()
+      if (!self.state.is_member) {
+        $(this).popover('show')
+        self.setUpChosen()
+      } else {
+        $(this).popover('hide')
+      }
     })
   },
 
@@ -72,23 +76,49 @@ var JoinTeam = React.createClass({
   },
 
   setUpEditor: function(chosenSelect) {
-    // TODO: Move default bio someplace saner.
-    var bio = "Hi! My name is Maeby. I do all of my design in Dreamweaver. What's version control?"
+    // TODO: Move default bio and interests someplace saner.
+    var defaultBio = "Hi! My name is Maeby. I do all of my design in Dreamweaver. I've never heard of version control."
+    var defaultInterests = ['code', 'design']
     var membership = this.props.membership
     var bioEditor = $('#join-bio-editor')
 
     if (membership) {
-      chosenSelect.val(membership.interests)
-      chosenSelect.trigger('chosen:updated')
-
       if (membership.bio) {
         bio = membership.bio
+        $(bioEditor).val(bio)
 
-        return $(bioEditor).val(bio)
+        // If the user has entered a bio, assume that they
+        // also entered their interests
+        chosenSelect.val(membership.interests)
+      } else {
+        chosenSelect.val(defaultInterests)
       }
+
+
+      chosenSelect.trigger('chosen:updated')
     }
 
-    $(bioEditor).attr({placeholder: bio})
+    bioEditor.attr({placeholder: defaultBio})
+    this.listenForChanges(bioEditor)
+  },
+
+  listenForChanges: function(bioEditor) {
+    var joinButton = $('#join-intro-button')
+    var startingVal = bioEditor.val()
+
+    if (startingVal.length >= 2) {
+      joinButton.removeClass('disabled')
+    }
+
+    bioEditor.on('keyup', function textEntered(e) {
+      var val = bioEditor.val().trim()
+
+      if (val.length >= 2) {
+        joinButton.removeClass('disabled')
+      } else if (val.length < 2) {
+        joinButton.addClass('disabled')
+      }
+    })
   },
 
   componentDidMount: function() {
@@ -106,7 +136,7 @@ var JoinTeam = React.createClass({
   label: function() {
     if (this.state.is_member) {
       return (
-        <a className={"toggler-btn btn btn-" + this.button()} style={{width: '120px', 'max-width': '120px'}} onClick={this.click()}>
+        <a className={"toggler-btn btn btn-" + this.button()} data-toggle="popover" style={{width: '120px', 'max-width': '120px'}} onClick={this.click()}>
           <i className="icon-user-unfollow" style={{'margin-right': '6px'}}></i>
           Leave Team
         </a>
@@ -114,7 +144,7 @@ var JoinTeam = React.createClass({
     }
 
     return (
-      <a className={"toggler-btn btn btn-" + this.button()} style={{width: '120px', 'max-width': '120px'}} onClick={this.click()}
+      <a className={"toggler-btn btn btn-" + this.button()} data-toggle="popover" style={{width: '120px', 'max-width': '120px'}} onClick={this.click()}
           role="button"
           id="js-join-popover">
         <i className="icon-user-follow" style={{'margin-right': '6px'}}></i>

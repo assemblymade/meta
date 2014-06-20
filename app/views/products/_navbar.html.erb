@@ -88,11 +88,10 @@
         <label class="control-label" for="join-bio-editor">
           Introduce yourself
         </label>
-
-        <textarea name="membership[bio]" id="join-bio-editor" class="form-control bio-editor" style="height: 100px" maxlength="200"></textarea>
-        <small class="help-block">
+        <small class="help-block" style="margin-top: 0px">
           What skills can you contribute, how much time do you have and what are you looking to get out of the experience?
         </small>
+        <textarea name="membership[bio]" id="join-bio-editor" class="form-control bio-editor" style="height: 100px" maxlength="200"></textarea>
       </div>
       <div class="form-group" style="margin-bottom: 15px">
         <label for="join-interests">What are you interested in?</label>
@@ -104,7 +103,7 @@
           :id => 'join-interests',
           :multiple => true %>
       </div>
-      <button type="submit" class="btn btn-primary btn-block" id="join-intro">Introduce yourself</button>
+      <button type="submit" class="btn btn-primary btn-block disabled" id="join-intro-button">Introduce yourself</button>
     </form>
   <% end %>
 </script>

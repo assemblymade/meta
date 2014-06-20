@@ -32,6 +32,12 @@ class Webhooks::GithubController < WebhookController
               url: commit['url'],
               metadata: { author: author, message: commit['message'], distinct: commit['distinct'] }
             )
+            # raise product.inspect
+            Activities::GitPush.publish!(
+              actor: user,
+              subject: work,
+              target: product
+            )
           end
         end
       end
@@ -66,7 +72,6 @@ class Webhooks::GithubController < WebhookController
     if @wip.awardable?
       @wip.with_lock do
         @wip.submit_code!({ url: ref.url }, user)
-        # TODO: create activity
       end
     end
   end
