@@ -1,7 +1,9 @@
 <div class="page-header">
   <div class="pull-right">
     <% if can?(:update, @wip) && @wip.open? %>
-      <a class="btn btn-default btn-sm" href="<%= close_product_discussion_path(@wip.product, @wip) %>" data-method="patch" data-confirm="Are you sure you want to close this discussion?">Close</a>
+      <a class="btn btn-default btn-sm" href="<%= close_product_discussion_path(@wip.product, @wip) %>" data-method="patch" data-confirm="Are you sure you want to close this discussion?" data-toggle="tooltip" data-placement="top" title="Close Discussion">
+        Close
+      </a>
     <% end %>
   </div>
 
