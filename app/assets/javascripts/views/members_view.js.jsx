@@ -71,7 +71,7 @@ var MembersView = React.createClass({
   renderMember: function(member) {
     var isOnline = isMemberOnline(member)
     var classes = React.addons.classSet({
-      'text-weight-bold': isOnline,
+      'text-weight-bold text-success': isOnline,
       'text-emphasis': !isOnline
     })
 
