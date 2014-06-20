@@ -6,26 +6,6 @@ class DigestMailer < BaseMailer
 
   layout 'mail/newsletter'
 
-  def daily(user_id, unread_articles=[])
-    mailgun_tag 'digest#daily'
-
-    @user     = User.find(user_id)
-    wip_group = WipGroup.new(
-                  ReadRaptorSerializer.deserialize(unread_articles)
-                )
-    @products = wip_group.products
-    @watchers = wip_group.watchers.take(30) # 30 happy faces
-
-    subject = if @showcase.present?
-      "What do you think of \"#{@showcase.first.product.pitch}\"?"
-    else
-      "#{pluralize wip_group.count, 'update'} on #{wip_group.product_names.to_sentence}"
-    end
-
-    mail to: @user.email,
-         subject: subject
-  end
-
   def weekly(user_id, newsletter_id)
     mailgun_tag 'digest#weekly'
     @user = User.find(user_id)

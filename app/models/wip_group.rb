@@ -20,16 +20,17 @@ class WipGroup
         @products[product][o] ||= []
         @watchers[product.id] ||= o.watcher_ids
       when Event::Comment
-        wip = o.wip
-        product = wip.product
-        @products[product] ||= {}
-        @products[product][wip] ||= []
-        @products[product][wip] << o
-        @watchers[wip.id] ||= wip.watcher_ids
+        if wip = o.wip
+          product = wip.product
+          @products[product] ||= {}
+          @products[product][wip] ||= []
+          @products[product][wip] << o
+          @watchers[wip.id] ||= wip.watcher_ids
 
-        if mentioned_users = o.mentioned_users
-          relevant_mentions = mentioned_users.map(&:username) & @include_mentions
-          @events_with_mentions[o] = relevant_mentions if relevant_mentions.any?
+          if mentioned_users = o.mentioned_users
+            relevant_mentions = mentioned_users.map(&:username) & @include_mentions
+            @events_with_mentions[o] = relevant_mentions if relevant_mentions.any?
+          end
         end
       end
     end

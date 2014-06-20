@@ -15,6 +15,6 @@ class DeliverUnreadEmail
       client.get(ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(entity, :email).first, user.id).url)
     end
 
-    UnreadMailer.hourly(user.id, unread_article_ids).deliver
+    UnreadMailer.unread_content(user.id, unread_article_ids).deliver
   end
 end

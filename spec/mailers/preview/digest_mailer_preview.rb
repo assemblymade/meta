@@ -1,25 +1,21 @@
 class DigestMailerPreview < ActionMailer::Preview
 
   def daily
-    DigestMailer.daily(user.id, serialize_articles(random_activity(10)))
-  end
-
-  def daily_with_showcase
-    DigestMailer.daily(user.id, serialize_articles(random_activity(10)))
+    UnreadMailer.unread_content(user.id, serialize_articles(random_activity(10)))
   end
 
   def hourly
     comments = []
     activity = random_activity(10) + comments
 
-    UnreadMailer.hourly(User.find_by(username: 'whatupdave').id, serialize_articles(activity))
+    UnreadMailer.unread_content(User.find_by(username: 'whatupdave').id, serialize_articles(activity))
   end
 
   def hourly_with_mentions
     comments = comments_that_contain(%w(@whatupdave @design @core), 3)
     activity = random_activity(10) + comments
 
-    UnreadMailer.hourly(User.find_by(username: 'whatupdave').id, serialize_articles(activity))
+    UnreadMailer.unread_content(User.find_by(username: 'whatupdave').id, serialize_articles(activity))
   end
 
   def weekly

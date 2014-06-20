@@ -72,7 +72,7 @@ namespace :emails do
     task :daily => :environment do
       users = User.where(mail_preference: 'daily')
       users.each do |user|
-        DeliverUnreadEmailDaily.perform_async(user.id)
+        DeliverUnreadEmail.perform_async(user.id)
       end
     end
 
