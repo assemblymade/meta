@@ -23,10 +23,14 @@
       </li>
       <% if can?(:update, @wip) %>
         <li>
-          <a href="<%= edit_product_wip_path(@wip.product, @wip) %>">Edit topic</a>
+          <a class="link-action-warning" href="<%= edit_product_wip_path(@wip.product, @wip) %>"  data-toggle="tooltip" data-placement="top" title="Edit Topic">
+            <i class="icon-pencil"></i> Edit
+          </a>
         </li>
-        <li class="text-warning">
-          <%= link_to 'Move to Discussions', product_task_to_discussion_path(@wip.product, @wip), method: :patch, data: {confirm: 'Are you sure?'} %>
+        <li>
+          <a class="link-action-warning" href="<%= product_task_to_discussion_path(@wip.product, @wip) %>" data-method="patch" data-confirm="Are you sure?" data-toggle="tooltip" data-placement="top" title="Move to Discussions">
+            <i class="icon-arrow-right-circled"></i> Move
+          </a>
         </li>
       <% end %>
     </ul>

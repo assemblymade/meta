@@ -284,3 +284,15 @@ mark,
   @extend .text-serif;
   font-size: 92%;
 }
+
+.link-action-success:hover {
+  color: $brand-success !important;
+}
+
+.link-action-warning:hover {
+  color: $brand-warning !important;
+}
+
+.link-action-danger:hover {
+  color: $brand-danger !important;
+}
