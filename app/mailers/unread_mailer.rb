@@ -6,8 +6,8 @@ class UnreadMailer < BaseMailer
 
   layout 'email'
 
-  def hourly(user_id, unread_articles=[])
-    mailgun_tag 'digest#hourly'
+  def unread_content(user_id, unread_articles=[])
+    mailgun_tag 'digest#unread'
 
     @user = User.find(user_id)
 

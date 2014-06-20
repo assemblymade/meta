@@ -22,9 +22,14 @@ class UserMailerPreview < ActionMailer::Preview
     end
     UserMailer.remind_user_of_their_claimed_work(worker.user.id, worker.wip.id)
   end
-  
+
   def joined_team_no_work_yet
     membership = TeamMembership.sample
     UserMailer.joined_team_no_work_yet(membership.id)
+  end
+
+  def joined_team_no_introduction_yet
+    membership = TeamMembership.where(bio: nil).sample
+    UserMailer.joined_team_no_introduction_yet(membership.id)
   end
 end

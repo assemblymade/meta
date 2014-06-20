@@ -48,11 +48,20 @@ namespace :emails do
     end
   end
 
+  task :joined_team_no_introduction_yet => :environment do
+    TeamMembership.where('created_at < ?', 1.day.ago).where(bio: nil).each do |membership|
+      EmailLog.send_once(membership.user, :joined_team_no_introduction_yet, membership_id: membership.id) do
+        UserMailer.delay.joined_team_no_introduction_yet(membership.id)
+      end
+    end
+  end
+
+
   namespace :digests do
 
     task :hourly => :environment do
       recently_active_users = User.
-        where(mail_preference: 'daily').
+        where(mail_preference: 'hourly').
         where('last_request_at > ?', 2.hours.ago)
 
       recently_active_users.each do |user|
@@ -63,7 +72,7 @@ namespace :emails do
     task :daily => :environment do
       users = User.where(mail_preference: 'daily')
       users.each do |user|
-        DeliverUnreadEmailDaily.perform_async(user.id)
+        DeliverUnreadEmail.perform_async(user.id)
       end
     end
 

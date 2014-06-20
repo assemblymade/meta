@@ -23,8 +23,8 @@ module AvatarHelper
     image_tag(url, attributes)
   end
 
-  def user_link(user, &blk)
-    content_tag :a, capture(&blk), href: user_path(user), title: "@#{user.username}"
+  def user_link(user, options={}, &blk)
+    content_tag :a, capture(&blk), href: user_path(user, options), title: "@#{user.username}"
   end
 
 end
