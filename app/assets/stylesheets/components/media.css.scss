@@ -7,12 +7,6 @@
   > .pull-right {
     margin-left: $grid-gutter-width;
   }
-
-  &:hover {
-    .media-heading {
-      color: $gray;
-    }
-  }
 }
 
 // TODO: Line-height is fixed
@@ -23,8 +17,7 @@
   margin-bottom: $padding-base-vertical;
   color: $text-muted;
   font-size: $font-size-xs;
-  color: $gray-light;
-  line-height: 20px;
+  line-height: 22px;
 
   a {
     color: inherit;
