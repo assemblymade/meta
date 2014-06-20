@@ -1,0 +1,68 @@
+<table class="row">
+  <tbody>
+    <tr>
+      <td class="wrapper last">
+        <table class="twelve columns">
+          <tbody>
+            <tr>
+              <td class="panel panel-default text-serif">
+                <p>Hi <%= @user.username %>,</p>
+
+                <p>I just noticed you hand't introduced yourself on <a href="<%= product_people_path(@membership.product, auth_token: @user.authentication_token) %>"><%= @product.name %></a>. Introducing yourself can be a great way to meet the rest of the community. Don't be shy!</p>
+
+                <p>Some good things to think about when you introduce yourself:</p>
+
+                <ul>
+                  <li>Where do you work/study now?</li>
+                  <li>What skills would you like to contribute?</li>
+                  <li>How much time would you like to put in?</li>
+                  <li>What are you looking to get out of the project? (experience, friendship, money etc.)</li>
+                </ul>
+
+                <table class="button success radius">
+                  <tr>
+                    <td>
+                      <a href="<%= product_people_path(@membership.product, auth_token: @user.authentication_token) %>">Introduce yourself</a>
+                    </td>
+                  </tr>
+                </table>
+
+                <br>
+
+                <p>Here are some great examples of people introducing themselves before:</p>
+
+                <br>
+
+                <% user = User.find_by(username: 'marckohlbrugge')%>
+                <%= avatar_tag(user, 20) %>&nbsp;<%= user_link(user, auth_token: @user.authentication_token) do %><%= user.username %><% end %>
+                on <a href="<%= product_chat_url('dawn', auth_token: @user.authentication_token) %>">Dawn</a>
+                <hr/>
+                <p>… I'm kind of a jack of all trades doing design, development, marketing, business development, etc. Lately, I've delegated development more and more however, to focus on strategy.</p>
+
+                <p>My role with this project will predominatly be getting us up and running by helping set the vision, strategy, building a team and getting initial traction …</p>
+
+                <br>
+
+                <% user = User.find_by(username: 'davidkaneda')%>
+                <%= avatar_tag(user, 20) %>&nbsp;<%= user_link(user, auth_token: @user.authentication_token) do %><%= user.username %><% end %>
+                on <a href="<%= product_chat_url('dawn', auth_token: @user.authentication_token) %>">Buckets</a>
+                <hr/>
+                <p>Designer/developer/startup consultant. Buckets has been my (sadly somewhat neglected) baby for the past year or so. I've built sites in the past with WP, EE, Textpattern, Drupal, Symphony, Craft (just experimented), Middleman, Jekyll, and of course a few hand-rolled systems.</p>
+
+                <p>Initially, I will be providing a fair amount of hands-on work on Buckets, to ensure it matches my vision for it both technically and design-wise, but hope to quickly get to a point where I can start delegating tasks and spend more time managing the project here and thinking about overall product direction.</p>
+
+                <br>
+
+                <br>
+
+                <p>Cheers,</p>
+
+                <p>Austin</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
