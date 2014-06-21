@@ -1,0 +1,36 @@
+<% title 'Financials', @product.name %>
+<% activate_nav! :subnav_financials %>
+
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
+
+<% cache [@product] do %>
+  <div class="page">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-8 col-xs-8">
+          <div class="page-header">
+            <h2 class="page-header-title">Financials</h2>
+          </div>
+
+          <div style="display:inline; margin-left: 5px; margin-top: 13px;"
+               data-react-class="Financials"
+               data-react-props="<%= {
+                 product: @product.as_json
+               }.to_json %>">
+          </div>
+        </div><!-- .col-md-8 -->
+
+        <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+          <%= render 'products/sidebar' %>
+          <%= render 'products/contract' %>
+        </div>
+      </div><!-- .row -->
+
+    </div><!-- .container -->
+
+  </div><!-- .page -->
+<% end %>
+
+<%= render 'shared/footer' %>

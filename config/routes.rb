@@ -271,6 +271,7 @@ ASM::Application.routes.draw do
     resources :status_messages, only: [:create]
 
     resources :partners, only: [:index]
+    resources :financials, only: [:index]
 
     resource :financial, :module => :financial  do
       resources :accounts, only: [:index, :show]
