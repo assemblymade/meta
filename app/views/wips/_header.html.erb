@@ -24,12 +24,12 @@
       <% if can?(:update, @wip) %>
         <li>
           <a class="link-action-warning" href="<%= edit_product_wip_path(@wip.product, @wip) %>"  data-toggle="tooltip" data-placement="top" title="Edit Topic">
-            <i class="icon-pencil"></i> Edit
+            <i class="icon-pencil" style="margin-right: 2px;"></i> Edit
           </a>
         </li>
         <li>
           <a class="link-action-warning" href="<%= product_task_to_discussion_path(@wip.product, @wip) %>" data-method="patch" data-confirm="Are you sure?" data-toggle="tooltip" data-placement="top" title="Move to Discussions">
-            <i class="icon-arrow-right-circled"></i> Move
+            <i class="icon-arrow-right-circled" style="margin-right: 2px;"></i> Move
           </a>
         </li>
       <% end %>
@@ -66,11 +66,10 @@
           <%= pluralize(@wip.comments.count, 'comment') %>
         </li>
         <li>
-          Priority
           <%= render 'wips/urgency', task: @wip %>
         </li>
         <li>
-          <span class="label label-default"><%= @wip.deliverable.titleize %></span>
+          <span class="label label-outlined"><%= @wip.deliverable.titleize %></span>
         </li>
       </ul>
     </div>

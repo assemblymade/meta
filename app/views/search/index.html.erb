@@ -8,7 +8,9 @@
     <% if @search %>
 
       <div class="page-header">
-        <h2 class="page-header-title">Search results for
+        <h2 class="page-header-title">
+          <i class="icon-magnifier text-muted" style="margin-right: 6px;  font-size: 22px; top: -2px; position: relative;"></i>
+          Search results for
           <span class="mark"><%= params[:q] %></span>
           <% if @product %>in <%= @product.name %><% end %>
         </h2>

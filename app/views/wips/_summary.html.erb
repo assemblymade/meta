@@ -7,13 +7,11 @@
 
     <ul class="list-piped omega pull-right">
       <% if task.workers.any? %>
-        <li style="opacity: 0.4;">
-          <span class="label label-default">In Progress</span>
+        <li>
+          <span class="label label-outlined">In Progress</span>
+          <span style="margin-left: 4px;"><%= render 'wips/urgency', task: task %></span>
         </li>
       <% end %>
-      <li>
-        <%= render 'wips/urgency', task: task %>
-      </li>
     </ul>
 
     <!-- FIXME: This sucks -->

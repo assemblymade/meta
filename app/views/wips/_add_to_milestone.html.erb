@@ -3,7 +3,7 @@
     <a href="<%= product_milestone_path(@product, @milestone)%>"><%= @milestone.wip.title %></a>
   <% elsif can?(:edit, @wip) %>
     <a class="js-add link-action-success" data-toggle="dropdown" href="#" data-placement="top" title="Add&nbsp;to&nbsp;Project">
-      <i class="icon-plus-circled"></i> Project
+      <i class="icon-rocket" style="margin-right: 2px;"></i> Project
     </a>
     <script>$('.js-add').tooltip()</script>
 

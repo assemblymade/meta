@@ -17,3 +17,9 @@
 .label-someday {
   background-color: $gray-lighter;
 }
+
+.label-outlined {
+  background: white;
+  border: 1px solid $brand-border;
+  color: $gray;
+}
