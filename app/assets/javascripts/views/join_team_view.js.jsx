@@ -45,6 +45,10 @@ var JoinTeam = React.createClass({
         $(this).popover('hide')
       }
     })
+
+    $(document).scroll(function(e) {
+      $(node).popover('hide');
+    })
   },
 
   setUpChosen: function() {
