@@ -2,10 +2,13 @@
   <% if @milestone %>
     <a href="<%= product_milestone_path(@product, @milestone)%>"><%= @milestone.wip.title %></a>
   <% elsif can?(:edit, @wip) %>
-    <a data-toggle="dropdown" href="#">Add to project</a>
+    <a class="js-add link-action-success" data-toggle="dropdown" href="#" data-placement="top" title="Add&nbsp;to&nbsp;Project">
+      <i class="icon-plus-circled"></i> Project
+    </a>
+    <script>$('.js-add').tooltip()</script>
 
     <ul class="dropdown-menu">
-      <li class='helper'>Projects:</li>
+      <li class="dropdown-header">Projects</li>
       <% @product.milestones.open.each do |milestone| %>
         <li>
           <a data-remote="true"

@@ -13,7 +13,9 @@
     <ul class="list-piped omega pull-right">
       <% if can?(:update, discussion) && discussion.open? %>
         <li>
-          <a href="<%= close_product_discussion_path(discussion.product, discussion) %>" data-method="patch" data-confirm="Are you sure you want to close this discussion?">Close</a>
+          <a href="<%= close_product_discussion_path(discussion.product, discussion) %>" data-method="patch" data-confirm="Are you sure you want to close this discussion?">
+            <i class="icon-close" data-toggle="tooltip" data-placement="top" title="Close Discussion"></i> Close
+          </a>
         </li>
       <% end %>
     </ul>

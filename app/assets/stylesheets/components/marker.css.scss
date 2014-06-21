@@ -16,6 +16,14 @@
   }
 }
 
+.marker-blip {
+  background-color: $gray-light;
+  border: 2px solid white;
+  width: 10px;
+  height: 10px;
+  margin: 6px 10px 0;
+}
+
 .marker-default {
   border-color: $gray-light;
   color: $gray-light;

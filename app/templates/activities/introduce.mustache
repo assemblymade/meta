@@ -1,7 +1,7 @@
 <div class="media" {{#subject}}id="{{anchor}}" data-readraptor-track="{{readraptor_track_id}}"{{/subject}}>
   <div class="pull-left">
-    <div class="marker marker-default">
-      <i class="icon icon-user-follow"></i>
+    <div class="marker marker-green">
+      <i class="icon icon-user-following" style="font-size: 12px;"></i>
     </div>
   </div>
 
@@ -12,7 +12,7 @@
           <ul class="list-inline omega text-muted">
             <li>
               {{#actor}}
-                <a href="{{url}}" title="@{{username}}" class="chat-actor text-muted" style="font-weight: bold; color: #d3d3d3">
+                <a href="{{url}}" title="@{{username}}">
                   @{{username}}
                 </a>
                 joined the team
@@ -32,7 +32,7 @@
           </ul>
         </div>
         {{#subject}}{{#bio}}
-          <div class="well well-sm media-object omega text-left" style="color: #393939; text-align: left; background-color: #fff">
+          <div class=" card omega" style="margin-top: 6px; text-align: left; font-size: 16px; padding: 12px 20px; color: #595959;">
             {{bio}}
           </div>
         {{/bio}}{{/subject}}

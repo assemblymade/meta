@@ -32,6 +32,7 @@ h6.panel-title {
 
 .panel-body + .panel-heading {
   border-top: 1px solid $brand-divider;
+  border-radius: 0;
 }
 
 .panel-body > .list-grid {

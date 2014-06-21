@@ -8,10 +8,10 @@ $text-accent: #BC9454;
 $home-primary: darken(#3E90CA, 30%);
 $home-secondary: #A8D7F9;
 
-$product-helpful: lighten(#494d52, 7%);
-$product-family-table: darken(#83B4AD, 5%);
-$product-buckets: darken(#f9d233, 12%);
-$product-really-good-emails: darken(desaturate(#f75853, 12%), 3%);
+$product-helpful: #494d52;
+$product-family-table: #77b8b4;
+$product-buckets: #f9d233;
+$product-really-good-emails: #ff6560;
 $product-assembly-meta: darken(#2b8ec3, 2%);
 
 $user-whale: #63a4ae;
@@ -169,17 +169,28 @@ $user-davidkaneda: #848C24;
     }
 
     .summary-target {
-      min-height: 72px;
+      min-height: 48px;
+      margin-bottom: $line-height-computed * 0.75;
+      font-size: $font-size-large;
     }
 
     p,
     .summary-name {
-      @extend .text-sans;
+      @extend .text-serif;
       @extend .upper-spaced;
       letter-spacing: 0.2pt;
       line-height: 1;
-      color: rgba(white, 0.6);
+      color: rgba(white, 0.75);
+      font-size: 13px;
     }
+  }
+
+  .card-footer {
+    border: none;
+    background: rgba(0,0,0,0.1);
+    font-weight: bold;
+    color: white;
+    padding: 6px 20px;
   }
 }
 
@@ -198,6 +209,14 @@ a.card-colored:hover {
 
   &.card-colored {
     background-color: $product-helpful;
+
+    .summary-name {
+      color: lighten($product-helpful, 35%);
+    }
+
+    .card-footer {
+      background: darken($product-helpful, 4%);
+    }
   }
 }
 
@@ -211,6 +230,14 @@ a.card-colored:hover {
 
   &.card-colored {
     background-color: $product-family-table;
+
+    .summary-name {
+      color: lighten($product-family-table, 28%);
+    }
+
+    .card-footer {
+      background: darken($product-family-table, 9%);
+    }
   }
 }
 
@@ -224,6 +251,14 @@ a.card-colored:hover {
 
   &.card-colored {
     background-color: $product-buckets;
+
+    .summary-name {
+      color: lighten($product-buckets, 35%);
+    }
+
+    .card-footer {
+      background: darken($product-buckets, 12%);
+    }
   }
 }
 
@@ -237,6 +272,14 @@ a.card-colored:hover {
 
   &.card-colored {
     background-color: $product-really-good-emails;
+
+    .summary-name {
+      color: lighten($product-really-good-emails, 24%);
+    }
+
+    .card-footer {
+      background: desaturate(darken($product-really-good-emails, 6%), 15%);
+    }
   }
 }
 
@@ -372,21 +415,17 @@ figure,
   .block-image-bg {
     background: linear-gradient(140deg, rgba($home-primary, 0.92), rgba(desaturate(darken($home-primary, 15%), 10%), 0.92)), url(image-path('home/home.jpg'));
     background-size: cover;
-    // margin-bottom: $line-height-computed * 1.5;
-    position: relative;
+    background-position: center;
 
     h1 {
       margin-top: $line-height-computed * 1.5;
-      margin-bottom: $line-height-computed * 1.5;
-      font-size: 60px;
-      line-height: 1.25;
-      font-weight: 400;
-      font-style: italic;
-
+      margin-bottom: $line-height-computed * 3;
+      font-size: 82px;
+      line-height: 1.15;
+      font-weight: 200;
     }
 
     .lead {
-      color: $home-secondary;
       font-size: 32px;
       line-height: 1.4;
     }
