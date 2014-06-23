@@ -48,7 +48,7 @@ var Financials = React.createClass({
   render: function() {
     var name = this.props.product.name;
     var costs = "3572";
-    var annuity = "20000";
+    var annuity = "18000";
 
     return (
       <div className="financials">
@@ -127,12 +127,12 @@ var FinancialsMeter = React.createClass({
     var total = this.props.financials[this.state.month];
     var costs = this.props.costs;
 
-    var profit = calculateProfit(total, costs);
-    var annuity = calculateAnnuity(total, costs, this.props.annuity)
+    var annuity = calculateAnnuity(total, costs, this.props.annuity);
+    var expenses = calculateExpenses(total, costs);
     var communityShare = calculateCommunityShare(total, costs, this.props.annuity);
 
     var annuityWidth = annuity / total * 100;
-    var costsWidth = costs / total * 100;
+    var costsWidth = expenses / total * 100;
     var communityWidth = communityShare / total * 100;
 
     return (
@@ -147,7 +147,7 @@ var FinancialsMeter = React.createClass({
              className="progress-bar progress-bar-danger"
              role="progress-bar"
              style={{ width: costsWidth + '%' }}>
-          <span>{'$' + numeral(costs).format('0,0')}</span>
+          <span>{'$' + numeral(expenses).format('0,0')}</span>
         </div>
         <div id='community-meter'
              className="progress-bar progress-bar-warning"
@@ -215,22 +215,23 @@ var FinancialsTable = React.createClass({
       var total = financials[month];
 
       var profit = calculateProfit(total, costs);
-      var annuity = calculateAnnuity(total, costs, self.props.annuity)
+      var annuity = calculateAnnuity(total, costs, self.props.annuity);
+      var expenses = calculateExpenses(total, costs);
       var communityShare = calculateCommunityShare(total, costs, self.props.annuity);
 
       return (
-        self.tRow(month, total, annuity, communityShare)
+        self.tRow(month, total, annuity, expenses, communityShare)
       );
     });
   },
 
-  tRow: function(month, total, annuity, community) {
+  tRow: function(month, total, annuity, costs, community) {
     return (
       <tr style={{cursor: 'pointer'}} onMouseOver={this.monthChanged(month)} key={month}>
         <td id={'financials-' + month}>{month}</td>
         <td>{'$' + numeral(total).format('0,0')}</td>
         <td className="text-right">{'$' + numeral(annuity).format('0,0')}</td>
-        <td className="text-right">{'$' + numeral(this.props.costs).format('0,0')}</td>
+        <td className="text-right">{'$' + numeral(costs).format('0,0')}</td>
         <td className="text-right">{'$' + numeral(community).format('0,0')}</td>
       </tr>
     );
@@ -245,15 +246,23 @@ var FinancialsTable = React.createClass({
 });
 
 function calculateProfit(total, costs) {
-  total = parseInt(total);
-  costs = parseInt(costs);
+  total = parseInt(total, 10);
+  costs = parseInt(costs, 10);
 
   return total - costs;
 }
 
-function calculateAnnuity(total, costs, annuity) {
+
+function calculateExpenses(total, costs) {
   total = parseInt(total, 10);
   costs = parseInt(costs, 10);
+
+  return total * 0.1 + costs;
+}
+
+function calculateAnnuity(total, costs, annuity) {
+  total = parseInt(total, 10);
+  costs = calculateExpenses(total, parseInt(costs, 10));
   annuity = parseInt(annuity, 10);
 
   var profit = calculateProfit(total, costs);
@@ -263,7 +272,7 @@ function calculateAnnuity(total, costs, annuity) {
 
 function calculateCommunityShare(total, costs, annuity) {
   total = parseInt(total, 10);
-  costs = parseInt(costs, 10);
+  costs = calculateExpenses(total, parseInt(costs, 10));
   annuity = parseInt(annuity, 10);
 
   var profit = calculateProfit(total, costs);
