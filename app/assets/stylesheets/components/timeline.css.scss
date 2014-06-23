@@ -34,14 +34,12 @@
 
   > time {
     font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.618pt;
-
-    color: $gray;
+    color: darken($gray-light, 10%);
     background-color: white;
-    border: 1px solid $brand-divider;
-    padding: 3px 10px;
+    border: 2px solid $brand-divider;
+    padding: 2px 10px;
     border-radius: $line-height-computed;
+    // font-weight: bold;
 
     display: inline-block;
   }

@@ -2,6 +2,10 @@
   font-size: $font-size-small;
   font-weight: bold;
 
+  a {
+    color: $gray;
+  }
+
   > li {
     + li:before {
       @extend .icon;
