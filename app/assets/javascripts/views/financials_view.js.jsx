@@ -2,7 +2,8 @@
 
 // TODO: Tidy up shared state
 
-/* Right now, both the table and the meter have
+/**
+ * Right now, both the table and the meter have
  * all of the financials in state; it would be
  * better to move all of this to the FinancialsStore
  */
@@ -85,15 +86,16 @@ var FinancialsKey = React.createClass({
   },
 
   render: function() {
+    // TODO: Break out dl-inline styles into reusable SCSS components
     return (
       <div>
         <dl>
           <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#5290d2'}}></dt>
           <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>{this.props.product.name}</dd>
           <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#d05555'}}></dt>
-          <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>Costs (hosting, maintenance, etc.)</dd>
+          <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>Expenses (hosting, maintenance, etc.)</dd>
           <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#eebb20'}}></dt>
-          <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>Community</dd>
+          <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>App Coin holders</dd>
         </dl>
         <strong>{this.state.month}</strong>
       </div>
