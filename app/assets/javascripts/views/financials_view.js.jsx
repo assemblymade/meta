@@ -9,6 +9,7 @@
  */
 
 var FinancialsStore = {
+  month: 'May',
   getMonth: function() {
     return this.month;
   },
@@ -77,7 +78,7 @@ var Financials = React.createClass({
 var FinancialsKey = React.createClass({
   componentWillMount: function() {
     this.setState({
-      month: 'January'
+      month: FinancialsStore.getMonth()
     })
   },
 
@@ -110,7 +111,7 @@ var FinancialsKey = React.createClass({
 var FinancialsMeter = React.createClass({
   componentWillMount: function() {
     this.setState({
-      month: 'January'
+      month: FinancialsStore.getMonth()
     })
   },
 
@@ -163,7 +164,7 @@ var FinancialsMeter = React.createClass({
 var FinancialsTable = React.createClass({
   componentWillMount: function() {
     this.setState({
-      month: 'January'
+      month: FinancialsStore.getMonth()
     })
   },
 
