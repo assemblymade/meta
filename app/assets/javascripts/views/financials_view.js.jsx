@@ -258,7 +258,7 @@ function calculateAnnuity(total, costs, annuity) {
 
   var profit = calculateProfit(total, costs);
 
-  return profit < annuity ? profit: annuity;
+  return profit < annuity ? profit : annuity;
 }
 
 function calculateCommunityShare(total, costs, annuity) {
