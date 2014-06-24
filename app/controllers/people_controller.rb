@@ -35,6 +35,8 @@ class PeopleController < ApplicationController
       introduce()
     end
 
+    update_interests(membership_params[:interests])
+
     @membership.update_attributes(bio: membership_params[:bio])
 
     respond_to do |format|
