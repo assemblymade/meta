@@ -98,7 +98,7 @@ class Product < ActiveRecord::Base
 
   serialize :repos, Repo::Github
 
-  PRIVATE = %w(asm coderwall asm-ideas)
+  PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
   NON_PROFIT = %w(meta)
 
   class << self

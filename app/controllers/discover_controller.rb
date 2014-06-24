@@ -2,7 +2,8 @@ class DiscoverController < ApplicationController
 
   def staff_picks
     @week = Date.today
-    @products = Showcase.this_weeks_products
+    staff_picks = Product.where(slug: (ENV['STAFF_PICKS'] || '').split(','))
+    @products = (staff_picks + Showcase.this_weeks_products).take(10)
   end
 
   def trending
