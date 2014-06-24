@@ -176,7 +176,6 @@ $user-davidkaneda: #848C24;
 
     p,
     .summary-name {
-      @extend .text-serif;
       @extend .upper-spaced;
       letter-spacing: 0.2pt;
       line-height: 1;
