@@ -6,12 +6,12 @@
     </a>
 
     <ul class="list-piped omega pull-right">
-      <% if task.workers.any? %>
-        <li>
+      <li>
+        <% if task.workers.any? %>
           <span class="label label-outlined">In Progress</span>
-          <span style="margin-left: 4px;"><%= render 'wips/urgency', task: task %></span>
-        </li>
-      <% end %>
+        <% end %>
+        <span style="margin-left: 4px;"><%= render 'wips/urgency', task: task %></span>
+      </li>
     </ul>
 
     <!-- FIXME: This sucks -->
