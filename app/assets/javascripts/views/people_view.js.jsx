@@ -9,7 +9,7 @@ var People = React.createClass({
             selected={this.state.selected}
             onFilter={this.onFilter} />
         <hr/>
-        <p>Tip: You can use @mentions to get the attention of {this.filterLabel()} in chat or Bounties.</p>
+        <p className="text-muted text-center">Tip: You can use @mentions to get the attention of {this.filterLabel()} in chat or Bounties.</p>
         <hr/>
         <PeopleList
             memberships={this.state.filteredMemberships}
@@ -89,17 +89,17 @@ var PeopleFilter = React.createClass({
           Browse by:
         </div>
         <div className="col-xs-10 btn-group btn-group-sm">
-            <a className={'text-muted btn btn-' + highlightAll}
-                onClick={this.clearInterest}
-                style={{cursor: 'pointer'}}>
-              All
-            </a>
-            <a className={'text-muted btn btn-' + highlightCore}
-                onClick={this.highlightCore}
-                style={{cursor: 'pointer'}}>
-              @core
-            </a>
-            {tags}
+          <a className={'text-muted btn btn-' + highlightAll}
+              onClick={this.clearInterest}
+              style={{cursor: 'pointer'}}>
+            All
+          </a>
+          <a className={'text-muted btn btn-' + highlightCore}
+              onClick={this.highlightCore}
+              style={{cursor: 'pointer'}}>
+            @core
+          </a>
+          {tags}
         </div>
       </div>
     )
@@ -147,7 +147,7 @@ var PeopleList = React.createClass({
           style={{
             'padding-top': '15px',
             'padding-bottom': '15px',
-            'border-bottom': '1px solid #d9d9d9'
+            'border-bottom': '1px solid #ebebeb'
           }}>
           {this.avatar(leftUser)}
           {this.member(leftMember)}
@@ -189,18 +189,14 @@ var PeopleList = React.createClass({
 
     return (
       <div className="col-sm-5 col-xs-5">
-        <p>
+        <p className="omega">
           <strong>
             <a href={user.url} title={'@' + user.username}>
               {user.username}
             </a>
           </strong>
-
-          <span className="text-muted text-small">
-            {user.bio ? '—' + user.bio : ''}
-          </span>
         </p>
-
+        { user.bio ? this.hasBio(user) : ''}
         <div>
           <BioEditor
               member={member}
@@ -212,6 +208,14 @@ var PeopleList = React.createClass({
               selected={this.props.selected} />
         </div>
       </div>
+    )
+  },
+
+  hasBio: function(user) {
+    return (
+      <p className="text-muted text-small">
+        {user.bio ? user.bio : ''}
+      </p>
     )
   },
 
@@ -247,25 +251,25 @@ var BioEditor = React.createClass({
             {member.bio}
             {this.state.editing ? this.saveButton() : this.editButton()}
           </div>
-          <p style={{position: 'absolute', bottom: '0px'}}>
-            <ul className="list-inline">
-              {this.skills(member)}
-            </ul>
-          </p>
+
+          <hr style={{'margin' : '16px 0 8px 0', 'border-top' : '1px dotted #ebebeb'}} />
+
+          <ul className="list-inline omega">
+            {this.skills(member)}
+          </ul>
         </div>
       )
     }
 
     return (
-      <div>
-        <p key={'b-' + member.user.id}>
-          {member.bio}
-        </p>
-        <p style={{position: 'absolute', bottom: '0px'}}>
-          <ul className="list-inline">
-            {this.skills(member)}
-          </ul>
-        </p>
+      <div key={'b-' + member.user.id}>
+        {member.bio}
+
+        <hr style={{'margin' : '16px 0 8px 0', 'border-top' : '1px dotted #ebebeb'}} />
+
+        <ul className="list-inline omega">
+          {this.skills(member)}
+        </ul>
       </div>
     )
   },
@@ -281,7 +285,7 @@ var BioEditor = React.createClass({
 
     return _.map(membership.interests, function mapInterests(interest) {
       var label = '@' + interest;
-      var highlight = self.props && self.props.selected === interest ? 'primary' : 'default';
+      var highlight = self.props && self.props.selected === interest ? 'primary' : 'outlined';
 
       return (
         <li>
@@ -296,17 +300,15 @@ var BioEditor = React.createClass({
 
   editButton: function() {
     return (
-      <div className="btn-group btn-group-sm">
-        <a className="btn btn-link" style={{'box-shadow': 'none'}} onClick={this.makeEditable}>Edit profile</a>
-      </div>
+      <a className="text-small" onClick={this.makeEditable}> &mdash;&nbsp;Update Intro</a>
     )
   },
 
   saveButton: function() {
     return (
-      <div className="btn-group btn-group-sm">
-        <a className="btn btn-link" style={{'box-shadow': 'none'}} onClick={this.saveBio}>Save</a>
-        <a className="btn btn-link" style={{'box-shadow': 'none'}} onClick={this.makeUneditable}>Cancel</a>
+      <div className="text-right" style={{'margin-top':'16px'}}>
+        <a className="btn btn-default btn-sm" onClick={this.makeUneditable} style={{'margin-right' : '8px'}}>Cancel</a>
+        <a className="btn btn-primary btn-sm" onClick={this.saveBio}>Save</a>
       </div>
     )
   },
@@ -317,7 +319,9 @@ var BioEditor = React.createClass({
 
     var editableBio = (
       <div>
-        <textarea className="form-control bio-editor" rows="2" defaultValue={bio}></textarea>
+        <label>Introduce yourself</label>
+        <textarea className="form-control bio-editor" style={{'margin-bottom': '16px'}} rows="2" defaultValue={bio}></textarea>
+        <label>Choose your interests</label>
         <select
             name="membership[interest_ids][]"
             data-placeholder=" "
