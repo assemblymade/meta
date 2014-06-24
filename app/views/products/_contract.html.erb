@@ -37,8 +37,6 @@
 <p><small>
     <% if report.royalty > 0 %>
       The App coin royalty was <%= number_to_currency (report.royalty / 100.0), precision: 2 %> per App Coin.
-    <% else %>
-      There were no royalty payouts.
     <% end %>
   <% else %>
     There was no revenue last month and there were no royalty payouts.

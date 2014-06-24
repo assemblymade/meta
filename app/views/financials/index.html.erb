@@ -20,6 +20,20 @@
                  product: @product.as_json
                }.to_json %>">
           </div>
+          <% if (annuity = @product.contract_holders.sum(:annuity)) > 0 %>
+            <div class="callout well">
+              <p>
+                Most open-source companies on Assembly do not have an annuity,
+                but in certain cases where a product earned revenue before arriving on Assembly, they do.
+              </p>
+
+              <p>
+                <%= @product.name %>'s annuity is <%= number_to_currency annuity %>/month,
+                and the company’s revenue has consistently exceeded that amount. Regardless of how much <%= @product.name %>'s revenue grows,
+                the annuity will never be raised &mdash; but the Core Team will seek ongoing community feedback and can revisit this arrangement to ensure fairness.
+              </p>
+            </div>
+          <% end %>
         </div><!-- .col-md-8 -->
 
         <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
@@ -27,7 +41,6 @@
           <%= render 'products/contract' %>
         </div>
       </div><!-- .row -->
-
     </div><!-- .container -->
 
   </div><!-- .page -->
