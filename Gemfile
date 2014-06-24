@@ -104,6 +104,10 @@ group :test do
   gem 'autotest-standalone'
 end
 
+group :development, :test do
+  gem 'teaspoon'
+end
+
 group :production do
   gem 'dalli'
   gem 'memcachier'

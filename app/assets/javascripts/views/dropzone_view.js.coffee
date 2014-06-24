@@ -47,7 +47,9 @@ class DropzoneView extends Backbone.View
 $(document).ready ->
   # FIXME: extract pattern into a helper
   url = $('meta[name=attachment-upload-url]').attr('content')
-  thow 'error' unless url
+  # Throwing an error here causes issues with the rest of
+  # the app's JavaScript loading. Changed to return for now.
+  return 'error' unless url
 
   $('.js-dropzone').each ->
     view = new DropzoneView(el: @, url: url, targetForm: $(@).data('target-form'))

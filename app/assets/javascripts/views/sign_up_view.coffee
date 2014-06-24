@@ -1,10 +1,10 @@
 class window.SignUpView extends Backbone.View
   events:
-    'click .facebook-signin': 'facebookSignIn'
-    'click a.js-sign-in': 'signinClicked'
-    'click a.back':    'resetForm'
+    'click .facebook-signin'   : 'facebookSignIn'
+    'click a.js-sign-in'       : 'signinClicked'
+    'click a.back'             :    'resetForm'
     'ajax:success .new-session': 'loginSucceeded'
-    'ajax:success .new-user': 'signupSucceeded'
+    'ajax:success .new-user'   : 'signupSucceeded'
 
   initialize: ->
     window.app.on 'user:signed_in', @loginSucceeded
