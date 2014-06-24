@@ -92,7 +92,7 @@ var FinancialsKey = React.createClass({
       <div>
         <dl>
           <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#5290d2'}}></dt>
-          <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>{this.props.product.name}</dd>
+          <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>{this.props.product.name} annuity</dd>
           <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#d05555'}}></dt>
           <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>Expenses (hosting, maintenance, etc.)</dd>
           <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#eebb20'}}></dt>
