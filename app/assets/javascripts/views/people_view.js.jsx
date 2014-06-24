@@ -223,6 +223,7 @@ var BioEditor = React.createClass({
     this.setState({
       currentUser: this.props.currentUser,
       member: this.props.member,
+      originalBio: this.props.originalBio,
       editing: false
     })
   },
@@ -312,7 +313,7 @@ var BioEditor = React.createClass({
 
   makeEditable: function(e) {
     var member = this.state.member;
-    var bio = this.props.originalBio;
+    var bio = this.state.originalBio;
 
     var editableBio = (
       <div>
@@ -400,7 +401,7 @@ var BioEditor = React.createClass({
       success: function(data) {
         member.bio = data.bio
         member.interests = data.interests
-        self.setState({ member: member, editing: false })
+        self.setState({ member: member, editing: false, originalBio: data.bio })
       },
       error: function(data, status) {
         console.error(status);
