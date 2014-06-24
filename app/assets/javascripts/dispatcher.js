@@ -1,5 +1,10 @@
 var Dispatcher = _.extend(Function.prototype, {
   register: function(callback) {
+    // React.js' example uses CommonJS modules
+    // to make things like _callbacks[] private.
+    // However, setting _callbacks[] on the
+    // Dispatcher seems better in our current case
+    // than polluting the global namespace. 
     this._callbacks = this._callbacks || [];
 
     this._callbacks.push(callback);
