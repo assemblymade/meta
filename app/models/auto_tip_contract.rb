@@ -10,6 +10,11 @@ class AutoTipContract < ActiveRecord::Base
 
   validate :one_contract_per_user
 
+  def active?
+    deleted_at.nil?
+  end
+
+
   # the minimum autotip is 0.001
   def truncate_amount
     self.amount = (self.amount * 1000).floor / 1000.0

@@ -8,7 +8,6 @@ class TransactionLogExchangeRate
     votes = []
     work = {}
     TransactionLogEntry.where(product_id: product_id).where('created_at <= ?', end_at).order(:created_at).each do |entry|
-      time =
       work_id = entry.work_id
       value = entry.value
 
