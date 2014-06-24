@@ -1,0 +1,83 @@
+<div id="sign-up" class="sign-up">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h1>Create an account</h1>
+        It takes less than a minute
+      </div>
+
+      <div class="modal-body body">
+        <div class="section facebook">
+          <div class="facebook-signin-form">
+
+            <a class="btn btn-large btn-default btn-block btn-facebook facebook-signin">
+              <span>
+                Sign up with Facebook
+              </span>
+            </a>
+
+            <a class="btn btn-large btn-default btn-block btn-facebook facebook-busy" style="display: none">
+              <span>
+                Connecting...
+              </span>
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="signin-or">
+          <span>OR</span>
+        </div>
+
+        <div class="new-user">
+          <div class="email-signup">
+            <div class="form-group input-group-control">
+              <input type="text" class="form-control" name="user[username]" autocomplete="off" autofocus="true" placeholder="Choose a username">
+              <input type="email" class="form-control" name="user[email]" autocomplete="off" placeholder="Your email">
+              <input type="password" class="form-control" name="user[password]" placeholder="Create a password">
+            </div>
+
+            Choose something easy to remember and hard to guess. 8 characters min.
+
+            <div class="sign-up-submit">
+              <button class="btn btn-large btn-default btn-block" data-disable-with="Signing up...">
+                Sign up
+              </button>
+
+            </div>
+          </div>
+
+          <div class="facebook-signup-form" style="display: none">
+            <div class="user medium">
+              <div class="avatar">
+                <img src="//www.gravatar.com/avatar/default?s=40">
+              </div>
+              <div class="name"></div>
+              <div class="location"></div>
+            </div>
+
+            <div class="form-group input-group-control">
+              <input type="text" class="form-control" id="user_username" name="user[username]" autocomplete="off" autofocus="true" placeholder="Choose a username">
+              <input type="email" class="form-control" id="user_email" name="user[email]" autocomplete="off" placeholder="Your email">
+            </div>
+
+            <div class="sign-up-submit">
+              <button class="btn btn-large btn-default btn-block">
+                Sign up
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footnote">
+    Already an Assembly member?
+    <a class="js-sign-in" href="#">Log in</a>
+  </div>
+</div>
