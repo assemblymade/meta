@@ -110,6 +110,8 @@ ASM::Application.routes.draw do
       get 'tracking/:article_id' => 'users#tracking', :as => :readraptor
 
       resources :saved_searches, only: [:create, :destroy]
+
+      resources :invites, only: [:create]
     end
   end
 
@@ -185,7 +187,6 @@ ASM::Application.routes.draw do
   get '/products/:product_id/tasks/:id', to: redirect(ProductRedirector.new(:task)), as: :full_product_task
 
   get '/activities/:id' => 'activity#show'
-
 
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do
