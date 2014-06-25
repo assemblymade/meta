@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+//= require dispatcher
+
 var JoinTeam = React.createClass({
   componentWillMount: function() {
     this.setState({ count: this.props.count, is_member: this.props.is_member })
@@ -205,6 +207,12 @@ var JoinTeam = React.createClass({
         analytics.track('product.team.joined', product)
       }
     )
+
+    Dispatcher.dispatch({
+      action: 'addPerson',
+      data: this.props.membership,
+      event: 'people:change'
+    })
   },
 
   onLeave: function(e) {
@@ -225,5 +233,11 @@ var JoinTeam = React.createClass({
         analytics.track('product.team.left', product)
       }
     )
+
+    Dispatcher.dispatch({
+      action: 'removePerson',
+      data: this.props.membership.user.username,
+      event: 'people:change'
+    });
   }
 })

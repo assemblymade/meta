@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+//= require stores/people_store
+
 var People = React.createClass({
   render: function(){
     return (
@@ -23,11 +25,20 @@ var People = React.createClass({
   },
 
   componentWillMount: function() {
-    this.onFilter(this.props.selected)
+    PeopleStore.setPeople(this.props.memberships);
+    this.onFilter(this.props.selected);
+  },
+
+  componentDidMount: function() {
+    PeopleStore.addChangeListener('people:change', this.onChange);
+  },
+
+  onChange: function() {
+    this.onFilter(this.state.selected);
   },
 
   onFilter: function(interest) {
-    var filteredMemberships = this.props.memberships;
+    var filteredMemberships = PeopleStore.getPeople();;
     var self = this;
 
     if (interest) {
@@ -35,7 +46,7 @@ var People = React.createClass({
         return this.onFilter()
       }
 
-      filteredMemberships = _.filter(this.props.memberships, function filterMemberships(m) {
+      filteredMemberships = _.filter(filteredMemberships, function filterMemberships(m) {
         if (interest === 'core') {
           return m.core_team;
         }

@@ -3,8 +3,8 @@
 //= require dispatcher
 
 describe('Dispatcher', function() {
-  afterEach(function(done) {
-    Dispatcher.remove(0);
+  beforeEach(function(done) {
+    Dispatcher.removeAll();
 
     done();
   });
@@ -39,7 +39,7 @@ describe('Dispatcher', function() {
 
     var removed = Dispatcher.remove(index);
     expect(removed).to.be.true;
-    
+
     done();
   });
 });

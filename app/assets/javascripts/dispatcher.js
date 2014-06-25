@@ -1,38 +1,41 @@
-var Dispatcher = _.extend(Function.prototype, {
-  register: function(callback) {
-    // React.js' example uses CommonJS modules
-    // to make things like _callbacks[] private.
-    // However, setting _callbacks[] on the
-    // Dispatcher seems better in our current case
-    // than polluting the global namespace. 
-    this._callbacks = this._callbacks || [];
+//= require underscore
 
-    this._callbacks.push(callback);
+var Dispatcher = (function() {
+  var _callbacks = [];
 
-    // Returning the callback's index allows
-    // explicit references to the callback
-    // outside of the dispatcher
-    return this._callbacks.length - 1;
-  },
+  return _.extend(Function.prototype, {
+    register: function(callback) {
+      _callbacks.push(callback);
 
-  dispatch: function(payload) {
-    var callbacks = this._callbacks;
+      // Returning the callback's index allows
+      // explicit references to the callback
+      // outside of the dispatcher
+      return _callbacks.length - 1;
+    },
 
-    if (!callbacks.length) {
-      return;
+    dispatch: function(payload) {
+      if (_.isEmpty(_callbacks)) {
+        return;
+      }
+
+      for (var i = 0, l = _callbacks.length; i < l; i++) {
+        _callbacks[i](payload);
+      }
+    },
+
+    remove: function(index) {
+      if (_callbacks[index]) {
+        _callbacks.splice(index, 1);
+        return true;
+      }
+
+      return false;
+    },
+
+    removeAll: function() {
+      for (var i = 0, l = _callbacks.length; i < l; i++) {
+        this.remove(i);
+      }
     }
-
-    for (var i = 0, l = callbacks.length; i < l; i++) {
-      callbacks[i](payload);
-    }
-  },
-
-  remove: function(index) {
-    if (this._callbacks[index]) {
-      this._callbacks.splice(index, 1);
-      return true;
-    }
-
-    return false;
-  }
-});
+  });
+})();
