@@ -108,13 +108,13 @@ var InviteFriendForm = React.createClass({
 
           <div className="btn-group text-center" data-toggle="buttons" style={{width:'100%'}}>
             <label className="btn btn-primary active" style={{width:'34%'}}>
-              <input type="radio" name="invite[tip_cents]" value="10" defaultChecked={true} /> <span className="icon icon-app-coin">10</span>
+              <input type="radio" name="invite[tip_cents]" value="1000" defaultChecked={true} /> <span className="icon icon-app-coin">10</span>
             </label>
             <label className="btn btn-primary" style={{width:'33%'}}>
-              <input type="radio" name="invite[tip_cents]" value="100"/> <span className="icon icon-app-coin">100</span>
+              <input type="radio" name="invite[tip_cents]" value="10000"/> <span className="icon icon-app-coin">100</span>
             </label>
             <label className="btn btn-primary" style={{width:'33%'}}>
-              <input type="radio" name="invite[tip_cents]" value="500"/> <span className="icon icon-app-coin">500</span>
+              <input type="radio" name="invite[tip_cents]" value="50000"/> <span className="icon icon-app-coin">500</span>
             </label>
           </div>
         </FormGroup>

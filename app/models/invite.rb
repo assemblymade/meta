@@ -11,20 +11,38 @@ class Invite < ActiveRecord::Base
   attr_accessor :username_or_email
   attr_accessor :username
 
+  delegate :product, to: :via
+
   def self.create_and_send(attributes={})
     Invite.transaction do
       Invite.create(attributes).tap do |invite|
         TransactionLogEntry.transfer!(
-          invite.via.product,
-          invite.invitor.id,
-          invite.id,
+          invite.product,
+          from = invite.invitor.id,
+            to = invite.id,
           invite.tip_cents,
-          invite.id,
+          via=invite.id,
           invite.created_at
         )
 
+        invite.update_attributes sent_at: Time.now
         InviteMailer.delay.invited(invite.id)
       end
+    end
+  end
+
+  def claim!(claimant)
+    with_lock do
+      TransactionLogEntry.transfer!(
+        product,
+        from = id,
+          to = claimant.id,
+        tip_cents,
+        via=id
+      )
+      self.claimed_at = Time.now
+      self.invitee = claimant
+      save!
     end
   end
 
