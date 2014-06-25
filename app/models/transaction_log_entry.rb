@@ -4,8 +4,8 @@ class TransactionLogEntry < ActiveRecord::Base
   scope :with_cents, -> { where.not(cents: nil) }
   scope :validated, -> { where(action: 'validated') }
 
-  def self.balance(product, user)
-    where(product_id: product.id, user_id: user.id).with_cents.sum(:cents)
+  def self.balance(product, user_id)
+    where(product_id: product.id, user_id: user_id).with_cents.sum(:cents)
   end
 
   def self.sum_balances(user)
@@ -79,5 +79,33 @@ class TransactionLogEntry < ActiveRecord::Base
       cents: cents,
       extra: extra
     )
+  end
+
+  def self.transfer!(product, from_id, to_id, cents, via, created_at=Time.now)
+    transaction do
+      transaction_id = SecureRandom.uuid
+
+      if self.balance(product, from_id) < cents
+        raise ActiveRecord::Rollback
+      end
+
+      attributes = {
+        transaction_id: transaction_id,
+        created_at: created_at,
+        product_id: product.id,
+        work_id: via
+      }
+
+      create!(attributes.merge(
+        action: 'credit',
+        user_id: to_id,
+        cents: cents
+      ))
+      create!(attributes.merge(
+        action: 'debit',
+        user_id: from_id,
+        cents: (-1 * cents)
+      ))
+    end
   end
 end

@@ -122,6 +122,6 @@
 
 <div data-react-class="InviteFriend" data-react-props='<%== {
     url: invites_path,
-    invites: serialize_hash(@invites),
+    invites: (@invites ? serialize_hash(@invites) : []),
   }.merge(TypeId.as_json(:via, @wip)).to_json %>'>
 </div>

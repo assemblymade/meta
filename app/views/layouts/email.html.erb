@@ -22,7 +22,7 @@
                         <table class="six columns">
                           <tr>
                             <td class="left-text-pad">
-                              <a href="<%= root_url(auth_token: @user.authentication_token) %>" target="_blank" title="Assembly">
+                              <a href="<%= root_url(auth_token: (@user.authentication_token if @user)) %>" target="_blank" title="Assembly">
                                 <img alt="Assembly Logo" src="<%= image_url('logo-wordmark-dark@2x.png') %>" width="36" height="32" />
                               </a>
                             </td>

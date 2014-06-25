@@ -11,13 +11,30 @@ class Invite < ActiveRecord::Base
   attr_accessor :username_or_email
   attr_accessor :username
 
+  def self.create_and_send(attributes={})
+    Invite.transaction do
+      Invite.create(attributes).tap do |invite|
+        TransactionLogEntry.transfer!(
+          invite.via.product,
+          invite.invitor.id,
+          invite.id,
+          invite.tip_cents,
+          invite.id,
+          invite.created_at
+        )
+
+        InviteMailer.delay.invited(invite.id)
+      end
+    end
+  end
+
+  # private
+
   def invitee_or_email
     if invitee.nil? && invitee_email.blank?
       errors.add(:username_or_email, 'not a valid username or email')
     end
   end
-
-  # private
 
   def set_invitee
     if username_or_email =~ User::USERNAME_REGEX

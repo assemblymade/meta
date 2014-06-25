@@ -26,7 +26,7 @@ class MilestonesController < ApplicationController
     @events = Event.render_events(@wip.events.order(:number), current_user)
     @product_balance = 0
     if signed_in?
-      @product_balance = TransactionLogEntry.balance(@product, current_user)
+      @product_balance = TransactionLogEntry.balance(@product, current_user.id)
     end
   end
 

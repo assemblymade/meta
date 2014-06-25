@@ -10,7 +10,6 @@ var FormGroup = React.createClass({
       'form-group': true,
       'alert-danger': this.props.error
     })
-    console.log(this.props, classes)
     return (
       <div className={classes}>
         {this.props.children}

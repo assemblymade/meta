@@ -4,7 +4,7 @@ class InvitesController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @invite = Invite.create(invite_params.merge(invitor: current_user))
+    @invite = Invite.create_and_send(invite_params.merge(invitor: current_user))
     respond_with @invite, location: request.referer
   end
 

@@ -14,8 +14,12 @@ describe InvitesController do
             username_or_email: 'ben@tatooine.com',
             note: 'help me obi wan kenobi',
             tip_cents: 50000,
-            via_type: Task, via_id: bounty.id
+            via_type: Task.to_s, via_id: bounty.id
           }
+      end
+
+      it 'validates' do
+        expect(assigns(:invite)).to be_valid
       end
 
       it 'creates an invite' do

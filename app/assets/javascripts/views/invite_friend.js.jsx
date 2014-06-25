@@ -1,8 +1,10 @@
 /** @jsx React.DOM */
 
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
+
 var InviteFriend = React.createClass({
   getInitialState: function() {
-    return { shown: false, invites: this.props.invites };
+    return { modal: false, invites: this.props.invites };
   },
 
   render: function() {
@@ -10,7 +12,7 @@ var InviteFriend = React.createClass({
       <div>
         <a className="text-small" href="#help-me" onClick={this.click}>Ask a friend to help with this Bounty</a>
         {this.state.invites.length > 0 ? <InviteList invites={this.state.invites} /> : null}
-        {this.state.shown ? this.popover() : null}
+        {this.state.modal ? this.popover() : null}
       </div>
     )
   },
@@ -27,14 +29,14 @@ var InviteFriend = React.createClass({
   },
 
   click: function() {
-    this.setState({shown: !this.state.shown})
+    this.setState({modal: !this.state.modal})
   },
 
   onSubmit: function(invite) {
     this.setState(
       React.addons.update(this.state, {
         invites: {$push: [invite] },
-        shown: {$set: false }
+        modal: {$set: false }
       })
     )
   }
@@ -43,12 +45,14 @@ var InviteFriend = React.createClass({
 var InviteList = React.createClass({
   render: function() {
     var inviteNodes = _.map(this.props.invites, function(invite) {
-      return <Invite id={invite.id} invitee_email={invite.invitee_email} invitee={invite.invitee} />
+      return <Invite key={invite.id} id={invite.id} invitee_email={invite.invitee_email} invitee={invite.invitee} />
     })
     return (
       <div className="panel panel-default">
         <ul className="list-group list-group-breakout small omega">
-          {inviteNodes}
+          <ReactCSSTransitionGroup transitionName="invite">
+            {inviteNodes}
+          </ReactCSSTransitionGroup>
         </ul>
       </div>
     )
@@ -65,7 +69,6 @@ var Invite = React.createClass({
   },
 
   label: function() {
-    console.log(this.props.invitee)
     if (this.props.invitee) {
       return <span>Invited <a href={this.props.invitee.url}>@{this.props.invitee.username}</a></span>
     } else {
@@ -142,5 +145,14 @@ var InviteFriendForm = React.createClass({
   handleErrors: function(errors) {
     this.setState({errors: errors})
   }
+})
 
+var InviteSent = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <h1>Sent!</h1>
+      </div>
+    )
+  }
 })
