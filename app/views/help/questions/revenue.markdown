@@ -38,10 +38,7 @@ Additionally, most products retain 5% of the App Coins for the person who submit
 title: What happens to my App Coins if I stop working on an app?
 ---
 
-Your App Coins remain with you in perpetuity, even after you stop working on the products, as long as you remain an active member. Contributions by other community members will continue to earn them new App Coins which would dilute your stake over time. However, these contributions increase the value of the product, so you end up with a smaller slice of a larger pie.
-
-
-To remain an active member of an Assembly app, you must keep your email information up to date and sign in to Assembly and vote on or make at least one new contribution for that app every calendar year.
+Your App Coins remain with you in perpetuity, even after you stop working on the products, as long as you remain an active member (Being an active member just means keeping your email information up to date and logging into your account one time per calendar year). Contributions by other community members will continue to earn them new App Coins which would dilute your stake over time. However, these contributions increase the value of the product, so you end up with a smaller slice of a larger pie.
 
 ---
 title: How are App Coins fairly rewarded to early contributors?
