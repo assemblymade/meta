@@ -81,6 +81,9 @@ var PeopleFilter = React.createClass({
     var highlightCore = self.props && self.props.selected === 'core' ? 'primary': 'default';
 
     var tags = _.map(this.props.interestFilters, function(interest){
+      if (interest === 'core') {
+        return;
+      }
       var label = '@' + interest;
       var highlight = self.props && self.props.selected === interest ? 'primary' : 'default';
 
@@ -319,7 +322,7 @@ var BioEditor = React.createClass({
     return (
       <div className="text-right" style={{'margin-top':'16px'}}>
         <a className="btn btn-default btn-sm" onClick={this.makeUneditable} style={{'margin-right' : '8px'}}>Cancel</a>
-        <a className="btn btn-primary btn-sm" onClick={this.saveBio}>Save</a>
+        <a className="btn btn-primary btn-sm" onClick={this.updateBio}>Save</a>
       </div>
     )
   },
@@ -342,7 +345,7 @@ var BioEditor = React.createClass({
           {this.skillsOptions()}
         </select>
       </div>
-    )
+    );
 
     member.bio = editableBio;
 
@@ -351,8 +354,11 @@ var BioEditor = React.createClass({
 
   skillsOptions: function() {
     var options = _.map(this.props.interestFilters, function(interest) {
-      return <option value={interest}>{'@' + interest}</option>
-    })
+      if (interest === 'core') {
+        return;
+      }
+      return (<option value={interest}>{'@' + interest}</option>);
+    });
 
     return options
   },
@@ -392,17 +398,22 @@ var BioEditor = React.createClass({
 
   makeUneditable: function(e) {
     var member = this.state.member;
+    var bio = this.state.originalBio || this.props.originalBio;
 
-    member.bio = this.props.originalBio;
-
-    this.setState({ member: member, editing: false });
+    this.save(member, bio, member.interests);
   },
 
-  saveBio: function(e) {
+  updateBio: function(e) {
     var self = this;
     var bio = $('.bio-editor').val();
-    var interests = $('#join-interests').val()
+    var interests = $('#join-interests').val();
     var member = this.state.member;
+
+    this.save(member, bio, interests);
+  },
+
+  save: function(member, bio, interests) {
+    var self = this;
 
     $.ajax({
       url: this.props.updatePath,
@@ -421,6 +432,6 @@ var BioEditor = React.createClass({
       error: function(data, status) {
         console.error(status);
       }
-    })
+    });
   }
-})
+});

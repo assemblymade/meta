@@ -84,24 +84,23 @@ var JoinTeam = React.createClass({
   setUpEditor: function(chosenSelect) {
     // TODO: Move default bio and interests someplace saner.
     var defaultBio = "Hi! My name is Maeby. I do all of my design in Dreamweaver, and I've never stopped loving .NET."
-    var defaultInterests = ['code', 'design']
-    var membership = this.props.membership
-    var bioEditor = $('#join-bio-editor')
+    var defaultInterests = ['code', 'design'];
+    var membership = this.props.membership;
+    var bioEditor = $('#join-bio-editor');
 
     if (membership) {
       if (membership.bio) {
-        bio = membership.bio
-        $(bioEditor).val(bio)
+        bio = membership.bio;
+        $(bioEditor).val(bio);
 
         // If the user has entered a bio, assume that s/he
         // has also entered his/her interests
-        chosenSelect.val(membership.interests)
+        chosenSelect.val(membership.interests);
       } else {
-        chosenSelect.val(defaultInterests)
+        chosenSelect.val(defaultInterests);
       }
 
-
-      chosenSelect.trigger('chosen:updated')
+      chosenSelect.trigger('chosen:updated');
     }
 
     bioEditor.attr({placeholder: defaultBio})
