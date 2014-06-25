@@ -10,8 +10,8 @@
     <div class="media-heading omega">
       <div class="activity-body">
         <div class="activity-actions">
-          <ul class="list-inline omega text-muted">
-            <li>
+          <ul class="list-inline omega">
+            <li class="text-muted">
               {{#actor}}
                 <a href="{{url}}">{{username}}</a>
               {{/actor}}
@@ -34,8 +34,10 @@
           </ul>
 
           {{#subject}}{{#metadata}}
-            <div class="well well-sm media-object omega text-left" style="color: #393939; text-align: left; background-color: #fff">
-              {{message}}
+            <div class=" card omega" style="margin-top: 6px; text-align: left; font-size: 16px; padding: 8px 10px;">
+              <code>
+                {{message}}
+              </code>
             </div>
           {{/metadata}}{{/subject}}
         </div>
