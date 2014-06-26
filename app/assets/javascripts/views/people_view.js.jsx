@@ -314,7 +314,7 @@ var BioEditor = React.createClass({
 
   editButton: function() {
     return (
-      <a className="text-small" onClick={this.makeEditable}> &mdash;&nbsp;Update Intro</a>
+      <a className="text-small" style={{ cursor: 'pointer' }} onClick={this.makeEditable}> &mdash;&nbsp;Update Intro</a>
     )
   },
 
@@ -328,28 +328,11 @@ var BioEditor = React.createClass({
   },
 
   makeEditable: function(e) {
-    var member = this.state.member;
+    $('#edit-membership-modal').modal('show');
+    this.setUpChosen();
+
     var bio = this.state.originalBio;
-
-    var editableBio = (
-      <div>
-        <label>Introduce yourself</label>
-        <textarea className="form-control bio-editor" style={{'margin-bottom': '16px'}} rows="2" defaultValue={bio}></textarea>
-        <label>Choose your interests</label>
-        <select
-            name="membership[interest_ids][]"
-            data-placeholder=" "
-            className="form-control chosen-select"
-            id="join-interests"
-            multiple="true">
-          {this.skillsOptions()}
-        </select>
-      </div>
-    );
-
-    member.bio = editableBio;
-
-    this.setState({ member: member, editing: true })
+    $('#bio-editor').val(bio);
   },
 
   skillsOptions: function() {
@@ -385,7 +368,8 @@ var BioEditor = React.createClass({
       persistent_create_option: true,
       skip_no_results: true,
       search_contains: true,
-      create_option_text: 'Add interest'
+      create_option_text: 'Add interest',
+      width: '95%'
     })
 
     var member = this.state.member;
