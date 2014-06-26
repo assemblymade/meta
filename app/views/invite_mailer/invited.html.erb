@@ -23,15 +23,18 @@
                   <a href="<%= user_url(@invitor) %>">
                     @<%= @invitor.username %>
                   </a>
-                  wants you to help out on Assembly. There's <%= pluralize(@invite.tip_cents / 100, "#{@product.name} coin") %> waiting for you.
+                  wants you to help out on <%= @product.name %>. There's <%= pluralize(@invite.tip_cents / 100, "#{@product.name} coin") %> waiting for you.
                 </h1>
 
                 <br/>
-
+                <% if @invite.note.present? %>
+                  <p>From @<%= @invitor.username %>:</p>
+                  <%== markdown @invite.note %>
+                <% end %>
                 <table class="button success radius">
                   <tr>
                     <td>
-                      <a href="<%= product_wip_url(@product, @via, i: @invite.id) %>">Check it out</a>
+                      <a href="<%= product_wip_url(@product, @via, i: @invite.id) %>">Help out @<%= @invitor.username %></a>
                     </td>
                   </tr>
                 </table>

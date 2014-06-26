@@ -55,16 +55,14 @@ class Invite < ActiveRecord::Base
       errors.add(:username_or_email, 'not a valid username or email')
     end
 
-    if invitee_email_changed?
-      if Invite.find_by(invitor: invitor, invitee_email: invitee_email).present?
-        errors.add(:username_or_email, 'already invited')
+    if username_or_email.present?
+      existing_invite = if self.invitee_email.present?
+        Invite.find_by(invitor: invitor, invitee_email: invitee_email)
+      elsif self.invitee_id.present?
+        Invite.find_by(invitor: invitor, invitee_email: invitee_email).present?
       end
-    end
 
-    if invitee_id_changed?
-      if Invite.find_by(invitor: invitor, invitee_id: invitee_id).present?
-        errors.add(:username_or_email, 'already invited')
-      end
+      errors.add(:username_or_email, 'already invited') if existing_invite.present?
     end
   end
 
@@ -76,5 +74,6 @@ class Invite < ActiveRecord::Base
     else
       self.invitee_email = username_or_email.strip
     end
+    self.username_or_email = nil
   end
 end

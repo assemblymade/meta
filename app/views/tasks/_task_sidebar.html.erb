@@ -120,8 +120,10 @@
   </div>
 </div><!-- .panel -->
 
-<div data-react-class="InviteFriend" data-react-props='<%== {
-    url: invites_path,
-    invites: (@invites ? serialize_hash(@invites) : []),
-  }.merge(TypeId.as_json(:via, @wip)).to_json %>'>
-</div>
+<% if signed_in? %>
+  <div data-react-class="InviteFriend" data-react-props='<%== {
+      url: invites_path,
+      invites: (@invites ? serialize_hash(@invites) : []),
+    }.merge(TypeId.as_json(:via, @wip)).to_json %>'>
+  </div>
+<% end %>
