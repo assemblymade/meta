@@ -16,7 +16,10 @@ class Activity < ActiveRecord::Base
   end
 
   def streams
-    stream_targets.map {|o| ActivityStream.new(o) }
+    stream_targets.map do |o|
+      undecorated = o.try(:object) || o
+      ActivityStream.new(undecorated)
+    end
   end
 
   def stream_targets
