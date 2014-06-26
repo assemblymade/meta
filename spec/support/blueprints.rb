@@ -11,6 +11,12 @@ Attachment.blueprint do
   name { Faker::Name.name }
 end
 
+AutoTipContract.blueprint do
+  user
+  product
+  amount { 0.1 }
+end
+
 Discussion.blueprint do
   user
   product

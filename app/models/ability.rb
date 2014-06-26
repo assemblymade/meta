@@ -82,7 +82,11 @@ class Ability
 
     # Contracts
 
-    can :destroy, AutoTipContract do |contract|
+    can :contract, Product do |product|
+      product.core_team?(current_user)
+    end
+
+    can [:create, :update, :destroy], AutoTipContract do |contract|
       contract.product.core_team?(current_user) || current_user.id == contract.user_id
     end
 

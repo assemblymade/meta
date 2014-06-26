@@ -56,6 +56,8 @@ var People = React.createClass({
     }
 
     var sortedMemberships = _.sortBy(filteredMemberships, function(m) {
+      if (!m) return;
+
       return (self.props.currentUser && self.props.currentUser.id === m.user.id ?
         '-1' :
         m.core_team ? '0' : '1') +
@@ -151,6 +153,9 @@ var PeopleList = React.createClass({
 
     for (var i = 0, l = memberships.length; i < l; i += 2) {
       var leftMember = memberships[i];
+      if (!leftMember) {
+        return;
+      }
       var leftUser = leftMember.user;
       var rightMember = memberships[i + 1];
       var rightUser = rightMember && rightMember.user;
@@ -188,7 +193,8 @@ var PeopleList = React.createClass({
               className="avatar"
               alt={'@' + user.username}
               width="30"
-              height="30" />
+              height="30"
+          />
         </a>
       </div>
     );
@@ -219,7 +225,8 @@ var PeopleList = React.createClass({
               originalBio={member.bio}
               interestFilters={this.props.interestFilters}
               updateSkills={this.updateSkills}
-              selected={this.props.selected} />
+              selected={this.props.selected}
+          />
         </div>
       </div>
     )
@@ -243,7 +250,16 @@ var BioEditor = React.createClass({
       member: this.props.member,
       originalBio: this.props.originalBio,
       editing: false
-    })
+    });
+  },
+
+  componentDidMount: function() {
+    var hash = window.location.hash.toLowerCase();
+
+    if (/intro/i.test(hash)) {
+      this.makeEditable();
+      window.location.hash = '';
+    }
   },
 
   componentDidUpdate: function() {
@@ -329,10 +345,10 @@ var BioEditor = React.createClass({
 
   makeEditable: function(e) {
     $('#edit-membership-modal').modal('show');
+
     this.setUpChosen();
 
-    var bio = this.state.originalBio;
-    $('#bio-editor').val(bio);
+    $('#bio-editor').val(this.state.originalBio);
   },
 
   skillsOptions: function() {
@@ -346,8 +362,9 @@ var BioEditor = React.createClass({
     return options
   },
 
-  setUpChosen: function() {
-    var chosenSelect = $('.chosen-select')
+  setUpChosen: function(node) {
+    node = node || '.chosen-select';
+    var chosenSelect = $(node)
 
     chosenSelect.chosen({
       create_option: function(term) {
@@ -376,8 +393,10 @@ var BioEditor = React.createClass({
 
     if (member.interests && member.interests.length) {
       chosenSelect.val(member.interests)
-      chosenSelect.trigger('chosen:updated')
+    } else {
+      chosenSelect.val(['code', 'design']);
     }
+    chosenSelect.trigger('chosen:updated')
   },
 
   makeUneditable: function(e) {

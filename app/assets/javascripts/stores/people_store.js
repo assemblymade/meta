@@ -12,7 +12,12 @@ var PeopleStore = (function() {
 
     setPeople: function(people) {
       _people = _.sortBy(people, function(person) {
-        return person.user.username;
+        if (!person) {
+          person = { user: app.currentUser() };
+          person.user.username = person.user.get('username');
+        }
+
+        return person && person.user && person.user.username;
       });
     },
 

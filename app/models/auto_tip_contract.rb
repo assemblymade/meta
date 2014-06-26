@@ -9,6 +9,7 @@ class AutoTipContract < ActiveRecord::Base
   before_validation :truncate_amount
 
   validate :one_contract_per_user
+  validate :contracts_less_than_100_percent
 
   def active?
     deleted_at.nil?
@@ -26,10 +27,27 @@ class AutoTipContract < ActiveRecord::Base
     end
   end
 
+  def contracts_less_than_100_percent
+    total = AutoTipContract.where(product_id: product.id, deleted_at: nil).inject(0) do |memo, contract|
+      memo + contract.amount
+    end
+
+    if total > 1
+      errors.add(:product, "contracts exceed 100%")
+    end
+  end
+
+  def self.end_contract(product, user)
+    end_at = Time.now - 1
+    AutoTipContract.transaction do
+      AutoTipContract.active_at(product, Time.now).where(user: user).update_all deleted_at: end_at
+    end
+  end
+
   def self.replace_contract(product, user, amount, start_at = Time.now)
     AutoTipContract.transaction do
       end_at = start_at - 1
-      AutoTipContract.active_at(product, Time.now).where(user: user).update_all deleted_at: end_at
+      AutoTipContract.end_contract(product, user)
 
       AutoTipContract.create! product: product, user: user, amount: amount
     end

@@ -24,44 +24,46 @@
 
 </div><!-- .row -->
 
-<div class="modal fade" id="edit-membership-modal" tabindex="-1" role="dialog" aria-hidden="true">
-  <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-        <input name="_method" value="patch" type="hidden">
-        <div class="modal-header">
-          <button type="button" class="close btn btn-sm" data-dismiss="modal">&times;</button>
-          <div class="form-group" style="margin-bottom: 15px">
-            <label class="control-label" for="join-bio-editor">
-              Introduce yourself, earn some <%= @product.name %> coins
-            </label>
-            <small class="help-block" style="margin-top: 0px">
-              What skills can you contribute, how much time do you have and what are you looking to get out of the experience?
-            </small>
-            <textarea name="membership[bio]" id="bio-editor" class="form-control bio-editor" style="min-height: 86px;" placeholder="Hi! My name is Maeby. I do all of my design in Dreamweaver, and I've never stopped loving .NET."></textarea>
+<% unless current_user.nil? %>
+  <div class="modal fade" id="edit-membership-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+          <input name="_method" value="patch" type="hidden">
+          <div class="modal-header">
+            <button type="button" class="close btn btn-sm" data-dismiss="modal">&times;</button>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label class="control-label" for="join-bio-editor">
+                Introduce yourself, earn some <%= @product.name %> coins
+              </label>
+              <small class="help-block" style="margin-top: 0px">
+                What skills can you contribute, how much time do you have and what are you looking to get out of the experience?
+              </small>
+              <textarea name="membership[bio]" id="bio-editor" class="form-control bio-editor" style="min-height: 130px;"></textarea>
+            </div>
           </div>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="join-interests">What are you interested in?</label>
-            <% interest_filters = product_membership_interests(@product, true) %>
-            <%= select_tag 'membership[interests][]',
-              options_for_select(interest_filters.map { |interest| ['@' + interest, interest]}),
-              'data-placeholder' => ' ',
-              :class => 'form-control chosen-select',
-              :id => 'join-interests',
-              :multiple => true %>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="join-interests">What are you interested in?</label>
+              <% interest_filters = product_membership_interests(@product, true) %>
+              <%= select_tag 'membership[interests][]',
+                options_for_select(interest_filters.map { |interest| ['@' + interest, interest]}),
+                'data-placeholder' => ' ',
+                :class => 'form-control chosen-select',
+                :id => 'join-interests',
+                :multiple => true %>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary btn-block" id="join-intro-button">Introduce yourself</button>
-        </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary btn-block" id="join-intro-button">Introduce yourself</button>
+          </div>
 
+        </div>
       </div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
+<% end %>
 
 <%= render 'shared/footer' %>
 
@@ -76,6 +78,10 @@ $(document).ready(function() {
       currentUser: <%== current_user.to_json %>,
       updatePath: "<%= product_person_path(@product, current_user) if current_user %>"
     }), this)
-  })
+  });
+
+  $('#edit-membership-modal').on('shown.bs.modal', function() {
+    $('#bio-editor').attr('placeholder', app.defaultBio());
+  });
 });
 </script>

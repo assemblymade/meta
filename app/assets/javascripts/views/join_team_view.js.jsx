@@ -83,7 +83,7 @@ var JoinTeam = React.createClass({
 
   setUpEditor: function(chosenSelect) {
     // TODO: Move default bio and interests someplace saner.
-    var defaultBio = "Hi! My name is Maeby. I do all of my design in Dreamweaver, and I've never stopped loving .NET."
+    var defaultBio = app.defaultBio();
     var defaultInterests = ['code', 'design'];
     var membership = this.props.membership;
     var bioEditor = $('#join-bio-editor');

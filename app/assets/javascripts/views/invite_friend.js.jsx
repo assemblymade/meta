@@ -36,7 +36,7 @@ var InviteFriend = React.createClass({
     this.setState(
       React.addons.update(this.state, {
         invites: {$push: [invite] },
-        modal: {$set: false }
+        modal: {$set: false}
       })
     )
   }

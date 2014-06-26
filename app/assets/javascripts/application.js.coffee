@@ -33,6 +33,13 @@ class window.Application
   currentUser: ->
     @_currentUser
 
+  defaultBio: ->
+    "Hi everyone! I love coding in VB6 across the stack; I'm currently living in
+     Westeros. I'll ping-pong a lot between concept and design too. Hoping to
+     get involved with IE6 compatibility issues, kickstarting ideas, and
+     providing tangible feedback. I'd like to free up to 8-16 hours a week to
+     work with everyone on this. Great to see so many people!"
+
   setCurrentAnalyticsProduct: (product) ->
     @_currentAnalyticsProduct = new Product(product)
     @trigger 'change:currentAnalyticsProduct', @_currentAnalyticsProduct

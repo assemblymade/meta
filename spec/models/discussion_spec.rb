@@ -22,7 +22,7 @@ describe Discussion do
       discussion.watch! watcher
       discussion.watch! watcher
       discussion.watch! watcher
-      
+
       discussion.watchers.should =~ [owner, watcher]
     end
   end

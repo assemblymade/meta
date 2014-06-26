@@ -9,6 +9,8 @@ class ContractsController < ProductController
   end
 
   def create
+    authorize! :contract, @product
+
     user = User.find_by!(username: contract_params[:user].strip().sub!('@', ''))
     amount = contract_params[:amount].to_f / 100
 
@@ -30,26 +32,21 @@ class ContractsController < ProductController
   def update
     user = contract_params[:user]
     contract = AutoTipContract.find_by!(product: @product, user: user)
+    authorize! :update, contract
     proposed_amount = contract_params[:amount].to_f / 100
-    allContracts = AutoTipContract.where(product: @product.id, deleted_at: nil)
-
-    total = sum_contracts()
-
-    if total - contract.amount + proposed_amount > 1
-      raise 'Tip contracts cannot exceed total revenue!'
-    end
 
     AutoTipContract.replace_contract(@product, contract.user, proposed_amount)
 
     respond_to do |format|
-      format.json { render json: { total: total } }
+      format.json { render json: {} }
     end
   end
 
   def destroy
-    AutoTipContract.transaction do
-      AutoTipContract.where(product: @product, id: params[:id]).update_all deleted_at: Time.now
-    end
+    contract = AutoTipContract.find_by!(product: @product, id: params[:id])
+    authorize! :destroy, contract
+
+    AutoTipContract.end_contract(@product, contract.user)
 
     respond_to do |format|
       format.json { render json: {} }
@@ -58,16 +55,6 @@ class ContractsController < ProductController
 
   def contract_params
     params.require(:contract).permit(:amount, :user)
-  end
-
-  def sum_contracts()
-    allContracts = AutoTipContract.where(product: @product.id, deleted_at: nil)
-
-    total = allContracts.inject(0) do |memo, c|
-      memo + c.amount
-    end
-
-    total
   end
 
 end
