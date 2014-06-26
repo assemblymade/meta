@@ -14,19 +14,21 @@ class Invite < ActiveRecord::Base
   delegate :product, to: :via
 
   def self.create_and_send(attributes={})
-    Invite.transaction do
-      Invite.create(attributes).tap do |invite|
-        TransactionLogEntry.transfer!(
-          invite.product,
-          from = invite.invitor.id,
-            to = invite.id,
-          invite.tip_cents,
-          via=invite.id,
-          invite.created_at
-        )
+    transaction do
+      create(attributes).tap do |invite|
+        if invite.valid?
+          TransactionLogEntry.transfer!(
+            invite.product,
+            from = invite.invitor.id,
+              to = invite.id,
+            invite.tip_cents,
+            via=invite.id,
+            invite.created_at
+          )
 
-        invite.update_attributes sent_at: Time.now
-        InviteMailer.delay.invited(invite.id)
+          invite.update_attributes sent_at: Time.now
+          InviteMailer.delay.invited(invite.id)
+        end
       end
     end
   end
@@ -52,9 +54,23 @@ class Invite < ActiveRecord::Base
     if invitee.nil? && invitee_email.blank?
       errors.add(:username_or_email, 'not a valid username or email')
     end
+
+    if invitee_email_changed?
+      if Invite.find_by(invitor: invitor, invitee_email: invitee_email).present?
+        errors.add(:username_or_email, 'already invited')
+      end
+    end
+
+    if invitee_id_changed?
+      if Invite.find_by(invitor: invitor, invitee_id: invitee_id).present?
+        errors.add(:username_or_email, 'already invited')
+      end
+    end
   end
 
   def set_invitee
+    return if username_or_email.nil?
+
     if username_or_email =~ User::USERNAME_REGEX
       self.invitee = User.find_by(username: $1.strip)
     else

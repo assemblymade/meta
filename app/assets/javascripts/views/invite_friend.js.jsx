@@ -95,7 +95,7 @@ var InviteFriendForm = React.createClass({
         <p>Know somebody who could help with this? Anybody can help out, all you need to do is ask.</p>
         <hr/>
         <FormGroup error={this.state.errors.username_or_email}>
-          <label>Username or email address</label>
+          <label className="control-label">Username or email address</label>
           <input name="invite[username_or_email]" type="text" placeholder="friend@example.com" className="form-control" />
         </FormGroup>
         <FormGroup error={this.state.errors.note}>

@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
         if signed_in?
           invite.claim!(current_user)
         else
-          cookies[:invite] = invite.id
+          cookies.permanent[:invite] = invite.id
         end
       end
       redirect_to(url_for(params.except(:i)))
