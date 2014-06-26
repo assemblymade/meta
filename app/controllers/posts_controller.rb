@@ -1,4 +1,4 @@
-class PostsController < ApplicationController
+class PostsController < ProductController
   respond_to :html
 
   def index

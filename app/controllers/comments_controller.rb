@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class CommentsController < ProductController
   include Missions::CompletionHelper
 
   respond_to :html, :json

@@ -1,29 +1,22 @@
-<%= render 'shared/navbar' %>
-<%= render 'products/navbar' %>
+<% title 'Edit Comment' %>
 
-<div class="page">
-  <div class="container">
-    <div class="page-header">
-      <h2 class="page-header-title">Edit comment</h2>
-    </div>
-    <div class="row">
-      <div class="col-xs-8">
-        <%= form_for @comment, url: product_wip_comment_path(@comment.product, @comment.wip, @comment), method: :patch, class: 'form' do |f| %>
+<div class="page-header">
+  <h2 class="page-header-title">Edit comment</h2>
+</div>
+<div class="row">
+  <div class="col-xs-8">
+    <%= form_for @comment, url: product_wip_comment_path(@comment.product, @comment.wip, @comment), method: :patch, class: 'form' do |f| %>
 
-          <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
-            <textarea class="form-control" data-validate-length="2" id="event_comment_body" name="event_comment[body]" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 176px;"><%= @comment.body %></textarea>
-            <div class="dropzone-inner js-dropzone-select">
-              To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...
-            </div>
-          </div>
-
-          <div class="form-actions">
-            <%= f.submit 'Update comment', class: %w(btn btn-primary) %>
-          </div>
-        <% end %>
+      <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
+        <textarea class="form-control" data-validate-length="2" id="event_comment_body" name="event_comment[body]" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 176px;"><%= @comment.body %></textarea>
+        <div class="dropzone-inner js-dropzone-select">
+          To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...
+        </div>
       </div>
-    </div>
+
+      <div class="form-actions">
+        <%= f.submit 'Update comment', class: %w(btn btn-primary) %>
+      </div>
+    <% end %>
   </div>
 </div>
-
-<%= render 'shared/footer' %>

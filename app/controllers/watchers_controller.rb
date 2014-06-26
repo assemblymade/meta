@@ -1,4 +1,4 @@
-class WatchersController < ApplicationController
+class WatchersController < ProductController
   respond_to :json, :html
 
   def index

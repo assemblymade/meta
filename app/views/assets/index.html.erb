@@ -1,55 +1,43 @@
 <% title 'Projects', @product.name %>
-<%= render 'shared/navbar' %>
-<%= render 'products/navbar' %>
 
-<div class="page">
-  <div class="container">
-    <%= render 'products/alert' %>
-
-    <div class="page-header">
-      <% if can? :create, Asset %>
-        <div class="pull-right">
-          <%= form_for :asset, url: product_assets_path(@product), html: {class: 'js-dropzone-form'} do |f| %>
-            <%= f.hidden_field :attachment_id %>
-            <%= f.hidden_field :name %>
-          <% end %>
-          <div class="js-dropzone" data-target-form=".js-dropzone-form">
-            <span class="btn btn-success js-dropzone-select" data-disable-with="Uploading...">
-              Upload an asset
-            </span>
-          </div>
-        </div>
+<div class="page-header">
+  <% if can? :create, Asset %>
+    <div class="pull-right">
+      <%= form_for :asset, url: product_assets_path(@product), html: {class: 'js-dropzone-form'} do |f| %>
+        <%= f.hidden_field :attachment_id %>
+        <%= f.hidden_field :name %>
       <% end %>
-
-      <h2 class="page-header-title">
-        <i class="icon-paper-clip text-muted" style="vertical-align: text-bottom; margin-right: 4px;"></i>
-        Assets
-      </h2>
+      <div class="js-dropzone" data-target-form=".js-dropzone-form">
+        <span class="btn btn-success js-dropzone-select" data-disable-with="Uploading...">
+          Upload an asset
+        </span>
+      </div>
     </div>
+  <% end %>
 
-    <div class="row">
-      <% if @assets.empty? %>
-        <div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
-          <div class="well well-lg omega">
-            <h3 class="alpha"><strong>Share Assets</strong></h3>
-            <p class="text-muted omega">
-              Upload images, zip files, PSDs with the rest of the team building <%= @product.name %>.
-            </p>
-          </div>
-        </div>
-      <% else %>
-        <% @assets.each do |asset| %>
-          <div class="col-md-3 col-xs-3">
-            <%= render 'assets/asset', asset: asset %>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-    <%= paginate @assets, theme: 'twitter-bootstrap-3' %>
-
-  </div>
-
+  <h2 class="page-header-title">
+    <i class="icon-paper-clip text-muted" style="vertical-align: text-bottom; margin-right: 4px;"></i>
+    Assets
+  </h2>
 </div>
 
+<div class="row">
+  <% if @assets.empty? %>
+    <div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
+      <div class="well well-lg omega">
+        <h3 class="alpha"><strong>Share Assets</strong></h3>
+        <p class="text-muted omega">
+          Upload images, zip files, PSDs with the rest of the team building <%= @product.name %>.
+        </p>
+      </div>
+    </div>
+  <% else %>
+    <% @assets.each do |asset| %>
+      <div class="col-md-3 col-xs-3">
+        <%= render 'assets/asset', asset: asset %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
 
-<%= render 'shared/footer' %>
+<%= paginate @assets, theme: 'twitter-bootstrap-3' %>

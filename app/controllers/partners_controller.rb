@@ -1,7 +1,7 @@
 require 'core_ext/time_ext'
 
-class PartnersController < ApplicationController
-  before_action :set_product
+class PartnersController < ProductController
+  before_action :find_product!
 
   def index
     @total_cents = 0

@@ -1,25 +1,16 @@
 <% title @product.name, @product.pitch %>
-<% @missionAutoOpen = false %>
-<%= render 'shared/navbar' %>
-<%= render 'products/navbar' %>
 
-<div class="page page-padded container">
-  <div class="page-content">
-    <% if @product.flagged? %>
-      <h1><%= @product.name %> is already flagged.</h1>
-    <% else %>
-      <h2>Flag product reason</h2>
-      <br/>
+<% if @product.flagged? %>
+  <h1><%= @product.name %> is already flagged.</h1>
+<% else %>
+  <h2>Flag product reason</h2>
+  <br/>
 
-      <%= form_for product_flag_url(@product) do |f| %>
-        <%= f.text_area :personal_message, placeholder: "Reason for flagging", rows: 10 %>
-        <div class='form-actions'>
-          <button class='btn btn-small btn-primary') data-disable-with="Updating..."> Update</button>
-        </div>
-      <% end %>
+  <%= form_for product_flag_url(@product) do |f| %>
+    <%= f.text_area :personal_message, placeholder: "Reason for flagging", rows: 10 %>
+    <div class='form-actions'>
+      <button class='btn btn-small btn-primary') data-disable-with="Updating..."> Update</button>
+    </div>
+  <% end %>
 
-    <% end %>
-  </div>
-</div>
-
-<%= render 'shared/footer' %>
+<% end %>
