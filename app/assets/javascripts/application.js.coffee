@@ -35,7 +35,7 @@ class window.Application
 
   defaultBio: ->
     """
-    Hi Everyone, I'm Maeby! I love coding in VB6 across the stack.
+    Hi everyone, I'm Maeby! I love coding in VB6 across the stack.
      I also ping-pong a lot between concept and design. Hoping to get involved
      with UX, to help kickstart ideas, and to provide tangible feedback.
 
