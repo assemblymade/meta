@@ -1,10 +1,9 @@
-<% title 'Discuss', @product.name %>
-<% activate_nav! :product_discussions %>
+<% title 'Chat', @product.name %>
+<% activate_nav! :chat %>
 <% provide :body_class, 'chat-wrapper' %>
 
 <div class="navbar-fixed-top">
   <%= render 'shared/navbar' %>
-  <%= render 'products/navbar' %>
 </div>
 
 <div class="modal fade"

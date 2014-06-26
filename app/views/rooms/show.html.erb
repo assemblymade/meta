@@ -1,12 +1,3 @@
 <% title "##{@room.number}", @room.product.name %>
 
-<%= render 'shared/navbar' %>
-<%= render 'products/navbar' %>
-
-<div class="page">
-  <div class="container">
-    <%= render @room %>
-  </div>
-</div>
-
-<%= render 'shared/footer' %>
+<%= render @room %>

@@ -1,28 +1,14 @@
 <% title 'People', @product.name %>
-<% activate_nav! :subnav_people %>
+<% activate_nav! :people %>
 
 <% if flash[:joined] %>
   <div class="alert alert-success page-alert">
     Welcome to the <%= @product.name %> team! <a href="<%= product_chat_path(@product) %>">Jump into chat and say Hi</a>
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
   </div>
-<% else %>
-  <%= render 'products/alert' %>
 <% end %>
 
-
-<div class="row">
-
-  <div class="col-xs-8">
-    <div class="js-people"></div>
-  </div>
-
-
-  <div class="col-xs-3 col-xs-offset-1">
-    <%= render 'products/sidebar' %>
-  </div><!-- .col-3 -->
-
-</div><!-- .row -->
+<div class="js-people"></div>
 
 <script>
 $(document).ready(function() {

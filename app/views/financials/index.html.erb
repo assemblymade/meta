@@ -1,5 +1,5 @@
 <% title 'Financials', @product.name %>
-<% activate_nav! :subnav_financials %>
+<% activate_nav! :financials %>
 
 <% cache [@product] do %>
   <div class="row">
@@ -32,7 +32,6 @@
     </div><!-- .col-md-8 -->
 
     <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-      <%= render 'products/sidebar' %>
       <%= render 'products/contract' %>
     </div>
   </div><!-- .row -->

@@ -1,0 +1,9 @@
+.sheet {
+  background-color: white;
+  border-radius: $border-radius-base;
+}
+
+.sheet-body {
+  // padding: ($line-height-computed * 1.5) ($grid-gutter-width * 1.5);
+  padding: 0 ($grid-gutter-width * 1.5);
+}

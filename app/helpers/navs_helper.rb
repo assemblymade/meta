@@ -1,7 +1,11 @@
 module NavsHelper
 
+  def nav_active_class(nav)
+    'active' if nav_active?(nav)
+  end
+
   def nav_active?(nav)
-    (@navs || []).include?(nav.to_sym)
+    @navs && @navs.include?(nav.to_sym)
   end
 
   def activate_nav!(nav)

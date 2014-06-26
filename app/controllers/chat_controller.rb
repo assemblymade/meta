@@ -1,4 +1,4 @@
-class ChatController < ApplicationController
+class ChatController < ProductController
   before_filter :set_no_cache, only: [:index]
   respond_to :html, :json
 
