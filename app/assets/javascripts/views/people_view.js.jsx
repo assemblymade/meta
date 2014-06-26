@@ -263,7 +263,7 @@ var BioEditor = React.createClass({
         <div>
           <div className="js-edit-bio" key={'b-' + currentUser.id}>
             {member.bio}
-            {this.state.editing ? this.saveButton() : this.editButton()}
+            &nbsp;{this.state.editing ? this.saveButton() : this.editButton()}
           </div>
 
           <hr style={{'margin' : '16px 0 8px 0', 'border-top' : '1px dotted #ebebeb'}} />
@@ -314,7 +314,7 @@ var BioEditor = React.createClass({
 
   editButton: function() {
     return (
-      <a className="text-small" style={{ cursor: 'pointer' }} onClick={this.makeEditable}> &mdash;&nbsp;Update Intro</a>
+      <a className="text-small" style={{ cursor: 'pointer' }} onClick={this.makeEditable}>&mdash;&nbsp;Update Intro</a>
     )
   },
 
