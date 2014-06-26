@@ -27,7 +27,7 @@ class Ability
       current_user.staff?
     end
 
-    # The creator has edit privelleges until a core team is established.
+    # The creator has edit privileges until a core team is established.
     can [:update, :status_update], Product do |product|
       product.core_team?(current_user) || (product.core_team.empty? && product.user == current_user)
     end
@@ -78,6 +78,12 @@ class Ability
     can :award, Event do |event|
       wip = event.wip
       wip.awardable? && event.awardable? && wip.open? && wip.product.core_team?(current_user)
+    end
+
+    # Contracts
+
+    can :destroy, AutoTipContract do |contract|
+      contract.product.core_team?(current_user) || current_user.id == contract.user_id
     end
 
   end

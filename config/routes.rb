@@ -263,7 +263,7 @@ ASM::Application.routes.draw do
 
     resources :tips, only: [:create]
 
-    resources :contracts, only: [:index]
+    resources :contracts, only: [:index, :create, :update, :destroy]
 
     resources :core_team_members
 
