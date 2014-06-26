@@ -34,11 +34,17 @@ class window.Application
     @_currentUser
 
   defaultBio: ->
-    "Hi everyone! I love coding in VB6 across the stack; I'm currently living in
-     Westeros. I'll ping-pong a lot between concept and design too. Hoping to
-     get involved with IE6 compatibility issues, kickstarting ideas, and
-     providing tangible feedback. I'd like to free up to 8-16 hours a week to
-     work with everyone on this. Great to see so many people!"
+    """
+    Hi Everyone, I'm Maeby! I love coding in VB6 across the stack.
+     I also ping-pong a lot between concept and design. Hoping to get involved
+     with UX, to help kickstart ideas, and to provide tangible feedback.
+
+    I'm here partly because I think the app idea is great, but also because I
+     think your team is outstanding and well-rounded – so I'm excited to learn
+     alongside you. I'd like to free up to 8-16 hours a week (mostly evenings –
+     I'm on CST here in Madison) to help ship this product. Great to see so many
+     people working on this!
+    """
 
   setCurrentAnalyticsProduct: (product) ->
     @_currentAnalyticsProduct = new Product(product)
