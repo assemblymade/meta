@@ -31,6 +31,7 @@ var Notifications = React.createClass({
     this.props.title = document.title
     var _this = this;
     $(document).bind('readraptor.tracked', this.fetchNotifications);
+    $(window).bind('storage', this.storedAckChanged);
     this.onPush(function(event, msg) {
       if (_.contains(msg.mentions, _this.props.username)) {
         _this.desktopNotify(msg);
@@ -135,6 +136,10 @@ var Notifications = React.createClass({
     } else {
       return parseInt(timestamp)
     }
+  },
+
+  storedAckChanged: function() {
+    this.setState({acknowledgedAt: this.storedAck()})
   },
 
   setBadge: function(total) {
