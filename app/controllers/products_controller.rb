@@ -1,4 +1,4 @@
-class ProductsController < ApplicationController
+class ProductsController < ProductController
   respond_to :html, :json
 
   before_action :authenticate_user!, only: [:create, :edit, :update]
@@ -13,6 +13,8 @@ class ProductsController < ApplicationController
         'Organize everything you love.',
         'Easily find useful information.'
       ].sample
+
+    render layout: 'application'
   end
 
   def welcome

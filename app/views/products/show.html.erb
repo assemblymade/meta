@@ -1,130 +1,80 @@
 <% title @product.name, @product.pitch %>
 <% activate_nav! :product %>
-<% @missionAutoOpen = false %>
 
-<%= render 'shared/navbar' %>
-<%= render 'products/navbar' %>
+<div class="row">
+  <div class="col-md-8 col-xs-8">
 
-<!-- <% if flash[:new_product_callout] %>
-  <br>
-  <div class="callout container">
-    <div class="callout-content">
-      <div class="mission-creator-intro">
-        <h1>Hit the ground running.</h1>
-        <p>
-          It looks like you’re off to a great start with the product. Great work! Until you get your bearings around here, you’ll be tasked with metric-driven missions to complete, leveling-up the product; giving it the best chance at becoming a shipping product.
-        </p>
-      </div>
-    </div>
-    <div class="callout-actions">
-      <div class="pull-left">
-        <span class="text-muted">Current Goal:</span>
-        <%= ProductMissionDecorator.new(@product.current_mission).translate(:name) %>
-      </div>
+    <!-- Pitch -->
 
-      <div class="pull-right">
-        <button class="btn btn-primary" data-click-trigger="mission.flyout.open">
-          Start reaching goals
-        </a>
+    <h2 class="alpha"><strong><%= @product.pitch %></strong></h2>
+
+    <% unless @product.lead.blank? %>
+      <div class="text-large">
+        <%== @product.lead_html %>
       </div>
+    <% end %>
+
+    <!-- Poster Image -->
+    <hr>
+
+
+    <!-- Body -->
+    <div class="markdown-normalized text-longform">
+      <%== @product.description_html %>
     </div>
   </div>
-<% elsif !signed_in? && !@product.meta? %>
-  <br>
-  <div class="callout container">
-    <div class="callout-content">
-      <div class="mission-creator-intro">
-        <h1>Welcome to Assembly!</h1>
-        <p>
-          <%= @product.name %> is a mutual product on Assembly, built and owned by the people who use it. The Assembly open platform enables anyone around the world to openly develop products together. We reliably host them, keeping your data safe, and split the profit among the people that built it at the end of every month.
-        </p>
+
+
+  <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+    <%= render 'products/sidebar' %>
+
+    <!-- Social links -->
+
+    <%#= render 'products/social_buttons' %>
+
+    <% cache [@product, 'links'] do %>
+      <%= render 'products/links' %>
+      <%= render 'products/people' %>
+    <% end %>
+
+    <%= render 'products/metrics' %>
+
+    <% cache [@product, 'tags'] do %>
+      <%= render 'products/tags_panel' %>
+    <% end %>
+
+    <% if can?(:update, @product) %>
+      <div class="btn-group-vertical btn-block">
+        <a class="btn btn-default" href="<%= edit_product_path(@product) %>">Edit Product</a>
+        <a class="btn btn-default" href="<%=  new_product_post_path(@product) %>">Write blog post</a>
       </div>
-    </div>
-  </div>
-<% end %> -->
+    <% end %>
 
-<div class="page">
-  <div class="container">
-    <%= render 'products/alert' %>
+    <% if staff? %>
+      <br><br>
+      <div class="panel panel-danger">
+        <div class="panel-heading">
+          <h6 class="panel-title">DANGER</h6>
+        </div>
+        <div class="panel-body">
+          <% if @product.flagged? %>
+            <span class="btn btn-danger btn-sm btn-block btn-disabled" href="#>">Product Flagged</span>
+          <% else %>
+            <a class="btn btn-danger btn-sm btn-block" href="<%= product_flag_path(@product)%>">Flag Product</a>
+          <% end %>
 
-    <div class="row">
-      <div class="col-md-8 col-xs-8">
+          <br>
 
-        <!-- Pitch -->
-
-        <h2 class="alpha"><strong><%= @product.pitch %></strong></h2>
-
-        <% unless @product.lead.blank? %>
-          <div class="text-large">
-            <%== @product.lead_html %>
-          </div>
-        <% end %>
-
-        <!-- Poster Image -->
-        <hr>
-
-
-        <!-- Body -->
-        <div class="markdown-normalized text-longform">
-          <%== @product.description_html %>
+          <%= form_for [:admin, @product.showcases.new], url: admin_staff_picks_path do |f| %>
+            <%= f.hidden_field :product_id %>
+            <%= f.submit "Schedule Staff Pick", class: %w(btn btn-default btn-sm btn-block) %>
+          <% end %>
         </div>
       </div>
+    <% end %>
 
-
-      <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-        <%= render 'products/sidebar' %>
-
-        <!-- Social links -->
-
-        <%#= render 'products/social_buttons' %>
-
-        <% cache [@product, 'links'] do %>
-          <%= render 'products/links' %>
-          <%= render 'products/people' %>
-        <% end %>
-
-        <%= render 'products/metrics' %>
-
-        <% cache [@product, 'tags'] do %>
-          <%= render 'products/tags_panel' %>
-        <% end %>
-
-        <% if can?(:update, @product) %>
-          <div class="btn-group-vertical btn-block">
-            <a class="btn btn-default" href="<%= edit_product_path(@product) %>">Edit Product</a>
-            <a class="btn btn-default" href="<%=  new_product_post_path(@product) %>">Write blog post</a>
-          </div>
-        <% end %>
-
-        <% if staff? %>
-          <br><br>
-          <div class="panel panel-danger">
-            <div class="panel-heading">
-              <h6 class="panel-title">DANGER</h6>
-            </div>
-            <div class="panel-body">
-              <% if @product.flagged? %>
-                <span class="btn btn-danger btn-sm btn-block btn-disabled" href="#>">Product Flagged</span>
-              <% else %>
-                <a class="btn btn-danger btn-sm btn-block" href="<%= product_flag_path(@product)%>">Flag Product</a>
-              <% end %>
-
-              <br>
-
-              <%= form_for [:admin, @product.showcases.new], url: admin_staff_picks_path do |f| %>
-                <%= f.hidden_field :product_id %>
-                <%= f.submit "Schedule Staff Pick", class: %w(btn btn-default btn-sm btn-block) %>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-
-      </div>
-    </div><!-- .row -->
-  </div><!-- .container -->
-</div>
-
-<%= render 'shared/footer' %>
+  </div>
+</div><!-- .row -->
 
 <% if current_user.try(:staff?) != true %>
   <script>

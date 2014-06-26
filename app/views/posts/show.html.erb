@@ -1,68 +1,59 @@
 <% title @post.title, @post.product.name %>
 <% activate_nav! :subnav_blog %>
 
-<%= render 'shared/navbar' %>
-<%= render 'products/navbar' %>
+<div class="row">
+  <div class="col-md-8 col-xs-8">
+    <div class="page-header">
+      <h2 class="page-header-title"><%= @post.title %></h2>
 
-<div class="page">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-xs-8">
-        <div class="page-header">
-          <h2 class="page-header-title"><%= @post.title %></h2>
+      <div class="page-header-meta">
 
-          <div class="page-header-meta">
-
-            <% if can?(:update, @post) %>
-              <ul class="list-piped pull-right">
-                <li>
-                  <%= link_to 'Update', edit_product_post_path(@post.product, @post) %>
-                </li>
-              </ul>
-            <% end %>
-
-            <ul class="list-piped omega">
-              <li>
-                <a href="<%= user_path(@post.author) %>" title="@<%= @post.author.username %>">
-                  <%= image_tag @post.author.avatar.url(40), width: 20, height: 20, class: 'img-circle', style: 'margin-right:0.5em', alt: "@#{@post.author.username}" %><%= @post.author.username %>
-                </a>
-              </li>
-              <li>
-                <%= time_ago_in_words(@post.created_at) %> ago
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="markdown-normalized">
-          <%= product_markdown(@post.product, @post.body) %>
-        </div>
-      </div>
-
-      <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-        <%= render 'products/sidebar' %>
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h6 class="panel-title">Recent Posts</h6>
-          </div>
-
-          <div class="list-group">
-            <% @product.posts.order(created_at: :desc).limit(10).each do |post| %>
-              <a class="list-group-item small" href="<%= product_post_path(post.product, post) %>">
-                <strong class="text-primary"><%= post.title %></strong>
-              </a>
-            <% end %>
-          </div>
-        </div>
-
-        <% if can?(:create, Post) %>
-          <%= link_to 'Write a new post', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
+        <% if can?(:update, @post) %>
+          <ul class="list-piped pull-right">
+            <li>
+              <%= link_to 'Update', edit_product_post_path(@post.product, @post) %>
+            </li>
+          </ul>
         <% end %>
 
+        <ul class="list-piped omega">
+          <li>
+            <a href="<%= user_path(@post.author) %>" title="@<%= @post.author.username %>">
+              <%= image_tag @post.author.avatar.url(40), width: 20, height: 20, class: 'img-circle', style: 'margin-right:0.5em', alt: "@#{@post.author.username}" %><%= @post.author.username %>
+            </a>
+          </li>
+          <li>
+            <%= time_ago_in_words(@post.created_at) %> ago
+          </li>
+        </ul>
       </div>
     </div>
+
+    <div class="markdown-normalized">
+      <%= product_markdown(@post.product, @post.body) %>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+    <%= render 'products/sidebar' %>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h6 class="panel-title">Recent Posts</h6>
+      </div>
+
+      <div class="list-group">
+        <% @product.posts.order(created_at: :desc).limit(10).each do |post| %>
+          <a class="list-group-item small" href="<%= product_post_path(post.product, post) %>">
+            <strong class="text-primary"><%= post.title %></strong>
+          </a>
+        <% end %>
+      </div>
+    </div>
+
+    <% if can?(:create, Post) %>
+      <%= link_to 'Write a new post', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
+    <% end %>
+
   </div>
 </div>
-
-<%= render 'shared/footer' %>

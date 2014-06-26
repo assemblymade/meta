@@ -1,90 +1,79 @@
 <% title 'Contracts', @product.name %>
 
-<%= render 'shared/navbar' %>
-<%= render 'products/navbar' %>
+<div class="page-header">
 
-<div class="page">
-  <div class="container">
+  <button class="btn btn-success pull-right" data-toggle="modal" data-target="#new-contract-modal">
+    Create contract
+  </button>
 
-    <div class="page-header">
+  <!-- Modal -->
+  <div class="modal fade" id="new-contract-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Create a new contract</h4>
+        </div>
+        <div class="modal-body">
 
-      <button class="btn btn-success pull-right" data-toggle="modal" data-target="#new-contract-modal">
-        Create contract
-      </button>
+          <div class="form-group">
+            <!-- Person Picker -->
+            <label class="input-label">Holder</label>
+            <input type="text" class="form-control">
+          </div>
 
-      <!-- Modal -->
-      <div class="modal fade" id="new-contract-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">Create a new contract</h4>
-            </div>
-            <div class="modal-body">
+          <div class="form-group">
+            <label class="input-label">Type</label>
+            <p class="form-control-static">Automatic tip when new coins minted</p>
+          </div>
 
-              <div class="form-group">
-                <!-- Person Picker -->
-                <label class="input-label">Holder</label>
-                <input type="text" class="form-control">
-              </div>
-
-              <div class="form-group">
-                <label class="input-label">Type</label>
-                <p class="form-control-static">Automatic tip when new coins minted</p>
-              </div>
-
-              <div class="form-group">
-                <label class="input-label">Amount</label>
-                <div class="input-group">
-                  <input type="number" class="form-control">
-                  <span class="input-group-addon">%</span>
-                </div>
-              </div>
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Create contract</button>
+          <div class="form-group">
+            <label class="input-label">Amount</label>
+            <div class="input-group">
+              <input type="number" class="form-control">
+              <span class="input-group-addon">%</span>
             </div>
           </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Create contract</button>
         </div>
       </div>
-
-      <h2>Contracts</h2>
     </div>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Created</th>
-          <th>Holder</th>
-          <th>Description</th>
-          <th>Ended</th>
-        </tr>
-      </thead>
-      <% @product.auto_tip_contracts.order(:deleted_at => :desc, created_at: :asc).each do |contract| %>
-        <tr class="<%= 'text-muted' if contract.deleted_at? %>">
-          <td><%= contract.created_at %></td>
-          <td>
-            <a href="<%= user_path(contract.user) %>">@<%= contract.user.username %></a>
-          </td>
-          <td>
-            Automatic
-            <strong><%= number_to_percentage(contract.amount * 100, precision: 1) %></strong>
-            tip when coins are minted
-          </td>
-          <td>
-            <% if contract.active? # can?(:destroy, contract) %>
-              <a href="#" class="text-danger" data-confirm="Are you sure you want to end this contract?">End</a>
-            <% else %>
-              <%= contract.deleted_at %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </table>
-
   </div>
+
+  <h2>Contracts</h2>
 </div>
 
-<%= render 'shared/footer' %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Created</th>
+      <th>Holder</th>
+      <th>Description</th>
+      <th>Ended</th>
+    </tr>
+  </thead>
+  <% @product.auto_tip_contracts.order(:deleted_at => :desc, created_at: :asc).each do |contract| %>
+    <tr class="<%= 'text-muted' if contract.deleted_at? %>">
+      <td><%= contract.created_at %></td>
+      <td>
+        <a href="<%= user_path(contract.user) %>">@<%= contract.user.username %></a>
+      </td>
+      <td>
+        Automatic
+        <strong><%= number_to_percentage(contract.amount * 100, precision: 1) %></strong>
+        tip when coins are minted
+      </td>
+      <td>
+        <% if contract.active? # can?(:destroy, contract) %>
+          <a href="#" class="text-danger" data-confirm="Are you sure you want to end this contract?">End</a>
+        <% else %>
+          <%= contract.deleted_at %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

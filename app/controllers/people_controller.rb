@@ -1,7 +1,7 @@
-class PeopleController < ApplicationController
+class PeopleController < ProductController
   respond_to :html, :json
 
-  before_action :set_product
+  before_action :find_product!
   before_action :authenticate_user!, :except => [:index]
 
   def index

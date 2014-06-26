@@ -1,7 +1,7 @@
-class MilestonesController < ApplicationController
+class MilestonesController < ProductController
   respond_to :html
 
-  before_action :set_product
+  before_action :find_product!
 
   def index
     @upgrade_stylesheet = true

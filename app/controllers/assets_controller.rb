@@ -1,8 +1,8 @@
-class AssetsController < ApplicationController
+class AssetsController < ProductController
   respond_to :html
 
   before_action :authenticate_user!, :except => [:index]
-  before_action :set_product
+  before_action :find_product!
 
   def index
     @assets = @product.assets.order('created_at desc').page(params[:page]).per(4*4)

@@ -1,37 +1,30 @@
 <% title 'New Post', @post.product.name %>
-<%= render 'shared/navbar' %>
-<%= render 'products/navbar' %>
 
-<div class="page">
-  <div class="container">
-    <div class="page-header">
-      <h1 class="page-header-title">Editing <q><%= @post.title %></q></h1>
-    </div>
-    <div class="row">
-      <div class="col-md-8 col-xs-8">
-        <%= form_for [@post.product, @post] do |f| %>
-          <div class="form-group">
-            <%= f.label :title, 'Post title', class: 'form-label' %>
-            <%= f.text_field :title, class: 'form-control' %>
-            <p class="help-block">
-              <strong>URL:</strong>
-              <%= product_post_url(@post.product, @post) %>
-            </p>
-          </div>
-          <div class="form-group">
-            <%= f.text_field :summary, class: 'form-control', placeholder: 'Tweet sized summary' %>
-          </div>
-          <div class="form-group">
-            <%= f.text_area :body, class: 'form-control', rows: 8, placeholder: 'Post body' %>
-          </div>
-
-          <div class="form-actions">
-            <%= f.submit 'Update', class: %w(btn btn-primary) %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+<div class="page-header">
+  <h1 class="page-header-title">Editing <q><%= @post.title %></q></h1>
 </div>
 
-<%= render 'shared/footer' %>
+<div class="row">
+  <div class="col-md-8 col-xs-8">
+    <%= form_for [@post.product, @post] do |f| %>
+      <div class="form-group">
+        <%= f.label :title, 'Post title', class: 'form-label' %>
+        <%= f.text_field :title, class: 'form-control' %>
+        <p class="help-block">
+          <strong>URL:</strong>
+          <%= product_post_url(@post.product, @post) %>
+        </p>
+      </div>
+      <div class="form-group">
+        <%= f.text_field :summary, class: 'form-control', placeholder: 'Tweet sized summary' %>
+      </div>
+      <div class="form-group">
+        <%= f.text_area :body, class: 'form-control', rows: 8, placeholder: 'Post body' %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit 'Update', class: %w(btn btn-primary) %>
+      </div>
+    <% end %>
+  </div>
+</div>

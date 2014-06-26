@@ -1,4 +1,4 @@
-class WipsController < ApplicationController
+class WipsController < ProductController
   include Missions::CompletionHelper
 
   respond_to :html, :json

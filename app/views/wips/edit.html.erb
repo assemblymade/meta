@@ -1,46 +1,37 @@
 <% title "Edit Task ##{@wip.number}", @product.name %>
 
-<%= render 'shared/navbar' %>
-<%= render 'products/navbar' %>
-
-<div class="page">
-  <div class="container">
-    <div class="page-header">
-      <h2 class="page-header-title">Edit task</h2>
-    </div>
-
-    <div class="row">
-      <div class="col-xs-8">
-        <%= form_for [@product, @wip] do |f| %>
-          <div class="form-group">
-            <%= f.label :title, class: 'control-label' %>
-            <%= f.text_field :title, 'class' => 'form-control', data: {'validate-length' => 2} %>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :deliverable, class: 'control-label' %>
-
-            <!-- <div class="form-control"> -->
-              <div class="btn-group btn-group-justified" data-toggle="buttons">
-
-                <% @wip.class.deliverable_types.each do |deliverable_type| %>
-                  <%= f.label :deliverable, class: "btn btn-default #{'active' if @wip.deliverable == deliverable_type}" do %>
-                    <%= f.radio_button :deliverable, deliverable_type %>
-                    <%= deliverable_type.camelcase %>
-                  <% end %>
-                <% end %>
-
-              </div>
-            </div>
-          <!-- </div> -->
-
-          <div class="form-actions">
-            <%= f.button 'Update task', 'class' => 'btn btn-primary' %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+<div class="page-header">
+  <h2 class="page-header-title">Edit task</h2>
 </div>
 
-<%= render 'shared/footer' %>
+<div class="row">
+  <div class="col-xs-8">
+    <%= form_for [@product, @wip] do |f| %>
+      <div class="form-group">
+        <%= f.label :title, class: 'control-label' %>
+        <%= f.text_field :title, 'class' => 'form-control', data: {'validate-length' => 2} %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :deliverable, class: 'control-label' %>
+
+        <!-- <div class="form-control"> -->
+          <div class="btn-group btn-group-justified" data-toggle="buttons">
+
+            <% @wip.class.deliverable_types.each do |deliverable_type| %>
+              <%= f.label :deliverable, class: "btn btn-default #{'active' if @wip.deliverable == deliverable_type}" do %>
+                <%= f.radio_button :deliverable, deliverable_type %>
+                <%= deliverable_type.camelcase %>
+              <% end %>
+            <% end %>
+
+          </div>
+        </div>
+      <!-- </div> -->
+
+      <div class="form-actions">
+        <%= f.button 'Update task', 'class' => 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>

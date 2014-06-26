@@ -1,0 +1,16 @@
+<%= render 'shared/navbar' %>
+<%= render 'products/navbar' %>
+
+<div class="page">
+<div class="container">
+  <%= yield %>
+</div>
+</div>
+
+<%= render 'shared/footer' %>
+
+<script>
+  window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);
+</script>
+
+<% parent_layout 'application' %>
