@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140619214525) do
+ActiveRecord::Schema.define(version: 20140620225153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,6 +186,21 @@ ActiveRecord::Schema.define(version: 20140619214525) do
   create_table "interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.text     "slug",       null: false
     t.datetime "created_at", null: false
+  end
+
+  create_table "invites", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "invitor_id",    null: false
+    t.uuid     "via_id"
+    t.text     "via_type"
+    t.text     "note"
+    t.integer  "tip_cents",     null: false
+    t.uuid     "invitee_id"
+    t.text     "invitee_email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "sent_at"
+    t.datetime "deleted_at"
+    t.datetime "claimed_at"
   end
 
   create_table "measurements", id: false, force: true do |t|

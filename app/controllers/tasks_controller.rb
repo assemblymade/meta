@@ -3,6 +3,9 @@ class TasksController < WipsController
 
   def show
     @milestone = MilestoneTask.where('task_id = ?', @wip.id).first.try(:milestone)
+    if signed_in?
+      @invites = Invite.where(invitor: current_user, via: @wip)
+    end
     super
   end
 

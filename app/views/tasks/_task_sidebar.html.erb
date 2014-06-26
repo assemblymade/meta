@@ -1,0 +1,127 @@
+<div class="panel panel-default">
+  <div class="panel-body text-small">
+    <% case @wip.state %>
+    <% when 'open' %>
+      <div class="progress progress-small omega">
+        <!-- <div class="progress-bar" style="width: 0%;"></div> -->
+      </div>
+      <h6 class="text-muted">
+        Ready for work
+      </h6>
+
+      <p><strong>Think you'd be a great fit for this bounty?</strong> Jump in and help out.</p>
+      <%= button_to 'Work on this bounty', product_wip_start_work_path(@wip.product, @wip), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-default btn-sm btn-block) %>
+
+    <% when 'allocated' %>
+      <div class="progress progress-small omega">
+        <div class="progress-bar progress-bar-success" style="width: 33%;"></div>
+      </div>
+      <h6 class="text-muted">
+        In Progress
+      </h6>
+      <table class="table table-condensed">
+        <tbody>
+          <% @wip.wip_workers.each do |worker| %>
+            <tr>
+              <td class="omega">
+              <% if signed_in? && worker.user == current_user %>
+                  <a href="<%= user_path(worker.user) %>">You</a>
+              <% else %>
+                <a href="<%= user_path(worker.user) %>">
+                  <strong>@<%= worker.user.username %></strong>
+                </a>
+              <% end %>
+              started this
+              <strong>
+                <time class="timestamp" datetime="<%= worker.created_at.iso8601 %>"></time>
+              </strong>
+              </td>
+              <% if signed_in? && @wip.product.core_team?(current_user) %>
+                <td>
+                  <% unless worker.user == current_user %>
+                    <a title="remove" href="<%= product_wip_stop_work_path(@wip.product, @wip, user: worker) %>" data-method="patch" class="text-danger">
+                      <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                  <% end %>
+                </td>
+              <% end %>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+      <% if signed_in? && @wip.workers.include?(current_user) %>
+        <%= button_to 'Stop work', product_wip_stop_work_path(@wip.product, @wip), method: :patch, disable_with: 'Cancelling…', class: %w(btn btn-default btn-sm btn-block inactive) %>
+      <% else %>
+        <%= button_to 'Start work', product_wip_start_work_path(@wip.product, @wip), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-default btn-sm btn-block) %>
+      <% end %>
+
+    <% when 'reviewing' %>
+      <div class="progress progress-small omega">
+        <div class="progress-bar progress-bar-success" style="width: 66%;"></div>
+      </div>
+      <h6 class="text-muted">
+        Reviewing
+      </h6>
+
+      <!--
+        This isn't perfect, there's no concept of the work that's up for
+        review.
+      -->
+      <p class="omega">A submission is currently being reviewed by the Core Team.</p>
+
+    <% when 'resolved' %>
+      <div class="progress progress-small omega">
+        <div class="progress-bar progress-bar-success" style="width: 100%;"></div>
+      </div>
+      <h6 class="text-muted">
+        Complete
+      </h6>
+      <% if @wip.winner %>
+        <% if signed_in? && @wip.winner == current_user %>
+          <p>
+            You were awarded
+            <%= format_coins(@wip.product, @wip.real_coin_value) %>
+            for completing this bounty.
+          </p>
+          <p class="omega"><strong>Keep up the great work!</strong></p>
+        <% else %>
+          <p class="omega">
+            <strong><%= @wip.winner.username %></strong>
+            was awarded
+            <%= format_coins(@wip.product, @wip.real_coin_value) %>
+            for completing this bounty.
+          </p>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h6 class="panel-title">
+      <span class="pull-right"><%= @wip.watchers.count %></span>
+      Watchers
+    </h6>
+  </div>
+  <div class="panel-body">
+    <ul class="list-grid omega">
+      <% @wip.watchers.each do |user| %>
+        <li>
+          <a href="<%= user_path(user) %>">
+            <%= avatar_tag(user, 21) %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div><!-- .panel -->
+
+<% if signed_in? %>
+  <div data-react-class="InviteFriend" data-react-props='<%== {
+      url: invites_path,
+      invites: (@invites ? serialize_hash(@invites) : []),
+    }.merge(TypeId.as_json(:via, @wip)).to_json %>'>
+  </div>
+<% end %>

@@ -4,8 +4,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   prepend_before_filter :authenticate_scope!, :only => [:edit_email]
   skip_before_action :validate_confirmed!, only: [:signup, :edit, :edit_email, :update]
 
-  after_action :track_signup,          :only => :create
-  after_action :email_welcome_package, :only => :create
+  after_action :track_signup,          only: [:create]
+  after_action :email_welcome_package, only: [:create]
+  after_action :claim_invite,          only: [:create]
 
   def signup
     @user = User.new
@@ -16,7 +17,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
 
     if resource.save
-
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
         sign_up(resource_name, resource)
@@ -43,6 +43,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   protected
+
+  def claim_invite
+    Invite.find(cookies[:invite]).claim!(resource) if self.resource && cookies[:invite]
+  end
 
   def sign_up_params
     params.require(:user).permit(:email, :username, :extra_data, :facebook_uid, :location, :name, :password, :password_confirmation, :follow_product)

@@ -49,6 +49,9 @@ class User < ActiveRecord::Base
   MAIL_HOURLY = 'hourly'
   MAIL_IMMEDIATE = 'immediate'
   MAIL_NEVER = 'never'
+
+  USERNAME_REGEX = /\A@?([\w+-]+)\z/
+
   before_validation -> { self.mail_preference = MAIL_DAILY }, on: :create
   validates :mail_preference, inclusion: { in: [MAIL_DAILY, MAIL_HOURLY, MAIL_IMMEDIATE, MAIL_NEVER] }
 

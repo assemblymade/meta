@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :store_location
   before_action :validate_confirmed!, if: :signed_in?
   before_action :strip_auth_token,    if: :signed_in?
+  before_action :strip_invite_token
   after_action  :set_request_info!,   if: :signed_in?
 
   rescue_from CanCan::AccessDenied do |e|
@@ -23,6 +24,19 @@ class ApplicationController < ActionController::Base
 
   def strip_auth_token
     redirect_to(url_for(params.except(:auth_token))) if params[:auth_token].present?
+  end
+
+  def strip_invite_token
+    if params[:i].present?
+      if invite = Invite.find_by(id: params[:i])
+        if signed_in?
+          invite.claim!(current_user)
+        else
+          cookies.permanent[:invite] = invite.id
+        end
+      end
+      redirect_to(url_for(params.except(:i)))
+    end
   end
 
   def after_sign_up_path_for(resource)

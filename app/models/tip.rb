@@ -12,34 +12,10 @@ class Tip < ActiveRecord::Base
     tip.cents ||= 0
 
     tip.with_lock do
-      transaction_id = SecureRandom.uuid
-
-      if add_cents > TransactionLogEntry.balance(product, from)
-        raise ActiveRecord::Rollback
-      end
+      TransactionLogEntry.transfer!(product, from.id, to.id, add_cents, via.id, created_at)
 
       tip.cents += add_cents
       tip.save!
-
-      TransactionLogEntry.create!(
-        transaction_id: transaction_id,
-        created_at: created_at,
-        product: product,
-        action: 'credit',
-        work_id: via.id,
-        user_id: to.id,
-        cents: add_cents
-      )
-
-      TransactionLogEntry.create!(
-        transaction_id: transaction_id,
-        created_at: created_at,
-        product: product,
-        action: 'debit',
-        work_id: via.id,
-        user_id: from.id,
-        cents: (-1 * add_cents)
-      )
     end
     tip
   end
