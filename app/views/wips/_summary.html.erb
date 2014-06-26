@@ -40,12 +40,17 @@
           <%= format_coins(task.product, task.real_coin_value, :short) %>
         </li>
         <li>
+          <%= user_link_username(task.user) %>
+        </li>
+        <li>
           <%= pluralize(task.comments.count, 'comment') %>
         </li>
         <li>
           <%= pluralize(task.watchers.count, 'watcher') %>
         </li>
-        <li>#<%= task.number %></li>
+        <li>
+          #<%= task.number %>
+        </li>
       </ul>
     </div>
   </div>
