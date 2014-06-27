@@ -11,20 +11,13 @@ class ContractsController < ProductController
   def create
     authorize! :contract, @product
 
-    user = User.find_by!(username: contract_params[:user].strip().sub!('@', ''))
+    user = User.find_by!(username: contract_params[:user].strip().sub('@', ''))
     amount = contract_params[:amount].to_f / 100
 
-    allContracts = AutoTipContract.where(product: @product.id, deleted_at: nil)
-
-    total = sum_contracts()
-
-    if total + amount > 1
-      raise 'Tip contracts cannot exceed total revenue!'
-    end
-
-    AutoTipContract.create!(product: @product, user: user, amount: amount)
+    contract = AutoTipContract.create!(product: @product, user: user, amount: amount)
 
     respond_to do |format|
+      format.json { render json: contract.to_json, status: 201 }
       format.html { redirect_to product_contracts_path(@product) }
     end
   end
@@ -38,7 +31,7 @@ class ContractsController < ProductController
     AutoTipContract.replace_contract(@product, contract.user, proposed_amount)
 
     respond_to do |format|
-      format.json { render json: {} }
+      format.json { render json: {}, status: 201 }
     end
   end
 
@@ -49,7 +42,7 @@ class ContractsController < ProductController
     AutoTipContract.end_contract(@product, contract.user)
 
     respond_to do |format|
-      format.json { render json: {} }
+      format.json { render json: {}, status: 204 }
     end
   end
 
