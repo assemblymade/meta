@@ -8,3 +8,18 @@
   padding: ($line-height-computed * 1.5) ($grid-gutter-width * 1.5);
   // padding: 0 ($grid-gutter-width * 1.5);
 }
+
+// Hacky
+
+.sheet-body > .page-header {
+  // margin: (-($line-height-computed * 1.5)) (-($grid-gutter-width * 1.5));
+  // padding: ($line-height-computed * 1.5) ($grid-gutter-width * 1.5);
+
+  margin-top: -($line-height-computed * 1.5);
+  margin-left: -($grid-gutter-width * 1.5);
+  margin-right: -($grid-gutter-width * 1.5);
+  padding-top: ($line-height-computed * 1);
+  padding-bottom: ($line-height-computed * .75);
+  padding-left: ($grid-gutter-width * 1.5);
+  padding-right: ($grid-gutter-width * 1.5);
+}
