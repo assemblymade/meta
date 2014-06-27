@@ -1,10 +1,10 @@
 <% title @user.username %>
 <%= render 'shared/navbar' %>
 
-<div class="page">
+<div class="page page-flat">
   <div class="container">
 
-    <div class="col-md-4 col-xs-4">
+    <div class="col-md-3 col-xs-3">
       <%= render 'users/card', user: @user %>
       <% if can?(:update, @user) %>
         <!-- FIXME: This URL is a hack -->
@@ -24,9 +24,9 @@
       <% end %>
     </div>
 
-    <div class="col-md-8 col-xs-8">
+    <div class="col-md-9 col-xs-9">
 
-      <div class="stat-group">
+      <div class="stat-group" style="margin-bottom: 36px;">
         <div class="stat">
           <div class="stat-value">
             <%= number_with_delimiter(@user.count_contributions) %>
@@ -56,7 +56,6 @@
       </div>
 
       <% if @contributions.any? %>
-        <hr>
 
         <h6>Contributions</h6>
 
