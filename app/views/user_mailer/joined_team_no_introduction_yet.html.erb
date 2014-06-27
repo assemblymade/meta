@@ -22,7 +22,7 @@
                 <table class="button success radius">
                   <tr>
                     <td>
-                      <a href="<%= product_people_path(@membership.product, auth_token: @user.authentication_token) %>">Introduce yourself</a>
+                      <a href="<%= product_people_path(@membership.product, auth_token: @user.authentication_token, introduction: true) %>">Introduce yourself</a>
                     </td>
                   </tr>
                 </table>

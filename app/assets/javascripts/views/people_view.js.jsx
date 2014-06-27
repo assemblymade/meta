@@ -254,11 +254,11 @@ var BioEditor = React.createClass({
   },
 
   componentDidMount: function() {
-    var hash = window.location.hash.toLowerCase();
+    var params = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
 
-    if (/intro/i.test(hash)) {
+    if (!this.introduced && params.indexOf('introduction=true') >= 0) {
+      this.introduced = true;
       this.makeEditable();
-      window.location.hash = '';
     }
   },
 
@@ -391,8 +391,8 @@ var BioEditor = React.createClass({
 
     var member = this.state.member;
 
-    if (member.interests && member.interests.length) {
-      chosenSelect.val(member.interests)
+    if (member.interests && _.omit(member.interests, 'core').length) {
+      chosenSelect.val(member.interests);
     } else {
       chosenSelect.val(['code', 'design']);
     }
