@@ -12,7 +12,7 @@ namespace :emails do
 
   task :stale_wips => :environment do
     user = User.find_by(username: 'chrislloyd')
-    ProductMailer.delay.stale_wips(user.id)
+    ProductMailer.delay(queue: 'mailer').stale_wips(user.id)
   end
 
   task :stale_allocated_tasks => :environment do
@@ -26,7 +26,7 @@ namespace :emails do
       product = Product.find(product_id)
       if cents > 0
         Rails.logger.info("email=stake_updated user=#{user.username} product=#{product.slug} cents=#{cents}")
-        StakeMailer.delay.coin_balance(product_id, user_id)
+        StakeMailer.delay(queue: 'mailer').coin_balance(product_id, user_id)
       end
     end
   end
@@ -41,7 +41,7 @@ namespace :emails do
          unless EmailLog.sent_to(user, :joined_team_no_work_yet).any?
            EmailLog.log_send user, :joined_team_no_work_yet do
              membership = user.team_memberships.order(created_at: :desc).first
-             UserMailer.delay.joined_team_no_work_yet membership.id
+             UserMailer.delay(queue: 'mailer').joined_team_no_work_yet membership.id
            end
          end
       end

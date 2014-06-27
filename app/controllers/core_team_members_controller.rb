@@ -8,7 +8,7 @@ class CoreTeamMembersController < ApplicationController
     user = User.find_by_username(core_team_member_params.fetch(:username))
     if user
       @product.core_team << user
-      CoreTeamMailer.delay.welcome(@product.id, user.id)
+      CoreTeamMailer.delay(queue: 'mailer').welcome(@product.id, user.id)
 
       if user.has_github_account?
         Github::AddCollaboratorToProductRepoWorker.perform_async(

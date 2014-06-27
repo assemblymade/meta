@@ -128,7 +128,7 @@ class WipsController < ProductController
       @event = Event.find(winner_id)
       @wip.award! current_user, @event
       if @product.tasks.won_by(@event.user).count == 1
-        BadgeMailer.delay.first_win(@event.id)
+        BadgeMailer.delay(queue: 'mailer').first_win(@event.id)
       end
       track_wip_event 'awarded'
     end

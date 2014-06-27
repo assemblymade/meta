@@ -210,7 +210,7 @@ class Wip < ActiveRecord::Base
   end
 
   def notify_by_email(user)
-    WipMailer.delay.wip_created(user.id, id) unless user.mail_never?
+    WipMailer.delay(queue: 'mailer').wip_created(user.id, id) unless user.mail_never?
   end
 
   def notify_state_changed

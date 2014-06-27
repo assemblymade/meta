@@ -45,7 +45,7 @@ class ProductsController < ProductController
       @product.touch(:flagged_at)
       @product.update_attribute(:flagged_reason, params[:message])
       # TODO: disabling email to idea submitter for time being
-      # ProductMailer.delay.flagged(current_user.id, @product.id, params[:message])
+      # ProductMailer.delay(queue: 'mailer').flagged(current_user.id, @product.id, params[:message])
       return redirect_to product_url(@product)
     end
   end

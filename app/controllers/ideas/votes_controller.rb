@@ -21,7 +21,7 @@ class Ideas::VotesController < ApplicationController
   protected
   def congratulate_first_signup
     if owner_and_now_new_user_signed_up = (@product.votes.count == 2)
-      ProductMailer.delay.congrats_on_your_first_user(@product.id)
+      ProductMailer.delay(queue: 'mailer').congrats_on_your_first_user(@product.id)
     end
   end
 

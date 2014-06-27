@@ -32,7 +32,7 @@ class Newsletter < ActiveRecord::Base
   end
 
   def send_email_to!(users)
-    users.each {|user| NewsletterMailer.delay.published(id, user.id) }
+    users.each {|user| NewsletterMailer.delay(queue: 'mailer').published(id, user.id) }
   end
 
 end

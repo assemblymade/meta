@@ -68,7 +68,7 @@ class Event < ActiveRecord::Base
 
   def notify_by_email(user)
     if notify_by_email? && !user.mail_never?
-      WipMailer.delay.wip_event_added(user.id, self.id)
+      WipMailer.delay(queue: 'mailer').wip_event_added(user.id, self.id)
     end
   end
 

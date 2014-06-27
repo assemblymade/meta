@@ -8,7 +8,7 @@ namespace :showcases do
       showcases = Showcase.today.where(email_public_sent_at: nil)
 
       showcases.each do |showcase|
-        ShowcaseMailer.delay.product_is_featured(showcase.id)
+        ShowcaseMailer.delay(queue: 'mailer').product_is_featured(showcase.id)
         showcase.touch(:email_public_sent_at)
       end
     end
@@ -24,7 +24,7 @@ namespace :showcases do
         .where(email_upcoming_sent_at: nil, email_public_sent_at: nil)
 
       showcases.each do |showcase|
-        ShowcaseMailer.delay.product_soon_to_be_featured(showcase.id)
+        ShowcaseMailer.delay(queue: 'mailer').product_soon_to_be_featured(showcase.id)
         showcase.touch(:email_upcoming_sent_at)
       end
     end

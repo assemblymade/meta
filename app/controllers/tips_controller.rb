@@ -13,7 +13,7 @@ class TipsController < ApplicationController
         add_cents
       )
 
-      TipMailer.delay.tipped(@tip.id)
+      TipMailer.delay(queue: 'mailer').tipped(@tip.id)
     end
 
     render nothing: true, status: 200
