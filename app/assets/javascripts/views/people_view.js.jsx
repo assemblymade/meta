@@ -135,7 +135,7 @@ var PeopleFilter = React.createClass({
   highlightCore: function(e) {
     this.props.onFilter('core')
   }
-})
+});
 
 var PeopleList = React.createClass({
   render: function() {

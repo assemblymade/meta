@@ -8,7 +8,7 @@
               <td class="panel panel-default text-serif">
                 <p>Hi <%= @user.username %>,</p>
 
-                <p>I just noticed you hand't introduced yourself on <a href="<%= product_people_path(@membership.product, auth_token: @user.authentication_token) %>"><%= @product.name %></a>. Introducing yourself can be a great way to meet the rest of the community. Don't be shy!</p>
+                <p>I just noticed you hadn't introduced yourself on <a href="<%= product_people_url(@membership.product, auth_token: @user.authentication_token) %>"><%= @product.name %></a>. Introducing yourself can be a great way to meet the rest of the community. Don't be shy!</p>
 
                 <p>Some good things to think about when you introduce yourself:</p>
 
@@ -22,7 +22,7 @@
                 <table class="button success radius">
                   <tr>
                     <td>
-                      <a href="<%= product_people_path(@membership.product, auth_token: @user.authentication_token, introduction: true) %>">Introduce yourself</a>
+                      <a href="<%= product_people_url(@membership.product, auth_token: @user.authentication_token, introduction: true) %>">Introduce yourself</a>
                     </td>
                   </tr>
                 </table>
