@@ -7,8 +7,6 @@
 <div class="page">
   <div class="container">
 
-    <!-- <h2>Buckets</h2> -->
-
     <div class="row">
 
       <div class="col-md-2">
@@ -116,6 +114,49 @@
       </div>
 
       <div class="col-md-10">
+
+        <ul class="list list-inline pull-right">
+          <li>
+            <div class="toggler">
+              <% if signed_in? && @product.watching?(current_user) %>
+                <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post" >
+
+                  <i class="icon-eye" style="margin-right: 2px;"></i>
+                  Unwatch
+                </a>
+              <% else %>
+                <a class="toggler-btn btn btn-primary" href="<%= subscribe_product_path(@product) %>" data-method="post">
+                  <i class="icon-eye" style="margin-right: 2px;"></i>
+                  Watch
+                </a>
+              <% end %>
+              <div class="badge toggler-badge">
+                <a href="<%= product_watchers_path(@product) %>">
+                  <%= @product.watchers.count %>
+                </a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="toggler">
+              <div
+                   data-react-class="JoinTeam"
+                   data-react-props="<%= {
+                     count: @product.team_memberships.active.count,
+                     join_path: product_people_path(@product),
+                     leave_path: (current_user && product_person_path(@product, current_user)),
+                     is_member: @product.member?(current_user),
+                     membership:  TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user)).as_json
+                   }.to_json %>">
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <h2 class="alpha"><strong><%= @product.name %></strong></h2>
+
+
+
         <div class="sheet">
           <div class="sheet-body">
             <%= yield %>
