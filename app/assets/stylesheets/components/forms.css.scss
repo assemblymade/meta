@@ -1,17 +1,11 @@
-.form-group {
-  margin-bottom: $line-height-computed * 1.5;
-}
-
 .form-actions {
   padding-top: $line-height-computed;
-  padding-bottom: $line-height-computed;
   border-top: 1px solid $brand-divider;
   text-align: right;
-  margin-top: $line-height-computed * 1.5;
 }
 
 .help-block {
-  margin-top: 10px;
+  margin-top: $font-size-small * $line-height-base / 2;
   font-size: $font-size-small;
 }
 
