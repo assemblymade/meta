@@ -1,22 +1,18 @@
 <% title @product.name, @product.pitch %>
 <% activate_nav! :about %>
 
+<div class="page-header">
+  <h3 class="alpha omega" style="margin-bottom: 8px"><strong><%= @product.pitch %></strong></h3>
+
+  <% unless @product.lead.blank? %>
+    <div class="text-large neuter-paragraphs" style="margin-top: 8px;">
+      <%== @product.lead_html %>
+    </div>
+  <% end %>
+</div>
+
 <div class="row">
   <div class="col-md-8 col-xs-8">
-
-    <!-- Pitch -->
-
-    <h2 class="alpha omega"><strong><%= @product.pitch %></strong></h2>
-
-    <% unless @product.lead.blank? %>
-      <div class="text-large">
-        <%== @product.lead_html %>
-      </div>
-    <% end %>
-
-    <!-- Poster Image -->
-    <hr>
-
 
     <!-- Body -->
     <div class="markdown-normalized text-longform">

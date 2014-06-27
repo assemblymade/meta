@@ -13,4 +13,8 @@ module NavsHelper
     @navs.push(nav.to_sym)
   end
 
+  def breadcrumb(url, text)
+    @breadcrumb = {url: url, text: text}
+  end
+
 end

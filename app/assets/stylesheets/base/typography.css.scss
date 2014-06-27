@@ -111,7 +111,9 @@ h6,
   ul,
   ol {
     @extend .text-serif;
+    font-size: 15px;
     line-height: 1.764;
+    color: $gray-dark;
   }
 }
 
@@ -211,6 +213,7 @@ blockquote {
   h5,
   h6 {
     @extend .h4;
+    font-weight: bold;
     margin-top: $line-height-computed * 1.5;
     margin-bottom: $line-height-computed / 2;
 

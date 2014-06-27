@@ -117,8 +117,11 @@
   > .active {
     // background-color: white;
     font-weight: bold;
+    border-radius: 0;
+    padding-right: 30px;
+    margin-right: -30px;
 
-    border-radius: $border-radius-base;
+    border-right: 3px solid $link-color;
 
     > a {
 

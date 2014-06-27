@@ -2,7 +2,7 @@
 
 $black:         #384047;
 
-$blue:          darken(#5fafef, 3%);
+$blue:          darken(#5fafef, 5%);
 $blue-light:    lighten($blue, 10%);
 $purple:        #6700B9;
 $purple-light:  lighten($purple, 10%);
@@ -15,11 +15,11 @@ $red-light:     lighten($red, 10%);
 
 $gray-darker:   #2d3339;
 $gray-dark:     #384047;
-$gray:          #b5bec5;
+$gray:          #93A0AA;
 $gray-light:    #c6ccd2;
 $gray-lighter:  #e2e5e8;
 
-$body-bg:       #f9fafa;
+$body-bg:       darken(#f9fafa, 3%);
 $text-color:    $black;
 
 $brand-primary: $blue;
@@ -59,7 +59,7 @@ $text-copy: darken($text-copy-bg, 75%);
 // Typography
 
 $font-family-sans-serif: Solitaire, "Helvetica Neue", Helvetica, Arial, sans-serif;
-$font-family-serif:      Skolar Cyrillic Basic, Tiempos, Georgia, "Times New Roman", Times, serif;
+$font-family-serif:      Tiempos, Georgia, "Times New Roman", Times, serif;
 $font-family-monospace:  Source Code Pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 $font-family-base:       $font-family-sans-serif;
 
@@ -286,10 +286,10 @@ $navbar-inverse-brand-hover-bg:    transparent;
 
 // Inverted navbar search
 $navbar-inverse-search-color:              $navbar-inverse-link-active-color;
-$navbar-inverse-search-bg:                 darken($navbar-inverse-bg, 10%);
+$navbar-inverse-search-bg:                 lighten($navbar-inverse-bg, 10%);
 $navbar-inverse-search-bg-focus:           $navbar-inverse-search-bg;
 $navbar-inverse-search-border:             $navbar-inverse-search-bg;
-$navbar-inverse-search-border-focus:       lighten($navbar-inverse-search-bg, 35%);
+$navbar-inverse-search-border-focus:       lighten($navbar-inverse-search-bg,20%);
 $navbar-inverse-search-placeholder-color:  darken($navbar-inverse-link-color, 5%);
 
 // Inverted navbar toggle

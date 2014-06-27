@@ -1,33 +1,36 @@
 <% title @post.title, @post.product.name %>
 <% activate_nav! :blog %>
 
+<div class="page-header">
+  <h2 class="page-header-title"><%= @post.title %></h2>
+
+  <div class="page-header-meta">
+
+    <% if can?(:update, @post) %>
+      <ul class="list-piped pull-right">
+        <li>
+          <a class="link-action-warning" href="<%= edit_product_post_path(@post.product, @post) %>" data-toggle="tooltip" data-placement="top" title="Edit Post">
+            <i class="icon-pencil" style="margin-right: 2px;"></i> Edit
+          </a>
+        </li>
+      </ul>
+    <% end %>
+
+    <ul class="list-piped omega">
+      <li>
+        <a href="<%= user_path(@post.author) %>" title="@<%= @post.author.username %>">
+          <%= image_tag @post.author.avatar.url(40), width: 20, height: 20, class: 'img-circle', style: 'margin-right:0.5em', alt: "@#{@post.author.username}" %><%= @post.author.username %>
+        </a>
+      </li>
+      <li>
+        <%= time_ago_in_words(@post.created_at) %> ago
+      </li>
+    </ul>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-md-8 col-xs-8">
-    <div class="page-header">
-      <h2 class="page-header-title"><%= @post.title %></h2>
-
-      <div class="page-header-meta">
-
-        <% if can?(:update, @post) %>
-          <ul class="list-piped pull-right">
-            <li>
-              <%= link_to 'Update', edit_product_post_path(@post.product, @post) %>
-            </li>
-          </ul>
-        <% end %>
-
-        <ul class="list-piped omega">
-          <li>
-            <a href="<%= user_path(@post.author) %>" title="@<%= @post.author.username %>">
-              <%= image_tag @post.author.avatar.url(40), width: 20, height: 20, class: 'img-circle', style: 'margin-right:0.5em', alt: "@#{@post.author.username}" %><%= @post.author.username %>
-            </a>
-          </li>
-          <li>
-            <%= time_ago_in_words(@post.created_at) %> ago
-          </li>
-        </ul>
-      </div>
-    </div>
 
     <div class="markdown-normalized">
       <%= product_markdown(@post.product, @post.body) %>

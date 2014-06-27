@@ -1,5 +1,6 @@
 <% title @wip.title, "##{@wip.number}", @wip.product.name %>
 <% activate_nav! :bounties %>
+<% breadcrumb product_wips_path(@wip.product), 'Bounties' %>
 
 <%= render 'header' %>
 <div class="row">

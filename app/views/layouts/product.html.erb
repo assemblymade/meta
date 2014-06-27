@@ -153,7 +153,13 @@
           </li>
         </ul>
 
-        <h2 class="alpha text-muted" style="font-weight: 200; line-height: 1;"><%= @product.name %></h2>
+        <h3 class="alpha" style="font-weight: 400; line-height: 1; color: #93A0AA;">
+          <%= @product.name %>
+          <% if @breadcrumb.present? %>
+            <i class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></i>
+            <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>"><%= @breadcrumb[:text] %></a>
+          <% end %>
+        </h3>
 
 
 

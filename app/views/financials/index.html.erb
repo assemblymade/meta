@@ -2,14 +2,16 @@
 <% activate_nav! :financials %>
 
 <% cache [@product] do %>
+
+  <div class="page-header">
+    <h2 class="page-header-title">Financials</h2>
+  </div>
+
   <div class="row">
 
     <div class="col-md-8 col-xs-8">
-      <div class="page-header">
-        <h2 class="page-header-title">Financials</h2>
-      </div>
 
-      <div style="display:inline; margin-left: 5px; margin-top: 13px;"
+      <div 
            data-react-class="Financials"
            data-react-props="<%= {
              product: @product.as_json
