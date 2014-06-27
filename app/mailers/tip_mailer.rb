@@ -13,9 +13,9 @@ class TipMailer < BaseMailer
     # to link people to
     @url = case @via.class.base_class.to_s
     when Event.to_s
-      product_wip_path(@product, @via.wip)
+      product_wip_url(@product, @via.wip)
     when Activity.to_s
-      product_chat_path(@product)
+      product_chat_url(@product)
     end
     mail to: @user.email_address,
          subject: "#{@tip.from.username} tipped you #{pluralize(@tip.cents / 100, 'coin')}"
