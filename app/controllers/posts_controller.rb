@@ -23,7 +23,7 @@ class PostsController < ProductController
     @post.save
 
     @product.watchers.each do |watcher|
-      PostMailer.delay.created(@post.id, watcher.id)
+      PostMailer.delay(queue: 'mailer').created(@post.id, watcher.id)
     end
 
     respond_with @post, location: product_post_path(@post.product, @post)
@@ -34,7 +34,7 @@ class PostsController < ProductController
     authenticate_user!
     authorize! :create, Post
 
-    PostMailer.delay.preview(@product.id, post_params.to_hash, current_user.id)
+    PostMailer.delay(queue: 'mailer').preview(@product.id, post_params.to_hash, current_user.id)
 
     render nothing: true
   end

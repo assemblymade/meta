@@ -27,7 +27,7 @@ class Invite < ActiveRecord::Base
           )
 
           invite.update_attributes sent_at: Time.now
-          InviteMailer.delay.invited(invite.id)
+          InviteMailer.delay(queue: 'mailer').invited(invite.id)
         end
       end
     end

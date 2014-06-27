@@ -20,7 +20,7 @@ class Wip::Worker < ActiveRecord::Base
     transaction do
       increment(:checkin_count)
       touch(:last_checkin_at)
-      UserMailer.delay.remind_user_of_their_claimed_work(user.id, wip.id)
+      UserMailer.delay(queue: 'mailer').remind_user_of_their_claimed_work(user.id, wip.id)
     end
   end
 
