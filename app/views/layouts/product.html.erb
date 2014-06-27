@@ -9,7 +9,7 @@
 
     <div class="row">
 
-      <div class="col-md-2">
+      <div class="col-md-2 fixed-enabler">
 
         <% if @product.poster? %>
           <%= image_tag @product.poster_image.url, class: 'img-rounded', width: '100%', alt: @product.name %>
@@ -32,12 +32,14 @@
             </a>
           </li>
 
-          <li class="<%= nav_active_class(:blog) %>">
-            <a href="<%= product_posts_path(@product) %>">
-              <i class="icon-notebook dropdown-glyph"></i>
-              Blog
-            </a>
-          </li>
+          <% if @product.posts.any? %>
+            <li class="<%= nav_active_class(:blog) %>">
+              <a href="<%= product_posts_path(@product) %>">
+                <i class="icon-notebook dropdown-glyph"></i>
+                Blog
+              </a>
+            </li>
+          <% end %>
         </ul>
 
         <h6 style="padding-left:15px">Work</h6>

@@ -19,7 +19,7 @@ $gray:          #93A0AA;
 $gray-light:    #c6ccd2;
 $gray-lighter:  #e2e5e8;
 
-$body-bg:       darken(#f9fafa, 3%);
+$body-bg:       desaturate(darken(#f9fafa, 3%), 1%);
 $text-color:    $black;
 
 $brand-primary: $blue;
@@ -271,7 +271,7 @@ $navbar-inverse-bg:     $black;
 $navbar-inverse-border: darken($navbar-inverse-bg, 2%);
 
 // Inverted navbar links
-$navbar-inverse-link-color:          darken($gray, 5%);
+$navbar-inverse-link-color:          darken($gray-light, 10%);
 $navbar-inverse-link-hover-color:    lighten($navbar-inverse-link-color, 10%);
 $navbar-inverse-link-hover-bg:       darken($navbar-inverse-bg, 5%);
 $navbar-inverse-link-active-color:   lighten($navbar-inverse-link-hover-color, 15%);
@@ -286,7 +286,7 @@ $navbar-inverse-brand-hover-bg:    transparent;
 
 // Inverted navbar search
 $navbar-inverse-search-color:              $navbar-inverse-link-active-color;
-$navbar-inverse-search-bg:                 lighten($navbar-inverse-bg, 10%);
+$navbar-inverse-search-bg:                 lighten($navbar-inverse-bg, 12%);
 $navbar-inverse-search-bg-focus:           $navbar-inverse-search-bg;
 $navbar-inverse-search-border:             $navbar-inverse-search-bg;
 $navbar-inverse-search-border-focus:       lighten($navbar-inverse-search-bg,20%);
