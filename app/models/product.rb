@@ -29,6 +29,7 @@ class Product < ActiveRecord::Base
   has_many :events, :through => :wips
   has_many :financial_accounts, class_name: 'Financial::Account'
   has_many :financial_transactions, class_name: 'Financial::Transaction'
+  has_many :invites, as: :via
   has_many :metrics
   has_many :milestones
   has_many :perks
@@ -342,6 +343,10 @@ class Product < ActiveRecord::Base
       self.authentication_token = Devise.friendly_token
       break authentication_token unless Product.find_by(authentication_token: authentication_token)
     end
+  end
+
+  def product
+    self
   end
 
   # missions

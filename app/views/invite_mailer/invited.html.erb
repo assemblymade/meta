@@ -11,7 +11,7 @@
                   <tr>
                     <td width="200"></td>
                     <td>
-                      <a href="<%= user_url(@invitor) %>">
+                      <a href="<%= user_url(@invitor, i: @invite.id) %>">
                         <%= image_tag(@invitor.avatar.url(120), width: 60, height: 60, class: 'img-circle') %>
                       </a>
                     </td>
@@ -19,26 +19,55 @@
                   </tr>
                 </table>
 
-                <h1 class="text-center">
-                  <a href="<%= user_url(@invitor) %>">
-                    @<%= @invitor.username %>
-                  </a>
-                  wants you to help out on <%= @product.name %>. There's <%= pluralize(@invite.tip_cents / 100, "#{@product.name} coin") %> waiting for you.
-                </h1>
+                <p>Your friend <a href="<%= user_url(@invitor, i: @invite.id) %>">@<%= @invitor.username %></a> is building a product called <%= @product.name %> on Assembly, and thought you’d be a great new member of the team.</p>
 
-                <br/>
                 <% if @invite.note.present? %>
-                  <p>From @<%= @invitor.username %>:</p>
-                  <%== markdown @invite.note %>
+                  <blockquote>
+                    <span style="font-size: 12px;color:#999">From @<%= @invitor.username %>:</span><br/>
+                    <%== markdown @invite.note %>
+                  </blockquote>
                 <% end %>
-                <table class="button success radius">
-                  <tr>
-                    <td>
-                      <a href="<%= product_wip_url(@product, @via, i: @invite.id) %>">Help out @<%= @invitor.username %></a>
-                    </td>
-                  </tr>
-                </table>
 
+                <p>Products on Assembly are built collaboratively, and ownership (along with future revenue) is distributed through App Coins.</p>
+                <% if @via.is_a? Task %>
+                  <p>You have two initial opportunities to own part of <%= @product.name %> today:</p>
+
+                  <ol>
+                    <li>Create an Assembly account and claim the <%= @invite.tip_cents / 100 %> <%= @product.name %> App Coins that <a href="<%= user_url(@invitor, i: @invite.id) %>">@<%= @invitor.username %></a> just tipped to you.</li>
+
+                    <li>Complete the bounty that <a href="<%= user_url(@invitor, i: @invite.id) %>">@<%= @invitor.username %></a> thought you'd be perfect for, which is worth <%= (@via.real_coin_value / 100).to_i %> App Coins.</li>
+                  </ol>
+
+                  <table class="button success radius">
+                    <tr>
+                      <td>
+                        <a href="<%= product_wip_url(@product, @via, i: @invite.id) %>">
+                          Help @<%= @invitor.username %> build <%= @product.name %>
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+
+                <% else %>
+                  <p>To get started, create an Assembly account and you'll automatically claim the <%= @invite.tip_cents / 100 %> <%= @product.name %> App Coins that <a href="<%= user_url(@invitor, i: @invite.id) %>">@<%= @invitor.username %></a> just tipped to you.</p>
+
+                  <table class="button success radius">
+                    <tr>
+                      <td>
+                        <a href="<%= product_url(@product, i: @invite.id) %>">
+                          Help @<%= @invitor.username %> build <%= @product.name %>
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+
+                <% end %>
+
+                <p>
+                  <br/>
+                  <a href="<%= faq_url(i: @invite.id) %>">Learn more about Assembly</a><br/>
+                  <a href="<%= product_url(@product, i: @invite.id) %>">Learn more about <%= @product.name %></a>
+                </p>
               </td>
             </tr>
           </tbody>
