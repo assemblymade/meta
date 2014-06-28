@@ -4,7 +4,8 @@ class AutoTipContract < ActiveRecord::Base
   belongs_to :product, touch: true
   belongs_to :user
 
-  scope :active_at, -> (product, at) { where(product_id: product.id).where('created_at <= ? and (deleted_at is null or deleted_at > ?)', at, at) }
+  scope :active_at, -> (product, at) { where(product_id: product.id).active }
+  scope :active, ->(at=Time.now){ where('created_at <= ? and (deleted_at is null or deleted_at > ?)', at, at) }
 
   before_validation :truncate_amount
 
@@ -14,7 +15,6 @@ class AutoTipContract < ActiveRecord::Base
   def active?
     deleted_at.nil?
   end
-
 
   # the minimum autotip is 0.001
   def truncate_amount

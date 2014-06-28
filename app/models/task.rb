@@ -248,8 +248,8 @@ class Task < Wip
     val
   end
 
-  def real_coin_value
-    product.decorate.current_exchange_rate * score * 100
+  def bounty
+    Bounty.new(self)
   end
 
   def multiplier_not_changed

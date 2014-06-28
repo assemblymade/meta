@@ -37,7 +37,7 @@
 
       <ul class="list-piped omega">
         <li>
-          <%= format_coins(task.product, task.real_coin_value, :short) %>
+          <%= format_coins(task.product, task.bounty.total_cents, :tiny) %>
         </li>
         <li>
           <%= user_link_username(task.user) %>

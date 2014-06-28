@@ -6,15 +6,17 @@ module CoinHelper
   end
 
   def format_coins(product, cents, format = :full)
-    label = if product.for_profit?
-      "#{product.name} coins"
-    else
-      'karma'
+    label = currency = product.for_profit? ? 'coins' : 'karma'
+
+    if product.for_profit?
+      label = "#{product.name} #{currency}"
     end
 
     text = case format
-    when :short
+    when :tiny
       cents_to_coins(cents)
+    when :short
+      "#{cents_to_coins(cents)} #{currency}"
     else
       "#{cents_to_coins(cents)} #{label}"
     end

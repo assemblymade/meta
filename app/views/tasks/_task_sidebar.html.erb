@@ -80,7 +80,7 @@
         <% if signed_in? && @wip.winner == current_user %>
           <p>
             You were awarded
-            <%= format_coins(@wip.product, @wip.real_coin_value) %>
+            <%= format_coins(@wip.product, @wip.bounty.total_cents) %>
             for completing this bounty.
           </p>
           <p class="omega"><strong>Keep up the great work!</strong></p>
@@ -88,13 +88,47 @@
           <p class="omega">
             <strong><%= @wip.winner.username %></strong>
             was awarded
-            <%= format_coins(@wip.product, @wip.real_coin_value) %>
+            <%= format_coins(@wip.product, @wip.bounty.total_cents) %>
             for completing this bounty.
           </p>
         <% end %>
       <% end %>
     <% end %>
   </div>
+</div>
+
+<div class="panel panel-default">
+  <% b = @wip.bounty %>
+  <div class="panel-heading">
+    <a href="<%= product_contracts_path(@wip.product) %>" class="text-muted">
+      <i class="icon-question pull-right" data-placement="top" data-toggle="tooltip" title="View&nbsp;all&nbsp;Tip&nbsp;Contracts"></i>
+      </a>
+    <h6 class="panel-title">
+      Automatic Tips
+    </h6>
+  </div>
+  <table class="table table-condensed small">
+    <% if b.core_team_contracts.any? %>
+      <tr>
+        <td class="text-muted" style="padding-left:15px">
+          Core Team Contracts
+        </td>
+        <td class="text-right" style="padding-right:15px">
+          <%= format_coins @wip.product, b.core_team_contracts.map(&:amount).sum * b.total_cents, :tiny %>
+        </td>
+      </tr>
+    <% end %>
+    <% if b.product_contracts.any? %>
+      <tr>
+        <td class="text-muted" style="padding-left:15px">
+          Product Contracts
+        </td>
+        <td class="text-right" style="padding-right:15px">
+          <%= format_coins @wip.product, b.product_contracts.map(&:amount).sum * b.total_cents, :tiny %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
 </div>
 
 
