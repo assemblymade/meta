@@ -1,11 +1,7 @@
 class WipTagSerializer < ActiveModel::Serializer
-  attributes :color, :name
+  attributes :name
 
   def name
     object.name
-  end
-
-  def color
-    object.color
   end
 end

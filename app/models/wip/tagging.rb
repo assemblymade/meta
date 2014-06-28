@@ -5,4 +5,5 @@ class Wip::Tagging < ActiveRecord::Base
 
   belongs_to :tag, foreign_key: 'wip_tag_id', class_name: 'Wip::Tag'
   belongs_to :wip, foreign_key: 'wip_id'
+  belongs_to :user
 end

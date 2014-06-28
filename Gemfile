@@ -90,6 +90,7 @@ group :development, :test do
   gem 'syntax'
   gem 'fakeweb'
   gem 'rest_client'
+  gem 'teaspoon'
 end
 
 group :development do
@@ -102,10 +103,6 @@ end
 group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'autotest-standalone'
-end
-
-group :development, :test do
-  gem 'teaspoon'
 end
 
 group :production do

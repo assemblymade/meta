@@ -2,8 +2,10 @@ var Store = _.extend(Function.prototype, {
   emit: function(event) {
     var callbacks = this.listeners && this.listeners[event];
 
-    for (var i = 0, l = callbacks.length; i < l; i++) {
-      callbacks[i]();
+    if (!_.isEmpty(callbacks)) {
+      for (var i = 0, l = callbacks.length; i < l; i++) {
+        callbacks[i]();
+      }
     }
   },
 

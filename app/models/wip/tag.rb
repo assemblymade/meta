@@ -9,21 +9,7 @@ class Wip::Tag < ActiveRecord::Base
   has_many :watchings, :as => :watchable
   has_many :watchers, :through => :watchings, :source => :user
 
-  validates :name, presence: true, length: { minimum: 2 }
-
-  COLOR_RULES = {
-    'bug' => 'F40',
-    'yc'  => 'F60'
-  }
-
-  def self.color_for(name)
-    hex = COLOR_RULES[name] || autocolor(name)
-    "##{hex}"
-  end
-
-  def color
-    self.class.color_for(name)
-  end
+  validates :name, length: { minimum: 2 }, allow_blank: true 
 
   def follow!(user)
     Watching.watch!(user, self)
@@ -37,10 +23,16 @@ class Wip::Tag < ActiveRecord::Base
     name
   end
 
-private
-
-  def self.autocolor(text)
-    Digest::MD5.hexdigest("a#{text}").to_s[0..5].upcase
+  def self.suggested_tags
+    %w(
+     small
+     medium
+     large
+     rails
+     javascript
+     design
+     copy
+    )
   end
 
 end
