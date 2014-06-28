@@ -3,7 +3,25 @@
 //= require dispatcher
 
 describe('Dispatcher', function() {
+  before(function(done) {
+    Dispatcher.removeAll();
+
+    done();
+  });
+
   beforeEach(function(done) {
+    Dispatcher.removeAll();
+
+    done();
+  });
+
+  after(function(done) {
+    Dispatcher.removeAll();
+
+    done();
+  });
+
+  afterEach(function(done) {
     Dispatcher.removeAll();
 
     done();

@@ -118,6 +118,47 @@
   </div>
 </div><!-- .panel -->
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h6 class="panel-title">
+      Tags
+    </h6>
+  </div>
+  <div class="panel-body">
+    <h6 style="margin-bottom: 0;">Tags</h6>
+    <div style="margin-bottom: 10px"
+         data-react-class="TagList"
+         data-react-props="<%= {
+            tags: (@wip.tags ? @wip.tags.map do |tag|
+              tag.name
+            end.as_json : []),
+            url: product_wip_path(@wip.product, @wip.number),
+            destination: true
+          }.to_json %>">
+    </div>
+
+    <div data-react-class="TextComplete"
+         data-react-props="<%= {
+           width: "125px",
+           size: "small",
+           label: "Add tag",
+           prepend: "#",
+           prompt: "Add",
+           url: product_wip_path(@wip.product, @wip.number)
+         }.to_json %>">
+    </div>
+
+    <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
+    <div data-react-class="TagList"
+          data-react-props="<%= {
+            tags: Wip::Tag.suggested_tags.as_json,
+            url: product_wip_path(@wip.product, @wip.number),
+            destination: false
+          }.to_json %>">
+    </div>
+  </div>
+</div>
+
 <% if signed_in? %>
   <div data-react-class="InviteFriend" data-react-props='<%== {
       url: invites_path,

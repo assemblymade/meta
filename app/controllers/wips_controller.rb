@@ -87,9 +87,11 @@ class WipsController < ProductController
     if title = wip_params[:title]
       @wip.update_title! current_user, title unless title == @wip.title
     end
+
     if tag_list = wip_params[:tag_list]
-      @wip.update_tag_names! current_user, tag_list.split(',')
+      @wip.update_tag_names! current_user, tag_list
     end
+
     @wip.update_attributes(update_wip_params)
 
     respond_with @wip, location: wip_path(@wip)
