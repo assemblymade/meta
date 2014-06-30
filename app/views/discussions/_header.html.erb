@@ -1,20 +1,13 @@
 <div class="page-header">
-  <div class="pull-right">
-    <% if can?(:update, @wip) && @wip.open? %>
-      <a class="btn btn-default btn-sm" href="<%= close_product_discussion_path(@wip.product, @wip) %>" data-method="patch" data-confirm="Are you sure you want to close this discussion?" data-toggle="tooltip" data-placement="top" title="Close Discussion">
-        Close
-      </a>
-    <% end %>
-  </div>
-
-  <ol class="breadcrumb omega">
-    <li><a href="<%= product_discussions_path(@wip.product) %>">Discussions</a></li>
+  <ul class="text-small list-piped pull-right">
     <li>
-      <a href="<%= product_discussion_path(@wip.product, @wip) %>">
-        #<%= @wip.number %>
-      </a>
+      <% if can?(:update, @wip) && @wip.open? %>
+        <a style="position: relative; top: 8px;" class="link-action-danger" href="<%= close_product_discussion_path(@wip.product, @wip) %>" data-method="patch" data-confirm="Are you sure you want to close this discussion?" data-toggle="tooltip" data-placement="top" title="Close Discussion">
+          <i class="icon-close" style="margin-right: 2px;"></i> Close
+        </a>
+      <% end %>
     </li>
-  </ol>
+  </ul>
 
   <h2 class="page-header-title"><%= @wip.title %></h2>
 </div>

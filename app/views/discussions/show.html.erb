@@ -1,5 +1,6 @@
 <% title @wip.title, "##{@wip.number}", @wip.product.name %>
 <% activate_nav! :discussions %>
+<% breadcrumb product_discussions_path(@wip.product), 'Discussions' %>
 
 <%= render 'header' %>
 
