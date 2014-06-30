@@ -110,7 +110,7 @@ var Notifications = React.createClass({
     var sorted = this.sortByCount(this.state.data)
     return (
       <li>
-        <a href="#notifications" data-toggle="dropdown" onClick={this.onClick}>
+        <a href="#notifications" data-toggle="dropdown" onClick={this.onClick} style={{"padding-bottom" : "12px"}}>
           <span className={classes}></span>
           {badge}
         </a>
@@ -190,7 +190,7 @@ var NotificationsList = React.createClass({
     }
 
     return (
-      <ul className="dropdown-menu" style={{"margin-top": 4}}>
+      <ul className="dropdown-menu">
         {productNodes}
         <li className="divider" />
         <li><a href={productsPath}>All Products</a></li>

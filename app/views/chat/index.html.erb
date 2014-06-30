@@ -1,10 +1,10 @@
-<% title 'Discuss', @product.name %>
-<% activate_nav! :product_discussions %>
+<% title 'Chat', @product.name %>
+<% activate_nav! :chat %>
 <% provide :body_class, 'chat-wrapper' %>
+<% @disable_footer = true %>
 
 <div class="navbar-fixed-top">
   <%= render 'shared/navbar' %>
-  <%= render 'products/navbar' %>
 </div>
 
 <div class="modal fade"
@@ -15,9 +15,9 @@
      aria-hidden="true">
 </div>
 
-<div class="container">
-  <div class="row" style="position:relative">
-    <div class="col-xs-8">
+<div class="js-scroll-container">
+  <div class="row">
+    <div class="col-md-8 col-xs-8">
       <div class="chat js-chat">
         <center>
           <a class="btn btn-default btn-block js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>">Load more</a>
@@ -25,18 +25,19 @@
         </center>
 
         <div class="timeline chat-timeline js-activity-stream"></div>
-        <div class="chat-actions js-chat-actions is-fixed" style="width:616px">
-          <%= render 'discussions/chat_box' %>
-        </div>
       </div>
     </div>
 
-    <div class="col-xs-3" style="margin-top:136px;width:260px;position:fixed;margin-left:711px">
+    <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
       <%#= render 'discussions/intro_panel' %>
       <div class="js-members"></div>
     </div>
   </div>
 </div>
+<div class="chat-actions js-chat-actions" style="margin-bottom:-34px">
+  <%= render 'discussions/chat_box' %>
+</div>
+
 
 <script>
   app.product = new Product(<%= json @product, scope: current_user %>);
@@ -107,8 +108,14 @@
 
     var chatView = new ChatView({
       el: $('.js-chat'),
-      collection: activityStream
+      collection: activityStream,
+      scrollContainer: $('.js-scroll-container'),
+      scrollPadding: 260
     });
+
+    var chatInput = new ChatInput({
+      el: $('.js-chat-actions')
+    })
 
     window.activityStream = activityStream;
     window.activityStreamView = activityStreamView;
@@ -116,7 +123,7 @@
 
     activityStreamView.render();
     chatView.render();
-
+    chatView.scrollToLatestActivity();
     $(window).load(function() {
       delay(1, chatView.scrollToLatestActivity);
     });

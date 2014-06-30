@@ -1,15 +1,17 @@
 <% title 'Financials', @product.name %>
-<% activate_nav! :subnav_financials %>
+<% activate_nav! :financials %>
 
 <% cache [@product] do %>
+
+  <div class="page-header">
+    <h2 class="page-header-title">Financials</h2>
+  </div>
+
   <div class="row">
 
     <div class="col-md-8 col-xs-8">
-      <div class="page-header">
-        <h2 class="page-header-title">Financials</h2>
-      </div>
 
-      <div style="display:inline; margin-left: 5px; margin-top: 13px;"
+      <div 
            data-react-class="Financials"
            data-react-props="<%= {
              product: @product.as_json
@@ -32,7 +34,6 @@
     </div><!-- .col-md-8 -->
 
     <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-      <%= render 'products/sidebar' %>
       <%= render 'products/contract' %>
     </div>
   </div><!-- .row -->

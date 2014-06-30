@@ -1,3 +1,7 @@
+.panel {
+  box-shadow: none;
+}
+
 .panel-heading {
   padding: 8px 15px 5px;
   border-radius: $border-radius-base $border-radius-base 0 0;
@@ -31,7 +35,7 @@ h6.panel-title {
 }
 
 .panel-body + .panel-heading {
-  border-top: 1px solid $brand-divider;
+  border-top: 1px solid $panel-inner-border;
   border-radius: 0;
 }
 

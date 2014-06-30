@@ -1,14 +1,11 @@
 .nav {
+
   > li > a {
     color: $text-color;
 
     &:hover,
     &:focus {
       background-color: transparent;
-    }
-
-    > .badge:last-child {
-      margin-left: $padding-base-vertical;
     }
   }
 
@@ -90,9 +87,41 @@
 
 .nav-stacked > li + li {
   margin-top: 0;
-  border-top: 1px solid $gray-lighter;
+  // border-top: 1px solid $gray-lighter;
 }
 
 .nav-stacked > li:last-child > a {
   border-radius: 0 0 $border-radius-base $border-radius-base;
+}
+
+
+.nav-sidebar {
+  margin-bottom: $line-height-computed;
+  font-size: $font-size-small;
+
+  > li {
+    border-top: none;
+  }
+
+  > li > a {
+    padding: $padding-small-vertical $padding-small-horizontal;
+    color: $gray-dark;
+
+    &:hover {
+      border-radius: $border-radius-base;
+      background-color: rgba(white, 1);
+      box-shadow: 0 1px 0 0 $brand-divider;
+    }
+  }
+
+  > .active {
+    background-color: white;
+    font-weight: bold;
+    box-shadow: 0 1px 0 0 $brand-divider;
+    border-radius: $border-radius-base;
+
+    > a {
+      color: $brand-primary;
+    }
+  }
 }

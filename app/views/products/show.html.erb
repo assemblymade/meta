@@ -1,22 +1,18 @@
 <% title @product.name, @product.pitch %>
-<% activate_nav! :product %>
+<% activate_nav! :about %>
+
+<div class="page-header">
+  <h3 class="alpha omega" style="margin-bottom: 8px"><strong><%= @product.pitch %></strong></h3>
+
+  <% unless @product.lead.blank? %>
+    <div class="text-large neuter-paragraphs" style="margin-top: 8px;">
+      <%== @product.lead_html %>
+    </div>
+  <% end %>
+</div>
 
 <div class="row">
   <div class="col-md-8 col-xs-8">
-
-    <!-- Pitch -->
-
-    <h2 class="alpha"><strong><%= @product.pitch %></strong></h2>
-
-    <% unless @product.lead.blank? %>
-      <div class="text-large">
-        <%== @product.lead_html %>
-      </div>
-    <% end %>
-
-    <!-- Poster Image -->
-    <hr>
-
 
     <!-- Body -->
     <div class="markdown-normalized text-longform">
@@ -26,7 +22,6 @@
 
 
   <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-    <%= render 'products/sidebar' %>
 
     <!-- Social links -->
 
@@ -58,12 +53,10 @@
         </div>
         <div class="panel-body">
           <% if @product.flagged? %>
-            <span class="btn btn-danger btn-sm btn-block btn-disabled" href="#>">Product Flagged</span>
+            <span class="btn btn-danger btn-sm btn-block btn-disabled" href="#" style="margin-bottom: 8px;">Product Flagged</span>
           <% else %>
-            <a class="btn btn-danger btn-sm btn-block" href="<%= product_flag_path(@product)%>">Flag Product</a>
+            <a class="btn btn-danger btn-sm btn-block" style="margin-bottom: 8px;" href="<%= product_flag_path(@product)%>">Flag Product</a>
           <% end %>
-
-          <br>
 
           <%= form_for [:admin, @product.showcases.new], url: admin_staff_picks_path do |f| %>
             <%= f.hidden_field :product_id %>
