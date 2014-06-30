@@ -20,7 +20,7 @@
     <div class="col-md-8 col-xs-8">
       <div class="chat js-chat">
         <center>
-          <a class="btn btn-default btn-block js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>">Load more</a>
+          <a class="btn btn-default btn-block btn-sm js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>" style="margin-top: 36px;">Load more</a>
           <br>
         </center>
 
@@ -110,7 +110,7 @@
       el: $('.js-chat'),
       collection: activityStream,
       scrollContainer: $('.js-scroll-container'),
-      scrollPadding: 265
+      scrollPadding: 216
     });
 
     var chatInput = new ChatInput({
