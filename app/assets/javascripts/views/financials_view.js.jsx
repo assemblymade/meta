@@ -90,12 +90,12 @@ var FinancialsKey = React.createClass({
     // TODO: Break out dl-inline styles into reusable SCSS components
     return (
       <div>
-        <dl>
-          <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#5290d2'}}></dt>
+        <dl className="text-small">
+          <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#48a3ed'}}></dt>
           <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>{this.props.product.name} annuity</dd>
-          <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#d05555'}}></dt>
+          <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#f93232'}}></dt>
           <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>Expenses (hosting, maintenance, etc.)</dd>
-          <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#eebb20'}}></dt>
+          <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#e9ad1a'}}></dt>
           <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>App Coin holders</dd>
         </dl>
         <strong>{this.state.month}</strong>

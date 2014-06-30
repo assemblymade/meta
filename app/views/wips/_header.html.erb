@@ -1,15 +1,10 @@
 <div class="page-header">
 
   <div class="pull-right">
-    <a class="btn btn-default" href="<%= new_product_wip_path(@wip.product) %>">
+    <a class="btn btn-default btn-sm" href="<%= new_product_wip_path(@wip.product) %>">
       Create a bounty
     </a>
   </div>
-
-  <ol class="breadcrumb omega">
-    <li><a href="<%= product_wips_path(@wip.product) %>">Bounties</a></li>
-    <li></li>
-  </ol>
 
   <h2 class="page-header-title">
     <%= @wip.title %>
@@ -23,7 +18,7 @@
       </li>
       <% if can?(:update, @wip) %>
         <li>
-          <a class="link-action-warning" href="<%= edit_product_wip_path(@wip.product, @wip) %>"  data-toggle="tooltip" data-placement="top" title="Edit Topic">
+          <a class="link-action-warning" href="<%= edit_product_wip_path(@wip.product, @wip) %>" data-toggle="tooltip" data-placement="top" title="Edit Topic">
             <i class="icon-pencil" style="margin-right: 2px;"></i> Edit
           </a>
         </li>

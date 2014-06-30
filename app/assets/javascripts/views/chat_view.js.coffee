@@ -6,78 +6,58 @@ class window.ChatView extends Backbone.View
   collection: ActivityStream
 
   events:
-    'keydown .js-chat-actions'   : 'onKeyDown'
-    'keyup   .js-chat-actions'   : 'onKeyUp'
-    'submit  .js-chat-actions'   : 'onSubmit'
     'click   .js-chat-load-more' : 'onLoadMore'
     'click   .js-chat-create-wip': 'onCreateWip'
 
-  initialize: ->
+  initialize: (options)->
     @listenTo(@collection, 'add', @render)
+    @scrollContainer = options.scrollContainer
+    @scrollPadding = options.scrollPadding
+
+    @stuckToBottom = true
+
+    @scrollContainer.css(
+      'height':'100px'
+      'overflow-x':'hidden'
+      'overflow-y':'scroll'
+    )
+
+    $(window).resize(@onWindowResize.bind(this))
+    @onWindowResize()
+
+    app.on 'comment:scheduled', @optimisticallyCreateActivity.bind(@)
 
   render: =>
-    @$('.js-activity-stream').css(
-      'margin-bottom': @$('.js-chat-actions').outerHeight()
-    )
     @$('.js-chat-load-more').toggle(@collection.length >= 25)
+    @scrollToLatestActivity() if @stuckToBottom
 
   scrollToLatestActivity: ->
-    $(window).scrollTop($(document).height())
+    $(@scrollContainer).scrollTop(999999)
 
-  clearForm: ->
-    @$('.js-chat-actions form')[0].reset()
-    @$('.js-chat-actions textarea').trigger('autosize.resize')
+  optimisticallyCreateActivity: (comment) ->
+    @stuckToBottom = true
 
-  optimisticallyCreateActivity: (body) ->
     activity = new Activity(
       type: 'activities/chat'
       created: (new Date()).toISOString()
       actor:  app.currentUser().attributes
       subject: {
-        body: body
+        body: comment.body
         tips: []
         total_tips: 0
       }
     )
 
     @collection.push(activity)
-
-    comment = new Comment(
-      body: body
-    )
-
-    comment.url = @$('.js-chat-actions form').attr('action')
     comment.save({socket_id: @collection.socketId},
       success: (comment, data) ->
         activity.set(data)
     )
     activity
 
-  # --
-
-  onKeyDown: (e) =>
-    return unless e.which == ENTER_KEY && !e.shiftKey
-    e.preventDefault()
-
-    comment = new Comment(
-      body: @$('.js-chat-actions textarea').val()
-    )
-
-    if comment.isValid()
-      @$('.js-chat-actions form').submit()
-
-  onSubmit: (e) =>
-    e.preventDefault()
-    body = @$('.js-chat-actions textarea').val()
-    @optimisticallyCreateActivity(body)
-    delay 0, @clearForm
-
-  onKeyUp: (e) =>
-    actionsHeight = @$('.chat-bottom').height()
-    @$('.chat-timeline').css('margin-bottom': actionsHeight)
-
   onLoadMore: (e) =>
     e.preventDefault()
+    @stuckToBottom = false
     originalText = $('.js-chat-load-more').text()
     @$('.js-chat-load-more').attr('disabled', true).text('Loading…')
     $.ajax(
@@ -126,6 +106,12 @@ class window.ChatView extends Backbone.View
        }),
       document.getElementById('suggested-tags')
     );
+
+  onWindowResize: (e) ->
+    @scrollContainer.css(
+      height: $(window).height() - @scrollPadding
+    )
+
 
 fixScroll = (cb) ->
   documentHeight = $(document).height()

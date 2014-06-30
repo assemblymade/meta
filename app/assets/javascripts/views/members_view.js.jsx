@@ -97,22 +97,29 @@ var MembersView = React.createClass({
 
   render: function() {
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h6 className="panel-title">Online</h6>
-        </div>
-        <div className="panel-body small">
-        {
-          _.map(this.onlineMembers(), this.renderMember)
-        }
-        </div>
-        <div className="panel-heading">
-          <h6 className="panel-title">Recently Active</h6>
-        </div>
-        <div className="panel-body small">
-        {
-          _.map(this.recentlyActiveMembers(), this.renderMember)
-        }
+      <div className="panel-group" id="accordion" style={{'margin-top' : '36px'}}>
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h6 className="panel-title">Online</h6>
+          </div>
+          <div className="panel-body small">
+            {
+              _.map(this.onlineMembers(), this.renderMember)
+            }
+          </div>
+          <div className="panel-heading">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseRecent" className="text-muted">
+              <i className="icon icon-chevron-up pull-right"></i>
+              <h6 className="panel-title">Recently Active</h6>
+            </a>
+          </div>
+          <div id="collapseRecent" className="panel-collapse collapse in">
+            <div className="panel-body small">
+            {
+              _.map(this.recentlyActiveMembers(), this.renderMember)
+            }
+            </div>
+          </div>
         </div>
       </div>
     )

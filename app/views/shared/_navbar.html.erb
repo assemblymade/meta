@@ -1,4 +1,4 @@
-<div class="navbar <% if Rails.env.development? %>devbar<% end %> navbar-inverse navbar-static-top" data-headroom data-tolerance="5" data-offset="205" data-classes="{"initial":"animated","pinned":"slideDown","unpinned":"slideUp","top":"headroom--top","notTop":"headroom--not-top"}">
+<div class="navbar navbar-inverse navbar-static-top">
   <div class="container-fluid">
 
     <div class="navbar-header">
@@ -24,7 +24,7 @@
         <form action="<%= scoped_search_path %>" class="navbar-form navbar-left" style="<% if user_signed_in? %>padding-left: 4px;<% end %>">
           <div class="form-group">
             <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off"
-              placeholder="<%= @product ? "Search #{@product.name}…" : "Search…" %>"  />
+              placeholder="<%= @product ? "Search #{@product.name}" : "Search…" %>"  />
             <input type="hidden" name="type" value="<%= @type %>">
           </div>
           <!-- <button type="submit" class="btn btn-default">Search</button> -->

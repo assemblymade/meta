@@ -44,7 +44,7 @@ module ASM
                                     Rack::CrossOriginAssets
 
     config.action_mailer.default_options = {
-      from: "Assembly <notifications@assembly.com>"
+      from: "Assembly <notifications@assemblymail.com>"
     }
 
     config.action_mailer.preview_path = Rails.root.join('spec', 'mailers', 'preview')

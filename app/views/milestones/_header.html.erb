@@ -1,13 +1,6 @@
 <% cache [@milestone, @milestone.wip, @milestone.product] do %>
   <div class="page-header">
 
-    <ol class="breadcrumb omega">
-      <li>
-        <a href="<%= product_milestones_path(@milestone.product) %>">Project</a>
-      </li>
-      <li></li>
-    </ol>
-
     <h2 class="page-header-title">
       <%= @milestone.wip.title %>
     </h2>
@@ -15,7 +8,9 @@
     <div class="page-header-meta">
       <ul class="list-piped pull-right">
         <li class="list-item">
-          <a class="text-yellow" href="<%= edit_product_milestone_path(@milestone.product, @milestone) %>">Edit</a>
+          <a class="link-action-warning" data-toggle="tooltip" data-placement="top" title="Edit Project" href="<%= edit_product_milestone_path(@milestone.product, @milestone) %>">
+            <i class="icon-pencil" style="margin-right: 2px;"></i>
+            Edit</a>
         </li>
       </ul>
 

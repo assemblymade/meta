@@ -94,43 +94,16 @@
         <% end %>
       <% end %>
     <% end %>
+
+    <% if signed_in? %>
+      <div style="margin-top:15px" data-react-class="InviteFriendBounty" data-react-props='<%== {
+          url: invites_path,
+          invites: (@invites ? serialize_hash(@invites) : []),
+        }.merge(TypeId.as_json(:via, @wip)).to_json %>'>
+      </div>
+    <% end %>
   </div>
 </div>
-
-<div class="panel panel-default">
-  <% b = @wip.bounty %>
-  <div class="panel-heading">
-    <a href="<%= product_contracts_path(@wip.product) %>" class="text-muted">
-      <i class="icon-question pull-right" data-placement="top" data-toggle="tooltip" title="View&nbsp;all&nbsp;Tip&nbsp;Contracts"></i>
-      </a>
-    <h6 class="panel-title">
-      Bounty Breakdown
-    </h6>
-  </div>
-  <table class="table table-condensed small">
-    <% if b.core_team_contracts.any? %>
-      <tr>
-        <td class="text-muted" style="padding-left:15px">
-          Core Team tip
-        </td>
-        <td class="text-right" style="padding-right:15px">
-          <%= format_coins @wip.product, b.core_team_contracts.map(&:amount).sum * b.total_cents, :tiny, round: true %>
-        </td>
-      </tr>
-    <% end %>
-    <% b.product_contracts.each do |c| %>
-      <tr>
-        <td class="text-muted" style="padding-left:15px">
-          @<%= c.user.username %> tip
-        </td>
-        <td class="text-right" style="padding-right:15px">
-          <%= format_coins @wip.product, c.amount * b.total_cents, :tiny, round: true %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-</div>
-
 
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -171,6 +144,15 @@
           }.to_json %>">
     </div>
 
+    <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
+    <div data-react-class="TagList"
+          data-react-props="<%= {
+            tags: Wip::Tag.suggested_tags.as_json,
+            url: product_wip_path(@wip.product, @wip.number),
+            destination: false
+          }.to_json %>">
+    </div>
+    <br>
     <div data-react-class="TextComplete"
          data-react-props="<%= {
            width: "125px",
@@ -181,22 +163,40 @@
            url: product_wip_path(@wip.product, @wip.number)
          }.to_json %>">
     </div>
-
-    <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
-    <div data-react-class="TagList"
-          data-react-props="<%= {
-            tags: Wip::Tag.suggested_tags.as_json,
-            url: product_wip_path(@wip.product, @wip.number),
-            destination: false
-          }.to_json %>">
-    </div>
+    
   </div>
 </div>
 
-<% if signed_in? %>
-  <div data-react-class="InviteFriendBounty" data-react-props='<%== {
-      url: invites_path,
-      invites: (@invites ? serialize_hash(@invites) : []),
-    }.merge(TypeId.as_json(:via, @wip)).to_json %>'>
+<div class="panel panel-default">
+  <% b = @wip.bounty %>
+  <div class="panel-heading">
+    <a href="<%= product_contracts_path(@wip.product) %>" class="text-muted">
+      <i class="icon-question pull-right" data-placement="top" data-toggle="tooltip" title="View&nbsp;all&nbsp;Tip&nbsp;Contracts"></i>
+      </a>
+    <h6 class="panel-title">
+      Bounty Breakdown
+    </h6>
   </div>
-<% end %>
+  <table class="table table-condensed small">
+    <% if b.core_team_contracts.any? %>
+      <tr>
+        <td class="text-muted" style="padding-left:15px">
+          Core Team tip
+        </td>
+        <td class="text-right" style="padding-right:15px">
+          <%= format_coins @wip.product, b.core_team_contracts.map(&:amount).sum * b.total_cents, :tiny, round: true %>
+        </td>
+      </tr>
+    <% end %>
+    <% b.product_contracts.select{|c| c.amount * b.total_cents >= 100 }.each do |c| %>
+      <tr>
+        <td class="text-muted" style="padding-left:15px">
+          @<%= c.user.username %> tip
+        </td>
+        <td class="text-right" style="padding-right:15px">
+          <%= format_coins @wip.product, c.amount * b.total_cents, :tiny, round: true %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

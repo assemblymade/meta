@@ -4,6 +4,7 @@
   color: $brand-muted;
   font-size: $font-size-large;
   box-shadow: 0 1px 0 0 rgba($black, 0.02);
+  border-bottom: 1px solid $gray-lighter
 }
 
 .breadcrumb + .page-heading-title {

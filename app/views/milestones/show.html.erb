@@ -1,4 +1,6 @@
 <% title "##{@wip.number}", @wip.title, @product.name %>
+<% activate_nav! :projects %>
+<% breadcrumb product_milestones_path(@milestone.product), 'Projects' %>
 
 <%= render 'header' %>
 
@@ -97,7 +99,7 @@
           <% end %>
         </ul>
 
-        <p class="small text-muted omega">Designs added to tasks in this project will be displayed here</p>
+        <p class="text-small text-muted omega" style="clear: both; margin-top: 8px;">Designs added to tasks in this project will be displayed here</p>
       </div>
     </div>
   </div>

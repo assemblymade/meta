@@ -1,16 +1,182 @@
-<%= render 'shared/navbar' %>
-<%= render 'products/navbar' %>
-
-<div class="page">
-<div class="container">
-  <%= yield %>
-</div>
-</div>
-
-<%= render 'shared/footer' %>
-
 <script>
   window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);
 </script>
+
+<%= render 'shared/navbar' %>
+
+<div class="page">
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-md-2 fixed-enabler">
+
+        <% if @product.poster? %>
+          <%= image_tag @product.poster_image.url, class: 'img-rounded', width: '100%', alt: @product.name %>
+          <br>
+          <br>
+        <% end %>
+
+        <ul class="nav nav-stacked nav-sidebar">
+          <li class="<%= nav_active_class(:about) %>">
+            <a href="<%= product_path(@product) %>">
+              <i class="icon-home dropdown-glyph"></i>
+              Home
+            </a>
+          </li>
+
+          <li class="<%= nav_active_class(:chat) %>">
+            <a href="<%= product_chat_path(@product) %>">
+              <i class="icon-bubbles dropdown-glyph"></i>
+              Chat
+            </a>
+          </li>
+
+          <% if @product.posts.any? %>
+            <li class="<%= nav_active_class(:blog) %>">
+              <a href="<%= product_posts_path(@product) %>">
+                <i class="icon-notebook dropdown-glyph"></i>
+                Blog
+              </a>
+            </li>
+          <% end %>
+        </ul>
+
+        <h6 style="padding-left:15px">Work</h6>
+
+        <ul class="nav nav-stacked nav-sidebar">
+
+          <li class="<%= nav_active_class(:projects) %>">
+            <a href="<%= product_milestones_path(@product) %>">
+              <i class="icon-rocket dropdown-glyph"></i>
+              Projects
+            </a>
+          </li>
+
+          <li class="<%= nav_active_class(:bounties) %>">
+            <a href="<%= product_wips_path(@product) %>">
+              <i class="icon-trophy dropdown-glyph"></i>
+              Bounties
+            </a>
+          </li>
+
+          <li class="<%= nav_active_class(:discussions) %>">
+            <a href="<%= product_discussions_path(@product) %>">
+              <i class="icon-book-open dropdown-glyph"></i>
+              Discussions
+            </a>
+          </li>
+
+          <li class="<%= nav_active_class(:assets) %>">
+            <a href="<%= product_assets_path(@product) %>">
+              <i class="icon-paper-clip dropdown-glyph"></i>
+              Assets
+            </a>
+          </li>
+        </ul>
+
+        <h6 style="padding-left:15px">People</h6>
+
+        <ul class="nav nav-stacked nav-sidebar">
+
+          <li class="<%= nav_active_class(:people) %>">
+            <a href="<%= product_people_path(@product) %>">
+              <i class="icon-users dropdown-glyph"></i>
+              Teams
+            </a>
+          </li>
+
+          <li class="<%= nav_active_class(:ownership) %>">
+            <a href="<%= product_partners_path(@product) %>">
+              <i class="icon-pie-chart dropdown-glyph"></i>
+              Ownership
+            </a>
+          </li>
+        </ul>
+
+        <% if @product.revenue? %>
+          <h6 style="padding-left:15px">Financials</h6>
+
+          <ul class="nav nav-stacked nav-sidebar">
+
+            <li class="<%= nav_active_class(:financials) %>">
+              <a href="<%= product_financials_path(@product) %>">
+                <i class="icon-wallet dropdown-glyph"></i>
+                Money
+              </a>
+            </li>
+
+            <!-- <li class="<%= nav_active_class(:contracts) %>">
+              <a href="<%= product_contracts_path(@product) %>">
+                <i class="icon-docs dropdown-glyph"></i>
+                Contracts
+              </a>
+            </li> -->
+          </ul>
+        <% end %>
+
+      </div>
+
+      <div class="col-md-10">
+
+        <ul class="list list-inline pull-right">
+          <li>
+            <div class="toggler">
+              <% if signed_in? && @product.watching?(current_user) %>
+                <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post" >
+
+                  <i class="icon-eye" style="margin-right: 2px;"></i>
+                  Unwatch
+                </a>
+              <% else %>
+                <a class="toggler-btn btn btn-primary" href="<%= subscribe_product_path(@product) %>" data-method="post">
+                  <i class="icon-eye" style="margin-right: 2px;"></i>
+                  Watch
+                </a>
+              <% end %>
+              <div class="badge toggler-badge">
+                <a href="<%= product_watchers_path(@product) %>">
+                  <%= @product.watchers.count %>
+                </a>
+              </div>
+            </div>
+          </li>
+          <li style="padding-right: 0;">
+            <div class="toggler">
+              <div
+                   data-react-class="JoinTeam"
+                   data-react-props="<%= {
+                     count: @product.team_memberships.active.count,
+                     join_path: product_people_path(@product),
+                     leave_path: (current_user && product_person_path(@product, current_user)),
+                     is_member: @product.member?(current_user),
+                     membership:  TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user)).as_json
+                   }.to_json %>">
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <h3 class="alpha" style="font-weight: 400; line-height: 1; color: #93A0AA; position: relative; top: 2px;">
+          <%= @product.name %>
+          <% if @breadcrumb.present? %>
+            <i class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></i>
+            <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>"><%= @breadcrumb[:text] %></a>
+          <% end %>
+        </h3>
+
+
+
+        <div class="sheet">
+          <div class="sheet-body">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' unless @disable_footer %>
 
 <% parent_layout 'application' %>

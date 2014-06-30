@@ -78,7 +78,7 @@ class WipMailer < BaseMailer
   end
 
   def from_address_for(user)
-    "#{user.username} <notifications@assembly.com>"
+    "#{user.username} <notifications@assemblymail.com>"
   end
 
 end

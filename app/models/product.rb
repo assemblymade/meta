@@ -183,6 +183,10 @@ class Product < ActiveRecord::Base
   def open_tasks?
     wips.where(closed_at: nil).exists?
   end
+  
+  def revenue?
+    slug == 'coderwall'
+  end
 
   def partner_ids
     TransactionLogEntry.with_cents.where(product: self).group(:user_id).count.keys

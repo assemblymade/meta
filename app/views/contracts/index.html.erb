@@ -1,4 +1,5 @@
 <% title 'Contracts', @product.name %>
+<% activate_nav! :contracts %>
 
 <div class="page-header">
   <% if current_user && @product.core_team?(current_user) %>
@@ -53,7 +54,7 @@
 
   <% end %>
 
-  <h2>Contracts</h2>
+  <h2 class="alpha omega">Contracts</h2>
 </div>
 <table class="table">
   <thead>
