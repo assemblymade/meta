@@ -10,7 +10,7 @@ var InviteFriendBounty = React.createClass({
   render: function() {
     return (
       <div>
-        <a className="text-small" href="#help-me" onClick={this.click}>Ask a friend to help with this Bounty</a>
+        <a className="btn btn-default btn-block btn-sm" href="#help-me" onClick={this.click}>Invite a friend to help</a>
         {this.state.invites.length > 0 ? <InviteList invites={this.state.invites} /> : null}
         {this.state.modal ? this.popover() : null}
       </div>
@@ -19,7 +19,7 @@ var InviteFriendBounty = React.createClass({
 
   popover: function() {
     return (
-      <Popover placement="left" positionLeft={-325} positionTop={0}>
+      <Popover placement="left" positionLeft={-325} positionTop={-120}>
         <InviteBountyForm url={this.props.url}
                           via_type={this.props.via_type}
                           via_id={this.props.via_id}
