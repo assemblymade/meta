@@ -32,7 +32,7 @@
             </a>
           </li>
 
-          <% if @product.posts.any? %>
+          <% if can?(:update, @product) || @product.posts.any? %>
             <li class="<%= nav_active_class(:blog) %>">
               <a href="<%= product_posts_path(@product) %>">
                 <i class="icon-notebook dropdown-glyph"></i>
