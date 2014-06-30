@@ -9,7 +9,7 @@ class Wip::Tag < ActiveRecord::Base
   has_many :watchings, :as => :watchable
   has_many :watchers, :through => :watchings, :source => :user
 
-  validates :name, length: { minimum: 2 }, allow_blank: true 
+  validates :name, length: { minimum: 2 }, allow_blank: true
 
   def follow!(user)
     Watching.watch!(user, self)
@@ -25,13 +25,14 @@ class Wip::Tag < ActiveRecord::Base
 
   def self.suggested_tags
     %w(
-     small
-     medium
-     large
-     rails
-     javascript
-     design
-     copy
+      simple
+      challenging
+      frontend
+      copy
+      design
+      backend
+      bug
+      api
     )
   end
 
