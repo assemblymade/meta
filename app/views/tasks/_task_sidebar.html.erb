@@ -104,27 +104,27 @@
       <i class="icon-question pull-right" data-placement="top" data-toggle="tooltip" title="View&nbsp;all&nbsp;Tip&nbsp;Contracts"></i>
       </a>
     <h6 class="panel-title">
-      Automatic Tips
+      Bounty Breakdown
     </h6>
   </div>
   <table class="table table-condensed small">
     <% if b.core_team_contracts.any? %>
       <tr>
         <td class="text-muted" style="padding-left:15px">
-          Core Team Contracts
+          Core Team tip
         </td>
         <td class="text-right" style="padding-right:15px">
-          <%= format_coins @wip.product, b.core_team_contracts.map(&:amount).sum * b.total_cents, :tiny %>
+          <%= format_coins @wip.product, b.core_team_contracts.map(&:amount).sum * b.total_cents, :tiny, round: true %>
         </td>
       </tr>
     <% end %>
-    <% if b.product_contracts.any? %>
+    <% b.product_contracts.each do |c| %>
       <tr>
         <td class="text-muted" style="padding-left:15px">
-          Product Contracts
+          @<%= c.user.username %> tip
         </td>
         <td class="text-right" style="padding-right:15px">
-          <%= format_coins @wip.product, b.product_contracts.map(&:amount).sum * b.total_cents, :tiny %>
+          <%= format_coins @wip.product, c.amount * b.total_cents, :tiny, round: true %>
         </td>
       </tr>
     <% end %>

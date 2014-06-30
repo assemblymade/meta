@@ -8,7 +8,7 @@ class UserMailer < Devise::Mailer
 
     @user = User.find(user_id)
 
-    mail from: "matt@assemblymade.com",
+    mail from: "matt@assembly.com",
            to:  @user.email,
       subject: "Your Assembly welcome package"
   end
@@ -19,7 +19,7 @@ class UserMailer < Devise::Mailer
     @user = User.find(user_id)
     @user.touch(:personal_email_sent_on)
 
-    mail from: "austin@assemblymade.com",
+    mail from: "austin@assembly.com",
            to:  @user.email,
       subject: "Assembly"
   end
@@ -32,9 +32,9 @@ class UserMailer < Devise::Mailer
     @worker   = Wip::Worker.where(:user_id => @user.id, :wip_id => @wip.id).first
     @watchers = (@wip.watchers.random.limit(3).to_a - [@user])[0...2]
 
-    mail from: "matt@assemblymade.com",
+    mail from: "matt@assembly.com",
            to:  @user.email,
-          bcc: "matt@assemblymade.com",
+          bcc: "matt@assembly.com",
       subject: "RE: #{@wip.title}"
   end
 
@@ -45,7 +45,7 @@ class UserMailer < Devise::Mailer
     @user = @membership.user
     @product = @membership.product
 
-    mail from: 'austin@assemblymade.com',
+    mail from: 'austin@assembly.com',
            to: @user.email,
       subject: "Need help getting started on #{@product.name}?"
   end
@@ -57,7 +57,7 @@ class UserMailer < Devise::Mailer
     @user = @membership.user
     @product = @membership.product
 
-    mail from: 'austin@assemblymade.com',
+    mail from: 'austin@assembly.com',
            to: @user.email,
       subject: "Introduce yourself to the #{@product.name} team"
   end

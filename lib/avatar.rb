@@ -10,7 +10,7 @@ class Avatar < Struct.new(:user)
     digest = Digest::MD5.hexdigest(user.email.downcase)
     query = {
       s: size,
-      d: 'https://assemblymade.com/assets/avatars/default.png'
+      d: 'https://assembly.com/assets/avatars/default.png'
     }.to_param
 
     URI::HTTPS.build(

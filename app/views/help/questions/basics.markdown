@@ -14,7 +14,7 @@ Working on Assembly projects is a great way to learn, challenge yourself and mak
 title: What is the best way to get the feel for Assembly?
 ---
 
-Hop into a discussion and introduce yourself! There are lots of products being actively built today([find some here!](http://assemblymade.com/discover)), and everyone working on them is friendly. Talk about your interests and availability, and see if there are any bounties you’d like to work on. Helping build products is a rewarding, fun way to quickly gain an understanding of how Assembly works.
+Hop into a discussion and introduce yourself! There are lots of products being actively built today([find some here!](https://assembly.com/discover)), and everyone working on them is friendly. Talk about your interests and availability, and see if there are any bounties you’d like to work on. Helping build products is a rewarding, fun way to quickly gain an understanding of how Assembly works.
 
 ---
 title: What parts of building can I help out with?
@@ -68,7 +68,7 @@ title: What does transparency mean to Assembly?
 This is really important to us. When a product is built on Assembly, we believe an open, transparent process is key. That means anyone can see progress, discussions, ownership and even revenue.
 
 
-Obviously, we can’t make the claim that building products in public is the best approach if we aren’t doing that ourselves. So, go check out [assemblymade.com/meta](https://assemblymade.com/meta). You can scan through our history of development and discussion, even seeing real-time updates as we ship new features.
+Obviously, we can’t make the claim that building products in public is the best approach if we aren’t doing that ourselves. So, go check out [assembly.com/meta](https://assembly.com/meta). You can scan through our history of development and discussion, even seeing real-time updates as we ship new features.
 
 ---
 title: How is Assembly different from Kickstarter or an Incubator?

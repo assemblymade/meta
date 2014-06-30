@@ -3,7 +3,7 @@ module Github
     def perform(repo, sha, github_login)
       post "/repos/#{repo}/statuses/#{sha}",
         state: 'pending',
-        target_url: 'https://assemblymade.com/settings',
+        target_url: 'https://assembly.com/settings',
         description: "@#{github_login} needs to link their GitHub account on Assembly"
     end
   end

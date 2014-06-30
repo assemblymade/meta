@@ -9,7 +9,7 @@ describe Work do
       metadata: {
         author: {
           name: "Dave Newman",
-          email: "dave@assemblymade.com",
+          email: "dave@assembly.com",
           username: "whatupdave"
         }
       }
@@ -20,7 +20,7 @@ describe Work do
   its(:metadata) { should == {
       'author' => {
         'name'     => "Dave Newman",
-        'email'    => "dave@assemblymade.com",
+        'email'    => "dave@assembly.com",
         'username' => "whatupdave"
       }
     }
