@@ -175,6 +175,6 @@
   </div>
 </div>
 
-<%= render 'shared/footer' %>
+<%= render 'shared/footer' unless @disable_footer %>
 
 <% parent_layout 'application' %>
