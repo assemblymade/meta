@@ -16,23 +16,21 @@
 </div>
 
 <div class="js-scroll-container">
-  <div class="container">
-    <div class="row" style="position:relative">
-      <div class="col-xs-8">
-        <div class="chat js-chat">
-          <center>
-            <a class="btn btn-default btn-block js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>">Load more</a>
-            <br>
-          </center>
+  <div class="row">
+    <div class="col-md-8 col-xs-8">
+      <div class="chat js-chat">
+        <center>
+          <a class="btn btn-default btn-block js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>">Load more</a>
+          <br>
+        </center>
 
-          <div class="timeline chat-timeline js-activity-stream"></div>
-        </div>
+        <div class="timeline chat-timeline js-activity-stream"></div>
       </div>
+    </div>
 
-      <div class="col-xs-3" style="margin-top:136px;width:260px;position:fixed;margin-left:751px">
-        <%#= render 'discussions/intro_panel' %>
-        <div class="js-members"></div>
-      </div>
+    <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+      <%#= render 'discussions/intro_panel' %>
+      <div class="js-members"></div>
     </div>
   </div>
 </div>

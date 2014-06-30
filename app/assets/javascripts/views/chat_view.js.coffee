@@ -24,7 +24,6 @@ class window.ChatView extends Backbone.View
 
     $(window).resize(@onWindowResize.bind(this))
     @onWindowResize()
-    $('.js-members').hide()
 
     app.on 'comment:scheduled', @optimisticallyCreateActivity.bind(@)
 

@@ -1,5 +1,5 @@
 .chat-wrapper {
-  
+
 }
 
 .chat {
@@ -11,8 +11,12 @@
 }
 
 .chat-actions {
-  padding-top: $padding-base-vertical;
-  padding-bottom: $padding-base-vertical;
+  padding-top: $padding-base-vertical + 2px;
+  padding-bottom: $padding-base-vertical + 2px;
+  margin-left: -($grid-gutter-width * 1.5);
+  margin-right: -($grid-gutter-width * 1.5);
+  padding-left: $grid-gutter-width * 1.5;
+  padding-right: $grid-gutter-width * 1.5;
 
   border-top: 1px solid $brand-divider;
   box-shadow: 0 -1px 0 0 rgba(black, 0.01);
