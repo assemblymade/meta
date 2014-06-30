@@ -144,6 +144,15 @@
           }.to_json %>">
     </div>
 
+    <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
+    <div data-react-class="TagList"
+          data-react-props="<%= {
+            tags: Wip::Tag.suggested_tags.as_json,
+            url: product_wip_path(@wip.product, @wip.number),
+            destination: false
+          }.to_json %>">
+    </div>
+    <br>
     <div data-react-class="TextComplete"
          data-react-props="<%= {
            width: "125px",
@@ -154,15 +163,7 @@
            url: product_wip_path(@wip.product, @wip.number)
          }.to_json %>">
     </div>
-
-    <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
-    <div data-react-class="TagList"
-          data-react-props="<%= {
-            tags: Wip::Tag.suggested_tags.as_json,
-            url: product_wip_path(@wip.product, @wip.number),
-            destination: false
-          }.to_json %>">
-    </div>
+    
   </div>
 </div>
 

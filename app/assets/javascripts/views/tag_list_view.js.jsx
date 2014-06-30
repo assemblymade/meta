@@ -48,7 +48,7 @@ var TagList = React.createClass({
 
       return (
         <li style={{'margin': '0px'}}>
-          <a style={style} onClick={self.handleClick(tag)}>{'#' + tag}</a>
+          <a style={style} onClick={self.handleClick(tag)}>{tag}</a>
         </li>
       );
     });
