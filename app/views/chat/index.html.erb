@@ -70,7 +70,7 @@
       activityStream.listenForRemote(pusher, pusher.connection);
 
       var presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
-      var permanentWatchers = <%= @product.watchers.each_with_object({}) {|w, memo| memo[w.id] = UserSerializer.new(w) }.to_json.html_safe %>
+      var permanentWatchers = <%= @recently_active.each_with_object({}) {|w, memo| memo[w.id] = UserSerializer.new(w) }.to_json.html_safe %>
 
       $('.js-members').each(function() {
         var component = React.renderComponent(
