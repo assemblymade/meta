@@ -8,7 +8,7 @@ class ProductMailer < ActionMailer::Base
     @product = Product.find(product_id)
     entire_core_team = (@product.core_team + [@product.user]).uniq.compact.collect(&:email)
 
-    mail from: "#{@product.name} <notifications@assembly.com>",
+    mail from: "#{@product.name} <notifications@assemblymail.com>",
            to: entire_core_team,
       subject: "#{@product.name} just got its first signup!"
   end
@@ -18,7 +18,7 @@ class ProductMailer < ActionMailer::Base
     @wips = @product.wips.where(state: %w(open allocated)).stale_by(20.hours.ago).to_a
     @user = User.find(user_id)
 
-    mail from: "#{@product.name} <notifications@assembly.com>",
+    mail from: "#{@product.name} <notifications@assemblymail.com>",
            to: @user.email,
       subject: "#{pluralize @wips.size, 'stale WIP'} on #{@product.name}"
   end
@@ -75,7 +75,7 @@ class ProductMailer < ActionMailer::Base
 
     @from = @status_update.user
 
-    mail from: "#{@from.name} on #{@product.name} <notifications@assembly.com>",
+    mail from: "#{@from.name} on #{@product.name} <notifications@assemblymail.com>",
            to: @user.email,
       subject: @status_update.title
   end
@@ -99,7 +99,7 @@ class ProductMailer < ActionMailer::Base
 
     subject = I18n.t("missions.#{@completed_mission.mission_id}.reward_title", product: @product.name).strip
 
-    mail from: "#{@product.name} <notifications@assembly.com>",
+    mail from: "#{@product.name} <notifications@assemblymail.com>",
            to: @user.email,
       subject: I18n.t("missions.#{@completed_mission.mission_id}.reward_title", product: @product.name).strip
 
