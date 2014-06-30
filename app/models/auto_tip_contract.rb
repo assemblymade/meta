@@ -5,7 +5,7 @@ class AutoTipContract < ActiveRecord::Base
   belongs_to :user
 
   scope :active_at, -> (product, at) { where(product_id: product.id).active }
-  scope :active, ->(at=Time.now){ where('created_at <= ? and (deleted_at is null or deleted_at > ?)', at, at) }
+  scope :active, -> (at=Time.now) { where('created_at <= ? and (deleted_at is null or deleted_at > ?)', at, at) }
 
   before_validation :truncate_amount
 

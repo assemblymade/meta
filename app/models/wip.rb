@@ -165,7 +165,6 @@ class Wip < ActiveRecord::Base
   # tagging
 
   def update_tag_names!(author, new_tag_names)
-    puts self.tag_names
     return if self.tag_names.sort == new_tag_names.uniq.sort
 
     add_event ::Event::TagChange.new(user: author, from: self.tag_names.sort.join(','), to: new_tag_names.sort.join(',')) do
