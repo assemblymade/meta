@@ -14,6 +14,8 @@ class window.ChatView extends Backbone.View
     @scrollContainer = options.scrollContainer
     @scrollPadding = options.scrollPadding
 
+    @stuckToBottom = true
+
     @scrollContainer.css(
       'height':'100px'
       'overflow-x':'hidden'
@@ -28,12 +30,14 @@ class window.ChatView extends Backbone.View
 
   render: =>
     @$('.js-chat-load-more').toggle(@collection.length >= 25)
-    @scrollToLatestActivity()
+    @scrollToLatestActivity() if @stuckToBottom
 
   scrollToLatestActivity: ->
     $(@scrollContainer).scrollTop(999999)
 
   optimisticallyCreateActivity: (comment) ->
+    @stuckToBottom = true
+
     activity = new Activity(
       type: 'activities/chat'
       created: (new Date()).toISOString()
@@ -54,6 +58,7 @@ class window.ChatView extends Backbone.View
 
   onLoadMore: (e) =>
     e.preventDefault()
+    @stuckToBottom = false
     originalText = $('.js-chat-load-more').text()
     @$('.js-chat-load-more').attr('disabled', true).text('Loading…')
     $.ajax(
