@@ -11,7 +11,7 @@ class ChatController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @watchers = @product.watchers.order(last_request_at: :desc)
+        @recently_active = @product.watchers.where('last_request_at > ?', 9.days.ago).order(last_request_at: :desc)
         if signed_in?
           MarkAllChatAsRead.perform_async(current_user.id, @product.id)
         end
