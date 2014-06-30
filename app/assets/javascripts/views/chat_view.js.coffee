@@ -96,8 +96,36 @@ class window.ChatView extends Backbone.View
     id = $(e.currentTarget).attr('href')
     body = $(id + ' .activity-content').text().trim()
     token = $('meta[name=csrf-token]').attr('content')
-    renderedModal = JST['activities/wip'].render({ title: body, action: @collection.product.attributes.url, token: token })
+    renderedModal = JST['activities/wip'].render({
+      title: body,
+      action: @collection.product.attributes.url,
+      token: token
+    })
     $('#create-task').html(renderedModal).modal()
+    selectedTags = React.renderComponent(
+      TagList({
+         tags: [],
+         destination: true
+       }),
+      document.getElementById('selected-tags')
+    );
+    textComplete = React.renderComponent(
+      TextComplete({
+        width: '125px',
+        size: 'small',
+        label: 'Add tag',
+        prepend: '#',
+        prompt: 'Add',
+      }),
+      document.getElementById('new-tags')
+    );
+    suggestedTags = React.renderComponent(
+      TagList({
+         tags: window.app.suggestedTags(),
+         destination: false
+       }),
+      document.getElementById('suggested-tags')
+    );
 
 fixScroll = (cb) ->
   documentHeight = $(document).height()

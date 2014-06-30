@@ -6,7 +6,10 @@
     </div>
     <form accept-charset="UTF-8" action="{{action}}/wips" class="new_task" id="new_task" name="task[title]" type="text" method="post">
       <div class="modal-body">
-        <input name="authenticity_token" type="hidden" value="{{token}}">
+        <div style="display:none;">
+          <input name="authenticity_token" type="hidden" value="{{token}}">
+          <select type="hidden" id="tag-list-hack" name="task[tag_list][]" multiple="true"></select>
+        </div>
 
         <div class="form-group">
           <label class="form-label" for="task_title">Title</label>
@@ -26,29 +29,13 @@
             </div>
           </div>
         </div>
-        <fieldset>
-          <div class="form-group">
-            <label class="control-label" for="task_deliverable">Deliverable</label>
-            <div class="btn-group btn-group-justified" data-toggle="buttons">
-              <label class="btn btn-default " data-show-tab="design" for="task_deliverable">
-                <input id="task_deliverable_design" name="task_deliverable" type="radio" value="design">
-                Design
-              </label>
-              <label class="btn btn-default" data-show-tab="code" for="task_deliverable">
-                <input id="task_deliverable_code" name="task_deliverable" type="radio" value="code">
-                Code
-              </label>
-              <label class="btn btn-default" data-show-tab="copy" for="task_deliverable">
-                <input id="task_deliverable_copy" name="task_deliverable" type="radio" value="copy">
-                Copy
-              </label>
-              <label class="btn btn-default active" data-show-tab="other" for="task_deliverable">
-                <input checked="checked" id="task_deliverable_other" name="task_deliverable" type="radio" value="other">
-                Other
-              </label>
-            </div>
-          </div>
-        </fieldset>
+        <h6 style="margin-bottom: 0;">Tags</h6>
+        <div style="margin-bottom: 10px" id="selected-tags"></div>
+
+        <div id="new-tags"></div>
+
+        <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
+        <div id="suggested-tags"></div>
       </div>
       <div class="modal-footer form-actions">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

@@ -177,6 +177,10 @@ class Wip < ActiveRecord::Base
   end
 
   def tag_names=(names)
+    if names[0].class == Array
+      names = names[0]
+    end
+
     self.tags = names.map do |n|
       Wip::Tag.find_or_create_by!(name: n.strip)
     end

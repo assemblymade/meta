@@ -54,6 +54,12 @@ class window.Application
   currentAnalyticsProduct: ->
     @_currentAnalyticsProduct
 
+  setSuggestedTags: (tags) ->
+    @_suggestedTags = tags
+
+  suggestedTags: ->
+    @_suggestedTags
+
   isSignedIn: ->
     @currentUser()?
 

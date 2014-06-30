@@ -13,7 +13,7 @@ var TextComplete = React.createClass({
 
   render: function() {
     return (
-      <form role="form" className="form-inline">
+      <div role="form" className="form-inline">
         <div className="form-group">
           <label className="sr-only">{this.props.label}</label>
           <input type="text"
@@ -27,7 +27,7 @@ var TextComplete = React.createClass({
                 onClick={this.handleClick}>
           {this.props.prompt}
         </button>
-      </form>
+      </div>
     );
   },
 

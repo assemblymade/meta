@@ -12,6 +12,10 @@
         <%= f.text_field :title, 'value' => params[:title], 'class' => 'form-control', 'data-validate-length' => '2', 'autofocus' => 'autofocus' %>
       </div>
 
+      <div style="display:none;">
+        <select type="hidden" id="tag-list-hack" name="task[tag_list][]" multiple="true"></select>
+      </div>
+
       <div class="form-group">
         <span class="help-block pull-right">(optional)</span>
         <%= f.label :description, 'Details', class: 'control-label' %>
@@ -25,20 +29,34 @@
         </div>
       </div>
 
-      <fieldset>
-        <div class="form-group">
-          <%= f.label :deliverable, class: 'control-label' %>
+      <h6 style="margin-bottom: 0;">Tags</h6>
+      <div style="margin-bottom: 10px"
+           data-react-class="TagList"
+           data-react-props="<%= {
+              tags: (@wip.tags ? @wip.tags.map do |tag|
+                tag.name
+              end.as_json : []),
+              destination: true
+            }.to_json %>">
+      </div>
 
-          <div class="btn-group btn-group-justified" data-toggle="buttons">
-            <% @wip.class.deliverable_types.each do |deliverable_type| %>
-              <%= f.label :deliverable, class: "btn btn-default #{'active' if @wip.deliverable == deliverable_type}", data: {show_tab: deliverable_type} do %>
-                <%= f.radio_button :deliverable, deliverable_type %>
-                <%= deliverable_type.camelcase %>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-      </fieldset>
+      <div data-react-class="TextComplete"
+           data-react-props="<%= {
+             width: "125px",
+             size: "small",
+             label: "Add tag",
+             prepend: "#",
+             prompt: "Add",
+           }.to_json %>">
+      </div>
+
+      <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
+      <div data-react-class="TagList"
+            data-react-props="<%= {
+              tags: Wip::Tag.suggested_tags.as_json,
+              destination: false
+            }.to_json %>">
+      </div>
 
       <div class="form-actions">
         <%= f.button 'Create bounty', 'class' => 'btn btn-primary', 'data-disable-with' => 'Saving...' %>

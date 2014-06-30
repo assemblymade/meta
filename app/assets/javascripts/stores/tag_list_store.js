@@ -42,10 +42,14 @@ var TagListStore = (function() {
         _tags.splice(index, 1);
       }
 
-      this.persist(url);
+      if (url) {
+        this.persist(url);
+      }
     },
 
     persist: function(url) {
+      if (!url) return;
+        
       var tags = this.getTags();
 
       if (_.isEmpty(tags)) {

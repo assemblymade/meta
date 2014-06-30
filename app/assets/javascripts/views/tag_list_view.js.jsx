@@ -64,6 +64,18 @@ var TagList = React.createClass({
       this.setState({
         tags: TagListStore.getTags()
       });
+
+      var tagListHack = $('#tag-list-hack');
+
+      if (tagListHack.length) {
+        var selected = tagListHack.val();
+
+        $(tagListHack).append(_.map(TagListStore.getTags(), function(tag) {
+          if ((selected && selected.indexOf(tag) === -1) || !selected) {
+            return '<option value=' + tag + ' selected="true">' + tag + '</option>';
+          }
+        }));
+      }
     } else {
       this.setState({
         tags: this.props.tags
