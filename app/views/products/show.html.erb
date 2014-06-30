@@ -53,12 +53,10 @@
         </div>
         <div class="panel-body">
           <% if @product.flagged? %>
-            <span class="btn btn-danger btn-sm btn-block btn-disabled" href="#>">Product Flagged</span>
+            <span class="btn btn-danger btn-sm btn-block btn-disabled" href="#" style="margin-bottom: 8px;">Product Flagged</span>
           <% else %>
-            <a class="btn btn-danger btn-sm btn-block" href="<%= product_flag_path(@product)%>">Flag Product</a>
+            <a class="btn btn-danger btn-sm btn-block" style="margin-bottom: 8px;" href="<%= product_flag_path(@product)%>">Flag Product</a>
           <% end %>
-
-          <br>
 
           <%= form_for [:admin, @product.showcases.new], url: admin_staff_picks_path do |f| %>
             <%= f.hidden_field :product_id %>
