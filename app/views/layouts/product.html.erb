@@ -94,24 +94,26 @@
           </li>
         </ul>
 
-        <h6 style="padding-left:15px">Financials</h6>
+        <% if @product.revenue? %>
+          <h6 style="padding-left:15px">Financials</h6>
 
-        <ul class="nav nav-stacked nav-sidebar">
+          <ul class="nav nav-stacked nav-sidebar">
 
-          <li class="<%= nav_active_class(:financials) %>">
-            <a href="<%= product_financials_path(@product) %>">
-              <i class="icon-wallet dropdown-glyph"></i>
-              Money
-            </a>
-          </li>
+            <li class="<%= nav_active_class(:financials) %>">
+              <a href="<%= product_financials_path(@product) %>">
+                <i class="icon-wallet dropdown-glyph"></i>
+                Money
+              </a>
+            </li>
 
-          <li class="<%= nav_active_class(:contracts) %>">
-            <a href="<%= product_contracts_path(@product) %>">
-              <i class="icon-docs dropdown-glyph"></i>
-              Contracts
-            </a>
-          </li>
-        </ul>
+            <!-- <li class="<%= nav_active_class(:contracts) %>">
+              <a href="<%= product_contracts_path(@product) %>">
+                <i class="icon-docs dropdown-glyph"></i>
+                Contracts
+              </a>
+            </li> -->
+          </ul>
+        <% end %>
 
       </div>
 
