@@ -26,7 +26,7 @@ class CampfireNotifier
 
     res = conn.post do |req|
       req.url url
-      req.headers['User-Agent'] = "Assembly (https://assemblymade.com)"
+      req.headers['User-Agent'] = "Assembly (https://assembly.com)"
       req.body = body
     end
   end

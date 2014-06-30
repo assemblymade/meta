@@ -2,7 +2,7 @@
 title: How do I submit an app idea?
 ---
 
-If you have a great idea for an app to build on Assembly, head over [assemblymade.com/new](assemblymade.com/new).
+If you have a great idea for an app to build on Assembly, head over [assembly.com/new](assembly.com/new).
 
 ---
 title: Who will build my app if I submit an idea?
@@ -39,7 +39,7 @@ There’s no one answer to this question, but here are some things that can help
 title: Can I port a project I’ve been building onto Assembly?
 ---
 
-Yes. We’re still ironing out the best way to handle these requests, but we’d love to hear about your project and help you port it onto Assembly. Come [introduce yourself to us in chat](https://assemblymade.com/meta/discuss).
+Yes. We’re still ironing out the best way to handle these requests, but we’d love to hear about your project and help you port it onto Assembly. Come [introduce yourself to us in chat](https://assembly.com/meta/discuss).
 
 
 

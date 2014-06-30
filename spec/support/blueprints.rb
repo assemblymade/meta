@@ -94,7 +94,7 @@ Work.blueprint do
   metadata {{
     author: {
       name: "Dave Newman",
-      email: "dave@assemblymade.com",
+      email: "dave@assembly.com",
       username: "whatupdave"
     },
     message: "I just made some rad code",

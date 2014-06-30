@@ -18,19 +18,19 @@ end
 
 dave = make_user name:     'Dave Newman',
                  username: 'whatupdave',
-                 email:    'dave@assemblymade.com',
+                 email:    'dave@assembly.com',
                  location: 'San Francisco, CA',
                  is_staff: true
 
 chris = make_user name:     'Chris Lloyd',
                   username: 'chrislloyd',
-                  email:    'chris@assemblymade.com',
+                  email:    'chris@assembly.com',
                   location: 'San Francisco, CA',
                   is_staff: true
 
 matt = make_user name:     'Matt Deiters',
                  username: 'mdeiters',
-                 email:    'm@assemblymade.com',
+                 email:    'm@assembly.com',
                  location: 'San Francisco, CA',
                  is_staff: true
 

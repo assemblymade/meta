@@ -2,7 +2,7 @@
 title: Who is in control?
 ---
 
-You are. Assembly apps are built by everyone, but like successful open source products every Assembly app also has a [Core Team](https://www.google.com/url?q=https%3A%2F%2Fassemblymade.com%2Fcore-team&sa=D&sntz=1&usg=AFQjCNH5QB9F3K1XC3Zd9q1vmNFoedsotA) of active, key contributors. The Core Team influences the vision of the app, standards for quality, and evaluates which contributions are accepted.
+You are. Assembly apps are built by everyone, but like successful open source products every Assembly app also has a [Core Team](https://www.google.com/url?q=https%3A%2F%2Fassembly.com%2Fcore-team&sa=D&sntz=1&usg=AFQjCNH5QB9F3K1XC3Zd9q1vmNFoedsotA) of active, key contributors. The Core Team influences the vision of the app, standards for quality, and evaluates which contributions are accepted.
 
 
 A new app's Core Team is typically made up of the inventor and Assembly staff members. As development progresses, more contributors would comprise the core team, and Assembly staff members will typically only provide support services as needed.

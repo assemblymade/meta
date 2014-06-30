@@ -54,8 +54,8 @@ class WipMailer < BaseMailer
     reply_address = SecureReplyTo.new('wip', @wip.id, @user.username).to_s
 
     thread_id = thread_parts.join('/')
-    thread_address = "<#{thread_id}@assemblymade.com>"
-    message_id = "<#{message_parts.join('/')}@assemblymade.com>"
+    thread_address = "<#{thread_id}@assembly.com>"
+    message_id = "<#{message_parts.join('/')}@assembly.com>"
 
     {
       "Reply-To" => "#{thread_parts.join('/')} <#{reply_address}>",
@@ -64,7 +64,7 @@ class WipMailer < BaseMailer
       "In-Reply-To" => thread_address,
       "References"  => thread_address,
 
-      "List-ID" => "#{thread_id} <#{thread_parts.join('.')}.assemblymade.com>",
+      "List-ID" => "#{thread_id} <#{thread_parts.join('.')}.assembly.com>",
       "List-Archive" => archive_url,
       "List-Post"  => "<mailto:#{reply_address}>",
       "Precedence" => "list",
@@ -78,7 +78,7 @@ class WipMailer < BaseMailer
   end
 
   def from_address_for(user)
-    "#{user.username} <notifications@assemblymade.com>"
+    "#{user.username} <notifications@assembly.com>"
   end
 
 end

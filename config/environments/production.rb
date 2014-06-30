@@ -60,7 +60,7 @@ ASM::Application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = {
-    host: 'assemblymade.com',
+    host: 'assembly.com',
     protocol: 'https'
   }
   Rails.application.routes.default_url_options[:host] = config.action_mailer.default_url_options[:host]
@@ -71,7 +71,7 @@ ASM::Application.configure do
     api_key: ENV['MAILGUN_API_KEY'],
     domain:  ENV['MAILGUN_DOMAIN']
   }
-  ActionMailer::Base.default from: 'Assembly <team@assemblymade.com>'
+  ActionMailer::Base.default from: 'Assembly <team@assembly.com>'
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found).

@@ -8,7 +8,7 @@ App Coins represent ownership of an Assembly product. Each product has its own s
 title: Core Team
 ---
 
-Every Assembly app also has a Core Team of active, key contributors. The Core Team influences the vision of the app, standards for quality, and evaluates which contributions are accepted. [Learn more about the roles and responsibilities of a Core Team](https://assemblymade.com/core-team).
+Every Assembly app also has a Core Team of active, key contributors. The Core Team influences the vision of the app, standards for quality, and evaluates which contributions are accepted. [Learn more about the roles and responsibilities of a Core Team](https://assembly.com/core-team).
 
 ---
 title: Contributor

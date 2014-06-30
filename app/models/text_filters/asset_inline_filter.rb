@@ -27,7 +27,7 @@ module TextFilters
     end
 
     def inline_wip(el)
-      if el['href'] =~ /https?:\/\/.*assemblymade.com(:\d+)?\/[\w-]+\/wips\/(\d+)/i
+      if el['href'] =~ /https?:\/\/.*assembly.com(:\d+)?\/[\w-]+\/wips\/(\d+)/i
         el.content = "##{$2}"
       end
     end
