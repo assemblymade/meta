@@ -187,7 +187,7 @@
         </td>
       </tr>
     <% end %>
-    <% b.product_contracts.each do |c| %>
+    <% b.product_contracts.select{|c| c.amount * b.total_cents >= 100 }.each do |c| %>
       <tr>
         <td class="text-muted" style="padding-left:15px">
           @<%= c.user.username %> tip
