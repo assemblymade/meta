@@ -64,8 +64,9 @@
       <th>Ended</th>
     </tr>
   </thead>
+  <% current_user_on_core_team = @product.core_team?(current_user) %>
   <% @product.auto_tip_contracts.order(:deleted_at => :desc, created_at: :asc).each do |contract| %>
-    <% canUpdate = contract.product.core_team?(current_user) || current_user.id == contract.user_id %>
+    <% can_update = current_user_on_core_team || current_user.id == contract.user_id %>
     <tr class="<%= 'text-muted' if contract.deleted_at? %>">
       <td>
         <time class="timestamp" datetime="<%= contract.created_at.iso8601 %>"></time>
@@ -74,7 +75,7 @@
         <a href="<%= user_path(contract.user) %>">@<%= contract.user.username %></a>
       </td>
       <td style="width: 15%; min-width: 50px;">
-        <% if contract.active? && canUpdate %>
+        <% if contract.active? && can_update %>
           <div data-react-class="NumberInput"
                data-react-props="<%= {
                  alwaysEditable: false,
@@ -91,7 +92,7 @@
         <% end %>
       </td>
       <td>
-        <% if contract.active? && canUpdate %>
+        <% if contract.active? && can_update %>
           <a id="edit-contract-<%= contract.user.username %>"
               style="cursor: pointer"
               data-path="<%= product_contract_path(@product, contract) %>"
