@@ -11,11 +11,11 @@
 
 .chat {
   position: relative;
+  padding-right: $grid-gutter-width * 1.5;
 }
 
 .chat-timeline {
   margin-bottom: 0;
-  padding-right: $grid-gutter-width * 1.5;
 }
 
 .chat-actions {
