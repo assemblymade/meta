@@ -38,13 +38,6 @@
       <%= render 'products/tags_panel' %>
     <% end %>
 
-    <% if can?(:update, @product) %>
-      <div class="btn-group-vertical btn-block">
-        <a class="btn btn-default" href="<%= edit_product_path(@product) %>">Edit Product</a>
-        <a class="btn btn-default" href="<%=  new_product_post_path(@product) %>">Write blog post</a>
-      </div>
-    <% end %>
-
     <% if staff? %>
       <br><br>
       <div class="panel panel-danger">

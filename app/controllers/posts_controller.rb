@@ -3,8 +3,12 @@ class PostsController < ProductController
 
   def index
     find_product!
-    @post = @product.posts.order(created_at: :desc).first!
-    redirect_to product_post_path(@post.product, @post)
+    @post = @product.posts.order(created_at: :desc).first
+    if @post
+      return redirect_to product_post_path(@post.product, @post)
+    else
+      return redirect_to new_product_post_path(@product)
+    end
   end
 
   def new
