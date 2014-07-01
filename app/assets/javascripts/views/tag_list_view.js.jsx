@@ -29,9 +29,9 @@ var TagList = React.createClass({
 
   tags: function(tags) {
     var self = this;
+    var addedTags = TagListStore.getTags();
 
-    return _.map(tags, function(tag) {
-      var addedTags = TagListStore.getTags();
+    var mappedTags = _.map(tags, function(tag) {
       var style = {
         'font-size': '14px',
         cursor: 'pointer'
@@ -52,6 +52,14 @@ var TagList = React.createClass({
         </li>
       );
     });
+
+    if (_.isEmpty(mappedTags) && this.props.destination) {
+      return (
+        <li style={{color: '#d3d3d3', 'font-size': '13px'}}>No tags yet &mdash; why not add some?</li>
+      );
+    }
+
+    return mappedTags;
   },
 
   componentDidMount: function() {
