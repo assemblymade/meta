@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
 
-  layout 'product'
+  layout :search_layout
 
   def index
     set_product if params[:product_id]
@@ -35,5 +35,9 @@ class SearchController < ApplicationController
         @totals.products = @search.total
       end
     end
+  end
+
+  def search_layout
+    params[:product_id] ? 'product' : 'global'
   end
 end
