@@ -1,7 +1,7 @@
 <% title 'Chat', @product.name %>
 <% activate_nav! :chat %>
 <% provide :body_class, 'chat-wrapper' %>
-<% @sheet_style = 'width:700px' %>
+<% @sheet_style = 'width: 700px;' %>
 <% @disable_footer = true %>
 
 <div class="navbar-fixed-top">
@@ -16,20 +16,16 @@
      aria-hidden="true">
 </div>
 
-<div class="js-members" style="width:230px;position:fixed;margin-left:670px"></div>
+<div class="js-members" style="width: 230px; position: fixed; margin-left: 670px;"></div>
 
 <div class="js-scroll-container">
-  <div class="row">
-    <div class="col-md-12 col-xs-12">
-      <div class="chat js-chat">
-        <center>
-          <a class="btn btn-default btn-block btn-sm js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>" style="margin-top: 36px;">Load more</a>
-          <br>
-        </center>
+  <div class="chat js-chat">
+    <center>
+      <a class="btn btn-default btn-block btn-sm js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>" style="margin-top: 36px;">Load more</a>
+      <br>
+    </center>
 
-        <div class="timeline chat-timeline js-activity-stream"></div>
-      </div>
-    </div>
+    <div class="timeline chat-timeline js-activity-stream"></div>
   </div>
 </div>
 <div class="chat-actions js-chat-actions" style="margin-bottom:-34px">

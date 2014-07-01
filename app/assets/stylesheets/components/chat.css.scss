@@ -5,6 +5,7 @@
 
   .sheet-body {
     padding-top: 0;
+    padding-right: 0;
   }
 }
 
@@ -14,13 +15,14 @@
 
 .chat-timeline {
   margin-bottom: 0;
+  padding-right: $grid-gutter-width * 1.5;
 }
 
 .chat-actions {
   padding-top: $padding-base-vertical + 2px;
   padding-bottom: $padding-base-vertical + 2px;
   margin-left: -($grid-gutter-width * 1.5);
-  margin-right: -($grid-gutter-width * 1.5);
+  // margin-right: -($grid-gutter-width * 1.5);
   padding-left: $grid-gutter-width * 1.5;
   padding-right: $grid-gutter-width * 1.5;
 
