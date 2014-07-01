@@ -6,7 +6,7 @@
 </div>
 
 <div class="row">
-  <div class="col-xs-8">
+  <div class="col-md-9 col-xs-9">
     <%= form_for [@product, @wip] do |f| %>
       <div class="form-group">
         <%= f.label :title, 'class' => 'form-label' %>
@@ -18,7 +18,7 @@
       </div>
 
       <div class="form-group">
-        <span class="help-block pull-right">(optional)</span>
+        <span class="text-muted text-small pull-right">(optional)</span>
         <%= f.label :description, 'Details', class: 'control-label' %>
 
         <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">

@@ -6,7 +6,7 @@
 </div>
 
 <div class="row">
-  <div class="col-xs-8">
+  <div class="col-md-9 col-xs-9">
     <%= form_for [@wip.product, @wip], method: :post, class: 'form' do |f| %>
 
       <div class="form-group">
@@ -15,7 +15,7 @@
       </div>
 
       <div class="form-group">
-        <span class="help-block pull-right">(optional)</span>
+        <span class="text-muted text-small pull-right">(optional)</span>
 
         <%= f.label :description, 'Details', class: 'form-title' %>
 

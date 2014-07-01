@@ -6,17 +6,8 @@
 </div>
 
 <div class="row">
-  <div class="col-md-4 col-xs-4 col-xs-push-8">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h6 class="panel-title">Everyone loves a blog post</h6>
-      </div>
-      <div class="panel-body">
-        Blog posts are a great way keep new contributors up to date with progress and new ways to help out. When you are ready, we'll also email the post to everyone following <%= @product.name %>. You can include images and use Markdown to make your post awesome.
-      </div>
-    </div>
-  </div>
-  <div class="col-md-8 col-xs-8 col-xs-pull-4">
+
+  <div class="col-md-9 col-xs-9">
     <%= form_for [@post.product, @post] do |f| %>
       <div class="form-group <%= 'has-error' if @post.errors[:title].any? %>">
         <%= f.label :title, 'Post title', class: 'form-label' %>
@@ -46,5 +37,16 @@
         <%= f.submit 'Publish', class: %w(btn btn-primary) %>
       </div>
     <% end %>
+  </div>
+
+  <div class="col-md-3 col-xs-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h6 class="panel-title">Everyone loves a blog post</h6>
+      </div>
+      <div class="panel-body">
+        Blog posts are a great way keep new contributors up to date with progress and new ways to help out. When you are ready, we'll also email the post to everyone following <%= @product.name %>. You can include images and use Markdown to make your post awesome.
+      </div>
+    </div>
   </div>
 </div>
