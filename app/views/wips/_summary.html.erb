@@ -47,7 +47,7 @@
         <li>
           <%= pluralize(task.watchers.count, 'watcher') %>
         </li>
-        <% if task.tags %>
+        <% unless task.tags.empty? %>
           <li>
             <% task.tags.map do |tag| %>
               <a href="<%= product_wips_path(@product, tag: tag.name) %>"><%= tag.name %></a>
