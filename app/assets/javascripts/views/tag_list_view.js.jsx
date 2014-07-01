@@ -76,17 +76,23 @@ var TagList = React.createClass({
   },
 
   onChange: function() {
+    var tags = TagListStore.getTags();
+
     if (this.props.destination) {
       this.setState({
-        tags: TagListStore.getTags()
+        tags: tags
       });
 
       var tagListHack = $('#tag-list-hack');
 
       if (tagListHack.length) {
+        if (_.isEmpty(tags)) {
+          tagListHack.empty();
+        }
+
         var selected = tagListHack.val();
 
-        $(tagListHack).append(_.map(TagListStore.getTags(), function(tag) {
+        $(tagListHack).append(_.map(tags, function(tag) {
           if ((selected && selected.indexOf(tag) === -1) || !selected) {
             return '<option value=' + tag + ' selected="true">' + tag + '</option>';
           }

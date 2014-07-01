@@ -19,7 +19,7 @@ var TextComplete = React.createClass({
           <input type="text"
                  className={"form-control input-" + this.size()}
                  valueLink={this.linkState('inputValue')}
-                 style={{width: this.props.width}}
+                 style={{width: this.props.width, 'padding-left': '5px'}}
           />
         </div>
         <button type="button"
