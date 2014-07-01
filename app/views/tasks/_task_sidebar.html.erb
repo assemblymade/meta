@@ -142,27 +142,28 @@
             destination: true
           }.to_json %>">
     </div>
-
-    <% if wip_tags.empty? || wip_tags.slice(1).nil? %>
-      <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
-      <div data-react-class="TagList"
-            data-react-props="<%= {
-              tags: Wip::Tag.suggested_tags.as_json,
-              url: product_wip_path(@wip.product, @wip.number),
-              destination: false
-            }.to_json %>">
+    <% unless current_user.nil? %>
+      <% if wip_tags.empty? || wip_tags.slice(1).nil? %>
+        <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
+        <div data-react-class="TagList"
+              data-react-props="<%= {
+                tags: Wip::Tag.suggested_tags.as_json,
+                url: product_wip_path(@wip.product, @wip.number),
+                destination: false
+              }.to_json %>">
+        </div>
+      <% end %>
+      <div data-react-class="TextComplete"
+           data-react-props="<%= {
+             width: "125px",
+             size: "small",
+             label: "Add tag",
+             prepend: "#",
+             prompt: "Add",
+             url: product_wip_path(@wip.product, @wip.number)
+           }.to_json %>">
       </div>
     <% end %>
-    <div data-react-class="TextComplete"
-         data-react-props="<%= {
-           width: "125px",
-           size: "small",
-           label: "Add tag",
-           prepend: "#",
-           prompt: "Add",
-           url: product_wip_path(@wip.product, @wip.number)
-         }.to_json %>">
-    </div>
 
   </div>
 </div>

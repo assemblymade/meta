@@ -13,22 +13,39 @@
         <%= f.text_field :title, 'class' => 'form-control', data: {'validate-length' => 2} %>
       </div>
 
-      <div class="form-group">
-        <%= f.label :deliverable, class: 'control-label' %>
+      <div style="display:none;">
+        <select type="hidden" id="tag-list-hack" name="task[tag_list][]" multiple="true"></select>
+      </div>
 
-        <!-- <div class="form-control"> -->
-          <div class="btn-group btn-group-justified" data-toggle="buttons">
+      <h6 style="margin-bottom: 0;">Tags</h6>
+      <div style="margin-bottom: 10px"
+           data-react-class="TagList"
+           data-react-props="<%= {
+              tags: (@wip.tags ? @wip.tags.map do |tag|
+                tag.name
+              end.as_json : []),
+              destination: true,
+              allowRemoval: true
+            }.to_json %>">
+      </div>
 
-            <% @wip.class.deliverable_types.each do |deliverable_type| %>
-              <%= f.label :deliverable, class: "btn btn-default #{'active' if @wip.deliverable == deliverable_type}" do %>
-                <%= f.radio_button :deliverable, deliverable_type %>
-                <%= deliverable_type.camelcase %>
-              <% end %>
-            <% end %>
+      <div data-react-class="TextComplete"
+           data-react-props="<%= {
+             width: "125px",
+             size: "small",
+             label: "Add tag",
+             prepend: "#",
+             prompt: "Add",
+           }.to_json %>">
+      </div>
 
-          </div>
-        </div>
-      <!-- </div> -->
+      <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
+      <div data-react-class="TagList"
+            data-react-props="<%= {
+              tags: Wip::Tag.suggested_tags.as_json,
+              destination: false
+            }.to_json %>">
+      </div>
 
       <div class="form-actions">
         <%= f.button 'Update task', 'class' => 'btn btn-primary' %>

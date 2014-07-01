@@ -95,8 +95,11 @@ var TagList = React.createClass({
     var self = this;
 
     if (this.props.destination) {
-      return function(e) {
+      if (!this.props.allowRemoval) {
+        return;
+      }
 
+      return function(e) {
         Dispatcher.dispatch({
           action: TAG_LIST.ACTIONS.REMOVE_TAG,
           data: { tag: tag, url: self.props.url },
