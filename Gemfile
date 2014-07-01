@@ -73,7 +73,7 @@ gem 'stripe'
 gem 'uglifier'
 gem 'warden', "~> 1.2.3"
 gem 'workflow'
-# gem 'store_base_sti_class'
+gem 'font_assets'
 
 group :development, :test do
   gem 'active_record_query_trace'
