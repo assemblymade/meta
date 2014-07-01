@@ -106,9 +106,12 @@
   > li > a {
     padding: $padding-small-vertical $padding-small-horizontal;
     color: $gray-dark;
+  }
 
-    &:hover {
-      color: $brand-primary;
+  > li {
+    &:not(.active) a:hover {
+      background-color: rgba($gray-light, .3);
+      border-radius: $border-radius-base;
     }
   }
 
