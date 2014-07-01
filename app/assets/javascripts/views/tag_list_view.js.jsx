@@ -46,6 +46,14 @@ var TagList = React.createClass({
         return;
       }
 
+      if (self.props.allowRemoval) {
+        return (
+          <li style={{'margin': '0px'}}>
+            <a style={style}>{tag}</a><span><a style={{'margin-left': '2px', 'font-size': '10px', cursor: 'pointer'}} onClick={self.handleClick(tag)}>&times;</a></span>
+          </li>
+        );
+      }
+
       return (
         <li style={{'margin': '0px'}}>
           <a style={style} onClick={self.handleClick(tag)}>{tag}</a>

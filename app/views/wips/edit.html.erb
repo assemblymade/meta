@@ -25,7 +25,8 @@
                 tag.name
               end.as_json : []),
               destination: true,
-              allowRemoval: true
+              allowRemoval: true,
+              url: product_wip_path(@product, @wip)
             }.to_json %>">
       </div>
 
@@ -36,6 +37,7 @@
              label: "Add tag",
              prepend: "#",
              prompt: "Add",
+             url: product_wip_path(@product, @wip)
            }.to_json %>">
       </div>
 
@@ -43,7 +45,8 @@
       <div data-react-class="TagList"
             data-react-props="<%= {
               tags: Wip::Tag.suggested_tags.as_json,
-              destination: false
+              destination: false,
+              url: product_wip_path(@product, @wip)
             }.to_json %>">
       </div>
 
