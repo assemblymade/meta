@@ -54,6 +54,7 @@ var Notifications = React.createClass({
   desktopNotify: function(event) {
     var n = new Notify("New message on " + (event.wip.product_name), {
       body: (event.actor.username + ": " + event.body_sanitized),
+      tag: event.id,
       icon: 'https://d8izdk6bl4gbi.cloudfront.net/80x/http://f.cl.ly/items/1I2a1j0M0w0V2p3C3Q0M/Assembly-Twitter-Avatar.png',
       timeout: 15,
       notifyClick: function() {
