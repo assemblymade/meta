@@ -21,8 +21,10 @@
 
 <div class="row">
   <% if @product.wips.any? %>
-    <div class="col-md-8 col-xs-8">
-
+    <div class="col-md-9 col-xs-9">
+      <% if params[:tag] %>
+        <h6>Filter: <%= params[:tag] %></h6>
+      <% end %>
       <ol class="list-group list-group-breakout list-group-padded" id="wips-view-el">
         <% @wips.each do |task| %>
           <li class="list-group-item">
@@ -36,7 +38,7 @@
       <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
     </div>
 
-    <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+    <div class="col-md-3 col-xs-3">
       <%= render partial: 'tasks/sidebar' %>
     </div>
 

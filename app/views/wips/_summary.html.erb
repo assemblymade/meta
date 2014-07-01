@@ -1,5 +1,4 @@
 <div class="item wip mint-gutter" data-number="<%= task.number %>" data-promoted="<%= task.promoted? %>">
-
   <div class="summary">
     <a class="summary-target" href="<%= product_wip_path(task.product, task) %>">
       <%= task.title %>
@@ -48,6 +47,13 @@
         <li>
           <%= pluralize(task.watchers.count, 'watcher') %>
         </li>
+        <% if task.tags %>
+          <li>
+            <% task.tags.map do |tag| %>
+              <a href="<%= product_wips_path(@product, tag: tag.name) %>"><%= tag.name %></a>
+            <% end %>
+          </li>
+        <% end %>
         <li>
           #<%= task.number %>
         </li>

@@ -138,6 +138,7 @@
          data-react-props="<%= {
             tags: (wip_tags || []),
             url: product_wip_path(@wip.product, @wip.number),
+            filterUrl: product_wips_path(@wip.product),
             destination: true
           }.to_json %>">
     </div>
@@ -159,6 +160,7 @@
              label: "Add tag",
              prepend: "#",
              prompt: "Add",
+             filterUrl: product_wips_path(@wip.product),
              url: product_wip_path(@wip.product, @wip.number)
            }.to_json %>">
       </div>

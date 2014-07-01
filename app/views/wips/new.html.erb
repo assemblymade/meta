@@ -37,6 +37,7 @@
               tags: (@wip.tags ? @wip.tags.map do |tag|
                 tag.name
               end.as_json : []),
+              filterUrl: product_wips_path(@wip.product),
               destination: true
             }.to_json %>">
       </div>
@@ -48,6 +49,7 @@
              label: "Add tag",
              prepend: "#",
              prompt: "Add",
+             filterUrl: product_wips_path(@wip.product)
            }.to_json %>">
       </div>
 
