@@ -97,7 +97,7 @@ var MembersView = React.createClass({
 
   render: function() {
     return (
-      <div className="panel-group" id="accordion" style={{'margin-top' : '36px'}}>
+      <div className="panel-group" id="accordion">
         <div className="panel panel-default">
           <div className="panel-heading">
             <h6 className="panel-title">Online</h6>

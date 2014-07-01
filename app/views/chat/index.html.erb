@@ -1,6 +1,7 @@
 <% title 'Chat', @product.name %>
 <% activate_nav! :chat %>
 <% provide :body_class, 'chat-wrapper' %>
+<% @sheet_style = 'width:700px' %>
 <% @disable_footer = true %>
 
 <div class="navbar-fixed-top">
@@ -15,6 +16,8 @@
      aria-hidden="true">
 </div>
 
+<div class="js-members" style="width:230px;position:fixed;margin-left:670px"></div>
+
 <div class="js-scroll-container">
   <div class="row">
     <div class="col-md-8 col-xs-8">
@@ -26,11 +29,6 @@
 
         <div class="timeline chat-timeline js-activity-stream"></div>
       </div>
-    </div>
-
-    <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-      <%#= render 'discussions/intro_panel' %>
-      <div class="js-members"></div>
     </div>
   </div>
 </div>

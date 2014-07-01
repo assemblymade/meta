@@ -167,7 +167,7 @@
 
 
 
-        <div class="sheet">
+        <div class="sheet" <%if @sheet_style%> style="<%= @sheet_style%>" <%end%>>
           <div class="sheet-body">
             <%= yield %>
           </div>
