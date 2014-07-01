@@ -132,27 +132,27 @@
     </h6>
   </div>
   <div class="panel-body">
+    <% wip_tags = @wip.tags.map { |tag| tag.name }.as_json %>
     <h6 style="margin-bottom: 0;">Tags</h6>
     <div style="margin-bottom: 10px"
          data-react-class="TagList"
          data-react-props="<%= {
-            tags: (@wip.tags ? @wip.tags.map do |tag|
-              tag.name
-            end.as_json : []),
+            tags: (wip_tags || []),
             url: product_wip_path(@wip.product, @wip.number),
             destination: true
           }.to_json %>">
     </div>
 
-    <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
-    <div data-react-class="TagList"
-          data-react-props="<%= {
-            tags: Wip::Tag.suggested_tags.as_json,
-            url: product_wip_path(@wip.product, @wip.number),
-            destination: false
-          }.to_json %>">
-    </div>
-    <br>
+    <% if wip_tags.empty? || wip_tags.slice(1).nil? %>
+      <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
+      <div data-react-class="TagList"
+            data-react-props="<%= {
+              tags: Wip::Tag.suggested_tags.as_json,
+              url: product_wip_path(@wip.product, @wip.number),
+              destination: false
+            }.to_json %>">
+      </div>
+    <% end %>
     <div data-react-class="TextComplete"
          data-react-props="<%= {
            width: "125px",
@@ -163,7 +163,7 @@
            url: product_wip_path(@wip.product, @wip.number)
          }.to_json %>">
     </div>
-    
+
   </div>
 </div>
 

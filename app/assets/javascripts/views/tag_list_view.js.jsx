@@ -53,7 +53,7 @@ var TagList = React.createClass({
       );
     });
 
-    if (_.isEmpty(mappedTags) && this.props.destination) {
+    if (this.props.destination && (_.isEmpty(mappedTags) || (mappedTags[0] == undefined && mappedTags[1] == undefined))) {
       return (
         <li style={{color: '#d3d3d3', 'font-size': '13px'}}>No tags yet &mdash; why not add some?</li>
       );
