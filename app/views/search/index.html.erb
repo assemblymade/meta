@@ -1,55 +1,46 @@
 <% title 'Search', params[:q] %>
-<%= render 'shared/navbar' %>
 
-<div class="page page-flat">
-  <div class="container">
-
-    <% if @search %>
-
-      <div class="page-header">
-        <h2 class="page-header-title">
-          <i class="icon-magnifier text-muted" style="margin-right: 6px;  font-size: 22px; top: -2px; position: relative;"></i>
-          Search results for
-          <span class="mark"><%= params[:q] %></span>
-          <% if @product %>in <%= @product.name %><% end %>
-        </h2>
-      </div>
-
-      <div class="row">
-        <div class="col-md-8 col-xs-8">
-
-          <div class="list-group list-group-breakout list-group-padded">
-            <% @search.results.page(params[:page]).each do |result| %>
-              <div class="list-group-item">
-                <%= render "#{@type}_result", result: result %>
-              </div>
-            <% end %>
-          </div>
-
-          <%= paginate @search.results, theme: 'twitter-bootstrap-3' %>
-        </div>
-
-        <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-          <%= render 'types' %>
-          <%= render "#{@type.to_s}_facets", facets: @search.facets %>
-        </div>
-      </div>
-
-    <% else %>
+  <% if @search %>
 
     <div class="page-header">
-      <form action="<%= polymorphic_path([@product, :search]) %>" class="pull-right form-inline">
-        <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off" placeholder="Search…" />
-        <input type="hidden" name="type" value="<%= @type %>">
-        <!-- <button class="btn btn-default">Search</button> -->
-      </form>
-
-      <h2 class="page-header-title">Search</h2>
+      <h2 class="page-header-title">
+        <i class="icon-magnifier text-muted" style="margin-right: 6px;  font-size: 22px; top: -2px; position: relative;"></i>
+        Search results for
+        <span class="mark"><%= params[:q] %></span>
+        <% if @product %>in <%= @product.name %><% end %>
+      </h2>
     </div>
 
-    <% end %>
+    <div class="row">
+      <div class="col-md-9 col-xs-9">
 
+        <div class="list-group list-group-breakout list-group-padded">
+          <% @search.results.page(params[:page]).each do |result| %>
+            <div class="list-group-item">
+              <%= render "#{@type}_result", result: result %>
+            </div>
+          <% end %>
+        </div>
+
+        <%= paginate @search.results, theme: 'twitter-bootstrap-3' %>
+      </div>
+
+      <div class="col-md-3 col-xs-3">
+        <%= render 'types' %>
+        <%= render "#{@type.to_s}_facets", facets: @search.facets %>
+      </div>
+    </div>
+
+  <% else %>
+
+  <div class="page-header">
+    <form action="<%= polymorphic_path([@product, :search]) %>" class="pull-right form-inline">
+      <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off" placeholder="Search…" />
+      <input type="hidden" name="type" value="<%= @type %>">
+      <!-- <button class="btn btn-default">Search</button> -->
+    </form>
+
+    <h2 class="page-header-title">Search</h2>
   </div>
-</div>
 
-<%= render 'shared/footer' %>
+  <% end %>

@@ -1,4 +1,7 @@
 class SearchController < ApplicationController
+
+  layout 'product'
+
   def index
     set_product if params[:product_id]
 
