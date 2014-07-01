@@ -149,6 +149,8 @@ GEM
     faraday_middleware (0.9.0)
       faraday (>= 0.7.4, < 0.9)
     ffaker (1.22.1)
+    font_assets (0.1.11)
+      rack
     git (1.2.6)
     github-markdown (0.6.4)
     hashie (2.0.5)
@@ -433,6 +435,7 @@ DEPENDENCIES
   email_spec
   fakeweb
   ffaker
+  font_assets
   friendly_id!
   gemoji!
   git

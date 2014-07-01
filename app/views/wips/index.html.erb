@@ -22,9 +22,11 @@
 <div class="row">
   <% if @product.wips.any? %>
     <div class="col-md-9 col-xs-9">
+
       <% if params[:tag] %>
         <h6>Filter: <%= params[:tag] %></h6>
       <% end %>
+
       <ol class="list-group list-group-breakout list-group-padded" id="wips-view-el">
         <% @wips.each do |task| %>
           <li class="list-group-item">
