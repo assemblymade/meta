@@ -62,14 +62,14 @@ var People = React.createClass({
         '-1' :
         m.core_team ? '0' : '1') +
         m.user.username.toLowerCase()
-    })
+    });
 
     this.setState({ filteredMemberships: sortedMemberships, selected: interest });
   },
 
   filterLabel: function() {
     if (this.state.selected) {
-      return (<span> the <a href="javascript:;">@{this.state.selected}</a> team</span>)
+      return (<span> the <a style={{cursor: 'pointer'}}>@{this.state.selected}</a> team</span>)
     } else {
       return 'these teams'
     }
@@ -86,6 +86,7 @@ var PeopleFilter = React.createClass({
       if (interest === 'core') {
         return;
       }
+
       var label = '@' + interest;
       var highlight = self.props && self.props.selected === interest ? 'primary' : 'default';
 
@@ -151,27 +152,24 @@ var PeopleList = React.createClass({
 
     var rows = [];
 
-    for (var i = 0, l = memberships.length; i < l; i += 2) {
-      var leftMember = memberships[i];
-      if (!leftMember) {
+    for (var i = 0, l = memberships.length; i < l; i++) {
+      var member = memberships[i];
+      if (!member) {
         return;
       }
-      var leftUser = leftMember.user;
-      var rightMember = memberships[i + 1];
-      var rightUser = rightMember && rightMember.user;
+
+      var user = member.user;
 
       var row = (
         <div className="row"
-          key={'row-' + leftUser.id + (rightUser && rightUser.id)}
+          key={'row-' + user.id}
           style={{
             'padding-top': '15px',
             'padding-bottom': '15px',
             'border-bottom': '1px solid #ebebeb'
           }}>
-          {this.avatar(leftUser)}
-          {this.member(leftMember)}
-          {this.avatar(rightUser)}
-          {this.member(rightMember)}
+          {this.avatar(user)}
+          {this.member(member)}
         </div>
       )
 
@@ -208,7 +206,7 @@ var PeopleList = React.createClass({
     var user = member.user;
 
     return (
-      <div className="col-sm-5 col-xs-5">
+      <div className="col-sm-11 col-xs-11">
         <p className="omega">
           <strong>
             <a href={user.url} title={'@' + user.username}>
@@ -216,10 +214,11 @@ var PeopleList = React.createClass({
             </a>
           </strong>
         </p>
-        { user.bio ? this.hasBio(user) : ''}
+        {user.bio ? this.hasBio(user) : ''}
         <div>
           <BioEditor
               member={member}
+              onFilter={this.props.onFilter}
               currentUser={this.props.currentUser}
               updatePath={this.props.updatePath}
               originalBio={member.bio}
@@ -320,7 +319,9 @@ var BioEditor = React.createClass({
       return (
         <li>
           <span className={'label label-' + highlight}
-              key={membership.user.id + '-' + interest}>
+              key={membership.user.id + '-' + interest}
+              style={{cursor: 'pointer'}}
+              onClick={self.props.onFilter.bind(null, interest)}>
             {label}
           </span>
         </li>
@@ -359,7 +360,7 @@ var BioEditor = React.createClass({
       return (<option value={interest}>{'@' + interest}</option>);
     });
 
-    return options
+    return options;
   },
 
   setUpChosen: function(node) {

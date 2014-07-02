@@ -8,7 +8,7 @@ var TextComplete = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
 
   getInitialState: function() {
-    return { inputValue: '' };
+    return { inputValue: '', transform: (this.props.transform || this.transform) };
   },
 
   render: function() {
@@ -57,12 +57,16 @@ var TextComplete = React.createClass({
   handleClick: function(e) {
     Dispatcher.dispatch({
       action: TC.ACTIONS.ADD_TAG,
-      data: { tag: this.state.inputValue, url: this.props.url },
+      data: { tag: this.state.transform(this.state.inputValue), url: this.props.url },
       event: TC.EVENTS.TAG_ADDED + '-true'
     });
 
     this.setState({
       inputValue: ''
     });
+  },
+
+  transform: function(text) {
+    return text.replace(/[^\w-]+/g, '').toLowerCase()
   }
 });
