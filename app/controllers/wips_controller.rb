@@ -88,7 +88,7 @@ class WipsController < ProductController
       @wip.update_title! current_user, title unless title == @wip.title
     end
 
-    apply_tag()
+    apply_tags()
 
     @wip.update_attributes(update_wip_params)
 
