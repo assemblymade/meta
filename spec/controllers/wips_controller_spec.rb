@@ -36,4 +36,27 @@ describe TasksController do
     end
   end
 
+  describe '#update' do
+    before do
+      sign_in user
+      product.core_team << user
+    end
+
+    it 'updates a wip' do
+      patch :update, product_id: product.id, id: wips.first.number, task: { title: 'Foo' }
+      expect(response.status).to eq(302)
+    end
+  end
+
+  describe '#tag' do
+    before do
+      sign_in user
+    end
+
+    it 'tags a wip' do
+      patch :tag, product_id: product.id, wip_id: wips.first.number, task: { tag_list: ['foo', 'bar', 'baz'] }
+      expect(response.status).to eq(302)
+      expect(assigns(:wips))
+    end
+  end
 end

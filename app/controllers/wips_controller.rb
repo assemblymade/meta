@@ -99,8 +99,6 @@ class WipsController < ProductController
     if tag_list = wip_params[:tag_list]
       @wip.update_tag_names! current_user, tag_list
     end
-
-    @wip.update_attributes(update_wip_params)
   end
 
   def tag
