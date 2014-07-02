@@ -208,6 +208,9 @@ var PeopleList = React.createClass({
     return (
       <div className="col-sm-11 col-xs-11">
         <p className="omega">
+          <ul className="list-inline omega pull-right">
+            {this.skills(member)}
+          </ul>
           <strong>
             <a href={user.url} title={'@' + user.username}>
               {user.username}
@@ -239,8 +242,32 @@ var PeopleList = React.createClass({
     )
   },
 
-  updateSkills: function() {}
-})
+  skills: function(membership) {
+    var self = this;
+
+    if (membership.core_team && membership.interests.indexOf('core') < 0) {
+      membership.interests.push('core')
+    }
+
+    membership.interests.sort();
+
+    return _.map(membership.interests, function mapInterests(interest) {
+      var label = '@' + interest;
+      var highlight = self.props && self.props.selected === interest ? 'primary' : 'outlined';
+
+      return (
+        <li>
+          <span className={'label label-' + highlight}
+              key={membership.user.id + '-' + interest}
+              style={{cursor: 'pointer'}}
+              onClick={self.props.onFilter.bind(null, interest)}>
+            {label}
+          </span>
+        </li>
+      );
+    });
+  }
+});
 
 var BioEditor = React.createClass({
   componentWillMount: function() {
@@ -280,12 +307,6 @@ var BioEditor = React.createClass({
             {member.bio}
             &nbsp;{this.state.editing ? this.saveButton() : this.editButton()}
           </div>
-
-          <hr style={{'margin' : '16px 0 8px 0', 'border-top' : '1px dotted #ebebeb'}} />
-
-          <ul className="list-inline omega">
-            {this.skills(member)}
-          </ul>
         </div>
       )
     }
@@ -293,40 +314,8 @@ var BioEditor = React.createClass({
     return (
       <div key={'b-' + member.user.id}>
         {member.bio}
-
-        <hr style={{'margin' : '16px 0 8px 0', 'border-top' : '1px dotted #ebebeb'}} />
-
-        <ul className="list-inline omega">
-          {this.skills(member)}
-        </ul>
       </div>
     )
-  },
-
-  skills: function(membership) {
-    var self = this;
-
-    if (membership.core_team && membership.interests.indexOf('core') < 0) {
-      membership.interests.push('core')
-    }
-
-    membership.interests.sort();
-
-    return _.map(membership.interests, function mapInterests(interest) {
-      var label = '@' + interest;
-      var highlight = self.props && self.props.selected === interest ? 'primary' : 'outlined';
-
-      return (
-        <li>
-          <span className={'label label-' + highlight}
-              key={membership.user.id + '-' + interest}
-              style={{cursor: 'pointer'}}
-              onClick={self.props.onFilter.bind(null, interest)}>
-            {label}
-          </span>
-        </li>
-      );
-    });
   },
 
   editButton: function() {
