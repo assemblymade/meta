@@ -74,12 +74,14 @@
             channel: presenceChannel
           }),
           this
-        )
+        );
 
         component.setState({
           members: permanentWatchers
-        })
-      })
+        });
+      });
+
+      var alreadyJoined = {};
 
       presenceChannel.bind(
         'pusher:member_added',
@@ -87,6 +89,14 @@
           if (permanentWatchers.hasOwnProperty(member.id)) {
             return;
           }
+
+          // Slight hack to prevent multiple join messages
+          // for one person
+          if (alreadyJoined[member.id] === 1) {
+            return;
+          }
+
+          alreadyJoined[member.id] = 1;
 
           var activity = new Activity({
             id: member.id + rand(10000),
