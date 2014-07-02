@@ -47,3 +47,22 @@
 .fb-like {
   top: -7px;
 }
+
+.img-shadow {
+  display: block;
+  position: relative;
+
+  &:before {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+    border-radius: $border-radius-base;
+  }
+
+  img {
+    display: block;
+  }
+}

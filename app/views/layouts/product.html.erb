@@ -12,9 +12,9 @@
       <div class="col-md-2 fixed-enabler">
 
         <% if @product.poster? %>
-          <%= image_tag @product.poster_image.url, class: 'img-rounded', width: '100%', alt: @product.name %>
-          <br>
-          <br>
+          <span class="img-shadow" style="margin-bottom: 36px;">
+            <%= image_tag @product.poster_image.url, class: 'img-rounded', width: '100%', alt: @product.name %>
+          </span>
         <% end %>
 
         <ul class="nav nav-stacked nav-sidebar">
