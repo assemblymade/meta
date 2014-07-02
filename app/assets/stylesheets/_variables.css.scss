@@ -549,8 +549,8 @@ $panel-danger-heading-bg: $state-danger-bg;
 // Thumbnails
 
 $thumbnail-padding:       4px;
-$thumbnail-bg:            $body-bg;
-$thumbnail-border:        #ddd;
+$thumbnail-bg:            lighten($body-bg, 3%);
+$thumbnail-border:        $brand-border;
 $thumbnail-border-radius: $border-radius-base;
 
 $thumbnail-caption-color:   $text-color;

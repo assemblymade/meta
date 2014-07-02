@@ -111,7 +111,6 @@ h6,
   ul,
   ol {
     @extend .text-serif;
-    font-size: 15px;
     line-height: 1.764;
     color: $gray-dark;
   }
@@ -298,4 +297,10 @@ mark,
 
 .link-action-danger:hover {
   color: $brand-danger !important;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
