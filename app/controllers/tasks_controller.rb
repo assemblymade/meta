@@ -24,7 +24,7 @@ class TasksController < WipsController
 
   def start_work
     if username = params[:assign_to]
-      assignee = User.find_by(username: username.gsub!('@', '').strip!())
+      assignee = User.find_by(username: username.gsub('@', '').strip())
     end
 
     assignee ||= current_user

@@ -32,7 +32,7 @@ class Webhooks::GithubController < WebhookController
               url: commit['url'],
               metadata: { author: author, message: commit['message'], distinct: commit['distinct'] }
             )
-            # raise product.inspect
+
             Activities::GitPush.publish!(
               actor: user,
               subject: work,

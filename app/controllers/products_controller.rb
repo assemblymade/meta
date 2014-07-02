@@ -34,6 +34,12 @@ class ProductsController < ProductController
       TransactionLogEntry.validated!(Time.current, @product, @product.id, @product.user.id, @product.user.id)
       @product.update_attributes main_thread: @product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
 
+      Activities::FoundProduct.publish!(
+        target: @product,
+        subject: @product,
+        actor: current_user
+      )
+
       flash[:new_product_callout] = true
     end
     respond_with(@product, location: product_path(@product))
