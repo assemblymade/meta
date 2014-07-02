@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140620225153) do
+ActiveRecord::Schema.define(version: 20140702173259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -440,7 +440,7 @@ ActiveRecord::Schema.define(version: 20140620225153) do
   create_table "transaction_log_entries", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "product_id",     null: false
     t.uuid     "work_id",        null: false
-    t.uuid     "user_id",        null: false
+    t.uuid     "wallet_id",      null: false
     t.string   "action",         null: false
     t.text     "value"
     t.datetime "created_at"
@@ -613,6 +613,7 @@ ActiveRecord::Schema.define(version: 20140620225153) do
     t.string   "type"
     t.string   "deliverable",                default: "other", null: false
     t.decimal  "multiplier",                 default: 1.0,     null: false
+    t.decimal  "author_tip",                 default: 0.0,     null: false
   end
 
   add_index "wips", ["product_id", "number"], name: "index_wips_on_product_id_and_number", unique: true, using: :btree

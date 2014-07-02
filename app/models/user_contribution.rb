@@ -16,7 +16,7 @@ class UserContribution < Struct.new(:product, :contribution_count, :cents, :tota
   end
 
   def self.for_product(user, product)
-    user_cents = TransactionLogEntry.where(user_id: user.id).where(product_id: product.id).with_cents.sum(:cents)
+    user_cents = TransactionLogEntry.where(wallet_id: user.id).where(product_id: product.id).with_cents.sum(:cents)
     total_cents = TransactionLogEntry.where(product_id: product.id).with_cents.sum(:cents)
 
     UserContribution.new(

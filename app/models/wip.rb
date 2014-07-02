@@ -26,6 +26,7 @@ class Wip < ActiveRecord::Base
 
   validates :title, presence: true, length: { minimum: 2 }
 
+  before_validation :set_author_tip, on: :create
   after_commit :set_number, on: :create
   after_create :add_watcher!
   after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.id) }
@@ -259,6 +260,10 @@ class Wip < ActiveRecord::Base
   end
 
   # protected
+
+  def set_author_tip
+    self.author_tip = Task::AUTHOR_TIP
+  end
 
   def set_number
     return unless number.nil?

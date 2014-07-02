@@ -35,7 +35,7 @@
                   <ol>
                     <li>Create an Assembly account and claim the <%= @invite.tip_cents / 100 %> <%= @product.name %> App Coins that <a href="<%= user_url(@invitor, i: @invite.id) %>">@<%= @invitor.username %></a> just tipped to you.</li>
 
-                    <li>Complete the bounty that <a href="<%= user_url(@invitor, i: @invite.id) %>">@<%= @invitor.username %></a> thought you'd be perfect for, which is worth <%= (@via.bounty.total_cents / 100).to_i %> App Coins.</li>
+                    <li>Complete the bounty that <a href="<%= user_url(@invitor, i: @invite.id) %>">@<%= @invitor.username %></a> thought you'd be perfect for, which is worth <%= (@via.contracts.earnable_cents / 100).to_i %> App Coins.</li>
                   </ol>
 
                   <table class="button success radius">

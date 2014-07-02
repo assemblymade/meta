@@ -23,6 +23,7 @@ class Task < Wip
   scope :won_after,   ->(time) { won.where('closed_at >= ?', time) }
   scope :won_by,      ->(user) { won.where('events.user_id = ?', user.id) }
 
+  AUTHOR_TIP = 0.05
   IN_PROGRESS = 'allocated'
 
   workflow_column :state
@@ -248,8 +249,8 @@ class Task < Wip
     val
   end
 
-  def bounty
-    Bounty.new(self)
+  def contracts
+    WipContracts.new(self)
   end
 
   def multiplier_not_changed
@@ -257,5 +258,4 @@ class Task < Wip
       errors.add(:multiplier, "cannot be changed on closed Bounty")
     end
   end
-
 end

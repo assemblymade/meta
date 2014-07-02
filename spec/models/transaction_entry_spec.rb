@@ -15,7 +15,7 @@ describe 'log entries' do
           product_id: product.id,
           action: 'proposed',
           work_id: wip.id,
-          user_id: wip_creator.id
+          wallet_id: wip_creator.id
       )
     end
   end
@@ -34,7 +34,7 @@ describe 'log entries' do
           product_id: product.id,
           action: 'validated',
           work_id: wip.id,
-          user_id: product.user.id,
+          wallet_id: product.user.id,
           value: wip_creator.id
       )
     end
@@ -53,7 +53,7 @@ describe 'log entries' do
           product_id: product.id,
           action: 'validated',
           work_id: work.id,
-          user_id: work.user.id,
+          wallet_id: work.user.id,
           value: work.user.id
       )
     end
@@ -71,7 +71,7 @@ describe 'log entries' do
           product_id: product.id,
           action: 'voted',
           work_id: wip.id,
-          user_id: wip_creator.id,
+          wallet_id: wip_creator.id,
           value: '1'
       )
     end
@@ -85,7 +85,7 @@ describe 'log entries' do
           product_id: product.id,
           action: 'voted',
           work_id: wip.id,
-          user_id: wip_creator.id
+          wallet_id: wip_creator.id
       )
     end
   end
@@ -103,7 +103,7 @@ describe 'log entries' do
           product_id: product.id,
           action: 'multiplied',
           work_id: wip.id,
-          user_id: wip_creator.id,
+          wallet_id: wip_creator.id,
           value: '2.0'
       )
     end
@@ -112,8 +112,8 @@ describe 'log entries' do
   context 'minted entry' do
     let(:wip) { Task.make! product: product, user: wip_creator }
 
-    it 'adds when task is promoted' do
-      entry = TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, wip.id, wip_creator.id, 170)
+    it 'mints into wallet' do
+      entry = TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, wip.id, wip.id, 170)
 
       expect(
         entry
@@ -121,7 +121,7 @@ describe 'log entries' do
           product_id: product.id,
           action: 'minted',
           work_id: wip.id,
-          user_id: wip_creator.id,
+          wallet_id: wip.id,
           cents: 170
       )
     end
@@ -146,7 +146,7 @@ describe 'log entries' do
           product_id: product.id,
           action: 'credit',
           work_id: comment.id,
-          user_id: comment.actor.id,
+          wallet_id: comment.actor.id,
           cents: 3
       )
       expect(
@@ -155,7 +155,7 @@ describe 'log entries' do
           product_id: product.id,
           action: 'debit',
           work_id: comment.id,
-          user_id: from.id,
+          wallet_id: from.id,
           cents: -3
       )
     end
