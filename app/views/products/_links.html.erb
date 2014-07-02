@@ -4,9 +4,8 @@
     <div class="panel-heading">
       <h6 class="panel-title">Links</h6>
     </div>
-    <div class="panel-body">
+    <div class="panel-body truncate">
       <% unless @product.homepage_url.blank? %>
-        <i class="icon-home dropdown-glyph"></i>
         <a class="small" href="<%= @product.homepage_url %>" data-track="product.site.clicked">
           <strong><%= @product.homepage_url %></strong>
         </a>
