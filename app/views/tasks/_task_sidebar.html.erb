@@ -207,7 +207,7 @@
     <% if c = contracts.author_contract %>
       <tr>
         <td class="text-muted" style="padding-left:15px">
-          Bounty Author
+          <span data-toggle="tooltip" title="<%= I18n.t 'tooltips.bounty.author', author: @wip.user.username %>" data-placement="left">Bounty Author</span>
         </td>
         <td class="text-right" style="padding-right:15px">
           <%= format_coins @wip.product, c.percentage * contracts.total_cents, :tiny, round: true %>
@@ -217,7 +217,7 @@
     <% if contracts.core_team_contracts.any? %>
       <tr>
         <td class="text-muted" style="padding-left:15px">
-          Core Team tip
+          <span data-toggle="tooltip" title="<%= I18n.t 'tooltips.bounty.core_team', product: @product.name %>" data-placement="left">Core Team tip</span>
         </td>
         <td class="text-right" style="padding-right:15px">
           <%= format_coins @wip.product, contracts.core_team_contracts.map(&:amount).sum * contracts.total_cents, :tiny, round: true %>

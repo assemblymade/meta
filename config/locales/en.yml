@@ -4,6 +4,11 @@ en:
       inception:
         - This is the very beginning. Where it all started. The B in the Big Bang. The C in the Cambrian Explosion.
 
+  tooltips:
+    bounty:
+      author: "Tip to @%{author} for creating this Bounty"
+      core_team: "Tip to the %{product} Core Team"
+
   activity:
     feed:
       wip:
