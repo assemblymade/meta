@@ -27,7 +27,7 @@
               destination: true,
               allowRemoval: true,
               filterUrl: product_wips_path(@wip.product),
-              url: product_wip_path(@product, @wip)
+              url: product_wip_tag_path(@product, @wip)
             }.to_json %>">
       </div>
 
@@ -38,7 +38,7 @@
              label: "Add tag",
              prepend: "#",
              prompt: "Add",
-             url: product_wip_path(@product, @wip)
+             url: product_wip_tag_path(@product, @wip)
            }.to_json %>">
       </div>
 
@@ -48,7 +48,7 @@
               tags: Wip::Tag.suggested_tags.as_json,
               destination: false,
               filterUrl: product_wips_path(@wip.product),
-              url: product_wip_path(@product, @wip)
+              url: product_wip_tag_path(@product, @wip)
             }.to_json %>">
       </div>
 

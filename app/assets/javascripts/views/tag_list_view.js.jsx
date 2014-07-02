@@ -56,13 +56,16 @@ var TagList = React.createClass({
 
       return (
         <li style={{'margin': '0px'}}>
-          <a style={style} href={self.props.filterUrl + '?tag=' + tag} onClick={self.handleClick(tag)}>{tag}</a>
+          <a style={style} href={self.props.filterUrl ? self.props.filterUrl + '?tag=' + tag : 'javascript:void(0);'} onClick={self.handleClick(tag)}>{tag}</a>
         </li>
       );
     });
 
     // FIXME: When there are no tags, the client just receives [""], which requires weird checks like this.
-    if (this.props.destination && (_.isEmpty(mappedTags) || (mappedTags[0] == undefined && mappedTags[1] == undefined))) {
+    if (this.props.destination &&
+        (_.isEmpty(mappedTags) ||
+          (mappedTags[0] == undefined &&
+           mappedTags[1] == undefined))) {
       return (
         <li style={{color: '#d3d3d3', 'font-size': '13px'}}>No tags yet &mdash; why not add some?</li>
       );

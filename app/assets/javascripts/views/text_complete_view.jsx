@@ -67,6 +67,6 @@ var TextComplete = React.createClass({
   },
 
   transform: function(text) {
-    return text.replace(/[^\w-]+/g, '').toLowerCase()
+    return text.replace(/[^\w-]+/g, '-').toLowerCase()
   }
 });
