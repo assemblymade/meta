@@ -31,6 +31,7 @@ class ActivityStream
     pusher_push(activity)
 
     if PUSH_TO_META.include?(activity.type)
+      meta_redis_push(activity)
       meta_push(activity)
     end
 
@@ -60,6 +61,14 @@ class ActivityStream
       "add",
       ActivitySerializer.new(activity).to_json,
       socket_id: activity.socket_id
+    )
+  end
+
+  def meta_redis_push(activity)
+    $redis.zadd(
+      meta_key,
+      activity.created_at.to_i,
+      self.class.serialize(activity)
     )
   end
 
@@ -95,10 +104,20 @@ class ActivityStream
     [KEY_PREFIX, @object.id].join('.')
   end
 
+  def meta_key
+    if meta
+      [KEY_PREFIX, meta.class.name.underscore, meta.id].join(':')
+    end
+  end
+
   def meta_channel
-    if meta = Product.select('id').find_by(slug: 'meta')
+    if meta
       [KEY_PREFIX, meta.id].join('.')
     end
+  end
+
+  def meta
+    Product.select('id').find_by(slug: 'meta')
   end
 
 end
