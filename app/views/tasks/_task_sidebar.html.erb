@@ -12,6 +12,29 @@
       <p><strong>Think you'd be a great fit for this bounty?</strong> Jump in and help out.</p>
       <%= button_to 'Work on this bounty', product_wip_start_work_path(@wip.product, @wip), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-default btn-sm btn-block) %>
 
+      <% if signed_in? && @wip.product.core_team?(current_user) %>
+        <div style="margin-top: 10px; margin-bottom: 0px;">
+          <form role="form" class="form-inline" method="post" action="<%= product_wip_start_work_path(@wip.product, @wip) %>">
+            <div style="display:none;">
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+              <input name="_method" value="patch" type="hidden">
+            </div>
+            <div class="form-group">
+              <label for="assign_to" class="sr-only">Username</label>
+              <input id="assign_to"
+                     class="form-control input-sm textcomplete"
+                     data-product-id="<%= @product.slug %>"
+                     type="text"
+                     name="assign_to"
+                     style="width: 100px; padding: 5px;"
+                     placeholder="Username"
+              >
+            </div>
+            <button type="submit" class="btn btn-default btn-sm" style="width: 55px; margin-top: 0px; padding-left: 6px;">Assign</button>
+          </form>
+        </div>
+      <% end %>
+
     <% when 'allocated' %>
       <div class="progress progress-small omega">
         <div class="progress-bar progress-bar-success" style="width: 33%;"></div>
@@ -39,7 +62,7 @@
               <% if signed_in? && @wip.product.core_team?(current_user) %>
                 <td>
                   <% unless worker.user == current_user %>
-                    <a title="remove" href="<%= product_wip_stop_work_path(@wip.product, @wip, user: worker) %>" data-method="patch" class="text-danger">
+                    <a title="remove" href="<%= product_wip_stop_work_path(@wip.product, @wip, user: worker.user.username) %>" data-method="patch" class="text-danger">
                       <span class="glyphicon glyphicon-remove"></span>
                     </a>
                   <% end %>
@@ -49,6 +72,7 @@
           </tr>
         </tbody>
       </table>
+
       <% if signed_in? && @wip.workers.include?(current_user) %>
         <%= button_to 'Stop work', product_wip_stop_work_path(@wip.product, @wip), method: :patch, disable_with: 'Cancelling…', class: %w(btn btn-default btn-sm btn-block inactive) %>
       <% else %>

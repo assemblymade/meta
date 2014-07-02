@@ -23,11 +23,17 @@ class TasksController < WipsController
   end
 
   def start_work
-    @wip.start_work!(current_user)
-    track_event 'wip.engaged', WipAnalyticsSerializer.new(@wip, scope: current_user).as_json.merge(engagement:'started_work')
-    if !current_user.staff?
+    if username = params[:assign_to]
+      assignee = User.find_by(username: username.gsub!('@', '').strip!())
+    end
+
+    assignee ||= current_user
+
+    @wip.start_work!(assignee)
+    track_event 'wip.engaged', WipAnalyticsSerializer.new(@wip, scope: assignee).as_json.merge(engagement:'started_work')
+    if !assignee.staff?
       AsmMetrics.product_enhancement
-      AsmMetrics.active_user(current_user)
+      AsmMetrics.active_user(assignee)
     end
     respond_with @wip, location: product_wip_path(@product, @wip)
   end
