@@ -3,6 +3,7 @@ class ActivityStream
 
   KEY_PREFIX = 'activitystream'
   DEFAULT_PAGE_LENGTH = 25
+  PUSH_TO_META = ['Activities::FoundProduct']
 
   def self.serialize(activity)
     activity.id.to_s
@@ -28,6 +29,11 @@ class ActivityStream
   def push(activity)
     redis_push(activity)
     pusher_push(activity)
+
+    if PUSH_TO_META.include?(activity.type)
+      meta_push(activity)
+    end
+
     activity
   end
 
@@ -42,6 +48,15 @@ class ActivityStream
   def pusher_push(activity)
     PusherWorker.perform_async(
       channel,
+      "add",
+      ActivitySerializer.new(activity).to_json,
+      socket_id: activity.socket_id
+    )
+  end
+
+  def meta_push(activity)
+    PusherWorker.perform_async(
+      meta_channel,
       "add",
       ActivitySerializer.new(activity).to_json,
       socket_id: activity.socket_id
@@ -78,6 +93,12 @@ class ActivityStream
 
   def channel
     [KEY_PREFIX, @object.id].join('.')
+  end
+
+  def meta_channel
+    if meta = Product.select('id').find_by(slug: 'meta')
+      [KEY_PREFIX, meta.id].join('.')
+    end
   end
 
 end
