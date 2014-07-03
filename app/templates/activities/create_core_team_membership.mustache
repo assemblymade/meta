@@ -1,0 +1,40 @@
+<div class="media">
+
+  <div class="pull-left">
+    <div class="marker marker-green">
+      <i class="icon-user-following"></i>
+    </div>
+  </div>
+
+  <div class="media-body">
+    <div class="media-heading omega">
+      <div class="activity-body">
+        <div class="activity-actions">
+          <ul class="list-inline omega">
+            <li class="text-muted">
+              {{#actor}}
+                <a href="{{url}}">{{username}}</a>
+              {{/actor}}
+              joined the
+              {{#target}}
+                <a target="_blank" href="{{url}}/core">{{#target}}{{name}}{{/target}}</a>
+              {{/target}}
+              core team
+            </li>
+            {{#id}}
+              <li>
+                <div class="js-tips"
+                     data-tips-to="{{#actor}}{{username}}{{/actor}}"
+                     {{#target}}
+                       data-tips-path="{{url}}/tips"
+                       data-tips-product-id="{{id}}"
+                     {{/target}}>
+                </div>
+              </li>
+            {{/id}}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

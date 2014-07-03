@@ -55,7 +55,7 @@ var People = React.createClass({
   },
 
   onFilter: function(interest) {
-    var filteredMemberships = PeopleStore.getPeople();;
+    var filteredMemberships = PeopleStore.getPeople();
     var self = this;
 
     if (interest) {
