@@ -20,8 +20,8 @@
     <div class="media-body ">
 
       <div class="media-heading">
-        Add to the discussion or share work to earn
-        <%= format_coins(@wip.product, @wip.bounty.total_cents) %>.
+        Add to the discussion or share work
+        <% if @wip.open? %>to earn <%= format_coins(@wip.product, @wip.contracts.earnable_cents) %>.<% end %>
       </div>
 
       <ul class="nav nav-tabs text-small" style="border-top: 1px dotted #ebebeb">

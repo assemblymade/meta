@@ -104,7 +104,7 @@
         <% if signed_in? && @wip.winner == current_user %>
           <p>
             You were awarded
-            <%= format_coins(@wip.product, @wip.bounty.total_cents) %>
+            <%= format_coins(@wip.product, @wip.contracts.earnable_cents) %>
             for completing this bounty.
           </p>
           <p class="omega"><strong>Keep up the great work!</strong></p>
@@ -112,7 +112,7 @@
           <p class="omega">
             <strong><%= @wip.winner.username %></strong>
             was awarded
-            <%= format_coins(@wip.product, @wip.bounty.total_cents) %>
+            <%= format_coins(@wip.product, @wip.contracts.earnable_cents) %>
             for completing this bounty.
           </p>
         <% end %>
@@ -194,7 +194,7 @@
 </div>
 
 <div class="panel panel-default">
-  <% b = @wip.bounty %>
+  <% contracts = @wip.contracts %>
   <div class="panel-heading">
     <a href="<%= product_contracts_path(@wip.product) %>" class="text-muted">
       <i class="icon-question pull-right" data-placement="top" data-toggle="tooltip" title="View&nbsp;all&nbsp;Tip&nbsp;Contracts"></i>
@@ -204,23 +204,33 @@
     </h6>
   </div>
   <table class="table table-condensed small">
-    <% if b.core_team_contracts.any? %>
+    <% if c = contracts.author_contract %>
       <tr>
         <td class="text-muted" style="padding-left:15px">
-          Core Team tip
+          <span data-toggle="tooltip" title="<%= I18n.t 'tooltips.bounty.author', author: @wip.user.username %>" data-placement="left">Bounty Author</span>
         </td>
         <td class="text-right" style="padding-right:15px">
-          <%= format_coins @wip.product, b.core_team_contracts.map(&:amount).sum * b.total_cents, :tiny, round: true %>
+          <%= format_coins @wip.product, c.percentage * contracts.total_cents, :tiny, round: true %>
         </td>
       </tr>
     <% end %>
-    <% b.product_contracts.select{|c| c.amount * b.total_cents >= 100 }.each do |c| %>
+    <% if contracts.core_team_contracts.any? %>
+      <tr>
+        <td class="text-muted" style="padding-left:15px">
+          <span data-toggle="tooltip" title="<%= I18n.t 'tooltips.bounty.core_team', product: @product.name %>" data-placement="left">Core Team tip</span>
+        </td>
+        <td class="text-right" style="padding-right:15px">
+          <%= format_coins @wip.product, contracts.core_team_contracts.map(&:amount).sum * contracts.total_cents, :tiny, round: true %>
+        </td>
+      </tr>
+    <% end %>
+    <% contracts.product_contracts.select{|c| c.percentage * contracts.total_cents >= 100 }.each do |c| %>
       <tr>
         <td class="text-muted" style="padding-left:15px">
           @<%= c.user.username %> tip
         </td>
         <td class="text-right" style="padding-right:15px">
-          <%= format_coins @wip.product, c.amount * b.total_cents, :tiny, round: true %>
+          <%= format_coins @wip.product, c.percentage * contracts.total_cents, :tiny, round: true %>
         </td>
       </tr>
     <% end %>

@@ -1,7 +1,7 @@
 module Github
   class Worker
     include Sidekiq::Worker
-    
+
     def add_webhooks(repo)
       post "/repos/#{repo}/hooks",
         name: "web",

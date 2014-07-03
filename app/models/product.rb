@@ -188,10 +188,6 @@ class Product < ActiveRecord::Base
     slug == 'coderwall'
   end
 
-  def partner_ids
-    TransactionLogEntry.with_cents.where(product: self).group(:user_id).count.keys
-  end
-
   def open_tasks_count
     tasks.where(closed_at: nil).count
   end

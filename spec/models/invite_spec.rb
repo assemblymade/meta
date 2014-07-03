@@ -10,7 +10,7 @@ describe Invite do
     context 'with insufficient coins' do
       it 'fails' do
         invite = create_invite
-        credit = TransactionLogEntry.find_by(user_id: invite.id)
+        credit = TransactionLogEntry.find_by(wallet_id: invite.id)
         expect(credit).to be_nil
       end
     end

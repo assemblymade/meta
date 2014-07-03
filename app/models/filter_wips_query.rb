@@ -68,7 +68,11 @@ class FilterWipsQuery
     when 'update'
       Wip.order('wips.updated_at DESC')
     else
-      Wip.order('multiplier DESC, votes_count DESC')
+      if state == 'resolved'
+        Wip.order('closed_at DESC')
+      else
+        Wip.order('multiplier DESC, votes_count DESC')
+      end
     end
   end
 

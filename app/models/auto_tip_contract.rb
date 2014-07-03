@@ -12,6 +12,8 @@ class AutoTipContract < ActiveRecord::Base
   validate :one_contract_per_user
   validate :contracts_less_than_100_percent
 
+  alias_attribute :percentage, :amount
+
   def active?
     deleted_at.nil?
   end

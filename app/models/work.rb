@@ -8,6 +8,8 @@ class Work < ActiveRecord::Base
 
   after_create :auto_upvote
 
+  alias_method :winner, :user
+
   def upvote!(user, ip)
     votes.create!(user: user, ip: ip)
     product.watch!(user)
@@ -44,6 +46,10 @@ class Work < ActiveRecord::Base
 
   def coins_add
     score_multiplier * product.decorate.current_exchange_rate
+  end
+
+  def contracts
+    WorkContracts.new(self)
   end
 
   protected

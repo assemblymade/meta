@@ -8,8 +8,9 @@ class window.ChatView extends Backbone.View
   events:
     'click   .js-chat-load-more' : 'onLoadMore'
     'click   .js-chat-create-wip': 'onCreateWip'
-
+    
   initialize: (options)->
+    @readyToLoadMore = true
     @listenTo(@collection, 'add', @render)
     @scrollContainer = options.scrollContainer
     @scrollPadding = options.scrollPadding
@@ -21,7 +22,8 @@ class window.ChatView extends Backbone.View
       'overflow-x':'hidden'
       'overflow-y':'scroll'
     )
-
+    @scrollContainer.on 'scroll', this.loadMoreWhenNearTop
+    
     $(window).resize(@onWindowResize.bind(this))
     @onWindowResize()
 
@@ -30,7 +32,7 @@ class window.ChatView extends Backbone.View
   render: =>
     @$('.js-chat-load-more').toggle(@collection.length >= 25)
     @scrollToLatestActivity() if @stuckToBottom
-
+    
   scrollToLatestActivity: ->
     $(@scrollContainer).scrollTop(999999)
 
@@ -57,20 +59,44 @@ class window.ChatView extends Backbone.View
 
   onLoadMore: (e) =>
     e.preventDefault()
+    this.loadMore(e)
+
+  loadMoreWhenNearTop: (e)=>
+    nearTop = 200
+    if e.currentTarget.scrollTop < nearTop
+      this.loadMore(e)
+
+  scrollToElement: (anchor)=>
+    console.log(anchor)
+    @scrollContainer.scrollTop $("#" + anchor).offset().top
+    
+  loadMore: (e)=>
+    return if @readyToLoadMore == false
+    @readyToLoadMore = false
     @stuckToBottom = false
-    originalText = $('.js-chat-load-more').text()
-    @$('.js-chat-load-more').attr('disabled', true).text('Loading…')
+    loadMoreButton = @$('.js-chat-load-more')
+    originalText = loadMoreButton.text()
+    curretTopEvent = @collection.first()
+    loadMoreButton.attr('disabled', true).text('Loading…')
+    oldHeight = @scrollContainer[0].scrollHeight
+
     $.ajax(
       type: 'GET'
-      url: $(e.target).attr('href') + "?top_id=#{@collection.first().get('id')}"
+      url: loadMoreButton .attr('href') + "?top_id=#{curretTopEvent.get('id')}"
+      complete: =>
+        @readyToLoadMore = true
+        console.log(curretTopEvent)
+        newHeight = @scrollContainer[0].scrollHeight
+        @scrollContainer.scrollTop (newHeight - oldHeight)
+        
       success: (datas) =>
         fixScroll =>
           for data in _.sortBy(datas, (data) -> data['created']).reverse()
             @collection.unshift(data)
 
-          @$('.js-chat-load-more').text(originalText).attr('disabled', false)
+          loadMoreButton.text(originalText).attr('disabled', false)
     )
-
+    
   onCreateWip: (e) ->
     e.preventDefault()
     id = $(e.currentTarget).attr('href')

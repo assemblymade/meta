@@ -6,4 +6,6 @@ describe Task do
       expect { Task.make!(deliverable: nil) }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
+
+  # describe 'award'
 end

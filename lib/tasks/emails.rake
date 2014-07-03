@@ -20,17 +20,6 @@ namespace :emails do
     Wip::Worker.mia.each(&:remind!)
   end
 
-  task :stake_updated => :environment do
-    TransactionLogEntry.with_cents.group(:user_id, :product_id).sum(:cents).each do |(user_id, product_id), cents|
-      user = User.find(user_id)
-      product = Product.find(product_id)
-      if cents > 0
-        Rails.logger.info("email=stake_updated user=#{user.username} product=#{product.slug} cents=#{cents}")
-        StakeMailer.delay(queue: 'mailer').coin_balance(product_id, user_id)
-      end
-    end
-  end
-
   task :joined_team_no_work_yet => :environment do
     User.find(TeamMembership.where('created_at < ?', 1.day.ago).group(:user_id).count.keys).each do |user|
       if Task.won_by(user).empty? &&                          # no bounties won
