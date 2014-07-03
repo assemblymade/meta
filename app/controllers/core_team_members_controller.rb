@@ -20,7 +20,14 @@ class CoreTeamMembersController < ProductController
       @product.core_team << user
 
       # FIXME: Shouldn't have to #find_or_create both the TeamMembership and the CoreTeamMembership
-      user.team_memberships.find_or_create_by!(product: @product).update_attributes(is_core: true)
+      team_membership = user.team_memberships.find_by(product: @product)
+
+      if team_membership.nil?
+        user.team_memberships.create(product: @product, is_core: true)
+      else
+        team_membership.update_attributes(is_core: true)
+      end
+
       CoreTeamMembership.find_or_create_by!(product: @product, user: user)
 
       CoreTeamMailer.delay(queue: 'mailer').welcome(@product.id, user.id)

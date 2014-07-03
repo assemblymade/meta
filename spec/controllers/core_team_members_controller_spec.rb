@@ -15,7 +15,7 @@ describe CoreTeamMembersController do
 
   describe "POST #create" do
 
-    it "is successful" do
+    it "is successful even if user is not on team" do
       product.core_team << current_user
       sign_in(current_user)
       post :create,
