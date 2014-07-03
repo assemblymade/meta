@@ -36,6 +36,7 @@ class Task < Wip
       event :unallocate,  :transitions_to => :open
     end
     state :allocated do
+      event :allocate,    :transitions_to => :allocated
       event :unallocate,  :transitions_to => :open
       event :award,       :transitions_to => :resolved
       event :close,       :transitions_to => :resolved
@@ -121,7 +122,7 @@ class Task < Wip
   end
 
   def start_work!(worker)
-    self.workers << worker
+    self.workers << worker unless self.workers.include?(worker)
     allocate!(worker) unless self.workers.count > 1
   end
 
