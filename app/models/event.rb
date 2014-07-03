@@ -56,6 +56,7 @@ class Event < ActiveRecord::Base
 
   # this is called immediately on event created
   # this  shouldn't email anyone because readraptor will take care of that
+  # FIXME: 3 July 2014: The above no longer seems to be true
   def notify_users!(users)
     mentioned = self.mentioned_users
     users.each do |user|
