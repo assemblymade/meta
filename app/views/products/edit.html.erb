@@ -117,8 +117,7 @@
 
         <hr>
 
-        <%= form_tag product_core_team_members_path(@product) do %>
-        <form class="form">
+        <%= form_tag product_core_team_members_path(@product), class: 'form' do %>
           <div class="input-group">
             <%= label_tag :core_team_member_username, '@', class: 'input-group-addon' %>
             <%= text_field_tag 'core_team_member[username]', nil, class: 'form-control', placeholder: 'username' %>
