@@ -65,10 +65,6 @@
       <% else %>
         <%= button_to 'Start work', product_wip_start_work_path(@wip.product, @wip), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-default btn-sm btn-block) %>
       <% end %>
-      
-      <% if signed_in? && @wip.product.core_team?(current_user) %>
-        <%= render 'tasks/assign_form' %>
-      <% end %>
 
   <% when 'reviewing' %>
     <div class="panel-heading" style="background-color: #fff;">
