@@ -1,4 +1,14 @@
-class CoreTeamMembersController < ApplicationController
+class CoreTeamMembersController < ProductController
+
+  def index
+    authenticate_user!
+    find_product!
+
+    @memberships = @product.team_memberships.active.core_team
+    @core_team_memberships = @product.core_team_memberships
+
+    @selected_filter = params[:filter]
+  end
 
   def create
     authenticate_user!
@@ -19,10 +29,6 @@ class CoreTeamMembersController < ApplicationController
     end
 
     redirect_to edit_product_path(@product)
-  end
-
-  def find_product!
-    @product = Product.find_by_slug(params[:product_id])
   end
 
   def core_team_member_params

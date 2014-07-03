@@ -1,3 +1,4 @@
+
 require 'sidekiq/web'
 
 ASM::Application.routes.draw do
@@ -218,6 +219,9 @@ ASM::Application.routes.draw do
     end
 
     resources :people, only: [:index, :create, :update, :destroy]
+    resources :core_team_members
+
+    get '/core' => 'core_team_members#index'
 
     resources :team, only: [:index, :show, :new, :edit, :create, :update], controller: 'jobs', as: :jobs  do
       get 'join'
@@ -266,8 +270,6 @@ ASM::Application.routes.draw do
     resources :tips, only: [:create]
 
     resources :contracts, only: [:index, :create, :update, :destroy]
-
-    resources :core_team_members
 
     resources :posts do
       post :preview, on: :collection

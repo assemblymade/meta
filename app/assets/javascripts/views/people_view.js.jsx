@@ -4,6 +4,22 @@
 
 var People = React.createClass({
   render: function(){
+    if (this.props.coreOnly) {
+      return (
+        <div>
+          <h6>Core Team</h6>
+          <PeopleList
+              memberships={this.state.filteredMemberships}
+              selected={this.state.selected}
+              onFilter={this.onFilter}
+              interestFilters={this.props.interestFilters}
+              currentUser={this.props.currentUser}
+              updatePath={this.props.updatePath}
+              coreMemberships={this.props.coreMemberships} />
+        </div>
+      );
+    }
+
     return (
       <div>
         <PeopleFilter
@@ -19,7 +35,8 @@ var People = React.createClass({
             onFilter={this.onFilter}
             interestFilters={this.props.interestFilters}
             currentUser={this.props.currentUser}
-            updatePath={this.props.updatePath} />
+            updatePath={this.props.updatePath}
+            coreMemberships={this.props.coreMemberships} />
       </div>
     )
   },
@@ -154,6 +171,7 @@ var PeopleList = React.createClass({
 
     for (var i = 0, l = memberships.length; i < l; i++) {
       var member = memberships[i];
+
       if (!member) {
         return;
       }
@@ -230,8 +248,25 @@ var PeopleList = React.createClass({
               selected={this.props.selected}
           />
         </div>
+        {this.coreTeamInfo(member)}
       </div>
     )
+  },
+
+  coreTeamInfo: function(member) {
+    var core = this.props.coreMemberships;
+
+    if (core) {
+      for (var i = 0, l = core.length; i < l; i++) {
+        var c = core[i];
+
+        if (c.user_id === member.user.id) {
+          return (
+            <span className="text-muted">{'Core team since ' + _parseDate(c.created_at)}</span>
+          )
+        }
+      }
+    }
   },
 
   hasBio: function(user) {
@@ -428,3 +463,9 @@ var BioEditor = React.createClass({
     });
   }
 });
+
+function _parseDate(date) {
+  var parsedDate = new Date(date);
+
+  return (parsedDate.getMonth() + 1).toString() + '-' + parsedDate.getDate().toString() + '-' + parsedDate.getFullYear().toString();
+}

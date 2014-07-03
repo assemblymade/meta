@@ -40,6 +40,13 @@
       <!-- <%= link_to 'People', product_people_path(@product) %> -->
     </li>
 
+    <li class="<%= 'active' if nav_active?(:subnav_core) %>">
+      <a href="<%= product_core_team_members_path(@product) %>">
+        <i class="icon-users dropdown-glyph"></i>
+        Core Team
+      </a>
+    </li>
+
     <li class="<%= 'active' if nav_active?(:subnav_partners) %>">
       <a href="<%= product_partners_path(@product) %>">
         <i class="icon-pie-chart dropdown-glyph"></i>

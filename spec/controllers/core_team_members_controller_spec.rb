@@ -6,6 +6,13 @@ describe CoreTeamMembersController do
   let(:current_user) { User.make! }
   let(:user) { User.make! }
 
+  describe '#index' do
+    it 'is successful' do
+      get :index, product_id: product.slug
+      expect(response.status).to eq(302)
+    end
+  end
+
   describe "POST #create" do
 
     it "is successful" do
