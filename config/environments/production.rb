@@ -71,7 +71,7 @@ ASM::Application.configure do
     api_key: ENV['MAILGUN_API_KEY'],
     domain:  ENV['MAILGUN_DOMAIN']
   }
-  ActionMailer::Base.default from: 'Assembly <team@assembly.com>'
+  ActionMailer::Base.default from: 'Assembly <hi@assembly.com>'
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found).
