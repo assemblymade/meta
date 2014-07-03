@@ -16,6 +16,12 @@ class ContractsController < ProductController
 
     contract = AutoTipContract.create!(product: @product, user: user, amount: amount)
 
+    Activities::CreateContract.publish!(
+      actor: user,
+      subject: @product,
+      target: @product
+    )
+
     respond_to do |format|
       format.json { render json: contract.to_json, status: 201 }
       format.html { redirect_to product_contracts_path(@product) }
@@ -30,6 +36,12 @@ class ContractsController < ProductController
 
     AutoTipContract.replace_contract(@product, contract.user, proposed_amount)
 
+    Activities::UpdateContract.publish!(
+      actor: contract.user,
+      subject: @product,
+      target: @product
+    )
+
     respond_to do |format|
       format.json { render json: {}, status: 201 }
     end
@@ -40,6 +52,12 @@ class ContractsController < ProductController
     authorize! :destroy, contract
 
     AutoTipContract.end_contract(@product, contract.user)
+
+    Activities::DestroyContract.publish!(
+      actor: contract.user,
+      subject: @product,
+      target: @product
+    )
 
     respond_to do |format|
       format.json { render json: {}, status: 204 }
