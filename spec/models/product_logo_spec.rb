@@ -7,7 +7,7 @@ describe ProductLogo do
 
   describe '#create' do
     it 'creates a product_logo' do
-      expect(ProductLogo.create(attachment: attachment, user: user, product: product)).to be_a(ProductLogo)
+      expect(ProductLogo.create(name: 'archer.png', attachment: attachment, user: user, product: product)).to be_a(ProductLogo)
     end
   end
 end

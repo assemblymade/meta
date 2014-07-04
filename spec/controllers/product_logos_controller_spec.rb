@@ -10,7 +10,7 @@ describe ProductLogosController do
     end
 
     it 'creates a product logo' do
-      post :create, product_id: product.slug, name: 'foo.jpg', size: 13124, content_type: 'image/png'
+      post :create, product_id: product.slug, name: 'ford_prefect.png', size: 13124, content_type: 'image/png'
       expect(assigns(:logo)).to be
     end
   end
