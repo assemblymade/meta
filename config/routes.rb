@@ -210,6 +210,8 @@ ASM::Application.routes.draw do
     resources :assets
     resources :watchers
 
+    resources :product_logos, only: [:index, :show, :create, :update], path: 'logos'
+
     resources :milestones, only: [:index, :show, :new, :create, :edit, :update], path: 'projects' do
       put 'tasks/:id' => 'milestones#add'
       resources :tasks, only: [:create, :destroy, :show, :update]

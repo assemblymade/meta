@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :core_products, :through => :core_team_memberships, :source => :product
   has_many :core_team_memberships
   has_many :products
+  has_many :product_logos
   has_many :preorders
   has_many :watchings
   has_many :followed_tags, :through => :watchings, :source => :watchable, :source_type => 'Wip::Tag'

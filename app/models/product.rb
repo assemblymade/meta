@@ -16,6 +16,8 @@ class Product < ActiveRecord::Base
   belongs_to :evaluator, class_name: 'User'
   belongs_to :main_thread, class_name: 'Discussion'
 
+  has_one :current_product_logo, class_name: 'ProductLogo'
+
   has_many :activities
   has_many :assets
   has_many :auto_tip_contracts
@@ -35,6 +37,7 @@ class Product < ActiveRecord::Base
   has_many :perks
   has_many :posts
   has_many :preorders, :through => :perks
+  has_many :product_logos
   has_many :profit_reports
   has_many :rooms
   has_many :showcases
@@ -183,7 +186,7 @@ class Product < ActiveRecord::Base
   def open_tasks?
     wips.where(closed_at: nil).exists?
   end
-  
+
   def revenue?
     slug == 'coderwall'
   end
