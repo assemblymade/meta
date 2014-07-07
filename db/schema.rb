@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140704044619) do
+ActiveRecord::Schema.define(version: 20140707175031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,14 +55,13 @@ ActiveRecord::Schema.define(version: 20140704044619) do
   end
 
   create_table "attachments", id: false, force: true do |t|
-    t.uuid     "id",            null: false
+    t.uuid     "id",           null: false
     t.uuid     "user_id"
     t.string   "asset_path"
     t.string   "name"
     t.string   "content_type"
     t.integer  "size"
     t.datetime "created_at"
-    t.uuid     "product_logos"
   end
 
   create_table "auto_tip_contracts", force: true do |t|
@@ -113,14 +112,6 @@ ActiveRecord::Schema.define(version: 20140704044619) do
   end
 
   add_index "core_team_memberships", ["user_id", "product_id"], name: "index_core_team_memberships_on_user_id_and_product_id", unique: true, using: :btree
-
-  create_table "current_product_logos", force: true do |t|
-    t.integer  "product_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "current_product_logos", ["product_id"], name: "index_current_product_logos_on_product_id", using: :btree
 
   create_table "daily_actives", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.integer  "count"
@@ -308,39 +299,6 @@ ActiveRecord::Schema.define(version: 20140704044619) do
     t.text     "variation"
   end
 
-  create_table "product_jobs", id: false, force: true do |t|
-    t.uuid     "id",          null: false
-    t.uuid     "user_id",     null: false
-    t.uuid     "product_id",  null: false
-    t.string   "category"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "slug"
-  end
-
-  add_index "product_jobs", ["slug"], name: "index_product_jobs_on_slug", unique: true, using: :btree
-
-  create_table "product_logos", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "product_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.uuid     "attachment_id", null: false
-  end
-
-  add_index "product_logos", ["product_id"], name: "index_product_logos_on_product_id", using: :btree
-  add_index "product_logos", ["user_id"], name: "index_product_logos_on_user_id", using: :btree
-
-  create_table "product_roles", id: false, force: true do |t|
-    t.uuid     "id",             null: false
-    t.uuid     "product_job_id", null: false
-    t.uuid     "user_id",        null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.uuid     "product_id",     null: false
-  end
-
   create_table "product_subscriptions", id: false, force: true do |t|
     t.uuid     "id",         null: false
     t.uuid     "product_id", null: false
@@ -385,6 +343,7 @@ ActiveRecord::Schema.define(version: 20140704044619) do
     t.datetime "founded_at"
     t.datetime "public_at"
     t.uuid     "main_thread_id"
+    t.uuid     "logo_id"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree

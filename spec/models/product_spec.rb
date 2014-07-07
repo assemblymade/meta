@@ -122,6 +122,24 @@ describe Product do
     end
   end
 
+  describe '#logo' do
+    it 'falls back to PosterImage' do
+      expect(product.poster_image).not_to be_a(Asset)
+      expect(product.poster_image).to be_a(PosterImage)
+    end
+
+    it 'uses a logo (Asset) if it has one' do
+      user = User.make!
+      attachment = Attachment.make!
+      product = Product.make!
+      logo = Asset.create(name: 'trillian.png', attachment: attachment, user: user, product: product)
+      product.logo = logo
+
+      expect(product.poster_image).not_to be_a(PosterImage)
+      expect(product.poster_image).to be_a(Asset)
+    end
+  end
+
   describe '#assembly?' do
     it 'only returns true if the product is assembly' do
       product.slug = 'asm'

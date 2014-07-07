@@ -16,7 +16,7 @@ class Product < ActiveRecord::Base
   belongs_to :evaluator, class_name: 'User'
   belongs_to :main_thread, class_name: 'Discussion'
 
-  has_one :current_product_logo, class_name: 'ProductLogo'
+  belongs_to :logo, class_name: 'Asset', foreign_key: 'logo_id'
 
   has_many :activities
   has_many :assets
@@ -37,7 +37,6 @@ class Product < ActiveRecord::Base
   has_many :perks
   has_many :posts
   has_many :preorders, :through => :perks
-  has_many :product_logos
   has_many :profit_reports
   has_many :rooms
   has_many :showcases
@@ -334,7 +333,7 @@ class Product < ActiveRecord::Base
   end
 
   def poster_image
-    PosterImage.new(self)
+    self.logo || PosterImage.new(self)
   end
 
   def fill_in_generated_name
@@ -401,7 +400,11 @@ class Product < ActiveRecord::Base
   end
 
   def poster_image_url
-    PosterImage.new(self).url
+    unless self.logo.nil?
+      self.logo.url
+    else
+      PosterImage.new(self).url
+    end
   end
 
   def hidden

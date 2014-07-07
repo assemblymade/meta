@@ -48,12 +48,6 @@ Product.blueprint do
   can_advertise { true }
 end
 
-ProductLogo.blueprint do
-  attachment
-  user
-  product
-end
-
 Preorder.blueprint do
   user
   perk

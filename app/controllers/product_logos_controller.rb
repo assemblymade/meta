@@ -4,13 +4,18 @@ class ProductLogosController < ProductController
   before_action :find_product!
   before_action :authenticate_user!
 
-  def create
-    attachment = Attachment.create!(logo_params.merge(user: current_user))
-    @logo = @product.product_logos.create!(name: logo_params[:name], attachment: attachment, user: current_user, product: @product)
-    @product.current_product_logo = @logo
-    @room = Room.create_for!(@logo.product, @logo)
+  def index
+    redirect_to product_assets_path(@product)
+  end
 
-    respond_with @logo, location: product_assets_path(@product)
+  def create
+    authorize! :edit, @product
+
+    logo = @product.assets.create(logo_params.merge(user: current_user))
+
+    @product.update_attributes(logo: logo)
+
+    respond_with @product, location: product_assets_path(@product)
   end
 
   def show
@@ -23,7 +28,7 @@ class ProductLogosController < ProductController
   end
 
   def logo_params
-    params.permit(:name, :size, :content_type)
+    params.require(:asset).permit(:attachment_id, :name)
   end
 
 end

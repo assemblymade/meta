@@ -12,14 +12,24 @@
       <div class="col-md-2 fixed-enabler">
 
         <% if @product.poster? %>
-          <div data-react-class="DragAndDrop"
-               data-react-props="<%= {
-                csrfToken: form_authenticity_token,
-                url: @product.poster_image.url,
-                uploadUrl: ATTACHMENT_UPLOAD_URL,
-                assetsPath: product_assets_path(@product),
-                alt: @product.name
-               }.to_json %>"></div>
+          <% if current_user && @product.core_team?(current_user) %>
+            <%= form_for :asset, url: product_logos_path(@product), html: {id: 'product-logo-form'} do |f| %>
+              <%= f.hidden_field :attachment_id %>
+              <%= f.hidden_field :name %>
+            <% end %>
+            <div class="js-dropzone"
+                data-target-form="#product-logo-form"
+                data-react-class="DragAndDrop"
+                data-react-props="<%= {
+                  url: @product.poster_image.url,
+                  alt: @product.name
+                }.to_json %>">
+            </div>
+          <% else %>
+            <span class="img-shadow" style="margin-bottom: 36px;">
+              <%= image_tag @product.poster_image.url, class: 'img-rounded', width: '100%', alt: @product.name %>
+            </span>
+          <% end %>
         <% end %>
 
         <ul class="nav nav-stacked nav-sidebar">
@@ -176,8 +186,6 @@
             <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>"><%= @breadcrumb[:text] %></a>
           <% end %>
         </h3>
-
-
 
         <div class="sheet" <%if @sheet_style%> style="<%= @sheet_style%>" <%end%>>
           <div class="sheet-body">

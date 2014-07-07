@@ -1,2 +1,0 @@
-class ProductLogo < Asset
-end
