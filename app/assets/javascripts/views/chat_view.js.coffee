@@ -67,7 +67,6 @@ class window.ChatView extends Backbone.View
       this.loadMore(e)
 
   scrollToElement: (anchor)=>
-    console.log(anchor)
     @scrollContainer.scrollTop $("#" + anchor).offset().top
 
   loadMore: (e)=>
@@ -76,16 +75,15 @@ class window.ChatView extends Backbone.View
     @stuckToBottom = false
     loadMoreButton = @$('.js-chat-load-more')
     originalText = loadMoreButton.text()
-    curretTopEvent = @collection.first()
+    currentTopEvent = @collection.first()
     loadMoreButton.attr('disabled', true).text('Loading…')
     oldHeight = @scrollContainer[0].scrollHeight
 
     $.ajax(
       type: 'GET'
-      url: loadMoreButton .attr('href') + "?top_id=#{curretTopEvent.get('id')}"
+      url: loadMoreButton .attr('href') + "?top_id=#{currentTopEvent.get('id')}"
       complete: =>
         @readyToLoadMore = true
-        console.log(curretTopEvent)
         newHeight = @scrollContainer[0].scrollHeight
         @scrollContainer.scrollTop (newHeight - oldHeight)
 
