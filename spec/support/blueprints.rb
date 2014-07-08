@@ -45,6 +45,7 @@ Product.blueprint do
   user
   name  { "Product #{sn}" }
   pitch { Faker::Lorem.paragraph(1) }
+  launched_at { Time.now }
   can_advertise { true }
 end
 

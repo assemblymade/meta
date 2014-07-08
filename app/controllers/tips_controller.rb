@@ -1,5 +1,5 @@
-class TipsController < ApplicationController
-  before_action :set_product
+class TipsController < ProductController
+  before_action :find_product!
 
   def create
     @via = tip_params[:via_type].constantize.find(tip_params[:via_id])

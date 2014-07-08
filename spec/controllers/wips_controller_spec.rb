@@ -26,7 +26,7 @@ describe TasksController do
     before do
       sign_in user
       product.core_team << user
-      patch :award, product_id: product.id, id: wips.first.number, event_id: event.id, format: :js
+      patch :award, product_id: product.slug, id: wips.first.number, event_id: event.id, format: :js
     end
 
     it "sends awarded mail" do
@@ -43,7 +43,7 @@ describe TasksController do
     end
 
     it 'updates a wip' do
-      patch :update, product_id: product.id, id: wips.first.number, task: { title: 'Foo' }
+      patch :update, product_id: product.slug, id: wips.first.number, task: { title: 'Foo' }
       expect(response.status).to eq(302)
     end
   end
@@ -54,7 +54,7 @@ describe TasksController do
     end
 
     it 'tags a wip' do
-      patch :tag, product_id: product.id, wip_id: wips.first.number, task: { tag_list: ['foo', 'bar', 'baz'] }
+      patch :tag, product_id: product.slug, wip_id: wips.first.number, task: { tag_list: ['foo', 'bar', 'baz'] }
       expect(response.status).to eq(302)
       expect(assigns(:wips))
     end

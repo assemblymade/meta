@@ -6,10 +6,17 @@ describe Product do
   let(:user) { User.make! }
   let(:ip) { '127.0.0.1' }
 
-  it 'should revert to id if slug is blank on to_param' do
-    blank_slug_in_prod_that_messes_up_urls = ""
-    product = Product.make!(:slug => blank_slug_in_prod_that_messes_up_urls)
-    product.to_param.should == product.id
+  describe '#to_param' do
+    it 'is slug if launched' do
+      expect(
+        Product.make!(slug: 'snapcat').to_param
+      ).to eq('snapcat')
+    end
+
+    it 'is id if stealth' do
+      product = Product.make!(launched_at: nil)
+      expect(product.to_param).to eq(product.id)
+    end
   end
 
   it 'generates an authentication token before create' do

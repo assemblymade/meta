@@ -17,3 +17,4 @@ describe Api::TextcompletesController do
     expect(JSON.parse(response.body)['textcompletes']).to match_array([['@vanstee', 'Patrick'], ['@vanstew', 'Pat']])
   end
 end
+

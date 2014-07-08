@@ -323,7 +323,6 @@ class Product < ActiveRecord::Base
 
   def to_param
     launched? ? slug : id
-    # (slug.blank? ? id : slug).to_param
   end
 
   def watch!(user)

@@ -1,6 +1,6 @@
 module Api
-  class TextcompletesController < ApplicationController
-    before_action :set_product
+  class TextcompletesController < ProductController
+    before_action :find_product!
 
     respond_to :json
 
