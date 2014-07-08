@@ -8,6 +8,7 @@ protected
     id = params[:product_id] || params[:id]
     if id.uuid?
       @product = Product.find(id).decorate
+      redirect_to product_path(@product.slug) if @product.launched?
     else
       @product = Product.launched.find_by_slug!(id).decorate
     end

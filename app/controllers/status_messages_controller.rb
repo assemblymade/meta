@@ -1,4 +1,4 @@
-class StatusMessagesController < ApplicationController
+class StatusMessagesController < ProductController
   respond_to :json
 
   before_action :find_product
@@ -10,10 +10,6 @@ class StatusMessagesController < ApplicationController
   end
 
 private
-
-  def find_product
-    @product = ProductDecorator.find_by_slug!(params.fetch(:product_id)).decorate
-  end
 
   def status_message_params
     params.require(:status_message).permit(:body)

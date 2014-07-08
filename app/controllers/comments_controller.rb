@@ -57,7 +57,8 @@ class CommentsController < ProductController
   # private
 
   def set_wip
-    @product = Product.find_by!(slug: params[:product_id]).decorate
+    find_product!
+
     if params[:discussion_id]
       @wip = @product.discussions.find_by(number: params[:discussion_id])
     else

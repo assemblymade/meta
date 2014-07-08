@@ -72,10 +72,6 @@ private
     true
   end
 
-  def find_product!
-    @product = ProductDecorator.find_by_slug!(params.fetch(:product_id))
-  end
-
   def post_params
     params.require(:post).permit(:title, :summary, :body, :published_at)
   end
