@@ -203,7 +203,6 @@ ASM::Application.routes.draw do
     get 'leaderboard(/:period)', :to => 'products#leaderboard', :as => :leaderboard
     get :metrics
     get :welcome
-    get '/dashboard' => 'products/dashboard#index', :as => :dashboard
     get 'log' => 'stakes#show'
     get 'search' => 'search#index'
 
