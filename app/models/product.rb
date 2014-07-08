@@ -72,6 +72,7 @@ class Product < ActiveRecord::Base
   scope :greenlit,         -> { where('greenlit_at is not null') }
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
+  scope :launched,         -> { where.not(launched_at: nil) }
   scope :public_products,  -> { where.not(slug: PRIVATE).where(flagged_at: nil) }
   scope :since,            ->(time) { where('created_at >= ?', time) }
   scope :tagged_with_any,  ->(tags) { where('tags && ARRAY[?]::varchar[]', tags) }
@@ -126,6 +127,10 @@ class Product < ActiveRecord::Base
     else
       :building
     end
+  end
+
+  def launched?
+    !launched_at.nil?
   end
 
   def founded_at
@@ -317,7 +322,8 @@ class Product < ActiveRecord::Base
   end
 
   def to_param
-    (slug.blank? ? id : slug).to_param
+    launched? ? slug : id
+    # (slug.blank? ? id : slug).to_param
   end
 
   def watch!(user)

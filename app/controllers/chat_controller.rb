@@ -55,11 +55,6 @@ class ChatController < ProductController
 
   private
 
-  def find_product!
-    @product = Product.find_by_slug!(params.fetch(:product_id))
-    authorize! :read, @product
-  end
-
   def comment_params
     params.require(:comment).permit(:body)
   end

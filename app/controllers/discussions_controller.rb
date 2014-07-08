@@ -54,10 +54,6 @@ class DiscussionsController < WipsController
 
   protected
 
-  def find_product!
-    @product = Product.find_by_slug!(params[:product_id])
-  end
-
   def find_discussion!
     @discussion = @product.wips.find_by_number(params[:id])
   end

@@ -87,11 +87,6 @@ class ApplicationController < ActionController::Base
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 
-  def set_product
-    @product = Product.find_by_id_or_slug!((params[:product_id] || params[:id]).downcase).decorate
-    authorize! :read, @product
-  end
-
   # TODO remove these when we've removed WIPs
   def product_task_path(product, wip, options={})
     product_wip_path(product, wip, options)
