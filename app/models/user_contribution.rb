@@ -1,15 +1,17 @@
-class UserContribution < Struct.new(:product, :contribution_count, :cents, :total_cents)
-  def self.for(user)
-    product_cents = Hash[TransactionLogEntry.product_balances(user)]
+class UserContribution < Struct.new(:product, :cents, :total_cents)
+  def self.for(user, launched_only=false)
+
+    # TODO: this should be able to load all product columns. WTF
+    product_id_balances = Hash[TransactionLogEntry.products_with_balance(user, launched_only)]
+
+    products = Product.where(id: product_id_balances.keys).to_a # shouldn't need this step
     total_cents = TransactionLogEntry.product_totals
 
-    product_contribution_counts(user).map do |product_id, contribution_count|
-      cents = (product_cents[product_id] || 0)
-
+    product_id_balances.map do |product_id, balance|
+      product = products.find{|product| product.id == product_id}
       UserContribution.new(
-        Product.find(product_id),
-        contribution_count,
-        cents,
+        product,
+        balance || 0,
         total_cents[product_id]
       )
     end
@@ -21,17 +23,9 @@ class UserContribution < Struct.new(:product, :contribution_count, :cents, :tota
 
     UserContribution.new(
       product,
-      product_contribution_counts(user)[product.id] || 0,
       user_cents,
       total_cents
     )
-  end
-
-  def self.product_contribution_counts(user)
-    event_contributions = Event.joins(:wip).where(user_id: user.id).group(:product_id).count
-    work_contributions = Work.where(user_id: user.id).group(:product_id).count
-
-    event_contributions.merge(work_contributions) {|k, v1, v2| v1 + v2 }
   end
 
   def coins

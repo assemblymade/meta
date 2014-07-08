@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.js   { render :layout => false }
       format.html {
-        @contributions = UserContribution.for(@user).
+        @contributions = UserContribution.for(@user, current_user != @user).
                                           sort_by{|c| -c.cents }.
                                           reject{|c| Product::PRIVATE.include?(c.product.slug) }
         respond_with @user

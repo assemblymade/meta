@@ -24,6 +24,18 @@ class TransactionLogEntry < ActiveRecord::Base
     with_cents.group(:product_id).sum(:cents)
   end
 
+  def self.products_with_balance(wallet_id, launched_only=false)
+    query = Product.select('products.id, sum(cents) as balance').
+         joins('inner join transaction_log_entries tle on tle.product_id = products.id').
+         where('wallet_id = ?', wallet_id)
+
+     query = query.where('launched_at is not null') if launched_only
+
+     query.group('products.id').map do |product|
+       [product.id, product.balance]
+     end
+  end
+
   def self.users_with_balance
     User.select('users.*, sum(cents) as balance').
          joins('inner join transaction_log_entries tle on tle.wallet_id = users.id').
