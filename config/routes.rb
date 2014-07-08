@@ -200,10 +200,6 @@ ASM::Application.routes.draw do
     post 'follow'
     post 'subscribe', as: :subscribe, on: :member
     post 'unsubscribe', as: :unsubscribe, on: :member
-    get 'leaderboard(/:period)', :to => 'products#leaderboard', :as => :leaderboard
-    get :metrics
-    get :welcome
-    get '/dashboard' => 'products/dashboard#index', :as => :dashboard
     get 'log' => 'stakes#show'
     get 'search' => 'search#index'
 
@@ -224,11 +220,6 @@ ASM::Application.routes.draw do
     resources :core_team_members
 
     get '/core' => 'core_team_members#index'
-
-    resources :team, only: [:index, :show, :new, :edit, :create, :update], controller: 'jobs', as: :jobs  do
-      get 'join'
-      get 'part'
-    end
 
     resources :discussions, only: [:index, :show, :new, :edit, :create, :update] do
       patch :close, on: :member
@@ -286,10 +277,10 @@ ASM::Application.routes.draw do
       resources :transactions, only: [:index, :show, :new, :create]
     end
 
-    resources :rooms
-
     # legacy
     get '/discuss', to: redirect(path: '%{product_id}/chat')
+    get :team, to: redirect(path: '%{product_id}/people')
+    get :welcome, to: redirect(path: '%{product_id}')
 
     get '/:number' => 'rooms#deprecated_redirect',
       constraints: {number: /\d+/},

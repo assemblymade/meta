@@ -23,16 +23,16 @@ var InviteBountyForm = React.createClass({
         </FormGroup>
         <FormGroup error={this.state.errors.tip_cents}>
           <label>Leave a tip</label>
-          <p className="text-muted">Get the started on the right foot. Generosity always pays off</p>
+          <p className="text-muted">Start off on the right foot; generosity always pays off.</p>
 
           <div className="btn-group text-center" data-toggle="buttons" style={{width:'100%'}}>
-            <label className="btn btn-primary active" style={{width:'34%'}}>
+            <label className="btn btn-default active" style={{width:'34%'}}>
               <input type="radio" name="invite[tip_cents]" value="1000" defaultChecked={true} /> <span className="icon icon-app-coin">10</span>
             </label>
-            <label className="btn btn-primary" style={{width:'33%'}}>
+            <label className="btn btn-default" style={{width:'33%'}}>
               <input type="radio" name="invite[tip_cents]" value="10000"/> <span className="icon icon-app-coin">100</span>
             </label>
-            <label className="btn btn-primary" style={{width:'33%'}}>
+            <label className="btn btn-default" style={{width:'33%'}}>
               <input type="radio" name="invite[tip_cents]" value="50000"/> <span className="icon icon-app-coin">500</span>
             </label>
           </div>

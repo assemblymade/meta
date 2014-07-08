@@ -1,8 +1,3 @@
-<% if @product.poster? %>
-  <img class="img-rounded" src="<%= @product.hero_image_path %>" alt="<%= @product.name %>" width="100%">
-  <hr>
-<% end %>
-
 <div class="panel">
   <div data-react-class="InviteFriendProduct" data-react-props='<%== {
       url: invites_path,
@@ -10,59 +5,4 @@
       notePlaceholder: "Hey! Want to help build #{@product.name}",
     }.merge(TypeId.as_json(:via, @product)).to_json %>'>
   </div>
-</div>
-
-<div class="panel panel-default">
-
-  <ul class="nav nav-pills nav-stacked">
-    <li class="<%= 'active' if nav_active?(:product) %>">
-      <a href="<%= product_path(@product) %>">
-        <i class="icon-info dropdown-glyph"></i>
-        About
-      </a>
-    </li>
-
-    <% if @product.posts.any? %>
-      <li class="<%= 'active' if nav_active?(:subnav_blog) %>">
-        <a href="<%= product_posts_path(@product) %>">
-          <i class="icon-notebook dropdown-glyph"></i>
-          Blog
-        </a>
-        <!-- <%= link_to 'Blog', product_posts_path(@product) %> -->
-      </li>
-    <% end %>
-
-    <li class="<%= 'active' if nav_active?(:subnav_people) %>">
-      <a href="<%= product_people_path(@product) %>">
-        <i class="icon-users dropdown-glyph"></i>
-        People
-      </a>
-      <!-- <%= link_to 'People', product_people_path(@product) %> -->
-    </li>
-
-    <li class="<%= 'active' if nav_active?(:subnav_core) %>">
-      <a href="<%= product_core_team_members_path(@product) %>">
-        <i class="icon-users dropdown-glyph"></i>
-        Core Team
-      </a>
-    </li>
-
-    <li class="<%= 'active' if nav_active?(:subnav_partners) %>">
-      <a href="<%= product_partners_path(@product) %>">
-        <i class="icon-pie-chart dropdown-glyph"></i>
-        Ownership
-      </a>
-      <!-- <%= link_to @product.stakeholders, product_partners_path(@product) %> -->
-    </li>
-
-    <% if @product.slug == 'coderwall' %>
-      <li class="<%= 'active' if nav_active?(:subnav_financials) %>">
-        <a href="<%= product_financials_path(@product) %>">
-          <i class="icon icon-wallet dropdown-glyph text-muted"></i>
-          Financials
-        </a>
-      </li>
-    <% end %>
-  </ul>
-
 </div>

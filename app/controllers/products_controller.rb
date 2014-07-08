@@ -3,7 +3,7 @@ class ProductsController < ProductController
 
   before_action :authenticate_user!, only: [:create, :edit, :update]
   before_action :set_product,
-    only: [:show, :edit, :update, :follow, :metrics, :flag, :feature, :welcome]
+    only: [:show, :edit, :update, :follow, :metrics, :flag, :feature]
 
   def new
     @product = Product.new
@@ -15,10 +15,6 @@ class ProductsController < ProductController
       ].sample
 
     render layout: 'application'
-  end
-
-  def welcome
-    redirect_to(product_url(@product)) if current_user
   end
 
   def create
