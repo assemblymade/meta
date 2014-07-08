@@ -8,26 +8,30 @@
 </div>
 
 <div class="row">
+  <div class="col-xs-9">
+    <div class="list-group list-group-breakout list-group-padded">
 
-  <div class="col-xs-8">
-    <% @watchers.each_slice(2) do |users| %>
-      <div class="row" style="padding-top:15px;padding-bottom:15px;border-bottom:1px solid #d9d9d9;">
-        <% users.each do |user| %>
-          <div class="col-sm-1 col-xs-1">
-            <%= user_link(user) do %><%= avatar_tag(user, 30) %><% end %>
+      <% @watchers.each_slice(2) do |users| %>
+        <div class="list-group-item">
+          <div class="row">
+            <% users.each do |user| %>
+              <div class="col-sm-1 col-xs-1">
+                <%= user_link(user) do %><%= avatar_tag(user, 30) %><% end %>
+              </div>
+              <div class="col-sm-5 col-xs-5">
+                <p>
+                  <strong><%= user_link(user) do %><%= user.username %><% end %></strong>
+                  <span class="text-muted text-small"><%== markdown user.bio %></span>
+                </p>
+              </div>
+            <% end %>
           </div>
-          <div class="col-sm-5 col-xs-5">
-            <p>
-              <strong><%= user_link(user) do %><%= user.username %><% end %></strong>
-              <span class="text-muted text-small"><%== markdown user.bio %></span>
-            </p>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
-  <div class="col-xs-3 col-xs-offset-1">
+  <div class="col-xs-3">
     <%= render 'products/sidebar' %>
   </div><!-- .col-3 -->
 </div>
