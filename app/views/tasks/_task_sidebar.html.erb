@@ -229,5 +229,17 @@
         </td>
       </tr>
     <% end %>
+    <tr>
+      <td class="text-muted" style="padding-left:15px">
+        <% if @wip.awarded? %>
+          <%= user_link_username(@wip.winner, class: 'text-muted') %> earned
+        <% else %>
+          You would earn
+        <% end %>
+      </td>
+      <td class="text-right" style="padding-right:15px">
+        <%= format_coins @wip.product, contracts.earnable_cents, :tiny, round: true %>
+      </td>
+    </tr>
   </table>
 </div>

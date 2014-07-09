@@ -10,7 +10,7 @@ var InviteFriendProduct = React.createClass({
   render: function() {
     return (
       <div>
-        <button className="btn btn-default btn-sm btn-block" onClick={this.click}>Invite a friend</button>
+        <button className="btn btn-default btn-sm btn-block" style={{"margin-bottom":16}} onClick={this.click}>Invite a friend</button>
         {this.state.invites.length > 0 ? <InviteList invites={this.state.invites} /> : null}
         {this.state.modal ? this.popover() : null}
       </div>

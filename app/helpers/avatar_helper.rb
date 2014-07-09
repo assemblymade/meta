@@ -24,7 +24,11 @@ module AvatarHelper
   end
 
   def user_link(user, options={}, &blk)
-    content_tag :a, capture(&blk), href: user_path(user, options), title: "@#{user.username}"
+    attributes = {
+      href: user_path(user),
+      title: "@#{user.username}"
+    }.merge(options)
+    content_tag :a, capture(&blk), attributes
   end
 
   def user_link_username(user, options={}, &blk)
