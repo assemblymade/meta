@@ -11,7 +11,7 @@ class StreamEvent < ActiveRecord::Base
 
   default_scope   -> { order(created_at: :desc) }
   scope :since,   -> (date) { where('stream_events.created_at >= ?', date) }
-  scope :visible, -> { where(product_flagged: false) }
+  scope :visible, -> { where(product_flagged: false).joins(:product).where('products.launched_at is not null') }
   before_create :find_and_set_product_id, :set_event_type
   after_commit :notify, on: :create
 

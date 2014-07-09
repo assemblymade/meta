@@ -27,8 +27,5 @@ describe UserContribution do
         UserContribution.for(user, true).map(&:product).map(&:id)
       ).to match_array([launched_product.id])
     end
-
   end
 end
-
-

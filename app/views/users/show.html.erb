@@ -125,7 +125,7 @@
         </div>
       <% end %>
 
-      <% if @user.stream_events.any? %>
+      <% if @stream_events.any? %>
         <h6>Activity</h6>
         <div class="timeline">
           <%= render @stream_events %>

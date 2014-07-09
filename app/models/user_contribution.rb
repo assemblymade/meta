@@ -17,17 +17,6 @@ class UserContribution < Struct.new(:product, :cents, :total_cents)
     end
   end
 
-  def self.for_product(user, product)
-    user_cents = TransactionLogEntry.where(wallet_id: user.id).where(product_id: product.id).with_cents.sum(:cents)
-    total_cents = TransactionLogEntry.where(product_id: product.id).with_cents.sum(:cents)
-
-    UserContribution.new(
-      product,
-      user_cents,
-      total_cents
-    )
-  end
-
   def coins
     cents / 100.to_d
   end
