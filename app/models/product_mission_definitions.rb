@@ -3,18 +3,6 @@
 class ProductMissionDefinitions
   include Missions::DSL
 
-  mission :discussions do
-    steps       2
-
-    steps_completed do
-      product.discussions.count
-    end
-
-    on_completed do
-      product.core_team << product.user unless product.core_team.include? product.user
-    end
-  end
-
   mission :tasks do
     steps       2
 

@@ -21,6 +21,12 @@ class Admin::NewslettersController < AdminController
     respond_with @newsletter, location: admin_newsletters_path
   end
 
+  def publish
+    @newsletter = Newsletter.find(params.fetch(:newsletter_id))
+    @newsletter.publish!(User.mailable)
+    respond_with @newsletter, location: admin_newsletters_path
+  end
+
 protected
 
   def newsletter_params

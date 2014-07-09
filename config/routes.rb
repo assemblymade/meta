@@ -154,7 +154,9 @@ ASM::Application.routes.draw do
   # Admin
   namespace :admin do
     resources :staff_picks, path: 'staff-picks'
-    resources :newsletters
+    resources :newsletters do
+      patch :publish
+    end
     resources :users
 
     get '/' => redirect('/admin/staff-picks')

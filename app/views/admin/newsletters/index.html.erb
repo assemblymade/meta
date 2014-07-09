@@ -43,6 +43,11 @@
               <span class="glyphicon glyphicon-ban-circle"></span>
               Cancel
             <% end %>
+            <%= link_to [:admin, newsletter, :publish], method: :patch, confirm: 'Continue sending email to ALL USERS?', class: 'btn btn-default' do %>
+              <span class="glyphicon glyphicon-share-alt"></span>
+              Send Now
+            <% end %>
+
           <% end %>
         </td>
         <td>
