@@ -17,8 +17,7 @@ class Activity < ActiveRecord::Base
 
   def streams
     stream_targets.map do |o|
-      undecorated = o.try(:object) || o
-      ActivityStream.new(undecorated)
+      ActivityStream.new(o)
     end
   end
 

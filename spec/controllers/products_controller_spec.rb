@@ -65,4 +65,29 @@ describe ProductsController do
       expect(assigns(:product).main_thread).to be_persisted
     end
   end
+
+  describe '#launch' do
+    let(:product) { Product.make!(launched_at: nil) }
+
+    before do
+      sign_in creator
+    end
+
+    it "redirects to product slug" do
+      patch :launch, product_id: product.id
+      expect(response).to redirect_to(product_path(product.slug))
+    end
+
+    it 'publishes activity' do
+      expect {
+        patch :launch, product_id: product.id
+      }.to change(Activity, :count).by(1)
+    end
+
+    it 'sets product to launched' do
+      expect {
+        patch :launch, product_id: product.id
+      }.to change{product.reload.launched_at.to_i}.to(Time.now.to_i)
+    end
+  end
 end

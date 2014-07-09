@@ -3,7 +3,7 @@ class ActivityStream
 
   KEY_PREFIX = 'activitystream'
   DEFAULT_PAGE_LENGTH = 25
-  PUSH_TO_META = ['Activities::FoundProduct']
+  PUSH_TO_META = [Activities::FoundProduct, Activities::Launch]
 
   def self.serialize(activity)
     activity.id.to_s
@@ -19,7 +19,9 @@ class ActivityStream
   end
 
   def initialize(object)
-    @object = object
+    # remove Draper if object is decorated
+    undecorated = object.try(:object) || object
+    @object = undecorated
   end
 
   def each
@@ -30,7 +32,7 @@ class ActivityStream
     redis_push(activity)
     pusher_push(activity)
 
-    if PUSH_TO_META.include?(activity.type)
+    if PUSH_TO_META.include?(activity.class)
       meta_redis_push(activity)
       meta_push(activity)
     end

@@ -3,7 +3,7 @@ class ProductsController < ProductController
 
   before_action :authenticate_user!, only: [:create, :edit, :update]
   before_action :set_product,
-    only: [:show, :edit, :update, :follow, :metrics, :flag, :feature]
+    only: [:show, :edit, :update, :follow, :metrics, :flag, :feature, :launch]
 
   def new
     @product = Product.new
@@ -108,6 +108,18 @@ class ProductsController < ProductController
   def metrics
     raise 'Mixpanel not configured in ENV' if ENV['MIXPANEL_API_KEY'].blank? || ENV['MIXPANEL_API_SECRET'].blank? || ENV['MIXPANEL_CONVERSION_FUNNEL_ID'].blank?
     @user_metrics = UserMetricsExpanded.new(@product)
+  end
+
+  def launch
+    if @product.launched_at.nil?
+      @product.update_attributes launched_at: Time.current
+      Activities::Launch.publish!(
+        target: @product,
+        subject: @product,
+        actor: current_user
+      )
+    end
+    respond_with @product, location: product_path(@product)
   end
 
   def generate_name

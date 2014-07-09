@@ -202,6 +202,7 @@ ASM::Application.routes.draw do
     post 'unsubscribe', as: :unsubscribe, on: :member
     get 'log' => 'stakes#show'
     get 'search' => 'search#index'
+    patch :launch
 
     resources :assets
     resources :watchers
