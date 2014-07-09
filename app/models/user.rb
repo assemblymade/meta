@@ -64,6 +64,7 @@ class User < ActiveRecord::Base
     length: { minimum: 2 },
     format: { with: /\A[a-zA-Z0-9-]+\z/ }
 
+  scope :mailable, -> { where.not(mail_preference: MAIL_NEVER) }
   scope :staff, -> { where(is_staff: true) }
   scope :wip_creators, -> { joins(:wips) }
   scope :event_creators, -> { joins(:events) }

@@ -18,6 +18,8 @@ class Product < ActiveRecord::Base
 
   belongs_to :logo, class_name: 'Asset', foreign_key: 'logo_id'
 
+  has_one :product_trend
+
   has_many :activities
   has_many :assets
   has_many :auto_tip_contracts
