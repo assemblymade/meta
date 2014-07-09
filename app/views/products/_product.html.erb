@@ -4,7 +4,7 @@
       <a href="<%= product_path(product) %>" data-track="product.clicked" data-track-props='{"link_type": "full"}'>
         <div class="card-hero">
           <div class="label"><%= product.presentable_stage %></div>
-          <img src="<%= image_path(product.poster_image.url) %>" alt="<%= product.name %>">
+          <%= image_tag @product.poster_image.url, class: 'img-rounded', width: '100%', alt: @product.name %>
         </div>
 
         <div class="card-content">
