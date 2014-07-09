@@ -3,7 +3,7 @@
 
     <div class="col-sm-2 col-xs-2">
       <a href="<%= product_path(product) %>">
-        <%= image_tag @product.poster_image.url, class: 'img-rounded', width: '100%', alt: @product.name %>
+        <img class="img-rounded" src="<%= image_path(product.poster_image.url) %>" width="100%" >
       </a>
 
   <!--       <a class="
