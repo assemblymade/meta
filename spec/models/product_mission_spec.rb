@@ -8,17 +8,7 @@ describe ProductMission do
 
   subject { product.current_mission }
 
-  its(:id) { should == :discussions }
   its(:progress) { should == 0.0 }
-
-  context 'when the first step is completed' do
-    before do
-      Discussion.make! product: product
-      product.reload
-    end
-
-    its(:progress) { should == 1 }
-  end
 
   context 'when the last step is completed' do
     before do
@@ -26,9 +16,6 @@ describe ProductMission do
       Discussion.make! product: product
       product.reload
     end
-
-    its(:progress) { should == 2 }
-    its(:complete?) { should be_true }
 
     describe '#complete!' do
       before do
@@ -40,16 +27,8 @@ describe ProductMission do
         expect(product.completed_missions.first.completor).to eq(mission_completor)
       end
 
-      it 'adds the creator to the core_team' do
-        product.core_team.should =~ [product.user]
-      end
-
       it 'creates completed mission' do
         expect(product).to have(1).completed_missions
-      end
-
-      it 'moves to next mission' do
-        product.current_mission.id.should == :tasks
       end
     end
   end
