@@ -6,7 +6,7 @@ namespace :emails do
     Newsletter.next_unpublished.publish!(if ENV['EMAIL_TEST_MODE']
       User.where(is_staff: true)
     else
-      User.all
+      User.mailable
     end)
   end
 
