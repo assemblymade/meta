@@ -15,10 +15,10 @@ class DiscoverController < ApplicationController
                        .limit(10)
   end
 
-  def most_wanted
+  def recently_launched
     @products = Product.public_products
-                       .where('votes_count >= ?', 5)
-                       .order(votes_count: :desc)
+                       .order(created_at: :desc)
+                       .limit(10)
                        .page(params[:page])
   end
 

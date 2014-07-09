@@ -20,10 +20,10 @@ describe DiscoverController do
 
   end
 
-  describe "GET #most_wanted" do
+  describe "GET #recently_launched" do
 
     it "is successful" do
-      get :most_wanted
+      get :recently_launched
       expect(response).to be_successful
     end
 
