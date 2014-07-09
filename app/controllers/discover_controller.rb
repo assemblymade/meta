@@ -9,9 +9,9 @@ class DiscoverController < ApplicationController
 
   def trending
     @products = Product.public_products
+                       .joins(:product_trend)
                        .where('votes_count >= ?', 10)
-                       .order(updated_at: :desc)
-                       .order(votes_count: :desc)
+                       .order('product_trends.score desc')
                        .limit(10)
   end
 
