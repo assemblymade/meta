@@ -363,8 +363,8 @@ $pager-disabled-color: $pagination-disabled-color;
 // Jumbotron
 
 $jumbotron-padding:       30px;
-$jumbotron-color:         white;
-$jumbotron-bg:            $green;
+$jumbotron-color:         $text-color;
+$jumbotron-bg:            $body-bg;
 $jumbotron-heading-color: inherit;
 $jumbotron-font-size:     48px;
 
