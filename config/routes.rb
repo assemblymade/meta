@@ -226,6 +226,8 @@ ASM::Application.routes.draw do
       resources :comments, only: [:show, :create, :edit, :update]
     end
 
+    resources :repositories, only: [:index, :create, :destroy], as: :repos
+
     patch '/discussions/:wip_id/to_task' => 'discussions#to_task', as: :discussion_to_task
     patch '/wips/:wip_id/to_discussion' => 'tasks#to_discussion', as: :task_to_discussion
 

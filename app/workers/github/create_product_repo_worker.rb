@@ -1,10 +1,11 @@
 module Github
   class CreateProductRepoWorker < Github::Worker
-    def perform(product_id, homepage)
+    def perform(product_id, homepage, repo_name=nil)
       product = Product.find(product_id)
+
       if ENV['GITHUB_PRODUCTS_ORG']
         repo = post "/orgs/#{ENV['GITHUB_PRODUCTS_ORG']}/repos",
-          name: product.slug,
+          name: repo_name || product.slug,
           description: product.pitch,
           homepage: homepage,
           private: false,
@@ -13,14 +14,16 @@ module Github
           has_downloads: false
 
         add_webhooks([ENV['GITHUB_PRODUCTS_ORG'], product.slug].join('/'))
-        add_license_and_readme(product)
+        add_license_and_readme(product, repo_name)
       end
     end
 
-    def add_license_and_readme(product)
-      url = "https://#{ENV['GITHUB_PRODUCTS_GITHUB_USER']}:#{ENV['GITHUB_PRODUCTS_GITHUB_TOKEN']}@github.com/asm-products/#{product.slug}.git"
+    def add_license_and_readme(product, repo_name=nil)
+      name = repo_name || product.slug
+
+      url = "https://#{ENV['GITHUB_PRODUCTS_GITHUB_USER']}:#{ENV['GITHUB_PRODUCTS_GITHUB_TOKEN']}@github.com/asm-products/#{name}.git"
       Dir.mktmpdir do |dir|
-        g = Git.init(product.slug)
+        g = Git.init(name)
 
         g.config('user.name', ENV['GITHUB_PRODUCTS_USER_NAME'])
         g.config('user.email', ENV['GITHUB_PRODUCTS_USER_EMAIL'])
