@@ -7,7 +7,6 @@ var People = React.createClass({
     if (this.props.coreOnly) {
       return (
         <div>
-          <h6>Core Team</h6>
           <PeopleList
               memberships={this.state.filteredMemberships}
               selected={this.state.selected}

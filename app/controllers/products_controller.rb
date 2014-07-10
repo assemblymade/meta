@@ -37,6 +37,10 @@ class ProductsController < ProductController
         actor: current_user
       )
 
+      schedule_greet
+      schedule_one_hour_checkin
+      schedule_one_day_checkin
+
       flash[:new_product_callout] = true
     end
     respond_with(@product, location: product_path(@product))
@@ -115,6 +119,27 @@ class ProductsController < ProductController
     render json: { name: NameGenerator.generate_unique }
   end
 
+  def schedule_greet
+    message = "Pfft. What's #{@product.name}? There's nothing here. Better get to work!"
+    PostChatMessage.perform_in(30.seconds, @product.slug, message)
+  end
+
+  def schedule_one_hour_checkin
+    eligible_products = Product.public_products.where('votes_count >= ?', 10)
+    index = rand(eligible_products.count)
+    example_product = eligible_products[index]
+
+    message = "Whoa whoa whoa. You still haven't done anything? You're killin' me, Smalls. Why not take a look at [#{example_product.name}](#{product_path(example_product)}) for some inspiration?"
+    PostChatMessage.perform_in(1.hour, @product.slug, message)
+  end
+
+  def schedule_one_day_checkin
+    message = "I'm gonna have to do this for you, aren't I? Is anyone even here?"
+
+    # TODO: Create a project with a TodoList and push that to chat
+
+    PostChatMessage.perform_in(1.day, @product.slug, message)
+  end
   # private
 
   def product_params
