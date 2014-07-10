@@ -23,22 +23,23 @@ module Github
 
       url = "https://#{ENV['GITHUB_PRODUCTS_GITHUB_USER']}:#{ENV['GITHUB_PRODUCTS_GITHUB_TOKEN']}@github.com/asm-products/#{name}.git"
       Dir.mktmpdir do |dir|
-        g = Git.init(name)
+        Dir.chdir(dir) do
+          g = Git.init(name)
 
-        g.config('user.name', ENV['GITHUB_PRODUCTS_USER_NAME'])
-        g.config('user.email', ENV['GITHUB_PRODUCTS_USER_EMAIL'])
-        g.config('github.user', ENV['GITHUB_PRODUCTS_GITHUB_USER'])
-        g.config('github.token', ENV['GITHUB_PRODUCTS_GITHUB_TOKEN'])
+          g.config('user.name', ENV['GITHUB_PRODUCTS_USER_NAME'])
+          g.config('user.email', ENV['GITHUB_PRODUCTS_USER_EMAIL'])
+          g.config('github.user', ENV['GITHUB_PRODUCTS_GITHUB_USER'])
+          g.config('github.token', ENV['GITHUB_PRODUCTS_GITHUB_TOKEN'])
 
-        Dir.mkdir(product.slug)
-        Dir.chdir(product.slug) do
-          write_erb_file 'README.md', 'app/views/products/git/readme.markdown.erb', product
-          write_erb_file 'LICENSE', 'app/views/products/git/license.text.erb', product
+          Dir.chdir(name) do
+            write_erb_file 'README.md', 'app/views/products/git/readme.markdown.erb', product
+            write_erb_file 'LICENSE', 'app/views/products/git/license.text.erb', product
 
-          g.add(:all=>true)
-          g.commit('Initial commit')
-          g.add_remote 'origin', url
-          g.push
+            g.add(:all=>true)
+            g.commit('Initial commit')
+            g.add_remote 'origin', url
+            g.push
+          end
         end
       end
     end
