@@ -129,12 +129,17 @@ class ProductsController < ProductController
     index = rand(eligible_products.count)
     example_product = eligible_products[index]
 
-    message = "Whoa whoa whoa. You still haven't done anything? You're killin' me, Smalls. Why not take a look at [#{example_product.name}](#{product_path(example_product)}) for some inspiration?"
+    message = "Whoa whoa whoa @core. You still haven't done anything? You're killin' me, Smalls."
+
+    if example_product
+      message << " Why not take a look at [#{example_product.name}](#{product_path(example_product)}) for some inspiration?"
+    end
+
     PostChatMessage.perform_in(1.hour, @product.slug, message)
   end
 
   def schedule_one_day_checkin
-    message = "I'm gonna have to do this for you, aren't I? Is anyone even here?"
+    message = "@core, I'm gonna have to do this for you, aren't I? Is anyone even here?"
 
     # TODO: Create a project with a TodoList and push that to chat
 

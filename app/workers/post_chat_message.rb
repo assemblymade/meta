@@ -4,6 +4,13 @@ class PostChatMessage
   def perform(product_id, message)
     @product = Product.find_by(slug: product_id)
 
+    return unless Activity.where(target_id: @product.id)
+                          .where.not(type: 'Activities::Chat')
+                          .where.not(type: 'Activities::FoundProduct')
+                          .empty?
+
+    @user = User.find_by(username: 'kernel')
+
     post Rails.application.routes.url_helpers.api_product_chat_comments_path(@product),
       body: message
   end
@@ -15,7 +22,7 @@ class PostChatMessage
   def request(method, url, body = {})
     resp = connection.send(method) do |req|
       req.url url
-      req.headers['Authorization'] = "token #{ENV['KERNEL_CHAT_TOKEN']}"
+      req.headers['Authorization'] = "Token token=#{@user.authentication_token}"
       req.headers['Content-Type'] = 'application/json'
       req.body = body.to_json
     end
