@@ -1,15 +1,13 @@
 module AvatarHelper
 
   def avatar_tag(user, size, options={})
-    url = if user.nil?
-      image_path('avatars/default.png')
-    else
+    url = if user.present?
       user.avatar.url(size * 2)
+    else
+      image_path('avatars/default.png')
     end
 
-    alt = if user.nil?
-      ""
-    else
+    alt = if user.present?
       "@#{user.username}"
     end
 

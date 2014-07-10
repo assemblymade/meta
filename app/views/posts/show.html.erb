@@ -9,7 +9,7 @@
     <% if can?(:update, @post) %>
       <ul class="list-piped pull-right">
         <li>
-          <a class="link-action-warning" href="<%= edit_product_post_path(@post.product, @post) %>" data-toggle="tooltip" data-placement="top" title="Edit Post">
+          <a class="link-hover-warning" href="<%= edit_product_post_path(@post.product, @post) %>" data-toggle="tooltip" data-placement="top" title="Edit Post">
             <i class="icon-pencil" style="margin-right: 2px;"></i> Edit
           </a>
         </li>

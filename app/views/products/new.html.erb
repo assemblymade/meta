@@ -11,8 +11,41 @@
     <div class="col-md-10 col-md-offset-1">
       <div class="sheet">
         <div class="sheet-body">
+
+
+          <ul class="nav nav-pills nav-justified">
+            <li>
+              <a href="#story">
+                <span class="text-muted">1.</span>
+                <strong>Story</strong>
+              </a>
+            </li>
+            <li>
+              <a href="#core-team">
+                <span class="text-muted">2.</span>
+                <strong>Core Team</strong>
+              </a>
+            </li>
+            <li>
+              <a href="#ownership-and-coins">
+                <span class="text-muted">3.</span>
+                <strong>Ownership &amp; Coins</strong>
+              </a>
+            </li>
+            <li>
+              <a href="#financials">
+                <span class="text-muted">4.</span>
+                <strong>Financials</strong>
+              </a>
+            </li>
+          </ul>
+
+          <hr id="story">
+
+
+          <h6 class="text-muted">Story</h6>
+
           <%= form_for @product, html: {class: 'form'} do |f| %>
-            <h6 class="text-muted">The Basics</h6>
             <div class="form-group">
               <%= f.label :name, class: 'control-label' %>
               <div class="row">
@@ -20,7 +53,7 @@
                   <%= f.text_field :name, class: 'form-control', autofocus: true %>
                 </div>
                 <div class="col-md-4">
-                  <p class="help-block">
+                  <p class="help-block alpha">
                     A name is important, but it can always change. If you have a codename already, use that, otherwise don't get too hung up on making it perfect.
                   </p>
                 </div>
@@ -34,10 +67,11 @@
                   <%= f.text_area :pitch, class: 'form-control', rows: 4 %>
                 </div>
                 <div class="col-md-4">
-                  <p class="help-block">If you had 30 seconds to describe your business to a friend in an elevator, what would you say? Use simple, direct words.</p>
+                  <p class="help-block alpha">If you had 30 seconds to describe your business to a friend in an elevator, what would you say? Use simple, direct words.</p>
                 </div>
               </div>
             </div>
+            <br>
 
             <!-- <hr>
             <h6 class="text-muted">Yourself</h6>
@@ -56,70 +90,204 @@
               </div>
             </div> -->
 
-            <hr>
-            <h6 class="text-muted">The Core Team</h6>
+            <hr id="core-team">
+            <h6 class="text-muted">Core Team</h6>
 
             <div class="form-group">
               <div class="row">
                 <div class="col-md-8">
                   <table class="table">
                     <tbody>
-                      <tr>
-                        <td><%= avatar_tag(User.find_by_username("chrislloyd"), 30) %></td>
+                      <tr class="active">
+                        <td><%= avatar_tag(User.find_by_username("chrislloyd"), 24) %></td>
                         <td>
                           @chrislloyd
+                        </td>
+                        <td class="text-right">
                           <span class="text-muted">(you)</span>
                         </td>
-                        <td class="text-right">
-                          <div data-toggle="tooltip" title="You cannot remove yourself from the Core Team" data-placement="top">
-                            <a href="#" class="btn btn-danger btn-xs disabled" >Remove</a>
-                          </div>
-                        </td>
                       </tr>
                       <tr>
-                        <td><%= avatar_tag(User.find_by_username("whatupdave"), 30) %></td>
+                        <td><%= avatar_tag(User.find_by_username("whatupdave"), 24) %></td>
                         <td>
                           dave@assembly.com
-                          <span class="text-muted">(pending)</span>
                         </td>
                         <td class="text-right">
-                          <a href="#" class="btn btn-danger btn-xs">Remove</a>
+                          <a href="#" class="text-muted link-hover-danger">
+                            <span class="icon icon-close"></span>
+                            <span class="sr-only">Remove</span>
+                          </a>
                         </td>
                       </tr>
                       <tr>
-                        <td><%= avatar_tag(User.find_by_username("whatupdave"), 30) %></td>
-                        <td><input type="email"></td>
-                        <td><button type="submit" class="btn btn-default">Invite to Core</button></td>
+                        <td><%= avatar_tag(nil, 24) %></td>
+                        <td>
+                          <!-- PersonPicker (Superset of UserPicker) -->
+                          <input class="form-control input-sm" type="email" placeholder="@username or email address">
+                        </td>
+                        <td class="text-right">
+                          <a class="text-success" href="#">
+                            <span class="icon icon-plus-circled"></span>
+                            <span class="sr-only">Add</span>
+                          </a>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
 
                 <div class="col-md-4">
-                  <p class="help-block">
+                  <p class="help-block alpha">
                     The Core Team is like a board of directors. They determine the direction and culture of a business. They can award bounties, write blog posts and set priorities.
                   </p>
                 </div>
               </div>
             </div>
 
-            <hr>
-            <h6 class="text-muted">Ownership</h6>
+            <hr id="ownership-and-coins">
+            <h6 class="text-muted">Ownership &amp; Coins</h6>
 
-            <div class="well">Ownership widget</div>
+            <div class="row">
+              <div class="col-md-8">
 
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th colspan="2">Partner</th>
+                      <th class="text-right">Ownership</th>
+                      <th class="text-right">Coins</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="active">
+                      <td><%= avatar_tag(User.find_by_username("chrislloyd"), 24) %></td>
+                      <td>
+                        @chrislloyd
+                      </td>
+                      <td class="text-right">
+                        <strong>50%</strong>
+                      </td>
+                      <td class="text-right">
+                        <span class="text-coins" style="white-space:nowrap">
+                          <span class="icon icon-app-coin"></span>
+                          3,000
+                        </span>
+                      </td>
+                      <td class="text-right">
+                        <span class="text-muted">(you)</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><%= avatar_tag(User.find_by_username("whatupdave"), 24) %></td>
+                      <td>
+                        dave@assembly.com
+                      </td>
+                      <td>
+                        <div class="input-group input-group-sm">
 
-            <h2>Funding</h2>
-            <p>There is $0 in the bank account</p>
+                          <input class="form-control text-right" type="number" value="50">
+                          <div class="input-group-addon">%</div>
+                        </div>
+                      </td>
+                      <td class="text-right">
+                        <span class="text-coins" style="white-space:nowrap">
+                          <span class="icon icon-app-coin"></span>
+                          3,000
+                        </span>
+                      </td>
+                      <td class="text-right">
+                        <a href="#" class="text-muted link-hover-danger">
+                          <span class="icon icon-close"></span>
+                          <span class="sr-only">Remove</span>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><%= avatar_tag(nil, 24) %></td>
+                      <td>
+                        <!-- PersonPicker (Superset of UserPicker) -->
+                        <input class="form-control input-sm" type="email" placeholder="@username or email address">
+                      </td>
+                      <td>
+                        <div class="input-group input-group-sm">
+
+                          <input class="form-control text-right" type="number" value="0">
+                          <div class="input-group-addon">%</div>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="text-coins" style="white-space:nowrap">
+                          <span class="icon icon-app-coin"></span>
+                          0
+                        </span>
+                      </td>
+                      <td class="text-right">
+                        <a class="text-success" href="#">
+                          <span class="icon icon-plus-circled"></span>
+                          <span class="sr-only">Add</span>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+              <div class="col-md-4">
+                <p class="help-block">
+                  Every business starts out with 6,000 coins and coins are how Assembly tracks ownership.
+                </p>
+                <p class="help-block">
+                  Profits are paid out to partners monthly based on their ownership.
+                </p>
+                <p class="help-block">
+                  Share ownership with initial partners to recognize exisiting help or incentivize future work.
+                </p>
+
+              </div>
+            </div>
+
+            <hr id="financials">
+            <h6 class="text-muted">Financials</h6>
+
+            <div class="row">
+              <div class="col-md-8">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td colspan="2" class="text-muted">
+                        Businesses get a <strong>virtual bank account</strong>. Its balance is 0 initially, but deposits come from the app's revenue. Partners are paid monthly from this account.
+                      </td>
+                    </tr>
+                    <tr class="active">
+                      <td>Initial Account Balance:</td>
+                      <td><strong>$0</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-4">
+                <p class="help-block alpha">
+                  The core team decides how the businesses money is spent.
+                </p>
+                <p class="help-block">
+                  Assembly pays all bills until a business is profitable.
+                </p>
+              </div>
+            </div>
 
             <div class="form-actions">
-              <button class="btn btn-primary" data-disable-with="Start the adventure">
-                Start your business
-              </button>
+              <div class="row">
+                <div class="col-md-4 col-md-offset-8">
+                  <button class="btn btn-primary btn-block" data-disable-with="Start the adventure">
+                    Found business
+                  </button>
+                </div>
+              </div>
             </div>
 
           <% end %>
-
+        </div>
       </div>
     </div>
   </div>

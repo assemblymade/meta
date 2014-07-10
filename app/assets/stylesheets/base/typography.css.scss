@@ -287,16 +287,19 @@ mark,
   font-size: 92%;
 }
 
-.link-action-success:hover {
+.link-hover-success:hover {
   color: $brand-success !important;
+  text-decoration: none;
 }
 
-.link-action-warning:hover {
+.link-hover-warning:hover {
   color: $brand-warning !important;
+  text-decoration: none;
 }
 
-.link-action-danger:hover {
+.link-hover-danger:hover {
   color: $brand-danger !important;
+  text-decoration: none;
 }
 
 .truncate {
