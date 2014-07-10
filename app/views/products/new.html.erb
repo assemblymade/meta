@@ -77,23 +77,6 @@
             </div>
             <br>
 
-            <!-- <hr>
-            <h6 class="text-muted">Yourself</h6>
-
-            <div class="form-group">
-              <%= f.label :introduce_yourself, class: 'form-label' %>
-              <div class="row">
-                <div class="col-md-8">
-                  <%= f.text_area :lead, class: 'form-control', rows: 4 %>
-                </div>
-                <div class="col-md-4">
-                  <p class="help-block">
-                    Tell
-                  </p>
-                </div>
-              </div>
-            </div> -->
-
             <hr id="core-team">
             <h6 class="text-muted">Core Team</h6>
 
@@ -103,7 +86,7 @@
                   <table class="table">
                     <tbody>
                       <tr class="active">
-                        <td><%= avatar_tag(User.find_by_username("chrislloyd"), 24) %></td>
+                        <td width="1"><%= avatar_tag(User.find_by_username("chrislloyd"), 24) %></td>
                         <td>
                           @chrislloyd
                         </td>
@@ -112,7 +95,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td><%= avatar_tag(User.find_by_username("whatupdave"), 24) %></td>
+                        <td width="1"><%= avatar_tag(User.find_by_username("whatupdave"), 24) %></td>
                         <td>
                           dave@assembly.com
                         </td>
@@ -124,7 +107,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td><%= avatar_tag(nil, 24) %></td>
+                        <td width="1"><%= avatar_tag(nil, 24) %></td>
                         <td>
                           <!-- PersonPicker (Superset of UserPicker) -->
                           <input class="form-control input-sm" type="email" placeholder="@username or email address">
@@ -165,11 +148,11 @@
                   </thead>
                   <tbody>
                     <tr class="active">
-                      <td><%= avatar_tag(User.find_by_username("chrislloyd"), 24) %></td>
+                      <td width="1"><%= avatar_tag(User.find_by_username("chrislloyd"), 24) %></td>
                       <td>
                         @chrislloyd
                       </td>
-                      <td class="text-right">
+                      <td class="text-right" width="1">
                         <strong>50%</strong>
                       </td>
                       <td class="text-right">
@@ -183,14 +166,14 @@
                       </td>
                     </tr>
                     <tr>
-                      <td><%= avatar_tag(User.find_by_username("whatupdave"), 24) %></td>
+                      <td width="1"><%= avatar_tag(User.find_by_username("whatupdave"), 24) %></td>
                       <td>
                         dave@assembly.com
                       </td>
-                      <td>
+                      <td width="1">
                         <div class="input-group input-group-sm">
 
-                          <input class="form-control text-right" type="number" value="50">
+                          <input class="form-control text-right" type="number" min="0" max="100" value="50"  style="min-width:5em">
                           <div class="input-group-addon">%</div>
                         </div>
                       </td>
@@ -208,7 +191,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td><%= avatar_tag(nil, 24) %></td>
+                      <td width="1"><%= avatar_tag(nil, 24) %></td>
                       <td>
                         <!-- PersonPicker (Superset of UserPicker) -->
                         <input class="form-control input-sm" type="email" placeholder="@username or email address">
@@ -216,17 +199,17 @@
                       <td>
                         <div class="input-group input-group-sm">
 
-                          <input class="form-control text-right" type="number" value="0">
+                          <input class="form-control text-right" type="number" min="0" max="100" size="4" style="min-width:5em" >
                           <div class="input-group-addon">%</div>
                         </div>
                       </td>
-                      <td>
+                      <td class="text-right" width="1">
                         <span class="text-coins" style="white-space:nowrap">
                           <span class="icon icon-app-coin"></span>
                           0
                         </span>
                       </td>
-                      <td class="text-right">
+                      <td class="text-right" width="1">
                         <a class="text-success" href="#">
                           <span class="icon icon-plus-circled"></span>
                           <span class="sr-only">Add</span>
@@ -235,8 +218,8 @@
                     </tr>
                   </tbody>
                 </table>
-
               </div>
+
               <div class="col-md-4">
                 <p class="help-block">
                   Every business starts out with 6,000 coins and coins are how Assembly tracks ownership.
@@ -247,7 +230,6 @@
                 <p class="help-block">
                   Share ownership with initial partners to recognize exisiting help or incentivize future work.
                 </p>
-
               </div>
             </div>
 
@@ -265,7 +247,7 @@
                     </tr>
                     <tr class="active">
                       <td>Initial Account Balance:</td>
-                      <td><strong>$0</strong></td>
+                      <td class="text-right"><strong>$0</strong></td>
                     </tr>
                   </tbody>
                 </table>
