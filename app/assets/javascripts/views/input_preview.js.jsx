@@ -13,8 +13,7 @@ var InputPreview = React.createClass({
   render: function() {
     return (
       <FormGroup>
-        <div className="input-group">
-          <div className="input-group-addon">{this.props.addonText + this.state.inputPreview}</div>
+        <div className="input-group" style={{ width: '35%' }}>
           <input type="text"
               name={this.props.inputName}
               className="form-control"
@@ -25,6 +24,9 @@ var InputPreview = React.createClass({
             <button type="submit" onSubmit={this.onSubmit} className="btn btn-primary">{this.props.buttonText}</button>
           </span>
         </div>
+        <p className="text-muted omega" style={{ 'margin-top': '5px', 'margin-left': '1px' }}>
+          Preview: <strong>{this.props.addonText + this.state.inputPreview}</strong>
+        </p>
       </FormGroup>
     );
   },

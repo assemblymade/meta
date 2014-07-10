@@ -16,24 +16,6 @@
 
 <div class="row">
   <div class="col-xs-12 col-md-12">
-
-    <% if can?(:update, @product) %>
-      <h6>Add a new repository</h6>
-
-      <form role="form" class="form" method='post' action="<%= product_repos_path(@product) %>">
-        <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-        <div data-react-class="InputPreview"
-            data-react-props="<%= {
-              addonText: 'github.com/' + ENV["GITHUB_PRODUCTS_ORG"] + '/' + @product.slug,
-              buttonText: 'Create',
-              placeholder: 'Repository name',
-              inputName: 'repository[name]'
-            }.to_json %>">
-        </div>
-      </form>
-      <br>
-    <% end %>
-
     <% if has_repos %>
       <h6>Current Repositories</h6>
       <div class="table-responsive">
@@ -52,6 +34,27 @@
           </tbody>
         </table>
       </div>
+    <% else %>
+      <div class="well well-lg">
+        There don't seem to be any repos for this product yet.
+      </div>
+    <% end %>
+
+    <% if can?(:update, @product) %>
+      <h6>Add a new repository</h6>
+
+      <form role="form" class="form" method='post' action="<%= product_repos_path(@product) %>">
+        <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+        <div data-react-class="InputPreview"
+            data-react-props="<%= {
+              addonText: 'github.com/' + ENV["GITHUB_PRODUCTS_ORG"] + '/' + @product.slug,
+              buttonText: 'Create',
+              placeholder: 'Repository suffix',
+              inputName: 'repository[name]'
+            }.to_json %>">
+        </div>
+      </form>
+      <br>
     <% end %>
   </div>
 </div>
