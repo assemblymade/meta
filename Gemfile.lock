@@ -269,6 +269,9 @@ GEM
     rack (1.5.2)
     rack-protection (1.5.1)
       rack
+    rack-streaming-proxy (2.0.1)
+      rack (>= 1.4)
+      servolux (~> 0.10)
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.1.0)
@@ -348,6 +351,7 @@ GEM
     sequenced (1.5.0)
       activerecord (>= 3.0)
       activesupport (>= 3.0)
+    servolux (0.10.0)
     sidekiq (2.16.1)
       celluloid (>= 0.15.2)
       connection_pool (>= 1.0.0)
@@ -465,6 +469,7 @@ DEPENDENCIES
   puma
   pusher
   quiet_assets
+  rack-streaming-proxy
   rails (= 4.1.0)
   rails-assets-backbone (= 1.0.0)
   rails-assets-dropzone (= 3.9.0)

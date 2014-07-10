@@ -1,4 +1,3 @@
-
 require 'sidekiq/web'
 
 ASM::Application.routes.draw do

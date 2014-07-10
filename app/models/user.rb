@@ -4,6 +4,7 @@ require 'stripe'
 
 class User < ActiveRecord::Base
   include ActiveRecord::UUID
+  include Elasticsearch::Model
 
   has_many :core_products, :through => :core_team_memberships, :source => :product
   has_many :core_team_memberships
@@ -243,6 +244,27 @@ class User < ActiveRecord::Base
       addr.address = email
       addr.display_name = username
     end
+  end
+
+  # elasticsearch
+  mappings do
+    indexes :username
+    indexes :suggest_username, type: 'completion', payloads: true
+  end
+
+  def as_indexed_json(options={})
+    as_json(root: false, only: [:username], methods: [:suggest_username])
+  end
+
+  def suggest_username
+    {
+      input: username,
+      payload: {
+        id: id,
+        name: name,
+        avatar_url: avatar.url.to_s
+      }
+    }
   end
 
 end
