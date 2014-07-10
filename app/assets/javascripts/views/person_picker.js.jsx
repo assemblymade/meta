@@ -14,6 +14,11 @@ window.PersonPicker = React.createClass({
     return { users: [], highlightIndex: 0 }
   },
 
+  clearText: function() {
+    this.refs.usernameOrEmail.getDOMNode().value = ''
+    this.setState(this.getInitialState())
+  },
+
   render: function(){
     return (
       <div style={{position: 'relative'}}>
@@ -28,13 +33,25 @@ window.PersonPicker = React.createClass({
   },
 
   userPicker: function(){
-    return <UserPicker users={this.state.users} highlightIndex={this.state.highlightIndex} onUserSelected={this.handleUserSelected} />
+    return <UserPicker
+      users={this.state.users}
+      highlightIndex={this.state.highlightIndex}
+      onUserSelected={this.handleUserSelected} />
   },
 
   handleChange: function(e) {
+    var text = this.refs.usernameOrEmail.getDOMNode().value
+    if(this.isEmail(text)) {
+      this.handleEmail(text)
+    } else {
+      this.handleUsername(text)
+    }
+  },
+
+  handleUsername: function(text) {
     var postData = {
       suggest_username: {
-        text: this.refs.usernameOrEmail.getDOMNode().value,
+        text: text,
         completion: {
           field: 'suggest_username'
         }
@@ -49,12 +66,19 @@ window.PersonPicker = React.createClass({
         var users = _.map(data.suggest_username[0].options, function(option) {
           return _.extend(option.payload, { username: option.text })
         })
-        this.setState({users: users, highlightIndex: this.constrainHighlight(this.state.highlightIndex)})
+        var index = this.constrainHighlight(this.state.highlightIndex)
+        this.props.onValidUserChanged(users[index])
+        this.setState({users: users, highlightIndex: index})
       }.bind(this),
       error: function(xhr, status, err) {
         console.error('error', arguments)
       }.bind(this)
     });
+  },
+
+  handleEmail: function(text) {
+    this.props.onValidUserChanged({email: text})
+    this.setState({users: []})
   },
 
   handleKey: function(e) {
@@ -66,23 +90,38 @@ window.PersonPicker = React.createClass({
       this.moveHighlight(1)
     } else if (e.keyCode == keys.enter) {
       e.preventDefault()
-      this.selectHighlight()
+      this.selectCurrentUser()
     }
   },
 
   moveHighlight: function(inc) {
-    this.setState({ highlightIndex: this.constrainHighlight(this.state.highlightIndex + inc) })
+    var index = this.constrainHighlight(this.state.highlightIndex + inc)
+    this.props.onValidUserChanged(this.state. users[index])
+    this.setState({ highlightIndex: index })
+  },
+
+  selectCurrentUser: function() {
+    var text = this.refs.usernameOrEmail.getDOMNode().value
+    this.clearText()
+
+    if (this.state.users.length > 0) {
+      this.selectHighlight()
+    } else if (this.isEmail(text)) {
+      this.selectEmail(text)
+    }
   },
 
   selectHighlight: function() {
     this.handleUserSelected(this.state.users[this.state.highlightIndex])
   },
 
+  selectEmail: function(email) {
+    this.props.onUserSelected({email: email})
+  },
+
   handleUserSelected: function(user) {
-    this.refs.usernameOrEmail.getDOMNode().value = ''
-    this.setState({
-      users: []
-    })
+    this.clearText()
+    this.setState({ users: [] })
     this.props.onUserSelected(user)
   },
 
@@ -90,6 +129,10 @@ window.PersonPicker = React.createClass({
     return Math.max(
       0, Math.min(this.state.users.length - 1, index)
     )
+  },
+
+  isEmail: function(text) {
+    return /^@?\w+@/.exec(text)
   }
 })
 

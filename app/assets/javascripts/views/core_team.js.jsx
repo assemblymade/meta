@@ -7,12 +7,16 @@ function atUsername(user) {
 }
 
 function avatarUrl(user, size) {
-  return user.avatar_url + '?s=' + 48
+  if (user) {
+    return user.avatar_url + '?s=' + 48
+  } else {
+    return '/assets/avatars/default.png'
+  }
 }
 
 window.CoreTeam = React.createClass({
   getInitialState: function() {
-    return { users: [] }
+    return { users: [], potentialUser: null }
   },
   render: function() {
     return (
@@ -32,14 +36,14 @@ window.CoreTeam = React.createClass({
           </tr>
           {this.rows()}
           <tr>
-            <td><img className="avatar img-circle" height="24" src="/assets/avatars/default.png" width="24" /></td>
-            <td><PersonPicker url="/_es" onUserSelected={this.handleUserSelected} /></td>
-
+            <td>{this.state.potentialUser ? this.avatar(this.state.potentialUser) : this.avatar(null) }</td>
+            <td>
+              <PersonPicker ref="picker" url="/_es"
+                            onUserSelected={this.handleUserSelected}
+                            onValidUserChanged={this.handleValidUserChanged} />
+            </td>
             <td className="text-right">
-              <a className="text-success" href="#" onClick={this.addUserClicked}>
-                <span className="icon icon-plus-circled"></span>
-                <span className="sr-only">Add</span>
-              </a>
+              {this.addButton()}
             </td>
           </tr>
         </tbody>
@@ -47,22 +51,71 @@ window.CoreTeam = React.createClass({
     )
   },
 
+  addButton: function() {
+    if (this.state.potentialUser) {
+      return (
+        <a className="text-success" href="#" onClick={this.addUserClicked}>
+          <span className="icon icon-plus-circled"></span>
+          <span className="sr-only">Add</span>
+        </a>
+      )
+    } else {
+      return (
+        <span className="text-success">
+          <span className="icon icon-plus-circled"></span>
+          <span className="sr-only">Add</span>
+        </span>
+      )
+    }
+  },
+
   rows: function(){
     return _.map(this.state.users, function(user){
-      return <MemberRow user={user} onRemove={this.handleUserRemoved(user)} />
+      return <MemberRow user={user} onRemove={this.handleUserRemoved(user)} key={user.id || user.email} />
     }.bind(this))
   },
 
   handleUserSelected: function(user) {
-   this.setState(React.addons.update(this.state, { users: { $push: [user] }}))
+    this.addUser(user)
   },
 
   handleUserRemoved: function(user) {
-    var users = _.reject(users, function(u){ u.id == user.id })
-
     return function() {
+      var users = _.reject(this.state.users, function(u){
+        if (u.id) {
+          return u.id == user.id
+        } else if (u.email) {
+          return u.email == user.email
+        }
+      })
+
       this.setState({users: users})
     }.bind(this)
+  },
+
+  handleValidUserChanged: function(user) {
+    this.setState({potentialUser: user})
+  },
+
+  addUserClicked: function(e) {
+    e.preventDefault()
+    this.addUser(this.state.potentialUser)
+    this.refs.picker.clearText()
+  },
+
+  addUser: function(user) {
+    this.setState(React.addons.update(this.state, {
+      potentialUser: {$set: null},
+      users: { $push: [user] }
+    }))
+  },
+
+  avatar: function(user) {
+    if (user && user.email) {
+      return <span className="text-muted glyphicon glyphicon-envelope"></span>
+    } else {
+      return <img className="avatar img-circle" height="24" src={avatarUrl(user)} width="24" />
+    }
   }
 })
 
@@ -75,19 +128,35 @@ function preventDefault(fn) {
 
 var MemberRow = React.createClass({
   render: function(){
-    return (
-      <tr key={this.props.user.id}>
-        <td><img className="avatar" src={avatarUrl(this.props.user, 48)} width={24} height={24}/></td>
-        <td>@{this.props.user.username}</td>
+    if (this.props.user.email) {
+      return (
+        <tr>
+          <td><span className="text-muted glyphicon glyphicon-envelope"></span></td>
+          <td>{this.props.user.email}</td>
 
-        <td className="text-right">
-          <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
-            <span className="icon icon-close"></span>
-            <span className="sr-only">Remove</span>
-          </a>
-        </td>
-      </tr>
-    )
+          <td className="text-right">
+            <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
+              <span className="icon icon-close"></span>
+              <span className="sr-only">Remove</span>
+            </a>
+          </td>
+        </tr>
+      )
+    } else {
+      return (
+        <tr>
+          <td><img className="avatar" src={avatarUrl(this.props.user, 48)} width={24} height={24}/></td>
+          <td>@{this.props.user.username}</td>
+
+          <td className="text-right">
+            <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
+              <span className="icon icon-close"></span>
+              <span className="sr-only">Remove</span>
+            </a>
+          </td>
+        </tr>
+      )
+    }
   }
 })
 
