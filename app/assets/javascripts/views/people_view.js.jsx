@@ -6,17 +6,14 @@ var People = React.createClass({
   render: function(){
     if (this.props.coreOnly) {
       return (
-        <div>
-          <h6>Core Team</h6>
-          <PeopleList
-              memberships={this.state.filteredMemberships}
-              selected={this.state.selected}
-              onFilter={this.onFilter}
-              interestFilters={this.props.interestFilters}
-              currentUser={this.props.currentUser}
-              updatePath={this.props.updatePath}
-              coreMemberships={this.props.coreMemberships} />
-        </div>
+        <PeopleList
+          memberships={this.state.filteredMemberships}
+          selected={this.state.selected}
+          onFilter={this.onFilter}
+          interestFilters={this.props.interestFilters}
+          currentUser={this.props.currentUser}
+          updatePath={this.props.updatePath}
+          coreMemberships={this.props.coreMemberships} />
       );
     }
 

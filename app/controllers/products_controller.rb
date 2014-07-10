@@ -41,6 +41,10 @@ class ProductsController < ProductController
     respond_with(@product, location: product_path(@product))
   end
 
+  def welcome
+    find_product!
+  end
+
   def flag
     return redirect_to(product_url(@product)) unless current_user && current_user.is_staff?
     if request.post?

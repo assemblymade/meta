@@ -93,6 +93,7 @@ h6,
 }
 
 .lead {
+  font-size: 21px;
   line-height: $line-height-base;
   margin-bottom: $line-height-computed * 1.556;
   text-rendering: optimizeLegibility;
@@ -306,4 +307,5 @@ mark,
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: inherit;
 }

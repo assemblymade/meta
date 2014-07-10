@@ -198,6 +198,7 @@ ASM::Application.routes.draw do
     get '/chat' => 'chat#index', as: :chat
     post '/chat' => 'chat#create'
 
+    get 'welcome'
     post 'feature'
     post 'follow'
     post 'subscribe', as: :subscribe, on: :member

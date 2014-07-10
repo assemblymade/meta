@@ -1,6 +1,13 @@
 <% title 'Core Team', @product.name %>
 <% activate_nav! :core_team %>
 
+<div class="page-header">
+  <h2 class="page-header-title">
+    <i class="icon-user-following text-muted" style="margin-right: 4px;"></i>
+    Core Team
+  </h2>
+</div>
+
 <div class="js-people"></div>
 
 <% unless current_user.nil? %>

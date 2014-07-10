@@ -40,7 +40,7 @@
   <div class="col-md-3 col-xs-3">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h6 class="panel-title">Recent Posts</h6>
+        <h6 class="panel-title">Recent Entries</h6>
       </div>
 
       <div class="list-group">
@@ -53,7 +53,7 @@
     </div>
 
     <% if can?(:create, Post) %>
-      <%= link_to 'Write a new post', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
+      <%= link_to 'Pen a new entry', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
     <% end %>
 
   </div>

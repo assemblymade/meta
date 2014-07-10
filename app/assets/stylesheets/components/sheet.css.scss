@@ -7,7 +7,18 @@
 
 .sheet-body {
   padding: ($line-height-computed * 1.5) ($grid-gutter-width * 1.5);
+
+  > .sheet-body {
+    margin: ($line-height-computed * -1.5) ($grid-gutter-width * -1.5);
+  }
+
+  > hr {
+    margin-left: ($grid-gutter-width * -1.5);
+    margin-right: ($grid-gutter-width * -1.5);
+  }
 }
+
+
 
 // Hacky
 
@@ -16,6 +27,17 @@
   margin-left: -($grid-gutter-width * 1.5);
   margin-right: -($grid-gutter-width * 1.5);
   margin-bottom: $line-height-computed * 1.25;
+  padding-top: $line-height-computed * 1;
+  padding-bottom: $line-height-computed * .85;
+  padding-left: $grid-gutter-width * 1.5;
+  padding-right: $grid-gutter-width * 1.5;
+}
+
+.sheet-body > .page-footer {
+  margin-top: $line-height-computed * 1.25;
+  margin-left: -($grid-gutter-width * 1.5);
+  margin-right: -($grid-gutter-width * 1.5);
+  margin-bottom: -($line-height-computed * 1.5);
   padding-top: $line-height-computed * 1;
   padding-bottom: $line-height-computed * .85;
   padding-left: $grid-gutter-width * 1.5;

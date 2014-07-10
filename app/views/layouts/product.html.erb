@@ -11,6 +11,10 @@
 
       <div class="col-md-2 fixed-enabler">
 
+        <a href="#" class="btn btn-success btn-sm btn-block" style="margin-bottom: 24px;">
+          Ready to launch?
+        </a>
+
         <% if @product.poster? %>
           <% if current_user && @product.core_team?(current_user) %>
             <%= form_for :asset, url: product_logos_path(@product), html: {id: 'product-logo-form'} do |f| %>
@@ -35,8 +39,8 @@
         <ul class="nav nav-stacked nav-sidebar">
           <li class="<%= nav_active_class(:about) %>">
             <a href="<%= product_path(@product) %>">
-              <i class="icon-home dropdown-glyph"></i>
-              Home
+              <i class="icon-eyeglasses dropdown-glyph"></i>
+              Plan
             </a>
           </li>
 
@@ -51,7 +55,7 @@
             <li class="<%= nav_active_class(:blog) %>">
               <a href="<%= product_posts_path(@product) %>">
                 <i class="icon-notebook dropdown-glyph"></i>
-                Blog
+                Journal
               </a>
             </li>
           <% end %>
@@ -63,7 +67,7 @@
 
           <li class="<%= nav_active_class(:projects) %>">
             <a href="<%= product_milestones_path(@product) %>">
-              <i class="icon-rocket dropdown-glyph"></i>
+              <i class="icon-folder dropdown-glyph"></i>
               Projects
             </a>
           </li>
@@ -84,7 +88,7 @@
 
           <li class="<%= nav_active_class(:assets) %>">
             <a href="<%= product_assets_path(@product) %>">
-              <i class="icon-paper-clip dropdown-glyph"></i>
+              <i class="icon-layers dropdown-glyph"></i>
               Assets
             </a>
           </li>
@@ -180,7 +184,7 @@
         </ul>
 
         <h3 class="alpha" style="font-weight: 400; line-height: 1; color: #93A0AA;">
-          <%= @product.name %>
+          <%= @product.name %> <span class="label label-outlined text-small" style="position: relative; top: -2px;">Stealth</span>
           <% if @breadcrumb.present? %>
             <i class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></i>
             <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>"><%= @breadcrumb[:text] %></a>
