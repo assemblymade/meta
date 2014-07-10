@@ -16,6 +16,13 @@
 
 <div class="row">
   <div class="col-xs-12 col-md-12">
+    <p class="text-muted alpha" style="margin-bottom: 20px;">
+      <%= @product.slug.capitalize %> uses GitHub repositories to manage your product's development
+      process. Repos give you a clear history of every change to your codebase
+      &mdash; even changes to PNGs! Not sure what a repo is? Not to worry
+      &mdash; you can crash course
+      <a href="http://git-scm.com/book/en/Getting-Started-Git-Basics">here</a>.
+    </p>
     <% if has_repos %>
       <h6>Current Repositories</h6>
       <div class="table-responsive">
