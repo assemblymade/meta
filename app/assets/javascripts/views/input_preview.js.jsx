@@ -20,8 +20,8 @@ var InputPreview = React.createClass({
               value={this.state.inputPreview}
               placeholder={this.props.placeholder}
               onChange={this.onChange} />
-          <span className="input-group-btn">
-            <button type="submit" onSubmit={this.onSubmit} className="btn btn-primary">{this.props.buttonText}</button>
+          <span className={"input-group-btn"}>
+            <button type="submit" onSubmit={this.onSubmit} className="btn btn-primary" disabled={this.buttonState()}>{this.props.buttonText}</button>
           </span>
         </div>
         <p className="text-muted omega" style={{ 'margin-top': '5px', 'margin-left': '1px' }}>
@@ -37,6 +37,10 @@ var InputPreview = React.createClass({
     this.setState({
       inputPreview: this.state.transform(value)
     });
+  },
+
+  buttonState: function() {
+    return this.state.inputPreview.length >= 2 ? false : true;
   },
 
   transform: function(text) {
