@@ -84,46 +84,6 @@
               <div class="row">
                 <div class="col-md-8">
                   <div data-react-class="CoreTeam" data-react-props='<%== {currentUser: serialize_hash(current_user)}.to_json %>'></div>
-
-                  <br/>
-                  <table class="table">
-                    <tbody>
-                      <tr class="active">
-                        <td width="1"><%= avatar_tag(User.find_by_username("chrislloyd"), 24) %></td>
-                        <td>
-                          @chrislloyd
-                        </td>
-                        <td class="text-right">
-                          <span class="text-muted">(you)</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td width="1"><%= avatar_tag(User.find_by_username("whatupdave"), 24) %></td>
-                        <td>
-                          dave@assembly.com
-                        </td>
-                        <td class="text-right">
-                          <a href="#" class="text-muted link-hover-danger">
-                            <span class="icon icon-close"></span>
-                            <span class="sr-only">Remove</span>
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td width="1"><%= avatar_tag(nil, 24) %></td>
-                        <td>
-                          <!-- PersonPicker (Superset of UserPicker) -->
-                          <input class="form-control input-sm" type="email" placeholder="@username or email address">
-                        </td>
-                        <td class="text-right">
-                          <a class="text-success" href="#">
-                            <span class="icon icon-plus-circled"></span>
-                            <span class="sr-only">Add</span>
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
                 </div>
 
                 <div class="col-md-4">

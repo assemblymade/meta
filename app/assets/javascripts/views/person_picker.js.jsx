@@ -1,6 +1,15 @@
 /** @jsx React.DOM */
 
-var UserSearch = React.createClass({
+(function() {
+
+var keys = {
+  enter: 13,
+  esc: 27,
+  up: 38,
+  down: 40
+}
+
+window.PersonPicker = React.createClass({
   getInitialState: function() {
     return { users: [], highlightIndex: 0 }
   },
@@ -8,7 +17,11 @@ var UserSearch = React.createClass({
   render: function(){
     return (
       <div style={{position: 'relative'}}>
-        <input type="text" ref="usernameOrEmail" onChange={this.handleChange} onKeyDown={this.handleKey} />
+        <input className="form-control input-sm" type="text"
+               ref="usernameOrEmail"
+               onChange={this.handleChange}
+               onKeyDown={this.handleKey}
+               placeholder="@username or email address" />
         {this.state.users.length > 0 ? this.userPicker() : null }
       </div>
     )
@@ -36,7 +49,7 @@ var UserSearch = React.createClass({
         var users = _.map(data.suggest_username[0].options, function(option) {
           return _.extend(option.payload, { username: option.text })
         })
-        this.setState({users: users})
+        this.setState({users: users, highlightIndex: this.constrainHighlight(this.state.highlightIndex)})
       }.bind(this),
       error: function(xhr, status, err) {
         console.error('error', arguments)
@@ -58,11 +71,7 @@ var UserSearch = React.createClass({
   },
 
   moveHighlight: function(inc) {
-    var newIndex = Math.max(
-      0, Math.min(this.state.users.length - 1, this.state.highlightIndex + inc)
-    )
-
-    this.setState({ highlightIndex: newIndex })
+    this.setState({ highlightIndex: this.constrainHighlight(this.state.highlightIndex + inc) })
   },
 
   selectHighlight: function() {
@@ -75,6 +84,12 @@ var UserSearch = React.createClass({
       users: []
     })
     this.props.onUserSelected(user)
+  },
+
+  constrainHighlight: function(index) {
+    return Math.max(
+      0, Math.min(this.state.users.length - 1, index)
+    )
   }
 })
 
@@ -126,3 +141,5 @@ var UserPickerEntry = React.createClass({
     }.bind(this)
   }
 })
+
+})();
