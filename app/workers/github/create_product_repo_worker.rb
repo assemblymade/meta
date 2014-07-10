@@ -30,6 +30,7 @@ module Github
         g.config('github.user', ENV['GITHUB_PRODUCTS_GITHUB_USER'])
         g.config('github.token', ENV['GITHUB_PRODUCTS_GITHUB_TOKEN'])
 
+        Dir.mkdir(product.slug)
         Dir.chdir(product.slug) do
           write_erb_file 'README.md', 'app/views/products/git/readme.markdown.erb', product
           write_erb_file 'LICENSE', 'app/views/products/git/license.text.erb', product
