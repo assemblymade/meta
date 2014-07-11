@@ -8,7 +8,7 @@ If you have a great idea for an app to build on Assembly, head over [assembly.co
 title: Who will build my app if I submit an idea?
 ---
 
-You, along with the Assembly community! If you have some skills (say, design) but need others to ship the product (say, development), then Assembly is a great place to find those people. Products require momentum and community support to succeed on Assembly, you nothing will ever ship if you submit an idea and walk away.
+You, along with the Assembly community! If you have some skills (say, design) but need others to ship the product (say, development), then Assembly is a great place to find those people. Products require momentum and community support to succeed on Assembly. Nothing will ever ship if you submit an idea and walk away.
 
 If you help out on other products, start working on your idea and help people understand your vision, you’ll have no trouble generating interest from a talented group of people to work on your project.
 
@@ -16,24 +16,13 @@ If you help out on other products, start working on your idea and help people un
 title: How much ownership do I get for coming up with the idea?
 ---
 
-The Core Team (which initially is just the creator) always maintains 5%. This number can be changed by the Core Team if they'd like, but 5% tends to leave room to get the community excited about participating. Remember, each bit of work you do will earn you a bit more ownership, so that 5% is just a baseline.
+The Core Team (which initially is just the creator) always maintains 5%. This number can be changed by the Core Team if they'd like, but 5% tends to leave room to get the community excited about participating. Remember, each bit of work you do will earn you a bit more ownership, so that 5% is just a starting point.
 
 ---
 title: How do I generate interest in my idea?
 ---
 
-There’s no one answer to this question, but here are some things that can help.
-
-
-1. Show the community why people want this product.
-
-2. Develop your idea, vision and tactics in detail.
-
-3. Work on other products on Assembly. This is a collaborative community, and you’ll find that helping others can be rewarding and can also help you find the best people to work with on your product.
-
-4.  Bring your friends. Once a product is underway, it’s easier for a newcomer to show up and help out. If you bring some friends to Assembly to get the ball rolling, it might help build some momentum.
-
-
+Glad you asked! We wrote a blog post about just that: [blog.assembly.com/build-momentum](http://blog.assembly.com/build-momentum)
 
 ---
 title: Can I port a project I’ve been building onto Assembly?
@@ -42,8 +31,7 @@ title: Can I port a project I’ve been building onto Assembly?
 Yes. We’re still ironing out the best way to handle these requests, but we’d love to hear about your project and help you port it onto Assembly. Come [introduce yourself to us in chat](https://assembly.com/meta/discuss).
 
 
-
-Annuities are paid to founders who bring more established products to the platform. They are paid out of the product's profit, after any expenses. If the monthly profit drops below the annuities, they will only be paid up to the available profit and there would be no royalty payout to other contributors for that month.
+Annuities can be paid to founders who bring more established products to the platform. They are paid out of the product's profit, after any expenses. If the monthly profit drops below the annuities, they will only be paid up to the available profit and there would be no royalty payout to other contributors for that month.
 
 ---
 title: How can I make my idea a Staff Pick?

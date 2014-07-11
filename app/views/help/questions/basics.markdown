@@ -2,19 +2,20 @@
 title: How does Assembly work?
 ---
 
-Assembly enables profitable products to be built like open source projects. The projects are open and transparent, and anyone can help build them – whether you want to contribute a few hours or a few months. Product ideas, vision and execution are driven by the community.
+Assembly enables software products (apps, services, etc.) to be built like open source projects. When a product earns money, it goes to the contributors who built it.
 
+The projects are open and transparent, and anyone can help build them – whether you want to contribute a few hours or a few months. Product ideas, vision and execution are driven by the community.
 
 Each contribution you make will be rewarded with a fair amount (as determined by the community) of stake in the project -- stake is distributed through App Coins. As soon as a product is generating revenue, everyone who helped build it receives payment each month. During development, Assembly often helps cover expenses like servers and web domains.
 
 
-Working on Assembly projects is a great way to learn, challenge yourself and make a meaningful contribution to a great product. Also, if the products you help build are successful, you might earn substantial income.
+Working on Assembly projects is a great way to learn, challenge yourself and make a meaningful contribution to a great product. Also, if the products you help build are successful, you can earn substantial income.
 
 ---
 title: What is the best way to get the feel for Assembly?
 ---
 
-Hop into a discussion and introduce yourself! There are lots of products being actively built today([find some here!](https://assembly.com/discover)), and everyone working on them is friendly. Talk about your interests and availability, and see if there are any bounties you’d like to work on. Helping build products is a rewarding, fun way to quickly gain an understanding of how Assembly works.
+Hop into a discussion and introduce yourself! There are lots of products in active development today([find some here!](https://assembly.com/discover)), and everyone working on them is friendly. Talk about your interests and availability, and see if there are any bounties you’d like to work on. Helping build products is a rewarding, fun way to quickly gain an understanding of how Assembly works.
 
 ---
 title: What parts of building can I help out with?
@@ -23,7 +24,7 @@ title: What parts of building can I help out with?
 Anything and everything. Take a look at the bounties on a particular project and see if anything is of interest for you. Or, just introduce yourself to the team working on a project you like. No matter what your skills are, there’s someone on Assembly who needs them.
 
 
-Registered Assembly members are free to participate in supporting and evolving any apps built on Assembly in the ways they see fit. Help out as little or as much as you want.
+Everyone is free to participate in supporting and evolving any apps built on Assembly in the ways they see fit. Help out as little or as much as you want.
 
 ---
 title: Why do people work on Assembly products?
@@ -40,6 +41,8 @@ When anyone contributes to a product (whether by submitting code, copy or design
 
 Each month, after an app’s expenses are paid, the revenue will be distributed among everyone who contributed to it. If you own 5% of the App Coins for a product making $20,000/mo after expenses, you’ll earn $1,000/mo.
 
+More on this in the [revenue and App Coins section of the FAQ](http://assembly.com/help/revenue)
+
 ---
 title: I have a great idea. Will the Assembly community build it for me?
 ---
@@ -48,6 +51,8 @@ Not exactly. Assembly is a place to build products collaboratively. If you are p
 
 
 A key ingredient to success on Assembly is community support. There are many ways to get the community to rally behind your product, but the best approach we’ve seen is to join in on another project and start building a network of talented Assembly members. That way, when you launch your own project you’ll already have people in mind for your core team.
+
+[Read more about how to get momentum for your idea](blog.assembly.com/build-momentum)
 
 ---
 title: Who owns the intellectual property?
@@ -77,7 +82,7 @@ title: How is Assembly different from Kickstarter or an Incubator?
 VCs and Incubators invest capital in a traditional company in exchange for equity. The capital is used to accelerate app growth until there is a liquidity event (IPO or acquisition) where the investors and founders receive most of the reward. Assembly instead provides a platform and backbone services so that anyone, anywhere can work together to build great apps and share the rewards fairly.
 
 
-On Kickstarter, you can contribute money to help a product or idea launch, and you’ll be rewarded with a prize or an early version of the product. On Assembly, you can contribute your time and talent, and in return you will have actual ownership over that product.
+On Kickstarter, you can contribute money to help a product or idea launch, and you’ll be rewarded with a prize or an early version of the product. On Assembly, you can contribute your time and talent, and in return you will have actual ownership over that product. Also, we haven’t seen any [potato salad](https://www.kickstarter.com/projects/324283889/potato-salad) on Assembly yet.
 
 ---
 title: Who is legally responsible for each product?

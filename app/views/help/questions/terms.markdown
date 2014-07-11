@@ -39,3 +39,9 @@ title: Staff Picks
 ---
 
 Staff Picks are products the Assembly team is excited about. These products are featured on the Discover page.
+
+---
+title: Tip Contract
+---
+
+An agreed percentage of new App Coins that go to the Core Team and/or the author of a given bounty. Typically, the Core Team receives 5% of any newly awarded coins, and the bounty author receives 5%.

@@ -5,7 +5,9 @@ title: Who is in control?
 You are. Assembly apps are built by everyone, but like successful open source products every Assembly app also has a [Core Team](https://www.google.com/url?q=https%3A%2F%2Fassembly.com%2Fcore-team&sa=D&sntz=1&usg=AFQjCNH5QB9F3K1XC3Zd9q1vmNFoedsotA) of active, key contributors. The Core Team influences the vision of the app, standards for quality, and evaluates which contributions are accepted.
 
 
-A new app's Core Team is typically made up of the inventor and Assembly staff members. As development progresses, more contributors would comprise the core team, and Assembly staff members will typically only provide support services as needed.
+A new app's Core Team is typically made up of the inventor and sometimes Assembly staff members. As development progresses, more contributors might comprise the core team, and Assembly staff members will typically only provide support services as needed.
+
+While anyone can create and upvote bounties and submit work, the Core Team makes approval decisions before changes are implemented and bounties are awarded.
 
 ---
 title: How are the apps licensed?
@@ -20,17 +22,43 @@ However, Assembly retains an exclusive license to commercialize the app so we ca
 title: What technology is used to build Assembly apps?
 ---
 
-An Assembly app's core technology is decided by the Core Team and early contributors when development is first started. We host components on [Heroku](https://www.heroku.com/) when possible for the time being. This guarantees the code the community builds will have a [level of modularity](http://12factor.net/).
+An Assembly app's core technology is decided by the Core Team and early contributors when development is first started. Typically, we suggest hosting components on [Heroku](https://www.heroku.com/) when possible. This guarantees the code the community builds will have a [level of modularity](http://12factor.net/).
 
 
-As other technologies like [docker](http://www.docker.io/) and [vagrant](http://www.vagrantup.com/) evolve so may our stack.
+As other technologies like [docker](http://www.docker.io/) and [vagrant](http://www.vagrantup.com/) evolve so may our stack. We’d love to hear your thoughts on this.
 
+---
+title: How is work prioritized?
+---
+
+Each product’s Core Team takes on most of the prioritization work. Core Team members can select a priority level for a bounty (from lowest to highest: someday, next, now, urgent). These priorities impact the number of App Coins assigned to a bounty, and the priority of a project is determined by the priority of the bounties within it.
+
+Additionally, anyone in the community can upvote a bounty, which will increase it’s
+priority and the number of App Coins assigned to it.
+
+---
+title: How is product management and prioritization rewarded?
+---
+
+Each product has a Tip Contract. This dictates a percentage of all newly minted coins to be minted to the Core Team and the bounty author.
+
+The default arrangement is 5% to the Core Team (which is split among everyone on the Core Team), and 5% to the bounty author.
+
+This is intended to reward the vision and decision-making happening on the part of the Core Team, as well as the product management work related to scoping and writing bounties. Quite often, bounties are authored by members of a product’s Core Team.
 
 ---
 title: What if I find work that is clearly needed, but doesn’t have a bounty assigned to it?
 ---
 
 Hop into that product’s chat room, and let someone know! If the need exists, the Core Team can create a bounty. Or, you can create the bounty yourself. The Assembly community values progress over consensus. Once you complete it, you’ll be rewarded with App Coins.
+
+Different teams on Assembly operate in different ways. Some Core Teams have are eager for the community to help shape the roadmap and the vision for the product, and others have a very clear vision that they would like to stick with.
+
+---
+title: Does all work need to happen in exchange for App Coins, or is a profitable product allowed to hire contractors for things like sales and marketing?
+---
+
+Sales and marketing can certainly be done through bounties and App Coins, but when a product is earning enough revenue to support contractors you are more than welcome to utilize them.
 
 ---
 title: What happens when there are disagreements?
@@ -48,4 +76,4 @@ If a necessary bounty goes uncompleted, Assembly may be able to help. We're equi
 title: What happens if development stops on an app?
 ---
 
-If an idea doesn't get and/or sustain support Assembly may decide to retire it. We'll notify the inventor and all the contributors. Assembly will also change the source code license to the MIT license and all non-code contributed work will be released under the [Creative Commons Attribution Non-Commercial 3.0 Unported License](http://www.google.com/url?q=http%3A%2F%2Fcreativecommons.org%2Flicenses%2Fby-nc%2F3.0%2Fus%2F&sa=D&sntz=1&usg=AFQjCNGD0KjEha9wLevv3yo3xo6SQsKLXw).
+If an idea doesn't get and/or sustain support Assembly may decide to retire it. We'll notify the inventor and all the contributors. Assembly may also change the source code license to the MIT license and all non-code contributed work will be released under the [Creative Commons Attribution Non-Commercial 3.0 Unported License](http://www.google.com/url?q=http%3A%2F%2Fcreativecommons.org%2Flicenses%2Fby-nc%2F3.0%2Fus%2F&sa=D&sntz=1&usg=AFQjCNGD0KjEha9wLevv3yo3xo6SQsKLXw).

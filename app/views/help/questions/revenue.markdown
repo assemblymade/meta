@@ -2,7 +2,7 @@
 title: How do I earn income from Assembly?
 ---
 
-Every month a product generates revenue, the bills associated with it (server costs, advertising, capital investment repayments, and so forth) are paid transparently by Assembly. The remaining proceeds are split and distributed as royalties to those that built the product. The ownership of a product is represented through App Coins.
+Every month a product generates revenue, the bills associated with it (server costs, advertising, capital investment repayments, and so forth) are paid transparently by Assembly. The remaining proceeds are split and distributed as royalties to those who built the product. The ownership of a product is represented through App Coins.
 
 
 Below is an example.
@@ -29,16 +29,29 @@ Here is a common example of how Mary might earn App Coins in the Helpful product
 
 3. Mary jumps in on the bounty and submits work, completing the bounty.
 
-4. The product’s Core Team then accept Mary’s work, which awards her the bounty of App Coins.
+4. The product’s Core Team then accept Mary’s work, which mints new App Coins and awards them to Mary.
 
-5. Later David comes along and likes Mary's work after it was already awarded. He also upvotes it and Mary earns additional app more App Coins because the work was already accepted by the Core Team.
+5. Later David comes along and likes Mary's work after it was already awarded. He also upvotes it and Mary earns additional app App Coins because the work was already accepted by the Core Team.
 
-Additionally, most products retain 5% of the App Coins for the person who submitted the idea and anyone else they add to the Core Team to help them lead the product development.
+Additionally, most products have “tip contract.” The default tip contract is that 5% of all new coins are tipped to the Core Team, and 5% are tipped to the bounty author.
+
 ---
 title: What happens to my App Coins if I stop working on an app?
 ---
 
-Your App Coins remain with you in perpetuity, even after you stop working on the products, as long as you remain an active member (Being an active member just means keeping your email information up to date and logging into your account one time per calendar year). Contributions by other community members will continue to earn them new App Coins which would dilute your stake over time. However, these contributions increase the value of the product, so you end up with a smaller slice of a larger pie.
+Your App Coins remain with you in perpetuity, even after you stop working on the products, as long as you remain an active member (Being an active member just means keeping your email information up to date and commenting, upvoting or completing work once per year).
+
+Contributions by other community members will continue to earn them new App Coins which would dilute your stake over time. However, these contributions increase the value of the product, so you end up with a smaller slice of a larger pie.
+
+---
+title: How are App Coins different from securities?
+---
+
+Assembly App Coins are legally structured as a partnership – like many law firms have. App Coins can’t be bought, sold or transferred, they only determine royalty payouts. As partners, owners of Assembly App Coins have access to information, voting rights, and potential royalty payouts.
+
+
+In an organization like this, partners must remain active to keep their rights and royalties. On Assembly, remaining active means (at a minimum) voting on work once per year.
+
 
 ---
 title: How are App Coins fairly rewarded to early contributors?
@@ -59,4 +72,4 @@ Assembly will often help cover a great deal of these costs. We can’t promise t
 title: Can an Assembly project be acquired by another company?
 ---
 
-Yes. If offers are made to acquire an Assembly product, it will be up to the Core Team to decide whether or not to take it. In the case of an acquisition, all funds will be distributed among those who own the product’s App Coins after the acquisition expenses are paid.
+Yes. If offers are made to acquire an Assembly product, it will be up to the Core Team to decide whether or not to take them. In the case of an acquisition, all funds will be distributed among those who own the product’s App Coins after the acquisition expenses are paid.
