@@ -101,6 +101,11 @@
         <ul class="nav nav-stacked nav-sidebar">
           <li class="<%= nav_active_class(:about) %>">
             <a href="<%= product_path(@product) %>">
+              <div class="pull-right" style="white-space:nowrap">
+                <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
+                <span class="sr-only">More info</span>
+              </div>
+
               <i class="icon-eyeglasses dropdown-glyph"></i>
               Plan
             </a>
@@ -108,6 +113,11 @@
 
           <li class="<%= nav_active_class(:chat) %>">
             <a href="<%= product_chat_path(@product) %>">
+              <div class="pull-right" style="white-space:nowrap">
+                <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
+                <span class="sr-only">More info</span>
+              </div>
+
               <i class="icon-bubbles dropdown-glyph"></i>
               Chat
             </a>
@@ -116,6 +126,11 @@
           <% if can?(:update, @product) || @product.posts.any? %>
             <li class="<%= nav_active_class(:blog) %>">
               <a href="<%= product_posts_path(@product) %>">
+                <div class="pull-right" style="white-space:nowrap">
+                  <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
+                  <span class="sr-only">More info</span>
+                </div>
+
                 <i class="icon-notebook dropdown-glyph"></i>
                 Journal
               </a>
@@ -129,6 +144,11 @@
 
           <li class="<%= nav_active_class(:projects) %>">
             <a href="<%= product_milestones_path(@product) %>">
+              <div class="pull-right" style="white-space:nowrap">
+                <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
+                <span class="sr-only">More info</span>
+              </div>
+
               <i class="icon-folder dropdown-glyph"></i>
               Projects
             </a>
@@ -136,6 +156,11 @@
 
           <li class="<%= nav_active_class(:bounties) %>">
             <a href="<%= product_wips_path(@product) %>">
+              <div class="pull-right" style="white-space:nowrap">
+                <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
+                <span class="sr-only">More info</span>
+              </div>
+
               <i class="icon-trophy dropdown-glyph"></i>
               Bounties
             </a>
@@ -143,6 +168,11 @@
 
           <li class="<%= nav_active_class(:discussions) %>">
             <a href="<%= product_discussions_path(@product) %>">
+              <div class="pull-right" style="white-space:nowrap">
+                <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
+                <span class="sr-only">More info</span>
+              </div>
+
               <i class="icon-book-open dropdown-glyph"></i>
               Discussions
             </a>
@@ -150,6 +180,11 @@
 
           <li class="<%= nav_active_class(:assets) %>">
             <a href="<%= product_assets_path(@product) %>">
+              <div class="pull-right" style="white-space:nowrap">
+                <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
+                <span class="sr-only">More info</span>
+              </div>
+
               <i class="icon-layers dropdown-glyph"></i>
               Assets
             </a>
@@ -162,6 +197,11 @@
 
           <li class="<%= nav_active_class(:core_team) %>">
             <a href="<%= product_core_path(@product) %>">
+              <div class="pull-right" style="white-space:nowrap">
+                <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
+                <span class="sr-only">More info</span>
+              </div>
+
               <span class="icon-user-following dropdown-glyph"></span>
               Core Team
             </a>
@@ -169,13 +209,24 @@
 
           <li class="<%= nav_active_class(:people) %>">
             <a href="<%= product_people_path(@product) %>">
-              <i class="icon-users dropdown-glyph"></i>
+              <div class="pull-right" style="white-space:nowrap">
+                <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
+                <span class="sr-only">More info</span>
+              </div>
+
+              <span class="icon icon-users dropdown-glyph"></span>
               Teams
             </a>
+
           </li>
 
           <li class="<%= nav_active_class(:ownership) %>">
             <a href="<%= product_partners_path(@product) %>">
+              <div class="pull-right" style="white-space:nowrap">
+                <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
+                <span class="sr-only">More info</span>
+              </div>
+
               <i class="icon-pie-chart dropdown-glyph"></i>
               Ownership
             </a>

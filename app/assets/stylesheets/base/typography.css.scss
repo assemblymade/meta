@@ -117,6 +117,14 @@ h6,
   }
 }
 
+.text-light {
+  color: $gray-light;
+}
+
+.text-weight-light {
+  font-weight: 300;
+}
+
 .text-weight-normal {
   font-weight: normal;
 }
@@ -286,6 +294,11 @@ mark,
 .inline-serif {
   @extend .text-serif;
   font-size: 92%;
+}
+
+.link-hover-primary:hover {
+  color: $link-color !important;
+  text-decoration: none;
 }
 
 .link-hover-success:hover {
