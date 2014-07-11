@@ -17,7 +17,7 @@ module Github
         add_webhooks([ENV['GITHUB_PRODUCTS_ORG'], product.slug].join('/'))
         add_license_and_readme(product, repo_name)
 
-        product.repos |= Repo::Github.new("https://github.com/#{ENV['GITHUB_PRODUCTS_ORG']}/#{repo_name}")
+        product.repos |= [Repo::Github.new("https://github.com/#{ENV['GITHUB_PRODUCTS_ORG']}/#{repo_name}")]
         product.save!
 
         product.core_team.each do |user|
