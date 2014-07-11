@@ -3,47 +3,43 @@
 class ProductMissionDefinitions
   include Missions::DSL
 
-  mission :tasks do
-    steps       2
-
-    steps_completed do
-      product.tasks.count
-    end
-
-    on_completed do
-      # create repo
-      Github::CreateProductRepoWorker.perform_async(
-        product.id,
-        Rails.application.routes.url_helpers.product_url(product)
-      )
-
-      # add creator to repo
-      if github_login = product.user.github_login
-        Github::AddCollaboratorToProductRepoWorker.perform_in(
-          1.minute,
-          product.slug,
-          github_login
-        )
-      end
-
-      # add repo to product
-      product.repos << Repo::Github.new("https://github.com/#{ENV['GITHUB_PRODUCTS_ORG']}/#{product.slug}")
-      product.save!
-    end
-  end
-
-  mission :contributors do
-    steps       5
-
-    steps_completed do
-      product.count_contributors
-    end
-
-    on_completed do
-      product.can_advertise = true
-      product.save!
-    end
-  end
+  # mission :tasks do
+  #   steps       2
+  #
+  #   steps_completed do
+  #     product.tasks.count
+  #   end
+  #
+  #   on_completed do
+  #     # create repo
+  #     Github::CreateProductRepoWorker.perform_async(
+  #       product.id,
+  #       Rails.application.routes.url_helpers.product_url(product)
+  #     )
+  #
+  #     # add creator to repo
+  #     if github_login = product.user.github_login
+  #       Github::AddCollaboratorToProductRepoWorker.perform_in(
+  #         1.minute,
+  #         product.slug,
+  #         github_login
+  #       )
+  #     end
+  #  #   end
+  # end
+  #
+  # mission :contributors do
+  #   steps       5
+  #
+  #   steps_completed do
+  #     product.count_contributors
+  #   end
+  #
+  #   on_completed do
+  #     product.can_advertise = true
+  #     product.save!
+  #   end
+  # end
 
   # mission :events do
   #   steps       25

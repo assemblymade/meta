@@ -12,11 +12,11 @@ module Github
           content_type: 'json'
         }
     end
-    
+
     def commit_count(repo)
-      stats("#{repo}").first['total']
+      stats("#{repo}").tap{|s| pp s}.first['total']
     end
-    
+
     def stats(repo)
       get "/repos/#{repo}/stats/contributors"
     end
