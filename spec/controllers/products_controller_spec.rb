@@ -7,7 +7,13 @@ describe ProductsController do
   let(:product) { Product.make! }
 
   describe '#new' do
-    it "is successful" do
+    it "redirects on signed out" do
+      get :new
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "is successful when signed in" do
+      sign_in creator
       get :new
       expect(response).to be_success
     end
@@ -45,6 +51,11 @@ describe ProductsController do
       expect(response).to redirect_to(product_path(assigns(:product)))
     end
 
+    it 'has no slug' do
+      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
+      expect(assigns(:product).slug).to be_nil
+    end
+
     it 'auto upvotes product' do
       expect {
         post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
@@ -67,7 +78,7 @@ describe ProductsController do
   end
 
   describe '#launch' do
-    let(:product) { Product.make!(launched_at: nil) }
+    let(:product) { Product.make!(launched_at: nil, user: creator) }
 
     before do
       sign_in creator
@@ -75,7 +86,7 @@ describe ProductsController do
 
     it "redirects to product slug" do
       patch :launch, product_id: product.id
-      expect(response).to redirect_to(product_path(product.slug))
+      expect(response).to redirect_to(product_path(product.reload.slug))
     end
 
     it 'publishes activity' do

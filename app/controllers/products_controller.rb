@@ -1,7 +1,7 @@
 class ProductsController < ProductController
   respond_to :html, :json
 
-  before_action :authenticate_user!, only: [:create, :edit, :update]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
   before_action :set_product,
     only: [:show, :edit, :update, :follow, :metrics, :flag, :feature, :launch]
 
@@ -115,6 +115,7 @@ class ProductsController < ProductController
   end
 
   def launch
+    authorize! :update, @product
     if @product.launched_at.nil?
       @product.update_attributes launched_at: Time.current
       Activities::Launch.publish!(
