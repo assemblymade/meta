@@ -143,7 +143,7 @@ class ProductsController < ProductController
 
     # TODO: Create a project with a TodoList and push that to chat
 
-    PostChatMessage.perform_in(1.day, @product.slug, message)
+    PostChatMessage.perform_in(1.second, @product.slug, message)
   end
   # private
 

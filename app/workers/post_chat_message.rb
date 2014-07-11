@@ -1,10 +1,10 @@
 class PostChatMessage
   include Sidekiq::Worker
 
-  def perform(product_id, message)
-    @product = Product.find_by(slug: product_id)
+  def perform(product_slug, message)
+    @product = Product.find_by(slug: product_slug)
 
-    return unless Activity.where(target_id: @product.id)
+    return false unless Activity.where(target_id: @product.id)
                           .where.not(type: 'Activities::Chat')
                           .where.not(type: 'Activities::FoundProduct')
                           .empty?
@@ -14,6 +14,8 @@ class PostChatMessage
     post Rails.application.routes.url_helpers.api_product_chat_comments_path(@product),
       body: message
   end
+
+  private
 
   def post(url, payload = {})
     request :post, url, payload
