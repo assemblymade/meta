@@ -43,7 +43,7 @@ Not exactly. Assembly is a place to build products collaboratively. If you are p
 
 A key ingredient to success on Assembly is community support. There are many ways to get the community to rally behind your product, but the best approach we’ve seen is to join in on another project and start building a network of talented Assembly members. That way, when you launch your own project you’ll already have people in mind for your core team.
 
-[Read more about how to get momentum for your idea](blog.assembly.com/build-momentum)
+[Read more about how to get momentum for your idea](http://blog.assembly.com/build-momentum)
 
 
 # Who owns the intellectual property?
