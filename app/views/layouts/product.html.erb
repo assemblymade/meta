@@ -264,7 +264,24 @@
 
         <ul class="list list-inline pull-right">
           <li>
-            <a href="#" class="btn btn-primary btn-sm" style="vertical-align: bottom;">
+            <a
+              href="#"
+              class="btn btn-primary btn-sm"
+              style="vertical-align: bottom;"
+              data-toggle="popover"
+              data-placement="bottom"
+              data-html="true"
+              data-content="
+                <div class='form-group' style='margin-bottom: 4px'>
+                  <label for='share-url'><%= @product.name %> is currently in stealth. See what your friends think and invite them to help out:</label>
+                  <div class='input-group'>
+                    <input type='text' class='form-control' id='share-url' value='http://assembly.com/d84k3gz'>
+                    <span class='input-group-btn'>
+                      <button class='btn btn-default' type='button'>Copy</button>
+                    </span>
+                  </div>
+                </div>"
+              >
               <i class="icon icon-share-alt" style="margin-right: 2px;"></i>
               Share
             </a>
