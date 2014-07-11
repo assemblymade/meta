@@ -58,8 +58,8 @@ $text-copy: darken($text-copy-bg, 75%);
 
 // Typography
 
-$font-family-sans-serif: Solitaire, "Helvetica Neue", Helvetica, Arial, sans-serif;
-$font-family-serif:      Tiempos, Georgia, "Times New Roman", Times, serif;
+$font-family-sans-serif: "Source Sans Pro", Solitaire, "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-serif:      "Source Sans Pro", Tiempos, Georgia, "Times New Roman", Times, serif;
 $font-family-monospace:  "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace;
 $font-family-base:       $font-family-sans-serif;
 
@@ -436,7 +436,7 @@ $modal-inner-padding: 30px;
 $modal-title-padding: 15px 30px;
 $modal-title-line-height: $line-height-base;
 
-$modal-content-bg: $body-bg;
+$modal-content-bg: white;
 $modal-content-border-color: rgba(0,0,0,0.2);
 $modal-content-fallback-border-color: transparent;
 
@@ -446,7 +446,7 @@ $modal-backdrop-bg: white;
 $modal-backdrop-opacity: 1;
 $modal-header-bg: white;
 $modal-header-border-color: $brand-divider;
-$modal-footer-bg: white;
+$modal-footer-bg: $body-bg;
 $modal-footer-border-color: $brand-divider;
 
 $modal-lg: 900px;

@@ -18,7 +18,7 @@
 }
 
 .modal-backdrop {
-  background-color: #000;
+  background-color: $black;
 }
 
 .modal-backdrop.fade {
@@ -30,9 +30,9 @@
 }
 
 .modal-warning {
-  background-color: $gray-dark;
+  background-color: rgba($brand-warning, 0.5);
 }
 
 .modal-danger {
-  background-color: $gray-darker;
+  background-color: rgba($brand-danger, 0.5);
 }

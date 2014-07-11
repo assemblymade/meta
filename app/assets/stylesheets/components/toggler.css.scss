@@ -5,7 +5,7 @@
   // height: $line-height-computed;
 
   font-size: $font-size-small;
-  line-height: $line-height-computed - 2px;
+  line-height: $line-height-computed;
 
   > :first-child {
     border-radius: $border-radius-base 0 0 $border-radius-base;
@@ -31,7 +31,7 @@
   padding-top: 0;
   padding-bottom: 0;
 
-  line-height: $line-height-computed - 2px;
+  line-height: $line-height-computed;
   font-size: $font-size-small;
 }
 
