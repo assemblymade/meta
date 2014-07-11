@@ -11,76 +11,7 @@
 
       <div class="col-md-2 fixed-enabler">
 
-        <a href="#" class="btn btn-success btn-sm btn-block" style="margin-bottom: 24px;" data-toggle="modal" data-target="#launch-modal">
-          <i class="icon icon-rocket" style="margin-right: 2px;"></i>
-          Ready to launch?
-        </a>
-
-        <div class="modal fade" id="launch-modal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" ><i class="icon-close" style="top: 7px;"></i></span><span class="sr-only">Close</span></button>
-                <h3 class="modal-title">Are you ready to launch?</h3>
-              </div>
-              <div class="modal-body">
-                <p class="lead omega text-center">Whilst in stealth, you can really take your time to flesh it out before the community at-large sees it. Aim to leave a lasting impression so the communitycan start contributing.</p>
-                <hr>
-
-                <div class="row">
-                  <div class="col-md-10 col-md-offset-1">
-                    <p class="text-center"><strong>We recommend tackling the following before launching:</strong></p>
-
-                    <div class="row" style="margin-bottom: 6px;">
-                      <div class="col-md-1">
-                        <i class="icon-check text-success"></i>
-                      </div>
-                      <div class="col-md-11 text-muted">
-                        Complete the business plan so it answers any questions potential contributors may have.
-                      </div>
-                    </div>
-                    <div class="row" style="margin-bottom: 6px;">
-                      <div class="col-md-1">
-                        <i class="icon-check text-success"></i>
-                      </div>
-                      <div class="col-md-11 text-muted">
-                        Write an introductory journal entry to introduce <%= @product.name %> and yourself to the community.
-                      </div>
-                    </div>
-                    <div class="row" style="margin-bottom: 6px;">
-                      <div class="col-md-1">
-                        <i class="icon-check text-success"></i>
-                      </div>
-                      <div class="col-md-11 text-muted">
-                        Create bounties that contributors can immediately work on.
-                      </div>
-                    </div>
-                    <div class="row" style="margin-bottom: 6px;">
-                      <div class="col-md-1">
-                        <i class="icon-check text-success"></i>
-                      </div>
-                      <div class="col-md-11 text-muted">
-                        Create your first Project to provide focus for contributors.
-                      </div>
-                    </div>
-                    <div class="row" style="margin-bottom: 6px;">
-                      <div class="col-md-1">
-                        <i class="icon-check text-success"></i>
-                      </div>
-                      <div class="col-md-11 text-muted">
-                        Get feedback from friends. Share the URL and have them chime in.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Not yet</button>
-                <button type="button" class="btn btn-success">Launch <%= @product.name %></button>
-              </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+        <%= render 'products/launch' unless @product.launched? %>
 
         <% if @product.poster? %>
           <% if current_user && @product.core_team?(current_user) %>
@@ -364,7 +295,7 @@
         </ul>
 
         <h3 class="alpha text-muted" style="font-weight: 400; line-height: 1;">
-          <%= @product.name %> <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;">Stealth</span>
+          <%= @product.name %> <% if @product.stealth? %><span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;">Stealth</span><% end %>
           <% if @breadcrumb.present? %>
             <i class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></i>
             <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>"><%= @breadcrumb[:text] %></a>

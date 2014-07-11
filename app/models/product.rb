@@ -139,6 +139,10 @@ class Product < ActiveRecord::Base
     !launched_at.nil?
   end
 
+  def stealth?
+    launched_at.nil?
+  end
+
   def founded_at
     read_attribute(:founded_at) || created_at
   end
