@@ -35,14 +35,14 @@
         <ul class="nav nav-stacked nav-sidebar">
           <li class="<%= nav_active_class(:about) %>">
             <a href="<%= product_path(@product) %>">
-              <i class="icon-home dropdown-glyph"></i>
+              <i class="icon icon-home dropdown-glyph"></i>
               Home
             </a>
           </li>
 
           <li class="<%= nav_active_class(:chat) %>">
             <a href="<%= product_chat_path(@product) %>">
-              <i class="icon-bubbles dropdown-glyph"></i>
+              <i class="icon icon-bubbles dropdown-glyph"></i>
               Chat
             </a>
           </li>
@@ -50,7 +50,7 @@
           <% if can?(:update, @product) || @product.posts.any? %>
             <li class="<%= nav_active_class(:blog) %>">
               <a href="<%= product_posts_path(@product) %>">
-                <i class="icon-notebook dropdown-glyph"></i>
+                <i class="icon icon-notebook dropdown-glyph"></i>
                 Blog
               </a>
             </li>
@@ -63,28 +63,28 @@
 
           <li class="<%= nav_active_class(:projects) %>">
             <a href="<%= product_milestones_path(@product) %>">
-              <i class="icon-rocket dropdown-glyph"></i>
+              <i class="icon icon-rocket dropdown-glyph"></i>
               Projects
             </a>
           </li>
 
           <li class="<%= nav_active_class(:bounties) %>">
             <a href="<%= product_wips_path(@product) %>">
-              <i class="icon-trophy dropdown-glyph"></i>
+              <i class="icon icon-trophy dropdown-glyph"></i>
               Bounties
             </a>
           </li>
 
           <li class="<%= nav_active_class(:discussions) %>">
             <a href="<%= product_discussions_path(@product) %>">
-              <i class="icon-book-open dropdown-glyph"></i>
+              <i class="icon icon-book-open dropdown-glyph"></i>
               Discussions
             </a>
           </li>
 
           <li class="<%= nav_active_class(:assets) %>">
             <a href="<%= product_assets_path(@product) %>">
-              <i class="icon-paper-clip dropdown-glyph"></i>
+              <i class="icon icon-paper-clip dropdown-glyph"></i>
               Assets
             </a>
           </li>
@@ -103,21 +103,21 @@
 
           <li class="<%= nav_active_class(:core_team) %>">
             <a href="<%= product_core_path(@product) %>">
-              <span class="icon-user-following dropdown-glyph"></span>
+              <span class="icon icon-user-following dropdown-glyph"></span>
               Core Team
             </a>
           </li>
 
           <li class="<%= nav_active_class(:people) %>">
             <a href="<%= product_people_path(@product) %>">
-              <i class="icon-users dropdown-glyph"></i>
+              <i class="icon icon-users dropdown-glyph"></i>
               Teams
             </a>
           </li>
 
           <li class="<%= nav_active_class(:ownership) %>">
             <a href="<%= product_partners_path(@product) %>">
-              <i class="icon-pie-chart dropdown-glyph"></i>
+              <i class="icon icon-pie-chart dropdown-glyph"></i>
               Ownership
             </a>
           </li>
@@ -130,14 +130,14 @@
 
             <li class="<%= nav_active_class(:financials) %>">
               <a href="<%= product_financials_path(@product) %>">
-                <i class="icon-wallet dropdown-glyph"></i>
+                <i class="icon icon-wallet dropdown-glyph"></i>
                 Money
               </a>
             </li>
 
             <!-- <li class="<%= nav_active_class(:contracts) %>">
               <a href="<%= product_contracts_path(@product) %>">
-                <i class="icon-docs dropdown-glyph"></i>
+                <i class="icon icon-docs dropdown-glyph"></i>
                 Contracts
               </a>
             </li> -->
