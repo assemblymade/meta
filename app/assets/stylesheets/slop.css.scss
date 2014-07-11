@@ -28,7 +28,6 @@ $user-davidkaneda: #848C24;
   color: $text-copy;
 
   h1 {
-    @extend .text-serif;
     font-size: 46px;
     margin-top: 0;
     margin-bottom: 28px;
@@ -76,30 +75,18 @@ $user-davidkaneda: #848C24;
 
 .section,
 .sidebar {
-  // @extend .text-serif;
-  line-height: 1.618;
   color: $text-copy;
 }
 
 .section {
-  @extend .text-serif;
-  line-height: 1.618;
+  font-size: $font-size-large;
   margin-bottom: 48px;
-
-  .lead {
-    @extend .text-sans;
-  }
 
   .table-striped > tbody > tr:nth-child(odd) > td {
     background-color: lighten($text-copy, 77%);
   }
 
-  .table {
-    @extend .text-sans;
-  }
-
   h2 {
-    @extend .text-sans;
     color: $black;
     font-weight: 200;
     margin-bottom: $line-height-computed * 2;
@@ -107,7 +94,6 @@ $user-davidkaneda: #848C24;
   }
 
   h3 {
-    @extend .text-sans;
     color: $black;
     font-weight: 200;
     margin-bottom: $line-height-computed * 1.5;
@@ -120,7 +106,6 @@ $user-davidkaneda: #848C24;
 
 
   h4 {
-    @extend .text-sans;
     font-weight: bold;
     font-size: 22px;
     margin-bottom: $line-height-computed;
@@ -150,7 +135,6 @@ $user-davidkaneda: #848C24;
 }
 
 .card-colored {
-  @extend .text-sans;
   margin-bottom: 0;
   background-color: $gray;
   box-shadow:
@@ -326,7 +310,7 @@ a.card-colored:hover {
 }
 
 .sidebar {
-  font-size: 14px;
+  font-size: $font-size-small;
   border-left: 1px solid $brand-divider;
   padding-left: 30px;
 
@@ -454,7 +438,6 @@ figure,
 .list-team {
 
   h6 {
-    @extend .text-sans;
     margin-top: $line-height-computed * 0.75;
     text-transform: none;
     letter-spacing: 0;

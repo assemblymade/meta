@@ -111,8 +111,6 @@ h6,
   p,
   ul,
   ol {
-    @extend .text-serif;
-    line-height: 1.764;
     color: $gray-dark;
   }
 }
@@ -122,15 +120,15 @@ h6,
 }
 
 .text-weight-light {
-  font-weight: 300;
+  font-weight: 200;
 }
 
 .text-weight-normal {
-  font-weight: normal;
+  font-weight: 400;
 }
 
 .text-weight-bold {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .text-large {
@@ -243,7 +241,6 @@ blockquote {
 
 .text-copy {
   @extend .text-serif;
-  // padding: $padding-xxl-vertical $padding-xxl-horizontal;
   padding: 26px $padding-xxl-horizontal 25px 68px;
   font-size: 15px;
   line-height: 1.764;
@@ -293,7 +290,6 @@ mark,
 
 .inline-serif {
   @extend .text-serif;
-  font-size: 92%;
 }
 
 .link-hover-primary:hover {
