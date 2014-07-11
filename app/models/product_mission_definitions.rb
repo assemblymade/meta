@@ -24,8 +24,7 @@ class ProductMissionDefinitions
       #     product.slug,
       #     github_login
       #   )
-      # end
-   #   end
+    end
   end
   #
   # mission :contributors do
