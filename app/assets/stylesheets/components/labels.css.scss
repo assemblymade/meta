@@ -1,5 +1,5 @@
 .label {
-  // padding: .3em .5em;
+  padding: .2em .5em;
 }
 
 .label-urgent {
@@ -19,8 +19,7 @@
 }
 
 .label-outlined {
-  background: white;
-  // border: 1px solid $brand-border;
+  background: transparent;
   box-shadow: inset 0 0 0 1px $brand-border;
   color: $gray;
 }

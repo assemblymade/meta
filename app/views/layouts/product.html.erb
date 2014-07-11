@@ -26,46 +26,50 @@
                 <p class="lead omega text-center">Whilst in stealth, you can really take your time to flesh it out before the community at-large sees it. Aim to leave a lasting impression so the communitycan start contributing.</p>
                 <hr>
 
-                <p><strong>We recommend tackling the following before launching:</strong></p>
+                <div class="row">
+                  <div class="col-md-10 col-md-offset-1">
+                    <p class="text-center"><strong>We recommend tackling the following before launching:</strong></p>
 
-                <div class="row" style="margin-bottom: 6px;">
-                  <div class="col-md-1">
-                    <i class="icon-check text-success"></i>
-                  </div>
-                  <div class="col-md-11 text-muted">
-                    Complete the business plan so it answers any questions potential contributors may have.
-                  </div>
-                </div>
-                <div class="row" style="margin-bottom: 6px;">
-                  <div class="col-md-1">
-                    <i class="icon-check text-success"></i>
-                  </div>
-                  <div class="col-md-11 text-muted">
-                    Write an introductory journal entry to introduce <%= @product.name %> and yourself to the community.
-                  </div>
-                </div>
-                <div class="row" style="margin-bottom: 6px;">
-                  <div class="col-md-1">
-                    <i class="icon-check text-success"></i>
-                  </div>
-                  <div class="col-md-11 text-muted">
-                    Create bounties that contributors can immediately work on.
-                  </div>
-                </div>
-                <div class="row" style="margin-bottom: 6px;">
-                  <div class="col-md-1">
-                    <i class="icon-check text-success"></i>
-                  </div>
-                  <div class="col-md-11 text-muted">
-                    Create your first Project to provide focus for contributors.
-                  </div>
-                </div>
-                <div class="row" style="margin-bottom: 6px;">
-                  <div class="col-md-1">
-                    <i class="icon-check text-success"></i>
-                  </div>
-                  <div class="col-md-11 text-muted">
-                    Get feedback from friends. Share the URL and have them chime in.
+                    <div class="row" style="margin-bottom: 6px;">
+                      <div class="col-md-1">
+                        <i class="icon-check text-success"></i>
+                      </div>
+                      <div class="col-md-11 text-muted">
+                        Complete the business plan so it answers any questions potential contributors may have.
+                      </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 6px;">
+                      <div class="col-md-1">
+                        <i class="icon-check text-success"></i>
+                      </div>
+                      <div class="col-md-11 text-muted">
+                        Write an introductory journal entry to introduce <%= @product.name %> and yourself to the community.
+                      </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 6px;">
+                      <div class="col-md-1">
+                        <i class="icon-check text-success"></i>
+                      </div>
+                      <div class="col-md-11 text-muted">
+                        Create bounties that contributors can immediately work on.
+                      </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 6px;">
+                      <div class="col-md-1">
+                        <i class="icon-check text-success"></i>
+                      </div>
+                      <div class="col-md-11 text-muted">
+                        Create your first Project to provide focus for contributors.
+                      </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 6px;">
+                      <div class="col-md-1">
+                        <i class="icon-check text-success"></i>
+                      </div>
+                      <div class="col-md-11 text-muted">
+                        Get feedback from friends. Share the URL and have them chime in.
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -297,7 +301,7 @@
         </ul>
 
         <h3 class="alpha" style="font-weight: 400; line-height: 1; color: #93A0AA;">
-          <%= @product.name %> <span class="label label-default" style="position: relative; top: -3px; font-size: 13px;">Stealth</span>
+          <%= @product.name %> <span class="label label-outlined" style="position: relative; top: -3px; font-size: 13px;">Stealth</span>
           <% if @breadcrumb.present? %>
             <i class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></i>
             <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>"><%= @breadcrumb[:text] %></a>
