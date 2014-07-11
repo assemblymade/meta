@@ -4,7 +4,9 @@ title: How does Assembly work?
 
 Assembly enables software products (apps, services, etc.) to be built like open source projects. When a product earns money, it goes to the contributors who built it.
 
+
 The projects are open and transparent, and anyone can help build them – whether you want to contribute a few hours or a few months. Product ideas, vision and execution are driven by the community.
+
 
 Each contribution you make will be rewarded with a fair amount (as determined by the community) of stake in the project -- stake is distributed through App Coins. As soon as a product is generating revenue, everyone who helped build it receives payment each month. During development, Assembly often helps cover expenses like servers and web domains.
 

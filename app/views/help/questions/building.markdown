@@ -33,8 +33,7 @@ title: How is work prioritized?
 
 Each product’s Core Team takes on most of the prioritization work. Core Team members can select a priority level for a bounty (from lowest to highest: someday, next, now, urgent). These priorities impact the number of App Coins assigned to a bounty, and the priority of a project is determined by the priority of the bounties within it.
 
-Additionally, anyone in the community can upvote a bounty, which will increase it’s
-priority and the number of App Coins assigned to it.
+Additionally, anyone in the community can upvote a bounty, which will increase its priority and the number of App Coins assigned to it.
 
 ---
 title: How is product management and prioritization rewarded?
