@@ -16,28 +16,28 @@
         <%= form_for @user, html: {class: 'form form-horizontal'} do |f| %>
           <div class="form-group">
             <%= f.label :username, class: 'control-label col-xs-2' %>
-            <div class="col-xs-6">
+            <div class="col-xs-8">
               <%= f.text_field :username, autocomplete: 'off', class: 'form-control' %>
             </div>
           </div>
 
           <div class="form-group">
             <%= f.label :location, class: 'control-label col-xs-2' %>
-            <div class="col-xs-6">
+            <div class="col-xs-8">
               <%= f.text_field :location, autocomplete: 'off', class: 'form-control' %>
             </div>
           </div>
 
           <div class="form-group">
             <%= f.label :email, class: 'control-label col-xs-2' %>
-            <div class="col-xs-6">
+            <div class="col-xs-8">
               <%= f.text_area :email, placeholder: 'Email', autocomplete: 'off', rows: 1, class: 'form-control' %>
             </div>
           </div>
 
           <div class="form-group">
             <%= f.label :bio, class: 'control-label col-xs-2' %>
-            <div class="col-xs-10">
+            <div class="col-xs-8">
               <%= f.text_area :bio, placeholder: 'Short bio', autocomplete: 'off', rows: 4, class: 'form-control' %>
             </div>
           </div>
@@ -90,14 +90,14 @@
 
           <div class="form-group">
             <%= f.label :password, 'Password', class: 'control-label col-xs-2' %>
-            <div class="col-xs-6">
+            <div class="col-xs-8">
               <%= f.password_field :password, class: 'form-control' %>
             </div>
           </div>
 
           <div class="form-group">
             <%= f.label :password_confirmation, 'Confirm', class: 'control-label col-xs-2' %>
-            <div class="col-xs-6">
+            <div class="col-xs-8">
               <%= f.password_field :password_confirmation, class: 'form-control' %>
             </div>
           </div>
