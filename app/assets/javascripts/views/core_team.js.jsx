@@ -18,6 +18,7 @@ window.CoreTeam = React.createClass({
   getInitialState: function() {
     return { users: [], potentialUser: null }
   },
+  
   render: function() {
     return (
       <table className="table">
