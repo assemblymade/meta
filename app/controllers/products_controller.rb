@@ -141,9 +141,12 @@ class ProductsController < ProductController
   def schedule_one_day_checkin
     message = "@core, I'm gonna have to do this for you, aren't I? Is anyone even here?"
 
-    # TODO: Create a project with a TodoList and push that to chat
+    PostChatMessage.perform_in(1.day, @product.slug, message)
+    CreateProject.perform_in(1.day, @product.slug)
 
-    PostChatMessage.perform_in(1.second, @product.slug, message)
+    message = "@core, I made something for you: [Lazy Human Launch Checklist](#{product_milestone_path(@product, 1)}). You're welcome."
+
+    PostChatMessage.perform_in(1.day, @product.slug, message)
   end
   # private
 

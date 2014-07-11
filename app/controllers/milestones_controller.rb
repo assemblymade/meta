@@ -88,6 +88,7 @@ class MilestonesController < ProductController
     else
       @product.tasks.find_by!(number: params[:id])
     end
+
     MilestoneTask.find_or_create_by!(milestone: @milestone, task: task)
 
     respond_to do |format|

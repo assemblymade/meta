@@ -179,6 +179,8 @@ ASM::Application.routes.draw do
       namespace :chat do
         resources :comments, only: [:create]
       end
+
+      resources :projects, only: [:create]
     end
 
     resources :textcompletes, only: [:index]

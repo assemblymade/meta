@@ -12,11 +12,8 @@ describe PostChatMessage do
       expect(PostChatMessage.jobs.size).to eq 1
     end
 
-    let(:task) { Task.make!(product: product) }
-
     context 'product has activity' do
-
-      let(:activity) { Activity.make!(target: product, type: 'Activities::Start') }
+      let!(:activity) { Activity.make!(target: product, type: 'Activities::Start') }
 
       it 'returns false' do
         pcm = PostChatMessage.new
