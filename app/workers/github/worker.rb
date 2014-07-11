@@ -14,7 +14,7 @@ module Github
     end
 
     def commit_count(repo)
-      stats("#{repo}").tap{|s| pp s}.first['total']
+      stats("#{repo}").first['total']
     end
 
     def stats(repo)
