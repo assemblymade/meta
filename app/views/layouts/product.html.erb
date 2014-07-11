@@ -264,28 +264,31 @@
 
         <ul class="list list-inline pull-right">
           <li>
-            <div class="toggler">
+            <a href="#" class="btn btn-primary btn-sm" style="vertical-align: bottom;">
+              <i class="icon icon-share-alt" style="margin-right: 2px;"></i>
+              Share
+            </a>
+          </li>
+          <li>
+            <div class="toggler toggler-sm">
               <% if signed_in? && @product.watching?(current_user) %>
-                <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post" >
-
-                  <i class="icon-eye" style="margin-right: 2px;"></i>
+                <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post">
+                  <i class="icon icon-eye" style="margin-right: 2px;"></i>
                   Unwatch
                 </a>
               <% else %>
                 <a class="toggler-btn btn btn-primary" href="<%= subscribe_product_path(@product) %>" data-method="post">
-                  <i class="icon-eye" style="margin-right: 2px;"></i>
+                  <i class="icon icon-eye" style="margin-right: 2px;"></i>
                   Watch
                 </a>
               <% end %>
-              <div class="badge toggler-badge">
-                <a href="<%= product_watchers_path(@product) %>">
+                <a class="toggler-badge" href="<%= product_watchers_path(@product) %>">
                   <%= @product.watchers.count %>
                 </a>
-              </div>
             </div>
           </li>
           <li style="padding-right: 0;">
-            <div class="toggler">
+            <div class="toggler toggler-sm">
               <div
                    data-react-class="JoinTeam"
                    data-react-props="<%= {

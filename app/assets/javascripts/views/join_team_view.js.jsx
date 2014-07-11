@@ -9,9 +9,9 @@ var JoinTeam = React.createClass({
 
   render: function() {
     return (
-      <div className="toggler">
+      <div className="toggler toggler-sm">
         {this.label()}
-        <div className="badge toggler-badge">
+        <div className="toggler-badge">
           <a href={this.props.join_path}>{this.state.count}</a>
         </div>
       </div>
@@ -141,18 +141,18 @@ var JoinTeam = React.createClass({
   label: function() {
     if (this.state.is_member) {
       return (
-        <a className={"toggler-btn btn btn-" + this.button()} data-toggle="popover" style={{width: '120px', 'max-width': '120px'}} onClick={this.click()}>
-          <i className="icon-user-unfollow" style={{'margin-right': '6px'}}></i>
+        <a className={"toggler-btn btn btn-" + this.button()} data-toggle="popover" onClick={this.click()}>
+          <i className="icon icon-user-unfollow" style={{'margin-right': '5px',}}></i>
           Leave Team
         </a>
       )
     }
 
     return (
-      <a className={"toggler-btn btn btn-" + this.button()} data-toggle="popover" style={{width: '120px', 'max-width': '120px'}} onClick={this.click()}
+      <a className={"toggler-btn btn btn-" + this.button()} data-toggle="popover"  onClick={this.click()}
           role="button"
           id="js-join-popover">
-        <i className="icon-user-follow" style={{'margin-right': '6px'}}></i>
+        <i className="icon icon-user-follow" style={{'margin-right': '5px'}}></i>
         Join Team
       </a>
     )
