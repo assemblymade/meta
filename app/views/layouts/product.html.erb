@@ -12,6 +12,7 @@
       <div class="col-md-2 fixed-enabler">
 
         <a href="#" class="btn btn-success btn-sm btn-block" style="margin-bottom: 24px;" data-toggle="modal" data-target="#launch-modal">
+          <i class="icon icon-rocket" style="margin-right: 2px;"></i>
           Ready to launch?
         </a>
 
@@ -362,8 +363,8 @@
           </li>
         </ul>
 
-        <h3 class="alpha" style="font-weight: 400; line-height: 1; color: #93A0AA;">
-          <%= @product.name %> <span class="label label-outlined" style="position: relative; top: -3px; font-size: 13px;">Stealth</span>
+        <h3 class="alpha text-muted" style="font-weight: 400; line-height: 1;">
+          <%= @product.name %> <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;">Stealth</span>
           <% if @breadcrumb.present? %>
             <i class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></i>
             <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>"><%= @breadcrumb[:text] %></a>
