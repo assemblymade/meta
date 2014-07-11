@@ -140,7 +140,7 @@ $table-border-color: $brand-divider;
 
 // Buttons
 
-$btn-font-weight: bold;
+$btn-font-weight:    bold;
 
 $btn-default-color:  $brand-primary;
 $btn-default-bg:     #fff;
@@ -165,6 +165,14 @@ $btn-warning-border: darken($btn-warning-bg, 5%);
 $btn-danger-color:   #fff;
 $btn-danger-bg:      $brand-danger;
 $btn-danger-border:  darken($btn-danger-bg, 5%);
+
+$btn-twitter-color:  white;
+$btn-twitter-bg:     $twitter;
+$btn-twitter-border: darken($btn-twitter-bg, 5%);
+
+$btn-facebook-color:  white;
+$btn-facebook-bg:     $facebook;
+$btn-facebook-border: darken($btn-facebook-bg, 5%);
 
 $btn-link-disabled-color: $gray-light;
 
@@ -408,7 +416,7 @@ $popover-fallback-border-color: $brand-divider;
 
 $popover-title-bg: darken($popover-bg, 3%);
 
-$popover-arrow-width: 8px;
+$popover-arrow-width: 6px;
 $popover-arrow-color: #fff;
 
 $popover-arrow-outer-width:          ($popover-arrow-width + 1);
