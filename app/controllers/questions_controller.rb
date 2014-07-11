@@ -1,9 +1,8 @@
 class QuestionsController < ApplicationController
 
   def index
-    @group = params.fetch(:group)
-    @questions = Question.by_group(@group)
-    @groups = Question::GROUPS
+    @faq_groups = FaqGroup.all
+    @faq_group = FaqGroup.find_by_slug!(params.fetch(:group))
   end
 
 end

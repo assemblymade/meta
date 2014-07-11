@@ -1,8 +1,8 @@
-<% title [Question::GROUPS[@group], 'FAQ'] %>
+<% title @faq_group.name, 'FAQ' %>
 <% activate_nav! :platform_faq %>
 <%= render 'shared/navbar' %>
 
-<% cache Question.cache_key(@group) do %>
+<% cache FaqGroup.cache_key(@faq_group) do %>
   <div class="page page-flat">
     <div class="container">
       <div class="row">
@@ -13,27 +13,22 @@
               <li class="active">FAQ</li>
               <li></li>
             </ol>
-            <h1 class="alpha"><%= Question::GROUPS[@group] %></h1>
+            <h1 class="alpha"><%= @faq_group.name %></h1>
           </div>
 
           <div class="row">
             <div class="col-md-8 col-xs-8 copy">
               <ul class="list-unstyled">
-                <% @questions.each.with_index do |question, i| %>
+                <% @faq_group.questions.each do |question| %>
                   <li class="question">
-                    <%= link_to question.title, "##{@group}-#{i+1}" %>
+                    <%= link_to question[:name], anchor: question[:anchor] %>
                   </li>
                 <% end %>
               </ul>
 
               <hr style="margin-bottom: 48px">
 
-              <% @questions.each.with_index do |question, i| %>
-                <h3 id="<%= @group %>-<%= i+1 %>">
-                  <%= question.title %>
-                </h3>
-                <%= markdown(question.body) %>
-              <% end %>
+              <%= @faq_group.body.html_safe %>
             </div>
 
             <div class="col-xs-4">
@@ -42,9 +37,9 @@
                   <h6 class="panel-title">Areas</h6>
                 </div>
                 <ul class="nav nav-pills nav-stacked">
-                  <% @groups.each do |id, name| %>
-                    <li class="<%= ('active' if @group == id) %>">
-                      <%= link_to name, "/help/#{id}" %>
+                  <% @faq_groups.each do |faq_group| %>
+                    <li class="<%= ('active' if @faq_group.slug == faq_group.slug) %>">
+                      <%= link_to faq_group.name, help_path(faq_group) %>
                     </li>
                   <% end %>
                 </ul>
