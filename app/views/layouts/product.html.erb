@@ -165,7 +165,7 @@
               <% end %>
               <div class="badge toggler-badge">
                 <a href="<%= product_watchers_path(@product) %>">
-                  <%= @product.watchers.count %>
+                  <%= @product.watchings_count %>
                 </a>
               </div>
             </div>
@@ -175,7 +175,7 @@
               <div
                    data-react-class="JoinTeam"
                    data-react-props="<%= {
-                     count: @product.team_memberships.active.count,
+                     count: @product.team_memberships_count,
                      join_path: product_people_path(@product),
                      leave_path: (current_user && product_person_path(@product, current_user)),
                      is_member: @product.member?(current_user),
