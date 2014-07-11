@@ -4,8 +4,6 @@ class AddLaunchedAtToProducts < ActiveRecord::Migration
 
     launched = %w(
       asm
-      barrtr
-      be-stow
       buckets
       coderwall
       confy
@@ -17,8 +15,6 @@ class AddLaunchedAtToProducts < ActiveRecord::Migration
       present
       readraptor
       really-good-emails
-      sharebay
-      wivern
     )
 
     Product.where(slug: launched).update_all launched_at: Time.now
