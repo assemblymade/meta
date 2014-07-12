@@ -1,9 +1,15 @@
 //= require spec_helper
 //= require underscore
+//= require dispatcher
 //= require stores/store
 //= require stores/tag_list_store
 
 describe('TagListStore', function() {
+  before(function(done) {
+    Dispatcher.removeAll();
+    done();
+  });
+
   afterEach(function(done) {
     TagListStore.removeAllTags();
 

@@ -1,6 +1,11 @@
 /** @jsx React.DOM */
 
+//= require constants
+//= require stores/person_picker_store
+
 (function() {
+
+var PP = CONSTANTS.PERSON_PICKER;
 
 var keys = {
   enter: 13,
@@ -12,6 +17,10 @@ var keys = {
 window.PersonPicker = React.createClass({
   getInitialState: function() {
     return { users: [], highlightIndex: 0 }
+  },
+
+  componentDidMount: function() {
+    PersonPickerStore.addChangeListener()
   },
 
   clearText: function() {
@@ -57,6 +66,7 @@ window.PersonPicker = React.createClass({
         }
       }
     };
+
     $.ajax({
       url: this.props.url + '/users/_suggest',
       dataType: 'json',
@@ -157,7 +167,7 @@ var UserPicker = React.createClass({
     var i = -1
     return _.map(this.props.users, function(user){
       i += 1
-      return <UserPickerEntry key={user.username} user={user} selected={i == this.props.highlightIndex} onUserSelected={this.props.onUserSelected} />
+      return <UserPickerEntry key={user.username} user={user} selected={i === this.props.highlightIndex} onUserSelected={this.props.onUserSelected} />
     }.bind(this))
   }
 })

@@ -1,4 +1,30 @@
 var CONSTANTS = {
+  COIN_OWNERSHIP: {
+    ACTIONS: {
+      ADD_USER: 'addUser',
+      REMOVE_USER: 'removeUser',
+      UPDATE_USER: 'updateUser'
+    },
+    EVENTS: {
+      USER_ADDED: 'coinOwnership:userAdded',
+      USER_REMOVED: 'coinOwnership:userRevmoed',
+      USER_UPDATED: 'coinOwnership:userUpdated'
+    }
+  },
+
+  PERSON_PICKER: {
+    ACTIONS: {
+      ADD_USER: 'addUser',
+      REMOVE_USER: 'removeUser',
+      UPDATE_USER: 'updateUser'
+    },
+    EVENTS: {
+      USER_ADDED: 'personPicker:userAdded',
+      USER_REMOVED: 'personPicker:userRemoved',
+      USER_UPDATED: 'personPicker:userUpdated'
+    }
+  },
+
   TEXT_COMPLETE: {
     ACTIONS: {
       SETUP: 'setUpChosen',

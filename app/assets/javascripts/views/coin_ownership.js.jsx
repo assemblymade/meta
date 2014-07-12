@@ -20,6 +20,10 @@ window.CoinOwnership = React.createClass({
     return { totalCoins: 6000 }
   },
 
+  componentDidMount: function() {
+
+  },
+
   getInitialState: function() {
     return {
       creator: _.extend(app.currentUser().attributes, { coins: this.props.totalCoins }),
@@ -85,7 +89,7 @@ window.CoinOwnership = React.createClass({
             <td>
               <div className="input-group input-group-sm">
 
-                <input className="form-control text-right" type="number" value="0" />
+                <input className="form-control text-right" type="number" value={this.state} onChange={this.handleChange} />
                 <div className="input-group-addon">%</div>
               </div>
             </td>
@@ -105,21 +109,18 @@ window.CoinOwnership = React.createClass({
   },
 
   addButton: function() {
-    if (this.state.potentialUser) {
-      return (
-        <a className="text-success" href="#" onClick={this.addUserClicked}>
-          <span className="icon icon-plus-circled"></span>
-          <span className="sr-only">Add</span>
-        </a>
-      )
-    } else {
-      return (
-        <span className="text-success">
-          <span className="icon icon-plus-circled"></span>
-          <span className="sr-only">Add</span>
-        </span>
-      )
-    }
+    return (
+      <a className="text-success"
+          style={{cursor: 'pointer'}}
+          onClick={this.state.potentialUser ? this.addUserClicked : ''}>
+        <span className="icon icon-plus-circled"></span>
+        <span className="sr-only">Add</span>
+      </a>
+    );
+  },
+
+  handleChange: function(e) {
+
   },
 
   handleUserSelected: function(user) {

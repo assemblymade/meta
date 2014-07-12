@@ -33,9 +33,7 @@ var Dispatcher = (function() {
     },
 
     removeAll: function() {
-      for (var i = 0, l = _callbacks.length; i < l; i++) {
-        this.remove(i);
-      }
+      _callbacks = [];
     }
   });
 })();

@@ -1,9 +1,15 @@
 //= require spec_helper
 //= require underscore
+//= require dispatcher
 //= require stores/store
 //= require stores/people_store
 
 describe('PeopleStore', function() {
+  after(function(done) {
+    Dispatcher.removeAll();
+    done();
+  });
+
   var people = [
     {
       user: {

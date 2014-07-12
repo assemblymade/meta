@@ -6,11 +6,6 @@ var TagListStore = (function() {
   var _tags = [];
 
   var _store = _.extend(Store, {
-    /**
-     * TODO: Curry the CRUD functions below in
-     *       Store
-     */
-
     addTag: function(data) {
       var tag = data.tag;
       var url = data.url;
@@ -49,7 +44,7 @@ var TagListStore = (function() {
 
     persist: function(url) {
       if (!url) return;
-        
+
       var tags = this.getTags();
 
       if (_.isEmpty(tags)) {
