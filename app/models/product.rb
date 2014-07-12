@@ -1,4 +1,4 @@
-require 'activerecord/uuid'
+  require 'activerecord/uuid'
 require 'money'
 require './lib/poster_image'
 require 'elasticsearch/model'

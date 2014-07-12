@@ -42,4 +42,9 @@ module ProductsHelper
     interests.sort
   end
 
+  def open_tweet_popup_js
+    text = 'hi'
+    %Q{window.open(\\"https://twitter.com/intent/tweet?text=#{text}&url=\\" + window.location)}
+  end
+
 end

@@ -208,7 +208,8 @@
                   <li style='margin-bottom: 10px;'>
                     <div class='row'>
                       <div class='col-md-6'>
-                        <a class='btn btn-twitter btn-block' href='#'>
+                        <a class='btn btn-twitter btn-block'
+                           href='https://twitter.com/share?url=<%= product_path(@product) %>&text=<%= "Check out #{@product.name} – #{ @product.pitch} on Assembly" %>'>
                           <i class='icon icon-twitter' style='margin-right: 2px;'></i>
                           Twitter
                         </a>
@@ -231,30 +232,6 @@
                   </li>
                 </ul>"
               title="Share <%= @product.name %> with the world"
-              >
-              <i class="icon icon-share-alt" style="margin-right: 2px;"></i>
-              Share
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="btn btn-primary btn-sm"
-              style="vertical-align: bottom;"
-              data-toggle="popover"
-              data-placement="bottom"
-              data-html="true"
-              data-content="
-                <div class='form-group' style='margin-bottom: 4px'>
-                  <label for='share-url'>Private URL</label>
-                  <div class='input-group input-group'>
-                    <input type='text' class='form-control' id='share-url' value='http://assembly.com/d84k3gz'>
-                    <span class='input-group-btn'>
-                      <button class='btn btn-default' type='button'>Copy</button>
-                    </span>
-                  </div>
-                </div>"
-              title="Share <%= @product.name %> with your friends and get their feedback"
               >
               <i class="icon icon-share-alt" style="margin-right: 2px;"></i>
               Share
