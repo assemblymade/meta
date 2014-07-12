@@ -12,13 +12,6 @@ class DiscoverController < ApplicationController
                        .joins(:product_trend)
                        .where('votes_count >= ?', 10)
                        .order('product_trends.score desc')
-                       .limit(10)
-  end
-
-  def recently_launched
-    @products = Product.public_products
-                       .order(created_at: :desc)
-                       .limit(10)
                        .page(params[:page])
   end
 
@@ -27,6 +20,13 @@ class DiscoverController < ApplicationController
                        .repos_gt(0)
                        .where(commit_count: 0)
                        .order(votes_count: :desc)
+                       .page(params[:page])
+  end
+
+  def recently_launched
+    @products = Product.public_products
+                       .launched
+                       .order(launched_at: :desc)
                        .page(params[:page])
   end
 

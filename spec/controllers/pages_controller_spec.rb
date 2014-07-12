@@ -9,6 +9,7 @@ describe PagesController do
       family-table
       buckets
       really-good-emails).each {|slug| Product.make!(slug: slug) }
+
       get :home
       expect(response).to be_successful
     end

@@ -121,6 +121,10 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def should_generate_new_friendly_id?
+    slug.nil? && launched_at && launched_at_changed?
+  end
+
   def stage
     # TODO add shipping stage
     case
@@ -133,6 +137,10 @@ class Product < ActiveRecord::Base
 
   def launched?
     !launched_at.nil?
+  end
+
+  def stealth?
+    launched_at.nil?
   end
 
   def founded_at
@@ -324,7 +332,7 @@ class Product < ActiveRecord::Base
   end
 
   def to_param
-    launched? ? slug : id
+    slug || id
   end
 
   def watch!(user)

@@ -59,7 +59,7 @@ $text-copy: darken($text-copy-bg, 75%);
 // Typography
 
 $font-family-sans-serif: "Source Sans Pro", Solitaire, "Helvetica Neue", Helvetica, Arial, sans-serif;
-$font-family-serif:      "Source Sans Pro", Tiempos, Georgia, "Times New Roman", Times, serif;
+$font-family-serif:      Tiempos, Georgia, "Times New Roman", Times, serif;
 $font-family-monospace:  "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace;
 $font-family-base:       $font-family-sans-serif;
 
@@ -140,7 +140,7 @@ $table-border-color: $brand-divider;
 
 // Buttons
 
-$btn-font-weight: bold;
+$btn-font-weight:    bold;
 
 $btn-default-color:  $brand-primary;
 $btn-default-bg:     #fff;
@@ -166,13 +166,21 @@ $btn-danger-color:   #fff;
 $btn-danger-bg:      $brand-danger;
 $btn-danger-border:  darken($btn-danger-bg, 5%);
 
+$btn-twitter-color:  white;
+$btn-twitter-bg:     $twitter;
+$btn-twitter-border: darken($btn-twitter-bg, 5%);
+
+$btn-facebook-color:  white;
+$btn-facebook-bg:     $facebook;
+$btn-facebook-border: darken($btn-facebook-bg, 5%);
+
 $btn-link-disabled-color: $gray-light;
 
 
 // Forms
 
 $input-bg:           #fff;
-$input-bg-disabled:  $body-bg;
+$input-bg-disabled:  lighten($body-bg, 2%);
 
 $input-color:         $text-color;
 $input-border:        $brand-border;
@@ -408,7 +416,7 @@ $popover-fallback-border-color: $brand-divider;
 
 $popover-title-bg: darken($popover-bg, 3%);
 
-$popover-arrow-width: 8px;
+$popover-arrow-width: 6px;
 $popover-arrow-color: #fff;
 
 $popover-arrow-outer-width:          ($popover-arrow-width + 1);

@@ -28,13 +28,14 @@ var DragAndDrop = React.createClass({
             width: '100%',
             'z-index': -1,
             top: '40%',
-            'font-size': '12px'
+            'font-size': '12px',
+            'font-weight': 'bold'
         }}>
           Drag and drop or click here
           <br />
           to change the logo
         </span>
-        
+
       </span>
     );
   },

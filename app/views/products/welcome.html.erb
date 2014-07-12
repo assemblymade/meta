@@ -1,8 +1,8 @@
-<div class="sheet-body">
-  <h1 class="text-center text-success"><strong>Say hello to your new business &hellip;</strong></h1>
+<div class="sheet-body text-center">
+  <h1><strong>Say hello to your business.</strong></h1>
   <div class="row">
     <div class="col-md-10 col-md-push-1">
-      <p class="text-center lead" style="margin-bottom: 36px;"><strong><%= @product.name %></strong> is currently in stealth, and is only visible to you and those you share it with. Use this time to flesh out your vision. Once launched, your product will be featured on the Discover page and the weekly newsletter.
+      <p class="lead text-muted" style="margin-bottom: 36px;"><strong><%= @product.name %></strong> is currently in stealth, and is only visible to you and those you share it with. Use this time to flesh out your vision. Once launched, your product will be featured on the Discover page and the weekly newsletter.
       </p>
     </div>
   </div>
@@ -12,7 +12,7 @@
 
 <div class="sheet-body">
 
-  <h2 style="margin-bottom: 36px; font-weight: 300;">&hellip; to your tools &hellip;</h2>
+  <h2 style="margin-bottom: 36px; font-weight: 300;">It's dangerous to go alone! Take these:</h2>
 
   <div class="row" style="margin-top: 24px; margin-bottom: 24px;">
 
@@ -20,12 +20,14 @@
     <div class="col-md-4">
       <div class="row">
         <div class="col-xs-2">
-          <span class="text-large text-success icon icon-eyeglasses"></span>
+          <span class="text-large text-primary icon icon-eyeglasses"></span>
         </div>
         <div class="col-xs-10">
-          <h4 class="alpha text-success">Plan</h4>
+          <h4 class="alpha">
+            <a href="<%= product_path(@product) %>">Plan</a>
+          </h4>
           <p class="text-muted text-small">
-            From elevator pitch to monetization strategies, the Plan should answer questions about your business.
+            From marketing to monetization, the Plan is your chance to answer any questions people may have about <%= @product.name %>.
           </p>
         </div>
       </div>
@@ -35,12 +37,14 @@
     <div class="col-md-4">
       <div class="row">
         <div class="col-xs-2">
-          <span class="text-large text-success icon icon-bubbles"></span>
+          <span class="icon icon-bubbles text-large text-primary"></span>
         </div>
         <div class="col-xs-10">
-          <h4 class="alpha text-success">Chat</h4>
-          <p class="text-muted text-small tex-weight-normal">
-            Where the team communicates and can see activity taking place as it happens around the product.
+          <h4 class="alpha">
+            <a href="<%= product_chat_path(@product) %>">Chat</a>
+          </h4>
+          <p class="text-muted text-small">
+            Good communication is the backbone of a great team. Use Chat to instantly talk, share and check in with everybody else.
           </p>
         </div>
       </div>
@@ -50,12 +54,14 @@
     <div class="col-md-4">
       <div class="row">
         <div class="col-xs-2">
-          <span class="text-large text-success icon icon-notebook"></span>
+          <span class="icon icon-notebook text-large text-primary"></span>
         </div>
         <div class="col-xs-10">
-          <h4 class="alpha text-success">Journal</h4>
+          <h4 class="alpha text-success">
+            <a href="<%= product_posts_path(@product) %>">Journal</a>
+          </h4>
           <p class="text-muted text-small">
-            Engage with the communtiy, get them excited, and allow them to follow along on your journey of creating <%= @product.name %>.
+            Writing is the best way to help everybody follow your progress. The Journal is valuable resource for existing and potential contributors.
           </p>
         </div>
       </div>
@@ -69,12 +75,14 @@
     <div class="col-md-4">
       <div class="row">
         <div class="col-xs-2">
-          <span class="text-large text-success icon icon-trophy"></span>
+          <span class="icon icon-trophy text-large text-primary"></span>
         </div>
         <div class="col-xs-10">
-          <h4 class="alpha text-success">Bounties</h4>
+          <h4 class="alpha">
+            <a href="<%= product_wips_path(@product) %>">Bounties</a>
+          </h4>
           <p class="text-muted text-small">
-            Bounties are pieces of work to be completed. Each bounty has an accumulation of App Coins which are awarded to the contributor that completes it.
+            Bounties are things you want done. Anybody can work on Bounties, the Core Team awards them and the winner receives its App Coins.
           </p>
         </div>
       </div>
@@ -84,12 +92,14 @@
     <div class="col-md-4">
       <div class="row">
         <div class="col-xs-2">
-          <span class="text-large text-success icon icon-folder"></span>
+          <span class="icon icon-folder text-large text-primary"></span>
         </div>
         <div class="col-xs-10">
-          <h4 class="alpha text-success">Projects</h4>
+          <h4 class="alpha">
+            <a href="<%= product_milestones_path(@product) %>">Projects</a>
+          </h4>
           <p class="text-muted text-small">
-            Help focus the community's efforts of building <%= @product.name %>. Break down your vision by grouping bounties into small, digestible projects.
+            Projects organize and focus work. They are curated lists of Bounties that help expose the priority of multiple tasks.
           </p>
         </div>
       </div>
@@ -99,12 +109,14 @@
     <div class="col-md-4">
       <div class="row">
         <div class="col-xs-2">
-          <span class="text-large text-success icon icon-book-open"></span>
+          <span class="icon icon-book-open text-large text-primary"></span>
         </div>
         <div class="col-xs-10">
-          <h4 class="alpha text-success">Discussions</h4>
+          <h4 class="alpha">
+            <a href="<%= product_discussions_path(@product) %>">Discussions</a>
+          </h4>
           <p class="text-muted text-small">
-            Colloquy
+            Discussions let you write about topics that would be too long for chat. You can file them away for later reference.
           </p>
         </div>
       </div>
@@ -117,7 +129,7 @@
 
 <div class="sheet-body">
 
-  <h2 style="font-weight: 300;">&hellip; and the community.</h2>
+  <h2 style="font-weight: 300;">Before you start, why not introduce yourself?</h2>
 
   <div class="row">
     <div class="col-md-8">
@@ -126,7 +138,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <button type="submit" class="btn btn-primary btn-block">Introduce yourself</button>
+      <button type="submit" class="btn btn-success btn-block">Introduce yourself</button>
 
     </div>
   </div>

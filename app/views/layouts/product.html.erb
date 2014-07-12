@@ -11,75 +11,7 @@
 
       <div class="col-md-2 fixed-enabler">
 
-        <a href="#" class="btn btn-success btn-sm btn-block" style="margin-bottom: 24px;" data-toggle="modal" data-target="#launch-modal">
-          Ready to launch?
-        </a>
-
-        <div class="modal fade" id="launch-modal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" ><i class="icon-close" style="top: 7px;"></i></span><span class="sr-only">Close</span></button>
-                <h3 class="modal-title">Are you ready to launch?</h3>
-              </div>
-              <div class="modal-body">
-                <p class="lead omega text-center">Whilst in stealth, you can really take your time to flesh it out before the community at-large sees it. Aim to leave a lasting impression so the communitycan start contributing.</p>
-                <hr>
-
-                <div class="row">
-                  <div class="col-md-10 col-md-offset-1">
-                    <p class="text-center"><strong>We recommend tackling the following before launching:</strong></p>
-
-                    <div class="row" style="margin-bottom: 6px;">
-                      <div class="col-md-1">
-                        <i class="icon-check text-success"></i>
-                      </div>
-                      <div class="col-md-11 text-muted">
-                        Complete the business plan so it answers any questions potential contributors may have.
-                      </div>
-                    </div>
-                    <div class="row" style="margin-bottom: 6px;">
-                      <div class="col-md-1">
-                        <i class="icon-check text-success"></i>
-                      </div>
-                      <div class="col-md-11 text-muted">
-                        Write an introductory journal entry to introduce <%= @product.name %> and yourself to the community.
-                      </div>
-                    </div>
-                    <div class="row" style="margin-bottom: 6px;">
-                      <div class="col-md-1">
-                        <i class="icon-check text-success"></i>
-                      </div>
-                      <div class="col-md-11 text-muted">
-                        Create bounties that contributors can immediately work on.
-                      </div>
-                    </div>
-                    <div class="row" style="margin-bottom: 6px;">
-                      <div class="col-md-1">
-                        <i class="icon-check text-success"></i>
-                      </div>
-                      <div class="col-md-11 text-muted">
-                        Create your first Project to provide focus for contributors.
-                      </div>
-                    </div>
-                    <div class="row" style="margin-bottom: 6px;">
-                      <div class="col-md-1">
-                        <i class="icon-check text-success"></i>
-                      </div>
-                      <div class="col-md-11 text-muted">
-                        Get feedback from friends. Share the URL and have them chime in.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Not yet</button>
-                <button type="button" class="btn btn-success">Launch <%= @product.name %></button>
-              </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+        <%= render 'products/launch' unless @product.launched? %>
 
         <% if @product.poster? %>
           <% if current_user && @product.core_team?(current_user) %>
@@ -264,28 +196,90 @@
 
         <ul class="list list-inline pull-right">
           <li>
-            <div class="toggler">
+            <a
+              href="#"
+              class="btn btn-primary btn-sm"
+              style="vertical-align: bottom;"
+              data-toggle="popover"
+              data-placement="bottom"
+              data-html="true"
+              data-content="
+                <ul class='list list-unstyled'>
+                  <li style='margin-bottom: 10px;'>
+                    <div class='row'>
+                      <div class='col-md-6'>
+                        <a class='btn btn-twitter btn-block' href='#'>
+                          <i class='icon icon-twitter' style='margin-right: 2px;'></i>
+                          Twitter
+                        </a>
+                      </div>
+                      <div class='col-md-6'>
+                        <a class='btn btn-facebook btn-block' href='#'>
+                          <i class='icon icon-facebook' style='margin-right: 2px;'></i>
+                          Facebook
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class='input-group'>
+                      <input type='text' class='form-control' id='share-url' value='http://assembly.com/d84k3gz'>
+                      <span class='input-group-btn'>
+                        <button class='btn btn-default' type='button'>Copy</button>
+                      </span>
+                    </div>
+                  </li>
+                </ul>"
+              title="Share <%= @product.name %> with the world"
+              >
+              <i class="icon icon-share-alt" style="margin-right: 2px;"></i>
+              Share
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="btn btn-primary btn-sm"
+              style="vertical-align: bottom;"
+              data-toggle="popover"
+              data-placement="bottom"
+              data-html="true"
+              data-content="
+                <div class='form-group' style='margin-bottom: 4px'>
+                  <label for='share-url'>Private URL</label>
+                  <div class='input-group input-group'>
+                    <input type='text' class='form-control' id='share-url' value='http://assembly.com/d84k3gz'>
+                    <span class='input-group-btn'>
+                      <button class='btn btn-default' type='button'>Copy</button>
+                    </span>
+                  </div>
+                </div>"
+              title="Share <%= @product.name %> with your friends and get their feedback"
+              >
+              <i class="icon icon-share-alt" style="margin-right: 2px;"></i>
+              Share
+            </a>
+          </li>
+          <li>
+            <div class="toggler toggler-sm">
               <% if signed_in? && @product.watching?(current_user) %>
-                <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post" >
-
-                  <i class="icon-eye" style="margin-right: 2px;"></i>
+                <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post">
+                  <i class="icon icon-eye" style="margin-right: 2px;"></i>
                   Unwatch
                 </a>
               <% else %>
                 <a class="toggler-btn btn btn-primary" href="<%= subscribe_product_path(@product) %>" data-method="post">
-                  <i class="icon-eye" style="margin-right: 2px;"></i>
+                  <i class="icon icon-eye" style="margin-right: 2px;"></i>
                   Watch
                 </a>
               <% end %>
-              <div class="badge toggler-badge">
-                <a href="<%= product_watchers_path(@product) %>">
+                <a class="toggler-badge" href="<%= product_watchers_path(@product) %>">
                   <%= @product.watchers.count %>
                 </a>
-              </div>
             </div>
           </li>
           <li style="padding-right: 0;">
-            <div class="toggler">
+            <div class="toggler toggler-sm">
               <div
                    data-react-class="JoinTeam"
                    data-react-props="<%= {
@@ -300,8 +294,8 @@
           </li>
         </ul>
 
-        <h3 class="alpha" style="font-weight: 400; line-height: 1; color: #93A0AA;">
-          <%= @product.name %> <span class="label label-outlined" style="position: relative; top: -3px; font-size: 13px;">Stealth</span>
+        <h3 class="alpha text-muted" style="font-weight: 400; line-height: 1;">
+          <%= @product.name %> <% if @product.stealth? %><span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;">Stealth</span><% end %>
           <% if @breadcrumb.present? %>
             <i class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></i>
             <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>"><%= @breadcrumb[:text] %></a>

@@ -24,3 +24,11 @@
     box-shadow: none;
   }
 }
+
+.btn-twitter {
+  @include button-variant($btn-twitter-color, $btn-twitter-bg, $btn-twitter-border);
+}
+
+.btn-facebook {
+  @include button-variant($btn-facebook-color, $btn-facebook-bg, $btn-facebook-border);
+}
