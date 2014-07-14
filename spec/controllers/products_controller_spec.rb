@@ -20,9 +20,19 @@ describe ProductsController do
   end
 
   describe '#show' do
-    it "is successful" do
-      get :show, id: product.slug
-      expect(response).to be_success
+    context 'product is launched' do
+      it "is successful" do
+        get :show, id: product.slug
+        expect(response).to be_success
+      end
+    end
+    context 'product in stealth' do
+      let(:product) { Product.make!(launched_at: nil) }
+
+      it "redirects to edit" do
+        get :show, id: product
+        expect(response).to redirect_to(edit_product_path(product))
+      end
     end
   end
 
@@ -46,9 +56,9 @@ describe ProductsController do
       expect(assigns(:product)).to be_persisted
     end
 
-    it 'should redirect to show page' do
+    it 'should redirect to edit page' do
       post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
-      expect(response).to redirect_to(product_path(assigns(:product)))
+      expect(response).to redirect_to(edit_product_path(assigns(:product)))
     end
 
     it 'has no slug' do
@@ -85,19 +95,19 @@ describe ProductsController do
     end
 
     it "redirects to product slug" do
-      patch :launch, product_id: product.id
+      patch :launch, product_id: product
       expect(response).to redirect_to(product_path(product.reload.slug))
     end
 
     it 'publishes activity' do
       expect {
-        patch :launch, product_id: product.id
+        patch :launch, product_id: product
       }.to change(Activity, :count).by(1)
     end
 
     it 'sets product to launched' do
       expect {
-        patch :launch, product_id: product.id
+        patch :launch, product_id: product
       }.to change{product.reload.launched_at.to_i}.to(Time.now.to_i)
     end
   end

@@ -38,7 +38,7 @@ class ProductsController < ProductController
 
       flash[:new_product_callout] = true
     end
-    respond_with(@product, location: product_path(@product))
+    respond_with(@product, location: edit_product_path(@product))
   end
 
   def welcome
@@ -63,6 +63,11 @@ class ProductsController < ProductController
   end
 
   def show
+    if @product.stealth?
+      redirect_to edit_product_path(@product)
+      return
+    end
+
     @perks = @product.perks.includes(:preorders).order(:amount).decorate
     @user_metrics = UserMetricsSummary.new(@product, Date.today - 1.day)
 

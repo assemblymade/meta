@@ -7,14 +7,15 @@ describe Product do
   let(:ip) { '127.0.0.1' }
 
   describe '#to_param' do
-    it 'is slug if launched' do
+    it 'is slug if present' do
       expect(
         Product.make!(slug: 'snapcat').to_param
       ).to eq('snapcat')
     end
 
-    it 'is id if stealth' do
-      product = Product.make!(launched_at: nil)
+    it 'is id if no slug' do
+      product = Product.make!
+      product.slug = nil
       expect(product.to_param).to eq(product.id)
     end
   end
