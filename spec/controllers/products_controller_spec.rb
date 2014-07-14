@@ -56,9 +56,9 @@ describe ProductsController do
       expect(assigns(:product)).to be_persisted
     end
 
-    it 'should redirect to edit page' do
+    it 'should redirect to welcome page' do
       post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
-      expect(response).to redirect_to(edit_product_path(assigns(:product)))
+      expect(response).to redirect_to(product_welcome_path(assigns(:product)))
     end
 
     it 'has no slug' do

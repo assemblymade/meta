@@ -38,7 +38,7 @@ class ProductsController < ProductController
 
       flash[:new_product_callout] = true
     end
-    respond_with(@product, location: edit_product_path(@product))
+    respond_with(@product, location: product_welcome_path(@product))
   end
 
   def welcome
