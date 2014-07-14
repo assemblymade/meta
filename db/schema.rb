@@ -318,9 +318,9 @@ ActiveRecord::Schema.define(version: 20140714213115) do
   add_index "product_trends", ["product_id"], name: "index_product_trends_on_product_id", unique: true, using: :btree
 
   create_table "products", id: false, force: true do |t|
-    t.uuid     "id",                                    null: false
+    t.uuid     "id",                                     null: false
     t.string   "slug"
-    t.string   "name",                                  null: false
+    t.string   "name",                                   null: false
     t.string   "pitch"
     t.text     "description"
     t.datetime "submitted_at"
@@ -353,9 +353,9 @@ ActiveRecord::Schema.define(version: 20140714213115) do
     t.datetime "public_at"
     t.uuid     "main_thread_id"
     t.uuid     "logo_id"
+    t.integer  "team_memberships_count", default: 0
     t.datetime "launched_at"
     t.hstore   "info"
-    t.integer  "team_memberships_count", default: 0
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
