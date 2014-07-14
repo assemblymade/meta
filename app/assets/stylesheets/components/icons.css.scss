@@ -18,6 +18,12 @@
 	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+  &.dropdown-glyph {
+    // vertical-align: text-bottom;
+    color: $gray;
+    top: -1px;
+  }
 }
 
 .icon-logo:before {
@@ -154,12 +160,6 @@ you can use the generic selector below, but it's slower:
 	-webkit-font-smoothing: antialiased;
   vertical-align: middle;
   position: relative;
-
-  &.dropdown-glyph {
-    // vertical-align: text-bottom;
-    color: $gray;
-    top: -1px;
-  }
 }
 
 .active {

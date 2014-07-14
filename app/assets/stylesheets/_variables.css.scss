@@ -1,6 +1,6 @@
 // Colors
 
-$black:         #2d3339;
+$black:         #2A3036;
 
 $blue:          darken(#5fafef, 5%);
 $blue-light:    lighten($blue, 10%);
@@ -13,13 +13,13 @@ $yellow-light:  lighten($yellow, 10%);
 $red:           #F93232;
 $red-light:     lighten($red, 10%);
 
-$gray-darker:   #2d3339;
-$gray-dark:     #384047;
-$gray:          #93A0AA;
-$gray-light:    #c6ccd2;
-$gray-lighter:  #e2e5e8;
+$gray-darker:   #2A3036;
+$gray-dark:     #4E5A66;
+$gray:          #96A1AB;
+$gray-light:    #C6CCD2;
+$gray-lighter:  #E2E5E8;
 
-$body-bg:       desaturate(darken(#f9fafa, 3%), 1%);
+$body-bg:       #F0F2F5;
 $text-color:    $black;
 
 $brand-primary: $blue;

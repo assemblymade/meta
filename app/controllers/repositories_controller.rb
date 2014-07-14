@@ -18,7 +18,7 @@ class RepositoriesController < ProductController
       product_url(@product),
       repo_name
     )
-
+    
     respond_with(@product, location: product_repos_path(@product))
   end
 

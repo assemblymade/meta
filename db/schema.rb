@@ -353,6 +353,7 @@ ActiveRecord::Schema.define(version: 20140711191834) do
     t.datetime "public_at"
     t.uuid     "main_thread_id"
     t.uuid     "logo_id"
+    t.datetime "launched_at"
     t.integer  "team_memberships_count", default: 0
   end
 
