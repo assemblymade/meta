@@ -326,35 +326,36 @@ ActiveRecord::Schema.define(version: 20140714213115) do
     t.datetime "submitted_at"
     t.datetime "evaluated_at"
     t.boolean  "is_approved"
-    t.integer  "assembly_contribution", default: 0,     null: false
+    t.integer  "assembly_contribution",  default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.uuid     "user_id",                               null: false
+    t.uuid     "user_id",                                null: false
     t.text     "lead"
-    t.integer  "view_count",            default: 0
+    t.integer  "view_count",             default: 0
     t.text     "suggested_perks"
     t.string   "poster"
-    t.integer  "votes_count",           default: 0,     null: false
+    t.integer  "votes_count",            default: 0,     null: false
     t.uuid     "evaluator_id"
     t.datetime "greenlit_at"
     t.text     "free_perk"
-    t.integer  "watchings_count",       default: 0,     null: false
-    t.text     "repos",                                              array: true
-    t.string   "authentication_token",                  null: false
+    t.integer  "watchings_count",        default: 0,     null: false
+    t.text     "repos",                                               array: true
+    t.string   "authentication_token",                   null: false
     t.datetime "featured_on"
-    t.string   "tags",                  default: [],                 array: true
-    t.boolean  "can_advertise",         default: false
+    t.string   "tags",                   default: [],                 array: true
+    t.boolean  "can_advertise",          default: false
     t.datetime "flagged_at"
     t.text     "flagged_reason"
     t.string   "homepage_url"
     t.string   "you_tube_video_url"
-    t.integer  "commit_count",          default: 0,     null: false
+    t.integer  "commit_count",           default: 0,     null: false
     t.datetime "founded_at"
     t.datetime "public_at"
     t.uuid     "main_thread_id"
     t.uuid     "logo_id"
     t.datetime "launched_at"
     t.hstore   "info"
+    t.integer  "team_memberships_count", default: 0
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree

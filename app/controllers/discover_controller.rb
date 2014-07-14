@@ -10,7 +10,7 @@ class DiscoverController < ApplicationController
   def trending
     @products = Product.public_products
                        .joins(:product_trend)
-                       .where('votes_count >= ?', 10)
+                       .where('watchings_count >= ?', 10)
                        .order('product_trends.score desc')
                        .page(params[:page])
   end
@@ -19,7 +19,7 @@ class DiscoverController < ApplicationController
     @products = Product.public_products
                        .repos_gt(0)
                        .where(commit_count: 0)
-                       .order(votes_count: :desc)
+                       .order(watchings_count: :desc)
                        .page(params[:page])
   end
 
@@ -36,17 +36,16 @@ class DiscoverController < ApplicationController
       @saved_search = current_user.saved_searches.find_by(query: "tag:#{params[:tech]}")
     end
     @products = Product.public_products
-                       .where('votes_count >= ?', 5)
+                       .where('watchings_count >= ?', 5)
                        .tagged_with_any(@tech.tags)
-                       .order(votes_count: :desc)
+                       .order(watchings_count: :desc)
                        .page(params[:page])
 
     @needing_commit = Product.public_products
                        .repos_gt(0)
-                       .where('votes_count >= ?', 3)
+                       .where('watchings_count >= ?', 3)
                        .where(commit_count: 0)
                        .order("Random()")
                        .limit(2)
   end
-
 end

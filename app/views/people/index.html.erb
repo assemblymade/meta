@@ -32,7 +32,7 @@
             </li>
           <% end %>
         </ul>
-          <hr>
+        <hr>
 
         <%= form_tag product_core_team_members_path(@product), class: 'form' do %>
           <% if current_user && @product.core_team?(current_user) %>

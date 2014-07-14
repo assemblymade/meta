@@ -13,6 +13,17 @@ module Github
         }
     end
 
+    def commit_count(repo)
+      s = stats("#{repo}")
+      return 0 if s.nil?
+
+      s.first['total']
+    end
+
+    def stats(repo)
+      get "/repos/#{repo}/stats/contributors"
+    end
+
     def get(url, body = {})
       request :get, url, body
     end

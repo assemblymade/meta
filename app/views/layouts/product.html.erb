@@ -125,6 +125,13 @@
               Assets
             </a>
           </li>
+
+          <li class="<%= nav_active_class(:repositories) %>">
+            <a href="<%= product_repos_path(@product) %>">
+              <i class="icon icon-repository dropdown-glyph"></i>
+              Repositories
+            </a>
+          </li>
         </ul>
 
         <h6 style="padding-left:10px">People</h6>
@@ -176,14 +183,14 @@
 
             <li class="<%= nav_active_class(:financials) %>">
               <a href="<%= product_financials_path(@product) %>">
-                <i class="icon-wallet dropdown-glyph"></i>
+                <i class="icon icon-wallet dropdown-glyph"></i>
                 Money
               </a>
             </li>
 
             <!-- <li class="<%= nav_active_class(:contracts) %>">
               <a href="<%= product_contracts_path(@product) %>">
-                <i class="icon-docs dropdown-glyph"></i>
+                <i class="icon icon-docs dropdown-glyph"></i>
                 Contracts
               </a>
             </li> -->
@@ -217,7 +224,7 @@
                 </a>
               <% end %>
                 <a class="toggler-badge" href="<%= product_watchers_path(@product) %>">
-                  <%= @product.watchers.count %>
+                  <%= @product.watchings_count %>
                 </a>
             </div>
           </li>
@@ -226,7 +233,7 @@
               <div
                    data-react-class="JoinTeam"
                    data-react-props="<%= {
-                     count: @product.team_memberships.active.count,
+                     count: @product.team_memberships_count,
                      join_path: product_people_path(@product),
                      leave_path: (current_user && product_person_path(@product, current_user)),
                      is_member: @product.member?(current_user),

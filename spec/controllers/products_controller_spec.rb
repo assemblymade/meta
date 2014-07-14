@@ -72,6 +72,11 @@ describe ProductsController do
       }.to change(Vote, :count).by(1)
     end
 
+    it 'adds creator to the core team' do
+      post :create, product:  { name: 'KJDB', pitch: 'Manage your karaoke life' }
+      expect(assigns(:product).core_team).to match_array([creator])
+    end
+
     it 'adds validated transaction entry for product' do
       post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
 

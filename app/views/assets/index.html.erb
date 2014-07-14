@@ -2,7 +2,7 @@
 <% activate_nav! :assets %>
 
 <div class="page-header">
-  <% if can? :create, Asset %>
+  <% if can?(:update, Product) %>
     <div class="pull-right">
       <%= form_for :asset, url: product_assets_path(@product), html: {class: 'js-dropzone-form'} do |f| %>
         <%= f.hidden_field :attachment_id %>
