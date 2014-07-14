@@ -21,6 +21,7 @@
 #= require_tree ./collections
 #= require_tree ./views
 #= require ./textcomplete
+#= require ./polyfills
 
 class window.Application
   _.extend(@.prototype, Backbone.Events)
