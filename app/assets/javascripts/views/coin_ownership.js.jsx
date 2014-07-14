@@ -146,8 +146,16 @@
     },
 
     onChange: function() {
+      var users = CoinOwnershipStore.getUsers();
+
+      for (var i = 0, l = users.length; i < l; i++) {
+        if (!users[i].hasOwnProperty('coins')) {
+          users[i].coins = 0;
+        }
+      }
+
       this.setState({
-        sharers: CoinOwnershipStore.getUsers()
+        sharers: users
       });
     },
 
@@ -170,6 +178,7 @@
       return _.map(this.state.sharers, function(user) {
         return <OwnershipRow
           user={user}
+          totalCoins={this.props.totalCoins}
           ownership={this.ownership(user)}
           onRemove={this.handleUserRemoved(user)} key={user.id || user.email}
           onOwnershipChanged={this.handleOwnershipChanged(user)} />
@@ -195,33 +204,22 @@
 
     handleOwnershipChanged: function(user) {
       // this needs to be completely rewritten to use the dispatcher and store(s)
-      return function(ownership, callback) {
+      return function(ownership) {
         user.coins = Math.floor((ownership / 100) * this.props.totalCoins);
 
         var creator = this.state.creator;
         var sharers = this.state.sharers;
 
-        creator.coins = this.props.totalCoins - user.coins;
-
-        var sharerCoins = _.reduce(_.map(_.reject(sharers,
-          function(s) {
-            return s.username === user.username
-          }),
+        var sharerCoins = _.reduce(
+          _.map(sharers,
           dot('coins')),
           function(memo, coins) {
             return memo + coins;
           },
-        0);
+          0
+        );
 
-        var coinsAvailable = creator.coins - sharerCoins;
-
-        if (ownership > coinsAvailable) {
-          ownership = coinsAvailable;
-        }
-
-        if (callback) {
-          callback(ownership);
-        }
+        creator.coins = this.props.totalCoins - sharerCoins || 0;
 
         this.setState({
           sharers: this.state.sharers,
@@ -274,16 +272,36 @@
     },
 
     handleOwnershipChanged: function(e) {
-      var val = parseInt(e.target.value, 10); // this.refs.ownership.getDOMNode().value
+      var val = parseInt(e.target.value, 10);
 
+      if (val < 0) {
+        val = 0;
+      }
+
+      var user = this.props.user;
       var users = CoinOwnershipStore.getUsers();
-      console.log(users);
-      
-      this.props.onOwnershipChanged(val, function(newVal) {
-        this.setState({
-          ownership: newVal
-        });
-      }.bind(this));
+
+      var sharerCoins = _.reduce(_.map(_.reject(users,
+        function(s) {
+          return s.username === user.username
+        }),
+        dot('coins')),
+        function(memo, coins) {
+          return memo + coins;
+        },
+      0);
+
+      var percentageRemaining = 100 - Math.floor(sharerCoins / this.props.totalCoins * 100);
+
+      if (val >= percentageRemaining) {
+        val = percentageRemaining;
+      }
+
+      this.setState({
+        ownership: val
+      });
+
+      this.props.onOwnershipChanged(val);
     }
   });
 
