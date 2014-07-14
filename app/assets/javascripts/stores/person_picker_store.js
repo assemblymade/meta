@@ -4,8 +4,9 @@
 var PersonPickerStore = (function() {
   var _people = [];
 
-  var _store = _.extend(Store, {
-    addPickedPerson: function(data) {
+  var _store = Object.create(Store);
+  var _personPickerStore = _.extend(_store, {
+    addPerson: function(data) {
       var user = data.user;
 
       if (_searchPeople(user.username) !== -1) {
@@ -15,17 +16,17 @@ var PersonPickerStore = (function() {
       _people.push(user);
     },
 
-    getPickedPerson: function(data) {
+    getPerson: function(data) {
       var index = _searchPeople(data.user.username);
 
       return _people[index];
     },
 
-    getPickedPeople: function() {
+    getPeople: function() {
       return _people;
     },
 
-    updatePickedPerson: function(data) {
+    updatePerson: function(data) {
       var user = data.user;
       var index = _searchPeople(user.username);
 
@@ -34,7 +35,7 @@ var PersonPickerStore = (function() {
       return _people[index];
     },
 
-    removePickedPerson: function(data) {
+    removePerson: function(data) {
       var user = data.user;
       var index = _searchPeople(user.username);
 
@@ -43,11 +44,11 @@ var PersonPickerStore = (function() {
       }
     },
 
-    setPickedPeople: function(users) {
+    setPeople: function(users) {
       _people = users;
     },
 
-    removeAllPickedPeople: function() {
+    removeAllPeople: function() {
       _people = [];
     }
   });
@@ -73,5 +74,5 @@ var PersonPickerStore = (function() {
     return -1;
   }
 
-  return _store;
+  return _personPickerStore;
 })();

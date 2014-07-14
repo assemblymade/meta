@@ -12,27 +12,19 @@ describe('CoinOwnershipStore', function() {
 
   var usersAndOwnerships = [
     {
-      user: {
-        username: 'bob'
-      },
+      username: 'bob',
       ownership: 10
     },
     {
-      user: {
-        username: 'cindy'
-      },
+      username: 'cindy',
       ownership: 5
     },
     {
-      user: {
-        username: 'lou'
-      },
+      username: 'lou',
       ownership: 0
     },
     {
-      user: {
-        username: 'amy'
-      },
+      username: 'amy',
       ownership: 8
     }
   ];
@@ -43,33 +35,29 @@ describe('CoinOwnershipStore', function() {
   });
 
   it('adds a user', function(done) {
-    CoinOwnershipStore.addUser({ userAndOwnership: { user: { username: 'nancy' }, ownership: 12 } });
+    CoinOwnershipStore.addUser({ userAndCoins: { username: 'nancy', ownership: 12 } });
 
-    expect(CoinOwnershipStore.getUsers()).to.eql([{ user: { username: 'nancy' }, ownership: 12 }]);
+    expect(CoinOwnershipStore.getUsers()).to.eql([{ username: 'nancy', ownership: 12 }]);
 
     done();
   });
 
   it('removes a user', function(done) {
     CoinOwnershipStore.setUsers(_.clone(usersAndOwnerships));
-    CoinOwnershipStore.removeUser({ userAndOwnership: { user: { username: 'lou' }, ownership: 0 } });
+    CoinOwnershipStore.removeUser({ userAndCoins: { username: 'lou', ownership: 0 } });
     expect(CoinOwnershipStore.getUsers()).to.eql([
       {
-        user: {
-          username: 'bob'
-        },
+
+        username: 'bob',
         ownership: 10
       },
       {
-        user: {
-          username: 'cindy'
-        },
+
+        username: 'cindy',
         ownership: 5
       },
       {
-        user: {
-          username: 'amy'
-        },
+        username: 'amy',
         ownership: 8
       }
     ]);
@@ -80,30 +68,26 @@ describe('CoinOwnershipStore', function() {
   it('updates a user', function(done) {
     CoinOwnershipStore.setUsers(_.clone(usersAndOwnerships));
 
-    CoinOwnershipStore.updateUser({ userAndOwnership: { user: { username: 'lou' }, ownership: 10 } });
+    CoinOwnershipStore.updateUser({ userAndCoins: { username: 'lou', ownership: 10 } });
     expect(CoinOwnershipStore.getUsers()).to.eql([
       {
-        user: {
-          username: 'bob'
-        },
+
+        username: 'bob',
         ownership: 10
       },
       {
-        user: {
-          username: 'cindy'
-        },
+
+        username: 'cindy',
         ownership: 5
       },
       {
-        user: {
-          username: 'lou'
-        },
+
+        username: 'lou',
         ownership: 10
       },
       {
-        user: {
-          username: 'amy'
-        },
+
+        username: 'amy',
         ownership: 8
       }
     ]);

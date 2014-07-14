@@ -5,7 +5,8 @@
 var TagListStore = (function() {
   var _tags = [];
 
-  var _store = _.extend(Store, {
+  var _store = Object.create(Store);
+  var _tagListStore = _.extend(_store, {
     addTag: function(data) {
       var tag = data.tag;
       var url = data.url;
@@ -94,5 +95,5 @@ var TagListStore = (function() {
     return -1
   }
 
-  return _store;
+  return _tagListStore;
 })();

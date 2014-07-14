@@ -14,9 +14,9 @@ var CONSTANTS = {
 
   PERSON_PICKER: {
     ACTIONS: {
-      ADD_USER: 'addUser',
-      REMOVE_USER: 'removeUser',
-      UPDATE_USER: 'updateUser'
+      ADD_USER: 'addPickedUser',
+      REMOVE_USER: 'removePickedUser',
+      UPDATE_USER: 'updatePickedUser'
     },
     EVENTS: {
       USER_ADDED: 'personPicker:userAdded',

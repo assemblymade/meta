@@ -2,58 +2,59 @@
 //= require stores/store
 
 var CoinOwnershipStore = (function() {
-  // { user: User, ownership: Number }
-  var _usersAndOwnerships = [];
+  // { user: User, coins: Number }
+  var _usersAndCoins = [];
 
-  var _store = _.extend(Store, {
+  var _store = Object.create(Store);
+  var _coinOwnershipStore = _.extend(_store, {
     addUser: function(data) {
-      var userAndOwnership = data.userAndOwnership;
+      var userAndCoins = data.userAndCoins;
 
-      if (_searchUsers(userAndOwnership.user.username) !== -1) {
+      if (_searchUsers(userAndCoins.username) !== -1) {
         return;
       }
 
-      _usersAndOwnerships.push(userAndOwnership);
+      _usersAndCoins.push(userAndCoins);
     },
 
     getUser: function(data) {
       var index = _searchUsers(data.username);
 
-      return _usersAndOwnerships[index];
+      return _usersAndCoins[index];
     },
 
     getUsers: function() {
-      return _usersAndOwnerships;
+      return _usersAndCoins;
     },
 
     updateUser: function(data) {
-      var userAndOwnership = data.userAndOwnership;
-      var index = _searchUsers(userAndOwnership.user.username);
+      var userAndCoins = data.userAndCoins;
+      var index = _searchUsers(userAndCoins.username);
 
       if (index === -1) {
         return;
       }
 
-      _usersAndOwnerships[index] = userAndOwnership;
+      _usersAndCoins[index] = userAndCoins;
 
-      return _usersAndOwnerships[index];
+      return _usersAndCoins[index];
     },
 
     removeUser: function(data) {
-      var userAndOwnership = data.userAndOwnership;
-      var index = _searchUsers(userAndOwnership.user.username);
+      var userAndCoins = data.userAndCoins;
+      var index = _searchUsers(userAndCoins.username);
 
       if (index >= 0) {
-        _usersAndOwnerships.splice(index, 1);
+        _usersAndCoins.splice(index, 1);
       }
     },
 
     setUsers: function(users) {
-      _usersAndOwnerships = users;
+      _usersAndCoins = users;
     },
 
     removeAllUsers: function() {
-      _usersAndOwnerships = [];
+      _usersAndCoins = [];
     }
   });
 
@@ -67,10 +68,10 @@ var CoinOwnershipStore = (function() {
   });
 
   function _searchUsers(username) {
-    for (var i = 0, l = _usersAndOwnerships.length; i < l; i++) {
-      var userAndOwnership = _usersAndOwnerships[i];
+    for (var i = 0, l = _usersAndCoins.length; i < l; i++) {
+      var userAndCoins = _usersAndCoins[i];
 
-      if (userAndOwnership.user.username === username) {
+      if (userAndCoins.username === username) {
         return i;
       }
     }
@@ -78,5 +79,5 @@ var CoinOwnershipStore = (function() {
     return -1;
   }
 
-  return _store;
+  return _coinOwnershipStore;
 })();

@@ -5,7 +5,8 @@
 var PeopleStore = (function() {
   var _people = [];
 
-  var _store = _.extend(Store, {
+  var _store = Object.create(Store);
+  var _peopleStore = _.extend(_store, {
     destroy: function() {
       Dispatcher.remove(dispatchIndex);
     },
@@ -80,5 +81,5 @@ var PeopleStore = (function() {
     return -1;
   }
 
-  return _store;
+  return _peopleStore;
 })();

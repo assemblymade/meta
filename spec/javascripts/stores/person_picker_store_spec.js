@@ -12,33 +12,33 @@ describe('PersonPickerStore', function() {
   });
 
   beforeEach(function(done) {
-    PersonPickerStore.removeAllPickedPeople();
+    PersonPickerStore.removeAllPeople();
 
     done();
   });
 
   it('adds a user', function(done) {
-    PersonPickerStore.addPickedPerson({ user: { username: 'rigby' } });
+    PersonPickerStore.addPerson({ user: { username: 'rigby' } });
 
-    expect(PersonPickerStore.getPickedPeople()).to.eql([{ username: 'rigby' }]);
+    expect(PersonPickerStore.getPeople()).to.eql([{ username: 'rigby' }]);
     done();
   });
 
   it('removes a user', function(done) {
-    PersonPickerStore.addPickedPerson({ user: { username: 'rigby' } });
-    PersonPickerStore.removePickedPerson({ user: { username: 'rigby' } });
+    PersonPickerStore.addPerson({ user: { username: 'rigby' } });
+    PersonPickerStore.removePerson({ user: { username: 'rigby' } });
 
-    expect(PersonPickerStore.getPickedPeople()).to.eql([]);
+    expect(PersonPickerStore.getPeople()).to.eql([]);
     done();
   });
 
   it('updates a user', function(done) {
-    PersonPickerStore.addPickedPerson({ user: { username: 'rigby' } });
-    expect(PersonPickerStore.getPickedPeople()).to.eql([{ username: 'rigby' }]);
+    PersonPickerStore.addPerson({ user: { username: 'rigby' } });
+    expect(PersonPickerStore.getPeople()).to.eql([{ username: 'rigby' }]);
 
-    PersonPickerStore.updatePickedPerson({ user: { username: 'rigby', toys: ['shoes'] } });
+    PersonPickerStore.updatePerson({ user: { username: 'rigby', toys: ['shoes'] } });
 
-    expect(PersonPickerStore.getPickedPeople()).to.eql([{ username: 'rigby', toys: ['shoes'] }]);
+    expect(PersonPickerStore.getPeople()).to.eql([{ username: 'rigby', toys: ['shoes'] }]);
     done();
   });
 });
