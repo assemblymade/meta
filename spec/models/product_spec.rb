@@ -163,4 +163,18 @@ describe Product do
       expect(product.contributors).to include(creator)
     end
   end
+
+  it 'stores additional fields in info' do
+    product = Product.make!
+    fields = %w(goals key_features target_audience competing_products competitive_advantage monetization_strategy)
+    fields.each do |field|
+      product.send :"#{field}=", field
+    end
+    product.save!
+    product.reload
+
+    fields.each do |field|
+      expect(product.send(field.to_sym)).to eq(field)
+    end
+  end
 end

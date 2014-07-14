@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140711231251) do
+ActiveRecord::Schema.define(version: 20140714213115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -354,6 +354,7 @@ ActiveRecord::Schema.define(version: 20140711231251) do
     t.uuid     "main_thread_id"
     t.uuid     "logo_id"
     t.datetime "launched_at"
+    t.hstore   "info"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree

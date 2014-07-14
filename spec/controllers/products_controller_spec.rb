@@ -4,7 +4,7 @@ describe ProductsController do
   render_views
 
   let(:creator) { User.make! }
-  let(:product) { Product.make! }
+  let(:product) { Product.make!(user: creator) }
 
   describe '#new' do
     it "redirects on signed out" do
@@ -84,6 +84,27 @@ describe ProductsController do
       }.to change(Discussion, :count).by(1)
 
       expect(assigns(:product).main_thread).to be_persisted
+    end
+  end
+
+  describe '#update' do
+    before do
+      sign_in creator
+    end
+
+    it 'updates all fields' do
+      info_fields = Product::INFO_FIELDS.each_with_object({}) do |field, h|
+        h[field.to_sym] = field
+      end
+
+      attrs = {
+        name: 'KJDB',
+        pitch: 'Manage your karaoke life',
+        description: 'it is good.'
+      }.merge(info_fields)
+
+      patch :update, id: product, product: attrs
+      expect(product.reload).to have_attributes(attrs)
     end
   end
 

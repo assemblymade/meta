@@ -139,7 +139,7 @@ class ProductsController < ProductController
   # private
 
   def product_params
-    params.require(:product).permit(
+    fields = [
       :name,
       :pitch,
       :lead,
@@ -148,6 +148,8 @@ class ProductsController < ProductController
       :poster,
       :homepage_url,
       :you_tube_video_url
-    )
+    ] + Product::INFO_FIELDS.map(&:to_sym)
+
+    params.require(:product).permit(*fields)
   end
 end

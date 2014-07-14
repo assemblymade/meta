@@ -90,6 +90,8 @@ class Product < ActiveRecord::Base
   validates :pitch, presence: true,
                     length: { maximum: 255 }
 
+
+
   # TODO This should be in a Form object (NewIdeaForm)
   validates :terms_of_service, acceptance: true
 
@@ -106,6 +108,19 @@ class Product < ActiveRecord::Base
 
   PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
   NON_PROFIT = %w(meta)
+
+  INFO_FIELDS = %w(goals key_features target_audience competing_products competitive_advantage monetization_strategy)
+
+  INFO_FIELDS.each do |field|
+    define_method(field) do
+      self.info && self.info[field]
+    end
+
+    define_method(:"#{field}=") do |val|
+      self.info ||= {}
+      self.info[field] = val
+    end
+  end
 
   class << self
     def find_by_id_or_slug!(id_or_slug)

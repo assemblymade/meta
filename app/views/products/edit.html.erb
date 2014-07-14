@@ -1,75 +1,79 @@
 <% title "Editing #{@product.name}" %>
 
 <div class="row">
-  <div class="col-md-8 col-xs-8">
+  <div class="col-md-12 col-xs-12">
     <%= form_for @product do |f| %>
-      <div class="form-group">
-        <%= f.label :pitch, 'What\'s the high level pitch?', class: 'form-label' %>
-        <%= f.text_field :pitch, class: 'form-control', placeholder: @four_word_story_example %>
 
-        <p class="help-block">
-          Start with a subject, an object, a verb. Then, add a descriptor or refining notion. Here are <a href="https://medium.com/design-story/23845834503b">some tips on writing four word stories</a>.
-        </p>
-      </div>
+      <h6 class="text-muted">Product Basics</h6>
 
-      <div class="form-group">
-        <%= f.label :lead, class: 'form-label' do %>
-          What will it do?
-        <% end %>
-        <%= f.text_area :lead, class: 'form-control', data: { autosize: '' }, rows: 2, data: { 'validate-length' => 2 } %>
-        <p class="help-block">
-          Great products can be described in a single Tweet (140 characters).
-        </p>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :description, class: 'form-label' do %>
-          What's the plan?
-          <a class="pull-right" href="https://daringfireball.net/projects/markdown/basics">
-            <img src="<%= image_path('markdown-mark.png') %>">
-          </a>
-        <% end %>
-        <%= f.text_area :description, class: 'form-control', data: { autosize: '', 'validate-length' => 2 }, rows: 8 %>
-
-        <div class="help-block">
-          <p>
-            You can enter anything you like in this section. Sell others on its merits by clearly addressing the following questions:
-          </p>
-          <div class="row">
-            <div class="col-3">
-              <ul class="list-dashed">
-                <li>How did you come up it?</li>
-                <li>Why is it awesome?</li>
-                <li>Do similar products exist already?</li>
-              </ul>
-            </div>
-            <div class="col-3">
-              <ul class="list-dashed">
-                <li>How will it make money?</li>
-                <li>How will you be involved in building it?</li>
-              </ul>
-            </div>
+      <%= f.label :name, 'Product name', class: 'form-label' %>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <%= f.text_field :name, class: 'form-control', maxlength: 255, autocomplete: 'off' %>
           </div>
+
+          <div class="form-group">
+            <%= f.label :pitch, '5 word pitch', class: 'form-label' %>
+            <%= f.text_field :pitch, class: 'form-control', placeholder: @four_word_story_example %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :description, 'The story behind the idea', class: 'form-label' %>
+            <%= f.text_area :description, class: 'form-control', data: { autosize: '' }, rows: 2, data: { 'validate-length' => 2 } %>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <p class="help-block alpha">
+            A name is important, but it can always change. If you have a codename already, use that, otherwise don't get too hung up on making it perfect.
+          </p>
         </div>
       </div>
 
-      <div class="form-group">
-        <%= f.label :name, 'Product name', class: 'form-label' %>
-        <%= f.text_field :name, class: 'form-control', maxlength: 255 %>
+      <hr id="story">
+
+      <h6 class="text-muted">The Vision</h6>
+
+      <%= f.label :goals, 'Goals', class: 'form-label' %>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <%= f.text_area :goals, class: 'form-control', data: { autosize: '' }, rows: 2 %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :key_features, 'Key Features', class: 'form-label' %>
+            <%= f.text_area :key_features, class: 'form-control', data: { autosize: '' }, rows: 2 %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :target_audience, 'Target Audience', class: 'form-label' %>
+            <%= f.text_area :target_audience, class: 'form-control', data: { autosize: '' }, rows: 2 %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :competing_products, 'Competing Products', class: 'form-label' %>
+            <%= f.text_area :competing_products, class: 'form-control', data: { autosize: '' }, rows: 2 %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :competitive_advantage, 'Competitive Advantage', class: 'form-label' %>
+            <%= f.text_area :monetization_strategy, class: 'form-control', data: { autosize: '' }, rows: 2 %>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <p class="help-block alpha">
+            The vision. For the future.
+          </p>
+        </div>
       </div>
 
-      <div class="form-group">
-        <%= f.label :tags_string, 'Product tags', class: 'form-label' %>
-        <%= f.text_field :tags_string, class: 'form-control', maxlength: 255 %>
-        <p class="help-block">
-          List product domain, core technologies, and programming languages for this product. Examples: 'B2B, Mobile, Ruby, iOS, Android'. If you don't know which technologies will be used, <a href="<%= new_product_discussion_path(@product) %>">create a discussion</a> and ask the community for recommendations.
-        </p>
-      </div>
 
-      <div class="form-group">
-        <%= f.label :you_tube_video_url, 'YouTube Video URL', class: 'form-label' %>
-        <%= f.text_field :you_tube_video_url, class: 'form-control', maxlength: 255 %>
-      </div>
+      <hr id="sundry">
+
+      <h6 class="text-muted">Sundry</h6>
 
       <div class="form-group">
         <%= f.label :homepage_url, 'Product homepage url', class: 'form-label' %>
@@ -77,8 +81,8 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :poster, 'Poster Image url', class: 'form-label' %>
-        <%= f.text_field :poster, class: 'form-control', maxlength: 255 %>
+        <%= f.label :you_tube_video_url, 'YouTube Video URL', class: 'form-label' %>
+        <%= f.text_field :you_tube_video_url, class: 'form-control', maxlength: 255 %>
       </div>
 
       <div class="form-actions">
@@ -88,56 +92,6 @@
   </div>
 
   <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h6 class="panel-title">Logo</h6>
-      </div>
-      <div class="panel-body">
-        <p>
-          Please <a href="mailto:assembly@helpful.io">email new logos to
-          Assembly</a> to have them show up publicly.
-        </p>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h6 class="panel-title">Core Team</h6>
-      </div>
-      <div class="panel-body">
-        <ul class="list-unstyled">
-          <% @product.core_team.each do |user| %>
-            <li>
-              <a href="<%= user_path(user) %>">
-                <img class="img-circle" style="margin-right:.5em" src="<%= user.avatar.url(32) %>" width="16" height="16" alt="@<%= user.username %>"><%= user.username %>
-              </a>
-            </li>
-          <% end %>
-        </ul>
-
-        <hr>
-
-        <%= form_tag product_core_team_members_path(@product), class: 'form' do %>
-          <div class="input-group">
-            <%= label_tag :core_team_member_username, '@', class: 'input-group-addon' %>
-            <%= text_field_tag 'core_team_member[username]', nil, class: 'form-control', placeholder: 'username' %>
-          </div>
-          <br>
-          <%= submit_tag 'Add to Core Team', class: 'btn btn-default btn-sm' %>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h6 class="panel-title">Perks</h6>
-      </div>
-      <div class="panel-body">
-        <p class="omega">
-          Please <a href="mailto:assembly@helpful.io">email Assembly</a> to discuss setting up perks for pre-order.
-        </p>
-      </div>
-    </div>
 
   </div>
 </div>
