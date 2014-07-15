@@ -12,14 +12,7 @@ var PeopleStore = (function() {
     },
 
     setPeople: function(people) {
-      _people = _.sortBy(people, function(person) {
-        if (!person) {
-          person = { user: app.currentUser() };
-          person.user.username = person.user.get('username');
-        }
-
-        return person && person.user && person.user.username;
-      });
+      _people = people;
     },
 
     getPeople: function() {
@@ -27,19 +20,19 @@ var PeopleStore = (function() {
     },
 
     getPerson: function(username) {
-      var index = _binarySearchPeople(username);
+      var index = _searchPeople(username);
 
       return _people[index];
     },
 
-    addPerson: function(person) {
-      var people = this.getPeople();
-      people.push(person);
-      this.setPeople(people);
+    addPerson: function(data) {
+      _people.push(data.user);
+
+      return this.getPeople();
     },
 
     removePerson: function(username) {
-      var index = _binarySearchPeople(username);
+      var index = _searchPeople(username);
 
       _people.splice(index, 1);
 
@@ -56,25 +49,10 @@ var PeopleStore = (function() {
     _store.emit(event);
   });
 
-  function _binarySearchPeople(username) {
-    var list = _.clone(_people);
-    var low = 0;
-    var length = list.length - 1;
-
-    if (!length) {
-      return;
-    }
-
-    while (low <= length) {
-      var index = Math.floor((low + length) / 2);
-      var mid = list[index];
-
-      if (mid.user.username < username) {
-        low = index + 1;
-      } else if (mid.user.username > username) {
-        length = index - 1;
-      } else {
-        return index;
+  function _searchPeople(username) {
+    for (var i = 0, l = _people.length; i < l; i++) {
+      if (_people[i].user.username === username) {
+        return i;
       }
     }
 

@@ -33,35 +33,14 @@ describe('PeopleStore', function() {
     }
   ];
 
-  it('sorts and stores an array of people', function(done) {
+  it('stores an array of people', function(done) {
     PeopleStore.setPeople(people);
-    expect(PeopleStore.getPeople()).to.eql([
-      {
-        user: {
-          username: 'Anne'
-        }
-      },
-      {
-        user: {
-          username: 'Bob'
-        }
-      },
-      {
-        user: {
-          username: 'Rick'
-        }
-      },
-      {
-        user: {
-          username: 'Stacy'
-        }
-      }
-    ]);
+    expect(PeopleStore.getPeople()).to.equal(people);
 
     done();
   });
 
-  it('binary searches for a person and returns their index', function(done) {
+  it('searches for a person and returns their index', function(done) {
     PeopleStore.setPeople(people);
     var rick = PeopleStore.getPerson('Rick');
     expect(rick.user).to.eql({ username: 'Rick' });
@@ -69,7 +48,8 @@ describe('PeopleStore', function() {
   });
 
   it('removes a person', function(done) {
-    PeopleStore.setPeople(people);
+    var p = _.clone(people);
+    PeopleStore.setPeople(p);
     PeopleStore.removePerson('Bob');
     expect(PeopleStore.getPeople()).to.eql([
       {
@@ -79,12 +59,12 @@ describe('PeopleStore', function() {
       },
       {
         user: {
-          username: 'Rick'
+          username: 'Stacy'
         }
       },
       {
         user: {
-          username: 'Stacy'
+          username: 'Rick'
         }
       }
     ]);
@@ -92,41 +72,20 @@ describe('PeopleStore', function() {
     done();
   });
 
-  it('inserts a person in order', function(done) {
-    PeopleStore.setPeople(people);
+  it('inserts a person', function(done) {
+    var p = _.clone(people);
+
+    PeopleStore.setPeople(p);
+
     PeopleStore.addPerson({
       user: {
         username: 'Larry'
       }
     });
 
-    expect(PeopleStore.getPeople()).to.eql([
-      {
-        user: {
-          username: 'Anne'
-        }
-      },
-      {
-        user: {
-          username: 'Bob'
-        }
-      },
-      {
-        user: {
-          username: 'Larry'
-        }
-      },
-      {
-        user: {
-          username: 'Rick'
-        }
-      },
-      {
-        user: {
-          username: 'Stacy'
-        }
-      }
-    ]);
+    p.push({ user: { username: 'Larry' } });
+
+    expect(PeopleStore.getPeople()).to.eql(p);
 
     done();
   });

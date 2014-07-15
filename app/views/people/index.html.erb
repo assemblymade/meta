@@ -14,6 +14,49 @@
     Teams
   </h2>
 </div>
+<% if current_user %>
+  <% product_membership = current_user.team_memberships.find_by(product: @product) %>
+
+  <% if !product_membership.nil? &&
+      !product_membership.deleted_at.nil? &&
+      product_membership.bio.nil? %>
+    <h2 style="font-weight: 300;">Before you start, why not introduce yourself?</h2>
+    <div class="row">
+      <div class="col-xs-9 col-md-9">
+        <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
+
+          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+          <input name="_method" value="patch" type="hidden">
+
+          <div class="form-group">
+            <textarea name="membership[bio]" id="bio-editor" class="form-control bio-editor" rows="4" id="self-introduction" placeholder="Hello world, I am @kernel. I’ve worked for the past 13 years as a programming robot. I have mastered 32 programming languages. As a programming robot, I need help understanding human emotions. I look forward to working with you to take over the world."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="join-interests">What are you interested in?</label>
+            <% interest_filters = product_membership_interests(@product, true) %>
+            <%= select_tag 'membership[interests][]',
+              options_for_select(interest_filters.map { |interest| ['@' + interest, interest]}),
+              'data-placeholder' => ' ',
+              :class => 'form-control chosen-select',
+              :id => 'join-interests',
+              :multiple => true %>
+          </div>
+
+          <button type="submit" id="join-intro-button" class="btn btn-success btn-block">Introduce yourself</button>
+
+        </form>
+      </div>
+      <div class="col-xs-3 col-md-3">
+        <small class="help-block" style="margin-top: 0px;">
+          What skills can you contribute, how much time do you have, and what are you looking to get out of the experience?
+        </small>
+      </div>
+    </div>
+
+    <hr>
+  <% end %>
+<% end %>
 
 <div class="row">
   <div class="js-people col-xs-9 col-md-9"></div>
@@ -109,6 +152,30 @@ $(document).ready(function() {
 
   $('#edit-membership-modal').on('shown.bs.modal', function() {
     $('#bio-editor').attr('placeholder', app.defaultBio());
+  });
+
+  var chosenSelect = $('.chosen-select')
+
+  chosenSelect.chosen({
+    create_option: function(term) {
+      var chosen = this
+
+      term = term.replace(/[^\w-]+/g, '').toLowerCase()
+
+      if (term === 'core') {
+        return;
+      }
+
+      chosen.append_option({
+        value: term,
+        text: '@' + term
+      })
+    },
+
+    persistent_create_option: true,
+    skip_no_results: true,
+    search_contains: true,
+    create_option_text: 'Add interest'
   });
 });
 </script>

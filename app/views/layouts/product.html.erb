@@ -237,7 +237,7 @@
                      join_path: product_people_path(@product),
                      leave_path: (current_user && product_person_path(@product, current_user)),
                      is_member: @product.member?(current_user),
-                     membership:  TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user)).as_json
+                     membership: TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user) || TeamMembership.new(product: @product, user: current_user)).as_json
                    }.to_json %>">
               </div>
             </div>

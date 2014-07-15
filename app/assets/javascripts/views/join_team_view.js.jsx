@@ -111,7 +111,7 @@ var JoinTeam = React.createClass({
     var joinButton = $('#join-intro-button')
     var startingVal = bioEditor.val()
 
-    if (startingVal.length >= 2) {
+    if (startingVal && startingVal.length >= 2) {
       joinButton.removeClass('disabled')
     }
 
@@ -205,13 +205,13 @@ var JoinTeam = React.createClass({
         var product = app.currentAnalyticsProduct()
         analytics.track('product.team.joined', product)
       }
-    )
+    );
 
     Dispatcher.dispatch({
       action: 'addPerson',
-      data: this.props.membership,
+      data: { user: this.props.membership },
       event: 'people:change'
-    })
+    });
   },
 
   onLeave: function(e) {
@@ -235,7 +235,7 @@ var JoinTeam = React.createClass({
 
     Dispatcher.dispatch({
       action: 'removePerson',
-      data: this.props.membership.user.username,
+      data: { user: this.props.membership.user },
       event: 'people:change'
     });
   }

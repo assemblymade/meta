@@ -8,7 +8,10 @@ var PersonPickerStore = (function() {
   var _personPickerStore = _.extend(_store, {
     addPerson: function(data) {
       var user = data.user;
-
+      if (!user) {
+        return;
+      }
+      
       if (_searchPeople(user.username) !== -1) {
         return;
       }
