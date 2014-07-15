@@ -219,7 +219,7 @@ ASM::Application.routes.draw do
     end
 
     resources :people, only: [:index, :create, :update, :destroy]
-    resources :core_team_members
+    resources :core_team_members, only: [:create]
 
     get '/core' => 'core_team_members#index'
 
