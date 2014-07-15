@@ -27,11 +27,15 @@ class ProductsController < ProductController
 
       @product.team_memberships.create!(user: current_user, is_core: true)
 
+      # TODO: Make this work with email addresses
+
       if core_team = params[:core_team]
         core_team.each do |user_id|
           @product.team_memberships.create(user: User.find(user_id), is_core: true)
         end
       end
+
+      # TODO: Add coins transfer
 
       @product.watch!(current_user)
       @product.upvote!(current_user, request.remote_ip)
@@ -155,15 +159,9 @@ class ProductsController < ProductController
       :tags_string,
       :poster,
       :homepage_url,
-<<<<<<< HEAD
-      :you_tube_video_url,
-      :ownership => []
-    )
-=======
       :you_tube_video_url
     ] + Product::INFO_FIELDS.map(&:to_sym)
 
     params.require(:product).permit(*fields)
->>>>>>> d03fd7e712b2d2beb320f95f51933e2afe221120
   end
 end

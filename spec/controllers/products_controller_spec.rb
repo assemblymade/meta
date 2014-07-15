@@ -98,10 +98,9 @@ describe ProductsController do
 
     let!(:core_team_member) { User.make! }
 
-    it 'creates a product with tip contracts' do
-      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life', ownership: Hash[core_team_member.id, 10] }
+    it 'creates a product with core team' do
+      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: [core_team_member.id]
       expect(assigns(:product).core_team).to include(core_team_member)
-      puts assigns(:product).auto_tip_contracts.inspect
     end
   end
 
