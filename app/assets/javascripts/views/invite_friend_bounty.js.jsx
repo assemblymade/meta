@@ -26,8 +26,8 @@ var InviteFriendBounty = React.createClass({
                           onSubmit={this.onSubmit.bind(this)}
                           notePlaceholder="Hey! This bounty seems right up your alley">
 
-          <h1>Ask a friend</h1>
-          <p>Know somebody who could help with this? Anybody can help out, all you need to do is ask.</p>
+          <h2 className="alpha">Ask a friend</h2>
+          <p className="text-muted">Know somebody who could help with this? Anybody can help out, all you need to do is ask.</p>
         </InviteBountyForm>
       </Popover>
     )
