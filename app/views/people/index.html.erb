@@ -17,9 +17,7 @@
 <% if current_user %>
   <% product_membership = current_user.team_memberships.find_by(product: @product) %>
 
-  <% if !product_membership.nil? &&
-      !product_membership.deleted_at.nil? &&
-      product_membership.bio.nil? %>
+  <% if product_membership.nil? || product_membership.bio.nil? %>
     <h2 style="font-weight: 300;">Before you start, why not introduce yourself?</h2>
     <div class="row">
       <div class="col-xs-9 col-md-9">
