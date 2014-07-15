@@ -27,7 +27,7 @@ class PeopleController < ProductController
   end
 
   def update
-    @membership = @product.team_memberships.find_by!(user: current_user)
+    @membership = @product.team_memberships.find_or_create_by!(user: current_user, is_core: false)
 
     if params[:introduction]
       track_params = ProductAnalyticsSerializer.new(@product, scope: current_user).as_json

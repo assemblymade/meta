@@ -418,7 +418,7 @@ var BioEditor = React.createClass({
     } else {
       chosenSelect.val(['code', 'design']);
     }
-    chosenSelect.trigger('chosen:updated')
+    chosenSelect.trigger('chosen:updated');
   },
 
   makeUneditable: function(e) {

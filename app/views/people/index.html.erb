@@ -175,5 +175,8 @@ $(document).ready(function() {
     search_contains: true,
     create_option_text: 'Add interest'
   });
+
+  chosenSelect.val(['code', 'design']);
+  chosenSelect.trigger('chosen:updated');
 });
 </script>
