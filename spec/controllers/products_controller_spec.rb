@@ -38,7 +38,7 @@ describe ProductsController do
 
   describe '#edit' do
     it "is successful" do
-      product.core_team << product.user
+      product.team_memberships.create(user: product.user, is_core: true)
       sign_in product.user
       get :edit, id: product.slug
       expect(response).to be_success
@@ -54,6 +54,11 @@ describe ProductsController do
       post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
       expect(assigns(:product)).to be_a(Product)
       expect(assigns(:product)).to be_persisted
+    end
+
+    it 'adds user to core team' do
+      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
+      expect(assigns(:product).core_team).to include(creator)
     end
 
     it 'should redirect to welcome page' do

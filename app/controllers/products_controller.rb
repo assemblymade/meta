@@ -25,7 +25,7 @@ class ProductsController < ProductController
         AsmMetrics.active_user(current_user)
       end
 
-      @product.core_team << current_user
+      @product.team_memberships.create!(user: current_user, is_core: true)
       @product.watch!(current_user)
       @product.upvote!(current_user, request.remote_ip)
       TransactionLogEntry.validated!(Time.current, @product, @product.id, @product.user.id, @product.user.id)

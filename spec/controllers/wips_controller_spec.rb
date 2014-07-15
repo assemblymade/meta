@@ -25,7 +25,7 @@ describe TasksController do
   describe '#award' do
     before do
       sign_in user
-      product.core_team << user
+      product.team_memberships.create(user: user, is_core: true)
       patch :award, product_id: product.slug, id: wips.first.number, event_id: event.id, format: :js
     end
 
@@ -39,7 +39,7 @@ describe TasksController do
   describe '#update' do
     before do
       sign_in user
-      product.core_team << user
+      product.team_memberships.create(user: user, is_core: true)
     end
 
     it 'updates a wip' do

@@ -8,7 +8,7 @@ describe ProductLogosController do
   describe '#create' do
     before do
       sign_in user
-      product.core_team << user
+      product.team_memberships.create(user: user, is_core: true)
     end
 
     it 'creates a logo' do

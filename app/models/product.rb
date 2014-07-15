@@ -25,11 +25,11 @@ class Product < ActiveRecord::Base
   has_many :auto_tip_contracts
   has_many :completed_missions
   has_many :contract_holders
-  has_many :core_team_memberships
-  has_many :core_team, -> { distinct }, :through => :core_team_memberships, :source => :user
+  has_many :core_team, through: :core_team_memberships, source: :user
+  has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
   has_many :discussions
   has_many :event_activities, through: :events, source: :activities
-  has_many :event_creators, -> { distinct }, :through => :events, :source => :user
+  has_many :event_creators, -> { distinct }, :through => :events, source: :user
   has_many :events, :through => :wips
   has_many :financial_accounts, class_name: 'Financial::Account'
   has_many :financial_transactions, class_name: 'Financial::Transaction'
@@ -191,12 +191,12 @@ class Product < ActiveRecord::Base
 
   def core_team?(user)
     return false if user.nil?
-    core_team_memberships.where(user_id: user.id).any?
+    team_memberships.core_team.active.find_by(user_id: user.id)
   end
 
   def member?(user)
     return false if user.nil?
-    team_memberships.active.where(user_id: user.id).any?
+    team_memberships.active.find_by(user_id: user.id)
   end
 
   def submit_for_approval!

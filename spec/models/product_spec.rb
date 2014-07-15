@@ -58,7 +58,7 @@ describe Product do
     let(:badass) { User.make! }
 
     before {
-      product.core_team << badass
+      product.team_memberships.create(user: badass, is_core: true)
     }
 
     subject { product }
@@ -123,10 +123,10 @@ describe Product do
 
   describe '#core_team_memberships' do
     it 'should be unique for user and product' do
-      product.core_team << user
+      product.team_memberships.create(user: user, is_core: false)
       expect {
-        product.core_team << user
-      }.to raise_error(ActiveRecord::RecordInvalid)
+        product.team_memberships.create(user: user, is_core: true)
+      }.to raise_error(ActiveRecord::RecordNotUnique)
     end
   end
 

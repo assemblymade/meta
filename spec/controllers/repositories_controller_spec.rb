@@ -10,7 +10,7 @@ describe RepositoriesController do
     end
 
     it 'allows a core team member to create a repo' do
-      product.core_team << user
+      product.team_memberships.create(user: user, is_core: true)
       post :create, product_id: product.slug, repository: { name: 'scoreunder' }
       expect(response.status).to eq(302)
     end
