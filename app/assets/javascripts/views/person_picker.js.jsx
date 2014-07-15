@@ -19,10 +19,6 @@ window.PersonPicker = React.createClass({
     return { users: [], highlightIndex: 0 }
   },
 
-  componentDidMount: function() {
-    PersonPickerStore.addChangeListener()
-  },
-
   clearText: function() {
     this.refs.usernameOrEmail.getDOMNode().value = ''
     this.setState(this.getInitialState())
@@ -182,6 +178,8 @@ var UserPickerEntry = React.createClass({
     return (
       <li className={className}>
         <a href={'#@' + this.props.user.username} onClick={this.handleUserSelected(this.props.user)}>
+          <Avatar user={this.props.user}
+              style={{'margin-right': '10px'}} />
           @{this.props.user.username} <span className="text-muted">{this.props.user.name}</span>
         </a>
       </li>

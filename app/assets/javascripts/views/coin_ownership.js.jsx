@@ -28,7 +28,6 @@
     componentDidMount: function() {
       CoinOwnershipStore.addChangeListener(CO.EVENTS.USER_ADDED, this.onChange);
       CoinOwnershipStore.addChangeListener(CO.EVENTS.USER_UPDATED, this.onChange);
-      CoinOwnershipStore.addChangeListener(CO.EVENTS.USER_REMOVED, this.onChange);
     },
 
     getInitialState: function() {
@@ -104,7 +103,7 @@
                 </div>
               </td>
               <td>
-                <span className="text-coins" style={{'white-space':"nowrap"}}>
+                <span className="text-coins pull-right" style={{'white-space':"nowrap"}}>
                   <span className="icon icon-app-coin"></span>
                   0
                 </span>
@@ -195,8 +194,19 @@
           }
         });
 
+        Dispatcher.dispatch({
+          event: CO.EVENTS.USER_REMOVED,
+          action: CO.ACTIONS.REMOVE_USER,
+          data: { userAndCoins: user }
+        });
+
+        var creator = this.state.creator;
+
+        creator.coins = creator.coins + user.coins;
+
         this.setState({
-          sharers: users
+          sharers: users,
+          creator: creator
         });
 
       }.bind(this);
@@ -239,36 +249,70 @@
     },
 
     render: function() {
-      var user = this.props.user
-      return (
-        <tr>
-          <td><Avatar user={user} /></td>
-          <td>
-            @{user.username}
-          </td>
-          <td>
-            <div className="input-group input-group-sm">
+      var user = this.props.user;
 
-              <input ref="ownership" className="form-control text-right" type="number"
-                     value={this.state.ownership}
-                     onChange={this.handleOwnershipChanged} />
-              <div className="input-group-addon">%</div>
-            </div>
-          </td>
-          <td className="text-right">
-            <span className="text-coins" style={{'white-space':"nowrap"}}>
-              <span className="icon icon-app-coin"></span>
-              {user.coins}
-            </span>
-          </td>
-          <td className="text-right">
-            <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
-              <span className="icon icon-close"></span>
-              <span className="sr-only">Remove</span>
-            </a>
-          </td>
-        </tr>
-      )
+      if (user.email) {
+        return (
+          <tr>
+            <td><span className="text-muted glyphicon glyphicon-envelope"></span></td>
+            <td>
+              {user.email}
+            </td>
+            <td>
+              <div className="input-group input-group-sm">
+                <input ref="ownership" className="form-control text-right" type="number"
+                       name={'ownership[' + user.id + ']'}
+                       value={this.state.ownership}
+                       onChange={this.handleOwnershipChanged} />
+                <div className="input-group-addon">%</div>
+              </div>
+            </td>
+            <td className="text-right">
+              <span className="text-coins" style={{'white-space':"nowrap"}}>
+                <span className="icon icon-app-coin"></span>
+                {user.coins}
+              </span>
+            </td>
+            <td className="text-right">
+              <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
+                <span className="icon icon-close"></span>
+                <span className="sr-only">Remove</span>
+              </a>
+            </td>
+          </tr>
+        );
+      } else {
+        return (
+          <tr>
+            <td><Avatar user={user} /></td>
+            <td>
+              @{user.username}
+            </td>
+            <td>
+              <div className="input-group input-group-sm">
+                <input ref="ownership" className="form-control text-right" type="number"
+                       name={'ownership[' + user.id + ']'}
+                       value={this.state.ownership}
+                       onChange={this.handleOwnershipChanged} />
+                <div className="input-group-addon">%</div>
+              </div>
+            </td>
+            <td className="text-right">
+              <span className="text-coins" style={{'white-space':"nowrap"}}>
+                <span className="icon icon-app-coin"></span>
+                {user.coins}
+              </span>
+            </td>
+            <td className="text-right">
+              <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
+                <span className="icon icon-close"></span>
+                <span className="sr-only">Remove</span>
+              </a>
+            </td>
+          </tr>
+        );
+      }
+
     },
 
     handleOwnershipChanged: function(e) {
@@ -291,7 +335,7 @@
         },
       0);
 
-      var percentageRemaining = 100 - Math.floor(sharerCoins / this.props.totalCoins * 100);
+      var percentageRemaining = 100 - Math.ceil(sharerCoins / this.props.totalCoins * 100);
 
       if (val >= percentageRemaining) {
         val = percentageRemaining;

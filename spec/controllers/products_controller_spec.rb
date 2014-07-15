@@ -75,6 +75,14 @@ describe ProductsController do
 
       expect(assigns(:product).main_thread).to be_persisted
     end
+
+    let!(:core_team_member) { User.make! }
+
+    it 'creates a product with tip contracts' do
+      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life', ownership: Hash[core_team_member.id, 10] }
+      expect(assigns(:product).core_team).to include(core_team_member)
+      puts assigns(:product).auto_tip_contracts.inspect
+    end
   end
 
   describe '#launch' do

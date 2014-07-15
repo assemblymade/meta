@@ -25,6 +25,14 @@ class ProductsController < ProductController
         AsmMetrics.active_user(current_user)
       end
 
+      raise params.inspect
+
+      if core_team = params[:core_team]
+        core_team.each do |user_id|
+          @product.core_team_memberships.create(user: User.find(user_id))
+        end
+      end
+      
       @product.watch!(current_user)
       @product.upvote!(current_user, request.remote_ip)
       TransactionLogEntry.validated!(Time.current, @product, @product.id, @product.user.id, @product.user.id)
@@ -142,7 +150,8 @@ class ProductsController < ProductController
       :tags_string,
       :poster,
       :homepage_url,
-      :you_tube_video_url
+      :you_tube_video_url,
+      :ownership => []
     )
   end
 end

@@ -100,7 +100,7 @@
           action: CONSTANTS.COIN_OWNERSHIP.ACTIONS.REMOVE_USER,
           data: { userAndCoins: user }
         });
-        
+
       }.bind(this)
     },
 
@@ -152,6 +152,7 @@
             <td>{this.props.user.email}</td>
 
             <td className="text-right">
+              <input type="hidden" value={this.props.user.email} name="core_team[]" />
               <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
                 <span className="icon icon-close"></span>
                 <span className="sr-only">Remove</span>
@@ -166,6 +167,7 @@
             <td>@{this.props.user.username}</td>
 
             <td className="text-right">
+              <input type="hidden" value={this.props.user.id} name="core_team[]" />
               <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
                 <span className="icon icon-close"></span>
                 <span className="sr-only">Remove</span>
