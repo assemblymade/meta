@@ -24,6 +24,10 @@ class TransactionLogEntry < ActiveRecord::Base
     with_cents.group(:product_id).sum(:cents)
   end
 
+  def self.wallet_balances(product_id)
+    where(product_id: product_id).with_cents.group(:wallet_id).sum(:cents)
+  end
+
   def self.users_with_balance
     User.select('users.*, sum(cents) as balance').
          joins('inner join transaction_log_entries tle on tle.wallet_id = users.id').
