@@ -2,7 +2,7 @@ require 'uri'
 
 class PosterImage
 
-  DEFAULT_PATH = "default_poster.jpg"
+  DEFAULT_PATH = "/assets/default_poster.jpg"
 
   attr_reader :product
 

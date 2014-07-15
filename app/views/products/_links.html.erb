@@ -1,25 +1,3 @@
-<% if @product.homepage_url.present? || @product.repos.any? %>
-  <div class="panel panel-default">
-
-    <div class="panel-heading">
-      <h6 class="panel-title">Links</h6>
-    </div>
-    <div class="panel-body truncate">
-      <% unless @product.homepage_url.blank? %>
-        <a class="small" href="<%= @product.homepage_url %>" data-track="product.site.clicked">
-          <strong><%= @product.homepage_url %></strong>
-        </a>
-      <% end %>
-      <% unless @product.homepage_url.blank? && @product.repos.any? %>
-        <hr style="margin-top: 15px; margin-bottom: 15px;">
-      <% end %>
-      <% if @product.for_profit? && @product.repos.any? %>
-        <%= render 'products/repos' %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
-
 <% if !@product.for_profit? %>
   <div class="panel panel-warning">
     <div class="panel-heading">
