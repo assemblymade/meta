@@ -63,8 +63,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Not yet</button>
-        <%= form_for @product, url: product_launch_path(@product), html: {style: 'display:inline-block'} do %>
+
+        <%= form_for @product, url: product_launch_path(@product) do %>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Not yet</button>
           <input type="submit" class="btn btn-success" value="Launch <%= @product.name %>" data-disable-with="Launching..." />
         <% end %>
       </div>
