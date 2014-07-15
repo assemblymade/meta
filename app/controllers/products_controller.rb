@@ -25,14 +25,14 @@ class ProductsController < ProductController
         AsmMetrics.active_user(current_user)
       end
 
-      raise params.inspect
+      @product.team_memberships.create!(user: current_user, is_core: true)
 
       if core_team = params[:core_team]
         core_team.each do |user_id|
-          @product.core_team_memberships.create(user: User.find(user_id))
+          @product.team_memberships.create(user: User.find(user_id), is_core: true)
         end
       end
-      
+
       @product.watch!(current_user)
       @product.upvote!(current_user, request.remote_ip)
       TransactionLogEntry.validated!(Time.current, @product, @product.id, @product.user.id, @product.user.id)
@@ -46,7 +46,7 @@ class ProductsController < ProductController
 
       flash[:new_product_callout] = true
     end
-    respond_with(@product, location: product_path(@product))
+    respond_with(@product, location: product_welcome_path(@product))
   end
 
   def welcome
@@ -71,6 +71,11 @@ class ProductsController < ProductController
   end
 
   def show
+    if @product.stealth?
+      redirect_to edit_product_path(@product)
+      return
+    end
+
     @perks = @product.perks.includes(:preorders).order(:amount).decorate
     @user_metrics = UserMetricsSummary.new(@product, Date.today - 1.day)
 
@@ -142,7 +147,7 @@ class ProductsController < ProductController
   # private
 
   def product_params
-    params.require(:product).permit(
+    fields = [
       :name,
       :pitch,
       :lead,
@@ -150,8 +155,15 @@ class ProductsController < ProductController
       :tags_string,
       :poster,
       :homepage_url,
+<<<<<<< HEAD
       :you_tube_video_url,
       :ownership => []
     )
+=======
+      :you_tube_video_url
+    ] + Product::INFO_FIELDS.map(&:to_sym)
+
+    params.require(:product).permit(*fields)
+>>>>>>> d03fd7e712b2d2beb320f95f51933e2afe221120
   end
 end

@@ -12,6 +12,7 @@
 #= require jquery-timeago
 #= require react
 #= require notify.js
+#= require zeroclipboard
 
 #= require_tree ./lib
 

@@ -10,7 +10,7 @@ describe Wip do
   let(:winning_event) { Event::Comment.make!(wip: wip, user: winner) }
 
   let(:joe_random) { User.make!(is_staff: false) }
-  let(:core_member) { user = User.make!; product.core_team << user; user }
+  let(:core_member) { user = User.make!; product.team_memberships.create(user: user, is_core: true); user }
 
   describe 'states' do
     subject { wip }

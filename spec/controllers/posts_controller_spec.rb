@@ -7,7 +7,7 @@ describe PostsController do
   let(:current_user) { User.make! }
 
   before do
-    product.core_team << current_user
+    product.team_memberships.create(user: current_user, is_core: true)
   end
 
   describe "#new" do

@@ -6,7 +6,12 @@ module TextFilters
       @renderer = Redcarpet::Render::HTML.new(context.fetch(:markdown, {}).merge(filter_html: false))
       @engine = Redcarpet::Markdown.new(
         @renderer,
-        context.fetch(:redcarpet, {}).merge(autolink: true, lax_spacing: true, fenced_code_blocks: true)
+        context.fetch(:redcarpet, {}).merge(
+          autolink: true,
+          lax_spacing: true,
+          fenced_code_blocks: true,
+          no_intra_emphasis: true
+        )
       )
     end
 

@@ -7,14 +7,15 @@ describe Product do
   let(:ip) { '127.0.0.1' }
 
   describe '#to_param' do
-    it 'is slug if launched' do
+    it 'is slug if present' do
       expect(
         Product.make!(slug: 'snapcat').to_param
       ).to eq('snapcat')
     end
 
-    it 'is id if stealth' do
-      product = Product.make!(launched_at: nil)
+    it 'is id if no slug' do
+      product = Product.make!
+      product.slug = nil
       expect(product.to_param).to eq(product.id)
     end
   end
@@ -57,7 +58,7 @@ describe Product do
     let(:badass) { User.make! }
 
     before {
-      product.core_team << badass
+      product.team_memberships.create(user: badass, is_core: true)
     }
 
     subject { product }
@@ -122,10 +123,10 @@ describe Product do
 
   describe '#core_team_memberships' do
     it 'should be unique for user and product' do
-      product.core_team << user
+      product.team_memberships.create(user: user, is_core: false)
       expect {
-        product.core_team << user
-      }.to raise_error(ActiveRecord::RecordInvalid)
+        product.team_memberships.create(user: user, is_core: true)
+      }.to raise_error(ActiveRecord::RecordNotUnique)
     end
   end
 
@@ -160,6 +161,20 @@ describe Product do
   describe '#contributors' do
     it 'includes the product creator' do
       expect(product.contributors).to include(creator)
+    end
+  end
+
+  it 'stores additional fields in info' do
+    product = Product.make!
+    fields = %w(goals key_features target_audience competing_products competitive_advantage monetization_strategy)
+    fields.each do |field|
+      product.send :"#{field}=", field
+    end
+    product.save!
+    product.reload
+
+    fields.each do |field|
+      expect(product.send(field.to_sym)).to eq(field)
     end
   end
 end

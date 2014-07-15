@@ -13,7 +13,7 @@ module Repo
     def initialize(url)
       @url = url
     end
-    
+
     def username
       @url.split('/')[-2]
     end
@@ -21,13 +21,21 @@ module Repo
     def name
       @url.split('/')[-1]
     end
-    
+
     def full_name
       "#{username}/#{name}"
     end
 
     def ==(other)
       self.url == other.try(:url)
+    end
+
+    def eql?(other)
+      self == other
+    end
+
+    def hash
+      self.url.hash
     end
   end
 end

@@ -20,7 +20,9 @@
 	-moz-osx-font-smoothing: grayscale;
 
   &.dropdown-glyph {
+    // vertical-align: text-bottom;
     color: $gray;
+    top: -1px;
   }
 }
 

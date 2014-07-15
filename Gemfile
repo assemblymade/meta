@@ -18,6 +18,7 @@ gem 'devise', '~> 3.0.0.rc'
 gem 'draper'
 gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
 gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
+gem 'font_assets'
 gem 'friendly_id', github: 'norman/friendly_id'
 gem 'gemoji', github: 'github/gemoji'
 gem 'git'
@@ -74,7 +75,7 @@ gem 'stripe'
 gem 'uglifier'
 gem 'warden', "~> 1.2.3"
 gem 'workflow'
-gem 'font_assets'
+gem 'zeroclipboard-rails'
 
 group :development, :test do
   gem 'active_record_query_trace'

@@ -1,0 +1,8 @@
+<%== product.description_html %>
+
+<% (@product.info || {}).each do |field, value| %>
+  <% if value %>
+    <h2><%= field.titlecase %></h2>
+    <%== markdown(value) %>
+  <% end %>
+<% end %>

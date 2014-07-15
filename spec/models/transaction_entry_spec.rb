@@ -94,7 +94,7 @@ describe 'log entries' do
     let(:wip) { Task.make! product: product, user: wip_creator }
 
     it 'adds when task is promoted' do
-      product.core_team << product.user
+      product.team_memberships.create(user: product.user, is_core: true)
       wip.multiply!(product.user, 2.0)
 
       expect(

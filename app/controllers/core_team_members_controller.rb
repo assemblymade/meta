@@ -4,8 +4,7 @@ class CoreTeamMembersController < ProductController
     authenticate_user!
     find_product!
 
-    @memberships = @product.team_memberships.active.core_team
-    @core_team_memberships = @product.core_team_memberships
+    @core_team_memberships = @product.team_memberships.active.core_team
 
     @selected_filter = params[:filter]
   end
@@ -17,9 +16,6 @@ class CoreTeamMembersController < ProductController
 
     user = User.find_by_username(core_team_member_params.fetch(:username))
     if user
-      @product.core_team << user
-
-      # FIXME: Shouldn't have to #find_or_create both the TeamMembership and the CoreTeamMembership
       team_membership = user.team_memberships.find_by(product: @product)
 
       if team_membership.nil?
@@ -27,8 +23,6 @@ class CoreTeamMembersController < ProductController
       else
         team_membership.update_attributes(is_core: true)
       end
-
-      CoreTeamMembership.find_or_create_by!(product: @product, user: user)
 
       CoreTeamMailer.delay(queue: 'mailer').welcome(@product.id, user.id)
 
