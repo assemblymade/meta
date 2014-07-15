@@ -30,9 +30,16 @@ describe ProductsController do
     context 'product in stealth' do
       let(:product) { Product.make!(launched_at: nil) }
 
-      it "redirects to edit" do
+      it "redirects to edit if only name and pitch fields are present" do
         get :show, id: product
         expect(response).to redirect_to(edit_product_path(product))
+      end
+
+      it "is successful if fields other than name and pitch are present" do
+        product.update_attributes goals: '7'
+
+        get :show, id: product
+        expect(response).to be_success
       end
     end
   end
@@ -121,6 +128,7 @@ describe ProductsController do
       invite = Invite.find_by(invitee_id: collaborator.id)
       expect(invite.tip_cents).to eq(600)
       expect(invite.via.name).to eq('KJDB')
+      expect(invite.core_team?).to be_true
     end
   end
 

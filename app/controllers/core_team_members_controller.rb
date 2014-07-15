@@ -1,14 +1,4 @@
 class CoreTeamMembersController < ProductController
-
-  def index
-    authenticate_user!
-    find_product!
-
-    @core_team_memberships = @product.team_memberships.active.core_team
-
-    @selected_filter = params[:filter]
-  end
-
   def create
     authenticate_user!
     find_product!

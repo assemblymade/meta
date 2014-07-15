@@ -7,4 +7,8 @@ class InviteMailerPreview < ActionMailer::Preview
     InviteMailer.invited(Invite.where('invitee_email is null').sample)
   end
 
+  def invited_to_core_team
+    InviteMailer.invited(Invite.where("extra ? 'core_team'").sample)
+  end
+
 end

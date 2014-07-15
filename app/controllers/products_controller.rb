@@ -48,7 +48,7 @@ class ProductsController < ProductController
   end
 
   def show
-    if @product.stealth?
+    if @product.stealth? && @product.draft?
       redirect_to edit_product_path(@product)
       return
     end
@@ -76,7 +76,7 @@ class ProductsController < ProductController
 
   def update
     authorize! :update, @product
-    @product.update_attributes(product_params)
+    @product.update_attributes!(product_params)
     respond_with(@product)
   end
 
@@ -150,7 +150,8 @@ class ProductsController < ProductController
         invite_params = {
           invitor: current_user,
           via: product,
-          tip_cents: (ownership[email_or_user_id].to_i || 0) * Product::INITIAL_COINS / 100.0
+          tip_cents: (ownership[email_or_user_id].to_i || 0) * Product::INITIAL_COINS / 100.0,
+          core_team: true
         }
 
         if email_or_user_id.uuid?

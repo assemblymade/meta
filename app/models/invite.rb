@@ -44,8 +44,22 @@ class Invite < ActiveRecord::Base
       )
       self.claimed_at = Time.now
       self.invitee = claimant
+
+      if core_team?
+        product.core_team_memberships.find_or_create_by(user: claimant)
+      end
+
       save!
     end
+  end
+
+  def core_team=(invite_to_core_team = true)
+    self.extra ||= {}
+    self.extra['core_team'] = invite_to_core_team
+  end
+
+  def core_team?
+    (self.extra || {})['core_team']
   end
 
   # private
