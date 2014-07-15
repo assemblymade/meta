@@ -1,7 +1,7 @@
 <%== product.description_html %>
 
 <% (@product.info || {}).each do |field, value| %>
-  <% if value %>
+  <% if value.present? %>
     <h2><%= field.titlecase %></h2>
     <%== markdown(value) %>
   <% end %>

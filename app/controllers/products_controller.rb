@@ -48,7 +48,7 @@ class ProductsController < ProductController
   end
 
   def show
-    if @product.stealth?
+    if @product.stealth? && @product.draft?
       redirect_to edit_product_path(@product)
       return
     end
@@ -76,7 +76,7 @@ class ProductsController < ProductController
 
   def update
     authorize! :update, @product
-    @product.update_attributes(product_params)
+    @product.update_attributes!(product_params)
     respond_with(@product)
   end
 

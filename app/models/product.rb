@@ -1,4 +1,4 @@
-  require 'activerecord/uuid'
+require 'activerecord/uuid'
 require 'money'
 require './lib/poster_image'
 require 'elasticsearch/model'
@@ -110,16 +110,7 @@ class Product < ActiveRecord::Base
 
   INFO_FIELDS = %w(goals key_features target_audience competing_products competitive_advantage monetization_strategy)
 
-  INFO_FIELDS.each do |field|
-    define_method(field) do
-      self.info && self.info[field]
-    end
-
-    define_method(:"#{field}=") do |val|
-      self.info ||= {}
-      self.info[field] = val
-    end
-  end
+  store_accessor :info, *INFO_FIELDS.map(&:to_sym)
 
   class << self
     def find_by_id_or_slug!(id_or_slug)
@@ -402,6 +393,10 @@ class Product < ActiveRecord::Base
     watch!(user)
     main_thread.watch!(user) if main_thread
     TransactionLogEntry.voted!(Time.current, self, self.id, user.id, 1)
+  end
+
+  def draft?
+    self.description.blank? && self.info.values.all?(&:blank?)
   end
 
   # elasticsearch
