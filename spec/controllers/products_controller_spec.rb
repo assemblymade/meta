@@ -121,6 +121,7 @@ describe ProductsController do
       invite = Invite.find_by(invitee_id: collaborator.id)
       expect(invite.tip_cents).to eq(600)
       expect(invite.via.name).to eq('KJDB')
+      expect(invite.core_team?).to be_true
     end
   end
 

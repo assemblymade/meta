@@ -150,7 +150,8 @@ class ProductsController < ProductController
         invite_params = {
           invitor: current_user,
           via: product,
-          tip_cents: (ownership[email_or_user_id].to_i || 0) * Product::INITIAL_COINS / 100.0
+          tip_cents: (ownership[email_or_user_id].to_i || 0) * Product::INITIAL_COINS / 100.0,
+          core_team: true
         }
 
         if email_or_user_id.uuid?

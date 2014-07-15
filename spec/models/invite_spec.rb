@@ -65,6 +65,13 @@ describe Invite do
 
       expect(invite.reload.invitee).to eq(invitee)
     end
+
+    it 'adds invitee to core team if requested' do
+      invite = create_invite(core_team: true)
+      invite.claim!(invitee)
+
+      expect(product.core_team).to include(invitee)
+    end
   end
 
   def create_invite(options={})
