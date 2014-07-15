@@ -95,17 +95,16 @@ class Product < ActiveRecord::Base
   # TODO This should be in a Form object (NewIdeaForm)
   validates :terms_of_service, acceptance: true
 
-  before_validation :fill_in_generated_name, :if => :new_record?
   before_create :generate_authentication_token
   after_update -> { CreateIdeaWipWorker.perform_async self.id }, :if => :submitted_at_changed?
 
   after_commit -> { subscribe_owner_to_notifications }, on: :create
   after_commit -> { add_to_event_stream }, on: :create
-  after_commit -> { create_auto_tips }, on: :create
   after_commit -> { Indexer.perform_async(:index, Product.to_s, self.id) }
 
   serialize :repos, Repo::Github
 
+  INITIAL_COINS = 6000
   PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
   NON_PROFIT = %w(meta)
 
@@ -366,10 +365,6 @@ class Product < ActiveRecord::Base
     self.logo || PosterImage.new(self)
   end
 
-  def fill_in_generated_name
-    self.name = NameGenerator.random if name.blank?
-  end
-
   def generate_authentication_token
     loop do
       self.authentication_token = Devise.friendly_token
@@ -463,9 +458,5 @@ class Product < ActiveRecord::Base
 
   def add_to_event_stream
     StreamEvent.add_create_event!(actor: user, subject: self)
-  end
-
-  def create_auto_tips
-    AutoTipContract.create!(product: self, user: self.user, amount: 0.05)
   end
 end

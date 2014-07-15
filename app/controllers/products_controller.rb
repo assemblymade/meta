@@ -18,39 +18,12 @@ class ProductsController < ProductController
   end
 
   def create
-    @product = current_user.products.create(product_params)
+    @product = create_product_with_params
     if @product.valid?
-      if !current_user.staff?
-        track_event 'product.created', ProductAnalyticsSerializer.new(@product).as_json
-        AsmMetrics.active_user(current_user)
-      end
-
-      @product.team_memberships.create!(user: current_user, is_core: true)
-
-      # TODO: Make this work with email addresses
-
-      if core_team = params[:core_team]
-        core_team.each do |user_id|
-          @product.team_memberships.create(user: User.find(user_id), is_core: true)
-        end
-      end
-
-      # TODO: Add coins transfer
-
-      @product.watch!(current_user)
-      @product.upvote!(current_user, request.remote_ip)
-      TransactionLogEntry.validated!(Time.current, @product, @product.id, @product.user.id, @product.user.id)
-      @product.update_attributes main_thread: @product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
-
-      Activities::FoundProduct.publish!(
-        target: @product,
-        subject: @product,
-        actor: current_user
-      )
-
-      flash[:new_product_callout] = true
+      respond_with(@product, location: product_welcome_path(@product))
+    else
+      render action: :new, layout: 'application'
     end
-    respond_with(@product, location: product_welcome_path(@product))
   end
 
   def welcome
@@ -144,11 +117,60 @@ class ProductsController < ProductController
     respond_with @product, location: product_path(@product)
   end
 
-  def generate_name
-    render json: { name: NameGenerator.generate_unique }
-  end
-
   # private
+
+  def create_product_with_params
+    product = current_user.products.create(product_params)
+    if product.valid?
+      if !current_user.staff?
+        track_event 'product.created', ProductAnalyticsSerializer.new(product).as_json
+        AsmMetrics.active_user(current_user)
+      end
+
+      product.team_memberships.create!(user: current_user, is_core: true)
+
+      product.watch!(current_user)
+      product.upvote!(current_user, request.remote_ip)
+      TransactionLogEntry.validated!(Time.current, product, product.id, product.user.id, product.user.id)
+      product.update_attributes main_thread: product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
+
+      ownership = params[:ownership] || {}
+      core_team_ids = Array(params[:core_team])
+
+      core_team_members = User.where(id: core_team_ids.select(&:uuid?))
+
+      core_team_members.each do |user|
+        product.core_team_memberships.create(user: user)
+      end
+
+      AutoTipContract.replace_contracts_with_default_core_team_split(product)
+
+      invitees = core_team_ids + ownership.keys
+      invitees.each do |email_or_user_id|
+        invite_params = {
+          invitor: current_user,
+          via: product,
+          tip_cents: (ownership[email_or_user_id].to_i || 0) * Product::INITIAL_COINS / 100.0
+        }
+
+        if email_or_user_id.uuid?
+          invite_params[:invitee] = User.find(email_or_user_id)
+        else
+          invite_params[:invitee_email] = email_or_user_id
+        end
+        Invite.create_and_send(invite_params)
+      end
+
+      Activities::FoundProduct.publish!(
+        target: product,
+        subject: product,
+        actor: current_user
+      )
+
+      flash[:new_product_callout] = true
+    end
+    product
+  end
 
   def product_params
     fields = [

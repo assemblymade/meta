@@ -100,12 +100,12 @@
             <div class="row">
               <div class="col-md-8">
 
-                <div data-react-class="CoinOwnership"></div>
+                <div data-react-class="CoinOwnership" data-react-props='<%== { totalCoins: Product::INITIAL_COINS }.to_json %>'></div>
               </div>
 
               <div class="col-md-4">
                 <p class="help-block">
-                  Every business starts out with 6,000 app coins. App coins are how Assembly tracks ownership.
+                  Every business starts out with <%= number_with_delimiter Product::INITIAL_COINS %> app coins. App coins are how Assembly tracks ownership.
                 </p>
                 <p class="help-block">
                   Profits are paid out to partners monthly based upon their ownership.

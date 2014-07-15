@@ -182,7 +182,6 @@ ASM::Application.routes.draw do
   get 'search' => 'search#index'
 
   post '/products' => 'products#create', as: :products
-  post '/products/generate-name' => 'products#generate_name'
 
   get '/products/:id', to: redirect(ProductRedirector.new), as: :full_product
   get '/products/:product_id/discussions/:id', to: redirect(ProductRedirector.new(:discussion)), as: :full_product_discussion

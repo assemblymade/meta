@@ -4,6 +4,7 @@ describe ProductsController do
   render_views
 
   let(:creator) { User.make! }
+  let(:collaborator) { User.make! }
   let(:product) { Product.make!(user: creator) }
 
   describe '#new' do
@@ -96,11 +97,30 @@ describe ProductsController do
       expect(assigns(:product).main_thread).to be_persisted
     end
 
-    let!(:core_team_member) { User.make! }
-
     it 'creates a product with core team' do
-      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: [core_team_member.id]
-      expect(assigns(:product).core_team).to include(core_team_member)
+      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: [collaborator.id]
+      expect(assigns(:product).core_team).to include(collaborator)
+    end
+
+    it 'gives auto tip contracts to core team members' do
+      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: [collaborator.id]
+      expect(assigns(:product).auto_tip_contracts.map(&:user)).to include(collaborator)
+    end
+
+    it 'creates an invite for core team members with email' do
+      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: ['jake@adventure.com']
+
+      expect(
+        Invite.find_by(invitee_email: 'jake@adventure.com').via.name
+      ).to eq('KJDB')
+    end
+
+    it 'creates invite with tip to collaborator' do
+      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, ownership: { collaborator.id => 10 }
+
+      invite = Invite.find_by(invitee_id: collaborator.id)
+      expect(invite.tip_cents).to eq(600)
+      expect(invite.via.name).to eq('KJDB')
     end
   end
 
