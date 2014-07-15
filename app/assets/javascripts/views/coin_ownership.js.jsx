@@ -261,7 +261,7 @@
             <td>
               <div className="input-group input-group-sm">
                 <input ref="ownership" className="form-control text-right" type="number"
-                       name={'ownership[' + user.id + ']'}
+                       name={'ownership[' + user.email + ']'}
                        value={this.state.ownership}
                        onChange={this.handleOwnershipChanged} />
                 <div className="input-group-addon">%</div>
