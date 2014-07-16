@@ -28,24 +28,14 @@
 <ul class="nav nav-stacked nav-sidebar" style="margin-top: 35px;">
 <li class="<%= nav_active_class(:about) %>">
   <a href="<%= product_path(product) %>">
-    <div class="pull-right" style="white-space:nowrap">
-      <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
-      <span class="sr-only">More info</span>
-    </div>
-
-    <i class="icon-eyeglasses dropdown-glyph"></i>
+    <span class="icon icon-eyeglasses dropdown-glyph"></span>
     Plan
   </a>
 </li>
 
 <li class="<%= nav_active_class(:chat) %>">
   <a href="<%= product_chat_path(product) %>">
-    <div class="pull-right" style="white-space:nowrap">
-      <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
-      <span class="sr-only">More info</span>
-    </div>
-
-    <i class="icon-bubbles dropdown-glyph"></i>
+    <span class="icon icon-bubbles dropdown-glyph"></span>
     Chat
   </a>
 </li>
@@ -53,12 +43,7 @@
 <% if can?(:update, product) || product.posts.any? %>
   <li class="<%= nav_active_class(:blog) %>">
     <a href="<%= product_posts_path(product) %>">
-      <div class="pull-right" style="white-space:nowrap">
-        <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
-        <span class="sr-only">More info</span>
-      </div>
-
-      <i class="icon-notebook dropdown-glyph"></i>
+      <span class="icon-notebook dropdown-glyph"></span>
       Journal
     </a>
   </li>
@@ -71,55 +56,35 @@
 
 <li class="<%= nav_active_class(:projects) %>">
   <a href="<%= product_milestones_path(product) %>">
-    <div class="pull-right" style="white-space:nowrap">
-      <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
-      <span class="sr-only">More info</span>
-    </div>
-
-    <i class="icon-folder dropdown-glyph"></i>
+    <span class="icon icon-folder dropdown-glyph"></span>
     Projects
   </a>
 </li>
 
 <li class="<%= nav_active_class(:bounties) %>">
   <a href="<%= product_wips_path(product) %>">
-    <div class="pull-right" style="white-space:nowrap">
-      <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
-      <span class="sr-only">More info</span>
-    </div>
-
-    <i class="icon-trophy dropdown-glyph"></i>
+    <span class="icon icon-trophy dropdown-glyph"></span>
     Bounties
   </a>
 </li>
 
 <li class="<%= nav_active_class(:discussions) %>">
   <a href="<%= product_discussions_path(product) %>">
-    <div class="pull-right" style="white-space:nowrap">
-      <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
-      <span class="sr-only">More info</span>
-    </div>
-
-    <i class="icon-book-open dropdown-glyph"></i>
+    <span class="icon icon-book-open dropdown-glyph"></span>
     Discussions
   </a>
 </li>
 
 <li class="<%= nav_active_class(:assets) %>">
   <a href="<%= product_assets_path(product) %>">
-    <div class="pull-right" style="white-space:nowrap">
-      <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
-      <span class="sr-only">More info</span>
-    </div>
-
-    <i class="icon-layers dropdown-glyph"></i>
+    <span class="icon icon-layers dropdown-glyph"></span>
     Assets
   </a>
 </li>
 
 <li class="<%= nav_active_class(:repositories) %>">
   <a href="<%= product_repos_path(product) %>">
-    <i class="icon icon-repository dropdown-glyph"></i>
+    <span class="icon icon-repository dropdown-glyph"></span>
     Repositories
   </a>
 </li>
@@ -131,11 +96,6 @@
 
 <li class="<%= nav_active_class(:people) %>">
   <a href="<%= product_people_path(product) %>">
-    <div class="pull-right" style="white-space:nowrap">
-      <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
-      <span class="sr-only">More info</span>
-    </div>
-
     <span class="icon icon-users dropdown-glyph"></span>
     Teams
   </a>
@@ -143,54 +103,35 @@
 
 <li class="<%= nav_active_class(:ownership) %>">
   <a href="<%= product_partners_path(product) %>">
-    <div class="pull-right" style="white-space:nowrap">
-      <span class="icon icon-info text-light link-hover-primary" data-container="body" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="From elevator pitch to monetization strategies, the Plan should answer questions about your business."></span>
-      <span class="sr-only">More info</span>
-    </div>
-
-    <i class="icon-pie-chart dropdown-glyph"></i>
+    <span class="icon-pie-chart dropdown-glyph"></span>
     Ownership
   </a>
 </li>
 </ul>
 
 <% if product.revenue? %>
-<h6 style="padding-left:10px">Financials</h6>
+  <h6 style="padding-left:10px">Financials</h6>
 
-<ul class="nav nav-stacked nav-sidebar">
-
-  <li class="<%= nav_active_class(:financials) %>">
-    <a href="<%= product_financials_path(product) %>">
-      <i class="icon icon-wallet dropdown-glyph"></i>
-      Money
-    </a>
-  </li>
-
-  <!-- <li class="<%= nav_active_class(:contracts) %>">
-    <a href="<%= product_contracts_path(product) %>">
-      <i class="icon icon-docs dropdown-glyph"></i>
-      Contracts
-    </a>
-  </li> -->
-</ul>
+  <ul class="nav nav-stacked nav-sidebar">
+    <li class="<%= nav_active_class(:financials) %>">
+      <a href="<%= product_financials_path(product) %>">
+        <i class="icon icon-wallet dropdown-glyph"></i>
+        Money
+      </a>
+    </li>
+  </ul>
 <% end %>
 
 <% if staff? %>
-  <div class="panel panel-danger">
-    <div class="panel-heading">
-      <h6 class="panel-title">DANGER</h6>
-    </div>
-    <div class="panel-body">
-      <% if @product.flagged? %>
-        <span class="btn btn-danger btn-sm btn-block btn-disabled" href="#" style="margin-bottom: 16px;">Product Flagged</span>
-      <% else %>
-        <a class="btn btn-danger btn-sm btn-block" style="margin-bottom: 8px;" href="<%= product_flag_path(@product)%>">Flag Product</a>
-      <% end %>
+  <% if @product.flagged? %>
+    <span class="btn btn-danger btn-sm btn-block btn-disabled" href="#" style="margin-bottom: 16px;">Product Flagged</span>
+  <% else %>
+    <a class="btn btn-danger btn-sm btn-block" style="margin-bottom: 8px;" href="<%= product_flag_path(@product)%>">Flag Product</a>
+  <% end %>
 
-      <%= form_for [:admin, @product.showcases.new], url: admin_staff_picks_path do |f| %>
-        <%= f.hidden_field :product_id %>
-        <%= f.submit "Schedule Staff Pick", class: %w(btn btn-default btn-sm btn-block) %>
-      <% end %>
-    </div>
-  </div>
+  <%= form_for [:admin, @product.showcases.new], url: admin_staff_picks_path do |f| %>
+    <%= f.hidden_field :product_id %>
+    <%= f.submit "Schedule Staff Pick", class: %w(btn btn-default btn-sm btn-block) %>
+  <% end %>
+
 <% end %>
