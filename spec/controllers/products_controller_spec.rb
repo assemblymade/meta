@@ -59,7 +59,7 @@ describe ProductsController do
     end
 
     context 'with good params' do
-      before { post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life', terms_of_service: '1' } }
+      before { post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' } }
 
       it "create's product" do
         expect(assigns(:product)).to be_a(Product)
@@ -85,10 +85,6 @@ describe ProductsController do
 
       it 'adds creator to the core team' do
         expect(assigns(:product).core_team).to match_array([creator])
-      end
-
-      it 'adds validated transaction entry for product' do
-        expect(TransactionLogEntry.validated.count).to eq(1)
       end
 
       it 'creates a main discussion thread' do
@@ -124,7 +120,7 @@ describe ProductsController do
       post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, ownership: { collaborator.id => 10 }
 
       invite = Invite.find_by(invitee_id: collaborator.id)
-      expect(invite.tip_cents).to eq(600)
+      expect(invite.tip_cents).to eq(60000)
       expect(invite.via.name).to eq('KJDB')
       expect(invite.core_team?).to be_true
     end
