@@ -368,9 +368,9 @@ var BioEditor = React.createClass({
   makeEditable: function(e) {
     $('#edit-membership-modal').modal('show');
 
-    this.setUpChosen();
+    this.setUpChosen('#modal-join-interests');
 
-    $('#bio-editor').val(this.state.originalBio);
+    $('#modal-bio-editor').val(this.state.originalBio);
   },
 
   skillsOptions: function() {

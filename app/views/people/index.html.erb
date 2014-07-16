@@ -27,12 +27,7 @@
           <input name="_method" value="patch" type="hidden">
 
           <div class="form-group">
-            <textarea name="membership[bio]"
-                id="bio-editor"
-                class="form-control bio-editor"
-                rows="4" id="self-introduction"
-                placeholder="Hi everyone, I'm Maeby! I love coding in VB6 across the stack. I also ping-pong a lot between concept and design. Hoping to get involved with UX, to help kickstart ideas, and to provide tangible feedback. I'm here partly because I think the app idea is great, but also because I think your team is outstanding and well-rounded – so I'm excited to learn alongside you. I'd like to free up to 8-16 hours a week (mostly evenings – I'm on CST here in Madison) to help ship this product. Great to see so many people working on this!">
-            </textarea>
+            <textarea name="membership[bio]" id="bio-editor" class="form-control bio-editor" rows="4" id="self-introduction" placeholder="Hi everyone, I'm Maeby! I love coding in VB6 across the stack. I also ping-pong a lot between concept and design. Hoping to get involved with UX, to help kickstart ideas, and to provide tangible feedback. I'm here partly because I think the app idea is great, but also because I think your team is outstanding and well-rounded – so I'm excited to learn alongside you. I'd like to free up to 8-16 hours a week (mostly evenings – I'm on CST here in Madison) to help ship this product. Great to see so many people working on this!"></textarea>
           </div>
 
           <div class="form-group">
@@ -109,25 +104,26 @@
           <div class="modal-header">
             <button type="button" class="close btn btn-sm" data-dismiss="modal">&times;</button>
             <div class="form-group" style="margin-bottom: 15px">
-              <label class="control-label" for="join-bio-editor">
+              <label class="control-label" for="modal-bio-editor">
                 Introduce yourself, earn some <%= @product.name %> coins
               </label>
               <small class="help-block" style="margin-top: 0px">
                 What skills can you contribute, how much time do you have and what are you looking to get out of the experience?
               </small>
-              <textarea name="membership[bio]" id="bio-editor" class="form-control bio-editor" style="min-height: 130px;"></textarea>
+              <textarea name="membership[bio]" id="modal-bio-editor" class="form-control bio-editor" style="min-height: 130px;"></textarea>
             </div>
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label for="join-interests">What are you interested in?</label>
+              <label for="modal-join-interests">What are you interested in?</label>
               <% interest_filters = product_membership_interests(@product, true) %>
               <%= select_tag 'membership[interests][]',
                 options_for_select(interest_filters.map { |interest| ['@' + interest, interest]}),
                 'data-placeholder' => ' ',
                 :class => 'form-control chosen-select',
-                :id => 'join-interests',
-                :multiple => true %>
+                :id => 'modal-join-interests',
+                :multiple => true,
+                :style => 'width: 300px;' %>
             </div>
           </div>
           <div class="modal-footer">
@@ -154,10 +150,13 @@ $(document).ready(function() {
   });
 
   $('#edit-membership-modal').on('shown.bs.modal', function() {
-    $('#bio-editor').attr('placeholder', app.defaultBio());
+    $('#modal-bio-editor').attr('placeholder', app.defaultBio());
+    // Hack.
+    // TODO: Replace chosen with a custom React component -- the PersonPicker is probably more than halfway there.
+    $('#modal_join_interests_chosen').css({ width: '300px' }); 
   });
 
-  var chosenSelect = $('.chosen-select')
+  var chosenSelect = $('.chosen-select');
 
   chosenSelect.chosen({
     create_option: function(term) {
