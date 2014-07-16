@@ -154,7 +154,7 @@ class ProductsController < ProductController
         invite_params = {
           invitor: current_user,
           via: product,
-          tip_cents: (ownership[email_or_user_id].to_i || 0) * Product::INITIAL_COINSs,
+          tip_cents: (ownership[email_or_user_id].to_i || 0) * Product::INITIAL_COINS,
           core_team: true
         }
 

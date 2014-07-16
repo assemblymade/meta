@@ -90,10 +90,6 @@ class Product < ActiveRecord::Base
   validates :pitch, presence: true,
                     length: { maximum: 255 }
 
-
-
-  validates :terms_of_service, acceptance: true, on: :create
-
   before_create :generate_authentication_token
   after_update -> { CreateIdeaWipWorker.perform_async self.id }, :if => :submitted_at_changed?
 

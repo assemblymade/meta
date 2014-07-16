@@ -6,7 +6,7 @@ var Avatar = React.createClass({
   },
 
   avatarUrl: function() {
-    if (this.props.user) {
+    if (this.props.user && !this.props.alwaysDefault) {
       return this.props.user.avatar_url + '?s=' + 48
     } else {
       return '/assets/avatars/default.png'

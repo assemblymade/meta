@@ -89,7 +89,7 @@
             {this.rows()}
 
             <tr>
-              <td><Avatar user={this.state.potentialUser} /></td>
+              <td><Avatar user={this.state.potentialUser} alwaysDefault="true" /></td>
               <td>
                 <PersonPicker ref="picker" url="/_es"
                               onUserSelected={this.handleUserSelected}
