@@ -130,7 +130,6 @@ class ProductsController < ProductController
       product.team_memberships.create!(user: current_user, is_core: true)
 
       product.watch!(current_user)
-      product.upvote!(current_user, request.remote_ip)
       product.update_attributes main_thread: product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
 
       ownership = params[:ownership] || {}

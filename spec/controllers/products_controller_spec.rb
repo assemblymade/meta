@@ -78,11 +78,6 @@ describe ProductsController do
         expect(assigns(:product).slug).to eq('kjdb')
       end
 
-      it 'auto upvotes product' do
-        post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
-        expect(assigns(:product).votes.count).to eq(1)
-      end
-
       it 'adds creator to the core team' do
         expect(assigns(:product).core_team).to match_array([creator])
       end
