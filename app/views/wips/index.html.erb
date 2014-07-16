@@ -20,7 +20,7 @@
 </div>
 
 <div class="row">
-  <% if @product.wips.any? %>
+  <% if @product.wips.count > 1 %>
     <div class="col-md-9 col-xs-9">
 
       <% if params[:tag] %>
