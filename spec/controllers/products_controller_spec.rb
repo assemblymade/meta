@@ -74,8 +74,8 @@ describe ProductsController do
         expect(response).to redirect_to(product_welcome_path(assigns(:product)))
       end
 
-      it 'has no slug' do
-        expect(assigns(:product).slug).to be_nil
+      it 'has slug based on name' do
+        expect(assigns(:product).slug).to eq('kjdb')
       end
 
       it 'auto upvotes product' do

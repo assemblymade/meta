@@ -320,7 +320,7 @@ ActiveRecord::Schema.define(version: 20140715200620) do
 
   create_table "products", id: false, force: true do |t|
     t.uuid     "id",                                     null: false
-    t.string   "slug"
+    t.string   "slug",                                   null: false
     t.string   "name",                                   null: false
     t.string   "pitch"
     t.text     "description"
@@ -354,8 +354,8 @@ ActiveRecord::Schema.define(version: 20140715200620) do
     t.datetime "public_at"
     t.uuid     "main_thread_id"
     t.uuid     "logo_id"
-    t.datetime "launched_at"
     t.integer  "team_memberships_count", default: 0
+    t.datetime "launched_at"
     t.hstore   "info"
   end
 
