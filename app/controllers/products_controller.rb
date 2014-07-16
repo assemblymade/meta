@@ -120,33 +120,37 @@ class ProductsController < ProductController
   end
 
   def schedule_greet
-    message = "Pfft. What's #{@product.name}? There's nothing here. Better get to work!"
-    PostChatMessage.perform_in(30.seconds, @product.slug, message)
+    message = "Hi there! I'm Kernel. #{@product.name} looks pretty sweet. If you need any help, message me at @kernel, and I'll get a human."
+    PostChatMessage.perform_in(1.second, @product.slug, message)
   end
 
   def schedule_one_hour_checkin
-    eligible_products = Product.public_products.where('votes_count >= ?', 10)
+    eligible_products = Product.public_products
+                       .joins(:product_trend)
+                       .where('votes_count >= ?', 10)
+                       .order('product_trends.score desc')
+                       .limit(100)
     index = rand(eligible_products.count)
     example_product = eligible_products[index]
 
-    message = "Whoa whoa whoa @core. You still haven't done anything? You're killin' me, Smalls."
-
-    if example_product
-      message << " Why not take a look at [#{example_product.name}](#{product_path(example_product)}) for some inspiration?"
+    message = if example_product
+      "Why not take a look at [#{example_product.name}](#{product_path(example_product)}) for some inspiration?"
+    else
+      "Why not take a look at [some of the other products](#{discover_path}) that people have built?"
     end
 
-    PostChatMessage.perform_in(1.hour, @product.slug, message)
+    PostChatMessage.perform_in(2.seconds, @product.slug, message)
   end
 
   def schedule_one_day_checkin
-    message = "@core, I'm gonna have to do this for you, aren't I? Is anyone even here?"
+    message = "@core, do you need some help?"
 
-    PostChatMessage.perform_in(1.day, @product.slug, message)
-    CreateProject.perform_in(1.day, @product.slug)
+    PostChatMessage.perform_in(3.seconds, @product.slug, message)
+    CreateProject.perform_in(3.seconds, @product.slug)
 
-    message = "@core, I made something for you: [Lazy Human Launch Checklist](#{product_milestone_path(@product, 1)}). You're welcome."
+    message = "@core, I made something for you: [Launch Checklist](#{product_milestone_path(@product, 1)}). You got this!"
 
-    PostChatMessage.perform_in(1.day, @product.slug, message)
+    PostChatMessage.perform_in(3.seconds, @product.slug, message)
   end
   # private
 

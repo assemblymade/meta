@@ -11,9 +11,9 @@ class CreateProject < ApiWorker
 
     post Rails.application.routes.url_helpers.api_product_projects_path(@product),
       wip: {
-        title: "Lazy Human Launch Checklist",
+        title: "Launch Checklist",
         milestone_attributes: {
-          description: "A robot could do these in less than 12 nanoseconds. I suspect you'll take a bit longer."
+          description: "A robot could do these in less than 12 nanoseconds, but I understand that you might take a bit longer. Ping me if you need help!"
         },
         milestone_tasks_attributes: [
           {
@@ -35,7 +35,7 @@ class CreateProject < ApiWorker
             title: "Set up blog"
           },
           {
-            title: "Get SSL up"
+            title: "Set up an app on Heroku"
           },
           {
             title: "Set up error logging"
