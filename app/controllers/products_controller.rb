@@ -131,7 +131,6 @@ class ProductsController < ProductController
 
       product.watch!(current_user)
       product.upvote!(current_user, request.remote_ip)
-      TransactionLogEntry.validated!(Time.current, product, product.id, product.user.id, product.user.id)
       product.update_attributes main_thread: product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
 
       ownership = params[:ownership] || {}
@@ -142,6 +141,11 @@ class ProductsController < ProductController
       core_team_members.each do |user|
         product.core_team_memberships.create(user: user)
       end
+
+      coins_allocated = ownership.values.map(&:to_i).sum
+      founder_coins = (100 - coins_allocated) * Product::INITIAL_COINS
+
+      TransactionLogEntry.minted!(nil, Time.now, product, product, current_user.id, founder_coins)
 
       AutoTipContract.replace_contracts_with_default_core_team_split(product)
 
