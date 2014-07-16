@@ -7,42 +7,6 @@
   questions: http://www.webtype.com
 */
 
-@font-face {
-  font-family: Solitaire;
-  src: // Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+
-       url(asset-path('mvb-solitaire-book.woff')) format('woff'),
-       // Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5
-       url(asset-path('mvb-solitaire-book.ttf')) format('truetype');
-}
-
-@font-face {
-  font-family: Solitaire;
-  font-style: italic;
-  src: url(asset-path('mvb-solitaire-book-italic.woff')) format('woff'),
-       url(asset-path('mvb-solitaire-book-italic.ttf')) format('truetype');
-}
-
-@font-face {
-  font-family: Solitaire;
-  font-weight: 200;
-  src: url(asset-path('mvb-solitaire-light.woff')) format('woff'),
-       url(asset-path('mvb-solitaire-light.ttf')) format('truetype');
-}
-
-@font-face {
-  font-family: Solitaire;
-  font-weight: bold;
-  src: url(asset-path('mvb-solitaire-semibold.woff')) format('woff'),
-       url(asset-path('mvb-solitaire-semibold.ttf')) format('truetype');
-}
-
-@font-face {
-  font-family: Solitaire;
-  font-weight: 800;
-  src: url(asset-path('mvb-solitaire-black.woff')) format('woff'),
-       url(asset-path('mvb-solitaire-black.ttf')) format('truetype');
-}
-
 // Tiempos
 
 @font-face {
