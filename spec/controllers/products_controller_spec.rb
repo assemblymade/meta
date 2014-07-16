@@ -58,50 +58,48 @@ describe ProductsController do
       sign_in creator
     end
 
-    it "create's product" do
-      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
-      expect(assigns(:product)).to be_a(Product)
-      expect(assigns(:product)).to be_persisted
-    end
+    context 'with good params' do
+      before { post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life', terms_of_service: '1' } }
 
-    it 'adds user to core team' do
-      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
-      expect(assigns(:product).core_team).to include(creator)
-    end
+      it "create's product" do
+        expect(assigns(:product)).to be_a(Product)
+        expect(assigns(:product)).to be_persisted
+      end
 
-    it 'should redirect to welcome page' do
-      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
-      expect(response).to redirect_to(product_welcome_path(assigns(:product)))
-    end
+      it 'adds user to core team' do
+        expect(assigns(:product).core_team).to include(creator)
+      end
 
-    it 'has no slug' do
-      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
-      expect(assigns(:product).slug).to be_nil
-    end
+      it 'should redirect to welcome page' do
+        expect(response).to redirect_to(product_welcome_path(assigns(:product)))
+      end
 
-    it 'auto upvotes product' do
-      expect {
+      it 'has no slug' do
+        expect(assigns(:product).slug).to be_nil
+      end
+
+      it 'auto upvotes product' do
         post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
-      }.to change(Vote, :count).by(1)
+        expect(assigns(:product).votes.count).to eq(1)
+      end
+
+      it 'adds creator to the core team' do
+        expect(assigns(:product).core_team).to match_array([creator])
+      end
+
+      it 'adds validated transaction entry for product' do
+        expect(TransactionLogEntry.validated.count).to eq(1)
+      end
+
+      it 'creates a main discussion thread' do
+        expect(Discussion.count).to eq(1)
+        expect(assigns(:product).main_thread).to be_persisted
+      end
     end
 
-    it 'adds creator to the core team' do
-      post :create, product:  { name: 'KJDB', pitch: 'Manage your karaoke life' }
-      expect(assigns(:product).core_team).to match_array([creator])
-    end
-
-    it 'adds validated transaction entry for product' do
+    it 'fails if terms of service not accepted' do
       post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
-
-      expect(TransactionLogEntry.validated.count).to eq(1)
-    end
-
-    it 'creates a main discussion thread' do
-      expect {
-        post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
-      }.to change(Discussion, :count).by(1)
-
-      expect(assigns(:product).main_thread).to be_persisted
+      expect(response).to_not be_success
     end
 
     it 'creates a product with core team' do

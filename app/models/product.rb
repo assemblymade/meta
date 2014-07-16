@@ -92,8 +92,7 @@ class Product < ActiveRecord::Base
 
 
 
-  # TODO This should be in a Form object (NewIdeaForm)
-  validates :terms_of_service, acceptance: true
+  validates :terms_of_service, acceptance: true, on: :create  
 
   before_create :generate_authentication_token
   after_update -> { CreateIdeaWipWorker.perform_async self.id }, :if => :submitted_at_changed?
@@ -396,7 +395,7 @@ class Product < ActiveRecord::Base
   end
 
   def draft?
-    self.description.blank? && self.info.values.all?(&:blank?)
+    self.description.blank? && (self.info || {}).values.all?(&:blank?)
   end
 
   # elasticsearch

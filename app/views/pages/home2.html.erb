@@ -1,0 +1,74 @@
+<% title 'Assembly is a new way for people around the world to collectively build, launch, and grow startups.' %>
+
+  <div class="page page-flat">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-xs-10 col-md-offset-1 col-xs-offset-1">
+
+          <div class="page-header">
+            <h1 class="alpha">            Assembly is a new way that people around the world collectively build, launch, and grow startups.
+</h1>
+          </div>          
+          <p>
+
+Startups on Assembly are unlike traditional companies. They don't have investors, shareholders, or even employees. Instead a global community creates and owns them, together.
+</p>
+<p>
+People with great ideas come to assembly to build them with others. The vision, development, design, marketing, and everything else required to make a successful product is a collaborative effort.  Assembly handles the hosting, legal, and finances so the community can focus on what they do best.
+</p>
+<p>
+Each product's success is equitably shared. Individual contributions are rewarded with more stake in the product's success, determined by the community. At the end of each month Assembly pays any bills and splits the proceeds amongst all those that made it.
+
+          </p>
+
+
+
+      <div class="section" style="margin-bottom: 48px;display:None;">
+
+          <div class="row">
+
+            <% @feature_products.each do |contributions| %>
+              <% product = contributions.product %>
+              <div class="col-xs-3">
+                <a href="<%= product_path(product) %>" class="card card-sm card-colored product-<%= product.slug %>">
+                  <div class="card-hero" style="background-image: url('<%= product.poster %>');"></div>
+                  <div class="card-body">
+                    <div class="summary">
+                      <div class="summary-target">
+                        <%= product.pitch %>
+                      </div>
+                      <p class="summary-name omega">
+                        <%= product.name %>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <p class="pull-right omega">
+                      <i class="icon-trophy" style="margin-right: 2px;"></i>
+                      <%= number_with_delimiter contributions.total %>
+                    </p>
+                    <p class="omega">
+                      <i class="icon-users" style="margin-right: 2px;"></i>
+                      <%= number_with_delimiter contributions.uniques %>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            <% end %>
+
+          </div>
+
+          <figure class="text-center figure-inverted" style="margin-top: 30px;">Four of many startups currently being built on Assembly. <a href="<%= discover_path %>">Explore more &rarr;</a></figure>
+
+        </div><!-- .section -->
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<%= render 'shared/footer' %>
+
+<script>analytics.track('home.viewed');</script>
