@@ -1,8 +1,8 @@
 <div class="panel">
-  <div data-react-class="InviteFriendProduct" data-react-props='<%== {
+  <div data-react-class="InviteFriendProduct" data-react-props="<%= {
       url: invites_path,
       invites: serialize_hash(@product.invites),
       notePlaceholder: "Hey! Want to help build #{@product.name}",
-    }.merge(TypeId.as_json(:via, @product)).to_json %>'>
+    }.merge(TypeId.as_json(:via, @product)).to_json %>">
   </div>
 </div>

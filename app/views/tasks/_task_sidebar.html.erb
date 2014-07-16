@@ -115,10 +115,10 @@
     <% if signed_in? && !@wip.awarded? %>
       <hr style="margin-bottom: 5px; margin-top: 15px;">
 
-      <div style="margin-top:15px" data-react-class="InviteFriendBounty" data-react-props='<%== {
+      <div style="margin-top:15px" data-react-class="InviteFriendBounty" data-react-props="<%= {
           url: invites_path,
           invites: (@invites ? serialize_hash(@invites) : []),
-        }.merge(TypeId.as_json(:via, @wip)).to_json %>'>
+        }.merge(TypeId.as_json(:via, @wip)).to_json %>">
       </div>
     <% end %>
   </div>
