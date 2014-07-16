@@ -173,6 +173,12 @@ class ProductsController < ProductController
       )
 
       flash[:new_product_callout] = true
+
+      Github::CreateProductRepoWorker.perform_async(
+        product.id,
+        product_url(product),
+        product.slug
+      )
     end
     product
   end

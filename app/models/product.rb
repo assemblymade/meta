@@ -92,7 +92,7 @@ class Product < ActiveRecord::Base
 
 
 
-  validates :terms_of_service, acceptance: true, on: :create  
+  validates :terms_of_service, acceptance: true, on: :create
 
   before_create :generate_authentication_token
   after_update -> { CreateIdeaWipWorker.perform_async self.id }, :if => :submitted_at_changed?
@@ -123,10 +123,6 @@ class Product < ActiveRecord::Base
     def unique_tags
       pluck('distinct unnest(tags)').sort_by{|t| t.downcase }
     end
-  end
-
-  def should_generate_new_friendly_id?
-    slug.nil? && launched_at && launched_at_changed?
   end
 
   def stage
