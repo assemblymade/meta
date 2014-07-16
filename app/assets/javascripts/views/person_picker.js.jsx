@@ -31,6 +31,7 @@ window.PersonPicker = React.createClass({
                ref="usernameOrEmail"
                onChange={this.handleChange}
                onKeyDown={this.handleKey}
+               onBlur={this.selectCurrentUser}
                placeholder="@username or email address" />
         {this.state.users.length > 0 ? this.userPicker() : null }
       </div>

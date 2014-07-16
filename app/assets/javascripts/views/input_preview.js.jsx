@@ -49,7 +49,5 @@ var InputPreview = React.createClass({
 
   onSubmit: function(e) {
     e.preventDefault();
-
-
   }
 });
