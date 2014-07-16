@@ -83,7 +83,7 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-8">
-                  <div data-react-class="CoreTeam" data-react-props='<%== {currentUser: serialize_hash(current_user)}.to_json %>'></div>
+                  <div data-react-class="CoreTeam" data-react-props="<%= {currentUser: serialize_hash(current_user)}.to_json %>"></div>
                 </div>
 
                 <div class="col-md-4">
@@ -100,7 +100,7 @@
             <div class="row">
               <div class="col-md-8">
 
-                <div data-react-class="CoinOwnership" data-react-props='<%== { totalCoins: Product::INITIAL_COINS }.to_json %>'></div>
+                <div data-react-class="CoinOwnership" data-react-props="<%= { totalCoins: Product::INITIAL_COINS }.to_json %>"></div>
               </div>
 
               <div class="col-md-4">
