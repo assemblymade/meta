@@ -22,4 +22,13 @@ module FormHelper
         options[:as] || model_name_from_record_or_class(object).param_key
       end
   end
+
+  def form_group(obj, attribute, options={}, &blk)
+    error_messages = obj.errors[attribute]
+    classes = (options[:class] || '').split(' ')
+    classes << 'form-group'
+    classes << %w(has-error has-feedback) if error_messages.any?
+
+    content_tag :div, capture(&blk), class: classes.join(' ')
+  end
 end

@@ -50,7 +50,7 @@
           <h6 class="text-muted">Story</h6>
 
           <%= form_for @product, html: {class: 'form'} do |f| %>
-            <div class="form-group">
+            <%= form_group @product, :name do %>
               <%= f.label :name, class: 'control-label' %>
               <div class="row">
                 <div class="col-md-8">
@@ -62,9 +62,9 @@
                   </p>
                 </div>
               </div>
-            </div>
+            <% end %>
 
-            <div class="form-group">
+            <%= form_group @product, :pitch do %>
               <%= f.label :pitch, 'Elevator pitch', class: 'control-label' %>
               <div class="row">
                 <div class="col-md-8">
@@ -74,7 +74,7 @@
                   <p class="help-block alpha">If you had 30 seconds to describe your business to a friend in an elevator, what would you say? Use simple, direct words.</p>
                 </div>
               </div>
-            </div>
+            <% end %>
             <br>
 
             <hr id="core-team">
@@ -148,6 +148,12 @@
             <div class="form-actions">
               <div class="row">
                 <div class="col-md-4 col-md-offset-8">
+                  <%= form_group @product, :terms_of_service, class: 'text-left' do %>
+                    <label class="control-label text-left">
+                      <%= f.check_box :terms_of_service %>
+                      Accept <a href="<%= tos_path %>">terms of service</a>
+                    </label>
+                  <% end %>
                   <button class="btn btn-primary btn-block" data-disable-with="Start the adventure">
                     Found business
                   </button>
