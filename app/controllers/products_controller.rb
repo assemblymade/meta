@@ -203,12 +203,6 @@ class ProductsController < ProductController
         Invite.create_and_send(invite_params)
       end
 
-      Activities::FoundProduct.publish!(
-        target: product,
-        subject: product,
-        actor: current_user
-      )
-
       flash[:new_product_callout] = true
 
       Github::CreateProductRepoWorker.perform_async(
