@@ -11,11 +11,10 @@
 
     <div class="col-md-9 col-xs-9">
 
-      <div
-           data-react-class="Financials"
-           data-react-props="<%= {
-             product: @product.as_json
-           }.to_json %>">
+      <div data-react-class="Financials"
+          data-react-props="<%= {
+            product: @product.as_json
+          }.to_json %>">
       </div>
       <% if (annuity = @product.contract_holders.sum(:annuity)) > 0 %>
         <div class="callout well">
