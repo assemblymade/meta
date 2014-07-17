@@ -27,12 +27,15 @@
 <% end %>
 
 <script>
+  app.product = new Product(<%= json @product, scope: current_user %>);
   app.wip = new Wip(<%== WipSerializer.new(@wip, scope: current_user).to_json %>);
-  app.wipEvents = new WipEvents(<%== ActiveModel::ArraySerializer.new(@wip.events).to_json %>, {
+  app.wipEvents = new WipEvents(<%== @wip.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
     url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
   });
 
   $(document).ready(function() {
+    <%= render 'wips/add_tips_to_wip_events' %>
+
     app.discussionView = new DiscussionView({
       el: $('#discussion-view-el'),
       tipsPath: '<%= product_tips_path(@wip.product) %>',

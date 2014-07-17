@@ -1,9 +1,9 @@
-class SearchController < ApplicationController
+class SearchController < ProductController
 
   layout :search_layout
 
   def index
-    set_product if params[:product_id]
+    find_product! if params[:product_id]
 
     if params[:q]
       @totals = Search::Totals.new(params[:q])

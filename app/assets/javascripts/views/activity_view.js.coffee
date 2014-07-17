@@ -1,6 +1,5 @@
 #= require marked
 #= require models/activity
-#= require views/tips_view
 #= require_tree ../../../templates/activities
 
 class window.ActivityView extends Backbone.View
@@ -10,24 +9,20 @@ class window.ActivityView extends Backbone.View
   initialize: (options)->
     @listenTo(@model, 'change', @render)
     @subjectId = options.subjectId
-    @subviews = {}
-
-    if tips = @model.get('tips') || @model.get('subject')?.tips
-      @subviews['.js-tips'] = new TipsView(
-        tips: tips,
-        tipsPath: options.tipsPath,
-        viaType: @model.get('verb'),
-        viaId: @model.get('id')
-      )
-
 
   render: =>
     @$el.html(JST[@model.get('type')].render(@templateData()))
     $('[data-readraptor-track]', @$el).readraptor()
     $('.activity-content a').attr('target', '_blank')
-    for selector, view of @subviews
-      view.setElement(@$(selector))
-      view.render()
+
+    model = @model
+    $('.js-insert-tips', @$el).each ->
+      React.renderComponent(TipsUI({
+        viaType: 'Activity',
+        viaId: model.id,
+        recipient: model.get('actor'),
+        tips: model.get('tips')
+      }), @)
 
   templateData: ->
     data = _.clone(@model.attributes)

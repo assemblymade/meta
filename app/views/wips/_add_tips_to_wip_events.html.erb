@@ -1,0 +1,13 @@
+// add in tips that are rendered server side
+var comments = app.wipEvents.filter(function(e) { return e.get('type') == 'Event::Comment' })
+
+_.each(comments, function(e){
+  $('.js-insert-tips', $('#' + e.get('anchor'))).each(function() {
+    React.renderComponent(TipsUI({
+      viaType: 'Event',
+      viaId: e.id,
+      recipient: e.get('actor'),
+      tips: e.get('tips')
+    }), this)
+  })
+})

@@ -97,11 +97,6 @@ class Event < ActiveRecord::Base
     users
   end
 
-  # TODO: Remove knowledge of tips
-  def total_tips
-    tips.sum(:cents)
-  end
-
   def to_param
     number
   end

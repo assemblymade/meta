@@ -105,12 +105,14 @@
 </div>
 
 <script>
+  app.product = new Product(<%= json @product, scope: current_user %>);
   app.wip = new Wip(<%== WipSerializer.new(@wip).to_json %>);
   app.wipEvents = new WipEvents(<%== @wip.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
     url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
   });
 
   $(document).ready(function() {
+    <%= render 'wips/add_tips_to_wip_events' %>
     new DiscussionView({
       el: $('#discussion-view-el'),
       model: app.wip

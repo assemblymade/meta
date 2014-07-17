@@ -1,23 +1,23 @@
-class Event::CommentSerializer < EventSerializer
-  include CoinHelper
-  include TippableSerializer
+# This one has been cut down to be used in chat. It has no reference to the author of the comment as that is stored
+# in the activity object
+class Event::CommentSerializer < ApplicationSerializer
+  include MarkdownHelper
+
+  attributes :anchor, :body_html, :number, :timestamp
 
   def anchor
     "comment-#{object.number}"
   end
 
-  attributes :total_tips, :formatted_total_tips, :tips
-
-  def formatted_total_tips
-    object.total_tips / 100
-  end
-
-  attributes :tip_path
-
-  def tip_path
-    if object.id # This check is crazy, it's only if fake events get pushed into the stream (like maeby's first comment)
-      product_tips_path(object.product, object.id)
+  def body_html
+    Rails.cache.fetch([object, 'body']) do
+      product_markdown(object.product, object.body)
     end
   end
 
+  def timestamp
+    if object.created_at
+      object.created_at.iso8601
+    end
+  end
 end

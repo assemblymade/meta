@@ -1,5 +1,4 @@
 #= require_tree ../../../templates/events
-#= require views/tips_view
 #= require marked
 
 markdown = (text) ->
@@ -28,14 +27,6 @@ class window.WipEventView extends Backbone.View
 
   initialize: (@options) ->
     @listenTo @model, 'change', @render
-    @subviews = {
-      '.js-tips': new TipsView(
-          tips: @model.get('tips'),
-          tipsPath: @options.tipsPath,
-          viaType: @model.get('type'),
-          viaId: @options.id
-        )
-    }
 
   template: ->
     template_name = eventTypeToTemplate(@model.get('type'))
@@ -45,10 +36,17 @@ class window.WipEventView extends Backbone.View
     @$el.html(@template().render(@templateData()))
 
     $('.activity', @$el).readraptor()
+    unless @model.isNew()
+      model = @model
 
-    for selector, view of @subviews
-      view.setElement(@$(selector))
-      view.render()
+      $('.js-insert-tips', @$el).each ->
+        React.renderComponent(TipsUI({
+          viaType: 'Event',
+          viaId: model.id,
+          recipient: model.get('actor'),
+          tips: model.get('tips')
+        }), @)
+
 
     @$('time').timeago() # display new timestamp
     @
