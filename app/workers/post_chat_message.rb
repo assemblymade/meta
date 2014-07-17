@@ -11,7 +11,8 @@ class PostChatMessage < ApiWorker
 
     @user = User.find_by(username: 'kernel')
 
-    post Rails.application.routes.url_helpers.api_product_chat_comments_path(@product),
-      message: message
+    post "#{ENV['HUBOT_HOST']}/kernel",
+      message: message,
+      product: @product.slug
   end
 end

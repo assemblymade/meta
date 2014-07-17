@@ -22,9 +22,9 @@ class ProductsController < ProductController
     if @product.valid?
       respond_with(@product, location: product_welcome_path(@product))
 
-      # schedule_greet
-      # schedule_one_hour_checkin
-      # schedule_one_day_checkin
+      schedule_greet
+      schedule_one_hour_checkin
+      schedule_one_day_checkin
     else
       render action: :new, layout: 'application'
     end
@@ -132,6 +132,7 @@ class ProductsController < ProductController
                        .where('votes_count >= ?', 10)
                        .order('product_trends.score desc')
                        .limit(100)
+
     index = rand(eligible_products.count)
     example_product = eligible_products[index]
 
