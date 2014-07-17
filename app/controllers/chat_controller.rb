@@ -44,7 +44,8 @@ class ChatController < ProductController
         actor: @event.user,
         subject: @event,
         target: @product.main_thread,
-        socket_id: params[:socket_id])
+        socket_id: params[:socket_id]
+      )
 
       track_analytics(@event)
       next_mission_if_complete!(@product.current_mission, current_user)

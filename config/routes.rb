@@ -176,6 +176,12 @@ ASM::Application.routes.draw do
   namespace :api do
     resources :products, only: [] do
       get :workers
+
+      namespace :chat do
+        resources :comments, only: [:create]
+      end
+
+      resources :projects, only: [:create]
     end
 
     resources :textcompletes, only: [:index]

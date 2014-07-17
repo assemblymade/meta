@@ -21,6 +21,10 @@ class ProductsController < ProductController
     @product = create_product_with_params
     if @product.valid?
       respond_with(@product, location: product_welcome_path(@product))
+
+      # schedule_greet
+      # schedule_one_hour_checkin
+      # schedule_one_day_checkin
     else
       render action: :new, layout: 'application'
     end
@@ -117,6 +121,39 @@ class ProductsController < ProductController
     respond_with @product, location: product_path(@product)
   end
 
+  def schedule_greet
+    message = "Hi there! I'm Kernel. #{@product.name} looks pretty sweet. If you need any help, message me at @kernel, and I'll get a human."
+    PostChatMessage.perform_in(30.seconds, @product.slug, message)
+  end
+
+  def schedule_one_hour_checkin
+    eligible_products = Product.public_products
+                       .joins(:product_trend)
+                       .where('votes_count >= ?', 10)
+                       .order('product_trends.score desc')
+                       .limit(100)
+    index = rand(eligible_products.count)
+    example_product = eligible_products[index]
+
+    message = if example_product
+      "Why not take a look at [#{example_product.name}](#{product_path(example_product)}) for some inspiration?"
+    else
+      "Why not take a look at [some of the other products](#{discover_path}) that people have built?"
+    end
+
+    PostChatMessage.perform_in(1.hour, @product.slug, message)
+  end
+
+  def schedule_one_day_checkin
+    message = "@core, do you need some help?"
+
+    PostChatMessage.perform_in(1.day, @product.slug, message)
+    CreateProject.perform_in(1.day, @product.slug)
+
+    message = "@core, I made something for you: [Launch Checklist](#{product_milestone_path(@product, 1)}). You got this!"
+
+    PostChatMessage.perform_in(1.day, @product.slug, message)
+  end
   # private
 
   def create_product_with_params

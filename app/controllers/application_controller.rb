@@ -23,7 +23,9 @@ class ApplicationController < ActionController::Base
   end
 
   def strip_auth_token
-    redirect_to(url_for(params.except(:auth_token))) if params[:auth_token].present?
+    unless request.headers['Content-Type'] == 'application/json'
+      redirect_to(url_for(params.except(:auth_token))) if params[:auth_token].present?
+    end
   end
 
   def strip_invite_token
