@@ -1,7 +1,8 @@
-# This one has been cut down to be used in chat. It has no reference to the author of the comment as that is stored
-# in the activity object
-class Event::CommentSerializer < ApplicationSerializer
+class Event::FullCommentSerializer < ApplicationSerializer
   include MarkdownHelper
+  include TippableSerializer
+
+  has_one :user, key: :actor
 
   attributes :anchor, :body_html, :number, :timestamp
 
@@ -19,5 +20,9 @@ class Event::CommentSerializer < ApplicationSerializer
     if object.created_at
       object.created_at.iso8601
     end
+  end
+
+  def type
+    object.class.name
   end
 end

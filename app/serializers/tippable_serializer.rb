@@ -6,14 +6,10 @@ module TippableSerializer
   end
 
   def total_tips
-    raw_tips.sum(:cents)
-  end
-
-  def raw_tips
-    Tip.where(via: object)
+    object.sum_tip_cents
   end
 
   def tips
-    ActiveModel::ArraySerializer.new(raw_tips).as_json
+    ActiveModel::ArraySerializer.new(object.tips).as_json
   end
 end

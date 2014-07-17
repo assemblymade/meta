@@ -21,6 +21,7 @@
 #= require_tree ./models
 #= require_tree ./collections
 #= require_tree ./views
+#= require_tree ./components
 #= require ./textcomplete
 #= require ./polyfills
 
@@ -81,3 +82,7 @@ class window.Application
       "#{val} #{name}"
     else
       "#{val} #{name}s"
+
+  currentProductBalance: ->
+    if user = @currentUser()
+      user.get('product_balance')[app.product.id]

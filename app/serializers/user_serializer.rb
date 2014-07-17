@@ -17,7 +17,7 @@ class UserSerializer < ApplicationSerializer
   end
 
   def product_balance
-    TransactionLogEntry.where(wallet_id: object.id).with_cents.group(:product_id).having('count(*) > 0').count
+    TransactionLogEntry.where(wallet_id: object.id).with_cents.group(:product_id).having('count(*) > 0').sum(:cents)
   end
 
   def include_product_balance?

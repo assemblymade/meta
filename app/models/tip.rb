@@ -4,6 +4,8 @@ class Tip < ActiveRecord::Base
   belongs_to :to,   class_name: 'User'
   belongs_to :via,  touch: true, polymorphic: true
 
+  after_commit :update_sum_tip_cents_cache!
+
   def self.perform!(product, from, via, add_cents)
     to = via.tip_receiver
     created_at = Time.now
@@ -19,4 +21,12 @@ class Tip < ActiveRecord::Base
     end
     tip
   end
+
+  # private
+
+  def update_sum_tip_cents_cache!
+    via.sum_tip_cents = via.tips.sum(:cents)
+    via.save!
+  end
+
 end

@@ -4,7 +4,11 @@ class EventSerializer < ActiveModel::Serializer
 
   # FIXME Remove `rescue` as a conditional
   def self.for(event, user)
-    klass = "#{event.type}Serializer".constantize rescue EventSerializer
+    if event.is_a? Event::Comment
+      klass = Event::FullCommentSerializer
+    else
+      klass = "#{event.type}Serializer".constantize rescue EventSerializer
+    end
     klass.new(event, scope: user)
   end
 
