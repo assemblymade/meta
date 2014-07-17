@@ -37,9 +37,9 @@ class ProductsController < ProductController
         actor: current_user
       )
 
-      schedule_greet
-      schedule_one_hour_checkin
-      schedule_one_day_checkin
+      # schedule_greet
+      # schedule_one_hour_checkin
+      # schedule_one_day_checkin
 
       flash[:new_product_callout] = true
     end
@@ -121,7 +121,7 @@ class ProductsController < ProductController
 
   def schedule_greet
     message = "Hi there! I'm Kernel. #{@product.name} looks pretty sweet. If you need any help, message me at @kernel, and I'll get a human."
-    PostChatMessage.perform_in(1.second, @product.slug, message)
+    PostChatMessage.perform_in(30.seconds, @product.slug, message)
   end
 
   def schedule_one_hour_checkin
@@ -139,18 +139,18 @@ class ProductsController < ProductController
       "Why not take a look at [some of the other products](#{discover_path}) that people have built?"
     end
 
-    PostChatMessage.perform_in(2.seconds, @product.slug, message)
+    PostChatMessage.perform_in(1.hour, @product.slug, message)
   end
 
   def schedule_one_day_checkin
     message = "@core, do you need some help?"
 
-    PostChatMessage.perform_in(3.seconds, @product.slug, message)
-    CreateProject.perform_in(3.seconds, @product.slug)
+    PostChatMessage.perform_in(1.day, @product.slug, message)
+    CreateProject.perform_in(1.day, @product.slug)
 
     message = "@core, I made something for you: [Launch Checklist](#{product_milestone_path(@product, 1)}). You got this!"
 
-    PostChatMessage.perform_in(3.seconds, @product.slug, message)
+    PostChatMessage.perform_in(1.day, @product.slug, message)
   end
   # private
 

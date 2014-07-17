@@ -14,7 +14,7 @@ module Api
         @wip = Wip.find_by(id: @product.main_thread_id)
 
         @wip.with_lock do
-          @event = Event.create_from_comment(@wip, Event::Comment, params[:body], @user)
+          @event = Event.create_from_comment(@wip, Event::Comment, params[:message], @user)
         end
 
         if @event.valid?

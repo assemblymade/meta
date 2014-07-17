@@ -12,6 +12,6 @@ class PostChatMessage < ApiWorker
     @user = User.find_by(username: 'kernel')
 
     post Rails.application.routes.url_helpers.api_product_chat_comments_path(@product),
-      body: message
+      message: message
   end
 end
