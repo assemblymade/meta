@@ -2,11 +2,7 @@ module TippableSerializer
   extend ActiveSupport::Concern
 
   included do
-    attributes :total_tips, :tips
-  end
-
-  def total_tips
-    object.sum_tip_cents
+    attributes :tips
   end
 
   def tips

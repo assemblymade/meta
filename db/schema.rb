@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140717004038) do
+ActiveRecord::Schema.define(version: 20140715200620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(version: 20140717004038) do
     t.uuid     "target_id"
     t.string   "target_type"
     t.datetime "created_at"
-    t.integer  "sum_tip_cents", default: 0
   end
 
   create_table "allocation_events", id: false, force: true do |t|
@@ -134,17 +133,16 @@ ActiveRecord::Schema.define(version: 20140717004038) do
   end
 
   create_table "events", id: false, force: true do |t|
-    t.uuid     "id",                        null: false
-    t.integer  "number",                    null: false
-    t.uuid     "wip_id",                    null: false
-    t.uuid     "user_id",                   null: false
-    t.string   "type",                      null: false
+    t.uuid     "id",         null: false
+    t.integer  "number",     null: false
+    t.uuid     "wip_id",     null: false
+    t.uuid     "user_id",    null: false
+    t.string   "type",       null: false
     t.text     "body"
     t.text     "url"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.uuid     "event_id"
-    t.integer  "sum_tip_cents", default: 0
   end
 
   add_index "events", ["wip_id", "number"], name: "index_events_on_wip_id_and_number", unique: true, using: :btree
