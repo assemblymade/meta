@@ -17,8 +17,13 @@ function add(a, b) {
 
 window.TipsUI = React.createClass({
   getDefaultProps: function() {
+    var currentUser = app.currentUser()
+    if (currentUser) {
+      currentUser = currentUser.attributes
+    }
+
     return {
-      currentUser: app.currentUser().attributes,
+      currentUser: currentUser,
       url: app.product.get('url') + '/tips'
     }
   },
