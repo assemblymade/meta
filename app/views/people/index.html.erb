@@ -33,12 +33,18 @@
           <div class="form-group">
             <label for="join-interests">What are you interested in?</label>
             <% interest_filters = product_membership_interests(@product, true) %>
-            <%= select_tag 'membership[interests][]',
+            <div data-react-class="InterestPicker"
+                data-react-props="<%= {
+                  interests: interest_filters,
+                  name: 'membership[interests][]'
+                }.to_json %>">
+            </div>
+            <!-- <%= select_tag 'membership[interests][]',
               options_for_select(interest_filters.map { |interest| ['@' + interest, interest]}),
               'data-placeholder' => ' ',
               :class => 'form-control chosen-select',
               :id => 'join-interests',
-              :multiple => true %>
+              :multiple => true %> -->
           </div>
 
           <button type="submit" id="join-intro-button" class="btn btn-success btn-block">Introduce yourself</button>

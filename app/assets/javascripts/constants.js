@@ -12,6 +12,19 @@ var CONSTANTS = {
     }
   },
 
+  INTEREST_PICKER: {
+    ACTIONS: {
+      ADD_INTEREST: 'addInterest',
+      REMOVE_INTEREST: 'removeInterest',
+      POP: 'pop'
+    },
+    EVENTS: {
+      INTEREST_ADDED: 'interestPicker:interestAdded',
+      INTEREST_REMOVED: 'interestPicker:interestRemoved',
+      POPPED: 'interestPicker:popped'
+    }
+  },
+
   PERSON_PICKER: {
     ACTIONS: {
       ADD_USER: 'addPickedUser',
