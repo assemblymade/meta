@@ -205,6 +205,7 @@ ASM::Application.routes.draw do
     post '/chat' => 'chat#create'
 
     get 'welcome'
+    get 'admin'
     post 'feature'
     post 'follow'
     post 'subscribe', as: :subscribe, on: :member

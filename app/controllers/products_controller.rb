@@ -33,6 +33,11 @@ class ProductsController < ProductController
   def welcome
     find_product!
   end
+  
+  def admin
+    return redirect_to(product_url(@product)) unless current_user && current_user.is_staff?
+    find_product!
+  end
 
   def flag
     return redirect_to(product_url(@product)) unless current_user && current_user.is_staff?
