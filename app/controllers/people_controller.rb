@@ -7,6 +7,18 @@ class PeopleController < ProductController
   def index
     @memberships = @product.team_memberships.active
 
+    if current_user
+      membership = current_user
+                  .team_memberships
+                  .find_by(product_id: @product.id)
+
+      if membership
+        @current_user_interests = membership.team_membership_interests
+                                  .map(&:interest)
+                                  .map(&:slug)
+      end
+    end
+
     @selected_filter = params[:filter]
   end
 
@@ -23,7 +35,7 @@ class PeopleController < ProductController
       format.json { render json: { count: @product.team_memberships.active.count } }
       format.html {
         flash[:joined] = true
-        redirect_to product_chat_path(@product)
+        redirect_to product_people_path(@product)
       }
     end
   end
@@ -45,7 +57,7 @@ class PeopleController < ProductController
 
     respond_to do |format|
       format.json { render json: @membership, serializer: TeamMembershipSerializer }
-      format.html { redirect_to product_chat_path(@product) }
+      format.html { redirect_to product_people_path(@product) }
     end
   end
 

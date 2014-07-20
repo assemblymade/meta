@@ -146,9 +146,6 @@ class ProductsController < ProductController
   end
 
   def schedule_one_day_checkin
-    message = "@core, do you need some help?"
-
-    PostChatMessage.perform_in(1.day, @product.slug, message)
     CreateProject.perform_in(1.day, @product.slug)
 
     message = "@core, I made something for you: [Launch Checklist](#{product_milestone_path(@product, 1)}). You got this!"

@@ -18,7 +18,7 @@
   window.InterestPicker = React.createClass({
     getInitialState: function() {
       return {
-        selectedInterests: [],
+        selectedInterests: InterestStore.getInterests(),
         highlightIndex: 0,
         visibleInterests: [],
         userInput: ''
@@ -26,6 +26,10 @@
     },
 
     componentWillMount: function() {
+      if (this.props.userInterests && this.props.userInterests.length) {
+        InterestStore.setInterests(this.props.userInterests);
+      }
+
       InterestStore.addChangeListener(IP.EVENTS.INTEREST_ADDED, this.onStoreChange);
       InterestStore.addChangeListener(IP.EVENTS.INTEREST_REMOVED, this.onStoreChange);
       InterestStore.addChangeListener(IP.EVENTS.POPPED, this.onStoreChange);
@@ -58,7 +62,7 @@
               />
             </li>
           </ul>
-          { this.state.visibleInterests.length > 0 ? this.interestDropdown() : null }
+          { this.state.visibleInterests.length > 0 && this.state.show ? this.interestDropdown() : null }
         </div>
       );
     },
@@ -109,9 +113,15 @@
     },
 
     getVisibleInterests: function(value) {
-      return _.filter(this.props.interests, function(interest) {
-        return interest.indexOf(value) >= 0;
+      var interests = _.filter(this.props.interests, function(interest) {
+        return interest.indexOf(value) >= 0 && InterestStore.getInterests().indexOf(interest) === -1;
       });
+
+      if (value && interests.indexOf(value) === -1) {
+        interests.push(value);
+      }
+
+      return interests;
     },
 
     moveHighlight: function(inc) {
@@ -139,7 +149,8 @@
     onStoreChange: function() {
       this.setState({
         visibleInterests: [],
-        selectedInterests: InterestStore.getInterests()
+        selectedInterests: InterestStore.getInterests(),
+        userInput: ''
       });
     },
 
@@ -151,12 +162,25 @@
       this.refs.container.getDOMNode().style.cssText = "border: 1px solid #48a3ed; box-shadow: 0px 0px 3px #66afe9";
 
       this.setState({
+        show: true,
         visibleInterests: _.difference(this.props.interests, InterestStore.getInterests())
       });
     },
 
     handleBlur: function(e) {
       this.refs.container.getDOMNode().style.cssText = '';
+
+      var self = this;
+
+      // FIXME: There has to be a better way to handle this:
+      //        The issue is that hiding the dropdown on blur
+      //        causes selecting an item to fail without a
+      //        timeout of ~200 to ~300 ms.
+      setTimeout(function() {
+        self.setState({
+          show: false
+        });
+      }, 300);
     },
 
     onInterestSelected: function(e) {
@@ -216,7 +240,8 @@
     },
 
     rows: function() {
-      var i = -1
+      var i = -1;
+
       var interests = _.map(this.props.interests, function(interest) {
         i++;
 
@@ -235,6 +260,7 @@
 
   var InterestDropdownEntry = React.createClass({
     render: function() {
+      var interest = this.props.interest;
       var className = 'textcomplete-item';
 
       if (this.props.selected) {
@@ -243,7 +269,7 @@
 
       return (
         <li className={className}>
-          <a href={'#@' + this.props.interest} style={{ cursor: 'pointer' }} onClick={this.handleInterestSelected.bind(this, this.props.interest)}>
+          <a href={'#@' + interest} style={{ cursor: 'pointer' }} onClick={this.handleInterestSelected.bind(this, interest)}>
             @{this.props.interest}
           </a>
         </li>

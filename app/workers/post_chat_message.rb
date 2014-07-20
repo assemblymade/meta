@@ -11,7 +11,7 @@ class PostChatMessage < ApiWorker
 
     @user = User.find_by(username: 'kernel')
 
-    post "#{ENV['HUBOT_HOST']}/kernel",
+    post "#{ENV['HUBOT_HOST']}/hubot/asm",
       message: message,
       product: @product.slug
   end

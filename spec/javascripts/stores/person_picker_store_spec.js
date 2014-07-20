@@ -26,6 +26,9 @@ describe('PersonPickerStore', function() {
 
   it('removes a user', function(done) {
     PersonPickerStore.addPerson({ user: { username: 'rigby' } });
+
+    expect(PersonPickerStore.getPeople()).to.eql([{ username: 'rigby' }]);
+
     PersonPickerStore.removePerson({ user: { username: 'rigby' } });
 
     expect(PersonPickerStore.getPeople()).to.eql([]);
