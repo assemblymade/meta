@@ -75,6 +75,7 @@ class Product < ActiveRecord::Base
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
   scope :launched,         -> { where.not(launched_at: nil) }
+  scope :stealth,          -> { where(launched_at: nil) }
   scope :public_products,  -> { where.not(slug: PRIVATE).where(flagged_at: nil).where.not(launched_at: nil) }
   scope :since,            ->(time) { where('created_at >= ?', time) }
   scope :tagged_with_any,  ->(tags) { where('tags && ARRAY[?]::varchar[]', tags) }

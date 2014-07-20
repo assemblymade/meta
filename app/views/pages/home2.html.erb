@@ -1,66 +1,190 @@
 <% title 'Assembly is a new way for people around the world to collectively build, launch, and grow startups.' %>
 
+<%- @product = Product.first %>
+
+<div class="navbar navbar-static-top">
+  <div class="container-fluid">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#platform-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="text-brand navbar-brand" href="<%= root_path %>">
+        <span class="brand">
+          <span class="icon icon-logo-filled"></span>
+            Assembly
+        </span>
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="platform-navbar-collapse">
+      <div class="navbar-right">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="<%= new_user_session_path %>">
+              Log in
+            </a>
+          </li>
+
+          <li>
+            <div class="navbar-form">
+              <a class="btn btn-success" href="<%= new_user_registration_path %>">Sign up</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
   <div class="page page-flat">
     <div class="container">
       <div class="row">
         <div class="col-md-10 col-xs-10 col-md-offset-1 col-xs-offset-1">
 
-          <div class="page-header">
-            <h1 class="alpha">            Assembly is a new way that people around the world collectively build, launch, and grow startups.
-</h1>
-          </div>          
-          <p>
 
-Startups on Assembly are unlike traditional companies. They don't have investors, shareholders, or even employees. Instead a global community creates and owns them, together.
-</p>
-<p>
-People with great ideas come to assembly to build them with others. The vision, development, design, marketing, and everything else required to make a successful product is a collaborative effort.  Assembly handles the hosting, legal, and finances so the community can focus on what they do best.
-</p>
-<p>
-Each product's success is equitably shared. Individual contributions are rewarded with more stake in the product's success, determined by the community. At the end of each month Assembly pays any bills and splits the proceeds amongst all those that made it.
+<div class="sheet-body text-center">
+  <h1><strong>Assembly is a new way that people around the world collectively build, launch, and grow startups.</strong></h1>
+  <div class="row">
+    <div class="col-md-10 col-md-push-1">
+      <p class="lead" style="margin-bottom: 36px;">
+        Startups on Assembly are unlike traditional companies. They don't have investors, shareholders, or even employees. Instead a global community creates and owns them, together.
+      </p>
 
+      <p class="lead" style="margin-bottom: 36px;">
+        People with great ideas come to assembly to build them with others. The vision, development, design, marketing, and everything else required to make a successful product is a collaborative effort.  Assembly handles the hosting, legal, and finances so the community can focus on what they do best.        
+      </p>
+      
+      <p class="lead" style="margin-bottom: 36px;">
+        Each product's success is equitably shared. Individual contributions are rewarded with more stake in the product's success, determined by the community. At the end of each month Assembly pays any bills and splits the proceeds amongst all those that made it.
+      </p>
+      
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<div class="sheet-body">
+
+  <h2 style="margin-bottom: 36px; font-weight: 300;">It's dangerous to go alone! Take these:</h2>
+
+  <div class="row" style="margin-top: 24px; margin-bottom: 24px;">
+
+    <!-- Plan -->
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-xs-2">
+          <span class="text-large text-primary icon icon-eyeglasses"></span>
+        </div>
+        <div class="col-xs-10">
+          <h4 class="alpha">
+            <a href="<%= product_path(@product) %>">Plan</a>
+          </h4>
+          <p class="text-muted text-small">
+            From marketing to monetization, the Plan is your chance to answer any questions people may have about <%= @product.name %>.
           </p>
+        </div>
+      </div>
+    </div>
 
+    <!-- Chat -->
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-xs-2">
+          <span class="icon icon-bubbles text-large text-primary"></span>
+        </div>
+        <div class="col-xs-10">
+          <h4 class="alpha">
+            <a href="<%= product_chat_path(@product) %>">Chat</a>
+          </h4>
+          <p class="text-muted text-small">
+            Good communication is the backbone of a great team. Use Chat to instantly talk, share and check in with everybody else.
+          </p>
+        </div>
+      </div>
+    </div>
 
+    <!-- Journal -->
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-xs-2">
+          <span class="icon icon-notebook text-large text-primary"></span>
+        </div>
+        <div class="col-xs-10">
+          <h4 class="alpha text-success">
+            <a href="<%= product_posts_path(@product) %>">Journal</a>
+          </h4>
+          <p class="text-muted text-small">
+            Writing is the best way to help everybody follow your progress. The Journal is valuable resource for existing and potential contributors.
+          </p>
+        </div>
+      </div>
+    </div>
 
-      <div class="section" style="margin-bottom: 48px;display:None;">
+  </div><!-- .row -->
 
-          <div class="row">
+  <div class="row" style="margin-bottom: 24px;">
 
-            <% @feature_products.each do |contributions| %>
-              <% product = contributions.product %>
-              <div class="col-xs-3">
-                <a href="<%= product_path(product) %>" class="card card-sm card-colored product-<%= product.slug %>">
-                  <div class="card-hero" style="background-image: url('<%= product.poster %>');"></div>
-                  <div class="card-body">
-                    <div class="summary">
-                      <div class="summary-target">
-                        <%= product.pitch %>
-                      </div>
-                      <p class="summary-name omega">
-                        <%= product.name %>
-                      </p>
-                    </div>
-                  </div>
-                  <div class="card-footer">
-                    <p class="pull-right omega">
-                      <i class="icon-trophy" style="margin-right: 2px;"></i>
-                      <%= number_with_delimiter contributions.total %>
-                    </p>
-                    <p class="omega">
-                      <i class="icon-users" style="margin-right: 2px;"></i>
-                      <%= number_with_delimiter contributions.uniques %>
-                    </p>
-                  </div>
-                </a>
-              </div>
-            <% end %>
+    <!-- Bounties -->
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-xs-2">
+          <span class="icon icon-trophy text-large text-primary"></span>
+        </div>
+        <div class="col-xs-10">
+          <h4 class="alpha">
+            <a href="<%= product_wips_path(@product) %>">Bounties</a>
+          </h4>
+          <p class="text-muted text-small">
+            Bounties are things you want done. Anybody can work on Bounties, the Core Team awards them and the winner receives its App Coins.
+          </p>
+        </div>
+      </div>
+    </div>
 
-          </div>
+    <!-- Projects -->
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-xs-2">
+          <span class="icon icon-folder text-large text-primary"></span>
+        </div>
+        <div class="col-xs-10">
+          <h4 class="alpha">
+            <a href="<%= product_milestones_path(@product) %>">Projects</a>
+          </h4>
+          <p class="text-muted text-small">
+            Projects organize and focus work. They are curated lists of Bounties that help expose the priority of multiple tasks.
+          </p>
+        </div>
+      </div>
+    </div>
 
-          <figure class="text-center figure-inverted" style="margin-top: 30px;">Four of many startups currently being built on Assembly. <a href="<%= discover_path %>">Explore more &rarr;</a></figure>
+    <!-- Discussions -->
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-xs-2">
+          <span class="icon icon-book-open text-large text-primary"></span>
+        </div>
+        <div class="col-xs-10">
+          <h4 class="alpha">
+            <a href="<%= product_discussions_path(@product) %>">Discussions</a>
+          </h4>
+          <p class="text-muted text-small">
+            Discussions let you write about topics that would be too long for chat. You can file them away for later reference.
+          </p>
+        </div>
+      </div>
+    </div>
 
-        </div><!-- .section -->
+  </div><!-- .row -->
+</div>
+
 
 
         </div>
