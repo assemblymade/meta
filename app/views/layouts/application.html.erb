@@ -14,12 +14,7 @@
       <meta name="user-username" content="<%= current_user.username %>" >
     <% end %>
 
-    <% if deprecated_stylesheet? %>
-      <%= stylesheet_link_tag 'deprecated_application' %>
-      <%= stylesheet_link_tag 'deprecated_components' %>
-    <% else %>
-      <%= stylesheet_link_tag 'application' %>
-    <% end %>
+    <%= stylesheet_link_tag 'application' %>
 
     <%= javascript_include_tag 'https://d3dy5gmtp8yhk7.cloudfront.net/2.2/pusher.min.js' %>
     <%= javascript_include_tag 'application' %>
@@ -47,10 +42,6 @@
 
     <% if signed_in? && flash[:signed_up] %>
       <%= render 'users/signed_up' %>
-    <% end %>
-
-    <% unless signed_in? %>
-      <%= render 'users/sessions/modal' %>
     <% end %>
 
     <% if signed_in? %>

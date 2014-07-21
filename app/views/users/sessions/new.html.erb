@@ -1,10 +1,34 @@
-<% title "Welcome back!", "You're almost there" %>
+<% title 'Sign in' %>
 
-<script>
-  $(function(){
-    window.signup.options.afterSignInPath = '<%= session[:previous_url] || after_sign_in_path_for_user %>';
-    window.signup.options.tab = 'signin';
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
 
-    $('.js-sign-in').click();
-  });
-</script>
+      <a class="btn btn-facebook btn-block" href="#">Sign in with Facebook</a>
+
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="form-group">
+          <%= f.label :login, 'Email or username', class: 'input-label' %>
+          <%= f.email_field :email, autofocus: true, class: 'form-control input-lg', placeholder: 'jane@example.com' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password, class: 'input-label' %>
+          <%= f.password_field :password, autocomplete: false, class: 'form-control input-lg' %>
+        </div>
+
+
+        <div class="checkbox pull-left">
+          <%= f.label :remember_me, class: 'input-label' do %>
+            <%= f.check_box :remember_me %>
+            Remember me
+          <% end %>
+        </div>
+
+        <div class="pull-right">
+          <%= f.submit 'Sign in', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
