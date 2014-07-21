@@ -33,7 +33,7 @@ class ProductsController < ProductController
   def welcome
     find_product!
   end
-  
+
   def admin
     return redirect_to(product_url(@product)) unless current_user && current_user.is_staff?
     find_product!
@@ -128,7 +128,7 @@ class ProductsController < ProductController
 
   def schedule_greet
     message = "Hi there! I'm Kernel. #{@product.name} looks pretty sweet. If you need any help, message me at @kernel, and I'll get a human."
-    PostChatMessage.perform_in(30.seconds, @product.slug, message)
+    PostChatMessage.perform_in(1.second, @product.slug, message, false)
   end
 
   def schedule_one_hour_checkin
