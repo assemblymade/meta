@@ -21,27 +21,27 @@
     <div class="collapse navbar-collapse" id="platform-navbar-collapse">
 
       <% if user_signed_in? %>
-        <form action="<%= scoped_search_path %>" class="navbar-form navbar-left" style="<% if user_signed_in? %>padding-left: 4px;<% end %>">
+        <form action="<%= scoped_search_path %>" class="navbar-form navbar-left">
           <div class="form-group">
             <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off"
               placeholder="<%= @product ? "Search #{@product.name}" : "Search…" %>"  />
             <input type="hidden" name="type" value="<%= @type %>">
           </div>
-          <!-- <button type="submit" class="btn btn-default">Search</button> -->
+          <button type="submit" class="btn btn-default sr-only">Search</button>
         </form>
       <% end %>
 
       <ul class="nav navbar-nav">
 
-        <li class="<%= 'active' if nav_active?(:platform_discover) %>">
+        <li class="<%= nav_active_class(:platform_discover) %>">
           <a href="<%= discover_path %>">Discover</a>
         </li>
 
-        <li class="<%= 'active' if nav_active?(:platform_start) %>">
+        <li class="<%= nav_active_class(:platform_create) %>">
           <a href="<%= new_product_path %>">Create</a>
         </li>
 
-        <li class="<%= 'active' if nav_active?(:getting_started) %>">
+        <li class="<%= nav_active_class(:platform_getting_started) %>">
           <a href="<%= getting_started_path %>">Get Started</a>
         </li>
       </ul>
@@ -91,13 +91,9 @@
                 Log in
               </a>
             </li>
-
-            <li>
-              <div class="navbar-form">
-                <a class="btn btn-success" href="<%= new_user_registration_path %>">Sign up</a>
-              </div>
-            </li>
           </ul>
+
+          <a class="btn btn-success navbar-btn" href="<%= new_user_registration_path %>">Sign up</a>
         <% end %>
 
         </ul>
