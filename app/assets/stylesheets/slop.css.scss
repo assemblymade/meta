@@ -309,20 +309,6 @@ a.card-colored:hover {
   }
 }
 
-.sidebar {
-  font-size: $font-size-small;
-  border-left: 1px solid $brand-divider;
-  padding-left: 30px;
-
-  h5 {
-    font-weight: bold;
-    font-size: 15px;
-    text-transform: uppercase;
-    letter-spacing: 0.8pt;
-    color: $hero-secondary;
-  }
-}
-
 .getting-started {
   padding: 16px 0 36px 0;
   background: $hero-primary;
@@ -403,9 +389,14 @@ figure,
     h1 {
       margin-top: $line-height-computed * 1.5;
       margin-bottom: $line-height-computed * 3;
-      font-size: 82px;
       line-height: 1.15;
       font-weight: 200;
+    }
+
+    @media screen and (min-width: $screen-sm-min) {
+      h1 {
+        font-size: 82px;
+      }
     }
 
     .lead {

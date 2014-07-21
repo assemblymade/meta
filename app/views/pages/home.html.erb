@@ -15,13 +15,13 @@
         </h1>
 
 
-        <div class="section" style="margin-bottom: 48px;">
+        <div class="section">
 
           <div class="row">
 
             <% @feature_products.each do |contributions| %>
               <% product = contributions.product %>
-              <div class="col-sm-3">
+              <div class="col-xs-6 col-sm-3" style="margin-bottom: 48px;">
                 <a href="<%= product_path(product) %>" class="card card-sm card-colored product-<%= product.slug %>">
                   <div class="card-hero" style="background-image: url('<%= product.poster %>');"></div>
                   <div class="card-body">
