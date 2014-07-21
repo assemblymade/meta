@@ -9,7 +9,11 @@
 
     <div class="row">
 
-      <div class="col-md-10 col-md-push-2">
+      <div class="col-md-2 fixed-enabler">
+        <%= render 'products/sidenav', product: @product %>
+      </div>
+
+      <div class="col-md-10">
 
         <ul class="list list-inline pull-right">
           <li>
@@ -67,11 +71,6 @@
           </div>
         </div>
       </div>
-
-      <div class="col-md-2 col-md-pull-10 fixed-enabler">
-        <%= render 'products/sidenav', product: @product %>
-      </div>
-
     </div>
   </div>
 </div>
