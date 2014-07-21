@@ -6,10 +6,10 @@
 
       <a class="btn btn-facebook btn-block" href="#">Sign in with Facebook</a>
 
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= form_for(resource, as: resource_name, url: new_user_session_path) do |f| %>
         <div class="form-group">
           <%= f.label :login, 'Email or username', class: 'input-label' %>
-          <%= f.email_field :email, autofocus: true, class: 'form-control input-lg', placeholder: 'jane@example.com' %>
+          <%= f.text_field :login, autofocus: true, class: 'form-control input-lg', placeholder: 'jane@example.com' %>
         </div>
 
         <div class="form-group">
