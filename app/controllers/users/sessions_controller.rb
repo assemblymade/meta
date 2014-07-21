@@ -2,12 +2,8 @@ class Users::SessionsController < Devise::SessionsController
   respond_to :html, :json
 
   skip_before_action :validate_confirmed!, only: [:destroy]
-  
-  after_action :claim_invite, only: [:create]
 
-  def new
-    @deprecated_stylesheet = true
-  end
+  after_action :claim_invite, only: [:create]
 
   def show
     if signed_in?
@@ -33,9 +29,9 @@ class Users::SessionsController < Devise::SessionsController
       }
     end
   end
-  
+
   # private
-  
+
   def claim_invite
     Invite.find(cookies[:invite]).claim!(resource) if self.resource && cookies[:invite]
   end
