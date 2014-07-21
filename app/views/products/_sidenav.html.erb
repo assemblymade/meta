@@ -1,29 +1,31 @@
 <%= render 'products/launch' unless product.launched? %>
 
-<% if current_user && product.core_team?(current_user) %>
-  <%= form_for :asset, url: product_logos_path(product), html: {id: 'product-logo-form'} do |f| %>
-    <%= f.hidden_field :attachment_id %>
-    <%= f.hidden_field :name %>
+<div class="hidden-sm hidden-xs">
+  <% if current_user && product.core_team?(current_user) %>
+    <%= form_for :asset, url: product_logos_path(product), html: {id: 'product-logo-form'} do |f| %>
+      <%= f.hidden_field :attachment_id %>
+      <%= f.hidden_field :name %>
+    <% end %>
+    <div class="js-dropzone"
+        data-target-form="#product-logo-form"
+        data-react-class="DragAndDrop"
+        data-react-props="<%= {
+          url: product.poster_image.url,
+          alt: product.name
+        }.to_json %>">
+    </div>
+  <% else %>
+    <span class="img-shadow">
+      <%= image_tag product.poster_image.url, class: 'img-rounded', width: '100%', alt: product.name %>
+    </span>
   <% end %>
-  <div class="js-dropzone"
-      data-target-form="#product-logo-form"
-      data-react-class="DragAndDrop"
-      data-react-props="<%= {
-        url: product.poster_image.url,
-        alt: product.name
-      }.to_json %>">
-  </div>
-<% else %>
-  <span class="img-shadow">
-    <%= image_tag product.poster_image.url, class: 'img-rounded', width: '100%', alt: product.name %>
-  </span>
-<% end %>
 
-<% if @product.homepage_url.present? %>
-  <a class="small truncate text-muted text-center" style="display:inline-block;width: 100%;margin-top:5px" href="<%= @product.homepage_url %>" data-track="product.site.clicked">
-    <strong><%= @product.homepage_url %></strong>
-  </a>
-<% end %>
+  <% if @product.homepage_url.present? %>
+    <a class="small truncate text-muted text-center" style="display:inline-block;width: 100%;margin-top:5px" href="<%= @product.homepage_url %>" data-track="product.site.clicked">
+      <strong><%= @product.homepage_url %></strong>
+    </a>
+  <% end %>
+</div>
 
 <ul class="nav nav-stacked nav-sidebar" style="margin-top: 35px;">
 <li class="<%= nav_active_class(:about) %>">
