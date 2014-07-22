@@ -132,9 +132,9 @@ class Task < Wip
   end
 
   def allocate(worker)
-    StreamEvent.add_allocated_event!(actor: worker, subject: self, target: product)
-
-    add_event ::Event::Allocation.new(user: worker)
+    add_activity worker, Activities::Assign do
+      add_event(::Event::Allocation.new(user: worker))
+    end
   end
 
   def unallocate(reviewer, reason)
@@ -146,25 +146,27 @@ class Task < Wip
   end
 
   def review_me(worker)
-    StreamEvent.add_reviewable_event!(actor: worker, subject: self, target: product)
-
-    add_event ::Event::ReviewReady.new(user: worker)
+    add_activity worker, Activities::Post do
+      add_event ::Event::ReviewReady.new(user: worker)
+    end
   end
 
   def reject(reviewer, reason)
-    add_event ::Event::Rejection.new(user: reviewer, body: reason) do
-      self.workers.delete_all
+    add_activity worker, Activities::Unassign do
+      add_event ::Event::Rejection.new(user: reviewer, body: reason) do
+        self.workers.delete_all
+      end
     end
   end
 
   def award(closer, winning_event)
-    add_event (win = ::Event::Win.new(user: closer, event: winning_event)) do
-      StreamEvent.add_win_event!(actor: winning_event.user, subject: win, target: self)
-
-      set_closed(closer)
-      self.winning_event = winning_event
-      TransactionLogEntry.validated!(Time.current, product, self.id, closer.id, winning_event.user.id)
-      milestones.each(&:touch)
+    add_activity(closer, Activities::Award) do
+      add_event (win = ::Event::Win.new(user: closer, event: winning_event)) do
+        set_closed(closer)
+        self.winning_event = winning_event
+        TransactionLogEntry.validated!(Time.current, product, self.id, closer.id, winning_event.user.id)
+        milestones.each(&:touch)
+      end
     end
   end
 
@@ -173,10 +175,11 @@ class Task < Wip
   end
 
   def submit_design!(attachment, submitter)
-    add_event (event = ::Event::DesignDeliverable.new(user: submitter, attachment: attachment)) do
-      work_submitted(submitter)
-      self.deliverables.create! attachment: attachment
-      StreamEvent.add_work_event!(actor: submitter, subject: event, target: self)
+    add_activity submitter, Activities::Post do
+      add_event (event = ::Event::DesignDeliverable.new(user: submitter, attachment: attachment)) do
+        work_submitted(submitter)
+        self.deliverables.create! attachment: attachment
+      end
     end
   end
 
@@ -184,8 +187,13 @@ class Task < Wip
     transaction do
       work_submitted(submitter)
       deliverable = self.copy_deliverables.create! copy_attributes.merge(user: submitter)
-      self.events << (event = ::Event::CopyAdded.new(user: submitter, deliverable: deliverable))
-      StreamEvent.add_work_event!(actor: submitter, subject: event, target: self)
+
+      add_activity submitter, Activities::Post do
+        event = ::Event::CopyAdded.new(user: submitter, deliverable: deliverable)
+        self.events << event
+        event
+      end
+
     end
   end
 
@@ -194,11 +202,15 @@ class Task < Wip
     transaction do
       work_submitted(submitter)
       work = self.code_deliverables.build code_attributes.merge(user: submitter)
-      if work.save
-        self.events << (event = ::Event::CodeAdded.new(user: submitter, deliverable: work))
-        StreamEvent.add_work_event!(actor: submitter, subject: event, target: self)
-      else
-        raise ActiveRecord::Rollback
+      add_activity submitter, Activities::Post do
+        if work.save
+          event = ::Event::CodeAdded.new(user: submitter, deliverable: work)
+          self.events << event
+          StreamEvent.add_work_event!(actor: submitter, subject: event, target: self)
+          event
+        else
+          raise ActiveRecord::Rollback
+        end
       end
     end
     work

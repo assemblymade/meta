@@ -58,6 +58,25 @@ describe Wip do
       its(:closed_at) { be_same_time_as Time.current }
       its(:winning_event) { should be_nil }
       its(:winning_event) { should be_nil }
+
+      it 'creates activity' do
+        expect(Activities::Close.first.target).to eq(wip)
+      end
+    end
+
+    context 'reopen' do
+      before {
+        wip.close! closer, 'not enough cats'
+        wip.reopen! closer, 'actually, there are enough cats'
+        wip.reload
+      }
+
+      its(:current_state) { should == :open }
+      its(:closed_at) { should be_nil }
+
+      it 'creates activity' do
+        expect(Activities::Open.first.target).to eq(wip)
+      end
     end
   end
 

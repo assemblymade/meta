@@ -28,7 +28,11 @@ class Event::Comment < Event
     TextFilters::ShortcutFilter.shortcuts_in(body) do |match, wip_number|
       wip = self.wip.product.wips.find_by(number: wip_number)
       if !wip.nil? && wip != self.wip
-        wip.events << Event::CommentReference.new(user: user, event: self)
+        wip.add_activity user, Activities::Reference do
+          event = Event::CommentReference.new(user: user, event: self)
+          wip.events << event
+          event
+        end
       end
     end
   end

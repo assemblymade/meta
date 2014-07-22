@@ -70,24 +70,30 @@ class Wip < ActiveRecord::Base
   end
 
   def close(closer, reason=nil)
-    add_event ::Event::Close.new(user: closer, body: reason) do
-      set_closed(closer)
-      milestones.each(&:touch)
+    add_activity closer, Activities::Close do
+      add_event ::Event::Close.new(user: closer, body: reason) do
+        set_closed(closer)
+        milestones.each(&:touch)
+      end
     end
   end
 
   def reopen(opener, reason)
-    add_event ::Event::Reopen.new(user: opener, body: reason) do
-      self.closer = nil
-      self.closed_at = nil
-      self.winning_event = nil
-      milestones.each(&:touch)
+    add_activity opener, Activities::Open do
+      add_event ::Event::Reopen.new(user: opener, body: reason) do
+        self.closer = nil
+        self.closed_at = nil
+        self.winning_event = nil
+        milestones.each(&:touch)
+      end
     end
   end
 
   def update_title!(author, new_title)
-    add_event ::Event::TitleChange.new(user: author, body: self.title) do
-      self.title = new_title
+    add_activity author, Activities::Update do
+      add_event ::Event::TitleChange.new(user: author, body: self.title) do
+        self.title = new_title
+      end
     end
   end
 
@@ -270,6 +276,16 @@ class Wip < ActiveRecord::Base
 
     Room.create_for!(product, self).tap do |shortcut|
       self.update_column :number, shortcut.number
+    end
+  end
+
+  def add_activity(actor, klass, &block)
+    block.call.tap do |event|
+      klass.publish!(
+        actor: actor,
+        subject: event,
+        target: self
+      )
     end
   end
 
