@@ -1,0 +1,20 @@
+<% title 'Notifications' %>
+
+<div class="page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5">
+        <div class="sheet">
+          <div class="sheet-body">
+            <div data-react-class="ActivityFeed" data-react-props="<%= {
+              activities: ActiveModel::ArraySerializer.new(
+                @activities, scope: current_user, each_serializer: ActivitySerializer
+              ).as_json
+            }.to_json %>">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
