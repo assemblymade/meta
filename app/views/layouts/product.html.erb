@@ -25,24 +25,79 @@
                  }.to_json %>" />
           </li>
           <li>
-            <div class="toggler toggler-sm">
+            <div class="btn-group">
+              <!-- FIXME: There shouldn't be any need for a magic number margin-bottom here -->
+              <a class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" style="margin-bottom: 15px">
+                Follow
+                <span class="icon icon-chevron-down"></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right" role="menu" style="width: auto; position: absolute; padding-top: 0; padding-bottom: 0;">
+                <li role="presentation" class="dropdown-header" style="color: #a6a6a6; background-color: #f2f2f2;">
+                  <strong>Notifications</strong><span class="pull-right"><a href="/settings">Settings</a></span>
+                </li>
+                <li role="presentation" class="textcomplete-item">
+                  <a role="menuitem" tabindex="-1" href="#">
+                    <p style="margin-bottom: 0; font-size: 14px;">
+                      <strong>Not following</strong>
+                    </p>
+                    <span class="text-muted" style="font-size: 14px;">
+                      Only notified when participating or @mentioned
+                    </span>
+                  </a>
+                </li>
+
+                <li role="presentation" class="textcomplete-item">
+                  <a role="menuitem" tabindex="-1" href="#">
+                    <p style="margin-bottom: 0; font-size: 14px;">
+                      <strong>Follow updates</strong>
+                    </p>
+                    <span class="text-muted" style="font-size: 14px;">
+                      Be notified of business updates, and when partcipating or @mentioned
+                    </span>
+                  </a>
+                </li>
+
+                <li role="presentation" class="textcomplete-item">
+                  <a role="menuitem" tabindex="-1" href="#">
+                    <p style="margin-bottom: 0; font-size: 14px;">
+                      <strong>Follow everything</strong>
+                    </p>
+                    <span class="text-muted" style="font-size: 14px;">
+                      Be notified of all discussions, business updates, and when participating or @mentioned
+                    </span>
+                  </a>
+                </li>
+              </ul>
+              <!-- <a class="badge" href="<%= product_watchers_path(@product) %>">
+                <%= @product.watchings_count %>
+              </a> -->
+            </div>
+            <!-- <div id="dropdown-follow" class="toggler toggler-sm">
               <% if signed_in? && @product.watching?(current_user) %>
                 <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post">
-                  <i class="icon icon-eye" style="margin-right: 2px;"></i>
-                  Unwatch
+                  Following
+                  <span class="icon icon-chevron-down"></span>
                 </a>
               <% else %>
-                <a class="toggler-btn btn btn-primary" href="<%= subscribe_product_path(@product) %>" data-method="post">
-                  <i class="icon icon-eye" style="margin-right: 2px;"></i>
-                  Watch
+                <a class="toggler-btn btn btn-primary dropdown-toggle" style="cursor: pointer;" data-toggle="dropdown">
+                  Follow
+                  <span class="icon icon-chevron-down"></span>
                 </a>
               <% end %>
-                <a class="toggler-badge" href="<%= product_watchers_path(@product) %>">
-                  <%= @product.watchings_count %>
-                </a>
-            </div>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-follow">
+                <li role="presentation" class="dropdown-header">Notifications</li>
+                <li role="presentation">
+                  <strong>Not following</strong>
+                  <br>
+                  Only notified when participating or @mentioned
+                </li>
+              </ul>
+              <a class="toggler-badge" href="<%= product_watchers_path(@product) %>">
+                <%= @product.watchings_count %>
+              </a>
+            </div> -->
           </li>
-          <li style="padding-right: 0;">
+          <!-- <li style="padding-right: 0;">
             <div class="toggler toggler-sm">
               <div data-react-class="JoinTeam"
                    data-react-props="<%= {
@@ -54,7 +109,7 @@
                    }.to_json %>">
               </div>
             </div>
-          </li>
+          </li> -->
         </ul>
 
         <h3 class="alpha text-muted" style="font-weight: 400; line-height: 1;">
