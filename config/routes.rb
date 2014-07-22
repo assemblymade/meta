@@ -16,7 +16,7 @@ ASM::Application.routes.draw do
   end
 
   root :to => 'pages#home'
-  
+
   get '/home2' => 'pages#home2'
 
   get '/still-field' => redirect('/discover') # bad product
@@ -105,6 +105,8 @@ ASM::Application.routes.draw do
 
     get    '/users/:id' => 'users#show', :as => :user
     patch  '/users/:id' => 'users#update'
+
+    resources :notifications, only: [:index]
 
     # saved searches
     scope '/user', controller: 'users' do
