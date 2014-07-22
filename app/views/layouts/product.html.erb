@@ -24,16 +24,52 @@
                    shareText: "Check out #{@product.name} – #{ @product.pitch} on Assembly",
                  }.to_json %>" />
           </li>
+
+          <li style="padding-right: 0;">
+            <div class="toggler toggler-sm">
+              <div data-react-class="JoinTeam"
+                   data-react-props="<%= {
+                     count: @product.team_memberships_count,
+                     join_path: product_people_path(@product),
+                     leave_path: (current_user && product_person_path(@product, current_user)),
+                     is_member: @product.member?(current_user),
+                     membership: TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user) || TeamMembership.new(product: @product, user: current_user)).as_json
+                   }.to_json %>">
+              </div>
+            </div>
+          </li>
+
           <li>
             <div class="btn-group">
               <!-- FIXME: There shouldn't be any need for a magic number margin-bottom here -->
-              <a class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" style="margin-bottom: 15px">
+              <!-- FIXME: There also shouldn't be a need for the border-radius magic -->
+              <button
+                  class="btn btn-primary btn-sm dropdown-toggle"
+                  type="button"
+                  data-toggle="dropdown"
+                  style="margin-bottom: 15px; border-top-right-radius: 0; border-bottom-right-radius: 0;">
                 Follow
                 <span class="icon icon-chevron-down"></span>
+              </button>
+              <a
+                  class="btn btn-primary btn-sm"
+                  type="button"
+                  href="<%= product_watchers_path(@product) %>"
+                  style="opacity: 0.5; border-top-right-radius: 2px; border-bottom-right-radius: 2px;">
+                <%= @product.watchings_count %>
               </a>
-              <ul class="dropdown-menu dropdown-menu-right" role="menu" style="width: auto; position: absolute; padding-top: 0; padding-bottom: 0;">
-                <li role="presentation" class="dropdown-header" style="color: #a6a6a6; background-color: #f2f2f2;">
-                  <strong>Notifications</strong><span class="pull-right"><a href="/settings">Settings</a></span>
+              <ul
+                  class="dropdown-menu dropdown-menu-right"
+                  role="menu"
+                  style="width: auto; position: absolute; padding-top: 0;">
+                <li
+                    role="presentation"
+                    class="dropdown-header"
+                    style="color: #a6a6a6; background-color: #f3f3f3;">
+                  <strong>Notifications</strong>
+                  <span class="pull-right">
+                    <a href="/settings">Settings</a>
+                  </span>
                 </li>
                 <li role="presentation" class="textcomplete-item">
                   <a role="menuitem" tabindex="-1" href="#">
@@ -68,48 +104,8 @@
                   </a>
                 </li>
               </ul>
-              <!-- <a class="badge" href="<%= product_watchers_path(@product) %>">
-                <%= @product.watchings_count %>
-              </a> -->
             </div>
-            <!-- <div id="dropdown-follow" class="toggler toggler-sm">
-              <% if signed_in? && @product.watching?(current_user) %>
-                <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post">
-                  Following
-                  <span class="icon icon-chevron-down"></span>
-                </a>
-              <% else %>
-                <a class="toggler-btn btn btn-primary dropdown-toggle" style="cursor: pointer;" data-toggle="dropdown">
-                  Follow
-                  <span class="icon icon-chevron-down"></span>
-                </a>
-              <% end %>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-follow">
-                <li role="presentation" class="dropdown-header">Notifications</li>
-                <li role="presentation">
-                  <strong>Not following</strong>
-                  <br>
-                  Only notified when participating or @mentioned
-                </li>
-              </ul>
-              <a class="toggler-badge" href="<%= product_watchers_path(@product) %>">
-                <%= @product.watchings_count %>
-              </a>
-            </div> -->
           </li>
-          <!-- <li style="padding-right: 0;">
-            <div class="toggler toggler-sm">
-              <div data-react-class="JoinTeam"
-                   data-react-props="<%= {
-                     count: @product.team_memberships_count,
-                     join_path: product_people_path(@product),
-                     leave_path: (current_user && product_person_path(@product, current_user)),
-                     is_member: @product.member?(current_user),
-                     membership: TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user) || TeamMembership.new(product: @product, user: current_user)).as_json
-                   }.to_json %>">
-              </div>
-            </div>
-          </li> -->
         </ul>
 
         <h3 class="alpha text-muted" style="font-weight: 400; line-height: 1;">
