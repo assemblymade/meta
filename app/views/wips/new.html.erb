@@ -1,69 +1,71 @@
 <% title 'New Bounty', @product.name %>
 <% activate_nav! :bounties %>
 
-<div class="page-header">
+<div class="page-header sheet-header">
   <h2 class="page-header-title">Create a Bounty</h2>
 </div>
 
-<div class="row">
-  <div class="col-md-9 col-xs-9">
-    <%= form_for [@product, @wip] do |f| %>
-      <div class="form-group">
-        <%= f.label :title, 'class' => 'form-label' %>
-        <%= f.text_field :title, 'value' => params[:title], 'class' => 'form-control', 'data-validate-length' => '2', 'autofocus' => 'autofocus' %>
-      </div>
+<div class="sheet-body">
+  <div class="row">
+    <div class="col-md-9 col-xs-9">
+      <%= form_for [@product, @wip] do |f| %>
+        <div class="form-group">
+          <%= f.label :title, 'class' => 'form-label' %>
+          <%= f.text_field :title, 'value' => params[:title], 'class' => 'form-control', 'data-validate-length' => '2', 'autofocus' => 'autofocus' %>
+        </div>
 
-      <div style="display:none;">
-        <select type="hidden" id="tag-list-hack" name="task[tag_list][]" multiple="true"></select>
-      </div>
+        <div style="display:none;">
+          <select type="hidden" id="tag-list-hack" name="task[tag_list][]" multiple="true"></select>
+        </div>
 
-      <div class="form-group">
-        <span class="text-muted text-small pull-right">(optional)</span>
-        <%= f.label :description, 'Details', class: 'control-label' %>
+        <div class="form-group">
+          <span class="text-muted text-small pull-right">(optional)</span>
+          <%= f.label :description, 'Details', class: 'control-label' %>
 
-        <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
-          <%= text_area_tag :description, '', class: 'form-control', rows: 4 %>
-          <div class="dropzone-inner js-dropzone-select">
-            To attach files drag &amp; drop here or <a href="#">select files
-            from your computer</a>...
+          <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
+            <%= text_area_tag :description, '', class: 'form-control', rows: 4 %>
+            <div class="dropzone-inner js-dropzone-select">
+              To attach files drag &amp; drop here or <a href="#">select files
+              from your computer</a>...
+            </div>
           </div>
         </div>
-      </div>
 
-      <h6 style="margin-bottom: 0;">Tags</h6>
-      <div style="margin-bottom: 10px"
-           data-react-class="TagList"
-           data-react-props="<%= {
-              tags: (@wip.tags ? @wip.tags.map do |tag|
-                tag.name
-              end.as_json : []),
-              filterUrl: product_wips_path(@wip.product),
-              destination: true
-            }.to_json %>">
-      </div>
+        <h6 style="margin-bottom: 0;">Tags</h6>
+        <div style="margin-bottom: 10px"
+             data-react-class="TagList"
+             data-react-props="<%= {
+                tags: (@wip.tags ? @wip.tags.map do |tag|
+                  tag.name
+                end.as_json : []),
+                filterUrl: product_wips_path(@wip.product),
+                destination: true
+              }.to_json %>">
+        </div>
 
-      <div data-react-class="TextComplete"
-           data-react-props="<%= {
-             width: "125px",
-             size: "small",
-             label: "Add tag",
-             prepend: "#",
-             prompt: "Add",
-             filterUrl: product_wips_path(@wip.product)
-           }.to_json %>">
-      </div>
+        <div data-react-class="TextComplete"
+             data-react-props="<%= {
+               width: "125px",
+               size: "small",
+               label: "Add tag",
+               prepend: "#",
+               prompt: "Add",
+               filterUrl: product_wips_path(@wip.product)
+             }.to_json %>">
+        </div>
 
-      <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
-      <div data-react-class="TagList"
-            data-react-props="<%= {
-              tags: Wip::Tag.suggested_tags.as_json,
-              destination: false
-            }.to_json %>">
-      </div>
+        <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
+        <div data-react-class="TagList"
+              data-react-props="<%= {
+                tags: Wip::Tag.suggested_tags.as_json,
+                destination: false
+              }.to_json %>">
+        </div>
 
-      <div class="form-actions">
-        <%= f.button 'Create bounty', 'class' => 'btn btn-primary', 'data-disable-with' => 'Saving...' %>
-      </div>
-    <% end %>
+        <div class="form-actions">
+          <%= f.button 'Create bounty', 'class' => 'btn btn-primary', 'data-disable-with' => 'Saving...' %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

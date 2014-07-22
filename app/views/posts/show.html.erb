@@ -1,7 +1,7 @@
 <% title @post.title, @post.product.name %>
 <% activate_nav! :blog %>
 
-<div class="page-header">
+<div class="page-header sheet-header">
   <h2 class="page-header-title"><%= @post.title %></h2>
 
   <div class="page-header-meta">
@@ -29,32 +29,34 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-9 col-xs-9">
+<div class="sheet-body">
+  <div class="row">
+    <div class="col-md-9">
 
-    <div class="markdown-normalized">
-      <%= product_markdown(@post.product, @post.body) %>
-    </div>
-  </div>
-
-  <div class="col-md-3 col-xs-3">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h6 class="panel-title">Recent Posts</h6>
-      </div>
-
-      <div class="list-group">
-        <% @product.posts.order(created_at: :desc).limit(10).each do |post| %>
-          <a class="list-group-item small" href="<%= product_post_path(post.product, post) %>">
-            <strong class="text-primary"><%= post.title %></strong>
-          </a>
-        <% end %>
+      <div class="markdown-normalized">
+        <%= product_markdown(@post.product, @post.body) %>
       </div>
     </div>
 
-    <% if can?(:create, Post) %>
-      <%= link_to 'Write a new post', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
-    <% end %>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h6 class="panel-title">Recent Posts</h6>
+        </div>
 
+        <div class="list-group">
+          <% @product.posts.order(created_at: :desc).limit(10).each do |post| %>
+            <a class="list-group-item small" href="<%= product_post_path(post.product, post) %>">
+              <strong class="text-primary"><%= post.title %></strong>
+            </a>
+          <% end %>
+        </div>
+      </div>
+
+      <% if can?(:create, Post) %>
+        <%= link_to 'Write a new post', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
+      <% end %>
+
+    </div>
   </div>
 </div>

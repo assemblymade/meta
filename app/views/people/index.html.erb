@@ -8,47 +8,37 @@
   </div>
 <% end %>
 
-<div class="page-header">
+<div class="page-header sheet-header">
   <h2 class="page-header-title">
     <i class="icon-users text-muted" style="margin-right: 4px;"></i>
     Teams
   </h2>
 </div>
-<% if current_user %>
-  <% product_membership = current_user.team_memberships.find_by(product: @product) %>
 
-  <% if product_membership.nil? || product_membership.bio.nil? %>
-    <h2 style="font-weight: 300;">Before you start, why not introduce yourself?</h2>
-    <div class="row">
-      <div class="col-xs-9 col-md-9">
-        <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
+<div class="sheet-body">
+  <% if current_user %>
+    <% product_membership = current_user.team_memberships.find_by(product: @product) %>
 
-          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-          <input name="_method" value="patch" type="hidden">
+    <% if product_membership.nil? || product_membership.bio.nil? %>
+      <h2 style="font-weight: 300;">Before you start, why not introduce yourself?</h2>
+      <div class="row">
+        <div class="col-md-9">
+          <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
 
-          <div class="form-group">
-            <textarea name="membership[bio]" id="bio-editor" class="form-control bio-editor" rows="4" id="self-introduction" placeholder="Hi everyone, I'm Maeby! I love coding in VB6 across the stack. I also ping-pong a lot between concept and design. Hoping to get involved with UX, to help kickstart ideas, and to provide tangible feedback. I'm here partly because I think the app idea is great, but also because I think your team is outstanding and well-rounded – so I'm excited to learn alongside you. I'd like to free up to 8-16 hours a week (mostly evenings – I'm on CST here in Madison) to help ship this product. Great to see so many people working on this!"></textarea>
-          </div>
+            <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+            <input name="_method" value="patch" type="hidden">
 
-          <div class="form-group">
-            <label for="join-interests">What are you interested in?</label>
-            <% interest_filters = product_membership_interests(@product, true) %>
-            <div data-react-class="InterestPicker"
-                data-react-props="<%= {
-                  interests: interest_filters,
-                  name: 'membership[interests][]'
-                }.to_json %>">
+            <div class="form-group">
+              <textarea name="membership[bio]" id="bio-editor" class="form-control bio-editor" rows="4" id="self-introduction" placeholder="Hi everyone, I'm Maeby! I love coding in VB6 across the stack. I also ping-pong a lot between concept and design. Hoping to get involved with UX, to help kickstart ideas, and to provide tangible feedback. I'm here partly because I think the app idea is great, but also because I think your team is outstanding and well-rounded – so I'm excited to learn alongside you. I'd like to free up to 8-16 hours a week (mostly evenings – I'm on CST here in Madison) to help ship this product. Great to see so many people working on this!"></textarea>
             </div>
-          </div>
 
-          <button type="submit" id="join-intro-button" class="btn btn-success btn-block">Introduce yourself</button>
-
-        </form>
-      </div>
-      <div class="col-xs-3 col-md-3">
-        <small class="help-block" style="margin-top: 0px;">
-          What skills can you contribute, how much time do you have, and what are you looking to get out of the experience?
-        </small>
+          </form>
+        </div>
+        <div class="col-md-3">
+          <small class="help-block" style="margin-top: 0px;">
+            What skills can you contribute, how much time do you have, and what are you looking to get out of the experience?
+          </small>
+        </div>
       </div>
     </div>
 
@@ -57,8 +47,8 @@
 <% end %>
 
 <div class="row">
-  <div class="js-people col-xs-9 col-md-9"></div>
-  <div class="col-xs-3 col-md-3">
+  <div class="js-people col-md-9"></div>
+  <div class="col-md-3">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h6 class="panel-title">Core Team</h6>

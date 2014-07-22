@@ -3,22 +3,26 @@
 <% breadcrumb product_wips_path(@wip.product), 'Bounties' %>
 
 <%= render 'header' %>
-<div class="row">
-  <div class="col-md-9">
-    <div id="discussion-view-el">
-      <%= render 'wips/discussion', events: @events %>
 
-      <div class="well js-upvote-reminder" style="display:none">
-        You've commented on this Bounty but you haven't upvoted. Your upvotes reward people with more coins for completing Bounties which helps make <%= @product.name %> a better product.
+<div class="sheet-body">
+  <div class="row">
+    <div class="col-md-9">
+      <div id="discussion-view-el">
+        <%= render 'wips/discussion', events: @events %>
+
+        <div class="well js-upvote-reminder" style="display:none">
+          You've commented on this Bounty but you haven't upvoted. Your upvotes reward people with more coins for completing Bounties which helps make <%= @product.name %> a better product.
+        </div>
+
+        <%= render 'new_event_form' %>
       </div>
-
-      <%= render 'new_event_form' %>
     </div>
-  </div>
 
 
-  <div class="col-md-3">
-    <%= render partial: 'tasks/task_sidebar' %>
+    <div class="col-md-3">
+      <hr class="visible-xs-block visible-sm-block">
+      <%= render partial: 'tasks/task_sidebar' %>
+    </div>
   </div>
 </div>
 

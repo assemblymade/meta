@@ -8,60 +8,62 @@
   </div>
 <% end %>
 
-<div class="page-header">
+<div class="page-header sheet-header">
   <h2 class="page-header-title">Repositories</h2>
 </div>
 
 <% has_repos = @product.for_profit? && @product.repos.any? %>
 
-<div class="row">
-  <div class="col-xs-12 col-md-12">
-    <p class="text-muted alpha" style="margin-bottom: 20px;">
-      <%= @product.name %> uses GitHub repositories to manage the product's development
-      process. Repos give a clear history of every change to the codebase
-      &mdash; even changes to PNGs! Not sure what a repo is? Not to worry
-      &mdash; you can crash course
-      <a href="http://git-scm.com/book/en/Getting-Started-Git-Basics">here</a>.
-    </p>
-    <% if has_repos %>
-      <h6>Current Repositories</h6>
-      <div class="table-responsive">
-        <table class="table">
-          <tbody>
-            <% @product.repos.each do |repo| %>
-              <tr>
-                <td>
-                  <i class="icon icon-github dropdown-glyph"></i>
-                  <a href="<%= repo.url %>" data-track="product.repo.clicked">
-                    <%= repo.name %>
-                  </a>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    <% else %>
-      <div class="well well-lg">
-        There don't seem to be any repos for this product yet.
-      </div>
-    <% end %>
-
-    <% if @product.slug && can?(:update, @product) %>
-      <h6>Add a new repository</h6>
-
-      <form role="form" class="form" method='post' action="<%= product_repos_path(@product) %>">
-        <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-        <div data-react-class="InputPreview"
-            data-react-props="<%= {
-              addonText: 'github.com/' + ENV["GITHUB_PRODUCTS_ORG"] + '/' + @product.slug,
-              buttonText: 'Create',
-              placeholder: 'Repository suffix',
-              inputName: 'repository[name]'
-            }.to_json %>">
+<div class="sheet-body">
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <p class="text-muted alpha" style="margin-bottom: 20px;">
+        <%= @product.name %> uses GitHub repositories to manage the product's development
+        process. Repos give a clear history of every change to the codebase
+        &mdash; even changes to PNGs! Not sure what a repo is? Not to worry
+        &mdash; you can crash course
+        <a href="http://git-scm.com/book/en/Getting-Started-Git-Basics">here</a>.
+      </p>
+      <% if has_repos %>
+        <h6>Current Repositories</h6>
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <% @product.repos.each do |repo| %>
+                <tr>
+                  <td>
+                    <i class="icon icon-github dropdown-glyph"></i>
+                    <a href="<%= repo.url %>" data-track="product.repo.clicked">
+                      <%= repo.name %>
+                    </a>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
-      </form>
-      <br>
-    <% end %>
+      <% else %>
+        <div class="well well-lg">
+          There don't seem to be any repos for this product yet.
+        </div>
+      <% end %>
+
+      <% if @product.slug && can?(:update, @product) %>
+        <h6>Add a new repository</h6>
+
+        <form role="form" class="form" method='post' action="<%= product_repos_path(@product) %>">
+          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+          <div data-react-class="InputPreview"
+              data-react-props="<%= {
+                addonText: 'github.com/' + ENV["GITHUB_PRODUCTS_ORG"] + '/' + @product.slug,
+                buttonText: 'Create',
+                placeholder: 'Repository suffix',
+                inputName: 'repository[name]'
+              }.to_json %>">
+          </div>
+        </form>
+        <br>
+      <% end %>
+    </div>
   </div>
 </div>
