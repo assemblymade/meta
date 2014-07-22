@@ -25,7 +25,7 @@
                  }.to_json %>" />
           </li>
 
-          <li style="padding-right: 0;">
+          <!-- <li style="padding-right: 0;">
             <div class="toggler toggler-sm">
               <div data-react-class="JoinTeam"
                    data-react-props="<%= {
@@ -37,20 +37,19 @@
                    }.to_json %>">
               </div>
             </div>
-          </li>
+          </li> -->
 
           <li>
-            <div class="btn-group">
+            <div class="toggler toggler-sm btn-group">
               <!-- FIXME: There shouldn't be any need for a magic number margin-bottom here -->
               <!-- FIXME: There also shouldn't be a need for the border-radius magic -->
-              <button
+              <a
                   class="btn btn-primary btn-sm dropdown-toggle"
-                  type="button"
                   data-toggle="dropdown"
-                  style="margin-bottom: 15px; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                  style="margin-bottom: 13px;">
                 Follow
                 <span class="icon icon-chevron-down"></span>
-              </button>
+              </a>
               <a
                   class="btn btn-primary btn-sm"
                   type="button"
