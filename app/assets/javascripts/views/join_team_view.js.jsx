@@ -123,6 +123,8 @@ var JoinTeam = React.createClass({
       }
     );
 
+    $('#edit-membership-modal').modal('show');
+
     Dispatcher.dispatch({
       action: 'addPerson',
       data: { user: this.props.membership },
