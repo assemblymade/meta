@@ -9,8 +9,6 @@ class Event < ActiveRecord::Base
   belongs_to :wip, touch: true, counter_cache: true
 
   has_many :activities, as: :subject
-  has_many :tips, foreign_key: 'via_id'
-  has_many :tippers, through: :tips, source: :from
 
   after_commit -> { self.wip.event_added(self); }, on: :create
 
@@ -99,6 +97,10 @@ class Event < ActiveRecord::Base
 
   def to_param
     number
+  end
+
+  def active_model_serializer
+    "#{self.class.name}Serializer".safe_constantize || EventSerializer
   end
 
   def self.slug

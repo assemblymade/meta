@@ -6,7 +6,10 @@
 <div class="row">
   <div class="col-md-9 col-xs-9">
     <div id="discussion-view-el">
-      <%= render 'wips/discussion', events: @events %>
+      <div data-react-class="Discussion" data-react-props="<%= {
+        canAward: can?(:award, @wip),
+        activities: ActiveModel::ArraySerializer.new(@activities, scope: current_user, each_serializer: ActivitySerializer).as_json
+      }.to_json %>"></div>
 
       <div class="well js-upvote-reminder" style="display:none">
         You've commented on this Bounty but you haven't upvoted. Your upvotes reward people with more coins for completing Bounties which helps make <%= @product.name %> a better product.
@@ -29,19 +32,9 @@
 <script>
   app.product = new Product(<%= json @product, scope: current_user %>);
   app.wip = new Wip(<%== WipSerializer.new(@wip, scope: current_user).to_json %>);
-  app.wipEvents = new WipEvents(<%== @wip.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
-    url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
-  });
-
-  $(document).ready(function() {
-    <%= render 'wips/add_tips_to_wip_events' %>
-
-    app.discussionView = new DiscussionView({
-      el: $('#discussion-view-el'),
-      tipsPath: '<%= product_tips_path(@wip.product) %>',
-      model: app.wip
-    });
-  })
-
   analytics.track('product.wip.viewed', <%== WipAnalyticsSerializer.new(@wip, scope: current_user).to_json %>)
+  new DiscussionInputView({
+    el: $('.js-new-event'),
+    model: app.wip
+  });
 </script>

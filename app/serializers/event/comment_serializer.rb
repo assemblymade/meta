@@ -1,6 +1,7 @@
 # This one has been cut down to be used in chat. It has no reference to the author of the comment as that is stored
 # in the activity object
 class Event::CommentSerializer < ApplicationSerializer
+  include ReadraptorTrackable
   include MarkdownHelper
 
   attributes :anchor, :body_html, :number, :timestamp

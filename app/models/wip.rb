@@ -11,7 +11,7 @@ class Wip < ActiveRecord::Base
   belongs_to :user
   belongs_to :closer, class_name: 'User'
 
-  has_many :activities, as: :subject
+  has_many :activities, as: :target
   has_many :comments, class_name: 'Event::Comment'
   has_many :events
   has_many :milestones, through: :milestone_tasks

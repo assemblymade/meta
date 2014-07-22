@@ -16,7 +16,7 @@ ASM::Application.routes.draw do
   end
 
   root :to => 'pages#home'
-  
+
   get '/home2' => 'pages#home2'
 
   get '/still-field' => redirect('/discover') # bad product
@@ -26,6 +26,7 @@ ASM::Application.routes.draw do
 
   # Internal
   get '/styleguide' => 'styleguide#index'
+  get '/playground' => 'playground#index'
   get '/playground/:action', controller: 'playground'
 
   # Legacy

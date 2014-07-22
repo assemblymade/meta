@@ -1,0 +1,30 @@
+<% @product = Product.find_by!(slug: 'asm') %>
+<% @wip = @product.wips.find_by(number: -1) %>
+<% @activities = @wip.activities.order(:created_at) %>
+
+<div class="page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2"></div>
+
+      <div class="col-md-8">
+        <div class="sheet">
+          <div class="sheet-body">
+            <div data-react-class="Discussion" data-react-props="<%= {
+              canAward: can?(:award, @wip),
+              activities: ActiveModel::ArraySerializer.new(
+                @activities, scope: current_user, each_serializer: ActivitySerializer
+              ).as_json
+            }.to_json %>">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  app.product = new Product(<%= json @product, scope: current_user %>);
+  app.wip = new Wip(<%== WipSerializer.new(@wip, scope: current_user).to_json %>);
+</script>

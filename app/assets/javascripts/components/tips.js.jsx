@@ -62,7 +62,7 @@ window.TipsUI = React.createClass({
         <div className={totalCents > 0 ? 'text-coins' : null}>
           <a ref="button" href="javascript:;" data-placement="top" data-toggle="tooltip" title={tooltip} onClick={this.currentUserCanTip() ? this.handleClick : null}>
             <span className="icon icon-app-coin"></span>
-            {numeral(this.totalCents() / 100).format('0,0')}
+            <span> {numeral(this.totalCents() / 100).format('0,0')}</span>
           </a>
           {tippers}
         </div>
@@ -125,7 +125,7 @@ window.TipsUI = React.createClass({
 var Tippers = React.createClass({
   render: function() {
     return (
-      <span className="text-muted">&mdash; tipped by
+      <span className="text-muted">&mdash; tipped by &nbsp;
         <ul className="list-inline-media">
           {_.map(this.props.tips, this.row)}
         </ul>

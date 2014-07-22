@@ -34,8 +34,9 @@ class WipsController < ProductController
 
   def show
     @watchers = @wip.watchers.to_a
+    @activities = @wip.activities.order(:created_at)
 
-    @events = Event.render_events(@wip.events.order(:number), current_user)
+    # @events = Event.render_events(@wip.events.order(:number), current_user)
 
     respond_to do |format|
       format.html
@@ -189,7 +190,6 @@ class WipsController < ProductController
     else
       @wip = @product.wips.find_by!(number: number).decorate
     end
-    @events = @wip.events.order(:number)
 
     # special case redirect to milestones
     if @wip.type.nil?

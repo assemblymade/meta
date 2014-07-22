@@ -1,3 +1,3 @@
-class Event::CodeAddedSerializer < EventSerializer
+class Event::CodeAddedSerializer < ApplicationSerializer
   has_one :deliverable
 end
