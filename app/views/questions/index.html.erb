@@ -6,7 +6,7 @@
   <div class="page page-flat">
     <div class="container">
       <div class="row">
-        <div class="col-md-10 col-xs-10 col-md-offset-1 col-xs-offset-1">
+        <div class="col-md-10 col-md-offset-1">
 
           <div class="page-header">
             <ol class="breadcrumb omega">
@@ -17,7 +17,23 @@
           </div>
 
           <div class="row">
-            <div class="col-md-8 col-xs-8 copy">
+
+            <div class="col-md-4 col-md-push-8">
+              <div class="panel panel-default">
+                <!-- <div class="panel-heading">
+                  <h6 class="panel-title">Areas</h6>
+                </div> -->
+                <ul class="nav nav-pills nav-stacked">
+                  <% @faq_groups.each do |faq_group| %>
+                    <li class="<%= ('active' if @faq_group.slug == faq_group.slug) %>">
+                      <%= link_to faq_group.name, help_path(faq_group) %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-md-8 col-md-pull-4">
               <ul class="list-unstyled">
                 <% @faq_group.questions.each do |question| %>
                   <li class="question">
@@ -29,21 +45,6 @@
               <hr style="margin-bottom: 48px">
 
               <%= @faq_group.body.html_safe %>
-            </div>
-
-            <div class="col-xs-4">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h6 class="panel-title">Areas</h6>
-                </div>
-                <ul class="nav nav-pills nav-stacked">
-                  <% @faq_groups.each do |faq_group| %>
-                    <li class="<%= ('active' if @faq_group.slug == faq_group.slug) %>">
-                      <%= link_to faq_group.name, help_path(faq_group) %>
-                    </li>
-                  <% end %>
-                </ul>
-              </div>
             </div>
           </div>
 

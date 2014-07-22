@@ -1,7 +1,7 @@
 <% title 'Projects', @product.name %>
 <% activate_nav! :assets %>
 
-<div class="page-header">
+<div class="page-header sheet-header">
   <% if can?(:update, Product) %>
     <div class="pull-right">
       <%= form_for :asset, url: product_assets_path(@product), html: {class: 'js-dropzone-form'} do |f| %>
@@ -22,23 +22,25 @@
   </h2>
 </div>
 
-<div class="row">
-  <% if @assets.empty? %>
-    <div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
-      <div class="well well-lg omega">
-        <h3 class="alpha"><strong>Share Assets</strong></h3>
-        <p class="text-muted omega">
-          Upload images, zip files, PSDs with the rest of the team building <%= @product.name %>.
-        </p>
+<div class="sheet-body">
+  <div class="row">
+    <% if @assets.empty? %>
+      <div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
+        <div class="well well-lg omega">
+          <h3 class="alpha"><strong>Share Assets</strong></h3>
+          <p class="text-muted omega">
+            Upload images, zip files, PSDs with the rest of the team building <%= @product.name %>.
+          </p>
+        </div>
       </div>
-    </div>
-  <% else %>
-    <% @assets.each do |asset| %>
-      <div class="col-md-3 col-xs-3">
-        <%= render 'assets/asset', asset: asset %>
-      </div>
+    <% else %>
+      <% @assets.each do |asset| %>
+        <div class="col-md-3 col-xs-3">
+          <%= render 'assets/asset', asset: asset %>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
 
-<%= paginate @assets, theme: 'twitter-bootstrap-3' %>
+  <%= paginate @assets, theme: 'twitter-bootstrap-3' %>
+</div>

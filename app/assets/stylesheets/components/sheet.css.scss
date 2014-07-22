@@ -5,6 +5,13 @@
   box-shadow: inset 0 0 0 1px $brand-divider;
 }
 
+.sheet-header {
+  padding-top: $line-height-computed * 1;
+  padding-bottom: $line-height-computed * .85;
+  padding-left: $grid-gutter-width * 1.5;
+  padding-right: $grid-gutter-width * 1.5;
+}
+
 .sheet-body {
   padding: ($line-height-computed * 1.5) ($grid-gutter-width * 1.5);
 
@@ -18,28 +25,17 @@
   }
 }
 
+@media screen and (max-width: $screen-xs-max) {
+  .sheet {
+    border-radius: 0;
+    box-shadow: none;
 
+    margin-left: - $grid-gutter-width / 2;
+    margin-right: - $grid-gutter-width / 2;
 
-// Hacky
-
-.sheet-body > .page-header {
-  margin-top: -($line-height-computed * 1.5);
-  margin-left: -($grid-gutter-width * 1.5);
-  margin-right: -($grid-gutter-width * 1.5);
-  margin-bottom: $line-height-computed * 1.25;
-  padding-top: $line-height-computed * 1;
-  padding-bottom: $line-height-computed * .85;
-  padding-left: $grid-gutter-width * 1.5;
-  padding-right: $grid-gutter-width * 1.5;
-}
-
-.sheet-body > .page-footer {
-  margin-top: $line-height-computed * 1.25;
-  margin-left: -($grid-gutter-width * 1.5);
-  margin-right: -($grid-gutter-width * 1.5);
-  margin-bottom: -($line-height-computed * 1.5);
-  padding-top: $line-height-computed * 1;
-  padding-bottom: $line-height-computed * .85;
-  padding-left: $grid-gutter-width * 1.5;
-  padding-right: $grid-gutter-width * 1.5;
+    > .sheet-body,
+    > .sheet-header {
+      padding: $line-height-computed ($grid-gutter-width / 2);
+    }
+  }
 }

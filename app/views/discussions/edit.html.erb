@@ -1,21 +1,23 @@
 <% title "Editing Discussion ##{@wip.number}", @wip.product.name %>
 <% activate_nav! :discussions %>
 
-<div class="page-header">
+<div class="page-header sheet-header">
   <h2 class="page-header-title">Editing Discussion #<%= @wip.number %></h2>
 </div>
 
-<div class="row">
-  <div class="col-xs-8">
-    <%= form_for [@wip.product, @wip], method: :patch do |f| %>
-      <div class="form-group">
-        <%= f.label :title, class: 'control-label' %>
-        <%= f.text_field :title, class: 'form-control' %>
-      </div>
+<div class="sheet-body">
+  <div class="row">
+    <div class="col-xs-8">
+      <%= form_for [@wip.product, @wip], method: :patch do |f| %>
+        <div class="form-group">
+          <%= f.label :title, class: 'control-label' %>
+          <%= f.text_field :title, class: 'form-control' %>
+        </div>
 
-      <div class="form-actions">
-        <button class="btn btn-primary" type="submit">Update task</button>
-      </div>
-    <% end %>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Update task</button>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

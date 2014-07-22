@@ -2,71 +2,73 @@
 <% activate_nav! :ownership %>
 
 <% cache [@product] do %>
-  <div class="page-header">
+  <div class="page-header sheet-header">
     <h2 class="page-header-title"><%= @product.stakeholders %></h2>
   </div>
 
-  <% if !@product.for_profit? %>
-    <%= render 'products/non_profit' %>
-  <% end %>
+  <div class="sheet-body">
+    <% if !@product.for_profit? %>
+      <%= render 'products/non_profit' %>
+    <% end %>
 
-  <% if @user_cents.any? %>
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class="text-left">Partner</th>
-            <th class="text-right">
-              <% if @product.for_profit? %>
-                Coins Earned
-              <% else %>
-                Karma
-              <% end %>
-            </th>
-            <% if @product.for_profit? %>
-              <th class="text-right">
-                Percentage
-              </th>
-            <% end %>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- TODO: Include escrow accounts (styled differently) -->
-          <% @user_cents.each do |user, cents| %>
+    <% if @user_cents.any? %>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
             <tr>
-              <td>
-                <a href="<%= user_path(user) %>">
-                  <%= avatar_tag(user, 20) %>
-                  <span style="margin-left: 4px;"><%= user.username %></span>
-                </a>
-              </td>
-              <td class="text-right">
-                <i class="icon icon-app-coin text-coins small"></i>
-                <%= number_to_currency cents / 100.to_d, precision: 2, unit: '' %>
-              </td>
+              <th class="text-left">Partner</th>
+              <th class="text-right">
+                <% if @product.for_profit? %>
+                  Coins Earned
+                <% else %>
+                  Karma
+                <% end %>
+              </th>
               <% if @product.for_profit? %>
-                <td class="text-right">
-                  <%= number_to_percentage(cents / @total_cents.to_d * 100, precision: 2) %>
-                </td>
+                <th class="text-right">
+                  Percentage
+                </th>
               <% end %>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% else %>
+          </thead>
+          <tbody>
+            <!-- TODO: Include escrow accounts (styled differently) -->
+            <% @user_cents.each do |user, cents| %>
+              <tr>
+                <td>
+                  <a href="<%= user_path(user) %>">
+                    <%= avatar_tag(user, 20) %>
+                    <span style="margin-left: 4px;"><%= user.username %></span>
+                  </a>
+                </td>
+                <td class="text-right">
+                  <i class="icon icon-app-coin text-coins small"></i>
+                  <%= number_to_currency cents / 100.to_d, precision: 2, unit: '' %>
+                </td>
+                <% if @product.for_profit? %>
+                  <td class="text-right">
+                    <%= number_to_percentage(cents / @total_cents.to_d * 100, precision: 2) %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
 
-    <div class="well well-lg omega">
-      <h3 class="alpha">
-        <strong>Become a <%= @product.name %> partner</strong>
-      </h3>
-      <p class="text-muted">
-        Partners have stake in a product's monthly revenue. Become a partner by earning app coins when you complete tasks with bounties or receive tips from the community for being an inspirational community member. <a href="/help/profits#profits-2">Learn more in the FAQ</a>.
-      </p>
+      <div class="well well-lg omega">
+        <h3 class="alpha">
+          <strong>Become a <%= @product.name %> partner</strong>
+        </h3>
+        <p class="text-muted">
+          Partners have stake in a product's monthly revenue. Become a partner by earning app coins when you complete tasks with bounties or receive tips from the community for being an inspirational community member. <a href="/help/profits#profits-2">Learn more in the FAQ</a>.
+        </p>
 
-      <a class="btn btn-success" href="<%= new_product_wip_path(@product) %>">
-        Create a Task
-      </a>
-    </div>
-  <% end %>
+        <a class="btn btn-success" href="<%= new_product_wip_path(@product) %>">
+          Create a Task
+        </a>
+      </div>
+    <% end %>
+  </div>
 <% end %>

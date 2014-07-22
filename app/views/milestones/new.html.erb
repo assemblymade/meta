@@ -1,43 +1,45 @@
 <% title 'New Project', @product.name %>
 <% activate_nav! :projects %>
 
-<div class="page-header">
+<div class="page-header sheet-header">
   <h2 class="page-header-title">Create a new Project</h2>
 </div>
 
-<div class="row">
-  <div class="col-md-9 col-xs-9">
-    <%= form_for @wip, url: product_milestones_path(@product) do |f| %>
+<div class="sheet-body">
+  <div class="row">
+    <div class="col-md-9 col-xs-9">
+      <%= form_for @wip, url: product_milestones_path(@product) do |f| %>
 
-      <div class="form-group">
-        <%= f.label :title, 'Project Name', class: 'control-label' %>
-        <%= f.text_field :title, autofocus: '', data: { 'validate-length' => 2 }, class: 'form-control' %>
-      </div>
+        <div class="form-group">
+          <%= f.label :title, 'Project Name', class: 'control-label' %>
+          <%= f.text_field :title, autofocus: '', data: { 'validate-length' => 2 }, class: 'form-control' %>
+        </div>
 
-      <div class="form-group">
-        <%= f.fields_for :milestone, Milestone.new do |f| %>
-          <%= f.label :description, class: 'form-label' %>
-          <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
-            <%= f.text_area :description, rows: 3, class: 'form-control' %>
-            <div class="dropzone-inner js-dropzone-select">
-              To attach files drag &amp; drop here or <a href="#">select files
-              from your computer</a>...
+        <div class="form-group">
+          <%= f.fields_for :milestone, Milestone.new do |f| %>
+            <%= f.label :description, class: 'form-label' %>
+            <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
+              <%= f.text_area :description, rows: 3, class: 'form-control' %>
+              <div class="dropzone-inner js-dropzone-select">
+                To attach files drag &amp; drop here or <a href="#">select files
+                from your computer</a>...
+              </div>
             </div>
-          </div>
-        <% end %>
-      </div>
+          <% end %>
+        </div>
 
-      <h6>Task list</h6>
-      <%= render partial: 'task_list', object: @wip.milestone %>
+        <h6>Task list</h6>
+        <%= render partial: 'task_list', object: @wip.milestone %>
 
-      <div class="form-actions">
-        <button class="btn btn-primary" data-disable-with="Saving...">
-          Create Project
-        </button>
-      </div>
-    <% end %>
-  </div>
-  <div class="col-md-3 col-xs-3">
-    <%= render 'help_module' %>
+        <div class="form-actions">
+          <button class="btn btn-primary" data-disable-with="Saving...">
+            Create Project
+          </button>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-3 col-xs-3">
+      <%= render 'help_module' %>
+    </div>
   </div>
 </div>

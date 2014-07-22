@@ -1,7 +1,7 @@
 <% title "Bounties", @product.name %>
 <% activate_nav! :bounties %>
 
-<div class="page-header">
+<div class="page-header sheet-header">
   <div class="pull-right">
     <a class="btn btn-success" href="<%= new_product_wip_path(@product) %>">Create a Bounty</a>
   </div>
@@ -19,47 +19,49 @@
   </h2>
 </div>
 
-<div class="row">
-  <% if @product.wips.count > 1 %>
-    <div class="col-md-9 col-xs-9">
+<div class="sheet-body">
+  <div class="row">
+    <% if @product.wips.count > 1 %>
+      <div class="col-md-9">
 
-      <% if params[:tag] %>
-        <h6>Filter: <%= params[:tag] %></h6>
-      <% end %>
-
-      <ol class="list-group list-group-breakout list-group-padded" id="wips-view-el">
-        <% @wips.each do |task| %>
-          <li class="list-group-item">
-            <%= render 'summary', task: task %>
-          </li>
+        <% if params[:tag] %>
+          <h6>Filter: <%= params[:tag] %></h6>
         <% end %>
-      </ol>
 
-      <hr>
+        <ol class="list-group list-group-breakout list-group-padded" id="wips-view-el">
+          <% @wips.each do |task| %>
+            <li class="list-group-item">
+              <%= render 'summary', task: task %>
+            </li>
+          <% end %>
+        </ol>
 
-      <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
-    </div>
+        <hr>
 
-    <div class="col-md-3 col-xs-3">
-      <%= render partial: 'tasks/sidebar' %>
-    </div>
-
-  <% else %>
-    <div class="col-md-6 col-xs-6 col-md-offset-3">
-      <div class="well well-lg omega">
-        <h3 class="alpha"><strong>Create the first task</strong></h3>
-        <p class="text-muted omega">
-          Get started by breaking down a new idea into bite-sized chunks
-          that can upvoted on and prioritized. Writing a great description will
-          make it super easy for anyone to jump in and get to work.
-        </p>
+        <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
       </div>
-    </div>
-  <% end %>
-</div><!-- .row -->
 
-<% unless staff? %>
-  <script>
-    analytics.track('product.wips.viewed', <%== ProductAnalyticsSerializer.new(@product).to_json %>)
-  </script>
-<% end %>
+      <div class="col-md-3">
+        <%= render partial: 'tasks/sidebar' %>
+      </div>
+
+    <% else %>
+      <div class="col-md-6 col-md-offset-3">
+        <div class="well well-lg omega">
+          <h3 class="alpha"><strong>Create the first task</strong></h3>
+          <p class="text-muted omega">
+            Get started by breaking down a new idea into bite-sized chunks
+            that can upvoted on and prioritized. Writing a great description will
+            make it super easy for anyone to jump in and get to work.
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div><!-- .row -->
+
+  <% unless staff? %>
+    <script>
+      analytics.track('product.wips.viewed', <%== ProductAnalyticsSerializer.new(@product).to_json %>)
+    </script>
+  <% end %>
+</div>

@@ -4,55 +4,57 @@
 
 <%= render 'header' %>
 
-<div class="row">
+<div class="sheet-body">
+  <div class="row">
 
-  <div class="col-md-9 col-xs-9">
-    <div id="discussion-view-el">
-      <%= render 'wips/discussion', events: @events %>
-      <%= render 'new_event_form' %>
+    <div class="col-md-9">
+      <div id="discussion-view-el">
+        <%= render 'wips/discussion', events: @events %>
+        <%= render 'new_event_form' %>
+      </div>
+    </div>
+
+
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h6 class="panel-title">Watchers</h6>
+        </div>
+        <div class="panel-body">
+          <ul class="list-grid omega">
+            <% @wip.watchers.each do |user| %>
+              <li>
+                <a href="<%= user_path(user) %>" title="@<%= user.username %>">
+                  <%= avatar_tag(user, 21) %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
+  <% if signed_in? %>
+    <img class="hidden" src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@wip).first, current_user.id).url %>">
+  <% end %>
 
-  <div class="col-md-3 col-xs-3">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h6 class="panel-title">Watchers</h6>
-      </div>
-      <div class="panel-body">
-        <ul class="list-grid omega">
-          <% @wip.watchers.each do |user| %>
-            <li>
-              <a href="<%= user_path(user) %>" title="@<%= user.username %>">
-                <%= avatar_tag(user, 21) %>
-              </a>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<% if signed_in? %>
-  <img class="hidden" src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@wip).first, current_user.id).url %>">
-<% end %>
-
-<script>
-  app.product = new Product(<%= json @product, scope: current_user %>);
-  app.wip = new Wip(<%== WipSerializer.new(@wip).to_json %>);
-  app.wipEvents = new WipEvents(<%== @wip.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
-    url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
-  });
-
-  $(document).ready(function() {
-    <%= render 'wips/add_tips_to_wip_events' %>
-
-    new DiscussionView({
-      el: $('#discussion-view-el'),
-      model: app.wip
+  <script>
+    app.product = new Product(<%= json @product, scope: current_user %>);
+    app.wip = new Wip(<%== WipSerializer.new(@wip).to_json %>);
+    app.wipEvents = new WipEvents(<%== @wip.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
+      url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
     });
-  })
 
-  analytics.track('product.wip.viewed', <%== WipAnalyticsSerializer.new(@wip, scope: current_user).to_json %>)
-</script>
+    $(document).ready(function() {
+      <%= render 'wips/add_tips_to_wip_events' %>
+
+      new DiscussionView({
+        el: $('#discussion-view-el'),
+        model: app.wip
+      });
+    })
+
+    analytics.track('product.wip.viewed', <%== WipAnalyticsSerializer.new(@wip, scope: current_user).to_json %>)
+  </script>
+</div>

@@ -1,7 +1,7 @@
 <% title @product.name, @product.pitch %>
 <% activate_nav! :about %>
 
-<div class="page-header">
+<div class="page-header sheet-header">
   <% if can?(:update, @product) %>
     <a style="position: relative; top: 4px;" class="btn btn-default btn-sm pull-right" href="<%= edit_product_path(@product) %>">Edit Product</a>
   <% end %>
@@ -14,30 +14,32 @@
   <% end %>
 </div>
 
-<div class="row">
-  <div class="col-md-9">
+<div class="sheet-body">
+  <div class="row">
+    <div class="col-md-9">
 
-    <!-- Body -->
-    <div class="markdown-normalized text-longform">
-      <%= render 'products/description', product: @product %>
+      <!-- Body -->
+      <div class="markdown-normalized text-longform">
+        <%= render 'products/description', product: @product %>
+      </div>
     </div>
-  </div>
 
 
-  <div class="col-md-3">
+    <div class="col-md-3">
 
-    <% cache [@product, 'links'] do %>
-      <%= render 'products/links' %>
-      <%= render 'products/people' %>
-    <% end %>
+      <% cache [@product, 'links'] do %>
+        <%= render 'products/links' %>
+        <%= render 'products/people' %>
+      <% end %>
 
-  </div>
-</div><!-- .row -->
+    </div>
+  </div><!-- .row -->
 
-<% if current_user.try(:staff?) != true %>
-  <script>
-    analytics.track('product.viewed', <%==
-      ProductAnalyticsSerializer.new(@product, scope: current_user).to_json
-    %>);
-  </script>
-<% end %>
+  <% if current_user.try(:staff?) != true %>
+    <script>
+      analytics.track('product.viewed', <%==
+        ProductAnalyticsSerializer.new(@product, scope: current_user).to_json
+      %>);
+    </script>
+  <% end %>
+</div>
