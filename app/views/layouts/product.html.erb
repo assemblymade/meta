@@ -40,78 +40,16 @@
           </li> -->
 
           <li>
-            <div class="toggler toggler-sm btn-group">
-              <!-- FIXME: There shouldn't be any need for a magic number margin-bottom here -->
-              <!-- FIXME: There also shouldn't be a need for the border-radius magic -->
-              <a
-                  class="btn btn-primary btn-sm dropdown-toggle"
-                  data-toggle="dropdown"
-                  style="margin-bottom: 13px;">
-                Follow
-                <span class="icon icon-chevron-down"></span>
-              </a>
-              <a
-                  class="btn btn-primary btn-sm"
-                  type="button"
-                  href="<%= product_watchers_path(@product) %>"
-                  style="opacity: 0.5; border-top-right-radius: 2px; border-bottom-right-radius: 2px;">
-                <%= @product.watchings_count %>
-              </a>
-              <ul
-                  class="dropdown-menu dropdown-menu-right"
-                  role="menu"
-                  style="width: auto; position: absolute; top: 35px; padding-top: 0;">
-                <li
-                    role="presentation"
-                    class="dropdown-header"
-                    style="color: #a6a6a6; background-color: #f3f3f3;">
-                  <strong>Notifications</strong>
-                  <!-- <span class="pull-right">
-                    <a href="/settings">Settings</a>
-                  </span> -->
-                </li>
-                <li role="presentation" class="textcomplete-item">
-                  <a role="menuitem" tabindex="-1" href="<%= product_unfollow_path(@product) %>" data-method="post">
-                    <p style="margin-bottom: 0; font-size: 14px;">
-                      <strong>Not following</strong>
-                    </p>
-                    <span class="text-muted" style="font-size: 14px;">
-                      Only notified when participating or @mentioned
-                    </span>
-                    <% if !@product.watching?(current_user) %>
-                      <span class="pull-right icon icon-circle" style="color: green;"></span>
-                    <% end %>
-                  </a>
-                </li>
-
-                <li role="presentation" class="textcomplete-item">
-                  <a role="menuitem" tabindex="-1" href="<%= product_follow_path(@product) %>" data-method="post">
-                    <p style="margin-bottom: 0; font-size: 14px;">
-                      <strong>Follow updates</strong>
-                    </p>
-                    <span class="text-muted" style="font-size: 14px;">
-                      Be notified of business updates, and when participating or @mentioned
-                    </span>
-                    <% if @product.watching?(current_user) %>
-                      <span class="pull-right icon icon-circle" style="color: green;"></span>
-                    <% end %>
-                  </a>
-                </li>
-
-                <li role="presentation" class="textcomplete-item">
-                  <a role="menuitem" tabindex="-1" href="<%= subscribe_product_path(@product) %>" data-method="post">
-                    <p style="margin-bottom: 0; font-size: 14px;">
-                      <strong>Follow everything</strong>
-                    </p>
-                    <span class="text-muted" style="font-size: 14px;">
-                      Be notified of all discussions, business updates, and when participating or @mentioned
-                    </span>
-                    <% if @product.subscribed?(current_user) %>
-                      <span class="pull-right icon icon-circle" style="color: green;"></span>
-                    <% end %>
-                  </a>
-                </li>
-              </ul>
+            <div
+                data-react-class="Dropdown"
+                data-react-props="<%= {
+                  productWatchersPath: product_watchers_path(@product),
+                  productWatchersCount: @product.watchings_count,
+                  productUnfollowPath: product_unfollow_path(@product),
+                  productFollowPath: product_follow_path(@product),
+                  productSubscribePath: subscribe_product_path(@product),
+                  watchingState: @product.watching_state(current_user)
+                }.to_json %>">
             </div>
           </li>
         </ul>

@@ -3,7 +3,7 @@ class ProductsController < ProductController
 
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
   before_action :set_product,
-    only: [:show, :edit, :update, :follow, :metrics, :flag, :feature, :launch]
+    only: [:show, :edit, :update, :follow, :unfollow, :subscribe, :unsubscribe, :metrics, :flag, :feature, :launch]
 
   def new
     @product = Product.new

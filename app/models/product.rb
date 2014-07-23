@@ -356,6 +356,16 @@ class Product < ActiveRecord::Base
     Watching.watched?(user, self)
   end
 
+  def watching_state(user)
+    if subscribed?(user)
+      return 'subscribed'
+    elsif watching?(user)
+      return 'watching'
+    else
+      return 'not watching'
+    end
+  end
+
   def poster_image
     self.logo || PosterImage.new(self)
   end
