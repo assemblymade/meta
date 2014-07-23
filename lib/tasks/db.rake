@@ -39,4 +39,9 @@ namespace :db do
   end
 
   task :restore => ['db:download:generate', 'db:download:latest', 'db:download:load', 'db:download:clean', 'db:migrate']
+
+  desc 'ActiveRecord can you shut up for 30 minutes?'
+  task :mute => :environment do
+    ActiveRecord::Base.logger = nil
+  end
 end

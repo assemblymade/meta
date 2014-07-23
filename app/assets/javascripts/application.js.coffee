@@ -18,6 +18,7 @@
 
 #= require_self
 #= require ./main
+#= require functional
 #= require_tree ./models
 #= require_tree ./collections
 #= require_tree ./views

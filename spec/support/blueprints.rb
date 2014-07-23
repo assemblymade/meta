@@ -6,6 +6,12 @@ Activity.blueprint do
   target   { Event::Comment.make! }
 end
 
+Activities::Start.blueprint do
+  subject  { Task.make! }
+  actor    { User.make! }
+  target   { Event::Comment.make! }
+end
+
 Attachment.blueprint do
   user
   name { Faker::Name.name }
@@ -54,6 +60,12 @@ Preorder.blueprint do
   user
   perk
   card_id { "card_103PgS2eZvKYlo2CpomG3L9L" }
+end
+
+Story.blueprint do
+  verb          { 'Start' }
+  subject_type  { 'Discussion' }
+  activities    { [Activities::Start.make!(subject: Discussion.make!)] }
 end
 
 Task.blueprint do

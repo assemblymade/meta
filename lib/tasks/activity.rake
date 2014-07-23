@@ -17,15 +17,17 @@ namespace :activity do
   desc "Rebuilds all the ActivityStreams in Redis"
   task :rebuild => [:destroy, :build]
 
-  desc "Rebuild user stream"
-  task :user => :environment do
-    Activity.where.not(type: Activities::Chat).includes(:actor, :subject, :target).find_each do |activity|
-      if activity.target
-        activity.target.watchers.each do |watcher|
-          stream = ActivityStream.new(watcher)
-          stream.redis_push(activity)
-        end
-      end
+  desc "Prune out weird and old activities"
+  task :prune => :environment do
+    ActiveRecord::Base.logger = nil
+
+    activities = Activity.all.includes(:subject, :target).select do |a|
+      a.subject.nil? || a.target.nil?
+    end
+    puts "pruning #{activities.size} activities"
+    activities.each do |a|
+      puts "  activity: #{a.inspect}"
+      a.destroy
     end
   end
 end

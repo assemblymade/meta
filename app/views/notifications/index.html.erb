@@ -6,9 +6,10 @@
       <div class="col-md-5">
         <div class="sheet">
           <div class="sheet-body">
-            <div data-react-class="ActivityFeed" data-react-props="<%= {
-              activities: ActiveModel::ArraySerializer.new(
-                @activities, scope: current_user, each_serializer: ActivitySerializer
+            <div data-react-class="NewsFeed" data-react-props="<%= {
+              actors: Hash[ActiveModel::ArraySerializer.new(@users).as_json.map{|u| [u[:id], u]}],
+              stories: ActiveModel::ArraySerializer.new(
+                @stories, scope: current_user, each_serializer: StorySerializer
               ).as_json
             }.to_json %>">
             </div>

@@ -7,12 +7,6 @@
 (function() {
   var CO = CONSTANTS.COIN_OWNERSHIP;
 
-  function dot(prop) {
-    return function(object) {
-      return object[prop]
-    }
-  }
-
   function preventDefault(fn) {
     return function(e) {
       e.preventDefault()
@@ -48,7 +42,7 @@
     },
 
     totalCoins: function() {
-      var sharerCoins = _.reduce(_.map(this.state.sharers, dot('coins')), function(memo, num) { return memo + num; }, 0)
+      var sharerCoins = _.reduce(_.map(this.state.sharers, func.dot('coins')), function(memo, num) { return memo + num; }, 0)
 
       return sharerCoins + this.state.creator.coins
     },

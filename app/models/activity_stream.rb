@@ -1,3 +1,4 @@
+# TODO: This is only used to render chat. Deprecate this when chat doesn't rely on activities
 class ActivityStream
   include Enumerable
 
@@ -10,7 +11,7 @@ class ActivityStream
   end
 
   def self.deserialize(*strs)
-    Activity.where(id: strs).includes(:actor, :subject, :target, :tips)
+    Activity.where(id: strs).includes(:activities)
   end
 
   def self.delete_all
@@ -61,7 +62,7 @@ class ActivityStream
     PusherWorker.perform_async(
       meta_channel,
       "add",
-      ActivitySerializer.new(activity).to_json,
+      StorySerializer.new(activity).to_json,
       socket_id: activity.socket_id
     )
   end

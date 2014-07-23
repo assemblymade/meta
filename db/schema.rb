@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140722194338) do
+ActiveRecord::Schema.define(version: 20140723000455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20140722194338) do
     t.uuid     "target_id"
     t.string   "target_type"
     t.datetime "created_at"
+    t.uuid     "story_id"
   end
 
   create_table "allocation_events", id: false, force: true do |t|
@@ -404,6 +405,13 @@ ActiveRecord::Schema.define(version: 20140722194338) do
     t.uuid     "user_id",    null: false
     t.string   "body",       null: false
     t.datetime "created_at", null: false
+  end
+
+  create_table "stories", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "verb",         null: false
+    t.string   "subject_type", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "stream_events", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

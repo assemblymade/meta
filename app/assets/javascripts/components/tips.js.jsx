@@ -5,16 +5,6 @@
 COIN_INCREMENT = 100
 DEBOUNCE_TIMEOUT = 2000
 
-function dot(prop) {
-  return function(object) {
-    return object[prop]
-  }
-}
-
-function add(a, b) {
-  return a + b
-}
-
 window.TipsUI = React.createClass({
   getDefaultProps: function() {
     var currentUser = app.currentUser()
@@ -114,7 +104,7 @@ window.TipsUI = React.createClass({
   },
 
   totalCents: function() {
-    return _.reduce(_.map(this.tips(), dot('cents')), add, 0)
+    return _.reduce(_.map(this.tips(), func.dot('cents')), func.add, 0)
   },
 
   tips: function() {
