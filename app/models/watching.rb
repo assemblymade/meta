@@ -13,6 +13,8 @@ class Watching < ActiveRecord::Base
     # find_or_create_by! is broken
     unless where(user: user, watchable: watchable).exists?
       create!(user: user, watchable: watchable)
+    else
+      find_by(user_id: user.id, watchable_id: watchable.id).update_attributes(subscription: false)
     end
   end
 
@@ -22,5 +24,23 @@ class Watching < ActiveRecord::Base
 
   def self.watched?(user, watchable)
     where(user: user, watchable: watchable).any?
+  end
+
+  def self.subscribe!(user, watchable)
+    if where(user: user, watchable: watchable).exists?
+      find_by(user_id: user.id, watchable_id: watchable.id).update_attributes(subscription: true)
+    else
+      create!(user: user, watchable: watchable, subscription: true)
+    end
+  end
+
+  def self.unsubscribe!(user, watchable)
+    if where(user: user, watchable: watchable, subscription: true).exists?
+      find_by(user_id: user.id, watchable_id: watchable.id).update_attributes(subscription: false)
+    end
+  end
+
+  def self.subscribed?(user, watchable)
+    where(user: user, watchable: watchable, subscription: true).any?
   end
 end

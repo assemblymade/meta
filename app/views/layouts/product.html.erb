@@ -60,46 +60,55 @@
               <ul
                   class="dropdown-menu dropdown-menu-right"
                   role="menu"
-                  style="width: auto; position: absolute; padding-top: 0;">
+                  style="width: auto; position: absolute; top: 35px; padding-top: 0;">
                 <li
                     role="presentation"
                     class="dropdown-header"
                     style="color: #a6a6a6; background-color: #f3f3f3;">
                   <strong>Notifications</strong>
-                  <span class="pull-right">
+                  <!-- <span class="pull-right">
                     <a href="/settings">Settings</a>
-                  </span>
+                  </span> -->
                 </li>
                 <li role="presentation" class="textcomplete-item">
-                  <a role="menuitem" tabindex="-1" href="#">
+                  <a role="menuitem" tabindex="-1" href="<%= product_unfollow_path(@product) %>" data-method="post">
                     <p style="margin-bottom: 0; font-size: 14px;">
                       <strong>Not following</strong>
                     </p>
                     <span class="text-muted" style="font-size: 14px;">
                       Only notified when participating or @mentioned
                     </span>
+                    <% if !@product.watching?(current_user) %>
+                      <span class="pull-right icon icon-circle" style="color: green;"></span>
+                    <% end %>
                   </a>
                 </li>
 
                 <li role="presentation" class="textcomplete-item">
-                  <a role="menuitem" tabindex="-1" href="#">
+                  <a role="menuitem" tabindex="-1" href="<%= product_follow_path(@product) %>" data-method="post">
                     <p style="margin-bottom: 0; font-size: 14px;">
                       <strong>Follow updates</strong>
                     </p>
                     <span class="text-muted" style="font-size: 14px;">
-                      Be notified of business updates, and when partcipating or @mentioned
+                      Be notified of business updates, and when participating or @mentioned
                     </span>
+                    <% if @product.watching?(current_user) %>
+                      <span class="pull-right icon icon-circle" style="color: green;"></span>
+                    <% end %>
                   </a>
                 </li>
 
                 <li role="presentation" class="textcomplete-item">
-                  <a role="menuitem" tabindex="-1" href="#">
+                  <a role="menuitem" tabindex="-1" href="<%= subscribe_product_path(@product) %>" data-method="post">
                     <p style="margin-bottom: 0; font-size: 14px;">
                       <strong>Follow everything</strong>
                     </p>
                     <span class="text-muted" style="font-size: 14px;">
                       Be notified of all discussions, business updates, and when participating or @mentioned
                     </span>
+                    <% if @product.subscribed?(current_user) %>
+                      <span class="pull-right icon icon-circle" style="color: green;"></span>
+                    <% end %>
                   </a>
                 </li>
               </ul>

@@ -332,6 +332,18 @@ class Product < ActiveRecord::Base
     slug || id
   end
 
+  def subscribe!(user)
+    Watching.subscribe!(user, self)
+  end
+
+  def unsubscribe!(user)
+    Watching.unsubscribe!(user, self)
+  end
+
+  def subscribed?(user)
+    Watching.subscribed?(user, self)
+  end
+
   def watch!(user)
     Watching.watch!(user, self)
   end

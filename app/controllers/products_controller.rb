@@ -94,17 +94,22 @@ class ProductsController < ProductController
     render nothing: true, :status => :ok
   end
 
+  def unfollow
+    @product.unwatch!(current_user)
+    render nothing: true, :status => :ok
+  end
+
   def subscribe
     authenticate_user!
     set_product
-    @product.watch!(current_user)
+    @product.subscribe!(current_user)
     respond_with @product, location: product_wips_path(@product)
   end
 
   def unsubscribe
     authenticate_user!
     set_product
-    @product.unwatch!(current_user)
+    @product.unsubscribe!(current_user)
     respond_with @product, location: product_wips_path(@product)
   end
 

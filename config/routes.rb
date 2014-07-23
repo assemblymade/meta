@@ -16,7 +16,7 @@ ASM::Application.routes.draw do
   end
 
   root :to => 'pages#home'
-  
+
   get '/home2' => 'pages#home2'
 
   get '/still-field' => redirect('/discover') # bad product
@@ -208,6 +208,7 @@ ASM::Application.routes.draw do
     get 'admin'
     post 'feature'
     post 'follow'
+    post 'unfollow'
     post 'subscribe', as: :subscribe, on: :member
     post 'unsubscribe', as: :unsubscribe, on: :member
     get 'log' => 'stakes#show'
