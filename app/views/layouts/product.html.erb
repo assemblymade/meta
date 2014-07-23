@@ -16,16 +16,7 @@
       <div class="col-md-10">
 
         <ul class="list list-inline pull-right">
-          <li>
-            <div data-react-class="Share"
-                 data-react-props="<%= {
-                   url: product_url(@product),
-                   title: "Share #{@product.name} with the world",
-                   shareText: "Check out #{@product.name} – #{ @product.pitch} on Assembly",
-                 }.to_json %>" />
-          </li>
-
-          <!-- <li style="padding-right: 0;">
+          <li style="padding-right: 0;">
             <div class="toggler toggler-sm">
               <div data-react-class="JoinTeam"
                    data-react-props="<%= {
@@ -37,7 +28,16 @@
                    }.to_json %>">
               </div>
             </div>
-          </li> -->
+          </li>
+          
+          <li>
+            <div data-react-class="Share"
+                 data-react-props="<%= {
+                   url: product_url(@product),
+                   title: "Share #{@product.name} with the world",
+                   shareText: "Check out #{@product.name} – #{ @product.pitch} on Assembly",
+                 }.to_json %>" />
+          </li>
 
           <li>
             <div

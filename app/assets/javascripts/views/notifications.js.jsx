@@ -30,17 +30,21 @@ var Notifications = React.createClass({
   componentWillMount: function() {
     this.props.title = document.title
     var _this = this;
+
     $(document).bind('readraptor.tracked', this.fetchNotifications);
     $(window).bind('storage', this.storedAckChanged);
+
     this.onPush(function(event, msg) {
       if (_.contains(msg.mentions, _this.props.username)) {
         _this.desktopNotify(msg);
       }
       _this.fetchNotifications();
     });
+
     window.visibility(function(visible) {
       if (visible) { _this.fetchNotifications(); }
     });
+
     _this.fetchNotifications();
   },
 
@@ -99,10 +103,10 @@ var Notifications = React.createClass({
       return (<span />);
     }
     badge = null;
-    var classes = "icon-bell";
+    var classes = "icon-bubble";
     var total = this.badgeCount();
     if (total > 0) {
-      badge = <span className="badge badge-notification">{total}</span>
+      badge = <span className="indicator indicator-success" style={{ 'font-size': '36px', 'background-color': '#74ea4f', 'margin-bottom': '-5px' }}></span>
       classes += " glyphicon-highlight";
     }
 
@@ -111,7 +115,7 @@ var Notifications = React.createClass({
     var sorted = this.sortByCount(this.state.data)
     return (
       <li>
-        <a href="#notifications" data-toggle="dropdown" onClick={this.onClick} style={{"padding-bottom" : "12px"}}>
+        <a href="#notifications" data-toggle="dropdown" onClick={this.onClick}>
           <span className={classes}></span>
           {badge}
         </a>
@@ -174,7 +178,7 @@ var NotificationsList = React.createClass({
     var productNodes = this.props.data.map(function(entry){
       badge = null;
       if (entry.count > 0) {
-        badge = <span className="badge pull-right">{entry.count}</span>
+        badge = <span className="indicator indicator-success pull-right" style={{ 'position': 'relative', 'top': '10px' }}></span>
       }
 
       var url = entry.product.url + '/chat';
