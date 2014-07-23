@@ -12,6 +12,15 @@ var CONSTANTS = {
     }
   },
 
+  DROPDOWN: {
+    ACTIONS: {
+      UPDATE_SELECTED: 'updateSelected'
+    },
+    EVENTS: {
+      SELECTED_UPDATED: 'dropdown:selectedUpdated'
+    }
+  },
+
   INTEREST_PICKER: {
     ACTIONS: {
       ADD_INTEREST: 'addInterest',

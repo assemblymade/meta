@@ -16,32 +16,6 @@
       <div class="col-md-10">
 
         <ul class="list list-inline pull-right">
-          <li>
-            <div data-react-class="Share"
-                 data-react-props="<%= {
-                   url: product_url(@product),
-                   title: "Share #{@product.name} with the world",
-                   shareText: "Check out #{@product.name} – #{ @product.pitch} on Assembly",
-                 }.to_json %>" />
-          </li>
-          <li>
-            <div class="toggler toggler-sm">
-              <% if signed_in? && @product.watching?(current_user) %>
-                <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post">
-                  <i class="icon icon-eye" style="margin-right: 2px;"></i>
-                  Unwatch
-                </a>
-              <% else %>
-                <a class="toggler-btn btn btn-primary" href="<%= subscribe_product_path(@product) %>" data-method="post">
-                  <i class="icon icon-eye" style="margin-right: 2px;"></i>
-                  Watch
-                </a>
-              <% end %>
-                <a class="toggler-badge" href="<%= product_watchers_path(@product) %>">
-                  <%= @product.watchings_count %>
-                </a>
-            </div>
-          </li>
           <li style="padding-right: 0;">
             <div class="toggler toggler-sm">
               <div data-react-class="JoinTeam"
@@ -53,6 +27,29 @@
                      membership: TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user) || TeamMembership.new(product: @product, user: current_user)).as_json
                    }.to_json %>">
               </div>
+            </div>
+          </li>
+          
+          <li>
+            <div data-react-class="Share"
+                 data-react-props="<%= {
+                   url: product_url(@product),
+                   title: "Share #{@product.name} with the world",
+                   shareText: "Check out #{@product.name} – #{ @product.pitch} on Assembly",
+                 }.to_json %>" />
+          </li>
+
+          <li>
+            <div
+                data-react-class="Dropdown"
+                data-react-props="<%= {
+                  productWatchersPath: product_watchers_path(@product),
+                  productWatchersCount: @product.watchings_count,
+                  productUnfollowPath: product_unfollow_path(@product),
+                  productFollowPath: product_follow_path(@product),
+                  productSubscribePath: subscribe_product_path(@product),
+                  watchingState: @product.watching_state(current_user)
+                }.to_json %>">
             </div>
           </li>
         </ul>

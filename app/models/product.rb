@@ -332,6 +332,18 @@ class Product < ActiveRecord::Base
     slug || id
   end
 
+  def subscribe!(user)
+    Watching.subscribe!(user, self)
+  end
+
+  def unsubscribe!(user)
+    Watching.unsubscribe!(user, self)
+  end
+
+  def subscribed?(user)
+    Watching.subscribed?(user, self)
+  end
+
   def watch!(user)
     Watching.watch!(user, self)
   end
@@ -342,6 +354,16 @@ class Product < ActiveRecord::Base
 
   def watching?(user)
     Watching.watched?(user, self)
+  end
+
+  def watching_state(user)
+    if subscribed?(user)
+      return 'subscribed'
+    elsif watching?(user)
+      return 'watching'
+    else
+      return 'not watching'
+    end
   end
 
   def poster_image

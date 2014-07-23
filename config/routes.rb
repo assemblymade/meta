@@ -210,6 +210,7 @@ ASM::Application.routes.draw do
     get 'admin'
     post 'feature'
     post 'follow'
+    post 'unfollow'
     post 'subscribe', as: :subscribe, on: :member
     post 'unsubscribe', as: :unsubscribe, on: :member
     get 'log' => 'stakes#show'
