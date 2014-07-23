@@ -1,4 +1,5 @@
 //= require dispatcher
+//= require xhr
 //= require stores/store
 
 var DropdownStore = (function() {
@@ -14,12 +15,8 @@ var DropdownStore = (function() {
 
       var item = data.item;
       var path = data.path;
-      
-      var request = new XMLHttpRequest();
 
-      request.open('POST', path, true);
-      request.setRequestHeader('X-CSRF-Token', document.getElementsByName('csrf-token')[0].content);
-      request.send();
+      window.xhr('POST', path);
 
       _selected = item;
     },
