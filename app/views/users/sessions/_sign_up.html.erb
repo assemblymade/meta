@@ -104,12 +104,15 @@
                 <input type="email" class="form-control" id="user_email" name="user[email]" autocomplete="off" placeholder="Your email">
               </div>
 
-              <div class="sign-up-submit">
+              <div class="clearfix">
                 <button class="btn btn-large btn-default btn-block">
                   Sign up
                 </button>
 
-                <%= render 'users/sessions/disclaimer' %>
+                <p class="text-legal">
+                  By signing up, you agree to Assembly's <a href="<%= tos_path %>">Terms of Service</a>.
+                </p>
+
               </div>
             <% end %>
           </div>

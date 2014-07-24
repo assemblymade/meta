@@ -76,11 +76,8 @@ ASM::Application.routes.draw do
 
     # Registrations
     controller 'users/registrations' do
-      get  '/signup', action: :signup, :as => :new_user_registration
-      get  '/signup/email', action: :new, :as => :new_user_email_registration
+      get  '/signup', action: :new, :as => :new_user_registration
       post '/signup', action: :create, :as => :user_registration
-
-      get '/welcome/tour', action: :welcome, as: :welcome_tour
     end
 
     # settings

@@ -1,23 +1,25 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+
   def facebook
     @user = User.find_by(facebook_uid: auth_hash['uid'])
-
     if @user
       sign_in(@user)
       @user.extra_data = auth_hash['extra']['raw_info'].to_json
       @user.save!
 
-      render json: @user
+      redirect_to after_sign_in_path_for_user
     else
-      render json: {
-        avatar_url: auth_hash,
+      @user = User.new(
+        avatar_url: auth_hash['info']['image'],
         email: auth_hash['info']['email'],
-        extra: auth_hash['extra']['raw_info'],
-        image: auth_hash['info']['image'],
+        extra_data: auth_hash['extra']['raw_info'],
         location: auth_hash['info']['location'],
+        username: auth_hash['info']['nickname'],
         name: auth_hash['info']['name'],
-        uid: auth_hash['uid'],
-      }
+        facebook_uid: auth_hash['uid']
+      )
+
+      render 'users/registrations/new'
     end
   end
 
