@@ -14,8 +14,8 @@ class PublishActivity
   def create_story!
     activity.with_lock do
       Story.create!(
-        verb: activity.class.name.split('::').last,
-        subject_type: activity.subject.class.name.split('::').last
+        verb: activity.verb,
+        subject_type: activity.verb_subject
       ).tap do |story|
         activity.update_attributes story_id: story.id
       end

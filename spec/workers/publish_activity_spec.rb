@@ -6,34 +6,34 @@ describe PublishActivity do
   let(:product) { discussion.product }
 
   it 'creates a story for an activity' do
-    activity = Activities::Start.create!(
+    activity = Activities::Comment.create!(
       actor: actor,
-      subject: discussion,
-      target: product
+      subject: discussion.comments.create!(user: actor, body: 'sup'),
+      target: discussion
     )
 
     PublishActivity.new.perform(activity.id)
 
     expect(Story.first).to have_attributes(
-      verb: 'Start',
+      verb: 'Comment',
       subject_type: 'Discussion',
     )
   end
 
   it 'pushes story into user activity stream' do
-    activity = Activities::Start.create!(
+    activity = Activities::Comment.create!(
       actor: actor,
-      subject: discussion,
-      target: product
+      subject: discussion.comments.create!(user: actor, body: 'sup'),
+      target: discussion
     )
 
     watcher = User.make!
 
-    product.watchings.create!(subscription: true, user: watcher)
+    discussion.watchings.create!(subscription: true, user: watcher)
 
     PublishActivity.new.perform(activity.id)
     expect(NewsFeed.new(watcher).first).to have_attributes(
-      verb: 'Start',
+      verb: 'Comment',
       subject_type: 'Discussion',
     )
   end
