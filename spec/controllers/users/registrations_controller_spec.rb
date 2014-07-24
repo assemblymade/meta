@@ -32,13 +32,4 @@ describe Users::RegistrationsController do
     end
   end
 
-  describe "GET #welcome" do
-
-    it "is successful" do
-      get :welcome
-      expect(response).to be_success
-    end
-
-  end
-
 end
