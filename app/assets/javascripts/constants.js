@@ -12,15 +12,6 @@ var CONSTANTS = {
     }
   },
 
-  DROPDOWN: {
-    ACTIONS: {
-      UPDATE_SELECTED: 'updateSelected'
-    },
-    EVENTS: {
-      SELECTED_UPDATED: 'dropdown:selectedUpdated'
-    }
-  },
-
   INTEREST_PICKER: {
     ACTIONS: {
       ADD_INTEREST: 'addInterest',
@@ -31,6 +22,15 @@ var CONSTANTS = {
       INTEREST_ADDED: 'interestPicker:interestAdded',
       INTEREST_REMOVED: 'interestPicker:interestRemoved',
       POPPED: 'interestPicker:popped'
+    }
+  },
+
+  NOTIFICATION_PREFERENCES_DROPDOWN: {
+    ACTIONS: {
+      UPDATE_SELECTED: 'updateSelected'
+    },
+    EVENTS: {
+      SELECTED_UPDATED: 'notificationPreferencesDropdown:selectedUpdated'
     }
   },
 
