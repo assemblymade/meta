@@ -41,7 +41,7 @@ class Story < ActiveRecord::Base
   # private
 
   def product_subscribers
-    subjects.first.product.watchings.subscribed.map(&:user)
+    subjects.first.try(:product).try(:watchings).try(:subscribed).map(&:user)
   end
 
   def wip_subscribers

@@ -13,8 +13,16 @@ class Activity < ActiveRecord::Base
 
   def self.publish!(opts)
     create!(opts).tap do |a|
+      if a.target.class == Wip
+        auto_subscribe!(a.actor, a.target.product)
+      end
+
       PublishActivity.perform_async(a.id)
     end
+  end
+
+  def self.auto_subscribe!(actor, target)
+    Watching.auto_subscribe!(actor, target)
   end
 
   # make this object tippable
