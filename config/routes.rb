@@ -64,7 +64,7 @@ ASM::Application.routes.draw do
 
 
   devise_for :users,
-    :skip => [:registrations, :sessions, :confirmations, :passwords],
+    :skip => [:registrations, :sessions, :confirmations],
     :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :passwords => 'users/passwords' }
 
   as :user do
@@ -96,10 +96,10 @@ ASM::Application.routes.draw do
     post   '/users/confirmation' => 'users/confirmations#create'
 
     # passwords
-    post   '/users/password' => 'users/passwords#create', :as => :user_password
-    get    '/users/password/edit' => 'users/passwords#edit', :as => :edit_user_password
-    patch  '/users/password' => 'users/passwords#update'
-    put    '/users/password' => 'users/passwords#update'
+    # post   '/users/password' => 'users/passwords#create', :as => :user_password
+    # get    '/users/password/edit' => 'users/passwords#edit', :as => :edit_user_password
+    # patch  '/users/password' => 'users/passwords#update'
+    # put    '/users/password' => 'users/passwords#update'
 
     get    '/users/:id' => 'users#show', :as => :user
     patch  '/users/:id' => 'users#update'

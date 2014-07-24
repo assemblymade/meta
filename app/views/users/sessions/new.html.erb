@@ -23,6 +23,12 @@
               <legend align="center">OR</legend>
             </fieldset>
 
+            <% if flash[:notice].present? %>
+              <div class="alert alert-info" role="alert">
+                <%= flash[:notice] %>
+              </div>
+            <% end %>
+
             <% if flash[:alert].present? %>
               <div class="alert alert-danger" role="alert">
                 <%= flash[:alert] %>
@@ -38,7 +44,7 @@
               <%= f.label :password, class: 'input-label' %>
               <%= f.password_field :password, autocomplete: false, class: 'form-control input-lg' %>
               <div class="help-block">
-                <a href="#">Forgot your password?</a>
+                <a href="<%= new_user_password_path %>">Forgot your password?</a>
               </div>
             </div>
 
