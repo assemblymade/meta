@@ -18,14 +18,10 @@ class window.ChatView extends Backbone.View
     @stuckToBottom = true
 
     @scrollContainer.css(
-      'height':'100px'
       'overflow-x':'hidden'
       'overflow-y':'scroll'
     )
     @scrollContainer.on 'scroll', this.loadMoreWhenNearTop
-
-    $(window).resize(@onWindowResize.bind(this))
-    @onWindowResize()
 
     app.on 'comment:scheduled', @optimisticallyCreateActivity.bind(@)
 
@@ -129,13 +125,7 @@ class window.ChatView extends Backbone.View
          destination: false
        }),
       document.getElementById('suggested-tags')
-    );
-
-  onWindowResize: (e) ->
-    @scrollContainer.css(
-      height: $(window).height() - @scrollPadding
     )
-
 
 fixScroll = (cb) ->
   documentHeight = $(document).height()

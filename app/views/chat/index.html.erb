@@ -1,12 +1,6 @@
 <% title 'Chat', @product.name %>
 <% activate_nav! :chat %>
-<% provide :body_class, 'chat-wrapper' %>
-<% @sheet_style = 'width: 700px;' %>
 <% @disable_footer = true %>
-
-<div class="navbar-fixed-top">
-  <%= render 'shared/navbar' %>
-</div>
 
 <div class="modal fade"
      id="create-task"
@@ -16,21 +10,65 @@
      aria-hidden="true">
 </div>
 
-<div class="js-members" style="width: 230px; position: fixed; margin-left: 670px;"></div>
+<style>
+.page {
+  padding-bottom: 0;
+}
+.chat-wrapper > .row {
+  position: absolute;
+  top: 0;
+}
+.chat-wrapper > .row > .col-md-9 {
+  padding-right: 0;
+}
+.chat-wrapper > .row > .col-md-3 {
+  padding-left: 0;
+}
+</style>
 
-<div class="js-scroll-container" style="width: 100%;">
-  <div class="chat js-chat">
-    <center>
-      <a class="btn btn-default btn-block btn-sm js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>" style="margin-top: 36px;">Load more</a>
-      <br>
-    </center>
+<script>
+  var resizeChatView = function resizeChatView() {
+    var offsetTop = $('.chat-wrapper').offset().top,
+        windowHeight = $(window).innerHeight(),
+        wrapperHeight = windowHeight - offsetTop;
 
-    <div class="timeline chat-timeline js-activity-stream"></div>
+    $('.chat-wrapper').css({height: wrapperHeight});
+
+    var chatActionsHeight = $('.js-chat-actions').outerHeight();
+
+    $('.js-chat,.js-members').css({height: (wrapperHeight - chatActionsHeight)});
+  }
+
+  $(window).resize(resizeChatView)
+  $(document).ready(resizeChatView)
+</script>
+
+<div class="chat-wrapper">
+
+  <div class="row">
+    <div class="col-md-9">
+
+      <div class="chat js-chat">
+        <center>
+          <a class="btn btn-default btn-block btn-sm js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>" style="margin-top: 36px;">Load more</a>
+          <br>
+        </center>
+
+        <div class="timeline chat-timeline js-activity-stream"></div>
+      </div>
+
+    </div>
+    <div class="col-md-3 hidden-xs hidden-sm" style="overflow:hidden">
+      <div class="js-members"></div>
+    </div>
+  </div>
+
+
+  <div class="chat-actions js-chat-actions">
+    <%= render 'discussions/chat_box' %>
   </div>
 </div>
-<div class="chat-actions js-chat-actions" style="margin-bottom:-30px">
-  <%= render 'discussions/chat_box' %>
-</div>
+
 
 
 <script>
@@ -109,7 +147,7 @@
     var chatView = new ChatView({
       el: $('.js-chat'),
       collection: activityStream,
-      scrollContainer: $('.js-scroll-container'),
+      scrollContainer: $('.js-chat'),
       scrollPadding: 168
     });
 
