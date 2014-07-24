@@ -8,6 +8,7 @@ class PublishActivity
 
     story = create_story!
     push_to_feeds!(story)
+    register_with_readraptor!(story)
   end
 
   def create_story!
@@ -25,5 +26,12 @@ class PublishActivity
     story.stream_targets.each do |watcher|
       NewsFeed.new(watcher).push(story)
     end
+  end
+
+  def register_with_readraptor!(story)
+    ReadRaptor::RegisterArticleWorker.perform_async(
+      key: ReadRaptorSerializer.serialize_entity('Story', story.id),
+      recipients: story.stream_targets.map(&:id)
+    )
   end
 end

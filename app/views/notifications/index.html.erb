@@ -19,3 +19,13 @@
     </div>
   </div>
 </div>
+
+<script>
+$.ajax({
+  type: 'GET',
+  url: 'http://localhost:3000/readers/<%= current_user.id %>/articles?<%= @stories.map{|s| "key=Story_#{s.id}" }.join('&'.html_safe) %>',
+  success: function(data) {
+    console.log('success', data)
+  }
+})
+</script>

@@ -30,7 +30,6 @@ class NewsFeed
 
   def push(story)
     redis_push(story)
-    pusher_push(story)
     story
   end
 
@@ -39,15 +38,6 @@ class NewsFeed
       key,
       story.created_at.to_i,
       self.class.serialize(story)
-    )
-  end
-
-  def pusher_push(story)
-    PusherWorker.perform_async(
-      channel,
-      "add",
-      StorySerializer.new(story).to_json,
-      socket_id: story.socket_id
     )
   end
 
