@@ -97,12 +97,6 @@ class ApplicationController < ActionController::Base
     product_wip_url(product, wip, options)
   end
 
-  helper_method :deprecated_stylesheet?
-
-  def deprecated_stylesheet?
-    @deprecated_stylesheet || false
-  end
-
   around_filter :profile if Rails.env == 'development'
 
   def profile

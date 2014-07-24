@@ -8,11 +8,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   after_action :email_welcome_package, only: [:create]
   after_action :claim_invite,          only: [:create]
 
-  def signup
-    @user = User.new
-    @deprecated_stylesheet = true
-  end
-
   def create
     build_resource(sign_up_params)
 
@@ -36,10 +31,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
         format.json { render :json => { errors: resource.errors }, :status => :unprocessable_entity }
       end
     end
-  end
-
-  def welcome
-    @deprecated_stylesheet = true
   end
 
   protected
