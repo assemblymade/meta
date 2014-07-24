@@ -1,0 +1,15 @@
+.hr-line {
+  border: none;
+  border-top: 1px solid $brand-divider;
+  text-align: center;
+  margin: $line-height-computed 0;
+
+  > legend {
+    font-size: 1em;
+    padding: 0 ($padding-base-horizontal);
+    margin: 0 auto;
+    color: $text-muted;
+    border-bottom: 0;
+    width: auto;
+  }
+}
