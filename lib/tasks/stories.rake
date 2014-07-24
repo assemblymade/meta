@@ -20,7 +20,7 @@ namespace :stories do
   task :rebuild => :environment do
     Story.delete_all
     Activity.where('created_at > ?', 7.days.ago).
-             where.not(type: Activities::Chat).includes(:actor, :subject, :target).find_each do |activity|
+             where(type: Activities::Comment).includes(:actor, :subject, :target).find_each do |activity|
 
       Story.create!(
         verb: activity.verb,
