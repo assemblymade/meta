@@ -8,6 +8,8 @@ class Watching < ActiveRecord::Base
 
   validates :user,      presence: true, uniqueness: {scope: :watchable}
   validates :watchable, presence: true
+  
+  scope :subscribed, -> { where(subscription: true) }
 
   def self.watch!(user, watchable)
     # find_or_create_by! is broken

@@ -29,7 +29,7 @@ describe PublishActivity do
 
     watcher = User.make!
 
-    product.watchers << watcher
+    product.watchings.create!(subscription: true, user: watcher)
 
     PublishActivity.new.perform(activity.id)
     expect(NewsFeed.new(watcher).first).to have_attributes(

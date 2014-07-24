@@ -562,13 +562,13 @@ ActiveRecord::Schema.define(version: 20140723001049) do
   add_index "votes", ["user_id", "voteable_id"], name: "index_votes_on_user_id_and_voteable_id", unique: true, using: :btree
 
   create_table "watchings", id: false, force: true do |t|
-    t.uuid     "id",                             null: false
-    t.uuid     "user_id",                        null: false
-    t.uuid     "watchable_id",                   null: false
-    t.string   "watchable_type",                 null: false
+    t.uuid     "id",                            null: false
+    t.uuid     "user_id",                       null: false
+    t.uuid     "watchable_id",                  null: false
+    t.string   "watchable_type",                null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "subscription",   default: false
+    t.boolean  "subscription",   default: true
   end
 
   add_index "watchings", ["watchable_id", "watchable_type"], name: "index_watchings_on_watchable_id_and_watchable_type", using: :btree
