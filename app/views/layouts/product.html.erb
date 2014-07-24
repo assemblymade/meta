@@ -9,13 +9,9 @@
 
     <div class="row">
 
-      <div class="col-md-2 fixed-enabler">
-        <%= render 'products/sidenav', product: @product %>
-      </div>
+      <div class="col-md-10 col-md-push-2">
 
-      <div class="col-md-10">
-
-        <ul class="list list-inline pull-right">
+        <ul class="list list-inline pull-right hidden-xs">
           <li>
             <div data-react-class="Share"
                  data-react-props="<%= {
@@ -65,9 +61,14 @@
           <% end %>
         </h3>
 
-        <div class="sheet" style="<%= @sheet_style %>">
+        <div class="sheet">
           <%= yield %>
         </div>
+      </div>
+
+
+      <div class="col-md-2 col-md-pull-10 fixed-enabler">
+        <%= render 'products/sidenav', product: @product %>
       </div>
     </div>
   </div>
