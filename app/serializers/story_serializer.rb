@@ -10,6 +10,6 @@ class StorySerializer < ApplicationSerializer
   end
 
   def url
-    "google.com"
+    story_path(object)
   end
 end

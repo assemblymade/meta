@@ -119,6 +119,8 @@ ASM::Application.routes.draw do
     end
   end
 
+  resources :stories, only: [:show]
+
   # Webhooks
   namespace :webhooks do
     post '/mailgun' => 'mailgun#create'
