@@ -59,7 +59,7 @@
           story = stories[i];
         }
       }
-      console.log(story);
+
       return story;
     },
 
