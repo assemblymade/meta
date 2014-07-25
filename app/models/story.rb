@@ -33,6 +33,15 @@ class Story < ActiveRecord::Base
     # ["Update", "Task"]                      => :wip_subscribers,
   }
 
+  BODY_MAPPINGS = {
+    ["Close", "Discussion"]                 => :subject_body,
+    ["Close", "Task"]                       => :subject_body,
+    ["Close", "Wip"]                        => :subject_body,
+    ["Comment", "Discussion"]               => :subject_body,
+    ["Comment", "Task"]                     => :subject_body,
+    ["Comment", "Wip"]                      => :subject_body,
+  }
+
 
   def stream_targets
     send STREAM_MAPPINGS.fetch([verb, subject_type])
@@ -40,6 +49,12 @@ class Story < ActiveRecord::Base
 
   def self.should_publish?(activity)
     STREAM_MAPPINGS[[activity.verb, activity.verb_subject]]
+  end
+
+  def body_preview
+    if mapping = BODY_MAPPINGS[[verb, subject_type]]
+      send mapping
+    end
   end
 
   # private
@@ -50,6 +65,10 @@ class Story < ActiveRecord::Base
 
   def wip_subscribers
     subjects.first.wip.watchings.subscribed.map(&:user)
+  end
+
+  def subject_body
+    activities.first.subject.sanitized_body
   end
 
   def subjects

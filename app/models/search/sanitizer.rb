@@ -3,7 +3,7 @@ module Search
     include ActionView::Helpers::SanitizeHelper
 
     def sanitize(text)
-      strip_tags markdown(text)
+      strip_tags(markdown(text)).strip
     end
 
     def markdown(text)

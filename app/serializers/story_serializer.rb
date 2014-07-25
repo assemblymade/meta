@@ -1,10 +1,8 @@
 class StorySerializer < ApplicationSerializer
-  attributes :verb
-  attributes :subject_type
+  include ActionView::Helpers::TextHelper
 
-  attributes :actor_ids
+  attributes :actor_ids, :verb, :subject_type, :body_preview
   attributes :url
-  attributes :body_preview
 
   def actor_ids
     object.activities.pluck(:actor_id)
@@ -15,6 +13,8 @@ class StorySerializer < ApplicationSerializer
   end
 
   def body_preview
-    "Yo, <a href='#'>@whatupdave</a>, what's the deal with <a href='#'>#42</a>?"
+    if preview = object.body_preview
+      preview.truncate(250).gsub(/\s+\r|\n\s+/, ' ').strip
+    end
   end
 end
