@@ -4,7 +4,10 @@
 
 var JoinTeam = React.createClass({
   componentWillMount: function() {
-    this.setState({ count: this.props.count, is_member: this.props.is_member })
+    this.setState({
+      count: this.props.count,
+      is_member: this.props.is_member
+    });
   },
 
   render: function() {
@@ -18,20 +21,6 @@ var JoinTeam = React.createClass({
     )
   },
 
-  setUpPopover: function(node) {
-    node.popover({
-      trigger: 'manual',
-      placement: 'bottom',
-      html: true,
-      container: 'body',
-      content: function() {
-        return $('#join-team-template').html()
-      }
-    })
-
-    this.listenForJoin(node)
-  },
-
   listenForJoin: function(node) {
     var self = this
 
@@ -39,72 +28,11 @@ var JoinTeam = React.createClass({
       if (!app.currentUser()) {
         return app.redirectTo('/login')
       }
-
-      if (!self.state.is_member) {
-        $(this).popover('show')
-        self.setUpChosen()
-      } else {
-        $(this).popover('hide')
-      }
     })
 
     $(document).scroll(function(e) {
       $(node).popover('hide');
     })
-  },
-
-  setUpChosen: function() {
-    var chosenSelect = $('.chosen-select')
-
-    chosenSelect.chosen({
-      create_option: function(term) {
-        var chosen = this
-
-        term = term.replace(/[^\w-]+/g, '').toLowerCase()
-
-        if (term === 'core') {
-          return;
-        }
-
-        chosen.append_option({
-          value: term,
-          text: '@' + term
-        })
-      },
-
-      persistent_create_option: true,
-      skip_no_results: true,
-      search_contains: true,
-      create_option_text: 'Add interest'
-    })
-
-    this.setUpEditor(chosenSelect)
-  },
-
-  setUpEditor: function(chosenSelect) {
-    // TODO: Move default bio and interests someplace saner.
-    var defaultBio = app.defaultBio();
-    var defaultInterests = ['code', 'design'];
-    var membership = this.props.membership;
-    var bioEditor = $('#join-bio-editor');
-
-    if (membership) {
-      if (membership.bio) {
-        bio = membership.bio;
-        $(bioEditor).val(bio);
-
-        // If the user has entered a bio, assume that s/he
-        // has also entered his/her interests
-        chosenSelect.val(membership.interests);
-      } else {
-        chosenSelect.val(defaultInterests);
-      }
-
-      chosenSelect.trigger('chosen:updated');
-    }
-
-    bioEditor.attr({placeholder: defaultBio})
-    this.listenForChanges(bioEditor)
   },
 
   listenForChanges: function(bioEditor) {
@@ -124,18 +52,6 @@ var JoinTeam = React.createClass({
         joinButton.addClass('disabled')
       }
     })
-  },
-
-  componentDidMount: function() {
-    var node = $('#js-join-popover')
-
-    if (node.length) {
-      this.setUpPopover(node)
-    }
-  },
-
-  componentDidUpdate: function() {
-    this.componentDidMount()
   },
 
   label: function() {

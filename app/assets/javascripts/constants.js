@@ -69,7 +69,6 @@ var CONSTANTS = {
 
   TEXT_COMPLETE: {
     ACTIONS: {
-      SETUP: 'setUpChosen',
       ADD_TAG: 'addTag'
     },
     EVENTS: {

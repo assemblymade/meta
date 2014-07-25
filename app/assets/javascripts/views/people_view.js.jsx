@@ -320,10 +320,6 @@ var BioEditor = React.createClass({
     }
   },
 
-  componentDidUpdate: function() {
-    this.setUpChosen()
-  },
-
   render: function() {
     var currentUser = this.state.currentUser;
     var member = this.state.member;
@@ -368,8 +364,6 @@ var BioEditor = React.createClass({
   makeEditable: function(e) {
     $('#edit-membership-modal').modal('show');
 
-    this.setUpChosen('#modal-join-interests');
-
     $('#modal-bio-editor').val(this.state.originalBio);
   },
 
@@ -382,43 +376,6 @@ var BioEditor = React.createClass({
     });
 
     return options;
-  },
-
-  setUpChosen: function(node) {
-    node = node || '.chosen-select';
-    var chosenSelect = $(node)
-
-    chosenSelect.chosen({
-      create_option: function(term) {
-        var chosen = this
-
-        term = term.replace(/[^\w-]+/g, '').toLowerCase()
-
-        if (term === 'core') {
-          return;
-        }
-
-        chosen.append_option({
-          value: term,
-          text: '@' + term
-        })
-      },
-
-      persistent_create_option: true,
-      skip_no_results: true,
-      search_contains: true,
-      create_option_text: 'Add interest',
-      width: '95%'
-    })
-
-    var member = this.state.member;
-
-    if (member.interests && _.omit(member.interests, 'core').length) {
-      chosenSelect.val(member.interests);
-    } else {
-      chosenSelect.val(['code', 'design']);
-    }
-    chosenSelect.trigger('chosen:updated');
   },
 
   makeUneditable: function(e) {
