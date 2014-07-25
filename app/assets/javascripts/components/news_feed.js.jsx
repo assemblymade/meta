@@ -6,11 +6,6 @@
 
 (function() {
 
-  // actors: Hash[ActiveModel::ArraySerializer.new(@users).as_json.map{|u| [u[:id], u]}],
-  // stories: ActiveModel::ArraySerializer.new(
-  //   @stories, scope: current_user, each_serializer: StorySerializer
-  // ).as_json
-
   var NF = CONSTANTS.NEWS_FEED;
 
   window.NewsFeed = React.createClass({
@@ -104,9 +99,7 @@
 
       var rows = _.map(this.state.stories, function(story) {
         return (
-          <a href={story.url}>
-            <Entry story={story} actors={this.state.actors} />
-          </a>
+          <Entry story={story} actors={this.state.actors} />
         );
       }.bind(this));
 
@@ -118,6 +111,8 @@
           </a>
           <ul className="dropdown-menu">
             {rows}
+            <li className="divider" />
+            <li><a href='/notifications'>All Notifications</a></li>
           </ul>
         </li>
       );
@@ -147,11 +142,11 @@
   var Entry = React.createClass({
     render: function() {
       var actors = _.map(this.actors(), func.dot('username')).join(' ,')
-      return <li key={this.props.story.id}>@{actors} {this.body()}</li>
+      return <li key={this.props.story.id}><a href={this.props.story.url}>@{actors} {this.body()}</a></li>
     },
 
     body: function() {
-      return this.props.story.verb + ' on a ' + this.props.story.subject_type
+      return this.verbMap[this.props.story.verb] + ' on a ' + this.subjectMap[this.props.story.subject_type];
     },
 
     actors: function() {
@@ -165,9 +160,17 @@
 
     componentDidMount: function() {
       if (this.refs.body) {
-        this.refs.body.getDOMNode().innerHTML = this.props.story.subject.body_html
+        this.refs.body.getDOMNode().innerHTML = this.props.story.subject.body_html;
       }
+    },
+
+    verbMap: {
+      'Comment': 'commented'
+    },
+
+    subjectMap: {
+      'Task': 'task'
     }
-  })
+  });
 
 })();
