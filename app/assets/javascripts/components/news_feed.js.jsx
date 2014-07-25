@@ -84,11 +84,20 @@
     },
 
     render: function() {
+      var classes = 'icon icon-bell'
+
       if (!this.state.stories) {
-        return <DropdownToggler iconClass='icon icon-bell' />;
+        if (this.props.fullPage) {
+          return (
+            <div>
+              <h3>Notifications</h3>
+            </div>
+          );
+        }
+
+        return <DropdownToggler iconClass={classes} />;
       }
 
-      var classes = 'icon icon-bell'
       var total = this.badgeCount();
       var badge = null;
 
@@ -159,6 +168,7 @@
             <a href={this.props.story.url}>
               @{actors} {this.body()}
             </a>
+            {this.preview()}
           </div>
         );
       }
@@ -168,12 +178,26 @@
           <a href={this.props.story.url}>
             @{actors} {this.body()}
           </a>
+          {this.preview()}
         </li>
       );
     },
 
     body: function() {
       return this.verbMap[this.props.story.verb] + ' on a ' + this.subjectMap[this.props.story.subject_type];
+    },
+
+    preview: function() {
+      return (
+        <p
+            className='text-muted'
+            style={{
+              'font-size': '14px',
+              'padding-left': '10px'
+            }}>
+          {this.props.story.body_preview}
+        </p>
+      );
     },
 
     actors: function() {
