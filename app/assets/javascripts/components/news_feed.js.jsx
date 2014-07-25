@@ -128,7 +128,7 @@
 
       return (
         <DropdownToggler iconClass={classes} linkHref='#stories' onClick={this.acknowledge} badge={badge}>
-          <ul className="dropdown-menu" style={{ 'max-height': '400px', overflow: 'scroll' }}>
+          <ul className="dropdown-menu" style={{ 'max-height': '400px', 'overflow-y': 'scroll', 'text-overflow': 'ellipsis', 'max-width': '300px' }}>
             {rows}
             <li className="divider" />
             <li><a href='/notifications'>All Notifications</a></li>
@@ -177,8 +177,8 @@
         <li key={this.props.story.id}>
           <a href={this.props.story.url}>
             @{actors} {this.body()}
+            {this.preview()}
           </a>
-          {this.preview()}
         </li>
       );
     },
@@ -195,7 +195,7 @@
               'font-size': '14px',
               'padding-left': '10px'
             }}>
-          {this.props.story.body_preview}
+          {this.props.fullPage ? this.props.story.body_preview : this.ellipsis(this.props.story.body_preview)}
         </p>
       );
     },
@@ -221,6 +221,14 @@
 
     subjectMap: {
       'Task': 'task'
+    },
+
+    ellipsis: function(text) {
+      if (text && text.length > 35) {
+        text = text.substring(0, 35) + '…';
+      }
+
+      return text;
     }
   });
 
