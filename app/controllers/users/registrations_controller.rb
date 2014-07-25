@@ -9,7 +9,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   after_action :claim_invite,          only: [:create]
 
   def create
-    build_resource(sign_up_params)
+    build_resource(sign_up_params.select{|k,v| v.present? })
 
     if resource.save
       if resource.active_for_authentication?
