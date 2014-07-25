@@ -25,6 +25,15 @@ var CONSTANTS = {
     }
   },
 
+  NEWS_FEED: {
+    ACTIONS: {
+      FETCH_STORIES: 'fetchStories'
+    },
+    EVENTS: {
+      STORIES_FETCHED: 'newsFeed:storiesFetched'
+    }
+  },
+
   NOTIFICATION_PREFERENCES_DROPDOWN: {
     ACTIONS: {
       UPDATE_SELECTED: 'updateSelected'

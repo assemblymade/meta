@@ -1,5 +1,5 @@
-//= require dispatcher
 //= require xhr
+//= require dispatcher
 //= require stores/store
 
 var NotificationPreferencesDropdownStore = (function() {
@@ -16,7 +16,7 @@ var NotificationPreferencesDropdownStore = (function() {
       var item = data.item;
       var path = data.path;
 
-      window.xhr('POST', path);
+      window.xhr.post(path);
 
       _selected = item;
     },

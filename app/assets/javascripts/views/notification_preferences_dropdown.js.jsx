@@ -47,7 +47,7 @@
               <strong>Notifications</strong>
             </li>
             <li role="presentation" style={{ cursor: 'pointer' }}>
-              <a role="menuitem" tabindex="-1" onClick={this.updatePreference.bind(this, 'not watching', this.props.productUnfollowPath)}>
+              <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'not watching', this.props.productUnfollowPath)}>
                 <p style={{ 'margin-bottom': '0', 'font-size': '14px' }}>
                   <strong>Not following</strong>
                   {this.selected('not watching')}
@@ -59,9 +59,9 @@
             </li>
 
             <li role="presentation" style={{ cursor: 'pointer' }}>
-              <a role="menuitem" tabindex="-1" onClick={this.updatePreference.bind(this, 'watching', this.props.productFollowPath)}>
+              <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'watching', this.props.productFollowPath)}>
                 <p style={{ 'margin-bottom': 0, 'font-size': '14px' }}>
-                  <strong>Follow updates</strong>
+                  <strong>Follow announcements</strong>
                   {this.selected('watching')}
                 </p>
                 <span className="text-muted" style={{ 'font-size': '14px' }}>
@@ -71,7 +71,7 @@
             </li>
 
             <li role="presentation" style={{ cursor: 'pointer' }}>
-              <a role="menuitem" tabindex="-1" onClick={this.updatePreference.bind(this, 'subscribed', this.props.productSubscribePath)}>
+              <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'subscribed', this.props.productSubscribePath)}>
                 <p style={{ 'margin-bottom': 0, 'font-size': '14px' }}>
                   <strong>Follow everything</strong>
                   {this.selected('subscribed')}

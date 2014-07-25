@@ -49,8 +49,23 @@
       <div class="navbar-right">
         <% if user_signed_in? %>
 
-          <ul class="nav navbar-nav navbar-notifications" data-react-class="Notifications"
-            data-react-props="<%= {url: unread_path, username: current_user.username }.to_json %>"></ul>
+          <ul
+              class="nav navbar-nav navbar-notifications"
+              data-react-class="NewsFeed"
+              data-react-props="<%= {
+                url: notifications_path,
+              }.to_json %>">
+          </ul>
+
+          <ul
+              class="nav navbar-nav navbar-notifications"
+              data-react-class="Notifications"
+              data-react-props="<%= {
+                url: unread_path,
+                type: 'chat',
+                username: current_user.username
+              }.to_json %>">
+          </ul>
 
           <ul class="nav navbar-nav">
 
