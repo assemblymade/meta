@@ -110,13 +110,13 @@
     },
 
     render: function() {
+      var classes = 'icon icon-bubble'
+
       if (!this.state.data) {
-        return (<span />);
+        return <DropdownToggler iconClass={classes} />;
       }
 
-      badge = null;
-
-      var classes = 'icon icon-bubble'
+      var badge = null;
       var total = this.badgeCount();
 
       if (total > 0) {
@@ -129,13 +129,9 @@
       var sorted = this.sortByCount(this.state.data);
 
       return (
-        <li>
-          <a href="#notifications" data-toggle="dropdown" onClick={this.onClick}>
-            <span className={classes}></span>
-            {badge}
-          </a>
+        <DropdownToggler iconClass={classes} linkHref='#notifications' onClick={this.onClick} badge={badge}>
           <NotificationsList data={sorted} username={this.props.username} />
-        </li>
+        </DropdownToggler>
       );
     },
 
@@ -227,9 +223,13 @@
         <ul className="dropdown-menu">
           {productNodes}
           <li className="divider" />
-          <li><a href={productsPath}>All Products</a></li>
+          <li>
+            <a href={productsPath}>All Products</a>
+          </li>
           {separator}
-          <li><DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} /></li>
+          <li>
+            <DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} />
+          </li>
         </ul>
       );
     }

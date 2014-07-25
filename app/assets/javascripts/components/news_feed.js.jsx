@@ -85,7 +85,7 @@
 
     render: function() {
       if (!this.state.stories) {
-        return <span />;
+        return <DropdownToggler iconClass='icon icon-bell' />;
       }
 
       var classes = 'icon icon-bell'
@@ -105,21 +105,26 @@
           break;
         }
 
-        rows.push(<Entry story={stories[i]} actors={this.state.actors} />);
+        rows.push(<Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />);
+      }
+
+      if (this.props.fullPage) {
+        return (
+          <div>
+            <h3>Notifications</h3>
+            {rows}
+          </div>
+        );
       }
 
       return (
-        <li>
-          <a href="#stories" data-toggle="dropdown" onClick={this.acknowledge}>
-            <span className='icon icon-bell'></span>
-            {badge}
-          </a>
-          <ul className="dropdown-menu" style={{ 'max-height': '400px', overflow: 'scroll' }}>
-            {rows}
-            <li className="divider" />
-            <li><a href='/notifications'>All Notifications</a></li>
-          </ul>
-        </li>
+        <DropdownToggler iconClass={classes} linkHref='#stories' onClick={this.acknowledge} badge={badge}>
+            <ul className="dropdown-menu" style={{ 'max-height': '400px', overflow: 'scroll' }}>
+              {rows}
+              <li className="divider" />
+              <li><a href='/notifications'>All Notifications</a></li>
+            </ul>
+        </DropdownToggler>
       );
     },
 
@@ -146,8 +151,25 @@
 
   var Entry = React.createClass({
     render: function() {
-      var actors = _.map(this.actors(), func.dot('username')).join(' ,')
-      return <li key={this.props.story.id}><a href={this.props.story.url}>@{actors} {this.body()}</a></li>
+      var actors = _.map(this.actors(), func.dot('username')).join(', @')
+
+      if (this.props.fullPage) {
+        return (
+          <div key={this.props.story.id}>
+            <a href={this.props.story.url}>
+              @{actors} {this.body()}
+            </a>
+          </div>
+        );
+      }
+
+      return (
+        <li key={this.props.story.id}>
+          <a href={this.props.story.url}>
+            @{actors} {this.body()}
+          </a>
+        </li>
+      );
     },
 
     body: function() {
