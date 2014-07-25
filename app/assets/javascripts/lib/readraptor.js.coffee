@@ -1,4 +1,6 @@
 #= require jquery.inview
+#= require constants
+#= require dispatcher
 
 do ($ = jQuery, window, document) ->
 	class Plugin
@@ -26,6 +28,10 @@ do ($ = jQuery, window, document) ->
       if (isInView)
         $('body').append("<img class='hidden' src='#{@tracking}' width='0' height='0'>")
         $(document).trigger('readraptor.tracked') # this is a hack to notify that something new is tracked
+				Dispatcher.dispatch
+					event: CONSTANTS.NEWS_FEED.EVENTS.STORIES_FETCHED
+					action: CONSTANTS.NEWS_FEED.ACTIONS.FETCH_STORIES
+					data: null
 
 
 	$.fn.readraptor = () ->

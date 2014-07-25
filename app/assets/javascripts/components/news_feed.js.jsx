@@ -39,7 +39,7 @@
     latestStoryTimestamp: function() {
       var story = this.latestStory();
 
-      return story && story.read_at ? story.read_at : 0;
+      return story && story.updated ? story.updated : 0;
     },
 
     latestStory: function() {
@@ -51,7 +51,7 @@
 
       var story;
       for (var i = 0, l = stories.length; i < l; i++) {
-        if (story && stories[i].read_at > story.read_at) {
+        if (story && stories[i].updated > story.updated) {
           story = stories[i];
         }
 
@@ -59,7 +59,7 @@
           story = stories[i];
         }
       }
-
+      console.log(story);
       return story;
     },
 
@@ -68,7 +68,7 @@
 
       var count = _.reduce(
         _.map(self.state.stories, function(story) {
-          return story.read_at ? 0 : 1;
+          return story.updated ? 0 : 1;
         }), function(memo, read) {
           return memo + read;
       }, 0);
@@ -128,11 +128,11 @@
 
       return (
         <DropdownToggler iconClass={classes} linkHref='#stories' onClick={this.acknowledge} badge={badge}>
-            <ul className="dropdown-menu" style={{ 'max-height': '400px', overflow: 'scroll' }}>
-              {rows}
-              <li className="divider" />
-              <li><a href='/notifications'>All Notifications</a></li>
-            </ul>
+          <ul className="dropdown-menu" style={{ 'max-height': '400px', overflow: 'scroll' }}>
+            {rows}
+            <li className="divider" />
+            <li><a href='/notifications'>All Notifications</a></li>
+          </ul>
         </DropdownToggler>
       );
     },
