@@ -1,60 +1,63 @@
 <% title "Edit Bounty ##{@wip.number}", @product.name %>
 <% activate_nav! :bounties %>
 
-<div class="page-header">
+<div class="page-header sheet-header">
   <h2 class="page-header-title">Edit task</h2>
 </div>
 
-<div class="row">
-  <div class="col-md-8">
-    <%= form_for [@product, @wip] do |f| %>
-      <div class="form-group">
-        <%= f.label :title, class: 'control-label' %>
-        <%= f.text_field :title, 'class' => 'form-control', data: {'validate-length' => 2} %>
-      </div>
 
-      <div style="display:none;">
-        <select type="hidden" id="tag-list-hack" name="task[tag_list][]" multiple="true"></select>
-      </div>
+<div class="sheet-body">
+  <div class="row">
+    <div class="col-md-8">
+      <%= form_for [@product, @wip] do |f| %>
+        <div class="form-group">
+          <%= f.label :title, class: 'control-label' %>
+          <%= f.text_field :title, 'class' => 'form-control', data: {'validate-length' => 2} %>
+        </div>
 
-      <h6 style="margin-bottom: 0;">Tags</h6>
-      <div style="margin-bottom: 10px"
-           data-react-class="TagList"
-           data-react-props="<%= {
-              tags: (@wip.tags ? @wip.tags.map do |tag|
-                tag.name
-              end.as_json : []),
-              destination: true,
-              allowRemoval: true,
-              filterUrl: product_wips_path(@wip.product),
-              url: product_wip_tag_path(@product, @wip)
-            }.to_json %>">
-      </div>
+        <div style="display:none;">
+          <select type="hidden" id="tag-list-hack" name="task[tag_list][]" multiple="true"></select>
+        </div>
 
-      <div data-react-class="TextComplete"
-           data-react-props="<%= {
-             width: "125px",
-             size: "small",
-             label: "Add tag",
-             prepend: "#",
-             prompt: "Add",
-             url: product_wip_tag_path(@product, @wip)
-           }.to_json %>">
-      </div>
+        <h6 style="margin-bottom: 0;">Tags</h6>
+        <div style="margin-bottom: 10px"
+             data-react-class="TagList"
+             data-react-props="<%= {
+                tags: (@wip.tags ? @wip.tags.map do |tag|
+                  tag.name
+                end.as_json : []),
+                destination: true,
+                allowRemoval: true,
+                filterUrl: product_wips_path(@wip.product),
+                url: product_wip_tag_path(@product, @wip)
+              }.to_json %>">
+        </div>
 
-      <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
-      <div data-react-class="TagList"
-            data-react-props="<%= {
-              tags: Wip::Tag.suggested_tags.as_json,
-              destination: false,
-              filterUrl: product_wips_path(@wip.product),
-              url: product_wip_tag_path(@product, @wip)
-            }.to_json %>">
-      </div>
+        <div data-react-class="TextComplete"
+             data-react-props="<%= {
+               width: "125px",
+               size: "small",
+               label: "Add tag",
+               prepend: "#",
+               prompt: "Add",
+               url: product_wip_tag_path(@product, @wip)
+             }.to_json %>">
+        </div>
 
-      <div class="form-actions">
-        <%= f.button 'Update task', 'class' => 'btn btn-primary' %>
-      </div>
-    <% end %>
+        <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
+        <div data-react-class="TagList"
+              data-react-props="<%= {
+                tags: Wip::Tag.suggested_tags.as_json,
+                destination: false,
+                filterUrl: product_wips_path(@wip.product),
+                url: product_wip_tag_path(@product, @wip)
+              }.to_json %>">
+        </div>
+
+        <div class="form-actions">
+          <%= f.button 'Update task', 'class' => 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
