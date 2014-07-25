@@ -7,8 +7,26 @@ class NotificationsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js   { render :json => { users: @users, stories: @stories } }
-      format.json { render :json => { users: @users, stories: @stories } }
+      format.js {
+        render :json => {
+          users: Hash[ActiveModel::ArraySerializer.new(@users).as_json.map{|u| [u[:id], u]}],
+          stories: ActiveModel::ArraySerializer.new(
+            @stories,
+            scope: current_user,
+            each_serializer: StorySerializer
+          ).as_json
+        }
+      }
+      format.json {
+        render :json => {
+          users: Hash[ActiveModel::ArraySerializer.new(@users).as_json.map{|u| [u[:id], u]}],
+          stories: ActiveModel::ArraySerializer.new(
+            @stories,
+            scope: current_user,
+            each_serializer: StorySerializer
+          ).as_json
+        }
+      }
     end
   end
 end

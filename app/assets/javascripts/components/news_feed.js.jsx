@@ -37,7 +37,6 @@
 
     badgeCount: function() {
       if (this.latestStoryTimestamp() > this.state.acknowledgedAt) {
-        console.log('hello')
         return this.total();
       }
     },
@@ -103,19 +102,35 @@
         classes += ' glyphicon-highlight';
       }
 
+      var rows = _.map(this.state.stories, function(story) {
+        return (
+          <a href={story.url}>
+            <Entry story={story} actors={this.state.actors} />
+          </a>
+        );
+      }.bind(this));
+
       return (
         <li>
-          <a href="#stories" data-toggle="dropdown">
+          <a href="#stories" data-toggle="dropdown" onClick={this.acknowledge}>
             <span className='icon icon-bell'></span>
             {badge}
           </a>
+          <ul className="dropdown-menu">
+            {rows}
+          </ul>
         </li>
       );
-      // var rows = _.map(this.state.stories, function(story){
-      //   return <Entry story={story} actors={this.state.actors} />
-      // }.bind(this));
-      //
-      // return <div>{rows}</div>
+    },
+
+    acknowledge: function() {
+      var timestamp = Math.floor(Date.now() / 1000);
+
+      localStorage.notificationsAck = timestamp;
+
+      this.setState({
+        acknowledgedAt: timestamp
+      });
     },
 
     storedAck: function() {
@@ -132,27 +147,20 @@
   var Entry = React.createClass({
     render: function() {
       var actors = _.map(this.actors(), func.dot('username')).join(' ,')
-      return <div className="row">@{actors} {this.body()}</div>
+      return <li key={this.props.story.id}>@{actors} {this.body()}</li>
     },
 
     body: function() {
       return this.props.story.verb + ' on a ' + this.props.story.subject_type
-
-      // if (this.props.activity.subject.body_html) {
-      //   return <div className="markdown-normalized" ref="body"></div>
-      // } else if (this.props.activity.subject.attachment) {
-      //   var href = this.props.activity.subject.attachment.href
-      //   var src = this.props.activity.subject.attachment.firesize_url + '/300x225/frame_0/g_center/' + href
-      //   return (
-      //     <a href={href}>
-      //       <img className="gallery-thumb" src={src} />
-      //     </a>
-      //   )
-      // }
     },
 
     actors: function() {
-      return _.map(this.props.story.actor_ids, function(actorId){ return this.props.actors[actorId] }.bind(this))
+      return _.map(
+        this.props.story.actor_ids,
+        function(actorId) {
+          return _.findWhere(this.props.actors, { id: actorId })
+        }.bind(this)
+      );
     },
 
     componentDidMount: function() {
