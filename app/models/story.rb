@@ -38,6 +38,10 @@ class Story < ActiveRecord::Base
     send STREAM_MAPPINGS.fetch([verb, subject_type])
   end
 
+  def self.should_publish?(activity)
+    STREAM_MAPPINGS[[activity.verb, activity.verb_subject]]
+  end
+
   # private
 
   def product_subscribers

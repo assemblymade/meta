@@ -9,7 +9,8 @@ class DigestMailer < BaseMailer
   def weekly(user_id, newsletter_id)
     mailgun_tag 'digest#weekly'
     @user = User.find(user_id)
-
+    puts "MADLFJADLFJKSDLFJASDFKLAJDF"
+    puts user_id
     @newsletter = Newsletter.find(newsletter_id)
 
     @products = Showcase.showcasing_in_date_range(Date.today, 1.week.ago).sort_by do |showcase|

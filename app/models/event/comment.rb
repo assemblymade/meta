@@ -17,8 +17,11 @@ class Event::Comment < Event
 
   def add_backreferences
     TextFilters::UserMentionFilter.mentioned_usernames_in(body, wip.product) do |_, user, interest|
-      wip.watch!(user) unless user.nil?
-      if interest
+      Array(user).each do |u|
+        wip.watch!(u) unless u.nil?
+      end
+
+      if interest && interest.slug != 'core'
         interest.members_in_product(wip.product).each do |user|
           wip.watch!(user)
         end

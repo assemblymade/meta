@@ -92,9 +92,11 @@ class Event < ActiveRecord::Base
   def mentioned_users
     users = []
     TextFilters::UserMentionFilter.mentioned_usernames_in(self.body, self.wip.product) do |username, user|
-      users << user if user
+      if user
+        users << user if user
+      end
     end
-    users
+    users.flatten
   end
 
   def to_param
