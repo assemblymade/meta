@@ -23,19 +23,20 @@
       return (
         <div className="toggler toggler-sm btn-group">
           <a
-              className="btn btn-primary btn-sm dropdown-toggle"
+              className={this.buttonClasses(true)}
               data-toggle="dropdown"
               style={{ 'margin-bottom': '13px' }}>
             {this.buttonState()}
             <span className="icon icon-chevron-down"></span>
           </a>
-          <a
-              className="btn btn-primary btn-sm"
-              type="button"
-              href={this.props.productWatchersPath}
-              style={{ opacity: '0.5', 'border-top-right-radius': '2px', 'border-bottom-right-radius': '2px' }}>
-            {this.state.productWatchersCount}
-          </a>
+          <div className="toggler-badge">
+            <a
+                type="button"
+                href={this.props.productWatchersPath}
+                style={{ opacity: '0.5', 'border-top-right-radius': '2px', 'border-bottom-right-radius': '2px' }}>
+              {this.state.productWatchersCount}
+            </a>
+          </div>
           <ul
               className="dropdown-menu dropdown-menu-right"
               role="menu"
@@ -101,6 +102,16 @@
         case 'not watching':
           return 'Follow';
       }
+    },
+
+    buttonClasses: function(dropdownToggle) {
+      return React.addons.classSet({
+        'btn': true,
+        'btn-primary': (this.state.selected === 'not watching'),
+        'btn-default': (this.state.selected !== 'not watching'),
+        'btn-sm': true,
+        'dropdown-toggle': dropdownToggle
+      })
     },
 
     selected: function(option) {
