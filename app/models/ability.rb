@@ -52,7 +52,7 @@ class Ability
     end
 
     can [:update, :close], Wip do |wip|
-      current_user.staff? || wip.product.core_team?(current_user)
+      current_user.staff? || wip.product.core_team?(current_user) || wip.user == current_user
     end
 
     can [:reopen, :rejection, :unallocate], Wip do |wip|
