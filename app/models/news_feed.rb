@@ -48,7 +48,7 @@ class NewsFeed
   def range(start_index, end_index)
     ids = $redis.zrevrange(key, start_index, end_index)
     if ids.present?
-      self.class.deserialize(ids).sort_by(&:created_at)
+      self.class.deserialize(ids).sort_by(&:created_at).reverse
     else
       []
     end
