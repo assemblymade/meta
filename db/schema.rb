@@ -529,6 +529,7 @@ ActiveRecord::Schema.define(version: 20140724184214) do
     t.text     "twitter_uid"
     t.text     "twitter_nickname"
     t.uuid     "recent_product_ids",                                    array: true
+    t.string   "remember_token"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

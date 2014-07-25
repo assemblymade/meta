@@ -1,8 +1,10 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  include Devise::Controllers::Rememberable
 
   def facebook
     @user = User.find_by(facebook_uid: auth_hash['uid'])
     if @user
+      remember_me(@user)
       sign_in(@user)
       @user.extra_data = auth_hash['extra']['raw_info'].to_json
       @user.save!
