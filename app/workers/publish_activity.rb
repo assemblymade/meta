@@ -12,8 +12,6 @@ class PublishActivity
   end
 
   def create_story!
-    return unless Story.should_publish?(activity)
-
     activity.with_lock do
       Story.create!(
         verb: activity.verb,
@@ -25,16 +23,12 @@ class PublishActivity
   end
 
   def push_to_feeds!(story)
-    return unless Story.should_publish?(activity)
-
     story.stream_targets.each do |watcher|
       NewsFeed.new(watcher).push(story)
     end
   end
 
   def register_with_readraptor!(story)
-    return unless Story.should_publish?(activity)
-
     ReadRaptor::RegisterArticleWorker.perform_async(
       key: ReadRaptorSerializer.serialize_entity('Story', story.id),
       recipients: story.stream_targets.map(&:id)

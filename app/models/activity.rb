@@ -17,7 +17,7 @@ class Activity < ActiveRecord::Base
         auto_subscribe!(a.actor, a.target.product)
       end
 
-      PublishActivity.perform_async(a.id)
+      PublishActivity.perform_async(a.id) if Story.should_publish?(a)
     end
   end
 
