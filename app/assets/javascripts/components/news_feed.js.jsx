@@ -97,11 +97,16 @@
         classes += ' glyphicon-highlight';
       }
 
-      var rows = _.map(this.state.stories, function(story) {
-        return (
-          <Entry story={story} actors={this.state.actors} />
-        );
-      }.bind(this));
+      var rows = [];
+      var stories = this.state.stories;
+
+      for (var i = 0, l = stories.length; i < l; i++) {
+        if (i > 10) {
+          break;
+        }
+
+        rows.push(<Entry story={stories[i]} actors={this.state.actors} />);
+      }
 
       return (
         <li>
@@ -109,7 +114,7 @@
             <span className='icon icon-bell'></span>
             {badge}
           </a>
-          <ul className="dropdown-menu">
+          <ul className="dropdown-menu" style={{ 'max-height': '400px', overflow: 'scroll' }}>
             {rows}
             <li className="divider" />
             <li><a href='/notifications'>All Notifications</a></li>
