@@ -184,7 +184,7 @@
     },
 
     body: function() {
-      return this.verbMap[this.props.story.verb] + ' on a ' + this.subjectMap[this.props.story.subject_type];
+      return this.verbMap[this.props.story.verb] + ' a ' + this.subjectMap[this.props.story.subject_type];
     },
 
     preview: function() {
@@ -216,11 +216,15 @@
     },
 
     verbMap: {
-      'Comment': 'commented'
+      'Comment': 'commented on',
+      'Award': 'awarded',
+      'Close': 'closed'
     },
 
     subjectMap: {
-      'Task': 'task'
+      'Task': 'task',
+      'Discussion': 'discussion',
+      'Wip': 'bounty'
     },
 
     ellipsis: function(text) {
