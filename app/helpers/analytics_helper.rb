@@ -33,6 +33,14 @@ module AnalyticsHelper
     end
   end
 
+  def track_readraptor(entities)
+    content_tag :div do
+      entities.each do |entity|
+        concat content_tag(:img, nil, class: 'hidden', src: ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(entity).first, current_user.id).url)
+      end
+    end
+  end
+
   def product_properties(product)
     {
       'backers.count'      => product.count_presignups,

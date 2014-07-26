@@ -42,13 +42,18 @@ class Story < ActiveRecord::Base
     ["Comment", "Wip"]                      => :subject_body,
   }
 
+  def self.should_publish?(activity)
+    STREAM_MAPPINGS[[activity.verb, activity.verb_subject]]
+  end
+
+  def self.associated_with(entity)
+    activities = Activity.where(target_id: entity.id)
+    story_ids = activities.map(&:story_id).uniq
+    Story.where(id: story_ids)
+  end
 
   def stream_targets
     send STREAM_MAPPINGS.fetch([verb, subject_type])
-  end
-
-  def self.should_publish?(activity)
-    STREAM_MAPPINGS[[activity.verb, activity.verb_subject]]
   end
 
   def body_preview

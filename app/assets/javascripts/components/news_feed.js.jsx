@@ -31,6 +31,7 @@
     }, 1000),
 
     badgeCount: function() {
+      console.log(this.latestStoryTimestamp(), this.state.acknowledgedAt)
       if (this.latestStoryTimestamp() > this.state.acknowledgedAt) {
         return this.total();
       }

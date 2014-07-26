@@ -6,7 +6,7 @@ class WipsController < ProductController
   before_filter :set_no_cache, only: [:index]
   before_action :authenticate_user!, :except => [:show, :index, :search]
   before_action :set_product
-  before_action :set_wip, except: [:index, :new, :create, :search]
+  before_action :set_stories, except: [:index, :new, :create, :search]
   before_action :validate_wip_administer , only: [:edit, :update, :destroy]
   after_action  :mark_wip_viewed, only: [:edit, :show]
 
@@ -197,5 +197,11 @@ class WipsController < ProductController
     elsif @wip.type != wip_class.to_s
       redirect_to url_for([@product, @wip])
     end
+  end
+  
+  def set_stories
+    set_wip
+    
+    @stories = Story.associated_with(@wip)
   end
 end
