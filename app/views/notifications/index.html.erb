@@ -1,17 +1,20 @@
 <% title 'Notifications' %>
+<%= render 'shared/navbar' %>
+
+<style>
+ .entry.entry-unread {
+   background-color: #FFC;
+ }
+</style>
 
 <div class="page">
   <div class="container">
     <div class="row">
-      <div class="col-md-5">
-        <div class="sheet">
-          <div class="sheet-body">
-            <div data-react-class="NewsFeed" data-react-props="<%= {
-              url: notifications_path,
-              fullPage: true
-            }.to_json %>">
-            </div>
-          </div>
+      <div class="col-md-6 col-md-offset-3">
+        <div data-react-class="NewsFeed" data-react-props="<%= {
+          url: notifications_path,
+          fullPage: true
+        }.to_json %>">
         </div>
       </div>
     </div>

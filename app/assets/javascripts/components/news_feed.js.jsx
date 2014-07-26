@@ -90,7 +90,7 @@
         if (this.props.fullPage) {
           return (
             <div>
-              <h3>Notifications</h3>
+              <h3>All of your notifications</h3>
             </div>
           );
         }
@@ -114,14 +114,22 @@
           break;
         }
 
-        rows.push(<Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />);
+        rows.push(
+          <div className="list-group-item" key={stories[i].key}>
+            <Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />
+          </div>
+        );
       }
 
       if (this.props.fullPage) {
         return (
-          <div>
-            <h3>Notifications</h3>
-            {rows}
+          <div className="sheet">
+            <div className="page-header sheet-header">
+              <h2 className="page-header-title">All of your notifications</h2>
+            </div>
+            <div className="list-group list-group-breakout">
+              {rows}
+            </div>
           </div>
         );
       }
@@ -162,41 +170,54 @@
     render: function() {
       var actors = _.map(this.actors(), func.dot('username')).join(', @')
 
+      var classes = React.addons.classSet({
+        'entry-read': this.isRead(),
+        'entry-unread': !this.isRead(),
+      })
+
       if (this.props.fullPage) {
         return (
-          <div key={this.props.story.id}>
-            <a href={this.props.story.url}>
-              @{actors} {this.body()}
-            </a>
-            {this.preview()}
-          </div>
-        );
-      }
-
-      return (
-        <li key={this.props.story.id}>
-          <a href={this.props.story.url}>
-            @{actors} {this.body()}
+          <a className={classes} href={this.props.story.url}>
+            <strong>@{actors}</strong> {this.body()}
             {this.preview()}
           </a>
-        </li>
-      );
+        );
+      } else {
+        return (
+          <a className={classes} href={this.props.story.url}>
+            <strong>@{actors}</strong> {this.body()}
+          </a>
+        );
+      }
     },
 
     body: function() {
-      return this.verbMap[this.props.story.verb] + ' a ' + this.subjectMap[this.props.story.subject_type];
+      var target = this.props.story.activities[0].target;
+      return (
+        <span>
+          {this.verbMap[this.props.story.verb]}
+          <strong>
+            {this.subjectMap[this.props.story.subject_type](target)}
+          </strong>
+        </span>
+      )
+    },
+
+    isRead: function() {
+      var readAt = this.props.story.read_at;
+      return (typeof readAt !== "undefined" && readAt !== null)
     },
 
     preview: function() {
       return (
-        <p
+        <span
             className='text-muted'
-            style={{
-              'font-size': '14px',
-              'padding-left': '10px'
-            }}>
+            >
+          &mdash;
+          &ldquo;
           {this.props.fullPage ? this.props.story.body_preview : this.ellipsis(this.props.story.body_preview)}
-        </p>
+          &rdquo;
+        </span>
       );
     },
 
@@ -222,9 +243,9 @@
     },
 
     subjectMap: {
-      'Task': 'task',
-      'Discussion': 'discussion',
-      'Wip': 'bounty'
+      'Task': function(task) { return "#" + task.number + " " + task.title },
+      'Discussion': function() { return 'discussion' },
+      'Wip': function() { return 'bounty' }
     },
 
     ellipsis: function(text) {

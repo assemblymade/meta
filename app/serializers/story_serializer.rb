@@ -4,6 +4,8 @@ class StorySerializer < ApplicationSerializer
   attributes :actor_ids, :verb, :subject_type, :body_preview
   attributes :url
 
+  has_many :activities, serializer: ActivitySerializer
+
   def actor_ids
     object.activities.pluck(:actor_id)
   end
