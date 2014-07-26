@@ -115,17 +115,25 @@
           break;
         }
 
-        rows.push(
-          <div className="list-group-item" key={stories[i].key}>
-            <Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />
-          </div>
-        );
+        if (this.props.fullPage) {
+          rows.push(
+            <div className="list-group-item" key={stories[i].key}>
+              <Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />
+            </div>
+          );
+        } else {
+          rows.push(
+            <li>
+              <Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />
+            </li>
+          );
+        }
       }
 
       if (this.props.fullPage) {
         return (
           <div className="sheet">
-            <div className="page-header sheet-header">
+            <div className="page-header sheet-header" style={{ 'padding-left': '20px' }}>
               <h2 className="page-header-title">All of your notifications</h2>
             </div>
             <div className="list-group list-group-breakout">
@@ -137,7 +145,7 @@
 
       return (
         <DropdownToggler iconClass={classes} linkHref='#stories' onClick={this.acknowledge} badge={badge}>
-          <ul className="dropdown-menu" style={{ 'max-height': '400px', 'overflow-y': 'scroll', 'text-overflow': 'ellipsis', 'max-width': '300px' }}>
+          <ul className="dropdown-menu" style={{ 'max-height': '400px', 'overflow-y': 'scroll', 'max-width': '300px', 'min-width': '300px' }}>
             {rows}
             <li className="divider" />
             <li><a href='/notifications'>All Notifications</a></li>
@@ -178,47 +186,46 @@
 
       if (this.props.fullPage) {
         return (
-          <a className={classes} href={this.props.story.url}>
-            <strong>@{actors}</strong> {this.body()}
+          <span>
+            <a className={classes} href={this.props.story.url}>
+              <strong>@{actors}</strong> {this.body()}
+            </a>
             {this.preview()}
-          </a>
-        );
-      } else {
-        return (
-          <a className={classes} href={this.props.story.url}>
-            <strong>@{actors}</strong> {this.body()}
-          </a>
+          </span>
         );
       }
+
+      return (
+        <a className={classes} href={this.props.story.url}>
+          <strong>@{actors}</strong> {this.body()}
+          {this.preview()}
+        </a>
+      );
     },
 
     body: function() {
       var target = this.props.story.activities[0].target;
+
       return (
         <span>
           {this.verbMap[this.props.story.verb]}
           <strong>
-            {this.subjectMap[this.props.story.subject_type](target)}
+            {this.subjectMap[this.props.story.subject_type].call(this, target)}
           </strong>
         </span>
-      )
+      );
     },
 
     isRead: function() {
       var readAt = this.props.story.read_at;
-      return (typeof readAt !== "undefined" && readAt !== null)
+      return readAt != null;
     },
 
     preview: function() {
       return (
-        <span
-            className='text-muted'
-            >
-          &mdash;
-          &ldquo;
+        <p className='text-muted'>
           {this.props.fullPage ? this.props.story.body_preview : this.ellipsis(this.props.story.body_preview)}
-          &rdquo;
-        </span>
+        </p>
       );
     },
 
@@ -238,15 +245,27 @@
     },
 
     verbMap: {
-      'Comment': 'commented on',
+      'Comment': 'commented on ',
       'Award': 'awarded',
       'Close': 'closed'
     },
 
     subjectMap: {
-      'Task': function(task) { return "#" + task.number + " " + task.title },
-      'Discussion': function() { return 'discussion' },
-      'Wip': function() { return 'bounty' }
+      Task: function(task) {
+        if (this.props.fullPage) {
+          return "#" + task.number + " " + task.title + ': '
+        }
+
+        return "#" + task.number;
+      },
+
+      Discussion: function() {
+        return 'discussion'
+      },
+
+      Wip: function() {
+        return 'bounty'
+      }
     },
 
     ellipsis: function(text) {
