@@ -1,4 +1,4 @@
-class StakesController < ApplicationController
+class StakesController < ProductController
   before_action :set_product
 
   def show
