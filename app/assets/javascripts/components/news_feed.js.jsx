@@ -91,7 +91,7 @@
         if (this.props.fullPage) {
           return (
             <div>
-              <h3>All of your notifications</h3>
+              <h3>Your notifications</h3>
             </div>
           );
         }
@@ -123,7 +123,7 @@
           );
         } else {
           rows.push(
-            <li>
+            <li key={stories[i].key}>
               <Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />
             </li>
           );
@@ -134,7 +134,11 @@
         return (
           <div className="sheet">
             <div className="page-header sheet-header" style={{ 'padding-left': '20px' }}>
-              <h2 className="page-header-title">All of your notifications</h2>
+              <div className="pull-right">
+                <a href="#">Mark all as read</a>
+              </div>
+              <h2 className="page-header-title">Your notifications</h2>
+
             </div>
             <div className="list-group list-group-breakout">
               {rows}
@@ -186,12 +190,24 @@
 
       if (this.props.fullPage) {
         return (
-          <span>
-            <a className={classes} href={this.props.story.url}>
-              <strong>@{actors}</strong> {this.body()}
-            </a>
-            {this.preview()}
-          </span>
+          <div>
+            <div className="row">
+              <div className="col-md-2">
+                Helpful
+              </div>
+              <div className="col-md-10">
+                <a className={classes} href={this.props.story.url}>
+                  <strong>@{actors}</strong> {this.body()}:
+                </a>
+                &nbsp;
+                {this.preview()}
+                &nbsp;
+                <span className="text-small text-muted">
+                  ({this.timestamp()})
+                </span>
+              </div>
+            </div>
+          </div>
         );
       }
 
@@ -201,6 +217,10 @@
           {this.preview()}
         </a>
       );
+    },
+
+    timestamp: function() {
+      return moment(this.props.story.created).format("ddd, hA")
     },
 
     body: function() {
@@ -223,9 +243,11 @@
 
     preview: function() {
       return (
-        <p className='text-muted'>
+        <span className='text-muted'>
+          &ldquo;
           {this.props.fullPage ? this.props.story.body_preview : this.ellipsis(this.props.story.body_preview)}
-        </p>
+          &rdquo;
+        </span>
       );
     },
 
@@ -253,7 +275,7 @@
     subjectMap: {
       Task: function(task) {
         if (this.props.fullPage) {
-          return "#" + task.number + " " + task.title + ': '
+          return "#" + task.number + " " + task.title
         }
 
         return "#" + task.number;
@@ -263,9 +285,13 @@
         return 'discussion'
       },
 
-      Wip: function() {
-        return 'bounty'
-      }
+      Wip: function(bounty) {
+        if (this.props.fullPage) {
+          return "#" + bounty.number + " " + bounty.title
+        }
+
+        return "#" + bounty.number;
+      },
     },
 
     ellipsis: function(text) {
