@@ -245,7 +245,7 @@
       return (
         <span className='text-muted'>
           &ldquo;
-          {this.props.fullPage ? this.props.story.body_preview : this.ellipsis(this.props.story.body_preview)}
+          {this.ellipsis(this.props.story.body_preview)}
           &rdquo;
         </span>
       );
@@ -295,11 +295,13 @@
     },
 
     ellipsis: function(text) {
-      if (text && text.length > 35) {
-        text = text.substring(0, 35) + '…';
+      var max = 70
+      var cutoff = Math.min(text.length, max)
+      var truncatedText = text.slice(0, cutoff)
+      if(text.length > max) {
+        truncatedText += "…"
       }
-
-      return text;
+      return truncatedText
     }
   });
 
