@@ -46,69 +46,29 @@
         </li>
       </ul>
 
-      <div class="navbar-right">
         <% if user_signed_in? %>
-
-          <ul
-              class="nav navbar-nav navbar-notifications"
-              data-react-class="NewsFeed"
+          <div
+              class="navbar-right"
+              data-react-class="Navbar"
               data-react-props="<%= {
-                url: notifications_path,
+                newsFeedPath: notifications_path(format: :json),
+                chatPath: unread_path,
+                userPath: user_path(current_user),
+                editUserPath: edit_user_path(current_user),
+                destroyUserSessionPath: destroy_user_session_path
               }.to_json %>">
-          </ul>
-
-          <ul
-              class="nav navbar-nav navbar-notifications"
-              data-react-class="Notifications"
-              data-react-props="<%= {
-                url: unread_path,
-                type: 'chat',
-                username: current_user.username
-              }.to_json %>">
-          </ul>
-
-          <ul class="nav navbar-nav">
-
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <%= avatar_tag(current_user, 22) %>
-                <span style="margin-left: 5px;"><%= current_user.username %></span>
-                <b class="caret"></b>
-              </a>
-
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="<%= user_path(current_user) %>">
-                    <i class="icon-user dropdown-glyph"></i>
-                    Profile
-                  </a>
-                </li>
-                <li>
-                  <a href="<%= edit_user_path(current_user) %>">
-                    <i class="icon-settings dropdown-glyph"></i>
-                    Settings
-                  </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <a href="<%= destroy_user_session_path %>" data-method="delete">
-                    <i class="icon-logout dropdown-glyph"></i>
-                    Log out
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
         <% else %>
-          <ul class="nav navbar-nav">
-            <li>
-              <a href="<%= new_user_session_path %>">
-                Log in
-              </a>
-            </li>
-          </ul>
+          <div class="navbar-right">
+            <ul class="nav navbar-nav">
+              <li>
+                <a href="<%= new_user_session_path %>">
+                  Log in
+                </a>
+              </li>
+            </ul>
 
-          <a class="btn btn-success navbar-btn" href="<%= new_user_registration_path %>">Sign up</a>
+            <a class="btn btn-success navbar-btn" href="<%= new_user_registration_path %>">Sign up</a>
+          </div>
         <% end %>
 
         </ul>

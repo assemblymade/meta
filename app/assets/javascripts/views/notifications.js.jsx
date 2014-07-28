@@ -110,28 +110,18 @@
     },
 
     render: function() {
-      var classes = 'icon icon-bubble'
-
       if (!this.state.data) {
-        return <DropdownToggler iconClass={classes} />;
+        return <span />
       }
 
-      var badge = null;
       var total = this.badgeCount();
-
-      if (total > 0) {
-        badge = <span className="indicator indicator-success" style={{ 'font-size': '36px', 'background-color': '#74ea4f', 'margin-bottom': '-5px' }}></span>
-        classes += " glyphicon-highlight";
-      }
 
       this.setTitle(total)
 
       var sorted = this.sortByCount(this.state.data);
 
       return (
-        <DropdownToggler iconClass={classes} linkHref='#notifications' onClick={this.onClick} badge={badge}>
-          <NotificationsList data={sorted} username={this.props.username} />
-        </DropdownToggler>
+        <NotificationsList data={sorted} username={this.props.username} />
       );
     },
 

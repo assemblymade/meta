@@ -11,8 +11,7 @@
   window.NewsFeed = React.createClass({
     getInitialState: function() {
       return {
-        stories: null,
-        acknowledgedAt: this.storedAck()
+        stories: null
       };
     },
 
@@ -30,53 +29,6 @@
       });
     }, 1000),
 
-    badgeCount: function() {
-      console.log(this.latestStoryTimestamp(), this.state.acknowledgedAt)
-      if (this.latestStoryTimestamp() > this.state.acknowledgedAt) {
-        return this.total();
-      }
-    },
-
-    latestStoryTimestamp: function() {
-      var story = this.latestStory();
-
-      return story && story.updated ? story.updated : 0;
-    },
-
-    latestStory: function() {
-      var stories = this.state.stories;
-
-      if (!stories) {
-        return;
-      }
-
-      var story;
-      for (var i = 0, l = stories.length; i < l; i++) {
-        if (story && stories[i].updated > story.updated) {
-          story = stories[i];
-        }
-
-        if (!story) {
-          story = stories[i];
-        }
-      }
-
-      return story;
-    },
-
-    total: function() {
-      var self = this;
-
-      var count = _.reduce(
-        _.map(self.state.stories, function(story) {
-          return story.updated ? 0 : 1;
-        }), function(memo, read) {
-          return memo + read;
-      }, 0);
-
-      return count;
-    },
-
     getStories: function() {
       this.setState({
         stories: NewsFeedStore.getStories(),
@@ -85,8 +37,6 @@
     },
 
     render: function() {
-      var classes = 'icon icon-bell'
-
       if (!this.state.stories) {
         if (this.props.fullPage) {
           return (
@@ -95,16 +45,7 @@
             </div>
           );
         }
-
-        return <DropdownToggler iconClass={classes} />;
-      }
-
-      var total = this.badgeCount();
-      var badge = null;
-
-      if (total > 0) {
-        badge = <span className='badge badge-notification'>{total}</span>
-        classes += ' glyphicon-highlight';
+        return <span />
       }
 
       var rows = [];
@@ -144,34 +85,12 @@
       }
 
       return (
-        <DropdownToggler iconClass={classes} linkHref='#stories' onClick={this.acknowledge} badge={badge}>
-          <ul className="dropdown-menu" style={{ 'max-height': '400px', 'overflow-y': 'scroll', 'max-width': '300px', 'min-width': '300px' }}>
-            {rows}
-            <li className="divider" />
-            <li><a href='/notifications'>All Notifications</a></li>
-          </ul>
-        </DropdownToggler>
+        <ul className="dropdown-menu" style={{ 'max-height': '400px', 'overflow-y': 'scroll', width: '300px', 'max-width': '300px', 'min-width': '300px' }}>
+          {rows}
+          <li className="divider" />
+          <li><a href='/notifications'>All Notifications</a></li>
+        </ul>
       );
-    },
-
-    acknowledge: function() {
-      var timestamp = Math.floor(Date.now() / 1000);
-
-      localStorage.notificationsAck = timestamp;
-
-      this.setState({
-        acknowledgedAt: timestamp
-      });
-    },
-
-    storedAck: function() {
-      var timestamp = localStorage.newsFeedAck;
-
-      if (timestamp == null || timestamp === "null") {
-        return -1;
-      } else {
-        return parseInt(timestamp, 10);
-      }
     }
   });
 
@@ -188,6 +107,9 @@
         return (
           <span>
             <a className={classes} href={this.props.story.url}>
+              <span style={{ 'margin-right': '5px' }}>
+                <Avatar user={this.actors()[0]} />
+              </span>
               <strong>@{actors}</strong> {this.body()}
             </a>
             {this.preview()}
@@ -196,7 +118,7 @@
       }
 
       return (
-        <a className={classes} href={this.props.story.url}>
+        <a className={classes} href={this.props.story.url} style={{ 'font-size': '14px' }}>
           <strong>@{actors}</strong> {this.body()}
           {this.preview()}
         </a>
@@ -223,7 +145,7 @@
 
     preview: function() {
       return (
-        <p className='text-muted'>
+        <p className='text-muted' style={{ 'text-overflow': 'ellipsis' }}>
           {this.props.fullPage ? this.props.story.body_preview : this.ellipsis(this.props.story.body_preview)}
         </p>
       );
@@ -269,8 +191,8 @@
     },
 
     ellipsis: function(text) {
-      if (text && text.length > 35) {
-        text = text.substring(0, 35) + '…';
+      if (text && text.length > 40) {
+        text = text.substring(0, 40) + '…';
       }
 
       return text;
