@@ -448,6 +448,7 @@ DEPENDENCIES
   github-markdown
   hogan_assets
   html-pipeline
+  htmlentities
   jquery-rails
   kaminari
   kss!
