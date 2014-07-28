@@ -18,7 +18,9 @@
                 iconClass='icon icon-bell'
                 href='#stories'
                 store='NEWS_FEED'
+                label='Notifications'
                 event='STORIES_FETCHED' />
+
             <NewsFeed url={this.props.newsFeedPath} />
           </li>
 
@@ -26,17 +28,21 @@
             <DropdownToggler
               iconClass='icon icon-bubble'
               href='#notifications'
+              label='Chat'
               store='NOTIFICATIONS' />
+
             <Notifications
                 url={this.props.chatPath}
                 username={this.props.user.username}
-                type='chat'
             />
           </li>
 
           <li className='dropdown'>
             <a href='#' className='dropdown-toggle' data-toggle='dropdown'>
               <Avatar user={this.props.user} />
+              <span className='visible-xs-inline' style={{ 'margin-left': '5px' }}>
+                {this.props.user.username}
+              </span>
             </a>
 
             {this.transferPropsTo(<UserNavbarDropdown />)}

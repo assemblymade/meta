@@ -79,18 +79,23 @@
 
     render: function() {
       var classes = this.props.iconClass;
-      var total = this.badgeCount();
+      var total = 10// this.badgeCount();
       var badge = null;
 
       if (total > 0) {
-        badge = <span className='badge badge-notification'>{total}</span>;
+        badge = this.props.iconClass.indexOf('bubble') > -1 ?
+          <span className='indicator indicator-success' /> :
+          <span className='badge badge-notification'>{total}</span>;
         classes += ' glyphicon-highlight';
       }
 
       return (
-        <a href={this.props.href} data-toggle="dropdown" onClick={this.acknowledge}>
+        <a href={this.props.href} data-toggle='dropdown' onClick={this.acknowledge}>
           <span className={classes}></span>
           {badge}
+          <span className='visible-xs-inline' style={{ 'margin-left': '5px' }}>
+            {this.props.label}
+          </span>
         </a>
       );
     },
@@ -98,7 +103,7 @@
     storedAck: function() {
       var timestamp = localStorage.newsFeedAck;
 
-      if (timestamp == null || timestamp === "null") {
+      if (timestamp == null || timestamp === 'null') {
         return -1;
       } else {
         return parseInt(timestamp, 10);
