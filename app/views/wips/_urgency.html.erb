@@ -6,8 +6,8 @@
          urgencies: Urgency.all.map(&:label),
          url: product_task_urgency_path(@product, task)
        }.to_json %>">
+  </div>
 
 <% else %>
   <span class="label label-<%= task.urgency.label.downcase %>"><%= task.urgency.label %></span>
 <% end %>
-

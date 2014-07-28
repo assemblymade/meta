@@ -3,14 +3,16 @@
     <a class="summary-target" href="<%= product_wip_path(task.product, task) %>">
       <%= task.title %>
     </a>
-    
+
     <% unless task.closed? %>
       <ul class="list-piped omega pull-right">
         <li>
           <% if task.workers.any? %>
             <span class="label label-outlined">In Progress</span>
           <% end %>
-          <span style="margin-left: 4px;"><%= render 'wips/urgency', task: task %></span>
+          <span style="margin-left: 4px;">
+            <%= render 'wips/urgency', task: task %>
+          </span>
         </li>
       </ul>
     <% end %>
@@ -51,7 +53,7 @@
         </li>
         <% if task.awarded? %>
           <li>
-            awarded to <%= user_link_username(task.winner) %>            
+            awarded to <%= user_link_username(task.winner) %>
           </li>
         <% end %>
         <% unless task.tags.empty? %>
@@ -60,7 +62,22 @@
               <a href="<%= product_wips_path(@product, tag: tag.name) %>"><%= tag.name %></a>
             <% end %>
           </li>
-        <% end %>          
+        <% end %>
+
+        <% unless task.workers.nil? %>
+          <li>
+            <ul class="list-piped omega" style="margin-left: 4px;">
+              <% task.workers.each do |user| %>
+                <li>
+                  <a href="<%= user_path(user) %>">
+                    <%= avatar_tag(user, 21) %>
+                  </a>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+
         <li>
           #<%= task.number %>
         </li>
