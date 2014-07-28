@@ -79,7 +79,7 @@
 
     render: function() {
       var classes = this.props.iconClass;
-      var total = 10// this.badgeCount();
+      var total = this.badgeCount();
       var badge = null;
 
       if (total > 0) {
