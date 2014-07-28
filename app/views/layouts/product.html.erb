@@ -10,56 +10,57 @@
     <div class="row">
 
       <div class="col-md-10 col-md-push-2">
-
-        <ul class="list list-inline pull-right hidden-xs">
-          <li>
-            <div data-react-class="Share"
-                 data-react-props="<%= {
-                   url: product_url(@product),
-                   title: "Share #{@product.name} with the world",
-                   shareText: "Check out #{@product.name} – #{ @product.pitch} on Assembly",
-                 }.to_json %>" />
-          </li>
-          <li>
-            <div class="toggler toggler-sm">
-              <% if signed_in? && @product.watching?(current_user) %>
-                <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post">
-                  <i class="icon icon-eye" style="margin-right: 2px;"></i>
-                  Unwatch
-                </a>
-              <% else %>
-                <a class="toggler-btn btn btn-primary" href="<%= subscribe_product_path(@product) %>" data-method="post">
-                  <i class="icon icon-eye" style="margin-right: 2px;"></i>
-                  Watch
-                </a>
-              <% end %>
-                <a class="toggler-badge" href="<%= product_watchers_path(@product) %>">
-                  <%= @product.watchings_count %>
-                </a>
-            </div>
-          </li>
-          <li style="padding-right: 0;">
-            <div class="toggler toggler-sm">
-              <div data-react-class="JoinTeam"
+        <div class="clearfix">
+          <ul class="list list-inline pull-right hidden-xs">
+            <li>
+              <div data-react-class="Share"
                    data-react-props="<%= {
-                     count: @product.team_memberships_count,
-                     join_path: product_people_path(@product),
-                     leave_path: (current_user && product_person_path(@product, current_user)),
-                     is_member: @product.member?(current_user),
-                     membership: TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user) || TeamMembership.new(product: @product, user: current_user)).as_json
-                   }.to_json %>">
+                     url: product_url(@product),
+                     title: "Share #{@product.name} with the world",
+                     shareText: "Check out #{@product.name} – #{ @product.pitch} on Assembly",
+                   }.to_json %>" />
+            </li>
+            <li>
+              <div class="toggler toggler-sm">
+                <% if signed_in? && @product.watching?(current_user) %>
+                  <a class="toggler-btn btn btn-default inactive" href="<%= unsubscribe_product_path(@product) %>" data-method="post">
+                    <i class="icon icon-eye" style="margin-right: 2px;"></i>
+                    Unwatch
+                  </a>
+                <% else %>
+                  <a class="toggler-btn btn btn-primary" href="<%= subscribe_product_path(@product) %>" data-method="post">
+                    <i class="icon icon-eye" style="margin-right: 2px;"></i>
+                    Watch
+                  </a>
+                <% end %>
+                  <a class="toggler-badge" href="<%= product_watchers_path(@product) %>">
+                    <%= @product.watchings_count %>
+                  </a>
               </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+            <li style="padding-right: 0;">
+              <div class="toggler toggler-sm">
+                <div data-react-class="JoinTeam"
+                     data-react-props="<%= {
+                       count: @product.team_memberships_count,
+                       join_path: product_people_path(@product),
+                       leave_path: (current_user && product_person_path(@product, current_user)),
+                       is_member: @product.member?(current_user),
+                       membership: TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user) || TeamMembership.new(product: @product, user: current_user)).as_json
+                     }.to_json %>">
+                </div>
+              </div>
+            </li>
+          </ul>
 
-        <h3 class="alpha text-muted" style="font-weight: 400; line-height: 1;">
-          <%= @product.name %> <% if @product.stealth? %><span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;">Stealth</span><% end %>
-          <% if @breadcrumb.present? %>
-            <i class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></i>
-            <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>"><%= @breadcrumb[:text] %></a>
-          <% end %>
-        </h3>
+          <h3 class="alpha text-muted" style="font-weight: 400; line-height: 1;">
+            <%= @product.name %> <% if @product.stealth? %><span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;">Stealth</span><% end %>
+            <% if @breadcrumb.present? %>
+              <i class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></i>
+              <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>"><%= @breadcrumb[:text] %></a>
+            <% end %>
+          </h3>
+        </div>
 
         <div class="sheet">
           <%= yield %>
