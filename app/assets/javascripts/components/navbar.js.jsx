@@ -16,7 +16,7 @@
           <li>
             <DropdownToggler
                 iconClass='icon-bell'
-                href='#stories'
+                href='#'
                 store='NEWS_FEED'
                 label='Notifications'
                 event='STORIES_FETCHED' />
@@ -26,7 +26,7 @@
 
           <li>
             <DropdownToggler
-              iconClass='icon-bubble'
+              iconClass='icon-bubbles'
               href='#notifications'
               label='Chat'
               store='NOTIFICATIONS' />
