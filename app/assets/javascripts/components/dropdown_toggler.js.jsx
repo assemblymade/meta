@@ -63,8 +63,6 @@
           story = stories[i];
         }
 
-        console.dir(story);
-
         if (!story) {
           story = stories[i];
         }
@@ -83,10 +81,10 @@
       var classes = ['icon', 'navbar-icon', this.props.iconClass];
       var total = this.badgeCount();
       var badge = null;
-      console.log(this.props.store, total)
+
       if (total > 0) {
         badge = this.props.iconClass.indexOf('bubble') > -1 ?
-          <span className='indicator indicator-success' /> :
+          <span className='indicator indicator-success' style={{ 'background-color': '#5ce600' }} /> :
           <span className='badge badge-notification'>{total}</span>;
         classes.push('glyphicon-highlight');
       }
