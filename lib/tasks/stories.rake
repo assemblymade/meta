@@ -2,6 +2,7 @@ namespace :stories do
 
   desc "Republish stories to redis"
   task :republish => :environment do
+    NewsFeed.delete_all
     Story.includes(activities: :subject).find_each do |story|
       puts "story: #{story.id}"
       begin
@@ -20,7 +21,8 @@ namespace :stories do
   task :rebuild => :environment do
     Story.delete_all
     Activity.where('created_at > ?', 7.days.ago).
-             where(type: Activities::Comment).includes(:actor, :subject, :target).find_each do |activity|
+             where(type: [Activities::Comment, Activities::Award, Activities::Close]).
+             includes(:actor, :subject, :target).find_each do |activity|
 
       Story.create!(
         created_at: activity.created_at,
