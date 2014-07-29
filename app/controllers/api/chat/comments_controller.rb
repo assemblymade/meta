@@ -1,8 +1,6 @@
 module Api
   module Chat
     class CommentsController < ApplicationController
-      respond_to :json
-
       protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
       before_action :authenticate
@@ -27,7 +25,9 @@ module Api
           )
         end
 
-        respond_with '', status: :ok, location: product_chat_path(params[:product_id])
+        respond_to do |format|
+          format.json { render nothing: true }
+        end
       end
 
       private
