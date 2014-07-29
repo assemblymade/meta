@@ -4,6 +4,11 @@
 //= require dispatcher
 //= require stores/dropdown_news_feed_store
 
+/*
+http://localhost:3000/readers/1a596d82-11bd-408d-a4a5-f934ab94c589/articles?key=Story_e645abc4-4923-477c-a900-0f03edb13e2f
+*/
+
+
 (function() {
 
   var NF = CONSTANTS.DROPDOWN_NEWS_FEED;
@@ -77,6 +82,23 @@
   });
 
   var Entry = React.createClass({
+    getInitialState: function() {
+      return {
+        story: this.props.story
+      };
+    },
+
+    markAsRead: function() {
+      var story = this.state.story;
+      story.readAt = Date.now();
+
+      console.log('marking')
+
+      this.setState({
+        story: story
+      });
+    },
+
     render: function() {
       var actors = _.map(this.actors(), func.dot('username')).join(', @')
 
@@ -86,7 +108,7 @@
       });
 
       return (
-        <a className={classes} href={this.props.story.url} style={{ 'font-size': '14px' }}>
+        <a className={classes} href={this.props.story.url} style={{ 'font-size': '14px' }} onMouseOver={this.state.story.readAt ? null : this.markAsRead}>
           <strong>@{actors}</strong> {this.body()}
           {this.preview()}
         </a>
@@ -111,7 +133,8 @@
     },
 
     isRead: function() {
-      var readAt = this.props.story.read_at;
+      var readAt = this.state.story.readAt;
+
       return readAt != null;
     },
 

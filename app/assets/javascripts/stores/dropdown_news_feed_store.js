@@ -91,12 +91,12 @@ var DropdownNewsFeedStore = (function() {
       for (var i = 0, l = data.length; i < l; i++) {
         var datum = data[i];
 
-        if (datum.read_at) {
+        if (datum.readAt) {
           for (var j = 0, k = stories.length; j < k; j++) {
             var story = stories[j];
 
             if (datum.key.indexOf(story.id) > -1) {
-              story.read_at = datum.read_at;
+              story.readAt = datum.readAt;
             }
           }
         }
