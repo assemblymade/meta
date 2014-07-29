@@ -20,7 +20,8 @@ namespace :stories do
   task :rebuild => :environment do
     Story.delete_all
     Activity.where('created_at > ?', 7.days.ago).
-             where(type: Activities::Comment).includes(:actor, :subject, :target).find_each do |activity|
+             where(type: [Activities::Comment, Activities::Award, Activities::Close]).
+             includes(:actor, :subject, :target).find_each do |activity|
 
       Story.create!(
         created_at: activity.created_at,
