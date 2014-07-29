@@ -17,26 +17,30 @@ var Popover = React.createClass({
   },
 
   render: function () {
-    var classes = {};
-    classes['popover'] = true;
+    var classes = {
+      popover: true,
+      in: this.props.positionLeft != null || this.props.positionTop != null
+    };
+
     classes[this.props.placement] = true;
-    classes['in'] = this.props.positionLeft != null || this.props.positionTop != null;
 
-    var style = {};
-    style['left'] = this.props.positionLeft;
-    style['top'] = this.props.positionTop;
-    style['display'] = 'block';
+    var style = {
+      left: this.props.positionLeft,
+      top: this.props.positionTop,
+      display: 'block'
+    };
 
-    var arrowStyle = {};
-    arrowStyle['left'] = this.props.arrowOffsetLeft;
-    arrowStyle['top'] = this.props.arrowOffsetTop;
+    var arrowStyle = {
+      left: this.props.arrowOffsetLeft,
+      top: this.props.arrowOffsetTop
+    };
 
     return (
       <div className={React.addons.classSet(classes)} style={style}>
         <div className="arrow" style={arrowStyle} />
         {this.props.title ? this.renderTitle() : null}
         <div className="popover-content">
-            {this.props.children}
+          {this.props.children}
         </div>
       </div>
     );
