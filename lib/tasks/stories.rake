@@ -2,6 +2,7 @@ namespace :stories do
 
   desc "Republish stories to redis"
   task :republish => :environment do
+    NewsFeed.delete_all
     Story.includes(activities: :subject).find_each do |story|
       puts "story: #{story.id}"
       begin
