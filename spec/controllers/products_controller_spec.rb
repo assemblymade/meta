@@ -104,7 +104,9 @@ describe ProductsController do
     end
 
     it 'creates an invite for core team members with email' do
-      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: ['jake@adventure.com']
+      expect {
+        post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: ['jake@adventure.com'], ownership: { 'jake@adventure.com' => 10 }
+      }.to change(Invite, :count).by(1)
 
       expect(
         Invite.find_by(invitee_email: 'jake@adventure.com').via.name
@@ -118,6 +120,17 @@ describe ProductsController do
       expect(invite.tip_cents).to eq(60000)
       expect(invite.via.name).to eq('KJDB')
       expect(invite.core_team?).to be_true
+    end
+
+    it 'mints founder coins' do
+      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: ['jake@adventure.com'], ownership: { 'jake@adventure.com' => 10 }
+
+      expect(
+        TransactionLogEntry.find_by(product_id: assigns(:product).id)
+      ).to have_attributes(
+        action: 'minted',
+        cents: 600000
+      )
     end
   end
 
