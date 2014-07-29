@@ -14,7 +14,6 @@ window.ActivityFeed = React.createClass({
 
 var Entry = React.createClass({
   render: function() {
-    console.log(this.props)
     return <div className="row">@{this.props.actor.username} {this.props.verb} {this.body()}</div>
   },
 
