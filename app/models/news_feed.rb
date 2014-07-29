@@ -3,7 +3,7 @@ class NewsFeed
   include Enumerable
 
   KEY_PREFIX = 'news'
-  DEFAULT_PAGE_LENGTH = 25
+  DEFAULT_PAGE_LENGTH = 10
 
   def self.serialize(story)
     story.id.to_s
@@ -54,7 +54,16 @@ class NewsFeed
     end
   end
 
-  def page(last_id=nil, limit = DEFAULT_PAGE_LENGTH)
+  def earlier_page(first_id=nil, limit=DEFAULT_PAGE_LENGTH)
+    offset = if first_id.nil?
+      0
+    else
+      $redis.zrank(key, first_id)
+    end
+    range(offset, offset + limit - 1)
+  end
+
+  def later_page(last_id=nil, limit = DEFAULT_PAGE_LENGTH)
     offset = if last_id.nil?
       0
     else

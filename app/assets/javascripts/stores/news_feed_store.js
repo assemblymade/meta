@@ -140,11 +140,11 @@ var NewsFeedStore = (function() {
     var action = payload.action;
     var data = payload.data;
     var event = payload.event;
-    var async = payload.async;
+    var sync = payload.sync;
 
     _store[action] && _store[action](data);
 
-    if (!async) {
+    if (sync) {
       return _store.emit(event);
     }
 

@@ -24,8 +24,7 @@
       Dispatcher.dispatch({
         action: NF.ACTIONS.FETCH_STORIES,
         event: NF.EVENTS.STORIES_FETCHED,
-        data: url,
-        async: true
+        data: url
       });
     }, 1000),
 
@@ -33,6 +32,26 @@
       this.setState({
         stories: NewsFeedStore.getStories(),
         actors: NewsFeedUsersStore.getUsers()
+      });
+    },
+
+    pageEarlier: function() {
+      var lastStory = this.state.stories[this.state.stories.length - 1];
+
+      Dispatcher.dispatch({
+        action: NF.ACTIONS.FETCH_STORIES,
+        event: NF.EVENTS.STORIES_FETCHED,
+        data: this.props.url + '?top_id=' + lastStory.id
+      });
+    },
+
+    pageLater: function() {
+      var lastStory = this.state.stories[this.state.stories.length - 1];
+
+      Dispatcher.dispatch({
+        action: NF.ACTIONS.FETCH_STORIES,
+        event: NF.EVENTS.STORIES_FETCHED,
+        data: this.props.url + '?top_id=' + lastStory.id + '&earlier=true'
       });
     },
 
@@ -45,6 +64,7 @@
                 <h2 className="page-header-title">Your notifications</h2>
 
               </div>
+
               <div className="list-group list-group-breakout" style={{ height: '800px' }}>
               </div>
             </div>
@@ -81,10 +101,22 @@
           <div className="sheet">
             <div className="page-header sheet-header" style={{ 'padding-left': '20px' }}>
               <h2 className="page-header-title">Your notifications</h2>
-
             </div>
+
             <div className="list-group list-group-breakout">
               {rows}
+            </div>
+
+            <div style={{ 'text-align': 'center' }}>
+              <ul className="pagination">
+                <li>
+                  <a href="#newer" onClick={this.pageLater}>Newer</a>
+                </li>
+
+                <li>
+                  <a href="#older" onClick={this.pageEarlier}>Older</a>
+                </li>
+              </ul>
             </div>
           </div>
         );
