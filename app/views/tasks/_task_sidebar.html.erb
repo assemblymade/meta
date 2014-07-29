@@ -36,7 +36,8 @@
                   <a href="<%= user_path(worker.user) %>">You</a>
               <% else %>
                 <a href="<%= user_path(worker.user) %>">
-                  <strong>@<%= worker.user.username %></strong>
+                  <%= avatar_tag(worker.user, 21) %>
+                  <strong><%= worker.user.username %></strong>
                 </a>
               <% end %>
               started this

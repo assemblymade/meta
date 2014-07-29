@@ -64,7 +64,7 @@
           </li>
         <% end %>
 
-        <% unless task.workers.nil? %>
+        <% unless task.workers.empty? %>
           <li>
             <ul class="list-piped omega" style="margin-left: 4px;">
               <% task.workers.each do |user| %>
