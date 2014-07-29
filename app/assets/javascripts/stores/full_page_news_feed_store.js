@@ -2,9 +2,9 @@
 //= require constants
 //= require dispatcher
 //= require stores/store
-//= require stores/dropdown_news_feed_users_store
+//= require stores/full_page_news_feed_users_store
 
-var DropdownNewsFeedStore = (function() {
+var FullPageNewsFeedStore = (function() {
   var READ_RAPTOR_URL = document.getElementsByName('read-raptor-url')[0].content;
 
   var _stories = [];
@@ -53,7 +53,7 @@ var DropdownNewsFeedStore = (function() {
       var users = data.users;
       var stories = data.stories;
 
-      DropdownNewsFeedUsersStore.setUsers(users);
+      FullPageNewsFeedUsersStore.setUsers(users);
 
       var url = READ_RAPTOR_URL +
         '/readers/' +
@@ -105,7 +105,7 @@ var DropdownNewsFeedStore = (function() {
       var users = data.users;
       var stories = data.stories;
 
-      DropdownNewsFeedUsersStore.addUsers(users);
+      FullPageNewsFeedUsersStore.addUsers(users);
 
       var url = READ_RAPTOR_URL +
         '/readers/' +

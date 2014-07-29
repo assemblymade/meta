@@ -2,13 +2,52 @@
 
 //= require constants
 //= require dispatcher
+//= require stores/full_page_news_feed_store
 
 (function() {
+  var NF = CONSTANTS.FULL_PAGE_NEWS_FEED;
+
   window.FullPageNewsFeed = React.createClass({
+    getInitialState: function() {
+      return {
+        stories: null
+      };
+    },
+
+    componentWillMount: function() {
+      FullPageNewsFeedStore.addChangeListener(NF.EVENTS.STORIES_FETCHED, this.getStories);
+      this.fetchNewsFeed(this.props.url);
+    },
+
+    fetchNewsFeed: _.debounce(function(url) {
+      Dispatcher.dispatch({
+        action: NF.ACTIONS.FETCH_STORIES,
+        event: NF.EVENTS.STORIES_FETCHED,
+        data: url
+      });
+    }, 1000),
+
+    getStories: function() {
+      this.setState({
+        stories: DropdownNewsFeedStore.getStories(),
+        actors: DropdownNewsFeedUsersStore.getUsers()
+      });
+    },
+
+    moreStories: function() {
+      var lastStory = this.state.stories[this.state.stories.length - 1];
+
+      Dispatcher.dispatch({
+        action: NF.ACTIONS.FETCH_MORE_STORIES,
+        event: NF.EVENTS.STORIES_FETCHED,
+        data: this.props.url + '?top_id=' + lastStory.id
+      });
+    },
+
     render: function() {
       var placeholderStyle;
 
-      if (!this.state.rows) {
+      if (!this.state.stories) {
         placeholderStyle = { height: '800px' };
       } else {
         placeholderStyle = {};
@@ -59,7 +98,7 @@
         <div>
           <div className='row'>
             <div className='col-md-3'>
-              <a href={'/' + productName}>{productName}</a>
+              <a href={'/' + this.props.story.product.slug}>{productName}</a>
               <br />
               <span className='text-muted text-small'>
                 {this.timestamp()}

@@ -22,6 +22,16 @@ var CONSTANTS = {
     }
   },
 
+  FULL_PAGE_NEWS_FEED: {
+    ACTIONS: {
+      FETCH_STORIES: 'fetchStories',
+      FETCH_MORE_STORIES: 'fetchMoreStories'
+    },
+    EVENTS: {
+      STORIES_FETCHED: 'newsFeed:storiesFetched'
+    }
+  },
+
   INTEREST_PICKER: {
     ACTIONS: {
       ADD_INTEREST: 'addInterest',

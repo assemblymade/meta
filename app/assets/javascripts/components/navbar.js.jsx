@@ -21,7 +21,7 @@
                 label='Notifications'
                 event='STORIES_FETCHED' />
 
-            <NewsFeed url={this.props.newsFeedPath} />
+            <DropdownNewsFeed url={this.props.newsFeedPath} />
           </li>
 
           <li>

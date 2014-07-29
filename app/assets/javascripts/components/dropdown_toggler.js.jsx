@@ -5,7 +5,7 @@
 
 (function() {
   var _stores = {
-    DROPDOWN_NEWS_FEED: NewsFeedStore,
+    DROPDOWN_NEWS_FEED: DropdownNewsFeedStore,
     NOTIFICATIONS: null
   };
 

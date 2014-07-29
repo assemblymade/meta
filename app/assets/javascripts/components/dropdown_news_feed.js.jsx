@@ -8,7 +8,7 @@
 
   var NF = CONSTANTS.DROPDOWN_NEWS_FEED;
 
-  window.NewsFeed = React.createClass({
+  window.DropdownNewsFeed = React.createClass({
     getInitialState: function() {
       return {
         stories: null
@@ -16,7 +16,7 @@
     },
 
     componentWillMount: function() {
-      NewsFeedStore.addChangeListener(NF.EVENTS.STORIES_FETCHED, this.getStories);
+      DropdownNewsFeedStore.addChangeListener(NF.EVENTS.STORIES_FETCHED, this.getStories);
       this.fetchNewsFeed(this.props.url);
     },
 
@@ -30,8 +30,8 @@
 
     getStories: function() {
       this.setState({
-        stories: NewsFeedStore.getStories(),
-        actors: NewsFeedUsersStore.getUsers()
+        stories: DropdownNewsFeedStore.getStories(),
+        actors: DropdownNewsFeedUsersStore.getUsers()
       });
     },
 
