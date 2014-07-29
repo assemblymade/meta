@@ -31,11 +31,11 @@ var FullPageNewsFeedStore = (function() {
       _stories = _stories.concat(stories);
     },
 
-    fetchStories: function(url) {
+    'fullPageNewsFeed:fetchStories': function(url) {
       window.xhr.get(url, this.handleFetchedStories.bind(this));
     },
 
-    fetchMoreStories: function(url) {
+    'fullPageNewsFeed:fetchMoreStories': function(url) {
       window.xhr.get(url, this.handleMoreStories.bind(this));
     },
 
@@ -206,7 +206,11 @@ var FullPageNewsFeedStore = (function() {
     var event = payload.event;
     var sync = payload.sync;
 
-    _store[action] && _store[action](data);
+    if (!_store[action]) {
+      return;
+    }
+
+    _store[action](data);
 
     if (sync) {
       return _store.emit(event);

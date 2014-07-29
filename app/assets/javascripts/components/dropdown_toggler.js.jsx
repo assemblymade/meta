@@ -6,7 +6,7 @@
 (function() {
   var _stores = {
     DROPDOWN_NEWS_FEED: DropdownNewsFeedStore,
-    NOTIFICATIONS: null
+    NOTIFICATIONS: NotificationsStore
   };
 
   window.DropdownToggler = React.createClass({
@@ -63,6 +63,8 @@
           story = stories[i];
         }
 
+        console.dir(story);
+
         if (!story) {
           story = stories[i];
         }
@@ -81,7 +83,7 @@
       var classes = ['icon', 'navbar-icon', this.props.iconClass];
       var total = this.badgeCount();
       var badge = null;
-
+      console.log(this.props.store, total)
       if (total > 0) {
         badge = this.props.iconClass.indexOf('bubble') > -1 ?
           <span className='indicator indicator-success' /> :
@@ -115,7 +117,11 @@
 
       var count = _.reduce(
         _.map(self.state.stories, function mapStories(story) {
-          return story.updated ? 0 : 1;
+          if (self.state.store === 'DROPDOWN_NEWS_FEED') {
+            return story.updated ? 0 : 1;
+          }
+
+          return story.count;
         }), function reduceStories(memo, read) {
           return memo + read;
       }, 0);

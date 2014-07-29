@@ -29,7 +29,8 @@
               iconClass='icon-bubble'
               href='#notifications'
               label='Chat'
-              store='NOTIFICATIONS' />
+              store='NOTIFICATIONS'
+              event='STORIES_FETCHED' />
 
             <Notifications
                 url={this.props.chatPath}

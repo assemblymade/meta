@@ -14,21 +14,20 @@ var CONSTANTS = {
 
   DROPDOWN_NEWS_FEED: {
     ACTIONS: {
-      FETCH_STORIES: 'fetchStories',
-      FETCH_MORE_STORIES: 'fetchMoreStories'
+      FETCH_STORIES: 'dropdownNewsFeed:fetchStories'
     },
     EVENTS: {
-      STORIES_FETCHED: 'newsFeed:storiesFetched'
+      STORIES_FETCHED: 'dropdownNewsFeed:storiesFetched'
     }
   },
 
   FULL_PAGE_NEWS_FEED: {
     ACTIONS: {
-      FETCH_STORIES: 'fetchStories',
-      FETCH_MORE_STORIES: 'fetchMoreStories'
+      FETCH_STORIES: 'fullPageNewsFeed:fetchStories',
+      FETCH_MORE_STORIES: 'fullPageNewsFeed:fetchMoreStories'
     },
     EVENTS: {
-      STORIES_FETCHED: 'newsFeed:storiesFetched'
+      STORIES_FETCHED: 'fullPageNewsFeed:storiesFetched'
     }
   },
 
@@ -42,6 +41,15 @@ var CONSTANTS = {
       INTEREST_ADDED: 'interestPicker:interestAdded',
       INTEREST_REMOVED: 'interestPicker:interestRemoved',
       POPPED: 'interestPicker:popped'
+    }
+  },
+
+  NOTIFICATIONS: {
+    ACTIONS: {
+      FETCH_STORIES: 'fetchStories'
+    },
+    EVENTS: {
+      STORIES_FETCHED: 'notifications:storiesFetched'
     }
   },
 

@@ -1,7 +1,12 @@
 /** @jsx React.DOM */
 
+//= require constants
+//= require dispatcher
+//= require stores/notifications_store
+
 (function() {
   var ICON_URL = 'https://d8izdk6bl4gbi.cloudfront.net/80x/http://f.cl.ly/items/1I2a1j0M0w0V2p3C3Q0M/Assembly-Twitter-Avatar.png';
+  var N = CONSTANTS.NOTIFICATIONS;
 
   window.Notifications = React.createClass({
     getInitialState: function() {
@@ -22,17 +27,10 @@
     },
 
     fetchNotifications: _.debounce(function() {
-      $.ajax({
-        url: this.props.url,
-        dataType: 'json',
-        success: function(data) {
-          this.setState({
-            data: data
-          });
-        }.bind(this),
-        error: function(xhr, status, err) {
-          console.error(this.props.url, status, err.toString());
-        }.bind(this)
+      Dispatcher.dispatch({
+        action: N.ACTIONS.FETCH_STORIES,
+        event: N.EVENTS.STORIES_FETCHED,
+        data: this.props.url
       });
     }, 1000),
 
@@ -54,7 +52,14 @@
         if (visible) { _this.fetchNotifications(); }
       });
 
+      NotificationsStore.addChangeListener(N.EVENTS.STORIES_FETCHED, this.getStories);
       this.fetchNotifications();
+    },
+
+    getStories: function() {
+      this.setState({
+        data: NotificationsStore.getStories()
+      });
     },
 
     onPush: function(fn) {
@@ -134,7 +139,9 @@
 
       localStorage.notificationsAck = timestamp;
 
-      this.setState({acknowledgedAt: timestamp});
+      this.setState({
+        acknowledgedAt: timestamp
+      });
     },
 
     storedAck: function() {

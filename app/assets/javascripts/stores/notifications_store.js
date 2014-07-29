@@ -2,9 +2,8 @@
 //= require constants
 //= require dispatcher
 //= require stores/store
-//= require stores/dropdown_news_feed_users_store
 
-var DropdownNewsFeedStore = (function() {
+var NotificationsStore = (function() {
   var READ_RAPTOR_URL = document.getElementsByName('read-raptor-url')[0].content;
 
   var _stories = [];
@@ -12,7 +11,7 @@ var DropdownNewsFeedStore = (function() {
 
   var _store = Object.create(Store);
 
-  var _newsFeedStore = _.extend(_store, {
+  var _notificationsStore = _.extend(_store, {
     addStory: function(data) {
       if (!data) {
         return;
@@ -23,15 +22,7 @@ var DropdownNewsFeedStore = (function() {
       _stories.push(story);
     },
 
-    addStories: function(stories) {
-      if (!stories) {
-        return;
-      }
-
-      _stories = _stories.concat(stories);
-    },
-
-    'dropdownNewsFeed:fetchStories': function(url) {
+    fetchStories: function(url) {
       window.xhr.get(url, this.handleFetchedStories.bind(this));
     },
 
@@ -46,61 +37,8 @@ var DropdownNewsFeedStore = (function() {
         return console.error(e);
       }
 
-      var users = data.users;
-      var stories = data.stories;
-
-      DropdownNewsFeedUsersStore.setUsers(users);
-
-      var url = READ_RAPTOR_URL +
-        '/readers/' +
-        app.currentUser().get('id') +
-        '/articles?' +
-        _.map(
-          stories,
-          function(s) {
-            return 'key=Story_' + s.id
-          }
-        ).join('&')
-
-      window.xhr.noCsrfGet(url, this.handleReadRaptor(stories));
-    },
-
-    handleReadRaptor: function(stories) {
-      var self = this;
-
-      return function readRaptorCallback(err, data) {
-        if (err) {
-          return console.error(err);
-        }
-
-        try {
-          data = JSON.parse(data);
-        } catch (e) {
-          return console.error(e);
-        }
-
-        self.applyReadTimes(data, stories);
-
-        self.setStories(stories);
-
-        self.emit(_deferred.pop());
-      };
-    },
-
-    applyReadTimes: function(data, stories) {
-      for (var i = 0, l = data.length; i < l; i++) {
-        var datum = data[i];
-
-        if (datum.read_at) {
-          for (var j = 0, k = stories.length; j < k; j++) {
-            var story = stories[j];
-
-            if (datum.key.indexOf(story.id) > -1) {
-              story.read_at = datum.read_at;
-            }
-          }
-        }
-      }
+      this.setStories(data);
+      this.emit(_deferred.pop());
     },
 
     getStory: function(id) {
@@ -163,5 +101,5 @@ var DropdownNewsFeedStore = (function() {
     _deferred.push(event);
   });
 
-  return _newsFeedStore;
+  return _notificationsStore;
 })();
