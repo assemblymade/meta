@@ -78,7 +78,7 @@
     },
 
     render: function() {
-      var classes = this.props.iconClass;
+      var classes = ['icon', 'navbar-icon', this.props.iconClass];
       var total = this.badgeCount();
       var badge = null;
 
@@ -86,12 +86,12 @@
         badge = this.props.iconClass.indexOf('bubble') > -1 ?
           <span className='indicator indicator-success' /> :
           <span className='badge badge-notification'>{total}</span>;
-        classes += ' glyphicon-highlight';
+        classes.push('glyphicon-highlight');
       }
 
       return (
         <a href={this.props.href} data-toggle='dropdown' onClick={this.acknowledge}>
-          <span className={classes}></span>
+          <span className={classes.join(' ')}></span>
           {badge}
           <span className='visible-xs-inline' style={{ 'margin-left': '5px' }}>
             {this.props.label}

@@ -23,6 +23,8 @@ namespace :stories do
              where(type: Activities::Comment).includes(:actor, :subject, :target).find_each do |activity|
 
       Story.create!(
+        created_at: activity.created_at,
+        updated_at: activity.created_at,
         verb: activity.verb,
         subject_type: activity.verb_subject,
       ).tap do |story|
