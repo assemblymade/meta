@@ -9,9 +9,9 @@ module Api
       before_action :authenticate_user!
 
       def create
-        @product = Product.find_by(slug: params[:product_id])
+        @product = Product.find_by!(slug: params[:product_id])
         @user = current_user
-        @wip = Wip.find_by(id: @product.main_thread_id)
+        @wip = @product.main_thread
 
         @wip.with_lock do
           @event = Event.create_from_comment(@wip, Event::Comment, params[:message], @user)
