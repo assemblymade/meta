@@ -45,41 +45,39 @@
                 role="presentation"
                 className="dropdown-header"
                 style={{ color: '#a6a6a6', 'background-color': '#f3f3f3' }}>
-              <strong>Notifications</strong>
+              <strong>Following Preferences</strong>
             </li>
-            <li role="presentation" style={{ cursor: 'pointer' }}>
+
+            <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('not watching')}>
               <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'not watching', this.props.productUnfollowPath)}>
-                <p style={{ 'margin-bottom': '0', 'font-size': '14px' }}>
+                <div>
                   <strong>Not following</strong>
-                  {this.selected('not watching')}
-                </p>
-                <span className="text-muted" style={{ 'font-size': '14px' }}>
+                </div>
+                <span className="text-muted">
                   Only notified when participating or @mentioned
                 </span>
               </a>
             </li>
 
-            <li role="presentation" style={{ cursor: 'pointer' }}>
+            <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('watching')}>
               <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'watching', this.props.productFollowPath)}>
-                <p style={{ 'margin-bottom': 0, 'font-size': '14px' }}>
+                <div>
                   <strong>Follow announcements</strong>
-                  {this.selected('watching')}
-                </p>
-                <span className="text-muted" style={{ 'font-size': '14px' }}>
+                </div>
+                <div className="text-muted">
                   Be notified of business updates, and when participating or @mentioned
-                </span>
+                </div>
               </a>
             </li>
 
-            <li role="presentation" style={{ cursor: 'pointer' }}>
+            <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('subscribed')}>
               <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'subscribed', this.props.productSubscribePath)}>
-                <p style={{ 'margin-bottom': 0, 'font-size': '14px' }}>
+                <div>
                   <strong>Follow everything</strong>
-                  {this.selected('subscribed')}
-                </p>
-                <span className="text-muted" style={{ 'font-size': '14px' }}>
+                </div>
+                <div className="text-muted">
                   Be notified of all discussions, business updates, and when participating or @mentioned
-                </span>
+                </div>
               </a>
             </li>
           </ul>
@@ -114,9 +112,9 @@
       })
     },
 
-    selected: function(option) {
+    selectedClass: function(option) {
       if (this.state.selected === option) {
-        return <span className="indicator indicator-success" style={{ 'margin-left': '5px' }}></span>
+        return "active";
       }
     },
 

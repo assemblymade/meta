@@ -2,7 +2,7 @@ class Activity < ActiveRecord::Base
   belongs_to :actor,   polymorphic: true
   belongs_to :subject, polymorphic: true
   belongs_to :target,  polymorphic: true
-  
+
   belongs_to :story
 
   has_many :tips, foreign_key: 'via_id'
@@ -20,6 +20,7 @@ class Activity < ActiveRecord::Base
       end
 
       PublishActivity.perform_async(a.id) if Story.should_publish?(a)
+      a.publish_to_chat
     end
   end
 
@@ -41,5 +42,22 @@ class Activity < ActiveRecord::Base
     raise "Bad Subject #{self.inspect}" if s.nil?
 
     s.class.name.split('::').last
+  end
+
+  # deprecated
+  def streams
+    stream_targets.map do |o|
+      ActivityStream.new(o)
+    end
+  end
+
+  def stream_targets
+    [actor, target]
+  end
+
+  def publish_to_chat
+    streams.each do |stream|
+      stream.push(self)
+    end
   end
 end

@@ -26,7 +26,7 @@
 
           <li>
             <DropdownToggler
-              iconClass='icon-bubble'
+              iconClass='icon-bubbles'
               href='#notifications'
               label='Chat'
               store='NOTIFICATIONS'

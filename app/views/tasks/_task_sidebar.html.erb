@@ -73,6 +73,11 @@
       </div>
       <h6 class="text-muted omega">
         Reviewing
+        <% if signed_in? && @wip.product.core_team?(current_user) %>
+          <a href="<%= product_wip_reject_path(@wip.product, @wip) %>" data-method="patch" class="text-danger" title="Re-open this Bounty" data-toggle="tooltip" data-confirm="This will remove workers and re-open Bounty">
+            <span class="glyphicon glyphicon-remove"></span>
+          </a>
+        <% end %>
       </h6>
     </div>
 
