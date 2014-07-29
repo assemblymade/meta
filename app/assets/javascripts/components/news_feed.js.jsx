@@ -40,8 +40,13 @@
       if (!this.state.stories) {
         if (this.props.fullPage) {
           return (
-            <div>
-              <h3>Your notifications</h3>
+            <div className="sheet">
+              <div className="page-header sheet-header" style={{ 'padding-left': '20px' }}>
+                <h2 className="page-header-title">Your notifications</h2>
+
+              </div>
+              <div className="list-group list-group-breakout" style={{ height: '800px' }}>
+              </div>
             </div>
           );
         }
