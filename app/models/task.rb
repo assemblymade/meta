@@ -151,9 +151,9 @@ class Task < Wip
     end
   end
 
-  def reject(reviewer, reason)
-    add_activity worker, Activities::Unassign do
-      add_event ::Event::Rejection.new(user: reviewer, body: reason) do
+  def reject(reviewer)
+    add_activity reviewer, Activities::Unassign do
+      add_event ::Event::Rejection.new(user: reviewer) do
         self.workers.delete_all
       end
     end
