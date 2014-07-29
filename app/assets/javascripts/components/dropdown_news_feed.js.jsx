@@ -2,11 +2,11 @@
 
 //= require constants
 //= require dispatcher
-//= require stores/news_feed_store
+//= require stores/dropdown_news_feed_store
 
 (function() {
 
-  var NF = CONSTANTS.NEWS_FEED;
+  var NF = CONSTANTS.DROPDOWN_NEWS_FEED;
 
   window.NewsFeed = React.createClass({
     getInitialState: function() {
@@ -46,71 +46,33 @@
     },
 
     render: function() {
-      if (!this.state.stories) {
-        if (this.props.fullPage) {
-          return (
-            <div className="sheet">
-              <div className="page-header sheet-header" style={{ 'padding-left': '20px' }}>
-                <h2 className="page-header-title">Your notifications</h2>
-
-              </div>
-
-              <div className="list-group list-group-breakout" style={{ height: '800px' }}>
-              </div>
-            </div>
-          );
-        }
-        return <span />
-      }
-
-      var rows = [];
-      var stories = this.state.stories;
-
-      for (var i = 0, l = stories.length; i < l; i++) {
-        if (i > 10 && !this.props.fullPage) {
-          break;
-        }
-
-        if (this.props.fullPage) {
-          rows.push(
-            <div className="list-group-item" key={stories[i].key}>
-              <Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />
-            </div>
-          );
-        } else {
-          rows.push(
-            <li key={stories[i].key}>
-              <Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />
-            </li>
-          );
-        }
-      }
-
-      if (this.props.fullPage) {
-        return (
-          <div className="sheet">
-            <div className="page-header sheet-header" style={{ 'padding-left': '20px' }}>
-              <h2 className="page-header-title">Your notifications</h2>
-            </div>
-
-            <div className="list-group list-group-breakout">
-              {rows}
-            </div>
-
-            <a href="#more" className="btn btn-block" onClick={this.moreStories}>More</a>
-          </div>
-        );
-      }
-
       return (
         <ul className="dropdown-menu" style={{ 'max-height': '400px', 'overflow-y': 'scroll', width: '300px', 'max-width': '300px', 'min-width': '300px' }}>
-          {rows}
+          {this.state.stories ? this.rows(this.state.stories) : null}
           <li className="divider" />
           <li>
             <a href='/notifications'>All Notifications</a>
           </li>
         </ul>
       );
+    },
+
+    rows: function(stories) {
+      var rows = [];
+
+      for (var i = 0, l = stories.length; i < l; i++) {
+        if (i > 10) {
+          break;
+        }
+
+        rows.push(
+          <li key={stories[i].key}>
+            <Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />
+          </li>
+        );
+      }
+
+      return rows;
     }
   });
 
@@ -122,33 +84,6 @@
         'entry-read': this.isRead(),
         'entry-unread': !this.isRead(),
       });
-
-      if (this.props.fullPage) {
-        return (
-          <div>
-            <div className='row'>
-              <div className='col-md-3'>
-                {this.props.story.product.name}
-                <br />
-                <span className='text-muted text-small'>
-                  {this.timestamp()}
-                </span>
-              </div>
-              <div className='col-md-9'>
-                <a className={classes} href={this.props.story.url}>
-                  <span style={{ 'margin-right': '5px' }}>
-                    <Avatar user={this.actors()[0]} />
-                  </span>
-                  <strong>{actors}</strong> {this.body()}
-                </a>
-                <span className='text-small text-muted'>
-                  {this.preview()}
-                </span>
-              </div>
-            </div>
-          </div>
-        );
-      }
 
       return (
         <a className={classes} href={this.props.story.url} style={{ 'font-size': '14px' }}>
@@ -185,7 +120,7 @@
 
       return (
         <p className='text-muted' style={{ 'text-overflow': 'ellipsis' }}>
-          {this.props.fullPage ? body_preview : this.ellipsis(body_preview)}
+          {this.ellipsis(body_preview)}
         </p>
       );
     },

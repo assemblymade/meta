@@ -3,7 +3,7 @@ class NewsFeed
   include Enumerable
 
   KEY_PREFIX = 'news'
-  DEFAULT_PAGE_LENGTH = 10
+  DEFAULT_PAGE_LENGTH = 25
 
   def self.serialize(story)
     story.id.to_s

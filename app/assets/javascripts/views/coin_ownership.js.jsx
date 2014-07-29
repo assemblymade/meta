@@ -216,7 +216,7 @@
 
         var sharerCoins = _.reduce(
           _.map(sharers,
-          dot('coins')),
+          func.dot('coins')),
           function(memo, coins) {
             return memo + coins;
           },
@@ -323,7 +323,7 @@
         function(s) {
           return s.username === user.username
         }),
-        dot('coins')),
+        func.dot('coins')),
         function(memo, coins) {
           return memo + coins;
         },

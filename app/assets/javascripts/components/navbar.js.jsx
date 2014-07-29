@@ -17,7 +17,7 @@
             <DropdownToggler
                 iconClass='icon-bell'
                 href='#stories'
-                store='NEWS_FEED'
+                store='DROPDOWN_NEWS_FEED'
                 label='Notifications'
                 event='STORIES_FETCHED' />
 

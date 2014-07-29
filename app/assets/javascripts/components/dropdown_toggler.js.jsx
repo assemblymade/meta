@@ -1,11 +1,11 @@
 /** @jsx React.DOM */
 
 //= require constants
-//= require stores/news_feed_store
+//= require stores/dropdown_news_feed_store
 
 (function() {
   var _stores = {
-    NEWS_FEED: NewsFeedStore,
+    DROPDOWN_NEWS_FEED: NewsFeedStore,
     NOTIFICATIONS: null
   };
 

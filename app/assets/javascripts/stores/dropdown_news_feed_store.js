@@ -2,7 +2,7 @@
 //= require constants
 //= require dispatcher
 //= require stores/store
-//= require stores/news_feed_users_store
+//= require stores/dropdown_news_feed_users_store
 
 var NewsFeedStore = (function() {
   var READ_RAPTOR_URL = document.getElementsByName('read-raptor-url')[0].content;

@@ -29,8 +29,8 @@ do ($ = jQuery, window, document) ->
         $('body').append("<img class='hidden' src='#{@tracking}' width='0' height='0'>")
         $(document).trigger('readraptor.tracked') # this is a hack to notify that something new is tracked
 				Dispatcher.dispatch
-					event: CONSTANTS.NEWS_FEED.EVENTS.STORIES_FETCHED
-					action: CONSTANTS.NEWS_FEED.ACTIONS.FETCH_STORIES
+					event: CONSTANTS.DROPDOWN_NEWS_FEED.EVENTS.STORIES_FETCHED
+					action: CONSTANTS.DROPDOWN_NEWS_FEED.ACTIONS.FETCH_STORIES
 					data: null
 
 
