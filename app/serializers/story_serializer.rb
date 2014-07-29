@@ -15,7 +15,7 @@ class StorySerializer < ApplicationSerializer
 
   def body_preview
     if preview = object.body_preview
-      HTMLEntities.new.decode(preview).truncate(250).gsub(/\s+\r|\n\s+/, ' ').strip
+      preview.truncate(250).gsub(/\s+\r|\n\s+/, ' ').strip
     end
   end
 
