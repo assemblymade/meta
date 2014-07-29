@@ -54,16 +54,7 @@ class NewsFeed
     end
   end
 
-  def earlier_page(first_id=nil, limit=DEFAULT_PAGE_LENGTH)
-    offset = if first_id.nil?
-      0
-    else
-      $redis.zrank(key, first_id)
-    end
-    range(offset, offset + limit - 1)
-  end
-
-  def later_page(last_id=nil, limit = DEFAULT_PAGE_LENGTH)
+  def page(last_id=nil, limit = DEFAULT_PAGE_LENGTH)
     offset = if last_id.nil?
       0
     else

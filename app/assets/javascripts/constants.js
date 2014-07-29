@@ -27,7 +27,8 @@ var CONSTANTS = {
 
   NEWS_FEED: {
     ACTIONS: {
-      FETCH_STORIES: 'fetchStories'
+      FETCH_STORIES: 'fetchStories',
+      FETCH_MORE_STORIES: 'fetchMoreStories'
     },
     EVENTS: {
       STORIES_FETCHED: 'newsFeed:storiesFetched'

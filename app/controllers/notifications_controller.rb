@@ -1,11 +1,7 @@
 class NotificationsController < ApplicationController
   def index
-    if params[:earlier]
-      @stories = NewsFeed.new(current_user).earlier_page(params[:top_id])
-    else
-      @stories = NewsFeed.new(current_user).later_page(params[:top_id])
-    end
-    
+    @stories = NewsFeed.new(current_user).page(params[:top_id])
+
     @users = @stories.map(&:activities).flatten.map(&:actor).flatten.uniq
 
     respond_to do |format|

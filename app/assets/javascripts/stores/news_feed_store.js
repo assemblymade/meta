@@ -23,8 +23,20 @@ var NewsFeedStore = (function() {
       _stories.push(story);
     },
 
+    addStories: function(stories) {
+      if (!stories) {
+        return;
+      }
+
+      _stories = _stories.concat(stories);
+    },
+
     fetchStories: function(url) {
       window.xhr.get(url, this.handleFetchedStories.bind(this));
+    },
+
+    fetchMoreStories: function(url) {
+      window.xhr.get(url, this.handleMoreStories.bind(this));
     },
 
     handleFetchedStories: function(err, data) {
@@ -74,6 +86,58 @@ var NewsFeedStore = (function() {
         self.applyReadTimes(data, stories);
 
         self.setStories(stories);
+
+        self.emit(_deferred.pop());
+      };
+    },
+
+    handleMoreStories: function(err, data) {
+      if (err) {
+        return console.error(err);
+      }
+
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        return console.error(e);
+      }
+
+      var users = data.users;
+      var stories = data.stories;
+
+      NewsFeedUsersStore.addUsers(users);
+
+      var url = READ_RAPTOR_URL +
+        '/readers/' +
+        app.currentUser().get('id') +
+        '/articles?' +
+        _.map(
+          stories,
+          function(s) {
+            return 'key=Story_' + s.id
+          }
+        ).join('&')
+
+      window.xhr.noCsrfGet(url, this.handleMoreReadRaptor(stories));
+    },
+
+    handleMoreReadRaptor: function(stories) {
+      var self = this;
+
+      return function moreReadRaptorCallback(err, data) {
+        if (err) {
+          return console.error(err);
+        }
+
+        try {
+          data = JSON.parse(data);
+        } catch (e) {
+          return console.error(e);
+        }
+
+        self.applyReadTimes(data, stories);
+
+        self.addStories(stories);
 
         self.emit(_deferred.pop());
       };

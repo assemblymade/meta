@@ -35,23 +35,13 @@
       });
     },
 
-    pageEarlier: function() {
+    moreStories: function() {
       var lastStory = this.state.stories[this.state.stories.length - 1];
 
       Dispatcher.dispatch({
-        action: NF.ACTIONS.FETCH_STORIES,
+        action: NF.ACTIONS.FETCH_MORE_STORIES,
         event: NF.EVENTS.STORIES_FETCHED,
         data: this.props.url + '?top_id=' + lastStory.id
-      });
-    },
-
-    pageLater: function() {
-      var lastStory = this.state.stories[this.state.stories.length - 1];
-
-      Dispatcher.dispatch({
-        action: NF.ACTIONS.FETCH_STORIES,
-        event: NF.EVENTS.STORIES_FETCHED,
-        data: this.props.url + '?top_id=' + lastStory.id + '&earlier=true'
       });
     },
 
@@ -77,7 +67,7 @@
       var stories = this.state.stories;
 
       for (var i = 0, l = stories.length; i < l; i++) {
-        if (i > 10) {
+        if (i > 10 && !this.props.fullPage) {
           break;
         }
 
@@ -107,17 +97,7 @@
               {rows}
             </div>
 
-            <div style={{ 'text-align': 'center' }}>
-              <ul className="pagination">
-                <li>
-                  <a href="#newer" onClick={this.pageLater}>Newer</a>
-                </li>
-
-                <li>
-                  <a href="#older" onClick={this.pageEarlier}>Older</a>
-                </li>
-              </ul>
-            </div>
+            <a href="#more" className="btn btn-block" onClick={this.moreStories}>More</a>
           </div>
         );
       }
