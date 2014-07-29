@@ -17,14 +17,12 @@ class window.ActivityStreamView extends Backbone.View
     $(window).on('focus', @onWindowFocus)
 
   renderTimestamp: ->
-    $('.timeline-insert.js-timestamp').each ->
+    @$('.timeline-insert.js-timestamp').each ->
       React.unmountComponentAtNode(@)
       $(@).remove()
 
     tsContainer = $('<div class="timeline-insert js-timestamp"></div>').insertBefore('.timeline-item:last')
-
     lastTime = @collection.last().get('created')
-
     React.renderComponent(Timestamp({time: lastTime}), tsContainer[0])
 
   buildSubviewForModel: (model, index) ->
