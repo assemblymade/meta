@@ -196,7 +196,7 @@
     verbMap: {
       'Comment': 'commented on ',
       'Award': 'awarded',
-      'Close': 'closed'
+      'Close': 'closed '
     },
 
     subjectMap: {
