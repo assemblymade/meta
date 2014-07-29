@@ -47,8 +47,6 @@ class ChatController < ProductController
         socket_id: params[:socket_id]
       )
 
-      ActivityStream.new(@product.object).push(@activity)
-
       track_analytics(@event)
       next_mission_if_complete!(@product.current_mission, current_user)
     end
