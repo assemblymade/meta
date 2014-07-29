@@ -15,7 +15,7 @@
         <ul className='nav navbar-nav'>
           <li>
             <DropdownToggler
-                iconClass='icon icon-bell'
+                iconClass='icon-bell'
                 href='#stories'
                 store='NEWS_FEED'
                 label='Notifications'
@@ -26,7 +26,7 @@
 
           <li>
             <DropdownToggler
-              iconClass='icon icon-bubble'
+              iconClass='icon-bubble'
               href='#notifications'
               label='Chat'
               store='NOTIFICATIONS' />
