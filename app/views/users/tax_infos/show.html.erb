@@ -1,0 +1,22 @@
+<% title 'Tax Information' %>
+<%= render 'shared/navbar' %>
+
+<div class="page page-flat">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-xs-3">
+        <%= render 'users/card', user: @user %>
+      </div>
+
+      <div class="col-md-9 col-xs-9">
+        <div class="page-header">
+          <h2 class="page-header-title">Tax Information</h2>
+        </div>
+        
+        <%= render 'form' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

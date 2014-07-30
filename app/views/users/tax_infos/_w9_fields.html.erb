@@ -1,0 +1,91 @@
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-5">
+      <%= form_group @tax_info, :full_name do %>
+        <%= f.label :full_name %>
+        <%= f.text_field :full_name, class: 'form-control' %>
+        <p class="help-block">As shown on your income tax return</p>
+      <% end %>
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+      <%= form_group @tax_info, :business_name do %>
+        <%= f.label :business_name %>
+        <%= f.text_field :business_name, class: 'form-control' %>
+        <p class="help-block">If different from full name (optional)</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <%= form_group @tax_info, :taxpayer_id do %>
+        <%= f.label :taxpayer_id, 'Taxpayer ID Number' %>
+        <%= f.text_field :taxpayer_id, class: 'form-control', maxlength: 11 %>
+        <label class="radio-inline">
+          <%= f.radio_button :taxpayer_type, 'ssn', checked: true %> SSN
+        </label>
+        <label class="radio-inline">
+          <%= f.radio_button :taxpayer_type, 'ein' %> EIN
+        </label>
+      <% end %>
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+      <%= form_group @tax_info, :classification do %>
+        <%= f.label :classification, 'Tax Classification' %><br/>
+        <%= f.select :classification, User::TaxInfo::CLASSIFICATIONS, html: {class: 'form-control block'} %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <%= form_group @tax_info, :address do %>
+        <%= f.label :address %>
+        <%= f.text_field :address, class: 'form-control' %>
+        <p class="help-block">Including apt. or suite no.</p>
+      <% end %>
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+      <%= form_group @tax_info, :city do %>
+        <%= f.label :city %>
+        <%= f.text_field :city, class: 'form-control' %>
+        <p class="help-block">Including apt. or suite no.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <%= form_group @tax_info, :zip do %>
+        <%= f.label :state, 'State / ZIP code' %>
+        <div class="row">
+          <div class="col-md-9">
+            <%= f.select :state, Country.find_country_by_name('united states').states.map{|k, v| [v['name'], k] }, class: 'form-control', maxlength: 2 %>
+          </div>
+          <div class="col-md-3">
+            <%= f.text_field :zip, class: 'form-control' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+      <%= form_group @tax_info, :date_of_birth do %>
+        <%= f.label :date_of_birth %>
+        <div class="input-group">
+          <%= f.date_select :date_of_birth, class: 'form-control', start_year: Time.now.year - 120 %>
+        </div>
+        <p class="help-block">Required for individuals</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <%= form_group @tax_info, :signature do %>
+        <%= f.label :signature, 'Your signature'%>
+        <%= f.text_field :signature, class: 'form-control' %>
+        <p class="help-block">Typing your name acts as your signature</p>
+      <% end %>
+    </div>
+  </div>
+</div>

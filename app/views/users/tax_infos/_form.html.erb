@@ -1,0 +1,20 @@
+<%= form_for @tax_info, url: users_tax_info_path, html: {class: 'form form-horizontal'} do |f| %>
+  <h2>IRS Form W-9</h2>
+
+  <% if @tax_info.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+    <ul>
+      <% @tax_info.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <%= render 'w9_fields', f: f %>
+
+  <div class="form-actions">
+    <button class="btn btn-primary pull-left" type="submit">Save Info</button>
+  </div>
+
+<% end %>
