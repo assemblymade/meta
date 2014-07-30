@@ -26,6 +26,16 @@ var ChatNotificationsStore = (function() {
       window.xhr.get(url, this.handleFetchedStories.bind(this));
     },
 
+    getUnreadCount: function() {
+      var count = _.countBy(_stories,
+        function(entry) {
+          return entry.count > 0
+        }
+      );
+
+      return count.true;
+    },
+
     handleFetchedStories: function(err, data) {
       if (err) {
         return console.error(err);

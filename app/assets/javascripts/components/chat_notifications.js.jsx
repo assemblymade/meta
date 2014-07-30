@@ -23,7 +23,11 @@
     },
 
     total: function() {
-      var count = _.countBy(this.state.data, function(entry){ return entry.count > 0 });
+      var count = _.countBy(this.state.data,
+        function(entry) {
+          return entry.count > 0
+        }
+      );
 
       return count.true;
     },
@@ -125,10 +129,6 @@
         return <span />;
       }
 
-      var total = this.badgeCount();
-
-      this.setTitle(total);
-
       var sorted = this.sortByCount(this.state.data);
 
       return (
@@ -155,16 +155,6 @@
     setBadge: function(total) {
       if (window.fluid) {
         window.fluid.dockBadge = total
-      }
-    },
-
-    setTitle: function(total) {
-      if (total > 0) {
-        document.title = '(' + total + ') ' + this.props.title;
-        this.setBadge(total);
-      } else {
-        document.title = this.props.title;
-        this.setBadge('');
       }
     }
   });

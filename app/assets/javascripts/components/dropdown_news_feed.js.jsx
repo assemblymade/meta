@@ -17,6 +17,11 @@
 
     componentWillMount: function() {
       DropdownNewsFeedStore.addChangeListener(this.getStories);
+
+      this.fetchNewsFeed(this.props.url);
+    },
+
+    componentWillUpdate: function() {
       this.fetchNewsFeed(this.props.url);
     },
 
@@ -32,16 +37,6 @@
       this.setState({
         stories: DropdownNewsFeedStore.getStories(),
         actors: DropdownNewsFeedUsersStore.getUsers()
-      });
-    },
-
-    moreStories: function() {
-      var lastStory = this.state.stories[this.state.stories.length - 1];
-
-      Dispatcher.dispatch({
-        action: NF.ACTIONS.FETCH_MORE_STORIES,
-        event: NF.EVENTS.STORIES_FETCHED,
-        data: this.props.url + '?top_id=' + lastStory.id
       });
     },
 
@@ -191,5 +186,4 @@
       return text;
     }
   });
-
 })();

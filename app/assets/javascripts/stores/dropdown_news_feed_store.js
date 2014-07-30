@@ -117,6 +117,17 @@ var DropdownNewsFeedStore = (function() {
       return _stories;
     },
 
+    getUnreadCount: function() {
+      var unreadStories = _.filter(
+          _stories,
+          function(story) {
+            return story.readAt == null;
+          }
+        );
+
+      return unreadStories && unreadStories.length;
+    },
+
     setStories: function(stories) {
       _stories = stories;
     },

@@ -2,31 +2,30 @@
 
 //= require constants
 //= require mixins/dropdown_toggler
+//= require stores/dropdown_news_feed_store
 
 (function() {
-  var CN = CONSTANTS.CHAT_NOTIFICATIONS;
-
-  window.ChatNotificationsToggler = React.createClass({
+  window.DropdownNewsFeedToggler = React.createClass({
     mixins: [DropdownTogglerMixin],
 
-    badge: function() {
-      return (
-        <span
-            className='indicator indicator-danger'
-            style={{ position: 'relative', top: '5px' }} />
-      );
+    badge: function(total) {
+      return <span className='badge badge-notification'>{total}</span>;
     },
 
     badgeCount: function() {
-      if (this.latestStoryTimestamp() > this.state.acknowledgedAt) {
-        return this.total();
-      }
+      var unreadStories = this.state.stories &&
+        _.filter(
+          this.state.stories,
+          function(story) {
+            return story.readAt == null;
+          }
+        );
+
+      return unreadStories && unreadStories.length;
     },
 
     componentWillMount: function() {
-      var store = this.props.store;
-
-      ChatNotificationsStore.addChangeListener(this.getStories);
+      DropdownNewsFeedStore.addChangeListener(this.getStories);
     },
 
     getDefaultProps: function() {
@@ -44,7 +43,7 @@
 
     getStories: function() {
       this.setState({
-        stories: ChatNotificationsStore.getStories()
+        stories: DropdownNewsFeedStore.getStories()
       });
     },
 
@@ -73,28 +72,6 @@
       var story = this.latestStory();
 
       return story && story.updated ? story.updated : 0;
-    },
-
-    setTitle: function() {
-      // Dispatcher.dispatch({
-      //   event: CN.EVENTS.STORIES_FETCHED,
-      //   action: CN.ACTIONS.MARK_READ,
-      //   data: null,
-      //   sync: true
-      // });
-    },
-
-    total: function() {
-      var self = this;
-
-      var count = _.reduce(
-        _.map(self.state.stories, function mapStories(story) {
-          return story.entities && story.entities.length;
-        }), function reduceStories(memo, read) {
-          return memo + read;
-      }, 0);
-
-      return count;
     }
   });
 })();

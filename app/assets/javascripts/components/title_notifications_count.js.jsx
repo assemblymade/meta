@@ -10,6 +10,12 @@
       DropdownNewsFeedStore.addChangeListener(this.setTitle);
     },
 
+    getDefaultProps: function() {
+      return {
+        title: document.title
+      };
+    },
+
     getInitialState: function() {
       return {
         count: 0
@@ -21,7 +27,14 @@
     },
 
     setTitle: function() {
-      console.log('setting title');
+      var chatCount = ChatNotificationsStore.getUnreadCount() || 0;
+      var newsCount = DropdownNewsFeedStore.getUnreadCount() | 0;
+
+      var total = chatCount + newsCount;
+
+      document.title = total > 0 ?
+        '(' + total + ') ' + this.props.title :
+        this.props.title;
     }
   });
 })();
