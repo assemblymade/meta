@@ -15,7 +15,7 @@
     },
 
     componentWillMount: function() {
-      FullPageNewsFeedStore.addChangeListener(NF.EVENTS.STORIES_FETCHED, this.getStories);
+      FullPageNewsFeedStore.addChangeListener(this.getStories);
       this.fetchNewsFeed(this.props.url);
     },
 

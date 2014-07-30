@@ -24,12 +24,6 @@
       this.setState({
         acknowledgedAt: timestamp
       });
-
-      this.resetTitle();
-    },
-
-    resetTitle: function() {
-      document.title = this.props.title;
     },
 
     badgeCount: function() {
@@ -56,10 +50,7 @@
 
       // One server call (in the main component) and no duplicated data (stories
       // are passed by reference)
-      _stores[store] && _stores[store].addChangeListener(
-        CONSTANTS[store].EVENTS[this.props.event],
-        this.getStories
-      );
+      _stores[store] && _stores[store].addChangeListener(this.getStories);
     },
 
     getInitialState: function() {

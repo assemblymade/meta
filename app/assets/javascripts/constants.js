@@ -1,13 +1,14 @@
 var CONSTANTS = {
   CHAT_NOTIFICATIONS: {
     ACTIONS: {
-      FETCH_STORIES: 'fetchStories'
+      FETCH_STORIES: 'fetchStories',
+      MARK_READ: 'markRead'
     },
     EVENTS: {
       STORIES_FETCHED: 'notifications:storiesFetched'
     }
   },
-  
+
   COIN_OWNERSHIP: {
     ACTIONS: {
       ADD_USER: 'addUser',
@@ -16,7 +17,7 @@ var CONSTANTS = {
     },
     EVENTS: {
       USER_ADDED: 'coinOwnership:userAdded',
-      USER_REMOVED: 'coinOwnership:userRevmoed',
+      USER_REMOVED: 'coinOwnership:userRemoved',
       USER_UPDATED: 'coinOwnership:userUpdated'
     }
   },

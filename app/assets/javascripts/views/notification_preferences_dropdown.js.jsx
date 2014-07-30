@@ -16,7 +16,7 @@
     },
 
     componentWillMount: function() {
-      NotificationPreferencesDropdownStore.addChangeListener(D.EVENTS.SELECTED_UPDATED, this.handleUpdate);
+      NotificationPreferencesDropdownStore.addChangeListener(this.handleUpdate);
     },
 
     render: function() {

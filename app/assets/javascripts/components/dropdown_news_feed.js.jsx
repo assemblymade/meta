@@ -16,7 +16,7 @@
     },
 
     componentWillMount: function() {
-      DropdownNewsFeedStore.addChangeListener(NF.EVENTS.STORIES_FETCHED, this.getStories);
+      DropdownNewsFeedStore.addChangeListener(this.getStories);
       this.fetchNewsFeed(this.props.url);
     },
 
@@ -101,7 +101,10 @@
       });
 
       return (
-        <a className={classes} href={this.props.story.url} style={{ 'font-size': '14px' }} onMouseOver={this.state.story.readAt ? null : this.markAsRead}>
+        <a className={classes}
+            href={this.props.story.url}
+            style={{ 'font-size': '14px' }}
+            onClick={this.state.story.readAt ? null : this.markAsRead}>
           <strong>@{actors}</strong> {this.body()}
           {this.preview()}
         </a>

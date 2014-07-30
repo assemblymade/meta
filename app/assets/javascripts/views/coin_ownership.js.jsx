@@ -20,8 +20,7 @@
     },
 
     componentDidMount: function() {
-      CoinOwnershipStore.addChangeListener(CO.EVENTS.USER_ADDED, this.onChange);
-      CoinOwnershipStore.addChangeListener(CO.EVENTS.USER_UPDATED, this.onChange);
+      CoinOwnershipStore.addChangeListener(this.onChange);
     },
 
     getInitialState: function() {

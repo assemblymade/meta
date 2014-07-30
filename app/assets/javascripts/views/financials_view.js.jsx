@@ -20,14 +20,13 @@
   };
 
   var FinancialsActions = {
-    addChangeListener: function(event, callback) {
-      this.listeners = this.listeners || {};
-      this.listeners[event] = this.listeners[event] || [];
-      this.listeners[event].push(callback)
+    addChangeListener: function(callback) {
+      this.listeners = this.listeners || [];
+      this.listeners.push(callback)
     },
 
-    sendChange: function(event, state) {
-      _.each(this.listeners[event], function(callback) {
+    sendChange: function(state) {
+      _.each(this.listeners, function(callback) {
         callback(state);
       });
     }
@@ -92,7 +91,7 @@
     },
 
     componentDidMount: function() {
-      FinancialsActions.addChangeListener('monthChanged', this._onChange)
+      FinancialsActions.addChangeListener(this._onChange)
     },
 
     render: function() {
@@ -127,7 +126,7 @@
     },
 
     componentDidMount: function() {
-      FinancialsActions.addChangeListener('monthChanged', this._onChange)
+      FinancialsActions.addChangeListener(this._onChange)
     },
 
     _onChange: function(state) {
@@ -194,7 +193,7 @@
     },
 
     componentDidMount: function() {
-      FinancialsActions.addChangeListener('monthChanged', this._onChange)
+      FinancialsActions.addChangeListener(this._onChange)
     },
 
     _onChange: function(state) {
@@ -276,7 +275,7 @@
     monthChanged: function(month) {
       return function(e) {
         FinancialsStore.setMonth(month);
-        FinancialsActions.sendChange('monthChanged', month);
+        FinancialsActions.sendChange(month);
       };
     }
   });

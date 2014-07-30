@@ -6,7 +6,8 @@
 (function() {
   window.TitleNotificationsCount = React.createClass({
     componentWillMount: function() {
-      ChatNotificationsStore.addChangeListener()
+      ChatNotificationsStore.addChangeListener(this.setTitle);
+      DropdownNewsFeedStore.addChangeListener(this.setTitle);
     },
 
     getInitialState: function() {
@@ -17,6 +18,10 @@
 
     render: function() {
       return <span />;
+    },
+
+    setTitle: function() {
+      console.log('setting title');
     }
   });
 })();

@@ -11,11 +11,7 @@
         acknowledgedAt: timestamp
       });
 
-      this.resetTitle();
-    },
-
-    resetTitle: function() {
-      document.title = this.props.title;
+      this.setTitle && this.setTitle();
     },
 
     storedAck: function() {

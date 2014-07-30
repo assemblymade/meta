@@ -26,10 +26,7 @@
     componentWillMount: function() {
       var store = this.props.store;
 
-      ChatNotificationsStore.addChangeListener(
-        CN.EVENTS.STORIES_FETCHED,
-        this.getStories
-      );
+      ChatNotificationsStore.addChangeListener(this.getStories);
     },
 
     getDefaultProps: function() {
@@ -97,6 +94,15 @@
           </span>
         </a>
       );
+    },
+
+    setTitle: function() {
+      // Dispatcher.dispatch({
+      //   event: CN.EVENTS.STORIES_FETCHED,
+      //   action: CN.ACTIONS.MARK_READ,
+      //   data: null,
+      //   sync: true
+      // });
     },
 
     total: function() {
