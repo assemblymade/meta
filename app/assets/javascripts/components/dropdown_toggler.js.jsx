@@ -10,6 +10,12 @@
   };
 
   window.DropdownToggler = React.createClass({
+    getDefaultProps: function() {
+      return {
+        title: document.title
+      };
+    },
+
     acknowledge: function() {
       var timestamp = Math.floor(Date.now() / 1000);
 
@@ -18,6 +24,12 @@
       this.setState({
         acknowledgedAt: timestamp
       });
+
+      this.resetTitle();
+    },
+
+    resetTitle: function() {
+      document.title = this.props.title;
     },
 
     badgeCount: function() {
@@ -97,7 +109,7 @@
 
       if (total > 0) {
         badge = this.props.iconClass.indexOf('bubble') > -1 ?
-          <span className='indicator indicator-success' style={{ 'background-color': '#5ce600' }} /> :
+          <span className='indicator indicator-danger' style={{ position: 'relative', top: '5px' }} /> :
           <span className='badge badge-notification'>{total}</span>;
         classes.push('glyphicon-highlight');
       }

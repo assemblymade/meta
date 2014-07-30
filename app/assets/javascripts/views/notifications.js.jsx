@@ -107,36 +107,32 @@
       var article = this.latestArticle()
 
       if (article) {
-        return article.timestamp
+        return article.timestamp;
       } else {
-        return 0
+        return 0;
       }
     },
 
     badgeCount: function() {
       if (this.latestArticleTimestamp() > this.state.acknowledgedAt) {
-        return this.total()
+        return this.total();
       }
     },
 
     render: function() {
       if (!this.state.data) {
-        return <span />
+        return <span />;
       }
 
       var total = this.badgeCount();
 
-      this.setTitle(total)
+      this.setTitle(total);
 
       var sorted = this.sortByCount(this.state.data);
 
       return (
         <NotificationsList data={sorted} username={this.props.username} />
       );
-    },
-
-    onClick: function() {
-      this.acknowledge()
     },
 
     acknowledge: function() {
@@ -155,9 +151,9 @@
       timestamp = localStorage.notificationsAck;
 
       if (timestamp == null || timestamp === "null") {
-        return 0
+        return 0;
       } else {
-        return parseInt(timestamp)
+        return parseInt(timestamp);
       }
     },
 
@@ -175,11 +171,11 @@
 
     setTitle: function(total) {
       if (total > 0) {
-        document.title = '(' + total + ') ' + this.props.title
-        this.setBadge(total)
+        document.title = '(' + total + ') ' + this.props.title;
+        this.setBadge(total);
       } else {
-        document.title = this.props.title
-        this.setBadge('')
+        document.title = this.props.title;
+        this.setBadge('');
       }
     }
   });
@@ -192,7 +188,7 @@
     },
 
     componentDidMount: function() {
-      $('[data-toggle]', this.getDOMNode()).tooltip()
+      $('[data-toggle]', this.getDOMNode()).tooltip();
     },
 
     handleDesktopNotificationsStateChange: function(isEnabled) {
@@ -206,7 +202,9 @@
         badge = null;
 
         if (entry.count > 0) {
-          badge = <span className="indicator indicator-success pull-right" style={{ 'position': 'relative', 'top': '10px' }}></span>
+          badge = <span
+              className="indicator indicator-danger pull-right"
+              style={{ 'position': 'relative', 'top': '10px' }} />;
         }
 
         var url = entry.product.url + '/chat';

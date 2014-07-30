@@ -65,6 +65,7 @@ class ApplicationController < ActionController::Base
     if (request.fullpath != "/login" &&
         request.fullpath != "/logout" &&
         request.fullpath != "/signup" &&
+        request.fullpath != "/notifications.json" &&
         !request.xhr?) # don't store ajax calls
       session[:previous_url] = request.fullpath
     end
