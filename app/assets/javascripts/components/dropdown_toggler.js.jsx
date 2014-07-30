@@ -10,6 +10,12 @@
   };
 
   window.DropdownToggler = React.createClass({
+    getDefaultProps: function() {
+      return {
+        title: document.title
+      };
+    },
+
     acknowledge: function() {
       var timestamp = Math.floor(Date.now() / 1000);
 
@@ -18,9 +24,28 @@
       this.setState({
         acknowledgedAt: timestamp
       });
+
+      this.resetTitle();
+    },
+
+    resetTitle: function() {
+      document.title = this.props.title;
     },
 
     badgeCount: function() {
+      if (this.props.store === 'DROPDOWN_NEWS_FEED') {
+        var self = this;
+        var unreadStories = this.state.stories &&
+          _.filter(
+            this.state.stories,
+            function(story) {
+              return story.readAt == null;
+            }
+          );
+
+        return unreadStories && unreadStories.length;
+      }
+
       if (this.latestStoryTimestamp() > this.state.acknowledgedAt) {
         return this.total();
       }
@@ -84,7 +109,7 @@
 
       if (total > 0) {
         badge = this.props.iconClass.indexOf('bubble') > -1 ?
-          <span className='indicator indicator-success' style={{ 'background-color': '#5ce600' }} /> :
+          <span className='indicator indicator-danger' style={{ position: 'relative', top: '5px' }} /> :
           <span className='badge badge-notification'>{total}</span>;
         classes.push('glyphicon-highlight');
       }
@@ -115,11 +140,7 @@
 
       var count = _.reduce(
         _.map(self.state.stories, function mapStories(story) {
-          if (self.state.store === 'DROPDOWN_NEWS_FEED') {
-            return story.updated ? 0 : 1;
-          }
-
-          return story.count;
+          return story.entities && story.entities.length;
         }), function reduceStories(memo, read) {
           return memo + read;
       }, 0);

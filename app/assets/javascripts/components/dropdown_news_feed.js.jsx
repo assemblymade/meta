@@ -4,11 +4,6 @@
 //= require dispatcher
 //= require stores/dropdown_news_feed_store
 
-/*
-http://localhost:3000/readers/1a596d82-11bd-408d-a4a5-f934ab94c589/articles?key=Story_e645abc4-4923-477c-a900-0f03edb13e2f
-*/
-
-
 (function() {
 
   var NF = CONSTANTS.DROPDOWN_NEWS_FEED;
@@ -92,8 +87,6 @@ http://localhost:3000/readers/1a596d82-11bd-408d-a4a5-f934ab94c589/articles?key=
       var story = this.state.story;
       story.readAt = Date.now();
 
-      console.log('marking')
-
       this.setState({
         story: story
       });
@@ -165,20 +158,16 @@ http://localhost:3000/readers/1a596d82-11bd-408d-a4a5-f934ab94c589/articles?key=
 
     verbMap: {
       'Comment': 'commented on ',
-      'Award': 'awarded',
+      'Award': 'awarded ',
       'Close': 'closed '
     },
 
     subjectMap: {
       Task: function(task) {
-        if (this.props.fullPage) {
-          return "#" + task.number + " " + task.title
-        }
-
         return "#" + task.number;
       },
 
-      Discussion: function() {
+      Discussion: function(discussion) {
         return 'discussion'
       },
 

@@ -24,20 +24,22 @@ class Webhooks::GithubController < WebhookController
           Github::UpdateCommitCount.perform_async(product.id)
           payload.commits.each do |commit|
             author = commit['author']
-            user = User.find_by(github_login: author['username'])
+            if username = author['username']
+              user = User.find_by(github_login: username)
 
-            work = WorkFactory.create_with_transaction_entry!(
-              product: product,
-              user: user,
-              url: commit['url'],
-              metadata: { author: author, message: commit['message'], distinct: commit['distinct'] }
-            )
+              work = WorkFactory.create_with_transaction_entry!(
+                product: product,
+                user: user,
+                url: commit['url'],
+                metadata: { author: author, message: commit['message'], distinct: commit['distinct'] }
+              )
 
-            Activities::GitPush.publish!(
-              actor: user,
-              subject: work,
-              target: product
-            )
+              Activities::GitPush.publish!(
+                actor: user,
+                subject: work,
+                target: product
+              )
+            end
           end
         end
       end

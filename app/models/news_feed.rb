@@ -66,11 +66,11 @@ class NewsFeed
 # private
 
   def key
-    [KEY_PREFIX, @object.class.name.underscore, @object.id].join(':')
+    [KEY_PREFIX, @object.class.name.underscore, @object.id].join(':') if @object
   end
 
   def channel
-    [KEY_PREFIX, @object.id].join('.')
+    [KEY_PREFIX, @object.id].join('.') if @object
   end
 
 end

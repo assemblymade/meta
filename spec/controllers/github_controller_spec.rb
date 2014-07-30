@@ -3,13 +3,11 @@ require 'spec_helper'
 describe Webhooks::GithubController do
 
   let(:product) { Product.make!(repos: [Repo::Github.new('https://github.com/support-foo/web')]) }
-  let(:wip) { product.tasks.make!(number: 5, product: product) }
-  let(:user) { User.make!(github_uid: 7064, github_login: 'whatupdave') }
+  let!(:wip) { product.tasks.make!(number: 5, product: product) }
+  let!(:user) { User.make!(github_uid: 7064, github_login: 'whatupdave') }
 
   describe 'pull request' do
     before do
-      wip; user # save em
-
       request.headers["HTTP_ACCEPT"] = "application/json"
       request.headers["X-Github-Event"] = "pull_request"
       post :create, JSON.parse(File.read(Rails.root.join('spec/fixtures/github/pull_request.json')))
@@ -26,8 +24,6 @@ describe Webhooks::GithubController do
 
   describe 'push' do
     before do
-      wip; user # save em
-
       request.headers["HTTP_ACCEPT"] = "application/json"
       request.headers["X-Github-Event"] = "push"
       post :create, JSON.parse(File.read(Rails.root.join('spec/fixtures/github/push.json')))
