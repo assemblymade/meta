@@ -5,7 +5,7 @@ describe Users::TaxInfosController do
 
   it 'can create w9' do
     sign_in user
-    post :create, user_tax_info: {
+    post :create, tax_info: {
       address: '123 Spaghetti St',
       business_name: 'Vanderlay industries',
       city: 'Spokane',
@@ -14,11 +14,13 @@ describe Users::TaxInfosController do
       full_name: 'George Costanza',
       taxpayer_id: '123443211',
       taxpayer_type: 'SSN',
-      signature: 'George Constanza',
+      signature: 'George Costanza',
       state: 'CA',
+      type: User::W9.to_s,
       zip: 90210
     }
 
+    expect(assigns(:tax_info)).to be_valid
     expect(assigns(:tax_info)).to be_persisted
   end
 end
