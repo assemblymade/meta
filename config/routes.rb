@@ -95,8 +95,6 @@ ASM::Application.routes.draw do
         get ':form_type' => 'tax_infos#show'
       end
     end
-    # get    '/settings/tax_info' => 'users/tax_info#edit', :as => :edit_user_tax_info
-    # patch  '/settings/tax_info' => 'users/tax_info#update', :as => :user_tax_info
 
     # Confirmation
     get    '/users/confirmation/new' => 'users/confirmations#new', :as => :new_user_confirmation
