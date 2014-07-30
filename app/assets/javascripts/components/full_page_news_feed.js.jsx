@@ -175,20 +175,16 @@
 
     subjectMap: {
       Task: function(task) {
-        if (this.props.fullPage) {
-          return "#" + task.number + " " + task.title
-        }
-
-        return "#" + task.number;
+        return "#" + task.number + " " + task.title;
       },
 
-      Discussion: function() {
-        return 'discussion'
+      Discussion: function(discussion) {
+        return 'a discussion';
       },
 
       Wip: function(bounty) {
         if (this.props.fullPage) {
-          return "#" + bounty.number + " " + bounty.title
+          return "#" + bounty.number + " " + bounty.title;
         }
 
         return "#" + bounty.number;

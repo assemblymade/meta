@@ -16,6 +16,12 @@
       }
     },
 
+    getDefaultProps: function() {
+      return {
+        title: document.title
+      };
+    },
+
     total: function() {
       var count = _.countBy(this.state.data, function(entry){ return entry.count > 0 });
 
@@ -35,7 +41,6 @@
     }, 1000),
 
     componentWillMount: function() {
-      this.props.title = document.title
       var _this = this;
 
       $(document).bind('readraptor.tracked', this.fetchNotifications);
@@ -142,6 +147,8 @@
       this.setState({
         acknowledgedAt: timestamp
       });
+
+      this.setTitle(0);
     },
 
     storedAck: function() {

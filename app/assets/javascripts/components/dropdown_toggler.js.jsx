@@ -21,6 +21,19 @@
     },
 
     badgeCount: function() {
+      if (this.props.store === 'DROPDOWN_NEWS_FEED') {
+        var self = this;
+        var unreadStories = this.state.stories &&
+          _.filter(
+            this.state.stories,
+            function(story) {
+              return story.readAt == null;
+            }
+          );
+
+        return unreadStories && unreadStories.length;
+      }
+
       if (this.latestStoryTimestamp() > this.state.acknowledgedAt) {
         return this.total();
       }
@@ -115,11 +128,7 @@
 
       var count = _.reduce(
         _.map(self.state.stories, function mapStories(story) {
-          if (self.state.store === 'DROPDOWN_NEWS_FEED') {
-            return story.updated ? 0 : 1;
-          }
-
-          return story.count;
+          return story.updated ? 0 : 1;
         }), function reduceStories(memo, read) {
           return memo + read;
       }, 0);
