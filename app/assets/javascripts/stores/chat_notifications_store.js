@@ -3,7 +3,7 @@
 //= require dispatcher
 //= require stores/store
 
-var NotificationsStore = (function() {
+var ChatNotificationsStore = (function() {
   var READ_RAPTOR_URL = document.getElementsByName('read-raptor-url')[0].content;
 
   var _stories = [];
@@ -24,6 +24,16 @@ var NotificationsStore = (function() {
 
     fetchStories: function(url) {
       window.xhr.get(url, this.handleFetchedStories.bind(this));
+    },
+
+    getUnreadCount: function() {
+      var count = _.countBy(_stories,
+        function(entry) {
+          return entry.count > 0
+        }
+      );
+
+      return count.true;
     },
 
     handleFetchedStories: function(err, data) {

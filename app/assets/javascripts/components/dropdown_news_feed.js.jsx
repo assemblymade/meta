@@ -16,7 +16,12 @@
     },
 
     componentWillMount: function() {
-      DropdownNewsFeedStore.addChangeListener(NF.EVENTS.STORIES_FETCHED, this.getStories);
+      DropdownNewsFeedStore.addChangeListener(this.getStories);
+
+      this.fetchNewsFeed(this.props.url);
+    },
+
+    componentWillUpdate: function() {
       this.fetchNewsFeed(this.props.url);
     },
 
@@ -32,16 +37,6 @@
       this.setState({
         stories: DropdownNewsFeedStore.getStories(),
         actors: DropdownNewsFeedUsersStore.getUsers()
-      });
-    },
-
-    moreStories: function() {
-      var lastStory = this.state.stories[this.state.stories.length - 1];
-
-      Dispatcher.dispatch({
-        action: NF.ACTIONS.FETCH_MORE_STORIES,
-        event: NF.EVENTS.STORIES_FETCHED,
-        data: this.props.url + '?top_id=' + lastStory.id
       });
     },
 
@@ -101,7 +96,10 @@
       });
 
       return (
-        <a className={classes} href={this.props.story.url} style={{ 'font-size': '14px' }} onMouseOver={this.state.story.readAt ? null : this.markAsRead}>
+        <a className={classes}
+            href={this.props.story.url}
+            style={{ 'font-size': '14px' }}
+            onClick={this.state.story.readAt ? null : this.markAsRead}>
           <strong>@{actors}</strong> {this.body()}
           {this.preview()}
         </a>
@@ -188,5 +186,4 @@
       return text;
     }
   });
-
 })();

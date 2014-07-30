@@ -30,9 +30,7 @@
         InterestStore.setInterests(this.props.userInterests);
       }
 
-      InterestStore.addChangeListener(IP.EVENTS.INTEREST_ADDED, this.onStoreChange);
-      InterestStore.addChangeListener(IP.EVENTS.INTEREST_REMOVED, this.onStoreChange);
-      InterestStore.addChangeListener(IP.EVENTS.POPPED, this.onStoreChange);
+      InterestStore.addChangeListener(this.onStoreChange);
     },
 
     render: function() {

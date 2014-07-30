@@ -75,8 +75,7 @@ var TagList = React.createClass({
   },
 
   componentDidMount: function() {
-    TagListStore.addChangeListener(TC.EVENTS.TAG_ADDED + '-' + this.props.destination.toString(), this.onChange);
-    TagListStore.addChangeListener(TAG_LIST.EVENTS.TAG_REMOVED, this.onChange);
+    TagListStore.addChangeListener(this.onChange);
   },
 
   onChange: function() {

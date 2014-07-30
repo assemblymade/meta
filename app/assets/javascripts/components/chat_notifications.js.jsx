@@ -2,13 +2,13 @@
 
 //= require constants
 //= require dispatcher
-//= require stores/notifications_store
+//= require stores/chat_notifications_store
 
 (function() {
   var ICON_URL = 'https://d8izdk6bl4gbi.cloudfront.net/80x/http://f.cl.ly/items/1I2a1j0M0w0V2p3C3Q0M/Assembly-Twitter-Avatar.png';
-  var N = CONSTANTS.NOTIFICATIONS;
+  var N = CONSTANTS.CHAT_NOTIFICATIONS;
 
-  window.Notifications = React.createClass({
+  window.ChatNotifications = React.createClass({
     getInitialState: function() {
       return {
         data: null,
@@ -23,7 +23,11 @@
     },
 
     total: function() {
-      var count = _.countBy(this.state.data, function(entry){ return entry.count > 0 });
+      var count = _.countBy(this.state.data,
+        function(entry) {
+          return entry.count > 0
+        }
+      );
 
       return count.true;
     },
@@ -43,7 +47,7 @@
     componentWillMount: function() {
       var _this = this;
 
-      $(document).bind('readraptor.tracked', this.fetchNotifications);
+      // TODO: Remove this and use the Dispatcher
       $(window).bind('storage', this.storedAckChanged);
 
       this.onPush(function(event, msg) {
@@ -57,19 +61,19 @@
         if (visible) { _this.fetchNotifications(); }
       });
 
-      NotificationsStore.addChangeListener(N.EVENTS.STORIES_FETCHED, this.getStories);
+      ChatNotificationsStore.addChangeListener(this.getStories);
       this.fetchNotifications();
     },
 
     getStories: function() {
       this.setState({
-        data: NotificationsStore.getStories()
+        data: ChatNotificationsStore.getStories()
       });
     },
 
     onPush: function(fn) {
       if (window.pusher) {
-        channel = window.pusher.subscribe('@'+this.props.username);
+        channel = window.pusher.subscribe('@' + this.props.username);
         channel.bind_all(fn);
       }
     },
@@ -88,6 +92,7 @@
           }
         }
       });
+
       return n.show();
     },
 
@@ -100,7 +105,7 @@
     latestArticle: function() {
       return _.max(this.articles(), function(a) {
         return a && a.timestamp;
-      })
+      });
     },
 
     latestArticleTimestamp: function() {
@@ -124,27 +129,11 @@
         return <span />;
       }
 
-      var total = this.badgeCount();
-
-      this.setTitle(total);
-
       var sorted = this.sortByCount(this.state.data);
 
       return (
         <NotificationsList data={sorted} username={this.props.username} />
       );
-    },
-
-    acknowledge: function() {
-      var timestamp = Math.floor(Date.now() / 1000);
-
-      localStorage.notificationsAck = timestamp;
-
-      this.setState({
-        acknowledgedAt: timestamp
-      });
-
-      this.setTitle(0);
     },
 
     storedAck: function() {
@@ -166,16 +155,6 @@
     setBadge: function(total) {
       if (window.fluid) {
         window.fluid.dockBadge = total
-      }
-    },
-
-    setTitle: function(total) {
-      if (total > 0) {
-        document.title = '(' + total + ') ' + this.props.title;
-        this.setBadge(total);
-      } else {
-        document.title = this.props.title;
-        this.setBadge('');
       }
     }
   });

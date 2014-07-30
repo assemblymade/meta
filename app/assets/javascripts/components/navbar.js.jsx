@@ -14,25 +14,25 @@
       return (
         <ul className='nav navbar-nav'>
           <li>
-            <DropdownToggler
+            <TitleNotificationsCount />
+          </li>
+          
+          <li>
+            <DropdownNewsFeedToggler
                 iconClass='icon-bell'
                 href='#stories'
-                store='DROPDOWN_NEWS_FEED'
-                label='Notifications'
-                event='STORIES_FETCHED' />
+                label='Notifications' />
 
             <DropdownNewsFeed url={this.props.newsFeedPath} />
           </li>
 
           <li>
-            <DropdownToggler
+            <ChatNotificationsToggler
               iconClass='icon-bubbles'
               href='#notifications'
-              label='Chat'
-              store='NOTIFICATIONS'
-              event='STORIES_FETCHED' />
+              label='Chat' />
 
-            <Notifications
+            <ChatNotifications
                 url={this.props.chatPath}
                 username={this.props.user.username}
             />

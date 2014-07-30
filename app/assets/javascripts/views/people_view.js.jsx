@@ -44,7 +44,7 @@ var People = React.createClass({
   },
 
   componentDidMount: function() {
-    PeopleStore.addChangeListener('people:change', this.onChange);
+    PeopleStore.addChangeListener(this.onChange);
   },
 
   onChange: function() {
