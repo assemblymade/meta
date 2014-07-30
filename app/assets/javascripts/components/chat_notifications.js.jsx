@@ -2,13 +2,13 @@
 
 //= require constants
 //= require dispatcher
-//= require stores/notifications_store
+//= require stores/chat_notifications_store
 
 (function() {
   var ICON_URL = 'https://d8izdk6bl4gbi.cloudfront.net/80x/http://f.cl.ly/items/1I2a1j0M0w0V2p3C3Q0M/Assembly-Twitter-Avatar.png';
-  var N = CONSTANTS.NOTIFICATIONS;
+  var N = CONSTANTS.CHAT_NOTIFICATIONS;
 
-  window.Notifications = React.createClass({
+  window.ChatNotifications = React.createClass({
     getInitialState: function() {
       return {
         data: null,
@@ -57,13 +57,13 @@
         if (visible) { _this.fetchNotifications(); }
       });
 
-      NotificationsStore.addChangeListener(N.EVENTS.STORIES_FETCHED, this.getStories);
+      ChatNotificationsStore.addChangeListener(N.EVENTS.STORIES_FETCHED, this.getStories);
       this.fetchNotifications();
     },
 
     getStories: function() {
       this.setState({
-        data: NotificationsStore.getStories()
+        data: ChatNotificationsStore.getStories()
       });
     },
 

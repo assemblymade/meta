@@ -3,7 +3,7 @@
 //= require dispatcher
 //= require stores/store
 
-var NotificationsStore = (function() {
+var ChatNotificationsStore = (function() {
   var READ_RAPTOR_URL = document.getElementsByName('read-raptor-url')[0].content;
 
   var _stories = [];

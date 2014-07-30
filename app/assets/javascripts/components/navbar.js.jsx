@@ -25,14 +25,14 @@
           </li>
 
           <li>
-            <DropdownToggler
+            <ChatNotificationsToggler
               iconClass='icon-bubbles'
               href='#notifications'
               label='Chat'
-              store='NOTIFICATIONS'
+              store='CHAT_NOTIFICATIONS'
               event='STORIES_FETCHED' />
 
-            <Notifications
+            <ChatNotifications
                 url={this.props.chatPath}
                 username={this.props.user.username}
             />

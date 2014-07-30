@@ -4,6 +4,6 @@ class Event::Close < Event
   end
 
   def sanitized_body
-    Search::Sanitizer.new.sanitize(body)
+    Search::Sanitizer.new.sanitize(body) unless body.nil?
   end
 end

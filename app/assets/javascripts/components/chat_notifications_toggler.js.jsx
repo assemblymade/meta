@@ -1,51 +1,23 @@
 /** @jsx React.DOM */
 
 //= require constants
-//= require stores/dropdown_news_feed_store
+//= require mixins/dropdown_toggler
 
 (function() {
-  var _stores = {
-    DROPDOWN_NEWS_FEED: DropdownNewsFeedStore,
-    NOTIFICATIONS: ChatNotificationsStore
-  };
+  var CN = CONSTANTS.CHAT_NOTIFICATIONS;
 
-  window.DropdownToggler = React.createClass({
-    getDefaultProps: function() {
-      return {
-        title: document.title
-      };
-    },
+  window.ChatNotificationsToggler = React.createClass({
+    mixins: [DropdownTogglerMixin],
 
-    acknowledge: function() {
-      var timestamp = Math.floor(Date.now() / 1000);
-
-      localStorage.notificationsAck = timestamp;
-
-      this.setState({
-        acknowledgedAt: timestamp
-      });
-
-      this.resetTitle();
-    },
-
-    resetTitle: function() {
-      document.title = this.props.title;
+    badge: function() {
+      return (
+        <span
+            className='indicator indicator-danger'
+            style={{ position: 'relative', top: '5px' }} />
+      );
     },
 
     badgeCount: function() {
-      if (this.props.store === 'DROPDOWN_NEWS_FEED') {
-        var self = this;
-        var unreadStories = this.state.stories &&
-          _.filter(
-            this.state.stories,
-            function(story) {
-              return story.readAt == null;
-            }
-          );
-
-        return unreadStories && unreadStories.length;
-      }
-
       if (this.latestStoryTimestamp() > this.state.acknowledgedAt) {
         return this.total();
       }
@@ -54,12 +26,16 @@
     componentWillMount: function() {
       var store = this.props.store;
 
-      // One server call (in the main component) and no duplicated data (stories
-      // are passed by reference)
-      _stores[store] && _stores[store].addChangeListener(
-        CONSTANTS[store].EVENTS[this.props.event],
+      ChatNotificationsStore.addChangeListener(
+        CN.EVENTS.STORIES_FETCHED,
         this.getStories
       );
+    },
+
+    getDefaultProps: function() {
+      return {
+        title: document.title
+      };
     },
 
     getInitialState: function() {
@@ -71,7 +47,7 @@
 
     getStories: function() {
       this.setState({
-        stories: _stores[this.props.store].getStories()
+        stories: ChatNotificationsStore.getStories()
       });
     },
 
@@ -108,9 +84,7 @@
       var badge = null;
 
       if (total > 0) {
-        badge = this.props.iconClass.indexOf('bubble') > -1 ?
-          <span className='indicator indicator-danger' style={{ position: 'relative', top: '5px' }} /> :
-          <span className='badge badge-notification'>{total}</span>;
+        badge = this.badge();
         classes.push('glyphicon-highlight');
       }
 
@@ -123,16 +97,6 @@
           </span>
         </a>
       );
-    },
-
-    storedAck: function() {
-      var timestamp = localStorage.newsFeedAck;
-
-      if (timestamp == null || timestamp === 'null') {
-        return -1;
-      } else {
-        return parseInt(timestamp, 10);
-      }
     },
 
     total: function() {

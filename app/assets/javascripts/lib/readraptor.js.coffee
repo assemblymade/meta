@@ -28,6 +28,12 @@ do ($ = jQuery, window, document) ->
       if (isInView)
         $('body').append("<img class='hidden' src='#{@tracking}' width='0' height='0'>")
         $(document).trigger('readraptor.tracked') # this is a hack to notify that something new is tracked
+
+				Dispatcher.dispatch
+					event: CONSTANTS.CHAT_NOTIFICATIONS.EVENTS.STORIES_FETCHED
+					action: CONSTANTS.CHAT_NOTIFICATIONS.ACTIONS.FETCH_STORIES
+					data: null
+
 				Dispatcher.dispatch
 					event: CONSTANTS.DROPDOWN_NEWS_FEED.EVENTS.STORIES_FETCHED
 					action: CONSTANTS.DROPDOWN_NEWS_FEED.ACTIONS.FETCH_STORIES
