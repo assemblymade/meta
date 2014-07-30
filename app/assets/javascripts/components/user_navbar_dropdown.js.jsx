@@ -22,7 +22,7 @@
           <li className='divider' />
 
           <li>
-            <a href={this.destroyUserSessionPath} data-method='delete'>
+            <a href={this.props.destroyUserSessionPath} data-method='delete'>
               <span className='icon icon-logout dropdown-glyph'></span>
               Log out
             </a>
