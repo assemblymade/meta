@@ -128,7 +128,7 @@
 
       var count = _.reduce(
         _.map(self.state.stories, function mapStories(story) {
-          return story.updated ? 0 : 1;
+          return story.entities.length;
         }), function reduceStories(memo, read) {
           return memo + read;
       }, 0);
