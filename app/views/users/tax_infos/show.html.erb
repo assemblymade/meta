@@ -12,8 +12,31 @@
         <div class="page-header">
           <h2 class="page-header-title">Tax Information</h2>
         </div>
-        
-        <%= render 'form' %>
+
+        <% if %w(w8ben w9).include? params[:form_type] %>
+          <%= render 'form', title: I18n.t("tax.#{params[:form_type]}.title") %>
+        <% else %>
+          <div>
+            <a href="<%= users_tax_info_path(form_type: 'w9')%>">I am a US Citizen</a>
+          </div>
+          <div>
+            <a href="<%= users_tax_info_path(form_type: 'w8ben')%>">I am not a US Citizen</a>
+          </div>
+
+          <hr/>
+
+          <h4>Why is Assembly requesting my taxpayer information?</h4>
+
+          <p>As a US company, we’re required by law to collect taxpayer information from Assemblers who earn an income in the US.</p>
+
+          <p>For US Assemblers, we will send you a 1099-K form to help you complete your personal taxes.</p>
+
+          <p>For foreign workers we're required to withhold tax on your behalf, but we will provide you with the necessary documentation to claim the tax back from the US government.</p>
+
+          <p>We encourage you to consult a tax professional if you need advice on reporting your income.</p>
+
+          <a href="#" data-helpful="assembly">Contact us for more info</a>
+        <% end %>
       </div>
     </div>
   </div>

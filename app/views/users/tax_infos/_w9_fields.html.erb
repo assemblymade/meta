@@ -1,3 +1,5 @@
+<%= f.hidden_field :type, value: User::W9 %>
+
 <div class="col-md-12">
   <div class="row">
     <div class="col-md-5">
@@ -32,7 +34,7 @@
     <div class="col-md-5 col-md-offset-1">
       <%= form_group @tax_info, :classification do %>
         <%= f.label :classification, 'Tax Classification' %><br/>
-        <%= f.select :classification, User::TaxInfo::CLASSIFICATIONS, html: {class: 'form-control block'} %>
+        <%= f.select :classification, User::W9::CLASSIFICATIONS, html: {class: 'form-control block'} %>
       <% end %>
     </div>
   </div>

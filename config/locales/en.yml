@@ -9,6 +9,12 @@ en:
       author: "Tip to @%{author} for creating this Bounty"
       core_team: "Tip to the %{product} Core Team"
 
+  tax:
+    w9:
+      title: IRS Form W-9
+    w8ben:
+      title: IRS Form W-8BEN
+
   activity:
     feed:
       wip:

@@ -91,7 +91,9 @@ ASM::Application.routes.draw do
     patch  '/settings/payment' => 'users/profiles#update'
 
     namespace :users, path: 'settings' do
-      resource :tax_info, only: [:show, :create, :update]
+      resource :tax_info, only: [:show, :create, :update] do
+        get ':form_type' => 'tax_infos#show'
+      end
     end
     # get    '/settings/tax_info' => 'users/tax_info#edit', :as => :edit_user_tax_info
     # patch  '/settings/tax_info' => 'users/tax_info#update', :as => :user_tax_info

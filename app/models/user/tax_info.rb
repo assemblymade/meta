@@ -1,22 +1,9 @@
 class User::TaxInfo < ActiveRecord::Base
   belongs_to :user
 
-  CLASSIFICATIONS = [
-    'Individual/sole proprietor',
-    'C Corporation',
-    'S Corporation',
-    'Partnership',
-    'Trust/estate',
-    'LLC (Single member)',
-    'LLC (C Corporation)',
-    'LLC (S Corporation)',
-    'LLC (Partnership)',
-    'Exempt payee'
-  ]
+  validates :type, inclusion: { in: %w(User::W9 User::W8Ben) }
 
   attr_accessor :signature
-
-  validates :full_name, presence: true
   validate :signature_match
 
   # private

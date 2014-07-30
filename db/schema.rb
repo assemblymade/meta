@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140728231439) do
+ActiveRecord::Schema.define(version: 20140730011037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -481,7 +481,7 @@ ActiveRecord::Schema.define(version: 20140728231439) do
   add_index "uniques", ["distinct_id", "created_at"], name: "index_uniques_on_distinct_id_and_created_at", using: :btree
 
   create_table "user_tax_infos", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "user_id",          null: false
+    t.uuid     "user_id",            null: false
     t.string   "full_name"
     t.string   "business_name"
     t.string   "taxpayer_id"
@@ -498,6 +498,18 @@ ActiveRecord::Schema.define(version: 20140728231439) do
     t.string   "signatory"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type",               null: false
+    t.string   "citizenship"
+    t.string   "mailing_address"
+    t.string   "mailing_city"
+    t.string   "mailing_state"
+    t.string   "mailing_zip"
+    t.string   "mailing_country"
+    t.string   "treaty_article"
+    t.string   "treaty_withholding"
+    t.string   "treaty_income_type"
+    t.string   "treaty_reasons"
+    t.string   "signature_capacity"
   end
 
   create_table "users", id: false, force: true do |t|
