@@ -1,132 +1,106 @@
-<% title 'Assembly is a community of crowd-made startups' %>
+<% title 'Assembly is a new way for people around the world to collectively build, launch, and grow startups.' %>
+<%= track 'home.viewed' %>
 
-<%= render 'shared/navbar' %>
+<div class="navbar navbar-default navbar-static-top">
+  <div class="container-fluid">
 
-<% cache 'v1', expires_in: 24.hours do %>
-  <div class="page page-flat page-with-header page-home">
-
-    <div class="block block-inverted block-image-bg">
-
-      <div class="container">
-        <h1 class="text-center">
-          Community built
-          <br>
-          open-source startups.
-        </h1>
-
-
-        <div class="section">
-
-          <div class="row">
-
-            <% @feature_products.each do |contributions| %>
-              <% product = contributions.product %>
-              <div class="col-xs-6 col-sm-3" style="margin-bottom: 48px;">
-                <a href="<%= product_path(product) %>" class="card card-sm card-colored product-<%= product.slug %>">
-                  <div class="card-hero" style="background-image: url('<%= product.poster %>');"></div>
-                  <div class="card-body">
-                    <div class="summary">
-                      <div class="summary-target">
-                        <%= product.pitch %>
-                      </div>
-                      <p class="summary-name omega">
-                        <%= product.name %>
-                      </p>
-                    </div>
-                  </div>
-                  <div class="card-footer">
-                    <p class="pull-right omega">
-                      <i class="icon-trophy" style="margin-right: 2px;"></i>
-                      <%= number_with_delimiter contributions.total %>
-                    </p>
-                    <p class="omega">
-                      <i class="icon-users" style="margin-right: 2px;"></i>
-                      <%= number_with_delimiter contributions.uniques %>
-                    </p>
-                  </div>
-                </a>
-              </div>
-            <% end %>
-
-          </div><!-- .row -->
-
-          <figure class="text-center figure-inverted" style="margin-top: 30px;">Four of many startups currently being built on Assembly. <a href="<%= discover_path %>">Explore more &rarr;</a></figure>
-
-        </div><!-- .section -->
-
-        <p class="text-center lead">Assembly is a platform for creating crowd-founded, open source startups built and owned by their makers. Talented minds everywhere are invited to help, and success is shared equitably.</p>
-      </div><!-- .container -->
-    </div><!-- .block -->
-
-    <div class="block block-colored block-bordered" style="margin-bottom: 48px;">
-      <div class="container">
-        <div class="row">
-          <h3 class="col-sm-8 alpha text-success" style="top: 3px;"><strong>Join Assembly.</strong> It takes less than a minute.</h3>
-          <div class="col-sm-4">
-            <a class="btn btn-success btn-block" href="<%= new_user_registration_path %>">Sign up</a>
-          </div>
-        </div>
-      </div>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#platform-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="text-brand navbar-brand" href="<%= root_path %>">
+        <span class="brand">
+          <span class="icon icon-logo-filled"></span>
+            Assembly
+        </span>
+      </a>
     </div>
 
-    <div class="container">
-      <div class="section section-ruled">
-        <div class="row">
-          <p class="col-sm-10 col-sm-offset-1 text-large text-center" style="margin-bottom: 48px;">
-            By trade, we may be developers, designers, writers, and marketers&mdash;but at heart, we're makers.  Assembly is for makers who want to create something on their own terms, choose their own challenges, and focus on the things they love.           </p>
-        </div>
+    <div class="collapse navbar-collapse" id="platform-navbar-collapse">
+      <div class="navbar-right">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="<%= new_user_session_path %>">
+              Log in
+            </a>
+          </li>
+
+          <li>
+            <div class="navbar-form">
+              <a class="btn btn-success" href="<%= new_user_registration_path %>">Sign up</a>
+            </div>
+          </li>
+        </ul>
       </div>
+    </div>
+  </div>
+</div><!-- .navbar -->
+
+<div class="page page-flat">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
 
 
-      <div class="section" style="margin-bottom: 36px;">
+        <div class="sheet-">
+          <h1 class="text-center">
+            Build, launch, and grow a startup with talented people around the world
+          </h1>
 
-        <div class="row" style="margin-bottom: 24px;">
-          <div class="col-sm-4 text-center text-muted" style="margin-top: 20px;">
-            <h6>Traditional companies</h6>
-            <ul class="list-unstyled list-ruled text-sans">
-              <li>Investors and founders have ownership</li>
-              <li style="line-height: 50px;">Complex organizational structure</li>
-              <li>Most work happens in the office,<br>during the day</li>
-              <li>Employment contracts</li>
-            </ul>
-          </div>
+          <br>
+          <br>
 
-          <div class="col-sm-4">
-            <div class="card card-lg text-center" style="box-shadow: inset 0 0 0 2px rgba(123, 171, 94, .5), 0 1px 0 0 rgba(0, 0, 0, 0.04);">
-              <div class="card-body">
-                <h6>Open Source Startups</h6>
-                <ul class="list-unstyled list-ruled omega text-success">
-                  <li>Everyone has ownership</li>
-                  <li>Everyone contributes where they are most effective</li>
-                  <li>Collaboration can happen around-the-clock by people everywhere</li>
-                  <li>Revenue is split equitably between contributors, monthly</li>
-                </ul>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="//player.vimeo.com/video/102253176" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
               </div>
+
+              <br>
+              <br>
+
             </div>
           </div>
 
-          <div class="col-sm-4 text-center text-muted" style="margin-top: 20px;">
-            <h6>Side projects</h6>
-            <ul class="list-unstyled list-ruled text-sans">
-              <li>Creator has ownership</li>
-              <li style="line-height: 50px;">Working alone</li>
-              <li>Work happens at home, on nights<br>and weekends</li>
-              <li>Revenue is rare</li>
-            </ul>
+
+          <div class="row">
+
+            <div class="col-md-10 col-md-offset-1">
+              <p class="lead" style="margin-bottom: 36px;text-align:left;">
+                Startups on Assembly are unlike traditional companies. They don't have investors, shareholders, or even employees. Instead, a global community creates and owns them, together.
+              </p>
+
+              <p>
+                Anyone can jump in and help out a startup on Assembly. The entire process is a collaborative effort including its vision, development, design, and marketing.
+              </p>
+
+              <p>
+                Everyone shares in the success of the startups they help create. Those involved earn App Coins from others in the community for their work. At the end of each month Assembly pays the bills and splits the proceeds amongst everyone with App Coins.
+              </p>
+            </div>
+
           </div>
+
+          <br>
+
+
+          <div class="text-center">
+            <a class="btn btn-primary btn-lg" href="<%= new_user_registration_path %>">
+              Join an Assembly
+            </a>
+          </div>
+
+          <br>
+          <br>
+
         </div>
       </div>
+    </div>
+  </div>
+</div>
 
-      <p class="lead text-center omega" style="margin-bottom: 48px;">
-        <a class="text-success" href="<%=getting_started_path%>">View our Field Guide to learn how to get started on Assembly &rarr;
-        </a>
-      </p>
-
-    </div><!-- .container -->
-
-  </div><!-- .page -->
-
-  <%= render 'shared/footer' %>
-<% end %>
-
-<script>analytics.track('home.viewed');</script>
+<%= render 'shared/footer' %>
