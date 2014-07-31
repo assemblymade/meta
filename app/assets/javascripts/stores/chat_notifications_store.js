@@ -12,6 +12,8 @@ var ChatNotificationsStore = (function() {
   var _store = Object.create(Store);
 
   var _notificationsStore = _.extend(_store, {
+    'chatNotifications:acknowledge': function(timestamp) {},
+
     addStory: function(data) {
       if (!data) {
         return;
@@ -26,14 +28,18 @@ var ChatNotificationsStore = (function() {
       window.xhr.get(url, this.handleFetchedStories.bind(this));
     },
 
-    getUnreadCount: function() {
+    getUnreadCount: function(acknowledgedAt) {
       var count = _.countBy(_stories,
         function(entry) {
-          return entry.count > 0
+          if (acknowledgedAt) {
+            return entry.count > 0 && +new Date(entry.product.updated) > acknowledgedAt;
+          }
+
+          return entry.count;
         }
       );
 
-      return count.true;
+      return count.true || 0;
     },
 
     handleFetchedStories: function(err, data) {

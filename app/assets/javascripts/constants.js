@@ -1,10 +1,11 @@
 var CONSTANTS = {
   CHAT_NOTIFICATIONS: {
     ACTIONS: {
-      FETCH_STORIES: 'fetchStories',
-      MARK_READ: 'markRead'
+      ACKNOWLEDGE: 'chatNotifications:acknowledge',
+      FETCH_STORIES: 'fetchStories'
     },
     EVENTS: {
+      ACKNOWLEDGED: 'chatNotifications:acknowledged',
       STORIES_FETCHED: 'notifications:storiesFetched'
     }
   },
@@ -24,9 +25,11 @@ var CONSTANTS = {
 
   DROPDOWN_NEWS_FEED: {
     ACTIONS: {
+      ACKNOWLEDGE: 'dropdownNewsFeed:acknowledge',
       FETCH_STORIES: 'dropdownNewsFeed:fetchStories'
     },
     EVENTS: {
+      ACKNOWLEDGED: 'dropdownNewsFeed:acknowledged',
       STORIES_FETCHED: 'dropdownNewsFeed:storiesFetched'
     }
   },

@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 //= require constants
+//= require stores/chat_notifications_store
 //= require mixins/dropdown_toggler
 
 (function() {
@@ -8,6 +9,23 @@
 
   window.ChatNotificationsToggler = React.createClass({
     mixins: [DropdownTogglerMixin],
+
+    acknowledge: function() {
+      var timestamp = +Date.now();
+
+      localStorage.notificationsAck = timestamp;
+
+      this.setState({
+        acknowledgedAt: timestamp
+      });
+
+      Dispatcher.dispatch({
+        event: CN.EVENTS.ACKNOWLEDGED,
+        action: CN.ACTIONS.ACKNOWLEDGE,
+        payload: timestamp,
+        sync: true
+      });
+    },
 
     badge: function() {
       return (
@@ -19,13 +37,13 @@
 
     badgeCount: function() {
       if (this.latestStoryTimestamp() > this.state.acknowledgedAt) {
-        return this.total();
+        return ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt);
       }
+
+      return 0;
     },
 
     componentWillMount: function() {
-      var store = this.props.store;
-
       ChatNotificationsStore.addChangeListener(this.getStories);
     },
 
@@ -57,7 +75,8 @@
 
       var story;
       for (var i = 0, l = stories.length; i < l; i++) {
-        if (story && stories[i].updated > story.updated) {
+        // product.updated is ~when the chat message was created
+        if (story && stories[i].product.updated > story.product.updated) {
           story = stories[i];
         }
 
@@ -72,7 +91,7 @@
     latestStoryTimestamp: function() {
       var story = this.latestStory();
 
-      return story && story.updated ? story.updated : 0;
+      return story && story.product.updated ? +new Date(story.product.updated) : 0;
     },
 
     total: function() {
@@ -80,12 +99,22 @@
 
       var count = _.reduce(
         _.map(self.state.stories, function mapStories(story) {
-          return story.entities && story.entities.length;
+          return story.count;
         }), function reduceStories(memo, read) {
           return memo + read;
       }, 0);
 
       return count;
+    },
+
+    storedAck: function() {
+      var timestamp = localStorage.notificationsAck;
+
+      if (timestamp == null || timestamp === 'null') {
+        return 0;
+      } else {
+        return parseInt(timestamp, 10);
+      }
     }
   });
 })();
