@@ -6,24 +6,25 @@ class User < ActiveRecord::Base
   include ActiveRecord::UUID
   include Elasticsearch::Model
 
+  has_many :activities,    foreign_key: 'owner_id'
   has_many :core_products, :through => :core_team_memberships, :source => :product
   has_many :core_team_memberships
+  has_many :events
   has_many :products
   has_many :product_logos
   has_many :preorders
-  has_many :watchings
   has_many :followed_tags, :through => :watchings, :source => :watchable, :source_type => 'Wip::Tag'
-  has_many :saved_searches
-  has_many :team_memberships
   has_many :wips
   has_many :wip_workers, :class_name => 'Wip::Worker'
   has_many :wips_working_on, ->{ where(state: Task::IN_PROGRESS) }, :through => :wip_workers, :source => :wip
   has_many :votes
-  has_many :events
   has_many :wips_contributed_to, -> { where(events: { type: Event::MAILABLE }).uniq.order("created_at DESC") }, :through => :events, :source => :wip
-  has_many :activities,    foreign_key: 'owner_id'
   has_many :stream_events, foreign_key: 'actor_id'
+  has_many :saved_searches
+  has_one  :tax_info
+  has_many :team_memberships
   has_many :watched_products, :through => :watchings, :source => :watchable, :source_type => Product
+  has_many :watchings
 
   devise :confirmable,
          :database_authenticatable,

@@ -1,0 +1,160 @@
+<%= f.hidden_field :type, value: User::W8Ben %>
+
+<h4>Part I - Identification of beneficial owner</h4>
+
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-5">
+      <%= form_group @tax_info, :full_name do %>
+        <%= f.label :full_name %>
+        <%= f.text_field :full_name, class: 'form-control' %>
+        <p class="help-block">As shown on your income tax return</p>
+      <% end %>
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+      <%= form_group @tax_info, :citizenship do %>
+        <%= f.label :citizenship %>
+        <%= f.country_select(:citizenship) %>
+
+        <p class="help-block">If different from full name (optional)</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <%= form_group @tax_info, :address do %>
+        <%= f.label :address, 'Permanent residence address' %>
+        <%= f.text_field :address, class: 'form-control' %>
+        <p class="help-block">Street, apt. or suite no., or rural route</p>
+      <% end %>
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+      <%= form_group @tax_info, :city do %>
+        <%= f.label :city, 'City or town, state or province' %>
+        <%= f.text_field :city, class: 'form-control' %>
+        <p class="help-block">Include postal code where appropriate</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5 col-md-offset-6">
+      <%= form_group @tax_info, :country do %>
+        <%= f.label :country %>
+        <%= f.country_select(:country) %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <%= form_group @tax_info, :mailing_address do %>
+        <%= f.label :mailing_address, 'Mailing address' %>
+        <%= f.text_field :mailing_address, class: 'form-control' %>
+        <p class="help-block">If different than permanent address (optional)</p>
+      <% end %>
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+      <%= form_group @tax_info, :mailing_city do %>
+        <%= f.label :mailing_city, 'City or town, state or province' %>
+        <%= f.text_field :mailing_city, class: 'form-control' %>
+        <p class="help-block">Include postal code where appropriate</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-offset-6 col-md-5">
+      <%= form_group @tax_info, :mailing_country do %>
+        <%= f.label :mailing_country %>
+        <%= f.country_select(:mailing_country) %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <%= form_group @tax_info, :taxpayer_id do %>
+        <%= f.label :taxpayer_id, 'U.S. tax ID number' %>
+        <%= f.text_field :taxpayer_id, class: 'form-control' %>
+        <p class="help-block">SSN or ITIN (if required)</p>
+      <% end %>
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+      <%= form_group @tax_info, :foreign_tax_id do %>
+        <%= f.label :foreign_tax_id, 'Foreign tax ID number' %>
+        <%= f.text_field :foreign_tax_id, class: 'form-control' %>
+        <p class="help-block">If you do not have a foreign tax ID number, complete date of birth</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <%= form_group @tax_info, :reference_number do %>
+        <%= f.label :reference_number, 'Reference number(s)' %>
+        <%= f.text_field :reference_number, class: 'form-control' %>
+      <% end %>
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+      <%= form_group @tax_info, :date_of_birth do %>
+        <%= f.label :date_of_birth %>
+        <div class="input-group">
+          <%= f.date_select :date_of_birth, class: 'form-control', start_year: Time.now.year - 120 %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <h4>Part II - Claim of tax treaty benefits (optional)</h4>
+
+    <p><strong>Special rates and conditions</strong> (if applicable - see instructions)</p>
+
+    <p>The beneficial owner is claiming the provisions of Article <%= f.text_field :treaty_article %> of the treaty identified by the country of citizenship above to claim a <%= f.text_field :treaty_withholding, class: 'text-right', size: 4 %>% rate of witholding on <br/>(specify type of income): <%= f.text_field :treaty_income_type %>. <br/>Explain the reasons the beneficial owner meets the terms of the treaty article: <%= f.text_field :treaty_reasons, size: 30 %>.
+  </div>
+
+  <div class="row">
+    <h4>Part III - Certification</h4>
+
+    <p>Under penalties of perjury, I declare that I have examined the information on this form and to the best of my knowledge and belief it is true, correct, and complete. I further certify under penalties of perjury that:</p>
+    <ul>
+      <li>I am the individual that is the beneficial owner (or am authorized to sign for the individual that is the beneficial owner) of all the income to which this form relates or</li>
+    </ul>
+    <p>am using this form to document myself as an individual that is an owner of a foreign financial institution,</p>
+    <ul>
+      <li>The person named on line 1 of this form is not a U.S. person,</li>
+      <li>
+        The income to which this form relates is:
+        <ul>
+          <li>not effectively connected with the conduct of a trade or business in the United States,</li>
+          <li>effectively connected but is not subject to tax under an applicable income tax treaty, or</li>
+          <li>the partner's share of a partnership's effectively connected income,</li>
+        </ul>
+      </li>
+      <li>The person named on line 1 of this form is a resident of the treaty country listed on line 9 of the form (if any) within the meaning of the income tax treaty between the United States and that country, and</li>
+      <li>For broker transactions or barter exchanges, the beneficial owner is an exempt foreign person as defined in the instructions.</li>
+    </ul>
+    <p>Furthermore, I authorize this form to be provided to any withholding agent that has control, receipt, or custody of the income of which I am the beneficial owner or any withholding agent that can disburse or make payments of the income of which I am the beneficial owner. I agree that I will submit a new form within 30 days if any certification made on this form becomes incorrect.</p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <%= form_group @tax_info, :signature do %>
+        <%= f.label :signature, 'Your signature'%>
+        <%= f.text_field :signature, class: 'form-control' %>
+        <p class="help-block">Typing your name acts as your signature</p>
+      <% end %>
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+      <%= form_group @tax_info, :signature_capacity do %>
+        <%= f.label :signature_capacity, 'Capacity in which acting' %>
+        <%= f.text_field :signature_capacity, class: 'form-control' %>
+        <p class="help-block">If form is not signed by beneficial owner</p>
+      <% end %>
+    </div>
+  </div>
+
+
+</div>

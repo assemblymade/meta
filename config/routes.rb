@@ -90,6 +90,12 @@ ASM::Application.routes.draw do
     get    '/settings/payment' => 'users/profiles#payment', :as => :user_payment
     patch  '/settings/payment' => 'users/profiles#update'
 
+    namespace :users, path: 'settings' do
+      resource :tax_info, only: [:show, :create, :update] do
+        get ':form_type' => 'tax_infos#show'
+      end
+    end
+
     # Confirmation
     get    '/users/confirmation/new' => 'users/confirmations#new', :as => :new_user_confirmation
     get    '/users/confirmation' => 'users/confirmations#show', :as => :user_confirmation
