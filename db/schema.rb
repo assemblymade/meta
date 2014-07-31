@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140730011037) do
+ActiveRecord::Schema.define(version: 20140731194126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,7 +146,9 @@ ActiveRecord::Schema.define(version: 20140730011037) do
     t.uuid     "event_id"
   end
 
+  add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
   add_index "events", ["wip_id", "number"], name: "index_events_on_wip_id_and_number", unique: true, using: :btree
+  add_index "events", ["wip_id"], name: "index_events_on_wip_id", using: :btree
 
   create_table "features", id: false, force: true do |t|
     t.uuid     "id",                      null: false
@@ -675,6 +677,7 @@ ActiveRecord::Schema.define(version: 20140730011037) do
 
   add_index "wips", ["product_id", "number"], name: "index_wips_on_product_id_and_number", unique: true, using: :btree
   add_index "wips", ["product_id", "promoted_at"], name: "index_wips_on_product_id_and_promoted_at", using: :btree
+  add_index "wips", ["product_id"], name: "index_wips_on_product_id", using: :btree
 
   create_table "work", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "product_id",              null: false
