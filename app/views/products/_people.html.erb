@@ -3,19 +3,21 @@
   <div class="panel-heading">
     <h6 class="panel-title">Core Team</h6>
   </div>
-  <div class="panel-body small">
-    <% if @product.core_team.empty? %>
-      <p class="omega">No core team members yet.</p>
-    <% else %>
-      <ul class="list-grid omega">
-        <% @product.core_team.each do |user| %>
-          <li>
-            <a href="<%= user_path(user) %>" title="<%= user.username %>"><%= avatar_tag(user, 36) %></a>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
-  </div>
+  <% cache([@product.slug, 'core-team'], expires_in: 1.day) do %>
+    <div class="panel-body small">
+      <% if @product.core_team.empty? %>
+        <p class="omega">No core team members yet.</p>
+      <% else %>
+        <ul class="list-grid omega">
+          <% @product.core_team.each do |user| %>
+            <li>
+              <a href="<%= user_path(user) %>" title="<%= user.username %>"><%= avatar_tag(user, 36) %></a>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  <% end %>
 
   <div class="panel-heading">
     <h6 class="panel-title">Contributors</h6>
@@ -25,7 +27,7 @@
     <% if @product.contributors.empty? %>
       <p class="omega">No contributors yet.</p>
     <% else %>
-      <% cache([@product, 'contributors'], expires_in: 1.day) do %>
+      <% cache([@product.slug, 'contributors'], expires_in: 1.day) do %>
         <ul class="list-grid omega">
           <% @product.important_contributors.each do |user| %>
             <li>
