@@ -118,8 +118,7 @@
     },
 
     isRead: function() {
-      var readAt = this.props.story.readAt;
-      return readAt != null;
+      return this.props.story.last_read_at != null;
     },
 
     markAsRead: function() {
@@ -148,7 +147,6 @@
         'entry-unread': !this.isRead(),
       });
 
-      var isRead = this.props.story.readAt || false;
       var productName = this.props.story.product.name;
 
       return (

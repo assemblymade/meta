@@ -93,8 +93,9 @@
     },
 
     markAsRead: function() {
+      // FIXME: This method shouldn't work this way; use the Dispatcher
       var story = this.state.story;
-      story.readAt = Date.now();
+      story.last_read_at = Date.now();
 
       this.setState({
         story: story
@@ -113,7 +114,7 @@
         <a className={'list-group-item ' + classes}
             href={this.props.story.url}
             style={{ 'font-size': '14px' }}
-            onClick={this.state.story.readAt ? null : this.markAsRead}>
+            onClick={this.state.story.last_read_at ? null : this.markAsRead}>
           <Avatar user={this.actors()[0]} size={18} />&nbsp;
           <strong>{actors}</strong> {this.body()}
           {this.preview()}
@@ -140,9 +141,7 @@
     },
 
     isRead: function() {
-      var readAt = this.state.story.readAt;
-
-      return readAt != null;
+      return this.state.story.last_read_at != null;
     },
 
     preview: function() {

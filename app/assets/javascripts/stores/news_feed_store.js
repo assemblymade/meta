@@ -35,12 +35,12 @@ var NewsFeedStore = (function() {
       for (var i = 0, l = data.length; i < l; i++) {
         var datum = data[i];
 
-        if (datum.readAt) {
+        if (datum.last_read_at) {
           for (var j = 0, k = stories.length; j < k; j++) {
             var story = stories[j];
 
             if (datum.key.indexOf(story.id) > -1) {
-              story.readAt = datum.readAt;
+              story.last_read_at = datum.last_read_at;
             }
           }
         }
@@ -177,7 +177,8 @@ var NewsFeedStore = (function() {
 
         var story = self.getStory(storyId);
 
-        story.readAt = Date.now();
+        // FIXME: Use the value from Readraptor
+        story.last_read_at = Date.now();
 
         self.emit(_deferred.pop());
       }
@@ -202,10 +203,10 @@ var NewsFeedStore = (function() {
         _stories,
         function(story) {
           if (timestamp) {
-            return story.readAt == null && +new Date(story.updated) > timestamp;
+            return story.last_read_at == null && +new Date(story.updated) > timestamp;
           }
 
-          return story.readAt == null;
+          return story.last_read_at == null;
         }
       );
 
