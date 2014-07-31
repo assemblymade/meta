@@ -23,7 +23,8 @@
     },
 
     total: function() {
-      var count = _.countBy(this.state.data,
+      var count = _.countBy(
+        this.state.data,
         function(entry) {
           return entry.count > 0
         }

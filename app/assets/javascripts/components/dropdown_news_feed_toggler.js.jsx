@@ -13,15 +13,17 @@
     },
 
     badgeCount: function() {
-      var unreadStories = this.state.stories &&
-        _.filter(
-          this.state.stories,
-          function(story) {
-            return story.readAt == null;
-          }
-        );
+      if (this.latestStoryTimestamp() > this.state.acknowledgedAt) {
+        var unreadStories = this.state.stories &&
+          _.filter(
+            this.state.stories,
+            function(story) {
+              return story.readAt == null;
+            }
+          );
 
-      return unreadStories && unreadStories.length;
+        return unreadStories && unreadStories.length;
+      }
     },
 
     componentWillMount: function() {
@@ -71,7 +73,7 @@
     latestStoryTimestamp: function() {
       var story = this.latestStory();
 
-      return story && story.updated ? story.updated : 0;
+      return story && story.updated ? Math.floor(+new Date(story.updated) / 1000) : 0;
     }
   });
 })();

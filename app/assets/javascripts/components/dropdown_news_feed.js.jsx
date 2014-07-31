@@ -19,17 +19,24 @@
       DropdownNewsFeedStore.addChangeListener(this.getStories);
 
       this.fetchNewsFeed(this.props.url);
+
+      this.onPush(function() {
+        this.fetchNewsFeed();
+      }.bind(this));
     },
 
-    componentWillUpdate: function() {
-      this.fetchNewsFeed(this.props.url);
+    onPush: function(fn) {
+      if (window.pusher) {
+        channel = window.pusher.subscribe('@' + this.props.username);
+        channel.bind_all(fn);
+      }
     },
 
-    fetchNewsFeed: _.debounce(function(url) {
+    fetchNewsFeed: _.debounce(function() {
       Dispatcher.dispatch({
         action: NF.ACTIONS.FETCH_STORIES,
         event: NF.EVENTS.STORIES_FETCHED,
-        data: url
+        data: this.props.url
       });
     }, 1000),
 

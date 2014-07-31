@@ -3,6 +3,7 @@
 (function() {
   window.DropdownTogglerMixin = {
     acknowledge: function() {
+      // Why are we dividing the timestamp by 1000?
       var timestamp = Math.floor(Date.now() / 1000);
 
       localStorage.notificationsAck = timestamp;
@@ -10,8 +11,6 @@
       this.setState({
         acknowledgedAt: timestamp
       });
-
-      this.setTitle && this.setTitle();
     },
 
     render: function() {

@@ -16,14 +16,16 @@
           <li>
             <TitleNotificationsCount />
           </li>
-          
+
           <li>
             <DropdownNewsFeedToggler
                 iconClass='icon-bell'
                 href='#stories'
                 label='Notifications' />
 
-            <DropdownNewsFeed url={this.props.newsFeedPath} />
+            <DropdownNewsFeed
+                url={this.props.newsFeedPath}
+                username={this.props.user.username} />
           </li>
 
           <li>

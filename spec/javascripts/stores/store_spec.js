@@ -6,7 +6,9 @@
 describe('Store', function() {
   it('provides a Store prototype', function(done) {
     expect(Store).to.exist;
-    expect(Store).to.eql(Function.prototype);
+    expect(Store.emit).to.exist;
+    expect(Store.addChangeListener).to.exist;
+    expect(Store.removeChangeListener).to.exist;
     done();
   });
 

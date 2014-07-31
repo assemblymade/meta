@@ -16,10 +16,10 @@ var Store = _.extend({}, {
     return this.listeners.length - 1;
   },
 
-  removeChangeListener: function(event, eventIndex) {
-    if (this.listeners && this.listeners[event]) {
-      this.listeners[event].splice(index, 1);
-      return this.listeners[event].length;
+  removeChangeListener: function(eventIndex) {
+    if (this.listeners && this.listeners[eventIndex]) {
+      this.listeners.splice(eventIndex, 1);
+      return this.listeners.length;
     } else {
       return -1;
     }
