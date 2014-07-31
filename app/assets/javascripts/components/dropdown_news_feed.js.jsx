@@ -25,13 +25,6 @@
       }.bind(this));
     },
 
-    onPush: function(fn) {
-      if (window.pusher) {
-        channel = window.pusher.subscribe('@' + this.props.username);
-        channel.bind_all(fn);
-      }
-    },
-
     fetchNewsFeed: _.debounce(function() {
       Dispatcher.dispatch({
         action: NF.ACTIONS.FETCH_STORIES,
@@ -45,6 +38,13 @@
         stories: DropdownNewsFeedStore.getStories(),
         actors: DropdownNewsFeedUsersStore.getUsers()
       });
+    },
+
+    onPush: function(fn) {
+      if (window.pusher) {
+        channel = window.pusher.subscribe('@' + this.props.username);
+        channel.bind_all(fn);
+      }
     },
 
     render: function() {

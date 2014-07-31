@@ -17,6 +17,10 @@
     componentWillMount: function() {
       FullPageNewsFeedStore.addChangeListener(this.getStories);
       this.fetchNewsFeed();
+
+      this.onPush(function() {
+        this.fetchNewsFeed();
+      }.bind(this));
     },
 
     fetchNewsFeed: _.debounce(function() {
@@ -42,6 +46,13 @@
         event: NF.EVENTS.STORIES_FETCHED,
         data: this.props.url + '?top_id=' + lastStory.id
       });
+    },
+
+    onPush: function(fn) {
+      if (window.pusher) {
+        channel = window.pusher.subscribe('@' + this.props.user.username);
+        channel.bind_all(fn);
+      }
     },
 
     render: function() {

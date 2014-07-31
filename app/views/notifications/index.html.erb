@@ -13,6 +13,7 @@
       <div class="col-md-8 col-md-offset-2">
         <div data-react-class="FullPageNewsFeed" data-react-props="<%= {
           url: notifications_path(format: :json),
+          user: current_user,
           fullPage: true
         }.to_json %>">
         </div>
