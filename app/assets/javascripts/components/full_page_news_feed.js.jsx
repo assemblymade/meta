@@ -16,21 +16,21 @@
 
     componentWillMount: function() {
       FullPageNewsFeedStore.addChangeListener(this.getStories);
-      this.fetchNewsFeed(this.props.url);
+      this.fetchNewsFeed();
     },
 
-    fetchNewsFeed: _.debounce(function(url) {
+    fetchNewsFeed: _.debounce(function() {
       Dispatcher.dispatch({
         action: NF.ACTIONS.FETCH_STORIES,
         event: NF.EVENTS.STORIES_FETCHED,
-        data: url
+        data: this.props.url
       });
     }, 1000),
 
     getStories: function() {
       this.setState({
-        stories: DropdownNewsFeedStore.getStories(),
-        actors: DropdownNewsFeedUsersStore.getUsers()
+        stories: FullPageNewsFeedStore.getStories(),
+        actors: FullPageNewsFeedUsersStore.getUsers()
       });
     },
 
