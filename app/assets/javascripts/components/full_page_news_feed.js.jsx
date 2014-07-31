@@ -2,10 +2,10 @@
 
 //= require constants
 //= require dispatcher
-//= require stores/full_page_news_feed_store
+//= require stores/news_feed_store
 
 (function() {
-  var NF = CONSTANTS.FULL_PAGE_NEWS_FEED;
+  var NF = CONSTANTS.NEWS_FEED;
 
   window.FullPageNewsFeed = React.createClass({
     getInitialState: function() {
@@ -15,7 +15,7 @@
     },
 
     componentWillMount: function() {
-      FullPageNewsFeedStore.addChangeListener(this.getStories);
+      NewsFeedStore.addChangeListener(this.getStories);
       this.fetchNewsFeed();
 
       this.onPush(function() {
@@ -33,8 +33,8 @@
 
     getStories: function() {
       this.setState({
-        stories: FullPageNewsFeedStore.getStories(),
-        actors: FullPageNewsFeedUsersStore.getUsers()
+        stories: NewsFeedStore.getStories(),
+        actors: NewsFeedUsersStore.getUsers()
       });
     },
 
@@ -95,6 +95,51 @@
   });
 
   var Entry = React.createClass({
+    actors: function() {
+      return _.map(
+        this.props.story.actor_ids,
+        function(actorId) {
+          return _.findWhere(this.props.actors, { id: actorId })
+        }.bind(this)
+      );
+    },
+
+    body: function() {
+      var target = this.props.story.activities[0].target;
+
+      return (
+        <span>
+          {this.verbMap[this.props.story.verb]}
+          <strong>
+            {this.subjectMap[this.props.story.subject_type].call(this, target)}
+          </strong>
+        </span>
+      );
+    },
+
+    isRead: function() {
+      var readAt = this.props.story.readAt;
+      return readAt != null;
+    },
+
+    markAsRead: function() {
+      Dispatcher.dispatch({
+        event: NF.EVENTS.READ,
+        action: NF.ACTIONS.MARK_AS_READ,
+        data: this.props.story.id
+      });
+    },
+
+    preview: function() {
+      var bodyPreview = this.props.story.body_preview;
+
+      return (
+        <p className='text-muted' style={{ 'text-overflow': 'ellipsis' }}>
+          {bodyPreview}
+        </p>
+      );
+    },
+
     render: function() {
       var actors = _.map(this.actors(), func.dot('username')).join(', @')
 
@@ -103,10 +148,11 @@
         'entry-unread': !this.isRead(),
       });
 
+      var isRead = this.props.story.readAt || false;
       var productName = this.props.story.product.name;
 
       return (
-        <div>
+        <div className={classes}>
           <div className='row'>
             <div className='col-md-3'>
               <a href={'/' + this.props.story.product.slug}>{productName}</a>
@@ -116,7 +162,7 @@
               </span>
             </div>
             <div className='col-md-9'>
-              <a className={classes} href={this.props.story.url}>
+              <a className={classes} href={this.props.story.url} onClick={this.markAsRead}>
                 <span style={{ 'margin-right': '5px' }}>
                   <Avatar user={this.actors()[0]} />
                 </span>
@@ -135,55 +181,6 @@
       return moment(this.props.story.created).format("ddd, hA")
     },
 
-    body: function() {
-      var target = this.props.story.activities[0].target;
-
-      return (
-        <span>
-          {this.verbMap[this.props.story.verb]}
-          <strong>
-            {this.subjectMap[this.props.story.subject_type].call(this, target)}
-          </strong>
-        </span>
-      );
-    },
-
-    isRead: function() {
-      var readAt = this.props.story.read_at;
-      return readAt != null;
-    },
-
-    preview: function() {
-      var bodyPreview = this.props.story.body_preview;
-
-      return (
-        <p className='text-muted' style={{ 'text-overflow': 'ellipsis' }}>
-          {bodyPreview}
-        </p>
-      );
-    },
-
-    actors: function() {
-      return _.map(
-        this.props.story.actor_ids,
-        function(actorId) {
-          return _.findWhere(this.props.actors, { id: actorId })
-        }.bind(this)
-      );
-    },
-
-    componentDidMount: function() {
-      if (this.refs.body) {
-        this.refs.body.getDOMNode().innerHTML = this.props.story.subject.body_html;
-      }
-    },
-
-    verbMap: {
-      'Comment': 'commented on ',
-      'Award': 'awarded',
-      'Close': 'closed '
-    },
-
     subjectMap: {
       Task: function(task) {
         return "#" + task.number + " " + task.title;
@@ -200,6 +197,12 @@
 
         return "#" + bounty.number;
       },
+    },
+
+    verbMap: {
+      'Comment': 'commented on ',
+      'Award': 'awarded',
+      'Close': 'closed '
     }
   });
 })();

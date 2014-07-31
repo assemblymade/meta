@@ -7,7 +7,7 @@
   window.TitleNotificationsCount = React.createClass({
     componentWillMount: function() {
       ChatNotificationsStore.addChangeListener(this.setTitle);
-      DropdownNewsFeedStore.addChangeListener(this.setTitle);
+      NewsFeedStore.addChangeListener(this.setTitle);
     },
 
     getDefaultProps: function() {
@@ -28,7 +28,7 @@
 
     setTitle: function() {
       var chatCount = ChatNotificationsStore.getUnreadCount(localStorage.notificationsAck) || 0;
-      var newsCount = DropdownNewsFeedStore.getUnreadCount(localStorage.newsFeedAck) || 0;
+      var newsCount = NewsFeedStore.getUnreadCount(localStorage.newsFeedAck) || 0;
 
       var total = chatCount + newsCount;
 

@@ -2,11 +2,11 @@
 
 //= require constants
 //= require dispatcher
-//= require stores/dropdown_news_feed_store
+//= require stores/news_feed_store
 
 (function() {
 
-  var NF = CONSTANTS.DROPDOWN_NEWS_FEED;
+  var NF = CONSTANTS.NEWS_FEED;
 
   window.DropdownNewsFeed = React.createClass({
     getInitialState: function() {
@@ -16,7 +16,7 @@
     },
 
     componentWillMount: function() {
-      DropdownNewsFeedStore.addChangeListener(this.getStories);
+      NewsFeedStore.addChangeListener(this.getStories);
 
       this.fetchNewsFeed(this.props.url);
 
@@ -35,8 +35,8 @@
 
     getStories: function() {
       this.setState({
-        stories: DropdownNewsFeedStore.getStories(),
-        actors: DropdownNewsFeedUsersStore.getUsers()
+        stories: NewsFeedStore.getStories(),
+        actors: NewsFeedUsersStore.getUsers()
       });
     },
 

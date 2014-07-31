@@ -2,10 +2,11 @@
 
 //= require constants
 //= require mixins/dropdown_toggler
-//= require stores/dropdown_news_feed_store
+//= require stores/news_feed_store
 
 (function() {
-  var NF = CONSTANTS.DROPDOWN_NEWS_FEED;
+  var NF = CONSTANTS.NEWS_FEED;
+
   window.DropdownNewsFeedToggler = React.createClass({
     mixins: [DropdownTogglerMixin],
 
@@ -21,7 +22,7 @@
       Dispatcher.dispatch({
         event: NF.EVENTS.ACKNOWLEDGED,
         action: NF.ACTIONS.ACKNOWLEDGE,
-        payload: timestamp,
+        data: timestamp,
         sync: true
       });
     },
@@ -32,14 +33,14 @@
 
     badgeCount: function() {
       if (this.latestStoryTimestamp() > this.state.acknowledgedAt) {
-        return DropdownNewsFeedStore.getUnreadCount(this.state.acknowledgedAt);
+        return NewsFeedStore.getUnreadCount(this.state.acknowledgedAt);
       }
 
       return 0;
     },
 
     componentWillMount: function() {
-      DropdownNewsFeedStore.addChangeListener(this.getStories);
+      NewsFeedStore.addChangeListener(this.getStories);
     },
 
     getDefaultProps: function() {
@@ -57,7 +58,7 @@
 
     getStories: function() {
       this.setState({
-        stories: DropdownNewsFeedStore.getStories()
+        stories: NewsFeedStore.getStories()
       });
     },
 

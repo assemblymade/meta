@@ -1,7 +1,7 @@
 //= require dispatcher
 //= require stores/store
 
-var FullPageNewsFeedUsersStore = (function() {
+var NewsFeedUsersStore = (function() {
   var _users = {};
 
   var _store = Object.create(Store);

@@ -22,7 +22,7 @@
       Dispatcher.dispatch({
         event: CN.EVENTS.ACKNOWLEDGED,
         action: CN.ACTIONS.ACKNOWLEDGE,
-        payload: timestamp,
+        data: timestamp,
         sync: true
       });
     },
