@@ -75,15 +75,6 @@
       return story && story.updated ? story.updated : 0;
     },
 
-    setTitle: function() {
-      // Dispatcher.dispatch({
-      //   event: CN.EVENTS.STORIES_FETCHED,
-      //   action: CN.ACTIONS.MARK_READ,
-      //   data: null,
-      //   sync: true
-      // });
-    },
-
     total: function() {
       var self = this;
 

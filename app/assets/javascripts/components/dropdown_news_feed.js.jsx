@@ -48,10 +48,15 @@
     },
 
     render: function() {
+      // TODO: Style stories inside a div; only scroll the div
       return (
-        <ul className="dropdown-menu" style={{ 'max-height': '400px', 'overflow-y': 'scroll' }}>
-          {this.state.stories ? this.rows(this.state.stories) : null}
-          <li className="divider" />
+        <ul className="dropdown-menu" style={{ 'max-height': '400px', 'min-width': '380px' }}>
+          <li style={{ 'overflow-y': 'scroll' }}>
+            {this.state.stories ? this.rows(this.state.stories) : null}
+          </li>
+
+          <li className="divider" style={{ 'margin-top': '0px' }} />
+
           <li>
             <a href='/notifications'>All Notifications</a>
           </li>
@@ -63,18 +68,20 @@
       var rows = [];
 
       for (var i = 0, l = stories.length; i < l; i++) {
-        if (i > 4) {
+        if (i > 9) {
           break;
         }
 
         rows.push(
-          <li key={stories[i].key}>
-            <Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />
-          </li>
+          <Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />
         );
       }
 
-      return rows;
+      return (
+        <div className="list-group" style={{ height: '300px' }}>
+          {rows}
+        </div>
+      );
     }
   });
 
@@ -103,7 +110,7 @@
       });
 
       return (
-        <a className={classes}
+        <a className={'list-group-item ' + classes}
             href={this.props.story.url}
             style={{ 'font-size': '14px' }}
             onClick={this.state.story.readAt ? null : this.markAsRead}>
