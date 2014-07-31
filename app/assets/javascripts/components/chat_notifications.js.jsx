@@ -22,17 +22,6 @@
       };
     },
 
-    total: function() {
-      var count = _.countBy(
-        this.state.data,
-        function(entry) {
-          return entry.count > 0
-        }
-      );
-
-      return count.true;
-    },
-
     sortByCount: function() {
       return _.sortBy(this.state.data, function(entry){ return -entry.count; });
     },
@@ -121,7 +110,7 @@
 
     badgeCount: function() {
       if (this.latestArticleTimestamp() > this.state.acknowledgedAt) {
-        return this.total();
+        return ChatNotificationsStore.getUnreadCount();
       }
     },
 

@@ -49,7 +49,7 @@
 
     render: function() {
       return (
-        <ul className="dropdown-menu" style={{ 'max-height': '400px', 'overflow-y': 'scroll', width: '300px', 'max-width': '300px', 'min-width': '300px' }}>
+        <ul className="dropdown-menu" style={{ 'max-height': '400px', 'overflow-y': 'scroll' }}>
           {this.state.stories ? this.rows(this.state.stories) : null}
           <li className="divider" />
           <li>
@@ -63,7 +63,7 @@
       var rows = [];
 
       for (var i = 0, l = stories.length; i < l; i++) {
-        if (i > 10) {
+        if (i > 4) {
           break;
         }
 
@@ -107,7 +107,8 @@
             href={this.props.story.url}
             style={{ 'font-size': '14px' }}
             onClick={this.state.story.readAt ? null : this.markAsRead}>
-          <strong>@{actors}</strong> {this.body()}
+          <Avatar user={this.actors()[0]} size={18} />&nbsp;
+          <strong>{actors}</strong> {this.body()}
           {this.preview()}
         </a>
       );
@@ -126,6 +127,7 @@
           <strong>
             {this.subjectMap[this.props.story.subject_type].call(this, target)}
           </strong>
+          {this.product()}
         </span>
       );
     },
@@ -144,6 +146,12 @@
           {this.ellipsis(body_preview)}
         </p>
       );
+    },
+
+    product: function() {
+      var product = this.props.story.product;
+
+      return ' in ' + product.name;
     },
 
     actors: function() {
