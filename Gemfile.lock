@@ -192,8 +192,6 @@ GEM
     librato-rails (0.10.1)
       librato-rack (~> 0.4.2)
       rails (>= 3.0)
-    librato-sidekiq (0.1.2)
-      sidekiq
     lograge (0.2.2)
       actionpack (>= 3)
       activesupport (>= 3)
@@ -456,7 +454,6 @@ DEPENDENCIES
   kss!
   leftronic
   librato-rails
-  librato-sidekiq
   lograge
   machinist (~> 2)
   markerb
