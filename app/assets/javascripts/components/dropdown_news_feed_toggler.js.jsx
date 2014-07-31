@@ -5,8 +5,26 @@
 //= require stores/dropdown_news_feed_store
 
 (function() {
+  var NF = CONSTANTS.DROPDOWN_NEWS_FEED;
   window.DropdownNewsFeedToggler = React.createClass({
     mixins: [DropdownTogglerMixin],
+
+    acknowledge: function() {
+      var timestamp = +Date.now();
+
+      localStorage.newsFeedAck = timestamp;
+
+      this.setState({
+        acknowledgedAt: timestamp
+      });
+
+      Dispatcher.dispatch({
+        event: NF.EVENTS.ACKNOWLEDGED,
+        action: NF.ACTIONS.ACKNOWLEDGE,
+        payload: timestamp,
+        sync: true
+      });
+    },
 
     badge: function(total) {
       return <span className='badge badge-notification'>{total}</span>;
@@ -14,16 +32,10 @@
 
     badgeCount: function() {
       if (this.latestStoryTimestamp() > this.state.acknowledgedAt) {
-        var unreadStories = this.state.stories &&
-          _.filter(
-            this.state.stories,
-            function(story) {
-              return story.readAt == null;
-            }
-          );
-
-        return unreadStories && unreadStories.length;
+        return DropdownNewsFeedStore.getUnreadCount(this.state.acknowledgedAt);
       }
+
+      return 0;
     },
 
     componentWillMount: function() {
@@ -73,7 +85,17 @@
     latestStoryTimestamp: function() {
       var story = this.latestStory();
 
-      return story && story.updated ? Math.floor(+new Date(story.updated) / 1000) : 0;
+      return story && story.updated ? +new Date(story.updated) : 0;
+    },
+
+    storedAck: function() {
+      var timestamp = localStorage.newsFeedAck;
+
+      if (timestamp == null || timestamp === 'null') {
+        return 0;
+      } else {
+        return parseInt(timestamp, 10);
+      }
     }
   });
 })();

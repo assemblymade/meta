@@ -110,8 +110,10 @@
 
     badgeCount: function() {
       if (this.latestArticleTimestamp() > this.state.acknowledgedAt) {
-        return ChatNotificationsStore.getUnreadCount();
+        return ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt);
       }
+
+      return ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt);
     },
 
     render: function() {
@@ -127,7 +129,7 @@
     },
 
     storedAck: function() {
-      timestamp = localStorage.notificationsAck;
+      var timestamp = localStorage.notificationsAck;
 
       if (timestamp == null || timestamp === "null") {
         return 0;

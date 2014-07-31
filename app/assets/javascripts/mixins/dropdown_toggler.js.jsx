@@ -1,18 +1,11 @@
 /** @jsx React.DOM */
 
+//= require constants
+
 (function() {
+  var N = CONSTANTS.CHAT_NOTIFICATIONS;
+
   window.DropdownTogglerMixin = {
-    acknowledge: function() {
-      // Why are we dividing the timestamp by 1000?
-      var timestamp = Math.floor(Date.now() / 1000);
-
-      localStorage.notificationsAck = timestamp;
-
-      this.setState({
-        acknowledgedAt: timestamp
-      });
-    },
-
     render: function() {
       var classes = ['icon', 'navbar-icon', this.props.iconClass];
       var total = this.badgeCount();
@@ -32,16 +25,6 @@
           </span>
         </a>
       );
-    },
-
-    storedAck: function() {
-      var timestamp = localStorage.newsFeedAck;
-
-      if (timestamp == null || timestamp === 'null') {
-        return -1;
-      } else {
-        return parseInt(timestamp, 10);
-      }
     }
   };
 })();

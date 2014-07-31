@@ -13,6 +13,8 @@ var DropdownNewsFeedStore = (function() {
   var _store = Object.create(Store);
 
   var _newsFeedStore = _.extend(_store, {
+    'dropdownNewsFeed:acknowledge': function(timestamp) {},
+
     addStory: function(data) {
       if (!data) {
         return;
@@ -117,13 +119,17 @@ var DropdownNewsFeedStore = (function() {
       return _stories;
     },
 
-    getUnreadCount: function() {
+    getUnreadCount: function(timestamp) {
       var unreadStories = _.filter(
-          _stories,
-          function(story) {
-            return story.readAt == null;
+        _stories,
+        function(story) {
+          if (timestamp) {
+            return story.readAt == null && +new Date(story.updated) > timestamp;
           }
-        );
+
+          return story.readAt == null;
+        }
+      );
 
       return unreadStories && unreadStories.length;
     },
