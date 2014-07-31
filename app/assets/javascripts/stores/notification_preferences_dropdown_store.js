@@ -39,6 +39,10 @@ var NotificationPreferencesDropdownStore = (function() {
     var data = payload.data;
     var event = payload.event;
 
+    if (!_store[action]) {
+      return;
+    }
+
     _store[action] && _store[action](data);
     _store.emit(event);
   });
