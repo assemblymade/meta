@@ -54,7 +54,7 @@
                 newsFeedPath: notifications_path(format: :json),
                 chatPath: unread_path,
                 userPath: user_path(current_user),
-                editUserPath: edit_user_path(current_user),
+                editUserPath: edit_user_path,
                 destroyUserSessionPath: destroy_user_session_path
               }.to_json %>">
         <% else %>

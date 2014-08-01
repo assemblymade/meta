@@ -26,7 +26,7 @@
             <DropdownNewsFeed
                 url={this.props.newsFeedPath}
                 username={this.props.user.username}
-                userSettingsPath={this.props.editUserPath} />
+                editUserPath={this.props.editUserPath} />
           </li>
 
           <li>

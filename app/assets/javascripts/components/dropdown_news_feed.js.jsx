@@ -56,7 +56,6 @@
     },
 
     render: function() {
-      // TODO: Style stories inside a div; only scroll the div
       return (
         <ul className="dropdown-menu" style={{ 'max-height': '500px', 'min-width': '380px' }}>
           <li style={{ 'overflow-y': 'scroll' }}>
