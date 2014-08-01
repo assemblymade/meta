@@ -28,12 +28,6 @@
       };
     },
 
-    sortByLastReadAt: function() {
-      return _.sortBy(this.state.data, function(entry){
-        return (entry.updated > entry.last_read_at ? 'A' : 'Z') + entry.label;
-      });
-    },
-
     fetchNotifications: _.debounce(function() {
       Dispatcher.dispatch({
         action: N.ACTIONS.FETCH_CHAT_ROOMS,
@@ -122,6 +116,18 @@
       );
     },
 
+    setBadge: function(total) {
+      if (window.fluid) {
+        window.fluid.dockBadge = total;
+      }
+    },
+
+    sortByLastReadAt: function() {
+      return _.sortBy(this.state.data, function(entry){
+        return (entry.updated > entry.last_read_at ? 'A' : 'Z') + entry.label;
+      });
+    },
+
     storedAck: function() {
       var timestamp = localStorage.chatAck;
 
@@ -136,12 +142,6 @@
       this.setState({
         acknowledgedAt: this.storedAck()
       });
-    },
-
-    setBadge: function(total) {
-      if (window.fluid) {
-        window.fluid.dockBadge = total
-      }
     }
   });
 
@@ -172,13 +172,14 @@
               style={{ 'position': 'relative', 'top': '10px' }} />;
         }
 
-        return <a href={entry.url} key={entry.id} className="list-group-item">
-          {badge} {entry.label}
-        </a>
+        return (
+          <a href={entry.url} key={entry.id} className="list-group-item">
+            {badge} {entry.label}
+          </a>
+        );
       });
 
       var productsPath = '/users/' + this.props.username;
-      var separator = null;
 
       return (
         <ul className="dropdown-menu" style={{ 'max-height': '400px', 'min-width': '380px' }}>

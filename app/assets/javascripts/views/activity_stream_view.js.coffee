@@ -15,6 +15,7 @@ class window.ActivityStreamView extends Backbone.View
 
     @listenTo(@collection, 'add', @onCollectionAdd)
     $(window).on('focus', @onWindowFocus)
+    @updateReadAt()
 
   renderTimestamp: ->
     @$('.timeline-insert.js-timestamp').each ->

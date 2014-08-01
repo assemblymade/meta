@@ -33,10 +33,8 @@ var ChatNotificationsStore = (function() {
       var count = _.countBy(_chatRooms,
         function(entry) {
           if (acknowledgedAt) {
-            return entry.count > 0 && +new Date(entry.product.updated) > acknowledgedAt;
+            return entry.updated > acknowledgedAt;
           }
-
-          return entry.count;
         }
       );
 
@@ -79,7 +77,16 @@ var ChatNotificationsStore = (function() {
           return console.error(e);
         }
 
-        chatRooms = _.reduce(chatRooms, function(h, chatRoom){ h[chatRoom.id] = chatRoom; return h }, {});
+        chatRooms = _.reduce(
+          chatRooms,
+          function(h, chatRoom) {
+            h[chatRoom.id] = chatRoom;
+            h[chatRoom.id].last_read_at = 0;
+
+            return h
+          },
+          {}
+        );
 
         this.applyReadTimes(data, chatRooms);
         this.setChatRooms(chatRooms);
@@ -92,7 +99,7 @@ var ChatNotificationsStore = (function() {
         var datum = data[i];
 
         if (datum.last_read_at && chatRooms[datum.key]) {
-          chatRooms[datum.key].last_read_at = datum.last_read_at || 9999999999
+          chatRooms[datum.key].last_read_at = datum.last_read_at;
         }
       }
     },
