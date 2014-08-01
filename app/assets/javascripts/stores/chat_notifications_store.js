@@ -120,7 +120,13 @@ var ChatNotificationsStore = (function() {
     },
 
     setChatRooms: function(chatRooms) {
-      _chatRooms = _.extend(chatRooms, _optimisticallyUpdatedChatRooms);
+      _chatRooms = chatRooms;
+
+      var keys = _.keys(_optimisticallyUpdatedChatRooms)
+      for (var i = 0; i < keys.length; i++) {
+        _chatRooms[keys[i]] = _.extend(_chatRooms[keys[i]], _optimisticallyUpdatedChatRooms[keys[i]])
+      }
+
       _optimisticallyUpdatedChatRooms = {}
     },
 

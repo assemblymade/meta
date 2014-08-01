@@ -8,6 +8,38 @@
   var ICON_URL = 'https://d8izdk6bl4gbi.cloudfront.net/80x/http://f.cl.ly/items/1I2a1j0M0w0V2p3C3Q0M/Assembly-Twitter-Avatar.png';
   var N = CONSTANTS.CHAT_NOTIFICATIONS;
 
+  function dynamicSort(property) {
+      var sortOrder = 1;
+      if(property[0] === "-") {
+          sortOrder = -1;
+          property = property.substr(1);
+      }
+      return function (a,b) {
+          var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+          return result * sortOrder;
+      }
+  }
+
+  function dynamicSortMultiple() {
+      /*
+       * save the arguments object as it will be overwritten
+       * note that arguments object is an array-like object
+       * consisting of the names of the properties to sort by
+       */
+      var props = arguments;
+      return function (obj1, obj2) {
+          var i = 0, result = 0, numberOfProperties = props.length;
+          /* try getting a different result from 0 (equal)
+           * as long as we have extra properties to compare
+           */
+          while(result === 0 && i < numberOfProperties) {
+              result = dynamicSort(props[i])(obj1, obj2);
+              i++;
+          }
+          return result;
+      }
+  }
+
   window.ChatNotifications = React.createClass({
     articles: function() {
       return _.flatten(_.map(this.state.data, function(a){
@@ -36,15 +68,21 @@
       target.appendChild(spinner.el);
     },
 
-    sortByLastReadAt: function() {
-      return _.sortBy(this.state.data, function(entry) {
-        var readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
-        var sortIndex = -this.state.sortKeys.indexOf(entry.id)
+    sortByLastReadAt: function(data) {
+      if (data === null) {
+        return [];
+      }
 
-        console.log(readState + sortIndex + entry.label)
-
-        return [readState, sortIndex, entry.label];
-      }.bind(this));
+      var values = _.values(data)
+      if (true) {
+        for (var i = 0; i < values.length; i++) {
+          var entry = values[i];
+          entry.readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
+          entry.sortIndex = this.state.sortKeys.indexOf(entry.id)
+        }
+        values.sort(dynamicSortMultiple("readState", "sortIndex", "label"))
+      }
+      return values || [];
     },
 
     componentWillMount: function() {
