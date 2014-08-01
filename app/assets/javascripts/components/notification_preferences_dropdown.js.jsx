@@ -94,9 +94,9 @@
     buttonState: function() {
       switch (this.state.selected) {
         case 'subscribed':
-          return 'Following everything';
+          return 'Following';
         case 'watching':
-          return 'Following announcements';
+          return 'Following announcements only';
         case 'not watching':
           return 'Follow';
       }
