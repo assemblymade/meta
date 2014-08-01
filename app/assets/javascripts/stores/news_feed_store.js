@@ -240,7 +240,7 @@ var NewsFeedStore = (function() {
         }
       );
 
-      return unreadStories && unreadStories.length;
+      return (unreadStories && unreadStories.length) || 0;
     },
 
     setStories: function(stories) {
