@@ -15,26 +15,20 @@
       }));
     },
 
-    getInitialState: function() {
-      return {
-        data: null,
-        acknowledgedAt: this.storedAck()
-      }
-    },
+    componentDidMount: function() {
+      $('[data-toggle]', this.getDOMNode()).tooltip();
 
-    getDefaultProps: function() {
-      return {
-        title: document.title
+      var target = this.refs.spinner.getDOMNode();
+      var opts = this.spinnerOptions || {
+        lines: 11,
+        length: 30,
+        radius: 55
       };
-    },
 
-    fetchNotifications: _.debounce(function() {
-      Dispatcher.dispatch({
-        action: N.ACTIONS.FETCH_CHAT_ROOMS,
-        event: N.EVENTS.CHAT_ROOMS_FETCHED,
-        data: this.props.url
-      });
-    }, 1000),
+      var spinner = this.spinner = new Spinner(opts).spin();
+
+      target.appendChild(spinner.el);
+    },
 
     componentWillMount: function() {
       var _this = this;
@@ -75,9 +69,44 @@
       return n.show();
     },
 
+    fetchNotifications: _.debounce(function() {
+      Dispatcher.dispatch({
+        action: N.ACTIONS.FETCH_CHAT_ROOMS,
+        event: N.EVENTS.CHAT_ROOMS_FETCHED,
+        data: this.props.url
+      });
+    }, 1000),
+
+    getDefaultProps: function() {
+      return {
+        title: document.title
+      };
+    },
+
+    getInitialState: function() {
+      return {
+        acknowledgedAt: this.storedAck(),
+        data: null,
+        desktopNotificationsEnabled: false,
+      }
+    },
+
     handleChatRoomsChanged: function() {
+      var self = this;
+
       this.setState({
         data: ChatNotificationsStore.getChatRooms()
+      }, function() {
+
+        if (!_.isEmpty(self.state.data)) {
+          self.spinner.stop();
+        }
+      });
+    },
+
+    handleDesktopNotificationsStateChange: function(isEnabled) {
+      this.setState({
+        desktopNotificationsEnabled: isEnabled
       });
     },
 
@@ -105,14 +134,25 @@
     },
 
     render: function() {
-      if (!this.state.data) {
-        return <span />;
-      }
-
       var sorted = this.sortByLastReadAt(this.state.data);
+      var productsPath = '/users/' + this.props.username;
 
       return (
-        <NotificationsList data={sorted} username={this.props.username} />
+        <ul className="dropdown-menu" style={{ 'max-height': '400px', 'min-width': '380px' }}>
+          <li ref="spinner" style={{ 'min-height': '50px', 'max-height': '300px', 'overflow-y': 'scroll' }}>
+            <NotificationsList data={sorted} />
+          </li>
+
+          <li className="divider" style={{ 'margin-top': '0px' }} />
+
+          <li>
+            <a href={productsPath}>All Products</a>
+          </li>
+
+          <li>
+            {!this.state.desktopNotificationsEnabled ? <DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} /> : null}
+          </li>
+        </ul>
       );
     },
 
@@ -126,6 +166,11 @@
       return _.sortBy(this.state.data, function(entry){
         return (entry.updated > entry.last_read_at ? 'A' : 'Z') + entry.label;
       });
+    },
+
+    spinnerOptions: {
+      lines: 11,
+      top: '20%'
     },
 
     storedAck: function() {
@@ -146,22 +191,6 @@
   });
 
   var NotificationsList = React.createClass({
-    getInitialState: function() {
-      return {
-        desktopNotificationsEnabled: false
-      };
-    },
-
-    componentDidMount: function() {
-      $('[data-toggle]', this.getDOMNode()).tooltip();
-    },
-
-    handleDesktopNotificationsStateChange: function(isEnabled) {
-      this.setState({
-        desktopNotificationsEnabled: isEnabled
-      });
-    },
-
     render: function() {
       var productNodes = this.props.data.map(function(entry){
         var badge = null;
@@ -179,23 +208,10 @@
         );
       });
 
-      var productsPath = '/users/' + this.props.username;
-
       return (
-        <ul className="dropdown-menu" style={{ 'max-height': '400px', 'min-width': '380px' }}>
-          <li style={{ height: '300px', 'overflow-y': 'scroll' }}>
-            <div className="list-group">
-              {productNodes}
-            </div>
-          </li>
-          <li className="divider" style={{ 'margin-top': '0px' }} />
-          <li>
-            <a href={productsPath}>All Products</a>
-          </li>
-          <li>
-            {!this.state.desktopNotificationsEnabled ? <DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} /> : null}
-          </li>
-        </ul>
+        <div className="list-group">
+          {productNodes}
+        </div>
       );
     }
   });
