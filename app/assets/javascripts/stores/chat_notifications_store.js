@@ -7,6 +7,7 @@ var ChatNotificationsStore = (function() {
   var READ_RAPTOR_URL = document.getElementsByName('read-raptor-url')[0].content;
 
   var _chatRooms = {};
+  var _sortKeys = [];
   var _optimisticallyUpdatedChatRooms = {};
   var _deferred = [];
 
@@ -46,12 +47,14 @@ var ChatNotificationsStore = (function() {
         return console.error(err);
       }
 
-      var chatRooms;
       try {
-        chatRooms = JSON.parse(data);
+        data = JSON.parse(data);
       } catch (e) {
         return console.error(e);
       }
+
+      var chatRooms = data.chat_rooms;
+      _sortKeys = data.sort_keys;
 
       var url = READ_RAPTOR_URL +
         '/readers/' +
@@ -110,6 +113,10 @@ var ChatNotificationsStore = (function() {
 
     getChatRooms: function() {
       return _chatRooms;
+    },
+
+    getSortKeys: function() {
+      return _sortKeys;
     },
 
     setChatRooms: function(chatRooms) {

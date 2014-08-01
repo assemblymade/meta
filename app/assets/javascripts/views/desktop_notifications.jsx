@@ -26,7 +26,7 @@ var DesktopNotifications = React.createClass({
       return <span />;
     } else {
       return (
-        <a href="#enable-notifications" className="js-enable-notifications" data-toggle="tooltip" data-placement="left" title="Enable&nbsp;desktop notifications for @mentions" onClick={this.handleClick}>
+        <a href="#enable-notifications" className="js-enable-notifications text-small" data-toggle="tooltip" data-placement="left" title="Enable&nbsp;desktop notifications for @mentions" onClick={this.handleClick}>
           Enable notifications
         </a>
       );

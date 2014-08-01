@@ -15,9 +15,16 @@
       }));
     },
 
+    getInitialState: function() {
+      return {
+        data: null,
+        sortKeys: [],
+        acknowledgedAt: this.storedAck()
+      }
+    },
+
     componentDidMount: function() {
       $('[data-toggle]', this.getDOMNode()).tooltip();
-
       var target = this.refs.spinner.getDOMNode();
       var opts = this.spinnerOptions || {
         lines: 11,
@@ -26,8 +33,18 @@
       };
 
       var spinner = this.spinner = new Spinner(opts).spin();
-
       target.appendChild(spinner.el);
+    },
+
+    sortByLastReadAt: function() {
+      return _.sortBy(this.state.data, function(entry) {
+        var readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
+        var sortIndex = -this.state.sortKeys.indexOf(entry.id)
+
+        console.log(readState + sortIndex + entry.label)
+
+        return [readState, sortIndex, entry.label];
+      }.bind(this));
     },
 
     componentWillMount: function() {
@@ -95,9 +112,9 @@
       var self = this;
 
       this.setState({
-        data: ChatNotificationsStore.getChatRooms()
+        data: ChatNotificationsStore.getChatRooms(),
+        sortKeys: ChatNotificationsStore.getSortKeys()
       }, function() {
-
         if (!_.isEmpty(self.state.data)) {
           self.spinner.stop();
         }
@@ -138,15 +155,13 @@
       var productsPath = '/users/' + this.props.username;
 
       return (
-        <ul className="dropdown-menu" style={{ 'max-height': '400px', 'min-width': '380px' }}>
-          <li ref="spinner" style={{ 'min-height': '50px', 'max-height': '300px', 'overflow-y': 'scroll' }}>
-            <NotificationsList data={sorted} />
+        <ul className="dropdown-menu" style={{'min-width': '380px' }}>
+          <li ref="spinner" style={{ 'min-height': '50px', 'max-height': '300px' }}>
+            <NotificationsList data={_.first(sorted, 7)} />
           </li>
 
-          <li className="divider" style={{ 'margin-top': '0px' }} />
-
           <li>
-            <a href={productsPath}>All Products</a>
+            <a href={productsPath} className="text-small">All Products</a>
           </li>
 
           <li>
@@ -160,12 +175,6 @@
       if (window.fluid) {
         window.fluid.dockBadge = total;
       }
-    },
-
-    sortByLastReadAt: function() {
-      return _.sortBy(this.state.data, function(entry){
-        return (entry.updated > entry.last_read_at ? 'A' : 'Z') + entry.label;
-      });
     },
 
     spinnerOptions: {
