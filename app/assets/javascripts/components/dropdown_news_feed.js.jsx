@@ -152,7 +152,7 @@
     markAsRead: function() {
       // FIXME: This method shouldn't work this way; use the Dispatcher
       var story = this.state.story;
-      story.last_read_at = Date.now();
+      story.last_read_at = moment().unix();
 
       this.setState({
         story: story

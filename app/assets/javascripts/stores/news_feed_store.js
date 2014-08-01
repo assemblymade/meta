@@ -199,7 +199,7 @@ var NewsFeedStore = (function() {
         var story = self.getStory(storyId);
 
         // FIXME: Use the value from Readraptor
-        story.last_read_at = Date.now();
+        story.last_read_at = moment().unix()
 
         if (!wait) {
           return self.emit(_deferred.pop());
@@ -233,7 +233,7 @@ var NewsFeedStore = (function() {
         _stories,
         function(story) {
           if (timestamp) {
-            return story.last_read_at == null && +new Date(story.updated) > timestamp;
+            return story.last_read_at == null && story.updated > timestamp;
           }
 
           return story.last_read_at == null;

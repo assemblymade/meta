@@ -11,7 +11,7 @@
     mixins: [DropdownTogglerMixin],
 
     acknowledge: function() {
-      var timestamp = +Date.now();
+      var timestamp = moment().unix();
 
       localStorage.newsFeedAck = timestamp;
 
@@ -86,7 +86,7 @@
     latestStoryTimestamp: function() {
       var story = this.latestStory();
 
-      return story && story.updated ? +new Date(story.updated) : 0;
+      return story && story.updated ? story.updated : 0;
     },
 
     storedAck: function() {
