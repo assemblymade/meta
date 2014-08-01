@@ -482,6 +482,12 @@ ActiveRecord::Schema.define(version: 20140731194126) do
 
   add_index "uniques", ["distinct_id", "created_at"], name: "index_uniques_on_distinct_id_and_created_at", using: :btree
 
+  create_table "user_payment_options", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid   "user_id",         null: false
+    t.string "type",            null: false
+    t.string "bitcoin_address"
+  end
+
   create_table "user_tax_infos", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id",            null: false
     t.string   "full_name"
