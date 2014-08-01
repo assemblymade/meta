@@ -6,11 +6,13 @@
   window.NewsFeedMixin = {
     componentDidMount: function() {
       var target = this.refs.spinner.getDOMNode();
-      var spinner = this.spinner = new Spinner({
+      var opts = this.spinnerOptions || {
         lines: 11,
         length: 30,
         radius: 55
-      }).spin();
+      };
+
+      var spinner = this.spinner = new Spinner(opts).spin();
 
       target.appendChild(spinner.el);
     },

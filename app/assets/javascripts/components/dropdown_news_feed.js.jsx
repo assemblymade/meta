@@ -89,10 +89,15 @@
       }
 
       return (
-        <div className="list-group" style={{ height: '300px' }}>
+        <div className="list-group" style={{ 'max-height': '300px', 'min-height': '50px' }}>
           {rows}
         </div>
       );
+    },
+
+    spinnerOptions: {
+      lines: 11,
+      top: '20%'
     }
   });
 
