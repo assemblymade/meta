@@ -2,6 +2,7 @@
 
 //= require constants
 //= require dispatcher
+//= require mixins/news_feed
 //= require stores/news_feed_store
 
 (function() {
@@ -9,6 +10,8 @@
   var NF = CONSTANTS.NEWS_FEED;
 
   window.DropdownNewsFeed = React.createClass({
+    mixins: [NewsFeedMixin],
+
     componentWillMount: function() {
       NewsFeedStore.addChangeListener(this.getStories);
 
@@ -33,13 +36,6 @@
       };
     },
 
-    getStories: function() {
-      this.setState({
-        stories: NewsFeedStore.getStories(),
-        actors: NewsFeedUsersStore.getUsers()
-      });
-    },
-
     markAllAsRead: function() {
       Dispatcher.dispatch({
         event: NF.EVENTS.READ_ALL,
@@ -58,7 +54,7 @@
     render: function() {
       return (
         <ul className="dropdown-menu" style={{ 'max-height': '500px', 'min-width': '380px' }}>
-          <li style={{ 'overflow-y': 'scroll' }}>
+          <li style={{ 'overflow-y': 'scroll' }} ref="spinner">
             {this.state.stories ? this.rows(this.state.stories) : null}
           </li>
 

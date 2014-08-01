@@ -1,10 +1,6 @@
 /** @jsx React.DOM */
 
-//= require constants
-
 (function() {
-  var N = CONSTANTS.CHAT_NOTIFICATIONS;
-
   window.DropdownTogglerMixin = {
     render: function() {
       var classes = ['icon', 'navbar-icon', this.props.iconClass];

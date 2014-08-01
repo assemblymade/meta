@@ -60,6 +60,7 @@ gem 'rails-assets-notify.js',           '1.2.0'
 gem 'rails-assets-numeral',             '1.5.3'
 gem 'rails-assets-jquery-timeago'
 gem 'rails-assets-jquery.inview',       '1.0.0'
+gem 'rails-assets-spin.js',             '2.0.1'
 gem 'rails-assets-underscore',          '1.5.2'
 gem 'rails_stdout_logging', group: [:development, :production]
 gem 'react-rails', '~> 0.10.0.0'

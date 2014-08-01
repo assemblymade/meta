@@ -2,17 +2,14 @@
 
 //= require constants
 //= require dispatcher
+//= require mixins/news_feed
 //= require stores/news_feed_store
 
 (function() {
   var NF = CONSTANTS.NEWS_FEED;
 
   window.FullPageNewsFeed = React.createClass({
-    getInitialState: function() {
-      return {
-        stories: null
-      };
-    },
+    mixins: [NewsFeedMixin],
 
     componentWillMount: function() {
       NewsFeedStore.addChangeListener(this.getStories);
@@ -31,11 +28,10 @@
       });
     }, 1000),
 
-    getStories: function() {
-      this.setState({
-        stories: NewsFeedStore.getStories(),
-        actors: NewsFeedUsersStore.getUsers()
-      });
+    getInitialState: function() {
+      return {
+        stories: null
+      };
     },
 
     moreStories: function() {
@@ -56,21 +52,13 @@
     },
 
     render: function() {
-      var placeholderStyle;
-
-      if (!this.state.stories) {
-        placeholderStyle = { height: '800px' };
-      } else {
-        placeholderStyle = {};
-      }
-
       return (
         <div className="sheet">
           <div className="page-header sheet-header" style={{ 'padding-left': '20px' }}>
             <h2 className="page-header-title">Your notifications</h2>
           </div>
 
-          <div className="list-group list-group-breakout" style={placeholderStyle}>
+          <div className="list-group list-group-breakout" style={{ height: '600px' }} ref="spinner">
             {this.state.stories ? this.rows(this.state.stories) : null}
           </div>
 
