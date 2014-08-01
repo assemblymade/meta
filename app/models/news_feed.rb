@@ -10,7 +10,7 @@ class NewsFeed
   end
 
   def self.deserialize(*strs)
-    Story.where(id: strs).includes(:activities)
+    Story.where(id: strs).includes(activities: [:actor, :subject, :target])
   end
 
   def self.delete_all

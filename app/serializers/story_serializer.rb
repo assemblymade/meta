@@ -6,7 +6,7 @@ class StorySerializer < ApplicationSerializer
   has_many :activities, serializer: ActivitySerializer
 
   def actor_ids
-    object.activities.pluck(:actor_id)
+    object.activities.map(&:actor_id)
   end
 
   def url
