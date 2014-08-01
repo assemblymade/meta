@@ -69,7 +69,7 @@ class Story < ActiveRecord::Base
   end
 
   def wip_subscribers
-    subjects.first.wip.watchings.subscribed.map(&:user)
+    subjects.first.wip.watchings.map(&:user)
   end
 
   def subject_body
