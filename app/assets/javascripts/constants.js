@@ -41,11 +41,13 @@ var CONSTANTS = {
       ACKNOWLEDGE: 'newsFeed:acknowledge',
       FETCH_STORIES: 'newsFeed:fetchStories',
       FETCH_MORE_STORIES: 'newsFeed:fetchMoreStories',
-      MARK_AS_READ: 'newsFeed:markAsRead'
+      MARK_AS_READ: 'newsFeed:markAsRead',
+      MARK_ALL_AS_READ: 'newsFeed:markAllAsRead'
     },
     EVENTS: {
       ACKNOWLEDGED: 'newsFeed:acknowledged',
       READ: 'newsFeed:read',
+      READ_ALL: 'newsFeed:readAll',
       STORIES_FETCHED: 'newsFeed:storiesFetched'
     }
   },
