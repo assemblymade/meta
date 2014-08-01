@@ -21,7 +21,7 @@ var ChatNotificationsStore = (function() {
 
       _optimisticallyUpdatedChatRooms[payload.id] = {
         last_read_at: moment().unix()
-      }
+      };
 
       this.emit(_deferred.pop());
     },
@@ -65,7 +65,7 @@ var ChatNotificationsStore = (function() {
           function(r) {
             return 'key=' + r.id
           }
-        ).join('&')
+        ).join('&');
 
       window.xhr.noCsrfGet(url, this.handleReadRaptor(chatRooms));
     },
@@ -86,7 +86,7 @@ var ChatNotificationsStore = (function() {
             h[chatRoom.id] = chatRoom;
             h[chatRoom.id].last_read_at = 0;
 
-            return h
+            return h;
           },
           {}
         );
@@ -134,15 +134,16 @@ var ChatNotificationsStore = (function() {
       delete _chatRooms[id]
     },
 
-    removeAllStories: function() {
+    removeAllChatRooms: function() {
       _chatRooms = {};
     },
 
     mostRecentlyUpdatedChatRoom: function() {
-      if (_.keys(_chatRooms).length == 0) {
-        return null
+      if (_.keys(_chatRooms).length === 0) {
+        return null;
       }
-      return _.max(_.values(_chatRooms), func.dot('updated'))
+
+      return _.max(_.values(_chatRooms), func.dot('updated'));
     },
   });
 

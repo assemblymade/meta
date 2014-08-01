@@ -69,9 +69,10 @@
     latestChatUpdate: function() {
       var chatRoom = ChatNotificationsStore.mostRecentlyUpdatedChatRoom();
       if (chatRoom) {
-        return chatRoom.updated
+        return chatRoom.updated;
       }
-      return null
+
+      return null;
     },
 
     total: function() {

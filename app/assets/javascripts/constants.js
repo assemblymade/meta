@@ -44,13 +44,15 @@ var CONSTANTS = {
       FETCH_STORIES: 'newsFeed:fetchStories',
       FETCH_MORE_STORIES: 'newsFeed:fetchMoreStories',
       MARK_AS_READ: 'newsFeed:markAsRead',
-      MARK_ALL_AS_READ: 'newsFeed:markAllAsRead'
+      MARK_ALL_AS_READ: 'newsFeed:markAllAsRead',
+      MARK_STORY_AS_READ: 'newsFeed:markStoryAsRead'
     },
     EVENTS: {
       ACKNOWLEDGED: 'newsFeed:acknowledged',
       READ: 'newsFeed:read',
       READ_ALL: 'newsFeed:readAll',
-      STORIES_FETCHED: 'newsFeed:storiesFetched'
+      STORIES_FETCHED: 'newsFeed:storiesFetched',
+      STORY_READ: 'newsFeed:storyRead'
     }
   },
 

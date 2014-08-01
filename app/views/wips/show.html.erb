@@ -37,6 +37,11 @@
     url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
   });
 
+  <% if signed_in? %>
+    app.wip.story = '<%== Story.associated_with(@wip).first.id %>';
+    app.wip.readRaptorUrl = '<%== ReadraptorTracker.new(Story.associated_with(@wip).first.id, current_user.id).url %>';
+  <% end %>
+
   $(document).ready(function() {
     <%= render 'wips/add_tips_to_wip_events' %>
 

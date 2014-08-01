@@ -1,4 +1,6 @@
 #= require_tree ../../../templates/events
+#= require ../dispatcher
+#= require ../constants
 #= require marked
 
 markdown = (text) ->
@@ -47,6 +49,11 @@ class window.WipEventView extends Backbone.View
           tips: model.get('tips')
         }), @)
 
+    Dispatcher.dispatch
+      event: CONSTANTS.NEWS_FEED.EVENTS.STORY_READ
+      action: CONSTANTS.NEWS_FEED.ACTIONS.MARK_STORY_AS_READ
+      data: { key: 'Story_' + app.wip.story, readraptor_url: app.wip.readRaptorUrl }
+      sync: true
 
     @$('time').timeago() # display new timestamp
     @
