@@ -233,8 +233,6 @@ var NewsFeedStore = (function() {
         _stories,
         function(story) {
           if (timestamp) {
-            console.dir(story)
-            console.log(timestamp);
             return story.last_read_at == null && story.updated > timestamp;
           }
 
