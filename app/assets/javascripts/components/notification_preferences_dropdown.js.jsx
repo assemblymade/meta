@@ -8,26 +8,41 @@
   var D = CONSTANTS.NOTIFICATION_PREFERENCES_DROPDOWN;
 
   window.NotificationPreferencesDropdown = React.createClass({
-    getInitialState: function() {
-      return {
-        productWatchersCount: this.props.productWatchersCount,
-        selected: this.props.watchingState
-      };
+    chevron: function() {
+      if (this.state.chevron) {
+        return <span className="icon icon-chevron-down"></span>;
+      }
+
+      return <span style={{ 'margin-right': '7px', 'margin-left': '7px' }} />
     },
 
     componentWillMount: function() {
       NotificationPreferencesDropdownStore.addChangeListener(this.handleUpdate);
     },
 
+    getInitialState: function() {
+      return {
+        productWatchersCount: this.props.productWatchersCount,
+        selected: this.props.watchingState,
+        chevron: false
+      };
+    },
+
+    hideChevron: function() {
+      this.setState({
+        chevron: false
+      });
+    },
+
     render: function() {
       return (
-        <div className="toggler toggler-sm btn-group">
+        <div className="toggler toggler-sm btn-group" onMouseOver={this.showChevron} onMouseOut={this.hideChevron}>
           <a
               className={this.buttonClasses(true)}
               data-toggle="dropdown"
               style={{ 'margin-bottom': '13px' }}>
             {this.buttonState()}
-            <span className="icon icon-chevron-down"></span>
+            {this.chevron()}
           </a>
           <div className="toggler-badge">
             <a
@@ -83,6 +98,12 @@
           </ul>
         </div>
       );
+    },
+
+    showChevron: function() {
+      this.setState({
+        chevron: true
+      });
     },
 
     handleUpdate: function() {
