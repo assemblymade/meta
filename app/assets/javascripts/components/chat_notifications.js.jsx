@@ -9,6 +9,12 @@
   var N = CONSTANTS.CHAT_NOTIFICATIONS;
 
   window.ChatNotifications = React.createClass({
+    articles: function() {
+      return _.flatten(_.map(this.state.data, function(a){
+        return a.entities;
+      }));
+    },
+
     getInitialState: function() {
       return {
         data: null,
@@ -57,19 +63,6 @@
       this.fetchNotifications();
     },
 
-    handleChatRoomsChanged: function() {
-      this.setState({
-        data: ChatNotificationsStore.getChatRooms()
-      });
-    },
-
-    onPush: function(fn) {
-      if (window.pusher) {
-        channel = window.pusher.subscribe('@' + this.props.username);
-        channel.bind_all(fn);
-      }
-    },
-
     desktopNotify: function(event) {
       var n = new Notify("New message on " + (event.wip.product_name), {
         body: (event.actor.username + ": " + event.body_sanitized),
@@ -88,10 +81,17 @@
       return n.show();
     },
 
-    articles: function() {
-      return _.flatten(_.map(this.state.data, function(a){
-        return a.entities;
-      }));
+    handleChatRoomsChanged: function() {
+      this.setState({
+        data: ChatNotificationsStore.getChatRooms()
+      });
+    },
+
+    onPush: function(fn) {
+      if (window.pusher) {
+        channel = window.pusher.subscribe('@' + this.props.username);
+        channel.bind_all(fn);
+      }
     },
 
     latestArticle: function() {
@@ -191,7 +191,9 @@
           <li>
             <a href={productsPath}>All Products</a>
           </li>
-          {!this.state.desktopNotificationsEnabled ? <DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} /> : null}
+          <li>
+            {!this.state.desktopNotificationsEnabled ? <DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} /> : null}
+          </li>
         </ul>
       );
     }

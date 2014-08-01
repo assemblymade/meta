@@ -23,13 +23,13 @@ var DesktopNotifications = React.createClass({
 
   render: function(){
     if(this.state.enabled) {
-      return (<span />)
+      return <span />;
     } else {
       return (
         <a href="#enable-notifications" className="js-enable-notifications" data-toggle="tooltip" data-placement="left" title="Enable&nbsp;desktop notifications for @mentions" onClick={this.handleClick}>
-        Enable Notifications
+          Enable notifications
         </a>
-      )
+      );
     }
   }
 });

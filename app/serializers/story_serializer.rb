@@ -22,4 +22,8 @@ class StorySerializer < ApplicationSerializer
   def product
     object.activities.first.target.product
   end
+
+  def updated
+    object.updated_at.try(:to_i)
+  end
 end
