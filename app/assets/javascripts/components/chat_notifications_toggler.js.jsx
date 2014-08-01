@@ -11,9 +11,9 @@
     mixins: [DropdownTogglerMixin],
 
     acknowledge: function() {
-      var timestamp = +Date.now();
+      var timestamp = moment().unix();
 
-      localStorage.notificationsAck = timestamp;
+      localStorage.chatAck = timestamp;
 
       this.setState({
         acknowledgedAt: timestamp
@@ -36,8 +36,8 @@
     },
 
     badgeCount: function() {
-      if (this.latestStoryTimestamp() > this.state.acknowledgedAt) {
-        return ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt);
+      if (this.latestChatUpdate() > this.state.acknowledgedAt) {
+        return 1;
       }
 
       return 0;
@@ -55,51 +55,31 @@
 
     getInitialState: function() {
       return {
-        stories: null,
+        chatRooms: null,
         acknowledgedAt: this.storedAck()
       };
     },
 
     getStories: function() {
       this.setState({
-        stories: ChatNotificationsStore.getStories()
+        chatRooms: ChatNotificationsStore.getChatRooms()
       });
     },
 
-    latestStory: function() {
-      var stories = this.state.stories;
-
-      if (!stories) {
-        return;
+    latestChatUpdate: function() {
+      var chatRoom = ChatNotificationsStore.mostRecentlyUpdatedChatRoom();
+      if (chatRoom) {
+        return chatRoom.updated
       }
-
-      var story;
-      for (var i = 0, l = stories.length; i < l; i++) {
-        // product.updated is ~when the chat message was created
-        if (story && stories[i].product.updated > story.product.updated) {
-          story = stories[i];
-        }
-
-        if (!story) {
-          story = stories[i];
-        }
-      }
-
-      return story;
-    },
-
-    latestStoryTimestamp: function() {
-      var story = this.latestStory();
-
-      return story && story.product.updated ? +new Date(story.product.updated) : 0;
+      return null
     },
 
     total: function() {
       var self = this;
 
       var count = _.reduce(
-        _.map(self.state.stories, function mapStories(story) {
-          return story.count;
+        _.map(self.state.chatRooms, function mapStories(chatRoom) {
+          return chatRoom.count;
         }), function reduceStories(memo, read) {
           return memo + read;
       }, 0);
@@ -108,7 +88,7 @@
     },
 
     storedAck: function() {
-      var timestamp = localStorage.notificationsAck;
+      var timestamp = localStorage.chatAck;
 
       if (timestamp == null || timestamp === 'null') {
         return 0;

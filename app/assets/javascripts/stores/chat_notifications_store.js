@@ -6,30 +6,31 @@
 var ChatNotificationsStore = (function() {
   var READ_RAPTOR_URL = document.getElementsByName('read-raptor-url')[0].content;
 
-  var _stories = [];
+  var _chatRooms = {};
+  var _optimisticallyUpdatedChatRooms = {};
   var _deferred = [];
 
   var _store = Object.create(Store);
 
   var _notificationsStore = _.extend(_store, {
-    'chatNotifications:acknowledge': function(timestamp) {},
+    'chat:acknowledge': function(timestamp) {},
 
-    addStory: function(data) {
-      if (!data) {
-        return;
+    'chat:markRoomAsRead': function(payload) {
+      window.xhr.noCsrfGet(payload.readraptor_url);
+
+      _optimisticallyUpdatedChatRooms[payload.id] = {
+        last_read_at: moment().unix()
       }
 
-      var story = data.story;
-
-      _stories.push(story);
+      this.emit(_deferred.pop());
     },
 
-    fetchStories: function(url) {
-      window.xhr.get(url, this.handleFetchedStories.bind(this));
+    'chat:fetchChatRooms': function(url) {
+      window.xhr.get(url, this.handleFetchedChatRooms.bind(this));
     },
 
     getUnreadCount: function(acknowledgedAt) {
-      var count = _.countBy(_stories,
+      var count = _.countBy(_chatRooms,
         function(entry) {
           if (acknowledgedAt) {
             return entry.count > 0 && +new Date(entry.product.updated) > acknowledgedAt;
@@ -42,61 +43,88 @@ var ChatNotificationsStore = (function() {
       return count.true || 0;
     },
 
-    handleFetchedStories: function(err, data) {
+    handleFetchedChatRooms: function(err, data) {
       if (err) {
         return console.error(err);
       }
 
+      var chatRooms;
       try {
-        data = JSON.parse(data);
+        chatRooms = JSON.parse(data);
       } catch (e) {
         return console.error(e);
       }
 
-      this.setStories(data);
-      this.emit(_deferred.pop());
+      var url = READ_RAPTOR_URL +
+        '/readers/' +
+        app.currentUser().get('id') +
+        '/articles?' +
+        _.map(
+          chatRooms,
+          function(r) {
+            return 'key=' + r.id
+          }
+        ).join('&')
+
+      window.xhr.noCsrfGet(url, this.handleReadRaptor(chatRooms));
     },
 
-    getStory: function(id) {
-      var index = _searchStories(id);
+    handleReadRaptor: function(chatRooms) {
+      return function readRaptorCallback(err, data) {
+        if (err) { return console.error(err); }
 
-      if (index > -1) {
-        return _stories[index];
+        try {
+          data = JSON.parse(data);
+        } catch (e) {
+          return console.error(e);
+        }
+
+        chatRooms = _.reduce(chatRooms, function(h, chatRoom){ h[chatRoom.id] = chatRoom; return h }, {});
+
+        this.applyReadTimes(data, chatRooms);
+        this.setChatRooms(chatRooms);
+        this.emit(_deferred.pop());
+      }.bind(this);
+    },
+
+    applyReadTimes: function(data, chatRooms) {
+      for (var i = 0, l = data.length; i < l; i++) {
+        var datum = data[i];
+
+        if (datum.last_read_at && chatRooms[datum.key]) {
+          chatRooms[datum.key].last_read_at = datum.last_read_at || 9999999999
+        }
       }
-
-      return null;
     },
 
-    getStories: function() {
-      return _stories;
+    getChatRoom: function(id) {
+      return _chatRooms[id];
     },
 
-    setStories: function(stories) {
-      _stories = stories;
+    getChatRooms: function() {
+      return _chatRooms;
     },
 
-    removeStory: function(id) {
-      var index = _searchStories(id);
+    setChatRooms: function(chatRooms) {
+      _chatRooms = _.extend(chatRooms, _optimisticallyUpdatedChatRooms);
+      _optimisticallyUpdatedChatRooms = {}
+    },
 
-      if (index > -1) {
-        _stories.splice(index, 1);
-      }
+    removeChatRoom: function(id) {
+      delete _chatRooms[id]
     },
 
     removeAllStories: function() {
-      _stories = [];
-    }
-  });
+      _chatRooms = {};
+    },
 
-  _searchStories = function(id) {
-    for (var i = 0, l = _stories.length; i < l; i++) {
-      if (_stories[i].id === id) {
-        return i;
+    mostRecentlyUpdatedChatRoom: function() {
+      if (_.keys(_chatRooms).length == 0) {
+        return null
       }
-    }
-
-    return -1;
-  }
+      return _.max(_.values(_chatRooms), func.dot('updated'))
+    },
+  });
 
   _store.dispatchIndex = Dispatcher.register(function(payload) {
     var action = payload.action;

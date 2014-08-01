@@ -94,6 +94,8 @@ ASM::Application.routes.draw do
       resource :tax_info, only: [:show, :create, :update] do
         get ':form_type' => 'tax_infos#show'
       end
+
+      resources :chat_rooms, only: [:index]
     end
 
     # Confirmation

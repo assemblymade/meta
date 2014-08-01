@@ -22,14 +22,16 @@
       };
     },
 
-    sortByCount: function() {
-      return _.sortBy(this.state.data, function(entry){ return -entry.count; });
+    sortByLastReadAt: function() {
+      return _.sortBy(this.state.data, function(entry){
+        return (entry.updated > entry.last_read_at ? 'A' : 'Z') + entry.label;
+      });
     },
 
     fetchNotifications: _.debounce(function() {
       Dispatcher.dispatch({
-        action: N.ACTIONS.FETCH_STORIES,
-        event: N.EVENTS.STORIES_FETCHED,
+        action: N.ACTIONS.FETCH_CHAT_ROOMS,
+        event: N.EVENTS.CHAT_ROOMS_FETCHED,
         data: this.props.url
       });
     }, 1000),
@@ -51,13 +53,13 @@
         if (visible) { _this.fetchNotifications(); }
       });
 
-      ChatNotificationsStore.addChangeListener(this.getStories);
+      ChatNotificationsStore.addChangeListener(this.handleChatRoomsChanged);
       this.fetchNotifications();
     },
 
-    getStories: function() {
+    handleChatRoomsChanged: function() {
       this.setState({
-        data: ChatNotificationsStore.getStories()
+        data: ChatNotificationsStore.getChatRooms()
       });
     },
 
@@ -108,20 +110,12 @@
       }
     },
 
-    badgeCount: function() {
-      if (this.latestArticleTimestamp() > this.state.acknowledgedAt) {
-        return ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt);
-      }
-
-      return ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt);
-    },
-
     render: function() {
       if (!this.state.data) {
         return <span />;
       }
 
-      var sorted = this.sortByCount(this.state.data);
+      var sorted = this.sortByLastReadAt(this.state.data);
 
       return (
         <NotificationsList data={sorted} username={this.props.username} />
@@ -129,7 +123,7 @@
     },
 
     storedAck: function() {
-      var timestamp = localStorage.notificationsAck;
+      var timestamp = localStorage.chatAck;
 
       if (timestamp == null || timestamp === "null") {
         return 0;
@@ -170,39 +164,34 @@
 
     render: function() {
       var productNodes = this.props.data.map(function(entry){
-        badge = null;
+        var badge = null;
 
-        if (entry.count > 0) {
+        if (entry.updated > entry.last_read_at) {
           badge = <span
               className="indicator indicator-danger pull-right"
               style={{ 'position': 'relative', 'top': '10px' }} />;
         }
 
-        var url = entry.product.url + '/chat';
-
-        return <li key={entry.product.slug}>
-          <a href={url}>{badge} {entry.product.name}</a>
-        </li>
+        return <a href={entry.url} key={entry.id} className="list-group-item">
+          {badge} {entry.label}
+        </a>
       });
 
       var productsPath = '/users/' + this.props.username;
       var separator = null;
 
-      if (!this.state.desktopNotificationsEnabled) {
-        separator = (<li className="divider" />)
-      }
-
       return (
-        <ul className="dropdown-menu">
-          {productNodes}
-          <li className="divider" />
+        <ul className="dropdown-menu" style={{ 'max-height': '400px', 'min-width': '380px' }}>
+          <li style={{ height: '300px', 'overflow-y': 'scroll' }}>
+            <div className="list-group">
+              {productNodes}
+            </div>
+          </li>
+          <li className="divider" style={{ 'margin-top': '0px' }} />
           <li>
             <a href={productsPath}>All Products</a>
           </li>
-          {separator}
-          <li>
-            <DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} />
-          </li>
+          {!this.state.desktopNotificationsEnabled ? <DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} /> : null}
         </ul>
       );
     }

@@ -380,6 +380,14 @@ class Product < ActiveRecord::Base
   def product
     self
   end
+  
+  def chat_room_key
+    "chat_#{id}"
+  end
+
+  def chat_watcher_ids
+    watchings.subscribed.pluck('watchings.user_id')
+  end
 
   # missions
   def current_mission

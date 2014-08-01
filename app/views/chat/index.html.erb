@@ -73,6 +73,11 @@
 
 <script>
   app.product = new Product(<%= json @product, scope: current_user %>);
+  app.chatRoom = { id: '<%= @product.chat_room_key %>' }
+
+  <% if signed_in? %>
+    app.chatRoom.readRaptorChatPath = '<%== ReadraptorTracker.new(@product.chat_room_key, current_user.id).url %>';
+  <% end %>
 
   $(document).ready(function() {
     var activityStream = new ActivityStream(<%=

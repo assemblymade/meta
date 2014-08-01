@@ -35,7 +35,7 @@ class window.ActivityStreamView extends Backbone.View
 
     view.render()
     @renderTimestamp() if @collection.any()
-
+    @updateReadAt()
 
   scrollToLatestActivity: ->
     $(window).scrollTop($(document).height())
@@ -46,6 +46,15 @@ class window.ActivityStreamView extends Backbone.View
     lockScrollToBottom(=>
       @buildSubviewForModel(model, collection.indexOf(model))
     )
+
+  updateReadAt: _.debounce(=>
+    Dispatcher.dispatch({
+      action: CONSTANTS.CHAT_NOTIFICATIONS.ACTIONS.MARK_ROOM_AS_READ,
+      event: CONSTANTS.CHAT_NOTIFICATIONS.EVENTS.CHAT_ROOM_READ,
+      data: {id: app.chatRoom.id, readraptor_url: app.chatRoom.readRaptorChatPath},
+      sync: true
+    });
+  , 200)
 
 # --
 

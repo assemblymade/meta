@@ -37,7 +37,7 @@ class ChatController < ProductController
 
     if @event.valid?
       track_wip_engaged @product.main_thread, 'commented'
-      register_with_readraptor(@event)
+      update_readraptor
       @event.notify_users!(@product.watchers)
 
       @activity = Activities::Chat.publish!(
@@ -78,14 +78,10 @@ class ChatController < ProductController
     track_event 'wip.engaged', WipAnalyticsSerializer.new(wip, scope: current_user).as_json.merge(engagement: 'commented')
   end
 
-  def register_with_readraptor(event)
-    excluded_users = [event.user, event.mentioned_users].flatten.compact.uniq
-    RegisterArticleWithRecipients.perform_async(
-      (event.wip.watchers - excluded_users).map(&:id),
-      :chat,
-      Event,
-      event.id
+  def update_readraptor
+    ReadRaptor::RegisterArticleWorker.perform_async(
+      key: ReadRaptorSerializer.serialize_entity('chat', @product.id),
+      recipients: @product.chat_watcher_ids
     )
   end
-
 end

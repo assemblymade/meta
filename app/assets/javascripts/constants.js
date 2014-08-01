@@ -1,12 +1,14 @@
 var CONSTANTS = {
   CHAT_NOTIFICATIONS: {
     ACTIONS: {
-      ACKNOWLEDGE: 'chatNotifications:acknowledge',
-      FETCH_STORIES: 'fetchStories'
+      ACKNOWLEDGE: 'chat:acknowledge',
+      FETCH_CHAT_ROOMS: 'chat:fetchChatRooms',
+      MARK_ROOM_AS_READ: 'chat:markRoomAsRead'
     },
     EVENTS: {
-      ACKNOWLEDGED: 'chatNotifications:acknowledged',
-      STORIES_FETCHED: 'notifications:storiesFetched'
+      ACKNOWLEDGED: 'chat:acknowledged',
+      CHAT_ROOMS_FETCHED: 'chat:chatRoomsFetched',
+      CHAT_ROOM_READ: 'chat:chatRoomRead'
     }
   },
 

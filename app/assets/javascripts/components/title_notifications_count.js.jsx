@@ -27,7 +27,7 @@
     },
 
     setTitle: function() {
-      var chatCount = ChatNotificationsStore.getUnreadCount(localStorage.notificationsAck) || 0;
+      var chatCount = ChatNotificationsStore.getUnreadCount(localStorage.chatAck) || 0;
       var newsCount = NewsFeedStore.getUnreadCount(localStorage.newsFeedAck) || 0;
 
       var total = chatCount + newsCount;
