@@ -26,19 +26,32 @@ class FilterWipsQuery
   end
 
   def filter_clauses
-    [state_filter, deliverable_filter, bounty_filter, tag_filter, sort_order, page_selection].compact
+    [state_filter, deliverable_filter, bounty_filter, tag_filter, sort_order, page_selection, user_filter].compact
   end
 
   def state_filter
-    return unless state
-
     case state
-    when 'personally_allocated'
-      user.wips_working_on
-    when 'open'
+    when nil, 'open'
       Wip.open
+    when 'progress'
+      Wip.where(state: ['allocated', 'reviewing'])
+    when 'closed'
+      Wip.where(state: 'resolved')
     else
-      Wip.where(state: state)
+      Wip.all
+    end
+  end
+
+  def user_filter
+    case user_params
+    when 'started'
+      user.wips
+    when 'assigned'
+      user.wips_working_on
+    when 'following'
+      user.wips_watching
+    else # all
+      Wip.all
     end
   end
 
@@ -63,16 +76,18 @@ class FilterWipsQuery
 
   def sort_order
     case sort
-    when 'created'
+    when 'least_valuable'
+      Wip.order('(multiplier * votes_count) ASC')
+    when 'newest'
       Wip.order('wips.created_at DESC')
-    when 'update'
+    when 'oldest'
+      Wip.order('wips.created_at ASC')
+    when 'recently_updated'
       Wip.order('wips.updated_at DESC')
-    else
-      if state == 'resolved'
-        Wip.order('closed_at DESC')
-      else
-        Wip.order('multiplier DESC, votes_count DESC')
-      end
+    when 'least_recently_updated'
+      Wip.order('wips.updated_at ASC')
+    else # most_valuable (default)
+      Wip.order('(multiplier * votes_count) DESC')
     end
   end
 
@@ -102,5 +117,9 @@ class FilterWipsQuery
 
   def tag
     filters[:tag]
+  end
+
+  def user_params
+    filters[:user]
   end
 end

@@ -2,21 +2,87 @@
 <% activate_nav! :bounties %>
 
 <div class="page-header sheet-header">
-  <div class="pull-right">
-    <a class="btn btn-success" href="<%= new_product_wip_path(@product) %>">Create a Bounty</a>
-  </div>
-
-
   <h2 class="page-header-title">
-    <i class="icon-trophy text-muted" style="margin-right: 4px;"></i>
+    <span class="icon icon-left icon-trophy text-muted"></span>
     <%= @product.reward %>
-    <small>
-      &mdash;
-      <%= format_coins(@product, @product.real_bounty_value) %>
-      to be earned from
-      <strong><%= pluralize @product.tasks.open.count, 'bounty' %></strong>
-    </small>
   </h2>
+
+  <div class="page-header-meta">
+    <ul class="list-piped pull-right">
+      <li>
+        <a class="text-success" href="#">Start a new bounty</a>
+      </li>
+    </ul>
+
+    <ul class="list-piped">
+      <li>
+        <a class="<%= 'bg-primary' if params[:state] == '' %>" href="<%= scoped_product_bounties_path(@product, state: '') %>">
+          <%= @product.tasks.open.count %>
+          open
+        </a>
+      </li>
+
+      <li>
+        <a href="<%= scoped_product_bounties_path(@product, state: 'progress') %>">
+          <%= @product.tasks.allocated.count %>
+          in progress
+        </a>
+      </li>
+
+      <li>
+        <a href="<%= scoped_product_bounties_path(@product, state: 'closed') %>">
+          <%= @product.tasks.closed.count %>
+          closed
+        </a>
+      </li>
+
+      <li>
+        <a href="<%= scoped_product_bounties_path(@product, state: 'all') %>">All</a>
+      </li>
+
+      <li>
+        Order:
+        <select name="sort" id="bounty-sort">
+          <option value="most_valuable" <%= 'selected' if params[:sort] == 'most_valuable' %>>Most valuable</option>
+          <option value="least_valuable" <%= 'selected' if params[:sort] == 'least_valuable' %>>Least valuable</option>
+          <option value="newest" <%= 'selected' if params[:sort] == 'newest' %>>Newest</option>
+          <option value="oldest" <%= 'selected' if params[:sort] == 'oldest' %>>Oldest</option>
+          <option value="recently_updated" <%= 'selected' if params[:sort] == 'recently_updated' %>>Recently updated</option>
+          <option value="least_recently_updated" <%= 'selected' if params[:sort] == 'least_recently_updated' %>>Least recently updated</option>
+        </select>
+
+        <script>
+          // bless stack overflow http://stackoverflow.com/a/10997390/11236
+
+          function updateURLParameter(url, param, paramVal){
+            var newAdditionalURL = "";
+            var tempArray = url.split("?");
+            var baseURL = tempArray[0];
+            var additionalURL = tempArray[1];
+            var temp = "";
+            if (additionalURL) {
+              tempArray = additionalURL.split("&");
+              for (i=0; i<tempArray.length; i++){
+                if(tempArray[i].split('=')[0] != param){
+                  newAdditionalURL += temp + tempArray[i];
+                  temp = "&";
+                }
+              }
+            }
+
+            var rows_txt = temp + "" + param + "=" + paramVal;
+            return baseURL + "?" + newAdditionalURL + rows_txt;
+          }
+
+          $('#bounty-sort').change(function() {
+            var sortOrder = $(this).val();
+            var newUrl = updateURLParameter(window.location.href, 'sort', sortOrder);
+            window.location = newUrl;
+          })
+        </script>
+      </li>
+    </ul>
+  </div>
 </div>
 
 <div class="sheet-body">
@@ -24,14 +90,10 @@
     <% if @product.wips.count > 1 %>
       <div class="col-md-9">
 
-        <% if params[:tag] %>
-          <h6>Filter: <%= params[:tag] %></h6>
-        <% end %>
-
         <ol class="list-group list-group-breakout list-group-padded" id="wips-view-el">
           <% @wips.each do |task| %>
             <li class="list-group-item">
-              <%= render 'summary', task: task %>
+              <%= render 'bounties/chip', bounty: task %>
             </li>
           <% end %>
         </ol>
@@ -42,7 +104,42 @@
       </div>
 
       <div class="col-md-3">
-        <%= render partial: 'tasks/sidebar' %>
+        <div class="panel panel-default">
+          <ul class="nav nav-pills nav-stacked">
+
+            <li class="<%= 'active' if params[:user].blank? %>">
+              <a href="<%= scoped_product_bounties_path(@product, user: '') %>">Everyone's bounties</a>
+            </li>
+
+
+            <% if signed_in? %>
+              <li class="<%= 'active' if params[:user] == 'started' %>">
+                <a href="<%= scoped_product_bounties_path(@product, user: 'started') %>">Started by you</a>
+              </li>
+
+              <li class="<%= 'active' if params[:user] == 'assigned' %>">
+                <a href="<%= scoped_product_bounties_path(@product, user: 'assigned') %>">Claimed by you</a>
+              </li>
+            <% end %>
+
+          </ul>
+        </div>
+
+        <div class="panel">
+          <div class="panel-heading">
+            <h6 class="panel-title">Projects</h6>
+          </div>
+          <ul class="nav nav-pills nav-stacked text-small">
+            <% @milestones.sort_by{|m| -m.multiplier }.each do |m| %>
+              <li class="<%= 'active' if params[:bounty].to_i == m.number %>">
+                <a href="<%= product_wips_path(@product, bounty: m.number) %>">
+                  <span class="pull-right label label-<%= m.urgency.slug %>"><%= m.urgency.label %></span>
+                  <%= m.title %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       </div>
 
     <% else %>

@@ -1,0 +1,104 @@
+<!-- <div class="row"> -->
+
+  <div class="pull-right">
+
+      <ul class="list-inline text-muted small">
+        <% if bounty.winner.present? %>
+          <li data-toggle="tooltip" title="Awarded to @<%= bounty.winner.username %>">
+            <%= avatar_tag(bounty.winner, 18, style: 'display:inline-block') %>
+          </li>
+        <% elsif bounty.state != 'resolved' %>
+          <% bounty.workers.each do |user| %>
+            <li data-toggle="tooltip" title="Assigned to @<%= user.username %>">
+              <%= avatar_tag(user, 18, style: 'display:inline-block') %>
+            </li>
+          <% end %>
+        <% end %>
+
+        <% if bounty.comments.any? %>
+          <li>
+            <strong>
+              <span class="icon icon-speech icon-left"></span>
+              <%= bounty.comments.count %>
+              <span class="sr-only">comments</span>
+            </strong>
+          </li>
+        <% end %>
+      </ul>
+
+  </div>
+
+  <div>
+    <a href="<%= product_wip_path(bounty.product, bounty) %>">
+      <strong><%= bounty.title %></strong>
+    </a>
+
+    <% bounty.tags.map do |tag| %>
+      &nbsp;
+      <a class="small text-info" href="<%= product_wips_path(@product, tag: tag.name) %>">
+        #<%= tag.name.downcase %>
+      </a>
+    <% end %>
+    <% unless bounty.closed? %>
+      &nbsp;
+      <a class="small text-info" href="#">
+        #<%= bounty.urgency.label.downcase %>
+      </a>
+    <% end %>
+  </div>
+
+
+  <div class="clearfix small text-muted">
+
+    <div class="js-coin-vote"
+         data-view="coin-vote"
+         data-vote-path="<%= product_wip_path(bounty.product, bounty) %>/votes"
+         data-coins="<%= bounty.coins.to_i %>"
+         data-coins-add="<%= bounty.coins_add.to_i %>"
+    >
+
+      <div class="pull-left" style="margin-right:6px">
+        <% if signed_in? %>
+          <a href="#" class="btn btn-default btn-xs js-coin-vote-btn <% if bounty.has_user_voted?(current_user) %>disabled<% end %>">
+            <span class="icon icon-chevron-up"></span>
+          </a>
+        <% else %>
+          <a href="<%= new_user_registration_path %>" class="btn btn-default btn-xs">
+            <span class="icon icon-chevron-up"></span>
+            <span class="sr-only">Upvote</span>
+          </a>
+        <% end %>
+      </div>
+
+      <!-- coins -->
+      <div>
+        <% case %>
+        <% when bounty.state == 'open' || (bounty.state == 'reviewing' && bounty.workers.empty?) %>
+          <span class="text-warning" data-toggle="tooltip" title="Available">
+        <% when bounty.workers.any? && (bounty.state != 'resolved') %>
+          <span class="text-warning" data-toggle="tooltip" title="<%= pluralize(bounty.workers.count, 'person') %> working">
+        <% when bounty.state == 'resolved' %>
+          <% if bounty.winner.present? %>
+            <span class="text-muted" data-toggle="tooltip" title="Awarded to @<%= bounty.winner.username %>">
+          <% else %>
+            <span class="text-muted" data-toggle="tooltip" title="Closed">
+          <% end %>
+        <% end %>
+
+        <% if bounty.state == 'resolved' && !bounty.winner.present? %>
+          <del>
+            <span class="icon icon-app-coin"></span>
+            <span class="js-coins"><%= number_with_delimiter(bounty.coins.floor) %></span>
+          </del>
+        <% else %>
+          <span class="icon icon-app-coin"></span>
+          <span class="js-coins"><%= number_with_delimiter(bounty.coins.floor) %></span>
+        <% end %>
+      </span>
+
+      &middot;
+
+      #<%= bounty.number %> started <%= time_ago_in_words(bounty.created_at) %> ago by <a class="text-muted" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
+    </div>
+  </div>
+</div>
