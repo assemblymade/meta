@@ -54,7 +54,7 @@
                   <strong>Not following</strong>
                 </div>
                 <span className="text-muted">
-                  Only notified when participating or @mentioned
+                  Receive notifications when you are @mentioned
                 </span>
               </a>
             </li>
@@ -62,10 +62,10 @@
             <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('watching')}>
               <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'watching', this.props.productFollowPath)}>
                 <div>
-                  <strong>Follow announcements</strong>
+                  <strong>Follow announcements only</strong>
                 </div>
                 <div className="text-muted">
-                  Be notified of business updates, and when participating or @mentioned
+                  Receive notifications when there are new blog posts
                 </div>
               </a>
             </li>
@@ -73,10 +73,10 @@
             <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('subscribed')}>
               <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'subscribed', this.props.productSubscribePath)}>
                 <div>
-                  <strong>Follow everything</strong>
+                  <strong>Follow</strong>
                 </div>
                 <div className="text-muted">
-                  Be notified of all discussions, business updates, and when participating or @mentioned
+                  Receive notifications when there are new blog posts, discussions, and chat messages
                 </div>
               </a>
             </li>
