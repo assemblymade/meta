@@ -9,44 +9,4 @@
     </li>
   <% end %>
 
-  <% cache [@product, params[:state], params[:deliverable]] do %>
-    <li class="<%= 'active' if params[:state] == 'open' %>">
-      <a href="<%= product_wips_path(@product, state: 'open') %>">
-        Open Bounties
-      </a>
-    </li>
-    <!-- <li>
-      <ul class="nav nav-pills nav-stacked small">
-        <% [:code, :design, :copy, :other].each do |deliverable| %>
-          <li class="<%= 'active' if params[:deliverable] == deliverable.to_s %>">
-            <a href="<%= product_wips_path(@product, deliverable: deliverable.to_s) %>">
-              <span class="badge pull-right"><%= @product.number_of_open_tasks(deliverable) %></span>
-              <%= deliverable.to_s.titleize %>
-            </a>
-          </li>
-        <% end %>
-      </ul>
-    </li> -->
-
-    <li class="<%= 'active' if params[:state] == 'allocated' %>">
-      <a href="<%= product_wips_path(@product, state: 'allocated') %>">
-        <span class="badge pull-right"><%= @product.tasks.allocated.count %></span>
-        In Progress
-      </a>
-    </li>
-
-    <li class="<%= 'active' if params[:state] == 'reviewing' %>">
-      <a href="<%= product_wips_path(@product, state: 'reviewing') %>">
-        <span class="badge pull-right"><%= @product.tasks.reviewing.count %></span>
-        Reviewing
-      </a>
-    </li>
-
-    <li class="<%= 'active' if params[:state] == 'resolved' %>">
-      <a href="<%= product_wips_path(@product, state: 'resolved') %>">
-        <span class="badge pull-right"><%= @product.tasks.closed.count %></span>
-        Resolved
-      </a>
-    </li>
-  <% end %>
 </ul>

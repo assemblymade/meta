@@ -2,7 +2,7 @@
 
 $black:         #2A3036;
 
-$blue:          darken(#5fafef, 5%);
+$blue:          #428bca;
 $blue-light:    lighten($blue, 10%);
 $purple:        #6700B9;
 $purple-light:  lighten($purple, 10%);
@@ -24,7 +24,7 @@ $text-color:    $black;
 
 $brand-primary: $blue;
 $brand-success: $green;
-$brand-info:    $blue-light;
+$brand-info:    #5bc0de;
 $brand-warning: $yellow;
 $brand-danger:  $red;
 $brand-muted:   $gray;
