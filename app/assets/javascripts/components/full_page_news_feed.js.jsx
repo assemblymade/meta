@@ -129,6 +129,15 @@
       });
     },
 
+    markAsReadButton: function() {
+      if (!this.isRead()) {
+        return <span className="icon icon-disc" onClick={this.markAsRead} title={'Mark as read'} style={{ cursor: 'pointer' }} />;
+      }
+
+      // TODO: Mark as unread
+      return <span className="icon icon-circle" style={{ cursor: 'pointer' }} />
+    },
+
     preview: function() {
       var bodyPreview = this.props.story.body_preview;
 
@@ -159,7 +168,8 @@
                 {this.timestamp()}
               </span>
             </div>
-            <div className='col-md-9'>
+
+            <div className='col-md-8'>
               <a className={classes} href={this.props.story.url} onClick={this.markAsRead}>
                 <span style={{ 'margin-right': '5px' }}>
                   <Avatar user={this.actors()[0]} />
@@ -169,6 +179,10 @@
               <span className='text-small text-muted'>
                 {this.preview()}
               </span>
+            </div>
+
+            <div className={'col-md-1 ' + classes}>
+              {this.markAsReadButton()}
             </div>
           </div>
         </div>

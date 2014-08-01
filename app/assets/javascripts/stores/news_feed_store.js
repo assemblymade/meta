@@ -167,7 +167,28 @@ var NewsFeedStore = (function() {
       window.xhr.get(url, this.markedAsRead(storyId));
     },
 
-    markedAsRead: function(storyId) {
+    'newsFeed:markAllAsRead': function() {
+      var unread = _.filter(_stories, function(story) {
+        return story.last_read_at == null;
+      });
+
+      var self = this;
+
+      for (var i = 0, l = unread.length; i < l; i++) {
+        (function(j) {
+          var story = unread[j];
+
+          if (!story.last_read_at) {
+            var storyId = story.id;
+            var url = '/user/tracking/' + storyId;
+
+            window.xhr.get(url, self.markedAsRead(storyId, true, (j + 1 === l)))
+          }
+        })(i);
+      }
+    },
+
+    markedAsRead: function(storyId, wait, ready) {
       var self = this;
 
       return function markedAsRead(err, data) {
@@ -180,7 +201,16 @@ var NewsFeedStore = (function() {
         // FIXME: Use the value from Readraptor
         story.last_read_at = Date.now();
 
-        self.emit(_deferred.pop());
+        if (!wait) {
+          return self.emit(_deferred.pop());
+        }
+
+        // FIXME: We really need a proper event emitter
+        if (ready) {
+          self.emit(_deferred.pop());
+        } else {
+          self.emit(_deferred[_deferred.length - 1]);
+        }
       }
     },
 
