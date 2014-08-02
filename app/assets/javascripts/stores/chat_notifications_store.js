@@ -125,7 +125,9 @@ var ChatNotificationsStore = (function() {
 
       var keys = _.keys(_optimisticallyUpdatedChatRooms)
       for (var i = 0; i < keys.length; i++) {
-        _chatRooms[keys[i]] = _.extend(_chatRooms[keys[i]], _optimisticallyUpdatedChatRooms[keys[i]])
+        if (_chatRooms[keys[i]]) {
+          _chatRooms[keys[i]] = _.extend(_chatRooms[keys[i]], _optimisticallyUpdatedChatRooms[keys[i]])
+        }
       }
 
       _optimisticallyUpdatedChatRooms = {}
