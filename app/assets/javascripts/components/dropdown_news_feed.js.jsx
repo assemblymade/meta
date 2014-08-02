@@ -146,7 +146,7 @@
     },
 
     isRead: function() {
-      return (typeof this.state.story.last_read_at !== 'undefined');
+      return this.state.story.last_read_at !== 0;
     },
 
     markAsRead: function() {

@@ -38,7 +38,6 @@
   });
 
   <% if signed_in? %>
-    app.wip.story = '<%== Story.associated_with(@wip).first.id %>';
     app.wip.readRaptorUrl = '<%== ReadraptorTracker.new(Story.associated_with(@wip).first.id, current_user.id).url %>';
   <% end %>
 

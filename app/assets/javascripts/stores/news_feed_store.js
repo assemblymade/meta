@@ -210,18 +210,16 @@ var NewsFeedStore = (function() {
     },
 
     getUnreadCount: function(timestamp) {
-      var unreadStories = _.filter(
+      var count = _.countBy(
         _stories,
-        function(story) {
+        function(entry) {
           if (timestamp) {
-            return story.last_read_at == null && story.updated > timestamp;
+            return entry.updated > timestamp
           }
-
-          return story.last_read_at == null;
         }
       );
 
-      return (unreadStories && unreadStories.length) || 0;
+      return count.true || 0;
     },
 
     setStories: function(stories) {

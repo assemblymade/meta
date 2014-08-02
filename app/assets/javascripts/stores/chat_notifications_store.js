@@ -31,7 +31,8 @@ var ChatNotificationsStore = (function() {
     },
 
     getUnreadCount: function(acknowledgedAt) {
-      var count = _.countBy(_chatRooms,
+      var count = _.countBy(
+        _chatRooms,
         function(entry) {
           if (acknowledgedAt) {
             return entry.updated > acknowledgedAt;

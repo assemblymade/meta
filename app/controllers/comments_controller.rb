@@ -23,14 +23,16 @@ class CommentsController < ProductController
         track_wip_engaged @wip, 'commented'
         register_with_readraptor(@event)
 
-        @event.notify_users!(@wip.watchers)
-
         Activities::Comment.publish!(
           actor: @event.user,
           subject: @event,
           target: @wip,
           socket_id: params[:socket_id]
         )
+
+        puts Story.associated_with(@event).inspect
+
+        @event.notify_users!(@wip.watchers)
       end
 
       track_analytics(@event)

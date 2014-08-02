@@ -20,6 +20,7 @@ class EventSerializer < ActiveModel::Serializer
   attributes :edit_url
   attributes :award_url, :can_award
   attributes :product_id
+  attributes :story_id
 
   has_one :wip, serializer: WipSerializer
   has_one :user, key: :actor, serializer: UserSerializer
@@ -62,6 +63,10 @@ class EventSerializer < ActiveModel::Serializer
         edit_product_wip_comment_url(product, wip, object)
       end
     end
+  end
+
+  def story_id
+    Story.associated_with(object).try(:first).try(:id)
   end
 
   def timestamp

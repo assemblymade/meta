@@ -29,6 +29,11 @@ class window.WipEventView extends Backbone.View
 
   initialize: (@options) ->
     @listenTo @model, 'change', @render
+    Dispatcher.dispatch
+      event: CONSTANTS.NEWS_FEED.EVENTS.STORY_READ
+      action: CONSTANTS.NEWS_FEED.ACTIONS.MARK_STORY_AS_READ
+      data: { key: 'Story_' + app.wip.id, readraptor_url: app.wip.readRaptorUrl }
+      sync: true
 
   template: ->
     template_name = eventTypeToTemplate(@model.get('type'))
@@ -48,12 +53,6 @@ class window.WipEventView extends Backbone.View
           recipient: model.get('actor'),
           tips: model.get('tips')
         }), @)
-
-    Dispatcher.dispatch
-      event: CONSTANTS.NEWS_FEED.EVENTS.STORY_READ
-      action: CONSTANTS.NEWS_FEED.ACTIONS.MARK_STORY_AS_READ
-      data: { key: 'Story_' + app.wip.story, readraptor_url: app.wip.readRaptorUrl }
-      sync: true
 
     @$('time').timeago() # display new timestamp
     @
