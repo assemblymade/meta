@@ -38,7 +38,8 @@
   });
 
   <% if signed_in? %>
-    app.wip.readRaptorUrl = '<%== ReadraptorTracker.new(Story.associated_with(@wip).first.id, current_user.id).url %>';
+    <% story = Story.associated_with(@wip).first.try(:id) %>
+    app.wip.readRaptorUrl = '<%== ReadraptorTracker.new(story, current_user.id).url if story %>';
   <% end %>
 
   $(document).ready(function() {
