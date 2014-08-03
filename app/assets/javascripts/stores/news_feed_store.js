@@ -5,7 +5,8 @@
 //= require stores/news_feed_users_store
 
 var NewsFeedStore = (function() {
-  var READ_RAPTOR_URL = document.getElementsByName('read-raptor-url')[0].content;
+  var rrMetaTag = document.getElementsByName('read-raptor-url');
+  var READ_RAPTOR_URL = rrMetaTag && rrMetaTag[0] && rrMetaTag[0].content;
 
   var _stories = {};
   var _optimisticStories = {};

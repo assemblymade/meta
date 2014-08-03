@@ -4,7 +4,8 @@
 //= require stores/store
 
 var ChatNotificationsStore = (function() {
-  var READ_RAPTOR_URL = document.getElementsByName('read-raptor-url')[0].content;
+  var rrMetaTag = document.getElementsByName('read-raptor-url');
+  var READ_RAPTOR_URL = rrMetaTag && rrMetaTag[0] && rrMetaTag[0].content;
 
   var _chatRooms = {};
   var _sortKeys = [];
