@@ -77,4 +77,4 @@ var CONSTANTS = require('../constants');
   }
 
   window.TextComplete = TextComplete;
-});
+})();

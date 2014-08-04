@@ -141,8 +141,7 @@
 
   if (typeof module !== 'undefined') {
     module.exports = TipsUi;
-  } else {
-    window.TipsUi = TipsUi;
   }
-
+  
+  window.TipsUi = TipsUi;
 })();

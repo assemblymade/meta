@@ -35,4 +35,4 @@
   }
 
   window.FormGroup = FormGroup;
-});
+})();

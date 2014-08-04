@@ -77,4 +77,4 @@ var FormGroup = require('./form_group.js.jsx');
   }
 
   window.InviteBountyForm = InviteBountyForm;
-});
+})();
