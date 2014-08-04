@@ -7,15 +7,11 @@
 
 <div class="sheet-body">
   <div class="row">
-    <div class="col-md-9 col-xs-9">
-      <%= form_for [@product, @wip] do |f| %>
+    <%= form_for [@product, @wip] do |f| %>
+      <div class="col-md-9 col-xs-9">
         <div class="form-group">
-          <%= f.label :title, 'class' => 'form-label' %>
-          <%= f.text_field :title, 'value' => params[:title], 'class' => 'form-control', 'data-validate-length' => '2', 'autofocus' => 'autofocus' %>
-        </div>
-
-        <div style="display:none;">
-          <select type="hidden" id="tag-list-hack" name="task[tag_list][]" multiple="true"></select>
+          <%= f.label :title, class: 'form-label' %>
+          <%= f.text_field :title, value: params[:title], class: %W(form-control input-lg), 'data-validate-length' => '2', autofocus: true %>
         </div>
 
         <div class="form-group">
@@ -28,6 +24,18 @@
               from your computer</a>...
             </div>
           </div>
+        </div>  
+
+        <div class="clearfix">
+          <%= f.button 'Create bounty', class: %w(btn btn-primary pull-right), 'data-disable-with' => 'Creating...' %>
+        </div>
+
+      </div>
+
+      <div class="col-md-3">
+
+        <div style="display:none;">
+          <select type="hidden" id="tag-list-hack" name="task[tag_list][]" multiple="true"></select>
         </div>
 
         <h6 style="margin-bottom: 0;">Tags</h6>
@@ -61,10 +69,7 @@
               }.to_json %>">
         </div>
 
-        <div class="form-actions">
-          <%= f.button 'Create bounty', 'class' => 'btn btn-primary', 'data-disable-with' => 'Saving...' %>
-        </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
