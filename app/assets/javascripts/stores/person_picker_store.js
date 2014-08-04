@@ -11,7 +11,7 @@ var PersonPickerStore = (function() {
       if (!user) {
         return;
       }
-      
+
       if (_searchPeople(user.username) !== -1) {
         return;
       }
@@ -79,3 +79,7 @@ var PersonPickerStore = (function() {
 
   return _personPickerStore;
 })();
+
+if (typeof module !== 'undefined') {
+  module.exports = PersonPickerStore;
+}

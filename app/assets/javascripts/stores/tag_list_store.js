@@ -97,3 +97,7 @@ var TagListStore = (function() {
 
   return _tagListStore;
 })();
+
+if (typeof module !== 'undefined') {
+  module.exports = TagListStore;
+}

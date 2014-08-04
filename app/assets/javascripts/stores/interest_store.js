@@ -55,3 +55,7 @@ var InterestStore = (function() {
 
   return _interestStore;
 })();
+
+if (typeof module !== 'undefined') {
+  module.exports = InterestStore;
+}

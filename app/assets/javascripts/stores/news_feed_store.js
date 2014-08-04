@@ -279,3 +279,7 @@ var NewsFeedStore = (function() {
 
   return _newsFeedStore;
 })();
+
+if (typeof module !== 'undefined') {
+  module.exports = NewsFeedStore;
+}

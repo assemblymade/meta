@@ -173,3 +173,7 @@ var ChatNotificationsStore = (function() {
 
   return _notificationsStore;
 })();
+
+if (typeof module !== 'undefined') {
+  module.exports = ChatNotificationsStore;
+}

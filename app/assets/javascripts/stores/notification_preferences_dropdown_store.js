@@ -49,3 +49,7 @@ var NotificationPreferencesDropdownStore = (function() {
 
   return _dropdownStore;
 })();
+
+if (typeof module !== 'undefined') {
+  module.exports = NotificationPreferencesDropdownStore;
+}

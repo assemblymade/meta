@@ -30,3 +30,7 @@ var NewsFeedUsersStore = (function() {
 
   return _newsFeedUsersStore;
 })();
+
+if (typeof module !== 'undefined') {
+  module.exports = NewsFeedUsersStore;
+}

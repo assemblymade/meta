@@ -25,3 +25,7 @@ var Store = _.extend({}, {
     }
   }
 });
+
+if (typeof module !== 'undefined') {
+  module.exports = Store;
+}

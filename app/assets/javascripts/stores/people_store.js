@@ -61,3 +61,7 @@ var PeopleStore = (function() {
 
   return _peopleStore;
 })();
+
+if (typeof module !== 'undefined') {
+  module.exports = PeopleStore;
+}

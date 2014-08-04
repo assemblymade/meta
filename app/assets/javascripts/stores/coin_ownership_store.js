@@ -81,3 +81,7 @@ var CoinOwnershipStore = (function() {
 
   return _coinOwnershipStore;
 })();
+
+if (typeof module !== 'undefined') {
+  module.exports = CoinOwnershipStore;
+}
