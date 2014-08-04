@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140731194126) do
+ActiveRecord::Schema.define(version: 20140804180451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -486,6 +486,8 @@ ActiveRecord::Schema.define(version: 20140731194126) do
     t.uuid   "user_id",         null: false
     t.string "type",            null: false
     t.string "bitcoin_address"
+    t.string "recipient_id"
+    t.string "last4"
   end
 
   create_table "user_tax_infos", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

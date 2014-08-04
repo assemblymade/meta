@@ -30,8 +30,6 @@ class CommentsController < ProductController
           socket_id: params[:socket_id]
         )
 
-        puts Story.associated_with(@event).inspect
-
         @event.notify_users!(@wip.watchers)
       end
 

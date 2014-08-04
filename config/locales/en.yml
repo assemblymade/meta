@@ -2,6 +2,8 @@ en:
   payment:
     bitcoin:
       title: Bitcoin Payment Settings
+    debit-card:
+      title: Debit Card Payment Settings
 
   tooltips:
     bounty:

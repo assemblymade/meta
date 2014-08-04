@@ -19,12 +19,12 @@
 
   <% if params[:payment_option] == 'bitcoin' %>
     <%= render 'bitcoin_fields', f: f %>
+
+    <div class="form-actions">
+      <button class="btn btn-primary pull-left" type="submit">Save Info</button>
+    </div>
   <% else %>
     <%= render 'debit_fields', f: f %>
   <% end %>
-
-  <div class="form-actions">
-    <button class="btn btn-primary pull-left" type="submit">Save Info</button>
-  </div>
 
 <% end %>
