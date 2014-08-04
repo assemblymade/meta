@@ -9,9 +9,8 @@
  */
 //= require moment
 //= require underscore
-//= require dispatcher
-//= require stores/store
-//= require stores/chat_notifications_store
+//= require react
+//= require components
 
 fixture.preload('readraptor_meta_tag.html');
 

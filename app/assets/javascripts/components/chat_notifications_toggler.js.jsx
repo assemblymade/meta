@@ -1,13 +1,13 @@
 /** @jsx React.DOM */
 
-//= require constants
-//= require stores/chat_notifications_store
-//= require mixins/dropdown_toggler
+var CONSTANTS = require('../constants');
+var ChatNotificationsStore = require('../stores/chat_notifications_store');
+var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
 
 (function() {
   var CN = CONSTANTS.CHAT_NOTIFICATIONS;
 
-  window.ChatNotificationsToggler = React.createClass({
+  var ChatNotificationsToggler = React.createClass({
     mixins: [DropdownTogglerMixin],
 
     acknowledge: function() {
@@ -98,4 +98,10 @@
       }
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = ChatNotificationsToggler;
+  }
+
+  window.ChatNotificationsToggler = ChatNotificationsToggler;
 })();

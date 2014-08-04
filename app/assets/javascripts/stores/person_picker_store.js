@@ -1,7 +1,7 @@
-//= require dispatcher
-//= require stores/store
+var Dispatcher = require('../dispatcher');
+var Store = require('../stores/store');
 
-var PersonPickerStore = (function() {
+(function() {
   var _people = [];
 
   var _store = Object.create(Store);
@@ -77,9 +77,9 @@ var PersonPickerStore = (function() {
     return -1;
   }
 
-  return _personPickerStore;
-})();
+  if (typeof module !== 'undefined') {
+    module.exports = _personPickerStore;
+  }
 
-if (typeof module !== 'undefined') {
-  module.exports = PersonPickerStore;
-}
+  window.PersonPickerStore = _personPickerStore;
+})();

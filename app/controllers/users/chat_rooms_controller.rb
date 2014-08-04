@@ -3,7 +3,6 @@ class Users::ChatRoomsController < ApplicationController
 
   def index
     @products = Product.joins(:watchings).
-      where('subscription = true').
       where('watchings.user_id = ?', current_user.id)
 
     render json: {

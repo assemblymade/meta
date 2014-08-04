@@ -56,7 +56,7 @@
 
   if (typeof module !== 'undefined') {
     module.exports = xhr;
-  } else {
-    window.xhr = xhr;
   }
+
+  window.xhr = xhr;
 })();

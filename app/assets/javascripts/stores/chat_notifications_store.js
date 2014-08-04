@@ -1,9 +1,8 @@
-//= require xhr
-//= require constants
-//= require dispatcher
-//= require stores/store
+var xhr = require('../xhr');
+var Dispatcher = require('../dispatcher');
+var Store = require('../stores/store');
 
-var ChatNotificationsStore = (function() {
+(function() {
   var rrMetaTag = document.getElementsByName('read-raptor-url');
   var READ_RAPTOR_URL = rrMetaTag && rrMetaTag[0] && rrMetaTag[0].content;
 
@@ -171,9 +170,9 @@ var ChatNotificationsStore = (function() {
     _deferred.push(event);
   });
 
-  return _notificationsStore;
-})();
+  if (typeof module !== 'undefined') {
+    module.exports = _notificationsStore;
+  }
 
-if (typeof module !== 'undefined') {
-  module.exports = ChatNotificationsStore;
-}
+  window.ChatNotificationsStore = _notificationsStore;
+})();

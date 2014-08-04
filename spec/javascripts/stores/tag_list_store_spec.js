@@ -1,8 +1,7 @@
 //= require spec_helper
 //= require underscore
-//= require dispatcher
-//= require stores/store
-//= require stores/tag_list_store
+//= require react
+//= require components
 
 describe('TagListStore', function() {
   before(function(done) {

@@ -1,8 +1,7 @@
 //= require spec_helper
 //= require underscore
-//= require dispatcher
-//= require stores/store
-//= require stores/news_feed_users_store
+//= require react
+//= require components
 
 describe('NewsFeedUsersStore', function() {
   describe('setUsers', function() {

@@ -1,13 +1,14 @@
 /** @jsx React.DOM */
 
-//= require spin
+var NewsFeedStore = require('../stores/news_feed_store');
+var NewsFeedUsersStore = require('../stores/news_feed_users_store');
 
 (function() {
-  window.NewsFeedMixin = {
+  var NewsFeedMixin = {
     componentDidMount: function() {
       var target = this.refs.spinner.getDOMNode();
       var opts = this.spinnerOptions || {
-        lines: 11,
+        lines: 13,
         length: 30,
         radius: 55
       };
@@ -29,5 +30,11 @@
         }
       });
     }
+  }
+
+  if (typeof module !== 'undefined') {
+    module.exports = NewsFeedMixin;
+  } else {
+    window.NewsFeedMixin = NewsFeedMixin;
   }
 })();

@@ -24,8 +24,8 @@ var Picker = {
     this.setState(this.getInitialState());
   },
 
+  /**
   render: function() {
-    /**
      * Extend this method in your Picker component.
      * To use the mixin, be sure to include ref='userInput'
      * on the returned element, e.g.:
@@ -42,8 +42,8 @@ var Picker = {
 
     * where userPicker and the other methods are defined on the component
     * itself.
-    */
   },
+  */
 
   handleKey: function(e) {
     if (e.keyCode == this.keys.up) {

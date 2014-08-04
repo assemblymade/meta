@@ -1,14 +1,15 @@
 /** @jsx React.DOM */
 
-//= require constants
-//= require dispatcher
-//= require mixins/news_feed
-//= require stores/news_feed_store
+var CONSTANTS = require('../constants');
+var Dispatcher = require('../dispatcher');
+var NewsFeedMixin = require('../mixins/news_feed.js.jsx');
+var NewsFeedStore = require('../stores/news_feed_store');
+var Avatar = require('./avatar.js.jsx');
 
 (function() {
   var NF = CONSTANTS.NEWS_FEED;
 
-  window.FullPageNewsFeed = React.createClass({
+  var FullPageNewsFeed = React.createClass({
     mixins: [NewsFeedMixin],
 
     componentWillMount: function() {
@@ -53,12 +54,12 @@
 
     render: function() {
       return (
-        <div className="sheet">
+        <div className="sheet" style={{ 'min-height': '600px' }}>
           <div className="page-header sheet-header" style={{ 'padding-left': '20px' }}>
             <h2 className="page-header-title">Your notifications</h2>
           </div>
 
-          <div className="list-group list-group-breakout" style={{ height: '600px' }} ref="spinner">
+          <div className="list-group list-group-breakout" ref="spinner">
             {this.state.stories ? this.rows(this.state.stories) : null}
           </div>
 
@@ -123,7 +124,7 @@
       }
 
       // TODO: Mark as unread
-      return <span className="icon icon-circle" style={{ cursor: 'pointer' }} />
+      return <span className="icon icon-circle" style={{ cursor: 'pointer' }} />;
     },
 
     preview: function() {
@@ -205,4 +206,10 @@
       'Close': 'closed '
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = FullPageNewsFeed;
+  }
+
+  window.FullPageNewsFeed = FullPageNewsFeed;
 })();

@@ -1,8 +1,7 @@
-//= require underscore
-//= require dispatcher
-//= require stores/store
+var Dispatcher = require('../dispatcher');
+var Store = require('../stores/store');
 
-var TagListStore = (function() {
+(function() {
   var _tags = [];
 
   var _store = Object.create(Store);
@@ -95,9 +94,9 @@ var TagListStore = (function() {
     return -1
   }
 
-  return _tagListStore;
-})();
+  if (typeof module !== 'undefined') {
+    module.exports = _tagListStore;
+  }
 
-if (typeof module !== 'undefined') {
-  module.exports = TagListStore;
-}
+  window.TagListStore = _tagListStore;
+})();

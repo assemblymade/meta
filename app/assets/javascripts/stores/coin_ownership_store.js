@@ -1,7 +1,7 @@
-//= require dispatcher
-//= require stores/store
+var Dispatcher = require('../dispatcher');
+var Store = require('../stores/store');
 
-var CoinOwnershipStore = (function() {
+(function() {
   // { user: User, coins: Number }
   var _usersAndCoins = [];
 
@@ -79,9 +79,9 @@ var CoinOwnershipStore = (function() {
     return -1;
   }
 
-  return _coinOwnershipStore;
-})();
+  if (typeof module !== 'undefined') {
+    module.exports = _coinOwnershipStore;
+  }
 
-if (typeof module !== 'undefined') {
-  module.exports = CoinOwnershipStore;
-}
+  window.CoinOwnershipStore = _coinOwnershipStore;
+})();

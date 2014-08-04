@@ -1,8 +1,10 @@
 /** @jsx React.DOM */
 
-//= require constants
-//= require dispatcher
-//= require stores/coin_ownership_store
+var CONSTANTS = require('../constants');
+var Dispatcher = require('../dispatcher');
+var CoinOwnershipStore = require('../stores/coin_ownership_store');
+var Avatar = require('./avatar.js.jsx');
+var PersonPicker = require('./person_picker.js.jsx');
 
 (function() {
   var CO = CONSTANTS.COIN_OWNERSHIP;
@@ -14,7 +16,7 @@
     }
   }
 
-  window.CoinOwnership = React.createClass({
+  var CoinOwnership = React.createClass({
     getDefaultProps: function() {
       return { totalCoins: 6000 };
     },
@@ -233,7 +235,6 @@
     }
   });
 
-
   var OwnershipRow = React.createClass({
     getInitialState: function() {
       return {
@@ -342,4 +343,9 @@
     }
   });
 
+  if (typeof module !== 'undefined') {
+    module.exports = CoinOwnership;
+  }
+
+  window.CoinOwnership = CoinOwnership;
 })();

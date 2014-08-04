@@ -1,15 +1,16 @@
 /** @jsx React.DOM */
 
-//= require constants
-//= require dispatcher
-//= require mixins/news_feed
-//= require stores/news_feed_store
+var CONSTANTS = require('../constants');
+var Dispatcher = require('../dispatcher');
+var NewsFeedMixin = require('../mixins/news_feed.js.jsx');
+var NewsFeedStore = require('../stores/news_feed_store');
+var Avatar = require('./avatar.js.jsx');
 
 (function() {
 
   var NF = CONSTANTS.NEWS_FEED;
 
-  window.DropdownNewsFeed = React.createClass({
+  var DropdownNewsFeed = React.createClass({
     mixins: [NewsFeedMixin],
 
     componentWillMount: function() {
@@ -244,4 +245,10 @@
       'Close': 'closed '
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = DropdownNewsFeed;
+  }
+
+  window.DropdownNewsFeed = DropdownNewsFeed;
 })();

@@ -1,7 +1,7 @@
 //= require spec_helper
 //= require underscore
-//= require dispatcher
-//= require stores/store
+//= require react
+//= require components
 
 describe('Store', function() {
   it('provides a Store prototype', function(done) {

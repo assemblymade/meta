@@ -1,0 +1,26 @@
+{
+  "name": "meta",
+  "version": "0.0.0",
+  "description": "Assembly Meta",
+  "scripts": {
+    "test": "rake teaspoon",
+    "bundle": "node_modules/.bin/browserify -r underscore -r spin.js -t reactify app/assets/javascripts/components/**.js.jsx -o app/assets/javascripts/components.js",
+    "watch": "node_modules/.bin/watchify -r underscore -r spin.js -t reactify app/assets/javascripts/components/**.js.jsx -o app/assets/javascripts/components.js -dv"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/assemblymade/meta.git"
+  },
+  "bugs": {
+    "url": "https://github.com/assemblymade/meta/issues"
+  },
+  "homepage": "https://assembly.com",
+  "devDependencies": {
+    "browserify": "^5.9.1",
+    "react": "^0.11.1",
+    "reactify": "^0.14.0",
+    "spin.js": "^2.0.1",
+    "underscore": "^1.6.0",
+    "watchify": "^1.0.1"
+  }
+}

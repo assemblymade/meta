@@ -1,13 +1,14 @@
 /** @jsx React.DOM */
 
-//= require dispatcher
-//= require stores/notification_preferences_dropdown_store
-//= require constants
+var CONSTANTS = require('../constants');
+var Dispatcher = require('../dispatcher');
+var NotificationPreferencesDropdownStore = require('../stores/notification_preferences_dropdown_store');
+var Avatar = require('./avatar.js.jsx');
 
 (function() {
   var D = CONSTANTS.NOTIFICATION_PREFERENCES_DROPDOWN;
 
-  window.NotificationPreferencesDropdown = React.createClass({
+  var NotificationPreferencesDropdown = React.createClass({
     chevron: function() {
       if (this.state.chevron) {
         return <span className="icon icon-chevron-down"></span>;
@@ -147,4 +148,10 @@
       });
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = NotificationPreferencesDropdown;
+  }
+
+  window.NotificationPreferencesDropdown = NotificationPreferencesDropdown;
 })();

@@ -1,8 +1,7 @@
 //= require spec_helper
 //= require underscore
-//= require dispatcher
-//= require stores/store
-//= require stores/coin_ownership_store
+//= require react
+//= require components
 
 describe('CoinOwnershipStore', function() {
   after(function(done) {

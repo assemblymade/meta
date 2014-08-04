@@ -1,8 +1,7 @@
 //= require spec_helper
 //= require underscore
-//= require dispatcher
-//= require stores/store
-//= require stores/person_picker_store
+//= require react
+//= require components
 
 describe('PersonPickerStore', function() {
   after(function(done) {

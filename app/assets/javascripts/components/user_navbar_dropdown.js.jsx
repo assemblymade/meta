@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  window.UserNavbarDropdown = React.createClass({
+  var UserNavbarDropdown = React.createClass({
     render: function() {
       return (
         <ul className='dropdown-menu'>
@@ -31,4 +31,10 @@
       );
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = UserNavbarDropdown;
+  }
+  
+  window.UserNavbarDropdown = UserNavbarDropdown;
 })();

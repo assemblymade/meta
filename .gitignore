@@ -20,3 +20,5 @@ dump.rdb
 
 # Dragonfly
 public/system
+
+node_modules

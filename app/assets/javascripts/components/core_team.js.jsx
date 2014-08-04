@@ -1,8 +1,5 @@
 /** @jsx React.DOM */
 
-//= require constants
-//= require dispatcher
-
 (function() {
 
   function atUsername(user) {
@@ -17,7 +14,7 @@
     }
   }
 
-  window.CoreTeam = React.createClass({
+  var CoreTeam = React.createClass({
     getInitialState: function() {
       return { users: [], potentialUser: null }
     },
@@ -177,6 +174,12 @@
         )
       }
     }
-  })
+  });
+
+  if (typeof module !== 'undefined') {
+    module.exports = CoreTeam;
+  }
+
+  window.CoreTeam = CoreTeam;
 
 })();

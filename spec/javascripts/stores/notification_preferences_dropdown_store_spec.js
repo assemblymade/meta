@@ -1,8 +1,7 @@
 //= require spec_helper
 //= require underscore
-//= require dispatcher
-//= require stores/store
-//= require stores/notification_preferences_dropdown_store
+//= require react
+//= require components
 
 fixture.preload('readraptor_meta_tag.html');
 

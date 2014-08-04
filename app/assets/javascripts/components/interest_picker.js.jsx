@@ -1,10 +1,10 @@
 /** @jsx React.DOM */
 
-//= require constants
-//= require dispatcher
-//= require stores/interest_store
+var CONSTANTS = require('../constants');
+var Dispatcher = require('../dispatcher');
+var InterestStore = require('../stores/interest_store');
 
-;(function() {
+(function() {
   var IP = CONSTANTS.INTEREST_PICKER;
 
   var keys = {
@@ -15,7 +15,7 @@
     delete: 8
   };
 
-  window.InterestPicker = React.createClass({
+  var InterestPicker = React.createClass({
     getInitialState: function() {
       return {
         selectedInterests: InterestStore.getInterests(),
@@ -282,4 +282,10 @@
       });
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = InterestPicker;
+  }
+
+  window.InterestPicker = InterestPicker;
 })();

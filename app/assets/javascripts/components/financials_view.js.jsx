@@ -7,7 +7,8 @@
  * all of the financials in state; it would be
  * better to move all of this to the FinancialsStore
  */
-;(function() {
+
+(function() {
   var FinancialsStore = {
     month: 'June',
     getMonth: function() {
@@ -32,7 +33,7 @@
     }
   };
 
-  window.Financials = React.createClass({
+  var Financials = React.createClass({
     componentWillMount: function() {
       this.setState({
         financials: {
@@ -313,4 +314,10 @@
 
     return profit < annuity ? 0 : profit - annuity;
   }
+
+  if (typeof module !== 'undefined') {
+    module.exports = Financials;
+  }
+
+  window.Financials = Financials;
 })();

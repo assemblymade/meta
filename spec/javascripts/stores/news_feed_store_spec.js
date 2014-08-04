@@ -1,9 +1,8 @@
 //= require spec_helper
 //= require moment
 //= require underscore
-//= require dispatcher
-//= require stores/store
-//= require stores/news_feed_store
+//= require react
+//= require components
 
 describe('NewsFeedStore', function() {
   var _app;

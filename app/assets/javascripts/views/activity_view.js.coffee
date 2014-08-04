@@ -17,7 +17,7 @@ class window.ActivityView extends Backbone.View
 
     model = @model
     $('.js-insert-tips', @$el).each ->
-      React.renderComponent(TipsUI({
+      React.renderComponent(TipsUi({
         viaType: 'Activity',
         viaId: model.id,
         recipient: model.get('actor'),

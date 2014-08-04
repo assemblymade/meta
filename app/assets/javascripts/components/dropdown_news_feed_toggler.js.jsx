@@ -1,13 +1,13 @@
 /** @jsx React.DOM */
 
-//= require constants
-//= require mixins/dropdown_toggler
-//= require stores/news_feed_store
+var CONSTANTS = require('../constants');
+var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
+var NewsFeedStore = require('../stores/news_feed_store');
 
 (function() {
   var NF = CONSTANTS.NEWS_FEED;
 
-  window.DropdownNewsFeedToggler = React.createClass({
+  var DropdownNewsFeedToggler = React.createClass({
     mixins: [DropdownTogglerMixin],
 
     acknowledge: function() {
@@ -99,4 +99,10 @@
       }
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = DropdownNewsFeedToggler;
+  }
+
+  window.DropdownNewsFeedToggler = DropdownNewsFeedToggler;
 })();

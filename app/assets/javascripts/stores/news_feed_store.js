@@ -1,10 +1,9 @@
-//= require xhr
-//= require constants
-//= require dispatcher
-//= require stores/store
-//= require stores/news_feed_users_store
+var xhr = require('../xhr');
+var Dispatcher = require('../dispatcher');
+var Store = require('../stores/store');
+var NewsFeedUsersStore = require('../stores/news_feed_users_store');
 
-var NewsFeedStore = (function() {
+(function() {
   var rrMetaTag = document.getElementsByName('read-raptor-url');
   var READ_RAPTOR_URL = rrMetaTag && rrMetaTag[0] && rrMetaTag[0].content;
 
@@ -277,9 +276,9 @@ var NewsFeedStore = (function() {
     _deferred.push(event);
   });
 
-  return _newsFeedStore;
+  if (typeof module !== 'undefined') {
+    module.exports = _newsFeedStore;
+  }
+  
+  window.NewsFeedStore = _newsFeedStore;
 })();
-
-if (typeof module !== 'undefined') {
-  module.exports = NewsFeedStore;
-}

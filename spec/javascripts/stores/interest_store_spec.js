@@ -1,8 +1,7 @@
 //= require spec_helper
 //= require underscore
-//= require dispatcher
-//= require stores/store
-//= require stores/interest_store
+//= require react
+//= require components
 
 describe('InterestStore', function() {
   after(function(done) {

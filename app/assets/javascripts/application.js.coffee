@@ -10,6 +10,7 @@
 #= require jquery-cookie
 #= require jquery-autosize
 #= require jquery-timeago
+#= require spin.js
 #= require react
 #= require notify.js
 #= require zeroclipboard
@@ -22,9 +23,10 @@
 #= require_tree ./models
 #= require_tree ./collections
 #= require_tree ./views
-#= require_tree ./components
 #= require ./textcomplete
 #= require ./polyfills
+#= require xhr
+#= require components
 
 class window.Application
   _.extend(@.prototype, Backbone.Events)

@@ -1,7 +1,8 @@
-//= require dispatcher
-//= require stores/store
+var xhr = require('../xhr');
+var Dispatcher = require('../dispatcher');
+var Store = require('../stores/store');
 
-var NewsFeedUsersStore = (function() {
+(function() {
   var _users = {};
 
   var _store = Object.create(Store);
@@ -28,9 +29,9 @@ var NewsFeedUsersStore = (function() {
     }
   });
 
-  return _newsFeedUsersStore;
-})();
+  if (typeof module !== 'undefined') {
+    module.exports = _newsFeedUsersStore;
+  }
 
-if (typeof module !== 'undefined') {
-  module.exports = NewsFeedUsersStore;
-}
+  window.NewsFeedUsersStore = _newsFeedUsersStore;
+})();
