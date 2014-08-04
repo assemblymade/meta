@@ -141,11 +141,11 @@ var NewsFeedStore = (function() {
           var story = unread[j];
 
           if (!story.last_read_at) {
-            // we do actually want the id, not they key, here
+            // we do actually want the id here, not the key
             var storyId = story.id;
             var url = '/user/tracking/' + storyId;
 
-            window.xhr.get(url, self.markedAsRead(storyId, true, (j + 1 === l)))
+            window.xhr.get(url, self.markedAsRead(storyId, true, (j + 1 === l)));
           }
         })(i);
       }

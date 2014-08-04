@@ -40,9 +40,9 @@ describe('Sign Up View', function() {
     var noop = function() {};
 
     beforeEach(function(done) {
-      this.fixture = fixture.load('sign_up_form.html', true)
+      this.fixture = fixture.load('sign_up_form.html', true);
       s = new SignUpView();
-      done()
+      done();
     });
 
     it('signs in with Facebook', function(done) {

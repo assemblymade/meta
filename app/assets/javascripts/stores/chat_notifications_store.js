@@ -13,9 +13,10 @@ var ChatNotificationsStore = (function() {
   var _deferred = [];
 
   var _store = Object.create(Store);
+  var noop = function() {};
 
   var _notificationsStore = _.extend(_store, {
-    'chat:acknowledge': function(timestamp) {},
+    'chat:acknowledge': noop,
 
     'chat:markRoomAsRead': function(payload) {
       window.xhr.noCsrfGet(payload.readraptor_url);
