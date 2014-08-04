@@ -1,6 +1,8 @@
 <%= f.hidden_field :type, value: User::DebitPaymentOption %>
 
-<p>Current card: XXXX-XXXX-XXXX-<%= current_user.payment_option.last4 %></p>
+<% if current_user.payment_option.last4 %>
+  <p>Current card: XXXX-XXXX-XXXX-<%= current_user.payment_option.last4 %></p>
+<% end %>
 
 <script
   src="https://checkout.stripe.com/checkout.js"
