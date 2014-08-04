@@ -1,8 +1,9 @@
 en:
-  product:
-    chat:
-      inception:
-        - This is the very beginning. Where it all started. The B in the Big Bang. The C in the Cambrian Explosion.
+  payment:
+    bitcoin:
+      title: Bitcoin Payment Settings
+    debit-card:
+      title: Debit Card Payment Settings
 
   tooltips:
     bounty:

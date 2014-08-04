@@ -87,8 +87,10 @@ ASM::Application.routes.draw do
     get    '/settings/profile' => 'users/profiles#edit', :as => :edit_user_profile
     get    '/settings/notifications' => "users/notifications#edit", :as => :settings_notifications
     patch  '/settings/notifications' => "users/notifications#update"
-    get    '/settings/payment' => 'users/profiles#payment', :as => :user_payment
-    patch  '/settings/payment' => 'users/profiles#update'
+
+    namespace :users, path: 'settings' do
+      resource :payment_option, only: [:show, :create, :update]
+    end
 
     namespace :users, path: 'settings' do
       resource :tax_info, only: [:show, :create, :update] do
@@ -102,12 +104,6 @@ ASM::Application.routes.draw do
     get    '/users/confirmation/new' => 'users/confirmations#new', :as => :new_user_confirmation
     get    '/users/confirmation' => 'users/confirmations#show', :as => :user_confirmation
     post   '/users/confirmation' => 'users/confirmations#create'
-
-    # passwords
-    # post   '/users/password' => 'users/passwords#create', :as => :user_password
-    # get    '/users/password/edit' => 'users/passwords#edit', :as => :edit_user_password
-    # patch  '/users/password' => 'users/passwords#update'
-    # put    '/users/password' => 'users/passwords#update'
 
     get    '/users/:id' => 'users#show', :as => :user
     patch  '/users/:id' => 'users#update'

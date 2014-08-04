@@ -1,0 +1,31 @@
+<% title 'Payment option' %>
+<%= render 'shared/navbar' %>
+
+<div class="page page-flat">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-xs-3">
+        <%= render 'users/card', user: @user %>
+      </div>
+
+      <div class="col-md-9 col-xs-9">
+        <div class="page-header">
+          <h2 class="page-header-title">Payment Option</h2>
+        </div>
+
+        <% if %w(bitcoin debit-card).include? params[:payment_option] %>
+          <%= render 'form', title: I18n.t("payment.#{params[:payment_option]}.title") %>
+        <% else %>
+          <div>
+            <a href="<%= users_payment_option_path(payment_option: 'bitcoin')%>">Pay me via Bitcoin (Available worldwide)</a>
+          </div>
+          <div>
+            <a href="<%= users_payment_option_path(payment_option: 'debit-card')%>">Pay me via my Debit Card (US bank accounts)</a>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

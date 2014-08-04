@@ -106,8 +106,10 @@ group :development do
 end
 
 group :test do
-  gem 'codeclimate-test-reporter', require: nil
   gem 'autotest-standalone'
+  gem 'codeclimate-test-reporter', require: nil
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :production do
