@@ -5323,18 +5323,6 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       _stories[story.key] = story;
     },
 
-    addStories: function(stories) {
-      if (!stories) {
-        return;
-      }
-
-      for (var i = 0, l = stories.length; i < l; i++) {
-        var story = stories[i];
-
-        _stories[story.key] = story;
-      }
-    },
-
     applyReadTimes: function(data, stories) {
       for (var i = 0, l = data.length; i < l; i++) {
         var datum = data[i];
@@ -5345,39 +5333,34 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       }
     },
 
-    handleFetchedStories: function(method) {
-      var self = this;
-
-      return function(err, data) {
-        if (err) {
-          return console.error(err);
-        }
-
-        try {
-          data = JSON.parse(data);
-        } catch (e) {
-          return console.error(e);
-        }
-
-        var users = data.users;
-        var stories = data.stories;
-
-        NewsFeedUsersStore.setUsers(users);
-
-        var url = READ_RAPTOR_URL +
-          '/readers/' +
-          app.currentUser().get('id') +
-          '/articles?' +
-          _.map(
-            stories,
-            function(s) {
-              return 'key=Story_' + s.id
-            }
-          ).join('&')
-
-        window.xhr.noCsrfGet(url, self.handleReadRaptor(stories, method));
+    handleFetchedStories: function(err, data) {
+      if (err) {
+        return console.error(err);
       }
 
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        return console.error(e);
+      }
+
+      var users = data.users;
+      var stories = data.stories;
+
+      NewsFeedUsersStore.setUsers(users);
+
+      var url = READ_RAPTOR_URL +
+        '/readers/' +
+        app.currentUser().get('id') +
+        '/articles?' +
+        _.map(
+          stories,
+          function(s) {
+            return 'key=Story_' + s.id
+          }
+        ).join('&')
+
+      window.xhr.noCsrfGet(url, this.handleReadRaptor(stories));
     },
 
     handleReadRaptor: function(stories, method) {
@@ -5406,7 +5389,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
         );
 
         self.applyReadTimes(data, stories);
-        self[method](stories);
+        self.setStories(stories);
         self.emit(_deferred.pop());
       };
     },
@@ -5414,11 +5397,11 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
     'newsFeed:acknowledge': function(timestamp) {},
 
     'newsFeed:fetchStories': function(url) {
-      window.xhr.get(url, this.handleFetchedStories('setStories'));
+      window.xhr.get(url, this.handleFetchedStories.bind(this));
     },
 
     'newsFeed:fetchMoreStories': function(url) {
-      window.xhr.get(url, this.handleFetchedStories('addStories'));
+      window.xhr.get(url, this.handleFetchedStories.bind(this));
     },
 
     'newsFeed:markAsRead': function(storyId) {
@@ -5524,7 +5507,9 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
 
       _optimisticStories = {};
 
-      _stories = stories;
+      for (var s in stories) {
+        _stories[s] = stories[s];
+      }
     },
 
     removeStory: function(key) {
