@@ -40,18 +40,16 @@
 
       var request = new XMLHttpRequest();
 
-      request.open(method, path, true);
-      request.setRequestHeader('Accept', 'application/json');
-      request.send(data);
-
       request.onload = function() {
-        // console.log(request.responseText);
         if (request.status >= 200 && request.status < 400) {
           return callback(null, request.responseText);
         }
 
         callback(new Error(request.responseText));
-      }
+      };
+
+      request.open(method, path, true);
+      request.send(data);
     }
   };
 

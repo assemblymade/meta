@@ -18,7 +18,9 @@ var Store = require('../stores/store');
     'chat:acknowledge': noop,
 
     'chat:markRoomAsRead': function(payload) {
-      window.xhr.noCsrfGet(payload.readraptor_url);
+      // We need to append the timestamp to bypass
+      // the browser's cache
+      window.xhr.noCsrfGet(payload.readraptor_url + '?' + Date.now());
 
       _optimisticallyUpdatedChatRooms[payload.id] = {
         last_read_at: moment().unix()
