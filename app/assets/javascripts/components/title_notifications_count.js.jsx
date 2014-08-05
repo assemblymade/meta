@@ -28,8 +28,8 @@ var NewsFeedStore = require('../stores/news_feed_store');
     },
 
     setTitle: function() {
-      var chatCount = ChatNotificationsStore.getUnreadCount(localStorage.chatAck) || 0;
-      var newsCount = NewsFeedStore.getUnreadCount(localStorage.newsFeedAck) || 0;
+      var chatCount = ChatNotificationsStore.getUnreadCount(parseInt(localStorage.chatAck, 10)) || 0;
+      var newsCount = NewsFeedStore.getUnreadCount(parseInt(localStorage.newsFeedAck, 10)) || 0;
 
       var total = chatCount + newsCount;
 

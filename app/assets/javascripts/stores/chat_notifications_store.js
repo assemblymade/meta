@@ -35,9 +35,13 @@ var Store = require('../stores/store');
       var count = _.countBy(
         _chatRooms,
         function(entry) {
+          var updated = entry.updated - entry.last_read_at > 5;
+
           if (acknowledgedAt) {
-            return entry.updated > acknowledgedAt;
+            return updated && entry.updated > acknowledgedAt;
           }
+
+          return updated;
         }
       );
 
@@ -127,7 +131,12 @@ var Store = require('../stores/store');
       var keys = _.keys(_optimisticallyUpdatedChatRooms)
       for (var i = 0; i < keys.length; i++) {
         if (_chatRooms[keys[i]]) {
-          _chatRooms[keys[i]] = _.extend(_chatRooms[keys[i]], _optimisticallyUpdatedChatRooms[keys[i]])
+          /** FIXME: Readraptor only updates last_read_at on page load
+          // console.log('updating last read?');
+          // console.log(_chatRooms[keys[i]])
+          _chatRooms[keys[i]].last_read_at = _optimisticallyUpdatedChatRooms[keys[i]].last_read_at;
+          // console.log('updated last read?');
+          // console.log(_chatRooms[keys[i]])
         }
       }
 
@@ -147,7 +156,15 @@ var Store = require('../stores/store');
         return null;
       }
 
-      return _.max(_.values(_chatRooms), func.dot('updated'));
+      return _.max(
+        _.filter(
+          _.values(_chatRooms),
+          function filterRooms(room) {
+            return room.id !== (app.chatRoom || {}).id;
+          }
+        ),
+        func.dot('updated')
+      );
     },
   });
 

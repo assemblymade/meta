@@ -36,11 +36,7 @@ var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
     },
 
     badgeCount: function() {
-      if (this.latestChatUpdate() > this.state.acknowledgedAt) {
-        return 1;
-      }
-
-      return 0;
+      return this.shouldRead() ? ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt) : 0;
     },
 
     componentWillMount: function() {
@@ -66,13 +62,20 @@ var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
       });
     },
 
-    latestChatUpdate: function() {
+    shouldRead: function() {
       var chatRoom = ChatNotificationsStore.mostRecentlyUpdatedChatRoom();
+
+      return chatRoom && chatRoom.updated > chatRoom.last_read_at;
+    },
+
+    lastUpdatedAt: function() {
+      var chatRoom = ChatNotificationsStore.mostRecentlyUpdatedChatRoom();
+
       if (chatRoom) {
         return chatRoom.updated;
       }
 
-      return null;
+      return 0;
     },
 
     total: function() {

@@ -26,7 +26,7 @@
 
   if (typeof module !== 'undefined') {
     module.exports = DropdownTogglerMixin;
-  } else {
-    window.DropdownTogglerMixin = DropdownTogglerMixin;
   }
+
+  window.DropdownTogglerMixin = DropdownTogglerMixin;
 })();

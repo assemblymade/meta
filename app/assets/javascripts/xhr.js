@@ -45,6 +45,7 @@
       request.send(data);
 
       request.onload = function() {
+        // console.log(request.responseText);
         if (request.status >= 200 && request.status < 400) {
           return callback(null, request.responseText);
         }

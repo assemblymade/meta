@@ -34,7 +34,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
 
   if (typeof module !== 'undefined') {
     module.exports = NewsFeedMixin;
-  } else {
-    window.NewsFeedMixin = NewsFeedMixin;
   }
+
+  window.NewsFeedMixin = NewsFeedMixin;
 })();
