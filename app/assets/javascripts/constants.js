@@ -54,7 +54,8 @@
         READ_ALL: 'newsFeed:readAll',
         STORIES_FETCHED: 'newsFeed:storiesFetched',
         STORY_READ: 'newsFeed:storyRead'
-      }
+      },
+      MORE_STORIES_LENGTH: 20
     },
 
     NOTIFICATION_PREFERENCES_DROPDOWN: {

@@ -1842,6 +1842,14 @@ var Avatar = require('./avatar.js.jsx');
   var FullPageNewsFeed = React.createClass({displayName: 'FullPageNewsFeed',
     mixins: [NewsFeedMixin],
 
+    moreButton: function() {
+      if (this.state.showMore) {
+        return React.DOM.a({href: "#more", className: "btn btn-block", onClick: this.moreStories}, "More");
+      }
+
+      return null;
+    },
+
     render: function() {
       return (
         React.DOM.div({className: "sheet", style: { 'min-height': '600px'}}, 
@@ -1853,7 +1861,7 @@ var Avatar = require('./avatar.js.jsx');
             this.state.stories ? this.rows(this.state.stories) : null
           ), 
 
-          React.DOM.a({href: "#more", className: "btn btn-block", onClick: this.moreStories}, "More")
+          this.moreButton()
         )
       );
     },
@@ -4732,7 +4740,8 @@ var CONSTANTS = require('../constants');
         READ_ALL: 'newsFeed:readAll',
         STORIES_FETCHED: 'newsFeed:storiesFetched',
         STORY_READ: 'newsFeed:storyRead'
-      }
+      },
+      MORE_STORIES_LENGTH: 20
     },
 
     NOTIFICATION_PREFERENCES_DROPDOWN: {
@@ -4909,16 +4918,21 @@ var update = require('react/lib/update');
 
     getInitialState: function() {
       return {
-        stories: null
+        stories: null,
+        showMore: true
       };
     },
 
     getStories: function() {
       var self = this;
 
+      var oldStoriesCount = this.state.stories && this.state.stories.length;
+      var newStories = NewsFeedStore.getStories();
+
       this.setState({
-        stories: NewsFeedStore.getStories(),
-        actors: NewsFeedUsersStore.getUsers()
+        stories: newStories,
+        actors: NewsFeedUsersStore.getUsers(),
+        showMore: (newStories.length - oldStoriesCount >= NF.MORE_STORIES_LENGTH)
       }, function() {
         if (self.state.stories.length) {
           self.spinner.stop();
@@ -5347,7 +5361,9 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       var users = data.users;
       var stories = data.stories;
 
-      NewsFeedUsersStore.setUsers(users);
+      if (!_.isEmpty(users)) {
+        NewsFeedUsersStore.setUsers(users);
+      }
 
       var url = READ_RAPTOR_URL +
         '/readers/' +

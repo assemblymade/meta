@@ -12,6 +12,14 @@ var Avatar = require('./avatar.js.jsx');
   var FullPageNewsFeed = React.createClass({
     mixins: [NewsFeedMixin],
 
+    moreButton: function() {
+      if (this.state.showMore) {
+        return <a href="#more" className="btn btn-block" onClick={this.moreStories}>More</a>;
+      }
+
+      return null;
+    },
+
     render: function() {
       return (
         <div className="sheet" style={{ 'min-height': '600px' }}>
@@ -23,7 +31,7 @@ var Avatar = require('./avatar.js.jsx');
             {this.state.stories ? this.rows(this.state.stories) : null}
           </div>
 
-          <a href="#more" className="btn btn-block" onClick={this.moreStories}>More</a>
+          {this.moreButton()}
         </div>
       );
     },

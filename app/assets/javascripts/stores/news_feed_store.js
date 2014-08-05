@@ -48,7 +48,9 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       var users = data.users;
       var stories = data.stories;
 
-      NewsFeedUsersStore.setUsers(users);
+      if (!_.isEmpty(users)) {
+        NewsFeedUsersStore.setUsers(users);
+      }
 
       var url = READ_RAPTOR_URL +
         '/readers/' +

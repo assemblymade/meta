@@ -41,16 +41,21 @@ var update = require('react/lib/update');
 
     getInitialState: function() {
       return {
-        stories: null
+        stories: null,
+        showMore: true
       };
     },
 
     getStories: function() {
       var self = this;
 
+      var oldStoriesCount = this.state.stories && this.state.stories.length;
+      var newStories = NewsFeedStore.getStories();
+
       this.setState({
-        stories: NewsFeedStore.getStories(),
-        actors: NewsFeedUsersStore.getUsers()
+        stories: newStories,
+        actors: NewsFeedUsersStore.getUsers(),
+        showMore: (newStories.length - oldStoriesCount >= NF.MORE_STORIES_LENGTH)
       }, function() {
         if (self.state.stories.length) {
           self.spinner.stop();
