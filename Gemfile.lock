@@ -157,7 +157,6 @@ GEM
     github-markdown (0.6.4)
     hashie (2.0.5)
     hike (1.2.3)
-    hodel_3000_compliant_logger (0.1.1)
     hogan_assets (1.6.0)
       execjs (>= 1.2.9)
       sprockets (>= 2.0.3)
@@ -226,9 +225,6 @@ GEM
       jwt (~> 0.1.4)
       multi_json (~> 1.0)
       rack (~> 1.2)
-    oink (0.10.1)
-      activerecord
-      hodel_3000_compliant_logger
     omniauth (1.1.4)
       hashie (>= 1.2, < 3)
       rack
@@ -473,7 +469,6 @@ DEPENDENCIES
   multi_fetch_fragments
   mustache
   newrelic_rpm
-  oink
   omniauth-facebook (= 1.4.0)
   omniauth-github
   omniauth-twitter
