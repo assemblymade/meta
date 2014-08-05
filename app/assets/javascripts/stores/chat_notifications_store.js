@@ -35,7 +35,7 @@ var Store = require('../stores/store');
       var count = _.countBy(
         _chatRooms,
         function(entry) {
-          var updated = entry.updated - entry.last_read_at > 5;
+          var updated = entry.updated > entry.last_read_at;
 
           if (acknowledgedAt) {
             return updated && entry.updated > acknowledgedAt;

@@ -98,13 +98,16 @@ describe('ChatNotificationsStore', function() {
   it('gets the unread chat count', function() {
     var chatRooms = [
       {
-        updated: 123
+        updated: 123,
+        last_read_at: 123
       },
       {
-        updated: 789
+        updated: 789,
+        last_read_at: 123
       },
       {
-        updated: 456
+        updated: 456,
+        last_read_at: 123
       }
     ];
 

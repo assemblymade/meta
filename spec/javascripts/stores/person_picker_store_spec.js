@@ -4,26 +4,23 @@
 //= require components
 
 describe('PersonPickerStore', function() {
-  after(function(done) {
+  after(function() {
     Dispatcher.removeAll();
 
-    done();
   });
 
-  beforeEach(function(done) {
+  beforeEach(function() {
     PersonPickerStore.removeAllPeople();
 
-    done();
   });
 
-  it('adds a user', function(done) {
+  it('adds a user', function() {
     PersonPickerStore.addPerson({ user: { username: 'rigby' } });
 
     expect(PersonPickerStore.getPeople()).to.eql([{ username: 'rigby' }]);
-    done();
   });
 
-  it('removes a user', function(done) {
+  it('removes a user', function() {
     PersonPickerStore.addPerson({ user: { username: 'rigby' } });
 
     expect(PersonPickerStore.getPeople()).to.eql([{ username: 'rigby' }]);
@@ -31,16 +28,14 @@ describe('PersonPickerStore', function() {
     PersonPickerStore.removePerson({ user: { username: 'rigby' } });
 
     expect(PersonPickerStore.getPeople()).to.eql([]);
-    done();
   });
 
-  it('updates a user', function(done) {
+  it('updates a user', function() {
     PersonPickerStore.addPerson({ user: { username: 'rigby' } });
     expect(PersonPickerStore.getPeople()).to.eql([{ username: 'rigby' }]);
 
     PersonPickerStore.updatePerson({ user: { username: 'rigby', toys: ['shoes'] } });
 
     expect(PersonPickerStore.getPeople()).to.eql([{ username: 'rigby', toys: ['shoes'] }]);
-    done();
   });
 });

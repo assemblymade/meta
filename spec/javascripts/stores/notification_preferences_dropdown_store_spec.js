@@ -6,19 +6,15 @@
 fixture.preload('readraptor_meta_tag.html');
 
 describe('NotificationPreferencesDropdownStore', function() {
-  after(function(done) {
+  after(function() {
     Dispatcher.removeAll();
-
-    done();
   });
 
-  beforeEach(function(done) {
+  beforeEach(function() {
     NotificationPreferencesDropdownStore.removeSelected();
-
-    done();
   });
 
-  it('updates the selected option', function(done) {
+  it('updates the selected option', function() {
     sinon.stub(window.xhr, 'request', function(method, path, data, callback) {
       return true;
     });
@@ -28,10 +24,9 @@ describe('NotificationPreferencesDropdownStore', function() {
     expect(NotificationPreferencesDropdownStore.getSelected()).to.eql('rugby');
 
     window.xhr.request.restore();
-    done();
   });
 
-  it('resets the selected option', function(done) {
+  it('resets the selected option', function() {
     sinon.stub(window.xhr, 'request', function(method, path, data, callback) {
       return true;
     });
@@ -45,6 +40,5 @@ describe('NotificationPreferencesDropdownStore', function() {
     expect(NotificationPreferencesDropdownStore.getSelected()).to.eql(undefined);
 
     window.xhr.request.restore();
-    done();
   });
 });

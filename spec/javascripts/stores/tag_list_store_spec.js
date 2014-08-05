@@ -4,31 +4,24 @@
 //= require components
 
 describe('TagListStore', function() {
-  before(function(done) {
+  before(function() {
     Dispatcher.removeAll();
-    done();
   });
 
-  afterEach(function(done) {
+  afterEach(function() {
     TagListStore.removeAllTags();
-
-    done();
   });
 
-  it('adds a tag', function(done) {
+  it('adds a tag', function() {
     TagListStore.addTag({ tag: 'foo' });
     expect(TagListStore.getTags()).to.include('foo');
-
-    done();
   });
 
-  it('removes a tag', function(done) {
+  it('removes a tag', function() {
     TagListStore.addTag({ tag: 'foo' });
     expect(TagListStore.getTags()).to.include('foo');
 
     TagListStore.removeTag({ tag: 'foo' });
     expect(TagListStore.getTags()).to.eql([]);
-
-    done();
   });
 });

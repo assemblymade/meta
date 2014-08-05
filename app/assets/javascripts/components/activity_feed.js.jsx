@@ -14,7 +14,7 @@
 
   var Entry = React.createClass({
     render: function() {
-      return <div className="row">@{this.props.actor.username} {this.props.verb} {this.body()}</div>
+      return <div className="row" key={this.props.actor.id}>@{this.props.actor.username} {this.props.verb} {this.body()}</div>
     },
 
     body: function() {

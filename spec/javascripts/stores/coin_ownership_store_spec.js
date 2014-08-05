@@ -4,9 +4,8 @@
 //= require components
 
 describe('CoinOwnershipStore', function() {
-  after(function(done) {
+  after(function() {
     Dispatcher.removeAll();
-    done();
   });
 
   var usersAndOwnerships = [
@@ -28,20 +27,17 @@ describe('CoinOwnershipStore', function() {
     }
   ];
 
-  beforeEach(function(done) {
+  beforeEach(function() {
     CoinOwnershipStore.removeAllUsers();
-    done();
   });
 
-  it('adds a user', function(done) {
+  it('adds a user', function() {
     CoinOwnershipStore.addUser({ userAndCoins: { username: 'nancy', ownership: 12 } });
 
     expect(CoinOwnershipStore.getUsers()).to.eql([{ username: 'nancy', ownership: 12 }]);
-
-    done();
   });
 
-  it('removes a user', function(done) {
+  it('removes a user', function() {
     CoinOwnershipStore.setUsers(_.clone(usersAndOwnerships));
     CoinOwnershipStore.removeUser({ userAndCoins: { username: 'lou', ownership: 0 } });
     expect(CoinOwnershipStore.getUsers()).to.eql([
@@ -60,11 +56,9 @@ describe('CoinOwnershipStore', function() {
         ownership: 8
       }
     ]);
-
-    done();
   });
 
-  it('updates a user', function(done) {
+  it('updates a user', function() {
     CoinOwnershipStore.setUsers(_.clone(usersAndOwnerships));
 
     CoinOwnershipStore.updateUser({ userAndCoins: { username: 'lou', ownership: 10 } });
@@ -90,7 +84,5 @@ describe('CoinOwnershipStore', function() {
         ownership: 8
       }
     ]);
-
-    done();
   });
 });

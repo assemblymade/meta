@@ -15,7 +15,7 @@
 
   var Entry = React.createClass({displayName: 'Entry',
     render: function() {
-      return React.DOM.div({className: "row"}, "@", this.props.actor.username, " ", this.props.verb, " ", this.body())
+      return React.DOM.div({className: "row", key: this.props.actor.id}, "@", this.props.actor.username, " ", this.props.verb, " ", this.body())
     },
 
     body: function() {
@@ -3018,7 +3018,7 @@ var Avatar = require('./avatar.js.jsx');
           ), 
 
           React.DOM.li({className: "dropdown"}, 
-            React.DOM.a({href: "#", className: "dropdown-toggle", 'data-toggle': "dropdown"}, 
+            React.DOM.a({href: "#", className: "dropdown-toggle", 'data-toggle': "dropdown", key: 'navbar dropdown'}, 
               Avatar({user: this.props.user}), 
               React.DOM.span({className: "visible-xs-inline", style: { 'margin-left': '5px'}}, 
                 this.props.user.username
@@ -4989,7 +4989,7 @@ var Store = require('../stores/store');
       var count = _.countBy(
         _chatRooms,
         function(entry) {
-          var updated = entry.updated - entry.last_read_at > 5;
+          var updated = entry.updated > entry.last_read_at;
 
           if (acknowledgedAt) {
             return updated && entry.updated > acknowledgedAt;

@@ -4,9 +4,8 @@
 //= require components
 
 describe('PeopleStore', function() {
-  after(function(done) {
+  after(function() {
     Dispatcher.removeAll();
-    done();
   });
 
   var people = [
@@ -32,21 +31,18 @@ describe('PeopleStore', function() {
     }
   ];
 
-  it('stores an array of people', function(done) {
+  it('stores an array of people', function() {
     PeopleStore.setPeople(people);
     expect(PeopleStore.getPeople()).to.equal(people);
-
-    done();
   });
 
-  it('searches for a person and returns their index', function(done) {
+  it('searches for a person and returns their index', function() {
     PeopleStore.setPeople(people);
     var rick = PeopleStore.getPerson('Rick');
     expect(rick.user).to.eql({ username: 'Rick' });
-    done();
   });
 
-  it('removes a person', function(done) {
+  it('removes a person', function() {
     var p = _.clone(people);
     PeopleStore.setPeople(p);
     PeopleStore.removePerson('Bob');
@@ -67,11 +63,9 @@ describe('PeopleStore', function() {
         }
       }
     ]);
-
-    done();
   });
 
-  it('inserts a person', function(done) {
+  it('inserts a person', function() {
     var p = _.clone(people);
 
     PeopleStore.setPeople(p);
@@ -85,7 +79,5 @@ describe('PeopleStore', function() {
     p.push({ user: { username: 'Larry' } });
 
     expect(PeopleStore.getPeople()).to.eql(p);
-
-    done();
   });
 });
