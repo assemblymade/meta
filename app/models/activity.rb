@@ -11,6 +11,8 @@ class Activity < ActiveRecord::Base
   validates :subject, presence: true
   validates :target,  presence: true
 
+  after_commit :track_in_segment, on: :create
+
   attr_accessor :socket_id
 
   def self.publish!(opts)
@@ -26,6 +28,12 @@ class Activity < ActiveRecord::Base
 
   def self.auto_subscribe!(actor, target)
     Watching.auto_subscribe!(actor, target)
+  end
+
+  def track_in_segment
+    return if actor.staff?
+
+    TrackActivityCreated.perform_async(self.id)
   end
 
   # make this object tippable
