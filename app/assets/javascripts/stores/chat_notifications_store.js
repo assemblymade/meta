@@ -131,7 +131,7 @@ var Store = require('../stores/store');
       var keys = _.keys(_optimisticallyUpdatedChatRooms)
       for (var i = 0; i < keys.length; i++) {
         if (_chatRooms[keys[i]]) {
-          /** FIXME: Readraptor only updates last_read_at on page load
+          /** FIXME: Readraptor only updates last_read_at on page load */
           // console.log('updating last read?');
           // console.log(_chatRooms[keys[i]])
           _chatRooms[keys[i]].last_read_at = _optimisticallyUpdatedChatRooms[keys[i]].last_read_at;
