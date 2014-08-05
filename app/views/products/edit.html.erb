@@ -118,11 +118,25 @@
           <%= f.label :competitive_advantage, 'Competitive Advantage', class: 'form-label' %>
           <div class="row">
             <div class="col-md-8">
-              <%= f.text_area :monetization_strategy, class: 'form-control', data: { autosize: '' }, rows: 2 %>
+              <%= f.text_area :competitive_advantage, class: 'form-control', data: { autosize: '' }, rows: 2 %>
             </div>
             <div class="col-md-4">
               <p class="alpha help-block">
                 What advantage do you have over these competitors that is uniquely yours?
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :monetization_strategy, 'Monetization Strategy', class: 'form-label' %>
+          <div class="row">
+            <div class="col-md-8">
+              <%= f.text_area :monetization_strategy, class: 'form-control', data: { autosize: '' }, rows: 2 %>
+            </div>
+            <div class="col-md-4">
+              <p class="alpha help-block">
+                How should this product be monetized?
               </p>
             </div>
           </div>
