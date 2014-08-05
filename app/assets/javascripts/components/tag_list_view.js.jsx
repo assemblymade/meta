@@ -4,7 +4,7 @@ var CONSTANTS = require('../constants');
 var TagListStore = require('../stores/tag_list_store');
 
 (function() {
-  var TC = CONSTANTS.TEXT_COMPLETE;
+  var TC = CONSTANTS.TYPEAHEAD;
   var TAG_LIST = CONSTANTS.TAG_LIST;
 
   var TagList = React.createClass({

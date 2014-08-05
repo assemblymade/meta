@@ -18,9 +18,7 @@ var Store = require('../stores/store');
     'chat:acknowledge': noop,
 
     'chat:markRoomAsRead': function(payload) {
-      // We need to append the timestamp to bypass
-      // the browser's cache
-      window.xhr.noCsrfGet(payload.readraptor_url + '?' + Date.now());
+      window.xhr.noCsrfGet(payload.readraptor_url);
 
       _optimisticallyUpdatedChatRooms[payload.id] = {
         last_read_at: moment().unix()
@@ -133,12 +131,7 @@ var Store = require('../stores/store');
       var keys = _.keys(_optimisticallyUpdatedChatRooms)
       for (var i = 0; i < keys.length; i++) {
         if (_chatRooms[keys[i]]) {
-          /** FIXME: Readraptor only updates last_read_at on page load */
-          // console.log('updating last read?');
-          // console.log(_chatRooms[keys[i]])
           _chatRooms[keys[i]].last_read_at = _optimisticallyUpdatedChatRooms[keys[i]].last_read_at;
-          // console.log('updated last read?');
-          // console.log(_chatRooms[keys[i]])
         }
       }
 

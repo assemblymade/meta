@@ -90,7 +90,7 @@
       }
     },
 
-    TEXT_COMPLETE: {
+    TYPEAHEAD: {
       ACTIONS: {
         ADD_TAG: 'addTag'
       },

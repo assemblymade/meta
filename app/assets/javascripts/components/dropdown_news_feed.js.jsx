@@ -7,35 +7,10 @@ var NewsFeedStore = require('../stores/news_feed_store');
 var Avatar = require('./avatar.js.jsx');
 
 (function() {
-
   var NF = CONSTANTS.NEWS_FEED;
 
   var DropdownNewsFeed = React.createClass({
     mixins: [NewsFeedMixin],
-
-    componentWillMount: function() {
-      NewsFeedStore.addChangeListener(this.getStories);
-
-      this.fetchNewsFeed(this.props.url);
-
-      this.onPush(function() {
-        this.fetchNewsFeed();
-      }.bind(this));
-    },
-
-    fetchNewsFeed: _.debounce(function() {
-      Dispatcher.dispatch({
-        action: NF.ACTIONS.FETCH_STORIES,
-        event: NF.EVENTS.STORIES_FETCHED,
-        data: this.props.url
-      });
-    }, 1000),
-
-    getInitialState: function() {
-      return {
-        stories: null
-      };
-    },
 
     markAllAsRead: function() {
       Dispatcher.dispatch({
@@ -43,13 +18,6 @@ var Avatar = require('./avatar.js.jsx');
         action: NF.ACTIONS.MARK_ALL_AS_READ,
         data: null
       });
-    },
-
-    onPush: function(fn) {
-      if (window.pusher) {
-        channel = window.pusher.subscribe('@' + this.props.username);
-        channel.bind_all(fn);
-      }
     },
 
     render: function() {
@@ -72,26 +40,23 @@ var Avatar = require('./avatar.js.jsx');
           <li>
             <a href='/notifications' className="text-small">All Notifications</a>
           </li>
+
         </ul>
       );
     },
 
     rows: function(stories) {
-      var rows = [];
+      var self = this;
 
-      for (var i = 0, l = stories.length; i < l; i++) {
-        if (i > 9) {
-          break;
-        }
-
-        rows.push(
-          <Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />
-        );
-      }
+      stories.sort(function(a, b) {
+        return (b.updated - a.updated);
+      });
 
       return (
         <div className="list-group" style={{ 'max-height': '300px', 'min-height': '50px' }}>
-          {rows}
+          { _.map(this.state.stories, function(story) {
+            return <Entry key={story.id} story={story} actors={self.state.actors} fullPage={false} />;
+          }) }
         </div>
       );
     },
@@ -105,7 +70,7 @@ var Avatar = require('./avatar.js.jsx');
   var Entry = React.createClass({
     actors: function() {
       return _.map(
-        this.props.story.actor_ids,
+        this.state.story.actor_ids,
         function(actorId) {
           return _.findWhere(this.props.actors, { id: actorId })
         }.bind(this)
@@ -113,13 +78,13 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     body: function() {
-      var target = this.props.story.activities[0].target;
+      var target = this.state.story.activities[0].target;
 
       return (
         <span>
-          {this.verbMap[this.props.story.verb]}
+          {this.verbMap[this.state.story.verb]}
           <strong>
-            {this.subjectMap[this.props.story.subject_type].call(this, target)}
+            {this.subjectMap[this.state.story.subject_type].call(this, target)}
           </strong>
           {this.product()}
         </span>
@@ -128,7 +93,7 @@ var Avatar = require('./avatar.js.jsx');
 
     componentDidMount: function() {
       if (this.refs.body) {
-        this.refs.body.getDOMNode().innerHTML = this.props.story.subject.body_html;
+        this.refs.body.getDOMNode().innerHTML = this.state.story.subject.body_html;
       }
     },
 
@@ -151,12 +116,10 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     markAsRead: function() {
-      // FIXME: This method shouldn't work this way; use the Dispatcher
-      var story = this.state.story;
-      story.last_read_at = moment().unix();
-
-      this.setState({
-        story: story
+      Dispatcher.dispatch({
+        event: NF.EVENTS.READ,
+        action: NF.ACTIONS.MARK_AS_READ,
+        data: this.props.story.id
       });
     },
 
@@ -170,7 +133,7 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     preview: function() {
-      var body_preview = this.props.story.body_preview;
+      var body_preview = this.state.story.body_preview;
 
       return (
         <p className='text-muted' style={{ 'text-overflow': 'ellipsis' }}>
@@ -180,7 +143,7 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     product: function() {
-      var product = this.props.story.product;
+      var product = this.state.story.product;
 
       return ' in ' + product.name;
     },
@@ -190,12 +153,12 @@ var Avatar = require('./avatar.js.jsx');
 
       var classes = React.addons.classSet({
         'entry-read': this.isRead(),
-        'entry-unread': !this.isRead(),
+        'entry-unread': !this.isRead()
       });
 
       return (
         <a className={'list-group-item ' + classes}
-            href={this.props.story.url}
+            href={this.state.story.url}
             style={{ 'font-size': '14px' }}
             onClick={this.state.story.last_read_at ? null : this.markAsRead}>
 
@@ -236,7 +199,7 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     timestamp: function() {
-      return moment(this.props.story.created).format("ddd, hA")
+      return moment(this.state.story.created).format("ddd, hA")
     },
 
     verbMap: {

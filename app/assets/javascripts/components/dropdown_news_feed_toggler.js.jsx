@@ -32,11 +32,7 @@ var NewsFeedStore = require('../stores/news_feed_store');
     },
 
     badgeCount: function() {
-      if (this.latestStoryTimestamp() > this.state.acknowledgedAt) {
-        return NewsFeedStore.getUnreadCount(this.state.acknowledgedAt);
-      }
-
-      return 0;
+      return NewsFeedStore.getUnreadCount(this.state.acknowledgedAt);
     },
 
     componentWillMount: function() {

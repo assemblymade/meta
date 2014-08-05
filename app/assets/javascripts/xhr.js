@@ -48,7 +48,8 @@
         callback(new Error(request.responseText));
       };
 
-      request.open(method, path, true);
+      // bypass the browser's cache: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache
+      request.open(method, path + ((/\?/).test(path) ? "&" : "?") + (new Date()).getTime(), true);
       request.send(data);
     }
   };

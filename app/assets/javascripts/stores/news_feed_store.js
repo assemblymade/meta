@@ -130,23 +130,17 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
 
     'newsFeed:markAllAsRead': function() {
       var unread = _.filter(_stories, function(story) {
-        return story.last_read_at == null;
+        return story.last_read_at === 0;
       });
 
       var self = this;
 
       for (var i = 0, l = unread.length; i < l; i++) {
-        (function(j) {
-          var story = unread[j];
-
-          if (!story.last_read_at) {
-            // we do actually want the id here, not the key
-            var storyId = story.id;
-            var url = '/user/tracking/' + storyId;
-
-            window.xhr.get(url, self.markedAsRead(storyId, true, (j + 1 === l)));
-          }
-        })(i);
+        var story = unread[i];
+        // we do actually want the id here, not the key
+        var url = story.url;
+        // and we want the key here
+        window.xhr.get(url, self.markedAsRead(story.key, true, (i + 1 === l)));
       }
     },
 
@@ -163,7 +157,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       this.emit(_deferred.pop());
     },
 
-    markedAsRead: function(storyId, wait, ready) {
+    markedAsRead: function(storyKey, wait, ready) {
       var self = this;
 
       return function markedAsRead(err, data) {
@@ -171,10 +165,12 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
           return console.error(err);
         }
 
-        var story = self.getStory(storyId);
+        var story = self.getStory(storyKey);
 
         // FIXME: Use the value from Readraptor
         story.last_read_at = moment().unix();
+
+        self.setStory(story);
 
         if (!wait) {
           return self.emit(_deferred.pop());
@@ -189,14 +185,8 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       }
     },
 
-    getStory: function(id) {
-      var index = _searchStories(id);
-
-      if (index > -1) {
-        return _stories[index];
-      }
-
-      return null;
+    getStory: function(key) {
+      return _stories[key];
     },
 
     getStories: function() {
@@ -214,12 +204,16 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
         _stories,
         function(entry) {
           if (timestamp) {
-            return entry.updated > timestamp
+            return entry.updated > entry.last_read_at && entry.updated > timestamp;
           }
         }
       );
 
       return count.true || 0;
+    },
+
+    setStory: function(story) {
+      _stories[story.key] = story;
     },
 
     setStories: function(stories) {
@@ -234,28 +228,14 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       _stories = stories;
     },
 
-    removeStory: function(id) {
-      var index = _searchStories(id);
-
-      if (index > -1) {
-        _stories.splice(index, 1);
-      }
+    removeStory: function(key) {
+      delete _stories[key];
     },
 
     removeAllStories: function() {
       _stories = [];
     }
   });
-
-  _searchStories = function(id) {
-    for (var i = 0, l = _stories.length; i < l; i++) {
-      if (_stories[i].id === id) {
-        return i;
-      }
-    }
-
-    return -1;
-  }
 
   _store.dispatchIndex = Dispatcher.register(function(payload) {
     var action = payload.action;
@@ -279,6 +259,6 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
   if (typeof module !== 'undefined') {
     module.exports = _newsFeedStore;
   }
-  
+
   window.NewsFeedStore = _newsFeedStore;
 })();

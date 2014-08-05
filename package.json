@@ -5,7 +5,7 @@
   "scripts": {
     "test": "rake teaspoon",
     "bundle": "node_modules/.bin/browserify -r underscore -r spin.js -t reactify app/assets/javascripts/components/**.js.jsx -o app/assets/javascripts/components.js",
-    "watch": "node_modules/.bin/watchify -r underscore -r spin.js -t reactify app/assets/javascripts/components/**.js.jsx -o app/assets/javascripts/components.js -dv"
+    "watch": "node_modules/.bin/watchify -r underscore -r spin.js -t reactify app/assets/javascripts/components/**.js.jsx -o app/assets/javascripts/components.js -v"
   },
   "repository": {
     "type": "git",

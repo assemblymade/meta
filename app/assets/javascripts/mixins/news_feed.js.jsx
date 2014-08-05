@@ -1,9 +1,13 @@
 /** @jsx React.DOM */
 
+var CONSTANTS = require('../constants');
 var NewsFeedStore = require('../stores/news_feed_store');
 var NewsFeedUsersStore = require('../stores/news_feed_users_store');
+var update = require('react/lib/update');
 
 (function() {
+  var NF = CONSTANTS.NEWS_FEED;
+
   var NewsFeedMixin = {
     componentDidMount: function() {
       var target = this.refs.spinner.getDOMNode();
@@ -18,6 +22,29 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       target.appendChild(spinner.el);
     },
 
+    componentWillMount: function() {
+      NewsFeedStore.addChangeListener(this.getStories);
+      this.fetchNewsFeed();
+
+      this.onPush(function() {
+        this.fetchNewsFeed();
+      }.bind(this));
+    },
+
+    fetchNewsFeed: _.debounce(function() {
+      Dispatcher.dispatch({
+        action: NF.ACTIONS.FETCH_STORIES,
+        event: NF.EVENTS.STORIES_FETCHED,
+        data: this.props.url
+      });
+    }, 1000),
+
+    getInitialState: function() {
+      return {
+        stories: null
+      };
+    },
+
     getStories: function() {
       var self = this;
 
@@ -29,8 +56,25 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
           self.spinner.stop();
         }
       });
+    },
+
+    moreStories: function() {
+      var lastStory = this.state.stories[this.state.stories.length - 1];
+
+      Dispatcher.dispatch({
+        action: NF.ACTIONS.FETCH_MORE_STORIES,
+        event: NF.EVENTS.STORIES_FETCHED,
+        data: this.props.url + '?top_id=' + lastStory.id
+      });
+    },
+
+    onPush: function(fn) {
+      if (window.pusher) {
+        channel = window.pusher.subscribe('@' + this.props.username);
+        channel.bind_all(fn);
+      }
     }
-  }
+  };
 
   if (typeof module !== 'undefined') {
     module.exports = NewsFeedMixin;
