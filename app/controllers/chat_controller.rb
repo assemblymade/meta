@@ -47,7 +47,6 @@ class ChatController < ProductController
       )
 
       track_analytics(@event)
-      next_mission_if_complete!(@product.current_mission, current_user)
     end
 
     respond_with @activity, location: product_chat_path(@product), serializer: ActivitySerializer

@@ -33,7 +33,6 @@ class CommentsController < ProductController
       end
 
       track_analytics(@event)
-      next_mission_if_complete!(@product.current_mission, current_user)
     end
 
     respond_with @event, location: product_wip_path(@product, @wip), serializer: EventSerializer

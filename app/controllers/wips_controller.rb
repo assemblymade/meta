@@ -64,7 +64,6 @@ class WipsController < ProductController
       end
 
       Vote.clear_cache(current_user, @wip)
-      next_mission_if_complete!(@product.current_mission, current_user)
       @activity = Activities::Start.publish!(
         actor: current_user,
         subject: @wip,
