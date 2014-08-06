@@ -19,6 +19,10 @@ class ProfitReport < ActiveRecord::Base
   end
 
   def fee
-    FEE * profit
+    FEE * (profit - annuity)
+  end
+
+  def payable
+    user_balances.joins(:user).where('users.is_staff is false').sum(:earnings)
   end
 end

@@ -1,0 +1,50 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Product</th>
+      <th>Coins</th>
+      <th>Revenue</th>
+      <th>Expenses</th>
+      <th>Profit</th>
+      <th>Annuity</th>
+      <th>Fee</th>
+      <th>Earnable</th>
+      <th>Payable</th>
+    </tr>
+  </thead>
+
+  <tr>
+    <td><%= @report.end_at.strftime('%b %Y') %></td>
+    <td><%= @report.product.name %></td>
+    <td><%= number @report.coins %></td>
+    <td><%= currency @report.revenue %></td>
+    <td><%= currency @report.expenses %></td>
+    <td><%= currency @report.profit %></td>
+    <td><%= currency @report.annuity %></td>
+    <td><%= currency @report.fee %></td>
+    <td><%= currency @report.earnable %></td>
+    <td><%= currency @report.payable %></td>
+  </tr>
+</table>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Coins</th>
+      <th>Ownership</th>
+      <th>Earnings</th>
+    </tr>
+  </thead>
+
+  <% @report.user_balances.sort_by{|r| -r.earnings }.each do |balance| %>
+    <% c = 'text-muted' if balance.user.staff? %>
+    <tr>
+      <td class="<%= c %>"><%= balance.user.username %></td>
+      <td class="<%= c %>"><%= number balance.coins %></td>
+      <td class="<%= c %>"><%= percentage balance.ownership %></td>
+      <td class="<%= c %>"><%= currency balance.earnings %></td>
+    </tr>
+  <% end %>
+</table>
