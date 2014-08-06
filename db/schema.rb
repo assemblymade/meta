@@ -369,9 +369,10 @@ ActiveRecord::Schema.define(version: 20140806221918) do
   create_table "profit_reports", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid    "product_id", null: false
     t.date    "end_at",     null: false
-    t.integer "royalty",    null: false
     t.integer "revenue",    null: false
     t.integer "expenses",   null: false
+    t.integer "coins"
+    t.integer "annuity"
   end
 
   create_table "rooms", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -481,6 +482,13 @@ ActiveRecord::Schema.define(version: 20140806221918) do
   end
 
   add_index "uniques", ["distinct_id", "created_at"], name: "index_uniques_on_distinct_id_and_created_at", using: :btree
+
+  create_table "user_balance_entries", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid    "user_id",          null: false
+    t.uuid    "profit_report_id", null: false
+    t.integer "coins",            null: false
+    t.integer "earnings",         null: false
+  end
 
   create_table "user_payment_options", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid   "user_id",         null: false

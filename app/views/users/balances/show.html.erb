@@ -1,0 +1,64 @@
+<% title 'Balance' %>
+<%= render 'shared/navbar' %>
+
+<div class="page page-flat">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-xs-3">
+        <%= render 'users/card', user: @user %>
+      </div>
+
+      <div class="col-md-9 col-xs-9">
+        <div class="page-header">
+          <span class="pull-right text-small"><%= Time.now.strftime("%B %Y")%></span>
+          <h2 class="page-header-title">TPS Report</h2>
+        </div>
+
+        <h3>Your balance: <%= number_to_currency @total_balance / 100.0, precision: 2 %></h3>
+
+        <!-- <p>
+          <a href="#" class="btn btn-xs btn-default pull-right">Withdraw</a>
+        </p> -->
+
+        <table class="table">
+          <tr>
+            <th></th>
+            <th>Your Coins</th>
+            <th>Your Earnings</th>
+            <th>Product Income</th>
+          </tr>
+
+          <% @balances.each do |balance| %>
+            <% report = balance.profit_report %>
+            <tr>
+              <td>
+                <%= report.product.name %> <%= report.end_at.strftime('%b %Y') %>
+              </td>
+              <td>
+                <%= number_with_precision(balance.coins / 100.0, precision: 2, delimiter: ',') %>
+                (<%= number_to_percentage balance.coins / report.coins.to_f * 100, precision: 2 %>)
+              </td>
+              <td>
+                <%= number_to_currency balance.earnings / 100.0, precision: 2 %>
+              </td>
+              <td>
+                <%= number_to_currency report.earnable / 100.0, precision: 2 %>
+              </td>
+            </tr>
+          <% end %>
+
+          <% @withdrawals.each do |withdrawal| %>
+            <td colspan="3" class="bg-info">
+              05/10/2014 Withdrawal (#123489374)
+            </td>
+            <td class="bg-info">
+              $2,000.00
+            </td>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>
