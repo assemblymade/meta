@@ -1,6 +1,4 @@
 class WipsController < ProductController
-  include Missions::CompletionHelper
-
   respond_to :html, :json
 
   before_filter :set_no_cache, only: [:index]
@@ -140,7 +138,7 @@ class WipsController < ProductController
       if @product.tasks.won_by(@event.user).count == 1
         BadgeMailer.delay(queue: 'mailer').first_win(@event.id)
       end
-      TrackBountyAwarded.perform_async(@wip.id)
+      TrackBountyAwarded.perform_async(@wip.id) unless @event.user.staff?
     end
     redirect_to product_wip_path(@wip.product, @wip)
   end

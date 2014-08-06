@@ -60,8 +60,6 @@ class ChatController < ProductController
 
   # --
 
-  include Missions::CompletionHelper
-
   def track_analytics(event)
     track_params = EventAnalyticsSerializer.new(event, scope: current_user).as_json
     track_event event.class.analytics_name, track_params

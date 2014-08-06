@@ -1,6 +1,4 @@
 class CommentsController < ProductController
-  include Missions::CompletionHelper
-
   respond_to :html, :json
 
   before_action :authenticate_user!, :only => [:create]
