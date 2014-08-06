@@ -163,6 +163,10 @@ class Wip < ActiveRecord::Base
     Watching.watch!(user, self)
   end
 
+  def mute!(user)
+    Watching.unwatch!(user, self)
+  end
+
   def contributors
     # TODO (whatupdave): when we can unwatch a wip we will need to look at this
     watchers

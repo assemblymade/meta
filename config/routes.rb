@@ -270,6 +270,7 @@ ASM::Application.routes.draw do
       post 'copy_deliverables'
       post 'code_deliverables'
       patch 'watch'
+      patch 'mute'
       patch 'tag'
 
       resources :votes, only: [:create]

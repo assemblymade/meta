@@ -91,6 +91,15 @@
       }
     },
 
+    TOGGLE_BUTTON: {
+      ACTIONS: {
+        CLICK: 'toggleButton:click'
+      },
+      EVENTS: {
+        CLICKED: 'toggleButton:clicked'
+      }
+    },
+
     TYPEAHEAD: {
       ACTIONS: {
         ADD_TAG: 'addTag'

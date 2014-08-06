@@ -159,6 +159,11 @@ class WipsController < ProductController
     respond_with @wip, location: request.referer
   end
 
+  def mute
+    @wip.mute!(current_user)
+    respond_with @wip, location: request.referer
+  end
+
   private
 
   def validate_wip_administer

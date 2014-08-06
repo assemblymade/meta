@@ -8,6 +8,10 @@
       this.noCsrfRequest('GET', path, null, callback);
     },
 
+    patch: function(path, data, callback) {
+      this.request('PATCH', path, data, callback);
+    },
+
     post: function(path, data, callback) {
       this.request('POST', path, data, callback);
     },

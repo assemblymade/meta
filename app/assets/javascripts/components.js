@@ -4476,7 +4476,66 @@ var NewsFeedStore = require('../stores/news_feed_store');
   window.TitleNotificationsCount = TitleNotificationsCount;
 })();
 
-},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../stores/chat_notifications_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/chat_notifications_store.js","../stores/news_feed_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/typeahead.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../stores/chat_notifications_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/chat_notifications_store.js","../stores/news_feed_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/toggle_button.js.jsx":[function(require,module,exports){
+/** @jsx React.DOM */
+
+var CONSTANTS = require('../constants');
+var ButtonStore = require('../stores/toggle_button_store');
+
+(function() {
+  var B = CONSTANTS.TOGGLE_BUTTON;
+
+  var ToggleButton = React.createClass({displayName: 'ToggleButton',
+    propTypes: {
+      text: React.PropTypes.object.isRequired,
+      classes: React.PropTypes.object.isRequired,
+      href: React.PropTypes.object.isRequired
+    },
+
+    buttonText: function() {
+      return this.props.text[this.state.bool];
+    },
+
+    classes: function() {
+      return "btn btn-block " + this.props.classes[this.state.bool];
+    },
+
+    getInitialState: function() {
+      return {
+        bool: !!this.props.bool
+      };
+    },
+
+    onClick: function(e) {
+      e.preventDefault();
+
+      Dispatcher.dispatch({
+        action: B.ACTIONS.CLICK,
+        event: B.EVENTS.CLICKED,
+        data: this.props.href[this.state.bool]
+      });
+
+      // For now, optimistically changing the button's state
+      // is probably fine. We might want to add error handling
+      // in at some point along the lines of FormGroup
+      this.setState({
+        bool: !this.state.bool
+      });
+    },
+
+    render: function() {
+      return React.DOM.a({className: this.classes(), onClick: this.onClick}, this.buttonText())
+    }
+  });
+
+  if (typeof module !== 'undefined') {
+    module.exports = ToggleButton;
+  }
+
+  window.ToggleButton = ToggleButton;
+})();
+
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../stores/toggle_button_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/toggle_button_store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/typeahead.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -4749,6 +4808,15 @@ var CONSTANTS = require('../constants');
       EVENTS: {
         TAG_ADDED: 'textComplete:tagAdded',
         TAG_REMOVED: 'tagList:tagRemoved'
+      }
+    },
+
+    TOGGLE_BUTTON: {
+      ACTIONS: {
+        CLICK: 'toggleButton:click'
+      },
+      EVENTS: {
+        CLICKED: 'toggleButton:clicked'
       }
     },
 
@@ -5090,8 +5158,6 @@ var Store = require('../stores/store');
     },
 
     mostRecentlyUpdatedChatRoom: function() {
-      console.log('most recently updated');
-      console.log(_chatRooms);
       if (_.keys(_chatRooms).length === 0) {
         return null;
       }
@@ -5100,7 +5166,6 @@ var Store = require('../stores/store');
         _.filter(
           _.values(_chatRooms),
           function filterRooms(room) {
-            console.log(room);
             return room.id !== (app.chatRoom || {}).id;
           }
         ),
@@ -5937,7 +6002,37 @@ var Store = require('../stores/store');
   window.TagListStore = _tagListStore;
 })();
 
-},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/xhr.js":[function(require,module,exports){
+},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/toggle_button_store.js":[function(require,module,exports){
+var xhr = require('../xhr');
+var Dispatcher = require('../dispatcher');
+var Store = require('../stores/store');
+
+(function() {
+  var _store = Object.create(Store);
+
+  var _buttonStore = _.extend(_store, {
+    'toggleButton:click': function(url) {
+      xhr.patch(url);
+    }
+  });
+
+  _store.dispatchIndex = Dispatcher.register(function(payload) {
+    var action = payload.action;
+    var data = payload.data;
+    var event = payload.event;
+
+    _store[action] && _store[action](data);
+    _store.emit(event);
+  });
+
+  if (typeof module !== 'undefined') {
+    module.exports = _buttonStore;
+  }
+
+  window.ButtonStore = _buttonStore;
+})();
+
+},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js","../xhr":"/Users/pletcher/Projects/meta/app/assets/javascripts/xhr.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/xhr.js":[function(require,module,exports){
 (function() {
   var xhr = {
     get: function(path, callback) {
@@ -5946,6 +6041,10 @@ var Store = require('../stores/store');
 
     noCsrfGet: function(path, callback) {
       this.noCsrfRequest('GET', path, null, callback);
+    },
+
+    patch: function(path, data, callback) {
+      this.request('PATCH', path, data, callback);
     },
 
     post: function(path, data, callback) {
@@ -8102,4 +8201,4 @@ module.exports = update;
   }
 }).call(this);
 
-},{}]},{},["/Users/pletcher/Projects/meta/app/assets/javascripts/components/activity_feed.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/chat_notifications.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/chat_notifications_toggler.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/coin_ownership.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/core_team.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/desktop_notifications.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/drag_and_drop_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/dropdown_news_feed.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/financials_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/form_group.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/full_page_news_feed.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/input_preview.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/interest_picker.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_bounty_form.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_friend_bounty.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_friend_product.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_list.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/join_team_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/members_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/navbar.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/notification_preferences_dropdown.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/number_input_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/people_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/person_picker.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/popover.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/share.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/tag_list_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/timestamp.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/tips_ui.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/title_notifications_count.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/typeahead.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/urgency.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/user_navbar_dropdown.js.jsx"]);
+},{}]},{},["/Users/pletcher/Projects/meta/app/assets/javascripts/components/activity_feed.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/chat_notifications.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/chat_notifications_toggler.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/coin_ownership.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/core_team.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/desktop_notifications.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/drag_and_drop_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/dropdown_news_feed.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/financials_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/form_group.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/full_page_news_feed.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/input_preview.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/interest_picker.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_bounty_form.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_friend_bounty.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_friend_product.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_list.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/join_team_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/members_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/navbar.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/notification_preferences_dropdown.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/number_input_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/people_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/person_picker.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/popover.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/share.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/tag_list_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/timestamp.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/tips_ui.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/title_notifications_count.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/toggle_button.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/typeahead.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/urgency.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/user_navbar_dropdown.js.jsx"]);
