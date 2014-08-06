@@ -8,11 +8,6 @@ class VotesController < ApplicationController
   def create
     @vote = @voteable.upvote!(current_user, request.remote_ip)
 
-    case @voteable
-    when Wip
-      track_event 'wip.engaged', WipAnalyticsSerializer.new(@voteable, scope: current_user).as_json.merge(engagement: 'voted')
-    end
-
     Vote.clear_cache(current_user, @voteable)
 
     next_mission_if_complete!(@product.current_mission, current_user)

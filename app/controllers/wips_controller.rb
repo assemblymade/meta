@@ -73,7 +73,6 @@ class WipsController < ProductController
       )
 
       track_params = WipAnalyticsSerializer.new(@wip, scope: current_user).as_json.merge(engagement: 'created')
-      track_event 'wip.engaged', track_params
       if !current_user.staff?
         AsmMetrics.product_enhancement
         AsmMetrics.active_user(current_user)

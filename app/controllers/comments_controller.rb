@@ -20,7 +20,6 @@ class CommentsController < ProductController
 
     if @event.valid?
       if type == Event::Comment
-        track_wip_engaged @wip, 'commented'
         register_with_readraptor(@event)
 
         Activities::Comment.publish!(
@@ -82,10 +81,6 @@ class CommentsController < ProductController
       AsmMetrics.active_user(current_user)
       AsmMetrics.active_builder(current_user)
     end
-  end
-
-  def track_wip_engaged(wip, engagement)
-    track_event 'wip.engaged', WipAnalyticsSerializer.new(wip, scope: current_user).as_json.merge(engagement: 'commented')
   end
 
   def register_with_readraptor(event)

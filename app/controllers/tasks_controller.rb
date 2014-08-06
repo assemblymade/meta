@@ -30,7 +30,6 @@ class TasksController < WipsController
     assignee ||= current_user
 
     @wip.start_work!(assignee)
-    track_event 'wip.engaged', WipAnalyticsSerializer.new(@wip, scope: assignee).as_json.merge(engagement:'started_work')
     if !assignee.staff?
       AsmMetrics.product_enhancement
       AsmMetrics.active_user(assignee)

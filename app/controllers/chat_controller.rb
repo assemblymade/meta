@@ -36,7 +36,6 @@ class ChatController < ProductController
     end
 
     if @event.valid?
-      track_wip_engaged @product.main_thread, 'commented'
       update_readraptor
       @event.notify_users!(@product.watchers)
 
@@ -72,10 +71,6 @@ class ChatController < ProductController
       AsmMetrics.active_user(current_user)
       AsmMetrics.active_builder(current_user)
     end
-  end
-
-  def track_wip_engaged(wip, engagement)
-    track_event 'wip.engaged', WipAnalyticsSerializer.new(wip, scope: current_user).as_json.merge(engagement: 'commented')
   end
 
   def update_readraptor
