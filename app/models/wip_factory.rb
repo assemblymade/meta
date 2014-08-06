@@ -20,9 +20,10 @@ class WipFactory
       add_transaction_log_entry(wip)
 
       upvote_creator(wip) if wip.upvotable?
-      watch_product
+      watch_product(@product.watchings.where(subscription: true).map(&:user))
 
       users = @product.watchers - [@creator]
+
       register_with_readraptor(wip, users)
       push(wip, users)
     end
@@ -43,7 +44,11 @@ class WipFactory
     wip.upvote!(@creator, @remote_ip)
   end
 
-  def watch_product
+  def watch_product(users)
+    users.each do |u|
+      @product.watch!(u)
+    end
+
     @product.watch!(@creator)
   end
 
