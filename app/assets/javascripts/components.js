@@ -131,7 +131,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
     },
 
     componentDidMount: function() {
-      $('[data-toggle]', this.getDOMNode()).tooltip();
+      // $('[data-toggle]', this.getDOMNode()).tooltip();
       var target = this.refs.spinner.getDOMNode();
       var opts = this.spinnerOptions || {
         lines: 11,
@@ -143,27 +143,11 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
       target.appendChild(spinner.el);
     },
 
-    sortByLastReadAt: function(data) {
-      if (data === null) {
-        return [];
-      }
-
-      var values = _.values(data);
-      for (var i = 0; i < values.length; i++) {
-        var entry = values[i];
-        entry.readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
-        entry.sortIndex = this.state.sortKeys.indexOf(entry.id);
-      }
-      values.sort(dynamicSortMultiple("readState", "sortIndex", "label"));
-
-      return values || [];
-    },
-
     componentWillMount: function() {
       var _this = this;
 
-      // TODO: Remove this and use the Dispatcher
-      $(window).bind('storage', this.storedAckChanged);
+      // // TODO: Remove this and use the Dispatcher
+      // $(window).bind('storage', this.storedAckChanged);
 
       this.onPush(function(event, msg) {
         if (_.contains(msg.mentions, _this.props.username)) {
@@ -214,7 +198,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
 
     getInitialState: function() {
       return {
-        data: null,
+        data: ChatNotificationsStore.getChatRooms(),
         sortKeys: [],
         acknowledgedAt: this.storedAck(),
         desktopNotificationsEnabled: false
@@ -293,6 +277,22 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
     spinnerOptions: {
       lines: 11,
       top: '20%'
+    },
+
+    sortByLastReadAt: function(data) {
+      if (data === null) {
+        return [];
+      }
+
+      var values = _.values(data);
+      for (var i = 0; i < values.length; i++) {
+        var entry = values[i];
+        entry.readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
+        entry.sortIndex = this.state.sortKeys.indexOf(entry.id);
+      }
+      values.sort(dynamicSortMultiple("readState", "sortIndex", "label"));
+
+      return values || [];
     },
 
     storedAck: function() {
@@ -414,29 +414,6 @@ var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
       var chatRoom = ChatNotificationsStore.mostRecentlyUpdatedChatRoom();
 
       return chatRoom && chatRoom.updated > chatRoom.last_read_at;
-    },
-
-    lastUpdatedAt: function() {
-      var chatRoom = ChatNotificationsStore.mostRecentlyUpdatedChatRoom();
-
-      if (chatRoom) {
-        return chatRoom.updated;
-      }
-
-      return 0;
-    },
-
-    total: function() {
-      var self = this;
-
-      var count = _.reduce(
-        _.map(self.state.chatRooms, function mapStories(chatRoom) {
-          return chatRoom.count;
-        }), function reduceStories(memo, read) {
-          return memo + read;
-      }, 0);
-
-      return count;
     },
 
     storedAck: function() {
@@ -1188,13 +1165,11 @@ var Avatar = require('./avatar.js.jsx');
     rows: function(stories) {
       var self = this;
 
-      stories.sort(function(a, b) {
-        return (b.updated - a.updated);
-      });
+      var firstTen = _.first(stories, 10);
 
       return (
         React.DOM.div({className: "list-group", style: { 'max-height': '300px', 'min-height': '50px'}}, 
-           _.map(this.state.stories, function(story) {
+           _.map(firstTen, function(story) {
             return Entry({key: story.id, story: story, actors: self.state.actors, fullPage: false});
           }) 
         )
@@ -5115,6 +5090,8 @@ var Store = require('../stores/store');
     },
 
     mostRecentlyUpdatedChatRoom: function() {
+      console.log('most recently updated');
+      console.log(_chatRooms);
       if (_.keys(_chatRooms).length === 0) {
         return null;
       }
@@ -5123,6 +5100,7 @@ var Store = require('../stores/store');
         _.filter(
           _.values(_chatRooms),
           function filterRooms(room) {
+            console.log(room);
             return room.id !== (app.chatRoom || {}).id;
           }
         ),
@@ -5493,6 +5471,10 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       for (var i in _stories) {
         stories.push(_stories[i]);
       }
+
+      stories.sort(function(a, b) {
+        return (b.updated - a.updated);
+      });
 
       return stories;
     },

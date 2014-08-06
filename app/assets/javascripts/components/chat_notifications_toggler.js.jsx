@@ -68,29 +68,6 @@ var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
       return chatRoom && chatRoom.updated > chatRoom.last_read_at;
     },
 
-    lastUpdatedAt: function() {
-      var chatRoom = ChatNotificationsStore.mostRecentlyUpdatedChatRoom();
-
-      if (chatRoom) {
-        return chatRoom.updated;
-      }
-
-      return 0;
-    },
-
-    total: function() {
-      var self = this;
-
-      var count = _.reduce(
-        _.map(self.state.chatRooms, function mapStories(chatRoom) {
-          return chatRoom.count;
-        }), function reduceStories(memo, read) {
-          return memo + read;
-      }, 0);
-
-      return count;
-    },
-
     storedAck: function() {
       var timestamp = localStorage.chatAck;
 

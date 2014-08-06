@@ -147,6 +147,8 @@ var Store = require('../stores/store');
     },
 
     mostRecentlyUpdatedChatRoom: function() {
+      console.log('most recently updated');
+      console.log(_chatRooms);
       if (_.keys(_chatRooms).length === 0) {
         return null;
       }
@@ -155,6 +157,7 @@ var Store = require('../stores/store');
         _.filter(
           _.values(_chatRooms),
           function filterRooms(room) {
+            console.log(room);
             return room.id !== (app.chatRoom || {}).id;
           }
         ),

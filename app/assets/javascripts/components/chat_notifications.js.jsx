@@ -49,7 +49,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
     },
 
     componentDidMount: function() {
-      $('[data-toggle]', this.getDOMNode()).tooltip();
+      // $('[data-toggle]', this.getDOMNode()).tooltip();
       var target = this.refs.spinner.getDOMNode();
       var opts = this.spinnerOptions || {
         lines: 11,
@@ -61,27 +61,11 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
       target.appendChild(spinner.el);
     },
 
-    sortByLastReadAt: function(data) {
-      if (data === null) {
-        return [];
-      }
-
-      var values = _.values(data);
-      for (var i = 0; i < values.length; i++) {
-        var entry = values[i];
-        entry.readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
-        entry.sortIndex = this.state.sortKeys.indexOf(entry.id);
-      }
-      values.sort(dynamicSortMultiple("readState", "sortIndex", "label"));
-
-      return values || [];
-    },
-
     componentWillMount: function() {
       var _this = this;
 
-      // TODO: Remove this and use the Dispatcher
-      $(window).bind('storage', this.storedAckChanged);
+      // // TODO: Remove this and use the Dispatcher
+      // $(window).bind('storage', this.storedAckChanged);
 
       this.onPush(function(event, msg) {
         if (_.contains(msg.mentions, _this.props.username)) {
@@ -132,7 +116,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
 
     getInitialState: function() {
       return {
-        data: null,
+        data: ChatNotificationsStore.getChatRooms(),
         sortKeys: [],
         acknowledgedAt: this.storedAck(),
         desktopNotificationsEnabled: false
@@ -211,6 +195,22 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
     spinnerOptions: {
       lines: 11,
       top: '20%'
+    },
+
+    sortByLastReadAt: function(data) {
+      if (data === null) {
+        return [];
+      }
+
+      var values = _.values(data);
+      for (var i = 0; i < values.length; i++) {
+        var entry = values[i];
+        entry.readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
+        entry.sortIndex = this.state.sortKeys.indexOf(entry.id);
+      }
+      values.sort(dynamicSortMultiple("readState", "sortIndex", "label"));
+
+      return values || [];
     },
 
     storedAck: function() {

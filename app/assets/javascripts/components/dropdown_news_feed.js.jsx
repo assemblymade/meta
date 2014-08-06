@@ -48,13 +48,11 @@ var Avatar = require('./avatar.js.jsx');
     rows: function(stories) {
       var self = this;
 
-      stories.sort(function(a, b) {
-        return (b.updated - a.updated);
-      });
+      var firstTen = _.first(stories, 10);
 
       return (
         <div className="list-group" style={{ 'max-height': '300px', 'min-height': '50px' }}>
-          { _.map(this.state.stories, function(story) {
+          { _.map(firstTen, function(story) {
             return <Entry key={story.id} story={story} actors={self.state.actors} fullPage={false} />;
           }) }
         </div>

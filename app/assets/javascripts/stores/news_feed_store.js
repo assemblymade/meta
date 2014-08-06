@@ -181,6 +181,10 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
         stories.push(_stories[i]);
       }
 
+      stories.sort(function(a, b) {
+        return (b.updated - a.updated);
+      });
+
       return stories;
     },
 

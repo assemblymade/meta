@@ -3,7 +3,7 @@
 jest.dontMock('../../../app/assets/javascripts/components/avatar.js.jsx');
 
 describe('Avatar', function() {
-  var ActivityFeed = require('../../../app/assets/javascripts/components/avatar.js.jsx');
+  var Avatar = require('../../../app/assets/javascripts/components/avatar.js.jsx');
 
   it('renders a default avatar', function() {
     var avatar = TestUtils.renderIntoDocument(
