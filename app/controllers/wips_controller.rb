@@ -142,7 +142,7 @@ class WipsController < ProductController
       if @product.tasks.won_by(@event.user).count == 1
         BadgeMailer.delay(queue: 'mailer').first_win(@event.id)
       end
-      track_wip_event 'awarded'
+      TrackBountyAwarded.perform_async(@wip.id)
     end
     redirect_to product_wip_path(@wip.product, @wip)
   end
@@ -178,10 +178,6 @@ class WipsController < ProductController
     PaginatingDecorator.new(query)
   end
 
-  def track_wip_event(name)
-    track_event "wip.#{name}", WipAnalyticsSerializer.new(@wip, scope: current_user).as_json
-  end
-
   def set_wip
     number = params[:wip_id] || params[:task_id] || params[:id]
     if number.to_i.zero?
@@ -198,10 +194,10 @@ class WipsController < ProductController
       redirect_to url_for([@product, @wip])
     end
   end
-  
+
   def set_stories
     set_wip
-    
+
     @stories = Story.associated_with(@wip)
   end
 end
