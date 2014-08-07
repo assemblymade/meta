@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Watching do
   let(:user) { User.make! }
+  let(:wip) { Task.make!(user: user, product: watchable) }
   let(:watchable) { Product.make! }
 
   describe 'watch!' do
@@ -33,6 +34,20 @@ describe Watching do
       Watching.unwatch!(user, watchable)
 
       expect(watchable.watchers).not_to include(user)
+    end
+  end
+
+  describe 'unwatch! a product' do
+    before do
+      Watching.watch!(user, watchable)
+      Watching.watch!(user, wip)
+    end
+
+    it 'unwatches all wips when unwatching a product' do
+      Watching.unwatch!(user, watchable)
+
+      expect(watchable.watchers).not_to include(user)
+      expect(wip.watchers).not_to include(user)
     end
   end
 
@@ -70,6 +85,14 @@ describe Watching do
     end
   end
 
+  describe 'subscribe! to a product' do
+    it 'watches all open wips' do
+      Watching.subscribe!(user, watchable)
+
+      expect(wip.watchers).to include(user)
+    end
+  end
+
   describe 'auto_subscribe!' do
     it 'subscribes a user to a product if the user performs an activity' do
       wip = Wip.create!(product: watchable, user: user, title: 'foo')
@@ -87,6 +110,19 @@ describe Watching do
       Watching.unsubscribe!(user, watchable)
 
       expect(Watching.find_by(user_id: user.id, watchable_id: watchable.id).subscription).to be_false
+    end
+  end
+
+  describe 'unsubscribe! from a product' do
+    before do
+      Watching.subscribe!(user, watchable)
+      Watching.watch!(user, wip)
+    end
+
+    it 'unwatches all wips' do
+      Watching.unsubscribe!(user, watchable)
+
+      expect(wip.watchers).not_to include(user)
     end
   end
 

@@ -380,7 +380,7 @@ class Product < ActiveRecord::Base
   def product
     self
   end
-  
+
   def chat_room_key
     "chat_#{id}"
   end
