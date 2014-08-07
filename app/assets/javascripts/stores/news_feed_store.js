@@ -59,7 +59,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
         _.map(
           stories,
           function(s) {
-            return 'key=Story_' + s.id
+            return 'key=' + s.key
           }
         ).join('&')
 
@@ -117,14 +117,13 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       var unread = _.filter(_stories, function(story) {
         return story.last_read_at === 0;
       });
-
+      console.log(unread);
       var self = this;
 
       for (var i = 0, l = unread.length; i < l; i++) {
         var story = unread[i];
-        // we do actually want the id here, not the key
         var url = story.url;
-        // and we want the key here
+
         window.xhr.get(url, self.markedAsRead(story.key, true, (i + 1 === l)));
       }
     },

@@ -49,7 +49,7 @@ class WipFactory
   end
 
   def watch_product
-    @product.watch!(@creator)
+    @product.auto_watch!(@creator)
   end
 
   def register_with_readraptor(wip, users)
