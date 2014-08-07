@@ -40,7 +40,7 @@ en:
       format:
         precision: 0
 
-  time:
+  date:
     formats:
       month: "%B %Y"
 

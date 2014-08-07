@@ -27,8 +27,8 @@ namespace :emails do
          Wip::Worker.where(user_id: user.id).empty?           # no work started
 
          # we'll only send this once per user. Even though they join multiple products
-         unless EmailLog.sent_to(user, :joined_team_no_work_yet).any?
-           EmailLog.log_send user, :joined_team_no_work_yet do
+         unless EmailLog.sent_to(user.id, :joined_team_no_work_yet).any?
+           EmailLog.log_send user.id, :joined_team_no_work_yet do
              membership = user.team_memberships.order(created_at: :desc).first
              UserMailer.delay(queue: 'mailer').joined_team_no_work_yet membership.id
            end
@@ -39,7 +39,7 @@ namespace :emails do
 
   task :joined_team_no_introduction_yet => :environment do
     TeamMembership.where('created_at < ?', 1.day.ago).where(bio: nil).each do |membership|
-      EmailLog.send_once(membership.user, :joined_team_no_introduction_yet) do
+      EmailLog.send_once(membership.user.id, :joined_team_no_introduction_yet) do
         UserMailer.delay.joined_team_no_introduction_yet(membership.id)
       end
     end
@@ -70,6 +70,26 @@ namespace :emails do
       # And send them a newsletter
       newsletter.email_to_users!(users)
     end
+  end
 
+  desc "Send out new balance report emails"
+  task :balance => :environment do
+    ProfitReport.group(:end_at).count.keys.each do |end_at|
+      user_ids = User::BalanceEntry.joins(:profit_report).
+        where('profit_reports.end_at = ?', end_at).
+        group(:user_id).count.keys
+
+      user_ids.each do |user_id|
+        EmailLog.send_once(user_id, "profit_report #{end_at.strftime('%b %Y')}") do
+          balance_entry_ids = User::BalanceEntry.joins(:profit_report).
+                where('profit_reports.end_at = ?', end_at).
+                where(user_id: user_id).
+                pluck(:id)
+
+
+          UserBalanceMailer.new_balance(balance_entry_ids).deliver
+        end
+      end
+    end
   end
 end

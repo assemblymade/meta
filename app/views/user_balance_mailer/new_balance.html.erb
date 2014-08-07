@@ -1,0 +1,55 @@
+<table class="row">
+  <tbody>
+    <tr>
+      <td class="wrapper last">
+        <table class="twelve columns">
+          <tbody>
+            <tr>
+              <td class="panel panel-default">
+
+                <p>Hi <%= @user.username %>,</p>
+
+                <p>The books are closed on the month of <%= l @end_at, format: :month %>, and your App Coins are paying out. Here's what you've earned:</p>
+
+                <% @balance_entries.each do |balance| %>
+                  <% report = balance.profit_report %>
+                  <h4 style="padding-top:20px"><%= report.product.name %></h4>
+
+                  <p>App Coins earned up to the end of <%= l @end_at, format: :month %>:
+                    <strong><%= number_with_delimiter balance.coins %></strong></p>
+
+                  <p>Percentage of ownership: <strong><%= percentage balance.ownership %></strong></p>
+
+                  <p><%= report.product.name %>'s total <%= l @end_at, format: :month %> profit:
+                    <strong><%= currency report.earnable %></strong></p>
+
+                  <p>Your <%= report.product.name %> royalty payment for <%= l @end_at, format: :month %>:
+                    <strong><%= currency balance.earnings %></strong></p>
+
+                  <hr style="margin: 20px 0"/>
+
+                <% end %>
+
+                <p>Your total Assembly royalty payout for <%= l @end_at, format: :month %>:
+                  <strong><%= currency @earnings %></strong></p>
+
+                <table class="button radius" style="margin-top:40px;margin-bottom:40px">
+                  <tr>
+                    <td>
+                      <a href="<%= users_balance_path(@user) %>">View your balance</a>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="font-style:italic;color:#96A1AB">Remember, these App Coins are yours to keep. While the products you've contributed to maintain or grow their revenue, your App Coin ownership will continue to pay you. Also, this statement reflects your ownership at the end of <%= l @end_at, format: :month %>, so any App Coins you've earned in July will be reflected next month.</p>
+
+                <p style="font-style:italic;color:#96A1AB">The minimum amount for withdrawal is $100. Balance transfers are made through either Bitcoin or payouts to debit cards for US residents. International contributors are paid using Bitcoin. Transfer fees and withholding taxes may apply.</p>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
