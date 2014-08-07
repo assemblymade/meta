@@ -5026,8 +5026,6 @@ var Store = require('../stores/store');
       _optimisticallyUpdatedChatRooms[payload.id] = {
         last_read_at: moment().unix()
       };
-
-      this.emit(_deferred.pop());
     },
 
     'chat:fetchChatRooms': function(url) {
