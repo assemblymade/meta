@@ -48,16 +48,6 @@ namespace :emails do
 
   namespace :digests do
 
-    task :hourly => :environment do
-      recently_active_users = User.
-        where(mail_preference: 'hourly').
-        where('last_request_at > ?', 2.hours.ago)
-
-      recently_active_users.each do |user|
-        DeliverUnreadEmail.perform_async(user.id)
-      end
-    end
-
     task :daily => :environment do
       users = User.where(mail_preference: 'daily')
       users.each do |user|
