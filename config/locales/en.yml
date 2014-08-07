@@ -40,6 +40,10 @@ en:
       format:
         precision: 0
 
+  time:
+    formats:
+      month: "%B %Y"
+
   activerecord:
       errors:
         models:
