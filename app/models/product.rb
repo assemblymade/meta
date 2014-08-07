@@ -199,7 +199,7 @@ class Product < ActiveRecord::Base
   end
 
   def revenue?
-    slug == 'coderwall'
+    profit_reports.any?
   end
 
   def open_tasks_count
