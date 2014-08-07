@@ -1,15 +1,15 @@
 class WipFactory
-  def self.create(product, scope, creator, remote_ip, params, description=nil)
-    new(product, scope, creator, remote_ip, params, description).create
+  def self.create(product, scope, creator, remote_ip, params, comment=nil)
+    new(product, scope, creator, remote_ip, params, comment).create
   end
 
-  def initialize(product, scope, creator, remote_ip, params, description)
+  def initialize(product, scope, creator, remote_ip, params, comment)
     @product = product
     @scope = scope
     @creator = creator
     @remote_ip = remote_ip
     @params = params
-    @description = description
+    @comment = comment
   end
 
   def create
@@ -33,8 +33,11 @@ class WipFactory
   end
 
   def add_description(wip)
-    unless @description.blank?
-      wip.update_attributes(description: @description)
+    unless @comment.blank?
+      wip.events << Event::Comment.new(
+        user_id: @creator.id,
+        body: @comment
+      )
     end
   end
 

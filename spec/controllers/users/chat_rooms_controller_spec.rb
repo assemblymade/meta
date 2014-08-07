@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Users::ChatRoomsController do
   let(:product) { Product.make! }
   let(:product2) { Product.make! }
-  let(:user) { User.make!(recent_product_ids: [product.id, product2.id]) }
+  let(:user) { User.make! }
 
   describe '#index' do
     before do
@@ -18,6 +18,7 @@ describe Users::ChatRoomsController do
       body = JSON.parse(response.body)
       expect(body["chat_rooms"].count).to eq(1)
       expect(body["chat_rooms"].first["id"]).to eq('chat_' + product.id)
+      expect(body["sort_keys"].count).to eq(0)
     end
   end
 end
