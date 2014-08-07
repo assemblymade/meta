@@ -36,8 +36,7 @@ describe('ChatNotificationsStore', function() {
   });
 
   it('marks a room as read', function() {
-    var spy = sinon.spy(ChatNotificationsStore, 'emit');
-    sinon.stub(window.xhr, 'noCsrfRequest', function(method, path, data, callback) {
+    var spy = sinon.stub(window.xhr, 'noCsrfRequest', function(method, path, data, callback) {
       return true;
     });
 
@@ -45,7 +44,6 @@ describe('ChatNotificationsStore', function() {
 
     expect(spy.calledOnce).to.be.true;
     window.xhr.noCsrfRequest.restore();
-    ChatNotificationsStore.emit.restore();
   });
 
   it('fetches the chat rooms', function() {
