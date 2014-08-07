@@ -348,6 +348,10 @@ class Product < ActiveRecord::Base
     Watching.watch!(user, self)
   end
 
+  def auto_watch!(user)
+    Watching.auto_watch!(user, self)
+  end
+
   def unwatch!(user)
     Watching.unwatch!(user, self)
   end
