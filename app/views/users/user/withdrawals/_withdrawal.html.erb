@@ -1,0 +1,10 @@
+<tr>
+  <td colspan="4" class="bg-info">
+    <%= l withdrawal.created_at, format: :formal %> Withdrawal
+    (#<%= withdrawal.reference.to_s.rjust(8, '0') %>) for
+    <%= currency withdrawal.amount %>
+    <% if withdrawal.payment_sent_at.nil? %>
+      <span class="text-muted">(pending)</span>
+    <% end %>
+  </td>
+</tr>

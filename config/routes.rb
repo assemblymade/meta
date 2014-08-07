@@ -89,7 +89,7 @@ ASM::Application.routes.draw do
     patch  '/settings/notifications' => "users/notifications#update"
 
     namespace :users, path: 'user' do
-      resource :balance, only: [:show]
+      resource :balance, only: [:show] { post :withdraw }
       resource :payment_option, only: [:show, :create, :update]
       resource :tax_info, only: [:show, :create, :update] do
         get ':form_type' => 'tax_infos#show'

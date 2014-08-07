@@ -1489,7 +1489,7 @@ var NewsFeedStore = require('../stores/news_feed_store');
             React.DOM.dt({style: {'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#e9ad1a'}}), 
             React.DOM.dd({style: {'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}, "App Coin holders")
           ), 
-          React.DOM.strong(null, this.state.month)
+          React.DOM.strong(null, moment(this.state.month).format('MMM YYYY'))
         )
       );
     },
@@ -1543,25 +1543,25 @@ var NewsFeedStore = require('../stores/news_feed_store');
                className: "progress-bar", 
                role: "progress-bar", 
                style: { width: annuityWidth + '%'}}, 
-            React.DOM.span(null, '$' + numeral(annuity).format('0,0'))
+            React.DOM.span(null, '$' + numeral(annuity / 100).format('0,0'))
           ), 
           React.DOM.div({id: "costs-share", 
                className: "progress-bar progress-bar-danger", 
                role: "progress-bar", 
                style: { width: costsWidth + '%'}}, 
-            React.DOM.span(null, '$' + numeral(expenses).format('0,0'))
+            React.DOM.span(null, '$' + numeral(expenses / 100).format('0,0'))
           ), 
           React.DOM.div({id: "assembly-share", 
                className: "progress-bar", 
                role: "progress-bar", 
                style: { width: assemblyWidth + '%', 'background-color': '#fd6b2f'}}, 
-            React.DOM.span(null, '$' + numeral(assemblyShare).format('0,0'))
+            React.DOM.span(null, '$' + numeral(assemblyShare / 100).format('0,0'))
           ), 
           React.DOM.div({id: "community-meter", 
                className: "progress-bar progress-bar-warning", 
                role: "progress-bar", 
                style: { width: communityWidth + '%'}}, 
-            React.DOM.span(null, '$' + numeral(communityShare).format('0,0'))
+            React.DOM.span(null, '$' + numeral(communityShare / 100).format('0,0'))
           )
         )
       );
@@ -1641,7 +1641,7 @@ var NewsFeedStore = require('../stores/news_feed_store');
     tRow: function(month, total, annuity, costs, assembly, community) {
       return (
         React.DOM.tr({style: {cursor: 'pointer'}, onMouseOver: this.monthChanged(month), key: month}, 
-          React.DOM.td({id: 'financials-' + month}, month), 
+          React.DOM.td({id: 'financials-' + month}, moment(month).format('MMM YYYY')), 
           React.DOM.td(null, '$' + numeral(total / 100.0).format('0,0')), 
           React.DOM.td({className: "text-right"}, '$' + numeral(costs / 100.0).format('0,0')), 
           React.DOM.td({className: "text-right"}, '$' + numeral(annuity / 100.0).format('0,0')), 
@@ -4546,9 +4546,16 @@ var CONSTANTS = require('../constants');
           ), 
 
           React.DOM.li(null, 
+            React.DOM.a({href: this.props.balancePath}, 
+              React.DOM.span({className: "icon icon-briefcase dropdown-glyph"}), 
+              "Balance"
+            )
+          ), 
+
+          React.DOM.li(null, 
             React.DOM.a({href: this.props.editUserPath}, 
               React.DOM.span({className: "icon icon-settings dropdown-glyph"}), 
-              "Setttings"
+              "Settings"
             )
           ), 
 
@@ -4568,7 +4575,7 @@ var CONSTANTS = require('../constants');
   if (typeof module !== 'undefined') {
     module.exports = UserNavbarDropdown;
   }
-  
+
   window.UserNavbarDropdown = UserNavbarDropdown;
 })();
 

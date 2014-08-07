@@ -13,6 +13,12 @@
           <h2 class="page-header-title">Payment Option</h2>
         </div>
 
+        <% if message = flash[:info] %>
+          <div class="alert alert-warning" role="alert">
+            <%= message %>
+          </div>
+        <% end %>
+
         <% if %w(bitcoin debit-card).include? params[:payment_option] %>
           <%= render 'form', title: I18n.t("payment.#{params[:payment_option]}.title") %>
         <% else %>

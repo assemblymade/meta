@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140806221918) do
+ActiveRecord::Schema.define(version: 20140807205950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -528,6 +528,15 @@ ActiveRecord::Schema.define(version: 20140806221918) do
     t.string   "treaty_income_type"
     t.string   "treaty_reasons"
     t.string   "signature_capacity"
+  end
+
+  create_table "user_withdrawals", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "user_id",         null: false
+    t.integer  "reference",       null: false
+    t.integer  "amount",          null: false
+    t.datetime "payment_sent_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", id: false, force: true do |t|

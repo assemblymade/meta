@@ -42,6 +42,6 @@
   if (typeof module !== 'undefined') {
     module.exports = UserNavbarDropdown;
   }
-  
+
   window.UserNavbarDropdown = UserNavbarDropdown;
 })();

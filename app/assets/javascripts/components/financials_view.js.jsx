@@ -73,7 +73,7 @@
             <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#e9ad1a'}}></dt>
             <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>App Coin holders</dd>
           </dl>
-          <strong>{this.state.month}</strong>
+          <strong>{moment(this.state.month).format('MMM YYYY')}</strong>
         </div>
       );
     },
@@ -127,25 +127,25 @@
                className="progress-bar"
                role="progress-bar"
                style={{ width: annuityWidth + '%' }}>
-            <span>{'$' + numeral(annuity).format('0,0')}</span>
+            <span>{'$' + numeral(annuity / 100).format('0,0')}</span>
           </div>
           <div id='costs-share'
                className="progress-bar progress-bar-danger"
                role="progress-bar"
                style={{ width: costsWidth + '%' }}>
-            <span>{'$' + numeral(expenses).format('0,0')}</span>
+            <span>{'$' + numeral(expenses / 100).format('0,0')}</span>
           </div>
           <div id='assembly-share'
                className="progress-bar"
                role="progress-bar"
                style={{ width: assemblyWidth + '%', 'background-color': '#fd6b2f' }}>
-            <span>{'$' + numeral(assemblyShare).format('0,0')}</span>
+            <span>{'$' + numeral(assemblyShare / 100).format('0,0')}</span>
           </div>
           <div id='community-meter'
                className="progress-bar progress-bar-warning"
                role="progress-bar"
                style={{ width: communityWidth + '%'}}>
-            <span>{'$' + numeral(communityShare).format('0,0')}</span>
+            <span>{'$' + numeral(communityShare / 100).format('0,0')}</span>
           </div>
         </div>
       );
@@ -225,7 +225,7 @@
     tRow: function(month, total, annuity, costs, assembly, community) {
       return (
         <tr style={{cursor: 'pointer'}} onMouseOver={this.monthChanged(month)} key={month}>
-          <td id={'financials-' + month}>{month}</td>
+          <td id={'financials-' + month}>{moment(month).format('MMM YYYY')}</td>
           <td>{'$' + numeral(total / 100.0).format('0,0')}</td>
           <td className="text-right">{'$' + numeral(costs / 100.0).format('0,0')}</td>
           <td className="text-right">{'$' + numeral(annuity / 100.0).format('0,0')}</td>

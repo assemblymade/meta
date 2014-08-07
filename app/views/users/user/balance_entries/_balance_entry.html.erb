@@ -1,0 +1,16 @@
+<% report = balance_entry.profit_report %>
+<tr>
+  <td>
+    <%= report.product.name %> <%= report.end_at.strftime('%b %Y') %>
+  </td>
+  <td>
+    <%= number_with_precision(balance_entry.coins / 100.0, precision: 2, delimiter: ',') %>
+    (<%= number_to_percentage balance_entry.coins / report.coins.to_f * 100, precision: 2 %>)
+  </td>
+  <td>
+    <%= number_to_currency balance_entry.earnings / 100.0, precision: 2 %>
+  </td>
+  <td>
+    <%= number_to_currency report.earnable / 100.0, precision: 2 %>
+  </td>
+</tr>

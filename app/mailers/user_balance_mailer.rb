@@ -17,4 +17,12 @@ class UserBalanceMailer < BaseMailer
          subject: "You earned #{currency @earnings} on Assembly in #{I18n.l @end_at, format: :month}"
   end
 
+  def withdrawal_created(withdrawal_id)
+    @withdrawal = User::Withdrawal.find(withdrawal_id)
+    @user = @withdrawal.user
+
+    mail to: 'withdrawals@assembly.com',
+         subject: "withdrawal requested from #{@user.username} for #{currency @withdrawal.amount}"
+  end
+
 end

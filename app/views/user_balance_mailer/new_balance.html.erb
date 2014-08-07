@@ -9,7 +9,7 @@
 
                 <p>Hi <%= @user.username %>,</p>
 
-                <p>The books are closed on the month of <%= l @end_at, format: :month %>, and your App Coins are paying out. Here's what you've earned:</p>
+                <p>The books have been closed for the month of <%= l @end_at, format: :month %>, and your App Coins are paying out. Here's what you've earned:</p>
 
                 <% @balance_entries.each do |balance| %>
                   <% report = balance.profit_report %>
@@ -20,7 +20,7 @@
 
                   <p>Percentage of ownership: <strong><%= percentage balance.ownership %></strong></p>
 
-                  <p><%= report.product.name %>'s total <%= l @end_at, format: :month %> profit:
+                  <p><%= l @end_at, format: :month %> community profit:
                     <strong><%= currency report.earnable %></strong></p>
 
                   <p>Your <%= report.product.name %> royalty payment for <%= l @end_at, format: :month %>:
