@@ -5,6 +5,7 @@ ASM::Application.routes.draw do
   authenticate :user, lambda { |u| u.staff? } do
     mount Sidekiq::Web => '/admin/sidekiq'
     mount Split::Dashboard  => '/admin/split'
+    mount PgHero::Engine => "/admin/postgres"
   end
 
   if Rails.env.development?
