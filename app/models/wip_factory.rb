@@ -1,15 +1,15 @@
 class WipFactory
-  def self.create(product, scope, creator, remote_ip, params, comment=nil)
-    new(product, scope, creator, remote_ip, params, comment).create
+  def self.create(product, scope, creator, remote_ip, params, description=nil)
+    new(product, scope, creator, remote_ip, params, description).create
   end
 
-  def initialize(product, scope, creator, remote_ip, params, comment)
+  def initialize(product, scope, creator, remote_ip, params, description)
     @product = product
     @scope = scope
     @creator = creator
     @remote_ip = remote_ip
     @params = params
-    @comment = comment
+    @description = description
   end
 
   def create
@@ -20,10 +20,11 @@ class WipFactory
       add_transaction_log_entry(wip)
 
       upvote_creator(wip) if wip.upvotable?
-      watch_product(@product.watchings.where(subscription: true).map(&:user))
+      watch_product
 
-      users = @product.watchers - [@creator]
+      users = @product.watchings.where(subscription: true).map(&:user)
 
+      watch_wip(wip, users)
       register_with_readraptor(wip, users)
       push(wip, users)
     end
@@ -32,11 +33,8 @@ class WipFactory
   end
 
   def add_description(wip)
-    unless @comment.blank?
-      wip.events << Event::Comment.new(
-        user_id: @creator.id,
-        body: @comment
-      )
+    unless @description.blank?
+      wip.update_attributes(description: @description)
     end
   end
 
@@ -44,11 +42,13 @@ class WipFactory
     wip.upvote!(@creator, @remote_ip)
   end
 
-  def watch_product(users)
+  def watch_wip(wip, users)
     users.each do |u|
-      @product.watch!(u)
+      wip.auto_watch!(u)
     end
+  end
 
+  def watch_product
     @product.watch!(@creator)
   end
 

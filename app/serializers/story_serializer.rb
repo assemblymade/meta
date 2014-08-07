@@ -1,7 +1,8 @@
 class StorySerializer < ApplicationSerializer
   include ActionView::Helpers::TextHelper
 
-  attributes :actor_ids, :verb, :subject_type, :body_preview, :url, :product, :key
+  attributes :actor_ids, :verb, :subject_type, :body_preview, :url, :product_name, :product_slug, :key
+  attributes :subjects, :target
 
   has_many :activities, serializer: ActivitySerializer
 
@@ -19,12 +20,27 @@ class StorySerializer < ApplicationSerializer
     end
   end
 
-  def product
-    object.activities.first.target.product
+  def product_name
+    object.activities.first.target.product.name
+  end
+
+  def product_slug
+    object.activities.first.target.product.slug
   end
 
   def updated
     object.updated_at.try(:to_i)
+  end
+
+  def subjects
+    ActiveModel::ArraySerializer.new(
+      object.activities.map(&:subject)
+    )
+  end
+
+  def target
+    target = object.activities.first.target
+    target.active_model_serializer.new(target)
   end
 
   def key

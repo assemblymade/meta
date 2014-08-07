@@ -30,6 +30,13 @@ class Watching < ActiveRecord::Base
     end
   end
 
+  # FIXME: There needs to be a better way to autowatch wips without breaking watch!
+  def self.auto_watch!(user, watchable)
+    unless where(user: user, watchable: watchable).exists?
+      create!(user: user, watchable: watchable, subscription: false)
+    end
+  end
+
   def self.unwatch!(user, watchable)
     where(user: user, watchable: watchable).delete_all
   end

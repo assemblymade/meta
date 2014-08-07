@@ -163,6 +163,10 @@ class Wip < ActiveRecord::Base
     Watching.watch!(user, self)
   end
 
+  def auto_watch!(user)
+    Watching.auto_watch!(user, self)
+  end
+
   def mute!(user)
     Watching.unwatch!(user, self)
   end

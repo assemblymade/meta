@@ -26,7 +26,7 @@ class Story < ActiveRecord::Base
     # ["Reference", "Task"]                   => :wip_subscribers,
     # ["Reference", "Wip"]                    => :wip_subscribers,
     # ["Start", "Discussion"]                 => :product_subscribers,
-    # ["Start", "Task"]                       => :product_subscribers,
+    ["Start", "Task"]                       => :product_subscribers,
     # ["Unassign", "Discussion"]              => :wip_subscribers,
     # ["Unassign", "Task"]                    => :wip_subscribers,
     # ["Update", "Discussion"]                => :wip_subscribers,
@@ -40,6 +40,7 @@ class Story < ActiveRecord::Base
     ["Comment", "Discussion"]               => :subject_body,
     ["Comment", "Task"]                     => :subject_body,
     ["Comment", "Wip"]                      => :subject_body,
+    ["Start", "Task"]                       => :description
   }
 
   def self.should_publish?(activity)
@@ -72,8 +73,12 @@ class Story < ActiveRecord::Base
     subjects.first.wip.watchings.map(&:user)
   end
 
+  def description
+    subjects.first.description
+  end
+
   def subject_body
-    activities.first.subject.sanitized_body
+    activities.first.subject.try(:sanitized_body)
   end
 
   def subjects

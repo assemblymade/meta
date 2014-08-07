@@ -2,6 +2,7 @@
 
 var CONSTANTS = require('../constants');
 var Dispatcher = require('../dispatcher');
+var EventMixin = require('../mixins/event.js.jsx');
 var NewsFeedMixin = require('../mixins/news_feed.js.jsx');
 var NewsFeedStore = require('../stores/news_feed_store');
 var Avatar = require('./avatar.js.jsx');
@@ -66,6 +67,8 @@ var Avatar = require('./avatar.js.jsx');
   });
 
   var Entry = React.createClass({
+    mixins: [EventMixin],
+
     actors: function() {
       return _.map(
         this.state.story.actor_ids,
@@ -76,13 +79,14 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     body: function() {
-      var target = this.state.story.activities[0].target;
+      var story = this.props.story;
+      var task = story.verb === 'Start' ? story.subjects[0] : story.target;
 
       return (
         <span>
-          {this.verbMap[this.state.story.verb]}
+          {this.verbMap[story.verb]}
           <strong>
-            {this.subjectMap[this.state.story.subject_type].call(this, target)}
+            {this.subjectMap[story.subject_type].call(this, task)}
           </strong>
           {this.product()}
         </span>
@@ -141,9 +145,9 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     product: function() {
-      var product = this.state.story.product;
+      var story = this.state.story;
 
-      return ' in ' + product.name;
+      return ' in ' + story.product_name;
     },
 
     render: function() {
@@ -176,34 +180,6 @@ var Avatar = require('./avatar.js.jsx');
           </div>
         </a>
       );
-    },
-
-    subjectMap: {
-      Task: function(task) {
-        return "#" + task.number;
-      },
-
-      Discussion: function(discussion) {
-        return 'discussion'
-      },
-
-      Wip: function(bounty) {
-        if (this.props.fullPage) {
-          return "#" + bounty.number + " " + bounty.title
-        }
-
-        return "#" + bounty.number;
-      },
-    },
-
-    timestamp: function() {
-      return moment(this.state.story.created).format("ddd, hA")
-    },
-
-    verbMap: {
-      'Comment': 'commented on ',
-      'Award': 'awarded ',
-      'Close': 'closed '
     }
   });
 

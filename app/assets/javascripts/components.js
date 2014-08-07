@@ -1119,6 +1119,7 @@ var Dispatcher = require('../dispatcher');
 
 var CONSTANTS = require('../constants');
 var Dispatcher = require('../dispatcher');
+var EventMixin = require('../mixins/event.js.jsx');
 var NewsFeedMixin = require('../mixins/news_feed.js.jsx');
 var NewsFeedStore = require('../stores/news_feed_store');
 var Avatar = require('./avatar.js.jsx');
@@ -1183,6 +1184,8 @@ var Avatar = require('./avatar.js.jsx');
   });
 
   var Entry = React.createClass({displayName: 'Entry',
+    mixins: [EventMixin],
+
     actors: function() {
       return _.map(
         this.state.story.actor_ids,
@@ -1193,13 +1196,14 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     body: function() {
-      var target = this.state.story.activities[0].target;
+      var story = this.props.story;
+      var task = story.verb === 'Start' ? story.subjects[0] : story.target;
 
       return (
         React.DOM.span(null, 
-          this.verbMap[this.state.story.verb], 
+          this.verbMap[story.verb], 
           React.DOM.strong(null, 
-            this.subjectMap[this.state.story.subject_type].call(this, target)
+            this.subjectMap[story.subject_type].call(this, task)
           ), 
           this.product()
         )
@@ -1258,9 +1262,9 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     product: function() {
-      var product = this.state.story.product;
+      var story = this.state.story;
 
-      return ' in ' + product.name;
+      return ' in ' + story.product_name;
     },
 
     render: function() {
@@ -1293,34 +1297,6 @@ var Avatar = require('./avatar.js.jsx');
           )
         )
       );
-    },
-
-    subjectMap: {
-      Task: function(task) {
-        return "#" + task.number;
-      },
-
-      Discussion: function(discussion) {
-        return 'discussion'
-      },
-
-      Wip: function(bounty) {
-        if (this.props.fullPage) {
-          return "#" + bounty.number + " " + bounty.title
-        }
-
-        return "#" + bounty.number;
-      },
-    },
-
-    timestamp: function() {
-      return moment(this.state.story.created).format("ddd, hA")
-    },
-
-    verbMap: {
-      'Comment': 'commented on ',
-      'Award': 'awarded ',
-      'Close': 'closed '
     }
   });
 
@@ -1331,7 +1307,7 @@ var Avatar = require('./avatar.js.jsx');
   window.DropdownNewsFeed = DropdownNewsFeed;
 })();
 
-},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../mixins/news_feed.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/news_feed.js.jsx","../stores/news_feed_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_store.js","./avatar.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../mixins/event.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/event.js.jsx","../mixins/news_feed.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/news_feed.js.jsx","../stores/news_feed_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_store.js","./avatar.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -1807,6 +1783,7 @@ var NewsFeedStore = require('../stores/news_feed_store');
 
 var CONSTANTS = require('../constants');
 var Dispatcher = require('../dispatcher');
+var EventMixin = require('../mixins/event.js.jsx');
 var NewsFeedMixin = require('../mixins/news_feed.js.jsx');
 var NewsFeedStore = require('../stores/news_feed_store');
 var Avatar = require('./avatar.js.jsx');
@@ -1857,6 +1834,8 @@ var Avatar = require('./avatar.js.jsx');
   });
 
   var Entry = React.createClass({displayName: 'Entry',
+    mixins: [EventMixin],
+
     actors: function() {
       return _.map(
         this.props.story.actor_ids,
@@ -1867,13 +1846,14 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     body: function() {
-      var target = this.props.story.activities[0].target;
+      var story = this.props.story;
+      var task = story.verb === 'Start' ? story.subjects[0] : story.target;
 
       return (
         React.DOM.span(null, 
-          this.verbMap[this.props.story.verb], 
+          this.verbMap[story.verb], 
           React.DOM.strong(null, 
-            this.subjectMap[this.props.story.subject_type].call(this, target)
+            this.subjectMap[story.subject_type].call(this, task)
           )
         )
       );
@@ -1918,12 +1898,12 @@ var Avatar = require('./avatar.js.jsx');
         'entry-unread': !this.isRead(),
       });
 
-      var productName = this.props.story.product.name;
+      var productName = this.props.story.product_name;
 
       return (
         React.DOM.div({className: classes + ' row'}, 
           React.DOM.div({className: "col-md-3"}, 
-            React.DOM.a({href: '/' + this.props.story.product.slug}, productName), 
+            React.DOM.a({href: '/' + this.props.story.product_slug}, productName), 
             React.DOM.br(null), 
             React.DOM.span({className: "text-muted text-small"}, 
               this.timestamp()
@@ -1947,34 +1927,6 @@ var Avatar = require('./avatar.js.jsx');
           )
         )
       );
-    },
-
-    timestamp: function() {
-      return moment(this.props.story.created).format("ddd, hA")
-    },
-
-    subjectMap: {
-      Task: function(task) {
-        return "#" + task.number + " " + task.title;
-      },
-
-      Discussion: function(discussion) {
-        return 'a discussion';
-      },
-
-      Wip: function(bounty) {
-        if (this.props.fullPage) {
-          return "#" + bounty.number + " " + bounty.title;
-        }
-
-        return "#" + bounty.number;
-      },
-    },
-
-    verbMap: {
-      'Comment': 'commented on ',
-      'Award': 'awarded',
-      'Close': 'closed '
     }
   });
 
@@ -1985,7 +1937,7 @@ var Avatar = require('./avatar.js.jsx');
   window.FullPageNewsFeed = FullPageNewsFeed;
 })();
 
-},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../mixins/news_feed.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/news_feed.js.jsx","../stores/news_feed_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_store.js","./avatar.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/input_preview.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../mixins/event.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/event.js.jsx","../mixins/news_feed.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/news_feed.js.jsx","../stores/news_feed_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_store.js","./avatar.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/input_preview.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var FormGroup = require('./form_group.js.jsx');
@@ -4915,6 +4867,46 @@ var CONSTANTS = require('../constants');
   }
 
   window.DropdownTogglerMixin = DropdownTogglerMixin;
+})();
+
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/event.js.jsx":[function(require,module,exports){
+/** @jsx React.DOM */(function() {
+  var EventMixin = {
+    timestamp: function() {
+      return moment(this.props.story.created).format("ddd, hA")
+    },
+
+    subjectMap: {
+      Task: function(task) {
+        return "#" + task.number + " " + task.title;
+      },
+
+      Discussion: function(discussion) {
+        return 'a discussion';
+      },
+
+      Wip: function(bounty) {
+        if (this.props.fullPage) {
+          return "#" + bounty.number + " " + bounty.title;
+        }
+
+        return "#" + bounty.number;
+      },
+    },
+
+    verbMap: {
+      'Comment': 'commented on ',
+      'Award': 'awarded',
+      'Close': 'closed ',
+      'Start': 'started '
+    }
+  };
+
+  if (typeof module !== 'undefined') {
+    module.exports = EventMixin;
+  }
+
+  window.EventMixin = EventMixin;
 })();
 
 },{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/news_feed.js.jsx":[function(require,module,exports){

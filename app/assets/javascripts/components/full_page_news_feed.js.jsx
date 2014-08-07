@@ -2,6 +2,7 @@
 
 var CONSTANTS = require('../constants');
 var Dispatcher = require('../dispatcher');
+var EventMixin = require('../mixins/event.js.jsx');
 var NewsFeedMixin = require('../mixins/news_feed.js.jsx');
 var NewsFeedStore = require('../stores/news_feed_store');
 var Avatar = require('./avatar.js.jsx');
@@ -52,6 +53,8 @@ var Avatar = require('./avatar.js.jsx');
   });
 
   var Entry = React.createClass({
+    mixins: [EventMixin],
+
     actors: function() {
       return _.map(
         this.props.story.actor_ids,
@@ -62,13 +65,14 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     body: function() {
-      var target = this.props.story.activities[0].target;
+      var story = this.props.story;
+      var task = story.verb === 'Start' ? story.subjects[0] : story.target;
 
       return (
         <span>
-          {this.verbMap[this.props.story.verb]}
+          {this.verbMap[story.verb]}
           <strong>
-            {this.subjectMap[this.props.story.subject_type].call(this, target)}
+            {this.subjectMap[story.subject_type].call(this, task)}
           </strong>
         </span>
       );
@@ -113,12 +117,12 @@ var Avatar = require('./avatar.js.jsx');
         'entry-unread': !this.isRead(),
       });
 
-      var productName = this.props.story.product.name;
+      var productName = this.props.story.product_name;
 
       return (
         <div className={classes + ' row'}>
           <div className='col-md-3'>
-            <a href={'/' + this.props.story.product.slug}>{productName}</a>
+            <a href={'/' + this.props.story.product_slug}>{productName}</a>
             <br />
             <span className='text-muted text-small'>
               {this.timestamp()}
@@ -142,34 +146,6 @@ var Avatar = require('./avatar.js.jsx');
           </div>
         </div>
       );
-    },
-
-    timestamp: function() {
-      return moment(this.props.story.created).format("ddd, hA")
-    },
-
-    subjectMap: {
-      Task: function(task) {
-        return "#" + task.number + " " + task.title;
-      },
-
-      Discussion: function(discussion) {
-        return 'a discussion';
-      },
-
-      Wip: function(bounty) {
-        if (this.props.fullPage) {
-          return "#" + bounty.number + " " + bounty.title;
-        }
-
-        return "#" + bounty.number;
-      },
-    },
-
-    verbMap: {
-      'Comment': 'commented on ',
-      'Award': 'awarded',
-      'Close': 'closed '
     }
   });
 
