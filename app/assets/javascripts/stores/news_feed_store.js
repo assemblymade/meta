@@ -117,7 +117,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       var unread = _.filter(_stories, function(story) {
         return story.last_read_at === 0;
       });
-      console.log(unread);
+
       var self = this;
 
       for (var i = 0, l = unread.length; i < l; i++) {
