@@ -2,7 +2,7 @@ class AddCoinsToProfitReports < ActiveRecord::Migration
   def change
     change_table :profit_reports do |t|
       t.integer :coins
-      t.integer :annuity
+      t.integer :annuity, default: 0, null: false
       t.remove :royalty
     end
 

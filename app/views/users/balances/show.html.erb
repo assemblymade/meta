@@ -16,8 +16,19 @@
 
         <%= render 'shared/flash' %>
 
-        <%= button_to 'Withdraw funds', withdraw_users_balance_path, class: 'pull-right btn btn-default' %>
-        <h3>Your balance: <%= number_to_currency @total_balance / 100.0, precision: 2 %></h3>
+        <% if @payable_earnings > 0 %>
+          <div class="pull-right">
+            <%= button_to "Withdraw #{currency @payable_earnings}", withdraw_users_balance_path, class: 'btn btn-default' %>
+            <% if @payable_withholding > 0 %>
+              <small class="text-muted"><%= currency @payable_withholding %> will be withheld for US taxes</small>
+            <% end %>
+          </div>
+        <% end %>
+
+        <h3>Total Earnings: <%= currency @earnings %></h3>
+        <% if @paid_withholding > 0 %>
+          <h4>Total Withheld: <%= currency @paid_withholding %></h4>
+        <% end %>
 
         <table class="table">
           <tr>
@@ -25,9 +36,10 @@
             <th>Your Coins</th>
             <th>Your Earnings</th>
             <th>Product Income</th>
+            <th></th>
           </tr>
 
-          <% (@balances + @withdrawals).sort_by{|e| -e.created_at.to_i }.each do |entry| %>
+          <% (@balances + @withdrawals).sort_by{|e| -(e.try(:end_at) || e.created_at).to_time.to_i }.each do |entry| %>
             <%= render entry %>
           <% end %>
         </table>

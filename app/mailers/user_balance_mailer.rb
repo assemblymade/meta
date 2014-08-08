@@ -22,7 +22,7 @@ class UserBalanceMailer < BaseMailer
     @user = @withdrawal.user
 
     mail to: 'withdrawals@assembly.com',
-         subject: "withdrawal requested from #{@user.username} for #{currency @withdrawal.amount}"
+         subject: "withdrawal requested from #{@user.username} for #{currency @withdrawal.total_amount}"
   end
 
 end

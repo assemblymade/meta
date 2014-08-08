@@ -4,9 +4,10 @@ class ProfitReport < ActiveRecord::Base
 
   validates :annuity, presence: :true
   validates :coins, presence: :true
-  validates :end_at, presence: :true
   validates :expenses, presence: :true
   validates :revenue, presence: :true
+
+  validates :end_at, presence: :true, uniqueness: { scope: :product }
 
   before_validation :set_coins
 
@@ -38,6 +39,10 @@ class ProfitReport < ActiveRecord::Base
 
   def royalty
     earnable / coins.to_f
+  end
+
+  def grace_ends_at
+    end_at + 1.month
   end
 
   # private

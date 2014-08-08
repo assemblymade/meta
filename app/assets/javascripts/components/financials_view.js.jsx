@@ -10,7 +10,6 @@
 
 (function() {
   var FinancialsStore = {
-    month: '2014-06-30',
     getMonth: function() {
       return this.month;
     },
@@ -34,6 +33,10 @@
   };
 
   var Financials = React.createClass({
+    componentWillMount: function() {
+      FinancialsStore.setMonth(this.props.reports[0].end_at)
+    },
+
     render: function() {
       var groupedReports = _.reduce(this.props.reports, function(h, r){ h[r.end_at] = r; return h }, {});
 

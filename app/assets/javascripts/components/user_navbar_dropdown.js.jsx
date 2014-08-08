@@ -14,7 +14,7 @@
 
           <li>
             <a href={this.props.balancePath}>
-              <span className="icon icon-briefcase dropdown-glyph"></span>
+              <span className="icon icon-wallet dropdown-glyph"></span>
               Balance
             </a>
           </li>

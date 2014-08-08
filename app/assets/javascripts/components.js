@@ -1426,7 +1426,6 @@ var NewsFeedStore = require('../stores/news_feed_store');
 
 (function() {
   var FinancialsStore = {
-    month: '2014-06-30',
     getMonth: function() {
       return this.month;
     },
@@ -1450,6 +1449,10 @@ var NewsFeedStore = require('../stores/news_feed_store');
   };
 
   var Financials = React.createClass({displayName: 'Financials',
+    componentWillMount: function() {
+      FinancialsStore.setMonth(this.props.reports[0].end_at)
+    },
+
     render: function() {
       var groupedReports = _.reduce(this.props.reports, function(h, r){ h[r.end_at] = r; return h }, {});
 
@@ -4547,7 +4550,7 @@ var CONSTANTS = require('../constants');
 
           React.DOM.li(null, 
             React.DOM.a({href: this.props.balancePath}, 
-              React.DOM.span({className: "icon icon-briefcase dropdown-glyph"}), 
+              React.DOM.span({className: "icon icon-wallet dropdown-glyph"}), 
               "Balance"
             )
           ), 
