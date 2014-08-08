@@ -3,7 +3,7 @@
 
 <div class="page-header sheet-header">
   <div class="pull-right">
-    <a class="btn btn-success" href="<%= new_product_milestone_path(@product) %>">
+    <a class="btn btn-success" href="<%= new_product_project_path(@product) %>">
       Start a new project
     </a>
   </div>
@@ -16,12 +16,12 @@
   <div class="page-header-meta">
     <ul class="list-inline list-inline-piped">
       <li>
-        <a href="<%= product_milestones_path(@product) %>">
+        <a href="<%= product_projects_path(@product) %>">
           <%= @product.milestones.open.count %> open
         </a>
       </li>
       <li>
-        <a href="<%= product_milestones_path(@product, filter: 'closed') %>">
+        <a href="<%= product_projects_path(@product, filter: 'closed') %>">
           <%= @product.milestones.closed.count %> closed
         </a>
       </li>
@@ -61,7 +61,7 @@
               <% end %>
             </td>
             <td>
-              <a href="<%= product_milestone_path(milestone.product, milestone.wip) %>"><strong><%= milestone.wip.title %></strong></a>
+              <a href="<%= product_project_path(milestone.product, milestone.wip) %>"><strong><%= milestone.wip.title %></strong></a>
             </td>
             <td class="text-right" style="padding-right: 30px;">
               <strong class="text-success"><%= milestone.tasks.closed.count %></strong>

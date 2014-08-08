@@ -4,6 +4,6 @@ class User::PaymentOption < ActiveRecord::Base
   validates :type, inclusion: { in: %w(User::BitcoinPaymentOption User::DebitPaymentOption) }
   attr_accessor :card_token
 
-  def save_account
+  def product_project
   end
 end

@@ -1,5 +1,5 @@
 class User::DebitPaymentOption < User::PaymentOption
-  def save_account
+  def product_project
     Actions::UpsertStripeRecipient.new(user, card_token).perform
     true
   rescue Stripe::InvalidRequestError => e

@@ -1,23 +1,23 @@
-<% title "Edit project ##{@wip.number}", @product.name %>
+<% title 'New Project', @product.name %>
 <% activate_nav! :projects %>
 
 <div class="page-header sheet-header">
-  <h2 class="page-header-title">Edit Project</h2>
+  <h2 class="page-header-title">Create a new Project</h2>
 </div>
 
 <div class="sheet-body">
   <div class="row">
-    <div class="col-md-9">
-      <%= form_for @wip, url: product_milestone_path(@product, @wip) do |f| %>
+    <div class="col-md-9 col-xs-9">
+      <%= form_for @wip, url: product_projects_path(@product) do |f| %>
 
         <div class="form-group">
           <%= f.label :title, 'Project Name', class: 'control-label' %>
-          <%= f.text_field :title, data: { 'validate-length' => 2 }, class: 'form-control'  %>
+          <%= f.text_field :title, autofocus: '', data: { 'validate-length' => 2 }, class: 'form-control' %>
         </div>
 
         <div class="form-group">
-          <%= f.fields_for :milestone, @milestone do |f| %>
-            <%= f.label :description, class: 'control-label' %>
+          <%= f.fields_for :milestone, Milestone.new do |f| %>
+            <%= f.label :description, class: 'form-label' %>
             <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
               <%= f.text_area :description, rows: 3, class: 'form-control' %>
               <div class="dropzone-inner js-dropzone-select">
@@ -29,17 +29,16 @@
         </div>
 
         <h6>Task list</h6>
-        <%= render partial: 'task_list', object: @milestone %>
+        <%= render partial: 'task_list', object: @wip.milestone %>
 
         <div class="form-actions">
           <button class="btn btn-primary" data-disable-with="Saving...">
-            Save Project
+            Create Project
           </button>
         </div>
       <% end %>
     </div>
-
-    <div class="col-md-3">
+    <div class="col-md-3 col-xs-3">
       <%= render 'help_module' %>
     </div>
   </div>

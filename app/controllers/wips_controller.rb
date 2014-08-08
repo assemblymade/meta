@@ -56,7 +56,7 @@ class WipsController < ProductController
     )
 
     if @wip.valid?
-      if milestone_number = params[:milestone_id]
+      if milestone_number = params[:project_id]
         @milestone = @product.milestones.find_by!(number: milestone_number)
         MilestoneTask.find_or_create_by!(milestone: @milestone, task: @wip)
       end
@@ -190,7 +190,7 @@ class WipsController < ProductController
 
     # special case redirect to milestones
     if @wip.type.nil?
-      redirect_to product_milestone_path(@product, @wip)
+      redirect_to product_project_path(@product, @wip)
     elsif @wip.type != wip_class.to_s
       redirect_to url_for([@product, @wip])
     end

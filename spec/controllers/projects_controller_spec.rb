@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MilestonesController do
+describe ProjectsController do
   let(:product) { Product.make! }
   let(:creator) { User.make! }
   let(:existing_task) { Task.make! product: product }
@@ -27,7 +27,7 @@ describe MilestonesController do
     end
 
     it "redirects" do
-      expect(response).to redirect_to(product_milestone_path(product, assigns(:milestone)))
+      expect(response).to redirect_to(product_project_path(product, assigns(:milestone)))
     end
 
     it 'creates tasks from titles and adds existing tasks' do
@@ -42,7 +42,7 @@ describe MilestonesController do
 
     before do
       sign_in creator
-      patch :images, product_id: product.slug, milestone_id: milestone.wip.number, wip: {
+      patch :images, product_id: product.slug, project_id: milestone.wip.number, wip: {
         milestone_images_attributes: [{
           attachment_id: attachment.id
         }]

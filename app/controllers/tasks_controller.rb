@@ -58,7 +58,7 @@ class TasksController < WipsController
 
   def destroy
     # This removes a task from a milestone. Doesn't delete the actual Task
-    @milestone = @product.milestones.find_by!(number: params[:milestone_id])
+    @milestone = @product.milestones.find_by!(number: params[:project_id])
     @task = @milestone.tasks.find_by!(number: params[:id])
     @milestone.tasks -= [@task]
 

@@ -1,4 +1,4 @@
-class MilestonesController < ProductController
+class ProjectsController < ProductController
   respond_to :html
 
   before_action :find_product!
@@ -50,7 +50,7 @@ class MilestonesController < ProductController
       end
     end
 
-    respond_with @wip, location: product_milestone_path(@product, @milestone)
+    respond_with @wip, location: product_project_path(@product, @milestone)
   end
 
   def update
@@ -66,7 +66,7 @@ class MilestonesController < ProductController
       end
     end
 
-    respond_with @wip, location: product_milestone_path(@product, @milestone)
+    respond_with @wip, location: product_project_path(@product, @milestone)
   end
 
   def images
@@ -77,7 +77,7 @@ class MilestonesController < ProductController
     end
     @milestone.update_attributes(milestone_images_attributes: attrs)
 
-    respond_with @wip, location: product_milestone_path(@product, @milestone)
+    respond_with @wip, location: product_project_path(@product, @milestone)
   end
 
   def add
@@ -99,7 +99,7 @@ class MilestonesController < ProductController
   # private
 
   def set_milestone
-    @milestone = @product.milestones.find_by!(number: (params[:milestone_id] || params[:id]))
+    @milestone = @product.milestones.find_by!(number: (params[:project_id] || params[:id]))
     @wip = @milestone.wip
   end
 

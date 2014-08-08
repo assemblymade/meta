@@ -56,8 +56,8 @@
       var completeTasks = new Tasks();
       var incompleteTasks = new Tasks();
     <% else %>
-      var completeTasks = new Tasks([], {url: "<%= product_milestone_tasks_path(@product, @milestone) %>" });
-      var incompleteTasks = new Tasks([], {url: "<%= product_milestone_tasks_path(@product, @milestone) %>" });
+      var completeTasks = new Tasks([], {url: "<%= product_project_tasks_path(@product, @milestone) %>" });
+      var incompleteTasks = new Tasks([], {url: "<%= product_project_tasks_path(@product, @milestone) %>" });
     <% end %>
 
     new TaskListView({

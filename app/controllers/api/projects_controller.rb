@@ -20,7 +20,7 @@ module Api
         end
       end
 
-      respond_with @wip, location: product_milestone_path(@product, @milestone)
+      respond_with @wip, location: product_project_path(@product, @milestone)
     end
 
     def update_tasks_for(milestone)
