@@ -11,38 +11,57 @@
       <div class="col-md-9 col-xs-9">
         <div class="page-header">
           <span class="pull-right text-small"><%= Time.now.strftime("%B %Y")%></span>
-          <h2 class="page-header-title">TPS Report</h2>
+          <h2 class="page-header-title">Total Earnings: <%= currency @balance.final_earnings %></h2>
         </div>
 
         <%= render 'shared/flash' %>
 
-        <% if @payable_earnings > 0 %>
+        <% if @balance.available_to_payout > 0 %>
           <div class="pull-right">
-            <%= button_to "Withdraw #{currency @payable_earnings}", withdraw_users_balance_path, class: 'btn btn-default' %>
-            <% if @payable_withholding > 0 %>
-              <small class="text-muted"><%= currency @payable_withholding %> will be withheld for US taxes</small>
+            <%= button_to "Withdraw #{currency @balance.available_to_payout}", withdraw_users_balance_path, class: 'btn btn-default' %>
+            <% if @balance.available_to_withhold > 0 %>
+              <small class="text-muted"><%= currency @balance.available_to_withhold %> will be withheld for US taxes</small>
             <% end %>
           </div>
         <% end %>
 
-        <h3>Total Earnings: <%= currency @earnings %></h3>
-        <% if @paid_withholding > 0 %>
-          <h4>Total Withheld: <%= currency @paid_withholding %></h4>
-        <% end %>
+        <% if @balance.final_earnings > 0 %>
+          <h4>
+            Available Earnings: <%= currency @balance.available_earnings %>
+            <% if @balance.available_to_withhold > 0 %>
+              <small class="text-muted"><%= currency @balance.available_to_withhold %> will be withheld for US taxes</small>
+            <% end %>
+          </h4>
+          <h4>Total Withdrawn: <%= currency @balance.previously_paidout %></h4>
 
-        <table class="table">
-          <tr>
-            <th></th>
-            <th>Your Coins</th>
-            <th>Your Earnings</th>
-            <th>Product Income</th>
-            <th></th>
-          </tr>
-
-          <% (@balances + @withdrawals).sort_by{|e| -(e.try(:end_at) || e.created_at).to_time.to_i }.each do |entry| %>
-            <%= render entry %>
+          <% if @balance.previously_withheld > 0 %>
+            <h4>Total Withheld: <%= currency @balance.previously_withheld %></h4>
           <% end %>
-        </table>
+
+          <table class="table">
+            <tr>
+              <th></th>
+              <th>Your Coins</th>
+              <th>Your Earnings</th>
+              <th>Product Income</th>
+              <th></th>
+            </tr>
+
+            <% (@balance.balances + @balance.withdrawals).sort_by{|e| -(e.try(:end_at) || e.created_at).to_time.to_i }.each do |entry| %>
+              <%= render entry %>
+            <% end %>
+          </table>
+        <% else %>
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+              <div class="well well-lg omega">
+                <p class="text-muted omega">
+                  You will earn a balance once you've worked on a profitable product
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

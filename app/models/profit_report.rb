@@ -12,6 +12,10 @@ class ProfitReport < ActiveRecord::Base
   before_validation :set_coins
 
   FEE = 0.10
+  
+  def self.grace_period
+    1.month
+  end
 
   def profit
     revenue - expenses
@@ -42,7 +46,7 @@ class ProfitReport < ActiveRecord::Base
   end
 
   def grace_ends_at
-    end_at + 1.month
+    end_at + self.class.grace_period
   end
 
   # private

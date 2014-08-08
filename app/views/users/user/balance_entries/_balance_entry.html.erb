@@ -16,7 +16,7 @@
   </td>
   <td>
     <% if Time.now <= report.grace_ends_at %>
-      <span class="label label-warning">Pending</span>
+      <span class="label label-warning" title="Income is available 30 days after end of month" data-toggle="tooltip">Pending</span>
     <% end %>
   </td>
 </tr>
