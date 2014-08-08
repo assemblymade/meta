@@ -14,8 +14,6 @@ class ChatRoomSerializer < ActiveModel::Serializer
   end
 
   def updated
-    if comments = object.main_thread.try(:comments)
-      comments.order(created_at: :desc).first.try(:updated_at).try(:to_i)
-    end
+    object.main_thread.try(:updated_at).try(:to_i)
   end
 end

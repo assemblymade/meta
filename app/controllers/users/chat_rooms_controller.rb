@@ -2,7 +2,7 @@ class Users::ChatRoomsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @products = Product.joins(:watchings).
+    @products = Product.joins(:watchings).includes(:main_thread).
       where('watchings.user_id = ?', current_user.id).
       where('watchings.subscription = ?', true)
 
