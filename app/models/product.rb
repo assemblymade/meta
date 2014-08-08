@@ -29,7 +29,6 @@ class Product < ActiveRecord::Base
   has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
   has_many :discussions
   has_many :event_activities, through: :events, source: :activities
-  has_many :event_creators, -> { distinct }, :through => :events, source: :user
   has_many :events, :through => :wips
   has_many :financial_accounts, class_name: 'Financial::Account'
   has_many :financial_transactions, class_name: 'Financial::Transaction'
@@ -52,7 +51,6 @@ class Product < ActiveRecord::Base
   has_many :watchers, :through => :watchings, :source => :user
   has_many :watchings, :as => :watchable
   has_many :wip_activities, through: :wips, source: :activities
-  has_many :wip_creators, -> { distinct }, :through => :wips, :source => :user
   has_many :wips
   has_many :work
 
@@ -160,9 +158,12 @@ class Product < ActiveRecord::Base
     for_profit?
   end
 
-  # TODO: (whatupdave) challenge: make this 1 query
   def contributors(limit=10)
-    (Array(user) + wip_creators.limit(limit) + event_creators.limit(limit)).uniq.take(limit)
+    User.where(id: (contributor_ids | [user_id])).take(limit)
+  end
+
+  def contributor_ids
+    wip_creator_ids | event_creator_ids
   end
 
   def contributors_with_no_activity_since(since)
@@ -230,9 +231,16 @@ class Product < ActiveRecord::Base
     tasks.where(state: 'open', deliverable: deliverable_type).count
   end
 
-  # TODO: (whatupdave) slowish...
   def count_contributors
-    (wip_creators.pluck(:id) + event_creators.pluck(:id)).uniq.size
+    (wip_creator_ids | event_creator_ids).size
+  end
+
+  def event_creator_ids
+    Event.joins(:wip).where('wips.product_id = ?', self.id).group('events.user_id').count.keys
+  end
+
+  def wip_creator_ids
+    Wip.where('wips.product_id = ?', self.id).group('wips.user_id').count.keys
   end
 
   def submitted?
