@@ -127,6 +127,10 @@ class User < ActiveRecord::Base
     is_staff?
   end
 
+  def sponsored?
+    staff?
+  end
+
   def last_contribution
     events.order("created_at ASC").last
   end

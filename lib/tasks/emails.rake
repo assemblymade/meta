@@ -79,15 +79,21 @@ namespace :emails do
         where('profit_reports.end_at = ?', end_at).
         group(:user_id).count.keys
 
-      user_ids.each do |user_id|
-        EmailLog.send_once(user_id, "profit_report #{end_at.strftime('%b %Y')}") do
-          balance_entry_ids = User::BalanceEntry.joins(:profit_report).
-                where('profit_reports.end_at = ?', end_at).
-                where(user_id: user_id).
-                pluck(:id)
+      key = "profit_report #{end_at.strftime('%b %Y')}"
+      puts key
+      User.where(id: user_ids).each do |user|
+        EmailLog.send_once(user.id, key) do
+          balance = User::Balance.new(user)
 
+          if !user.sponsored? && balance.available_earnings > 0
+            puts "  #{user.username} $#{"%.02f" % (balance.available_earnings / 100.0)}"
+            balance_entry_ids = User::BalanceEntry.joins(:profit_report).
+                  where('profit_reports.end_at = ?', end_at).
+                  where(user_id: user.id).
+                  pluck(:id)
 
-          UserBalanceMailer.new_balance(balance_entry_ids).deliver
+            UserBalanceMailer.delay(queue: 'mailer').new_balance(balance_entry_ids)
+          end
         end
       end
     end

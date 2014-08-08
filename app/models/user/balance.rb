@@ -46,7 +46,7 @@ class User::Balance
   end
 
   def available_to_withhold
-    available_earnings * user.tax_info.withholding
+    available_earnings * (user.tax_info.try(:withholding) || 0)
   end
 
   def available_to_payout
