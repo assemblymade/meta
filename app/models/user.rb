@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
   has_many :team_memberships
   has_many :watched_products, :through => :watchings, :source => :watchable, :source_type => Product
   has_many :watchings
+  has_many :withdrawals
 
   has_one :payment_option
 
@@ -124,6 +125,10 @@ class User < ActiveRecord::Base
 
   def staff?
     is_staff?
+  end
+
+  def sponsored?
+    staff?
   end
 
   def last_contribution

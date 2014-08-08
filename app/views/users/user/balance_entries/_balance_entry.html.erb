@@ -1,0 +1,22 @@
+<% report = balance_entry.profit_report %>
+<% c = 'text-muted' if Time.now <= report.grace_ends_at %>
+<tr>
+  <td>
+    <a class="<%= c %>" href="<%= product_financials_path(report.product) %>"><%= report.product.name %> <%= report.end_at.strftime('%b %Y') %></a>
+  </td>
+  <td class="<%= c %>">
+    <%= number_with_precision(balance_entry.coins / 100.0, precision: 2, delimiter: ',') %>
+    (<%= number_to_percentage balance_entry.coins / report.coins.to_f * 100, precision: 2 %>)
+  </td>
+  <td class="<%= c %>">
+    <%= number_to_currency balance_entry.earnings / 100.0, precision: 2 %>
+  </td>
+  <td class="<%= c %>">
+    <%= number_to_currency report.earnable / 100.0, precision: 2 %>
+  </td>
+  <td>
+    <% if Time.now <= report.grace_ends_at %>
+      <span class="label label-warning" title="Income is available 30 days after end of month" data-toggle="tooltip">Pending</span>
+    <% end %>
+  </td>
+</tr>

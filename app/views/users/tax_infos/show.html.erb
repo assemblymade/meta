@@ -13,6 +13,13 @@
           <h2 class="page-header-title">Tax Information</h2>
         </div>
 
+        <% if message = flash[:info] %>
+          <div class="alert alert-warning" role="alert">
+            <%= message %>
+          </div>
+        <% end %>
+
+
         <% if %w(w8ben w9).include? params[:form_type] %>
           <%= render 'form', title: I18n.t("tax.#{params[:form_type]}.title") %>
         <% else %>

@@ -10,7 +10,6 @@
 
 (function() {
   var FinancialsStore = {
-    month: 'June',
     getMonth: function() {
       return this.month;
     },
@@ -35,50 +34,18 @@
 
   var Financials = React.createClass({
     componentWillMount: function() {
-      this.setState({
-        financials: {
-          January: 27732,
-          February: 20704,
-          March: 34020,
-          April: 30074,
-          May: 26632,
-          June: 27334
-        },
-        expenses: {
-          January: 2998,
-          February: 4024,
-          March: 3363,
-          April: 3433,
-          May: 3474,
-          June: 3487
-        }
-      });
+      FinancialsStore.setMonth(this.props.reports[0].end_at)
     },
 
     render: function() {
-      var name = this.props.product.name;
-      var costs = this.state.expenses[FinancialsStore.getMonth()];
-      var annuity = "18000";
+      var groupedReports = _.reduce(this.props.reports, function(h, r){ h[r.end_at] = r; return h }, {});
 
       return (
         <div className="financials">
-          <FinancialsKey
-              product={this.props.product}
-          />
+          <FinancialsKey product={this.props.product} />
 
-          <FinancialsMeter
-              product={this.props.product}
-              financials={this.state.financials}
-              costs={this.state.expenses}
-              annuity={annuity}
-          />
-
-          <FinancialsTable
-              product={this.props.product}
-              financials={this.state.financials}
-              costs={this.state.expenses}
-              annuity={annuity}
-          />
+          <FinancialsMeter product={this.props.product} reports={groupedReports} />
+          <FinancialsTable product={this.props.product} reports={groupedReports} />
         </div>
       );
     }
@@ -109,7 +76,7 @@
             <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#e9ad1a'}}></dt>
             <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>App Coin holders</dd>
           </dl>
-          <strong>{this.state.month}</strong>
+          <strong>{moment(this.state.month).format('MMM YYYY')}</strong>
         </div>
       );
     },
@@ -136,12 +103,14 @@
 
     render: function() {
       var name = this.props.product.name;
-      var total = this.props.financials[this.state.month];
-      var costs = this.props.costs[this.state.month];
+      var report = this.props.reports[this.state.month];
 
-      var annuity = calculateAnnuity(total, costs, this.props.annuity);
+      var total = report.revenue;
+      var costs = report.expenses;
+
+      var annuity = calculateAnnuity(total, costs, report.annuity);
       var expenses = calculateExpenses(total, costs);
-      var communityShare = calculateCommunityShare(total, costs, this.props.annuity);
+      var communityShare = calculateCommunityShare(total, costs, report.annuity);
       var assemblyShare = communityShare * 0.1;
       communityShare = communityShare - assemblyShare;
 
@@ -161,25 +130,25 @@
                className="progress-bar"
                role="progress-bar"
                style={{ width: annuityWidth + '%' }}>
-            <span>{'$' + numeral(annuity).format('0,0')}</span>
+            <span>{'$' + numeral(annuity / 100).format('0,0')}</span>
           </div>
           <div id='costs-share'
                className="progress-bar progress-bar-danger"
                role="progress-bar"
                style={{ width: costsWidth + '%' }}>
-            <span>{'$' + numeral(expenses).format('0,0')}</span>
+            <span>{'$' + numeral(expenses / 100).format('0,0')}</span>
           </div>
           <div id='assembly-share'
                className="progress-bar"
                role="progress-bar"
                style={{ width: assemblyWidth + '%', 'background-color': '#fd6b2f' }}>
-            <span>{'$' + numeral(assemblyShare).format('0,0')}</span>
+            <span>{'$' + numeral(assemblyShare / 100).format('0,0')}</span>
           </div>
           <div id='community-meter'
                className="progress-bar progress-bar-warning"
                role="progress-bar"
                style={{ width: communityWidth + '%'}}>
-            <span>{'$' + numeral(communityShare).format('0,0')}</span>
+            <span>{'$' + numeral(communityShare / 100).format('0,0')}</span>
           </div>
         </div>
       );
@@ -237,16 +206,17 @@
 
     tBody: function() {
       var self = this;
-      var financials = this.props.financials;
+      var financials = this.props.reports;
 
       return _.map(Object.keys(financials), function mapFinancials(month) {
-        var total = financials[month];
-        var costs = self.props.costs[month];
+        var report = financials[month];
+        var total = report.revenue;
+        var costs = report.expenses;
 
         var profit = calculateProfit(total, costs);
-        var annuity = calculateAnnuity(total, costs, self.props.annuity);
+        var annuity = calculateAnnuity(total, costs, report.annuity);
         var expenses = calculateExpenses(total, costs);
-        var communityShare = calculateCommunityShare(total, costs, self.props.annuity);
+        var communityShare = calculateCommunityShare(total, costs, report.annuity);
         var assemblyShare = communityShare * 0.1;
 
         return (
@@ -256,19 +226,14 @@
     },
 
     tRow: function(month, total, annuity, costs, assembly, community) {
-      var muted = '';
-      if (['January', 'February', 'March', 'April', 'May'].indexOf(month) >= 0) {
-        muted = ' text-muted';
-      }
-
       return (
         <tr style={{cursor: 'pointer'}} onMouseOver={this.monthChanged(month)} key={month}>
-          <td id={'financials-' + month}>{month}</td>
-          <td>{'$' + numeral(total).format('0,0')}</td>
-          <td className="text-right">{'$' + numeral(costs).format('0,0')}</td>
-          <td className="text-right">{'$' + numeral(annuity).format('0,0')}</td>
-          <td className={"text-right" + muted}>{'$' + numeral(assembly).format('0,0')}</td>
-          <td className={"text-right" + muted}>{'$' + numeral(community - assembly).format('0,0')}</td>
+          <td id={'financials-' + month}>{moment(month).format('MMM YYYY')}</td>
+          <td>{'$' + numeral(total / 100.0).format('0,0')}</td>
+          <td className="text-right">{'$' + numeral(costs / 100.0).format('0,0')}</td>
+          <td className="text-right">{'$' + numeral(annuity / 100.0).format('0,0')}</td>
+          <td className={"text-right"}>{'$' + numeral(assembly / 100.0).format('0,0')}</td>
+          <td className={"text-right"}>{'$' + numeral((community - assembly) / 100.0).format('0,0')}</td>
         </tr>
       );
     },

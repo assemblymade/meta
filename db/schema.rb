@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140806221918) do
+ActiveRecord::Schema.define(version: 20140807205950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -367,11 +367,12 @@ ActiveRecord::Schema.define(version: 20140806221918) do
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true, using: :btree
 
   create_table "profit_reports", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid    "product_id", null: false
-    t.date    "end_at",     null: false
-    t.integer "royalty",    null: false
-    t.integer "revenue",    null: false
-    t.integer "expenses",   null: false
+    t.uuid    "product_id",             null: false
+    t.date    "end_at",                 null: false
+    t.integer "revenue",                null: false
+    t.integer "expenses",               null: false
+    t.integer "coins"
+    t.integer "annuity",    default: 0, null: false
   end
 
   create_table "rooms", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -482,6 +483,14 @@ ActiveRecord::Schema.define(version: 20140806221918) do
 
   add_index "uniques", ["distinct_id", "created_at"], name: "index_uniques_on_distinct_id_and_created_at", using: :btree
 
+  create_table "user_balance_entries", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.datetime "created_at",       null: false
+    t.uuid     "user_id",          null: false
+    t.uuid     "profit_report_id", null: false
+    t.integer  "coins",            null: false
+    t.integer  "earnings",         null: false
+  end
+
   create_table "user_payment_options", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid   "user_id",         null: false
     t.string "type",            null: false
@@ -520,6 +529,16 @@ ActiveRecord::Schema.define(version: 20140806221918) do
     t.string   "treaty_income_type"
     t.string   "treaty_reasons"
     t.string   "signature_capacity"
+  end
+
+  create_table "user_withdrawals", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "user_id",         null: false
+    t.integer  "reference",       null: false
+    t.integer  "total_amount",    null: false
+    t.integer  "amount_withheld", null: false
+    t.datetime "payment_sent_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", id: false, force: true do |t|
