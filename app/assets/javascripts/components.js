@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/activity_feed.js.jsx":[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/activity_feed.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -4393,7 +4393,66 @@ var NewsFeedStore = require('../stores/news_feed_store');
   window.TitleNotificationsCount = TitleNotificationsCount;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../stores/chat_notifications_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/chat_notifications_store.js","../stores/news_feed_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/news_feed_store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/typeahead.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../stores/chat_notifications_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/chat_notifications_store.js","../stores/news_feed_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/news_feed_store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/toggle_button.js.jsx":[function(require,module,exports){
+/** @jsx React.DOM */
+
+var CONSTANTS = require('../constants');
+var ButtonStore = require('../stores/toggle_button_store');
+
+(function() {
+  var B = CONSTANTS.TOGGLE_BUTTON;
+
+  var ToggleButton = React.createClass({displayName: 'ToggleButton',
+    propTypes: {
+      text: React.PropTypes.object.isRequired,
+      classes: React.PropTypes.object.isRequired,
+      href: React.PropTypes.object.isRequired
+    },
+
+    buttonText: function() {
+      return this.props.text[this.state.bool];
+    },
+
+    classes: function() {
+      return "btn btn-block " + this.props.classes[this.state.bool];
+    },
+
+    getInitialState: function() {
+      return {
+        bool: !!this.props.bool
+      };
+    },
+
+    onClick: function(e) {
+      e.preventDefault();
+
+      Dispatcher.dispatch({
+        action: B.ACTIONS.CLICK,
+        event: B.EVENTS.CLICKED,
+        data: this.props.href[this.state.bool]
+      });
+
+      // For now, optimistically changing the button's state
+      // is probably fine. We might want to add error handling
+      // in at some point along the lines of FormGroup
+      this.setState({
+        bool: !this.state.bool
+      });
+    },
+
+    render: function() {
+      return React.DOM.a({className: this.classes(), onClick: this.onClick}, this.buttonText())
+    }
+  });
+
+  if (typeof module !== 'undefined') {
+    module.exports = ToggleButton;
+  }
+
+  window.ToggleButton = ToggleButton;
+})();
+
+},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../stores/toggle_button_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/toggle_button_store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/typeahead.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -5904,7 +5963,37 @@ var Store = require('../stores/store');
   window.TagListStore = _tagListStore;
 })();
 
-},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/xhr.js":[function(require,module,exports){
+},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/toggle_button_store.js":[function(require,module,exports){
+var xhr = require('../xhr');
+var Dispatcher = require('../dispatcher');
+var Store = require('../stores/store');
+
+(function() {
+  var _store = Object.create(Store);
+
+  var _buttonStore = _.extend(_store, {
+    'toggleButton:click': function(url) {
+      xhr.patch(url);
+    }
+  });
+
+  _store.dispatchIndex = Dispatcher.register(function(payload) {
+    var action = payload.action;
+    var data = payload.data;
+    var event = payload.event;
+
+    _store[action] && _store[action](data);
+    _store.emit(event);
+  });
+
+  if (typeof module !== 'undefined') {
+    module.exports = _buttonStore;
+  }
+
+  window.ButtonStore = _buttonStore;
+})();
+
+},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js","../xhr":"/Users/dave/code/asm/asm-web/app/assets/javascripts/xhr.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/xhr.js":[function(require,module,exports){
 (function() {
   var xhr = {
     get: function(path, callback) {
@@ -8073,4 +8162,4 @@ module.exports = update;
   }
 }).call(this);
 
-},{}]},{},["/Users/dave/code/asm/asm-web/app/assets/javascripts/components/activity_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/avatar.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications_toggler.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/coin_ownership.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/core_team.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/desktop_notifications.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/drag_and_drop_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/financials_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/form_group.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/full_page_news_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/input_preview.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/interest_picker.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_bounty_form.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_friend_bounty.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_friend_product.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_list.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/join_team_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/members_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/navbar.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/notification_preferences_dropdown.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/number_input_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/people_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/person_picker.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/popover.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/share.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/tag_list_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/timestamp.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/tips_ui.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/title_notifications_count.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/typeahead.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/urgency.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/user_navbar_dropdown.js.jsx"]);
+},{}]},{},["/Users/dave/code/asm/asm-web/app/assets/javascripts/components/activity_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/avatar.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications_toggler.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/coin_ownership.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/core_team.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/desktop_notifications.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/drag_and_drop_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/financials_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/form_group.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/full_page_news_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/input_preview.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/interest_picker.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_bounty_form.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_friend_bounty.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_friend_product.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_list.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/join_team_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/members_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/navbar.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/notification_preferences_dropdown.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/number_input_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/people_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/person_picker.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/popover.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/share.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/tag_list_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/timestamp.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/tips_ui.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/title_notifications_count.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/toggle_button.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/typeahead.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/urgency.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/user_navbar_dropdown.js.jsx"]);
