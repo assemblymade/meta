@@ -8,16 +8,16 @@ describe Users::ChatRoomsController do
   describe '#index' do
     before do
       sign_in user
-      Watching.subscribe!(user, product)
+      Watching.announcements!(user, product)
       Watching.watch!(user, product2)
     end
 
-    it 'only returns subscribed products' do
+    it 'only returns following products' do
       get :index
 
       body = JSON.parse(response.body)
       expect(body["chat_rooms"].count).to eq(1)
-      expect(body["chat_rooms"].first["id"]).to eq('chat_' + product.id)
+      expect(body["chat_rooms"].first["id"]).to eq('chat_' + product2.id)
       expect(body["sort_keys"].count).to eq(0)
     end
   end

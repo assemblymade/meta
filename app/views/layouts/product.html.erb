@@ -27,9 +27,9 @@
                 data-react-props="<%= {
                   productWatchersPath: product_watchers_path(@product),
                   productWatchersCount: @product.watchings_count,
-                  productUnfollowPath: product_unfollow_path(@product),
                   productFollowPath: product_follow_path(@product),
-                  productSubscribePath: subscribe_product_path(@product),
+                  productAnnouncementsPath: product_announcements_path(@product),
+                  productUnfollowPath: product_unfollow_path(@product),
                   watchingState: @product.watching_state(current_user),
                   afterFollowPath: product_people_path(@product)
                 }.to_json %>">

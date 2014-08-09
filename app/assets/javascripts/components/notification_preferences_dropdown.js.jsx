@@ -75,8 +75,8 @@ var Avatar = require('./avatar.js.jsx');
               </a>
             </li>
 
-            <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('watching')}>
-              <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'watching', this.props.productFollowPath)}>
+            <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('announcements')}>
+              <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'announcements', this.props.productAnnouncementsPath)}>
                 <div>
                   <strong>Follow announcements only</strong>
                 </div>
@@ -86,8 +86,8 @@ var Avatar = require('./avatar.js.jsx');
               </a>
             </li>
 
-            <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('subscribed')}>
-              <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'subscribed', this.props.productSubscribePath)}>
+            <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('following')}>
+              <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'following', this.props.productFollowPath)}>
                 <div>
                   <strong>Follow</strong>
                 </div>
@@ -115,9 +115,9 @@ var Avatar = require('./avatar.js.jsx');
 
     buttonState: function() {
       switch (this.state.selected) {
-        case 'subscribed':
+        case 'following':
           return 'Following';
-        case 'watching':
+        case 'announcements':
           return 'Following announcements only';
         case 'not watching':
           return 'Follow';
@@ -144,7 +144,7 @@ var Avatar = require('./avatar.js.jsx');
       Dispatcher.dispatch({
         event: D.EVENTS.SELECTED_UPDATED,
         action: D.ACTIONS.UPDATE_SELECTED,
-        data: { item: item, path: path, redirectTo: (item == 'subscribed' ? this.props.afterFollowPath : null) }
+        data: { item: item, path: path, redirectTo: (item == 'following' ? this.props.afterFollowPath : null) }
       });
     }
   });

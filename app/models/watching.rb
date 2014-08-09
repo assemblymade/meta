@@ -12,17 +12,24 @@ class Watching < ActiveRecord::Base
   scope :subscribed, -> { where(subscription: true) }
 
   def self.auto_subscribe!(user, watchable)
-    return if auto_subscribed?(user, watchable)
+    return if auto_following?(user, watchable)
 
     watch!(user, watchable)
   end
 
-  def self.watch!(user, watchable)
+  def self.watch!(user, watchable, subscription=true)
     if watching = find_by(user: user, watchable: watchable)
-      watching.update_attributes subscription: true
+      watching.update_attributes subscription: subscription
     else
-      create!(user: user, watchable: watchable, subscription: true)
+      watching = create!(user: user, watchable: watchable, subscription: subscription)
     end
+
+    if subscription
+      if is_product?(watchable)
+        watch_wips!(user, watchable)
+      end
+    end
+    watching
   end
 
   def self.watch_wips!(user, watchable)
@@ -56,35 +63,19 @@ class Watching < ActiveRecord::Base
     where(user: user, watchable: watchable).any?
   end
 
-  def self.subscribe!(user, watchable)
-    if where(user: user, watchable: watchable).exists?
-      watching = find_by(user_id: user.id, watchable_id: watchable.id).update_attributes(subscription: true)
-    else
-      watching = create!(user: user, watchable: watchable, subscription: true)
-    end
-
-    if self.is_product?(watchable)
-      self.watch_wips!(user, watchable)
-    end
-
-    watching
+  def self.announcements!(user, watchable)
+    watch!(user, watchable, false)
   end
 
-  def self.unsubscribe!(user, watchable)
-    if where(user: user, watchable: watchable, subscription: true).exists?
-      find_by(user_id: user.id, watchable_id: watchable.id).update_attributes(subscription: false)
-    end
-
-    if self.is_product?(watchable)
-      self.unwatch_wips!(user, watchable)
-    end
-  end
-
-  def self.subscribed?(user, watchable)
+  def self.following?(user, watchable)
     where(user: user, watchable: watchable, subscription: true).any?
   end
 
-  def self.auto_subscribed?(user, watchable)
+  def self.announcements?(user, watchable)
+    where(user: user, watchable: watchable, subscription: false).any?
+  end
+
+  def self.auto_following?(user, watchable)
     where(user: user, watchable: watchable, subscription: true).where('auto_subscribed_at is not null').any?
   end
 

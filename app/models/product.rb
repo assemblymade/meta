@@ -340,20 +340,16 @@ class Product < ActiveRecord::Base
     slug || id
   end
 
-  def subscribe!(user)
-    Watching.subscribe!(user, self)
-  end
-
-  def unsubscribe!(user)
-    Watching.unsubscribe!(user, self)
-  end
-
-  def subscribed?(user)
-    Watching.subscribed?(user, self)
-  end
-
   def watch!(user)
     Watching.watch!(user, self)
+  end
+
+  def announcements!(user)
+    Watching.announcements!(user, self)
+  end
+
+  def following?(user)
+    Watching.following?(user, self)
   end
 
   def auto_watch!(user)
@@ -369,12 +365,10 @@ class Product < ActiveRecord::Base
   end
 
   def watching_state(user)
-    if subscribed?(user)
-      return 'subscribed'
-    elsif watching?(user)
-      return 'watching'
+    if watching = Watching.find_by(user: user, watchable_id: self.id)
+      watching.subscription ? 'following' : 'announcements'
     else
-      return 'not watching'
+      'not watching'
     end
   end
 

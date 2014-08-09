@@ -217,9 +217,8 @@ ASM::Application.routes.draw do
     get 'admin'
     post 'feature'
     post 'follow'
+    post 'announcements'
     post 'unfollow'
-    post 'subscribe', as: :subscribe, on: :member
-    post 'unsubscribe', as: :unsubscribe, on: :member
     get 'log' => 'stakes#show'
     get 'search' => 'search#index'
     patch :launch

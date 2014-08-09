@@ -2847,8 +2847,8 @@ var Avatar = require('./avatar.js.jsx');
               )
             ), 
 
-            React.DOM.li({role: "presentation", style: { cursor: 'pointer'}, className: this.selectedClass('watching')}, 
-              React.DOM.a({role: "menuitem", tabIndex: "-1", onClick: this.updatePreference.bind(this, 'watching', this.props.productFollowPath)}, 
+            React.DOM.li({role: "presentation", style: { cursor: 'pointer'}, className: this.selectedClass('announcements')}, 
+              React.DOM.a({role: "menuitem", tabIndex: "-1", onClick: this.updatePreference.bind(this, 'announcements', this.props.productAnnouncementsPath)}, 
                 React.DOM.div(null, 
                   React.DOM.strong(null, "Follow announcements only")
                 ), 
@@ -2858,8 +2858,8 @@ var Avatar = require('./avatar.js.jsx');
               )
             ), 
 
-            React.DOM.li({role: "presentation", style: { cursor: 'pointer'}, className: this.selectedClass('subscribed')}, 
-              React.DOM.a({role: "menuitem", tabIndex: "-1", onClick: this.updatePreference.bind(this, 'subscribed', this.props.productSubscribePath)}, 
+            React.DOM.li({role: "presentation", style: { cursor: 'pointer'}, className: this.selectedClass('following')}, 
+              React.DOM.a({role: "menuitem", tabIndex: "-1", onClick: this.updatePreference.bind(this, 'following', this.props.productFollowPath)}, 
                 React.DOM.div(null, 
                   React.DOM.strong(null, "Follow")
                 ), 
@@ -2887,9 +2887,9 @@ var Avatar = require('./avatar.js.jsx');
 
     buttonState: function() {
       switch (this.state.selected) {
-        case 'subscribed':
+        case 'following':
           return 'Following';
-        case 'watching':
+        case 'announcements':
           return 'Following announcements only';
         case 'not watching':
           return 'Follow';
@@ -2916,7 +2916,7 @@ var Avatar = require('./avatar.js.jsx');
       Dispatcher.dispatch({
         event: D.EVENTS.SELECTED_UPDATED,
         action: D.ACTIONS.UPDATE_SELECTED,
-        data: { item: item, path: path, redirectTo: (item == 'subscribed' ? this.props.afterFollowPath : null) }
+        data: { item: item, path: path, redirectTo: (item == 'following' ? this.props.afterFollowPath : null) }
       });
     }
   });
