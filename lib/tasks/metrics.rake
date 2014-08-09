@@ -62,7 +62,9 @@ namespace :metrics do
 
   task :mau2 => :environment do
     last_month = 1.month.ago
-    User.where("created_at < ?", Date.today.beginning_of_month).where("last_request_at >= ?", last_month.beginning_of_month)
+    # User.where("created_at < ?", Date.today.beginning_of_month).where("last_request_at >= ?", last_month.beginning_of_month)
+    a = User.where("created_at < ?", last_month.beginning_of_month)
+    puts a.where("last_request_at >= ?", 2.months.ago.beginning_of_month).count
   end
 
   desc "Monthly Active Contributors - People who created wips and comment"
