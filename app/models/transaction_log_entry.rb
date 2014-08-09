@@ -46,16 +46,6 @@ class TransactionLogEntry < ActiveRecord::Base
          group('users.id')
   end
 
-  def self.proposed!(created_at, product, work_id, wallet_id)
-    create!(
-      created_at: created_at,
-      product: product,
-      action: 'proposed',
-      work_id: work_id,
-      wallet_id: wallet_id
-    )
-  end
-
   def self.validated!(created_at, product, work_id, wallet_id, worker_id)
     entry = create!(
       created_at: created_at,

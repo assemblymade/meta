@@ -66,7 +66,7 @@ class Wip < ActiveRecord::Base
   end
 
   def awarded?
-    !!self.winner
+    self.try(:winning_event_id)
   end
 
   def close(closer, reason=nil)

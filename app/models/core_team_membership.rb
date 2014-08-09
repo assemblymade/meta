@@ -1,3 +1,4 @@
+# TODO: (whatupdave) Remove this in favor of team membership
 class CoreTeamMembership < ActiveRecord::Base
   include ActiveRecord::UUID
 

@@ -8,7 +8,7 @@ describe Task do
   let(:comment) { task.comments.create!(body: 'TROGDOR', user: worker) }
 
   before {
-    product.core_team_memberships.create!(user: core_member)
+    product.team_memberships.create!(user: core_member, is_core: true)
   }
 
   describe 'deliverable' do
@@ -30,6 +30,7 @@ describe Task do
     end
 
     it "increments with a single offer" do
+      TransactionLogEntry.minted!(nil, Time.now, product, task.id, core_member.id, 1)
       Offer.create!(bounty: task, user: core_member, amount: 100)
       expect(task.value).to eq(100)
     end

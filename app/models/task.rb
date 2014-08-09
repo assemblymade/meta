@@ -197,19 +197,20 @@ class Task < Wip
   end
 
   def award(closer, winning_event)
+    minting = nil
     add_activity(closer, Activities::Award) do
       win = ::Event::Win.new(user: closer, event: winning_event)
       add_event(win) do
         set_closed(closer)
         self.winning_event = winning_event
-        # (parent_id, created_at, product, work_id, wallet_id, cents, extra=nil)
-        minting = TransactionLogEntry.minted!(nil, Time.current, product, self.id,  self.id, self.value)
 
-        CoinsMinted.new.perform(minting.id)
+        minting = TransactionLogEntry.minted!(nil, Time.current, product, self.id, winning_event.user.id, self.value)
 
         milestones.each(&:touch)
       end
     end
+
+    CoinsMinted.new.perform(minting.id) if minting
   end
 
   def work_submitted(submitter)

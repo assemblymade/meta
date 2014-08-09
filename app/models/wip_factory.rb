@@ -17,8 +17,6 @@ class WipFactory
 
     if wip.valid?
       add_description(wip)
-      add_transaction_log_entry(wip)
-
       upvote_creator(wip) if wip.upvotable?
       watch_product
 
@@ -54,10 +52,6 @@ class WipFactory
       Wip,
       wip.id
     )
-  end
-
-  def add_transaction_log_entry(wip)
-    TransactionLogEntry.proposed!(wip.created_at, @product, wip.id, @creator.id)
   end
 
   def push(wip, users)
