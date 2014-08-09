@@ -1,0 +1,183 @@
+<% title 'Talk' %>
+
+<%= render 'shared/navbar' %>
+
+<div class="modal fade"
+     id="create-task"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="createTask"
+     aria-hidden="true">
+</div>
+
+<style>
+.chat-wrapper {
+  background-color: white;
+}
+.page {
+  padding-bottom: 0;
+}
+.chat-wrapper > .row {
+  position: absolute;
+  top: 0;
+}
+.chat-wrapper > .row > .col-md-9 {
+  padding-right: 0;
+}
+.chat-wrapper > .row > .col-md-3 {
+  padding-left: 0;
+}
+</style>
+
+<script>
+  var resizeChatView = function resizeChatView() {
+    var offsetTop = $('.chat-wrapper').offset().top,
+        windowHeight = $(window).innerHeight(),
+        wrapperHeight = windowHeight - offsetTop;
+
+    $('.chat-wrapper').css({height: wrapperHeight});
+
+    var chatActionsHeight = $('.js-chat-actions').outerHeight();
+
+    $('.js-chat,.js-members').css({height: (wrapperHeight - chatActionsHeight)});
+  }
+
+  $(window).resize(resizeChatView)
+  $(document).ready(resizeChatView)
+</script>
+
+<div class="chat-wrapper">
+
+  <div class="row" style="position:relative">
+    <div class="col-md-9">
+
+      <div class="chat js-chat" style="width:100%">
+        <center>
+          <a class="btn btn-default btn-block btn-sm js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>" style="margin-top: 36px;">Load more</a>
+          <br>
+        </center>
+
+        <div class="timeline chat-timeline js-activity-stream"></div>
+      </div>
+
+    </div>
+    <div class="col-md-3 hidden-xs hidden-sm" style="overflow:hidden">
+      <div class="js-members"></div>
+    </div>
+  </div>
+
+
+  <div class="chat-actions js-chat-actions">
+    <%= render 'discussions/chat_box' %>
+  </div>
+</div>
+
+
+
+<script>
+  app.product = new Product(<%= json @product, scope: current_user %>);
+  app.chatRoom = { id: '<%= @product.chat_room_key %>' }
+
+  <% if signed_in? %>
+    app.chatRoom.readRaptorChatPath = '<%== ReadraptorTracker.new(@product.chat_room_key, current_user.id).url %>';
+  <% end %>
+
+  $(document).ready(function() {
+    var activityStream = new ActivityStream(<%=
+      json @activity_stream.map {|a, _|
+        ActivitySerializer.new(a, scope: current_user)
+      }
+    %>);
+    activityStream.url = '<%= product_wip_comments_path(@product, @product.main_thread) %>';
+    activityStream.product = app.product;
+
+    var activityStreamView = new ActivityStreamView({
+      el: $('.js-activity-stream'),
+      collection: activityStream,
+      subjectId: '<%= @product.main_thread_id %>',
+      tipsPath: "<%= product_tips_path(@product) %>"
+    });
+
+    // Initialize pusher
+    var pusher = new Pusher($('meta[name=pusher-key]').attr('content'), {
+      authEndpoint: <%= webhooks_pusher_path.to_json.html_safe %>
+    });
+
+    pusher.connection.bind('connected', function() {
+      activityStream.listenForRemote(pusher, pusher.connection);
+
+      var presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
+      var permanentWatchers = <%= @recently_active.each_with_object({}) {|w, memo| memo[w.id] = UserSerializer.new(w) }.to_json.html_safe %>
+
+      $('.js-members').each(function() {
+        var component = React.renderComponent(
+          MembersView({
+            url: '<%= product_watchers_path(@product, format: :json) %>',
+            channel: presenceChannel
+          }),
+          this
+        );
+
+        component.setState({
+          members: permanentWatchers
+        });
+      });
+
+      var alreadyJoined = {};
+
+      presenceChannel.bind(
+        'pusher:member_added',
+        function memberJoined(member) {
+          if (permanentWatchers.hasOwnProperty(member.id)) {
+            return;
+          }
+
+          // Slight hack to prevent multiple join messages
+          // for one person
+          if (alreadyJoined[member.id] === 1) {
+            return;
+          }
+
+          alreadyJoined[member.id] = 1;
+
+          var activity = new Activity({
+            id: member.id + rand(10000),
+            actor: member.info,
+            // TODO: change 'type' to 'verb'
+            type: 'activities/join',
+            created: moment().toISOString()
+          });
+
+          activityStream.add(activity);
+        }
+      );
+    });
+
+    var chatView = new ChatView({
+      el: $('.js-chat'),
+      collection: activityStream,
+      scrollContainer: $('.js-chat'),
+      scrollPadding: 168
+    });
+
+    var chatInput = new ChatInput({
+      el: $('.js-chat-actions')
+    })
+
+    window.activityStream = activityStream;
+    window.activityStreamView = activityStreamView;
+    window.chatView = chatView;
+
+    activityStreamView.render();
+    chatView.render();
+    chatView.scrollToLatestActivity();
+    $(window).load(function() {
+      delay(1, chatView.scrollToLatestActivity);
+    });
+  });
+</script>
+
+<!-- Analytics -->
+<script>
+  analytics.track('product.chat.viewed', <%== ProductSerializer.new(@product, scope: current_user).to_json %>)
+</script>

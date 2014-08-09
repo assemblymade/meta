@@ -20,6 +20,9 @@ ASM::Application.routes.draw do
 
   get '/home2' => 'pages#home2'
 
+  # Talk Experiment
+  get '/talk'  => 'talk#index'
+
   get '/still-field' => redirect('/discover') # bad product
 
   # Bugfix. Read more at https://assembly.com/meta/198
