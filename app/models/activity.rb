@@ -18,7 +18,7 @@ class Activity < ActiveRecord::Base
   def self.publish!(opts)
     create!(opts).tap do |a|
       if product = a.target.try(:product)
-        auto_subscribe!(a.actor, a.target.product)
+        auto_subscribe!(a.actor, product)
       end
 
       PublishActivity.perform_async(a.id) if Story.should_publish?(a)
@@ -26,8 +26,8 @@ class Activity < ActiveRecord::Base
     end
   end
 
-  def self.auto_subscribe!(actor, target)
-    Watching.auto_subscribe!(actor, target)
+  def self.auto_subscribe!(actor, watchable)
+    Watching.auto_subscribe!(actor, watchable)
   end
 
   def track_in_segment

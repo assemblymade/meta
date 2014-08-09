@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/activity_feed.js.jsx":[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/pletcher/Projects/meta/app/assets/javascripts/components/activity_feed.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -46,7 +46,7 @@
   window.ActivityFeed = ActivityFeed;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/avatar.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -79,7 +79,7 @@
   window.Avatar = Avatar;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/chat_notifications.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -345,7 +345,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
   window.ChatNotifications = ChatNotifications;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/chat_notifications_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/chat_notifications_store.js","./desktop_notifications.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/desktop_notifications.js.jsx"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications_toggler.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/chat_notifications_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/chat_notifications_store.js","./desktop_notifications.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/desktop_notifications.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/chat_notifications_toggler.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -434,7 +434,7 @@ var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
   window.ChatNotificationsToggler = ChatNotificationsToggler;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../mixins/dropdown_toggler.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/mixins/dropdown_toggler.js.jsx","../stores/chat_notifications_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/chat_notifications_store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/coin_ownership.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../mixins/dropdown_toggler.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/dropdown_toggler.js.jsx","../stores/chat_notifications_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/chat_notifications_store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/coin_ownership.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -787,7 +787,7 @@ var PersonPicker = require('./person_picker.js.jsx');
   window.CoinOwnership = CoinOwnership;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/coin_ownership_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/coin_ownership_store.js","./avatar.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/avatar.js.jsx","./person_picker.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/person_picker.js.jsx"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/core_team.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/coin_ownership_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/coin_ownership_store.js","./avatar.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx","./person_picker.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/person_picker.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/core_team.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -974,7 +974,7 @@ var PersonPicker = require('./person_picker.js.jsx');
 
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/desktop_notifications.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/desktop_notifications.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -1019,7 +1019,7 @@ var PersonPicker = require('./person_picker.js.jsx');
   window.DesktopNotifications = DesktopNotifications;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/drag_and_drop_view.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/drag_and_drop_view.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var Dispatcher = require('../dispatcher');
@@ -1114,7 +1114,7 @@ var Dispatcher = require('../dispatcher');
   window.DragAndDrop = DragAndDrop;
 })();
 
-},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed.js.jsx":[function(require,module,exports){
+},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/dropdown_news_feed.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -1307,7 +1307,7 @@ var Avatar = require('./avatar.js.jsx');
   window.DropdownNewsFeed = DropdownNewsFeed;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../mixins/event.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/mixins/event.js.jsx","../mixins/news_feed.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/mixins/news_feed.js.jsx","../stores/news_feed_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/news_feed_store.js","./avatar.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/avatar.js.jsx"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../mixins/event.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/event.js.jsx","../mixins/news_feed.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/news_feed.js.jsx","../stores/news_feed_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_store.js","./avatar.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -1413,7 +1413,7 @@ var NewsFeedStore = require('../stores/news_feed_store');
   window.DropdownNewsFeedToggler = DropdownNewsFeedToggler;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../mixins/dropdown_toggler.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/mixins/dropdown_toggler.js.jsx","../stores/news_feed_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/news_feed_store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/financials_view.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../mixins/dropdown_toggler.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/dropdown_toggler.js.jsx","../stores/news_feed_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/financials_view.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 // TODO: Tidy up shared state
@@ -1703,7 +1703,7 @@ var NewsFeedStore = require('../stores/news_feed_store');
   window.Financials = Financials;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/form_group.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/form_group.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -1743,7 +1743,7 @@ var NewsFeedStore = require('../stores/news_feed_store');
   window.FormGroup = FormGroup;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/full_page_news_feed.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/full_page_news_feed.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -1902,7 +1902,7 @@ var Avatar = require('./avatar.js.jsx');
   window.FullPageNewsFeed = FullPageNewsFeed;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../mixins/event.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/mixins/event.js.jsx","../mixins/news_feed.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/mixins/news_feed.js.jsx","../stores/news_feed_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/news_feed_store.js","./avatar.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/avatar.js.jsx"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/input_preview.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../mixins/event.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/event.js.jsx","../mixins/news_feed.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/news_feed.js.jsx","../stores/news_feed_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_store.js","./avatar.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/input_preview.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var FormGroup = require('./form_group.js.jsx');
@@ -1965,7 +1965,7 @@ var FormGroup = require('./form_group.js.jsx');
   window.InputPreview = InputPreview;
 })();
 
-},{"./form_group.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/form_group.js.jsx"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/interest_picker.js.jsx":[function(require,module,exports){
+},{"./form_group.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/form_group.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/interest_picker.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -2258,7 +2258,7 @@ var InterestStore = require('../stores/interest_store');
   window.InterestPicker = InterestPicker;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/interest_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/interest_store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_bounty_form.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/interest_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/interest_store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_bounty_form.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var FormGroup = require('./form_group.js.jsx');
@@ -2340,7 +2340,7 @@ var FormGroup = require('./form_group.js.jsx');
   window.InviteBountyForm = InviteBountyForm;
 })();
 
-},{"./form_group.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/form_group.js.jsx"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_friend_bounty.js.jsx":[function(require,module,exports){
+},{"./form_group.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/form_group.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_friend_bounty.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
@@ -2400,7 +2400,7 @@ var InviteBountyForm = require('./invite_bounty_form.js.jsx');
   window.InviteFriendBounty = InviteFriendBounty;
 })();
 
-},{"./invite_bounty_form.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_bounty_form.js.jsx","./popover.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/popover.js.jsx"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_friend_product.js.jsx":[function(require,module,exports){
+},{"./invite_bounty_form.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_bounty_form.js.jsx","./popover.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/popover.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_friend_product.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
@@ -2461,7 +2461,7 @@ var InviteBountyForm = require('./invite_bounty_form.js.jsx');
   window.InviteFriendProduct = InviteFriendProduct;
 })();
 
-},{"./invite_bounty_form.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_bounty_form.js.jsx","./popover.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/popover.js.jsx"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_list.js.jsx":[function(require,module,exports){
+},{"./invite_bounty_form.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_bounty_form.js.jsx","./popover.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/popover.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_list.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
@@ -2510,7 +2510,7 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
   window.InviteList = InviteList;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/members_view.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/members_view.js.jsx":[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -2693,7 +2693,7 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
   window.MembersView = MembersView;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/navbar.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/navbar.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -2769,7 +2769,7 @@ var Avatar = require('./avatar.js.jsx');
   window.Navbar = Navbar;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","./avatar.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/avatar.js.jsx","./chat_notifications.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications.js.jsx","./chat_notifications_toggler.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications_toggler.js.jsx","./dropdown_news_feed.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed.js.jsx","./dropdown_news_feed_toggler.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx","./title_notifications_count.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/title_notifications_count.js.jsx","./user_navbar_dropdown.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/user_navbar_dropdown.js.jsx"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/notification_preferences_dropdown.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","./avatar.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx","./chat_notifications.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/chat_notifications.js.jsx","./chat_notifications_toggler.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/chat_notifications_toggler.js.jsx","./dropdown_news_feed.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/dropdown_news_feed.js.jsx","./dropdown_news_feed_toggler.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx","./title_notifications_count.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/title_notifications_count.js.jsx","./user_navbar_dropdown.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/user_navbar_dropdown.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/notification_preferences_dropdown.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -2928,7 +2928,7 @@ var Avatar = require('./avatar.js.jsx');
   window.NotificationPreferencesDropdown = NotificationPreferencesDropdown;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/notification_preferences_dropdown_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/notification_preferences_dropdown_store.js","./avatar.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/avatar.js.jsx"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/number_input_view.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/notification_preferences_dropdown_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/notification_preferences_dropdown_store.js","./avatar.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/number_input_view.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -3033,7 +3033,7 @@ var Avatar = require('./avatar.js.jsx');
   window.NumberInput = NumberInput;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/people_view.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/people_view.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var PeopleStore = require('../stores/people_store');
@@ -3470,7 +3470,7 @@ var PeopleStore = require('../stores/people_store');
   }
 })();
 
-},{"../stores/people_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/people_store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/person_picker.js.jsx":[function(require,module,exports){
+},{"../stores/people_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/people_store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/person_picker.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -3676,7 +3676,7 @@ var Avatar = require('./avatar.js.jsx');
 
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../stores/person_picker_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/person_picker_store.js","./avatar.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/avatar.js.jsx"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/popover.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../stores/person_picker_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/person_picker_store.js","./avatar.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/popover.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -3740,7 +3740,7 @@ var Avatar = require('./avatar.js.jsx');
   window.Popover = Popover;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/share.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/share.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var Popover = require('./popover.js.jsx');
@@ -3848,7 +3848,7 @@ var Popover = require('./popover.js.jsx');
   window.Share = Share;
 })();
 
-},{"./popover.js.jsx":"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/popover.js.jsx"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/tag_list_view.js.jsx":[function(require,module,exports){
+},{"./popover.js.jsx":"/Users/pletcher/Projects/meta/app/assets/javascripts/components/popover.js.jsx"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/tag_list_view.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -3998,7 +3998,7 @@ var TagListStore = require('../stores/tag_list_store');
   window.TagList = TagList;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../stores/tag_list_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/tag_list_store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/timestamp.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../stores/tag_list_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/tag_list_store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/timestamp.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -4025,7 +4025,7 @@ var TagListStore = require('../stores/tag_list_store');
   window.Timestamp = Timestamp;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/tips_ui.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/tips_ui.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -4174,7 +4174,7 @@ var TagListStore = require('../stores/tag_list_store');
   window.TipsUi = TipsUi;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/title_notifications_count.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/title_notifications_count.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -4223,7 +4223,7 @@ var NewsFeedStore = require('../stores/news_feed_store');
   window.TitleNotificationsCount = TitleNotificationsCount;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../stores/chat_notifications_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/chat_notifications_store.js","../stores/news_feed_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/news_feed_store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/toggle_button.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../stores/chat_notifications_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/chat_notifications_store.js","../stores/news_feed_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/toggle_button.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -4282,7 +4282,7 @@ var ButtonStore = require('../stores/toggle_button_store');
   window.ToggleButton = ToggleButton;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../stores/toggle_button_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/toggle_button_store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/typeahead.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../stores/toggle_button_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/toggle_button_store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/typeahead.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -4364,7 +4364,7 @@ var CONSTANTS = require('../constants');
   window.Typeahead = Typeahead;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/urgency.js.jsx":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/urgency.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -4422,7 +4422,7 @@ var CONSTANTS = require('../constants');
   window.Urgency = Urgency;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/user_navbar_dropdown.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/components/user_navbar_dropdown.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -4471,7 +4471,7 @@ var CONSTANTS = require('../constants');
   window.UserNavbarDropdown = UserNavbarDropdown;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js":[function(require,module,exports){
 (function() {
   var CONSTANTS = {
     CHAT_NOTIFICATIONS: {
@@ -4592,7 +4592,7 @@ var CONSTANTS = require('../constants');
   window.CONSTANTS = CONSTANTS;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js":[function(require,module,exports){
 (function() {
   var _callbacks = [];
 
@@ -4637,7 +4637,7 @@ var CONSTANTS = require('../constants');
   window.Dispatcher = Dispatcher;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/mixins/dropdown_toggler.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/dropdown_toggler.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -4671,7 +4671,7 @@ var CONSTANTS = require('../constants');
   window.DropdownTogglerMixin = DropdownTogglerMixin;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/mixins/event.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/event.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */(function() {
   var EventMixin = {
     timestamp: function() {
@@ -4711,7 +4711,7 @@ var CONSTANTS = require('../constants');
   window.EventMixin = EventMixin;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/mixins/news_feed.js.jsx":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/mixins/news_feed.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
@@ -4802,7 +4802,7 @@ var update = require('react/lib/update');
   window.NewsFeedMixin = NewsFeedMixin;
 })();
 
-},{"../constants":"/Users/dave/code/asm/asm-web/app/assets/javascripts/constants.js","../stores/news_feed_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/news_feed_store.js","../stores/news_feed_users_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/news_feed_users_store.js","react/lib/update":"/Users/dave/code/asm/asm-web/node_modules/react/lib/update.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/chat_notifications_store.js":[function(require,module,exports){
+},{"../constants":"/Users/pletcher/Projects/meta/app/assets/javascripts/constants.js","../stores/news_feed_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_store.js","../stores/news_feed_users_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_users_store.js","react/lib/update":"/Users/pletcher/Projects/meta/node_modules/react/lib/update.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/chat_notifications_store.js":[function(require,module,exports){
 var xhr = require('../xhr');
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
@@ -4992,7 +4992,7 @@ var Store = require('../stores/store');
   window.ChatNotificationsStore = _notificationsStore;
 })();
 
-},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js","../xhr":"/Users/dave/code/asm/asm-web/app/assets/javascripts/xhr.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/coin_ownership_store.js":[function(require,module,exports){
+},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js","../xhr":"/Users/pletcher/Projects/meta/app/assets/javascripts/xhr.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/coin_ownership_store.js":[function(require,module,exports){
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
 
@@ -5081,7 +5081,7 @@ var Store = require('../stores/store');
   window.CoinOwnershipStore = _coinOwnershipStore;
 })();
 
-},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/interest_store.js":[function(require,module,exports){
+},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/interest_store.js":[function(require,module,exports){
 var xhr = require('../xhr');
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
@@ -5145,7 +5145,7 @@ var Store = require('../stores/store');
   window.InterestStore = _interestStore;
 })();
 
-},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js","../xhr":"/Users/dave/code/asm/asm-web/app/assets/javascripts/xhr.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/news_feed_store.js":[function(require,module,exports){
+},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js","../xhr":"/Users/pletcher/Projects/meta/app/assets/javascripts/xhr.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_store.js":[function(require,module,exports){
 var xhr = require('../xhr');
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
@@ -5401,7 +5401,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
   window.NewsFeedStore = _newsFeedStore;
 })();
 
-},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/news_feed_users_store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/news_feed_users_store.js","../stores/store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js","../xhr":"/Users/dave/code/asm/asm-web/app/assets/javascripts/xhr.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/news_feed_users_store.js":[function(require,module,exports){
+},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/news_feed_users_store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_users_store.js","../stores/store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js","../xhr":"/Users/pletcher/Projects/meta/app/assets/javascripts/xhr.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/news_feed_users_store.js":[function(require,module,exports){
 var xhr = require('../xhr');
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
@@ -5440,7 +5440,7 @@ var Store = require('../stores/store');
   window.NewsFeedUsersStore = _newsFeedUsersStore;
 })();
 
-},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js","../xhr":"/Users/dave/code/asm/asm-web/app/assets/javascripts/xhr.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/notification_preferences_dropdown_store.js":[function(require,module,exports){
+},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js","../xhr":"/Users/pletcher/Projects/meta/app/assets/javascripts/xhr.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/notification_preferences_dropdown_store.js":[function(require,module,exports){
 var xhr = require('../xhr');
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
@@ -5501,7 +5501,7 @@ var Store = require('../stores/store');
   window.NotificationPreferencesDropdownStore = _dropdownStore;
 })();
 
-},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js","../xhr":"/Users/dave/code/asm/asm-web/app/assets/javascripts/xhr.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/people_store.js":[function(require,module,exports){
+},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js","../xhr":"/Users/pletcher/Projects/meta/app/assets/javascripts/xhr.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/people_store.js":[function(require,module,exports){
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
 
@@ -5569,7 +5569,7 @@ var Store = require('../stores/store');
   window.PeopleStore = _peopleStore;
 })();
 
-},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/person_picker_store.js":[function(require,module,exports){
+},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/person_picker_store.js":[function(require,module,exports){
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
 
@@ -5656,7 +5656,7 @@ var Store = require('../stores/store');
   window.PersonPickerStore = _personPickerStore;
 })();
 
-},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js":[function(require,module,exports){
+},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js":[function(require,module,exports){
 (function() {
   var Store = _.extend({}, {
     emit: function(event) {
@@ -5693,7 +5693,7 @@ var Store = require('../stores/store');
   window.Store = Store;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/tag_list_store.js":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/tag_list_store.js":[function(require,module,exports){
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
 
@@ -5797,7 +5797,7 @@ var Store = require('../stores/store');
   window.TagListStore = _tagListStore;
 })();
 
-},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/toggle_button_store.js":[function(require,module,exports){
+},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/toggle_button_store.js":[function(require,module,exports){
 var xhr = require('../xhr');
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
@@ -5827,7 +5827,7 @@ var Store = require('../stores/store');
   window.ButtonStore = _buttonStore;
 })();
 
-},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/dave/code/asm/asm-web/app/assets/javascripts/stores/store.js","../xhr":"/Users/dave/code/asm/asm-web/app/assets/javascripts/xhr.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/xhr.js":[function(require,module,exports){
+},{"../dispatcher":"/Users/pletcher/Projects/meta/app/assets/javascripts/dispatcher.js","../stores/store":"/Users/pletcher/Projects/meta/app/assets/javascripts/stores/store.js","../xhr":"/Users/pletcher/Projects/meta/app/assets/javascripts/xhr.js"}],"/Users/pletcher/Projects/meta/app/assets/javascripts/xhr.js":[function(require,module,exports){
 (function() {
   var xhr = {
     get: function(path, callback) {
@@ -5895,7 +5895,7 @@ var Store = require('../stores/store');
   window.xhr = xhr;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/node_modules/browserify/node_modules/process/browser.js":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/node_modules/browserify/node_modules/process/browser.js":[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -5960,7 +5960,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],"/Users/dave/code/asm/asm-web/node_modules/react/lib/copyProperties.js":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/node_modules/react/lib/copyProperties.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014 Facebook, Inc.
@@ -6018,7 +6018,7 @@ function copyProperties(obj, a, b, c, d, e, f) {
 module.exports = copyProperties;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/dave/code/asm/asm-web/node_modules/browserify/node_modules/process/browser.js"}],"/Users/dave/code/asm/asm-web/node_modules/react/lib/invariant.js":[function(require,module,exports){
+},{"_process":"/Users/pletcher/Projects/meta/node_modules/browserify/node_modules/process/browser.js"}],"/Users/pletcher/Projects/meta/node_modules/react/lib/invariant.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014 Facebook, Inc.
@@ -6082,7 +6082,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/dave/code/asm/asm-web/node_modules/browserify/node_modules/process/browser.js"}],"/Users/dave/code/asm/asm-web/node_modules/react/lib/keyOf.js":[function(require,module,exports){
+},{"_process":"/Users/pletcher/Projects/meta/node_modules/browserify/node_modules/process/browser.js"}],"/Users/pletcher/Projects/meta/node_modules/react/lib/keyOf.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014 Facebook, Inc.
  *
@@ -6125,7 +6125,7 @@ var keyOf = function(oneKeyObj) {
 
 module.exports = keyOf;
 
-},{}],"/Users/dave/code/asm/asm-web/node_modules/react/lib/update.js":[function(require,module,exports){
+},{}],"/Users/pletcher/Projects/meta/node_modules/react/lib/update.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014 Facebook, Inc.
@@ -6300,7 +6300,7 @@ function update(value, spec) {
 module.exports = update;
 
 }).call(this,require('_process'))
-},{"./copyProperties":"/Users/dave/code/asm/asm-web/node_modules/react/lib/copyProperties.js","./invariant":"/Users/dave/code/asm/asm-web/node_modules/react/lib/invariant.js","./keyOf":"/Users/dave/code/asm/asm-web/node_modules/react/lib/keyOf.js","_process":"/Users/dave/code/asm/asm-web/node_modules/browserify/node_modules/process/browser.js"}],"spin.js":[function(require,module,exports){
+},{"./copyProperties":"/Users/pletcher/Projects/meta/node_modules/react/lib/copyProperties.js","./invariant":"/Users/pletcher/Projects/meta/node_modules/react/lib/invariant.js","./keyOf":"/Users/pletcher/Projects/meta/node_modules/react/lib/keyOf.js","_process":"/Users/pletcher/Projects/meta/node_modules/browserify/node_modules/process/browser.js"}],"spin.js":[function(require,module,exports){
 /**
  * Copyright (c) 2011-2014 Felix Gnass
  * Licensed under the MIT license
@@ -7996,4 +7996,4 @@ module.exports = update;
   }
 }).call(this);
 
-},{}]},{},["/Users/dave/code/asm/asm-web/app/assets/javascripts/components/activity_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/avatar.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications_toggler.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/coin_ownership.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/core_team.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/desktop_notifications.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/drag_and_drop_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/financials_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/form_group.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/full_page_news_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/input_preview.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/interest_picker.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_bounty_form.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_friend_bounty.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_friend_product.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_list.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/members_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/navbar.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/notification_preferences_dropdown.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/number_input_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/people_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/person_picker.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/popover.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/share.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/tag_list_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/timestamp.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/tips_ui.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/title_notifications_count.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/toggle_button.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/typeahead.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/urgency.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/user_navbar_dropdown.js.jsx"]);
+},{}]},{},["/Users/pletcher/Projects/meta/app/assets/javascripts/components/activity_feed.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/avatar.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/chat_notifications.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/chat_notifications_toggler.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/coin_ownership.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/core_team.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/desktop_notifications.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/drag_and_drop_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/dropdown_news_feed.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/financials_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/form_group.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/full_page_news_feed.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/input_preview.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/interest_picker.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_bounty_form.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_friend_bounty.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_friend_product.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/invite_list.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/members_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/navbar.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/notification_preferences_dropdown.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/number_input_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/people_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/person_picker.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/popover.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/share.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/tag_list_view.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/timestamp.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/tips_ui.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/title_notifications_count.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/toggle_button.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/typeahead.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/urgency.js.jsx","/Users/pletcher/Projects/meta/app/assets/javascripts/components/user_navbar_dropdown.js.jsx"]);

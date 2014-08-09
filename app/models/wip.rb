@@ -18,7 +18,7 @@ class Wip < ActiveRecord::Base
   has_many :taggings, class_name: 'Wip::Tagging'
   has_many :tags, through: :taggings, class_name: 'Wip::Tag'
   has_many :watchings, :as => :watchable
-  has_many :watchers, :through => :watchings, :source => :user
+  has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
 
   has_one :milestone
   accepts_nested_attributes_for :milestone

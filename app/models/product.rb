@@ -48,7 +48,7 @@ class Product < ActiveRecord::Base
   has_many :tasks
   has_many :team_memberships
   has_many :votes, :as => :voteable
-  has_many :watchers, :through => :watchings, :source => :user
+  has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
   has_many :watchings, :as => :watchable
   has_many :wip_activities, through: :wips, source: :activities
   has_many :wips
@@ -365,11 +365,13 @@ class Product < ActiveRecord::Base
   end
 
   def watching_state(user)
-    if watching = Watching.find_by(user: user, watchable_id: self.id)
-      watching.subscription ? 'following' : 'announcements'
-    else
-      'not watching'
+    if Watching.following?(user, self)
+      return 'following'
+    elsif Watching.announcements?(user, self)
+      return 'announcements'
     end
+
+    'not watching'
   end
 
   def poster_image
