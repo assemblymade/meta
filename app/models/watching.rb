@@ -17,7 +17,7 @@ class Watching < ActiveRecord::Base
     # We can't fall back to watch! here because we need auto_subscribed_at
     # not to be overwritten on subsequent calls to watch!.
     if auto_subscription = find_by(user_id: user.id, watchable_id: watchable.id)
-        auto_subscription.update_attributes(subscription: true, auto_subscribed_at: Time.now)
+        auto_subscription.update(subscription: true, auto_subscribed_at: Time.now)
     else
       auto_subscription = create!(
         user: user,
@@ -32,7 +32,7 @@ class Watching < ActiveRecord::Base
 
   def self.watch!(user, watchable, subscription=true)
     if watching = find_by(user: user, watchable: watchable)
-      watching.update_attributes(subscription: subscription, unwatched_at: nil)
+      watching.update(subscription: subscription, unwatched_at: nil)
     else
       watching = create!(user: user, watchable: watchable, subscription: subscription)
     end
@@ -60,7 +60,7 @@ class Watching < ActiveRecord::Base
 
   def self.unwatch!(user, watchable)
     if watching = find_by(user: user, watchable: watchable)
-      watching.update_attributes(unwatched_at: Time.now)
+      watching.update(unwatched_at: Time.now, subscription: false)
     end
 
     if self.is_product?(watchable)
