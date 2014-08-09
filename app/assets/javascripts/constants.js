@@ -91,6 +91,15 @@
       }
     },
 
+    TEXT_COMPLETE: {
+      ACTIONS: {
+        SETUP: 'SETUP',
+      },
+      EVENTS: {
+        DID_MOUNT: 'DID_MOUNT',
+      }
+    },
+
     TOGGLE_BUTTON: {
       ACTIONS: {
         CLICK: 'toggleButton:click'
