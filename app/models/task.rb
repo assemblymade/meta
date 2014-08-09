@@ -91,6 +91,43 @@ class Task < Wip
     TransactionLogEntry.voted!(Time.current, product, self.id, user.id, 1)
   end
 
+  def value
+    offers = Offer.where(bounty: self)
+
+    # 1. reject invalid (old) offers
+
+    latest_offers = {}
+    offers.each do |offer|
+      last_offer = latest_offers[offer.user]
+      if last_offer.nil? || last_offer.created_at < offer.created_at
+        latest_offers[offer.user] = offer
+      end
+    end
+
+    offers = latest_offers.values
+
+    # 2. figure out people's current ownership
+
+    partners = offers.map {|o| Partner.new(o.product, o.user) }
+    ownership = partners.each_with_object({}) do |partner, o|
+      o[partner.wallet] = partner.ownership
+    end
+
+    # 3. figure out weighted average
+
+    return 0 if offers.empty?
+
+    sum = 0
+    weight_sum = 0
+
+    offers.each do |offer|
+      sum += offer.amount * ownership[offer.user]
+      weight_sum += ownership[offer.user]
+    end
+
+    (sum / weight_sum).round
+  end
+
   def score
     votes_count * score_multiplier
   end
@@ -161,10 +198,15 @@ class Task < Wip
 
   def award(closer, winning_event)
     add_activity(closer, Activities::Award) do
-      add_event (win = ::Event::Win.new(user: closer, event: winning_event)) do
+      win = ::Event::Win.new(user: closer, event: winning_event)
+      add_event(win) do
         set_closed(closer)
         self.winning_event = winning_event
-        TransactionLogEntry.validated!(Time.current, product, self.id, closer.id, winning_event.user.id)
+        # (parent_id, created_at, product, work_id, wallet_id, cents, extra=nil)
+        minting = TransactionLogEntry.minted!(nil, Time.current, product, self.id,  self.id, self.value)
+
+        CoinsMinted.new.perform(minting.id)
+
         milestones.each(&:touch)
       end
     end

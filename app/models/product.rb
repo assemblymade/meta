@@ -380,7 +380,7 @@ class Product < ActiveRecord::Base
   def product
     self
   end
-  
+
   def chat_room_key
     "chat_#{id}"
   end
@@ -465,6 +465,11 @@ class Product < ActiveRecord::Base
 
   def push_channel
     slug
+  end
+
+  def average_bounty_value
+    values = TransactionLogEntry.where(product:  self).group(:work_id).sum(:cents).values.reject(&:zero?)
+    values.inject(0, &:+) / values.length
   end
 
   protected

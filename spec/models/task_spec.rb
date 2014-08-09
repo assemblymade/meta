@@ -23,9 +23,25 @@ describe Task do
     end
   end
 
-  describe 'award' do
-    it 'creates award Activity' do
+  describe "#value" do
+
+    it "defaults to 0" do
+      expect(task.value).to eq(0)
+    end
+
+    it "increments with a single offer" do
+      Offer.create!(bounty: task, user: core_member, amount: 100)
+      expect(task.value).to eq(100)
+    end
+
+  end
+
+  describe "award" do
+    it "creates award Activity" do
       expect { task.award!(core_member, comment) }.to change(Activity, :count).by(1)
     end
+
+    # it "increments"
+
   end
 end

@@ -6,7 +6,7 @@ class TransactionLogEntry < ActiveRecord::Base
   scope :minted,     -> { where(action: 'minted') }
   scope :validated,  -> { where(action: 'validated') }
 
-  after_commit :schedule_minter
+  # after_commit :schedule_minter
 
   def self.balance(product, wallet_id)
     where(product_id: product.id, wallet_id: wallet_id).with_cents.sum(:cents)
@@ -56,9 +56,8 @@ class TransactionLogEntry < ActiveRecord::Base
     )
   end
 
-
   def self.validated!(created_at, product, work_id, wallet_id, worker_id)
-    create!(
+    entry = create!(
       created_at: created_at,
       product: product,
       action: 'validated',
@@ -66,6 +65,7 @@ class TransactionLogEntry < ActiveRecord::Base
       wallet_id: wallet_id,
       value: worker_id
     )
+
   end
 
   def self.voted!(created_at, product, work_id, wallet_id, vote_count=1)

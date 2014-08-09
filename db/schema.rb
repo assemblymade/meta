@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140731194126) do
+ActiveRecord::Schema.define(version: 20140805210708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -264,6 +264,13 @@ ActiveRecord::Schema.define(version: 20140731194126) do
     t.datetime "cancelled_at"
   end
 
+  create_table "offers", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "bounty_id",              null: false
+    t.uuid     "user_id",                null: false
+    t.integer  "amount",     default: 0, null: false
+    t.datetime "created_at"
+  end
+
   create_table "perks", id: false, force: true do |t|
     t.uuid     "id",          null: false
     t.uuid     "product_id"
@@ -323,7 +330,7 @@ ActiveRecord::Schema.define(version: 20140731194126) do
 
   create_table "products", id: false, force: true do |t|
     t.uuid     "id",                                     null: false
-    t.string   "slug"
+    t.string   "slug",                                   null: false
     t.string   "name",                                   null: false
     t.string   "pitch"
     t.text     "description"
@@ -357,8 +364,8 @@ ActiveRecord::Schema.define(version: 20140731194126) do
     t.datetime "public_at"
     t.uuid     "main_thread_id"
     t.uuid     "logo_id"
-    t.datetime "launched_at"
     t.integer  "team_memberships_count", default: 0
+    t.datetime "launched_at"
     t.hstore   "info"
   end
 

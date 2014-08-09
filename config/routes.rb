@@ -181,8 +181,8 @@ ASM::Application.routes.draw do
   # hack route for Metrics gem (/v1/metrics)
   post '/v1/metrics', to: 'metrics#create'
 
-
   # api
+  # ◕ᴥ◕
   namespace :api do
     resources :products, only: [] do
       get :workers
@@ -195,6 +195,8 @@ ASM::Application.routes.draw do
     end
 
     resources :textcompletes, only: [:index]
+
+    resources :offers, except: [:new, :edit, :update]
   end
 
   get 'search' => 'search#index'

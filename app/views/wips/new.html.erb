@@ -1,4 +1,4 @@
-<% title 'New Bounty', @product.name %>
+<% title 'New Bounty', @bounty.product.name %>
 <% activate_nav! :bounties %>
 
 <div class="page-header sheet-header">
@@ -7,7 +7,7 @@
 
 <div class="sheet-body">
   <div class="row">
-    <%= form_for [@product, @wip] do |f| %>
+    <%= form_for [@bounty.product, @bounty] do |f| %>
       <div class="col-md-9 col-xs-9">
         <div class="form-group">
           <%= f.label :title, class: 'form-label' %>
@@ -24,7 +24,14 @@
               from your computer</a>...
             </div>
           </div>
-        </div>  
+        </div>
+
+        <div class="form-group">
+          <label class="control-label">Initial Offer</label>
+          <div class="well">
+            <input type="range" max="1000" min="0" value="<%= @bounty.product.average_bounty_value / 100 %>">
+          </div>
+        </div>
 
         <div class="clearfix">
           <%= f.button 'Create bounty', class: %w(btn btn-primary pull-right), 'data-disable-with' => 'Creating...' %>
@@ -42,10 +49,10 @@
         <div style="margin-bottom: 10px"
              data-react-class="TagList"
              data-react-props="<%= {
-                tags: (@wip.tags ? @wip.tags.map do |tag|
+                tags: (@bounty.tags ? @bounty.tags.map do |tag|
                   tag.name
                 end.as_json : []),
-                filterUrl: product_wips_path(@wip.product),
+                filterUrl: product_wips_path(@bounty.product),
                 destination: true
               }.to_json %>">
         </div>
@@ -57,7 +64,7 @@
                label: "Add tag",
                prepend: "#",
                prompt: "Add",
-               filterUrl: product_wips_path(@wip.product)
+               filterUrl: product_wips_path(@bounty.product)
              }.to_json %>">
         </div>
 

@@ -20,7 +20,7 @@ describe 'log entries' do
     end
   end
 
-  context 'validated entry' do
+  context 'minted entry' do
     let(:wip) { Task.make! product: product, user: wip_creator }
 
     it 'adds when Task is won' do
@@ -39,24 +39,6 @@ describe 'log entries' do
       )
     end
 
-    it 'adds when Work is created' do
-      work = WorkFactory.create_with_transaction_entry!(
-        product: product,
-        user: wip_creator,
-        url: 'https://github.com/rails/rails/commit/db045dbbf60b53dbe013ef25554fd013baf88134',
-        metadata: {}
-      )
-
-      expect(
-        TransactionLogEntry.validated.first
-      ).to have_attributes(
-          product_id: product.id,
-          action: 'validated',
-          work_id: work.id,
-          wallet_id: work.user.id,
-          value: work.user.id
-      )
-    end
   end
 
   context 'voted entry' do

@@ -19,6 +19,7 @@ class Wip < ActiveRecord::Base
   has_many :tags, through: :taggings, class_name: 'Wip::Tag'
   has_many :watchings, :as => :watchable
   has_many :watchers, :through => :watchings, :source => :user
+  has_many :offers, inverse_of: :bounty
 
   has_one :milestone
   accepts_nested_attributes_for :milestone

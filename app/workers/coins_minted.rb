@@ -7,7 +7,7 @@ class CoinsMinted
   def perform(minted_entry_id)
     @entry = TransactionLogEntry.find(minted_entry_id)
     @product = @entry.product
-    @work = Work.find_by(id: @entry.work_id) || Wip.find_by!(id: @entry.work_id) # TODO or Product
+    @work = Wip.find_by!(id: @entry.work_id) # TODO or Product
     @winner = work.winner
 
     return if @winner.nil? # older wips may not have a winner if they were awarded, but re-opened

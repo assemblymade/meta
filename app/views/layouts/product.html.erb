@@ -11,7 +11,7 @@
 
       <div class="col-md-10 col-md-push-2">
         <ul class="list list-inline pull-right hidden-xs">
-          
+
           <li>
             <div data-react-class="Share"
                  data-react-props="<%= {
@@ -20,7 +20,7 @@
                    shareText: "Check out #{@product.name} – #{ @product.pitch} on Assembly",
                  }.to_json %>" />
           </li>
-          
+
           <li style="padding-right: 0;">
             <div class="toggler toggler-sm">
               <div data-react-class="JoinTeam"
@@ -47,16 +47,31 @@
                 }.to_json %>">
             </div>
           </li>
-          
+
         </ul>
 
+        <ol class="breadcrumb">
+          <li><a href="#"><%= @product.name %></a></li>
+          <li><a href="#">Bounties</a></li>
+          <li class="active"><a href="#">#17</a></li>
+        </ol>
+
+        <!--
         <h3 class="alpha text-muted" style="font-weight: 400; line-height: 1;">
-          <%= @product.name %> <% if @product.stealth? %><span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;">Stealth</span><% end %>
+          <%= @product.name %>
+          <% if @product.stealth? %>
+            <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;">Stealth</span>
+          <% end %>
+          <span class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></span>
+          Bounties
           <% if @breadcrumb.present? %>
-            <i class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></i>
-            <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>"><%= @breadcrumb[:text] %></a>
+            <span class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></span>
+            <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>">
+              <%= @breadcrumb[:text] %>
+            </a>
           <% end %>
         </h3>
+        -->
 
         <div class="sheet">
           <%= yield %>

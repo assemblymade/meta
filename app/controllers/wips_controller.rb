@@ -58,10 +58,13 @@ class WipsController < ProductController
     )
 
     if @wip.valid?
+
       if milestone_number = params[:milestone_id]
         @milestone = @product.milestones.find_by!(number: milestone_number)
         MilestoneTask.find_or_create_by!(milestone: @milestone, task: @wip)
       end
+
+
 
       Vote.clear_cache(current_user, @wip)
       next_mission_if_complete!(@product.current_mission, current_user)
@@ -198,10 +201,10 @@ class WipsController < ProductController
       redirect_to url_for([@product, @wip])
     end
   end
-  
+
   def set_stories
     set_wip
-    
+
     @stories = Story.associated_with(@wip)
   end
 end

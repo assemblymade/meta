@@ -1,12 +1,55 @@
 class TasksController < WipsController
   wrap_parameters format: [:json]
 
+  def new
+    @bounty = Task.new(product: @product)
+  end
+
+  def create
+    @bounty = WipFactory.create(
+      @product,
+      product_wips,
+      current_user,
+      request.remote_ip,
+      wip_params,
+      params[:description]
+    )
+
+    if @bounty.valid?
+      Vote.clear_cache(current_user, @wip)
+
+      @activity = Activities::Start.publish!(
+        actor: current_user,
+        subject: @bounty,
+        target: @product,
+        socket_id: params[:socket_id]
+      )
+
+      track_params = WipAnalyticsSerializer.new(@bounty, scope: current_user).as_json.merge(engagement: 'created')
+      track_event 'wip.engaged', track_params
+      if !current_user.staff?
+        AsmMetrics.product_enhancement
+        AsmMetrics.active_user(current_user)
+      end
+    end
+
+    respond_with @bounty, location: wip_path(@bounty)
+  end
+
   def show
-    @milestone = MilestoneTask.where('task_id = ?', @wip.id).first.try(:milestone)
+    @bounty = @wip # fixme: legacy
+
+    @milestone = MilestoneTask.where('task_id = ?', @bounty.id).first.try(:milestone)
     if signed_in?
       @invites = Invite.where(invitor: current_user, via: @wip)
     end
-    super
+
+    @events = Event.render_events(@bounty.events.order(:number), current_user)
+
+    respond_to do |format|
+      format.html { render 'bounties/show' }
+      format.json { render json: @bounty, serializer: WipSerializer }
+    end
   end
 
   def index

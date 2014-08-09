@@ -181,7 +181,6 @@ h6,
 
 .list-piped {
   @extend .list-inline;
-  @extend .text-link-bold;
 
   > li + li {
     border-left: 1px solid $brand-divider;

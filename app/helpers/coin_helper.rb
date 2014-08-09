@@ -13,7 +13,8 @@ module CoinHelper
       label = "#{product.name} #{currency}"
     end
 
-    coins = cents_to_coins(cents, options)
+    # coins = cents_to_coins(cents, options)
+    coins = number_with_delimiter(cents.floor)
 
     text = case format
     when :tiny

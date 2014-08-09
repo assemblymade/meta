@@ -50,26 +50,6 @@
 
   <div class="clearfix small text-muted">
 
-    <div class="js-coin-vote"
-         data-view="coin-vote"
-         data-vote-path="<%= product_wip_path(bounty.product, bounty) %>/votes"
-         data-coins="<%= bounty.coins.to_i %>"
-         data-coins-add="<%= bounty.coins_add.to_i %>"
-    >
-
-      <div class="pull-left" style="margin-right:6px">
-        <% if signed_in? %>
-          <a href="#" class="btn btn-default btn-xs js-coin-vote-btn <% if bounty.has_user_voted?(current_user) %>disabled<% end %>">
-            <span class="icon icon-chevron-up"></span>
-          </a>
-        <% else %>
-          <a href="<%= new_user_registration_path %>" class="btn btn-default btn-xs">
-            <span class="icon icon-chevron-up"></span>
-            <span class="sr-only">Upvote</span>
-          </a>
-        <% end %>
-      </div>
-
       <!-- coins -->
       <div>
         <% case %>
@@ -88,7 +68,7 @@
         <% if bounty.state == 'resolved' && !bounty.winner.present? %>
           <del>
             <span class="icon icon-app-coin"></span>
-            <span class="js-coins"><%= number_with_delimiter(bounty.coins.floor) %></span>
+            <span><%= number_with_delimiter(bounty.value) %></span>
           </del>
         <% else %>
           <span class="icon icon-app-coin"></span>
@@ -100,5 +80,5 @@
 
       #<%= bounty.number %> started <%= time_ago_in_words(bounty.created_at) %> ago by <a class="text-muted" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
     </div>
-  </div>
+
 </div>

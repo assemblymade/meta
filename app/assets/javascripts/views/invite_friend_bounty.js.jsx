@@ -10,7 +10,7 @@ var InviteFriendBounty = React.createClass({
   render: function() {
     return (
       <div>
-        <a className="btn btn-default btn-block btn-sm" href="#help-me" onClick={this.click}>Invite a friend to help</a>
+        <a className="btn btn-default btn-block btn-sm" href="#help-me" onClick={this.click}>Invite a friend</a>
         {this.state.invites.length > 0 ? <InviteList invites={this.state.invites} /> : null}
         {this.state.modal ? this.popover() : null}
       </div>

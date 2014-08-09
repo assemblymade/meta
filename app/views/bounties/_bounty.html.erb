@@ -1,46 +1,204 @@
-<div class="card">
-  <div class="card-body">
-    <h2 class="alpha omega">
-      <%= bounty.title %>
-      <% if bounty.deliverable != 'other' %>
-        <span class="text-muted">#<%= bounty.deliverable %></span>
-      <% end %>
-    </h2>
-  </div>
-  <div class="card-footer">
-    <div class="js-coin-vote"
-         data-view="coin-vote"
-         data-vote-path="<%= product_wip_path(bounty.product, bounty) %>/votes"
-         data-coins="<%= bounty.decorate.coins %>"
-         data-coins-add="<%= bounty.decorate.coins_add %>"
-    >
-      <div class="pull-left" style="margin-right: 6px;">
-        <% if signed_in? %>
-          <a href="#" class="btn btn-default btn-xs js-coin-vote-btn <% if bounty.has_user_voted?(current_user) %>disabled<% end %>">
-            <span class="icon icon-chevron-up"></span>
-          </a>
-        <% else %>
-          <a href="<%= new_user_registration_path %>" class="btn btn-default btn-xs">
-            <span class="icon icon-chevron-up"></span>
-            <span class="sr-only">Upvote</span>
-          </a>
-        <% end %>
-      </div>
+<div class="page-header sheet-header">
 
-      <ul class="list-piped omega">
-        <li>
-          <%= format_coins(bounty.product, bounty.total_cents) %>
-        </li>
-        <li>
-          Created by
-          <a href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
-        </li>
-        <li>
-          Priority
-          <%= render 'wips/urgency', task: bounty %>
-        </li>
-      </ul>
-    </div>
+  <!-- <div class="pull-right">
+    <a class="btn btn-default btn-sm" href="<%= new_product_wip_path(bounty.product) %>">
+      Create a bounty
+    </a>
+  </div> -->
+
+  <h2 class="page-header-title">
+    <%= bounty.title %>
+    <small>#<%= bounty.number %></small>
+  </h2>
+
+  <div class="page-header-meta">
+
+    <% if can?(:update, bounty) %>
+      <div class="pull-right dropdown">
+        <a href="#" id="bounty-other-actions-dropdown" data-toggle="dropdown">
+          <span class="glyphicon glyphicon-cog"></span>
+          <div class="sr-only">Other actions</div>
+        </a>
+
+        <ul class="dropdown-menu" role="menu" aria-labelledby="bounty-other-actions-dropdown">
+          <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="<%= edit_product_wip_path(bounty.product, bounty) %>">
+              <span class="icon icon-pencil icon-left"></span>
+              Edit Bounty
+            </a>
+          </li>
+          <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="<%= product_task_to_discussion_path(bounty.product, bounty) %>" data-method="patch" data-confirm="Are you sure?">
+              <span class="icon icon-arrow-right-circled icon-left"></span>
+              Make discussion
+            </a>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+
+    <ul class="list-inline omega">
+
+      <li>
+        <% case %>
+        <% when bounty.state == 'open' || (bounty.state == 'reviewing' && bounty.workers.empty?) %>
+          <span class="label label-success">OPEN</span>
+        <% when bounty.workers.any? && (bounty.state != 'resolved') %>
+          <span class="label label-default">IN PROGRESS</span>
+        <% when bounty.state == 'resolved' %>
+          <span class="label label-default">CLOSED</span>
+        <% end %>
+      </li>
+
+      <li>
+
+        <a class="text-coins" href="#" id="bounty-amount-link">
+          <span class="icon icon-app-coin"></span>
+          <%= number_with_delimiter(bounty.value) %>
+          <span class="caret"></span>
+        </a>
+
+        <div class="hidden" id="bounty-amount-popover">
+
+            <% contracts = bounty.contracts %>
+
+            <h5>Breakdown</h5>
+
+            <table class="table table-condensed small">
+              <% if c = contracts.author_contract %>
+                <tr>
+                  <td class="text-muted">
+                    <span data-toggle="tooltip" title="<%= I18n.t 'tooltips.bounty.author', author: bounty.user.username %>" data-placement="left">Bounty Author</span>
+                  </td>
+                  <td class="text-right">
+                    <%= format_coins bounty.product, c.percentage * contracts.total_cents, :tiny, round: true %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if contracts.core_team_contracts.any? %>
+                <tr>
+                  <td class="text-muted">
+                    <span data-toggle="tooltip" title="<%= I18n.t 'tooltips.bounty.core_team', product: @product.name %>" data-placement="left">Core Team tip</span>
+                  </td>
+                  <td class="text-right">
+                    <%= format_coins bounty.product, contracts.core_team_contracts.map(&:amount).sum * contracts.total_cents, :tiny, round: true %>
+                  </td>
+                </tr>
+              <% end %>
+              <% contracts.product_contracts.select{|c| c.percentage * contracts.total_cents >= 100 }.each do |c| %>
+                <tr>
+                  <td class="text-muted">
+                    @<%= c.user.username %> tip
+                  </td>
+                  <td class="text-right">
+                    <%= format_coins bounty.product, c.percentage * contracts.total_cents, :tiny, round: true %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if bounty.awarded? %>
+                <tr class="success">
+                  <td>
+                    <%= user_link_username(bounty.winner) %> earned
+                  </td>
+                  <td class="text-right">
+                    <%= format_coins bounty.product, contracts.earnable_cents, :tiny %>
+                  </td>
+                </tr>
+              <% else %>
+                <tr>
+                  <td class="text-muted">
+                    You would earn
+                  </td>
+                  <td class="text-right">
+                    <%= format_coins bounty.product, contracts.earnable_cents, :tiny %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+
+            <h5>Bounty Valuations</h5>
+
+            <table class="table table-sm small">
+              <tbody>
+                <% Offer.where(bounty_id: bounty.id).each do |offer| %>
+                  <tr>
+                    <td>
+                      <a href="<%= user_path(offer.user) %>">@<%= offer.user.username %></a>
+                      <span class="text-muted">
+                        <% if offer.influence < 0.01 %>
+                            (&lt;1%)
+                        <% else %>
+                          (<%= number_to_percentage(offer.influence * 100, precision: 0) %>)
+                        <% end %>
+                      </span>
+                    </td>
+                    <td class="text-right">
+                      <span class="icon icon-app-coin icon-left text-coins">
+                        <%= number_with_delimiter(offer.amount) %>
+                      </span>
+                      <span class="sr-only">
+                        <%= bounty.product.name %>
+                        coins
+                      </span>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+
+            <!-- <hr> -->
+
+            <h5>What is this worth?</h5>
+
+            <form class="form" id="test">
+              <div class="clearfix text-muted small">
+                <span class="pull-left">Simple</span>
+                <span class="pull-right">Complex</span>
+              </div>
+              <input type="range" min="0" max="10000">
+              <br>
+              <p>
+                <span class="text-success">35% more</span>
+                than the average Helpful bounty.
+              </p>
+
+              <a id="slider" class="btn btn-default btn-block btn-xs" href="#">
+                Offer
+                <span id="x-coins">423</span>
+                coins
+              </a>
+
+              <script>
+                $('#slider').change(function() {
+                  $('#x-coins').text($(this).val())
+                })
+              </script>
+
+            </form>
+
+        </div>
+
+        <script>
+          $('#bounty-amount-link').click(function() {
+            $(this).popover({
+              placement: 'bottom',
+              content: $('#bounty-amount-popover').html(),
+              html: true,
+              container: document.body
+            })
+          })
+        </script>
+
+      </li>
+      <li>
+        Created
+        <%= time_ago_in_words(bounty.created_at) %> ago by
+        <a href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
+      </li>
+      <li>
+        <%= pluralize(bounty.comments.count, 'comment') %>
+      </li>
+    </ul>
 
   </div>
 </div>

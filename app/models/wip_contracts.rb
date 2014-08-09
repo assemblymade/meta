@@ -7,7 +7,7 @@ class WipContracts
   end
 
   def total_cents
-    @total_cents ||= product.decorate.current_exchange_rate * task.score * 100
+    @total_cents ||= task.value
   end
 
   def earnable_cents

@@ -5,10 +5,10 @@
 }
 
 .progress-bar {
-  @include box-shadow(none);  
+  @include box-shadow(none);
 }
 
-
+.progress-sm,
 .progress-small {
   height: 6px;
 }
