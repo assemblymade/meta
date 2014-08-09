@@ -51,6 +51,21 @@
   </li>
 <% end %>
 
+<li class="<%= nav_active_class(:people) %>">
+  <a href="<%= product_people_path(product) %>">
+    <span class="icon icon-users dropdown-glyph"></span>
+    People
+  </a>
+</li>
+
+<li class="<%= nav_active_class(:ownership) %>">
+  <a href="<%= product_partners_path(product) %>">
+    <span class="icon-pie-chart dropdown-glyph"></span>
+    Ownership
+  </a>
+</li>
+
+
 <% if staff? %>
   <li class="<%= nav_active_class(:admin) %>">
     <a href="<%= product_admin_path(product) %>">
@@ -97,25 +112,6 @@
   <a href="<%= product_repos_path(product) %>">
     <span class="icon icon-repository dropdown-glyph"></span>
     Repositories
-  </a>
-</li>
-</ul>
-
-<h6 style="padding-left:10px">People</h6>
-
-<ul class="nav nav-stacked nav-sidebar">
-
-<li class="<%= nav_active_class(:people) %>">
-  <a href="<%= product_people_path(product) %>">
-    <span class="icon icon-users dropdown-glyph"></span>
-    Teams
-  </a>
-</li>
-
-<li class="<%= nav_active_class(:ownership) %>">
-  <a href="<%= product_partners_path(product) %>">
-    <span class="icon-pie-chart dropdown-glyph"></span>
-    Ownership
   </a>
 </li>
 </ul>
