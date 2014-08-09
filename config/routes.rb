@@ -21,7 +21,7 @@ ASM::Application.routes.draw do
   get '/home2' => 'pages#home2'
 
   # Talk Experiment
-  get '/talk'  => 'talk#index'
+  get '/talk'  => 'talk#index', :as => :chat
 
   get '/still-field' => redirect('/discover') # bad product
 
