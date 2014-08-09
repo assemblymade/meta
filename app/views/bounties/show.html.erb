@@ -1,0 +1,57 @@
+<% title @bounty.title, "##{@bounty.number}", @bounty.product.name %>
+<% activate_nav! :bounties %>
+<% breadcrumb product_wips_path(@bounty.product), 'Bounties' %>
+<% breadcrumb product_wip_path(@bounty.product, @bounty), "##{@bounty.number}" %>
+
+<%= render 'bounties/bounty', bounty: @bounty %>
+
+<div class="sheet-body">
+  <div class="row">
+    <div class="col-md-9">
+      <div id="discussion-view-el">
+        <%= render 'wips/discussion', events: @events %>
+
+        <div class="well js-upvote-reminder" style="display:none">
+          You've commented on this Bounty but you haven't upvoted. Your upvotes reward people with more coins for completing Bounties which helps make <%= @bounty.product.name %> a better product.
+        </div>
+
+        <%= render 'new_event_form' %>
+      </div>
+    </div>
+
+
+    <div class="col-md-3">
+      <hr class="visible-xs-block visible-sm-block">
+      <%= render 'bounties/sidebar', bounty: @bounty %>
+    </div>
+  </div>
+</div>
+
+<% if signed_in? %>
+  <img class="hidden" src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@bounty).first, current_user.id).url %>" />
+<% end %>
+
+<script>
+  app.product = new Product(<%= json @bounty.product, scope: current_user %>);
+  app.wip = new Wip(<%== WipSerializer.new(@bounty, scope: current_user).to_json %>);
+  app.wipEvents = new WipEvents(<%== @bounty.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
+    url: '<%= product_wip_comments_path(@bounty.product, @bounty) %>'
+  });
+
+  <% if signed_in? %>
+    <% story = Story.associated_with(@bounty).first.try(:id) %>
+    app.wip.readRaptorUrl = '<%== ReadraptorTracker.new(story, current_user.id).url if story %>';
+  <% end %>
+
+  $(document).ready(function() {
+    <%= render 'wips/add_tips_to_wip_events' %>
+
+    app.discussionView = new DiscussionView({
+      el: $('#discussion-view-el'),
+      tipsPath: '<%= product_tips_path(@bounty.product) %>',
+      model: app.wip
+    });
+  })
+
+  analytics.track('product.wip.viewed', <%== WipAnalyticsSerializer.new(@wip, scope: current_user).to_json %>)
+</script>

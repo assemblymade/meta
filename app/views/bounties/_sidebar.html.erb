@@ -1,0 +1,176 @@
+<div class="panel panel-default">
+  <% case bounty.state %>
+  <% when 'open' %>
+    <div class="panel-heading" style="background-color: #fff;">
+      <div class="progress progress-small omega">
+        <!-- <div class="progress-bar" style="width: 0%;"></div> -->
+      </div>
+      <h6 class="text-muted omega">
+        Ready for work
+      </h6>
+    </div>
+    <div class="panel-body text-small">
+      <%= button_to 'Work on this bounty', product_wip_start_work_path(bounty.product, bounty), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-default btn-sm btn-block) %>
+
+      <% if signed_in? && bounty.product.core_team?(current_user) %>
+        <%= render 'tasks/assign_form' %>
+      <% end %>
+
+  <% when 'allocated' %>
+    <div class="panel-heading" style="background-color: #fff;">
+      <div class="progress progress-small omega">
+        <div class="progress-bar progress-bar-success" style="width: 33%;"></div>
+      </div>
+      <h6 class="text-muted omega">
+        In Progress
+      </h6>
+    </div>
+
+    <div class="panel-body text-small">
+      <table class="table table-condensed" style="margin-bottom: 5px;">
+        <tbody>
+          <% bounty.wip_workers.each do |worker| %>
+            <tr>
+              <td class="omega" style="border: 0px; border-top: none;">
+              <% if signed_in? && worker.user == current_user %>
+                  <a href="<%= user_path(worker.user) %>">You</a>
+              <% else %>
+                <a href="<%= user_path(worker.user) %>">
+                  <strong>@<%= worker.user.username %></strong>
+                </a>
+              <% end %>
+              started this
+
+              <strong>
+                <time class="timestamp" datetime="<%= worker.created_at.iso8601 %>"></time>
+              </strong>
+
+              </td>
+              <% if signed_in? && bounty.product.core_team?(current_user) %>
+                <td style="border: 0px; border-top: none;">
+                  <% unless worker.user == current_user %>
+                    <a title="remove" href="<%= product_wip_stop_work_path(bounty.product, bounty, user: worker.user.username) %>" data-method="patch" class="text-danger">
+                      <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                  <% end %>
+                </td>
+              <% end %>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+
+      <% if signed_in? && bounty.workers.include?(current_user) %>
+        <%= button_to 'Stop work', product_wip_stop_work_path(bounty.product, bounty), method: :patch, disable_with: 'Cancelling…', class: %w(btn btn-default btn-sm btn-block inactive) %>
+      <% else %>
+        <%= button_to 'Start work', product_wip_start_work_path(bounty.product, bounty), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-default btn-sm btn-block) %>
+      <% end %>
+
+  <% when 'reviewing' %>
+    <div class="panel-heading" style="background-color: #fff;">
+      <div class="progress progress-small omega">
+        <div class="progress-bar progress-bar-success" style="width: 66%;"></div>
+      </div>
+      <h6 class="text-muted omega">
+        Reviewing
+        <% if signed_in? && bounty.product.core_team?(current_user) %>
+          <a href="<%= product_wip_reject_path(bounty.product, bounty) %>" data-method="patch" class="text-danger" title="Re-open this Bounty" data-toggle="tooltip" data-confirm="This will remove workers and re-open Bounty">
+            <span class="glyphicon glyphicon-remove"></span>
+          </a>
+        <% end %>
+      </h6>
+    </div>
+
+    <div class="panel-body text-small">
+      <!--
+        This isn't perfect, there's no concept of the work that's up for
+        review.
+      -->
+      <p class="omega">A submission is currently being reviewed by the Core Team.</p>
+  <% when 'resolved' %>
+    <div class="panel-heading" style="background-color: #fff;">
+      <div class="progress progress-small omega">
+        <div class="progress-bar progress-bar-success" style="width: 100%;"></div>
+      </div>
+      <h6 class="text-muted omega">
+        Complete
+      </h6>
+    </div>
+
+    <div class="panel-body text-small">
+      <% if bounty.winner %>
+        <% if signed_in? && bounty.winner == current_user %>
+          <p>
+            You were awarded
+            <%= format_coins(bounty.product, bounty.contracts.earnable_cents) %>
+            for completing this bounty.
+          </p>
+          <p class="omega"><strong>Keep up the great work!</strong></p>
+        <% else %>
+          <p class="omega">
+            <strong><%= bounty.winner.username %></strong>
+            was awarded
+            <%= format_coins(bounty.product, bounty.contracts.earnable_cents) %>
+            for completing this bounty.
+          </p>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if signed_in? && !bounty.awarded? %>
+    <hr style="margin:0">
+    <div class="panel-body">
+      <div data-react-class="InviteFriendBounty" data-react-props="<%= {
+          url: invites_path,
+          invites: (@invites ? serialize_hash(@invites) : []),
+        }.merge(TypeId.as_json(:via, bounty)).to_json %>">
+      </div>
+    </div>
+  <% end %>
+
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h6 class="panel-title">
+      Tags
+    </h6>
+  </div>
+  <div class="panel-body">
+    <% wip_tags = bounty.tags.map { |tag| tag.name }.as_json %>
+    <div style="margin-bottom: 10px"
+         data-react-class="TagList"
+         data-react-props="<%= {
+            tags: (wip_tags || []),
+            url: product_wip_tag_path(bounty.product, bounty.number),
+            filterUrl: product_wips_path(bounty.product),
+            destination: true
+          }.to_json %>">
+    </div>
+    <% unless current_user.nil? %>
+      <% if wip_tags.empty? || wip_tags.slice(1).nil? %>
+        <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
+        <div data-react-class="TagList"
+              data-react-props="<%= {
+                tags: Wip::Tag.suggested_tags.as_json,
+                url: product_wip_tag_path(bounty.product, bounty.number),
+                destination: false
+              }.to_json %>">
+        </div>
+      <% end %>
+      <div data-react-class="TextComplete"
+           data-react-props="<%= {
+             width: "125px",
+             size: "small",
+             label: "Add tag",
+             prepend: "#",
+             prompt: "Add",
+             filterUrl: product_wips_path(bounty.product),
+             url: product_wip_tag_path(bounty.product, bounty.number)
+           }.to_json %>">
+      </div>
+    <% end %>
+
+  </div>
+</div>
