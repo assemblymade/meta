@@ -11,7 +11,7 @@
 
       <div class="col-md-10 col-md-push-2">
         <ul class="list list-inline pull-right hidden-xs">
-          
+
           <li>
             <div data-react-class="Share"
                  data-react-props="<%= {
@@ -20,20 +20,7 @@
                    shareText: "Check out #{@product.name} – #{ @product.pitch} on Assembly",
                  }.to_json %>" />
           </li>
-          
-          <li style="padding-right: 0;">
-            <div class="toggler toggler-sm">
-              <div data-react-class="JoinTeam"
-                   data-react-props="<%= {
-                     count: @product.team_memberships_count,
-                     join_path: product_people_path(@product),
-                     leave_path: (current_user && product_person_path(@product, current_user)),
-                     is_member: @product.member?(current_user),
-                     membership: TeamMembershipSerializer.new(@product.team_memberships.find_by(user: current_user) || TeamMembership.new(product: @product, user: current_user)).as_json
-                   }.to_json %>">
-              </div>
-            </div>
-          </li>
+
           <li>
             <div
                 data-react-class="NotificationPreferencesDropdown"
@@ -43,11 +30,12 @@
                   productUnfollowPath: product_unfollow_path(@product),
                   productFollowPath: product_follow_path(@product),
                   productSubscribePath: subscribe_product_path(@product),
-                  watchingState: @product.watching_state(current_user)
+                  watchingState: @product.watching_state(current_user),
+                  afterFollowPath: product_people_path(@product)
                 }.to_json %>">
             </div>
           </li>
-          
+
         </ul>
 
         <h3 class="alpha text-muted" style="font-weight: 400; line-height: 1;">

@@ -17,7 +17,7 @@ class Activity < ActiveRecord::Base
 
   def self.publish!(opts)
     create!(opts).tap do |a|
-      if a.target.class == Wip
+      if product = a.target.try(:product)
         auto_subscribe!(a.actor, a.target.product)
       end
 

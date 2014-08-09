@@ -1,4 +1,4 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/activity_feed.js.jsx":[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/activity_feed.js.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 
 (function() {
@@ -2510,177 +2510,7 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
   window.InviteList = InviteList;
 })();
 
-},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/join_team_view.js.jsx":[function(require,module,exports){
-/** @jsx React.DOM */
-
-var Dispatcher = require('../dispatcher');
-
-(function() {
-  var JoinTeam = React.createClass({displayName: 'JoinTeam',
-    componentWillMount: function() {
-      this.setState({
-        count: this.props.count,
-        is_member: this.props.is_member
-      });
-    },
-
-    render: function() {
-      return (
-        React.DOM.div({className: "toggler toggler-sm"}, 
-          this.label(), 
-          React.DOM.div({className: "toggler-badge"}, 
-            React.DOM.a({href: this.props.join_path}, this.state.count)
-          )
-        )
-      )
-    },
-
-    listenForJoin: function(node) {
-      var self = this
-
-      $(node).click(function(e) {
-        if (!app.currentUser()) {
-          return app.redirectTo('/login')
-        }
-      })
-
-      $(document).scroll(function(e) {
-        $(node).popover('hide');
-      })
-    },
-
-    listenForChanges: function(bioEditor) {
-      var joinButton = $('#join-intro-button')
-      var startingVal = bioEditor.val()
-
-      if (startingVal && startingVal.length >= 2) {
-        joinButton.removeClass('disabled')
-      }
-
-      bioEditor.on('keyup', function textEntered(e) {
-        var val = bioEditor.val().trim()
-
-        if (val.length >= 2) {
-          joinButton.removeClass('disabled')
-        } else if (val.length < 2) {
-          joinButton.addClass('disabled')
-        }
-      })
-    },
-
-    label: function() {
-      if (this.state.is_member) {
-        return (
-          React.DOM.a({className: "toggler-btn btn btn-" + this.button(), 'data-toggle': "popover", onClick: this.click()}, 
-            React.DOM.i({className: "icon icon-user-unfollow", style: {'margin-right': '5px',}}), 
-            "Leave Team"
-          )
-        )
-      }
-
-      return (
-        React.DOM.a({className: "toggler-btn btn btn-" + this.button(), 'data-toggle': "popover", onClick: this.click(), 
-            role: "button", 
-            id: "js-join-popover"}, 
-          React.DOM.i({className: "icon icon-user-follow", style: {'margin-right': '5px'}}), 
-          "Join Team"
-        )
-      )
-    },
-
-    button: function() {
-      if (this.state.is_member) {
-        if (this.props.membership && this.props.membership.core_team) {
-          return 'default disabled'
-        } else {
-          return 'default inactive'
-        }
-      }
-
-      return 'primary'
-    },
-
-    click: function() {
-      return this.state.is_member ? this.onLeave : this.onJoin
-    },
-
-    handleJoinOrLeave: function(url, newState, method, callback) {
-      var self = this
-      var currentState = this.state
-      this.setState(newState)
-
-      $.ajax({
-        url: url,
-        method: method,
-        success: function(data) {
-          callback(null, data)
-        },
-        error: function(jqxhr, status) {
-          self.setState(currentState)
-          callback(new Error(status))
-        }
-      })
-    },
-
-    onJoin: function(e) {
-      this.handleJoinOrLeave(
-        this.props.join_path,
-        { count: (this.state.count + 1), is_member: true },
-        'POST',
-        function joined(err, data) {
-          if (err) {
-            return console.error(err);
-          }
-
-          var product = app.currentAnalyticsProduct()
-          analytics.track('product.team.joined', product)
-        }
-      );
-
-      $('#edit-membership-modal').modal('show');
-
-      Dispatcher.dispatch({
-        action: 'addPerson',
-        data: { user: this.props.membership },
-        event: 'people:change'
-      });
-    },
-
-    onLeave: function(e) {
-      if (this.props.membership && this.props.membership.core_team) {
-        return
-      }
-
-      this.handleJoinOrLeave(
-        this.props.leave_path,
-        { count: (this.state.count - 1) , is_member: false },
-        'DELETE',
-        function left(err, data) {
-          if (err) {
-            return console.error(err);
-          }
-
-          var product = app.currentAnalyticsProduct()
-          analytics.track('product.team.left', product)
-        }
-      )
-
-      Dispatcher.dispatch({
-        action: 'removePerson',
-        data: { user: this.props.membership.user },
-        event: 'people:change'
-      });
-    }
-  });
-
-  if (typeof module !== 'undefined') {
-    module.exports = JoinTeam;
-  }
-
-  window.JoinTeam = JoinTeam;
-})();
-
-},{"../dispatcher":"/Users/dave/code/asm/asm-web/app/assets/javascripts/dispatcher.js"}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/members_view.js.jsx":[function(require,module,exports){
+},{}],"/Users/dave/code/asm/asm-web/app/assets/javascripts/components/members_view.js.jsx":[function(require,module,exports){
 /**
  * @jsx React.DOM
  */
@@ -3086,7 +2916,7 @@ var Avatar = require('./avatar.js.jsx');
       Dispatcher.dispatch({
         event: D.EVENTS.SELECTED_UPDATED,
         action: D.ACTIONS.UPDATE_SELECTED,
-        data: { item: item, path: path }
+        data: { item: item, path: path, redirectTo: (item == 'subscribed' ? this.props.afterFollowPath : null) }
       });
     }
   });
@@ -5629,7 +5459,11 @@ var Store = require('../stores/store');
       var item = data.item;
       var path = data.path;
 
-      window.xhr.post(path);
+      window.xhr.post(path, {}, function(){
+        if (data.redirectTo) {
+          app.redirectTo(data.redirectTo)
+        }
+      });
 
       _selected = item;
     },
@@ -5663,7 +5497,7 @@ var Store = require('../stores/store');
   if (typeof module !== 'undefined') {
     module.exports = _dropdownStore;
   }
-  
+
   window.NotificationPreferencesDropdownStore = _dropdownStore;
 })();
 
@@ -8162,4 +7996,4 @@ module.exports = update;
   }
 }).call(this);
 
-},{}]},{},["/Users/dave/code/asm/asm-web/app/assets/javascripts/components/activity_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/avatar.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications_toggler.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/coin_ownership.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/core_team.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/desktop_notifications.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/drag_and_drop_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/financials_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/form_group.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/full_page_news_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/input_preview.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/interest_picker.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_bounty_form.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_friend_bounty.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_friend_product.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_list.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/join_team_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/members_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/navbar.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/notification_preferences_dropdown.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/number_input_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/people_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/person_picker.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/popover.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/share.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/tag_list_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/timestamp.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/tips_ui.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/title_notifications_count.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/toggle_button.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/typeahead.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/urgency.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/user_navbar_dropdown.js.jsx"]);
+},{}]},{},["/Users/dave/code/asm/asm-web/app/assets/javascripts/components/activity_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/avatar.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/chat_notifications_toggler.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/coin_ownership.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/core_team.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/desktop_notifications.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/drag_and_drop_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/dropdown_news_feed_toggler.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/financials_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/form_group.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/full_page_news_feed.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/input_preview.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/interest_picker.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_bounty_form.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_friend_bounty.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_friend_product.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/invite_list.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/members_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/navbar.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/notification_preferences_dropdown.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/number_input_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/people_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/person_picker.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/popover.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/share.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/tag_list_view.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/timestamp.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/tips_ui.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/title_notifications_count.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/toggle_button.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/typeahead.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/urgency.js.jsx","/Users/dave/code/asm/asm-web/app/assets/javascripts/components/user_navbar_dropdown.js.jsx"]);

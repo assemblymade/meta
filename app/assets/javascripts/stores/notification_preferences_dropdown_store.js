@@ -16,7 +16,11 @@ var Store = require('../stores/store');
       var item = data.item;
       var path = data.path;
 
-      window.xhr.post(path);
+      window.xhr.post(path, {}, function(){
+        if (data.redirectTo) {
+          app.redirectTo(data.redirectTo)
+        }
+      });
 
       _selected = item;
     },
@@ -50,6 +54,6 @@ var Store = require('../stores/store');
   if (typeof module !== 'undefined') {
     module.exports = _dropdownStore;
   }
-  
+
   window.NotificationPreferencesDropdownStore = _dropdownStore;
 })();

@@ -144,7 +144,7 @@ var Avatar = require('./avatar.js.jsx');
       Dispatcher.dispatch({
         event: D.EVENTS.SELECTED_UPDATED,
         action: D.ACTIONS.UPDATE_SELECTED,
-        data: { item: item, path: path }
+        data: { item: item, path: path, redirectTo: (item == 'subscribed' ? this.props.afterFollowPath : null) }
       });
     }
   });

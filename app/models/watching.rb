@@ -14,19 +14,14 @@ class Watching < ActiveRecord::Base
   def self.auto_subscribe!(user, watchable)
     return if auto_subscribed?(user, watchable)
 
-    if where(user: user, watchable: watchable).exists?
-      find_by(user_id: user.id, watchable_id: watchable.id).update_attributes(subscription: true, auto_subscribed_at: Time.now)
-    else
-      create!(user: user, watchable: watchable, subscription: true, auto_subscribed_at: Time.now)
-    end
+    watch!(user, watchable)
   end
 
   def self.watch!(user, watchable)
-    # find_or_create_by! is broken
-    unless where(user: user, watchable: watchable).exists?
-      create!(user: user, watchable: watchable, subscription: false)
+    if watching = find_by(user: user, watchable: watchable)
+      watching.update_attributes subscription: true
     else
-      self.unsubscribe!(user, watchable)
+      create!(user: user, watchable: watchable, subscription: true)
     end
   end
 
@@ -39,7 +34,7 @@ class Watching < ActiveRecord::Base
   # FIXME: There needs to be a better way to autowatch wips without breaking watch!
   def self.auto_watch!(user, watchable)
     unless where(user: user, watchable: watchable).exists?
-      create!(user: user, watchable: watchable, subscription: false)
+      create!(user: user, watchable: watchable, subscription: true)
     end
   end
 
