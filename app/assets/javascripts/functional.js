@@ -1,7 +1,7 @@
 window.func = {
   dot: function(prop) {
     return function(object) {
-      return object[prop]
+      return object && object[prop]
     }
   },
 
@@ -9,4 +9,3 @@ window.func = {
     return a + b
   }
 }
-

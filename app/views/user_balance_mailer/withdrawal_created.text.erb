@@ -1,0 +1,7 @@
+Withdrawal requested
+--------------------
+
+reference: #<%= @withdrawal.reference.to_s.rjust(8, '0') %>
+username: <%= @user.username %>
+amount: <%= currency @withdrawal.total_amount %>
+withholding: <%= currency @withdrawal.amount_withheld %>

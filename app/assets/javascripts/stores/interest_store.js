@@ -1,7 +1,8 @@
-//= require dispatcher
-//= require stores/store
+var xhr = require('../xhr');
+var Dispatcher = require('../dispatcher');
+var Store = require('../stores/store');
 
-var InterestStore = (function() {
+(function() {
   var _interests = ['code', 'design'];
 
   var _store = Object.create(Store);
@@ -53,5 +54,9 @@ var InterestStore = (function() {
     _store.emit(event);
   });
 
-  return _interestStore;
+  if (typeof module !== 'undefined') {
+    module.exports = _interestStore;
+  }
+  
+  window.InterestStore = _interestStore;
 })();

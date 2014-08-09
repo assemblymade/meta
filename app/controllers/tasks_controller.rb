@@ -73,7 +73,6 @@ class TasksController < WipsController
     assignee ||= current_user
 
     @wip.start_work!(assignee)
-    track_event 'wip.engaged', WipAnalyticsSerializer.new(@wip, scope: assignee).as_json.merge(engagement:'started_work')
     if !assignee.staff?
       AsmMetrics.product_enhancement
       AsmMetrics.active_user(assignee)
@@ -102,7 +101,7 @@ class TasksController < WipsController
 
   def destroy
     # This removes a task from a milestone. Doesn't delete the actual Task
-    @milestone = @product.milestones.find_by!(number: params[:milestone_id])
+    @milestone = @product.milestones.find_by!(number: params[:project_id])
     @task = @milestone.tasks.find_by!(number: params[:id])
     @milestone.tasks -= [@task]
 

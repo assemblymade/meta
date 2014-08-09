@@ -11,12 +11,14 @@ class Activity < ActiveRecord::Base
   validates :subject, presence: true
   validates :target,  presence: true
 
+  after_commit :track_in_segment, on: :create
+
   attr_accessor :socket_id
 
   def self.publish!(opts)
     create!(opts).tap do |a|
-      if a.target.class == Wip
-        auto_subscribe!(a.actor, a.target.product)
+      if product = a.target.try(:product)
+        auto_subscribe!(a.actor, product)
       end
 
       PublishActivity.perform_async(a.id) if Story.should_publish?(a)
@@ -24,8 +26,14 @@ class Activity < ActiveRecord::Base
     end
   end
 
-  def self.auto_subscribe!(actor, target)
-    Watching.auto_subscribe!(actor, target)
+  def self.auto_subscribe!(actor, watchable)
+    Watching.auto_subscribe!(actor, watchable)
+  end
+
+  def track_in_segment
+    return if actor.staff?
+
+    TrackActivityCreated.perform_async(self.id)
   end
 
   # make this object tippable

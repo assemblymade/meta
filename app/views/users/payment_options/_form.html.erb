@@ -1,0 +1,30 @@
+<%= form_for @payment_option, as: :payout_settings, url: users_payment_option_path(payment_option: params[:payment_option]), html: {class: 'form form-horizontal'} do |f| %>
+  <h2><%= title %></h2>
+
+  <% if message = flash[:success] %>
+    <div class="alert alert-success" role="alert">
+      <%= message%>
+    </div>
+  <% end %>
+
+  <% if @payment_option.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <ul>
+        <% @payment_option.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if params[:payment_option] == 'bitcoin' %>
+    <%= render 'bitcoin_fields', f: f %>
+
+    <div class="form-actions">
+      <button class="btn btn-primary pull-left" type="submit">Save Info</button>
+    </div>
+  <% else %>
+    <%= render 'debit_fields', f: f %>
+  <% end %>
+
+<% end %>

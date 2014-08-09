@@ -1,8 +1,7 @@
-//= require underscore
-//= require dispatcher
-//= require stores/store
+var Dispatcher = require('../dispatcher');
+var Store = require('../stores/store');
 
-var PeopleStore = (function() {
+(function() {
   var _people = [];
 
   var _store = Object.create(Store);
@@ -59,5 +58,9 @@ var PeopleStore = (function() {
     return -1;
   }
 
-  return _peopleStore;
+  if (typeof module !== 'undefined') {
+    module.exports = _peopleStore;
+  }
+  
+  window.PeopleStore = _peopleStore;
 })();

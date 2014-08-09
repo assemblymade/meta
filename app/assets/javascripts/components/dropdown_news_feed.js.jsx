@@ -1,40 +1,17 @@
 /** @jsx React.DOM */
 
-//= require constants
-//= require dispatcher
-//= require mixins/news_feed
-//= require stores/news_feed_store
+var CONSTANTS = require('../constants');
+var Dispatcher = require('../dispatcher');
+var EventMixin = require('../mixins/event.js.jsx');
+var NewsFeedMixin = require('../mixins/news_feed.js.jsx');
+var NewsFeedStore = require('../stores/news_feed_store');
+var Avatar = require('./avatar.js.jsx');
 
 (function() {
-
   var NF = CONSTANTS.NEWS_FEED;
 
-  window.DropdownNewsFeed = React.createClass({
+  var DropdownNewsFeed = React.createClass({
     mixins: [NewsFeedMixin],
-
-    componentWillMount: function() {
-      NewsFeedStore.addChangeListener(this.getStories);
-
-      this.fetchNewsFeed(this.props.url);
-
-      this.onPush(function() {
-        this.fetchNewsFeed();
-      }.bind(this));
-    },
-
-    fetchNewsFeed: _.debounce(function() {
-      Dispatcher.dispatch({
-        action: NF.ACTIONS.FETCH_STORIES,
-        event: NF.EVENTS.STORIES_FETCHED,
-        data: this.props.url
-      });
-    }, 1000),
-
-    getInitialState: function() {
-      return {
-        stories: null
-      };
-    },
 
     markAllAsRead: function() {
       Dispatcher.dispatch({
@@ -42,13 +19,6 @@
         action: NF.ACTIONS.MARK_ALL_AS_READ,
         data: null
       });
-    },
-
-    onPush: function(fn) {
-      if (window.pusher) {
-        channel = window.pusher.subscribe('@' + this.props.username);
-        channel.bind_all(fn);
-      }
     },
 
     render: function() {
@@ -71,26 +41,21 @@
           <li>
             <a href='/notifications' className="text-small">All Notifications</a>
           </li>
+
         </ul>
       );
     },
 
     rows: function(stories) {
-      var rows = [];
+      var self = this;
 
-      for (var i = 0, l = stories.length; i < l; i++) {
-        if (i > 9) {
-          break;
-        }
-
-        rows.push(
-          <Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />
-        );
-      }
+      var firstTen = _.first(stories, 10);
 
       return (
         <div className="list-group" style={{ 'max-height': '300px', 'min-height': '50px' }}>
-          {rows}
+          { _.map(firstTen, function(story) {
+            return <Entry key={story.id} story={story} actors={self.state.actors} fullPage={false} />;
+          }) }
         </div>
       );
     },
@@ -102,9 +67,11 @@
   });
 
   var Entry = React.createClass({
+    mixins: [EventMixin],
+
     actors: function() {
       return _.map(
-        this.props.story.actor_ids,
+        this.state.story.actor_ids,
         function(actorId) {
           return _.findWhere(this.props.actors, { id: actorId })
         }.bind(this)
@@ -112,13 +79,14 @@
     },
 
     body: function() {
-      var target = this.props.story.activities[0].target;
+      var story = this.props.story;
+      var task = story.verb === 'Start' ? story.subjects[0] : story.target;
 
       return (
         <span>
-          {this.verbMap[this.props.story.verb]}
+          {this.verbMap[story.verb]}
           <strong>
-            {this.subjectMap[this.props.story.subject_type].call(this, target)}
+            {this.subjectMap[story.subject_type].call(this, task)}
           </strong>
           {this.product()}
         </span>
@@ -127,7 +95,7 @@
 
     componentDidMount: function() {
       if (this.refs.body) {
-        this.refs.body.getDOMNode().innerHTML = this.props.story.subject.body_html;
+        this.refs.body.getDOMNode().innerHTML = this.state.story.subject.body_html;
       }
     },
 
@@ -150,12 +118,10 @@
     },
 
     markAsRead: function() {
-      // FIXME: This method shouldn't work this way; use the Dispatcher
-      var story = this.state.story;
-      story.last_read_at = moment().unix();
-
-      this.setState({
-        story: story
+      Dispatcher.dispatch({
+        event: NF.EVENTS.READ,
+        action: NF.ACTIONS.MARK_AS_READ,
+        data: this.props.story.id
       });
     },
 
@@ -169,7 +135,7 @@
     },
 
     preview: function() {
-      var body_preview = this.props.story.body_preview;
+      var body_preview = this.state.story.body_preview;
 
       return (
         <p className='text-muted' style={{ 'text-overflow': 'ellipsis' }}>
@@ -179,9 +145,9 @@
     },
 
     product: function() {
-      var product = this.props.story.product;
+      var story = this.state.story;
 
-      return ' in ' + product.name;
+      return ' in ' + story.product_name;
     },
 
     render: function() {
@@ -189,12 +155,12 @@
 
       var classes = React.addons.classSet({
         'entry-read': this.isRead(),
-        'entry-unread': !this.isRead(),
+        'entry-unread': !this.isRead()
       });
 
       return (
         <a className={'list-group-item ' + classes}
-            href={this.props.story.url}
+            href={this.state.story.url}
             style={{ 'font-size': '14px' }}
             onClick={this.state.story.last_read_at ? null : this.markAsRead}>
 
@@ -214,34 +180,12 @@
           </div>
         </a>
       );
-    },
-
-    subjectMap: {
-      Task: function(task) {
-        return "#" + task.number;
-      },
-
-      Discussion: function(discussion) {
-        return 'discussion'
-      },
-
-      Wip: function(bounty) {
-        if (this.props.fullPage) {
-          return "#" + bounty.number + " " + bounty.title
-        }
-
-        return "#" + bounty.number;
-      },
-    },
-
-    timestamp: function() {
-      return moment(this.props.story.created).format("ddd, hA")
-    },
-
-    verbMap: {
-      'Comment': 'commented on ',
-      'Award': 'awarded ',
-      'Close': 'closed '
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = DropdownNewsFeed;
+  }
+
+  window.DropdownNewsFeed = DropdownNewsFeed;
 })();

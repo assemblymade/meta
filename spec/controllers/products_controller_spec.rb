@@ -173,10 +173,10 @@ describe ProductsController do
       }.to change(Activity, :count).by(1)
     end
 
+    # Travis isn't a fan of this test -- 1 s off will make it fail
     it 'sets product to launched' do
-      expect {
-        patch :launch, product_id: product
-      }.to change{product.reload.launched_at.to_i}.to(Time.now.to_i)
+      patch :launch, product_id: product
+      expect(Time.now.to_i - product.reload.launched_at.to_i < 2).to be_true
     end
   end
 end

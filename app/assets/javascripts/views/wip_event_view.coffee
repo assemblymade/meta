@@ -47,7 +47,7 @@ class window.WipEventView extends Backbone.View
       model = @model
 
       $('.js-insert-tips', @$el).each ->
-        React.renderComponent(TipsUI({
+        React.renderComponent(TipsUi({
           viaType: 'Event',
           viaId: model.id,
           recipient: model.get('actor'),

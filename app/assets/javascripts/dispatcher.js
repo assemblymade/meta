@@ -1,9 +1,7 @@
-//= require underscore
-
-var Dispatcher = (function() {
+(function() {
   var _callbacks = [];
 
-  return _.extend(Function.prototype, {
+  var Dispatcher = _.extend(Function.prototype, {
     register: function(callback) {
       _callbacks.push(callback);
 
@@ -36,4 +34,10 @@ var Dispatcher = (function() {
       _callbacks = [];
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = Dispatcher;
+  }
+
+  window.Dispatcher = Dispatcher;
 })();

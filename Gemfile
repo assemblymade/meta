@@ -39,10 +39,11 @@ gem 'mustache'
 gem 'omniauth-facebook', '1.4.0' # http://stackoverflow.com/questions/11597130/omniauth-facebook-keeps-reporting-invalid-credentials
 gem 'omniauth-twitter'
 gem 'omniauth-github'
-gem 'oink'
+# gem 'oink'
 gem 'opengraph', github: 'whatupdave/opengraph'
 gem 'paperclip'
 gem 'pg'
+gem 'pghero'
 gem 'puma'
 gem 'pusher'
 gem 'premailer-rails'
@@ -72,7 +73,7 @@ gem 'sanitize'
 gem 'sass-rails'
 gem 'sequenced', '~> 1.5.0'
 gem 'sidekiq'
-gem 'skylight'
+gem 'skylight', '~> 0.3.19'
 gem 'split', :require => 'split/dashboard'
 gem 'stripe'
 gem 'uglifier'
@@ -106,8 +107,10 @@ group :development do
 end
 
 group :test do
-  gem 'codeclimate-test-reporter', require: nil
   gem 'autotest-standalone'
+  gem 'codeclimate-test-reporter', require: nil
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :production do

@@ -49,6 +49,8 @@ module ASM
 
     config.action_mailer.preview_path = Rails.root.join('spec', 'mailers', 'preview')
 
+    config.skylight.probes = %w(net_http excon redis)
+
     console do
       require 'console_helpers'
       Rails::ConsoleMethods.send :include, ASM::Console

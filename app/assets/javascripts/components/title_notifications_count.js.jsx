@@ -1,10 +1,11 @@
 /** @jsx React.DOM */
 
-//= require constants
-//= require stores/chat_notifications_store
+var CONSTANTS = require('../constants');
+var ChatNotificationsStore = require('../stores/chat_notifications_store');
+var NewsFeedStore = require('../stores/news_feed_store');
 
 (function() {
-  window.TitleNotificationsCount = React.createClass({
+  var TitleNotificationsCount = React.createClass({
     componentWillMount: function() {
       ChatNotificationsStore.addChangeListener(this.setTitle);
       NewsFeedStore.addChangeListener(this.setTitle);
@@ -27,8 +28,8 @@
     },
 
     setTitle: function() {
-      var chatCount = ChatNotificationsStore.getUnreadCount(localStorage.chatAck) || 0;
-      var newsCount = NewsFeedStore.getUnreadCount(localStorage.newsFeedAck) || 0;
+      var chatCount = ChatNotificationsStore.getUnreadCount(parseInt(localStorage.chatAck, 10)) || 0;
+      var newsCount = NewsFeedStore.getUnreadCount(parseInt(localStorage.newsFeedAck, 10)) || 0;
 
       var total = chatCount + newsCount;
 
@@ -37,4 +38,10 @@
         this.props.title;
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = TitleNotificationsCount;
+  }
+
+  window.TitleNotificationsCount = TitleNotificationsCount;
 })();

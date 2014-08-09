@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  window.UserNavbarDropdown = React.createClass({
+  var UserNavbarDropdown = React.createClass({
     render: function() {
       return (
         <ul className='dropdown-menu'>
@@ -13,9 +13,16 @@
           </li>
 
           <li>
+            <a href={this.props.balancePath}>
+              <span className="icon icon-wallet dropdown-glyph"></span>
+              Balance
+            </a>
+          </li>
+
+          <li>
             <a href={this.props.editUserPath}>
               <span className="icon icon-settings dropdown-glyph"></span>
-              Setttings
+              Settings
             </a>
           </li>
 
@@ -31,4 +38,10 @@
       );
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = UserNavbarDropdown;
+  }
+
+  window.UserNavbarDropdown = UserNavbarDropdown;
 })();

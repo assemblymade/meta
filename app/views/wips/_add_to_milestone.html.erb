@@ -1,6 +1,6 @@
 <div class="dropdown align-right">
   <% if @milestone %>
-    <a href="<%= product_milestone_path(@product, @milestone)%>"><%= @milestone.wip.title %></a>
+    <a href="<%= product_project_path(@product, @milestone)%>"><%= @milestone.wip.title %></a>
   <% elsif can?(:edit, @wip) %>
     <a class="js-add link-hover-success" data-toggle="dropdown" href="#" data-placement="top" title="Add&nbsp;to&nbsp;Project">
       <i class="icon-folder" style="margin-right: 2px;"></i> Project
@@ -13,7 +13,7 @@
         <li>
           <a data-remote="true"
              data-method="patch"
-             href="<%= product_milestone_add_path(@product, milestone, task_id: @wip.id) %>">
+             href="<%= product_project_add_path(@product, milestone, task_id: @wip.id) %>">
                <%= milestone.wip.title %>
             </a>
         </li>

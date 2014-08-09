@@ -8,17 +8,17 @@
 
   <div class="col-sm-10 col-xs-10">
     <strong><a href="<%= product_path(result.slug) %>">
-      <%= (result.try(:highlight).try(:name) ? result.highlight.name.join.html_safe : result.name) %>
+      <%= sanitize (result.try(:highlight).try(:name) ? result.highlight.name.join.html_safe : result.name), tags: %w(mark) %>
     </a></strong>
 
     <h4 class="text-serif text-weight-normal" style="margin-top: 5px;">
-      <%= (result.try(:highlight).try(:pitch) ? result.highlight.pitch.join.html_safe : result.pitch) %>
+      <%= sanitize (result.try(:highlight).try(:pitch) ? result.highlight.pitch.join.html_safe : result.pitch), tags: %w(mark) %>
     </h4>
     <% if fragments = result.try(:highlight).try(:sanitized_description) %>
       <% fragments.take(2).each do |match| %>
         <div class="small neuter-paragraphs">
           <p>
-            <%= ellipses_for_highlight(match, result.sanitized_description).html_safe %>
+            <%= sanitize ellipses_for_highlight(match, result.sanitized_description).html_safe, tags: %w(mark) %>
           </p>
         </div>
       <% end %>

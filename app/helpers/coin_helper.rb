@@ -35,4 +35,11 @@ module CoinHelper
     )
   end
 
+  def number(val)
+    number_with_delimiter(val)
+  end
+
+  def percentage(val, opts={})
+    number_to_percentage(val * 100.0, precision: opts[:precision] || 2)
+  end
 end

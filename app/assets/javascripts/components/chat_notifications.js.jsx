@@ -1,62 +1,55 @@
 /** @jsx React.DOM */
 
-//= require constants
-//= require dispatcher
-//= require stores/chat_notifications_store
+var CONSTANTS = require('../constants');
+var Dispatcher = require('../dispatcher');
+var ChatNotificationStore = require('../stores/chat_notifications_store');
+var DesktopNotifications = require('./desktop_notifications.js.jsx');
 
 (function() {
   var ICON_URL = 'https://d8izdk6bl4gbi.cloudfront.net/80x/http://f.cl.ly/items/1I2a1j0M0w0V2p3C3Q0M/Assembly-Twitter-Avatar.png';
   var N = CONSTANTS.CHAT_NOTIFICATIONS;
 
   function dynamicSort(property) {
-      var sortOrder = 1;
-      if(property[0] === "-") {
-          sortOrder = -1;
-          property = property.substr(1);
-      }
-      return function (a,b) {
-          var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-          return result * sortOrder;
-      }
+    var sortOrder = 1;
+    if(property[0] === "-") {
+      sortOrder = -1;
+      property = property.substr(1);
+    }
+    return function (a,b) {
+      var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+      return result * sortOrder;
+    }
   }
 
   function dynamicSortMultiple() {
-      /*
-       * save the arguments object as it will be overwritten
-       * note that arguments object is an array-like object
-       * consisting of the names of the properties to sort by
+    /*
+     * save the arguments object as it will be overwritten
+     * note that arguments object is an array-like object
+     * consisting of the names of the properties to sort by
+     */
+    var props = arguments;
+    return function (obj1, obj2) {
+      var i = 0, result = 0, numberOfProperties = props.length;
+      /* try getting a different result from 0 (equal)
+       * as long as we have extra properties to compare
        */
-      var props = arguments;
-      return function (obj1, obj2) {
-          var i = 0, result = 0, numberOfProperties = props.length;
-          /* try getting a different result from 0 (equal)
-           * as long as we have extra properties to compare
-           */
-          while(result === 0 && i < numberOfProperties) {
-              result = dynamicSort(props[i])(obj1, obj2);
-              i++;
-          }
-          return result;
+      while (result === 0 && i < numberOfProperties) {
+        result = dynamicSort(props[i])(obj1, obj2);
+        i++;
       }
+      return result;
+    }
   }
 
-  window.ChatNotifications = React.createClass({
+  var ChatNotifications = React.createClass({
     articles: function() {
       return _.flatten(_.map(this.state.data, function(a){
         return a.entities;
       }));
     },
 
-    getInitialState: function() {
-      return {
-        data: null,
-        sortKeys: [],
-        acknowledgedAt: this.storedAck()
-      }
-    },
-
     componentDidMount: function() {
-      $('[data-toggle]', this.getDOMNode()).tooltip();
+      // $('[data-toggle]', this.getDOMNode()).tooltip();
       var target = this.refs.spinner.getDOMNode();
       var opts = this.spinnerOptions || {
         lines: 11,
@@ -68,28 +61,11 @@
       target.appendChild(spinner.el);
     },
 
-    sortByLastReadAt: function(data) {
-      if (data === null) {
-        return [];
-      }
-
-      var values = _.values(data)
-      if (true) {
-        for (var i = 0; i < values.length; i++) {
-          var entry = values[i];
-          entry.readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
-          entry.sortIndex = this.state.sortKeys.indexOf(entry.id)
-        }
-        values.sort(dynamicSortMultiple("readState", "sortIndex", "label"))
-      }
-      return values || [];
-    },
-
     componentWillMount: function() {
       var _this = this;
 
-      // TODO: Remove this and use the Dispatcher
-      $(window).bind('storage', this.storedAckChanged);
+      // // TODO: Remove this and use the Dispatcher
+      // $(window).bind('storage', this.storedAckChanged);
 
       this.onPush(function(event, msg) {
         if (_.contains(msg.mentions, _this.props.username)) {
@@ -140,10 +116,11 @@
 
     getInitialState: function() {
       return {
+        data: ChatNotificationsStore.getChatRooms(),
+        sortKeys: [],
         acknowledgedAt: this.storedAck(),
-        data: null,
-        desktopNotificationsEnabled: false,
-      }
+        desktopNotificationsEnabled: false
+      };
     },
 
     handleChatRoomsChanged: function() {
@@ -220,6 +197,22 @@
       top: '20%'
     },
 
+    sortByLastReadAt: function(data) {
+      if (data === null) {
+        return [];
+      }
+
+      var values = _.values(data);
+      for (var i = 0; i < values.length; i++) {
+        var entry = values[i];
+        entry.readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
+        entry.sortIndex = this.state.sortKeys.indexOf(entry.id);
+      }
+      values.sort(dynamicSortMultiple("readState", "sortIndex", "label"));
+
+      return values || [];
+    },
+
     storedAck: function() {
       var timestamp = localStorage.chatAck;
 
@@ -262,4 +255,10 @@
       );
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = ChatNotifications;
+  }
+
+  window.ChatNotifications = ChatNotifications;
 })();

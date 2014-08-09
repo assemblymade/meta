@@ -1,9 +1,8 @@
-//= require xhr
-//= require constants
-//= require dispatcher
-//= require stores/store
+var xhr = require('../xhr');
+var Dispatcher = require('../dispatcher');
+var Store = require('../stores/store');
 
-var ChatNotificationsStore = (function() {
+(function() {
   var rrMetaTag = document.getElementsByName('read-raptor-url');
   var READ_RAPTOR_URL = rrMetaTag && rrMetaTag[0] && rrMetaTag[0].content;
 
@@ -24,8 +23,6 @@ var ChatNotificationsStore = (function() {
       _optimisticallyUpdatedChatRooms[payload.id] = {
         last_read_at: moment().unix()
       };
-
-      this.emit(_deferred.pop());
     },
 
     'chat:fetchChatRooms': function(url) {
@@ -36,9 +33,13 @@ var ChatNotificationsStore = (function() {
       var count = _.countBy(
         _chatRooms,
         function(entry) {
+          var updated = entry.updated > entry.last_read_at;
+
           if (acknowledgedAt) {
-            return entry.updated > acknowledgedAt;
+            return updated && entry.updated > acknowledgedAt;
           }
+
+          return updated;
         }
       );
 
@@ -128,7 +129,7 @@ var ChatNotificationsStore = (function() {
       var keys = _.keys(_optimisticallyUpdatedChatRooms)
       for (var i = 0; i < keys.length; i++) {
         if (_chatRooms[keys[i]]) {
-          _chatRooms[keys[i]] = _.extend(_chatRooms[keys[i]], _optimisticallyUpdatedChatRooms[keys[i]])
+          _chatRooms[keys[i]].last_read_at = _optimisticallyUpdatedChatRooms[keys[i]].last_read_at;
         }
       }
 
@@ -148,7 +149,15 @@ var ChatNotificationsStore = (function() {
         return null;
       }
 
-      return _.max(_.values(_chatRooms), func.dot('updated'));
+      return _.max(
+        _.filter(
+          _.values(_chatRooms),
+          function filterRooms(room) {
+            return room.id !== (app.chatRoom || {}).id;
+          }
+        ),
+        func.dot('updated')
+      );
     },
   });
 
@@ -171,5 +180,9 @@ var ChatNotificationsStore = (function() {
     _deferred.push(event);
   });
 
-  return _notificationsStore;
+  if (typeof module !== 'undefined') {
+    module.exports = _notificationsStore;
+  }
+
+  window.ChatNotificationsStore = _notificationsStore;
 })();

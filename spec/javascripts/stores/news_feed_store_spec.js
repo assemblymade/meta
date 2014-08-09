@@ -1,9 +1,8 @@
 //= require spec_helper
 //= require moment
 //= require underscore
-//= require dispatcher
-//= require stores/store
-//= require stores/news_feed_store
+//= require react
+//= require components
 
 describe('NewsFeedStore', function() {
   var _app;
@@ -100,13 +99,16 @@ describe('NewsFeedStore', function() {
     it('returns the number of unread stories', function() {
       var stories = [
         {
-          updated: 123
+          updated: 123,
+          last_read_at: 123
         },
         {
-          updated: 789
+          updated: 789,
+          last_read_at: 123
         },
         {
-          updated: 456
+          updated: 456,
+          last_read_at: 123
         }
       ];
 

@@ -1,0 +1,40 @@
+{
+  "name": "meta",
+  "version": "0.0.0",
+  "description": "Assembly Meta",
+  "scripts": {
+    "jest": "node_modules/.bin/jest",
+    "test": "bin/rake teaspoon && npm run jest",
+    "bundle": "node_modules/.bin/browserify -r underscore -r spin.js -t reactify app/assets/javascripts/components/**.js.jsx -o app/assets/javascripts/components.js",
+    "watch": "node_modules/.bin/watchify -r underscore -r spin.js -t reactify app/assets/javascripts/components/**.js.jsx -o app/assets/javascripts/components.js -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/assemblymade/meta.git"
+  },
+  "bugs": {
+    "url": "https://github.com/assemblymade/meta/issues"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/preprocessor.js",
+    "setupEnvScriptFile": "<rootDir>/jest_env.js",
+    "testDirectoryName": "spec/javascripts/components",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react",
+      "<rootDir>/node_modules/underscore"
+    ]
+  },
+  "homepage": "https://assembly.com",
+  "devDependencies": {
+    "browserify": "^5.9.1",
+    "jest-cli": "^0.1.18",
+    "jquery": "^2.1.1",
+    "moment": "^2.8.1",
+    "react": "^0.11.1",
+    "react-tools": "^0.11.1",
+    "reactify": "^0.14.0",
+    "spin.js": "^2.0.1",
+    "underscore": "^1.6.0",
+    "watchify": "^1.0.1"
+  }
+}

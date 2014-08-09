@@ -25,6 +25,9 @@ class User < ActiveRecord::Base
   has_many :team_memberships
   has_many :watched_products, :through => :watchings, :source => :watchable, :source_type => Product
   has_many :watchings
+  has_many :withdrawals
+
+  has_one :payment_option
 
   devise :confirmable,
          :database_authenticatable,
@@ -124,16 +127,8 @@ class User < ActiveRecord::Base
     is_staff?
   end
 
-  def paid_via_paypal?
-    payment_option == PaymentOption::PAYPAL && !paypal_email.nil?
-  end
-
-  def paid_via_ach?
-    payment_option == PaymentOption::ACH && bank_account_id && bank_name && bank_last4 && address_line1 && address_city && address_zip
-  end
-
-  def missing_payment_information?
-    !(paid_via_ach? || paid_via_paypal?)
+  def sponsored?
+    staff?
   end
 
   def last_contribution

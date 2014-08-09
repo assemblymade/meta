@@ -11,6 +11,12 @@
     <small>#<%= @wip.number %></small>
   </h2>
 
+  <% if @wip.description %>
+    <div>
+      <small><%= @wip.description %></small>
+    </div>
+  <% end %>
+
   <div class="page-header-meta">
     <ul class="list-piped pull-right">
       <li>

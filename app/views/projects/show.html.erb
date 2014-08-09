@@ -1,0 +1,125 @@
+<% title "##{@wip.number}", @wip.title, @product.name %>
+<% activate_nav! :projects %>
+<% breadcrumb product_projects_path(@milestone.product), 'Projects' %>
+
+<%= render 'header' %>
+
+<div class="sheet-body">
+  <div class="row">
+    <div class="col-md-9">
+
+      <% if @milestone.feature_image.present? %>
+        <img class="img-thumbnail" src="<%= firesize_url %>/630x300/frame_0/<%= URI.escape @milestone.feature_image.attachment.url %>">
+      <% end %>
+
+      <div class="markdown-normalized">
+        <%== product_markdown(@milestone.product, @milestone.description) %>
+      </div>
+
+      <hr>
+
+      <h6>Task list</h6>
+      <%= render partial: 'task_list', object: @milestone %>
+
+      <br>
+      <hr>
+
+      <h6>Discussion</h6>
+      <div id="discussion-view-el">
+        <%= render 'wips/discussion', events: @events %>
+        <%= render 'discussions/new_event_form' %>
+      </div>
+    </div>
+
+
+    <div class="col-md-3">
+
+      <div class="panel panel-default">
+        <div class="panel-body">
+
+          <div class="progress progress-small omega" style="margin-bottom: 10px;">
+            <div class="progress-bar progress-bar-success" style="width:<%= number_to_percentage @milestone.progress * 100, precision: 0 %>;">
+
+            </div>
+          </div>
+
+          <h6 class="text-muted omega">
+            <span class="pull-right"><%= number_to_percentage @milestone.progress * 100, precision: 0 %></span>
+            Progress
+          </h6>
+        </div>
+
+        <ul class="list-group list-group-breakout small omega">
+          <li class="list-group-item">
+            <span class="badge"><%= @milestone.tasks.open.count %></span>
+            Bounties remaining
+          </li>
+          <li class="list-group-item">
+            <span class="badge"><%= @milestone.tasks.closed.count %></span>
+            Completed
+          </li>
+        </ul>
+
+      </div><!-- .panel -->
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h6 class="panel-title">Contributors</h6>
+        </div>
+        <div class="panel-body">
+          <ul class="list-grid omega">
+            <% @milestone.wip.contributors.each do |contributor| %>
+              <li>
+                <%= avatar_tag(contributor, 24) %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h6 class="panel-title">Cover Image</h6>
+        </div>
+        <%= render 'feature_image' %>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h6 class="panel-title">Assets</h6>
+        </div>
+        <div class="panel-body">
+          <ul class="list-grid">
+            <% @assets.each do |asset| %>
+              <li>
+                <a href="<%= product_wip_path(asset.wip.product, asset.wip) %>">
+                  <img src="<%= File.join(firesize_url, "48x48", "g_center", "frame_0", URI.encode(asset.attachment.url)) %>">
+                </a>
+              </li>
+            <% end %>
+          </ul>
+
+          <p class="text-small text-muted omega" style="clear: both; margin-top: 8px;">Designs added to tasks in this project will be displayed here</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    app.product = new Product(<%= json @product, scope: current_user %>);
+    app.wip = new Wip(<%== WipSerializer.new(@wip).to_json %>);
+    app.wipEvents = new WipEvents(<%== @wip.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
+      url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
+    });
+
+    $(document).ready(function() {
+      <%= render 'wips/add_tips_to_wip_events' %>
+      new DiscussionView({
+        el: $('#discussion-view-el'),
+        model: app.wip
+      });
+    })
+
+    analytics.track('product.wip.viewed', <%== WipAnalyticsSerializer.new(@wip, scope: current_user).to_json %>)
+  </script>
+</div>

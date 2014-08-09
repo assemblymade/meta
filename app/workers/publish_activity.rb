@@ -23,7 +23,7 @@ class PublishActivity
   end
 
   def push_to_feeds!(story)
-    (story.stream_targets - [activity.actor]).each do |watcher|
+    (story.stream_targets - [activity && activity.actor]).each do |watcher|
       NewsFeed.new(watcher).push(story)
     end
   end

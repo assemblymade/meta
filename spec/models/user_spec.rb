@@ -28,33 +28,6 @@ describe User do
     end
   end
 
-  it 'indicates when users are using paypal' do
-    user = User.make!(payment_option: PaymentOption::PAYPAL, paypal_email: Faker::Internet.email)
-    user.should be_paid_via_paypal
-    user.should_not be_paid_via_ach
-    user.should_not be_missing_payment_information
-  end
-
-  it 'indicates when users are using ach' do
-    user = User.make!(payment_option: PaymentOption::ACH,
-      bank_account_id: rand(1000),
-      bank_name:     'US BANK',
-      bank_last4:    rand(9999).to_s.rjust(4, '0'),
-      address_line1: Faker::Address.street_address,
-      address_city:  Faker::Address.city,
-      address_zip:   Faker::AddressUS.zip_code)
-    user.should be_paid_via_ach
-    user.should_not be_paid_via_paypal
-    user.should_not be_missing_payment_information
-  end
-
-  it 'indicates when users are missing payment information' do
-    user = User.make!
-    user.should be_missing_payment_information
-    user.should_not be_paid_via_paypal
-    user.should_not be_paid_via_ach
-  end
-
   it 'should return wips a user is working on' do
     user = User.make!
     task = Task.make!

@@ -9,9 +9,8 @@
  */
 //= require moment
 //= require underscore
-//= require dispatcher
-//= require stores/store
-//= require stores/chat_notifications_store
+//= require react
+//= require components
 
 fixture.preload('readraptor_meta_tag.html');
 
@@ -37,8 +36,7 @@ describe('ChatNotificationsStore', function() {
   });
 
   it('marks a room as read', function() {
-    var spy = sinon.spy(ChatNotificationsStore, 'emit');
-    sinon.stub(window.xhr, 'noCsrfRequest', function(method, path, data, callback) {
+    var spy = sinon.stub(window.xhr, 'noCsrfRequest', function(method, path, data, callback) {
       return true;
     });
 
@@ -46,7 +44,6 @@ describe('ChatNotificationsStore', function() {
 
     expect(spy.calledOnce).to.be.true;
     window.xhr.noCsrfRequest.restore();
-    ChatNotificationsStore.emit.restore();
   });
 
   it('fetches the chat rooms', function() {
@@ -99,13 +96,16 @@ describe('ChatNotificationsStore', function() {
   it('gets the unread chat count', function() {
     var chatRooms = [
       {
-        updated: 123
+        updated: 123,
+        last_read_at: 123
       },
       {
-        updated: 789
+        updated: 789,
+        last_read_at: 123
       },
       {
-        updated: 456
+        updated: 456,
+        last_read_at: 123
       }
     ];
 

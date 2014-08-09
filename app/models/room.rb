@@ -3,7 +3,7 @@ class Room < ActiveRecord::Base
   belongs_to :target, polymorphic: true, validate: false
 
   has_many :watchings, :as => :watchable
-  has_many :watchers, :through => :watchings, :source => :user
+  has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
 
   validate :number, uniqueness: { scope: :product }
 

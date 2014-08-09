@@ -1,10 +1,12 @@
 class TransactionLogEntry < ActiveRecord::Base
   belongs_to :product, touch: true
 
-  scope :with_cents, -> { where.not(cents: nil) }
-  scope :credit,     -> { where(action: 'credit') }
-  scope :minted,     -> { where(action: 'minted') }
-  scope :validated,  -> { where(action: 'validated') }
+  scope :credit,       -> { where(action: 'credit') }
+  scope :in_user_wallets, -> { joins('inner join users on users.id = wallet_id') }
+  scope :minted,       -> { where(action: 'minted') }
+  scope :to_month_end, ->(time) { where('transaction_log_entries.created_at < ?', TransactionLogEntry.end_of_month(time.to_time)) }
+  scope :validated,    -> { where(action: 'validated') }
+  scope :with_cents,   -> { where.not(cents: nil) }
 
   # after_commit :schedule_minter
 
@@ -45,6 +47,21 @@ class TransactionLogEntry < ActiveRecord::Base
          joins('inner join transaction_log_entries tle on tle.wallet_id = users.id').
          group('users.id')
   end
+
+  def self.end_of_month(time)
+    Time.parse(time.end_of_month.strftime("%Y-%m-%dT%T") + '-11:00')
+  end
+
+  def self.proposed!(created_at, product, work_id, wallet_id)
+    create!(
+      created_at: created_at,
+      product: product,
+      action: 'proposed',
+      work_id: work_id,
+      wallet_id: wallet_id
+    )
+  end
+
 
   def self.validated!(created_at, product, work_id, wallet_id, worker_id)
     entry = create!(

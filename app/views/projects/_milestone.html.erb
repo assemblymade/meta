@@ -1,0 +1,34 @@
+<% cache [milestone, milestone.wip] do %>
+  <a class="card" href="<%= product_project_path(milestone.product, milestone) %>">
+
+    <% if milestone.milestone_images.any? %>
+      <% url = File.join(firesize_url, "263x175", "g_north", "frame_0", URI.escape(milestone.feature_image.attachment.url)) %>
+      <div class="card-hero" style="background-image:url(<%= url %>)">
+      </div>
+    <% end %>
+
+    <div class="card-body">
+
+      <div class="progress progress-small">
+        <div class="progress-bar progress-bar-success" style="width:<%= number_to_percentage(milestone.progress * 100, precision: 0) %>"></div>
+      </div>
+
+      <div class="summary">
+        <div class="summary-target" style="min-height:56px">
+          <%= milestone.wip.title %>
+        </div>
+
+        <p class="omega">
+          <% if milestone.tasks.count.zero? %>
+            No tasks added
+          <% else %>
+            <%= pluralize(milestone.tasks.open.count, 'open task') %>
+          <% end %>
+          <% if urgency = milestone.urgency %>
+            <span class="pull-right label label-<%= urgency.slug %>"><%= urgency.label %></span>
+          <% end %>
+        </p>
+      </div>
+    </div><!-- .card-body -->
+  </a>
+<% end %>

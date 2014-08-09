@@ -5,6 +5,8 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'email_spec'
 require 'sidekiq/testing'
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: true)
 
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start

@@ -1,0 +1,17 @@
+<%= f.hidden_field :type, value: User::DebitPaymentOption %>
+
+<% if current_user.payment_option.last4 %>
+  <p>Current card: XXXX-XXXX-XXXX-<%= current_user.payment_option.last4 %></p>
+<% end %>
+
+<script
+  src="https://checkout.stripe.com/checkout.js"
+  class="stripe-button"
+  data-key="<%= ENV['STRIPE_PUBLISHABLE'] %>"
+  data-allow-remember-me="false"
+  data-email="<%= current_user.email %>"
+  data-label="Add Card"
+  data-panel-label="Save">
+</script>
+
+

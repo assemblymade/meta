@@ -1,10 +1,9 @@
-//= require xhr
-//= require constants
-//= require dispatcher
-//= require stores/store
-//= require stores/news_feed_users_store
+var xhr = require('../xhr');
+var Dispatcher = require('../dispatcher');
+var Store = require('../stores/store');
+var NewsFeedUsersStore = require('../stores/news_feed_users_store');
 
-var NewsFeedStore = (function() {
+(function() {
   var rrMetaTag = document.getElementsByName('read-raptor-url');
   var READ_RAPTOR_URL = rrMetaTag && rrMetaTag[0] && rrMetaTag[0].content;
 
@@ -25,18 +24,6 @@ var NewsFeedStore = (function() {
       _stories[story.key] = story;
     },
 
-    addStories: function(stories) {
-      if (!stories) {
-        return;
-      }
-
-      for (var i = 0, l = stories.length; i < l; i++) {
-        var story = stories[i];
-
-        _stories[story.key] = story;
-      }
-    },
-
     applyReadTimes: function(data, stories) {
       for (var i = 0, l = data.length; i < l; i++) {
         var datum = data[i];
@@ -47,39 +34,36 @@ var NewsFeedStore = (function() {
       }
     },
 
-    handleFetchedStories: function(method) {
-      var self = this;
-
-      return function(err, data) {
-        if (err) {
-          return console.error(err);
-        }
-
-        try {
-          data = JSON.parse(data);
-        } catch (e) {
-          return console.error(e);
-        }
-
-        var users = data.users;
-        var stories = data.stories;
-
-        NewsFeedUsersStore.setUsers(users);
-
-        var url = READ_RAPTOR_URL +
-          '/readers/' +
-          app.currentUser().get('id') +
-          '/articles?' +
-          _.map(
-            stories,
-            function(s) {
-              return 'key=Story_' + s.id
-            }
-          ).join('&')
-
-        window.xhr.noCsrfGet(url, self.handleReadRaptor(stories, method));
+    handleFetchedStories: function(err, data) {
+      if (err) {
+        return console.error(err);
       }
 
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        return console.error(e);
+      }
+
+      var users = data.users;
+      var stories = data.stories;
+
+      if (!_.isEmpty(users)) {
+        NewsFeedUsersStore.setUsers(users);
+      }
+
+      var url = READ_RAPTOR_URL +
+        '/readers/' +
+        app.currentUser().get('id') +
+        '/articles?' +
+        _.map(
+          stories,
+          function(s) {
+            return 'key=' + s.key
+          }
+        ).join('&')
+
+      window.xhr.noCsrfGet(url, this.handleReadRaptor(stories));
     },
 
     handleReadRaptor: function(stories, method) {
@@ -108,7 +92,7 @@ var NewsFeedStore = (function() {
         );
 
         self.applyReadTimes(data, stories);
-        self[method](stories);
+        self.setStories(stories);
         self.emit(_deferred.pop());
       };
     },
@@ -116,11 +100,11 @@ var NewsFeedStore = (function() {
     'newsFeed:acknowledge': function(timestamp) {},
 
     'newsFeed:fetchStories': function(url) {
-      window.xhr.get(url, this.handleFetchedStories('setStories'));
+      window.xhr.get(url, this.handleFetchedStories.bind(this));
     },
 
     'newsFeed:fetchMoreStories': function(url) {
-      window.xhr.get(url, this.handleFetchedStories('addStories'));
+      window.xhr.get(url, this.handleFetchedStories.bind(this));
     },
 
     'newsFeed:markAsRead': function(storyId) {
@@ -131,23 +115,16 @@ var NewsFeedStore = (function() {
 
     'newsFeed:markAllAsRead': function() {
       var unread = _.filter(_stories, function(story) {
-        return story.last_read_at == null;
+        return story.last_read_at === 0;
       });
 
       var self = this;
 
       for (var i = 0, l = unread.length; i < l; i++) {
-        (function(j) {
-          var story = unread[j];
+        var story = unread[i];
+        var url = story.url;
 
-          if (!story.last_read_at) {
-            // we do actually want the id here, not the key
-            var storyId = story.id;
-            var url = '/user/tracking/' + storyId;
-
-            window.xhr.get(url, self.markedAsRead(storyId, true, (j + 1 === l)));
-          }
-        })(i);
+        window.xhr.get(url, self.markedAsRead(story.key, true, (i + 1 === l)));
       }
     },
 
@@ -164,7 +141,7 @@ var NewsFeedStore = (function() {
       this.emit(_deferred.pop());
     },
 
-    markedAsRead: function(storyId, wait, ready) {
+    markedAsRead: function(storyKey, wait, ready) {
       var self = this;
 
       return function markedAsRead(err, data) {
@@ -172,10 +149,12 @@ var NewsFeedStore = (function() {
           return console.error(err);
         }
 
-        var story = self.getStory(storyId);
+        var story = self.getStory(storyKey);
 
         // FIXME: Use the value from Readraptor
         story.last_read_at = moment().unix();
+
+        self.setStory(story);
 
         if (!wait) {
           return self.emit(_deferred.pop());
@@ -190,14 +169,8 @@ var NewsFeedStore = (function() {
       }
     },
 
-    getStory: function(id) {
-      var index = _searchStories(id);
-
-      if (index > -1) {
-        return _stories[index];
-      }
-
-      return null;
+    getStory: function(key) {
+      return _stories[key];
     },
 
     getStories: function() {
@@ -207,6 +180,10 @@ var NewsFeedStore = (function() {
         stories.push(_stories[i]);
       }
 
+      stories.sort(function(a, b) {
+        return (b.updated - a.updated);
+      });
+
       return stories;
     },
 
@@ -215,12 +192,16 @@ var NewsFeedStore = (function() {
         _stories,
         function(entry) {
           if (timestamp) {
-            return entry.updated > timestamp
+            return entry.updated > entry.last_read_at && entry.updated > timestamp;
           }
         }
       );
 
       return count.true || 0;
+    },
+
+    setStory: function(story) {
+      _stories[story.key] = story;
     },
 
     setStories: function(stories) {
@@ -232,31 +213,19 @@ var NewsFeedStore = (function() {
 
       _optimisticStories = {};
 
-      _stories = stories;
+      for (var s in stories) {
+        _stories[s] = stories[s];
+      }
     },
 
-    removeStory: function(id) {
-      var index = _searchStories(id);
-
-      if (index > -1) {
-        _stories.splice(index, 1);
-      }
+    removeStory: function(key) {
+      delete _stories[key];
     },
 
     removeAllStories: function() {
       _stories = [];
     }
   });
-
-  _searchStories = function(id) {
-    for (var i = 0, l = _stories.length; i < l; i++) {
-      if (_stories[i].id === id) {
-        return i;
-      }
-    }
-
-    return -1;
-  }
 
   _store.dispatchIndex = Dispatcher.register(function(payload) {
     var action = payload.action;
@@ -277,5 +246,9 @@ var NewsFeedStore = (function() {
     _deferred.push(event);
   });
 
-  return _newsFeedStore;
+  if (typeof module !== 'undefined') {
+    module.exports = _newsFeedStore;
+  }
+
+  window.NewsFeedStore = _newsFeedStore;
 })();

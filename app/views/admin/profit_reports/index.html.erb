@@ -1,0 +1,31 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Product</th>
+      <th>Coins</th>
+      <th>Revenue</th>
+      <th>Expenses</th>
+      <th>Profit</th>
+      <th>Annuity</th>
+      <th>Fee</th>
+      <th>Earnable</th>
+      <th>Payable</th>
+    </tr>
+  </thead>
+
+  <% @reports.each do |report| %>
+    <tr>
+      <td><a href="<%= admin_profit_report_path(report) %>"><%= report.end_at.strftime('%b %Y') %></a></td>
+      <td><%= report.product.name %></td>
+      <td><%= number report.coins %></td>
+      <td><%= currency report.revenue %></td>
+      <td><%= currency report.expenses %></td>
+      <td><%= currency report.profit %></td>
+      <td><%= currency report.payable_annuity %></td>
+      <td><%= currency report.fee %></td>
+      <td><%= currency report.earnable %></td>
+      <td><%= currency report.payable %></td>
+    </tr>
+  <% end %>
+</table>

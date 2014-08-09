@@ -130,22 +130,14 @@
 </div>
 
 <div class="panel panel-default">
-  <div class="panel-heading">
-    <h6 class="panel-title">
-      <span class="pull-right"><%= @wip.watchers.count %></span>
-      Watchers
-    </h6>
-  </div>
-  <div class="panel-body">
-    <ul class="list-grid omega">
-      <% @wip.watchers.each do |user| %>
-        <li>
-          <a href="<%= user_path(user) %>">
-            <%= avatar_tag(user, 21) %>
-          </a>
-        </li>
-      <% end %>
-    </ul>
+  <div class="panel-body"
+      data-react-class="ToggleButton"
+      data-react-props="<%= {
+        bool: watching?(@wip),
+        text: { true: 'Mute', false: 'Watch' },
+        classes: { true: 'btn-sm btn-block btn-default', false: 'btn-sm btn-block btn-primary' },
+        href: { true: product_wip_mute_path(@wip.product, @wip.number), false: product_wip_watch_path(@wip.product, @wip.number) }
+      }.to_json %>">
   </div>
 </div><!-- .panel -->
 
@@ -177,7 +169,7 @@
               }.to_json %>">
         </div>
       <% end %>
-      <div data-react-class="TextComplete"
+      <div data-react-class="Typeahead"
            data-react-props="<%= {
              width: "125px",
              size: "small",

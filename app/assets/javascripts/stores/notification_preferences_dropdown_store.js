@@ -1,8 +1,8 @@
-//= require xhr
-//= require dispatcher
-//= require stores/store
+var xhr = require('../xhr');
+var Dispatcher = require('../dispatcher');
+var Store = require('../stores/store');
 
-var NotificationPreferencesDropdownStore = (function() {
+(function() {
   var _selected;
 
   var _store = Object.create(Store);
@@ -16,7 +16,11 @@ var NotificationPreferencesDropdownStore = (function() {
       var item = data.item;
       var path = data.path;
 
-      window.xhr.post(path);
+      window.xhr.post(path, {}, function(){
+        if (data.redirectTo) {
+          app.redirectTo(data.redirectTo)
+        }
+      });
 
       _selected = item;
     },
@@ -47,5 +51,9 @@ var NotificationPreferencesDropdownStore = (function() {
     _store.emit(event);
   });
 
-  return _dropdownStore;
+  if (typeof module !== 'undefined') {
+    module.exports = _dropdownStore;
+  }
+
+  window.NotificationPreferencesDropdownStore = _dropdownStore;
 })();

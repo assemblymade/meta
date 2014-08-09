@@ -1,6 +1,9 @@
 <div class="navbar navbar-inverse navbar-static-top">
   <div class="container">
     <ul class="nav navbar-nav">
+      <li class="<%= "active" if profit_reports_controller? %>">
+        <%= link_to 'Profit Reports', admin_profit_reports_path %>
+      </li>
       <li class="<%= "active" if staff_picks_controller? %>">
         <%= link_to 'Staff Picks', admin_staff_picks_path %>
       </li>

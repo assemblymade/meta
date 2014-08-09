@@ -2,13 +2,14 @@ require 'spec_helper'
 
 describe Watching do
   let(:user) { User.make! }
+  let(:wip) { Task.make!(user: user, product: watchable) }
   let(:watchable) { Product.make! }
 
   describe 'watch!' do
     let!(:subscriber) { User.make! }
 
     before do
-      Watching.subscribe!(subscriber, watchable)
+      Watching.announcements!(subscriber, watchable)
     end
 
     it 'watches a watchable' do
@@ -17,10 +18,10 @@ describe Watching do
       expect(watchable.watchers).to include(user)
     end
 
-    it 'unsubscribes if subscribed' do
+    it 'follows if announcements' do
       Watching.watch!(subscriber, watchable)
 
-      expect(Watching.subscribed?(subscriber, watchable)).to be_false
+      expect(Watching.following?(subscriber, watchable)).to be_true
     end
   end
 
@@ -33,6 +34,20 @@ describe Watching do
       Watching.unwatch!(user, watchable)
 
       expect(watchable.watchers).not_to include(user)
+    end
+  end
+
+  describe 'unwatch! a product' do
+    before do
+      Watching.watch!(user, watchable)
+      Watching.watch!(user, wip)
+    end
+
+    it 'unwatches all wips when unwatching a product' do
+      Watching.unwatch!(user, watchable)
+
+      expect(watchable.watchers).not_to include(user)
+      expect(wip.watchers).not_to include(user)
     end
   end
 
@@ -53,20 +68,28 @@ describe Watching do
     end
   end
 
-  describe 'subscribe!' do
-    it 'subscribes to a watchable' do
-      w = Watching.subscribe!(user, watchable)
+  describe 'announcements!' do
+    it 'watches a watchable passively' do
+      w = Watching.announcements!(user, watchable)
 
-      expect(w.subscription).to be_true
+      expect(w.subscription).to be_false
     end
 
-    it 'subscribes if a user is already watching' do
+    it 'moves to announcements if already watching' do
       Watching.watch!(user, watchable)
+      Watching.announcements!(user, watchable)
 
-      expect(watchable.watchers).to include(user)
-      Watching.subscribe!(user, watchable)
+      expect(
+        Watching.find_by(user_id: user.id, watchable_id: watchable.id).subscription
+      ).to be_false
+    end
+  end
 
-      expect(Watching.find_by(user_id: user.id, watchable_id: watchable.id).subscription).to be_true
+  describe 'subscribe! to a product' do
+    it 'watches all open wips' do
+      Watching.announcements!(user, watchable)
+
+      expect(wip.watchers).to include(user)
     end
   end
 
@@ -74,36 +97,7 @@ describe Watching do
     it 'subscribes a user to a product if the user performs an activity' do
       wip = Wip.create!(product: watchable, user: user, title: 'foo')
       Activity.publish!(target: wip, actor: user, subject: wip.product)
-      expect(Watching.subscribed?(user, watchable)).to be_true
-    end
-  end
-
-  describe 'unsubscribe!' do
-    before do
-      Watching.subscribe!(user, watchable)
-    end
-
-    it 'unsubscribes from a watchable' do
-      Watching.unsubscribe!(user, watchable)
-
-      expect(Watching.find_by(user_id: user.id, watchable_id: watchable.id).subscription).to be_false
-    end
-  end
-
-  describe 'subscribed?' do
-    let!(:non_subscriber) { User.make! }
-
-    before do
-      Watching.watch!(non_subscriber, watchable)
-      Watching.subscribe!(user, watchable)
-    end
-
-    it 'returns true if subscribed' do
-      expect(Watching.subscribed?(user, watchable)).to be_true
-    end
-
-    it 'returns false if not subscribed' do
-      expect(Watching.subscribed?(non_subscriber, watchable)).to be_false
+      expect(Watching.following?(user, watchable)).to be_true
     end
   end
 end

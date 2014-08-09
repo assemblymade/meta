@@ -1,8 +1,8 @@
+log
 # Ignore bundler config.
 /.bundle
 
 # Ignore all logfiles and tempfiles.
-/log/*.log
 /tmp
 
 /.env
@@ -20,3 +20,6 @@ dump.rdb
 
 # Dragonfly
 public/system
+
+node_modules
+npm-debug.log

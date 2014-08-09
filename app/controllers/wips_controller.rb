@@ -1,6 +1,4 @@
 class WipsController < ProductController
-  include Missions::CompletionHelper
-
   respond_to :html, :json
 
   before_filter :set_no_cache, only: [:index]
@@ -58,8 +56,7 @@ class WipsController < ProductController
     )
 
     if @wip.valid?
-
-      if milestone_number = params[:milestone_id]
+      if milestone_number = params[:project_id]
         @milestone = @product.milestones.find_by!(number: milestone_number)
         MilestoneTask.find_or_create_by!(milestone: @milestone, task: @wip)
       end
@@ -67,7 +64,6 @@ class WipsController < ProductController
 
 
       Vote.clear_cache(current_user, @wip)
-      next_mission_if_complete!(@product.current_mission, current_user)
       @activity = Activities::Start.publish!(
         actor: current_user,
         subject: @wip,
@@ -76,7 +72,6 @@ class WipsController < ProductController
       )
 
       track_params = WipAnalyticsSerializer.new(@wip, scope: current_user).as_json.merge(engagement: 'created')
-      track_event 'wip.engaged', track_params
       if !current_user.staff?
         AsmMetrics.product_enhancement
         AsmMetrics.active_user(current_user)
@@ -145,7 +140,7 @@ class WipsController < ProductController
       if @product.tasks.won_by(@event.user).count == 1
         BadgeMailer.delay(queue: 'mailer').first_win(@event.id)
       end
-      track_wip_event 'awarded'
+      TrackBountyAwarded.perform_async(@wip.id) unless @event.user.staff?
     end
     redirect_to product_wip_path(@wip.product, @wip)
   end
@@ -166,6 +161,11 @@ class WipsController < ProductController
     respond_with @wip, location: request.referer
   end
 
+  def mute
+    @wip.mute!(current_user)
+    respond_with @wip, location: request.referer
+  end
+
   private
 
   def validate_wip_administer
@@ -181,10 +181,6 @@ class WipsController < ProductController
     PaginatingDecorator.new(query)
   end
 
-  def track_wip_event(name)
-    track_event "wip.#{name}", WipAnalyticsSerializer.new(@wip, scope: current_user).as_json
-  end
-
   def set_wip
     number = params[:wip_id] || params[:task_id] || params[:id]
     if number.to_i.zero?
@@ -196,7 +192,7 @@ class WipsController < ProductController
 
     # special case redirect to milestones
     if @wip.type.nil?
-      redirect_to product_milestone_path(@product, @wip)
+      redirect_to product_project_path(@product, @wip)
     elsif @wip.type != wip_class.to_s
       redirect_to url_for([@product, @wip])
     end

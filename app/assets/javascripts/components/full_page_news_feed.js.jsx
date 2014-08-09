@@ -1,88 +1,60 @@
 /** @jsx React.DOM */
 
-//= require constants
-//= require dispatcher
-//= require mixins/news_feed
-//= require stores/news_feed_store
+var CONSTANTS = require('../constants');
+var Dispatcher = require('../dispatcher');
+var EventMixin = require('../mixins/event.js.jsx');
+var NewsFeedMixin = require('../mixins/news_feed.js.jsx');
+var NewsFeedStore = require('../stores/news_feed_store');
+var Avatar = require('./avatar.js.jsx');
 
 (function() {
   var NF = CONSTANTS.NEWS_FEED;
 
-  window.FullPageNewsFeed = React.createClass({
+  var FullPageNewsFeed = React.createClass({
     mixins: [NewsFeedMixin],
 
-    componentWillMount: function() {
-      NewsFeedStore.addChangeListener(this.getStories);
-      this.fetchNewsFeed();
-
-      this.onPush(function() {
-        this.fetchNewsFeed();
-      }.bind(this));
-    },
-
-    fetchNewsFeed: _.debounce(function() {
-      Dispatcher.dispatch({
-        action: NF.ACTIONS.FETCH_STORIES,
-        event: NF.EVENTS.STORIES_FETCHED,
-        data: this.props.url
-      });
-    }, 1000),
-
-    getInitialState: function() {
-      return {
-        stories: null
-      };
-    },
-
-    moreStories: function() {
-      var lastStory = this.state.stories[this.state.stories.length - 1];
-
-      Dispatcher.dispatch({
-        action: NF.ACTIONS.FETCH_MORE_STORIES,
-        event: NF.EVENTS.STORIES_FETCHED,
-        data: this.props.url + '?top_id=' + lastStory.id
-      });
-    },
-
-    onPush: function(fn) {
-      if (window.pusher) {
-        channel = window.pusher.subscribe('@' + this.props.user.username);
-        channel.bind_all(fn);
+    moreButton: function() {
+      if (this.state.showMore) {
+        return <a href="#more" className="btn btn-block" onClick={this.moreStories}>More</a>;
       }
+
+      return null;
     },
 
     render: function() {
       return (
-        <div className="sheet">
+        <div className="sheet" style={{ 'min-height': '600px' }}>
           <div className="page-header sheet-header" style={{ 'padding-left': '20px' }}>
             <h2 className="page-header-title">Your notifications</h2>
           </div>
 
-          <div className="list-group list-group-breakout" style={{ height: '600px' }} ref="spinner">
+          <div className="list-group list-group-breakout" ref="spinner">
             {this.state.stories ? this.rows(this.state.stories) : null}
           </div>
 
-          <a href="#more" className="btn btn-block" onClick={this.moreStories}>More</a>
+          {this.moreButton()}
         </div>
       );
     },
 
     rows: function(stories) {
-      var rows = [];
+      var self = this;
 
-      for (var i = 0, l = stories.length; i < l; i++) {
-        rows.push(
-          <div className="list-group-item" key={stories[i].key}>
-            <Entry story={stories[i]} actors={this.state.actors} fullPage={this.props.fullPage} />
-          </div>
-        );
-      }
+      var entries = _.map(stories, function(story) {
+        return <Entry key={story.id + 'f'} story={story} actors={self.state.actors} />;
+      });
 
-      return rows;
+      return (
+        <div className="list-group-item" style={{ 'padding-top': '0px', 'padding-bottom': '0px' }}>
+          {entries}
+        </div>
+      );
     }
   });
 
   var Entry = React.createClass({
+    mixins: [EventMixin],
+
     actors: function() {
       return _.map(
         this.props.story.actor_ids,
@@ -93,27 +65,28 @@
     },
 
     body: function() {
-      var target = this.props.story.activities[0].target;
+      var story = this.props.story;
+      var task = story.verb === 'Start' ? story.subjects[0] : story.target;
 
       return (
         <span>
-          {this.verbMap[this.props.story.verb]}
+          {this.verbMap[story.verb]}
           <strong>
-            {this.subjectMap[this.props.story.subject_type].call(this, target)}
+            {this.subjectMap[story.subject_type].call(this, task)}
           </strong>
         </span>
       );
     },
 
     isRead: function() {
-      return this.props.story.last_read_at != null;
+      return this.props.story.last_read_at !== 0;
     },
 
     markAsRead: function() {
       Dispatcher.dispatch({
         event: NF.EVENTS.READ,
         action: NF.ACTIONS.MARK_AS_READ,
-        data: this.props.story.id
+        data: this.props.story.key
       });
     },
 
@@ -123,7 +96,7 @@
       }
 
       // TODO: Mark as unread
-      return <span className="icon icon-circle" style={{ cursor: 'pointer' }} />
+      return <span className="icon icon-circle" style={{ cursor: 'pointer' }} />;
     },
 
     preview: function() {
@@ -144,65 +117,41 @@
         'entry-unread': !this.isRead(),
       });
 
-      var productName = this.props.story.product.name;
+      var productName = this.props.story.product_name;
 
       return (
-        <div className={classes}>
-          <div className='row'>
-            <div className='col-md-3'>
-              <a href={'/' + this.props.story.product.slug}>{productName}</a>
-              <br />
-              <span className='text-muted text-small'>
-                {this.timestamp()}
-              </span>
-            </div>
+        <div className={classes + ' row'}>
+          <div className='col-md-3'>
+            <a href={'/' + this.props.story.product_slug}>{productName}</a>
+            <br />
+            <span className='text-muted text-small'>
+              {this.timestamp()}
+            </span>
+          </div>
 
-            <div className='col-md-8'>
-              <a className={classes} href={this.props.story.url} onClick={this.markAsRead}>
-                <span style={{ 'margin-right': '5px' }}>
-                  <Avatar user={this.actors()[0]} />
-                </span>
-                <strong>{actors}</strong> {this.body()}
-              </a>
-              <span className='text-small text-muted'>
-                {this.preview()}
+          <div className='col-md-8'>
+            <a className={classes} href={this.props.story.url} onClick={this.markAsRead}>
+              <span style={{ 'margin-right': '5px' }}>
+                <Avatar user={this.actors()[0]} />
               </span>
-            </div>
+              <strong>{actors}</strong> {this.body()}
+            </a>
+            <span className='text-small text-muted'>
+              {this.preview()}
+            </span>
+          </div>
 
-            <div className={'col-md-1 ' + classes}>
-              {this.markAsReadButton()}
-            </div>
+          <div className={'col-md-1 ' + classes}>
+            {this.markAsReadButton()}
           </div>
         </div>
       );
-    },
-
-    timestamp: function() {
-      return moment(this.props.story.created).format("ddd, hA")
-    },
-
-    subjectMap: {
-      Task: function(task) {
-        return "#" + task.number + " " + task.title;
-      },
-
-      Discussion: function(discussion) {
-        return 'a discussion';
-      },
-
-      Wip: function(bounty) {
-        if (this.props.fullPage) {
-          return "#" + bounty.number + " " + bounty.title;
-        }
-
-        return "#" + bounty.number;
-      },
-    },
-
-    verbMap: {
-      'Comment': 'commented on ',
-      'Award': 'awarded',
-      'Close': 'closed '
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = FullPageNewsFeed;
+  }
+
+  window.FullPageNewsFeed = FullPageNewsFeed;
 })();

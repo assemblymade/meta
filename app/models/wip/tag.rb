@@ -7,7 +7,7 @@ class Wip::Tag < ActiveRecord::Base
   has_many :tasks, :through => :taggings, :source => :wip
   has_many :discussions, :through => :taggings, :source => :wip
   has_many :watchings, :as => :watchable
-  has_many :watchers, :through => :watchings, :source => :user
+  has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
 
   validates :name, length: { minimum: 2 }, allow_blank: true
 

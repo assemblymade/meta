@@ -1,30 +1,25 @@
 //= require spec_helper
 //= require underscore
-//= require dispatcher
-//= require stores/store
-//= require stores/interest_store
+//= require react
+//= require components
 
 describe('InterestStore', function() {
-  after(function(done) {
+  after(function() {
     Dispatcher.removeAll();
-
-    done();
   });
 
-  beforeEach(function(done) {
+  beforeEach(function() {
     InterestStore.removeAllInterests();
 
-    done();
   });
 
-  it('adds an interest', function(done) {
+  it('adds an interest', function() {
     InterestStore.addInterest('rugby');
 
     expect(InterestStore.getInterests()).to.eql(['code', 'design', 'rugby']);
-    done();
   });
 
-  it('removes an interest', function(done) {
+  it('removes an interest', function() {
     InterestStore.addInterest('baseball');
 
     expect(InterestStore.getInterests()).to.eql(['code', 'design', 'baseball']);
@@ -32,6 +27,5 @@ describe('InterestStore', function() {
     InterestStore.removeInterest('baseball');
 
     expect(InterestStore.getInterests()).to.eql(['code', 'design']);
-    done();
   });
 });

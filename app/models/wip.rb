@@ -18,8 +18,8 @@ class Wip < ActiveRecord::Base
   has_many :taggings, class_name: 'Wip::Tagging'
   has_many :tags, through: :taggings, class_name: 'Wip::Tag'
   has_many :watchings, :as => :watchable
-  has_many :watchers, :through => :watchings, :source => :user
   has_many :offers, inverse_of: :bounty
+  has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
 
   has_one :milestone
   accepts_nested_attributes_for :milestone
@@ -162,6 +162,18 @@ class Wip < ActiveRecord::Base
 
   def watch!(user)
     Watching.watch!(user, self)
+  end
+
+  def auto_watch!(user)
+    Watching.auto_watch!(user, self)
+  end
+
+  def mute!(user)
+    Watching.unwatch!(user, self)
+  end
+
+  def unwatch!(user)
+    mute!(user)
   end
 
   def contributors

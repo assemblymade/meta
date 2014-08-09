@@ -1,13 +1,18 @@
 /** @jsx React.DOM */
 
-//= require spin
+var CONSTANTS = require('../constants');
+var NewsFeedStore = require('../stores/news_feed_store');
+var NewsFeedUsersStore = require('../stores/news_feed_users_store');
+var update = require('react/lib/update');
 
 (function() {
-  window.NewsFeedMixin = {
+  var NF = CONSTANTS.NEWS_FEED;
+
+  var NewsFeedMixin = {
     componentDidMount: function() {
       var target = this.refs.spinner.getDOMNode();
       var opts = this.spinnerOptions || {
-        lines: 11,
+        lines: 13,
         length: 30,
         radius: 55
       };
@@ -17,17 +22,68 @@
       target.appendChild(spinner.el);
     },
 
+    componentWillMount: function() {
+      NewsFeedStore.addChangeListener(this.getStories);
+      this.fetchNewsFeed();
+
+      this.onPush(function() {
+        this.fetchNewsFeed();
+      }.bind(this));
+    },
+
+    fetchNewsFeed: _.debounce(function() {
+      Dispatcher.dispatch({
+        action: NF.ACTIONS.FETCH_STORIES,
+        event: NF.EVENTS.STORIES_FETCHED,
+        data: this.props.url
+      });
+    }, 1000),
+
+    getInitialState: function() {
+      return {
+        stories: null,
+        showMore: true
+      };
+    },
+
     getStories: function() {
       var self = this;
 
+      var oldStoriesCount = this.state.stories && this.state.stories.length;
+      var newStories = NewsFeedStore.getStories();
+
       this.setState({
-        stories: NewsFeedStore.getStories(),
-        actors: NewsFeedUsersStore.getUsers()
+        stories: newStories,
+        actors: NewsFeedUsersStore.getUsers(),
+        showMore: (newStories.length - oldStoriesCount >= NF.MORE_STORIES_LENGTH)
       }, function() {
         if (self.state.stories.length) {
           self.spinner.stop();
         }
       });
+    },
+
+    moreStories: function() {
+      var lastStory = this.state.stories[this.state.stories.length - 1];
+
+      Dispatcher.dispatch({
+        action: NF.ACTIONS.FETCH_MORE_STORIES,
+        event: NF.EVENTS.STORIES_FETCHED,
+        data: this.props.url + '?top_id=' + lastStory.id
+      });
+    },
+
+    onPush: function(fn) {
+      if (window.pusher) {
+        channel = window.pusher.subscribe('@' + this.props.username);
+        channel.bind_all(fn);
+      }
     }
+  };
+
+  if (typeof module !== 'undefined') {
+    module.exports = NewsFeedMixin;
   }
+
+  window.NewsFeedMixin = NewsFeedMixin;
 })();

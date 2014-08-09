@@ -14,7 +14,8 @@
 
         <div data-react-class="Financials"
             data-react-props="<%= {
-              product: @product.as_json
+              product: ProductSerializer.new(@product).as_json,
+              reports: ActiveModel::ArraySerializer.new(@reports).as_json
             }.to_json %>">
         </div>
         <% if (annuity = @product.contract_holders.sum(:annuity)) > 0 %>

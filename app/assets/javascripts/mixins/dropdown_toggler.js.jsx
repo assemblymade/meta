@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  window.DropdownTogglerMixin = {
+  var DropdownTogglerMixin = {
     render: function() {
       var classes = ['icon', 'navbar-icon', this.props.iconClass];
       var total = this.badgeCount();
@@ -23,4 +23,10 @@
       );
     }
   };
+
+  if (typeof module !== 'undefined') {
+    module.exports = DropdownTogglerMixin;
+  }
+
+  window.DropdownTogglerMixin = DropdownTogglerMixin;
 })();

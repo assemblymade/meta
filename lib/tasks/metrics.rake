@@ -33,7 +33,7 @@ namespace :metrics do
       end
     end
   end
-  
+
   task :created => :environment do
     data = by_month do |date|
       total = User.where("created_at >= date(?) and created_at <= date(?)", date.beginning_of_month, date.end_of_month).count
@@ -43,7 +43,7 @@ namespace :metrics do
       puts "#{month}: #{total} New Users"
     end
   end
-  
+
   task :total_users => :environment do
     data = by_month do |date|
       total = User.where("created_at <= date(?)", date.end_of_month).count
@@ -53,16 +53,18 @@ namespace :metrics do
       puts "#{month}: #{total} Total Users"
     end
   end
-  
+
   task :mau => :environment do
     mau = Metrics::DailyActives.active_between(Date.today.beginning_of_month, Date.today.end_of_month).pluck('sum(count)').first
     puts "Total MAU: #{mau}"
     puts "Total %: #{(mau.to_f / User.count.to_f)}"
   end
-  
+
   task :mau2 => :environment do
     last_month = 1.month.ago
-    User.where("created_at < ?", Date.today.beginning_of_month).where("last_request_at >= ?", last_month.beginning_of_month)
+    # User.where("created_at < ?", Date.today.beginning_of_month).where("last_request_at >= ?", last_month.beginning_of_month)
+    a = User.where("created_at < ?", last_month.beginning_of_month)
+    puts a.where("last_request_at >= ?", 2.months.ago.beginning_of_month).count
   end
 
   desc "Monthly Active Contributors - People who created wips and comment"
@@ -136,7 +138,7 @@ namespace :metrics do
 
   def by_month
     data = []
-    ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014", "1-apr-2014", "1-may-2014"].each do |month|
+    ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014", "1-apr-2014", "1-may-2014", "1-jun-2014", "1-jul-2014"].each do |month|
       data << yield(Date.parse(month))
     end
     data

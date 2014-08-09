@@ -1,13 +1,14 @@
 /** @jsx React.DOM */
 
-//= require dispatcher
-//= require stores/notification_preferences_dropdown_store
-//= require constants
+var CONSTANTS = require('../constants');
+var Dispatcher = require('../dispatcher');
+var NotificationPreferencesDropdownStore = require('../stores/notification_preferences_dropdown_store');
+var Avatar = require('./avatar.js.jsx');
 
 (function() {
   var D = CONSTANTS.NOTIFICATION_PREFERENCES_DROPDOWN;
 
-  window.NotificationPreferencesDropdown = React.createClass({
+  var NotificationPreferencesDropdown = React.createClass({
     chevron: function() {
       if (this.state.chevron) {
         return <span className="icon icon-chevron-down"></span>;
@@ -74,8 +75,8 @@
               </a>
             </li>
 
-            <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('watching')}>
-              <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'watching', this.props.productFollowPath)}>
+            <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('announcements')}>
+              <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'announcements', this.props.productAnnouncementsPath)}>
                 <div>
                   <strong>Follow announcements only</strong>
                 </div>
@@ -85,8 +86,8 @@
               </a>
             </li>
 
-            <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('subscribed')}>
-              <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'subscribed', this.props.productSubscribePath)}>
+            <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('following')}>
+              <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'following', this.props.productFollowPath)}>
                 <div>
                   <strong>Follow</strong>
                 </div>
@@ -114,9 +115,9 @@
 
     buttonState: function() {
       switch (this.state.selected) {
-        case 'subscribed':
+        case 'following':
           return 'Following';
-        case 'watching':
+        case 'announcements':
           return 'Following announcements only';
         case 'not watching':
           return 'Follow';
@@ -143,8 +144,14 @@
       Dispatcher.dispatch({
         event: D.EVENTS.SELECTED_UPDATED,
         action: D.ACTIONS.UPDATE_SELECTED,
-        data: { item: item, path: path }
+        data: { item: item, path: path, redirectTo: (item == 'following' ? this.props.afterFollowPath : null) }
       });
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = NotificationPreferencesDropdown;
+  }
+
+  window.NotificationPreferencesDropdown = NotificationPreferencesDropdown;
 })();

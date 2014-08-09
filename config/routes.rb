@@ -5,6 +5,7 @@ ASM::Application.routes.draw do
   authenticate :user, lambda { |u| u.staff? } do
     mount Sidekiq::Web => '/admin/sidekiq'
     mount Split::Dashboard  => '/admin/split'
+    mount PgHero::Engine => "/admin/postgres"
   end
 
   if Rails.env.development?
@@ -18,6 +19,9 @@ ASM::Application.routes.draw do
   root :to => 'pages#home'
 
   get '/home2' => 'pages#home2'
+
+  # Talk Experiment
+  get '/talk'  => 'talk#index', :as => :chat
 
   get '/still-field' => redirect('/discover') # bad product
 
@@ -87,10 +91,10 @@ ASM::Application.routes.draw do
     get    '/settings/profile' => 'users/profiles#edit', :as => :edit_user_profile
     get    '/settings/notifications' => "users/notifications#edit", :as => :settings_notifications
     patch  '/settings/notifications' => "users/notifications#update"
-    get    '/settings/payment' => 'users/profiles#payment', :as => :user_payment
-    patch  '/settings/payment' => 'users/profiles#update'
 
-    namespace :users, path: 'settings' do
+    namespace :users, path: 'user' do
+      resource :balance, only: [:show] { post :withdraw }
+      resource :payment_option, only: [:show, :create, :update]
       resource :tax_info, only: [:show, :create, :update] do
         get ':form_type' => 'tax_infos#show'
       end
@@ -102,12 +106,6 @@ ASM::Application.routes.draw do
     get    '/users/confirmation/new' => 'users/confirmations#new', :as => :new_user_confirmation
     get    '/users/confirmation' => 'users/confirmations#show', :as => :user_confirmation
     post   '/users/confirmation' => 'users/confirmations#create'
-
-    # passwords
-    # post   '/users/password' => 'users/passwords#create', :as => :user_password
-    # get    '/users/password/edit' => 'users/passwords#edit', :as => :edit_user_password
-    # patch  '/users/password' => 'users/passwords#update'
-    # put    '/users/password' => 'users/passwords#update'
 
     get    '/users/:id' => 'users#show', :as => :user
     patch  '/users/:id' => 'users#update'
@@ -164,6 +162,7 @@ ASM::Application.routes.draw do
 
   # Admin
   namespace :admin do
+    resources :profit_reports, path: 'profit-reports', only: [:index, :show]
     resources :staff_picks, path: 'staff-picks'
     resources :newsletters do
       patch :publish
@@ -220,9 +219,8 @@ ASM::Application.routes.draw do
     get 'admin'
     post 'feature'
     post 'follow'
+    post 'announcements'
     post 'unfollow'
-    post 'subscribe', as: :subscribe, on: :member
-    post 'unsubscribe', as: :unsubscribe, on: :member
     get 'log' => 'stakes#show'
     get 'search' => 'search#index'
     patch :launch
@@ -232,7 +230,7 @@ ASM::Application.routes.draw do
 
     resources :product_logos, only: [:index, :show, :create, :update], as: :logos, path: 'logos'
 
-    resources :milestones, only: [:index, :show, :new, :create, :edit, :update], path: 'projects' do
+    resources :projects, only: [:index, :show, :new, :create, :edit, :update] do
       put 'tasks/:id' => 'milestones#add'
       resources :tasks, only: [:create, :destroy, :show, :update]
 
@@ -276,6 +274,7 @@ ASM::Application.routes.draw do
       post 'copy_deliverables'
       post 'code_deliverables'
       patch 'watch'
+      patch 'mute'
       patch 'tag'
 
       resources :votes, only: [:create]

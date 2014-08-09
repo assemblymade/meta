@@ -63,13 +63,6 @@
               </div>
 
               <div class="radio">
-                <%= f.label :mail_preference_hourly do %>
-                  <%= f.radio_button :mail_preference, :hourly %>
-                  As an hourly digest
-                <% end %>
-              </div>
-
-              <div class="radio">
                 <%= f.label :mail_preference_never do %>
                   <%= f.radio_button :mail_preference, :never %>
                   Never
@@ -81,7 +74,7 @@
           <div class="form-group">
             <label class="control-label col-xs-2">Payment</label>
             <div class="col-xs-10">
-              <a class="btn btn-default" href="/settings/payment">
+              <a class="btn btn-default" href="<%= users_payment_option_path %>">
                 Update bank details
               </a>
             </div>
@@ -90,7 +83,7 @@
           <div class="form-group">
             <label class="control-label col-xs-2">Tax Info</label>
             <div class="col-xs-10">
-              <a class="btn btn-default" href="/settings/tax_info">
+              <a class="btn btn-default" href="<%= users_tax_info_path %>">
                 Update Tax Info
               </a>
             </div>

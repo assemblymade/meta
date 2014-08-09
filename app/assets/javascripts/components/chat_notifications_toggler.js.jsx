@@ -1,13 +1,13 @@
 /** @jsx React.DOM */
 
-//= require constants
-//= require stores/chat_notifications_store
-//= require mixins/dropdown_toggler
+var CONSTANTS = require('../constants');
+var ChatNotificationsStore = require('../stores/chat_notifications_store');
+var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
 
 (function() {
   var CN = CONSTANTS.CHAT_NOTIFICATIONS;
 
-  window.ChatNotificationsToggler = React.createClass({
+  var ChatNotificationsToggler = React.createClass({
     mixins: [DropdownTogglerMixin],
 
     acknowledge: function() {
@@ -36,11 +36,7 @@
     },
 
     badgeCount: function() {
-      if (this.latestChatUpdate() > this.state.acknowledgedAt) {
-        return 1;
-      }
-
-      return 0;
+      return this.shouldRead() ? ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt) : 0;
     },
 
     componentWillMount: function() {
@@ -66,26 +62,10 @@
       });
     },
 
-    latestChatUpdate: function() {
+    shouldRead: function() {
       var chatRoom = ChatNotificationsStore.mostRecentlyUpdatedChatRoom();
-      if (chatRoom) {
-        return chatRoom.updated;
-      }
 
-      return null;
-    },
-
-    total: function() {
-      var self = this;
-
-      var count = _.reduce(
-        _.map(self.state.chatRooms, function mapStories(chatRoom) {
-          return chatRoom.count;
-        }), function reduceStories(memo, read) {
-          return memo + read;
-      }, 0);
-
-      return count;
+      return chatRoom && chatRoom.updated > chatRoom.last_read_at;
     },
 
     storedAck: function() {
@@ -98,4 +78,10 @@
       }
     }
   });
+
+  if (typeof module !== 'undefined') {
+    module.exports = ChatNotificationsToggler;
+  }
+
+  window.ChatNotificationsToggler = ChatNotificationsToggler;
 })();
