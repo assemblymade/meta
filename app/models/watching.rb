@@ -59,11 +59,11 @@ class Watching < ActiveRecord::Base
   end
 
   def self.unwatch!(user, watchable)
-    if watching = find_by(user: user, watchable: watchable)
-      watching.update(unwatched_at: Time.now, subscription: false)
+    if watching = find_by(user: user, watchable: watchable, unwatched_at: nil)
+      watching.update!(subscription: false, unwatched_at: Time.now)
     end
 
-    if self.is_product?(watchable)
+    if watching && self.is_product?(watchable)
       self.unwatch_wips!(user, watchable)
     end
   end
