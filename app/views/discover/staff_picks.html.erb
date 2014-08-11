@@ -8,13 +8,8 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
-        <div class="page-header">
-          <h2 class="page-header-title">This week's most actively developed products</h2>
-          <p>
-
-            From the <%= Product.launched.count %> launched products on Assembly
-            and <%= Product.stealth.count %> others in stealth.
-          </p>
+        <div class="jumbotron">
+          <h2>This week's 8 most actively developed products</h2>
         </div>
 
         <div class="list-group list-group-breakout list-group-padded">
@@ -24,7 +19,7 @@
             </div>
           <% end %>
         </div>
-        
+
       </div>
 
 
