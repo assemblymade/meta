@@ -5345,10 +5345,10 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       window.xhr.get(url, this.handleFetchedStories.bind(this));
     },
 
-    'newsFeed:markAsRead': function(storyKey) {
-      var url = '/user/tracking/' + storyKey;
+    'newsFeed:markAsRead': function(storykey) {
+      var url = '/user/tracking/' + storykey;
 
-      window.xhr.get(url, this.markedAsRead(storyKey));
+      window.xhr.get(url, this.markedAsRead(storykey));
     },
 
     'newsFeed:markAllAsRead': function() {
@@ -5367,12 +5367,12 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
     },
 
     'newsFeed:markStoryAsRead': function(data) {
-      var storyId = data.key;
+      var storyKey = data.key;
       var url = data.readraptor_url;
 
       window.xhr.noCsrfGet(url);
 
-      _optimisticStories[storyId] = {
+      _optimisticStories[storyKey] = {
         last_read_at: moment().unix()
       };
 
