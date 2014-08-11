@@ -139,8 +139,13 @@ var Spinner = require('react-spinner');
     },
 
     handleOfferClicked: function() {
-      var offer = _.find(this.state.offers, function(o) { return o.user.id == this.props.user.id}.bind(this))
-      console.log('current', offer)
+      window.xhr.post(
+        this.props.offersPath,
+        { amount: this.state.newOffer },
+        function(data) {
+          window.location.reload()
+        }
+      )
     },
 
     relativeSize: function() {
@@ -6257,7 +6262,15 @@ var Store = require('../stores/store');
       request.open(method, path, true);
       request.setRequestHeader('X-CSRF-Token', document.getElementsByName('csrf-token')[0].content);
       request.setRequestHeader('Accept', 'application/json');
-      request.send(data);
+      request.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+
+      var formValues = [];
+      for(var p in data){
+        if (data.hasOwnProperty(p)) {
+          formValues.push(encodeURIComponent(p) + "=" + encodeURIComponent(data[p]));
+        }
+      }
+      request.send(formValues.join("&"));
 
       request.onload = function() {
         if (request.status >= 200 && request.status < 400) {

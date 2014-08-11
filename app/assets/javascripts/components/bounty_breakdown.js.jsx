@@ -57,8 +57,13 @@ var Spinner = require('react-spinner');
     },
 
     handleOfferClicked: function() {
-      var offer = _.find(this.state.offers, function(o) { return o.user.id == this.props.user.id}.bind(this))
-      console.log('current', offer)
+      window.xhr.post(
+        this.props.offersPath,
+        { amount: this.state.newOffer },
+        function(data) {
+          window.location.reload()
+        }
+      )
     },
 
     relativeSize: function() {

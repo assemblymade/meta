@@ -26,7 +26,15 @@
       request.open(method, path, true);
       request.setRequestHeader('X-CSRF-Token', document.getElementsByName('csrf-token')[0].content);
       request.setRequestHeader('Accept', 'application/json');
-      request.send(data);
+      request.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+
+      var formValues = [];
+      for(var p in data){
+        if (data.hasOwnProperty(p)) {
+          formValues.push(encodeURIComponent(p) + "=" + encodeURIComponent(data[p]));
+        }
+      }
+      request.send(formValues.join("&"));
 
       request.onload = function() {
         if (request.status >= 200 && request.status < 400) {

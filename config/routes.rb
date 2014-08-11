@@ -185,17 +185,16 @@ ASM::Application.routes.draw do
   namespace :api do
     resources :products, only: [] do
       get :workers
-
       namespace :chat do
         resources :comments, only: [:create]
       end
-
+      resources :bounties, only: [] do
+        resources :offers, only: [:create, :show]
+      end
       resources :projects, only: [:create]
     end
 
     resources :textcompletes, only: [:index]
-
-    resources :offers, except: [:new, :edit, :update]
   end
 
   get 'search' => 'search#index'

@@ -53,6 +53,7 @@
       <li id="js-bounty-valuation">
         <script>
           React.renderComponent(BountyValuation(<%== {
+            offersPath: api_product_bounty_offers_path(@product, bounty),
             product: { name: @product.name },
             contracts: bounty.contracts.as_json,
             offers: ActiveModel::ArraySerializer.new(@offers).as_json,

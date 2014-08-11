@@ -1,21 +1,24 @@
 module Api
   class OffersController < ApiController
+    before_action :authenticate_user!
 
     def create
-      @bounty = Task.find(offer_params.fetch(:bounty_id))
-      @offer = Offer.create(
-        bounty: @bounty,
-        user: current_user || User.first,
+      @product = Product.find_by!(slug: params[:product_id])
+      @bounty = @product.tasks.find_by!(number: params[:bounty_id])
+      @offer = @bounty.offers.create(
+        user: current_user,
         amount: offer_params.fetch(:amount)
       )
-      respond_with(@offer, location: api_offer_path(@offer))
+      respond_with(
+        @offer,
+        location: api_product_bounty_offer_path(@product, @bounty, @offer)
+      )
     end
 
   private
 
     def offer_params
-      params.require(:offer)
+      params.permit(:product_id, :bounty_id, :amount)
     end
-
   end
 end
