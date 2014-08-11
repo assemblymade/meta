@@ -6,6 +6,7 @@ class Task < Wip
 
   has_many :code_deliverables, foreign_key: 'wip_id'
   has_many :copy_deliverables, foreign_key: 'wip_id'
+  has_many :offers, foreign_key: "bounty_id"
   has_many :wip_workers, class_name: 'Wip::Worker', foreign_key: 'wip_id', inverse_of: :wip
   has_many :votes, :as => :voteable, :after_add => :vote_added
   has_many :workers, :through => :wip_workers, :source => :user

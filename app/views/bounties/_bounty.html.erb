@@ -50,145 +50,17 @@
         <% end %>
       </li>
 
-      <li>
-
-        <a class="text-coins" href="#" id="bounty-amount-link">
-          <span class="icon icon-app-coin"></span>
-          <%= number_with_delimiter(bounty.value) %>
-          <span class="caret"></span>
-        </a>
-
-        <div class="hidden" id="bounty-amount-popover">
-
-            <% contracts = bounty.contracts %>
-
-            <h5>Breakdown</h5>
-
-            <table class="table table-condensed small">
-              <% if c = contracts.author_contract %>
-                <tr>
-                  <td class="text-muted">
-                    <span data-toggle="tooltip" title="<%= I18n.t 'tooltips.bounty.author', author: bounty.user.username %>" data-placement="left">Bounty Author</span>
-                  </td>
-                  <td class="text-right">
-                    <%= format_coins bounty.product, c.percentage * contracts.total_cents, :tiny, round: true %>
-                  </td>
-                </tr>
-              <% end %>
-              <% if contracts.core_team_contracts.any? %>
-                <tr>
-                  <td class="text-muted">
-                    <span data-toggle="tooltip" title="<%= I18n.t 'tooltips.bounty.core_team', product: @product.name %>" data-placement="left">Core Team tip</span>
-                  </td>
-                  <td class="text-right">
-                    <%= format_coins bounty.product, contracts.core_team_contracts.map(&:amount).sum * contracts.total_cents, :tiny, round: true %>
-                  </td>
-                </tr>
-              <% end %>
-              <% contracts.product_contracts.select{|c| c.percentage * contracts.total_cents >= 100 }.each do |c| %>
-                <tr>
-                  <td class="text-muted">
-                    @<%= c.user.username %> tip
-                  </td>
-                  <td class="text-right">
-                    <%= format_coins bounty.product, c.percentage * contracts.total_cents, :tiny, round: true %>
-                  </td>
-                </tr>
-              <% end %>
-              <% if bounty.awarded? %>
-                <tr class="success">
-                  <td>
-                    <%= user_link_username(bounty.winner) %> earned
-                  </td>
-                  <td class="text-right">
-                    <%= format_coins bounty.product, contracts.earnable_cents, :tiny %>
-                  </td>
-                </tr>
-              <% else %>
-                <tr>
-                  <td class="text-muted">
-                    You would earn
-                  </td>
-                  <td class="text-right">
-                    <%= format_coins bounty.product, contracts.earnable_cents, :tiny %>
-                  </td>
-                </tr>
-              <% end %>
-            </table>
-
-            <h5>Bounty Valuations</h5>
-
-            <table class="table table-sm small">
-              <tbody>
-                <% Offer.where(bounty_id: bounty.id).each do |offer| %>
-                  <tr>
-                    <td>
-                      <a href="<%= user_path(offer.user) %>">@<%= offer.user.username %></a>
-                      <span class="text-muted">
-                        <% if offer.influence < 0.01 %>
-                            (&lt;1%)
-                        <% else %>
-                          (<%= number_to_percentage(offer.influence * 100, precision: 0) %>)
-                        <% end %>
-                      </span>
-                    </td>
-                    <td class="text-right">
-                      <span class="icon icon-app-coin icon-left text-coins">
-                        <%= number_with_delimiter(offer.amount) %>
-                      </span>
-                      <span class="sr-only">
-                        <%= bounty.product.name %>
-                        coins
-                      </span>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-
-            <!-- <hr> -->
-
-            <h5>What is this worth?</h5>
-
-            <form class="form" id="test">
-              <div class="clearfix text-muted small">
-                <span class="pull-left">Simple</span>
-                <span class="pull-right">Complex</span>
-              </div>
-              <input type="range" min="0" max="10000">
-              <br>
-              <p>
-                <span class="text-success">35% more</span>
-                than the average Helpful bounty.
-              </p>
-
-              <a id="slider" class="btn btn-default btn-block btn-xs" href="#">
-                Offer
-                <span id="x-coins">423</span>
-                coins
-              </a>
-
-              <script>
-                $('#slider').change(function() {
-                  $('#x-coins').text($(this).val())
-                })
-              </script>
-
-            </form>
-
-        </div>
-
+      <li id="js-bounty-valuation">
         <script>
-          $('#bounty-amount-link').click(function() {
-            $(this).popover({
-              placement: 'bottom',
-              content: $('#bounty-amount-popover').html(),
-              html: true,
-              container: document.body
-            })
-          })
+          React.renderComponent(BountyValuation(<%== {
+            product: { name: @product.name },
+            contracts: bounty.contracts.as_json,
+            offers: ActiveModel::ArraySerializer.new(@offers).as_json,
+            maxOffer: (2 * @product.average_bounty).round(-4),
+            averageBounty: @product.average_bounty,
+            value: bounty.value
+          }.to_json %>), document.getElementById('js-bounty-valuation'));
         </script>
-
       </li>
       <li>
         Created

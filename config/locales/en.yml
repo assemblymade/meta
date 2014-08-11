@@ -5,11 +5,6 @@ en:
     debit-card:
       title: Debit Card Payment Settings
 
-  tooltips:
-    bounty:
-      author: "Tip to @%{author} for creating this Bounty"
-      core_team: "Tip to the %{product} Core Team"
-
   tax:
     w9:
       title: IRS Form W-9

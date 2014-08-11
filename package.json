@@ -24,6 +24,9 @@
       "<rootDir>/node_modules/underscore"
     ]
   },
+  "jshintConfig": {
+    "asi": true
+  },
   "homepage": "https://assembly.com",
   "devDependencies": {
     "browserify": "^5.9.1",
@@ -31,6 +34,7 @@
     "jquery": "^2.1.1",
     "moment": "^2.8.1",
     "react": "^0.11.1",
+    "react-spinner": "^0.1.9",
     "react-tools": "^0.11.1",
     "reactify": "^0.14.0",
     "spin.js": "^2.0.1",

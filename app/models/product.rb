@@ -397,6 +397,11 @@ class Product < ActiveRecord::Base
     watchings.subscribed.pluck('watchings.user_id')
   end
 
+  def average_bounty
+    bounties = TransactionLogEntry.where(product_id: product.id).minted.group(:work_id).sum(:cents).values
+    bounties.inject(0) { |result, el| result + el } / bounties.size
+  end
+
   # missions
   def current_mission
     ProductMission.next_mission_for_product(self)

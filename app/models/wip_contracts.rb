@@ -41,4 +41,26 @@ class WipContracts
   def core_team_contracts
     @core_team_contracts ||= auto_tip_contracts.select{|c| product.core_team.include? c.user }
   end
+
+  def as_json
+    h = {
+      total: total_cents,
+      earnable: earnable_cents,
+      core_team: {
+        percentage: core_team_contracts.map(&:amount).sum.to_f
+      },
+      others: product_contracts.map{|c| {
+        username: c.user.username,
+        percentage: c.percentage.to_f
+      }}
+    }
+
+    if task.author_tip > 0
+      h[:author] = {
+        username: task.user.username,
+        percentage: task.author_tip.to_f
+      }
+    end
+    h
+  end
 end
