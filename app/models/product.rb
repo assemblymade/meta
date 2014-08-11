@@ -423,13 +423,6 @@ class Product < ActiveRecord::Base
     slug == 'meta'
   end
 
-  def upvote!(user, ip)
-    votes.create!(user: user, ip: ip)
-    watch!(user)
-    main_thread.watch!(user) if main_thread
-    TransactionLogEntry.voted!(Time.current, self, self.id, user.id, 1)
-  end
-
   def draft?
     self.description.blank? && (self.info || {}).values.all?(&:blank?)
   end

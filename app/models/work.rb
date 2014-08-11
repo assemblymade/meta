@@ -6,15 +6,7 @@ class Work < ActiveRecord::Base
 
   has_many :votes, :as => :voteable
 
-  after_create :auto_upvote
-
   alias_method :winner, :user
-
-  def upvote!(user, ip)
-    votes.create!(user: user, ip: ip)
-    product.watch!(user)
-    TransactionLogEntry.voted!(Time.current, product, self.id, user.id, 1)
-  end
 
   def votable?
     true
@@ -46,10 +38,5 @@ class Work < ActiveRecord::Base
 
   def contracts
     WorkContracts.new(self)
-  end
-
-  protected
-  def auto_upvote
-    upvote!(user, user.last_sign_in_ip || '0.0.0.0')
   end
 end

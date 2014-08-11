@@ -17,7 +17,6 @@ class WipFactory
 
     if wip.valid?
       add_description(wip)
-      upvote_creator(wip) if wip.upvotable?
       watch_product
 
       users = @product.watchings.where(subscription: true).map(&:user)
@@ -37,10 +36,6 @@ class WipFactory
         body: @comment
       )
     end
-  end
-
-  def upvote_creator(wip)
-    wip.upvote!(@creator, @remote_ip)
   end
 
   def watch_wip(wip, users)

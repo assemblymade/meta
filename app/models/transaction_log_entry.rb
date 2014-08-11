@@ -51,52 +51,7 @@ class TransactionLogEntry < ActiveRecord::Base
   def self.end_of_month(time)
     Time.parse(time.end_of_month.strftime("%Y-%m-%dT%T") + '-11:00')
   end
-
-  def self.proposed!(created_at, product, work_id, wallet_id)
-    create!(
-      created_at: created_at,
-      product: product,
-      action: 'proposed',
-      work_id: work_id,
-      wallet_id: wallet_id
-    )
-  end
-
-
-  def self.validated!(created_at, product, work_id, wallet_id, worker_id)
-    entry = create!(
-      created_at: created_at,
-      product: product,
-      action: 'validated',
-      work_id: work_id,
-      wallet_id: wallet_id,
-      value: worker_id
-    )
-
-  end
-
-  def self.voted!(created_at, product, work_id, wallet_id, vote_count=1)
-    create!(
-      created_at: created_at,
-      product: product,
-      action: 'voted',
-      work_id: work_id,
-      wallet_id: wallet_id,
-      value: vote_count
-    )
-  end
-
-  def self.multiplied!(created_at, product, work_id, wallet_id, multiplier)
-    create!(
-      created_at: created_at,
-      product: product,
-      action: 'multiplied',
-      work_id: work_id,
-      wallet_id: wallet_id,
-      value: multiplier
-    )
-  end
-
+  
   def self.minted!(parent_id, created_at, product, work_id, wallet_id, cents, extra=nil)
     create!(
       transaction_id: parent_id,

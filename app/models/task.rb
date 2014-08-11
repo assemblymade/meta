@@ -86,12 +86,6 @@ class Task < Wip
     open?
   end
 
-  def upvote!(user, ip)
-    votes.create!(user: user, ip: ip)
-
-    TransactionLogEntry.voted!(Time.current, product, self.id, user.id, 1)
-  end
-
   def value
     offers = Offer.where(bounty: self)
 
@@ -147,7 +141,6 @@ class Task < Wip
     self.promoted_at = Time.current
     self.urgency = Urgency.find(multiplier)
     self.save!
-    TransactionLogEntry.multiplied!(Time.current, product, self.id, user.id, multiplier)
     milestones.each(&:touch)
   end
 

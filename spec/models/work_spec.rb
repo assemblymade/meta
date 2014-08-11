@@ -25,10 +25,5 @@ describe Work do
       }
     }
   }
-  
-  it 'should be auto upvoted by the user that submitted work' do
-    dave = User.make!
-    work = Work.make!(user:dave)
-    work.score.should == 1
-  end
+
 end

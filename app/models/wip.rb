@@ -130,10 +130,6 @@ class Wip < ActiveRecord::Base
     false
   end
 
-  def upvote!(user, ip)
-    # overridden
-  end
-
   def winning_event=(something)
     # ignore
   end
