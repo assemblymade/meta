@@ -14,7 +14,7 @@ module WipHelper
   end
 
   def watching?(wip)
-    current_user && wip.watchings.find_by(user_id: current_user.id)
+    current_user && wip.watchings.find_by(user_id: current_user.id, unwatched_at: nil)
   end
 
   # TODO remove these when we've removed WIPs
