@@ -124,7 +124,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
         var story = unread[i];
         var url = story.url;
 
-        window.xhr.get(url, self.markedAsRead(story.key, true, (i + 1 === l)));
+        window.xhr.noCsrfGet(url, self.markedAsRead(story.key, true, (i + 1 === l)));
       }
     },
 

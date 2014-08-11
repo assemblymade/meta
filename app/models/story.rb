@@ -49,6 +49,11 @@ class Story < ActiveRecord::Base
 
   def self.associated_with(entity)
     activities = Activity.where(target_id: entity.id)
+
+    if activities.empty?
+      activities = Activity.where(subject_id: entity.id)
+    end
+
     story_ids = activities.map(&:story_id).uniq
     Story.where(id: story_ids)
   end
