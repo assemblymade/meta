@@ -7,7 +7,6 @@ class VotesController < ApplicationController
   def create
     @vote = @voteable.upvote!(current_user, request.remote_ip)
 
-    Vote.clear_cache(current_user, @voteable)
     AsmMetrics.active_user(current_user) unless current_user.staff?
     respond_with @vote, location: product_path(@product)
   end
@@ -15,8 +14,6 @@ class VotesController < ApplicationController
   def downvote
     if @voteable.downvotable?
       @voteable.votes.by_user(current_user).destroy_all
-      Vote.clear_cache(current_user, @voteable)
-
       TransactionLogEntry.voted!(Time.current, @voteable.product, @voteable.id, current_user.id, -1)
       AsmMetrics.active_user(current_user) unless current_user.staff?
     end

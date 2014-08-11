@@ -38,14 +38,6 @@ class ProductDecorator < ApplicationDecorator
     count_contributors - NUMBER_OF_CONTRIBUTORS_CONSIDERED_IMPORANT
   end
 
-  def signup_button_copy(user)
-    if user && user.voted_for?(self)
-      "Thanks for signing up"
-    else
-      "Sign up pre-launch"
-    end
-  end
-
   def presentable_stage
     case stage
     when :validating

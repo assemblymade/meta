@@ -36,10 +36,6 @@ class Work < ActiveRecord::Base
     1
   end
 
-  def has_user_voted?(user)
-    Vote.voted?(user, self)
-  end
-
   def coins
     product.decorate.current_exchange_rate * score
   end

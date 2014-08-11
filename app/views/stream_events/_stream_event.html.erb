@@ -18,10 +18,6 @@
       <div class="media-body">
         <div class="media-heading omega">
 
-          <% if stream_event.work? %>
-            <%= render 'shared/coin_vote', voteable: stream_event.work %>
-          <% end %>
-
           <a href="<%= user_path(stream_event.actor) %>" class="username">
             <%= avatar_tag(stream_event.actor, 20, style: 'margin-right:6px') %>
             <%= stream_event.actor.username %>

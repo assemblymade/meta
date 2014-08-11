@@ -16,8 +16,6 @@ class TasksController < WipsController
     )
 
     if @bounty.valid?
-      Vote.clear_cache(current_user, @wip)
-
       @activity = Activities::Start.publish!(
         actor: current_user,
         subject: @bounty,

@@ -17,13 +17,13 @@ class WipSerializer < ActiveModel::Serializer
              :deliverable
 
   # personalized
-  attributes :voted, :new_comments, :unread, :own_comments
+  attributes :new_comments, :unread, :own_comments
 
   has_one  :user, :key => :author, serializer: UserSerializer
 
   def filter(keys)
     if scope.nil?
-      keys - [:voted, :new_comments, :unread]
+      keys - [:new_comments, :unread]
     end
   end
 
@@ -70,10 +70,6 @@ class WipSerializer < ActiveModel::Serializer
 
   def new_comments
     wip.updates.for(scope).unread_comment_count if scope
-  end
-
-  def voted
-    Vote.voted?(scope, wip)
   end
 
   def own_comments

@@ -137,10 +137,6 @@ class Task < Wip
     multiplier
   end
 
-  def has_user_voted?(user)
-    Vote.voted?(user, self)
-  end
-
   def promoted?
     !promoted_at.nil?
   end

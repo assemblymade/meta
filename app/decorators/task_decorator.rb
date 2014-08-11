@@ -5,10 +5,6 @@ class TaskDecorator < WipDecorator
     "#{task.deliverable}-icon"
   end
 
-  def voted?(user)
-    user.voted_for?(self)
-  end
-
   def votable?
     true
   end

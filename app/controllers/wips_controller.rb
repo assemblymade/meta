@@ -61,9 +61,6 @@ class WipsController < ProductController
         MilestoneTask.find_or_create_by!(milestone: @milestone, task: @wip)
       end
 
-
-
-      Vote.clear_cache(current_user, @wip)
       @activity = Activities::Start.publish!(
         actor: current_user,
         subject: @wip,
