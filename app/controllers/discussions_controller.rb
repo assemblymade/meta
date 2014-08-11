@@ -6,6 +6,40 @@ class DiscussionsController < WipsController
     super
   end
 
+  def create
+    @wip = WipFactory.create(
+      @product,
+      product_wips,
+      current_user,
+      request.remote_ip,
+      wip_params,
+      params[:description]
+    )
+
+    if @wip.valid?
+      if milestone_number = params[:project_id]
+        @milestone = @product.milestones.find_by!(number: milestone_number)
+        MilestoneTask.find_or_create_by!(milestone: @milestone, task: @wip)
+      end
+
+      @activity = Activities::Start.publish!(
+        actor: current_user,
+        subject: @wip,
+        target: @product,
+        socket_id: params[:socket_id]
+      )
+
+      track_params = WipAnalyticsSerializer.new(@wip, scope: current_user).as_json.merge(engagement: 'created')
+      if !current_user.staff?
+        AsmMetrics.product_enhancement
+        AsmMetrics.active_user(current_user)
+      end
+    end
+
+    respond_with @wip, location: wip_path(@wip)
+  end
+
+
   def show
     if @wip.main_thread?
       redirect_to product_chat_path(@wip.product)

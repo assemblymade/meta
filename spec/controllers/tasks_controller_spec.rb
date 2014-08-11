@@ -36,4 +36,19 @@ describe TasksController do
       wip.code_deliverables.last.url.should == 'https://github.com/asm-helpful/helpful-web/pull/91'
     end
   end
+
+  describe '#create' do
+
+    it 'creates an initial offer' do
+      sign_in user
+      post :create, product_id: product.slug,
+        task: { title: 'Add cats'},
+        description: "There aren't enough",
+        offer: 1184
+
+      expect(
+        assigns(:bounty)
+      ).to have(1).offers
+    end
+  end
 end

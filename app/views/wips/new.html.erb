@@ -40,13 +40,15 @@
 
         <div class="form-group">
           <label class="control-label">Initial Offer</label>
-          <div class="well">
-            <input type="range" max="1000" min="0" value="<%= @bounty.product.average_bounty_value / 100 %>">
+          <div id="js-initial-offer" class="well">
+            <script>
+              React.renderComponent(InitialOffer(<%== {
+                product: { name: @product.name },
+                maxOffer: (2 * @product.average_bounty).round(-4),
+                averageBounty: @product.average_bounty
+              }.to_json %>), document.getElementById('js-initial-offer'));
+            </script>
           </div>
-        </div>
-
-        <div class="clearfix">
-          <%= f.button 'Create bounty', class: %w(btn btn-primary pull-right), 'data-disable-with' => 'Creating...' %>
         </div>
 
       </div>

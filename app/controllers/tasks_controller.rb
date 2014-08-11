@@ -16,6 +16,8 @@ class TasksController < WipsController
     )
 
     if @bounty.valid?
+      @bounty.offers.create(user: current_user, amount: params[:offer])
+
       @activity = Activities::Start.publish!(
         actor: current_user,
         subject: @bounty,

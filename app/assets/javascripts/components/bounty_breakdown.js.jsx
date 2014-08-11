@@ -1,5 +1,4 @@
 /** @jsx React.DOM */
-var Spinner = require('react-spinner');
 
 (function() {
   var BountyBreakdown = React.createClass({
@@ -23,37 +22,32 @@ var Spinner = require('react-spinner');
         <h5>Bounty Valuation</h5>
         {BountyOffers({offers: this.state.offers, product: this.props.product})}
 
-        {this.updateOffer()}
+        {this.props.user ? this.newOffer() : null}
       </div>
     },
 
-    updateOffer: function() {
-      if (!this.props.user) {
-        return <div />
-      }
-
+    newOffer: function() {
       return <div>
+
         <h5>What is this worth?</h5>
 
-        <form className="form" id="test">
-          <div className="clearfix text-muted small">
-            <span className="pull-left">Simple</span>
-            <span className="pull-right">Complex</span>
-          </div>
-          <input type="range" min="0" max={this.props.maxOffer} valueLink={this.linkState('newOffer')} />
-          <br />
-          <p>
-            <span className="text-success">
-              {this.relativeSize()}
-            </span>
-            <span> the average {this.props.product.name} bounty.</span>
-          </p>
-
+        <form className="form">
+          <NewBountyOffer
+            product={this.props.product}
+            user={this.props.user}
+            maxOffer={this.props.maxOffer}
+            newOffer={this.state.newOffer}
+            averageBounty={this.props.averageBounty}
+            onChange={this.handleOfferChanged} />
           <a id="slider" className="btn btn-default btn-block btn-xs" href="#" onClick={this.handleOfferClicked}>
             Offer {numeral(this.state.newOffer).format('0,0')} coins
           </a>
         </form>
       </div>
+    },
+
+    handleOfferChanged: function(newOffer) {
+      this.setState({newOffer: newOffer})
     },
 
     handleOfferClicked: function() {
@@ -65,17 +59,6 @@ var Spinner = require('react-spinner');
         }
       )
     },
-
-    relativeSize: function() {
-      var factor = this.state.newOffer / this.props.averageBounty
-      if (factor <= 0.9) {
-        return numeral(factor).format('0%') + ' less than'
-      } else if (factor > 1.1) {
-        return numeral(factor).format('0%') + ' more than'
-      } else {
-        return 'Similar size to'
-      }
-    }
   });
 
   if (typeof module !== 'undefined') {

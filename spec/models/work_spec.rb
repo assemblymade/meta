@@ -25,5 +25,4 @@ describe Work do
       }
     }
   }
-
 end
