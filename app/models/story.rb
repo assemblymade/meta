@@ -75,7 +75,7 @@ class Story < ActiveRecord::Base
   end
 
   def wip_subscribers
-    subjects.first.wip.watchings.map(&:user)
+    subjects.first.wip.watchings.where(unwatched_at: nil).map(&:user)
   end
 
   def description
