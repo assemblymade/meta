@@ -1,6 +1,6 @@
 {
   "name": "meta",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Assembly Meta",
   "scripts": {
     "jest": "node_modules/.bin/jest",
