@@ -107,10 +107,10 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       window.xhr.get(url, this.handleFetchedStories.bind(this));
     },
 
-    'newsFeed:markAsRead': function(storyId) {
-      var url = '/user/tracking/' + storyId;
+    'newsFeed:markAsRead': function(storyKey) {
+      var url = '/user/tracking/' + storyKey;
 
-      window.xhr.get(url, this.markedAsRead(storyId));
+      window.xhr.get(url, this.markedAsRead(storyKey));
     },
 
     'newsFeed:markAllAsRead': function() {
@@ -122,9 +122,9 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
 
       for (var i = 0, l = unread.length; i < l; i++) {
         var story = unread[i];
-        var url = story.url;
+        var url = '/user/tracking/' + story.key;
 
-        window.xhr.noCsrfGet(url, self.markedAsRead(story.key, true, (i + 1 === l)));
+        window.xhr.get(url, self.markedAsRead(story.key, true, (i + 1 === l)));
       }
     },
 

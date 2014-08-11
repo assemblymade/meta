@@ -22,7 +22,7 @@ class WipFactory
       upvote_creator(wip) if wip.upvotable?
       watch_product
 
-      users = @product.watchings.where(subscription: true, unsubscribed_at: nil).map(&:user)
+      users = @product.watchings.where(subscription: true, unwatched_at: nil).map(&:user)
 
       watch_wip(wip, users)
       register_with_readraptor(wip, users)
