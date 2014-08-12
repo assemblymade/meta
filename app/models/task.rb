@@ -105,7 +105,7 @@ class Task < Wip
 
     partners = offers.map {|o| Partner.new(o.product, o.user) }
     ownership = partners.each_with_object({}) do |partner, o|
-      o[partner.wallet] = partner.ownership
+      o[partner.wallet] = [0.01, partner.ownership].max
     end
 
     # 3. figure out weighted average
@@ -120,7 +120,11 @@ class Task < Wip
       weight_sum += ownership[offer.user]
     end
 
-    (sum / weight_sum).round
+    if weight_sum > 0
+      (sum / weight_sum).round
+    else
+      0
+    end
   end
 
   def score

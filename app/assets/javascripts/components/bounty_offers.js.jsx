@@ -20,7 +20,7 @@
         <td>
           <a href={offer.user.url}>@{offer.user.username}</a>
           <span className="text-muted">
-              ({numeral(offer.influence).format('0%')})
+            ({numeral(offer.influence).format('0%')})
           </span>
         </td>
         <td className="text-right">
