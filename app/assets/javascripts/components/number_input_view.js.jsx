@@ -28,7 +28,14 @@
     editable: function() {
       return (
         <div className="input-group">
-          <input name={this.props.name} ref="inputField" type="number" className="form-control" min="0" step="0.1" defaultValue={this.state.amount}/>
+          <input name={this.props.name}
+              ref="inputField"
+              type="number"
+              className="form-control"
+              min="0"
+              step="0.1"
+              value={this.state.amount}
+              onChange={this.onChange} />
           <span className="input-group-addon">%</span>
         </div>
       );
@@ -48,6 +55,12 @@
 
     listenForChanges: function(node) {
       $(node).on('change keydown', this.handleChange);
+    },
+
+    onChange: function(e) {
+      this.setState({
+        amount: Math.min(e.target.value, 100)
+      });
     },
 
     handleChange: function(e) {
