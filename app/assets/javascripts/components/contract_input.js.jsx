@@ -1,5 +1,11 @@
 /** @jsx React.DOM */
 
+var ContractStore = require('../stores/contract_store');
+var C = require('../constants').CONTRACT;
+
+// FIXME: (pletcher) This component is a victim of its surroundings;
+// the layout needs to be refactored, and then this component
+// needs to be made to conform with React
 (function() {
   var ContractInput = React.createClass({
     componentWillMount: function() {
@@ -10,19 +16,22 @@
     },
 
     componentDidMount: function() {
-      this.listenForChanges(this.refs.inputField && this.refs.inputField.getDOMNode());
+      ContractStore.addChangeListener(this.contractsChange);
+
+      if (this.props.user) {
+        Dispatcher.dispatch({
+          action: C.ACTIONS.ADD_CONTRACT,
+          event: C.EVENTS.CONTRACT_ADDED,
+          data: { id: this.props.user.id, amount: this.props.startingAmount }
+        });
+      }
     },
 
-    componentDidUpdate: function() {
-      this.componentDidMount();
-    },
+    // Hack to prevent looping when component mounts
+    contractsChange: function() {},
 
     render: function() {
-      if (this.state.editable) {
-        return this.editable();
-      }
-
-      return this.uneditable();
+      return this.state.editable ? this.editable() : this.uneditable();
     },
 
     editable: function() {
@@ -50,20 +59,18 @@
         self.setState({ editable: !self.state.editable });
       });
 
-      return (<span><strong>{this.props.startingAmount + '%'}</strong> tip when coins are minted</span>);
-    },
-
-    listenForChanges: function(node) {
-      $(node).on('change keydown', this.handleChange);
+      return (
+        <span>
+          <strong>{this.props.startingAmount + '%'}</strong> tip when coins are minted
+        </span>
+      );
     },
 
     onChange: function(e) {
       this.setState({
-        amount: Math.min(e.target.value, 100)
+        amount: Math.min(e && e.target.value, ContractStore.getAvailablePercentage())
       });
-    },
 
-    handleChange: function(e) {
       var confirmLink = $(this.props.confirmButton);
 
       if (!_.isEmpty(confirmLink)) {
@@ -77,6 +84,14 @@
           confirmLink.css('visibility', 'hidden');
           confirmLink.off('click');
         }
+      }
+
+      if (this.props.user) {
+        Dispatcher.dispatch({
+          action: C.ACTIONS.UPDATE_CONTRACT,
+          event: C.EVENTS.CONTRACT_UPDATED,
+          data: { id: this.props.user.id, amount: this.state.amount }
+        });
       }
     },
 
