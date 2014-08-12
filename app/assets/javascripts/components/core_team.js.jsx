@@ -93,7 +93,6 @@
         this.setState({users: users});
 
         Dispatcher.dispatch({
-          event: CONSTANTS.COIN_OWNERSHIP.EVENTS.USER_REMOVED,
           action: CONSTANTS.COIN_OWNERSHIP.ACTIONS.REMOVE_USER,
           data: { userAndCoins: user }
         });
@@ -118,7 +117,6 @@
       }))
 
       Dispatcher.dispatch({
-        event: CONSTANTS.COIN_OWNERSHIP.EVENTS.USER_ADDED,
         action: CONSTANTS.COIN_OWNERSHIP.ACTIONS.ADD_USER,
         data: { userAndCoins: user }
       });

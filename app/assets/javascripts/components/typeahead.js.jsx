@@ -50,16 +50,14 @@ var CONSTANTS = require('../constants');
     componentDidMount: function() {
       Dispatcher.dispatch({
         action: TC.ACTIONS.SETUP,
-        data: this.getDOMNode(),
-        event: TC.EVENTS.DID_MOUNT
+        data: this.getDOMNode()
       });
     },
 
     handleClick: function(e) {
       Dispatcher.dispatch({
         action: TC.ACTIONS.ADD_TAG,
-        data: { tag: this.state.transform(this.state.inputValue), url: this.props.url },
-        event: TC.EVENTS.TAG_ADDED + '-true'
+        data: { tag: this.state.transform(this.state.inputValue), url: this.props.url }
       });
 
       this.setState({

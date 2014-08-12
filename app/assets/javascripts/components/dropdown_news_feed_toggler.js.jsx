@@ -20,7 +20,6 @@ var NewsFeedStore = require('../stores/news_feed_store');
       });
 
       Dispatcher.dispatch({
-        event: NF.EVENTS.ACKNOWLEDGED,
         action: NF.ACTIONS.ACKNOWLEDGE,
         data: timestamp,
         sync: true

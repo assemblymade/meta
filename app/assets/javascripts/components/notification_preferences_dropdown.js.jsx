@@ -142,7 +142,6 @@ var Avatar = require('./avatar.js.jsx');
 
     updatePreference: function(item, path) {
       Dispatcher.dispatch({
-        event: D.EVENTS.SELECTED_UPDATED,
         action: D.ACTIONS.UPDATE_SELECTED,
         data: { item: item, path: path, redirectTo: (item == 'following' ? this.props.afterFollowPath : null) }
       });

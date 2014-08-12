@@ -21,7 +21,6 @@ var C = require('../constants').CONTRACT;
       if (this.props.user) {
         Dispatcher.dispatch({
           action: C.ACTIONS.ADD_CONTRACT,
-          event: C.EVENTS.CONTRACT_ADDED,
           data: { id: this.props.user.id, amount: this.props.startingAmount }
         });
       }

@@ -84,7 +84,6 @@ var Avatar = require('./avatar.js.jsx');
 
     markAsRead: function() {
       Dispatcher.dispatch({
-        event: NF.EVENTS.READ,
         action: NF.ACTIONS.MARK_AS_READ,
         data: this.props.story.key
       });

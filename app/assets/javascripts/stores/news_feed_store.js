@@ -217,7 +217,6 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
   _store.dispatchIndex = Dispatcher.register(function(payload) {
     var action = payload.action;
     var data = payload.data;
-    var event = payload.event;
     var sync = payload.sync;
 
     if (!_store[action]) {
@@ -227,7 +226,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
     _store[action](data);
 
     if (sync) {
-      return _store.emitChange(event);
+      return _store.emitChange();
     }
   });
 

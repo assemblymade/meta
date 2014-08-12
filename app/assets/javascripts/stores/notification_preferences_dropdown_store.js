@@ -41,14 +41,13 @@ var Store = require('../stores/store');
   _store.dispatchIndex = Dispatcher.register(function(payload) {
     var action = payload.action;
     var data = payload.data;
-    var event = payload.event;
 
     if (!_store[action]) {
       return;
     }
 
     _store[action] && _store[action](data);
-    _store.emitChange(event);
+    _store.emitChange();
   });
 
   if (typeof module !== 'undefined') {

@@ -121,7 +121,6 @@ var TagListStore = require('../stores/tag_list_store');
           Dispatcher.dispatch({
             action: TAG_LIST.ACTIONS.REMOVE_TAG,
             data: { tag: tag, url: self.props.url },
-            event: TAG_LIST.EVENTS.TAG_REMOVED
           });
         };
       }
@@ -130,7 +129,6 @@ var TagListStore = require('../stores/tag_list_store');
         Dispatcher.dispatch({
           action: TAG_LIST.ACTIONS.ADD_TAG,
           data: { tag: tag, url: self.props.url },
-          event: TAG_LIST.EVENTS.TAG_ADDED + '-true'
         });
 
         self.setState({

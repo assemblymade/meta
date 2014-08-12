@@ -159,20 +159,19 @@ var Store = require('../stores/store');
     },
   });
 
-  _notificationsStore.dispatchIndex = Dispatcher.register(function(payload) {
+  _store.dispatchIndex = Dispatcher.register(function(payload) {
     var action = payload.action;
     var data = payload.data;
-    var event = payload.event;
     var sync = payload.sync;
 
-    if (!_notificationsStore[action]) {
+    if (!_store[action]) {
       return;
     }
 
-    _notificationsStore[action](data);
+    _store[action](data);
 
     if (sync) {
-      return _notificationsStore.emitChange(event);
+      return _store.emitChange();
     }
   });
 

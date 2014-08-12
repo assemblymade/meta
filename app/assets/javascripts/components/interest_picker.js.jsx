@@ -100,8 +100,7 @@ var InterestStore = require('../stores/interest_store');
       } else if (e.keyCode === keys.delete) {
         if (this.state.userInput === '') {
           return Dispatcher.dispatch({
-            action: IP.ACTIONS.POP,
-            event: IP.EVENTS.POPPED
+            action: IP.ACTIONS.POP
           });
         }
       } else if (e.keyCode === keys.enter) {
@@ -139,7 +138,6 @@ var InterestStore = require('../stores/interest_store');
     selectCurrentInterest: function() {
       Dispatcher.dispatch({
         action: IP.ACTIONS.ADD_INTEREST,
-        event: IP.EVENTS.INTEREST_ADDED,
         data: this.state.visibleInterests[this.state.highlightIndex]
       });
     },
@@ -183,8 +181,7 @@ var InterestStore = require('../stores/interest_store');
 
     onInterestSelected: function(e) {
       Dispatcher.dispatch({
-        action: IP.EVENTS.ADD_INTEREST,
-        event: IP.EVENTS.INTEREST_ADDED,
+        action: IP.ACTIONS.ADD_INTEREST,
         data: ''
       });
     },
@@ -192,7 +189,6 @@ var InterestStore = require('../stores/interest_store');
     handleRemove: function(interest) {
       Dispatcher.dispatch({
         action: IP.ACTIONS.REMOVE_INTEREST,
-        event: IP.EVENTS.INTEREST_REMOVED,
         data: interest
       });
     },
@@ -277,7 +273,6 @@ var InterestStore = require('../stores/interest_store');
     handleInterestSelected: function(interest) {
       Dispatcher.dispatch({
         action: IP.ACTIONS.ADD_INTEREST,
-        event: IP.EVENTS.INTEREST_ADDED,
         data: interest
       });
     }

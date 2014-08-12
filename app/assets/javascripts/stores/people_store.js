@@ -42,10 +42,9 @@ var Store = require('../stores/store');
   _store.dispatchIndex = Dispatcher.register(function(payload) {
     var action = payload.action;
     var data = payload.data;
-    var event = payload.event;
 
     _store[action] && _store[action](data);
-    _store.emitChange(event);
+    _store.emitChange();
   });
 
   function _searchPeople(username) {
@@ -61,6 +60,6 @@ var Store = require('../stores/store');
   if (typeof module !== 'undefined') {
     module.exports = _peopleStore;
   }
-  
+
   window.PeopleStore = _peopleStore;
 })();

@@ -51,7 +51,6 @@ class window.ActivityStreamView extends Backbone.View
   updateReadAt: _.debounce(=>
     Dispatcher.dispatch({
       action: CONSTANTS.CHAT_NOTIFICATIONS.ACTIONS.MARK_ROOM_AS_READ,
-      event: CONSTANTS.CHAT_NOTIFICATIONS.EVENTS.CHAT_ROOM_READ,
       data: {id: app.chatRoom.id, readraptor_url: app.chatRoom.readRaptorChatPath},
       sync: true
     });
