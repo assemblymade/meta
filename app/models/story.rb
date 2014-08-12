@@ -88,7 +88,7 @@ class Story < ActiveRecord::Base
   end
 
   def subject_body
-    activities.first.subject.try(:sanitized_body)
+    activities.first.try(:subject).try(:sanitized_body)
   end
 
   def subjects

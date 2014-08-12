@@ -33,7 +33,7 @@
 
               <div class="form-group">
                 <label class="input-label">Amount</label>
-                <div data-react-class="NumberInput"
+                <div data-react-class="ContractInput"
                      data-react-props="<%= {
                        startingAmount: '0',
                        alwaysEditable: true,
@@ -79,7 +79,7 @@
         </td>
         <td style="width: 15%; min-width: 50px;">
           <% if contract.active? && can_update %>
-            <div data-react-class="NumberInput"
+            <div data-react-class="ContractInput"
                  data-react-props="<%= {
                    alwaysEditable: false,
                    user: contract.user,

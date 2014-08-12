@@ -6,7 +6,9 @@
 
     subjectMap: {
       Task: function(task) {
-        return "#" + task.number + " " + task.title;
+        if (task) {
+          return "#" + task.number + " " + task.title;
+        }
       },
 
       Discussion: function(discussion) {
