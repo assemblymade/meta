@@ -40,7 +40,7 @@
         <td className="text-right">
           <span className="text-coins">
             <span className="icon icon-app-coin"></span>
-            <span className="js-coins">{numeral(this.props.coins).format('0,0')}</span>
+            <span className="js-coins"> {numeral(this.props.coins).format('0,0')}</span>
           </span>
         </td>
       </tr>
