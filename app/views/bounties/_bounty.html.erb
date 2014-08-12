@@ -57,7 +57,7 @@
             product: { name: @product.name },
             contracts: bounty.contracts.as_json,
             offers: ActiveModel::ArraySerializer.new(@offers).as_json,
-            maxOffer: (2 * @product.average_bounty).round(-4),
+            maxOffer: (6 * @product.average_bounty).round(-4),
             averageBounty: @product.average_bounty,
             value: bounty.value,
             open: bounty.open?

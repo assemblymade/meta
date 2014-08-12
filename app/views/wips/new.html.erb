@@ -44,7 +44,7 @@
             <script>
               React.renderComponent(InitialOffer(<%== {
                 product: { name: @product.name },
-                maxOffer: (2 * @product.average_bounty).round(-4),
+                maxOffer: (6 * @product.average_bounty).round(-4),
                 averageBounty: @product.average_bounty
               }.to_json %>), document.getElementById('js-initial-offer'));
             </script>
