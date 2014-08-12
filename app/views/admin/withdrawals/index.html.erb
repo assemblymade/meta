@@ -3,6 +3,7 @@
     <tr>
       <th></th>
       <th>User</th>
+      <th>Payment Option</th>
       <th>Amount</th>
       <th>Withhold</th>
       <th>Payment sent</th>
@@ -13,7 +14,12 @@
   <% @withdrawals.each do |withdrawal| %>
     <tr>
       <td><%= withdrawal.created_at %></td>
-      <td><a href="<%= user_path(withdrawal.user) %>">@<%= withdrawal.user.username %></a></td>
+      <td>
+        <a href="<%= user_path(withdrawal.user) %>">@<%= withdrawal.user.username %></a>
+      </td>
+      <td>
+        <%= render withdrawal.user.payment_option %>
+      </td>
       <td><%= currency withdrawal.total_amount %></td>
       <td><%= currency withdrawal.amount_withheld %></td>
       <td><%= withdrawal.payment_sent_at %></td>
