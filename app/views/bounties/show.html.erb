@@ -10,11 +10,6 @@
     <div class="col-md-9">
       <div id="discussion-view-el">
         <%= render 'wips/discussion', events: @events %>
-
-        <div class="well js-upvote-reminder" style="display:none">
-          You've commented on this Bounty but you haven't upvoted. Your upvotes reward people with more coins for completing Bounties which helps make <%= @bounty.product.name %> a better product.
-        </div>
-
         <%= render 'new_event_form' %>
       </div>
     </div>

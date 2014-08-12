@@ -17,7 +17,6 @@ class window.DiscussionView extends Backbone.View
       current_user_can_tip: true
 
     @children =
-      upvoteReminder: @$('.js-upvote-reminder')
       timestamp: @$('.js-timestamp')
       welcomeBox: @$('.js-welcome-chat')
 
@@ -58,7 +57,6 @@ class window.DiscussionView extends Backbone.View
 
   addComment: (body)->
     @createEvent 'Event::Comment', body
-    @showUpvotePrompt() unless @model.get('voted')
     @children.timestamp.remove()
     @model.set('own_comments', 1)
 
@@ -151,9 +149,6 @@ class window.DiscussionView extends Backbone.View
 
   validComment: (body)->
     return body.length > 1
-
-  showUpvotePrompt: ->
-    @children.upvoteReminder.fadeIn()
 
   ownCommentsChanged: ->
     @children.welcomeBox.toggle !@model.hasOwnComments()
