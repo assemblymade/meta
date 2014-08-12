@@ -49,6 +49,11 @@ class Story < ActiveRecord::Base
 
   def self.associated_with(entity)
     activities = Activity.where(target_id: entity.id)
+
+    if activities.empty?
+      activities = Activity.where(subject_id: entity.id)
+    end
+
     story_ids = activities.map(&:story_id).uniq
     Story.where(id: story_ids)
   end
@@ -66,11 +71,16 @@ class Story < ActiveRecord::Base
   # private
 
   def product_subscribers
-    subjects.first.try(:product).try(:watchings).try(:subscribed).map(&:user)
+    subjects.first
+      .try(:product)
+      .try(:watchings)
+      .try(:subscribed)
+      .try(:where, {unwatched_at: nil})
+      .map(&:user)
   end
 
   def wip_subscribers
-    subjects.first.wip.watchings.map(&:user)
+    subjects.first.wip.watchings.where(unwatched_at: nil).map(&:user)
   end
 
   def description

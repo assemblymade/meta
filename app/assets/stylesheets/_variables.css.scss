@@ -3,14 +3,16 @@
 $black:         #2A3036;
 
 $blue:          #428bca;
-$blue-light:    lighten($blue, 10%);
 $purple:        #6700B9;
-$purple-light:  lighten($purple, 10%);
 $green:         #699D36;
-$green-light:   lighten($green, 10%);
 $yellow:        #E9AD1A;
-$yellow-light:  lighten($yellow, 10%);
 $red:           #F93232;
+
+// Deprecated
+$blue-light:    lighten($blue, 10%);
+$green-light:   lighten($green, 10%);
+$purple-light:  lighten($purple, 10%);
+$yellow-light:  lighten($yellow, 10%);
 $red-light:     lighten($red, 10%);
 
 $gray-darker:   #2A3036;

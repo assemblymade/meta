@@ -51,7 +51,7 @@
         window.pusher = new Pusher($('meta[name=pusher-key]').attr('content'));
       </script>
       <%= render 'analytics/identify' %>
-      <%= track_readraptor(@stories) if @stories %>
+      <%= track_readraptor(@stories_to_mark_as_read) if @stories_to_mark_as_read %>
     <% end %>
 
     <% unless Rails.env.development? %>

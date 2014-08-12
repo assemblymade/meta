@@ -22,4 +22,17 @@ describe UsersController do
       expect(assigns(:wips))
     end
   end
+
+  describe '#tracking' do
+    before do
+      sign_in user
+    end
+
+    it "returns a ReadRaptor tracking URL" do
+      get :tracking, article_id: wips[0][:id]
+
+      expect(response.response_code).to eq(200)
+      expect(response.body).to include(".gif")
+    end
+  end
 end

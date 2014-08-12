@@ -19,7 +19,7 @@ class WipFactory
       add_description(wip)
       watch_product
 
-      users = @product.watchings.where(subscription: true).map(&:user)
+      users = @product.watchings.where(subscription: true, unwatched_at: nil).map(&:user)
 
       watch_wip(wip, users)
       register_with_readraptor(wip, users)

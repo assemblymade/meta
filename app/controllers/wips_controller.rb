@@ -165,6 +165,6 @@ class WipsController < ProductController
   def set_stories
     set_wip
 
-    @stories = Story.associated_with(@wip)
+    @stories_to_mark_as_read = Story.associated_with(@wip)
   end
 end

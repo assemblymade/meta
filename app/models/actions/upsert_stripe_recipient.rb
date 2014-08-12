@@ -1,4 +1,5 @@
 module Actions
+  # requires tax_info.full_name to be set
   class UpsertStripeRecipient
     def initialize(user, card_token)
       @user = user
@@ -16,7 +17,7 @@ module Actions
     def create_recipient!
       Stripe::Recipient.create(
         type: 'individual',
-        name: @user.name,
+        name: @user.tax_info.full_name,
         email: @user.email,
         card: @card_token,
         metadata: metadata

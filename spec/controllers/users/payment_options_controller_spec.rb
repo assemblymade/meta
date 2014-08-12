@@ -8,18 +8,26 @@ describe Users::PaymentOptionsController do
 
   describe '#create' do
     context 'bitcoin' do
-      # it 'saves settings' do
-      #   post :create, payout_settings: {
-      #     type: User::BitcoinPaymentOption,
-      #     bitcoin_address: '16yuWBDNR2qs9tihGMZSv4HkwCKQHow6kf',
-      #   }
-      #
-      #   expect(assigns(:payment_option)).to be_valid
-      #   expect(assigns(:payment_option)).to be_persisted
-      # end
+      it 'saves settings' do
+        post :create, payout_settings: {
+          type: User::BitcoinPaymentOption,
+          bitcoin_address: '16yuWBDNR2qs9tihGMZSv4HkwCKQHow6kf',
+        }
+
+        expect(assigns(:payment_option)).to be_valid
+        expect(assigns(:payment_option)).to be_persisted
+      end
     end
 
     context 'debit card' do
+      before do
+        user.create_tax_info!(
+          full_name: 'Finn Mertens',
+          signature: 'Finn Mertens',
+          type: User::W9.to_s
+        )
+      end
+
       it 'creates recipient and saves recipient_id' do
         # Stripe.api_key = 'nope'
 

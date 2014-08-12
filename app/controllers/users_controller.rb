@@ -53,7 +53,12 @@ class UsersController < ApplicationController
   end
 
   def tracking
-    render json: ReadraptorTracker.new(params[:article_id], current_user.id).url
+    url = ReadraptorTracker.new(params[:article_id], current_user.id).url
+
+    # make request to Readraptor to mark the article as read
+    ReadRaptor::ReadArticle.perform_async(url)
+
+    render json: url
   end
 
   if Rails.env.development?

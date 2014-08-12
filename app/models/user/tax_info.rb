@@ -13,7 +13,7 @@ class User::TaxInfo < ActiveRecord::Base
       errors.add(:signature, "must match full name")
     end
   end
-  
+
   def withholding
     0
   end

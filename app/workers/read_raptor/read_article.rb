@@ -1,17 +1,13 @@
 module ReadRaptor
-  class RegisterArticleWorker
+  class ReadArticle
     include Sidekiq::Worker
 
-    def perform(args)
-      post "/articles", args
+    def perform(url)
+      get url
     end
 
     def get(url, body = {})
       request :get, url, body
-    end
-
-    def post(url, body = {})
-      request :post, url, body
     end
 
     def request(method, url, body)

@@ -44,6 +44,10 @@
         <li class="<%= nav_active_class(:platform_getting_started) %>">
           <a href="<%= getting_started_path %>">Get Started</a>
         </li>
+
+        <li class="<%= nav_active_class(:community) %>">
+          <a href="<%= chat_path %>">Community</a>
+        </li>
       </ul>
 
         <% if user_signed_in? %>
