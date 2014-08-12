@@ -19,7 +19,7 @@
   "jest": {
     "scriptPreprocessor": "<rootDir>/spec/javascripts/preprocessor.js",
     "setupEnvScriptFile": "<rootDir>/spec/javascripts/jest_env.js",
-    "testDirectoryName": "spec/javascripts/components",
+    "testDirectoryName": "spec/javascripts/flux",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/underscore"
