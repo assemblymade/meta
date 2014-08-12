@@ -36,19 +36,27 @@
 
   var BsPopover = React.createClass({
       componentDidMount: function() {
-          var $el = $(this.getDOMNode());
+        var $el = $(this.getDOMNode());
 
-          $el.popover({
-              react: true,
-              title: this.props.title,
-              content: this.props.content,
-              trigger: '',  // Don't toggle on click automatically
-              placement: this.props.placement !== null ?
-                  this.props.placement : undefined
-          });
-          if (this.props.visible) {
-              $el.popover('show');
+        $el.popover({
+            react: true,
+            title: this.props.title,
+            content: this.props.content,
+            trigger: '',  // Don't toggle on click automatically
+            placement: this.props.placement !== null ?
+                this.props.placement : undefined
+        });
+        if (this.props.visible) {
+          $el.popover('show');
+        }
+
+        $('body').on('click', function(e) {
+          window.target = $(e.target)
+          if (!$(e.target).is('.popover') &&
+               $(e.target).parents('.popover').length === 0) {
+            this.props.onHide()
           }
+        }.bind(this))
       },
 
       componentDidUpdate: function(prevProps, prevState) {

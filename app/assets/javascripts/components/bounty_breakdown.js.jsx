@@ -58,6 +58,7 @@
           window.location.reload()
         }
       )
+      return false
     },
   });
 

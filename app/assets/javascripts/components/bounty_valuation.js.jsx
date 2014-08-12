@@ -12,7 +12,8 @@
       return <BsPopover
         content={BountyBreakdown(this.props)}
         placement="bottom"
-        visible={this.state.popoverShown}>
+        visible={this.state.popoverShown}
+        onHide={this.handleHide}>
           <a className="text-coins" href="#" id="bounty-amount-link" onClick={this.togglePopover}>
             <span className="icon icon-app-coin"></span>
               {numeral(this.props.contracts.earnable).format('0,0')}
@@ -23,6 +24,11 @@
 
     togglePopover: function() {
       this.setState({popoverShown: !this.state.popoverShown })
+      return false
+    },
+
+    handleHide: function() {
+      this.setState({popoverShown: false})
     }
   })
 
