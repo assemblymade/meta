@@ -5,7 +5,6 @@
     getInitialState: function() {
       return {
         popoverShown: false,
-        coins: this.props.value
       }
     },
 
@@ -16,7 +15,7 @@
         visible={this.state.popoverShown}>
           <a className="text-coins" href="#" id="bounty-amount-link" onClick={this.togglePopover}>
             <span className="icon icon-app-coin"></span>
-              {numeral(this.state.coins).format('0,0')}
+              {numeral(this.props.contracts.earnable).format('0,0')}
             <span className="caret"></span>
           </a>
         </BsPopover>

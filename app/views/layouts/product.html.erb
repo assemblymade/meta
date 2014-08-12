@@ -38,20 +38,11 @@
 
         </ul>
 
-        <ol class="breadcrumb">
-          <li><a href="#"><%= @product.name %></a></li>
-          <li><a href="#">Bounties</a></li>
-          <li class="active"><a href="#">#17</a></li>
-        </ol>
-
-        <!--
         <h3 class="alpha text-muted" style="font-weight: 400; line-height: 1;">
           <%= @product.name %>
           <% if @product.stealth? %>
             <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;">Stealth</span>
           <% end %>
-          <span class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></span>
-          Bounties
           <% if @breadcrumb.present? %>
             <span class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></span>
             <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>">
@@ -59,7 +50,6 @@
             </a>
           <% end %>
         </h3>
-        -->
 
         <div class="sheet">
           <%= yield %>
