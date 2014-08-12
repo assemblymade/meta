@@ -6,11 +6,8 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
 (function() {
   var rrMetaTag = document.getElementsByName('read-raptor-url');
   var READ_RAPTOR_URL = rrMetaTag && rrMetaTag[0] && rrMetaTag[0].content;
-
   var _stories = {};
   var _optimisticStories = {};
-  var _deferred = [];
-
   var _store = Object.create(Store);
 
   var _newsFeedStore = _.extend(_store, {
@@ -93,7 +90,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
 
         self.applyReadTimes(data, stories);
         self.setStories(stories);
-        self.emit(_deferred.pop());
+        self.emitChange();
       };
     },
 
@@ -138,7 +135,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
         last_read_at: moment().unix()
       };
 
-      this.emit(_deferred.pop());
+      this.emitChange();
     },
 
     markedAsRead: function(storyKey, wait, ready) {
@@ -155,17 +152,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
         story.last_read_at = moment().unix();
 
         self.setStory(story);
-
-        if (!wait) {
-          return self.emit(_deferred.pop());
-        }
-
-        // FIXME: We really need a proper event emitter
-        if (ready) {
-          self.emit(_deferred.pop());
-        } else {
-          self.emit(_deferred[_deferred.length - 1]);
-        }
+        self.emitChange();
       }
     },
 
@@ -240,10 +227,8 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
     _store[action](data);
 
     if (sync) {
-      return _store.emit(event);
+      return _store.emitChange(event);
     }
-
-    _deferred.push(event);
   });
 
   if (typeof module !== 'undefined') {

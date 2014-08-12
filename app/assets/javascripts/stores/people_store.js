@@ -45,7 +45,7 @@ var Store = require('../stores/store');
     var event = payload.event;
 
     _store[action] && _store[action](data);
-    _store.emit(event);
+    _store.emitChange(event);
   });
 
   function _searchPeople(username) {

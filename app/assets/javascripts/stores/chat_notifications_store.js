@@ -1,16 +1,14 @@
 var xhr = require('../xhr');
+var merge = require('react/lib/merge');
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
 
 (function() {
   var rrMetaTag = document.getElementsByName('read-raptor-url');
   var READ_RAPTOR_URL = rrMetaTag && rrMetaTag[0] && rrMetaTag[0].content;
-
   var _chatRooms = {};
   var _sortKeys = [];
   var _optimisticallyUpdatedChatRooms = {};
-  var _deferred = [];
-
   var _store = Object.create(Store);
   var noop = function() {};
 
@@ -97,7 +95,7 @@ var Store = require('../stores/store');
 
         this.applyReadTimes(data, chatRooms);
         this.setChatRooms(chatRooms);
-        this.emit(_deferred.pop());
+        this.emitChange();
       }.bind(this);
     },
 
@@ -161,23 +159,21 @@ var Store = require('../stores/store');
     },
   });
 
-  _store.dispatchIndex = Dispatcher.register(function(payload) {
+  _notificationsStore.dispatchIndex = Dispatcher.register(function(payload) {
     var action = payload.action;
     var data = payload.data;
     var event = payload.event;
     var sync = payload.sync;
 
-    if (!_store[action]) {
+    if (!_notificationsStore[action]) {
       return;
     }
 
-    _store[action](data);
+    _notificationsStore[action](data);
 
     if (sync) {
-      return _store.emit(event);
+      return _notificationsStore.emitChange(event);
     }
-
-    _deferred.push(event);
   });
 
   if (typeof module !== 'undefined') {

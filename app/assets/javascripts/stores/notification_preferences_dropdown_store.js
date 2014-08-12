@@ -48,7 +48,7 @@ var Store = require('../stores/store');
     }
 
     _store[action] && _store[action](data);
-    _store.emit(event);
+    _store.emitChange(event);
   });
 
   if (typeof module !== 'undefined') {

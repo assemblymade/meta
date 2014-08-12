@@ -1,5 +1,6 @@
 (function() {
   var CONSTANTS = {
+    CHANGE_EVENT: 'change',
     CHAT_NOTIFICATIONS: {
       ACTIONS: {
         ACKNOWLEDGE: 'chat:acknowledge',

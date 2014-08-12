@@ -48,7 +48,6 @@ var update = require('react/lib/update');
 
     getStories: function() {
       var self = this;
-
       var oldStoriesCount = this.state.stories && this.state.stories.length;
       var newStories = NewsFeedStore.getStories();
 
