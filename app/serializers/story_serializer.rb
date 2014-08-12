@@ -21,11 +21,11 @@ class StorySerializer < ApplicationSerializer
   end
 
   def product_name
-    object.activities.first.target.product.name
+    object.activities.first.try(:target).try(:product).try(:name)
   end
 
   def product_slug
-    object.activities.first.target.product.slug
+    object.activities.first.try(:target).try(:product).try(:slug)
   end
 
   def updated
@@ -39,8 +39,9 @@ class StorySerializer < ApplicationSerializer
   end
 
   def target
-    target = object.activities.first.target
-    target.active_model_serializer.new(target)
+    if target = object.activities.first.try(:target)
+      target.active_model_serializer.new(target)
+    end
   end
 
   def key
