@@ -15,11 +15,11 @@
     },
 
     avatarUrl: function() {
-      if (this.props.user && !this.props.alwaysDefault) {
-        return this.props.user.avatar_url + '?s=' + (this.props.size * 2);
-      } else {
+      if (!this.props.user || this.props.alwaysDefault) {
         return '/assets/avatars/default.png';
       }
+
+      return this.props.user.avatar_url;
     }
   });
 
