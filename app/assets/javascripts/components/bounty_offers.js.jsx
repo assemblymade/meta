@@ -25,7 +25,7 @@
         </td>
         <td className="text-right">
           <span className="icon icon-app-coin icon-left text-coins">
-            &nbsp;{numeral(offer.amount).format('0,0')}
+            {numeral(offer.amount).format('0,0')}
           </span>
           <span className="sr-only">
             {this.props.product.name}
