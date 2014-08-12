@@ -22,3 +22,18 @@
     $ rake db:setup
 
     $ foreman start
+
+### Compiling Components.js
+
+    $ npm install
+    $ npm run watch
+
+### Elasticsearch
+
+If you need to populate the ElasticSearch index (recommended on first run):
+
+    $ rails console
+    > Wip.__elasticsearch__.client.indices.delete index: Wip.index_name;
+    > Wip.__elasticsearch__.create_index! force: true; Wip.import;
+    > Product.__elasticsearch__.client.indices.delete index: Product.index_name
+    > Product.__elasticsearch__.create_index! force: true; Product.import
