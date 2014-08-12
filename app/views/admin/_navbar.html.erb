@@ -4,6 +4,9 @@
       <li class="<%= "active" if profit_reports_controller? %>">
         <%= link_to 'Profit Reports', admin_profit_reports_path %>
       </li>
+      <li class="<%= "active" if withdrawals_controller? %>">
+        <%= link_to 'Withdrawals', admin_withdrawals_path %>
+      </li>
       <li class="<%= "active" if staff_picks_controller? %>">
         <%= link_to 'Staff Picks', admin_staff_picks_path %>
       </li>

@@ -1,0 +1,30 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>User</th>
+      <th>Amount</th>
+      <th>Withhold</th>
+      <th>Payment sent</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <% @withdrawals.each do |withdrawal| %>
+    <tr>
+      <td><%= withdrawal.created_at %></td>
+      <td><a href="<%= user_path(withdrawal.user) %>">@<%= withdrawal.user.username %></a></td>
+      <td><%= currency withdrawal.total_amount %></td>
+      <td><%= currency withdrawal.amount_withheld %></td>
+      <td><%= withdrawal.payment_sent_at %></td>
+      <td>
+        <% if withdrawal.payment_sent_at.nil? %>
+          <%= link_to admin_withdrawal_payment_sent_path(withdrawal), method: :patch, class: 'btn btn-default' do %>
+            <span class="glyphicon glyphicon-share-alt"></span>
+            Mark as sent
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

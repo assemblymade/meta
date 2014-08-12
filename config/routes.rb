@@ -164,6 +164,9 @@ ASM::Application.routes.draw do
   namespace :admin do
     resources :profit_reports, path: 'profit-reports', only: [:index, :show]
     resources :staff_picks, path: 'staff-picks'
+    resources :withdrawals, only: [:index] do
+      patch :payment_sent
+    end
     resources :newsletters do
       patch :publish
     end
