@@ -11,7 +11,7 @@ describe 'log entries' do
 
     before {
       TransactionLogEntry.minted!(nil, Time.now, product, product.id, creator.id, 1)
-      Offer.create!(bounty: bounty, user: creator, amount: 100)
+      Offer.create!(bounty: bounty, user: creator, amount: 100, ip: '1.1.1.1')
       bounty.events << winning_event
     }
 

@@ -31,7 +31,7 @@ describe Task do
 
     it "increments with a single offer" do
       TransactionLogEntry.minted!(nil, Time.now, product, task.id, core_member.id, 1)
-      Offer.create!(bounty: task, user: core_member, amount: 100)
+      Offer.create!(bounty: task, user: core_member, amount: 100, ip: '1.1.1.1')
       expect(task.value).to eq(100)
     end
 
