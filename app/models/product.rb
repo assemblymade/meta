@@ -8,6 +8,8 @@ class Product < ActiveRecord::Base
   include Kaminari::ActiveRecordModelExtension
   include Elasticsearch::Model
 
+  DEFAULT_BOUNTY_SIZE=10000
+
   extend FriendlyId
 
   friendly_id :slug_candidates, use: :slugged
@@ -398,8 +400,15 @@ class Product < ActiveRecord::Base
   end
 
   def average_bounty
-    bounties = TransactionLogEntry.where(product_id: product.id).minted.group(:work_id).sum(:cents).values
-    bounties.inject(0) { |result, el| result + el } / bounties.size
+    bounties = TransactionLogEntry.minted.
+      where(product_id: product.id).
+      where.not(work_id: product.id).
+      group(:work_id).
+      sum(:cents).values.reject(&:zero?)
+
+    return DEFAULT_BOUNTY_SIZE if bounties.none?
+
+    bounties.inject(0, &:+) / bounties.size
   end
 
   # missions
@@ -471,11 +480,6 @@ class Product < ActiveRecord::Base
 
   def push_channel
     slug
-  end
-
-  def average_bounty_value
-    values = TransactionLogEntry.where(product:  self).group(:work_id).sum(:cents).values.reject(&:zero?)
-    values.inject(0, &:+) / values.length
   end
 
   protected

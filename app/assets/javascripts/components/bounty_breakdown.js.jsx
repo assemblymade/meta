@@ -15,7 +15,7 @@
       }
     },
     render: function() {
-      return <div className="popover-content" style={{"min-width": 300}}>
+      return <div className="popover-content" style={{"min-width": 360}}>
         <h5>Breakdown</h5>
         {BountyContracts({contracts: this.props.contracts, product: this.props.product})}
 
