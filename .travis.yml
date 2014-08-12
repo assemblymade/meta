@@ -3,6 +3,10 @@ rvm:
 - 2.1.1
 addons:
   postgresql: '9.3'
+install:
+  - npm install
+  - npm run bundle
+  - bundle install
 before_script:
 - psql -c 'create database asm_test;' -U postgres
 - cp config/database.yml.travis config/database.yml

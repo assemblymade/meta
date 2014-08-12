@@ -26,6 +26,19 @@
       }
     },
 
+    CONTRACT: {
+      ACTIONS: {
+        ADD_CONTRACT: 'addContract',
+        REMOVE_CONTRACT: 'removeContract',
+        UPDATE_CONTRACT: 'updateContract'
+      },
+      EVENTS: {
+        CONTRACT_ADDED: 'contract:contractAdded',
+        CONTRACT_REMOVED: 'contract:contractRemoved',
+        CONTRACT_UPDATED: 'contract:contractUpdated'
+      }
+    },
+
     INTEREST_PICKER: {
       ACTIONS: {
         ADD_INTEREST: 'addInterest',
