@@ -265,10 +265,11 @@ ActiveRecord::Schema.define(version: 20140809171241) do
   end
 
   create_table "offers", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "bounty_id",              null: false
-    t.uuid     "user_id",                null: false
-    t.integer  "amount",     default: 0, null: false
-    t.datetime "created_at"
+    t.uuid     "bounty_id",  null: false
+    t.uuid     "user_id",    null: false
+    t.integer  "amount",     null: false
+    t.inet     "ip",         null: false
+    t.datetime "created_at", null: false
   end
 
   create_table "perks", id: false, force: true do |t|

@@ -23,7 +23,8 @@ class PopulateOffers < ActiveRecord::Migration
         bounty_id:  wip.id,
         user_id:    vote.user_id,
         amount:     amount,
-        created_at: vote.created_at
+        created_at: vote.created_at,
+        ip:         vote.ip
       )
 
       begin

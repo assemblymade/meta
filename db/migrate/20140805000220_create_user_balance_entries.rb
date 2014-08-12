@@ -9,4 +9,3 @@ class CreateUserBalanceEntries < ActiveRecord::Migration
     end
   end
 end
-
