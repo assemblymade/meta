@@ -26,7 +26,7 @@
 #= require ./textcomplete
 #= require ./polyfills
 #= require xhr
-#= require components
+#= require ./components
 
 class window.Application
   _.extend(@.prototype, Backbone.Events)
