@@ -38,7 +38,7 @@
 
         <div class="stat">
           <div class="stat-value">
-            <%= cents_to_coins(@user.sum_app_cents) %>
+            <%= number_with_delimiter @user.sum_app_cents %>
           </div>
           <div class="stat-title">
             App Coins

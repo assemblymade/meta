@@ -22,7 +22,7 @@
         <h5>Bounty Valuation</h5>
         {BountyOffers({offers: this.state.offers, product: this.props.product})}
 
-        {this.props.user ? this.newOffer() : null}
+        {(this.props.open && this.props.user) ? this.newOffer() : null}
       </div>
     },
 

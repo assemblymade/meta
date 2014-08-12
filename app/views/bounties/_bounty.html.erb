@@ -59,7 +59,8 @@
             offers: ActiveModel::ArraySerializer.new(@offers).as_json,
             maxOffer: (2 * @product.average_bounty).round(-4),
             averageBounty: @product.average_bounty,
-            value: bounty.value
+            value: bounty.value,
+            open: bounty.open?
           }.to_json %>), document.getElementById('js-bounty-valuation'));
         </script>
       </li>

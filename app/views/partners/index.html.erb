@@ -43,7 +43,7 @@
                 </td>
                 <td class="text-right">
                   <i class="icon icon-app-coin text-coins small"></i>
-                  <%= number_to_currency cents / 100.to_d, precision: 2, unit: '' %>
+                  <%= number_with_delimiter cents %>
                 </td>
                 <% if @product.for_profit? %>
                   <td class="text-right">

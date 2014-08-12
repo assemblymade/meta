@@ -1,11 +1,5 @@
 module CoinHelper
 
-  def cents_to_coins(cents, options={})
-    coins = cents / 100.to_d
-    precision = options[:round] ? 0 : (coins.round == coins ? 0 : 2)
-    number_with_precision(coins, precision: precision, delimiter: ',')
-  end
-
   def format_coins(product, cents, format = :full, options={})
     label = currency = product.for_profit? ? 'coins' : 'karma'
 
@@ -13,7 +7,6 @@ module CoinHelper
       label = "#{product.name} #{currency}"
     end
 
-    # coins = cents_to_coins(cents, options)
     coins = number_with_delimiter(cents.floor)
 
     text = case format

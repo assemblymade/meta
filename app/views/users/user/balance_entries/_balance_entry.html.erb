@@ -5,7 +5,7 @@
     <a class="<%= c %>" href="<%= product_financials_path(report.product) %>"><%= report.product.name %> <%= report.end_at.strftime('%b %Y') %></a>
   </td>
   <td class="<%= c %>">
-    <%= number_with_precision(balance_entry.coins / 100.0, precision: 2, delimiter: ',') %>
+    <%= number_with_delimiter(balance_entry.coins) %>
     (<%= number_to_percentage balance_entry.coins / report.coins.to_f * 100, precision: 2 %>)
   </td>
   <td class="<%= c %>">
