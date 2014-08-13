@@ -2,17 +2,17 @@
 
 jest.dontMock(pathToFile('components/chat_notifications.js.jsx'));
 
-describe('ChatNotificationsToggler', function() {
+describe('ChatNotifications', function() {
+  global.localStorage = {};
+  global.moment = require.requireActual('moment');
+  global.Spinner = require.requireActual('spin.js');
+  global.Dispatcher = require(pathToFile('dispatcher.js'));
+  global.ChatNotificationsStore = require(pathToFile('stores/chat_notifications_store.js'));
+
   var Chat = require(pathToFile('components/chat_notifications.js.jsx'));
   var chatRooms;
 
   beforeEach(function() {
-    global.localStorage = {};
-    global.moment = require.requireActual('moment');
-    global.Spinner = require.requireActual('spin.js');
-    global.Dispatcher = require(pathToFile('dispatcher.js'));
-    global.ChatNotificationsStore = require(pathToFile('stores/chat_notifications_store.js'));
-
     chatRooms = {
       foo: {
         id: 'foo',
@@ -59,14 +59,6 @@ describe('ChatNotificationsToggler', function() {
 
       return count.true || 0;
     });
-  });
-
-  // I'm also not sure that this cleanup is strictly necessary
-  afterEach(function() {
-    global.localStorage = null;
-    global.moment = null;
-    global.Dispatcher = null;
-    global.Spinner = null;
   });
 
   it('instantiates a ChatNotifications component', function() {

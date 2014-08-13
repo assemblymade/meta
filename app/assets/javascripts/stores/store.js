@@ -1,29 +1,19 @@
-(function() {
-  var Store = _.extend({}, {
-    emit: function(event) {
-      var callbacks = this.listeners;
+var EventEmitter = require('events').EventEmitter;
+var merge = require('react/lib/merge');
+var CHANGE_EVENT = require('../constants').CHANGE_EVENT;
 
-      if (!_.isEmpty(callbacks)) {
-        for (var i = 0, l = callbacks.length; i < l; i++) {
-          callbacks[i]();
-        }
-      }
+(function() {
+  var Store = merge(EventEmitter.prototype, {
+    emitChange: function() {
+      this.emit(CHANGE_EVENT);
     },
 
     addChangeListener: function(callback) {
-      this.listeners = this.listeners || [];
-      this.listeners.push(callback);
-
-      return this.listeners.length - 1;
+      this.on(CHANGE_EVENT, callback);
     },
 
-    removeChangeListener: function(eventIndex) {
-      if (this.listeners && this.listeners[eventIndex]) {
-        this.listeners.splice(eventIndex, 1);
-        return this.listeners.length;
-      } else {
-        return -1;
-      }
+    removeChangeListener: function(callback) {
+      this.removeListener(CHANGE_EVENT, callback);
     }
   });
 

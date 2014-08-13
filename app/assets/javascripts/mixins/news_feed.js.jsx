@@ -34,7 +34,6 @@ var update = require('react/lib/update');
     fetchNewsFeed: _.debounce(function() {
       Dispatcher.dispatch({
         action: NF.ACTIONS.FETCH_STORIES,
-        event: NF.EVENTS.STORIES_FETCHED,
         data: this.props.url
       });
     }, 1000),
@@ -48,7 +47,6 @@ var update = require('react/lib/update');
 
     getStories: function() {
       var self = this;
-
       var oldStoriesCount = this.state.stories && this.state.stories.length;
       var newStories = NewsFeedStore.getStories();
 
@@ -68,7 +66,6 @@ var update = require('react/lib/update');
 
       Dispatcher.dispatch({
         action: NF.ACTIONS.FETCH_MORE_STORIES,
-        event: NF.EVENTS.STORIES_FETCHED,
         data: this.props.url + '?top_id=' + lastStory.id
       });
     },

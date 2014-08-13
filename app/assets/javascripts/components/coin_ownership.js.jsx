@@ -165,7 +165,6 @@ var PersonPicker = require('./person_picker.js.jsx');
       }));
 
       Dispatcher.dispatch({
-        event: CO.EVENTS.USER_ADDED,
         action: CO.ACTIONS.ADD_USER,
         data: { userAndCoins: user }
       });
@@ -193,7 +192,6 @@ var PersonPicker = require('./person_picker.js.jsx');
         });
 
         Dispatcher.dispatch({
-          event: CO.EVENTS.USER_REMOVED,
           action: CO.ACTIONS.REMOVE_USER,
           data: { userAndCoins: user }
         });

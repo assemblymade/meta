@@ -1,10 +1,10 @@
 /** @jsx React.DOM */
 
-jest.dontMock('../../../app/assets/javascripts/components/activity_feed.js.jsx');
+jest.dontMock(pathToFile('components/activity_feed.js.jsx'));
 
 describe('ActivityFeed', function() {
   it('renders an activity feed', function() {
-    var ActivityFeed = require('../../../app/assets/javascripts/components/activity_feed.js.jsx');
+    var ActivityFeed = require(pathToFile('components/activity_feed.js.jsx'));
 
     var activities = [
       {

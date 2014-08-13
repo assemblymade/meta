@@ -32,7 +32,6 @@ var ButtonStore = require('../stores/toggle_button_store');
 
       Dispatcher.dispatch({
         action: B.ACTIONS.CLICK,
-        event: B.EVENTS.CLICKED,
         data: this.props.href[this.state.bool]
       });
 

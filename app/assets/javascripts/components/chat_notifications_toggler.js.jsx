@@ -20,7 +20,6 @@ var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
       });
 
       Dispatcher.dispatch({
-        event: CN.EVENTS.ACKNOWLEDGED,
         action: CN.ACTIONS.ACKNOWLEDGE,
         data: timestamp,
         sync: true

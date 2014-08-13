@@ -103,7 +103,6 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
     fetchNotifications: _.debounce(function() {
       Dispatcher.dispatch({
         action: N.ACTIONS.FETCH_CHAT_ROOMS,
-        event: N.EVENTS.CHAT_ROOMS_FETCHED,
         data: this.props.url
       });
     }, 1000),

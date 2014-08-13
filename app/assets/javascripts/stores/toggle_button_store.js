@@ -1,4 +1,5 @@
 var xhr = require('../xhr');
+var merge = require('react/lib/merge');
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
 
@@ -14,10 +15,9 @@ var Store = require('../stores/store');
   _store.dispatchIndex = Dispatcher.register(function(payload) {
     var action = payload.action;
     var data = payload.data;
-    var event = payload.event;
 
     _store[action] && _store[action](data);
-    _store.emit(event);
+    _store.emitChange();
   });
 
   if (typeof module !== 'undefined') {

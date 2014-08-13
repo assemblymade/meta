@@ -8,5 +8,5 @@ global.Notify.isSupported = function() { return true; };
 global.Notify.needsPermission = function() { return true; };
 
 global.pathToFile = function(name) {
-  return '../../../app/assets/javascripts/' + name;
+  return '../../../../app/assets/javascripts/' + name;
 };
