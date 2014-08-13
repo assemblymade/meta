@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
-ruby '2.1.1'
+ruby '2.1.2'
 
 gem 'active_model_serializers'
 gem 'analytics-ruby', '<1.0'
@@ -40,7 +40,6 @@ gem 'omniauth-facebook', '1.4.0' # http://stackoverflow.com/questions/11597130/o
 gem 'omniauth-twitter'
 gem 'omniauth-github'
 # gem 'oink'
-gem 'opengraph', github: 'whatupdave/opengraph'
 gem 'paperclip'
 gem 'pg'
 gem 'pghero'
