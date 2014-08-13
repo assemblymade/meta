@@ -2,7 +2,7 @@
 
 (function() {
 
-  COIN_INCREMENT = 100
+  COIN_INCREMENT = [1, 1, 3, 5, 15, 25, 50]
   DEBOUNCE_TIMEOUT = 2000
 
   var TipsUi = React.createClass({
@@ -22,7 +22,8 @@
       return {
         tips: _.reduce(this.props.tips, function(h, tip) { h[tip.from.id] = tip; return h }, {}),
         userCents: app.currentProductBalance(),
-        pendingCents: 0
+        pendingCents: 0,
+        pendingClicks: 0
       }
     },
 
@@ -34,7 +35,7 @@
       var totalCents = this.totalCents()
 
       var tooltip = null
-      if (this.props.currentUser == null) {
+      if (this.props.currentUser === null) {
         tooltip = 'You need to sign up before you can tip'
       } else if (this.state.userCents <= 0) {
         tooltip = 'You have no coins to tip'
@@ -52,7 +53,7 @@
           <div className={totalCents > 0 ? 'text-coins' : null}>
             <a ref="button" href="javascript:;" data-placement="top" data-toggle="tooltip" title={tooltip} onClick={this.currentUserCanTip() ? this.handleClick : null}>
               <span className="icon icon-app-coin"></span>
-              <span> {numeral(this.totalCents() / 100).format('0,0')}</span>
+              <span> {numeral(this.totalCents()).format('0,0')}</span>
             </a>
             {tippers}
           </div>
@@ -61,13 +62,18 @@
     },
 
     optimisticTip: function() {
-      var update = { pendingCents: { $set: this.state.pendingCents + COIN_INCREMENT }, tips: {}}
+      var increment = COIN_INCREMENT[Math.min(this.state.pendingClicks, COIN_INCREMENT.length-1)]
+      var update = {
+        pendingClicks: { $set: this.state.pendingClicks + 1 },
+        pendingCents: {
+          $set: this.state.pendingCents + increment
+        }, tips: {}}
 
       var tip = this.state.tips[this.props.currentUser.id]
       if (tip) {
-        update.tips[this.props.currentUser.id] = { $merge: { cents: tip.cents + COIN_INCREMENT } }
+        update.tips[this.props.currentUser.id] = { $merge: { cents: tip.cents + increment } }
       } else {
-        update.tips[this.props.currentUser.id] = { $set: { from: this.props.currentUser, cents: COIN_INCREMENT } }
+        update.tips[this.props.currentUser.id] = { $set: { from: this.props.currentUser, cents: increment } }
       }
 
       this.setState(React.addons.update(this.state, update))
@@ -86,7 +92,7 @@
           }
         },
         complete: function() {
-          this.setState({pendingCents: 0})
+          this.setState({pendingCents: 0, pendingClicks: 0})
       }.bind(this)})
     }, DEBOUNCE_TIMEOUT),
 
@@ -142,6 +148,6 @@
   if (typeof module !== 'undefined') {
     module.exports = TipsUi;
   }
-  
+
   window.TipsUi = TipsUi;
 })();
