@@ -78,6 +78,51 @@
             <br>
 
             <hr id="core-team">
+            <h6 class="text-muted">Code</h6>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-8">
+
+                  <table class="table">
+                    <tr class="">
+                      <td>
+                        <label for="chrislloyd-brains">chrislloyd/brains</label>
+                      </td>
+                      <td class="text-right">
+                        <input type="checkbox" id="chrislloyd-brains">
+                      </td>
+                    </tr>
+                    <tr class="text-muted">
+                      <td>
+                        <label for="chrislloyd-helpful-web">chrislloyd/helpful-web</label>
+                      </td>
+                      <td class="text-right">
+                        Linked to <a href="#">Helpful</a>
+                      </td>
+                    </tr>
+                    <tr class="">
+                      <td>
+                        <label for="chrislloyd-poacher">chrislloyd/poacher</a>
+                      </td>
+                      <td class="text-right">
+                        <input type="checkbox" id="chrislloyd-poacher">
+                      </td>
+                    </tr>
+                  </table>
+
+                </div>
+
+                <div class="col-md-4">
+                  <p class="help-block alpha">
+                    Link at least one code repository on GitHub to get started. You can always link more repositories later.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+
+            <hr id="core-team">
             <h6 class="text-muted">Core Team</h6>
 
             <div class="form-group">
@@ -95,23 +140,22 @@
             </div>
 
             <hr id="ownership-and-coins">
-            <h6 class="text-muted">Ownership &amp; Coins</h6>
+            <h6 class="text-muted">Coins &amp; Ownership</h6>
 
             <div class="row">
               <div class="col-md-8">
-
-                <div data-react-class="CoinOwnership" data-react-props="<%= { totalCoins: Product::INITIAL_COINS }.to_json %>"></div>
+                <div data-react-class="CoinOwnership"></div>
               </div>
 
               <div class="col-md-4">
                 <p class="help-block">
-                  Every business starts out with <%= number_with_delimiter Product::INITIAL_COINS %> app coins. App coins are how Assembly tracks ownership.
+                  Coins are how Assembly tracks ownership. Every business starts out with <%= number_with_delimiter(10_000_000) %> coins of which you can allocate 5% (<%= number_with_delimiter((10_000_000 * 0.05).to_i) %>) initially.
                 </p>
                 <p class="help-block">
                   Profits are paid out to partners monthly based upon their ownership.
                 </p>
                 <p class="help-block">
-                  Share ownership with initial partners to recognize exisiting help or incentivize future work.
+                  Sharing ownership with other partners recognizes exisiting help and incentivizes future work.
                 </p>
               </div>
             </div>
