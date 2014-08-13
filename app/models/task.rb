@@ -78,14 +78,6 @@ class Task < Wip
     true
   end
 
-  def upvotable?
-    true
-  end
-
-  def downvotable?
-    open?
-  end
-
   def value
     offers = Offer.where(bounty: self)
 

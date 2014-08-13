@@ -8,10 +8,6 @@ class Work < ActiveRecord::Base
 
   alias_method :winner, :user
 
-  def votable?
-    true
-  end
-
   def promoted?
     true
   end
@@ -20,20 +16,8 @@ class Work < ActiveRecord::Base
     votes_count
   end
 
-  def downvotable?
-    false
-  end
-
   def score_multiplier
     1
-  end
-
-  def coins
-    product.decorate.current_exchange_rate * score
-  end
-
-  def coins_add
-    score_multiplier * product.decorate.current_exchange_rate
   end
 
   def contracts

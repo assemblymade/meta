@@ -66,12 +66,6 @@ class ProductDecorator < ApplicationDecorator
     "https://www.youtube.com/embed/#{you_tube_video_id}"
   end
 
-  def current_exchange_rate
-    Rails.cache.fetch([self.id, 'exchange_rate'], expires_in: 12.hours) do
-      TransactionLogExchangeRate.at(self.id, Time.now)
-    end
-  end
-
   def reward
     for_profit? ? 'Bounties' : 'Karma'
   end
@@ -82,17 +76,6 @@ class ProductDecorator < ApplicationDecorator
 
   def stakeholders
     for_profit? ? 'Ownership' : 'Contributors'
-  end
-
-  def sum_bounties
-    Rails.cache.fetch([self.cache_key, 'sum_bounties']) do
-      open_score = wips.open.map(&:score).compact.reduce(0, :+)
-      current_exchange_rate * open_score
-    end
-  end
-
-  def real_bounty_value
-    sum_bounties * 100
   end
 
   def sum_active_auto_tips

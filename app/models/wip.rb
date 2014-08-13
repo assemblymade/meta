@@ -122,14 +122,6 @@ class Wip < ActiveRecord::Base
     nil
   end
 
-  def upvotable?
-    false
-  end
-
-  def downvotable?
-    false
-  end
-
   def winning_event=(something)
     # ignore
   end

@@ -3,9 +3,7 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
 
   attributes :comments
   attributes :ideas
-  attributes :product_upvotes
   attributes :wips
-  attributes :wip_upvotes
 
   def comments
     Event::Comment.where(user: object).size
@@ -15,15 +13,7 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
     object.products.size
   end
 
-  def product_upvotes
-    Vote.where(voteable_type: 'Product').where(user: object).count
-  end
-
   def wips
     object.wips.size
-  end
-
-  def wip_upvotes
-    Vote.where(voteable_type: 'Wip').where(user: object).count
   end
 end

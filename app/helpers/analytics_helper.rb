@@ -12,16 +12,6 @@ module AnalyticsHelper
     content_tag :script, track_inline(event, options)
   end
 
-  def track_vote(product)
-    track_inline 'vote.created', product_properties(product)
-  end
-
-  def track_presale(presale)
-    track 'presale.created', {
-      'amount' => presale.amount,
-    }.merge(product_properties(presale.product))
-  end
-
   def analytics_track_events
     events = (flash[:events] || [])
     if events.any?
@@ -48,8 +38,7 @@ module AnalyticsHelper
       'applications.count' => product.watchings.count,
       'features.count'     => product.wips.count,
       'perks.count'        => product.perks.count,
-      'views.count'        => product.view_count,
-      'votes.count'        => product.votes.count,
+      'views.count'        => product.view_count
     }
   end
 end

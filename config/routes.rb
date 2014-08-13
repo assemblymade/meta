@@ -49,9 +49,7 @@ ASM::Application.routes.draw do
 
   get '/new'      => redirect('/create')
   get '/create'   => 'products#new',     :as => :new_idea
-  resources :ideas, :only => [:index] do
-    post :vote, :controller => 'ideas/votes', :action => 'create', :on => :member
-  end
+  resources :ideas, :only => [:index]
 
   get '/discover(/:action)', controller: 'discover',
                              as: :discover,
@@ -255,15 +253,10 @@ ASM::Application.routes.draw do
     patch '/discussions/:wip_id/to_task' => 'discussions#to_task', as: :discussion_to_task
     patch '/wips/:wip_id/to_discussion' => 'tasks#to_discussion', as: :task_to_discussion
 
-    resources :work do
-      delete 'votes' => 'votes#downvote_work'
-      post 'votes' => 'votes#upvote_work'
-    end
-
+    resources :work
     resources :wips, only: [:index, :show, :new, :edit, :create, :update], controller: 'tasks' do
       get 'search', :on => :collection
 
-      delete 'votes' => 'votes#downvote'
       get   'checkin'
       patch 'start_work'
       patch 'stop_work'
@@ -279,7 +272,6 @@ ASM::Application.routes.draw do
       patch 'mute'
       patch 'tag'
 
-      resources :votes, only: [:create]
       resources :comments, only: [:show, :create, :edit, :update]
     end
 

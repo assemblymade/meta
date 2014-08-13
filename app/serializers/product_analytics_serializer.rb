@@ -17,7 +17,7 @@ class ProductAnalyticsSerializer < ActiveModel::Serializer
   end
 
   def registered_users
-    product.votes.size
+    team_members
   end
 
   def preorders

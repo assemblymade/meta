@@ -22,8 +22,4 @@ class WipDecorator < ApplicationDecorator
   def formatted_watchers_count
     helpers.pluralize(watchings_count, 'watcher')
   end
-
-  def votable?
-    false
-  end
 end

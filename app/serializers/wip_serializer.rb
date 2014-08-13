@@ -13,7 +13,6 @@ class WipSerializer < ActiveModel::Serializer
              :comments_count,
              :score,
              :score_multiplier,
-             :downvotable?,
              :deliverable
 
   # personalized

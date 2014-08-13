@@ -18,13 +18,11 @@ Here is a common example of how Mary might earn App Coins in the Helpful product
 
 1. Patrick suggests a new bounty for building a feature for Helpful.
 
-2. Community members upvote the bounty because they think it’s valuable to Helpful’s progress. Each upvote adds App Coins to the bounty for completing the bounty.
+2. Community members value the bounty because they think it’s valuable to Helpful’s progress.
 
 3. Mary jumps in on the bounty and submits work, completing the bounty.
 
 4. The product’s Core Team then accept Mary’s work, which mints new App Coins and awards them to Mary.
-
-5. Later David comes along and likes Mary's work after it was already awarded. He also upvotes it and Mary earns additional app App Coins because the work was already accepted by the Core Team.
 
 Additionally, most products have “tip contract.” The default tip contract is that 5% of all new coins are tipped to the Core Team, and 5% are tipped to the bounty author.
 
@@ -41,13 +39,6 @@ Contributions by other community members will continue to earn them new App Coin
 Assembly App Coins are legally structured as a partnership – like many law firms have. App Coins can’t be bought, sold or transferred, they only determine royalty payouts. As partners, owners of Assembly App Coins have access to information, voting rights, and potential royalty payouts.
 
 In an organization like this, partners must remain active to keep their rights and royalties. On Assembly, remaining active means (at a minimum) voting on work once per year.
-
-
-# How are App Coins fairly rewarded to early contributors?
-
-Each product has its own exchange rate for App Coins that is dynamic and adjusts depending on the duration of development, and its rate of progress. Early in development a product tends to have fewer people upvoting bounties.
-
-Therefore, young products with small communities will see exchange rates where your 1 upvote might mint 90 or more app coins for the person who completes the work. Mature products with a large community will start to see that value go down as low as 1 upvote equaling 1 App Coin earned.
 
 
 # Who pays the operating costs before there is any revenue?

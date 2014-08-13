@@ -80,10 +80,6 @@ class StreamEvent < ActiveRecord::Base
     false
   end
 
-  def votable?
-    false
-  end
-
   def work?
     false
   end
@@ -102,7 +98,6 @@ class StreamEvent < ActiveRecord::Base
 
   def css_classes
     [ expandable? && 'activity-group-expandable',
-      votable?    && 'activity-group-votable',
       highlight?  && 'activity-group-highlight',
       important?  && 'activity-group-important' ].select{ |c| c }.join(' ')
   end

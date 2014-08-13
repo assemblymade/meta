@@ -1,6 +1,6 @@
 Hi <%= @user.short_name %>
 
-Just checking in to see how the <%=@wip.product.name%> task [<%="##{@wip.number}"%>](<%= url_for([@wip.product, @wip])%>) is going. Looks like you started working on it   about <%= time_ago_in_words(@worker.created_at) %> ago. 
+Just checking in to see how the <%=@wip.product.name%> task [<%="##{@wip.number}"%>](<%= url_for([@wip.product, @wip])%>) is going. Looks like you started working on it   about <%= time_ago_in_words(@worker.created_at) %> ago.
 
 <% if @watchers.any? %>
 If you need help you can always drop in [chat](<%= ENV['PUBLIC_CHAT_URL'] %>) or ask a question in the [task](<%= url_for([@wip.product, @wip])%>). <%= @watchers.collect{|u| link_to("@#{u.username}", user_url(u))}.join(' and ').html_safe  %> upvoted it too so they may also be able to help out.

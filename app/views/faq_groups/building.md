@@ -4,7 +4,7 @@ You are. Assembly apps are built by everyone, but like successful open source pr
 
 A new app's Core Team is typically made up of the inventor and sometimes Assembly staff members. As development progresses, more contributors might comprise the core team, and Assembly staff members will typically only provide support services as needed.
 
-While anyone can create and upvote bounties and submit work, the Core Team makes approval decisions before changes are implemented and bounties are awarded.
+While anyone can create bounties and submit work, the Core Team makes approval decisions before changes are implemented and bounties are awarded.
 
 
 # How are the apps licensed?
@@ -24,7 +24,7 @@ As other technologies like [docker](http://www.docker.io/) and [vagrant](http://
 
 Each product’s Core Team takes on most of the prioritization work. Core Team members can select a priority level for a bounty (from lowest to highest; someday, next, now, urgent). These priorities impact the number of App Coins assigned to a bounty, and the priority of a project is determined by the priority of the bounties within it.
 
-Additionally, anyone in the community can upvote a bounty, which will increase its priority and the number of App Coins assigned to it.
+Additionally, anyone in the community can value a bounty, which will affect its priority and the number of App Coins assigned to it.
 
 
 # How is product management and prioritization rewarded?

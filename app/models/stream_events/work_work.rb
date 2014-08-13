@@ -6,10 +6,6 @@ module StreamEvents
       subject
     end
 
-    def votable?
-      true
-    end
-
     def work?
       true
     end
