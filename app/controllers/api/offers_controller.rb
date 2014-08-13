@@ -7,7 +7,7 @@ module Api
       @bounty = @product.tasks.find_by!(number: params[:bounty_id])
       @offer = @bounty.offers.create!(
         user: current_user,
-        amount: offer_params.fetch(:amount).round,
+        amount: offer_params.fetch(:amount).to_i,
         ip: request.ip
       )
 
