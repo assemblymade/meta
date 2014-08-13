@@ -20,7 +20,10 @@
     render: function () {
       var classes = {
         popover: true,
-        in: this.props.positionLeft != null || this.props.positionTop != null
+        in: this.props.positionLeft !== null ||
+            this.props.positionTop !== null  ||
+            this.props.positionLeft !== undefined ||
+            this.props.positionTop !== undefined
       };
 
       classes[this.props.placement] = true;

@@ -2,6 +2,7 @@
 
 var CONSTANTS = require('../constants');
 var Dispatcher = require('../dispatcher');
+var LocalStorageMixin = require('../mixins/local_storage.js');
 var ChatNotificationStore = require('../stores/chat_notifications_store');
 var DesktopNotifications = require('./desktop_notifications.js.jsx');
 
@@ -42,6 +43,8 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
   }
 
   var ChatNotifications = React.createClass({
+    mixins: [LocalStorageMixin],
+
     articles: function() {
       return _.flatten(_.map(this.state.data, function(a){
         return a.entities;
@@ -63,9 +66,6 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
 
     componentWillMount: function() {
       var _this = this;
-
-      // // TODO: Remove this and use the Dispatcher
-      // $(window).bind('storage', this.storedAckChanged);
 
       this.onPush(function(event, msg) {
         if (_.contains(msg.mentions, _this.props.username)) {
@@ -117,7 +117,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
       return {
         data: ChatNotificationsStore.getChatRooms(),
         sortKeys: [],
-        acknowledgedAt: this.storedAck(),
+        acknowledgedAt: this.storedAck('chatAck'),
         desktopNotificationsEnabled: false
       };
     },
@@ -212,19 +212,9 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
       return values || [];
     },
 
-    storedAck: function() {
-      var timestamp = localStorage.chatAck;
-
-      if (timestamp == null || timestamp === "null") {
-        return 0;
-      } else {
-        return parseInt(timestamp);
-      }
-    },
-
     storedAckChanged: function() {
       this.setState({
-        acknowledgedAt: this.storedAck()
+        acknowledgedAt: this.storedAck('chatAck')
       });
     }
   });

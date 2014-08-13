@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 jest.dontMock(pathToFile('components/chat_notifications_toggler.js.jsx'));
+jest.dontMock(pathToFile('mixins/local_storage.js'));
 
 describe('ChatNotificationsToggler', function() {
   var Toggler = require(pathToFile('components/chat_notifications_toggler.js.jsx'));

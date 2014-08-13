@@ -2,13 +2,14 @@
 
 var CONSTANTS = require('../constants');
 var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
+var NewsFeedMixin = require('../mixins/news_feed.js.jsx');
 var NewsFeedStore = require('../stores/news_feed_store');
 
 (function() {
   var NF = CONSTANTS.NEWS_FEED;
 
   var DropdownNewsFeedToggler = React.createClass({
-    mixins: [DropdownTogglerMixin],
+    mixins: [DropdownTogglerMixin, NewsFeedMixin],
 
     acknowledge: function() {
       var timestamp = moment().unix();
@@ -47,7 +48,7 @@ var NewsFeedStore = require('../stores/news_feed_store');
     getInitialState: function() {
       return {
         stories: null,
-        acknowledgedAt: this.storedAck()
+        acknowledgedAt: this.storedAck('newsFeedAck')
       };
     },
 
@@ -82,16 +83,6 @@ var NewsFeedStore = require('../stores/news_feed_store');
       var story = this.latestStory();
 
       return story && story.updated ? story.updated : 0;
-    },
-
-    storedAck: function() {
-      var timestamp = localStorage.newsFeedAck;
-
-      if (timestamp == null || timestamp === 'null') {
-        return 0;
-      } else {
-        return parseInt(timestamp, 10);
-      }
     }
   });
 

@@ -157,7 +157,7 @@ var PersonPicker = require('./person_picker.js.jsx');
     },
 
     addUser: function(user) {
-      var user = _.extend(user, {coins: 0});
+      user = _.extend(user, {coins: 0});
 
       this.setState(React.addons.update(this.state, {
         potentialUser: {$set: null},

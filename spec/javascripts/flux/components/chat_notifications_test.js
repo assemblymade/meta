@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 jest.dontMock(pathToFile('components/chat_notifications.js.jsx'));
+jest.dontMock(pathToFile('mixins/local_storage.js'));
 
 describe('ChatNotifications', function() {
   global.localStorage = {};

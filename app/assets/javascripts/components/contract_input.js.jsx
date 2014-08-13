@@ -54,7 +54,7 @@ var C = require('../constants').CONTRACT;
 
       $('#edit-contract-' + this.props.user.username).click(function(e) {
         $(self.props.confirmButton).css('visibility', 'hidden');
-        $(this).text() === 'Edit' ? $(this).text('Cancel') : $(this).text('Edit');
+        $(this).text() === 'Edit' ? $(this).text('Cancel') : $(this).text('Edit'); // jshint ignore:line
         self.setState({ editable: !self.state.editable });
       });
 

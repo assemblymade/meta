@@ -3,12 +3,13 @@
 var CONSTANTS = require('../constants');
 var ChatNotificationsStore = require('../stores/chat_notifications_store');
 var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
+var LocalStorageMixin = require('../mixins/local_storage');
 
 (function() {
   var CN = CONSTANTS.CHAT_NOTIFICATIONS;
 
   var ChatNotificationsToggler = React.createClass({
-    mixins: [DropdownTogglerMixin],
+    mixins: [DropdownTogglerMixin, LocalStorageMixin],
 
     acknowledge: function() {
       var timestamp = moment().unix();
@@ -39,7 +40,7 @@ var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
     },
 
     componentWillMount: function() {
-      ChatNotificationsStore.addChangeListener(this.getStories);
+      ChatNotificationsStore.addChangeListener(this.getNotifications);
     },
 
     getDefaultProps: function() {
@@ -51,11 +52,11 @@ var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
     getInitialState: function() {
       return {
         chatRooms: null,
-        acknowledgedAt: this.storedAck()
+        acknowledgedAt: this.storedAck('chatAck')
       };
     },
 
-    getStories: function() {
+    getNotifications: function() {
       this.setState({
         chatRooms: ChatNotificationsStore.getChatRooms()
       });
@@ -65,16 +66,6 @@ var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
       var chatRoom = ChatNotificationsStore.mostRecentlyUpdatedChatRoom();
 
       return chatRoom && chatRoom.updated > chatRoom.last_read_at;
-    },
-
-    storedAck: function() {
-      var timestamp = localStorage.chatAck;
-
-      if (timestamp == null || timestamp === 'null') {
-        return 0;
-      } else {
-        return parseInt(timestamp, 10);
-      }
     }
   });
 
