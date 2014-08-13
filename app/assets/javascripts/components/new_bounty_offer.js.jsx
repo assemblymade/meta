@@ -33,7 +33,9 @@
     scaleOffer: function(val) {
       var multiplier = (this.props.maxOffer - min) / (Math.pow(scale, 99) - 1)
       var shift = min - multiplier
-      return Math.pow(scale, val) * multiplier + shift
+      return Math.min(
+        Math.pow(scale, val) * multiplier + shift, this.props.maxOffer
+      )
     },
 
     relativeSize: function() {
