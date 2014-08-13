@@ -9,13 +9,13 @@ class UsersController < ApplicationController
     @stream_events = viewing_self? ? @user.stream_events : @user.stream_events.visible
     @stream_events = @stream_events.page(page)
     respond_to do |format|
-      format.js   { render :layout => false }
       format.html {
         @contributions = UserContribution.for(@user, !viewing_self?).
                                           sort_by{|c| -c.cents }.
                                           reject{|c| Product::PRIVATE.include?(c.product.slug) }
         respond_with @user
       }
+      format.js   { render :layout => false }
     end
   end
 
