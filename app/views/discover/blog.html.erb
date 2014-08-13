@@ -13,7 +13,7 @@
 
         <div class="row">
           <div class="col-md-9">
-            <% @posts.each do |post| %>
+            <% @page.each do |post| %>
               <%= render post %>
               <hr/>
             <% end %>
@@ -25,7 +25,7 @@
               </div>
 
               <div class="list-group">
-                <% Post.order(created_at: :desc).limit(10).each do |post| %>
+                <% @posts.limit(10).each do |post| %>
                   <a class="list-group-item small" href="<%= product_post_path(post.product, post) %>">
                     <strong class="text-primary"><%= post.title %></strong>
                   </a>
@@ -35,7 +35,7 @@
           </div>
         </div>
 
-        <%= paginate @posts, theme: 'twitter-bootstrap-3' %>
+        <%= paginate @page, theme: 'twitter-bootstrap-3' %>
       </div>
     </div>
   </div>
