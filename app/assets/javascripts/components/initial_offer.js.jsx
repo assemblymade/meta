@@ -22,6 +22,8 @@
           averageBounty={this.props.averageBounty}
           onChange={this.handleOfferChanged} />
 
+        <input name="offer" type="hidden" value={this.state.newOffer} />
+
         <span className="text-coins">
           <span className="icon icon-app-coin"></span>
           {numeral(this.state.newOffer).format('0,0')}

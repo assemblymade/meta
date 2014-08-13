@@ -15,7 +15,7 @@
             <span className="pull-left">Simple</span>
             <span className="pull-right">Complex</span>
           </div>
-          <input name="offer" type="range" min="0" max="100" onChange={this.handleOfferChanged} defaultValue={50} />
+          <input type="range" min="0" max="100" onChange={this.handleOfferChanged} defaultValue={50} />
           <br />
           <p>
             <span className="text-success">
