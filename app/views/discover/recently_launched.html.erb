@@ -1,17 +1,15 @@
 <% title 'Recently Launched Products' %>
 <% activate_nav! :platform_discover %>
+<% activate_nav! :discover_recently_launched %>
 
 <%= render 'shared/navbar' %>
 
 <div class="page page-flat">
   <div class="container">
     <div class="row">
-      <div class="col-sm-9 col-xs-9">
+      <div class="col-md-10 col-md-offset-1">
 
-        <div class="page-header">
-          <h2 class="page-header-title">Recently Launched</h2>
-          <p>Hot off the press. Products that are ready to rock.</p>
-        </div>
+        <%= render 'header' %>
 
         <div class="list-group list-group-breakout list-group-padded">
           <% @products.each do |product| %>
@@ -25,9 +23,7 @@
 
       </div>
 
-      <div class="col-sm-3 col-xs-3">
-        <%= render 'nav' %>
-      </div>
+
     </div>
   </div>
 </div>
