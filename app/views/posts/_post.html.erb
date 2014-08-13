@@ -1,0 +1,12 @@
+<h3 style="margin-bottom: 0"><%= post.title %></h3>
+<p class="small text-muted">Posted in
+  <a class="text-muted" href="<%= product_path(post.product) %>"><%= post.product.name %></a>
+  <time class="timestamp" datetime="<%= post.created_at.iso8601 %>"></time> by
+  <a class="text-muted" href="<%= user_path(post.author) %>">@<%= post.author.username %></a>
+</p>
+
+<div class="markdown-normalized">
+  <%= product_markdown(post.product, post.body.split("\n")[0..6].join("\n")) %>
+</div>
+
+<p><br/><a href="<%= product_post_path(post.product, post) %>">Read more...</a></p>

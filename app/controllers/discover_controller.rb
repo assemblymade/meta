@@ -48,4 +48,10 @@ class DiscoverController < ApplicationController
                        .order("Random()")
                        .limit(2)
   end
+
+  def blog
+    @posts = Post.joins(:product).
+      where('products.flagged_at is null').
+      order(created_at: :desc).page(params[:page])
+  end
 end

@@ -2,6 +2,7 @@ require 'activerecord/uuid'
 
 class Post < ActiveRecord::Base
   include ActiveRecord::UUID
+  include Kaminari::ActiveRecordModelExtension
   extend FriendlyId
 
   belongs_to :product
