@@ -68,11 +68,11 @@
         <% if bounty.state == 'resolved' && !bounty.winner.present? %>
           <del>
             <span class="icon icon-app-coin"></span>
-            <span><%= number_with_delimiter(bounty.value) %></span>
+            <span><%= number_with_delimiter(WipContracts.new(bounty).earnable_cents.floor) %></span>
           </del>
         <% else %>
           <span class="icon icon-app-coin"></span>
-          <span class="js-coins"><%= number_with_delimiter(bounty.value.floor) %></span>
+          <span class="js-coins"><%= number_with_delimiter(WipContracts.new(bounty).earnable_cents.floor) %></span>
         <% end %>
       </span>
 
