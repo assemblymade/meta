@@ -17,9 +17,13 @@ services:
 - elasticsearch
 deploy:
   provider: heroku
+  strategy: git
   app:
     secure: gv+O69pvNInWcQUSRwjPS2Fu+5gKwSTkiEzQ8KkOMygBTa1btS8DWpvQUtkxtEyXDwTz7P5UNYNNsRcL1/UCB6Xl3UknnTK825yTMfX3UDKAhNQ0+Zw0GtqXx9xXnfPthhBYGK7g2aKhoou4eJwkDIBVytmMsTxFj+fwnTSRnRo=
-  run: rake db:migrate
+  run:
+    - "rake db:migrate"
+    - restart
+    - "rake cleanup"
   api_key:
     secure: TBU1zA2xMr0MBJTPiLIkCM92UczOxOM3a4ChAH48HjGvw9TSRB5faGY/HiIMJG0MjUMohlLINjQ7RvZlH9CH3yplWZiDSrsQvbpaGrK3WE8PHC/DOvwzfBoNKRYZqcFkWtyoO5JlAU51g877SjPpzW0Ec5iamCqzUTf9OhaIWlo=
 env:
