@@ -18,7 +18,7 @@ var PersonPicker = require('./person_picker.js.jsx');
 
   var CoinOwnership = React.createClass({
     getDefaultProps: function() {
-      return { totalCoins: 6000 };
+      return { totalCoins: parseInt(10000000 * 0.05, 10) };
     },
 
     componentDidMount: function() {
@@ -48,6 +48,10 @@ var PersonPicker = require('./person_picker.js.jsx');
       return sharerCoins + this.state.creator.coins
     },
 
+    unallocatedCoins: function() {
+      return 10000000 - this.totalCoins();
+    },
+
     render: function() {
       var creator = this.state.creator;
 
@@ -56,27 +60,39 @@ var PersonPicker = require('./person_picker.js.jsx');
           <thead>
             <tr>
               <th colSpan="2">Partner</th>
-              <th className="text-right" style={{width: 130}}>Ownership</th>
               <th className="text-right">Coins</th>
+              <th className="text-right" style={{width: 130}}>Ownership</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
+
             <tr className="active">
+              <td>&nbsp;</td>
+              <td style={{'white-space':"nowrap"}}>Unallocated coins</td>
+              <td className="text-right">
+                <span className="icon icon-app-coin text-coins"></span>
+                {numeral(this.unallocatedCoins()).format('0,0')}
+              </td>
+              <td></td>
+              <td>&nbsp;</td>
+            </tr>
+
+            <tr className="">
               <td><Avatar user={creator} /></td>
               <td>
                 @{creator.username}
               </td>
               <td className="text-right">
-                <strong>{this.ownership(creator)}%</strong>
-              </td>
-              <td className="text-right">
-                <span className="text-coins" style={{"white-space":"nowrap"}}>
-                  <span className="icon icon-app-coin"></span>
-                  {creator.coins}
+                <span style={{"white-space":"nowrap"}}>
+                  <span className="icon icon-app-coin text-coins"></span>
+                  {numeral(creator.coins).format('0,0')}
                 </span>
               </td>
               <td className="text-right">
+                <strong>{this.ownership(creator)}%</strong>
+              </td>
+              <td>
                 <span className="text-muted">(you)</span>
               </td>
             </tr>
@@ -85,25 +101,12 @@ var PersonPicker = require('./person_picker.js.jsx');
 
             <tr>
               <td><Avatar user={this.state.potentialUser} alwaysDefault="true" /></td>
-              <td>
+              <td colSpan="3">
                 <PersonPicker ref="picker" url="/_es"
                               onUserSelected={this.handleUserSelected}
                               onValidUserChanged={this.handleValidUserChanged} />
               </td>
               <td>
-                <div className="input-group input-group-sm">
-
-                  <input className="form-control text-right" type="number" value={this.state.percentageAvailable} onChange={this.handleInputChange} />
-                  <div className="input-group-addon">%</div>
-                </div>
-              </td>
-              <td>
-                <span className="text-coins pull-right" style={{'white-space':"nowrap"}}>
-                  <span className="icon icon-app-coin"></span>
-                  0
-                </span>
-              </td>
-              <td className="text-right">
                 {this.addButton()}
               </td>
             </tr>
@@ -262,16 +265,16 @@ var PersonPicker = require('./person_picker.js.jsx');
               </div>
             </td>
             <td className="text-right">
-              <span className="text-coins" style={{'white-space':"nowrap"}}>
-                <span className="icon icon-app-coin"></span>
-                {user.coins}
-              </span>
-            </td>
-            <td className="text-right">
               <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
                 <span className="icon icon-close"></span>
                 <span className="sr-only">Remove</span>
               </a>
+            </td>
+            <td className="text-right">
+              <span style={{'white-space':"nowrap"}}>
+                <span className="icon icon-app-coin text-coins"></span>
+                {numeral(user.coins).format('0,0')}
+              </span>
             </td>
           </tr>
         );
@@ -282,6 +285,12 @@ var PersonPicker = require('./person_picker.js.jsx');
             <td>
               @{user.username}
             </td>
+            <td className="text-right">
+              <span style={{'white-space':"nowrap"}}>
+                <span className="icon icon-app-coin text-coins"></span>
+                {numeral(user.coins).format('0,0')}
+              </span>
+            </td>
             <td>
               <div className="input-group input-group-sm">
                 <input ref="ownership" className="form-control text-right" type="number"
@@ -291,13 +300,7 @@ var PersonPicker = require('./person_picker.js.jsx');
                 <div className="input-group-addon">%</div>
               </div>
             </td>
-            <td className="text-right">
-              <span className="text-coins" style={{'white-space':"nowrap"}}>
-                <span className="icon icon-app-coin"></span>
-                {user.coins}
-              </span>
-            </td>
-            <td className="text-right">
+            <td>
               <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
                 <span className="icon icon-close"></span>
                 <span className="sr-only">Remove</span>

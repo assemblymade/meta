@@ -3,10 +3,24 @@
 
 <% cache [@product] do %>
   <div class="page-header sheet-header">
-    <h2 class="page-header-title"><%= @product.stakeholders %></h2>
+    <h2 class="page-header-title">Coins</h2>
+    <div class="page-header-meta">
+      <div class="pull-right">
+        <a href="<%= help_path(:revenue) %>">
+          <span class="glyphicon glyphicon-question-sign icon-left"></span>
+          What are coins?
+        </a>
+      </div>
+
+      <ul class="list-piped">
+        <li>10M total</li>
+        <li>200k vested</li>
+      </ul>
+    </div>
   </div>
 
   <div class="sheet-body">
+
     <% if !@product.for_profit? %>
       <%= render 'products/non_profit' %>
     <% end %>
@@ -19,16 +33,19 @@
               <th class="text-left">Partner</th>
               <th class="text-right">
                 <% if @product.for_profit? %>
-                  Coins Earned
+                  Coins
                 <% else %>
                   Karma
                 <% end %>
               </th>
-              <% if @product.for_profit? %>
-                <th class="text-right">
+
+              <th class="text-right">
+                <% if @product.for_profit? %>
+                  Ownership
+                <% else %>
                   Percentage
-                </th>
-              <% end %>
+                <% end %>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -42,16 +59,28 @@
                   </a>
                 </td>
                 <td class="text-right">
-                  <i class="icon icon-app-coin text-coins small"></i>
-                  <%= number_with_delimiter cents %>
+                  <span class="icon icon-app-coin text-coins"></span>
+                  <%= number_with_delimiter(cents) %>
                 </td>
-                <% if @product.for_profit? %>
-                  <td class="text-right">
+                <td class="text-right">
+                  <% if cents / @total_cents.to_d < 0.0001 %>
+                    &lt; 0.01%
+                  <% else %>
                     <%= number_to_percentage(cents / @total_cents.to_d * 100, precision: 2) %>
-                  </td>
-                <% end %>
+                  <% end %>
+                </td>
               </tr>
             <% end %>
+
+            <tr class="active text-muted">
+              <td>Unvested</td>
+              <td class="text-right">
+                <span class="icon icon-app-coin text-coins"></span>
+                9,800,390
+              </td>
+              <td class="text-right">-</td>
+            </tr>
+
           </tbody>
         </table>
       </div>
