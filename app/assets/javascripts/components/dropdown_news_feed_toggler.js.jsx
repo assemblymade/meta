@@ -1,15 +1,16 @@
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
+var Dispatcher = require('../dispatcher');
 var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
-var NewsFeedMixin = require('../mixins/news_feed.js.jsx');
+var LocalStorageMixin = require('../mixins/local_storage');
 var NewsFeedStore = require('../stores/news_feed_store');
 
 (function() {
   var NF = CONSTANTS.NEWS_FEED;
 
   var DropdownNewsFeedToggler = React.createClass({
-    mixins: [DropdownTogglerMixin, NewsFeedMixin],
+    mixins: [DropdownTogglerMixin, LocalStorageMixin],
 
     acknowledge: function() {
       var timestamp = moment().unix();

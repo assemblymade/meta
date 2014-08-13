@@ -10,7 +10,7 @@ var update = require('react/lib/update');
 
   var NewsFeedMixin = {
     componentDidMount: function() {
-      var target = this.refs.spinner.getDOMNode();
+      var target = this.refs.spinner && this.refs.spinner.getDOMNode();
       var opts = this.spinnerOptions || {
         lines: 13,
         length: 30,
@@ -53,7 +53,7 @@ var update = require('react/lib/update');
       this.setState({
         stories: newStories,
         actors: NewsFeedUsersStore.getUsers(),
-        showMore: (newStories.length - oldStoriesCount >= NF.MORE_STORIES_LENGTH)
+        showMore: (newStories.length - oldStoriesCount === NF.MORE_STORIES_LENGTH)
       }, function() {
         if (self.state.stories.length) {
           self.spinner.stop();
