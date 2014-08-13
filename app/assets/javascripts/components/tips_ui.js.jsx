@@ -2,7 +2,7 @@
 
 (function() {
 
-  COIN_INCREMENT = [1, 1, 3, 5, 15, 25, 50]
+  COIN_INCREMENT = [1, 1, 1, 2, 5, 5, 5, 5, 25, 25, 25, 50]
   DEBOUNCE_TIMEOUT = 2000
 
   var TipsUi = React.createClass({
