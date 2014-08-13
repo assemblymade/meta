@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140813003428) do
+ActiveRecord::Schema.define(version: 20140813201736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(version: 20140813003428) do
     t.uuid     "event_id"
   end
 
+  add_index "events", ["type", "wip_id"], name: "index_events_on_type_and_wip_id", using: :btree
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
   add_index "events", ["wip_id", "number"], name: "index_events_on_wip_id_and_number", unique: true, using: :btree
   add_index "events", ["wip_id"], name: "index_events_on_wip_id", using: :btree
