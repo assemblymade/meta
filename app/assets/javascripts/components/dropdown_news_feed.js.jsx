@@ -22,7 +22,7 @@ var Avatar = require('./avatar.js.jsx');
 
     render: function() {
       return (
-        <ul className="dropdown-menu" style={{ 'max-height': '500px', 'min-width': '380px' }}>
+        <ul className="dropdown-menu" style={{'min-width': '380px' }}>
           <li style={{ 'overflow-y': 'scroll' }} ref="spinner">
             {this.state.stories ? this.rows(this.state.stories) : null}
           </li>
@@ -51,7 +51,7 @@ var Avatar = require('./avatar.js.jsx');
       var firstTen = _.first(stories, 10);
 
       return (
-        <div className="list-group" style={{ 'max-height': '300px', 'min-height': '50px' }}>
+        <div className="list-group" style={{ 'max-height': '400px', 'min-height': '50px' }}>
           { _.map(firstTen, function(story) {
             return <Entry key={story.id} story={story} actors={self.state.actors} fullPage={false} />;
           }) }
@@ -99,8 +99,8 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     ellipsis: function(text) {
-      if (text && text.length > 40) {
-        text = text.substring(0, 40) + '…';
+      if (text && text.length > 100) {
+        text = text.substring(0, 100) + '…';
       }
 
       return text;
@@ -136,9 +136,9 @@ var Avatar = require('./avatar.js.jsx');
       var body_preview = this.state.story.body_preview;
 
       return (
-        <p className='text-muted' style={{ 'text-overflow': 'ellipsis' }}>
+        <span className='text-muted' style={{ 'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space':'nowrap', 'display': 'inline-block', 'width': 290}}>
           {this.ellipsis(body_preview)}
-        </p>
+        </span>
       );
     },
 
@@ -157,7 +157,7 @@ var Avatar = require('./avatar.js.jsx');
       });
 
       return (
-        <a className={'list-group-item ' + classes}
+        <a className={'list-group-item list-group-item-condensed ' + classes}
             href={this.state.story.url}
             style={{ 'font-size': '14px' }}
             onClick={this.state.story.last_read_at ? null : this.markAsRead}>
@@ -168,7 +168,7 @@ var Avatar = require('./avatar.js.jsx');
             </div>
 
             <div className="col-md-10">
-              <strong>{actors}</strong> {this.body()}
+              <strong>{actors}</strong> {this.body()}<br/>
               {this.preview()}
             </div>
 
