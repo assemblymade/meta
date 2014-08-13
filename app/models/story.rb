@@ -68,6 +68,10 @@ class Story < ActiveRecord::Base
     end
   end
 
+  def notify_by_email(user)
+    # don't send emails for every story created
+  end
+
   # private
 
   def product_subscribers
