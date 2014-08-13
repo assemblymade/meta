@@ -15,6 +15,13 @@ cache: bundler
 services:
   - redis-server
   - elasticsearch
+deploy:
+  provider: heroku
+  api_key:
+    secure: UKgwoaJveqQ1TYgnOVv8YDnU25wW61UUQOoFTHmJXjcW0t960SkiWLcEnLpM88gxdO+h0Xg6JDsXmU285TZH9kHeNXCAXigTzUXtkC0DNYjrwARdiIWJugJQ+97ExvlTTaKFqIR6cMaAHDPsze5CIjM+3NKosa0HJy0ezizLvJo=
+  app:
+    secure: QgInT48ljww7cQVn779VXdUbI//dJCNHzaB8e+t/dLRXjypc5uobhK7PS0Nk/Qk1wW9Qd7Eoy6Q4F5uiU88J2QFMWBkpgZ2My05aWlZI/m+Ni+Tqh6UV3Nr4VWqbWgtRKY+jCTF/tItuPkKFk9avOSDNLYcQNbQ9lR0doRaSOO4=
+  run: "rake db:migrate"
 env:
   global:
     secure: e5U3AYlkOhCiDJxHnR+tAkARa+EL3mcKYQujnerIkXxcCHz2D2cRgYutGYb6sfZxZaspZsk62EyxGTeEcCJP5D5ANaOkpQ4qdSjznHRJdjiEcM2+XBUsRXgTQeeXbtpG5uW+gX9DlFf0e1149RHXErdR0WiUdrHpRKnAU8LOV48=
