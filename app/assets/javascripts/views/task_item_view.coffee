@@ -24,7 +24,10 @@ class window.TaskItemView extends Backbone.View
     @listenTo @model, 'destroy', @remove
 
   render: ->
-    @$el.html(@template()(@model.toJSON().task))
+    templateAttributes = _.clone(@model.attributes)
+    templateAttributes.title = _.escape(templateAttributes.title)
+
+    @$el.html(@template()(templateAttributes))
     @$el.attr('class', @className())
 
     @$input = @$('.js-input')
