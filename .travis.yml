@@ -4,24 +4,24 @@ rvm:
 addons:
   postgresql: '9.3'
 install:
-  - npm install
-  - npm run bundle
-  - bundle install
+- npm install
+- npm run bundle
+- bundle install
 before_script:
 - psql -c 'create database asm_test;' -U postgres
 - cp config/database.yml.travis config/database.yml
 - bin/rake db:schema:load
 cache: bundler
 services:
-  - redis-server
-  - elasticsearch
+- redis-server
+- elasticsearch
 deploy:
   provider: heroku
-  api_key:
-    secure: UKgwoaJveqQ1TYgnOVv8YDnU25wW61UUQOoFTHmJXjcW0t960SkiWLcEnLpM88gxdO+h0Xg6JDsXmU285TZH9kHeNXCAXigTzUXtkC0DNYjrwARdiIWJugJQ+97ExvlTTaKFqIR6cMaAHDPsze5CIjM+3NKosa0HJy0ezizLvJo=
   app:
-    secure: QgInT48ljww7cQVn779VXdUbI//dJCNHzaB8e+t/dLRXjypc5uobhK7PS0Nk/Qk1wW9Qd7Eoy6Q4F5uiU88J2QFMWBkpgZ2My05aWlZI/m+Ni+Tqh6UV3Nr4VWqbWgtRKY+jCTF/tItuPkKFk9avOSDNLYcQNbQ9lR0doRaSOO4=
-  run: "rake db:migrate"
+    secure: gv+O69pvNInWcQUSRwjPS2Fu+5gKwSTkiEzQ8KkOMygBTa1btS8DWpvQUtkxtEyXDwTz7P5UNYNNsRcL1/UCB6Xl3UknnTK825yTMfX3UDKAhNQ0+Zw0GtqXx9xXnfPthhBYGK7g2aKhoou4eJwkDIBVytmMsTxFj+fwnTSRnRo=
+  run: rake db:migrate
+  api_key:
+    secure: TBU1zA2xMr0MBJTPiLIkCM92UczOxOM3a4ChAH48HjGvw9TSRB5faGY/HiIMJG0MjUMohlLINjQ7RvZlH9CH3yplWZiDSrsQvbpaGrK3WE8PHC/DOvwzfBoNKRYZqcFkWtyoO5JlAU51g877SjPpzW0Ec5iamCqzUTf9OhaIWlo=
 env:
   global:
     secure: e5U3AYlkOhCiDJxHnR+tAkARa+EL3mcKYQujnerIkXxcCHz2D2cRgYutGYb6sfZxZaspZsk62EyxGTeEcCJP5D5ANaOkpQ4qdSjznHRJdjiEcM2+XBUsRXgTQeeXbtpG5uW+gX9DlFf0e1149RHXErdR0WiUdrHpRKnAU8LOV48=
