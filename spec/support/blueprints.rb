@@ -40,13 +40,6 @@ Interest.blueprint do
   slug { "interest_#{sn}"}
 end
 
-Perk.blueprint do
-  product
-  amount      { sn.to_i * 100 }
-  name        { Faker::Company.name }
-  description { Faker::Lorem.paragraph(1) }
-end
-
 Product.blueprint do
   user
   name  { "Product #{sn}" }
@@ -54,12 +47,6 @@ Product.blueprint do
   pitch { Faker::Lorem.paragraph(1) }
   launched_at { Time.now }
   can_advertise { true }
-end
-
-Preorder.blueprint do
-  user
-  perk
-  card_id { "card_103PgS2eZvKYlo2CpomG3L9L" }
 end
 
 Story.blueprint do

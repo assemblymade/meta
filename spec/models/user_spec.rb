@@ -20,14 +20,6 @@ describe User do
     user.wips_contributed_to.should include(event.wip)
   end
 
-  describe '#ensure_stripe_customer!' do
-    it 'saves stripe customer id' do
-      expect(Stripe::Customer).to receive(:create).with(email: user.email, card: 't_1234') { FakeStripeCustomer.new('cus_1234') }
-      user.ensure_stripe_customer!('t_1234')
-      user.reload.customer_id.should == 'cus_1234'
-    end
-  end
-
   it 'should return wips a user is working on' do
     user = User.make!
     task = Task.make!

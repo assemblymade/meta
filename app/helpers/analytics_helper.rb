@@ -34,10 +34,8 @@ module AnalyticsHelper
   def product_properties(product)
     {
       'backers.count'      => product.count_presignups,
-      'bank.total'         => product.total_banked,
       'applications.count' => product.watchings.count,
       'features.count'     => product.wips.count,
-      'perks.count'        => product.perks.count,
       'views.count'        => product.view_count
     }
   end

@@ -37,9 +37,7 @@ class Product < ActiveRecord::Base
   has_many :invites, as: :via
   has_many :metrics
   has_many :milestones
-  has_many :perks
   has_many :posts
-  has_many :preorders, :through => :perks
   has_many :profit_reports
   has_many :rooms
   has_many :showcases
@@ -153,10 +151,6 @@ class Product < ActiveRecord::Base
   end
 
   def has_metrics?
-    for_profit?
-  end
-
-  def has_preorders?
     for_profit?
   end
 
@@ -299,32 +293,12 @@ class Product < ActiveRecord::Base
     user.username
   end
 
-  def sum_preorders
-    preorders.sum(:amount)
-  end
-
-  def total_banked
-    sum_preorders + assembly_contribution
-  end
-
   def voted_by?(user)
     votes.where(user: user).any?
   end
 
-  def preorders_by_user(user)
-    preorders.find_by(user: user)
-  end
-
-  def count_registered_users
-    votes.size + preorders.size
-  end
-
   def combined_watchers_and_voters
     (votes.map {|vote| vote.user } + watchers).uniq
-  end
-
-  def score
-    votes.size + sum_preorders.dollars.to_i + assembly_contribution.dollars.to_i
   end
 
   def tags_with_count

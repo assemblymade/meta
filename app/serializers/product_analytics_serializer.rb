@@ -1,6 +1,6 @@
 class ProductAnalyticsSerializer < ActiveModel::Serializer
   attributes :product_id, :product_slug
-  attributes :registered_users, :preorders, :team_members
+  attributes :registered_users, :team_members
   attributes :current_mission
   attributes :status_updated
 
@@ -18,10 +18,6 @@ class ProductAnalyticsSerializer < ActiveModel::Serializer
 
   def registered_users
     team_members
-  end
-
-  def preorders
-    product.sum_preorders
   end
 
   def team_members

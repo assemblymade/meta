@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
   has_many :events
   has_many :products
   has_many :product_logos
-  has_many :preorders
   has_many :followed_tags, :through => :watchings, :source => :watchable, :source_type => 'Wip::Tag'
   has_many :wips
   has_many :wip_workers, :class_name => 'Wip::Worker'
@@ -119,10 +118,6 @@ class User < ActiveRecord::Base
     Avatar.new(self)
   end
 
-  def preordered_perk?(perk)
-    preorders.where(perk_id: perk.id).exists?
-  end
-
   def staff?
     is_staff?
   end
@@ -193,14 +188,6 @@ class User < ActiveRecord::Base
 
   def voted_for?(votable)
     votable.votes.where(user: self).any?
-  end
-
-  attr_reader :stripe_customer
-
-  def ensure_stripe_customer!(token)
-    ensurer = StripeCustomerEnsurer.new(self, token)
-    ensurer.ensure!
-    @stripe_customer = ensurer.customer
   end
 
   def username_renamed

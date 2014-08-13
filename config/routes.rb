@@ -59,12 +59,6 @@ ASM::Application.routes.draw do
 
   get '/discover/tech/:tech' => 'discover#tech'
 
-  # Perks
-  resources :perks, :only => [] do
-    resources :preorders, :module => :perks, :on => :member, :only => [:new, :create]
-  end
-
-
   devise_for :users,
     :skip => [:registrations, :sessions, :confirmations],
     :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :passwords => 'users/passwords' }

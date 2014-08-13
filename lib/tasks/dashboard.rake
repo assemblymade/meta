@@ -4,9 +4,6 @@ namespace :dashboard do
   task :entities => :environment do
     dash = DashboardReporter.new
     dash.number 'ideas.count', Product.count
-    dash.number 'presales.count', Preorder.count
-    dash.number 'presales.sum', Preorder.sum(:amount) / 100.0
-    dash.number 'presales.avg.user', dash.average(Preorder.group(:user_id).average(:amount).values) / 100.0
     dash.number 'users.count', User.count
 
     helpful = Product.find_by!(slug:'helpful')
@@ -14,8 +11,6 @@ namespace :dashboard do
     dash.sparkline 'wips.awarded', helpful.tasks.won.group('date(closed_at)').order('date(closed_at)').count('*')
 
     dash.list 'users.active.recent', User.where('last_request_at is not null').order('last_request_at DESC').limit(20).select(:username).map(&:username)
-
-    dash.leaderboard 'users.presales.recent', recent_presales
   end
 
   task :growth => :environment do
@@ -78,9 +73,5 @@ namespace :dashboard do
 
   task :disable_ar_log => :environment do
     ActiveRecord::Base.logger = nil
-  end
-  
-  def recent_presales
-    Preorder.order('created_at DESC').limit(20).map {|ps| { "#{ps.user.name}" => ps.amount / 100.0} }
   end
 end

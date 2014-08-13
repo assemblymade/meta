@@ -70,12 +70,5 @@ splitty = Product.create!(
   description: seed_idea_description('splitty.md'),
   submitted_at: 3.days.ago,
   evaluated_at: 5.days.ago,
-  is_approved: true,
-  perks: [
-    Perk.new(
-      amount: 500,
-      name: "One year unlimited",
-      description: "Unlimited transactions for you and your friends when you use Splitty in the first year."
-    )
-  ]
+  is_approved: true
 )

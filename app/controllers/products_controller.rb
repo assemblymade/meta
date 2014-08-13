@@ -62,7 +62,6 @@ class ProductsController < ProductController
       return
     end
 
-    @perks = @product.perks.includes(:preorders).order(:amount).decorate
     @user_metrics = UserMetricsSummary.new(@product, Date.today - 1.day)
 
     page_views = TimedSet.new($redis, "#{@product.id}:show")
