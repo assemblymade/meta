@@ -12,7 +12,7 @@ describe Api::OffersController do
       TransactionLogEntry.minted!(nil, Time.now, product, bounty.id, user.id, 1)
 
       post :create, product_id: product.slug, bounty_id: bounty.number,
-        amount: 5000, format: :json
+        amount: 5000.78, format: :json
 
       expect(response).to be_successful
       expect(assigns(:offer)).to be_persisted

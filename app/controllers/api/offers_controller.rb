@@ -5,9 +5,9 @@ module Api
     def create
       @product = Product.find_by!(slug: params[:product_id])
       @bounty = @product.tasks.find_by!(number: params[:bounty_id])
-      @offer = @bounty.offers.create(
+      @offer = @bounty.offers.create!(
         user: current_user,
-        amount: offer_params.fetch(:amount),
+        amount: offer_params.fetch(:amount).round,
         ip: request.ip
       )
 
