@@ -1,6 +1,8 @@
 class TipMailer < BaseMailer
   include ActionView::Helpers::TextHelper
 
+  helper :markdown
+
   layout 'email'
 
   def tipped(tip_id)
@@ -18,7 +20,7 @@ class TipMailer < BaseMailer
       product_chat_url(@product)
     end
     mail to: @user.email_address,
-         subject: "#{@tip.from.username} tipped you #{pluralize(@tip.cents / 100, 'coin')}"
+         subject: "#{@tip.from.username} tipped you #{pluralize(@tip.cents, 'coin')}"
   end
 
 end
