@@ -2,15 +2,14 @@ var xhr = require('../xhr');
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
 var NewsFeedUsersStore = require('../stores/news_feed_users_store');
+var NotificationsMixin = require('../mixins/notifications');
 
 (function() {
-  var rrMetaTag = document.getElementsByName('read-raptor-url');
-  var READ_RAPTOR_URL = rrMetaTag && rrMetaTag[0] && rrMetaTag[0].content;
   var _stories = {};
   var _optimisticStories = {};
   var _store = Object.create(Store);
 
-  var _newsFeedStore = _.extend(_store, {
+  var _newsFeedStore = _.extend(_store, NotificationsMixin, {
     addStory: function(data) {
       if (!data) {
         return;
@@ -19,16 +18,6 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       var story = data.story;
 
       _stories[story.key] = story;
-    },
-
-    applyReadTimes: function(data, stories) {
-      for (var i = 0, l = data.length; i < l; i++) {
-        var datum = data[i];
-
-        if (datum.last_read_at && stories[datum.key]) {
-          stories[datum.key].last_read_at = datum.last_read_at;
-        }
-      }
     },
 
     handleFetchedStories: function(err, data) {
@@ -49,7 +38,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
         NewsFeedUsersStore.setUsers(users);
       }
 
-      var url = READ_RAPTOR_URL +
+      var url = this.rrUrl() +
         '/readers/' +
         app.currentUser().get('id') +
         '/articles?' +
@@ -60,54 +49,23 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
           }
         ).join('&')
 
-      window.xhr.noCsrfGet(url, this.handleReadRaptor(stories));
+      xhr.noCsrfGet(url, this.handleReadRaptor(stories, 'key'));
     },
 
-    handleReadRaptor: function(stories, method) {
-      var self = this;
-
-      return function readRaptorCallback(err, data) {
-        if (err) {
-          return console.error(err);
-        }
-
-        try {
-          data = JSON.parse(data);
-        } catch (e) {
-          return console.error(e);
-        }
-
-        stories = _.reduce(
-          stories,
-          function(hash, story) {
-            hash[story.key] = story;
-            hash[story.key].last_read_at = 0;
-
-            return hash;
-          },
-          {}
-        );
-
-        self.applyReadTimes(data, stories);
-        self.setStories(stories);
-        self.emitChange();
-      };
-    },
-
-    'newsFeed:acknowledge': function(timestamp) {},
+    'newsFeed:acknowledge': this.noop,
 
     'newsFeed:fetchStories': function(url) {
-      window.xhr.get(url, this.handleFetchedStories.bind(this));
+      xhr.get(url, this.handleFetchedStories.bind(this));
     },
 
     'newsFeed:fetchMoreStories': function(url) {
-      window.xhr.get(url, this.handleFetchedStories.bind(this));
+      xhr.get(url, this.handleFetchedStories.bind(this));
     },
 
     'newsFeed:markAsRead': function(storykey) {
       var url = '/user/tracking/' + storykey;
 
-      window.xhr.get(url, this.markedAsRead(storykey));
+      xhr.get(url, this.markedAsRead(storykey));
     },
 
     'newsFeed:markAllAsRead': function() {
@@ -121,7 +79,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
         var story = unread[i];
         var url = '/user/tracking/' + story.key;
 
-        window.xhr.get(url, self.markedAsRead(story.key, true, (i + 1 === l)));
+        xhr.get(url, self.markedAsRead(story.key, true, (i + 1 === l)));
       }
     },
 
@@ -129,7 +87,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
       var storyKey = data.key;
       var url = data.readraptor_url;
 
-      window.xhr.noCsrfGet(url);
+      xhr.noCsrfGet(url);
 
       _optimisticStories[storyKey] = {
         last_read_at: moment().unix()

@@ -2,29 +2,27 @@ var xhr = require('../xhr');
 var merge = require('react/lib/merge');
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
+var NotificationsMixin = require('../mixins/notifications');
 
 (function() {
-  var rrMetaTag = document.getElementsByName('read-raptor-url');
-  var READ_RAPTOR_URL = rrMetaTag && rrMetaTag[0] && rrMetaTag[0].content;
   var _chatRooms = {};
   var _sortKeys = [];
-  var _optimisticallyUpdatedChatRooms = {};
+  var _optimisticChatRooms = {};
   var _store = Object.create(Store);
-  var noop = function() {};
 
-  var _notificationsStore = _.extend(_store, {
-    'chat:acknowledge': noop,
+  var _notificationsStore = _.extend(_store, NotificationsMixin, {
+    'chat:acknowledge': this.noop,
 
     'chat:markRoomAsRead': function(payload) {
-      window.xhr.noCsrfGet(payload.readraptor_url);
+      xhr.noCsrfGet(payload.readraptor_url);
 
-      _optimisticallyUpdatedChatRooms[payload.id] = {
+      _optimisticChatRooms[payload.id] = {
         last_read_at: moment().unix()
       };
     },
 
     'chat:fetchChatRooms': function(url) {
-      window.xhr.get(url, this.handleFetchedChatRooms.bind(this));
+      xhr.get(url, this.handleFetchedChatRooms.bind(this));
     },
 
     getUnreadCount: function(acknowledgedAt) {
@@ -58,7 +56,7 @@ var Store = require('../stores/store');
       var chatRooms = data.chat_rooms;
       _sortKeys = data.sort_keys;
 
-      var url = READ_RAPTOR_URL +
+      var url = this.rrUrl() +
         '/readers/' +
         app.currentUser().get('id') +
         '/articles?' +
@@ -69,51 +67,24 @@ var Store = require('../stores/store');
           }
         ).join('&');
 
-      window.xhr.noCsrfGet(url, this.handleReadRaptor(chatRooms));
-    },
-
-    handleReadRaptor: function(chatRooms) {
-      return function readRaptorCallback(err, data) {
-        if (err) { return console.error(err); }
-
-        try {
-          data = JSON.parse(data);
-        } catch (e) {
-          return console.error(e);
-        }
-
-        chatRooms = _.reduce(
-          chatRooms,
-          function(h, chatRoom) {
-            h[chatRoom.id] = chatRoom;
-            h[chatRoom.id].last_read_at = 0;
-
-            return h;
-          },
-          {}
-        );
-
-        this.applyReadTimes(data, chatRooms);
-        this.setChatRooms(chatRooms);
-        this.emitChange();
-      }.bind(this);
-    },
-
-    applyReadTimes: function(data, chatRooms) {
-      for (var i = 0, l = data.length; i < l; i++) {
-        var datum = data[i];
-
-        if (datum.last_read_at && chatRooms[datum.key]) {
-          chatRooms[datum.key].last_read_at = datum.last_read_at;
-        }
-      }
+      xhr.noCsrfGet(url, this.handleReadRaptor(chatRooms, 'id'));
     },
 
     getChatRoom: function(id) {
+      if (_optimisticChatRooms[id]) {
+        _chatRooms[id].last_read_at = _optimisticChatRooms[id].last_read_at;
+      }
+
       return _chatRooms[id];
     },
 
     getChatRooms: function() {
+      for (var id in _optimisticChatRooms) {
+        if (_chatRooms[id]) {
+          _chatRooms[id].last_read_at = _optimisticChatRooms[id].last_read_at;
+        }
+      }
+
       return _chatRooms;
     },
 
@@ -121,17 +92,17 @@ var Store = require('../stores/store');
       return _sortKeys;
     },
 
-    setChatRooms: function(chatRooms) {
+    setStories: function(chatRooms) {
       _chatRooms = chatRooms;
 
-      var keys = _.keys(_optimisticallyUpdatedChatRooms)
+      var keys = _.keys(_optimisticChatRooms)
       for (var i = 0; i < keys.length; i++) {
         if (_chatRooms[keys[i]]) {
-          _chatRooms[keys[i]].last_read_at = _optimisticallyUpdatedChatRooms[keys[i]].last_read_at;
+          _chatRooms[keys[i]].last_read_at = _optimisticChatRooms[keys[i]].last_read_at;
         }
       }
 
-      _optimisticallyUpdatedChatRooms = {}
+      _optimisticChatRooms = {}
     },
 
     removeChatRoom: function(id) {
