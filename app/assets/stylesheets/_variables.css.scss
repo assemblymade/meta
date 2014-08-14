@@ -1,43 +1,47 @@
 // Colors
 
-$black:         #2A3036;
+$black:         #333;
 
 $blue:          #428bca;
-$purple:        #6700B9;
-$green:         #699D36;
-$yellow:        #E9AD1A;
-$red:           #F93232;
+$green:         #5cb85c;
+$cyan:          #5bc0de;
+$yellow:        #f0ad4e;
+$red:           #d9534f;
+
+$facebook:      #3B5998;
+$twitter:       #55ACEE;
 
 // Deprecated
+$purple:        #6700B9;
 $blue-light:    lighten($blue, 10%);
 $green-light:   lighten($green, 10%);
 $purple-light:  lighten($purple, 10%);
 $yellow-light:  lighten($yellow, 10%);
 $red-light:     lighten($red, 10%);
 
-$gray-darker:   #2A3036;
-$gray-dark:     #4E5A66;
-$gray:          #96A1AB;
-$gray-light:    #C6CCD2;
-$gray-lighter:  #E2E5E8;
-
-$body-bg:       #F0F2F5;
-$text-color:    $black;
+$gray-darker:   lighten(#000, 13.5%); // #222
+$gray-dark:     lighten(#000, 20%);   // #333
+$gray:          lighten(#000, 33.5%); // #555
+$gray-light:    lighten(#000, 46.7%); // #777
+$gray-lighter:  lighten(#000, 93.5%); // #eee
 
 $brand-primary: $blue;
 $brand-success: $green;
-$brand-info:    #5bc0de;
+$brand-info:    $cyan;
 $brand-warning: $yellow;
 $brand-danger:  $red;
-$brand-muted:   $gray;
+$brand-muted:   $gray-light;
 
-$brand-border:   darken($gray-lighter, 4%);
-$brand-divider:  darken($body-bg, 4%);
+$brand-bg:       #FAFAFA;
+$brand-border:   darken($gray-lighter, 10%);
+$brand-divider:  darken($brand-bg, 5%);
 $brand-shadow:   rgba(black, 0.02);
+
 $brand-coins:    $yellow;
 
-$facebook:      #3B5998;
-$twitter:       #55ACEE;
+$body-bg:       $brand-bg;
+$text-color:    $black;
+
 
 // Transition Timing
 
@@ -65,7 +69,7 @@ $font-family-serif:      Tiempos, Georgia, "Times New Roman", Times, serif;
 $font-family-monospace:  "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace;
 $font-family-base:       $font-family-sans-serif;
 
-$font-size-base:  16px;
+$font-size-base:  15px;
 $font-size-large: 18px;
 $font-size-small: 14px;
 $font-size-xs:    13px;
@@ -77,11 +81,11 @@ $font-size-h4: 18px;
 $font-size-h5: $font-size-base;
 $font-size-h6: 13px;
 
-$line-height-base:     1.556;
+$line-height-base:     1.6;
 $line-height-computed: floor(($font-size-base * $line-height-base)); // 24px
 
 $headings-font-family: inherit;
-$headings-font-weight: 400;
+$headings-font-weight: 600;
 $headings-line-height: 1.4;
 $headings-color:       inherit;
 
@@ -121,7 +125,7 @@ $border-radius-large: 5px;
 $border-radius-small: 2px;
 
 $component-active-color:  $brand-primary;
-$component-active-bg:     rgba($brand-primary, .1);
+$component-active-bg:     lighten($brand-primary, 40%);
 
 $caret-width-base:  4px;
 $caret-width-large: 5px;
@@ -276,12 +280,12 @@ $navbar-default-toggle-border-color: #ddd;
 
 // Inverted navbar
 // Reset inverted navbar basics
-$navbar-inverse-color:  $gray;
+$navbar-inverse-color:  $gray-lighter;
 $navbar-inverse-bg:     $black;
 $navbar-inverse-border: darken($navbar-inverse-bg, 2%);
 
 // Inverted navbar links
-$navbar-inverse-link-color:          darken($gray-light, 10%);
+$navbar-inverse-link-color:          darken($navbar-inverse-color, 10%);
 $navbar-inverse-link-hover-color:    lighten($navbar-inverse-link-color, 10%);
 $navbar-inverse-link-hover-bg:       darken($navbar-inverse-bg, 5%);
 $navbar-inverse-link-active-color:   lighten($navbar-inverse-link-hover-color, 15%);
@@ -311,7 +315,7 @@ $navbar-inverse-toggle-border-color: #333;
 // Navs
 
 // Shared nav styles
-$nav-link-padding:  5px 15px;
+$nav-link-padding:  6px 15px;
 $nav-link-hover-bg: rgba($gray-lighter, 0.25);
 
 $nav-disabled-link-color:       $gray-light;
@@ -505,7 +509,7 @@ $list-group-bg:            white;
 $list-group-border:        $brand-divider;
 $list-group-border-radius: 0;
 
-$list-group-hover-bg:          lighten($link-color, 36%);
+$list-group-hover-bg:          rgba($brand-primary, 0.1);
 $list-group-active-color:      $component-active-color;
 $list-group-active-bg:         $component-active-bg;
 $list-group-active-border:     $list-group-active-bg;

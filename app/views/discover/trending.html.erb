@@ -11,10 +11,10 @@
 
         <%= render 'header' %>
 
-        <div class="list-group list-group-breakout list-group-padded">
+        <div class="list-group list-group-breakout">
           <% @products.each do |product| %>
             <div class="list-group-item">
-              <%= render 'product', product: product %>
+              <%= render 'products/chip', product: product %>
             </div>
           <% end %>
         </div>

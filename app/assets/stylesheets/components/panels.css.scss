@@ -10,11 +10,11 @@
 .panel-default {
   .panel-heading {
     border-bottom-color: $panel-inner-border;
-    color: darken($gray-light, 5%);
+    color: $gray-light;
   }
 
   .panel-title {
-    color: $gray;
+    color: $gray-light;
   }
 }
 

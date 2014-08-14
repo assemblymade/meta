@@ -1,19 +1,13 @@
-<div class="page-header">
-  <h2 class="page-header-title">Discover Products</h2>
-  <div class="page-header-meta">
-    <ul class="nav nav-pills">
-      <li class="<%= nav_active_class(:discover_staff_picks) %>">
-        <a href="<%= discover_path %>">Staff Picks</a>
-      </li>
-      <li class="<%= nav_active_class(:discover_trending) %>">
-        <a href="<%= discover_path(:trending) %>">Trending</a>
-      </li>
-      <li class="<%= nav_active_class(:discover_recently_launched) %>">
-        <a href="<%= discover_path(:recently_launched) %>">Recently Launched</a>
-      </li>
-      <li class="<%= nav_active_class(:discover_blog) %>">
-        <a href="<%= discover_path(:blog) %>">Product Blogs</a>
-      </li>
-    </ul>
-  </div>
-</div>
+<ul class="nav nav-pills">
+  <li class="<%= nav_active_class(:discover_staff_picks) %>">
+    <a href="<%= discover_path %>">Popular</a>
+  </li>
+  <li class="<%= nav_active_class(:discover_trending) %>">
+    <a href="<%= discover_path(:trending) %>">Trending</a>
+  </li>
+  <li class="<%= nav_active_class(:discover_recently_launched) %>">
+    <a href="<%= discover_path(:recently_launched) %>">New</a>
+  </li>
+</ul>
+
+<hr>
