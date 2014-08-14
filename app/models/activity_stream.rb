@@ -11,7 +11,7 @@ class ActivityStream
   end
 
   def self.deserialize(*strs)
-    Activity.where(id: strs).includes(:actor, :subject, :target)
+    Activity.where(id: strs).includes(:actor, :subject, :target, :tips)
   end
 
   def self.delete_all
