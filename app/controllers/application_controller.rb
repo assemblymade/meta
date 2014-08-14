@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
     redirect_to new_user_session_path
   end
 
+  rescue_from ActionController::UnknownFormat, with: :raise_not_found
+
   protected
 
   helper_method :after_sign_up_path_for_user
@@ -111,6 +113,10 @@ class ApplicationController < ActionController::Base
     else
       yield
     end
+  end
+
+  def raise_not_found
+    render(text: 'Not Found', status: 404)
   end
 
 end
