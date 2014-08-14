@@ -1,52 +1,59 @@
 <!-- People Panel -->
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h6 class="panel-title">Core Team</h6>
-  </div>
-  <% cache([@product.slug, 'core-team'], expires_in: 1.day) do %>
-    <div class="panel-body small">
-      <% if @product.core_team.empty? %>
-        <p class="omega">No core team members yet.</p>
-      <% else %>
-        <ul class="list-grid omega">
-          <% @product.core_team.each do |user| %>
-            <li>
-              <a href="<%= user_path(user) %>" title="<%= user.username %>"><%= avatar_tag(user, 36) %></a>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-    </div>
-  <% end %>
+<h6>Core Team</h6>
 
-  <div class="panel-heading">
-    <h6 class="panel-title">Contributors</h6>
-  </div>
-
-  <div class="panel-body small">
-    <% if @product.contributors.empty? %>
-      <p class="omega">No contributors yet.</p>
-    <% else %>
-      <% cache([@product.slug, 'contributors'], expires_in: 1.day) do %>
-        <ul class="list-grid omega">
-          <% @product.important_contributors.each do |user| %>
-            <li>
+<% cache([@product.slug, 'core-team'], expires_in: 1.day) do %>
+  <% if @product.core_team.empty? %>
+    <p class="omega">No core team members yet.</p>
+  <% else %>
+    <ul class="list-unstyled">
+      <% @product.core_team.each do |user| %>
+        <li class="clearfix" style="margin-bottom:12px">
+          <div class="media" style="margin-bottom:0">
+            <div class="pull-left" style="margin-right:15px">
+              <div class="media-object">
+                <%= avatar_tag(user, 36) %>
+              </div>
+            </div>
+            <div class="media-body">
               <a href="<%= user_path(user) %>" title="<%= user.username %>">
-                <%= avatar_tag(user, 21) %>
+                <strong>@<%= user.username %></strong>
               </a>
-            </li>
-          <% end %>
-        </ul>
-
-        <!-- FIXME: Most of these should be in another decorator -->
-        <% if @product.uninmportant_contributors_count > 0 %>
-          <p class="text-center omega" style="margin-top:15px">
-            <a href="<%= product_people_path(@product) %>">
-              Plus <%= @product.uninmportant_contributors_count %> more
-            </a>
-          </p>
-        <% end %>
+              <% if user.bio.present? %>
+                <p class="text-small text-muted omega"><%= user.bio %></p>
+              <% end %>
+            </div>
+          </div>
+        </li>
       <% end %>
+    </ul>
+  <% end %>
+<% end %>
+
+<hr>
+
+<h6 class="panel-title">Followers</h6>
+
+<% if @product.watchers.empty? %>
+  <p class="omega">No contributors yet.</p>
+<% else %>
+  <% cache([@product.slug, 'contributors'], expires_in: 1.day) do %>
+    <ul class="list-grid omega">
+      <% @product.important_contributors.each do |user| %>
+        <li>
+          <a href="<%= user_path(user) %>" title="<%= user.username %>">
+            <%= avatar_tag(user, 21) %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+
+    <!-- FIXME: Most of these should be in another decorator -->
+    <% if @product.uninmportant_contributors_count > 0 %>
+      <p class="text-center omega" style="margin-top:15px">
+        <a class="text-strong text-success" href="<%= product_people_path(@product) %>">
+          + <%= @product.uninmportant_contributors_count %> more
+        </a>
+      </p>
     <% end %>
-  </div>
-</div>
+  <% end %>
+<% end %>
