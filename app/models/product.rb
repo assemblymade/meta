@@ -94,7 +94,9 @@ class Product < ActiveRecord::Base
 
   after_commit -> { subscribe_owner_to_notifications }, on: :create
   after_commit -> { add_to_event_stream }, on: :create
-  after_commit -> { Indexer.perform_async(:index, Product.to_s, self.id) }
+  after_commit -> { Indexer.perform_async(:index, Product.to_s, self.id) }, on: :create
+  after_update :update_elasticsearch
+
 
   serialize :repos, Repo::Github
 
@@ -411,6 +413,12 @@ class Product < ActiveRecord::Base
   end
 
   # elasticsearch
+  def update_elasticsearch
+    return unless (['name', 'pitch', 'description'] - self.changed).any?
+
+    Indexer.perform_async(:index, Product.to_s, self.id)
+  end
+
   mappings do
     indexes :name, type: 'multi_field' do
       indexes :name

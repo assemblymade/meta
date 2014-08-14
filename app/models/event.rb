@@ -13,6 +13,7 @@ class Event < ActiveRecord::Base
   has_many :tippers, through: :tips, source: :from
 
   after_commit -> { self.wip.event_added(self); }, on: :create
+  after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.wip.id) }
 
   delegate :product, :to => :wip
 

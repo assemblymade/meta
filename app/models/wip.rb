@@ -29,7 +29,8 @@ class Wip < ActiveRecord::Base
   before_validation :set_author_tip, on: :create
   after_commit :set_number, on: :create
   after_create :add_watcher!
-  after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.id) }
+  after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.id) }, on: :create
+  after_update :update_elasticsearch
 
   scope :available,   ->{ where(state: 'open') }
   scope :by_product,  ->(product){ where(product_id: product.id) }
@@ -235,6 +236,12 @@ class Wip < ActiveRecord::Base
   end
 
   # elasticsearch
+  def update_elasticsearch
+    return unless title_changed? || state_changed?
+
+    Indexer.perform_async(:index, Wip.to_s, self.id)
+  end
+
   mappings dynamic: false do
     indexes :title,  analyzer: 'snowball'
     indexes :hidden, index: 'not_analyzed'
