@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe NewsFeed do
+  let(:object) { Product.make! }
 
   it 'returns previous stories one' do
-    stream  = NewsFeed.new(owner_can_be_anthing = Product.make!)
+    stream  = NewsFeed.new(Product, object.id)
     three = stream.push( Story.make!(created_at: 1.day.ago) )
     two  = stream.push( Story.make!(created_at: 2.day.ago) )
     one  = stream.push( Story.make!(created_at: 3.day.ago) )
@@ -13,7 +14,7 @@ describe NewsFeed do
   end
 
   it 'returns previous stories two' do
-    stream  = NewsFeed.new(owner_can_be_anthing = Product.make!)
+    stream  = NewsFeed.new(Product, object.id)
     three = stream.push( Story.make!(created_at: 1.day.ago) )
     two  = stream.push( Story.make!(created_at: 2.day.ago) )
     one  = stream.push( Story.make!(created_at: 3.day.ago) )

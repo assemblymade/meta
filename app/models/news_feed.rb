@@ -18,10 +18,16 @@ class NewsFeed
     $redis.del(*keys) if keys.any?
   end
 
-  def initialize(object)
-    # remove Draper if object is decorated
-    undecorated = object.try(:object) || object
-    @object = undecorated
+  # you can initialize with the model if loaded, or just the id
+  # if you're optimising for perf/memory usage
+  def initialize(klass_or_model, id=nil)
+    if id.nil?
+      @klass = klass_or_model.class
+      @id = klass_or_model.id
+    else
+      @klass = klass_or_model
+      @id = id
+    end
   end
 
   def each
@@ -66,11 +72,6 @@ class NewsFeed
 # private
 
   def key
-    [KEY_PREFIX, @object.class.name.underscore, @object.id].join(':') if @object
+    [KEY_PREFIX, @klass.name.underscore, @id].join(':')
   end
-
-  def channel
-    [KEY_PREFIX, @object.id].join('.') if @object
-  end
-
 end

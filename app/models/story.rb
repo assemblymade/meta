@@ -58,7 +58,7 @@ class Story < ActiveRecord::Base
     Story.where(id: story_ids)
   end
 
-  def stream_targets
+  def reader_ids
     send STREAM_MAPPINGS.fetch([verb, subject_type])
   end
 
@@ -75,16 +75,15 @@ class Story < ActiveRecord::Base
   # private
 
   def product_subscribers
-    subjects.first
-      .try(:product)
-      .try(:watchings)
-      .try(:subscribed)
-      .try(:where, {unwatched_at: nil})
-      .map(&:user)
+    Watching.where(
+      watchable_id: activities.first.subject.product_id
+    ).pluck(:user_id)
   end
 
   def wip_subscribers
-    subjects.first.wip.watchings.where(unwatched_at: nil).map(&:user)
+    Watching.where(
+      watchable_id: activities.first.subject.wip_id
+    ).pluck(:user_id)
   end
 
   def description
