@@ -4,6 +4,7 @@ require 'activerecord/uuid'
 class Event < ActiveRecord::Base
   include ActiveRecord::UUID
   include Versioning
+  include ActionView::Helpers::TextHelper
 
   belongs_to :user
   belongs_to :wip, touch: true, counter_cache: true
@@ -83,6 +84,8 @@ class Event < ActiveRecord::Base
   def update_pusher(users, mentioned_users)
     event_hash = EventSerializer.for(self, nil).as_json.merge(socket_id: self.socket_id)
     event_hash[:mentions] = mentioned_users.map(&:username)
+    event_hash.delete :body
+    event_hash[:body_html] = truncate(event_hash[:body_html], length: 200)
 
     # pushes a 'chat' event to the user's channel to trigger
     # it to call for updates. This is part of notifications

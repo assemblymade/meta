@@ -35,7 +35,7 @@
       var totalCents = this.totalCents()
 
       var tooltip = null
-      if (this.props.currentUser === null) {
+      if (!this.props.currentUser) {
         tooltip = 'You need to sign up before you can tip'
       } else if (this.state.userCents <= 0) {
         tooltip = 'You have no coins to tip'

@@ -96,6 +96,7 @@ class window.DiscussionView extends Backbone.View
     event = new WipEvent(msg)
     unless app.wipEvents.get(event)
       app.wipEvents.add(event)
+      event.fetch()
 
   wipStateChanged: ->
     switch @model.get('state')
