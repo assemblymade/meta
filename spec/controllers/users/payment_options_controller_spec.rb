@@ -24,6 +24,7 @@ describe Users::PaymentOptionsController do
         user.create_tax_info!(
           full_name: 'Finn Mertens',
           signature: 'Finn Mertens',
+          taxpayer_id: 123456780,
           type: User::W9.to_s
         )
       end

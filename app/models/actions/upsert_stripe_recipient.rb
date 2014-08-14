@@ -18,6 +18,7 @@ module Actions
       Stripe::Recipient.create(
         type: 'individual',
         name: @user.tax_info.full_name,
+        tax_id: @user.tax_info.taxpayer_id,
         email: @user.email,
         card: @card_token,
         metadata: metadata
