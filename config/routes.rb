@@ -225,7 +225,7 @@ ASM::Application.routes.draw do
     resources :product_logos, only: [:index, :show, :create, :update], as: :logos, path: 'logos'
 
     resources :projects, only: [:index, :show, :new, :create, :edit, :update] do
-      put 'tasks/:id' => 'milestones#add'
+      put 'tasks/:id' => 'projects#add'
       resources :tasks, only: [:create, :destroy, :show, :update]
 
       patch :images
