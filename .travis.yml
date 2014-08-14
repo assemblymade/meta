@@ -3,6 +3,9 @@ rvm:
 - 2.1.2
 addons:
   postgresql: '9.3'
+  code_climate:
+    repo_token:
+      secure: "PK/YJYSCEQ0/pRrFhruasAp91P/6MRPowVoC3fVU1fCa8CoZmck8YCbDIUkuCQhRFfbUb6ggg3yGmwSrX+WcKXwzEzvO88zUv1rb+wRey/hxzrH8f67e2d03eNDGhDSXDBxp16yTGzgGoOIkTofOS1PhwFF1FWIZ4azcxpaMMjM="
 install:
 - npm install
 - npm run bundle
