@@ -10,10 +10,11 @@ class window.ChatView extends Backbone.View
     'click   .js-chat-create-wip': 'onCreateWip'
 
   initialize: (options)->
-    @readyToLoadMore = true
+    @ch =
+      loadMore: @$('.js-chat-load-more')
+
     @listenTo(@collection, 'add', @render)
     @scrollContainer = options.scrollContainer
-    @scrollPadding = options.scrollPadding
 
     @stuckToBottom = true
 
@@ -22,11 +23,13 @@ class window.ChatView extends Backbone.View
       'overflow-y':'scroll'
     )
     @scrollContainer.on 'scroll', this.loadMoreWhenNearTop
+    @displayLoadMore = true
+    @pageSize = 50
 
     app.on 'comment:scheduled', @optimisticallyCreateActivity.bind(@)
 
   render: =>
-    @$('.js-chat-load-more').toggle(@collection.length >= 25)
+    @$('.js-chat-load-more').toggle(@displayLoadMore)
     @scrollToLatestActivity() if @stuckToBottom
 
   scrollToLatestActivity: ->
@@ -58,37 +61,30 @@ class window.ChatView extends Backbone.View
     this.loadMore(e)
 
   loadMoreWhenNearTop: (e)=>
-    nearTop = 200
-    if e.currentTarget.scrollTop < nearTop
-      this.loadMore(e)
-
-  scrollToElement: (anchor)=>
-    @scrollContainer.scrollTop $("#" + anchor).offset().top
+    if @displayLoadMore
+      nearTop = 200
+      if e.currentTarget.scrollTop < nearTop
+        this.loadMore(e)
 
   loadMore: (e)=>
-    return if @readyToLoadMore == false
-    @readyToLoadMore = false
     @stuckToBottom = false
-    loadMoreButton = @$('.js-chat-load-more')
-    originalText = loadMoreButton.text()
+    originalText = @ch.loadMore.text()
     currentTopEvent = @collection.first()
-    loadMoreButton.attr('disabled', true).text('Loading…')
+    @ch.loadMore.attr('disabled', true).text('Loading…')
     oldHeight = @scrollContainer[0].scrollHeight
 
     $.ajax(
       type: 'GET'
-      url: loadMoreButton .attr('href') + "?top_id=#{currentTopEvent.get('id')}"
+      url: @ch.loadMore.attr('href') + "?top_id=#{currentTopEvent.get('id')}"
       complete: =>
-        @readyToLoadMore = true
-        newHeight = @scrollContainer[0].scrollHeight
-        @scrollContainer.scrollTop (newHeight - oldHeight)
+        @ch.loadMore.text(originalText).attr('disabled', false)
 
       success: (datas) =>
-        fixScroll =>
+        @displayLoadMore = datas.length >= @pageSize
+        @render()
+        preserveScrollPosition @scrollContainer[0], =>
           for data in _.sortBy(datas, (data) -> data['created']).reverse()
             @collection.unshift(data)
-
-          loadMoreButton.text(originalText).attr('disabled', false)
     )
 
   onCreateWip: (e) ->
@@ -127,7 +123,8 @@ class window.ChatView extends Backbone.View
       document.getElementById('suggested-tags')
     )
 
-fixScroll = (cb) ->
-  documentHeight = $(document).height()
+preserveScrollPosition = (container, cb) ->
+  scrollTop = container.scrollTop
+  scrollHeight = container.scrollHeight
   cb()
-  $(document).scrollTop(Math.max(0, $(document).height() - documentHeight))
+  container.scrollTop = (container.scrollHeight - scrollHeight + scrollTop)

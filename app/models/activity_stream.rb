@@ -3,7 +3,7 @@ class ActivityStream
   include Enumerable
 
   KEY_PREFIX = 'activitystream'
-  DEFAULT_PAGE_LENGTH = 25
+  DEFAULT_PAGE_LENGTH = 50
   PUSH_TO_META = [Activities::FoundProduct, Activities::Launch]
 
   def self.serialize(activity)
