@@ -6,9 +6,16 @@
 
     <div class="col-xs-11">
       <ul class="list-inline omega hidden-xs pull-right">
+
         <% product.core_team.each do |user| %>
           <li>
             <a href="<%= user_path(user) %>" data-toggle="tooltip" title="@<%= user.username %>"><%= avatar_tag(user, 24) %></a>
+          </li>
+        <% end %>
+
+        <% if product.watchers.count > product.core_team.size %>
+          <li>
+            <strong class="text-success">+<%= product.watchers.count %></strong>
           </li>
         <% end %>
       </ul>
