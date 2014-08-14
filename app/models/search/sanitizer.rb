@@ -3,11 +3,11 @@ module Search
     include ActionView::Helpers::SanitizeHelper
 
     def sanitize(text)
-      HTMLEntities.new.decode(strip_tags(markdown(text))).strip 
+      HTMLEntities.new.decode(strip_tags(markdown(text))).strip
     end
 
     def markdown(text)
-      Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(text) 
+      Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(text)
     end
   end
 end

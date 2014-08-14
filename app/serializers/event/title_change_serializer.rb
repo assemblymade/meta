@@ -2,6 +2,6 @@ class Event::TitleChangeSerializer < EventSerializer
   attributes :old_title
 
   def old_title
-    object.body
+    Search::Sanitizer.new.sanitize object.body
   end
 end
