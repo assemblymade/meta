@@ -1,6 +1,14 @@
 class Webhooks::GithubController < WebhookController
 
   def create
+    process_request
+
+    render nothing: true, status: 200
+  end
+
+  # private
+
+  def process_request
     type = request.headers['X-GitHub-Event']
     if payload = ::Github::Payload.load(type, params)
 
@@ -44,8 +52,6 @@ class Webhooks::GithubController < WebhookController
         end
       end
     end
-
-    render nothing: true, status: 200
   end
 
   def process_wip_reference(product, ref, payload)
