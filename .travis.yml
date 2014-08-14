@@ -6,12 +6,15 @@ addons:
 install:
 - npm install
 - npm run bundle
-- bundle install
+- bundle install --without development --deployment
 before_script:
 - psql -c 'create database asm_test;' -U postgres
 - cp config/database.yml.travis config/database.yml
 - bin/rake db:schema:load
-cache: bundler
+cache:
+  directories:
+  - vendor/bundle
+  - node_modules
 services:
 - redis-server
 - elasticsearch
