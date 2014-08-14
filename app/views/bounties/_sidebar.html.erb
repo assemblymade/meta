@@ -128,8 +128,19 @@
       </div>
     </div>
   <% end %>
-
 </div>
+
+<div class="panel panel-default">
+  <div class="panel-body"
+      data-react-class="ToggleButton"
+      data-react-props="<%= {
+        bool: watching?(@wip),
+        text: { true: 'Mute', false: 'Watch' },
+        classes: { true: 'btn-sm btn-block btn-default', false: 'btn-sm btn-block btn-primary' },
+        href: { true: product_wip_mute_path(@wip.product, @wip.number), false: product_wip_watch_path(@wip.product, @wip.number) }
+      }.to_json %>">
+  </div>
+</div><!-- .panel -->
 
 <div class="panel panel-default">
   <div class="panel-heading">

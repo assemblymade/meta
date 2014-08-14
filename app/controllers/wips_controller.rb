@@ -4,7 +4,7 @@ class WipsController < ProductController
   before_filter :set_no_cache, only: [:index]
   before_action :authenticate_user!, :except => [:show, :index, :search]
   before_action :set_product
-  before_action :set_stories, except: [:index, :new, :create, :search]
+  before_action :set_stories, except: [:index, :new, :create, :search, :mute, :watch]
   before_action :validate_wip_administer , only: [:edit, :update, :destroy]
   after_action  :mark_wip_viewed, only: [:edit, :show]
 
@@ -121,11 +121,13 @@ class WipsController < ProductController
   end
 
   def watch
+    set_wip
     @wip.watch!(current_user)
     respond_with @wip, location: request.referer
   end
 
   def mute
+    set_wip
     @wip.mute!(current_user)
     respond_with @wip, location: request.referer
   end
@@ -145,14 +147,8 @@ class WipsController < ProductController
     PaginatingDecorator.new(query)
   end
 
-  def set_wip
-    number = params[:wip_id] || params[:task_id] || params[:id]
-    if number.to_i.zero?
-      @wip = @product.main_thread.decorate
-    else
-      @wip = @product.wips.find_by!(number: number).decorate
-    end
-    @events = @wip.events.order(:number)
+  def set_wip_with_redirect
+    set_wip
 
     # special case redirect to milestones
     if @wip.type.nil?
@@ -162,8 +158,18 @@ class WipsController < ProductController
     end
   end
 
+  def set_wip
+    number = params[:wip_id] || params[:task_id] || params[:id]
+    if number.to_i.zero?
+      @wip = @product.main_thread.decorate
+    else
+      @wip = @product.wips.find_by!(number: number).decorate
+    end
+    @events = @wip.events.order(:number)
+  end
+
   def set_stories
-    set_wip
+    set_wip_with_redirect
 
     @stories_to_mark_as_read = Story.associated_with(@wip)
   end

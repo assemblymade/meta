@@ -17,21 +17,19 @@
 
     <div class="col-md-3">
       <div class="panel panel-default">
-        <div class="panel-heading">
-          <h6 class="panel-title">Watchers</h6>
+        <div class="panel-body"
+            data-react-class="ToggleButton"
+            data-react-props="<%= {
+              bool: watching?(@wip),
+              text: { true: 'Mute', false: 'Watch' },
+              classes: { true: 'btn-sm btn-block btn-default', false: 'btn-sm btn-block btn-primary' },
+              href: {
+                true: product_wip_mute_path(@wip.product, @wip.number),
+                false: product_wip_watch_path(@wip.product, @wip.number)
+              }
+            }.to_json %>">
         </div>
-        <div class="panel-body">
-          <ul class="list-grid omega">
-            <% @wip.watchers.each do |user| %>
-              <li>
-                <a href="<%= user_path(user) %>" title="@<%= user.username %>">
-                  <%= avatar_tag(user, 21) %>
-                </a>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
+      </div><!-- .panel -->
     </div>
   </div>
 
