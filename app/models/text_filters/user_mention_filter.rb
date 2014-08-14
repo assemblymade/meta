@@ -20,7 +20,7 @@ module TextFilters
 
         if mention == 'core'
           if product
-            yield $1, product.core_team, Interest.new(slug: 'core')
+            yield $1, (product.core_team - [current_user]), Interest.new(slug: 'core')
           end
 
         elsif user = User.find_by('lower(username) = ?', mention)

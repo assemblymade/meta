@@ -61,7 +61,7 @@ class Event < ActiveRecord::Base
     mentioned = self.mentioned_users
     users.each do |user|
       notify_by_email(user) if mentioned.include?(user)
-      update_unreads(user)
+      update_unreads(user) if mentioned.include?(user)
     end
 
     update_pusher(users, mentioned_users)
@@ -91,11 +91,12 @@ class Event < ActiveRecord::Base
 
   def mentioned_users
     users = []
-    TextFilters::UserMentionFilter.mentioned_usernames_in(self.body, self.wip.product) do |username, user|
-      if user
-        users << user if user
+    TextFilters::UserMentionFilter.mentioned_usernames_in(self.body, self.wip.product) do |username, u|
+      if u
+        users << u if u && u != user
       end
     end
+
     users.flatten
   end
 
