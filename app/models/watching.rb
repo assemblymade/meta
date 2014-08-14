@@ -16,7 +16,7 @@ class Watching < ActiveRecord::Base
 
     # We can't fall back to watch! here because we need auto_subscribed_at
     # not to be overwritten on subsequent calls to watch!.
-    if auto_subscription = find_by(user_id: user.id, watchable_id: watchable.id)
+    if auto_subscription = find_by(user_id: user.id, watchable_id: watchable.id, auto_subscribed_at: nil)
         auto_subscription.update(subscription: true, auto_subscribed_at: Time.now)
     else
       auto_subscription = create!(
