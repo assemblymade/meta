@@ -68,7 +68,8 @@
 
     TEXT_COMPLETE: {
       ACTIONS: {
-        SETUP: 'SETUP',
+        ADD_TAG: 'addTag',
+        SETUP: 'SETUP'
       }
     },
 
