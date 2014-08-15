@@ -27,7 +27,7 @@
 
 <p><small>
   <% if @product.profit_reports.any? %>
-    <% report = @product.profit_reports.last %>
+    <% report = @product.profit_reports.order(:end_at).last %>
 
     Last month's profit was <%= number_to_currency (report.profit / 100.0), precision: 2 %>,
     based on <%= number_to_currency (report.revenue / 100.0), precision: 2 %> revenue
