@@ -16,6 +16,15 @@ class PostMailer < BaseMailer
          subject: @post.title
   end
 
+  def mailing_list(post_id, email_address)
+    @post = Post.find(post_id)
+
+    mailgun_tag "post##{@post.product.slug}"
+
+    mail to: email_address,
+         subject: @post.title
+  end
+
   def preview(product_id, params, author_id)
     @product = Product.find(product_id)
     @post = Post.new(params)

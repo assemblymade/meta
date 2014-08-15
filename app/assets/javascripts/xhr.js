@@ -28,7 +28,7 @@
       request.open(method, path, true);
       request.setRequestHeader('X-CSRF-Token', token);
       request.setRequestHeader('Accept', 'application/json');
-      request.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+      request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
       var formValues = [];
       for(var p in data){
@@ -62,7 +62,8 @@
         callback(new Error(request.responseText));
       };
 
-      // bypass the browser's cache: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache
+      // bypass the browser's cache:
+      // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache
       request.open(method, path + ((/\?/).test(path) ? "&" : "?") + (new Date()).getTime(), true);
       request.send(data);
     }
