@@ -15,11 +15,11 @@
           <% end %>
         <% end %>
 
-        <% if bounty.comments.any? %>
+        <% if (count = bounty.comments_count) > 0 %>
           <li>
             <strong>
               <span class="icon icon-speech icon-left"></span>
-              <%= bounty.comments.count %>
+              <%= count %>
               <span class="sr-only">comments</span>
             </strong>
           </li>
@@ -39,46 +39,45 @@
         #<%= tag.name.downcase %>
       </a>
     <% end %>
-    <% unless bounty.closed? %>
-      &nbsp;
-      <a class="small text-info" href="#">
-        #<%= bounty.urgency.label.downcase %>
-      </a>
-    <% end %>
   </div>
 
 
   <div class="clearfix small text-muted">
+    <% if bounty.open? %>
+      <div class="pull-right">
+        <%= render partial: 'bounties/urgency', locals: { task: bounty } %>
+      </div>
+    <% end %>
 
-      <!-- coins -->
-      <div>
-        <% case %>
-        <% when bounty.state == 'open' || (bounty.state == 'reviewing' && bounty.workers.empty?) %>
-          <span class="text-warning" data-toggle="tooltip" title="Available">
-        <% when bounty.workers.any? && (bounty.state != 'resolved') %>
-          <span class="text-warning" data-toggle="tooltip" title="<%= pluralize(bounty.workers.count, 'person') %> working">
-        <% when bounty.state == 'resolved' %>
-          <% if bounty.winner.present? %>
-            <span class="text-muted" data-toggle="tooltip" title="Awarded to @<%= bounty.winner.username %>">
-          <% else %>
-            <span class="text-muted" data-toggle="tooltip" title="Closed">
-          <% end %>
-        <% end %>
-
-        <% if bounty.state == 'resolved' && !bounty.winner.present? %>
-          <del>
-            <span class="icon icon-app-coin"></span>
-            <span><%= number_with_delimiter(WipContracts.new(bounty).earnable_cents.floor) %></span>
-          </del>
+    <!-- coins -->
+    <div>
+      <% case %>
+      <% when bounty.state == 'open' || (bounty.state == 'reviewing' && bounty.workers.empty?) %>
+        <span class="text-warning" data-toggle="tooltip" title="Available">
+      <% when bounty.workers.any? && (bounty.state != 'resolved') %>
+        <span class="text-warning" data-toggle="tooltip" title="<%= pluralize(bounty.workers.count, 'person') %> working">
+      <% when bounty.state == 'resolved' %>
+        <% if bounty.winner.present? %>
+          <span class="text-muted" data-toggle="tooltip" title="Awarded to @<%= bounty.winner.username %>">
         <% else %>
-          <span class="icon icon-app-coin"></span>
-          <span class="js-coins"><%= number_with_delimiter(WipContracts.new(bounty).earnable_cents.floor) %></span>
+          <span class="text-muted" data-toggle="tooltip" title="Closed">
         <% end %>
-      </span>
+      <% end %>
 
-      &middot;
+      <% if bounty.state == 'resolved' && !bounty.winner.present? %>
+        <del>
+          <span class="icon icon-app-coin"></span>
+          <span><%= number_with_delimiter(WipContracts.new(bounty, @auto_tip_contracts).earnable_cents.floor) %></span>
+        </del>
+      <% else %>
+        <span class="icon icon-app-coin"></span>
+        <span class="js-coins"><%= number_with_delimiter(WipContracts.new(bounty, @auto_tip_contracts).earnable_cents.floor) %></span>
+      <% end %>
+    </span>
 
-      #<%= bounty.number %> started <%= time_ago_in_words(bounty.created_at) %> ago by <a class="text-muted" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
-    </div>
+    &middot;
+
+    #<%= bounty.number %> started <%= time_ago_in_words(bounty.created_at) %> ago by <a class="text-muted" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
+  </div>
 
 </div>

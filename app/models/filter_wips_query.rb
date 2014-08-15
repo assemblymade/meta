@@ -76,6 +76,8 @@ class FilterWipsQuery
 
   def sort_order
     case sort
+    when 'most_valuable'
+      Wip.order('(multiplier * votes_count) DESC')
     when 'least_valuable'
       Wip.order('(multiplier * votes_count) ASC')
     when 'newest'
@@ -86,8 +88,8 @@ class FilterWipsQuery
       Wip.order('wips.updated_at DESC')
     when 'least_recently_updated'
       Wip.order('wips.updated_at ASC')
-    else # most_valuable (default)
-      Wip.order('(multiplier * votes_count) DESC')
+    else #  (default)
+      Wip.order(['multiplier desc', 'created_at desc'])
     end
   end
 

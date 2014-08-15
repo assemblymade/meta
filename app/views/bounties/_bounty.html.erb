@@ -49,6 +49,9 @@
           <span class="label label-default">CLOSED</span>
         <% end %>
       </li>
+      <li>
+        <%= render partial: 'bounties/urgency', locals: { task: bounty } %>
+      </li>
 
       <li id="js-bounty-valuation">
         <script>

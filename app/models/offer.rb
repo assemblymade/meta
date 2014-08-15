@@ -1,6 +1,6 @@
 class Offer < ActiveRecord::Base
   belongs_to :user
-  belongs_to :bounty, class_name: 'Wip', foreign_key: "bounty_id", inverse_of: :offers
+  belongs_to :bounty, class_name: 'Wip', foreign_key: "bounty_id", inverse_of: :offers, touch: true
 
   validates :user, presence: true
   validates :bounty, presence: true

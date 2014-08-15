@@ -59,6 +59,7 @@ class TasksController < WipsController
     end
     @wips = find_wips
     @milestones = @product.milestones.open.with_open_tasks
+    @auto_tip_contracts = @product.auto_tip_contracts.active
 
     respond_to do |format|
       format.html { expires_now }
@@ -120,7 +121,7 @@ class TasksController < WipsController
   end
 
   def product_wips
-    @product.tasks.includes(:workers, :product, :watchings)
+    @product.tasks.includes(:workers, :watchings, :product, :tags)
   end
 
   def copy_params

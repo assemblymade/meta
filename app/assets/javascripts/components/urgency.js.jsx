@@ -9,7 +9,7 @@
     render: function() {
       return (
         <div className="dropdown" style={{"display":"inline-block"}}>
-          <a data-toggle="dropdown" href="#">
+          <a data-toggle="dropdown" style={{"cursor":"pointer"}}>
             <span className={this.labelClass(this.state.label)}>{this.state.label}</span>
           </a>
           <ul className="dropdown-menu">

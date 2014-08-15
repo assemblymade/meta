@@ -1,6 +1,8 @@
 <% title "Bounties", @product.name %>
 <% activate_nav! :bounties %>
 
+<% @show_urgency_dropdown = @product.core_team?(current_user) %>
+
 <div class="page-header sheet-header">
   <h2 class="page-header-title">
     <span class="icon icon-left icon-trophy text-muted"></span>
@@ -43,6 +45,7 @@
       <li>
         Order:
         <select name="sort" id="bounty-sort">
+          <option value="priority" <%= 'selected' if params[:sort] == 'priority' %>>Priority</option>
           <option value="most_valuable" <%= 'selected' if params[:sort] == 'most_valuable' %>>Most valuable</option>
           <option value="least_valuable" <%= 'selected' if params[:sort] == 'least_valuable' %>>Least valuable</option>
           <option value="newest" <%= 'selected' if params[:sort] == 'newest' %>>Newest</option>
