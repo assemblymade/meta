@@ -70,7 +70,7 @@ module Github
     end
 
     def launchpad_connection
-      Faraday.new(url: 'https://launchpad.assembly.com') do |faraday|
+      Faraday.new(url: 'http://launchpad.assembly.com') do |faraday|
         faraday.adapter  :net_http
       end
     end
