@@ -8,8 +8,10 @@ class RequestInfo
       last_request_at: at,
     }
 
-    if product_id
-      update[:recent_product_ids] = (user.recent_product_ids || []).unshift(product_id).uniq
+    recent_product_ids = user.recent_product_ids || []
+
+    if product_id && product_id != recent_product_ids.first
+      update[:recent_product_ids] = (user.recent_product_ids || []).unshift(product_id).uniq.take(10)
     end
 
     user.update_columns(update)
