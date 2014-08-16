@@ -36,6 +36,10 @@ module Github
       request :post, url, body
     end
 
+    def launchpad_post(url, body = {})
+      launchpad_request :post, url, body
+    end
+
     def request(method, url, body)
       resp = connection.send(method) do |req|
         req.url url
@@ -46,8 +50,27 @@ module Github
       JSON.load(resp.body)
     end
 
+    def launchpad_request(method, url, body)
+      resp = launchpad_connection.send(method) do |req|
+        req.url url
+        # TODO: We can send the OAuth token for the user if we want to create
+        #       the repo in his/her account.
+        # req.headers['Authorization'] = "token github_oauth_token
+        req.headers['Content-Type'] = 'application/json'
+        req.body = body.to_json
+      end
+
+      JSON.load(resp.body)
+    end
+
     def connection
       Faraday.new(url: 'https://api.github.com') do |faraday|
+        faraday.adapter  :net_http
+      end
+    end
+
+    def launchpad_connection
+      Faraday.new(url: 'https://launchpad.assembly.com') do |faraday|
         faraday.adapter  :net_http
       end
     end

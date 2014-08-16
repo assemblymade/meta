@@ -5,16 +5,13 @@ module Github
       repo_name ||= product.slug
 
       if ENV['GITHUB_PRODUCTS_ORG']
-        repo = post "/orgs/#{ENV['GITHUB_PRODUCTS_ORG']}/repos",
-          name: repo_name,
+        repo = launchpad_post "/github",
+          slug: repo_name,
+          name: product.name,
           description: product.pitch,
-          homepage: homepage,
-          private: false,
-          has_issues: false,
-          has_wiki: false,
-          has_downloads: false
+          homepage: homepage
 
-        add_webhooks([ENV['GITHUB_PRODUCTS_ORG'], product.slug].join('/'))
+        add_webhooks([ENV['GITHUB_PRODUCTS_ORG'], repo_name].join('/'))
         add_license_and_readme(product, repo_name)
 
         product.repos |= [Repo::Github.new("https://github.com/#{ENV['GITHUB_PRODUCTS_ORG']}/#{repo_name}")]
