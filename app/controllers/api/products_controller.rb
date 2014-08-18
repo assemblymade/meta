@@ -2,6 +2,19 @@ module Api
   class ProductsController < ApplicationController
     respond_to :json
 
+    def info
+      @product = Product.find_by!(slug: params[:product_id])
+      @product_info = {
+        name: @product.name,
+        slug: @product.slug,
+        pitch: @product.pitch,
+        description: @product.try(:description) || '',
+        core_team: @product.core_team.map { |m| { avatar_url: m.avatar_url, username: m.username } }
+      }
+
+      respond_with @product_info
+    end
+
     def workers
       @product = Product.find_by!(slug: params[:product_id])
       @workers = @product.core_team.map do |u|
