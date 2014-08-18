@@ -5,6 +5,7 @@ class CreatePitchWeekApplications < ActiveRecord::Migration
       t.uuid      :applicant_id,  null: false
       t.boolean   :is_approved
       t.datetime  :reviewed_at
+      t.uuid      :reviewer_id
       t.timestamps
     end
   end

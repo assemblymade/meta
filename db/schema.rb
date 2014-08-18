@@ -294,6 +294,7 @@ ActiveRecord::Schema.define(version: 20140818212829) do
     t.uuid     "applicant_id", null: false
     t.boolean  "is_approved"
     t.datetime "reviewed_at"
+    t.uuid     "reviewer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

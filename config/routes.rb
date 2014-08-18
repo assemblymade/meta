@@ -159,6 +159,10 @@ ASM::Application.routes.draw do
     resources :withdrawals, only: [:index] do
       patch :payment_sent
     end
+    resources :pitch_week_applications, path: 'pitch-week', only: [:index] do
+      patch :approve
+      patch :decline
+    end
     resources :newsletters do
       patch :publish
     end

@@ -1,19 +1,22 @@
 <div class="navbar navbar-inverse navbar-static-top">
   <div class="container">
     <ul class="nav navbar-nav">
-      <li class="<%= "active" if profit_reports_controller? %>">
+      <li class="<%= "active" if controller_active?(:profit_reports) %>">
         <%= link_to 'Profit Reports', admin_profit_reports_path %>
       </li>
-      <li class="<%= "active" if withdrawals_controller? %>">
+      <li class="<%= "active" if controller_active?(:withdrawals) %>">
         <%= link_to 'Withdrawals', admin_withdrawals_path %>
       </li>
-      <li class="<%= "active" if staff_picks_controller? %>">
+      <li class="<%= "active" if controller_active?(:staff_picks) %>">
         <%= link_to 'Staff Picks', admin_staff_picks_path %>
       </li>
-      <li class="<%= "active" if newsletters_controller? %>">
+      <li class="<%= "active" if controller_active?(:pitch_week_applications) %>">
+        <%= link_to 'Pitch Week', admin_pitch_week_applications_path %>
+      </li>
+      <li class="<%= "active" if controller_active?(:newsletters) %>">
         <%= link_to 'Newsletters', admin_newsletters_path %>
       </li>
-      <li class="<%= "active" if users_controller? %>">
+      <li class="<%= "active" if controller_active?(:users) %>">
         <%= link_to 'Users', admin_users_path %>
       </li>
       <li>
