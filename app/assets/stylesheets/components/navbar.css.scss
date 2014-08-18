@@ -52,19 +52,14 @@
   }
 }
 
-.glyphicon-highlight {
+.navbar-item-muted.open .navbar-icon {
   color: #fff;
 }
 
-.navbar-notifications {
-  position: relative;
+.navbar-item-muted .navbar-icon {
+  color: $brand-muted;
 
-  .dropdown-menu {
-    min-width: 180px;
-  }
-
-  > li > a {
-    padding-top: 14px;
-    padding-bottom: 8px;
+  &.glyphicon-highlight {
+    color: #fff;
   }
 }
