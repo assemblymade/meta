@@ -25,7 +25,7 @@
           </div>
         <% end %>
 
-        <% if @balance.final_earnings > 0 %>
+        <% if @balance.balances.any? %>
           <h4>
             Available Earnings: <%= currency @balance.available_earnings %>
             <% if @balance.available_to_withhold > 0 %>

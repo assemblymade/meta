@@ -14,12 +14,16 @@ class User::BalanceEntry < ActiveRecord::Base
   def payable_earnings
     earnings - withholding
   end
-  
+
   def withholding
     if percentage = user.tax_info.try(:withholding)
       percentage * earnings
     else
       0
     end
+  end
+
+  def pending?(at=Time.now)
+    payable_earnings > 0 && at <= profit_report.grace_ends_at
   end
 end

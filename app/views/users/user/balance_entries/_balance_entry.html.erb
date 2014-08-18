@@ -1,5 +1,5 @@
 <% report = balance_entry.profit_report %>
-<% c = 'text-muted' if Time.now <= report.grace_ends_at %>
+<% c = 'text-muted' if balance_entry.pending? %>
 <tr>
   <td>
     <a class="<%= c %>" href="<%= product_financials_path(report.product) %>"><%= report.product.name %> <%= report.end_at.strftime('%b %Y') %></a>
@@ -15,7 +15,7 @@
     <%= number_to_currency report.earnable / 100.0, precision: 2 %>
   </td>
   <td>
-    <% if Time.now <= report.grace_ends_at %>
+    <% if balance_entry.pending? %>
       <span class="label label-warning" title="Income is available 30 days after end of month" data-toggle="tooltip">Pending</span>
     <% end %>
   </td>
