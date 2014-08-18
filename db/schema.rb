@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140815003900) do
+ActiveRecord::Schema.define(version: 20140818212829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -287,6 +287,15 @@ ActiveRecord::Schema.define(version: 20140815003900) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name",        null: false
+  end
+
+  create_table "pitch_week_applications", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id",   null: false
+    t.uuid     "applicant_id", null: false
+    t.boolean  "is_approved"
+    t.datetime "reviewed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "posts", id: false, force: true do |t|

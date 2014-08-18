@@ -167,16 +167,15 @@ describe ProductsController do
       expect(response).to redirect_to(product_path(product.reload.slug))
     end
 
-    it 'publishes activity' do
+    it 'queues job' do
       expect {
         patch :launch, product_id: product
-      }.to change(Activity, :count).by(1)
+      }.to change(ApplyForPitchWeek.jobs, :size).by(1)
     end
 
-    # Travis isn't a fan of this test -- 1 s off will make it fail
     it 'sets product to launched' do
       patch :launch, product_id: product
-      expect(Time.now.to_i - product.reload.launched_at.to_i < 2).to be_true
+      expect(product.reload.launched_at.to_i).to be_within(2).of(Time.now.to_i)
     end
   end
 end

@@ -112,13 +112,9 @@ class ProductsController < ProductController
 
   def launch
     authorize! :update, @product
-    if @product.launched_at.nil?
-      @product.update_attributes launched_at: Time.current
-      Activities::Launch.publish!(
-        target: @product,
-        subject: @product,
-        actor: current_user
-      )
+    if @product.update(launched_at: Time.now)
+      ApplyForPitchWeek.perform_async(@product.id, current_user.id)
+      flash[:info] = :applied_for_pitch_week
     end
     respond_with @product, location: product_path(@product)
   end
