@@ -206,6 +206,9 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
         var entry = values[i];
         entry.readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
         entry.sortIndex = this.state.sortKeys.indexOf(entry.id);
+        if (entry.sortIndex === -1) {
+          entry.sortIndex = values.length
+        }
       }
       values.sort(dynamicSortMultiple("readState", "sortIndex", "label"));
 
