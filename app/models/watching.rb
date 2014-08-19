@@ -42,6 +42,7 @@ class Watching < ActiveRecord::Base
         watch_wips!(user, watchable)
       end
     else
+      # Unwatch wips if moved from following -> announcements
       if is_product?(watchable)
         unwatch_wips!(user, watchable)
       end
