@@ -1,6 +1,5 @@
 <% title 'Blog' %>
-<% activate_nav! :platform_discover %>
-<% activate_nav! :discover_blog %>
+<% activate_nav! :platform_blog %>
 
 <%= render 'shared/navbar' %>
 
@@ -8,9 +7,6 @@
   <div class="container">
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
-
-        <%= render 'header' %>
-
         <div class="row">
           <div class="col-md-9">
             <% @page.each do |post| %>

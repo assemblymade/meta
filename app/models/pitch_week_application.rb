@@ -15,4 +15,8 @@ class PitchWeekApplication < ActiveRecord::Base
       is_approved: outcome
     )
   end
+
+  def pitch_week_end
+    reviewed_at + 7.days
+  end
 end

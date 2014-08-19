@@ -12,20 +12,20 @@
         <%= render 'header' %>
 
         <div class="row">
-          <div class="col-md-8">
-            <p>Each of these products have one week to get <%= Product::PITCH_WEEK_REQUIRED_BUILDERS %> or more people to join the initial team. Products that get enough support go to be built on Assembly.<br/>
+          <div class="col-md-9">
+            <p class="lead">Each of these products have one week to get <%= Product::PITCH_WEEK_REQUIRED_BUILDERS %> or more people to join the initial team. Products that get enough support go to be built on Assembly.<br/>
               What product will you build?
             </p>
           </div>
-          <div class="col-md-4">
-            <a href="<%= new_product_path %>" class="btn btn-default">Add Product</a>
+          <div class="col-md-3">
+            <a href="<%= new_product_path %>" class="btn btn-default pull-right">Add Product</a>
           </div>
         </div>
 
         <div class="list-group list-group-breakout">
           <% @applications.each do |app| %>
-            <div class="list-group-item foobar">
-              <%= render 'products/pitching', product: app.product %>
+            <div class="list-group-item">
+              <%= render 'pitch_week/chip', app: app %>
             </div>
           <% end %>
         </div>
