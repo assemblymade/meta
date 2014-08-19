@@ -12,7 +12,7 @@
                 </h1>
 
                 <p>
-                  <%= @product.name %> had <%= @number %> new signups in the past 24-hours.
+                  <a href="<%= product_url(@product) %>"><%= @product.name %></a> had <%= @number %> new signups in the past 24-hours.
                 <br/>
 
                 <p>
