@@ -38,7 +38,6 @@ describe TasksController do
   end
 
   describe '#create' do
-
     it 'creates an initial offer' do
       sign_in user
       post :create, product_id: product.slug,
@@ -49,6 +48,21 @@ describe TasksController do
       expect(
         assigns(:bounty)
       ).to have(1).offers
+    end
+
+    context 'with project_id' do
+      let(:project) { Milestone.make!(product: product) }
+
+      it 'adds to project' do
+        sign_in user
+        project.set_number_from_wip
+        project.save!
+
+        post :create, product_id: product.slug, project_id: project.wip.number,
+          task: { title: 'Add cats' }
+
+        expect(project.reload.tasks.size).to eq(1)
+      end
     end
   end
 end
