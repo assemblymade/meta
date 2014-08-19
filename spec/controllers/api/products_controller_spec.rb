@@ -17,7 +17,7 @@ describe Api::ProductsController do
       body = JSON.parse(response.body)
       expect(body["name"]).to eq(product.name)
       expect(body["core_team"][0]["username"]).to eq(user.username)
-      expect(body["core_team"][0]["avatar_url"]).to eq(user.avatar_url)
+      expect(body["core_team"][0]["avatar_url"]).to eq(user.avatar.url.to_s)
     end
   end
 end
