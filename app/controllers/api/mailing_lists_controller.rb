@@ -6,9 +6,12 @@ module Api
     protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
     def create
-      subscription = MailingList.create!(product_id: product_id, email: params[:email])
+      email = params[:email]
+      subscription = MailingList.create!(product_id: product_id, email: email)
 
-      ProductMailer.delay(queue: 'mailer').mailing_list(product_id, params[:email])
+      unless User.find_by(email: email)
+        ProductMailer.delay(queue: 'mailer').mailing_list(product_id, email)
+      end
 
       respond_with subscription, location: root_url
     end
