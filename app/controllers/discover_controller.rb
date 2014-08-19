@@ -11,6 +11,7 @@ class DiscoverController < ApplicationController
     @products = Product.public_products
                        .joins(:product_trend)
                        .where('watchings_count >= ?', 10)
+                       .where('slug != ?', 'meta')
                        .order('product_trends.score desc')
                        .page(params[:page])
   end
