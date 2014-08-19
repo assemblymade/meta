@@ -24,7 +24,7 @@ namespace :emails do
     Product.find(MailingList.where('created_at > ?', 1.day.ago).group(:product_id).count.keys).each do |product|
       number_of_signups = MailingList.where('created_at > ? and product_id = ?', 1.day.ago, product.id).count
 
-      return if number_of_signups < 10
+      next if number_of_signups < 10
 
       ProductMailer.delay(queue: 'mailer').congratulate_on_signups(product.id, number_of_signups)
     end
