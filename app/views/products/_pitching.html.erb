@@ -1,0 +1,43 @@
+<div class="chip">
+  <div class="row">
+    <div class="col-xs-1">
+      <%= image_tag product.poster_image.url, class: 'img-rounded', height: 24, alt: product.name %>
+    </div>
+
+    <div class="col-xs-7">
+      <ul class="list-inline omega hidden-xs pull-right">
+
+        <% product.core_team.limit(3).each do |user| %>
+          <li>
+            <a href="<%= user_path(user) %>" data-toggle="tooltip" title="@<%= user.username %>"><%= avatar_tag(user, 24) %></a>
+          </li>
+        <% end %>
+
+        <% other_people_size = [product.core_team.count - 3, 0].max + product.watchers.count %>
+
+        <% if other_people_size > 0 %>
+          <li>
+            <span class="text-muted">+<%= other_people_size %></span>
+          </li>
+        <% end %>
+      </ul>
+
+      <a href="<%= product_path(product) %>"><strong><%= product.name %></strong></a>
+
+      <div>
+        <%= product.pitch %>
+        &nbsp;
+        <span class="text-muted text-small">Updated <%= time_ago_in_words(product.updated_at) %> ago</span>
+      </div>
+
+    </div>
+
+    <div class="col-xs-4">
+      <div class="progress progress-small omega">
+        <div class="progress-bar progress-bar-success" style="width: <%= percentage(product.bio_memberships_count / Product::PITCH_WEEK_REQUIRED_BUILDERS.to_f) %>;">
+        </div>
+      </div>
+      <%= product.bio_memberships_count %> / <%= Product::PITCH_WEEK_REQUIRED_BUILDERS %> building
+    </div>
+  </div>
+</div>

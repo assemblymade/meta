@@ -4,6 +4,8 @@ class PitchWeekApplication < ActiveRecord::Base
   belongs_to :applicant
   belongs_to :product
 
+  scope :approved, -> { where(is_approved: true) }
+  scope :in_pitch_week, ->(at=Time.now) { where('reviewed_at > ?', at - 7.days) }
   scope :to_review, -> { where(reviewed_at: nil) }
 
   def review(reviewer, outcome)

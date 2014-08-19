@@ -1,5 +1,12 @@
 class DiscoverController < ApplicationController
 
+  def fresh
+    @applications = PitchWeekApplication.in_pitch_week.approved.
+      joins(:product).
+      order('products.bio_memberships_count desc').
+      page(params[:page])
+  end
+
   def staff_picks
     @week = Date.today
     slugs = (ENV['STAFF_PICKS'] || '').split(',')

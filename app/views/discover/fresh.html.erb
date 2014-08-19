@@ -1,0 +1,38 @@
+<% title 'Fresh Products' %>
+<% activate_nav! :platform_discover %>
+<% activate_nav! :discover_fresh %>
+
+<%= render 'shared/navbar' %>
+
+<div class="page page-flat">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+
+        <%= render 'header' %>
+
+        <div class="row">
+          <div class="col-md-8">
+            <p>Each of these products have one week to get <%= Product::PITCH_WEEK_REQUIRED_BUILDERS %> or more people to join the initial team. Products that get enough support go to be built on Assembly.<br/>
+              What product will you build?
+            </p>
+          </div>
+          <div class="col-md-4">
+            <a href="<%= new_product_path %>" class="btn btn-default">Add Product</a>
+          </div>
+        </div>
+
+        <div class="list-group list-group-breakout">
+          <% @applications.each do |app| %>
+            <div class="list-group-item foobar">
+              <%= render 'products/pitching', product: app.product %>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

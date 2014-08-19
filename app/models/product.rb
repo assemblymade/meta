@@ -9,6 +9,7 @@ class Product < ActiveRecord::Base
   include Elasticsearch::Model
 
   DEFAULT_BOUNTY_SIZE=10000
+  PITCH_WEEK_REQUIRED_BUILDERS=10
 
   extend FriendlyId
 
