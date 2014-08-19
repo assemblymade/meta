@@ -14,6 +14,11 @@ class TipsController < ProductController
       )
 
       TipMailer.delay(queue: 'mailer').tipped(@tip.id)
+      Activities::Tip.publish!(
+        actor: current_user,
+        subject: @tip,
+        target: @tip.to
+      )
     end
 
     render nothing: true, status: 200
