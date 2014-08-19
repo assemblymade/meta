@@ -2,7 +2,6 @@ module Api
   class MailingListsController < ApplicationController
     respond_to :json
     before_filter :set_access_control_headers
-    # after_filter :set_access_control_headers
 
     protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 

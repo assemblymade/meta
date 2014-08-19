@@ -3,13 +3,16 @@ module Api
     respond_to :json
 
     def info
+      set_access_control_headers
+
       @product = Product.find_by!(slug: params[:product_id])
       @product_info = {
         name: @product.name,
         slug: @product.slug,
         pitch: @product.pitch,
-        description: @product.try(:description) || '',
-        core_team: @product.core_team.map { |m| { avatar_url: m.avatar_url, username: m.username } }
+        description: @product.try(:description),
+        poster_image_url: @product.try(:poster_image_url),
+        core_team: @product.core_team.map { |m| { avatar_url: m.avatar.url.to_s, username: m.username } }
       }
 
       respond_with @product_info
@@ -29,6 +32,13 @@ module Api
       end
 
       respond_with @workers
+    end
+
+    def set_access_control_headers
+      headers['Access-Control-Allow-Origin'] = '*'
+      headers['Access-Control-Allow-Methods'] = 'POST, DELETE'
+      headers['Access-Control-Request-Method'] = '*'
+      headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept'
     end
   end
 end
