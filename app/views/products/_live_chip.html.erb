@@ -5,22 +5,7 @@
     </div>
 
     <div class="col-xs-8">
-      <ul class="list-inline omega hidden-xs pull-right">
-
-        <% product.core_team.limit(3).each do |user| %>
-          <li>
-            <a href="<%= user_path(user) %>" data-toggle="tooltip" title="@<%= user.username %>"><%= avatar_tag(user, 24) %></a>
-          </li>
-        <% end %>
-
-        <% other_people_size = [product.core_team.count - 3, 0].max + product.watchers.count %>
-
-        <% if other_people_size > 0 %>
-          <li>
-            <span class="text-muted">+<%= other_people_size %></span>
-          </li>
-        <% end %>
-      </ul>
+      <%= render 'products/faces', product: product %>
 
       <a href="<%= product_path(product) %>"><strong><%= product.name %></strong></a>
       &nbsp;
@@ -28,8 +13,6 @@
       <div>
         <span class="text-muted text-small">Updated <%= time_ago_in_words(product.updated_at) %> ago</span>
       </div>
-
-
     </div>
 
     <div class="col-xs-1 col-xs-offset-1 text-center">

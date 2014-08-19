@@ -54,7 +54,7 @@ ASM::Application.routes.draw do
   get '/discover(/:action)', controller: 'discover',
                              as: :discover,
                              defaults: {
-                               action: 'staff_picks'
+                               action: 'fresh'
                              }
 
   get '/discover/tech/:tech' => 'discover#tech'

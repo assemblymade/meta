@@ -4,12 +4,16 @@ class Watching < ActiveRecord::Base
   include ActiveRecord::UUID
 
   belongs_to :user
-  belongs_to :watchable, polymorphic: true, counter_cache: true, touch: true
+  belongs_to :watchable, polymorphic: true, touch: true
 
   validates :user,      presence: true, uniqueness: {scope: :watchable}
   validates :watchable, presence: true
 
+  default_scope { active }
+  scope :active, -> { where(unwatched_at: nil) }
   scope :subscribed, -> { where(subscription: true) }
+
+  after_commit :update_counter_cache
 
   def self.auto_subscribe!(user, watchable)
     return if auto_following?(user, watchable)
@@ -96,5 +100,13 @@ class Watching < ActiveRecord::Base
 
   def self.is_product?(watchable)
     watchable.class.to_s == "Product"
+  end
+
+  # private
+
+  def update_counter_cache
+    if watchable.try(:watchings_count)
+      watchable.update watchings_count: watchable.watchings.active.count
+    end
   end
 end
