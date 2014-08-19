@@ -318,6 +318,13 @@ mark,
   text-overflow: ellipsis;
 }
 
+.text-subtle-link {
+  color: inherit;
+  &:hover {
+    color: inherit
+  }
+}
+
 .text-muted-links {
   color: $gray;
 

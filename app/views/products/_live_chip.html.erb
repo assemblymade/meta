@@ -1,4 +1,3 @@
-<% product = app.product %>
 <div class="chip">
   <div class="row">
     <div class="col-xs-1">
@@ -29,19 +28,29 @@
       <div>
         <span class="text-muted text-small">Updated <%= time_ago_in_words(product.updated_at) %> ago</span>
       </div>
+
+
     </div>
 
-    <div class="col-xs-3">
-      <div class="progress progress-small omega">
-        <div class="progress-bar progress-bar-success" style="width: <%= percentage(product.bio_memberships_count / Product::PITCH_WEEK_REQUIRED_BUILDERS.to_f) %>;">
-        </div>
-      </div>
-      <span>
-        <%= product.bio_memberships_count %> / <%= Product::PITCH_WEEK_REQUIRED_BUILDERS %> building
-      </span>
-      <span class="pull-right">
-        <%= time_ago_in_words app.pitch_week_end %> to go
-      </span>
+    <div class="col-xs-1 col-xs-offset-1 text-center">
+      <div>
+        <a class="text-subtle-link" href="<%= product_partners_path(product) %>">
+          <strong>+ <%= product.partners_count %></strong></div>
+        </a>
+        <a class="text-subtle-link" href="<%= product_partners_path(product) %>">
+          <span class="text-muted">partners</span>
+        </a>
+    </div>
+
+    <div class="col-xs-1 text-center">
+      <a class="text-subtle-link" href="<%= product_financials_path(product) %>">
+        <div><strong><%= short_currency product.profit_reports.order(:end_at).last.try(:revenue) %>
+        </strong></div>
+      </a>
+
+      <a class="text-subtle-link" href="<%= product_financials_path(product) %>">
+        <span class="text-muted">monthly</span>
+      </a>
     </div>
   </div>
 </div>

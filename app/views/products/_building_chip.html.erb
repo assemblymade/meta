@@ -33,13 +33,21 @@
     </div>
 
     <div class="col-xs-offset-1 col-xs-1 text-center">
-      <div><strong>+ <%= product.bio_memberships_count %></strong></div>
-      <span class="text-muted">building</span>
+      <div><a class="text-subtle-link" href="<%= product_people_path(product) %>">
+        <strong>+ <%= product.bio_memberships_count %></strong>
+      </a></div>
+      <a class="text-subtle-link" href="<%= product_people_path(product) %>">
+        <span class="text-muted">building</span>
+      </a>
     </div>
 
     <div class="col-xs-1 text-center">
-      <div><strong>+ <%= product.watchings_count %></strong></div>
-      <span class="text-muted">signups</span>
+      <div><a class="text-subtle-link" href="<%= product_people_path(product) %>">
+        <strong>+ <%= product.watchings_count %></strong>
+      </a></div>
+      <a class="text-subtle-link" href="<%= product_people_path(product) %>">
+        <span class="text-muted">signups</span>
+      </a>
     </div>
   </div>
 </div>

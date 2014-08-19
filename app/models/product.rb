@@ -48,6 +48,7 @@ class Product < ActiveRecord::Base
   has_many :subscriptions
   has_many :tasks
   has_many :team_memberships
+  has_many :transaction_log_entries
   has_many :votes, :as => :voteable
   has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
   has_many :watchings, :as => :watchable
@@ -386,6 +387,14 @@ class Product < ActiveRecord::Base
     return DEFAULT_BOUNTY_SIZE if bounties.none?
 
     bounties.inject(0, &:+) / bounties.size
+  end
+
+  def ownership
+    ProductOwnership.new(self)
+  end
+
+  def update_partners_count_cache
+    self.partners_count = ownership.user_cents.size
   end
 
   # missions

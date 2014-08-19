@@ -13,6 +13,8 @@ class CoinsMinted
     return if @winner.nil? # older wips may not have a winner if they were awarded, but re-opened
 
     transfer_coins_to_user_wallets!
+    @product.update_partners_count_cache
+    @product.save!
   end
 
   def transfer_coins_to_user_wallets!
