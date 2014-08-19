@@ -3,7 +3,7 @@ class TalkController < ApplicationController
   layout nil
 
   def index
-    @product = Product.find_by_slug!('meta')
+    @product = Product.find_by_slug!(params.fetch(:product, 'meta'))
     @activity_stream = ActivityStream.new(@product).page(params[:top_id])
     @activity_stream.each do |a|
       a.subject.readraptor_tag = :chat if a.subject.try(:readraptor_tag)
