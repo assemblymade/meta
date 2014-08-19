@@ -20,6 +20,14 @@ namespace :emails do
     Wip::Worker.mia.each(&:remind!)
   end
 
+  task :congratulate_on_signups => :environment do
+    Product.find(MailingList.where('created_at > ?', 1.day.ago).group(:product_id).count.keys).each do |product|
+      number_of_signups = MailingList.where('created_at > ? and product_id = ?', 1.day.ago, product.id).count
+
+      ProductMailer.delay(queue: 'mailer').congratulate_on_signups(product.id, number_of_signups)
+    end
+  end
+
   task :joined_team_no_work_yet => :environment do
     User.find(TeamMembership.where('created_at < ?', 1.day.ago).group(:user_id).count.keys).each do |user|
       if Task.won_by(user).empty? &&                          # no bounties won

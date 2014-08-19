@@ -8,6 +8,8 @@ module Api
     def create
       subscription = MailingList.create!(product_id: product_id, email: params[:email])
 
+      ProductMailer.delay(queue: 'mailer').mailing_list(product.id, params[:email]) 
+
       respond_with subscription, location: root_url
     end
 

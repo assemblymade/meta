@@ -9,6 +9,13 @@ class ProductMailerPreview < ActionMailer::Preview
     ProductMailer.congrats_on_your_first_user(product.id)
   end
 
+  def mailing_list
+    product = Product.sample
+    email = User.random.first.email
+
+    ProductMailer.mailing_list(product.id, email)
+  end
+
   def flagged
     product    = Product.sample
     admin      = User.random.first
