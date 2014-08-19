@@ -179,4 +179,18 @@ describe ProductsController do
       expect(Time.now.to_i - product.reload.launched_at.to_i < 2).to be_true
     end
   end
+
+  describe '#follow' do
+    let(:product) { Product.make!(user: creator) }
+
+    before do
+      sign_in collaborator
+    end
+
+    it 'publishes activity' do
+      expect {
+        patch :follow, product_id: product
+      }.to change(Activity, :count).by(1)
+    end
+  end
 end
