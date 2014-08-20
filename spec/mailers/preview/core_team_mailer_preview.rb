@@ -9,8 +9,8 @@ class CoreTeamMailerPreview < ActionMailer::Preview
   end
 
   def featured_work
-    product = Product.sample
+    product = Product.find_by_slug('helpful')
 
-    CoreTeamMailer.featured_work(product.id)
+    CoreTeamMailer.featured_work(product)
   end
 end

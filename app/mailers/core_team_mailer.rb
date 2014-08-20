@@ -11,6 +11,7 @@ class CoreTeamMailer < BaseMailer
 
   def featured_work(product)
     @product = product
+
     active_core_team = (@product.core_team + [@product.user]).uniq.compact.delete_if { |c|
       c.last_request_at < 30.days.ago
     }.collect(&:email)
