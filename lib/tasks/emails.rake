@@ -36,6 +36,18 @@ namespace :emails do
     end
   end
 
+  task :featured_work_apology => :environment do
+    Product.all.each do |product|
+      active_core_team = (product.core_team + [product.user]).uniq.compact.delete_if { |c|
+        c.last_request_at < 30.days.ago
+      }.collect(&:email)
+
+      active_core_team.each do |team_member|
+        UserMailer.delay(queue: 'mailer').featured_work_apology(product, team_member)
+      end
+    end
+  end
+
   task :joined_team_no_work_yet => :environment do
     User.find(TeamMembership.where('created_at < ?', 1.day.ago).group(:user_id).count.keys).each do |user|
       if Task.won_by(user).empty? &&                          # no bounties won

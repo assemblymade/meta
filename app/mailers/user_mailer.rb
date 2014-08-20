@@ -24,6 +24,16 @@ class UserMailer < Devise::Mailer
       subject: "Assembly"
   end
 
+  def featured_work_apology(product, user)
+    @product = product
+    @user = user
+    @example = Product.find_by(slug: 'coderwall')
+
+    mail from: "Austin Smith <austin.smith@assembly.com>",
+           to: user.email,
+      subject: "Can I help grow the #{@product.name} team?"
+  end
+
   def remind_user_of_their_claimed_work(user_id, wip_id)
     mailgun_tag 'user#remind_user_claimed_work'
 

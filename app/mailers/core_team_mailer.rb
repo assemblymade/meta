@@ -18,7 +18,7 @@ class CoreTeamMailer < BaseMailer
 
     return if active_core_team.empty?
 
-    mail from: "#{@product.name} <notifications@assemblymail.com>",
+    mail from: "Austin Smith <austin.smith@assembly.com>",
            to: active_core_team,
       subject: "Can I help grow the #{@product.name} team?"
   end
