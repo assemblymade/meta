@@ -42,7 +42,7 @@
         <p>Teams that go through Pitchweek will have the support of both the community and the Assembly team as they build their products.</p>
 
         <% if signed_in? and product = current_user.products.stealth.order(:created_at).last %>
-          <a href="<%= product_path(product) %>" class="btn btn-success btn-block">Launch <%= product.name %> into Pitchweek</a>
+          <a href="<%= edit_product_path(product) %>" class="btn btn-success btn-block">Launch <%= product.name %> into Pitchweek</a>
         <% end %>
       </div>
     </div>
