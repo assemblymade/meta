@@ -1,15 +1,5 @@
-.navbar {
-  font-size: 15px;
-}
-
-.navbar-brand {
-  font-weight: bold;
-  font-family: Solitaire;
-}
-
-.navbar > .container-fluid .navbar-brand {
-  padding: 10px 15px;
-  margin-left: -10px;
+.navbar-brand > .icon {
+  font-size: $line-height-computed;
 }
 
 .navbar-icon {

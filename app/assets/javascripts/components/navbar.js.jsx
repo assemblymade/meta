@@ -53,7 +53,7 @@ var Avatar = require('./avatar.js.jsx');
 
           <li className='dropdown'>
             <a href='#' className='dropdown-toggle' data-toggle='dropdown' key={'navbar dropdown'}>
-              <Avatar user={this.props.user} />
+              <Avatar user={this.props.user} size="22" />
               <span className='visible-xs-inline' style={{ 'margin-left': '5px' }}>
                 {this.props.user.username}
               </span>
