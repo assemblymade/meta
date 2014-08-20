@@ -48,13 +48,7 @@ A key ingredient to success on Assembly is community support. There are many way
 
 # Who owns the intellectual property?
 
-Assembly owns the intellectual property on behalf of our members, because that’s the best way to protect your interests. However, Assembly also recognizes that our members should have the right to use their ideas in other contexts. As a result, we give our members a license back to their content to give them the flexibility to use their intellectual property in non-commercial ways.
-
-
-Assembly enables each of our members to make a virtually limitless number of contributions to each app. As a result, each app may comprise hundreds or even thousands of different ideas and contributions, each with a different owner. Protecting the intellectual property rights of the hundreds of contributors to each app is virtually impossible if each contributor retains ownership of their contribution.
-
-Thus, Assembly retains all intellectual property derived from Assembly apps on behalf of our members, in order to protect the interests of our members and to maximize the returns derived from the sale of the commercialized apps.
-
+You do. 
 
 # What does transparency mean to Assembly?
 
@@ -78,4 +72,4 @@ Assembly.
 
 # Who covers the costs of development?
 
-Assembly. We have restrictions to this, but generally we financially assist growing product get off the ground.
+The Assembly. We have restrictions to this, but generally we financially assist growing product get off the ground.

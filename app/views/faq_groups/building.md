@@ -9,9 +9,9 @@ While anyone can create bounties and submit work, the Core Team makes approval d
 
 # How are the apps licensed?
 
-Each Assembly app's source code is released under a BSD 3-clause license, making it freely available for non-commercial use and development.
+Each Assembly app's source code is released under the GNU AGPL v. 3.0 license available at: http://www.gnu.org/licenses/agpl-3.0.html (“AGPL License”) and all non-software code under the terms of the Creative Commons Attribution 4.0 International license available at: http://creativecommons.org/licenses/by/4.0/ (“CC License”)
 
-However, Assembly retains an exclusive license to commercialize the app so we can award the proceeds back to the people who made it. The Assembly platform is intended to make it easy to view and search all discussions, comments, designs, and other contributions to a project. Assembly transparently shares an app's revenue, costs, and anonymized data including number of users, MAU, page views, and other key metrics.
+However, Assembly retains a license to commercialize the app so we can award the proceeds back to the people who made it. The Assembly platform is intended to make it easy to view and search all discussions, comments, designs, and other contributions to a project. Assembly transparently shares an app's revenue, costs, and anonymized data including number of users, MAU, page views, and other key metrics.
 
 # What technology is used to build Assembly apps?
 
