@@ -30,7 +30,7 @@ namespace :emails do
     end
   end
 
-  task :feature_work => :environment do
+  task :featured_work => :environment do
     Product.all.each do |product|
       CoreTeamMailer.delay(queue: 'mailer').featured_work(product)
     end
