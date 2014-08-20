@@ -30,6 +30,12 @@ namespace :emails do
     end
   end
 
+  task :feature_work => :environment do
+    Product.all.each do |product|
+      CoreTeamMailer.delay(queue: 'mailer').featured_work(product)
+    end
+  end
+
   task :joined_team_no_work_yet => :environment do
     User.find(TeamMembership.where('created_at < ?', 1.day.ago).group(:user_id).count.keys).each do |user|
       if Task.won_by(user).empty? &&                          # no bounties won

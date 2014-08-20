@@ -1,0 +1,14 @@
+Hi there, <%= @product.name %> Core Team!
+
+I’m starting a "job board" newsletter to help connect great people with interesting work. It's a chance to bring in new people to work with you on [<%= @product.name %>](<%= product_url(@product) %>). Would you like to participate?
+
+Just reply to this email with a short blurb about the type of work on your roadmap, and we’ll share that out to the Assembly community.
+
+Here’s an example:
+
+Coderwall (Design, Development) We have a [rough wireframe and description of features](<%= product_discussion_url(@product, 333) %>) of a reworked homepage/Protip showcase, and we need some design and front-end help to get it done. Also, we need a [t-shirt designed](<%= product_wip_url(@product, 336) %>) for a new partnership with New Relic.
+
+
+Thanks!
+
+Austin
