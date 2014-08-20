@@ -17,19 +17,9 @@ class Activity < ActiveRecord::Base
 
   def self.publish!(opts)
     create!(opts).tap do |a|
-      if product = a.target.try(:product)
-        return unless a.actor.class == User
-
-        auto_subscribe!(a.actor, product)
-      end
-
       PublishActivity.perform_async(a.id) if Story.should_publish?(a)
       a.publish_to_chat if a.publishable
     end
-  end
-
-  def self.auto_subscribe!(actor, watchable)
-    Watching.auto_subscribe!(actor, watchable)
   end
 
   def track_in_segment

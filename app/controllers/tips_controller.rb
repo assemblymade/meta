@@ -19,6 +19,7 @@ class TipsController < ProductController
         subject: @tip,
         target: @tip.to
       )
+      Watching.auto_subscribe!(current_user, @product)
     end
 
     render nothing: true, status: 200
