@@ -4,7 +4,7 @@ module Github
       product = Product.find(product_id)
       repo_name ||= product.slug
 
-      if ENV['GITHUB_PRODUCTS_ORG']
+      if ENV['GITHUB_PRODUCTS_ORG'] && ENV['LAUNCHPAD_URL']
         repo = launchpad_post "/github",
           slug: repo_name,
           name: product.name,
