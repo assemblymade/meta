@@ -8,15 +8,19 @@
               <td class="panel panel-default">
 
                 <h1 class="text-center">
-                  Nice job!
+                  You're ready to get to work!
                 </h1>
 
                 <p>
-                  <a href="<%= product_url(@product) %>"><%= @product.name %></a> had <%= @number %> new signups in the past 24-hours.
+                  We've created a repo for your product <a href="<%= @product.repos.first.url %>">here</a>. If you don't already have admin access, it should be added soon.
                 </p>
 
                 <p>
-                  Keep up the good work!
+                  We've also created a landing page for you at <a href="http://<%= @product.slug %>.asm.co"><%= @product.slug %>.asm.co<a/>. You can edit this page by committing to the gh-pages branch of the above repo.
+                </p>
+
+                <p>
+                  Good luck!
                   <br/>
                   The Assembly team
                 </p>

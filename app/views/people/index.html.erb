@@ -1,5 +1,6 @@
 <% title 'People', @product.name %>
 <% activate_nav! :people %>
+<% activate_nav! :people_overview %>
 
 <% if flash[:joined] %>
   <div class="alert alert-success page-alert">
@@ -9,10 +10,8 @@
 <% end %>
 
 <div class="page-header sheet-header">
-  <h2 class="page-header-title">
-    <i class="icon-users text-muted" style="margin-right: 4px;"></i>
-    People
-  </h2>
+  <h2>People</h2>
+  <%= render 'people/nav' %>
 </div>
 
 <% if signed_in? %>

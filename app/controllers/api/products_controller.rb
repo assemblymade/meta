@@ -34,7 +34,7 @@ module Api
     end
 
     def set_access_control_headers
-      headers['Access-Control-Allow-Origin'] = '*.asm.co'
+      headers['Access-Control-Allow-Origin'] = '*'
       headers['Access-Control-Allow-Methods'] = 'POST, DELETE'
       headers['Access-Control-Request-Method'] = '*'
       headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept'
