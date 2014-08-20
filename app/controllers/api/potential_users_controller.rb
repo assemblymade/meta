@@ -1,5 +1,5 @@
 module Api
-  class MailingListsController < ApplicationController
+  class PotentialUsersController < ApplicationController
     respond_to :json
     before_filter :set_access_control_headers
 
@@ -7,17 +7,24 @@ module Api
 
     def create
       email = params[:email]
-      subscription = MailingList.create!(product_id: product_id, email: email)
+      product = Product.find_by!(slug: params[:product_id])
+      subscription = PotentialUser.create!(product_id: product.id, email: email)
 
       unless User.find_by(email: email)
-        ProductMailer.delay(queue: 'mailer').mailing_list(product_id, email)
+        ProductMailer.delay(queue: 'mailer').mailing_list(product.id, email)
       end
+
+      Activities::Subscribe.publish!(
+        actor: subscription,
+        subject: product,
+        target: product
+      )
 
       respond_with subscription, location: root_url
     end
 
     def destroy
-      if subscription = MailingList.find_by(product_id: product_id, email: params[:email])
+      if subscription = PotentialUser.find_by(product_id: product_id, email: params[:email])
         subscription.destroy!
       end
 

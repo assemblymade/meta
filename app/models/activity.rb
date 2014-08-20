@@ -18,6 +18,8 @@ class Activity < ActiveRecord::Base
   def self.publish!(opts)
     create!(opts).tap do |a|
       if product = a.target.try(:product)
+        return unless a.actor.class == User
+
         auto_subscribe!(a.actor, product)
       end
 

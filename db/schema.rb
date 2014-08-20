@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140815003900) do
+ActiveRecord::Schema.define(version: 20140820004340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,12 +208,6 @@ ActiveRecord::Schema.define(version: 20140815003900) do
     t.hstore   "extra"
   end
 
-  create_table "mailing_lists", force: true do |t|
-    t.datetime "created_at", null: false
-    t.string   "email",      null: false
-    t.uuid     "product_id", null: false
-  end
-
   create_table "measurements", id: false, force: true do |t|
     t.uuid     "id",         null: false
     t.uuid     "metric_id",  null: false
@@ -302,6 +296,12 @@ ActiveRecord::Schema.define(version: 20140815003900) do
   end
 
   add_index "posts", ["product_id", "slug"], name: "index_posts_on_product_id_and_slug", unique: true, using: :btree
+
+  create_table "potential_users", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.datetime "created_at", null: false
+    t.string   "email",      null: false
+    t.uuid     "product_id", null: false
+  end
 
   create_table "preorders", id: false, force: true do |t|
     t.uuid     "id",         null: false

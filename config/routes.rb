@@ -188,7 +188,7 @@ ASM::Application.routes.draw do
         resources :offers, only: [:create, :show]
       end
       resources :projects, only: [:create]
-      resources :mailing_lists, only: [:create, :destroy]
+      resources :potential_users, only: [:create, :destroy]
     end
 
     resources :textcompletes, only: [:index]

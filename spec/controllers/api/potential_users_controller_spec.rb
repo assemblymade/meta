@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::MailingListsController do
+describe Api::PotentialUsersController do
   let(:product) { Product.make! }
   let(:user) { User.make!(email: 'zanzibar@z.com') }
 
