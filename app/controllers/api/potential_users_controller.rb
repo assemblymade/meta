@@ -10,8 +10,10 @@ module Api
       product = Product.find_by!(slug: params[:product_id])
       subscription = PotentialUser.create!(product_id: product.id, email: email)
 
-      unless User.find_by(email: email)
-        ProductMailer.delay(queue: 'mailer').mailing_list(product.id, email)
+      if user = User.find_by(email: email)
+        ProductMailer.delay(queue: 'mailer').potential_user_with_account(product, user)
+      else
+        ProductMailer.delay(queue: 'mailer').potential_user(product, email)
       end
 
       Activities::Subscribe.publish!(
