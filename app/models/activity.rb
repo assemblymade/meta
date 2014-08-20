@@ -15,6 +15,10 @@ class Activity < ActiveRecord::Base
 
   attr_accessor :socket_id
 
+  PUBLISHABLE_IN_CHAT = [
+    ""
+  ]
+
   def self.publish!(opts)
     create!(opts).tap do |a|
       if product = a.target.try(:product)
@@ -24,7 +28,7 @@ class Activity < ActiveRecord::Base
       end
 
       PublishActivity.perform_async(a.id) if Story.should_publish?(a)
-      a.publish_to_chat
+      a.publish_to_chat if a.publishable
     end
   end
 
@@ -69,5 +73,9 @@ class Activity < ActiveRecord::Base
     streams.each do |stream|
       stream.push(self)
     end
+  end
+
+  def publishable
+    false
   end
 end

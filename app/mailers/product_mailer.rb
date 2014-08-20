@@ -33,6 +33,10 @@ class ProductMailer < ActionMailer::Base
       subject: "Thanks for signing up for #{@product.name}!"
   end
 
+  def featured_work(product)
+    @product = product
+  end
+
   def congratulate_on_signups(product_id, number)
     @product = Product.find(product_id)
     @number = number
