@@ -37,12 +37,12 @@
 
         <p><strong>Step 4: Community support</strong></p>
 
-        <p>Once you enter Pitchweek, you'll be featured on the Assembly Fresh Products page, where the community can rally behind your idea. In those seven days, if XX people sign up with bios to join your team, you'll become a featured Assembly product, and you can start development with a kick-off meeting.</p>
+        <p>Once you enter Pitchweek, you'll be featured on the Assembly Fresh Products page, where the community can rally behind your idea. In those seven days, if 10 people sign up with bios to join your team, you'll become a featured Assembly product, and you can start development with a kick-off meeting.</p>
 
         <p>Teams that go through Pitchweek will have the support of both the community and the Assembly team as they build their products.</p>
 
         <% if signed_in? and product = current_user.products.stealth.order(:created_at).last %>
-          <a href="<%= edit_product_path(product) %>" class="btn btn-success btn-block">Launch <%= product.name %> into Pitchweek</a>
+          <a href="<%= edit_product_path(product) %>" class="btn btn-success btn-block">Prepare <%= product.name %> for Pitchweek</a>
         <% end %>
       </div>
     </div>
