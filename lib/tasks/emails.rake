@@ -39,7 +39,7 @@ namespace :emails do
   task :featured_work_apology => :environment do
     Product.all.each do |product|
       active_core_team = (product.core_team + [product.user]).uniq.compact.delete_if { |c|
-        c.last_request_at < 30.days.ago
+        c.last_request_at.nil? || c.last_request_at < 30.days.ago
       }
 
       active_core_team.each do |team_member|

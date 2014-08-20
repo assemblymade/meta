@@ -30,7 +30,7 @@ class UserMailer < Devise::Mailer
     @example = Product.find_by(slug: 'coderwall')
 
     mail from: "Austin Smith <austin.smith@assembly.com>",
-           to: user.email,
+           to: @user.email,
       subject: "Can I help grow the #{@product.name} team?"
   end
 
