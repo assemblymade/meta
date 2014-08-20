@@ -10,7 +10,7 @@ Whether this is an idea you've submitted to Assembly in the past, or a brand new
 
 In order to enter Pitchweek, you need to create a video. This is your chance to show off your creativity and personality while demonstrating how great your idea is. Here's an example of a great video:
 
-[sample video]
+<iframe src="//player.vimeo.com/video/102253176" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 *Tip: here are some important things to cover in your video: Who are you? What's your background? Why are you well-equipped to help this idea succeed? What is your idea? How is it better than current solutions? How will you reach your customers? What are your challenges? How far along are you? etc.*
 
