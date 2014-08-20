@@ -32,14 +32,14 @@
 <ul class="nav nav-stacked nav-sidebar">
   <li class="<%= nav_active_class(:about) %>">
     <a href="<%= product_path(product) %>">
-      <span class="icon icon-compass dropdown-glyph"></span>
+      <span class="icon icon-compass icon-left"></span>
       Idea
     </a>
   </li>
 
   <li class="<%= nav_active_class(:people) %>">
     <a href="<%= product_people_path(product) %>">
-      <span class="icon icon-users dropdown-glyph"></span>
+      <span class="icon icon-users icon-left"></span>
       People
     </a>
   </li>
@@ -47,7 +47,7 @@
   <% if product.revenue? %>
     <li class="<%= nav_active_class(:financials) %>">
       <a href="<%= product_financials_path(product) %>">
-        <span class="icon icon-wallet dropdown-glyph"></span>
+        <span class="icon icon-wallet icon-left"></span>
         Financials
       </a>
     </li>
@@ -61,7 +61,7 @@
 
   <li class="<%= nav_active_class(:chat) %>">
     <a href="<%= product_chat_path(product) %>">
-      <span class="icon icon-bubbles dropdown-glyph"></span>
+      <span class="icon icon-bubbles icon-left"></span>
       Chat
     </a>
   </li>
@@ -69,7 +69,7 @@
   <% if can?(:update, product) || product.posts.any? %>
     <li class="<%= nav_active_class(:blog) %>">
       <a href="<%= product_posts_path(product) %>">
-        <span class="icon-notebook dropdown-glyph"></span>
+        <span class="icon-notebook icon-left"></span>
         Blog
       </a>
     </li>
@@ -77,35 +77,35 @@
 
   <li class="<%= nav_active_class(:projects) %>">
     <a href="<%= product_projects_path(product) %>">
-      <span class="icon icon-folder dropdown-glyph"></span>
+      <span class="icon icon-folder icon-left"></span>
       Projects
     </a>
   </li>
 
   <li class="<%= nav_active_class(:bounties) %>">
     <a href="<%= product_wips_path(product) %>">
-      <span class="icon icon-trophy dropdown-glyph"></span>
+      <span class="icon icon-trophy icon-left"></span>
       Bounties
     </a>
   </li>
 
   <li class="<%= nav_active_class(:discussions) %>">
     <a href="<%= product_discussions_path(product) %>">
-      <span class="icon icon-book-open dropdown-glyph"></span>
+      <span class="icon icon-book-open icon-left"></span>
       Discussions
     </a>
   </li>
 
   <li class="<%= nav_active_class(:assets) %>">
     <a href="<%= product_assets_path(product) %>">
-      <span class="icon icon-layers dropdown-glyph"></span>
+      <span class="icon icon-layers icon-left"></span>
       Assets
     </a>
   </li>
 
   <li class="<%= nav_active_class(:repositories) %>">
     <a href="<%= product_repos_path(product) %>">
-      <span class="icon icon-repository dropdown-glyph"></span>
+      <span class="icon icon-repository icon-left"></span>
       Repositories
     </a>
   </li>
@@ -117,7 +117,7 @@
   <ul class="nav nav-stacked nav-pills">
     <li class="<%= nav_active_class(:admin) %>">
       <a href="<%= product_admin_path(product) %>">
-        <span class="icon-moustache dropdown-glyph"></span>
+        <span class="icon-moustache icon-left"></span>
         Admin
       </a>
     </li>
