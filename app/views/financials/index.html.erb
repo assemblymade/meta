@@ -1,5 +1,9 @@
 <% title 'Financials', @product.name %>
 <% activate_nav! :financials %>
+<% activate_nav! :financial_overview %>
+
+<% title 'Financials', @product.name %>
+<% activate_nav! :financials %>
 
 <% cache [@product] do %>
 
@@ -39,3 +43,123 @@
     </div><!-- .row -->
   </div><!-- .sheet-body -->
 <% end %>
+
+<!-- <div class="page-header sheet-header">
+  <h2>Financials</h2>
+  <div class="pull-right">
+    <a href="#">Setup</a>
+  </div>
+  <%= render 'financials/nav' %>
+</div>
+
+<div class="sheet-body">
+
+  <div class="stat-group">
+    <div class="stat">
+      <div class="stat-title">Balance</div>
+      <div class="stat-value">-$53.00</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Total Revenue</div>
+      <div class="stat-value text-success">$0.00</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Total Expenses</div>
+      <div class="stat-value text-danger">$53.00</div>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th colspan="5">
+          Last 30 days
+          <span class="icon icon-chevron-down"></span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="text-muted">July 25th, 2014</span></td>
+        <td>
+          Money from this thing
+        </td>
+        <td><span class="text-muted small">PENDING</span></td>
+        <td class="text-right text-success">$28.00</td>
+        <td class="text-right">
+          <a href="#">
+            <span class="icon icon-chevron-right"></span>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="text-muted">July 25th, 2014</span></td>
+        <td>
+          Expense for this thing
+        </td>
+        <td></td>
+        <td class="text-right text-danger">-$18.00</td>
+        <td class="text-right">
+          <a href="#">
+            <span class="icon icon-chevron-right"></span>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="text-muted">July 25th, 2014</span></td>
+        <td>
+          Money from this thing
+        </td>
+        <td></td>
+        <td class="text-right text-success">$28.00</td>
+        <td class="text-right">
+          <a href="#">
+            <span class="icon icon-chevron-right"></span>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="text-muted">July 25th, 2014</span></td>
+        <td>
+          @chrislloyd expenses
+        </td>
+        <td></td>
+        <td class="text-right text-danger">-$12.00</td>
+        <td class="text-right">
+          <a href="#">
+            <span class="icon icon-chevron-right"></span>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="text-muted">June 25th, 2014</span></td>
+        <td>
+          @chrislloyd expenses
+        </td>
+        <td></td>
+        <td class="text-right text-danger">-$18.00</td>
+        <td class="text-right">
+          <a href="#">
+            <span class="icon icon-chevron-right"></span>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="text-muted">May 25th, 2014</span></td>
+        <td>
+          Charge from small plan
+        </td>
+        <td></td>
+        <td class="text-right text-success">$30.00</td>
+        <td class="text-right">
+          <a href="#">
+            <span class="icon icon-chevron-right"></span>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div><!-- .sheet-body --> -->

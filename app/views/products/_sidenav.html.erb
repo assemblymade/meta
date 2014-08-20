@@ -27,103 +27,98 @@
   <% end %>
 </div>
 
-<ul class="nav nav-stacked nav-sidebar" style="margin-top: 35px;">
-<li class="<%= nav_active_class(:about) %>">
-  <a href="<%= product_path(product) %>">
-    <span class="icon icon-compass dropdown-glyph"></span>
-    Plan
-  </a>
-</li>
+<br>
 
-<li class="<%= nav_active_class(:chat) %>">
-  <a href="<%= product_chat_path(product) %>">
-    <span class="icon icon-bubbles dropdown-glyph"></span>
-    Chat
-  </a>
-</li>
-
-<% if can?(:update, product) || product.posts.any? %>
-  <li class="<%= nav_active_class(:blog) %>">
-    <a href="<%= product_posts_path(product) %>">
-      <span class="icon-notebook dropdown-glyph"></span>
-      Blog
+<ul class="nav nav-stacked nav-sidebar">
+  <li class="<%= nav_active_class(:about) %>">
+    <a href="<%= product_path(product) %>">
+      <span class="icon icon-compass dropdown-glyph"></span>
+      Idea
     </a>
   </li>
-<% end %>
 
-<li class="<%= nav_active_class(:people) %>">
-  <a href="<%= product_people_path(product) %>">
-    <span class="icon icon-users dropdown-glyph"></span>
-    People
-  </a>
-</li>
-
-<li class="<%= nav_active_class(:ownership) %>">
-  <a href="<%= product_partners_path(product) %>">
-    <span class="icon-pie-chart dropdown-glyph"></span>
-    Coins
-  </a>
-</li>
-
-
-<% if staff? %>
-  <li class="<%= nav_active_class(:admin) %>">
-    <a href="<%= product_admin_path(product) %>">
-      <span class="icon-moustache dropdown-glyph"></span>
-      Admin
+  <li class="<%= nav_active_class(:people) %>">
+    <a href="<%= product_people_path(product) %>">
+      <span class="icon icon-users dropdown-glyph"></span>
+      People
     </a>
   </li>
-<% end %>
+
+  <% if product.revenue? %>
+    <li class="<%= nav_active_class(:financials) %>">
+      <a href="<%= product_financials_path(product) %>">
+        <span class="icon icon-wallet dropdown-glyph"></span>
+        Financials
+      </a>
+    </li>
+  <% end %>
+
 </ul>
 
-<h6 style="padding-left:10px">Work</h6>
+<hr>
 
 <ul class="nav nav-stacked nav-sidebar">
 
-<li class="<%= nav_active_class(:projects) %>">
-  <a href="<%= product_projects_path(product) %>">
-    <span class="icon icon-folder dropdown-glyph"></span>
-    Projects
-  </a>
-</li>
+  <li class="<%= nav_active_class(:chat) %>">
+    <a href="<%= product_chat_path(product) %>">
+      <span class="icon icon-bubbles dropdown-glyph"></span>
+      Chat
+    </a>
+  </li>
 
-<li class="<%= nav_active_class(:bounties) %>">
-  <a href="<%= product_wips_path(product) %>">
-    <span class="icon icon-trophy dropdown-glyph"></span>
-    Bounties
-  </a>
-</li>
+  <% if can?(:update, product) || product.posts.any? %>
+    <li class="<%= nav_active_class(:blog) %>">
+      <a href="<%= product_posts_path(product) %>">
+        <span class="icon-notebook dropdown-glyph"></span>
+        Blog
+      </a>
+    </li>
+  <% end %>
 
-<li class="<%= nav_active_class(:discussions) %>">
-  <a href="<%= product_discussions_path(product) %>">
-    <span class="icon icon-book-open dropdown-glyph"></span>
-    Discussions
-  </a>
-</li>
+  <li class="<%= nav_active_class(:projects) %>">
+    <a href="<%= product_projects_path(product) %>">
+      <span class="icon icon-folder dropdown-glyph"></span>
+      Projects
+    </a>
+  </li>
 
-<li class="<%= nav_active_class(:assets) %>">
-  <a href="<%= product_assets_path(product) %>">
-    <span class="icon icon-layers dropdown-glyph"></span>
-    Assets
-  </a>
-</li>
+  <li class="<%= nav_active_class(:bounties) %>">
+    <a href="<%= product_wips_path(product) %>">
+      <span class="icon icon-trophy dropdown-glyph"></span>
+      Bounties
+    </a>
+  </li>
 
-<li class="<%= nav_active_class(:repositories) %>">
-  <a href="<%= product_repos_path(product) %>">
-    <span class="icon icon-repository dropdown-glyph"></span>
-    Repositories
-  </a>
-</li>
+  <li class="<%= nav_active_class(:discussions) %>">
+    <a href="<%= product_discussions_path(product) %>">
+      <span class="icon icon-book-open dropdown-glyph"></span>
+      Discussions
+    </a>
+  </li>
+
+  <li class="<%= nav_active_class(:assets) %>">
+    <a href="<%= product_assets_path(product) %>">
+      <span class="icon icon-layers dropdown-glyph"></span>
+      Assets
+    </a>
+  </li>
+
+  <li class="<%= nav_active_class(:repositories) %>">
+    <a href="<%= product_repos_path(product) %>">
+      <span class="icon icon-repository dropdown-glyph"></span>
+      Repositories
+    </a>
+  </li>
+
 </ul>
 
-<% if product.revenue? %>
-  <h6 style="padding-left:10px">Financials</h6>
-
-  <ul class="nav nav-stacked nav-sidebar">
-    <li class="<%= nav_active_class(:financials) %>">
-      <a href="<%= product_financials_path(product) %>">
-        <i class="icon icon-wallet dropdown-glyph"></i>
-        Money
+<% if staff? %>
+  <hr>
+  <ul class="nav nav-stacked nav-pills">
+    <li class="<%= nav_active_class(:admin) %>">
+      <a href="<%= product_admin_path(product) %>">
+        <span class="icon-moustache dropdown-glyph"></span>
+        Admin
       </a>
     </li>
   </ul>

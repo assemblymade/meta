@@ -1,0 +1,11 @@
+<ul class="nav nav-pills">
+  <li class="<%= nav_active_class(:financial_overview) %>">
+    <a href="<%= product_financials_path(@product) %>">Overview</a>
+  </li>
+  <li class="<%= nav_active_class(:financial_expenses) %>">
+    <a href="<%= product_expenses_path(@product) %>">Expenses</a>
+  </li>
+  <li class="<%= nav_active_class(:financial_royalties) %>">
+    <a href="#">Royalties</a>
+  </li>
+</ul>
