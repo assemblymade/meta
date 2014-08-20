@@ -1,19 +1,6 @@
 <div class="chip">
   <div class="row">
-    <div class="col-xs-1">
-      <%= image_tag product.poster_image.url, class: 'img-rounded', height: 24, alt: product.name %>
-    </div>
-
-    <div class="col-xs-8">
-      <%= render 'products/faces', product: product %>
-
-      <a href="<%= product_path(product) %>"><strong><%= product.name %></strong></a>
-      &nbsp;
-      <%= product.pitch %>
-      <div>
-        <span class="text-muted text-small">Updated <%= time_ago_in_words(product.updated_at) %> ago</span>
-      </div>
-    </div>
+    <%= render 'products/mini_chip', product: product %>
 
     <div class="col-xs-1 col-xs-offset-1 text-center">
       <div>
