@@ -17,8 +17,10 @@ class Activity < ActiveRecord::Base
 
   def self.publish!(opts)
     create!(opts).tap do |a|
-      PublishActivity.perform_async(a.id) if Story.should_publish?(a)
-      a.publish_to_chat if a.publishable
+      if a.publishable
+        PublishActivity.perform_async(a.id) if Story.should_publish?(a)
+        a.publish_to_chat
+      end
     end
   end
 
