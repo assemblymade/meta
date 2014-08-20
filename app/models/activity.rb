@@ -15,10 +15,6 @@ class Activity < ActiveRecord::Base
 
   attr_accessor :socket_id
 
-  PUBLISHABLE_IN_CHAT = [
-    ""
-  ]
-
   def self.publish!(opts)
     create!(opts).tap do |a|
       if product = a.target.try(:product)
