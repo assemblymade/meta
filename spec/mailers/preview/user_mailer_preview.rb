@@ -23,6 +23,13 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.remind_user_of_their_claimed_work(worker.user.id, worker.wip.id)
   end
 
+  def featured_work_apology
+    product = Product.sample
+    user = User.sample
+
+    UserMailer.featured_work_apology(product, user)
+  end
+
   def joined_team_no_work_yet
     membership = TeamMembership.sample
     UserMailer.joined_team_no_work_yet(membership.id)

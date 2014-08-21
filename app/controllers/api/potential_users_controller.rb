@@ -1,19 +1,32 @@
 module Api
-  class MailingListsController < ApplicationController
+  class PotentialUsersController < ApplicationController
     respond_to :json
     before_filter :set_access_control_headers
-    # after_filter :set_access_control_headers
 
     protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
     def create
-      subscription = MailingList.create!(product_id: product_id, email: params[:email])
+      email = params[:email]
+      product = Product.find_by!(slug: params[:product_id])
+      subscription = PotentialUser.create!(product_id: product.id, email: email)
+
+      if user = User.find_by(email: email)
+        ProductMailer.delay(queue: 'mailer').potential_user_with_account(product, user)
+      else
+        ProductMailer.delay(queue: 'mailer').potential_user(product, email)
+      end
+
+      Activities::Subscribe.publish!(
+        actor: subscription,
+        subject: product,
+        target: product
+      )
 
       respond_with subscription, location: root_url
     end
 
     def destroy
-      if subscription = MailingList.find_by(product_id: product_id, email: params[:email])
+      if subscription = PotentialUser.find_by(product_id: product_id, email: params[:email])
         subscription.destroy!
       end
 

@@ -45,13 +45,18 @@ class Watching < ActiveRecord::Base
       if is_product?(watchable)
         watch_wips!(user, watchable)
       end
+    else
+      # Unwatch wips if moved from following -> announcements
+      if is_product?(watchable)
+        unwatch_wips!(user, watchable)
+      end
     end
     watching
   end
 
   def self.watch_wips!(user, watchable)
     Wip.where(product: watchable).each do |w|
-      self.watch!(user, w)
+      watch!(user, w)
     end
   end
 
@@ -68,13 +73,13 @@ class Watching < ActiveRecord::Base
     end
 
     if watching && self.is_product?(watchable)
-      self.unwatch_wips!(user, watchable)
+      unwatch_wips!(user, watchable)
     end
   end
 
   def self.unwatch_wips!(user, watchable)
     Wip.where(product: watchable).each do |w|
-      self.unwatch!(user, w)
+      unwatch!(user, w)
     end
   end
 

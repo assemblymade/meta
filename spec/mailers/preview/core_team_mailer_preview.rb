@@ -7,4 +7,10 @@ class CoreTeamMailerPreview < ActionMailer::Preview
     # Return a Mail::Message here (but don't deliver it!)
     CoreTeamMailer.welcome(product.id, user.id)
   end
+
+  def featured_work
+    product = Product.find_by_slug('helpful')
+
+    CoreTeamMailer.featured_work(product)
+  end
 end

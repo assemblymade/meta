@@ -24,4 +24,10 @@ describe TipsController do
     expect(assigns(:tip).product).to eq(product)
     expect(assigns(:tip).cents).to eq(5)
   end
+
+  it 'publishes activity' do
+    expect(
+      Activities::Tip.find_by(subject: assigns(:tip)).actor
+    ).to eq(tipper)
+  end
 end

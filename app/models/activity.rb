@@ -17,17 +17,11 @@ class Activity < ActiveRecord::Base
 
   def self.publish!(opts)
     create!(opts).tap do |a|
-      if product = a.target.try(:product)
-        auto_subscribe!(a.actor, product)
+      if a.publishable
+        PublishActivity.perform_async(a.id) if Story.should_publish?(a)
+        a.publish_to_chat
       end
-
-      PublishActivity.perform_async(a.id) if Story.should_publish?(a)
-      a.publish_to_chat
     end
-  end
-
-  def self.auto_subscribe!(actor, watchable)
-    Watching.auto_subscribe!(actor, watchable)
   end
 
   def track_in_segment
@@ -67,5 +61,9 @@ class Activity < ActiveRecord::Base
     streams.each do |stream|
       stream.push(self)
     end
+  end
+
+  def publishable
+    false
   end
 end

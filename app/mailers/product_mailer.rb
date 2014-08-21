@@ -2,6 +2,8 @@ class ProductMailer < ActionMailer::Base
   helper :markdown
   helper :wip
 
+  layout 'email'
+
   include ActionView::Helpers::TextHelper
 
   def congrats_on_your_first_user(product_id)
@@ -11,6 +13,44 @@ class ProductMailer < ActionMailer::Base
     mail from: "#{@product.name} <notifications@assemblymail.com>",
            to: entire_core_team,
       subject: "#{@product.name} just got its first signup!"
+  end
+
+  def potential_user(product, email_address)
+    @product = product
+    @email_address = email_address
+
+    mail from: "#{@product.name} <notifications@assemblymail.com>",
+           to: @email_address,
+      subject: "Thanks for signing up for #{@product.name}!"
+  end
+
+  def potential_user_with_account(product, user)
+    @product = product
+    @user = user
+
+    mail from: "#{@product.name} <notifications@assemblymail.com>",
+           to: @user.email,
+      subject: "Thanks for signing up for #{@product.name}!"
+  end
+
+  def congratulate_on_signups(product_id, number)
+    @product = Product.find(product_id)
+    @number = number
+    entire_core_team = (@product.core_team + [@product.user]).uniq.compact.collect(&:email)
+
+    mail from: "#{@product.name} <notifications@assemblymail.com>",
+           to: entire_core_team,
+      subject: "#{@product.name} is rolling in signups!"
+  end
+
+  def notify_core_team(product)
+    @product = product
+
+    entire_core_team = (@product.core_team + [@product.user]).uniq.compact.collect(&:email)
+
+    mail from: "#{@product.name} <notifications@assemblymail.com>",
+           to: entire_core_team,
+      subject: "#{@product.name} is ready for work!"
   end
 
   def stale_wips(user_id)

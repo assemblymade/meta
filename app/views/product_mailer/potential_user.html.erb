@@ -1,0 +1,35 @@
+<table class="row">
+  <tbody>
+    <tr>
+      <td class="wrapper last">
+        <table class="twelve columns">
+          <tbody>
+            <tr>
+              <td class="panel panel-default">
+
+                <h1 class="text-center">
+                  Thanks for signing up for updates on <a href="<%= product_url(@product) %>"><%= @product.name %></a>!
+                </h1>
+
+                <p>
+                  <%= @product.name %> is being built on <a href="<%= root_url %>">Assembly</a>, a platform for building open-source projects. When a project on Assembly earns revenue, its contributors are paid based on their contributions. We've reserved an Assembly account for you at this email address; you can sign up <a href="<%= new_user_registration_url(email: @email_address) %>">here</a>.
+                </p>
+                <p>
+                  If you'd rather just get updates about <%= @product.name %>, you don't have to take any further action. But if you'd like to <span style="font-style: italic;">build</span> <%= @product.name %> or offer direct feedback to the team, you can sign up anytime.
+                </p>
+                <br/>
+
+                <p>
+                  Over and out,
+                  <br/>
+                  The <%= @product.name %> team
+                </p>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

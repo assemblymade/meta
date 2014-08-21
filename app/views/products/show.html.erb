@@ -18,6 +18,12 @@
   <div class="row">
     <div class="col-md-8">
 
+      <% if @product.video? %>
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" src="<%= @product.you_tube_video_embed_url %>"></iframe>
+        </div>
+      <% end %>
+
       <!-- Body -->
       <div class="markdown-normalized text-longform">
         <%= render 'products/description', product: @product %>

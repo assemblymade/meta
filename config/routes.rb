@@ -42,6 +42,7 @@ ASM::Application.routes.draw do
   get '/about'            => 'pages#about',       as: :about
   get '/terms'            => 'pages#tos',         as: :tos
   get '/core-team'        => 'pages#core_team',   as: :core_team
+  get '/pitchweek'        => 'pages#pitch_week',  as: :pitch_week
   get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
@@ -183,6 +184,7 @@ ASM::Application.routes.draw do
   # ◕ᴥ◕
   namespace :api do
     resources :products, only: [] do
+      get :info
       get :workers
       namespace :chat do
         resources :comments, only: [:create]
@@ -191,7 +193,7 @@ ASM::Application.routes.draw do
         resources :offers, only: [:create, :show]
       end
       resources :projects, only: [:create]
-      resources :mailing_lists, only: [:create, :destroy]
+      resources :potential_users, only: [:create, :destroy]
     end
 
     resources :textcompletes, only: [:index]

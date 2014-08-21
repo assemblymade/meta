@@ -1,14 +1,10 @@
-# What does it mean to watch a product?
+# What does it mean to follow a product?
 
-If you are watching a product, you’ll receive occasional emails with updates from the team.
+If you are following a product, you’ll receive occasional emails with updates from the team.
 
+You can follow 'Everything' to receive notifications (both on the web and occasionally via email) when people are discussing the product or creating new bounties and projects on it.
 
-# What does it mean to join a team?
-
-If you join a team, you’ll receive notifications (both on the web and occasionally via email) when people are discussing the product or creating new bounties and projects on it.
-
-If you want to help build a product, start by joining the team and introducing yourself.
-
+If you want to help build a product, start by following 'Everything' and introducing yourself to the team.
 
 # Can I create a bounty for a product if I’m not on the Core Team?
 

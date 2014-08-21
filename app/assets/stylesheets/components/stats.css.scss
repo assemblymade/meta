@@ -19,12 +19,10 @@
 }
 
 .stat-title {
-  @extend .upper-spaced;
-  font-size: $font-size-h6;
   color: $text-muted;
-  font-weight: bold;
 }
 
 .stat-value {
   font-size: $font-size-h2;
+  font-weight: bold;
 }
