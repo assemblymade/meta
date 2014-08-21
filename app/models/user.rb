@@ -179,7 +179,8 @@ class User < ActiveRecord::Base
   def most_interesting_product
       products.where(flagged_at: nil).
                where('lower(name) != ?', 'test').
-               max{|p| p.watchings_count }
+               order(:watchings_count).last
+
   end
 
   # this is used on signup to auto follow a product
