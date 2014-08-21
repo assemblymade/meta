@@ -48,6 +48,17 @@
         <li class="<%= nav_active_class(:community) %>">
           <a href="<%= chat_path %>">Community</a>
         </li>
+
+        <% if !user_signed_in? %>
+          <li>
+            <a style="cursor: pointer;" onclick="showInfoModal()">More Info</a>
+          </li>
+          <script>
+            function showInfoModal() {
+              $('#info-modal').modal();
+            }
+          </script>
+        <% end %>
       </ul>
 
         <% if user_signed_in? %>
@@ -80,4 +91,8 @@
       </div>
     </div>
   </div>
+  <% if @product && !user_signed_in? %>
+    <div data-react-class="ProductBanner" data-react-props="<%= { productName: @product.name }.to_json %>" style="text-align: center; width: 100%;">
+    </div>
+  <% end %>
 </div>

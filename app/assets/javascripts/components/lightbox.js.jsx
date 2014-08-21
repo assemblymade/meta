@@ -4,7 +4,7 @@
   var Lightbox = React.createClass({
     render: function() {
       return (
-        <div className="modal fade" role="dialog" tabindex="-1" aria-labelledby={this.props.title || "lightbox"} aria-hidden="true">
+        <div className="modal fade" id={this.props.id} role="dialog" tabIndex="-1" aria-labelledby={this.props.title || "lightbox"} aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
 
