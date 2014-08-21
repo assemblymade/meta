@@ -92,12 +92,4 @@ describe Watching do
       expect(wip.watchers).to include(user)
     end
   end
-
-  describe 'auto_subscribe!' do
-    it 'subscribes a user to a product if the user performs an activity' do
-      wip = Wip.create!(product: watchable, user: user, title: 'foo')
-      Activity.publish!(target: wip, actor: user, subject: wip.product)
-      expect(Watching.following?(user, watchable)).to be_true
-    end
-  end
 end

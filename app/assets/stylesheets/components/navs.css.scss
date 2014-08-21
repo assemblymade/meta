@@ -1,16 +1,6 @@
 .nav {
-
-  > li > a {
-    color: $text-color;
-
-    &:hover,
-    &:focus {
-      background-color: transparent;
-    }
-  }
-
   > .active {
-    font-weight: bold;
+    font-weight: 500;
   }
 }
 

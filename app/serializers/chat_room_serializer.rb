@@ -14,6 +14,12 @@ class ChatRoomSerializer < ActiveModel::Serializer
   end
 
   def updated
-    object.main_thread.try(:updated_at).try(:to_i)
+    last_event.try(:created_at).try(:to_i)
+  end
+
+  def last_event
+    if wip = object.main_thread
+      wip.events.order(:created_at).select(:created_at).last
+    end
   end
 end

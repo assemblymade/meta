@@ -16,7 +16,14 @@ class TasksController < WipsController
     )
 
     if @bounty.valid?
-      @bounty.offers.create(user: current_user, amount: params[:offer].to_i, ip: request.ip)
+      if amount = params[:offer].to_i > 0
+        @bounty.offers.create(user: current_user, amount: amount, ip: request.ip)
+      end
+
+      if params[:project_id]
+        project = @product.milestones.find_by!(number: params[:project_id])
+        project.tasks << @bounty
+      end
 
       @activity = Activities::Start.publish!(
         actor: current_user,
@@ -25,8 +32,6 @@ class TasksController < WipsController
         socket_id: params[:socket_id]
       )
 
-      track_params = WipAnalyticsSerializer.new(@bounty, scope: current_user).as_json.merge(engagement: 'created')
-      track_event 'wip.engaged', track_params
       if !current_user.staff?
         AsmMetrics.product_enhancement
         AsmMetrics.active_user(current_user)

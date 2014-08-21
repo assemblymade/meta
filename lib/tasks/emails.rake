@@ -20,6 +20,34 @@ namespace :emails do
     Wip::Worker.mia.each(&:remind!)
   end
 
+  task :congratulate_on_signups => :environment do
+    Product.find(PotentialUser.where('created_at > ?', 1.day.ago).group(:product_id).count.keys).each do |product|
+      number_of_signups = PotentialUser.where('created_at > ? and product_id = ?', 1.day.ago, product.id).count
+
+      next if number_of_signups < 10
+
+      ProductMailer.delay(queue: 'mailer').congratulate_on_signups(product.id, number_of_signups)
+    end
+  end
+
+  task :featured_work => :environment do
+    Product.all.each do |product|
+      CoreTeamMailer.delay(queue: 'mailer').featured_work(product)
+    end
+  end
+
+  task :featured_work_apology => :environment do
+    Product.all.each do |product|
+      active_core_team = (product.core_team + [product.user]).uniq.compact.delete_if { |c|
+        c.last_request_at.nil? || c.last_request_at < 30.days.ago
+      }
+
+      active_core_team.each do |team_member|
+        UserMailer.delay(queue: 'mailer').featured_work_apology(product, team_member)
+      end
+    end
+  end
+
   task :joined_team_no_work_yet => :environment do
     User.find(TeamMembership.where('created_at < ?', 1.day.ago).group(:user_id).count.keys).each do |user|
       if Task.won_by(user).empty? &&                          # no bounties won
@@ -97,5 +125,17 @@ namespace :emails do
         end
       end
     end
+  end
+
+  task :pitch_week_intro => :environment do
+    User.where(id: Product.group(:user_id).count.keys).each do |user|
+      if product = user.most_interesting_product
+        EmailLog.send_once(user.id, :pitch_week_intro) do
+          puts "#{user.username.ljust(20)} #{product.name}"
+          TextMailer.delay.pitch_week_intro(user.id, product.id)
+        end
+      end
+   end
+
   end
 end

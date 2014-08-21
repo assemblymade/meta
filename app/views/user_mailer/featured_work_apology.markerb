@@ -1,0 +1,11 @@
+Hey <%= @user.short_name %>,
+
+I just sent an email about something new we're doing at Assembly, and I realized that the email was a little cryptic. I apologize for the duplicate emails - this will be the last one. :-D
+
+We're starting a "job board" newsletter to help connect great people with interesting work. It's a chance to bring in new people to work with you on your product. If you are interested, just reply to this email with a short blurb about your next design, development, or marketing challenge on your product. Here’s an example on [<%= @example.name %>](<%= product_url(@example) %>):
+
+*<%= @example.name %>: (Design, Development) We have a [rough wireframe and description of features](<%= product_discussion_url(@example, 333) %>) of a reworked homepage/Protip showcase, and we need some design and front-end help to get it done. Also, we need a [t-shirt designed](<%= product_wip_url(@example, 336) %>) for a new partnership with New Relic.*
+
+Do you have any weekly goals to be included in an upcoming email?
+
+Austin

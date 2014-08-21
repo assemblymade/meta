@@ -253,6 +253,12 @@ var PersonPicker = require('./person_picker.js.jsx');
             <td>
               {user.email}
             </td>
+            <td className="text-right">
+              <span style={{'white-space':"nowrap"}}>
+                <span className="icon icon-app-coin text-coins"></span>
+                {numeral(user.coins).format('0,0')}
+              </span>
+            </td>
             <td>
               <div className="input-group input-group-sm">
                 <input ref="ownership" className="form-control text-right" type="number"
@@ -262,17 +268,11 @@ var PersonPicker = require('./person_picker.js.jsx');
                 <div className="input-group-addon">%</div>
               </div>
             </td>
-            <td className="text-right">
+            <td>
               <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
                 <span className="icon icon-close"></span>
                 <span className="sr-only">Remove</span>
               </a>
-            </td>
-            <td className="text-right">
-              <span style={{'white-space':"nowrap"}}>
-                <span className="icon icon-app-coin text-coins"></span>
-                {numeral(user.coins).format('0,0')}
-              </span>
             </td>
           </tr>
         );

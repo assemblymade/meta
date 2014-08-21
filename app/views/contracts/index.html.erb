@@ -1,5 +1,7 @@
 <% title 'Contracts', @product.name %>
-<% activate_nav! :contracts %>
+<% activate_nav! :people %>
+<% activate_nav! :people_contracts %>
+
 
 <div class="page-header sheet-header">
   <% if current_user && @product.core_team?(current_user) %>
@@ -54,7 +56,8 @@
 
   <% end %>
 
-  <h2 class="alpha omega">Contracts</h2>
+  <h2>Contracts</h2>
+  <%= render 'people/nav' %>
 </div>
 
 <div class="sheet-body">

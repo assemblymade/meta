@@ -1,22 +1,11 @@
 <% title @product.stakeholders, @product.name %>
-<% activate_nav! :ownership %>
+<% activate_nav! :people %>
+<% activate_nav! :people_ownership %>
 
 <% cache [@product] do %>
   <div class="page-header sheet-header">
-    <h2 class="page-header-title">Coins</h2>
-    <div class="page-header-meta">
-      <a href="<%= help_path(:revenue) %>">
-        <span class="glyphicon glyphicon-question-sign icon-left"></span>
-        What are coins?
-      </a>
-
-      <% if false %>
-        <ul class="list-piped">
-          <li><%= number_to_human(100_000_000) %> total</li>
-          <li><%= number_to_human(@total_cents) %> vested</li>
-        </ul>
-      <% end %>
-    </div>
+    <h2>Ownership</h2>
+    <%= render 'people/nav' %>
   </div>
 
   <div class="sheet-body">

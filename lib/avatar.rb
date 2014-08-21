@@ -11,9 +11,9 @@ class Avatar < Struct.new(:user)
     query = {
       d: 'https://assembly.com/assets/avatars/default.png'
     }
-    
+
     query[:s] = size if size
-    
+
     URI::HTTPS.build(
       host: 'gravatar.com',
       path: File.join('/avatar', digest),

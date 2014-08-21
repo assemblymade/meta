@@ -4,6 +4,9 @@
 
 <%= render 'shared/navbar' %>
 
+<div data-react-class="InfoModal" data-react-props="<%= { product: @product, signup_path: new_user_registration_path }.to_json %>">
+</div>
+
 <div class="page">
   <div class="container">
 

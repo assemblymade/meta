@@ -63,7 +63,11 @@ class ProductDecorator < ApplicationDecorator
   end
 
   def you_tube_video_embed_url
-    "https://www.youtube.com/embed/#{you_tube_video_id}"
+    "https://www.youtube.com/embed/#{you_tube_video_id}?autoplay=0"
+  end
+
+  def video?
+    you_tube_video_url.present?
   end
 
   def reward

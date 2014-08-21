@@ -176,6 +176,13 @@ class User < ActiveRecord::Base
     product.voted_by?(self)
   end
 
+  def most_interesting_product
+      products.where(flagged_at: nil).
+               where('lower(name) != ?', 'test').
+               order(:watchings_count).last
+
+  end
+
   # this is used on signup to auto follow a product
   def follow_product=(slug)
     Watching.watch!(self, Product.find_by!(slug: slug)) unless slug.blank?

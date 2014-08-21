@@ -12,6 +12,10 @@ class AutoTipContract < ActiveRecord::Base
   validate :one_contract_per_user
   validate :contracts_less_than_100_percent
 
+  validates :amount, presence: true, numericality: {
+    greater_than_or_equal_to: 0
+  }
+
   alias_attribute :percentage, :amount
 
   def active?
@@ -48,7 +52,6 @@ class AutoTipContract < ActiveRecord::Base
 
   def self.replace_contract(product, user, amount, start_at = Time.now)
     AutoTipContract.transaction do
-      end_at = start_at - 1
       AutoTipContract.end_contract(product, user)
 
       AutoTipContract.create! product: product, user: user, amount: amount

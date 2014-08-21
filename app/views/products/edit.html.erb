@@ -6,6 +6,24 @@
     <div class="col-md-12 col-xs-12">
       <%= form_for @product do |f| %>
 
+        <p class="lead">To enter Pitchweek: Explain your idea clearly and concisely, and create a great video that talks about you, your idea, your progress and your vision. Then email <a href="mailto:austin@assembly.com">austin@assembly.com</a> with a link to your product page.</p>
+
+        <div class="form-group">
+          <%= f.label :you_tube_video_url, 'Pitch video link', class: 'form-label' %>
+          <div class="row">
+            <div class="col-md-8">
+              <%= f.url_field :you_tube_video_url, class: 'form-control', maxlength: 255 %>
+              <p class="help-block">See a <a href="<%= pitch_week_path %>">sample video</a></p>
+            </div>
+            <div class="col-md-4">
+              <p class="help-block alpha">
+                Add a link to a video that describes your product. It could be as simple as you talking into a webcam, or
+                as awesome as an animated product video.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <h6 class="text-muted">Basics</h6>
 
         <div class="form-group">

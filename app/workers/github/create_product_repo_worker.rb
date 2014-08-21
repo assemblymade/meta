@@ -4,7 +4,7 @@ module Github
       product = Product.find(product_id)
       repo_name ||= product.slug
 
-      if ENV['GITHUB_PRODUCTS_ORG']
+      if ENV['GITHUB_PRODUCTS_ORG'] && ENV['LAUNCHPAD_URL']
         repo = launchpad_post "/github",
           slug: repo_name,
           name: product.name,
@@ -16,6 +16,8 @@ module Github
 
         product.repos |= [Repo::Github.new("https://github.com/#{ENV['GITHUB_PRODUCTS_ORG']}/#{repo_name}")]
         product.save!
+
+        notify_core_team(product)
 
         product.core_team.each do |user|
           if github_login = user.github_login
@@ -52,6 +54,10 @@ module Github
           end
         end
       end
+    end
+
+    def notify_core_team(product)
+      ProductMailer.delay(queue: 'mailer').notify_core_team(product)
     end
 
     def write_erb_file(file, view, object)

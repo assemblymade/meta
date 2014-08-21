@@ -11,7 +11,7 @@
     getInitialState: function() {
       return {
         offers: this.props.offers,
-        newOffer: this.props.averageBounty
+        newOffer: this.props.averageBounty * 0.10
       }
     },
     render: function() {

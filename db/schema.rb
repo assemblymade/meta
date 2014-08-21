@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819221800) do
+ActiveRecord::Schema.define(version: 20140821213403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -187,6 +187,18 @@ ActiveRecord::Schema.define(version: 20140819221800) do
     t.datetime "updated_at"
   end
 
+  create_table "global_interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.integer  "user_id"
+    t.datetime "design"
+    t.datetime "frontend"
+    t.datetime "backend"
+    t.datetime "marketing"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "global_interests", ["user_id"], name: "index_global_interests_on_user_id", using: :btree
+
   create_table "interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.text     "slug",       null: false
     t.datetime "created_at", null: false
@@ -206,12 +218,6 @@ ActiveRecord::Schema.define(version: 20140819221800) do
     t.datetime "deleted_at"
     t.datetime "claimed_at"
     t.hstore   "extra"
-  end
-
-  create_table "mailing_lists", force: true do |t|
-    t.datetime "created_at", null: false
-    t.string   "email",      null: false
-    t.uuid     "product_id", null: false
   end
 
   create_table "measurements", id: false, force: true do |t|
@@ -312,6 +318,12 @@ ActiveRecord::Schema.define(version: 20140819221800) do
   end
 
   add_index "posts", ["product_id", "slug"], name: "index_posts_on_product_id_and_slug", unique: true, using: :btree
+
+  create_table "potential_users", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.datetime "created_at", null: false
+    t.string   "email",      null: false
+    t.uuid     "product_id", null: false
+  end
 
   create_table "preorders", id: false, force: true do |t|
     t.uuid     "id",         null: false
