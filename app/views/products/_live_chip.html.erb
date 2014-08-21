@@ -4,7 +4,7 @@
       <%= image_tag product.poster_image.url, class: 'img-rounded', height: 24, alt: product.name %>
     </div>
 
-    <div class="col-xs-8">
+    <div class="col-xs-9">
       <%= render 'products/faces', product: product %>
 
       <a href="<%= product_path(product) %>"><strong><%= product.name %></strong></a>
@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="col-xs-1 col-xs-offset-1 text-center">
+    <div class="col-xs-1 text-center">
       <div>
         <a class="text-subtle-link" href="<%= product_partners_path(product) %>">
           <strong>+ <%= product.partners_count %></strong></div>
