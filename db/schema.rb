@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140820004340) do
+ActiveRecord::Schema.define(version: 20140821213403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,6 +186,18 @@ ActiveRecord::Schema.define(version: 20140820004340) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "global_interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.integer  "user_id"
+    t.datetime "design"
+    t.datetime "frontend"
+    t.datetime "backend"
+    t.datetime "marketing"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "global_interests", ["user_id"], name: "index_global_interests_on_user_id", using: :btree
 
   create_table "interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.text     "slug",       null: false

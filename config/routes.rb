@@ -205,6 +205,8 @@ ASM::Application.routes.draw do
 
   get '/activities/:id' => 'activity#show'
 
+  get '/interests/:interest' => 'global_interests#toggle'
+
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do
     match 'flag',    via: [:get, :post]
