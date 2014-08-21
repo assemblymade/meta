@@ -44,6 +44,7 @@
         <% if signed_in? and product = current_user.products.stealth.order(:created_at).last %>
           <a href="<%= edit_product_path(product) %>" class="btn btn-success btn-block">Prepare <%= product.name %> for Pitchweek</a>
         <% end %>
+        <p>Questions? austin@assembly.com</p>
       </div>
     </div>
   </div>
