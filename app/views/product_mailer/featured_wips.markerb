@@ -1,0 +1,119 @@
+Here are a few teams on Assembly that are looking for talented people who share their vision. Feel free to jump in and start working,  or just introduce yourself.
+
+**Visual design:**
+
+> *Gig Radio:  Listen to music by artists who are playing near you tonight.*
+
+> We have a [working prototype](https://assembly.com/gig-radio/posts/prototype-development) of the app that proves it is feasible. Now I’m looking for support to come up with the [visual identity of the product](https://assembly.com/gig-radio/posts/the-plan) - icon, typography, color scheme and so on.
+
+**Copywriting:**
+
+> *Confy: Helping developers separate config from code*
+
+> One thing we really need help with at the moment is copywriting.  If you’re interested in helping with this, [check out the bounties](https://assembly.com/confy/wips?tag=copy) and join the conversation.
+
+**Front-end development, design:**
+
+> *Coderwall: Professional network for software engineers*
+
+> We have a [rough wireframe and description of features](https://assembly.com/coderwall/discussions/333) of a reworked homepage/Protip showcase, and we need some design and front-end help to get it done. Also, we need a [t-shirt designed](https://assembly.com/coderwall/wips/336) for a new partnership with New Relic.
+
+**What are you interested in?**
+
+<table class="container">
+  <tbody>
+    <tr>
+      <td>
+        <table class="row">
+          <tbody>
+            <tr>
+              <td class="wrapper">
+                <table class="three columns">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <table class="medium-button radius">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <a style="color: #fff !important;" href="<%= global_interests_url('design', { auth_token: @user.authentication_token }) %>">Design</a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+
+              <td class="wrapper">
+                <table class="three columns">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <table class="medium-button radius">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <a style="color: #fff !important;" href="<%= global_interests_url('marketing', { auth_token: @user.authentication_token }) %>">Marketing</a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+
+              <td class="wrapper">
+                <table class="three columns">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <table class="medium-button radius">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <a style="color: #fff !important;" href="<%= global_interests_url('frontend', { auth_token: @user.authentication_token }) %>">Frontend</a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+
+              <td class="wrapper last">
+                <table class="three columns">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <table class="medium-button radius">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <a style="color: #fff !important;" href="<%= global_interests_url('backend', { auth_token: @user.authentication_token }) %>">Backend</a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+*If you’re building a product on Assembly and are looking for great people to work with, send a blurb to austin@assembly.com*
