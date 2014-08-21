@@ -27,7 +27,7 @@
           <span className="icon icon-app-coin icon-left text-coins">
             {numeral(offer.amount).format('0,0')}
           </span>
-          <span className="sr-only">
+          <span>
             {this.props.product.name}
             coins
           </span>

@@ -1,29 +1,30 @@
 (function() {
   var min = 1
   var scale = 1.05
+  var initialVal = 25
 
   var NewBountyOffer = React.createClass({
     mixins: [React.addons.LinkedStateMixin],
 
     componentDidMount: function() {
-      this.props.onChange(this.scaleOffer(50))
+      this.props.onChange(this.scaleOffer(initialVal))
     },
 
     render: function() {
       return <div>
-          <div className="clearfix text-muted small">
-            <span className="pull-left">Simple</span>
-            <span className="pull-right">Complex</span>
-          </div>
-          <input type="range" min="0" max="100" onChange={this.handleOfferChanged} defaultValue={50} />
-          <br />
-          <p>
-            <span className="text-success">
-              {this.relativeSize()}
-            </span>
-            <span> the average {this.props.product.name} bounty.</span>
-          </p>
+        <div className="clearfix text-muted small">
+          <span className="pull-left">Simple</span>
+          <span className="pull-right">Complex</span>
         </div>
+        <input type="range" min="0" max="100" onChange={this.handleOfferChanged} defaultValue={initialVal} />
+        <br />
+        <p>
+          <span className="text-success">
+            {this.relativeSize()}
+          </span>
+          <span> the average {this.props.product.name} bounty.</span>
+        </p>
+      </div>
     },
 
     handleOfferChanged: function(e) {
