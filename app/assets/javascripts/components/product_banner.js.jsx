@@ -3,6 +3,7 @@
 (function() {
   var COOKIE_NAME = 'asm_banner';
   var Cookie = require('../cookie');
+
   var ProductBanner = React.createClass({
     componentWillMount: function() {
       if (app.currentUser() || Cookie.getCookie(COOKIE_NAME)) {
@@ -18,20 +19,20 @@
       }
     },
 
-    getInitialState: function() {
-      return {
-        display: 'inline-block'
-      };
-    },
-
     dismiss: function(e) {
       e.preventDefault();
 
-      Cookie.createCookie(COOKIE_NAME, true, 365);
+      Cookie.createCookie(COOKIE_NAME, true, 1);
 
       this.setState({
         display: 'none'
       });
+    },
+
+    getInitialState: function() {
+      return {
+        display: 'inline-block'
+      };
     },
 
     render: function() {
@@ -47,9 +48,8 @@
           'font-size': '1.1em',
           'font-weight': 'bold'
         }}>
-          {this.props.productName} is being built on <a href="/">Assembly!</a>
-          <span>
-            <a  id="hide-banner"
+          How do I <a style={{ cursor: 'pointer' }} onClick={this.showModal}>get started</a>?
+          <span id="hide-banner"
                 style={{
                   cursor: 'pointer',
                   'padding-left': '10px'
@@ -57,12 +57,17 @@
                 onClick={this.dismiss}
                 data-toggle="tooltip"
                 data-placement="right"
-                title="Never show this banner again">
-              &times;
-            </a>
+                title="Hide this banner">
+            <span className="icon icon-close"></span>
           </span>
         </div>
       );
+    },
+
+    showModal: function(e) {
+      e.preventDefault();
+
+      $('#info-modal').modal();
     }
   });
 

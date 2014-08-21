@@ -4,6 +4,7 @@
   var Cookie = require('../cookie');
   var Lightbox = require('./lightbox.js.jsx');
   var marked = require('marked');
+  var COOKIE_NAME = 'asm_product_info';
 
   var InfoModal = React.createClass({
     assembly: function() {
@@ -24,13 +25,12 @@
 
     componentDidMount: function() {
       var product = this.props.product;
-      var cookieName = 'asm_product_info';
 
-      if (app.currentUser() || Cookie.getCookie(cookieName)) {
-        // return;
+      if (app.currentUser() || Cookie.getCookie(COOKIE_NAME)) {
+        return;
       }
 
-      Cookie.createCookie(cookieName, true);
+      Cookie.createCookie(COOKIE_NAME, true);
 
       $(this.getDOMNode()).modal();
     },
@@ -40,7 +40,7 @@
         <p>
           Whether you're a developer who writes x86 assembly in her sleep, a designer who rivals Michalengelo,
           a marketer who sells ice to penguins, or anything in between, there's a product on Assembly that would
-          love your help. Sign up, claim a bounty, and dive in.
+          love your help. Sign up, claim a bounty, submit work, repeat.
         </p>
       );
     },
