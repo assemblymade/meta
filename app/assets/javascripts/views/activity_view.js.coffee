@@ -11,18 +11,20 @@ class window.ActivityView extends Backbone.View
     @subjectId = options.subjectId
 
   render: =>
-    @$el.html(JST[@model.get('type')].render(@templateData()))
-    $('[data-readraptor-track]', @$el).readraptor()
-    $('.activity-content a').attr('target', '_blank')
+    template = JST[@model.get('type')]
+    if template
+      @$el.html(template.render(@templateData()))
+      $('[data-readraptor-track]', @$el).readraptor()
+      $('.activity-content a').attr('target', '_blank')
 
-    model = @model
-    $('.js-insert-tips', @$el).each ->
-      React.renderComponent(TipsUi({
-        viaType: 'Activity',
-        viaId: model.id,
-        recipient: model.get('actor'),
-        tips: model.get('tips')
-      }), @)
+      model = @model
+      $('.js-insert-tips', @$el).each ->
+        React.renderComponent(TipsUi({
+          viaType: 'Activity',
+          viaId: model.id,
+          recipient: model.get('actor'),
+          tips: model.get('tips')
+        }), @)
 
   templateData: ->
     data = _.clone(@model.attributes)
