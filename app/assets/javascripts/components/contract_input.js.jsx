@@ -68,6 +68,10 @@ var C = require('../constants').CONTRACT;
     onChange: function(e) {
       var inputValue = e.target.value;
 
+      if (inputValue < 0) {
+        inputValue = 0;
+      }
+
       this.setState({
         amount: Math.min(inputValue, ContractStore.getAvailablePercentage(this.props.startingAmount))
       });
