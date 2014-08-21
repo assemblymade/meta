@@ -19,7 +19,7 @@ class ChatRoomSerializer < ActiveModel::Serializer
 
   def last_event
     if wip = object.main_thread
-      wip.events.order(:created_at).last
+      wip.events.order(:created_at).select(:created_at).last
     end
   end
 end
