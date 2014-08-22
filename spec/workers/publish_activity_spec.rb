@@ -32,9 +32,9 @@ describe PublishActivity do
     product.watch!(watcher)
 
     PublishActivity.new.perform(activity.id)
-    expect(NewsFeed.new(watcher).first).to have_attributes(
-      verb: 'Comment',
-      subject_type: 'Discussion',
+    expect(NewsFeed.new(watcher).first.attributes.slice('verb', 'subject_type')).to eq(
+      'verb' => 'Comment',
+      'subject_type' => 'Discussion',
     )
   end
 end
