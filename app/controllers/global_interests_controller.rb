@@ -1,5 +1,5 @@
 class GlobalInterestsController < ApplicationController
-  respond_to :json
+  respond_to :json, :html
   before_action :authenticate_user!
 
   INTEREST_WHITELIST = ["design", "frontend", "backend", "marketing"]
@@ -17,6 +17,9 @@ class GlobalInterestsController < ApplicationController
       global_interest = GlobalInterest.create!(:user => current_user, "#{interest}" => Time.now)
     end
 
-    respond_with global_interest
+    respond_to do |format|
+      format.json { render json: global_interest, status: 201 }
+      format.html { redirect_to root_path }
+    end
   end
 end

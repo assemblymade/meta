@@ -29,7 +29,7 @@ class UserMailer < Devise::Mailer
 
     mail from: "Austin from Assembly <austin.smith@assembly.com>",
            to: @user.email,
-      subject: "Want to build something today?"
+      subject: "Today’s featured bounties on Assembly"
   end
 
   def featured_work_apology(product, user)

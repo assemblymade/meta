@@ -2,6 +2,7 @@ Hi <%= @user.short_name %>,
 
 We’ve hand-picked some bounties on a few of our favorite products for you. You can jump in and tackle any of them or join the conversation.
 
+<br/>
 
 **Design:**
 
@@ -14,6 +15,7 @@ With [@johnlloyd](<%= user_url('johnlloyd') %>)’s recent wireframes of a homep
 
 Barrtr is building a marketplace for local businesses that can offer products/services to designers and developers with extra time. (Imagine getting your next 200 pints of beer at the local watering hole in exchange for building a landing page).
 
+<br/>
 
 **Backend development:**
 
@@ -24,6 +26,7 @@ Barrtr is building a marketplace for local businesses that can offer products/se
 
 Snapshot is building a feature-rich competitor to the Wayback Machine, so smart storage with quick retrieval will be crucial. If you have ideas or want to step up and help tackle this, [#6](<%= product_wip_url('snapshot-io', 6) %>).
 
+<br/>
 
 **Product/front-end development:**
 
@@ -34,6 +37,7 @@ Snapshot is building a feature-rich competitor to the Wayback Machine, so smart 
 
 The Coderwall team is having a [discussion](<%= product_discussion_url('coderwall', 333) %>) about ways to increase the amount of exposure its job postings get, which would increase Coderwall’s revenue. If you have thoughts on design, UX, and front-end development, jump in the conversation.
 
+<br/>
 
 **Marketing:**
 
