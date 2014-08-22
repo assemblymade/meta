@@ -25,7 +25,7 @@ class Activity < ActiveRecord::Base
   end
 
   def track_in_segment
-    return if actor.staff?
+    return if actor && actor.staff?
 
     TrackActivityCreated.perform_async(self.id)
   end
