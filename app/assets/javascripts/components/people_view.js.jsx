@@ -1,8 +1,10 @@
 /** @jsx React.DOM */
 
-var PeopleStore = require('../stores/people_store');
-
 (function() {
+  var FollowerList = require('./follower_list.js.jsx');
+  var PeopleStore = require('../stores/people_store');
+  var PeoplePageMixin = require('../mixins/people_page.js.jsx');
+
   var People = React.createClass({
     render: function(){
       if (this.props.coreOnly) {
@@ -17,8 +19,6 @@ var PeopleStore = require('../stores/people_store');
             coreMemberships={this.props.coreMemberships} />
         );
       }
-
-
 
       return (
         <div>
@@ -37,6 +37,7 @@ var PeopleStore = require('../stores/people_store');
               currentUser={this.props.currentUser}
               updatePath={this.props.updatePath}
               coreMemberships={this.props.coreMemberships} />
+          <FollowerList followers={this.props.followers} />
         </div>
       )
     },
@@ -156,9 +157,12 @@ var PeopleStore = require('../stores/people_store');
   });
 
   var PeopleList = React.createClass({
+    mixins: [PeoplePageMixin],
+
     render: function() {
       return (
         <div className="list-group list-group-breakout list-group-padded">
+          <h4>Builders</h4>
           {this.rows(this.props.memberships)}
         </div>
       )
@@ -166,7 +170,6 @@ var PeopleStore = require('../stores/people_store');
 
     rows: function(memberships) {
       var self = this;
-
       var rows = [];
 
       for (var i = 0, l = memberships.length; i < l; i++) {
@@ -179,8 +182,7 @@ var PeopleStore = require('../stores/people_store');
         var user = member.user;
 
         var row = (
-          <div className="row"
-            key={'row-' + user.id}
+          <div key={user.id + i}
             style={{
               'padding-top': '15px',
               'padding-bottom': '15px',
@@ -195,25 +197,6 @@ var PeopleStore = require('../stores/people_store');
       }
 
       return rows;
-    },
-
-    avatar: function(user) {
-      if (!user) {
-        return;
-      }
-
-      return (
-        <div className="col-sm-1 col-xs-1 ">
-          <a href={user.url} title={'@' + user.username}>
-            <img src={user.avatar_url}
-                className="avatar"
-                alt={'@' + user.username}
-                width="30"
-                height="30"
-            />
-          </a>
-        </div>
-      );
     },
 
     member: function(member) {
@@ -291,9 +274,8 @@ var PeopleStore = require('../stores/people_store');
         var highlight = self.props && self.props.selected === interest ? 'primary' : 'outlined';
 
         return (
-          <li>
+          <li key={membership.user.id + '-' + interest}>
             <span className={'label label-' + highlight}
-                key={membership.user.id + '-' + interest}
                 style={{cursor: 'pointer'}}
                 onClick={self.props.onFilter.bind(null, interest)}>
               {label}

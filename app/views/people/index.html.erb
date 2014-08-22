@@ -90,6 +90,7 @@ $(document).ready(function() {
   $('.js-people').each(function(){
     React.renderComponent(People({
       interestFilters: <%== product_membership_interests(@product, false).to_json %>,
+      followers: <%== ActiveModel::ArraySerializer.new(Watching.where(watchable: @product, subscription: true, unwatched_at: nil).map(&:user).uniq).to_json %>,
       memberships: <%== ActiveModel::ArraySerializer.new(@memberships).to_json %>,
       selected: "<%= @selected_filter %>",
       currentUser: <%== current_user.to_json %>,
