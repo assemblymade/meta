@@ -15,7 +15,7 @@ With [@johnlloyd](<%= user_url('johnlloyd') %>)’s recent wireframes of a homep
 Barrtr is building a marketplace for local businesses that can offer products/services to designers and developers with extra time. (Imagine getting your next 200 pints of beer at the local watering hole in exchange for building a landing page).
 
 
-**Backend:**
+**Backend development:**
 
 <img src="https://d8izdk6bl4gbi.cloudfront.net/frame_0/https://d1015h9unskp4y.cloudfront.net/attachments/64fd1bd7-bee9-4e21-afb4-1350704cd4b2/Screen%20Shot%202014-08-22%20at%2012.19.46%20PM.png" alt="Screen Shot 2014-08-22 at 12.19.46 PM.png">
 
@@ -25,7 +25,7 @@ Barrtr is building a marketplace for local businesses that can offer products/se
 Snapshot is building a feature-rich competitor to the Wayback Machine, so smart storage with quick retrieval will be crucial. If you have ideas or want to step up and help tackle this, [#6](<%= product_wip_url('snapshot-io', 6) %>).
 
 
-**Product:**
+**Product/front-end development:**
 
 <img src="https://d8izdk6bl4gbi.cloudfront.net/frame_0/https://d1015h9unskp4y.cloudfront.net/attachments/f2ba2e8c-0c9e-46da-99a7-b44bb2fcc88f/Screen%20Shot%202014-08-22%20at%2012.19.29%20PM.png" alt="Screen Shot 2014-08-22 at 12.19.29 PM.png">
 
