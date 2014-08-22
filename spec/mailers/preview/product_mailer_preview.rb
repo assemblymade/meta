@@ -21,12 +21,6 @@ class ProductMailerPreview < ActionMailer::Preview
     ProductMailer.congratulate_on_signups(product.id, 10)
   end
 
-  def featured_wips
-    user = User.random.first
-
-    ProductMailer.featured_wips(user.id)
-  end
-
   def flagged
     product    = Product.sample
     admin      = User.random.first

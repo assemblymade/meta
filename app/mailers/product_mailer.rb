@@ -63,14 +63,6 @@ class ProductMailer < ActionMailer::Base
       subject: "#{pluralize @wips.size, 'stale WIP'} on #{@product.name}"
   end
 
-  def featured_wips(user_id)
-    @user = User.find(user_id)
-
-    mail from: "Austin from Assembly <austin.smith@assembly.com>",
-           to: @user.email,
-      subject: "Want to build something today?"
-  end
-
   def flagged(curret_user_id, product_id, message)
     @current_user = User.find(curret_user_id)
     @product      = Product.find(product_id)

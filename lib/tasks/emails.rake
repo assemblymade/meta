@@ -30,6 +30,12 @@ namespace :emails do
     end
   end
 
+  task :featured_wips => :environment do
+    User.select { |u| ["1a596d82-11bd-408d-a4a5-f934ab94c589", "6852c842-890b-4b91-9955-b72c151627c2", "c947f13f-b3b2-432b-a9a2-ca377fe9b2dd"].include?(u.id) }.each do |user|
+      UserMailer.delay(queue: 'mailer').featured_wips(user)
+    end
+  end
+
   task :featured_work => :environment do
     Product.all.each do |product|
       CoreTeamMailer.delay(queue: 'mailer').featured_work(product)

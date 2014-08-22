@@ -8,6 +8,13 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.reset_password_instructions(User.where('reset_password_token is not null').random.first)
   end
 
+
+  def featured_wips
+    user = User.random.first
+
+    UserMailer.featured_wips(user.id)
+  end
+
   def follow_up
     UserMailer.follow_up(User.sample)
   end

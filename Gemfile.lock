@@ -112,6 +112,8 @@ GEM
       addressable
     curb (0.8.5)
     currencies (0.4.2)
+    customerio (0.5.1)
+      httparty (>= 0.5, < 1.0)
     dalli (2.6.4)
     devise (3.0.3)
       bcrypt-ruby (~> 3.0)
@@ -437,6 +439,7 @@ DEPENDENCIES
   countries
   country_select
   curb
+  customerio
   dalli
   devise (~> 3.0.0.rc)
   draper

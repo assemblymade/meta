@@ -1,22 +1,52 @@
-Here are a few teams on Assembly that are looking for talented people who share their vision. Feel free to jump in and start working,  or just introduce yourself.
+Hi <%= @user.short_name %>,
 
-**Visual design:**
+We’ve hand-picked some bounties on a few of our favorite products for you. You can jump in and tackle any of them or join the conversation.
 
-> *Gig Radio:  Listen to music by artists who are playing near you tonight.*
 
-> We have a [working prototype](https://assembly.com/gig-radio/posts/prototype-development) of the app that proves it is feasible. Now I’m looking for support to come up with the [visual identity of the product](https://assembly.com/gig-radio/posts/the-plan) - icon, typography, color scheme and so on.
+**Design:**
 
-**Copywriting:**
+<img src="https://d8izdk6bl4gbi.cloudfront.net/frame_0/https://d1015h9unskp4y.cloudfront.net/attachments/bfadc4b4-273e-451d-8884-b6ca0fa18114/Screen%20Shot%202014-08-22%20at%2012.19.56%20PM.png" alt="Screen Shot 2014-08-22 at 12.19.56 PM.png">
 
-> *Confy: Helping developers separate config from code*
+<br/>
+<br/>
 
-> One thing we really need help with at the moment is copywriting.  If you’re interested in helping with this, [check out the bounties](https://assembly.com/confy/wips?tag=copy) and join the conversation.
+With [@johnlloyd](<%= user_url('@johnlloyd') %>)’s recent wireframes of a homepage for Barrtr, [#63](<%= product_wip_url('barrtr', 63) %>). Take care of this, and 18,000 Barrtr App Coins will be yours.
 
-**Front-end development, design:**
+Barrtr is building a marketplace for local businesses that can offer products/services to designers and developers with extra time. (Imagine getting your next 200 pints of beer at the local watering hole in exchange for building a landing page).
 
-> *Coderwall: Professional network for software engineers*
 
-> We have a [rough wireframe and description of features](https://assembly.com/coderwall/discussions/333) of a reworked homepage/Protip showcase, and we need some design and front-end help to get it done. Also, we need a [t-shirt designed](https://assembly.com/coderwall/wips/336) for a new partnership with New Relic.
+**Backend:**
+
+<img src="https://d8izdk6bl4gbi.cloudfront.net/frame_0/https://d1015h9unskp4y.cloudfront.net/attachments/64fd1bd7-bee9-4e21-afb4-1350704cd4b2/Screen%20Shot%202014-08-22%20at%2012.19.46%20PM.png" alt="Screen Shot 2014-08-22 at 12.19.46 PM.png">
+
+<br/>
+<br/>
+
+Snapshot is building a feature-rich competitor to the Wayback Machine, so smart storage with quick retrieval will be crucial. If you have ideas or want to step up and help tackle this, [#6](<%= product_wip_url('snapshot-io', 6) %>).
+
+
+**Product:**
+
+<img src="https://d8izdk6bl4gbi.cloudfront.net/frame_0/https://d1015h9unskp4y.cloudfront.net/attachments/f2ba2e8c-0c9e-46da-99a7-b44bb2fcc88f/Screen%20Shot%202014-08-22%20at%2012.19.29%20PM.png" alt="Screen Shot 2014-08-22 at 12.19.29 PM.png">
+
+<br/>
+<br/>
+
+The Coderwall team is having a [discussion](<%= product_discussion_url('coderwall', 333) %>) about ways to increase the amount of exposure its job postings get, which would increase Coderwall’s revenue. If you have thoughts on design, UX, and front-end development, jump in the conversation.
+
+
+**Marketing:**
+
+<img src="https://d8izdk6bl4gbi.cloudfront.net/frame_0/https://d1015h9unskp4y.cloudfront.net/attachments/c95f83a7-6a72-4424-b642-567df42db1d2/Screen%20Shot%202014-08-22%20at%2012.19.37%20PM.png" alt="Screen Shot 2014-08-22 at 12.19.37 PM.png">
+
+<br/>
+<br/>
+
+After a successful launch, Helpful is aiming to ramp up marketing. The team is planning a content marketing campaign, and right now needs help with [#824](<%= product_wip_url('helpful', 824) %>). If this is up your alley, go ahead and help out!
+
+*If you’re building a product on Assembly and are looking for great people to work with, send a blurb to austin@assembly.com.*
+
+<br/>
 
 **What are you interested in?**
 

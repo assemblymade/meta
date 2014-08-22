@@ -1,7 +1,7 @@
 class UserMailer < Devise::Mailer
   helper :avatar, :markdown, :wip
 
-  layout 'email', only: [:welcome, :joined_team_no_work_yet, :joined_team_no_introduction_yet]
+  layout 'email', only: [:welcome, :joined_team_no_work_yet, :joined_team_no_introduction_yet, :featured_wips]
 
   def welcome(user_id)
     mailgun_tag 'user#welcome'
@@ -22,6 +22,14 @@ class UserMailer < Devise::Mailer
     mail from: "austin.smith@assembly.com",
            to:  @user.email,
       subject: "Assembly"
+  end
+
+  def featured_wips(user)
+    @user = user
+
+    mail from: "Austin from Assembly <austin.smith@assembly.com>",
+           to: @user.email,
+      subject: "Want to build something today?"
   end
 
   def featured_work_apology(product, user)

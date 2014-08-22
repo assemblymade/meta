@@ -2,10 +2,15 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
   attributes :created_at, :email, :location, :username, :last_sign_in_at, :last_request_at
   attributes :facebook_uid, :username, :twitter_nickname, :github_login
 
+  attributes :id
   attributes :payment_via
   attributes :partner_of, :core_team_of
 
   attributes :comments, :following, :ideas, :wips
+
+  def id
+    object.id
+  end
 
   def payment_via
     object.payment_option.try(:type)
