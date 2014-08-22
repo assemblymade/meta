@@ -82,6 +82,33 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-9 hidden-xs">
+      <div className="list-group list-group-breakout list-group-padded">
+        <h4>Followers</h4>
+        <% if current_user && @product.following?(current_user) %>
+          <span style="display: inline-block; margin-bottom: 3px;">
+            <a href="<%= user_path(current_user) %>">
+              <img class="avatar img-circle" src="<%= current_user.avatar.url %>" height="30px" width="30px" title="@<%= current_user.username %>">
+            </a>
+          </span>
+        <% end %>
+
+        <% @followers.each do |follower| %>
+          <% if follower == current_user %>
+            next
+          <% end %>
+
+          <span style="display: inline-block; margin-bottom: 3px;">
+            <a href="<%= user_path(follower) %>">
+              <img class="avatar img-circle" src="<%= follower.avatar_url %>" height="30px" width="30px" title="@<%= follower.username %>">
+            </a>
+          </span>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>

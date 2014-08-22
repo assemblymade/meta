@@ -6,6 +6,12 @@ class PeopleController < ProductController
 
   def index
     @memberships = @product.team_memberships.active
+    @followers = User.joins(:watchings)
+      .where('watchings.watchable_id = ?', @product.id)
+      .where('watchings.subscription = ?', true)
+      .where('watchings.unwatched_at is null')
+      .limit(100)
+      .decorate
 
     if current_user
       membership = current_user
