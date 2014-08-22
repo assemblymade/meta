@@ -68,6 +68,8 @@
       e.preventDefault();
 
       $('#info-modal').modal();
+
+      analytics.track('product.getting_started_modal.show', { product: app.currentAnalyticsProduct().get('product_slug') });
     }
   });
 
