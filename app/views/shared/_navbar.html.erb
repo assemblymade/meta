@@ -48,17 +48,6 @@
         <li class="<%= nav_active_class(:community) %>">
           <a href="<%= chat_path %>">Community</a>
         </li>
-
-        <% if !user_signed_in? %>
-          <li>
-            <a style="cursor: pointer;" onclick="showInfoModal()">More Info</a>
-          </li>
-          <script>
-            function showInfoModal() {
-              $('#info-modal').modal();
-            }
-          </script>
-        <% end %>
       </ul>
 
         <% if user_signed_in? %>
