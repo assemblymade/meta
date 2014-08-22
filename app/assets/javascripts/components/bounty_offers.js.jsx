@@ -20,7 +20,7 @@
         <td>
           <a href={offer.user.url}>@{offer.user.username}</a>
           <span className="text-muted">
-            ({numeral(offer.influence).format('0%')})
+            &nbsp;({numeral(offer.influence).format('0%')})
           </span>
         </td>
         <td className="text-right">
@@ -29,7 +29,7 @@
           </span>
           <span>
             {this.props.product.name}
-            coins
+            &nbsp;coins
           </span>
         </td>
       </tr>
