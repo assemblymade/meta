@@ -9,7 +9,7 @@ class Watching < ActiveRecord::Base
   validates :user,      presence: true, uniqueness: {scope: :watchable}
   validates :watchable, presence: true
 
-  scope :subscribed, -> { where(subscription: true) }
+  scope :subscribed, -> { where(subscription: true, unwatched_at: nil) }
 
   def self.auto_subscribe!(user, watchable)
     return if auto_following?(user, watchable)

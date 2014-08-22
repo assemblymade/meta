@@ -1,7 +1,6 @@
 /** @jsx React.DOM */
 
 (function() {
-  var FollowerList = require('./follower_list.js.jsx');
   var PeopleStore = require('../stores/people_store');
   var PeoplePageMixin = require('../mixins/people_page.js.jsx');
 
@@ -27,8 +26,11 @@
               selected={this.state.selected}
               onFilter={this.onFilter} />
           <hr/>
+
           <p className="text-muted text-center">Tip: You can use @mentions to get the attention of {this.filterLabel()} in chat or Bounties.</p>
+
           <hr/>
+
           <PeopleList
               memberships={this.state.filteredMemberships}
               selected={this.state.selected}
@@ -37,7 +39,6 @@
               currentUser={this.props.currentUser}
               updatePath={this.props.updatePath}
               coreMemberships={this.props.coreMemberships} />
-          <FollowerList followers={this.props.followers} />
         </div>
       )
     },
@@ -182,7 +183,8 @@
         var user = member.user;
 
         var row = (
-          <div key={user.id + i}
+          <div className="row"
+            key={'row-' + user.id + i}
             style={{
               'padding-top': '15px',
               'padding-bottom': '15px',
