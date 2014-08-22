@@ -10,7 +10,7 @@ We’ve hand-picked some bounties on a few of our favorite products for you. You
 <br/>
 <br/>
 
-With [@johnlloyd](<%= user_url('@johnlloyd') %>)’s recent wireframes of a homepage for Barrtr, [#63](<%= product_wip_url('barrtr', 63) %>). Take care of this, and 18,000 Barrtr App Coins will be yours.
+With [@johnlloyd](<%= user_url('johnlloyd') %>)’s recent wireframes of a homepage for Barrtr, [#63](<%= product_wip_url('barrtr', 63) %>). Take care of this, and 18,000 Barrtr App Coins will be yours.
 
 Barrtr is building a marketplace for local businesses that can offer products/services to designers and developers with extra time. (Imagine getting your next 200 pints of beer at the local watering hole in exchange for building a landing page).
 
