@@ -4,65 +4,61 @@
 
 <%= render 'shared/navbar' %>
 
-<div class="page">
+<div class="foo">
   <div class="container">
+    <ul class="list list-inline pull-right omega hidden-xs">
 
-    <div class="row">
+      <li>
+        <div data-react-class="Share"
+             data-react-props="<%= {
+               url: product_url(@product),
+               title: "Share #{@product.name} with the world",
+               shareText: "Check out #{@product.name} – #{ @product.pitch} on Assembly",
+             }.to_json %>" />
+      </li>
 
-      <div class="col-md-10 col-md-push-2">
-        <ul class="list list-inline pull-right hidden-xs">
-
-          <li>
-            <div data-react-class="Share"
-                 data-react-props="<%= {
-                   url: product_url(@product),
-                   title: "Share #{@product.name} with the world",
-                   shareText: "Check out #{@product.name} – #{ @product.pitch} on Assembly",
-                 }.to_json %>" />
-          </li>
-
-          <li>
-            <div
-                data-react-class="NotificationPreferencesDropdown"
-                data-react-props="<%= {
-                  productWatchersPath: product_people_path(@product),
-                  productWatchersCount: @product.watchings_count,
-                  productFollowPath: product_follow_path(@product),
-                  productAnnouncementsPath: product_announcements_path(@product),
-                  productUnfollowPath: product_unfollow_path(@product),
-                  watchingState: @product.watching_state(current_user),
-                  afterFollowPath: product_people_path(@product)
-                }.to_json %>">
-            </div>
-          </li>
-
-        </ul>
-
-        <h3 class="alpha text-muted" style="font-weight: 400; line-height: 1;">
-          <%= @product.name %>
-          <% if @product.stealth? %>
-            <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;">Stealth</span>
-          <% end %>
-          <% if @breadcrumb.present? %>
-            <span class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></span>
-            <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>">
-              <%= @breadcrumb[:text] %>
-            </a>
-          <% end %>
-        </h3>
-
-        <div class="sheet">
-          <%= yield %>
+      <li>
+        <div
+            data-react-class="NotificationPreferencesDropdown"
+            data-react-props="<%= {
+              productWatchersPath: product_people_path(@product),
+              productWatchersCount: @product.watchings_count,
+              productFollowPath: product_follow_path(@product),
+              productAnnouncementsPath: product_announcements_path(@product),
+              productUnfollowPath: product_unfollow_path(@product),
+              watchingState: @product.watching_state(current_user),
+              afterFollowPath: product_people_path(@product)
+            }.to_json %>">
         </div>
+      </li>
+
+    </ul>
+
+    <h3 class="alpha omega text-muted">
+      <%= @product.name %>
+    </h3>
+    <% if @product.stealth? %>
+      <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;">Stealth</span>
+    <% end %>
+    <% if @breadcrumb.present? %>
+      <span class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></span>
+      <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>">
+        <%= @breadcrumb[:text] %>
+      </a>
+    <% end %>
+  </div>
+</div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <%= yield %>
       </div>
-
-
-      <div class="col-md-2 col-md-pull-10 fixed-enabler">
+      <div class="col-md-2 col-md-offset-1">
         <%= render 'products/sidenav', product: @product %>
       </div>
     </div>
   </div>
-</div>
 
 <% unless current_user.nil? %>
   <div class="modal fade" id="edit-membership-modal" tabindex="-1" role="dialog" aria-hidden="true">
