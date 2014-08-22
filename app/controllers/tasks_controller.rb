@@ -16,8 +16,8 @@ class TasksController < WipsController
     )
 
     if @bounty.valid?
-      if amount = params[:offer].to_i > 0
-        @bounty.offers.create(user: current_user, amount: amount, ip: request.ip)
+      if (amount = params[:offer].to_i) > 0
+        @offer = @bounty.offers.create(user: current_user, amount: amount, ip: request.ip)
       end
 
       if params[:project_id]
