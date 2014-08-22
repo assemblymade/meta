@@ -173,7 +173,9 @@ class Wip < ActiveRecord::Base
 
   def contributors
     # TODO (whatupdave): when we can unwatch a wip we will need to look at this
-    watchers
+    User.joins(:watchings)
+      .where('watchings.watchable_id = ?', self.id)
+      .where('watchings.unwatched_at is null')
   end
 
   # tagging
