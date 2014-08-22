@@ -98,8 +98,8 @@ After a successful launch, Helpful is aiming to ramp up marketing. The team is p
                         <table class="medium-button radius success">
                           <tbody>
                             <tr>
-                              <td style="border-color: #5da423;">
-                                <a style="color: #fff !important;" href="<%= global_interests_url('marketing', { auth_token: @user.authentication_token }) %>">Marketing</a>
+                              <td style=>
+                                <a style="color: #fff !important;" href="<%= global_interests_url('backend', { auth_token: @user.authentication_token }) %>">Backend</a>
                               </td>
                             </tr>
                           </tbody>
@@ -139,7 +139,7 @@ After a successful launch, Helpful is aiming to ramp up marketing. The team is p
                           <tbody>
                             <tr>
                               <td style="background: #d9534f !important; border-color: #d9534f !important;">
-                                <a style="color: #fff !important;" href="<%= global_interests_url('backend', { auth_token: @user.authentication_token }) %>">Backend</a>
+                                <a style="color: #fff !important;" href="<%= global_interests_url('marketing', { auth_token: @user.authentication_token }) %>">Marketing</a>
                               </td>
                             </tr>
                           </tbody>
