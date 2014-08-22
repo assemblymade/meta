@@ -31,7 +31,7 @@ class WipsController < ProductController
   end
 
   def show
-    @watchers = @wip.watchers.to_a
+    @watchers = @wip.followers.to_a
 
     @events = Event.render_events(@wip.events.order(:number), current_user)
 

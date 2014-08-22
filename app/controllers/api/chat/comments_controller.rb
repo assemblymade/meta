@@ -16,7 +16,7 @@ module Api
         end
 
         if @event.valid?
-          @event.notify_users!(@wip.watchers)
+          @event.notify_users!(@wip.followers)
 
           Activities::Chat.publish!(
             actor: @user,

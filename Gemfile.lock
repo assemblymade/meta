@@ -505,6 +505,7 @@ DEPENDENCIES
   sass-rails
   sequenced (~> 1.5.0)
   sidekiq
+  simplecov
   skylight (~> 0.3.19)
   split
   stripe

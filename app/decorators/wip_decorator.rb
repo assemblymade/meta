@@ -18,8 +18,4 @@ class WipDecorator < ApplicationDecorator
     return 0 if user.nil?
     wip.updates.for(user).unread_comment_count || 0
   end
-
-  def formatted_watchers_count
-    helpers.pluralize(watchings_count, 'watcher')
-  end
 end

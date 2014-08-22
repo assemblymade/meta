@@ -21,7 +21,7 @@ class ProductAnalyticsSerializer < ActiveModel::Serializer
   end
 
   def team_members
-    product.watchings.count
+    product.watchings_count
   end
 
   def status_updated

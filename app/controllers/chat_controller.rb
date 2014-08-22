@@ -11,7 +11,7 @@ class ChatController < ProductController
 
     respond_to do |format|
       format.html do
-        @recently_active = @product.watchers.where('last_request_at > ?', 9.days.ago).order(last_request_at: :desc)
+        @recently_active = @product.followers.where('last_request_at > ?', 9.days.ago).order(last_request_at: :desc)
         if signed_in?
           MarkChatRoomAsRead.perform_async(current_user.id, @product.id)
         end
@@ -37,7 +37,7 @@ class ChatController < ProductController
 
     if @event.valid?
       update_readraptor
-      @event.notify_users!(@product.watchers)
+      @event.notify_users!(@product.main_thread.followers)
 
       @activity = Activities::Chat.publish!(
         actor: @event.user,

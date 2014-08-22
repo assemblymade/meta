@@ -60,40 +60,34 @@ describe TasksController do
     end
   end
 
-  describe '#watch' do
-    before do
-      sign_in worker
-      request.env["HTTP_REFERER"] = "/"
-    end
-
-    # we need to check the watchings_count after the request
-    # it should be 2, but RSpec is making it difficult to access
-    # the wips array
-    it 'watches a wip' do
-      expect(wips.first.watchings_count).to eq(1)
-
-      patch :watch, product_id: product.slug, wip_id: wips.first.number, task: { title: 'Foo' }
-      expect(response.status).to eq(302)
-      expect(assigns(:wips))
-    end
-  end
-
   describe '#mute' do
     before do
       sign_in user
       request.env["HTTP_REFERER"] = "/"
     end
 
-    # we need to check the watchings_count after the request
-    # it should be 0, but RSpec is making it difficult to access
-    # the wips array
+    it 'creates a muting' do
+      expect {
+        patch :mute, product_id: product.slug, wip_id: wips.first.number, task: { title: 'Foo' }
+      }.to change(Muting, :count).by(1)
+    end
+  end
 
-    it 'mutes a wip' do
-      expect(wips.first.watchings_count).to eq(1)
+  # effectively an un-mute
+  describe '#watch' do
+    let(:wip) { wips.first }
 
-      patch :mute, product_id: product.slug, wip_id: wips.first.number, task: { title: 'Foo' }
+    before do
+      sign_in worker
+      request.env["HTTP_REFERER"] = "/"
+      product.watch!(worker)
+      wip.mute!(worker)
+    end
+
+    it 'unmutes a wip' do
+      patch :watch, product_id: product.slug, wip_id: wip.number, task: { title: 'Foo' }
       expect(response.status).to eq(302)
-      expect(assigns(:wips))
+      expect(assigns(:wip).followed_by?(worker)).to be_true
     end
   end
 end

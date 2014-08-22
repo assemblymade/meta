@@ -40,7 +40,7 @@ class UserMailer < Devise::Mailer
     @user     = User.find(user_id)
     @wip      = Wip.find(wip_id)
     @worker   = Wip::Worker.where(:user_id => @user.id, :wip_id => @wip.id).first
-    @watchers = (@wip.watchers.random.limit(3).to_a - [@user])[0...2]
+    @watchers = (@wip.product.followers.random.limit(3).to_a - [@user])[0...2]
 
     mail from: "matt@assembly.com",
            to:  @user.email,

@@ -15,7 +15,7 @@ describe Watching do
     it 'watches a watchable' do
       Watching.watch!(user, watchable)
 
-      expect(watchable.watchers).to include(user)
+      expect(watchable.followers).to include(user)
     end
 
     it 'follows if announcements' do
@@ -33,7 +33,7 @@ describe Watching do
     it 'unwatches a watchable' do
       Watching.unwatch!(user, watchable)
 
-      expect(watchable.watchers).not_to include(user)
+      expect(watchable.followers).not_to include(user)
     end
   end
 
@@ -46,8 +46,8 @@ describe Watching do
     it 'unwatches all wips when unwatching a product' do
       Watching.unwatch!(user, watchable)
 
-      expect(watchable.watchers).not_to include(user)
-      expect(wip.watchers).not_to include(user)
+      expect(watchable.followers).not_to include(user)
+      expect(wip.followers).not_to include(user)
     end
   end
 
@@ -82,14 +82,6 @@ describe Watching do
       expect(
         Watching.find_by(user_id: user.id, watchable_id: watchable.id).subscription
       ).to be_false
-    end
-  end
-
-  describe 'subscribe! to a product' do
-    it 'watches all open wips' do
-      Watching.announcements!(user, watchable)
-
-      expect(wip.watchers).to include(user)
     end
   end
 end

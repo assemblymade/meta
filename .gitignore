@@ -8,6 +8,7 @@ log
 /.env
 
 /.rspec
+coverage
 Procfile.dev
 
 .sass-cache

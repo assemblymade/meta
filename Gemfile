@@ -108,6 +108,7 @@ end
 group :test do
   gem 'autotest-standalone'
   gem 'codeclimate-test-reporter', require: nil
+  gem 'simplecov'
   gem 'vcr'
   gem 'webmock'
 end

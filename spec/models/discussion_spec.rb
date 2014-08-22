@@ -14,16 +14,4 @@ describe Discussion do
     it { discussion.tags.map(&:name).should =~ ['bug', 'code'] }
     it { product.discussions.tagged_with('bug').size.should == 1 }
   end
-
-  describe 'watching set' do
-    let(:watcher) { User.make! }
-
-    it 'is only watched once by user' do
-      discussion.watch! watcher
-      discussion.watch! watcher
-      discussion.watch! watcher
-
-      discussion.watchers.should =~ [owner, watcher]
-    end
-  end
 end

@@ -20,6 +20,8 @@ class TasksController < WipsController
         @offer = @bounty.offers.create(user: current_user, amount: amount, ip: request.ip)
       end
 
+      @bounty.watch!(current_user)
+
       if params[:project_id]
         project = @product.milestones.find_by!(number: params[:project_id])
         project.tasks << @bounty
@@ -126,7 +128,7 @@ class TasksController < WipsController
   end
 
   def product_wips
-    @product.tasks.includes(:workers, :watchings, :product, :tags)
+    @product.tasks.includes(:workers, :product, :tags)
   end
 
   def copy_params

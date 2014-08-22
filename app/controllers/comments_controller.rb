@@ -28,7 +28,7 @@ class CommentsController < ProductController
         )
         Watching.auto_subscribe!(current_user, @product)
 
-        @event.notify_users!(@wip.watchers)
+        @event.notify_users!(@wip.followers)
       end
 
       track_analytics(@event)
@@ -83,7 +83,7 @@ class CommentsController < ProductController
 
   def register_with_readraptor(event)
     excluded_users = [event.user, event.mentioned_users].flatten.compact.uniq
-    recipients = event.wip.watchers - excluded_users
+    recipients = event.wip.followers - excluded_users
 
     # register the main content article (no tag) + the email article (email tag) + chat
     RegisterArticleWithRecipients.perform_async(

@@ -47,11 +47,11 @@ describe WipGroup do
   end
 
   it "collects watchers" do
-    watchers.each {|u| tasks[0].watch!(u) }
+    watchers.each {|u| tasks[0].product.watch!(u) }
 
     group = WipGroup.new(tasks)
 
-    expect(group.watchers).to match_array(watchers + [creator])
+    expect(group.watchers).to match_array(watchers)
   end
 
   it 'collects product names' do

@@ -37,23 +37,7 @@ class Watching < ActiveRecord::Base
       watching = create!(user: user, watchable: watchable, subscription: subscription)
     end
 
-    if subscription
-      if is_product?(watchable)
-        watch_wips!(user, watchable)
-      end
-    else
-      # Unwatch wips if moved from following -> announcements
-      if is_product?(watchable)
-        unwatch_wips!(user, watchable)
-      end
-    end
     watching
-  end
-
-  def self.watch_wips!(user, watchable)
-    Wip.where(product: watchable).each do |w|
-      watch!(user, w)
-    end
   end
 
   # FIXME: There needs to be a better way to autowatch wips without breaking watch!
@@ -66,16 +50,6 @@ class Watching < ActiveRecord::Base
   def self.unwatch!(user, watchable)
     if watching = find_by(user: user, watchable: watchable, unwatched_at: nil)
       watching.update!(subscription: false, unwatched_at: Time.now)
-    end
-
-    if watching && self.is_product?(watchable)
-      unwatch_wips!(user, watchable)
-    end
-  end
-
-  def self.unwatch_wips!(user, watchable)
-    Wip.where(product: watchable).each do |w|
-      unwatch!(user, w)
     end
   end
 

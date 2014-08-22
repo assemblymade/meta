@@ -19,9 +19,8 @@ class WipFactory
       add_description(wip)
       watch_product
 
-      users = @product.watchings.where(subscription: true, unwatched_at: nil).map(&:user)
+      users = @product.followers
 
-      watch_wip(wip, users)
       register_with_readraptor(wip, users)
       push(wip, users)
     end
@@ -35,12 +34,6 @@ class WipFactory
         user_id: @creator.id,
         body: @comment
       )
-    end
-  end
-
-  def watch_wip(wip, users)
-    users.each do |u|
-      wip.auto_watch!(u)
     end
   end
 

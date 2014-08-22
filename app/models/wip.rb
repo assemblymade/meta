@@ -1,3 +1,5 @@
+# I'm thinking about this class more as a discussion. Which may also hold a bounty
+
 require 'activerecord/uuid'
 require 'elasticsearch/model'
 
@@ -13,13 +15,13 @@ class Wip < ActiveRecord::Base
 
   has_many :comments, class_name: 'Event::Comment'
   has_many :events
+  has_many :offers, inverse_of: :bounty
   has_many :milestones, through: :milestone_tasks
   has_many :milestone_tasks, foreign_key: 'task_id'
+  has_many :mutings
+  has_many :muters, through: :mutings, source: :user
   has_many :taggings, class_name: 'Wip::Tagging'
   has_many :tags, through: :taggings, class_name: 'Wip::Tag'
-  has_many :watchings, :as => :watchable
-  has_many :offers, inverse_of: :bounty
-  has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
 
   has_one :milestone
   accepts_nested_attributes_for :milestone
@@ -28,7 +30,6 @@ class Wip < ActiveRecord::Base
 
   before_validation :set_author_tip, on: :create
   after_commit :set_number, on: :create
-  after_create :add_watcher!
   after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.id) }, on: :create
   after_update :update_elasticsearch
 
@@ -143,26 +144,31 @@ class Wip < ActiveRecord::Base
     end
   end
 
-  # watching
+  # following
 
-  def add_watcher!
-    watch!(self.user)
+  def followers
+    product.followers - muters
   end
 
-  def watch!(user)
-    Watching.watch!(user, self)
+  def follower_ids
+    product.follower_ids - muter_ids
   end
 
-  def auto_watch!(user)
-    Watching.auto_watch!(user, self)
+  def followed_by?(user)
+    product.followed_by?(user) && !muted_by?(user)
+  end
+
+  def muted_by?(user)
+    !mutings.find_by(user: user, deleted_at: nil).nil?
   end
 
   def mute!(user)
-    Watching.unwatch!(user, self)
+    Muting.mute!(user, self)
   end
 
-  def unwatch!(user)
-    mute!(user)
+  def watch!(user)
+    product.watch!(user)
+    Muting.unmute!(user, self)
   end
 
   def contributors

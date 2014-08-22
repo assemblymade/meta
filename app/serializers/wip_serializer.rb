@@ -7,7 +7,6 @@ class WipSerializer < ActiveModel::Serializer
              :number,
              :state,
              :winner,
-             :watchers_count,
              :promoted,
              :push_channel,
              :comments_count,
@@ -49,10 +48,6 @@ class WipSerializer < ActiveModel::Serializer
 
   def promoted
     wip.promoted?
-  end
-
-  def watchers_count
-    wip.watchings_count
   end
 
   def winner

@@ -318,15 +318,28 @@ class Product < ActiveRecord::Base
     slug || id
   end
 
+  # following
+
   def watch!(user)
     Watching.watch!(user, self)
   end
 
+  # only people following the product, ie. excludes people on announcements only
+  def followers
+    watchers.where('watchings.subscription = ?', true)
+  end
+
+  def follower_ids
+    watchings.subscribed.pluck(:user_id)
+  end
+
+  # only people on announcements only
   def announcements!(user)
     Watching.announcements!(user, self)
   end
 
-  def following?(user)
+
+  def followed_by?(user)
     Watching.following?(user, self)
   end
 
