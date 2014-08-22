@@ -12,7 +12,7 @@ class UserMailerPreview < ActionMailer::Preview
   def featured_wips
     user = User.random.first
 
-    UserMailer.featured_wips(user.id)
+    UserMailer.featured_wips(user)
   end
 
   def follow_up

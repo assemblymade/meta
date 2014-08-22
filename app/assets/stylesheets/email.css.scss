@@ -22,12 +22,6 @@ $dl-horizontal-offset:        $component-offset-horizontal !default;
 @import 'bootstrap/type';
 @import 'base/typography';
 
-html,
-body,
-table.body {
-  background-color: $body-bg;
-}
-
 a {
   color: $link-color !important;
 }
@@ -111,6 +105,22 @@ pre {
 
 .panel-danger {
   background-color: $brand-danger;
+}
+
+.primary {
+  background-color: $brand-primary !important;
+}
+
+.success {
+  background-color: $brand-success !important;
+}
+
+.info {
+  background-color: $brand-info !important;
+}
+
+.warning {
+  background-color: $brand-warning !important;
 }
 
 .header {
