@@ -1,4 +1,4 @@
-class UserMailer < Devise::Mailer
+class UserMailer < BaseMailer
   helper :avatar, :markdown, :wip
 
   layout 'email', only: [:welcome, :joined_team_no_work_yet, :joined_team_no_introduction_yet, :featured_wips]
@@ -26,7 +26,7 @@ class UserMailer < Devise::Mailer
 
   def featured_wips(user)
     mailgun_tag 'user#featured_wips'
-    headers 'X-Mailgun-Campaign-Id' => 'd2lii'
+    mailgun_campaign 'd2lii'
 
     @user = user
 
