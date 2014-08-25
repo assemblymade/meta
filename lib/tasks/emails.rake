@@ -40,13 +40,12 @@ namespace :emails do
       ],
 
       unwatched_at: nil
-    )
-    .each do |watching|
+    ).each do |watching|
       user = watching.user
 
-      next if EmailLog.sent_to(user.id, :featured_wips).any?
+      next if EmailLog.sent_to(user.id, :featured_wips_take_two).any?
 
-      EmailLog.log_send user.id, :featured_wips do
+      EmailLog.log_send user.id, :featured_wips_take_two do
         UserMailer.delay(queue: 'mailer').featured_wips(user)
       end
     end

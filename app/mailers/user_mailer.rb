@@ -26,7 +26,7 @@ class UserMailer < Devise::Mailer
 
   def featured_wips(user)
     mailgun_tag 'user#featured_wips'
-    mailgun_campaign 'd2lii'
+    headers 'X-Mailgun-Campaign-Id' => 'd2lii'
 
     @user = user
 
