@@ -66,9 +66,14 @@
     },
 
     handleQualityChanged: function(productId) {
-      var products = this.state.products
-      products[productId].editState = 'saving'
       return function(quality) {
+        var products = this.state.products
+        products[productId].editState = 'saving'
+        products[productId].quality = quality
+        this.setState({
+          products: products
+        })
+
         window.xhr.put('/admin/products/' + productId, { quality: quality }, function() {
           products[productId].editState = 'saved'
           this.setState({
@@ -119,16 +124,17 @@
   var ProductRow = React.createClass({
     getInitialState: function() {
       return {
-        pendingQualityScore: null
+        pendingQualityScore: null,
+        dirty: false
       }
     },
 
     render: function() {
       var bgColor = '#fff'
-      if (this.state.pendingQualityScore) {
-        bgColor = '#f0ad4e'
+      if (this.state.pendingQualityScore || this.props.editState == 'saving') {
+        bgColor = '#fcf8e3'
       } else if (this.props.editState == 'saved') {
-        bgColor = '#5cb85c'
+        bgColor = '#dff0d8'
       }
 
       return <tr>
@@ -142,7 +148,7 @@
         <td><Timestamp time={this.props.last_activity_at} /></td>
         <td className="text-right">{this.props.watchings_count}</td>
         <td className="text-right">
-          <input type="text" className="form-control" value={this.state.pendingQualityScore || this.props.quality} style={{'background-color': bgColor}}
+          <input type="text" className="form-control" value={this.state.dirty ? this.state.pendingQualityScore : this.props.quality} style={{'background-color': bgColor}}
             onChange={this.handleChange}
             onBlur={this.persistChange}
           />
@@ -151,11 +157,17 @@
     },
 
     handleChange: function(e) {
-      this.setState({pendingQualityScore: e.target.value})
+      this.setState({
+        dirty: true,
+        pendingQualityScore: e.target.value
+      })
     },
 
     persistChange: function() {
-      this.props.onChange(this.state.pendingQualityScore)
+      if (this.state.dirty && (this.state.pendingQualityScore != this.props.quality)) {
+        this.props.onChange(this.state.pendingQualityScore)
+        this.setState({pendingQualityScore: null, dirty: false})
+      }
     }
   })
 

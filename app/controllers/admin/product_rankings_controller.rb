@@ -20,11 +20,10 @@ class Admin::ProductRankingsController < AdminController
 
   def update
     @product = Product.find(params[:id])
-    if quality = params.fetch(:quality).to_i
-      @product.update!(
-        quality: (quality > 0 ? quality : nil)
-      )
-    end
+
+    quality = Integer(params[:quality]) rescue nil
+    @product.update!(quality: quality)
+
     render nothing: true, status: :ok
   end
 end
