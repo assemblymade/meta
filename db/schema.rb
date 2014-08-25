@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140825011829) do
+ActiveRecord::Schema.define(version: 20140825185713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -300,16 +300,6 @@ ActiveRecord::Schema.define(version: 20140825011829) do
     t.string   "name",        null: false
   end
 
-  create_table "pitch_week_applications", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "product_id",   null: false
-    t.uuid     "applicant_id", null: false
-    t.boolean  "is_approved"
-    t.datetime "reviewed_at"
-    t.uuid     "reviewer_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "posts", id: false, force: true do |t|
     t.uuid     "id",         null: false
     t.uuid     "product_id", null: false
@@ -396,10 +386,8 @@ ActiveRecord::Schema.define(version: 20140825011829) do
     t.integer  "team_memberships_count", default: 0
     t.datetime "launched_at"
     t.hstore   "info"
-    t.integer  "bio_memberships_count",  default: 0,     null: false
-    t.datetime "started_building_at"
-    t.datetime "live_at"
-    t.integer  "partners_count"
+    t.integer  "quality"
+    t.datetime "last_activity_at"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
