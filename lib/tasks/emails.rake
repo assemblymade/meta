@@ -31,8 +31,24 @@ namespace :emails do
   end
 
   task :featured_wips => :environment do
-    User.select { |u| ["1a596d82-11bd-408d-a4a5-f934ab94c589", "6852c842-890b-4b91-9955-b72c151627c2", "c947f13f-b3b2-432b-a9a2-ca377fe9b2dd"].include?(u.id) }.each do |user|
-      UserMailer.delay(queue: 'mailer').featured_wips(user)
+    Watching.where(
+      watchable_id: [
+        "de18b612-c487-4d3e-abec-19a231fecda9", # barrtr
+        "ee7615bc-53c4-49b5-9c7b-680866ed8487", # coderwall
+        "99774a98-3059-4290-921a-2f25f48e093b", # helpful
+        "44cbd334-4f33-45c5-b522-3569b275ffd6"  # snapshot-io
+      ],
+
+      unwatched_at: nil
+    )
+    .each do |watching|
+      user = watching.user
+
+      next if EmailLog.sent_to(user.id, :featured_wips).any?
+
+      EmailLog.log_send user.id, :featured_wips do
+        UserMailer.delay(queue: 'mailer').featured_wips(user)
+      end
     end
   end
 

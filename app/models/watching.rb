@@ -1,4 +1,4 @@
- require 'activerecord/uuid'
+require 'activerecord/uuid'
 
 class Watching < ActiveRecord::Base
   include ActiveRecord::UUID
