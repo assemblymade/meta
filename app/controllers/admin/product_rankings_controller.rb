@@ -5,7 +5,7 @@ class Admin::ProductRankingsController < AdminController
     @showRanked = %w[true false].include?(params[:showranked]) ? params[:showranked] : 'false'
 
     @products = Product.all.
-      order(@sort_column => @sort_direction).
+      order("#{@sort_column} #{@sort_direction} NULLS LAST").
       page(params[:page]).per(200)
 
     if @showRanked == 'false'
