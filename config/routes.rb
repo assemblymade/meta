@@ -165,7 +165,7 @@ ASM::Application.routes.draw do
     end
     resources :users
 
-    get '/' => redirect('/admin/staff-picks')
+    get '/' => redirect('/admin/withdrawals')
   end
 
   scope :upload do
