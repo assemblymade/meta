@@ -22,6 +22,7 @@ gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-ra
 gem 'font_assets'
 gem 'friendly_id', github: 'norman/friendly_id'
 gem 'gemoji', github: 'github/gemoji'
+gem 'gibbon'
 gem 'git'
 gem 'github-markdown'
 gem 'hogan_assets'
