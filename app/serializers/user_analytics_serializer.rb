@@ -6,6 +6,8 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
   attributes :payment_via
   attributes :partner_of, :core_team_of
 
+  attributes :most_recent_product_name
+
   attributes :comments, :following, :ideas, :wips
 
   def id
@@ -33,6 +35,10 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
 
   def comments
     Event::Comment.where(user: object).size
+  end
+
+  def most_recent_product_name
+    object.products.order(:created_at).last.try(:name)
   end
 
   def ideas
