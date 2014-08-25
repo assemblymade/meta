@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :events
   has_many :products
   has_many :product_logos
+  has_many :followed_products, through: :watchings, source: :watchable, source_type: Product.to_s
   has_many :followed_tags, :through => :watchings, :source => :watchable, :source_type => 'Wip::Tag'
   has_many :wips
   has_many :wip_workers, :class_name => 'Wip::Worker'

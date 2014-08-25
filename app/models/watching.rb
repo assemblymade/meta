@@ -6,8 +6,10 @@ class Watching < ActiveRecord::Base
   belongs_to :user
   belongs_to :watchable, polymorphic: true, touch: true
 
-  validates :user,      presence: true, uniqueness: {scope: :watchable}
+  validates :user,      presence: true, uniqueness:  { scope: :watchable }
   validates :watchable, presence: true
+
+  default_scope -> { where(unwatched_at: nil) }
 
   after_commit -> { watchable.update_watchings_count! }
 
@@ -18,7 +20,7 @@ class Watching < ActiveRecord::Base
   end
 
   def self.watch!(user, watchable, auto_watch_at=nil)
-    if watching = find_by(user: user, watchable: watchable)
+    if watching = unscoped.find_by(user: user, watchable: watchable)
       watching.update(unwatched_at: nil, auto_subscribed_at: auto_watch_at)
     else
       watching = create!(user: user, watchable: watchable, auto_subscribed_at: auto_watch_at)
@@ -28,7 +30,7 @@ class Watching < ActiveRecord::Base
   end
 
   def self.unwatch!(user, watchable)
-    if watching = find_by(user: user, watchable: watchable, unwatched_at: nil)
+    if watching = unscoped.find_by(user: user, watchable: watchable, unwatched_at: nil)
       watching.update!(unwatched_at: Time.now)
     end
   end
