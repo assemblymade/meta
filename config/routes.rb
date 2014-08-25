@@ -189,7 +189,7 @@ ASM::Application.routes.draw do
         resources :offers, only: [:create, :show]
       end
       resources :projects, only: [:create]
-      resources :potential_users, only: [:create, :destroy]
+      resources :potential_users, controller: 'subscribers', only: [:create, :destroy]
     end
 
     resources :textcompletes, only: [:index]

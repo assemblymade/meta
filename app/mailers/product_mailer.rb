@@ -15,7 +15,7 @@ class ProductMailer < ActionMailer::Base
       subject: "#{@product.name} just got its first signup!"
   end
 
-  def potential_user(product, email_address)
+  def new_subscriber(product, email_address)
     @product = product
     @email_address = email_address
 
@@ -24,7 +24,7 @@ class ProductMailer < ActionMailer::Base
       subject: "Thanks for signing up for #{@product.name}!"
   end
 
-  def potential_user_with_account(product, user)
+  def new_subscriber_with_account(product, user)
     @product = product
     @user = user
 

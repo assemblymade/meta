@@ -43,8 +43,7 @@ class Product < ActiveRecord::Base
   has_many :showcases
   has_many :status_messages
   has_many :stream_events
-  has_many :subscribers, :through => :subscriptions, :source => :user
-  has_many :subscriptions
+  has_many :subscribers
   has_many :tasks
   has_many :team_memberships
   has_many :votes, :as => :voteable
@@ -319,25 +318,37 @@ class Product < ActiveRecord::Base
   end
 
   # following
-
   def watch!(user)
-    Watching.watch!(user, self)
+    transaction do
+      Watching.watch!(user, self)
+      Subscriber.unsubscribe!(self, user)
+    end
+  end
+
+  # not following, will receive announcements
+  def announcements!(user)
+    transaction do
+      Watching.unwatch!(user, self)
+      Subscriber.upsert!(self, user)
+    end
+  end
+
+  # not following
+  def unwatch!(user)
+    transaction do
+      Watching.unwatch!(user, self)
+      Subscriber.unsubscribe!(self, user)
+    end
   end
 
   # only people following the product, ie. excludes people on announcements only
   def followers
-    watchers.where('watchings.subscription = ?', true)
+    watchers
   end
 
   def follower_ids
-    watchings.subscribed.pluck(:user_id)
+    watchings.pluck(:user_id)
   end
-
-  # only people on announcements only
-  def announcements!(user)
-    Watching.announcements!(user, self)
-  end
-
 
   def followed_by?(user)
     Watching.following?(user, self)
@@ -347,19 +358,17 @@ class Product < ActiveRecord::Base
     Watching.auto_watch!(user, self)
   end
 
-  def unwatch!(user)
-    Watching.unwatch!(user, self)
-  end
-
   def watching?(user)
     Watching.watched?(user, self)
   end
 
   def watching_state(user)
-    if Watching.following?(user, self)
-      return 'following'
-    elsif Watching.announcements?(user, self)
-      return 'announcements'
+    if user
+      if Watching.following?(user, self)
+        return 'following'
+      elsif subscribers.find_by(user_id: user.id)
+        return 'announcements'
+      end
     end
 
     'not watching'
@@ -384,10 +393,6 @@ class Product < ActiveRecord::Base
     "chat_#{id}"
   end
 
-  def chat_watcher_ids
-    watchings.subscribed.pluck('watchings.user_id')
-  end
-
   def average_bounty
     bounties = TransactionLogEntry.minted.
       where(product_id: product.id).
@@ -398,6 +403,10 @@ class Product < ActiveRecord::Base
     return DEFAULT_BOUNTY_SIZE if bounties.none?
 
     bounties.inject(0, &:+) / bounties.size
+  end
+
+  def update_watchings_count!
+    update! watchings_count: (subscribers.count + followers.count)
   end
 
   # missions

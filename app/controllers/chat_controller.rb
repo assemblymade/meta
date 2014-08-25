@@ -73,7 +73,7 @@ class ChatController < ProductController
   def update_readraptor
     ReadRaptor::RegisterArticleWorker.perform_async(
       key: ReadRaptorSerializer.serialize_entity('chat', @product.id),
-      recipients: @product.chat_watcher_ids
+      recipients: @product.follower_ids
     )
   end
 end

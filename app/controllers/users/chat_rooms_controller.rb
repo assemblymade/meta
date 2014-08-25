@@ -3,8 +3,7 @@ class Users::ChatRoomsController < ApplicationController
 
   def index
     @products = Product.joins(:watchings).includes(:main_thread).
-      where('watchings.user_id = ?', current_user.id).
-      where('watchings.subscription = ?', true)
+      where('watchings.user_id = ?', current_user.id)
 
     render json: {
       chat_rooms: ActiveModel::ArraySerializer.new(@products, each_serializer: ChatRoomSerializer),

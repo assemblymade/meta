@@ -21,8 +21,8 @@ namespace :emails do
   end
 
   task :congratulate_on_signups => :environment do
-    Product.find(PotentialUser.where('created_at > ?', 1.day.ago).group(:product_id).count.keys).each do |product|
-      number_of_signups = PotentialUser.where('created_at > ? and product_id = ?', 1.day.ago, product.id).count
+    Product.find(Subscriber.where('created_at > ?', 1.day.ago).group(:product_id).count.keys).each do |product|
+      number_of_signups = Subscriber.where('created_at > ? and product_id = ?', 1.day.ago, product.id).count
 
       next if number_of_signups < 10
 

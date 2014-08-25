@@ -8,8 +8,8 @@ describe Users::ChatRoomsController do
   describe '#index' do
     before do
       sign_in user
-      Watching.announcements!(user, product)
-      Watching.watch!(user, product2)
+      product.announcements!(user)
+      product2.watch!(user)
     end
 
     it 'only returns following products' do

@@ -1,4 +1,4 @@
-class CreatePotentialUsers < ActiveRecord::Migration
+class CreateSubscribers < ActiveRecord::Migration
   def change
     create_table :potential_users, id: :uuid do |t|
       t.datetime :created_at, null: false
