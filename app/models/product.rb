@@ -489,7 +489,7 @@ class Product < ActiveRecord::Base
   protected
 
   def subscribe_owner_to_notifications
-    subscriptions.create!(user: user)
+    subscribers.create!(user: user)
   end
 
   def add_to_event_stream

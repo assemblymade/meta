@@ -25,6 +25,9 @@ class UserMailer < Devise::Mailer
   end
 
   def featured_wips(user)
+    mailgun_tag 'user#featured_wips'
+    mailgun_campaign 'd2lii'
+
     @user = user
 
     mail from: "Austin from Assembly <austin.smith@assembly.com>",

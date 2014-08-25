@@ -13,6 +13,11 @@ class BaseMailer < ActionMailer::Base
     headers 'X-Mailgun-Tag' => @mailgun_tag
   end
 
+  def mailgun_campaign(campaign_id)
+    @mailgun_campaign = campaign_id.to_s
+    headers 'X-Mailgun-Campaign-Id' => @mailgun_campaign
+  end
+
   def set_list_unsubscribe_headers
     headers 'List-Unsubscribe' => '%unsubscribe_email%'
   end
