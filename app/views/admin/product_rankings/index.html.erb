@@ -1,0 +1,12 @@
+<% title 'Product Rankings' %>
+
+<section class="js-rankings"></section>
+
+<% content_for :javascript do %>
+  <script>
+    React.renderComponent(
+      ProductRankings(<%== { totalPages: @products.total_pages }.to_json %>),
+      document.getElementsByClassName('js-rankings')[0]
+    )
+  </script>
+<% end %>

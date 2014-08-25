@@ -12,6 +12,10 @@
       this.request('PATCH', path, data, callback);
     },
 
+    put: function(path, data, callback) {
+      this.request('PUT', path, data, callback);
+    },
+
     post: function(path, data, callback) {
       this.request('POST', path, data, callback);
     },

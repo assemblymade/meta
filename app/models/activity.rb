@@ -20,6 +20,10 @@ class Activity < ActiveRecord::Base
       if a.publishable
         PublishActivity.perform_async(a.id) if Story.should_publish?(a)
         a.publish_to_chat
+
+        if product = opts[:product] || a.find_product
+          product.update!(last_activity_at: a.created_at)
+        end
       end
     end
   end
@@ -44,6 +48,10 @@ class Activity < ActiveRecord::Base
     raise "Bad Subject #{self.inspect}" if s.nil?
 
     s.class.name.split('::').last
+  end
+
+  def find_product
+    subject.try(:product) || target.try(:product)
   end
 
   # deprecated
