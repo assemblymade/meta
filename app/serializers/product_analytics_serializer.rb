@@ -1,12 +1,7 @@
 class ProductAnalyticsSerializer < ActiveModel::Serializer
   attributes :product_id, :product_slug, :product_name
   attributes :registered_users, :team_members
-  attributes :current_mission
   attributes :status_updated
-
-  def current_mission
-    product.current_mission.try(:id)
-  end
 
   def product_id
     product.id
