@@ -29,7 +29,6 @@ ASM::Application.routes.draw do
   get '/webhooks/pusher' => redirect('/discover')
 
   # Internal
-  get '/styleguide' => 'styleguide#index'
   get '/playground/:action', controller: 'playground'
 
   # Legacy

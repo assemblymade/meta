@@ -16,13 +16,6 @@ GIT
     gemoji (1.5.0)
 
 GIT
-  remote: git://github.com/kneath/kss.git
-  revision: 25e2642ea2f3c7a87873dcfc21d7138213818ec8
-  ref: 25e2642ea2f3c7a87873dcfc21d7138213818ec8
-  specs:
-    kss (0.5.0)
-
-GIT
   remote: git://github.com/norman/friendly_id.git
   revision: 57baa3549a5d5b1ee0cc9b6a803c59d9de0e7d59
   specs:
@@ -463,7 +456,6 @@ DEPENDENCIES
   htmlentities
   jquery-rails
   kaminari
-  kss!
   leftronic
   librato-rails
   lograge
