@@ -1,23 +1,6 @@
 .footer {
-  padding-top: 60px;
-  padding-bottom: 60px;
-  color: $gray-light;
-}
-
-.footer-nav {
-  > li {
-    > a {
-      color: $gray;
-
-      &:hover {
-        color: $gray-dark;
-      }
-    }
-  }
-}
-
-.footer-brand {
-  color: $gray;
-  line-height: 32px;
-  font-family: Solitaire;
+  margin-top: $line-height-computed * 2;
+  padding-top: $line-height-computed * 2;
+  padding-bottom: $line-height-computed * 2;
+  border-top: 1px solid $brand-divider;
 }
