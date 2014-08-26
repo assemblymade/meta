@@ -3,18 +3,22 @@
 //= require components/admin/pagination_links
 //= require components/timestamp
 //= require underscore
+//= require lib/parseuri
 
 (function() {
   var ProductRankings = React.createClass({
     getInitialState: function() {
-      return {
-        page: 1,
-        sortCol: 'created_at',
-        sortAsc: false,
-        pageSize: 100,
-        showRanked: false,
+      var q = parseUri(window.location).queryKey
+
+      var s = {
+        page: q.page || 1,
+        sortCol: q.sort || 'created_at',
+        sortAsc: (q.direction === 'asc'),
+        showRanked: (q.showranked === 'true'),
         products: {}
       }
+
+      return s
     },
 
     componentDidMount: function() {
@@ -25,29 +29,19 @@
       return <div>
         <div className="checkbox">
           <label>
-            <input type="checkbox" defaultChecked={false} onChange={this.handleFilterChanged} /> Show ranked products
+            <input type="checkbox" defaultChecked={this.state.showRanked} onChange={this.handleFilterChanged} /> Show ranked products
           </label>
         </div>
 
         <table className="table table-striped">
           <thead>
             <tr>
-              <th style={{"width": 150}}>
-                <a href="#" onClick={this.handleSortToggled('created_at')}>Created</a>
-              </th>
-              <th>
-                <a href="#" onClick={this.handleSortToggled('name')}>Name</a>
-              </th>
-              <th>Pitch</th>
-              <th style={{"width": 150}}>
-                <a href="#" onClick={this.handleSortToggled('updated')}>Updated</a>
-              </th>
-              <th style={{"width": 150}} className="text-right">
-                <a href="#" onClick={this.handleSortToggled('watchings_count')}>Followers</a>
-              </th>
-              <th style={{"width": 125}} className="text-right">
-                <a href="#" onClick={this.handleSortToggled('quality')}>Quality Score</a>
-              </th>
+              <TableSortHeader width={150} onClick={this.handleSortToggled('created_at')} asc={this.sortOrder('created_at')} label="Created" />
+              <TableSortHeader width={150} onClick={this.handleSortToggled('name')} asc={this.sortOrder('name')} label="Name" />
+              <TableSortHeader width={300} onClick={this.handleSortToggled('pitch')} asc={this.sortOrder('pitch')} label="Pitch" />
+              <TableSortHeader width={150} onClick={this.handleSortToggled('last_activity_at')} asc={this.sortOrder('last_activity_at')} label="Updated" />
+              <TableSortHeader width={150} onClick={this.handleSortToggled('watchings_count')} asc={this.sortOrder('watchings_count')} label="Followers" align="right" />
+              <TableSortHeader width={150} onClick={this.handleSortToggled('quality')} asc={this.sortOrder('quality')} label="Quality Score" align="right" />
             </tr>
           </thead>
 
@@ -111,6 +105,7 @@
         '&direction=' + sortDir +
         '&showranked=' + this.state.showRanked
 
+      window.history.replaceState({}, document.title, url)
       window.xhr.get(url, function(err, responseText) {
         var products = {}
         JSON.parse(responseText).map(function(p){
@@ -118,6 +113,10 @@
         })
         this.setState({products: products, page: page})
       }.bind(this))
+    },
+
+    sortOrder: function(col) {
+      return this.state.sortCol == col ? this.state.sortAsc : null
     }
   })
 
@@ -168,6 +167,32 @@
         this.props.onChange(this.state.pendingQualityScore)
         this.setState({pendingQualityScore: null, dirty: false})
       }
+    }
+  })
+
+  var SortArrow = React.createClass({
+    render: function() {
+      if (this.props.asc === false) {
+        return <span className="caret" />
+      } else if (this.props.asc === true) {
+        return <span className="dropup"><span className="caret" /></span>
+      }
+      return <span />
+    }
+  })
+
+  var TableSortHeader = React.createClass({
+    render: function() {
+      var classes = React.addons.classSet({
+        'text-right': (this.props.align == 'right')
+      });
+
+      return <th style={{"width": this.props.width}} className={classes}>
+        <a href="#" onClick={this.props.onClick} className="text-subtle-link">
+          {this.props.label}
+          <SortArrow asc={this.props.asc} />
+        </a>
+      </th>
     }
   })
 

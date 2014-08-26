@@ -5,7 +5,13 @@
 <% content_for :javascript do %>
   <script>
     React.renderComponent(
-      ProductRankings(<%== { totalPages: @products.total_pages }.to_json %>),
+      ProductRankings(<%== {
+        page: params[:page],
+        sortCol: params[:sort],
+        sortAsc: params[:direction] == 'asc',
+        showRanked: params[:showranked] == 'true',
+        totalPages: @products.total_pages
+      }.to_json %>),
       document.getElementsByClassName('js-rankings')[0]
     )
   </script>
