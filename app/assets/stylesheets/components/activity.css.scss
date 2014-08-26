@@ -35,7 +35,7 @@
 }
 
 .activity-actions {
-  font-size: $font-size-xs;
+  font-size: $font-size-small;
   color: $gray-light;
 
   a {
@@ -55,6 +55,6 @@
   // FIXME: This is hacky as shit
   .glyphicon {
     top: 2px;
-    font-size: $font-size-xs;
+    font-size: $font-size-small;
   }
 }
