@@ -1,142 +1,190 @@
 <% title 'Assembly : Our Story' %>
 <%= track 'about.viewed' %>
+
 <%= render 'shared/navbar' %>
 
-<div class="page page-flat">
+<div class="jumbotron">
   <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <div class="sheet-">
-          
-
-          <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-              <p class="lead" style="margin-bottom: 36px;text-align:left;">
-                Assembly is for those who enjoy building software.
-                <br>
-                We connect you with others who share your interest and complement your skills so you can form distributed software companies.
-                <br>
-                Unlike traditional companies with shareholders and employees, everything on Assembly is created, operated, and owned by a global community of makers, together. 
-              </p>
-              <p>
-                Together, we’re more powerful, more intelligent. more driven.
-                <br>
-                We can think bigger and go further.
-              </p>
-            </div>
-          </div>
-
-          
-          <h1 class="text-center">
-            Our Story
-          </h1>
-
-          <br>
-
-          <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-
-              <p>
-                The single biggest impact the internet has had is this: bringing people together to create things we couldn’t have created alone. We can see this everywhere, from Wikipedia and Linux to Tumblr and Kickstarter.
-              </p>
-              
-              <p>
-                Software's ability to connect and empower people at the edges of a network by collapsing hierarchies can be felt by everyone. One of the oldest hierarchies is the Company; a group of people cooperating for a common goal and receiving some benefit from its success. We’re building Assembly to challenge the traditional notions of a “company” by leveraging the internet to connect makers around the world; making it possible for them to work side-by-side while having more autonomy, creative freedom, and a fuller share in the success of what they build.
-              </p>
-              
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-md-11">
-              
-              <div style="margin: 10px">
-                <center>
-              <img src='http://scontent-a-sjc.cdninstagram.com/hphotos-xpf1/t51.2885-15/10540246_350497958431852_1646285852_n.jpg' width="205px" style="float: left; margin-right:10px"/>
-              <img src='http://scontent-b-sjc.cdninstagram.com/hphotos-xap1/t51.2885-15/10546587_308496552644625_49564381_n.jpg' width="205px" style="float: left; margin-right:10px"/>
-              <img src='http://photos-a.ak.instagram.com/hphotos-ak-xap1/923742_555758104529432_1347471837_n.jpg' 
-width="205px" style="float: left; "/>
-              
-                </center>
-              </div>
-            </div>
-          </div>  
-          <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-          
-              
-              <p>
-                With this vision <a href='https://assembly.com/users/chrislloyd'>Chris</a>, <a href='https://assembly.com/users/whatupdave'>Dave</a> and <a href='https://assembly.com/users/mdeiters'>I</a> travelled to Ventura Beach in Southern California in late 2013. We isolated ourselves in a small rickety beachside villa that we rented on Airbnb to give us time to write down a set of beliefs and sketch out the initial concept of Assembly.
-              </p>
-              
-              <p>
-                We came up with these guiding principles, which we felt were key to Assembly being a place where great products are built in this new way. 
-                <ul>
-                  <li>
-                    The platform would enable a global community of makers to drive all ideas, vision and execution of a software product
-                  </li>
-                  <li>
-                    Everyone would be invited to make an impact, have influence, and be able to share their best work
-                  </li>
-                  <li>
-                    Clear leadership and vision would be modeled after open source's notion of a merit based Core Team made up from the community.
-                  </li>
-                  <li>
-                    Each product would be radically transparent so everyone could can make thoughtful contributions. While customer data would be private, all the business metrics (e.g. growth, revenue, engagement) and strategy would be known by everyone involved.
-                  </li>
-                  <li>
-                    Instead of employment contracts, people should be able to work when they want, how they want, and where they want.
-                  </li>
-                  <li>
-                    Success would be shared equitably. Each contribution should be rewarded with a fair amount of ownership stake as determined by the community.
-                  </li>
-                  <li>
-                    With no employees or shareholders and lowering cost of hosting software, liquidity wouldn't have to wait for an IPO or acquisition. Instead, contributors should receive the success of what they built frequent, even possibly every month. 
-                  </li>
-                </ul>
-              </p>
-              <p>
-                After our week on the beach, we returned to a small studio just off the main strip in the Castro neighborhood of San Francisco to start assembling. Though the product has changed much, our values have not. In the short year Assembly has been running, we've already seen 89 strangers come together to build and launch <a href='https://assembly.com/helpful'>a useful product</a>, middle schoolers coding next to seasoned designers, and paid out tens of thousands of dollars out to contributors on some of the early successful products.
-              </p>
-              <p>
-                Over the last year we've moved three times to new locations and the team has grown to be nearly as diverse as the Assembly community; including  an engineer with a Phd in ancient greek, a physicist who studied nanometer scale biological self-assembly in confined lipid systems, and a writer who worked for the Daily show with Jon Stewart.
-              </p>
-              <p>
-                Our current office is located in the heart of the Mission at 3030A 16th street in San Francisco. We welcome anyone working on Assembly products to come visit us to work on your project out of our office and let me make you an <a href='http://instagram.com/p/nJXMCnLXIk/'>latte</a>. We are also always looking for talented people to join our small team of makers. 
-              </p>
-              <p>
-                I hope you like Assembly.
-                <br>
-                - @mdeiters
-              </p>
-
-
-              <ul class="list-unstyled">
-                <% cache 'about-us-team' do %>
-                <% Product.find_by_id_or_slug!('meta').core_team.each do |user| %>
-                  <li class="clearfix" style="margin:10px; float: left;">
-                    <a href="<%= user_path(user) %>" title="<%= user.username %>">
-                      <div class="pull-left" style="margin-right:15px">
-                        <div class="media-object">
-                          <%= avatar_tag(user, 48) %>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                <% end %>
-                <% end %>
-              </ul>
-
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-    </div>
+    <h2>Together, we're thinking <em>bigger</em><br>and going <em>further</em>.</h2>
   </div>
 </div>
 
+<div class="container">
+  <div class="row">
 
+    <div class="col-md-8 text-large">
+      <p class="lead text-large">
+        Assembly is for those who enjoy building software.
+We connect you with others who share your interest and complement your skills so you can form distributed software companies.
+Unlike traditional companies with shareholders and employees, everything on Assembly is created, operated, and owned by a global community of makers, together.
+      </p>
+
+      <h3 id="story">Our Story</h3>
+      <p>
+        The single biggest impact the internet has had is this: bringing people together to create things we couldn’t have created alone. We can see this everywhere, from Wikipedia and Linux to Tumblr and Kickstarter.
+      </p>
+
+      <p>
+        Software's ability to connect and empower people at the edges of a network by collapsing hierarchies can be felt by everyone. One of the oldest hierarchies is the Company; a group of people cooperating for a common goal and receiving some benefit from its success. We’re building Assembly to challenge the traditional notions of a “company” by leveraging the internet to connect makers around the world; making it possible for them to work side-by-side while having more autonomy, creative freedom, and a fuller share in the success of what they build.
+      </p>
+
+      <div class="row" style="margin-bottom:24px">
+        <div class="col-sm-4">
+          <img class="img-rounded" src="http://scontent-a-sjc.cdninstagram.com/hphotos-xpf1/t51.2885-15/10540246_350497958431852_1646285852_n.jpg" width="100%">
+        </div>
+        <div class="col-sm-4">
+          <img class="img-rounded" src="http://scontent-b-sjc.cdninstagram.com/hphotos-xap1/t51.2885-15/10546587_308496552644625_49564381_n.jpg" width="100%">
+        </div>
+        <div class="col-sm-4">
+          <img class="img-rounded" src="http://photos-a.ak.instagram.com/hphotos-ak-xap1/923742_555758104529432_1347471837_n.jpg"
+    width="100%">
+        </div>
+      </div>
+
+      <p>
+        With this vision <a href='https://assembly.com/users/chrislloyd'>Chris</a>, <a href='https://assembly.com/users/whatupdave'>Dave</a> and <a href='https://assembly.com/users/mdeiters'>I</a> travelled to Ventura Beach in Southern California in late 2013. We isolated ourselves in a small rickety beachside villa that we rented on Airbnb to give us time to write down a set of beliefs and sketch out the initial concept of Assembly.
+      </p>
+
+      <p>
+        We came up with <a href="#mission">our guiding principles</a>, which we felt were key to Assembly being a place where great products are built in this new way.
+      </p>
+
+      <p>
+        After our week on the beach, we returned to a small studio just off the main strip in the Castro neighborhood of San Francisco to start assembling. Though the product has changed much, our values have not. In the short year Assembly has been running, we've already seen 89 strangers come together to build and launch <a href='https://assembly.com/helpful'>a useful product</a>, middle schoolers coding next to seasoned designers, and paid out tens of thousands of dollars out to contributors on some of the early successful products.
+      </p>
+      <p>
+        Over the last year we've moved three times to new locations and the team has grown to be nearly as diverse as the Assembly community; including  an engineer with a Phd in ancient greek, a physicist who studied nanometer scale biological self-assembly in confined lipid systems, and a writer who worked for the Daily show with Jon Stewart.
+      </p>
+      <p>
+        Our current office is located in the heart of the Mission at 3030A 16th street in San Francisco. We welcome anyone working on Assembly products to come visit us to work on your project out of our office and let me make you an <a href='http://instagram.com/p/nJXMCnLXIk/'>latte</a>. We are also always looking for talented people to join our small team of makers.
+      </p>
+      <p>
+        I hope you like Assembly.
+        <br>
+        - @mdeiters
+      </p>
+
+
+      <h3 id="mission">Mission</h3>
+
+      <div class="row" style="margin-bottom:24px">
+        <div class="col-md-4">
+          <h4 class="text-success">Global Community</h4>
+          <p>
+            The platform would enable a global community of makers to drive all ideas, vision and execution of a software product
+          </p>
+        </div>
+
+        <div class="col-md-4">
+          <h4 class="text-success">Diversity</h4>
+          <p>
+            Everyone would be invited to make an impact, have influence, and be able to share their best work
+          </p>
+        </div>
+
+        <div class="col-md-4">
+          <h4 class="text-success">Explicitness</h4>
+          <p>
+            Clear leadership and vision would be modeled after open source's notion of a merit based Core Team made up from the community.
+          </p>
+        </div>
+
+        <div class="col-md-4">
+          <h4 class="text-success">No Suprises</h4>
+          <p>
+            Each product would be radically transparent so everyone could can make thoughtful contributions.
+          </p>
+        </div>
+
+        <div class="col-md-4">
+          <h4 class="text-success">Liberty</h4>
+          <p>
+            Instead of employment contracts, people should be able to work when they want, how they want, and where they want.
+          </p>
+        </div>
+
+        <div class="col-md-4">
+          <h4 class="text-success">Shared ownership</h4>
+          <p>
+            Success would be shared equitably. Each contribution should be rewarded with a fair amount of ownership stake as determined by the community.
+          </p>
+        </div>
+      </div>
+
+      <h3 id="team">The Team</h3>
+
+      <div class="row">
+        <% Product.find_by_slug('meta').core_team.order(:created_at).each do |user| %>
+          <div class="col-sm-3" style="margin-bottom:24px">
+            <a href="<%= user_path(user) %>" title="<%= user.username %>">
+              <%= image_tag(user.avatar.url(360), width: '100%', class: 'img-rounded') %>
+            </a>
+          </div>
+        <% end %>
+      </div>
+
+      <!--
+      <h2>News &amp; Press</h2>
+      <hr>
+      <div class="row">
+        <div class="col-md-4">
+          <ul class="list-unstyled">
+            <li><a href="#">Logo</a></li>
+          </ul>
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <% 6.times.each do %>
+              <div class="col-md-6">
+                <a href="#">
+                  <h4 class="text-success">NEW YORKER, October 2014</h4>
+                </a>
+                <p class="text-muted">
+                  Be prepared to have your mind blown by Assembly
+                </p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      -->
+
+    </div>
+
+    <div class="col-md-3 col-md-offset-1">
+      <div class="asm-about-sidebar hidden-xs hidden-sm" role="complementary">
+        <ul class="nav nav-pills nav-stacked">
+          <li class="active"><a href="#story">Story</a></li>
+          <li><a href="#mission">Mission</a></li>
+          <li><a href="#team">The Team</a></li>
+          <!-- <li><a href="#">Investors</a></li> -->
+          <!-- <li><a href="#">News &amp; Press</a></li> -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 <%= render 'shared/footer' %>
+
+<script>
+  var $body = $(document.body)
+  var $sideBar = $('.asm-about-sidebar')
+  $body.scrollspy({target: '.asm-about-sidebar'})
+
+  var sideBarWidth = $sideBar.width()
+  $sideBar.width(sideBarWidth)
+
+  var offsetTop      = $sideBar.offset().top
+  var sideBarMargin  = parseInt($sideBar.children(0).css('margin-top'), 10)
+
+  setTimeout(function () {
+    $sideBar.affix({
+      offset: {
+        bottom: $('.footer').outerHeight(true)
+      }
+    })
+  }, 100)
+
+</script>
