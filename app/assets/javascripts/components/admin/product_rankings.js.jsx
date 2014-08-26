@@ -4,6 +4,7 @@
 //= require components/timestamp
 //= require underscore
 //= require lib/parseuri
+//= require nprogress
 
 (function() {
   var ProductRankings = React.createClass({
@@ -106,12 +107,14 @@
         '&showranked=' + this.state.showRanked
 
       window.history.replaceState({}, document.title, url)
+      NProgress.start();
       window.xhr.get(url, function(err, responseText) {
         var products = {}
         JSON.parse(responseText).map(function(p){
           products[p.id] = p
         })
         this.setState({products: products, page: page})
+        NProgress.done()
       }.bind(this))
     },
 
