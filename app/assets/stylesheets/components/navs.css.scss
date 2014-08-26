@@ -72,6 +72,11 @@
   margin-top: 0;
 }
 
+.nav-stacked > li:last-child > a {
+  border-radius: 0 0 $border-radius-base $border-radius-base;
+}
+
+
 .nav-sidebar {
   margin-bottom: $line-height-computed;
   font-size: $font-size-small;
