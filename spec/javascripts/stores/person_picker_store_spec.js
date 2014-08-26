@@ -1,12 +1,13 @@
 //= require spec_helper
 //= require underscore
 //= require react
+//= require jquery
+//= require bootstrap
 //= require components
 
 describe('PersonPickerStore', function() {
   after(function() {
     Dispatcher.removeAll();
-
   });
 
   beforeEach(function() {
