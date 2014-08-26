@@ -22,7 +22,10 @@ module TextFilters
           if product
             yield $1, (product.core_team), Interest.new(slug: 'core')
           end
-
+        elsif mention == 'partners'
+          if product
+            yield $1, (product.partners), Interest.new(slug: 'partners')
+          end
         elsif user = User.find_by('lower(username) = ?', mention)
           yield $1, user
 

@@ -8,8 +8,7 @@ class ProductOwnership
   end
 
   def calculate_user_cents
-    entries = TransactionLogEntry.where(product_id: @product.id).with_cents.group(:wallet_id).sum(:cents)
-    users = User.where(id: entries.keys).to_a
+    users = product.partners.to_a
 
     @user_cents = entries.inject([]) do |a, (wallet_id, cents)|
       user = users.find{|u| u.id == wallet_id}
