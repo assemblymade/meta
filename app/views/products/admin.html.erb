@@ -4,9 +4,4 @@
   <% else %>
     <a class="btn btn-danger btn-sm btn-block" style="margin-bottom: 8px;" href="<%= product_flag_path(@product)%>">Flag Product</a>
   <% end %>
-
-  <%= form_for [:admin, @product.showcases.new], url: admin_staff_picks_path do |f| %>
-    <%= f.hidden_field :product_id %>
-    <%= f.submit "Schedule Staff Pick", class: %w(btn btn-default btn-sm btn-block) %>
-  <% end %>
 </div>
