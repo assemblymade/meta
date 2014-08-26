@@ -73,6 +73,10 @@
        url(asset-path('TiemposTextWebLF-SemiboldItalic.ttf')) format('truetype');
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 h2,
 .h2 {
   // Enable bolding once we've transitioned to Bootstrap completely
@@ -136,8 +140,13 @@ h6,
   font-weight: 600;
 }
 
-.text-large {
+.text-large,
+.large {
   font-size: $font-size-large;
+
+  .lead {
+    font-size: $font-size-large * 1.3333;
+  }
 }
 
 .text-small {
@@ -336,4 +345,8 @@ mark,
   a {
     color: inherit;
   }
+}
+
+.lead {
+  font-weight: 400;
 }

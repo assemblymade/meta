@@ -64,14 +64,14 @@ $text-copy: darken($text-copy-bg, 75%);
 
 // Typography
 
-$font-family-sans-serif: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-sans-serif: "Source Sans Pro";
 $font-family-serif:      Tiempos, Georgia, "Times New Roman", Times, serif;
 $font-family-monospace:  "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace;
 $font-family-base:       $font-family-sans-serif;
 
 $font-size-base:  15px;
 $font-size-large: 18px;
-$font-size-small: 14px;
+$font-size-small: 13px;
 
 $font-size-h1: 35px;
 $font-size-h2: 28px;
@@ -248,7 +248,7 @@ $container-lg:            $container-large-desktop;
 
 // Basics of a navbar
 $navbar-height:              $line-height-computed * 2;
-$navbar-margin-bottom:       0;
+$navbar-margin-bottom:       $line-height-computed;
 $navbar-border-radius:       $border-radius-base;
 $navbar-padding-horizontal:  floor(($grid-gutter-width / 2));
 $navbar-padding-vertical:    (($navbar-height - $line-height-computed) / 2);
@@ -269,7 +269,7 @@ $navbar-default-link-disabled-bg:    transparent;
 
 // Navbar brand label
 $navbar-default-brand-color:       $black;
-$navbar-default-brand-hover-color: $navbar-default-link-hover-color;
+$navbar-default-brand-hover-color: $red;
 $navbar-default-brand-hover-bg:    transparent;
 
 // Navbar toggle
@@ -572,7 +572,7 @@ $thumbnail-caption-padding: 9px;
 
 // Wells
 
-$well-bg:     lighten($body-bg, 3%);
+$well-bg:     $brand-bg;
 $well-border: $brand-border;
 
 
