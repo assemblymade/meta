@@ -134,19 +134,18 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
     render: function() {
       var productsPath = '/users/' + this.props.username;
 
+      var desktopNotifications = null
+      if (!this.state.desktopNotificationsEnabled) {
+        desktopNotifications = <li>
+          <DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} /> : null
+        </li>
+      }
       return (
         <ul className="dropdown-menu" style={{'min-width': '380px' }}>
-          <li ref="spinner" style={{ 'min-height': '50px', 'max-height': '300px' }}>
+          <li ref="spinner">
             <NotificationsList data={_.values(this.state.data)} />
           </li>
-
-          <li>
-            <a href={productsPath} className="text-small">All Products</a>
-          </li>
-
-          <li>
-            {!this.state.desktopNotificationsEnabled ? <DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} /> : null}
-          </li>
+          {desktopNotifications}
         </ul>
       );
     },
@@ -188,7 +187,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
       });
 
       return (
-        <div className="list-group">
+        <div>
           {productNodes}
         </div>
       );

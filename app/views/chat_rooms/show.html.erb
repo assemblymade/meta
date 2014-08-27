@@ -65,7 +65,13 @@
     <div class="col-md-3 hidden-xs hidden-sm" style="overflow:hidden">
       <div class="row">
         <div class="col-md-11">
-          <h2>#<%= @chat_room.slug %></h2>
+          <h2>
+            <% if product = @chat_room.product %>
+              <a class="text-subtle-link" href="<%= product_path(product) %>">
+                #<%= @chat_room.slug %>
+              </a>
+            <% end %>
+          </h2>
           <div class="js-members"></div>
         </div>
       </div>

@@ -24,6 +24,7 @@ class Product < ActiveRecord::Base
 
   has_many :assets
   has_many :auto_tip_contracts
+  has_many :chat_rooms
   has_many :completed_missions
   has_many :contract_holders
   has_many :core_team, through: :core_team_memberships, source: :user
@@ -149,7 +150,7 @@ class Product < ActiveRecord::Base
   def for_profit?
     not NON_PROFIT.include?(slug)
   end
-  
+
   def partners
     entries = TransactionLogEntry.where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
     User.where(id: entries.keys)
@@ -281,6 +282,10 @@ class Product < ActiveRecord::Base
 
   def feature!
     touch(:featured_on)
+  end
+
+  def main_chat_room
+    chat_rooms.first || ChatRoom.general
   end
 
   def count_presignups

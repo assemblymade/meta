@@ -59,12 +59,14 @@
 
 <ul class="nav nav-stacked nav-sidebar">
 
-  <li class="<%= nav_active_class(:chat) %>">
-    <a href="<%= product_chat_path(product) %>">
-      <span class="icon icon-bubbles icon-left"></span>
-      Chat
-    </a>
-  </li>
+  <% if chat_room = product.chat_rooms.first %>
+    <li class="<%= nav_active_class(:chat) %>">
+      <a href="<%= chat_room_path(chat_room) %>">
+        <span class="icon icon-bubbles icon-left"></span>
+        Chat
+      </a>
+    </li>
+  <% end %>
 
   <% if can?(:update, product) || product.posts.any? %>
     <li class="<%= nav_active_class(:blog) %>">
