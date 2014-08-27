@@ -14,8 +14,8 @@
   var MEMBER_VIEW_REFRESH_PERIOD = 60 * 1000; // 1 minute
 
   var MembersView = React.createClass({
-
      loadMembersFromServer: function() {
+       console.log('loading', this.props.url)
       $.ajax({
         url: this.props.url,
         dataType: 'json',
@@ -105,19 +105,6 @@
               {
                 _.map(this.onlineMembers(), this.renderMember)
               }
-            </div>
-            <div className="panel-heading">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseRecent" className="text-muted">
-                <i className="icon icon-chevron-up pull-right"></i>
-                <h6 className="panel-title">Recently Active</h6>
-              </a>
-            </div>
-            <div id="collapseRecent" className="panel-collapse collapse in">
-              <div className="panel-body small">
-              {
-                _.map(this.recentlyActiveMembers(), this.renderMember)
-              }
-              </div>
             </div>
           </div>
         </div>

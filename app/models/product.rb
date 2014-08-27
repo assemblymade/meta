@@ -393,10 +393,6 @@ class Product < ActiveRecord::Base
     self
   end
 
-  def chat_room_key
-    "chat_#{id}"
-  end
-
   def average_bounty
     bounties = TransactionLogEntry.minted.
       where(product_id: product.id).

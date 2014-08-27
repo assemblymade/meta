@@ -41,12 +41,8 @@
           <a href="<%= new_product_path %>">Create</a>
         </li>
 
-        <li class="<%= nav_active_class(:platform_getting_started) %>">
-          <a href="<%= getting_started_path %>">Get Started</a>
-        </li>
-
         <li class="<%= nav_active_class(:community) %>">
-          <a href="<%= chat_path %>">Community</a>
+          <a href="<%= chat_rooms_path %>">Community Chat</a>
         </li>
       </ul>
 
@@ -56,7 +52,7 @@
               data-react-class="Navbar"
               data-react-props="<%= {
                 newsFeedPath: notifications_path(format: :json),
-                chatPath: users_chat_rooms_path,
+                chatPath: chat_rooms_path,
                 userPath: user_path(current_user),
                 editUserPath: edit_user_path,
                 balancePath: users_balance_path,

@@ -18,7 +18,6 @@ describe Users::ChatRoomsController do
       body = JSON.parse(response.body)
       expect(body["chat_rooms"].count).to eq(1)
       expect(body["chat_rooms"].first["id"]).to eq('chat_' + product2.id)
-      expect(body["sort_keys"].count).to eq(0)
     end
   end
 end

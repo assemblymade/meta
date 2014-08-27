@@ -17,14 +17,15 @@ class window.ActivityView extends Backbone.View
       $('[data-readraptor-track]', @$el).readraptor()
       $('.activity-content a').attr('target', '_blank')
 
-      model = @model
-      $('.js-insert-tips', @$el).each ->
-        React.renderComponent(TipsUi({
-          viaType: 'Activity',
-          viaId: model.id,
-          recipient: model.get('actor'),
-          tips: model.get('tips')
-        }), @)
+      if app.product
+        model = @model
+        $('.js-insert-tips', @$el).each ->
+          React.renderComponent(TipsUi({
+            viaType: 'Activity',
+            viaId: model.id,
+            recipient: model.get('actor'),
+            tips: model.get('tips')
+          }), @)
 
   templateData: ->
     data = _.clone(@model.attributes)

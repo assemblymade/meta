@@ -2,15 +2,15 @@ class ChatRoomSerializer < ActiveModel::Serializer
   attributes :id, :label, :url, :updated
 
   def id
-    object.chat_room_key
+    object.key
   end
 
   def label
-    object.name
+    object.slug
   end
 
   def url
-    product_chat_path(object)
+    chat_room_path(object)
   end
 
   def updated
@@ -18,8 +18,6 @@ class ChatRoomSerializer < ActiveModel::Serializer
   end
 
   def last_event
-    if wip = object.main_thread
-      wip.events.order(:created_at).select(:created_at).last
-    end
+    object.wip.events.order(:created_at).select(:created_at).last
   end
 end

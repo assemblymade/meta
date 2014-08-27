@@ -48,7 +48,9 @@
       <script>
         window.app.setCurrentUser(<%= UserWithBalanceSerializer.new(current_user, scope:  current_user).to_json.html_safe %>);
         window.app.setSuggestedTags(<%== Wip::Tag.suggested_tags %>);
-        window.pusher = new Pusher($('meta[name=pusher-key]').attr('content'));
+        window.pusher = new Pusher($('meta[name=pusher-key]').attr('content'), {
+                  authEndpoint: <%= webhooks_pusher_path.to_json.html_safe %>
+                });
       </script>
       <%= render 'analytics/identify' %>
       <%= track_readraptor(@stories_to_mark_as_read) if @stories_to_mark_as_read %>

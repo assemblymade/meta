@@ -20,8 +20,8 @@ ASM::Application.routes.draw do
 
   get '/home2' => 'pages#home2'
 
-  # Talk Experiment
-  get '/talk'  => 'talk#index', :as => :chat
+  # Global Chat Experiment
+  resources :chat_rooms, only: [:index, :show], path: 'chat'
 
   get '/still-field' => redirect('/discover') # bad product
 
@@ -46,7 +46,6 @@ ASM::Application.routes.draw do
   get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
-  get '/chat' => redirect('/meta/chat')
 
   get '/new'      => redirect('/create')
   get '/create'   => 'products#new',     :as => :new_idea
@@ -91,8 +90,6 @@ ASM::Application.routes.draw do
       resource :tax_info, only: [:show, :create, :update] do
         get ':form_type' => 'tax_infos#show'
       end
-
-      resources :chat_rooms, only: [:index]
     end
 
     # Confirmation
@@ -179,12 +176,14 @@ ASM::Application.routes.draw do
   # api
   # ◕ᴥ◕
   namespace :api do
+    resources :chat_rooms, path: 'chat' do
+      resources :comments, only: [:create, :index], module: :chat
+      resources :users, only: [:index], module: :chat, path: 'online'
+    end
+
     resources :products, only: [] do
       get :info
       get :workers
-      namespace :chat do
-        resources :comments, only: [:create]
-      end
       resources :bounties, only: [] do
         resources :offers, only: [:create, :show]
       end
@@ -210,9 +209,6 @@ ASM::Application.routes.draw do
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do
     match 'flag',    via: [:get, :post]
-
-    get '/chat' => 'chat#index', as: :chat
-    post '/chat' => 'chat#create'
 
     get 'welcome'
     get 'admin'
@@ -296,7 +292,6 @@ ASM::Application.routes.draw do
     end
 
     # legacy
-    get '/discuss', to: redirect(path: '%{product_id}/chat')
     get :team, to: redirect(path: '%{product_id}/people')
     get :welcome, to: redirect(path: '%{product_id}')
 
