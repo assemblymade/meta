@@ -212,7 +212,7 @@ class User < ActiveRecord::Base
       name.split(/ |@/).first.strip
     end
   end
-
+  
   def mail_immediate?
     mail_preference == 'immediate'
   end

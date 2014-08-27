@@ -142,7 +142,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
       }
       return (
         <ul className="dropdown-menu" style={{'min-width': '380px' }}>
-          <li ref="spinner">
+          <li ref="spinner" style={{'min-height': 120}}>
             <NotificationsList data={_.values(this.state.data)} />
           </li>
           {desktopNotifications}
