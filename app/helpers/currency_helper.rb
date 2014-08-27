@@ -11,5 +11,10 @@ module CurrencyHelper
     amount = 1 - (discounted_cost / full_cost.to_f)
     "#{(amount * 100).to_i}%"
   end
-
+  
+  def short_currency(val)
+    val ||= 0
+    val = val / 100.0
+    "$#{val.round(-3)/1000}K"
+  end
 end

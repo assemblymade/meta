@@ -35,7 +35,7 @@
 
     <% bounty.tags.map do |tag| %>
       &nbsp;
-      <a class="small text-info" href="<%= product_wips_path(@product, tag: tag.name) %>">
+      <a class="small text-info" href="<%= product_wips_path(bounty.product, tag: tag.name) %>">
         #<%= tag.name.downcase %>
       </a>
     <% end %>

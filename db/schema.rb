@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140827001548) do
+ActiveRecord::Schema.define(version: 20140827184855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,15 @@ ActiveRecord::Schema.define(version: 20140827001548) do
     t.datetime "created_at", null: false
     t.datetime "deleted_at"
   end
+
+  create_table "bounty_postings", force: true do |t|
+    t.uuid     "bounty_id",  null: false
+    t.uuid     "poster_id",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "expired_at"
+  end
+
+  add_index "bounty_postings", ["expired_at", "bounty_id"], name: "index_bounty_postings_on_expired_at_and_bounty_id", unique: true, using: :btree
 
   create_table "chat_rooms", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "slug",       null: false

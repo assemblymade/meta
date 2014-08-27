@@ -33,16 +33,16 @@
 
       <ul class="nav navbar-nav">
 
-        <li class="<%= nav_active_class(:platform_discover) %>">
-          <a href="<%= discover_path %>">Discover</a>
-        </li>
-
-        <li class="<%= nav_active_class(:platform_create) %>">
-          <a href="<%= new_product_path %>">Create</a>
+        <li class="<%= nav_active_class(:discover_bounties) %>">
+          <a href="<%= discover_path(:bounties) %>">Bounties</a>
         </li>
 
         <li class="<%= nav_active_class(:community) %>">
           <a href="<%= chat_rooms_path %>">Community Chat</a>
+        </li>
+
+        <li class="<%= nav_active_class(:platform_create) %>">
+          <a href="<%= new_product_path %>">Create</a>
         </li>
       </ul>
 

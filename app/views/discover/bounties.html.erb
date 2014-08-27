@@ -1,0 +1,69 @@
+<% title 'Bounties' %>
+<% activate_nav! :platform_discover %>
+<% activate_nav! :discover_bounties %>
+
+<%= render 'shared/navbar' %>
+
+<div class="bg-primary" style="padding: 15px 0" data-dismissable="bounty-welcome">
+  <button type="button" class="close js-dismiss pull-right" style="margin-right: 25px">
+    <span>&times;</span>
+  </button>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 lead omega">
+        <strong>Welcome to Assembly.</strong> A community of people who have ideas and build them. Everything here is a collaborative effort including the vision, development, design and marketing. We collect each product's revenue and split the proceeds amongst all involved.
+      </div>
+      <div class="col-md-2">
+        <span class="lead"><strong>1.</strong></span> Jump into any open challenges on the products that interest you.
+      </div>
+      <div class="col-md-2">
+        <span class="lead"><strong>2.</strong></span> Earn App Coins for completing the bounty or sharing your experience in the discussion
+      </div>
+      <div class="col-md-2">
+        <span class="lead"><strong>3.</strong></span> Share in the product's success when monthly revenue is split amongst all those with App Coins.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page page-flat">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-header">
+          <h2>
+            All open <span class="text-primary">#<%= params[:filter]%></span> challenges for Wedenesday, August 27th
+          </h2>
+          <ul class="nav nav-pills">
+            <% @filters.each do |f| %>
+              <li class="<%= 'active' if params[:filter] == f[:slug] %>">
+                <a href="<%= discover_path(:bounties, filter: f[:slug]) %>">
+                  <%= f[:label] %> <span class="badge badge-subtle"><%= f[:count] %></span>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <% @postings.each do |product, postings| %>
+      <div class="row">
+        <div class="col-md-8">
+          <% postings.each do |posting| %>
+            <%= render 'bounty_postings/bounty_chip', bounty: posting.bounty %>
+          <% end %>
+        </div>
+        <div class="col-md-4">
+          <%= render 'bounty_postings/product_chip', product: product %>
+        </div>
+      </div>
+
+      <hr/>
+    <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

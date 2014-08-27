@@ -1,0 +1,19 @@
+<div class="chip">
+  <div>
+    <a href="<%= product_path(product) %>"><strong><%= product.name %></strong></a>
+  </div>
+  <div class="text-muted">
+    <%= product.pitch %>
+  </div>
+
+  <div class="text-muted">
+    <%= number product.partners.count %> partners
+
+    <% if product.profit_reports.any? %>
+      <% report = product.profit_reports.order(:end_at).last %>
+
+      &middot;
+      <%= short_currency report.profit %> last month
+    <% end %>
+  </div>
+</div>
