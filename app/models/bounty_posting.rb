@@ -10,4 +10,8 @@ class BountyPosting < ActiveRecord::Base
       where('wip_tags.name = ?', tag).
       order(created_at: :desc)
   end
+
+  def ends_at
+    created_at + 7.days
+  end
 end

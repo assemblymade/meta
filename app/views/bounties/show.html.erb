@@ -1,7 +1,5 @@
 <% title @bounty.title, "##{@bounty.number}", @bounty.product.name %>
 <% activate_nav! :bounties %>
-<% breadcrumb product_wips_path(@bounty.product), 'Bounties' %>
-<% breadcrumb product_wip_path(@bounty.product, @bounty), "##{@bounty.number}" %>
 
 <%= render 'bounties/bounty', bounty: @bounty %>
 

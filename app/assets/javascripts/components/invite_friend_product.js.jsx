@@ -28,10 +28,6 @@ var InviteBountyForm = require('./invite_bounty_form.js.jsx');
                             via_id={this.props.via_id}
                             onSubmit={this.onSubmit.bind(this)}
                             notePlaceholder={this.props.notePlaceholder}>
-
-            <h2 class="alpha">Ask a friend</h2>
-            <p className="text-muted">Know somebody who could help with this? Anybody can help out, all you need to do is ask.</p>
-
           </InviteBountyForm>
         </Popover>
       )

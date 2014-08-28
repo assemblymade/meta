@@ -146,6 +146,11 @@ class Task < Wip
     votes.where(user: user).none?
   end
 
+  def assigned_to?(worker)
+    false if worker.nil?
+    workers.include?(worker)
+  end
+
   def start_work!(worker)
     self.workers << worker unless self.workers.include?(worker)
     allocate!(worker) unless self.workers.count > 1

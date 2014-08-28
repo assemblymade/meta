@@ -11,19 +11,8 @@
   <div class="container">
 
     <div class="row">
-
       <div class="col-md-10 col-md-push-2">
         <ul class="list list-inline pull-right hidden-xs">
-
-          <li>
-            <div data-react-class="Share"
-                 data-react-props="<%= {
-                   url: product_url(@product),
-                   title: "Share #{@product.name} with the world",
-                   shareText: "Check out #{@product.name} – #{ @product.pitch} on Assembly",
-                 }.to_json %>" />
-          </li>
-
           <li>
             <div
                 data-react-class="NotificationPreferencesDropdown"
