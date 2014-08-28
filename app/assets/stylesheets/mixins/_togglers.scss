@@ -1,0 +1,22 @@
+@mixin toggler-variant($color, $background, $border) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    color: $color;
+    // background-color: darken($background, 10%);
+        border-color: darken($border, 20%);
+  }
+
+  .toggler-btn {
+    color: $color;
+  }
+
+  .toggler-badge {
+    background-color: lighten($border, 10%);
+  }
+}
