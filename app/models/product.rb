@@ -101,6 +101,7 @@ class Product < ActiveRecord::Base
 
   INITIAL_COINS = 6000
   PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
+  LAUNCHED = ((ENV['PRODUCTS_LAUNCHED'] || '').split(','))
   NON_PROFIT = %w(meta)
 
   INFO_FIELDS = %w(goals key_features target_audience competing_products competitive_advantage monetization_strategy)
@@ -122,12 +123,13 @@ class Product < ActiveRecord::Base
   end
 
   def stage
-    # TODO add shipping stage
     case
-    when greenlit_at.nil?
-      :validating
+    when LAUNCHED.include?(slug)
+      'launched'
+    when stealth?
+      'alpha'
     else
-      :building
+      'beta'
     end
   end
 

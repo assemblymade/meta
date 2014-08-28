@@ -1,7 +1,9 @@
 <div class="page-header sheet-header">
   <% if posting = bounty.postings.first %>
-    <p class="text-center text-muted">
-      <time data-diff datetime="<%= posting.ends_at.iso8601 %>"></time> days left to start this bounty before it expires
+    <p class="text-center text-muted lead">
+      <strong>
+        <time data-diff datetime="<%= posting.ends_at.iso8601 %>"></time> days left
+      </strong> to start this bounty before it expires
     </p>
   <% end %>
   <div class="row">
@@ -12,19 +14,21 @@
       </h3>
 
       <ul class="list-inline">
-        <li id="js-bounty-valuation">
-          <script>
-            React.renderComponent(BountyValuation(<%== {
-              offersPath: api_product_bounty_offers_path(@product, bounty),
-              product: { name: @product.name },
-              contracts: bounty.contracts.as_json,
-              offers: ActiveModel::ArraySerializer.new(@offers).as_json,
-              maxOffer: (6 * @product.average_bounty).round(-4),
-              averageBounty: @product.average_bounty,
-              value: bounty.value,
-              open: bounty.open?
-            }.to_json %>), document.getElementById('js-bounty-valuation'));
-          </script>
+        <li>
+          <h4 id="js-bounty-valuation" class="alpha">
+            <script>
+              React.renderComponent(BountyValuation(<%== {
+                offersPath: api_product_bounty_offers_path(@product, bounty),
+                product: { name: @product.name },
+                contracts: bounty.contracts.as_json,
+                offers: ActiveModel::ArraySerializer.new(@offers).as_json,
+                maxOffer: (6 * @product.average_bounty).round(-4),
+                averageBounty: @product.average_bounty,
+                value: bounty.value,
+                open: bounty.open?
+              }.to_json %>), document.getElementById('js-bounty-valuation'));
+            </script>
+          </h4>
         </li>
         <li class="text-muted text-small">
           Created

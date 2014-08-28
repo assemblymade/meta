@@ -23,7 +23,7 @@ class DiscoverController < ApplicationController
     }]
 
     @filters.each do |f|
-      f[:count] = BountyPosting.tagged(filter).count
+      f[:count] = BountyPosting.tagged(f[:slug]).count
     end
 
     @postings = BountyPosting.tagged(filter)

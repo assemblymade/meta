@@ -12,16 +12,16 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 lead omega">
-        <strong>Welcome to Assembly.</strong> A community of people who have ideas and build them. Everything here is a collaborative effort including the vision, development, design and marketing. We collect each product's revenue and split the proceeds amongst all involved.
+        <strong>Welcome to Assembly,</strong> a community of people who have ideas and build them. Everything here is a collaborative effort including the vision, development, design and marketing. We collect each product's revenue and split the proceeds amongst all involved.
       </div>
       <div class="col-md-2">
-        <span class="lead"><strong>1.</strong></span> Jump into any open challenges on the products that interest you.
+        <span class="lead"><strong>Start</strong><br/></span> Jump into any open challenges on the products that interest you.
       </div>
       <div class="col-md-2">
-        <span class="lead"><strong>2.</strong></span> Earn App Coins for completing the bounty or sharing your experience in the discussion
+        <span class="lead"><strong>Earn</strong><br/></span> Earn App Coins for completing the bounty or sharing your experience in the discussion
       </div>
       <div class="col-md-2">
-        <span class="lead"><strong>3.</strong></span> Share in the product's success when monthly revenue is split amongst all those with App Coins.
+        <span class="lead"><strong>Share</strong><br/></span> Share in the product's success when monthly revenue is split amongst all those with App Coins.
       </div>
     </div>
   </div>
@@ -33,10 +33,10 @@
       <div class="col-md-12">
         <div class="page-header">
           <h2>
-            All open <span class="text-primary">#<%= params[:filter]%></span> challenges for Wedenesday, August 27th
+            All open <span class="text-primary">#<%= params[:filter]%></span> challenges for <%= l Date.today, format: :month %>
           </h2>
           <ul class="nav nav-pills">
-            <% @filters.each do |f| %>
+            <% @filters.select{|f| f[:count] > 0}.each do |f| %>
               <li class="<%= 'active' if params[:filter] == f[:slug] %>">
                 <a href="<%= discover_path(:bounties, filter: f[:slug]) %>">
                   <%= f[:label] %> <span class="badge badge-subtle"><%= f[:count] %></span>
