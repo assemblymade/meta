@@ -1,32 +1,9 @@
 @import 'variables',
         'bootstrap',
+        'mixins/*',
         'base/*',
         'components/*',
         'slop';
-
-a {
-  cursor: pointer;
-}
-
-.fixed-bottom {
-  z-index: 9999;
-  position: fixed;
-  bottom: 0;
-
-  .btn {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-}
-
-.fixed-bottom-right {
-  right: 30px;
-}
-
-.fixed-top {
-  position: fixed;
-  top: 0;
-}
 
 
 .hide-long-links {

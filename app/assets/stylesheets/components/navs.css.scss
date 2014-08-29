@@ -15,19 +15,6 @@
   }
 }
 
-.nav-pills-centered {
-  text-align: center;
-  display: inline-block;
-
-  > li {
-    display: inline;
-  }
-
-  > li > a {
-    float: left;
-  }
-}
-
 .nav-tabs {
   > li {
     > a {
@@ -37,8 +24,6 @@
 }
 
 .nav-tabs {
-  // border-bottom-width: 0;
-
   > li {
     margin-bottom: 0;
 
@@ -68,18 +53,9 @@
   }
 }
 
-.nav-stacked > li + li {
-  margin-top: 0;
-}
-
-.nav-stacked > li:last-child > a {
-  border-radius: 0 0 $border-radius-base $border-radius-base;
-}
-
-
 .nav-sidebar {
   margin-bottom: $line-height-computed;
-  font-size: $font-size-small;
+  border-right: 1px solid $brand-divider;
 
   > li {
     border-top: none;
@@ -87,21 +63,19 @@
 
   > li > a {
     padding: $padding-small-vertical $padding-small-horizontal;
-    color: $gray-dark;
+    color: $gray-light;
   }
 
   > li {
     &:not(.active) a:hover {
-      background-color: rgba($gray-light, .3);
-      border-radius: $border-radius-base;
+      background-color: $brand-shadow;
     }
   }
 
   > .active {
     background-color: white;
     font-weight: bold;
-    box-shadow: 0 1px 0 0 $brand-divider;
-    border-radius: $border-radius-base;
+    background-color: $component-active-bg;
 
     > a {
       color: $brand-primary;

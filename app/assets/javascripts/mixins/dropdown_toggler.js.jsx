@@ -3,7 +3,7 @@
 (function() {
   var DropdownTogglerMixin = {
     render: function() {
-      var classes = ['icon', 'navbar-icon', this.props.iconClass];
+      var classes = ['icon', this.props.iconClass];
       var total = this.badgeCount();
       var badge = null;
 

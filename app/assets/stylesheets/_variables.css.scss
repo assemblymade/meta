@@ -6,7 +6,7 @@ $blue:          #428bca;
 $green:         #5cb85c;
 $cyan:          #5bc0de;
 $yellow:        #f0ad4e;
-$red:           #FF4400;
+$red:           desaturate(#FF4400, 30%);
 
 $facebook:      #3B5998;
 $twitter:       #55ACEE;
@@ -39,7 +39,7 @@ $brand-shadow:   rgba(black, 0.05);
 
 $brand-coins:    $yellow;
 
-$body-bg:       $brand-bg;
+$body-bg:       white;
 $text-color:    $black;
 
 

@@ -27,7 +27,7 @@ var Avatar = require('./avatar.js.jsx');
             <TitleNotificationsCount />
           </li>
 
-          <li className="navbar-item-muted">
+          <li>
             <DropdownNewsFeedToggler
                 iconClass='icon-bell'
                 href='#stories'
@@ -39,7 +39,7 @@ var Avatar = require('./avatar.js.jsx');
                 editUserPath={this.props.editUserPath} />
           </li>
 
-          <li className="navbar-item-muted">
+          <li>
             <ChatNotificationsToggler
               iconClass='icon-bubbles'
               href='#notifications'
