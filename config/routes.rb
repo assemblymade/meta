@@ -182,6 +182,7 @@ ASM::Application.routes.draw do
     resources :products, only: [] do
       get :info
       get :workers
+      get :core_team
       namespace :chat do
         resources :comments, only: [:create]
       end
