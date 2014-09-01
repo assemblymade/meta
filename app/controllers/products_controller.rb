@@ -90,11 +90,13 @@ class ProductsController < ProductController
 
   def follow
     @product.watch!(current_user)
+
     Activities::Follow.publish!(
       actor: current_user,
       subject: @product,
       target: @product
     )
+
     render nothing: true, :status => :ok
   end
 

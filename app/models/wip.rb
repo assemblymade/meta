@@ -220,8 +220,12 @@ class Wip < ActiveRecord::Base
     Wip.reset_counters(self.id, :events)
     Wip.reset_counters(self.id, :comments)
 
+    # FIXME: (pletcher) A call to #watch! here was causing users to follow a product
+    #        just by posting in that product's chat. I just removed that call,
+    #        but #watch! was being called twice, and I couldn't quite identify
+    #        how the calls were coming in. We really need code coverage around this stuff,
+    #        but the watching system as it stands is somewhat opaque.
     event.wip.watch!(event.user)
-    watch!(event.user)
   end
 
   def vote_added(vote)

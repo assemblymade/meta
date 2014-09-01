@@ -26,8 +26,8 @@ class CommentsController < ProductController
           target: @wip,
           socket_id: params[:socket_id]
         )
-        @product.auto_watch!(current_user)
 
+        @product.auto_watch!(current_user)
         @event.notify_users!(@wip.followers)
       end
 
