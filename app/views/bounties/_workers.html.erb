@@ -1,0 +1,20 @@
+<div style="padding-top: 10px; padding-bottom: 30px">
+  <% if workers.any? %>
+    <% workers.each_with_index do |working, i| %>
+      <% if working.user == current_user %>
+        You
+      <% else %>
+        <%= avatar_tag(working.user, 18) %>
+        <%= user_link_username(working.user, class: 'text-subtle-link') %>
+      <% end %>
+      <%= inline_sentence(i, workers.size) %>
+    <% end %>
+    <% if workers.size == 1 && workers.first.user == current_user %>
+      started work on this since <time class="timestamp" dateTime="<%= workers.map(&:created_at).max.iso8601 %>"></time>.
+    <% else %>
+      <%= pluralize_text(workers.size, 'is', 'are')%>
+      working on this since <time class="timestamp" dateTime="<%= workers.map(&:created_at).max.iso8601 %>"></time>.
+      Help them by adding your thoughts to the discussion or claim the bounty if you want to help with the work too.
+    <% end %>
+  <% end %>
+</div>

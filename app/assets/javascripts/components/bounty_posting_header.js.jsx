@@ -65,13 +65,11 @@
     },
 
     togglePopover: function() {
-      console.log('toggled')
       this.setState({popoverShown: !this.state.popoverShown })
       return false
     },
 
     handleHide: function() {
-      console.log('hide')
       this.setState({popoverShown: false})
     }
   })

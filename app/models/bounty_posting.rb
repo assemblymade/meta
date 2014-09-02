@@ -18,7 +18,10 @@ class BountyPosting < ActiveRecord::Base
   end
 
   def self.slots_used(product)
-    joins(:bounty).where('wips.product_id = ?', product.id).count
+    joins(:bounty).
+      where('wips.product_id = ?', product.id).
+      where('wips.closed_at is null').
+      count
   end
 
   def ends_at
