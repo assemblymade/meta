@@ -23,10 +23,7 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
   end
 
   def partner_of
-    Product.
-       joins('inner join transaction_log_entries tle on tle.product_id = products.id').
-       group('products.name').
-       where('wallet_id = ?', object.id).pluck(:name)
+    object.partnerships.pluck(:name)
   end
 
   def following

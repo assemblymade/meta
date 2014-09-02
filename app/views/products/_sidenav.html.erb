@@ -73,19 +73,21 @@
     </li>
   <% end %>
 
-  <li class="<%= nav_active_class(:projects) %>">
-    <a href="<%= product_projects_path(product) %>">
-      <span class="icon icon-folder icon-left"></span>
-      Projects
-    </a>
-  </li>
+  <% if partner?(product) %>
+    <li class="<%= nav_active_class(:projects) %>">
+      <a href="<%= product_projects_path(product) %>">
+        <span class="icon icon-folder icon-left"></span>
+        Projects
+      </a>
+    </li>
 
-  <li class="<%= nav_active_class(:bounties) %>">
-    <a href="<%= product_wips_path(product) %>">
-      <span class="icon icon-trophy icon-left"></span>
-      Bounties
-    </a>
-  </li>
+    <li class="<%= nav_active_class(:bounties) %>">
+      <a href="<%= product_wips_path(product) %>">
+        <span class="icon icon-trophy icon-left"></span>
+        Bounties
+      </a>
+    </li>
+  <% end %>
 
   <li class="<%= nav_active_class(:discussions) %>">
     <a href="<%= product_discussions_path(product) %>">
@@ -117,5 +119,5 @@
       </a>
     </li>
   <% end %>
-  
+
 </ul>

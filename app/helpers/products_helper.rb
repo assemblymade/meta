@@ -47,4 +47,8 @@ module ProductsHelper
     %Q{window.open(\\"https://twitter.com/intent/tweet?text=#{text}&url=\\" + window.location)}
   end
 
+  def partner?(product)
+    current_user && current_user.partnerships.find_by(id: product.id)
+  end
+
 end
