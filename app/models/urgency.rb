@@ -2,7 +2,7 @@ class Urgency
   attr_reader :label, :multiplier
 
   def self.find(multiplier)
-    all.find{|u| u.multiplier == multiplier }.tap{|u| raise ActiveRecord::RecordNotFound if u.nil? }
+    all.find{|u| u.multiplier == multiplier }
   end
 
   def initialize(options)

@@ -189,6 +189,7 @@ ASM::Application.routes.draw do
       end
       resources :projects, only: [:create]
       resources :potential_users, controller: 'subscribers', only: [:create, :destroy]
+      resources :bounty_postings, only: [:create]
     end
 
     resources :textcompletes, only: [:index]

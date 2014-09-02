@@ -12,7 +12,6 @@ class Task < Wip
   has_many :workers, :through => :wip_workers, :source => :user
 
   validates :deliverable, presence: true
-  validates :multiplier, inclusion: { in: Urgency.multipliers }
   validate :multiplier_not_changed
 
   before_save :update_trending_score

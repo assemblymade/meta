@@ -1,6 +1,6 @@
 class CreateBountyPostings < ActiveRecord::Migration
   def change
-    create_table :bounty_postings do |t|
+    create_table :bounty_postings, id: :uuid do |t|
       t.uuid :bounty_id,      null: false
       t.uuid :poster_id,      null: false
 

@@ -24,6 +24,7 @@ class Product < ActiveRecord::Base
 
   has_many :assets
   has_many :auto_tip_contracts
+  has_many :bounty_postings
   has_many :chat_rooms
   has_many :completed_missions
   has_many :contract_holders

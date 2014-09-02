@@ -32,15 +32,7 @@
 
         <h3 class="alpha text-muted" style="font-weight: 400; line-height: 1;">
           <%= @product.name %>
-          <% if @product.stealth? %>
-            <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;">Stealth</span>
-          <% end %>
-          <% if @breadcrumb.present? %>
-            <span class="icon icon-chevron-right" style="color: #c6ccd2; font-size: 16px; vertical-align: middle;"></span>
-            <a style="color: #c6ccd2;" href="<%= @breadcrumb[:url]%>">
-              <%= @breadcrumb[:text] %>
-            </a>
-          <% end %>
+          <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;"><%= @product.stage %></span>
         </h3>
 
         <div class="sheet">

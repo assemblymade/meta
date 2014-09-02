@@ -26,7 +26,10 @@ class DiscoverController < ApplicationController
       f[:count] = BountyPosting.tagged(f[:slug]).count
     end
 
-    @postings = BountyPosting.tagged(filter)
+    @postings = BountyPosting.joins(bounty: :product).tagged(filter)
+    if slug = params[:product]
+      @postings = @postings.where('products.slug = ?', slug)
+    end
 
     @postings = @postings.group_by{|p| p.bounty.product }
   end
