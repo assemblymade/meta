@@ -1,15 +1,12 @@
-.badge {
-  // The extra top padding is to push Solitaire to its baseline.
-  padding: 3px 5px 2px 5px;
-}
-
 .badge-notification {
   position: absolute;
-  top: 8px;
+  top: 6px;
   right: 6px;
-  padding: 2px 5px;
-  font-size: 12px;
+  padding: 0;
+  font-size: 11px;
   background-color: $red;
-  border: 2px solid $navbar-inverse-bg;
   border-radius: 50%;
+  text-align: center;
+  width: 20px;
+  line-height: 20px;
 }
