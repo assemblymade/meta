@@ -1,10 +1,4 @@
 .jumbotron {
-  text-align: center;
-
-  @media screen and (min-width: $screen-sm-min) {
-    h1,
-    .h1 {
-      font-size: $jumbotron-font-size;
-    }
-  }
+  padding-left: 0;
+  padding-right: 0;
 }

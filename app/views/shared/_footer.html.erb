@@ -1,56 +1,49 @@
-<div class="footer">
-  <div class="container">
-    <div class="pull-left">
-      <a class="brand footer-brand" href="<%= root_path %>">
-        <i class="icon icon-logo-filled" style="font-size: 20px; position: relative; top: -2px"></i>
-        Assembly
-      </a>
-    </div>
-    <div class="pull-right">
-      <ul class="list-inline footer-nav">
-        <li>
-          <a href="<%= discover_path %>">Discover</a>
-        </li>
-        <li>
-          <a href="<%= getting_started_path %>">Getting Started</a>
-        </li>
-        <li>
-          <a href="<%= faq_path %>">FAQ</a>
-        </li>
-        <li>
-          <a href="<%= blog_path %>">Blog</a>
-        </li>
-        <li>
-          <a href="#" data-helpful="assembly">Contact</a>
-          <script src="//assets.helpful.io/assets/widget.js"></script>
-        </li>
-        <li>
-          <a href="<%= tos_path %>">Terms</a>
-        </li>
-      </ul>
-    </div>
-  </div>
+<div class="container">
+  <div class="footer">
+    <div class="row">
+      <div class="col-md-2">
+        <span class="icon icon-logo-filled text-large"></span>
+        <span class="sr-only">Assembly</span>
+      </div>
 
-  <div class="container">
-    <div class="pull-left">
-      <ul class="list-inline">
-        <li>
-          <a class="fb-like" data-action="like" data-colorscheme="light" data-layout="button_count" href="https://www.facebook.com/assemblymade" style="display:block" vertical-align="top">
-            Facebook
-          </a>
-        </li>
-        <li style="height:20px" vertical-align="top">
-          <a class="twitter-follow-button" data-show-count="false" href="https://twitter.com/asm" style="display:block" vertical-align="top">
-            @asm
-          </a>
-        </li>
-      </ul>
-    </div>
+      <div class="col-md-2">
+        <h5 class="alpha">Assembly</h5>
+        <ul class="list-unstyled">
+          <li><a href="<%= about_path %>">About</a></li>
+          <li><a href="<%= product_path('meta') %>">Meta</a></li>
+          <li><a href="<%= blog_path %>">Blog</a></li>
+        </ul>
+      </div>
 
-    <div class="pull-right">
-      <p>
-        &copy; 2013&ndash;2014 Assembly Made, Inc.
-      </p>
-    </div>
-  </div>
-</div>
+      <div class="col-md-2">
+        <h5 class="alpha">Help</h5>
+        <ul class="list-unstyled">
+          <li><a href="<%= getting_started_path %>">Getting Started</a></li>
+          <li><a href="<%= faq_path %>">FAQs</a></li>
+          <li><a href="<%= tos_path %>">Terms</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-2">
+        <h5 class="alpha">Discover</h5>
+        <ul class="list-unstyled">
+          <li><a href="<%= discover_path %>">Popular</a></li>
+          <li><a href="<%= discover_path(:trending) %>">Trending</a></li>
+          <li><a href="<%= discover_path(:recently_launched) %>">New</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-2 col-md-offset-2">
+        <h5 class="alpha">Say hello!</h5>
+        <ul class="list-unstyled">
+          <li><a href="https://twitter.com/asm">Twitter</a></li>
+          <li><a href="https://facebook.com/assemblymade">Facebook</a></li>
+          <li>
+            <a href="mailto:assembly@helpful.io" data-helpful="assembly">Email</a>
+            <script src="https://assets.helpful.io/assets/widget.js"></script>
+          </li>
+        </ul>
+      </div>
+    </div><!-- .row -->
+  </div><!-- .footer -->
+</div><!-- .container -->

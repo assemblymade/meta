@@ -70,7 +70,7 @@ var NotificationsMixin = require('../mixins/notifications');
 
     'newsFeed:markAllAsRead': function() {
       var unread = _.filter(_stories, function(story) {
-        return story.last_read_at === 0;
+        return story && story.last_read_at === 0;
       });
 
       var self = this;

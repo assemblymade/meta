@@ -22,7 +22,7 @@ var Avatar = require('./avatar.js.jsx');
 
     render: function() {
       return (
-        <ul className="dropdown-menu" style={{'min-width': '380px' }}>
+        <ul className="dropdown-menu" style={{ 'min-width': '380px', width: '380px' }}>
           <li style={{ 'overflow-y': 'scroll' }} ref="spinner">
             {this.state.stories ? this.rows(this.state.stories) : null}
           </li>
@@ -136,7 +136,13 @@ var Avatar = require('./avatar.js.jsx');
       var body_preview = this.state.story.body_preview;
 
       return (
-        <span className='text-muted' style={{ 'text-overflow': 'ellipsis', 'overflow': 'hidden', 'white-space':'nowrap', 'display': 'inline-block', 'width': 290}}>
+        <span className='text-muted' style={{
+          'text-overflow': 'ellipsis',
+          'overflow': 'hidden',
+          'white-space':'nowrap',
+          'display': 'inline-block',
+          'width': "280px"
+        }}>
           {this.ellipsis(body_preview)}
         </span>
       );
@@ -159,10 +165,10 @@ var Avatar = require('./avatar.js.jsx');
       return (
         <a className={'list-group-item list-group-item-condensed ' + classes}
             href={this.state.story.url}
-            style={{ 'font-size': '14px' }}
+            style={{ 'font-size': '14px', 'border': 'none' }}
             onClick={this.state.story.last_read_at ? null : this.markAsRead}>
 
-          <div className="row">
+          <div className="row" style={{ 'margin': '0px', 'max-width': '365px' }}>
             <div className="col-md-1">
               <Avatar user={this.actors()[0]} size={18} />&nbsp;
             </div>
@@ -170,10 +176,6 @@ var Avatar = require('./avatar.js.jsx');
             <div className="col-md-10">
               <strong>{actors}</strong> {this.body()}<br/>
               {this.preview()}
-            </div>
-
-            <div className="col-md-1">
-              {this.markAsReadButton()}
             </div>
           </div>
         </a>

@@ -8,7 +8,7 @@ class ChatRoom < ActiveRecord::Base
   default_scope -> { where(deleted_at: nil) }
 
   def self.general
-    find_by!(slug: 'general')
+    find_by(slug: 'general')
   end
 
   def key

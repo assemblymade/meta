@@ -225,9 +225,6 @@ class Wip < ActiveRecord::Base
   def event_added(event)
     Wip.reset_counters(self.id, :events)
     Wip.reset_counters(self.id, :comments)
-
-    event.wip.watch!(event.user)
-    watch!(event.user)
   end
 
   def vote_added(vote)

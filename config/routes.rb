@@ -29,7 +29,6 @@ ASM::Application.routes.draw do
   get '/webhooks/pusher' => redirect('/discover')
 
   # Internal
-  get '/styleguide' => 'styleguide#index'
   get '/playground/:action', controller: 'playground'
 
   # Legacy
@@ -184,6 +183,12 @@ ASM::Application.routes.draw do
     resources :products, only: [] do
       get :info
       get :workers
+
+      get :core_team
+      namespace :chat do
+        resources :comments, only: [:create]
+      end
+
       resources :bounties, only: [] do
         resources :offers, only: [:create, :show]
       end

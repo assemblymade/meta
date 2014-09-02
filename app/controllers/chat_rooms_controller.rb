@@ -5,9 +5,10 @@ class ChatRoomsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to chat_room_path('general') }
       format.json {
-        @rooms = [ChatRoom.general] +
+        @rooms = (
+          [ChatRoom.general] +
           ChatRoom.where(product_id: current_user.followed_product_ids).order(:slug)
-
+        ).compact
 
         render json: {
           chat_rooms: ActiveModel::ArraySerializer.new(@rooms)

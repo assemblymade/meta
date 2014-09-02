@@ -14,8 +14,7 @@
   var MEMBER_VIEW_REFRESH_PERIOD = 60 * 1000; // 1 minute
 
   var MembersView = React.createClass({
-     loadMembersFromServer: function() {
-       console.log('loading', this.props.url)
+    loadMembersFromServer: function() {
       $.ajax({
         url: this.props.url,
         dataType: 'json',

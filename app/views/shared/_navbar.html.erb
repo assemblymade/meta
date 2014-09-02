@@ -1,4 +1,4 @@
-<div class="navbar navbar-inverse navbar-static-top">
+<div class="navbar navbar-default navbar-static-top omega">
   <div class="container-fluid">
 
     <div class="navbar-header">
@@ -8,13 +8,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="text-brand navbar-brand" href="<%= root_path %>">
-        <span class="brand">
-          <span class="icon icon-logo-filled"></span>
-          <% if !user_signed_in? %>
-            Assembly
-          <% end %>
-        </span>
+      <a class="navbar-brand" href="<%= root_path %>">
+        <span class="icon icon-logo-filled"></span>
+        <span class="sr-only">Assembly</span>
       </a>
     </div>
 
