@@ -23,7 +23,6 @@ class Product < ActiveRecord::Base
 
   has_one :product_trend
 
-  has_many :activities
   has_many :assets
   has_many :auto_tip_contracts
   has_many :completed_missions
@@ -44,8 +43,7 @@ class Product < ActiveRecord::Base
   has_many :showcases
   has_many :status_messages
   has_many :stream_events
-  has_many :subscribers, :through => :subscriptions, :source => :user
-  has_many :subscriptions
+  has_many :subscribers
   has_many :tasks
   has_many :team_memberships
   has_many :transaction_log_entries
@@ -152,6 +150,11 @@ class Product < ActiveRecord::Base
 
   def for_profit?
     not NON_PROFIT.include?(slug)
+  end
+
+  def partners
+    entries = TransactionLogEntry.where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
+    User.where(id: entries.keys)
   end
 
   def has_metrics?
@@ -320,15 +323,40 @@ class Product < ActiveRecord::Base
     slug || id
   end
 
+  # following
   def watch!(user)
-    Watching.watch!(user, self)
+    transaction do
+      Watching.watch!(user, self)
+      Subscriber.unsubscribe!(self, user)
+    end
   end
 
+  # not following, will receive announcements
   def announcements!(user)
-    Watching.announcements!(user, self)
+    transaction do
+      Watching.unwatch!(user, self)
+      Subscriber.upsert!(self, user)
+    end
   end
 
-  def following?(user)
+  # not following
+  def unwatch!(user)
+    transaction do
+      Watching.unwatch!(user, self)
+      Subscriber.unsubscribe!(self, user)
+    end
+  end
+
+  # only people following the product, ie. excludes people on announcements only
+  def followers
+    watchers
+  end
+
+  def follower_ids
+    watchings.pluck(:user_id)
+  end
+
+  def followed_by?(user)
     Watching.following?(user, self)
   end
 
@@ -336,19 +364,17 @@ class Product < ActiveRecord::Base
     Watching.auto_watch!(user, self)
   end
 
-  def unwatch!(user)
-    Watching.unwatch!(user, self)
-  end
-
   def watching?(user)
     Watching.watched?(user, self)
   end
 
   def watching_state(user)
-    if Watching.following?(user, self)
-      return 'following'
-    elsif Watching.announcements?(user, self)
-      return 'announcements'
+    if user
+      if Watching.following?(user, self)
+        return 'following'
+      elsif subscribers.find_by(user_id: user.id)
+        return 'announcements'
+      end
     end
 
     'not watching'
@@ -373,10 +399,6 @@ class Product < ActiveRecord::Base
     "chat_#{id}"
   end
 
-  def chat_watcher_ids
-    watchings.subscribed.pluck('watchings.user_id')
-  end
-
   def average_bounty
     bounties = TransactionLogEntry.minted.
       where(product_id: product.id).
@@ -395,6 +417,10 @@ class Product < ActiveRecord::Base
 
   def update_partners_count_cache
     self.partners_count = ownership.user_cents.size
+  end
+
+  def update_watchings_count!
+    update! watchings_count: (subscribers.count + followers.count)
   end
 
   # missions
@@ -477,7 +503,7 @@ class Product < ActiveRecord::Base
   protected
 
   def subscribe_owner_to_notifications
-    subscriptions.create!(user: user)
+    subscribers.create!(user: user)
   end
 
   def add_to_event_stream

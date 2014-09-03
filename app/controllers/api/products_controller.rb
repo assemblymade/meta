@@ -33,9 +33,16 @@ module Api
       respond_with @workers
     end
 
+    def core_team
+      @product = Product.find_by!(slug: params[:product_id])
+      @user = User.find_by!(authentication_token: params[:token])
+
+      respond_with authorized: @product.core_team.include?(@user)
+    end
+
     def set_access_control_headers
       headers['Access-Control-Allow-Origin'] = '*'
-      headers['Access-Control-Allow-Methods'] = 'POST, DELETE'
+      headers['Access-Control-Allow-Methods'] = 'GET, POST, DELETE'
       headers['Access-Control-Request-Method'] = '*'
       headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept'
     end

@@ -1,8 +1,15 @@
 .toggler {
   display: inline-table;
 
-  // font-size: $font-size-small;
-  // line-height: $line-height-computed;
+  border: 1px solid $brand-divider;
+  border-radius: $border-radius-base;
+  background-color: $brand-bg;
+
+  cursor: pointer;
+
+  &:hover {
+    border-color: $brand-border;
+  }
 
   > :first-child {
     border-radius: $border-radius-base 0 0 $border-radius-base;
@@ -19,40 +26,33 @@
   > :last-child.toggler-badge {
     border-left: none;
   }
+
 }
 
 .toggler-btn,
 .toggler-badge {
   display: table-cell;
+  padding: (3px - 1px) 10px;
+}
 
-  .icon {
-    top: -1px;
+.toggler-btn {
+  color: $brand-border;
+  font-weight: bold;
+
+  &:hover {
+    color: $brand-border;
   }
 }
 
 .toggler-badge {
-  @extend .btn;
-  @extend .btn-default;
-  background-color: transparent;
-  color: $gray;
-
+  color: white;
+  background-color: $brand-divider;
+  font-weight: bold;
   &:hover {
-    background-color: transparent;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: none;
-    }
+    color: white;
   }
 }
 
-.toggler-sm {
-  .toggler-btn,
-  .toggler-badge {
-    @extend .btn-sm;
-  }
+.toggler-primary {
+  @include toggler-variant($brand-primary, lighten($brand-primary, 40%), lighten($brand-primary, 20%));
 }

@@ -26,7 +26,7 @@ class PostsController < ProductController
     @post.author = current_user
     @post.save
 
-    PotentialUser.where(product_id: @product.id).each do |email|
+    Subscriber.where(product_id: @product.id).each do |email|
       PostMailer.delay(queue: 'mailer').mailing_list(@post.id, email)
     end
 

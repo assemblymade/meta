@@ -1,0 +1,207 @@
+/** @jsx React.DOM */
+//= require xhr
+//= require components/admin/pagination_links
+//= require components/timestamp
+//= require underscore
+//= require lib/parseuri
+//= require nprogress
+
+(function() {
+  var ProductRankings = React.createClass({
+    getInitialState: function() {
+      var q = parseUri(window.location).queryKey
+
+      var s = {
+        page: q.page || 1,
+        sortCol: q.sort || 'created_at',
+        sortAsc: (q.direction === 'asc'),
+        showRanked: (q.showranked === 'true'),
+        products: {}
+      }
+
+      return s
+    },
+
+    componentDidMount: function() {
+      this.fetchProducts(this.state.page)
+    },
+
+    render: function() {
+      return <div>
+        <div className="checkbox">
+          <label>
+            <input type="checkbox" defaultChecked={this.state.showRanked} onChange={this.handleFilterChanged} /> Show ranked products
+          </label>
+        </div>
+
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <TableSortHeader width={150} onClick={this.handleSortToggled('created_at')} asc={this.sortOrder('created_at')} label="Created" />
+              <TableSortHeader width={150} onClick={this.handleSortToggled('name')} asc={this.sortOrder('name')} label="Name" />
+              <TableSortHeader width={300} onClick={this.handleSortToggled('pitch')} asc={this.sortOrder('pitch')} label="Pitch" />
+              <TableSortHeader width={150} onClick={this.handleSortToggled('last_activity_at')} asc={this.sortOrder('last_activity_at')} label="Updated" />
+              <TableSortHeader width={150} onClick={this.handleSortToggled('watchings_count')} asc={this.sortOrder('watchings_count')} label="Followers" align="right" />
+              <TableSortHeader width={150} onClick={this.handleSortToggled('quality')} asc={this.sortOrder('quality')} label="Quality Score" align="right" />
+            </tr>
+          </thead>
+
+          <tbody>
+            {_.values(this.state.products).map(function(product) {
+              return ProductRow(React.addons.update(product, {
+                key: { $set: product.id },
+                onChange: { $set: this.handleQualityChanged(product.id) }
+              }))
+            }.bind(this))}
+          </tbody>
+        </table>
+
+        <PaginationLinks page={this.state.page} pages={this.props.totalPages} onPageChanged={this.handlePageChanged} />
+      </div>
+    },
+
+    handleQualityChanged: function(productId) {
+      return function(quality) {
+        var products = this.state.products
+        products[productId].editState = 'saving'
+        products[productId].quality = quality
+        this.setState({
+          products: products
+        })
+
+        window.xhr.put('/admin/products/' + productId, { quality: quality }, function() {
+          products[productId].editState = 'saved'
+          this.setState({
+            products: products
+          })
+        }.bind(this))
+      }.bind(this)
+    },
+
+    handlePageChanged: function(page) {
+      this.fetchProducts(page)
+      document.body.scrollTop = document.documentElement.scrollTop = 0
+    },
+
+    handleFilterChanged: function(e) {
+      this.setState({showRanked: e.target.checked}, function() {
+        this.fetchProducts(this.state.page)
+      }.bind(this))
+    },
+
+    handleSortToggled: function(sortCol) {
+      return function(e) {
+        this.setState({
+          sortCol: sortCol,
+          sortAsc: !this.state.sortAsc
+        }, this.fetchProducts)
+      }.bind(this)
+    },
+
+    fetchProducts: function(page) {
+      page = page || this.state.page
+      var sortDir = this.state.sortAsc ? 'asc' : 'desc'
+      var url = '/admin/products?page=' + page +
+        '&sort=' + this.state.sortCol +
+        '&direction=' + sortDir +
+        '&showranked=' + this.state.showRanked
+
+      window.history.replaceState({}, document.title, url)
+      NProgress.start();
+      window.xhr.get(url, function(err, responseText) {
+        var products = {}
+        JSON.parse(responseText).map(function(p){
+          products[p.id] = p
+        })
+        this.setState({products: products, page: page})
+        NProgress.done()
+      }.bind(this))
+    },
+
+    sortOrder: function(col) {
+      return this.state.sortCol == col ? this.state.sortAsc : null
+    }
+  })
+
+  var ProductRow = React.createClass({
+    getInitialState: function() {
+      return {
+        pendingQualityScore: null,
+        dirty: false
+      }
+    },
+
+    render: function() {
+      var bgColor = '#fff'
+      if (this.state.pendingQualityScore || this.props.editState == 'saving') {
+        bgColor = '#fcf8e3'
+      } else if (this.props.editState == 'saved') {
+        bgColor = '#dff0d8'
+      }
+
+      return <tr>
+        <td><Timestamp time={this.props.created} /></td>
+        <td>
+          <strong>
+            <a href={this.props.url} target="_blank" tabIndex="-1">{this.props.name}</a>
+          </strong>
+        </td>
+        <td>{this.props.pitch}</td>
+        <td><Timestamp time={this.props.last_activity_at} /></td>
+        <td className="text-right">{this.props.watchings_count}</td>
+        <td className="text-right">
+          <input type="text" className="form-control" value={this.state.dirty ? this.state.pendingQualityScore : this.props.quality} style={{'background-color': bgColor}}
+            onChange={this.handleChange}
+            onBlur={this.persistChange}
+          />
+        </td>
+      </tr>
+    },
+
+    handleChange: function(e) {
+      this.setState({
+        dirty: true,
+        pendingQualityScore: e.target.value
+      })
+    },
+
+    persistChange: function() {
+      if (this.state.dirty && (this.state.pendingQualityScore != this.props.quality)) {
+        this.props.onChange(this.state.pendingQualityScore)
+        this.setState({pendingQualityScore: null, dirty: false})
+      }
+    }
+  })
+
+  var SortArrow = React.createClass({
+    render: function() {
+      if (this.props.asc === false) {
+        return <span className="caret" />
+      } else if (this.props.asc === true) {
+        return <span className="dropup"><span className="caret" /></span>
+      }
+      return <span />
+    }
+  })
+
+  var TableSortHeader = React.createClass({
+    render: function() {
+      var classes = React.addons.classSet({
+        'text-right': (this.props.align == 'right')
+      });
+
+      return <th style={{"width": this.props.width}} className={classes}>
+        <a href="#" onClick={this.props.onClick} className="text-subtle-link">
+          {this.props.label}
+          <SortArrow asc={this.props.asc} />
+        </a>
+      </th>
+    }
+  })
+
+  if (typeof module !== 'undefined') {
+    module.exports = Avatar;
+  }
+
+  window.ProductRankings = ProductRankings;
+})();

@@ -11,11 +11,11 @@
     render: function() {
       var size = this.props.size && this.props.size.toString();
 
-      return <img className="avatar img-circle" height={size} src={this.avatarUrl()} width={size} />;
+      return <img className="avatar img-circle" src={this.avatarUrl()} height={size} width={size} />;
     },
 
     avatarUrl: function() {
-      if (!this.props.user || this.props.alwaysDefault) {
+      if (!this.props.user || !this.props.user.avatar_url || this.props.alwaysDefault) {
         return '/assets/avatars/default.png';
       }
 

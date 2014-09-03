@@ -6,9 +6,13 @@
 
   <div class="col-sm-10 col-xs-10">
     <strong>
-      <a href="<%= product_wip_path(result.product.slug, result.number) %>">
+      <% if result.number %>
+        <a href="<%= product_wip_path(result.product.slug, result.number) %>">
+          <%= sanitize (result.try(:highlight).try(:title) ? result.highlight.title.join.html_safe : result.title), tags: %w(mark) %>
+        </a>
+      <% else %>
         <%= sanitize (result.try(:highlight).try(:title) ? result.highlight.title.join.html_safe : result.title), tags: %w(mark) %>
-      </a>
+      <% end %>
     </strong>
     <span class="pull-right small text-muted">#<%= result.number %></span>
 

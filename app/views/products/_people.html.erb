@@ -33,7 +33,7 @@
 
 <h6 class="panel-title">Followers</h6>
 
-<% if @product.watchers.empty? %>
+<% if @product.followers.empty? %>
   <p class="omega">No contributors yet.</p>
 <% else %>
   <% cache([@product.slug, 'contributors'], expires_in: 1.day) do %>

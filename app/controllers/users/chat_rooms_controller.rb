@@ -2,9 +2,7 @@ class Users::ChatRoomsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @products = Product.joins(:watchings).includes(:main_thread).
-      where('watchings.user_id = ?', current_user.id).
-      where('watchings.subscription = ?', true)
+    @products = current_user.followed_products
 
     render json: {
       chat_rooms: ActiveModel::ArraySerializer.new(@products, each_serializer: ChatRoomSerializer),

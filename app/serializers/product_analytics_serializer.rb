@@ -1,12 +1,7 @@
 class ProductAnalyticsSerializer < ActiveModel::Serializer
-  attributes :product_id, :product_slug
+  attributes :product_id, :product_slug, :product_name
   attributes :registered_users, :team_members
-  attributes :current_mission
   attributes :status_updated
-
-  def current_mission
-    product.current_mission.try(:id)
-  end
 
   def product_id
     product.id
@@ -16,12 +11,16 @@ class ProductAnalyticsSerializer < ActiveModel::Serializer
     product.slug
   end
 
+  def product_name
+    product.name
+  end
+
   def registered_users
     team_members
   end
 
   def team_members
-    product.watchings.count
+    product.watchings_count
   end
 
   def status_updated

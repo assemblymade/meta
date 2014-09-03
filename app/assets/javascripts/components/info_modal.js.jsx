@@ -30,6 +30,8 @@
         return;
       }
 
+      analytics.track('product.getting_started_modal.view', { product: app.currentAnalyticsProduct().get('product_slug') });
+
       Cookie.createCookie(COOKIE_NAME, true);
 
       $(this.getDOMNode()).modal();
@@ -67,9 +69,17 @@
 
           <hr />
 
-          <a href={this.props.signup_path} className="btn btn-primary btn-block">Start building</a>
+          <a className="btn btn-primary btn-block" style={{ cursor: 'pointer' }} onClick={this.signUp}>Start building</a>
         </Lightbox>
       );
+    },
+
+    signUp: function(e) {
+      e.preventDefault();
+
+      analytics.track('product.getting_started_modal.sign_up', { product: app.currentAnalyticsProduct().get('product_slug') });
+
+      window.location = this.props.signup_path;
     },
 
     what: function() {

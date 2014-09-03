@@ -18,14 +18,14 @@ class WipGroup
         product = o.product
         @products[product] ||= {}
         @products[product][o] ||= []
-        @watchers[product.id] ||= o.watcher_ids
+        @watchers[product.id] ||= o.follower_ids
       when Event::Comment
         if wip = o.wip
           product = wip.product
           @products[product] ||= {}
           @products[product][wip] ||= []
           @products[product][wip] << o
-          @watchers[wip.id] ||= wip.watcher_ids
+          @watchers[wip.id] ||= wip.follower_ids
 
           if mentioned_users = o.mentioned_users
             relevant_mentions = mentioned_users.map(&:username) & @include_mentions

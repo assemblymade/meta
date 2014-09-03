@@ -75,17 +75,11 @@ class Story < ActiveRecord::Base
   # private
 
   def product_subscribers
-    Watching.where(
-      watchable_id: activities.first.subject.product_id,
-      subscription: true
-    ).pluck(:user_id)
+    subjects.first.follower_ids
   end
 
   def wip_subscribers
-    Watching.where(
-      watchable_id: activities.first.subject.wip_id,
-      subscription: true
-    ).pluck(:user_id)
+    subjects.first.wip.follower_ids
   end
 
   def description

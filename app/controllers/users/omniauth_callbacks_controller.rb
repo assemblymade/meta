@@ -12,7 +12,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to after_sign_in_path_for_user
     else
       @user = User.new(
-        avatar_url: auth_hash['info']['image'],
         email: auth_hash['info']['email'],
         extra_data: auth_hash['extra']['raw_info'],
         location: auth_hash['info']['location'],

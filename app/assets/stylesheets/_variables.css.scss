@@ -6,7 +6,7 @@ $blue:          #428bca;
 $green:         #5cb85c;
 $cyan:          #5bc0de;
 $yellow:        #f0ad4e;
-$red:           #d9534f;
+$red:           desaturate(#FF4400, 30%);
 
 $facebook:      #3B5998;
 $twitter:       #55ACEE;
@@ -35,11 +35,11 @@ $brand-muted:   $gray-light;
 $brand-bg:       #FAFAFA;
 $brand-border:   darken($gray-lighter, 10%);
 $brand-divider:  darken($brand-bg, 5%);
-$brand-shadow:   rgba(black, 0.02);
+$brand-shadow:   rgba(black, 0.05);
 
 $brand-coins:    $yellow;
 
-$body-bg:       $brand-bg;
+$body-bg:       white;
 $text-color:    $black;
 
 
@@ -64,15 +64,14 @@ $text-copy: darken($text-copy-bg, 75%);
 
 // Typography
 
-$font-family-sans-serif: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-sans-serif: "Source Sans Pro";
 $font-family-serif:      Tiempos, Georgia, "Times New Roman", Times, serif;
 $font-family-monospace:  "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace;
 $font-family-base:       $font-family-sans-serif;
 
 $font-size-base:  15px;
 $font-size-large: 18px;
-$font-size-small: 14px;
-$font-size-xs:    13px;
+$font-size-small: 13px;
 
 $font-size-h1: 35px;
 $font-size-h2: 28px;
@@ -248,29 +247,29 @@ $container-lg:            $container-large-desktop;
 // Navbar
 
 // Basics of a navbar
-$navbar-height:              50px;
-$navbar-margin-bottom:       0;
+$navbar-height:              $line-height-computed * 2;
+$navbar-margin-bottom:       $line-height-computed;
 $navbar-border-radius:       $border-radius-base;
 $navbar-padding-horizontal:  floor(($grid-gutter-width / 2));
 $navbar-padding-vertical:    (($navbar-height - $line-height-computed) / 2);
 $navbar-collapse-max-height: 340px;
 
-$navbar-default-color:  $gray-dark;
-$navbar-default-bg:     white;
-$navbar-default-border: $brand-border;
+$navbar-default-color:  $gray;
+$navbar-default-bg:     $brand-bg;
+$navbar-default-border: darken($navbar-default-bg, 5%);
 
 // Navbar links
-$navbar-default-link-color:          $gray-darker;
+$navbar-default-link-color:          $gray-light;
 $navbar-default-link-hover-color:    $gray-darker;
-$navbar-default-link-hover-bg:       transparent;
+$navbar-default-link-hover-bg:       rgba(black, .05);
 $navbar-default-link-active-color:   $gray-darker;
 $navbar-default-link-active-bg:      transparent;
 $navbar-default-link-disabled-color: $gray;
 $navbar-default-link-disabled-bg:    transparent;
 
 // Navbar brand label
-$navbar-default-brand-color:       $navbar-default-link-color;
-$navbar-default-brand-hover-color: $navbar-default-link-hover-color;
+$navbar-default-brand-color:       $black;
+$navbar-default-brand-hover-color: $red;
 $navbar-default-brand-hover-bg:    transparent;
 
 // Navbar toggle
@@ -377,7 +376,7 @@ $pager-disabled-color: $pagination-disabled-color;
 // Jumbotron
 
 $jumbotron-padding:       30px;
-$jumbotron-color:         $text-color;
+$jumbotron-color:         $black;
 $jumbotron-bg:            $body-bg;
 $jumbotron-heading-color: inherit;
 $jumbotron-font-size:     48px;
@@ -573,7 +572,7 @@ $thumbnail-caption-padding: 9px;
 
 // Wells
 
-$well-bg:     lighten($body-bg, 3%);
+$well-bg:     $brand-bg;
 $well-border: $brand-border;
 
 

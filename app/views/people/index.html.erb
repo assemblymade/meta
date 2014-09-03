@@ -19,7 +19,7 @@
 
   <% if product_membership.nil? || product_membership.bio.nil? %>
     <div class="sheet-body">
-      <h2 style="font-weight: 300;">Want to help build this, why not introduce yourself?</h2>
+      <h2 style="font-weight: 300;">Want to be part of <%= @product.name %>, why not introduce yourself?</h2>
       <div class="row">
         <div class="col-md-9">
           <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
@@ -82,6 +82,24 @@
       </div>
     </div>
   </div>
+  <% cache @product do %>
+    <div class="row">
+      <div class="col-md-9 hidden-xs">
+        <div className="list-group list-group-breakout list-group-padded">
+          <h4>Followers</h4>
+
+          <% @followers.each do |follower| %>
+            <span style="display: inline-block; margin-bottom: 3px;">
+              <a href="<%= user_path(follower) %>">
+                <img class="avatar img-circle" src="<%= follower.avatar_url %>" height="30px" width="30px" title="@<%= follower.username %>">
+              </a>
+            </span>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
 
 <script>

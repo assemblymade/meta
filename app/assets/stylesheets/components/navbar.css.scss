@@ -1,55 +1,13 @@
-.navbar {
-  font-size: 15px;
-}
-
-.navbar-brand {
-  font-weight: bold;
-  font-family: Solitaire;
-}
-
-.navbar > .container-fluid .navbar-brand {
-  padding: 10px 15px;
-  margin-left: -10px;
+.navbar-brand > .icon {
+  font-size: $line-height-computed;
 }
 
 .navbar-icon {
   font-size: 22px;
 }
 
-.navbar .form-control {
-  font-size: 15px;
-  height: 34px;
-  margin-top: 2px;
+.navbar-form .form-control {
   box-shadow: none;
-}
-
-.navbar-inverse {
-  ::-webkit-input-placeholder { /* WebKit browsers */
-    color: $navbar-inverse-search-placeholder-color;
-  }
-  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color: $navbar-inverse-search-placeholder-color;
-    opacity: 1;
-  }
-  ::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color: $navbar-inverse-search-placeholder-color;
-    opacity: 1;
-  }
-  :-ms-input-placeholder { /* Internet Explorer 10+ */
-    color: $navbar-inverse-search-placeholder-color;
-  }
-
-  .form-control {
-    border-color: $navbar-inverse-search-border;
-    background-color: $navbar-inverse-search-bg;
-    color: $navbar-inverse-search-color;
-
-    &:focus {
-      border-color: $navbar-inverse-search-border-focus;
-      background-color: $navbar-inverse-search-bg-focus;
-      box-shadow: none;
-    }
-  }
 }
 
 .navbar-item-muted.open .navbar-icon {
@@ -62,4 +20,10 @@
   &.glyphicon-highlight {
     color: #fff;
   }
+}
+
+.navbar-product {
+  border-bottom: 1px solid $brand-divider;
+  padding-top: ($navbar-height - 36px) / 2;
+  padding-bottom: ($navbar-height - 36px) / 2;
 }

@@ -9,13 +9,6 @@ var Avatar = require('./avatar.js.jsx');
   var D = CONSTANTS.NOTIFICATION_PREFERENCES_DROPDOWN;
 
   var NotificationPreferencesDropdown = React.createClass({
-    chevron: function() {
-      if (this.state.chevron) {
-        return <span className="icon icon-chevron-down"></span>;
-      }
-
-      return <span style={{ 'margin-right': '7px', 'margin-left': '7px' }} />
-    },
 
     componentWillMount: function() {
       NotificationPreferencesDropdownStore.addChangeListener(this.handleUpdate);
@@ -29,30 +22,16 @@ var Avatar = require('./avatar.js.jsx');
       };
     },
 
-    hideChevron: function() {
-      this.setState({
-        chevron: false
-      });
-    },
-
     render: function() {
       return (
-        <div className="toggler toggler-sm btn-group" onMouseOver={this.showChevron} onMouseOut={this.hideChevron}>
-          <a
-              className={this.buttonClasses(true)}
-              data-toggle="dropdown"
-              style={{ 'margin-bottom': '13px' }}>
+        <div className={this.togglerClasses()}>
+          <a className="toggler-btn" data-toggle="dropdown">
             {this.buttonState()}
-            {this.chevron()}
           </a>
-          <div className="toggler-badge">
-            <a
-                type="button"
-                href={this.props.productWatchersPath}
-                style={{ opacity: '0.5', 'border-top-right-radius': '2px', 'border-bottom-right-radius': '2px' }}>
-              {this.state.productWatchersCount}
-            </a>
-          </div>
+          <a className="toggler-badge" href={this.props.productWatchersPath}>
+            {this.state.productWatchersCount}
+          </a>
+
           <ul
               className="dropdown-menu dropdown-menu-right"
               role="menu"
@@ -118,10 +97,17 @@ var Avatar = require('./avatar.js.jsx');
         case 'following':
           return 'Following';
         case 'announcements':
-          return 'Following announcements only';
+          return 'Following';
         case 'not watching':
           return 'Follow';
       }
+    },
+
+    togglerClasses: function() {
+      return React.addons.classSet({
+        'toggler': true,
+        'toggler-primary': (this.state.selected === 'not watching')
+      })
     },
 
     buttonClasses: function(dropdownToggle) {
@@ -130,7 +116,8 @@ var Avatar = require('./avatar.js.jsx');
         'btn-primary': (this.state.selected === 'not watching'),
         'btn-default': (this.state.selected !== 'not watching'),
         'btn-sm': true,
-        'dropdown-toggle': dropdownToggle
+        'dropdown-toggle': dropdownToggle,
+        'toggler-btn': true
       })
     },
 
@@ -143,7 +130,11 @@ var Avatar = require('./avatar.js.jsx');
     updatePreference: function(item, path) {
       Dispatcher.dispatch({
         action: D.ACTIONS.UPDATE_SELECTED,
-        data: { item: item, path: path, redirectTo: (item == 'following' ? this.props.afterFollowPath : null) }
+        data: {
+          item: item,
+          path: path,
+          redirectTo: (item === 'following' ? this.props.afterFollowPath : null)
+        }
       });
     }
   });

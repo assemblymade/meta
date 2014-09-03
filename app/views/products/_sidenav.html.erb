@@ -53,11 +53,7 @@
     </li>
   <% end %>
 
-</ul>
-
-<hr>
-
-<ul class="nav nav-stacked nav-sidebar">
+  <li><hr></li>
 
   <li class="<%= nav_active_class(:chat) %>">
     <a href="<%= product_chat_path(product) %>">
@@ -110,16 +106,14 @@
     </a>
   </li>
 
-</ul>
-
-<% if staff? %>
-  <hr>
-  <ul class="nav nav-stacked nav-pills">
+  <% if staff? %>
+    <li><hr></li>
     <li class="<%= nav_active_class(:admin) %>">
       <a href="<%= product_admin_path(product) %>">
         <span class="icon-moustache icon-left"></span>
         Admin
       </a>
     </li>
-  </ul>
-<% end %>
+  <% end %>
+  
+</ul>

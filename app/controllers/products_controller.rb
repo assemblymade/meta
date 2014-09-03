@@ -1,9 +1,9 @@
 class ProductsController < ProductController
   respond_to :html, :json
 
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :follow, :unfollow, :announcements]
   before_action :set_product,
-    only: [:show, :edit, :update, :follow, :unfollow, :subscribe, :unsubscribe, :metrics, :flag, :feature, :launch]
+    only: [:show, :edit, :update, :follow, :announcements, :unfollow, :metrics, :flag, :feature, :launch]
 
   def new
     @product = Product.new
@@ -90,11 +90,13 @@ class ProductsController < ProductController
 
   def follow
     @product.watch!(current_user)
+
     Activities::Follow.publish!(
       actor: current_user,
       subject: @product,
       target: @product
     )
+
     render nothing: true, :status => :ok
   end
 

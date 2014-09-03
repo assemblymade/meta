@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140821213403) do
+ActiveRecord::Schema.define(version: 20140902172818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,26 @@ ActiveRecord::Schema.define(version: 20140821213403) do
     t.datetime "created_at", null: false
     t.datetime "deleted_at"
   end
+
+  create_table "bounty_postings", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "bounty_id",  null: false
+    t.uuid     "poster_id",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "expired_at"
+  end
+
+  add_index "bounty_postings", ["expired_at", "bounty_id"], name: "index_bounty_postings_on_expired_at_and_bounty_id", unique: true, using: :btree
+
+  create_table "chat_rooms", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "slug",       null: false
+    t.uuid     "wip_id"
+    t.uuid     "product_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "chat_rooms", ["slug"], name: "index_chat_rooms_on_slug", unique: true, using: :btree
 
   create_table "code_deliverables", id: false, force: true do |t|
     t.uuid     "id",         null: false
@@ -188,7 +208,7 @@ ActiveRecord::Schema.define(version: 20140821213403) do
   end
 
   create_table "global_interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.integer  "user_id"
+    t.uuid     "user_id"
     t.datetime "design"
     t.datetime "frontend"
     t.datetime "backend"
@@ -196,8 +216,6 @@ ActiveRecord::Schema.define(version: 20140821213403) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "global_interests", ["user_id"], name: "index_global_interests_on_user_id", using: :btree
 
   create_table "interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.text     "slug",       null: false
@@ -268,6 +286,13 @@ ActiveRecord::Schema.define(version: 20140821213403) do
 
   add_index "milestones", ["product_id", "number"], name: "index_milestones_on_product_id_and_number", unique: true, using: :btree
 
+  create_table "mutings", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "wip_id",     null: false
+    t.uuid     "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "deleted_at"
+  end
+
   create_table "newsletters", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "subject"
     t.text     "body"
@@ -318,12 +343,6 @@ ActiveRecord::Schema.define(version: 20140821213403) do
   end
 
   add_index "posts", ["product_id", "slug"], name: "index_posts_on_product_id_and_slug", unique: true, using: :btree
-
-  create_table "potential_users", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.datetime "created_at", null: false
-    t.string   "email",      null: false
-    t.uuid     "product_id", null: false
-  end
 
   create_table "preorders", id: false, force: true do |t|
     t.uuid     "id",         null: false
@@ -397,6 +416,8 @@ ActiveRecord::Schema.define(version: 20140821213403) do
     t.integer  "team_memberships_count", default: 0
     t.datetime "launched_at"
     t.hstore   "info"
+    t.integer  "quality"
+    t.datetime "last_activity_at"
     t.integer  "bio_memberships_count",  default: 0,     null: false
     t.datetime "started_building_at"
     t.datetime "live_at"
@@ -471,6 +492,16 @@ ActiveRecord::Schema.define(version: 20140821213403) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "subscribers", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.datetime "created_at", null: false
+    t.string   "email",      null: false
+    t.uuid     "product_id", null: false
+    t.uuid     "user_id"
+    t.datetime "deleted_at"
+  end
+
+  add_index "subscribers", ["email", "product_id"], name: "index_subscribers_on_email_and_product_id", unique: true, using: :btree
 
   create_table "team_membership_interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "team_membership_id", null: false
@@ -665,13 +696,12 @@ ActiveRecord::Schema.define(version: 20140821213403) do
   add_index "votes", ["user_id", "voteable_id"], name: "index_votes_on_user_id_and_voteable_id", unique: true, using: :btree
 
   create_table "watchings", id: false, force: true do |t|
-    t.uuid     "id",                                null: false
-    t.uuid     "user_id",                           null: false
-    t.uuid     "watchable_id",                      null: false
-    t.string   "watchable_type",                    null: false
+    t.uuid     "id",                 null: false
+    t.uuid     "user_id",            null: false
+    t.uuid     "watchable_id",       null: false
+    t.string   "watchable_type",     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "subscription",       default: true
     t.datetime "auto_subscribed_at"
     t.datetime "unwatched_at"
   end
@@ -737,7 +767,6 @@ ActiveRecord::Schema.define(version: 20140821213403) do
     t.datetime "pinned_at"
     t.integer  "trending_score",   limit: 8
     t.string   "state"
-    t.integer  "watchings_count",            default: 0,       null: false
     t.string   "type"
     t.string   "deliverable",                default: "other", null: false
     t.decimal  "multiplier",                 default: 1.0,     null: false

@@ -43,11 +43,11 @@ describe TasksController do
       post :create, product_id: product.slug,
         task: { title: 'Add cats'},
         description: "There aren't enough",
-        offer: 1184
+        offer: "2690.01"
 
       expect(
-        assigns(:bounty)
-      ).to have(1).offers
+        assigns(:offer).attributes['amount']
+      ).to eq(2690)
     end
 
     context 'with project_id' do

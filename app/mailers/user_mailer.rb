@@ -1,7 +1,7 @@
-class UserMailer < Devise::Mailer
+class UserMailer < BaseMailer
   helper :avatar, :markdown, :wip
 
-  layout 'email', only: [:welcome, :joined_team_no_work_yet, :joined_team_no_introduction_yet]
+  layout 'email', only: [:welcome, :joined_team_no_work_yet, :joined_team_no_introduction_yet, :featured_wips]
 
   def welcome(user_id)
     mailgun_tag 'user#welcome'
@@ -24,6 +24,17 @@ class UserMailer < Devise::Mailer
       subject: "Assembly"
   end
 
+  def featured_wips(user)
+    mailgun_tag 'user#featured_wips'
+    mailgun_campaign 'd2lii'
+
+    @user = user
+
+    mail from: "Austin from Assembly <austin.smith@assembly.com>",
+           to: @user.email,
+      subject: "Today’s featured bounties on Assembly"
+  end
+
   def featured_work_apology(product, user)
     @product = product
     @user = user
@@ -40,7 +51,7 @@ class UserMailer < Devise::Mailer
     @user     = User.find(user_id)
     @wip      = Wip.find(wip_id)
     @worker   = Wip::Worker.where(:user_id => @user.id, :wip_id => @wip.id).first
-    @watchers = (@wip.watchers.random.limit(3).to_a - [@user])[0...2]
+    @watchers = (@wip.product.followers.random.limit(3).to_a - [@user])[0...2]
 
     mail from: "matt@assembly.com",
            to:  @user.email,

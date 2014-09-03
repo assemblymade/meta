@@ -52,4 +52,15 @@ describe TextFilters::UserMentionFilter do
       expect(res.to_html).to eq("<p>Check this out #{link}</p>")
     end
   end
+  
+  context "@mentioned @partners" do
+    it 'replaces @partners with link' do
+      body = "<p>Check this out @partners</p>"
+      res  = filter(body)
+
+      link = "<a href=\"/people?filter=partners\" class=\"user-mention\">@partners</a>"
+      expect(res.to_html).to eq("<p>Check this out #{link}</p>")
+    end
+  end
+  
 end

@@ -21,12 +21,33 @@ namespace :emails do
   end
 
   task :congratulate_on_signups => :environment do
-    Product.find(PotentialUser.where('created_at > ?', 1.day.ago).group(:product_id).count.keys).each do |product|
-      number_of_signups = PotentialUser.where('created_at > ? and product_id = ?', 1.day.ago, product.id).count
+    Product.find(Subscriber.where('created_at > ?', 1.day.ago).group(:product_id).count.keys).each do |product|
+      number_of_signups = Subscriber.where('created_at > ? and product_id = ?', 1.day.ago, product.id).count
 
       next if number_of_signups < 10
 
       ProductMailer.delay(queue: 'mailer').congratulate_on_signups(product.id, number_of_signups)
+    end
+  end
+
+  task :featured_wips => :environment do
+    Watching.where(
+      watchable_id: [
+        "de18b612-c487-4d3e-abec-19a231fecda9", # barrtr
+        "ee7615bc-53c4-49b5-9c7b-680866ed8487", # coderwall
+        "99774a98-3059-4290-921a-2f25f48e093b", # helpful
+        "44cbd334-4f33-45c5-b522-3569b275ffd6"  # snapshot-io
+      ],
+
+      unwatched_at: nil
+    ).each do |watching|
+      user = watching.user
+
+      next if EmailLog.sent_to(user.id, :featured_wips_take_two).any?
+
+      EmailLog.log_send user.id, :featured_wips_take_two do
+        UserMailer.delay(queue: 'mailer').featured_wips(user)
+      end
     end
   end
 

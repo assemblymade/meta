@@ -29,7 +29,6 @@ ASM::Application.routes.draw do
   get '/webhooks/pusher' => redirect('/discover')
 
   # Internal
-  get '/styleguide' => 'styleguide#index'
   get '/playground/:action', controller: 'playground'
 
   # Legacy
@@ -156,7 +155,7 @@ ASM::Application.routes.draw do
   # Admin
   namespace :admin do
     resources :profit_reports, path: 'profit-reports', only: [:index, :show]
-    resources :staff_picks, path: 'staff-picks'
+    resources :product_rankings, path: 'products', only: [:index, :update]
     resources :withdrawals, only: [:index] do
       patch :payment_sent
     end
@@ -169,7 +168,7 @@ ASM::Application.routes.draw do
     end
     resources :users
 
-    get '/' => redirect('/admin/staff-picks')
+    get '/' => redirect('/admin/withdrawals')
   end
 
   scope :upload do
@@ -186,6 +185,7 @@ ASM::Application.routes.draw do
     resources :products, only: [] do
       get :info
       get :workers
+      get :core_team
       namespace :chat do
         resources :comments, only: [:create]
       end
@@ -193,7 +193,7 @@ ASM::Application.routes.draw do
         resources :offers, only: [:create, :show]
       end
       resources :projects, only: [:create]
-      resources :potential_users, only: [:create, :destroy]
+      resources :potential_users, controller: 'subscribers', only: [:create, :destroy]
     end
 
     resources :textcompletes, only: [:index]
@@ -209,7 +209,7 @@ ASM::Application.routes.draw do
 
   get '/activities/:id' => 'activity#show'
 
-  get '/interests/:interest' => 'global_interests#toggle'
+  get '/interests/:interest' => 'global_interests#toggle', as: :global_interests
 
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do
