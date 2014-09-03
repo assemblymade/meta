@@ -24,7 +24,7 @@
       <% end %>
     </div>
 
-    <div class="col-xs-8 col-xs-offset-1">
+    <div class="col-xs-9">
 
       <div class="stat-group" style="margin-bottom: 36px;">
         <div class="stat">
@@ -72,7 +72,7 @@
       </ul>
 
       <% if @wips.present? %>
-        <div class="list-group list-group-breakout list-group-padded">
+        <ul class="list-group list-group-breakout list-group-padded">
 
           <% @wips.each do |wip| %>
             <li class="list-group-item">
@@ -84,7 +84,7 @@
             </li>
           <% end %>
 
-        </div>
+        </ul>
 
         <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
       <% end %>
