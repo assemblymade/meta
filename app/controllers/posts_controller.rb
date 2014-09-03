@@ -52,20 +52,20 @@ class PostsController < ProductController
 
   def show
     find_product!
-    @post = @product.posts.find_by_slug!(params[:id])
+    @post = @product.posts.find_by_slug(params[:id]) || Post.find!(params[:id])
   end
 
   def edit
     find_product!
     authenticate_user!
-    @post = @product.posts.find_by_slug!(params.fetch(:id))
+    @post = @product.posts.find_by_slug(params.fetch(:id)) || Post.find!(params.fetch(:id))
     authorize! :update, @post
   end
 
   def update
     find_product!
     authenticate_user!
-    @post = @product.posts.find_by_slug!(params.fetch(:id))
+    @post = @product.posts.find_by_slug(params.fetch(:id)) || Post.find!(params.fetch(:id))
     authorize! :update, @post
 
     @post.update_attributes(post_params)
