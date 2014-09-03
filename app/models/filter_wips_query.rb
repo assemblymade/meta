@@ -26,7 +26,8 @@ class FilterWipsQuery
   end
 
   def filter_clauses
-    [state_filter, deliverable_filter, bounty_filter, tag_filter, sort_order, page_selection, user_filter].compact
+    [state_filter, deliverable_filter, bounty_filter, tag_filter, sort_order,
+     page_selection, user_filter].compact
   end
 
   def state_filter
@@ -49,7 +50,9 @@ class FilterWipsQuery
     when 'assigned'
       user.wips_working_on
     when 'following'
-      user.wips_watching
+      user.wips_watched
+    when 'awarded'
+      user.wips_awarded_to
     else # all
       Wip.all
     end

@@ -17,14 +17,15 @@ class User < ActiveRecord::Base
   has_many :wips
   has_many :wip_workers, :class_name => 'Wip::Worker'
   has_many :wips_working_on, ->{ where(state: Task::IN_PROGRESS) }, :through => :wip_workers, :source => :wip
+  has_many :wips_watched, :through => :watchings, :source => :watchable, :source_type => Wip
   has_many :votes
   has_many :wips_contributed_to, -> { where(events: { type: Event::MAILABLE }).uniq.order("created_at DESC") }, :through => :events, :source => :wip
+  has_many :wips_awarded_to, -> { where(events: { type: Event::Win }).uniq.order("created_at DESC") }, :through => :events, :source => :wip
   has_many :stream_events, foreign_key: 'actor_id'
   has_many :saved_searches
   has_one  :tax_info
   has_many :team_memberships
   has_many :watched_products, :through => :watchings, :source => :watchable, :source_type => Product
-  has_many :watched_wips, :through => :watchings, :source => :watchable, :source_type => Wip
   has_many :watchings
   has_many :withdrawals
 

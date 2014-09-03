@@ -5,7 +5,9 @@ class UsersController < ApplicationController
 
   def show
     set_user
-    @wips = @user.watched_wips.order('created_at DESC').limit(20)
+    default_params = { state: false, user: 'following' }.with_indifferent_access
+    query = FilterWipsQuery.call(Wip.all, @user, default_params.merge(params))
+    @wips = PaginatingDecorator.new(query)
     respond_with @user
   end
 
