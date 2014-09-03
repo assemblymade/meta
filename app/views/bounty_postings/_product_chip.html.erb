@@ -3,7 +3,7 @@
     <div class="pull-right">
       <%= image_tag product.poster_image.url, class: 'img-rounded', height: 60, alt: product.name %>
     </div>
-    <a class="text-subtle-link" href="<%= product_path(product) %>"><strong><%= product.name %></strong></a>
+    <a class="text-stealth-link" href="<%= product_path(product) %>"><strong><%= product.name %></strong></a>
     <span class="badge badge-subtle"><%= product.stage %></span>
   </div>
   <div class="text-muted text-small">

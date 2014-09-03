@@ -43,7 +43,7 @@
         <li class="text-muted text-small">
           Created
           <%= time_ago_in_words(bounty.created_at) %> ago by
-          <a class="text-subtle-link" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
+          <a class="text-stealth-link" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
         </li>
       </ul>
 
