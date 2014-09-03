@@ -48,7 +48,6 @@ module ProductsHelper
   end
 
   def partner?(product)
-    current_user && current_user.partnerships.find_by(id: product.id)
+    current_user && TransactionLogEntry.where(product_id: product.id).where(wallet_id: current_user.id).any?
   end
-
 end

@@ -108,21 +108,6 @@
     </a>
   </li> -->
 
-  <li><hr></li>
-
-  <li>
-    <h6>Getting started</h6>
-    <small>
-      <p>Become a partner and owner of <%= @product.name %> when you earn App Coins for completing bounties and contributing helpful comments in a discussion. If you want to see <%= @product.name %> succeed follow these 3 easy steps to become a partner:</p>
-      <p>1. Let the team know you're interested in helping out and what you want to do to make it happen.</p>
-      <p><a class="btn btn-sm btn-primary" href="<%= product_people_path(@product) %>">Introduce Yourself</a></p>
-      <p>2. Have any ideas or questions for the team, jump into <%= @product.name %>'s discussions or start one of your own.</p>
-      <p>3. Start working on any of the open bounties</p>
-
-      <p><strong>More for developers</strong></p>
-      <p>You can start contributing to the code <a href="<% @product.repos.first.url %>">here</a>
-    </small>
-  </li>
 
   <% if staff? %>
   <li><hr></li>

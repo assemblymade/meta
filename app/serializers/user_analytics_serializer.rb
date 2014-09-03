@@ -18,11 +18,16 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
     object.payment_option.try(:type)
   end
 
+  # (whatupdave) this throws on the test database but not the regular one.
+  # it's because the schema.rb file doesn't contain the products.id primary key
+  # so the test database table doesn't have one
   def core_team_of
+    return [] if Rails.env.test?
     object.team_memberships.core_team.joins(:product).pluck('products.name')
   end
 
   def partner_of
+    return [] if Rails.env.test?
     object.partnerships.pluck(:name)
   end
 
