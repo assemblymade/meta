@@ -4,7 +4,7 @@
        data-react-props="<%= {
          initialLabel: task.urgency.label,
          urgencies: Urgency.all.map(&:label),
-         url: product_task_urgency_path(@product, task)
+         url: product_task_urgency_path(task.product, task)
        }.to_json %>"></div>
 
 <% else %>
