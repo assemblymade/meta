@@ -26,101 +26,114 @@
 
     <div class="col-xs-9">
 
-      <div class="stat-group" style="margin-bottom: 36px;">
-        <div class="stat">
-          <div class="stat-value">
-            <%= number_with_delimiter(@user.count_contributions) %>
+      <div class="page-header sheet-header">
+
+        <div class="stat-group" style="margin-bottom: 36px;">
+          <div class="stat">
+            <div class="stat-value">
+              <%= number_with_delimiter(@user.count_contributions) %>
+            </div>
+            <div class="stat-title">
+              Contributions
+            </div>
           </div>
-          <div class="stat-title">
-            Contributions
+
+          <div class="stat">
+            <div class="stat-value">
+              <%= number_with_delimiter @user.sum_app_cents %>
+            </div>
+            <div class="stat-title">
+              App Coins
+            </div>
           </div>
+
+          <!-- <div class="stat">
+            <div class="stat-value">
+              <%= number_to_currency(0) %>
+            </div>
+            <div class="stat-title">
+              Earned
+            </div>
+          </div> -->
+
         </div>
 
-        <div class="stat">
-          <div class="stat-value">
-            <%= number_with_delimiter @user.sum_app_cents %>
-          </div>
-          <div class="stat-title">
-            App Coins
-          </div>
-        </div>
+        <% unless @wips.empty? && signed_in? && current_user == @user %>
 
-        <!-- <div class="stat">
-          <div class="stat-value">
-            <%= number_to_currency(0) %>
+          <div class="page-header-meta">
+
+            <ul class="nav nav-pills">
+              <li>
+                <a href="<%= user_path(@user, user: 'started') %>">Started</a>
+              </li>
+              <li>
+                <a href="<%= user_path(@user, user: 'assigned') %>">Assigned</a>
+              </li>
+              <li>
+                <a href="<%= user_path(@user, user: 'following') %>">Followed</a>
+              </li>
+              <li>
+                <a href="<%= user_path(@user, user: 'awarded') %>">Awarded</a>
+              </li>
+            </ul>
+
           </div>
-          <div class="stat-title">
-            Earned
-          </div>
-        </div> -->
+
+        <% end %>
 
       </div>
 
-      <ul class="list-piped">
-        <li>
-          <a href="<%= user_path(@user, user: 'started') %>">Started</a>
-        </li>
-        <li>
-          <a href="<%= user_path(@user, user: 'assigned') %>">Assigned</a>
-        </li>
-        <li>
-          <a href="<%= user_path(@user, user: 'following') %>">Followed</a>
-        </li>
-        <li>
-          <a href="<%= user_path(@user, user: 'awarded') %>">Awarded</a>
-        </li>
-      </ul>
+      <div class="sheet-body">
+        <% if @wips.present? %>
+          <ul class="list-group list-group-breakout list-group-padded">
 
-      <% if @wips.present? %>
-        <ul class="list-group list-group-breakout list-group-padded">
+            <% @wips.each do |wip| %>
+              <li class="list-group-item">
+                <% if wip.is_a?(Discussion) %>
+                  <%= render 'discussions/summary', discussion: wip %>
+                <% elsif wip.is_a?(Task) %>
+                  <%= render 'bounties/chip', bounty: wip %>
+                <% end %>
+              </li>
+            <% end %>
 
-          <% @wips.each do |wip| %>
-            <li class="list-group-item">
-              <% if wip.is_a?(Discussion) %>
-                <%= render 'discussions/summary', discussion: wip %>
-              <% elsif wip.is_a?(Task) %>
-                <%= render 'bounties/chip', bounty: wip %>
-              <% end %>
-            </li>
-          <% end %>
+          </ul>
 
-        </ul>
+          <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
+        <% end %>
 
-        <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
-      <% end %>
+        <% if @wips.empty? && signed_in? && current_user == @user %>
+          <div class="well">
+            <%= image_tag 'null-states/profile@2x.png', width: 154, height: 38, class: 'img-center' %>
+            <h3>Earn yourself some App Coins!</h3>
+            <p>Find a product to help out and earn your first app coins. Permission isn’t required to contribute—jump in and help out in any way possible. At the end of every month the product's revenue is split with everyone that owns its coins.</p>
 
-      <% if @user.count_contributions == 0 &&  signed_in? && current_user == @user %>
-        <hr>
+            <hr>
 
-        <div class="well">
-          <%= image_tag 'null-states/profile@2x.png', width: 154, height: 38 %>
-          <h3>Earn yourself some App Coins!</h3>
-          <p>Find a product to help out and earn your first app coins. Permission isn’t required to contribute—jump in and help out in any way possible. At the end of every month the product's revenue is split with everyone that owns its coins.</p>
-
-          <hr>
-
-          <div class="row">
-            <div class="col-xs-4">
-              <a class="btn btn-primary btn-block" href="<%= discover_path %>">Discover Products</a>
+            <div class="row">
+              <div class="col-xs-4">
+                <a class="btn btn-primary btn-block" href="<%= discover_path %>">Discover Products</a>
+              </div>
+              <div class="col-xs-8 text-left small">
+                Start earning coins by helping an existing app. Earn the most coins when you jump in early &amp; steer its direction.
+              </div>
             </div>
-            <div class="col-xs-8 text-left small">
-              Start earning coins by helping an existing app. Earn the most coins when you jump in early &amp; steer its direction.
+
+            <br>
+
+            <div class="row">
+              <div class="col-xs-4">
+                <a class="btn btn-default btn-block" href="<%= new_product_path %>">Start a Product</a>
+              </div>
+              <div class="col-xs-8 text-left small">
+                Kickstart your own idea, have the community rally around it, and keep at least 5% of its earnings.
+              </div>
             </div>
+
           </div>
+        <% end %>
 
-          <br>
-
-          <div class="row">
-            <div class="col-xs-4">
-              <a class="btn btn-default btn-block" href="<%= new_product_path %>">Start a Product</a>
-            </div>
-            <div class="col-xs-8 text-left small">
-              Kickstart your own idea, have the community rally around it, and keep at least 5% of its earnings.
-            </div>
-          </div>
-
-        </div>
-      <% end %>
+      </div>
 
     </div>
   </div>
