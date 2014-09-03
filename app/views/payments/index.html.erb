@@ -1,0 +1,60 @@
+<% title 'Payments', @product.name %>
+<% activate_nav! :payments %>
+
+<div class="page-header sheet-header">
+  <h2>Payments</h2>
+</div>
+
+<div class="sheet-body">
+  <% if flash[:plan_update] %>
+    <div class="alert alert-success alert-dismissable" role="alert" style="text-align: center;">
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+      </button>
+      It might take a couple of minutes for your plans to be updated.
+    </div>
+  <% end %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Plan</th>
+        <th>Price</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @active_plans.each do |plan| %>
+        <tr>
+          <td><%= plan["name"] %></td>
+          <td>$<%= "%.2f" % (plan["amount"] / 100.00) %></td>
+          <td>
+            <a href="<%= product_payment_path(@product, plan['stripe_id']) %>" data-method="delete" data-confirm="Are you sure?">
+              <span class="glyphicon glyphicon-remove"></span>
+            </a>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h4>Create a new plan</h4>
+
+  <form role="form" class="form-inline" method="post" action="<%= product_payments_path(@product) %>">
+    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+    <div class="form-group" style="width: 40%;">
+      <label class="sr-only" for="plan-name">Plan name</label>
+      <input type="text" class="form-control" id="plan-name" name="name" placeholder="Plan name" style="width: 100%;">
+    </div>
+
+    <div class="form-group" style="width: 15%;">
+      <div class="input-group" >
+        <div class="input-group-addon">$</div>
+        <label class="sr-only" for="plan-amount">Plan price</label>
+        <input type="text" class="form-control" id="plan-amount" name="amount" placeholder="Plan amount" style="width: 100%;">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-default">Create</button>
+  </form>
+</div>
