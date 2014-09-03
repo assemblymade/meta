@@ -62,7 +62,7 @@ class DiscoverController < ApplicationController
     @postings = @postings.group_by{|p| p.bounty.product }
   end
 
-  def blog
+  def updates
     @posts = Post.joins(:product).
       where('products.flagged_at is null').
       order(created_at: :desc)

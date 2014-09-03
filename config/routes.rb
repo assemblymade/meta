@@ -32,6 +32,7 @@ ASM::Application.routes.draw do
   get '/playground/:action', controller: 'playground'
 
   # Legacy
+  get '/discover/blog', to: redirect('/discover/updates')
   get '/explore', to: redirect('/discover')
   get '/ideas',   to: redirect('/discover')
   get '/blog',    to: redirect('http://blog.assembly.com')

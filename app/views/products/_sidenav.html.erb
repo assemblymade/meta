@@ -63,10 +63,10 @@
   <% end %>
 
   <% if can?(:update, product) || product.posts.any? %>
-    <li class="<%= nav_active_class(:blog) %>">
+    <li class="<%= nav_active_class(:updates) %>">
       <a href="<%= product_posts_path(product) %>">
         <span class="icon-notebook icon-left"></span>
-        Blog
+        Updates
       </a>
     </li>
   <% end %>
