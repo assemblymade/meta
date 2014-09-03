@@ -23,12 +23,12 @@
           <table cellspacing="0" cellpadding="0" align="center" id="button-wrapper">
             <tr>
               <td class="first-td">
-                <a href="<%= product_url(product, auth_token: @user.authentication_token) %>" target="_blank" class="button">
+                <a href="<%= product_url(product) %>" target="_blank" class="button">
                   Check it out
                 </a>
               </td>
               <td>
-                <a href="<%= discover_url(auth_token: @user.authentication_token) %>" target="_blank" class="button other">
+                <a href="<%= discover_url %>" target="_blank" class="button other">
                   Discover other products
                 </a>
               </td>
