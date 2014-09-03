@@ -24,7 +24,7 @@
       <% end %>
     </div>
 
-    <div class="col-md-9 col-xs-9">
+    <div class="col-xs-8 col-xs-offset-1">
 
       <div class="stat-group" style="margin-bottom: 36px;">
         <div class="stat">
@@ -56,41 +56,20 @@
 
       </div>
 
-      <% if @contributions.any? %>
+      <% if @wips.present? %>
+        <div class="list-group list-group-breakout list-group-padded">
 
-        <h6>Contributions</h6>
-
-        <div class="list-group">
-          <% @contributions.each do |contribution| %>
-            <% product = contribution.product %>
-            <a class="list-group-item" href="<%= product_path(product) %>">
-              <div class="row">
-                <div class="col-xs-2">
-                  <%= image_tag(product.poster_image.url, class: 'img-rounded', width: '100%') %>
-                </div>
-                <div class="col-xs-10">
-                  <div class="clearfix">
-                    <p class="alpha omega text-primary pull-left" style="margin-bottom: 6px;">
-                      <strong><%= product.name %></strong>
-                    </p>
-
-                    <ul class="list-piped omega small text-muted pull-right">
-                      <% if product.for_profit? %>
-                        <li>
-                            <%= number_to_percentage(contribution.stake * 100, precision: 2, strip_insignificant_zeros: true) %> stake
-                        </li>
-                      <% end %>
-                      <li>
-                        <%= format_coins(product, contribution.cents, :tiny) %>
-                      </li>
-                    <ul>
-                  </div>
-                  <p class="text-serif alpha omega"><%= product.pitch %></p>
-                </div>
-              </div>
-            </a>
+          <% @wips.each do |wip| %>
+            <li class="list-group-item">
+              <% if wip.is_a?(Discussion) %>
+                <%= render 'discussions/summary', discussion: wip %>
+              <% elsif wip.is_a?(Task) %>
+                <%= render 'bounties/chip', bounty: wip %>
+              <% end %>
+            </li>
           <% end %>
-        </div><!-- .list-group -->
+
+        </div>
       <% end %>
 
       <% if @user.count_contributions == 0 &&  signed_in? && current_user == @user %>

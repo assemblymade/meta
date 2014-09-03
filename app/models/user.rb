@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
   has_one  :tax_info
   has_many :team_memberships
   has_many :watched_products, :through => :watchings, :source => :watchable, :source_type => Product
+  has_many :watched_wips, :through => :watchings, :source => :watchable, :source_type => Wip
   has_many :watchings
   has_many :withdrawals
 
