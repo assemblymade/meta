@@ -3,6 +3,7 @@
 </script>
 
 <%= render 'shared/navbar' %>
+<%= render 'shared/welcome' %>
 
 <div data-react-class="InfoModal" data-react-props="<%= { product: @product, signup_path: new_user_registration_path }.to_json %>">
 </div>
@@ -26,9 +27,7 @@
 
     <h3 class="alpha omega text-muted">
       <%= @product.name %>
-      <% if @product.stealth? %>
-        <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;">Stealth</span>
-      <% end %>
+      <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;"><%= @product.stage %></span>
     </h3>
   </div>
 </div>

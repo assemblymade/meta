@@ -68,7 +68,6 @@ describe('ChatNotifications', function() {
     );
 
     expect(chat.state.data instanceof Object).toBe(true);
-    expect(chat.state.sortKeys instanceof Array).toBe(true);
     expect(chat.state.acknowledgedAt).toEqual(0);
     expect(chat.state.desktopNotificationsEnabled).toBe(false);
   });

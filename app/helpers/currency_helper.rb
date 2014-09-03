@@ -14,10 +14,7 @@ module CurrencyHelper
 
   def short_currency(val)
     val ||= 0
-
     val = val / 100.0
-
     "$#{val.round(-3)/1000}K"
   end
-
 end

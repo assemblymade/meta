@@ -23,6 +23,11 @@ AutoTipContract.blueprint do
   amount { 0.1 }
 end
 
+ChatRoom.blueprint do
+  slug { "room_#{sn}" }
+  wip
+end
+
 Discussion.blueprint do
   user
   product

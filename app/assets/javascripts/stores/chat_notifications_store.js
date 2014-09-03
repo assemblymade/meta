@@ -6,7 +6,6 @@ var NotificationsMixin = require('../mixins/notifications');
 
 (function() {
   var _chatRooms = {};
-  var _sortKeys = [];
   var _optimisticChatRooms = {};
   var _store = Object.create(Store);
 
@@ -54,7 +53,6 @@ var NotificationsMixin = require('../mixins/notifications');
       }
 
       var chatRooms = data.chat_rooms;
-      _sortKeys = data.sort_keys;
 
       var url = this.rrUrl() +
         '/readers/' +
@@ -86,10 +84,6 @@ var NotificationsMixin = require('../mixins/notifications');
       }
 
       return _chatRooms;
-    },
-
-    getSortKeys: function() {
-      return _sortKeys;
     },
 
     setStories: function(chatRooms) {

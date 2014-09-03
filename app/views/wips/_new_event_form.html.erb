@@ -7,7 +7,7 @@
   </div>
 
 <% else %>
-  <div class="media js-new-event alpha">
+  <div id="new-comment" class="media js-new-event alpha">
 
     <div class="pull-left">
       <% if signed_in? %>
@@ -31,11 +31,8 @@
         <li><a href="#copy" data-toggle="tab">Text</a></li>
       </ul>
 
-
       <!-- Tab panes -->
       <div class="tab-content">
-
-
         <!-- Comments -->
 
         <div class="tab-pane active" id="comment">

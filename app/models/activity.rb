@@ -56,7 +56,7 @@ class Activity < ActiveRecord::Base
 
   # deprecated
   def streams
-    stream_targets.map do |o|
+    stream_targets.compact.map do |o|
       ActivityStream.new(o)
     end
   end

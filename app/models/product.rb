@@ -25,6 +25,8 @@ class Product < ActiveRecord::Base
 
   has_many :assets
   has_many :auto_tip_contracts
+  has_many :bounty_postings
+  has_many :chat_rooms
   has_many :completed_missions
   has_many :contract_holders
   has_many :core_team, through: :core_team_memberships, source: :user
@@ -102,6 +104,7 @@ class Product < ActiveRecord::Base
 
   INITIAL_COINS = 6000
   PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
+  LAUNCHED = ((ENV['PRODUCTS_LAUNCHED'] || '').split(','))
   NON_PROFIT = %w(meta)
 
   INFO_FIELDS = %w(goals key_features target_audience competing_products competitive_advantage monetization_strategy)
@@ -123,12 +126,13 @@ class Product < ActiveRecord::Base
   end
 
   def stage
-    # TODO add shipping stage
     case
-    when greenlit_at.nil?
-      :validating
+    when LAUNCHED.include?(slug)
+      'launched'
+    when stealth?
+      'alpha'
     else
-      :building
+      'beta'
     end
   end
 
@@ -285,6 +289,10 @@ class Product < ActiveRecord::Base
     touch(:featured_on)
   end
 
+  def main_chat_room
+    chat_rooms.first || ChatRoom.general
+  end
+
   def count_presignups
     votes.select(:user_id).distinct.count
   end
@@ -393,10 +401,6 @@ class Product < ActiveRecord::Base
 
   def product
     self
-  end
-
-  def chat_room_key
-    "chat_#{id}"
   end
 
   def average_bounty

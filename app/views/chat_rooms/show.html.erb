@@ -1,6 +1,7 @@
-<% title 'Chat', @product.name %>
-<% activate_nav! :chat %>
-<% @disable_footer = true %>
+<% title 'Community Chat' %>
+<% activate_nav! :community %>
+
+<%= render 'shared/navbar' %>
 
 <div class="modal fade"
      id="create-task"
@@ -11,6 +12,9 @@
 </div>
 
 <style>
+.chat-wrapper {
+  background-color: white;
+}
 .page {
   padding-bottom: 0;
 }
@@ -36,7 +40,8 @@
 
     var chatActionsHeight = $('.js-chat-actions').outerHeight();
 
-    $('.js-chat,.js-members').css({height: (wrapperHeight - chatActionsHeight)});
+    $('.js-chat').css({height: (wrapperHeight - chatActionsHeight)})
+    // $('.js-members').css({height: (wrapperHeight - chatActionsHeight - 10)});
   }
 
   $(window).resize(resizeChatView)
@@ -50,16 +55,28 @@
 
       <div class="chat js-chat" style="width:100%">
         <center>
-          <a class="btn btn-default btn-block btn-sm js-chat-load-more" href="<%= product_chat_path(@product, format: 'json') %>" style="margin-top: 36px;">Load more</a>
+          <a class="btn btn-default btn-block btn-sm js-chat-load-more" href="<%= api_chat_room_comments_path(@chat_room, format: 'json') %>" style="margin-top: 36px;">Load more</a>
           <br>
         </center>
-
         <div class="timeline chat-timeline js-activity-stream"></div>
       </div>
 
     </div>
     <div class="col-md-3 hidden-xs hidden-sm" style="overflow:hidden">
-      <div class="js-members"></div>
+      <div class="row">
+        <div class="col-md-11">
+          <h2>
+            <% if product = @chat_room.product %>
+              <a class="text-stealth-link" href="<%= product_path(product) %>">
+                #<%= @chat_room.slug %>
+              </a>
+            <% else %>
+              #<%= @chat_room.slug %>
+            <% end %>
+          </h2>
+          <div class="js-members"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -72,11 +89,13 @@
 
 
 <script>
-  app.product = new Product(<%= json @product, scope: current_user %>);
-  app.chatRoom = { id: '<%= @product.chat_room_key %>' }
+  <% if @chat_room.product %>
+    app.product = new Product(<%= json @chat_room.product, scope: current_user %>);
+  <% end %>
+  app.chatRoom = { id: '<%= @chat_room.key %>' }
 
   <% if signed_in? %>
-    app.chatRoom.readRaptorChatPath = '<%== ReadraptorTracker.new(@product.chat_room_key, current_user.id).url %>';
+    app.chatRoom.readRaptorChatPath = '<%== ReadraptorTracker.new(@chat_room.key, current_user.id).url %>';
   <% end %>
 
   $(document).ready(function() {
@@ -85,39 +104,28 @@
         ActivitySerializer.new(a, scope: current_user)
       }
     %>);
-    activityStream.url = '<%= product_wip_comments_path(@product, @product.main_thread) %>';
-    activityStream.product = app.product;
+    activityStream.url = '<%= api_chat_room_comments_path(@chat_room) %>';
+    activityStream.id = '<%= @chat_room.id %>'
 
     var activityStreamView = new ActivityStreamView({
       el: $('.js-activity-stream'),
       collection: activityStream,
-      subjectId: '<%= @product.main_thread_id %>',
-      tipsPath: "<%= product_tips_path(@product) %>"
-    });
-
-    // Initialize pusher
-    var pusher = new Pusher($('meta[name=pusher-key]').attr('content'), {
-      authEndpoint: <%= webhooks_pusher_path.to_json.html_safe %>
+      subjectId: '<%= @chat_room.wip_id %>'
     });
 
     pusher.connection.bind('connected', function() {
       activityStream.listenForRemote(pusher, pusher.connection);
 
       var presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
-      var permanentWatchers = <%= @recently_active.each_with_object({}) {|w, memo| memo[w.id] = UserSerializer.new(w) }.to_json.html_safe %>
 
       $('.js-members').each(function() {
         var component = React.renderComponent(
           MembersView({
-            url: '<%= product_watchers_path(@product, format: :json) %>',
-            channel: presenceChannel
+            channel: presenceChannel,
+            url: '<%= api_chat_room_users_path(@chat_room) %>'
           }),
           this
         );
-
-        component.setState({
-          members: permanentWatchers
-        });
       });
 
       var alreadyJoined = {};
@@ -125,10 +133,6 @@
       presenceChannel.bind(
         'pusher:member_added',
         function memberJoined(member) {
-          if (permanentWatchers.hasOwnProperty(member.id)) {
-            return;
-          }
-
           // Slight hack to prevent multiple join messages
           // for one person
           if (alreadyJoined[member.id] === 1) {

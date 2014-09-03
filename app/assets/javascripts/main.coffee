@@ -48,6 +48,8 @@ $(document).ready ->
   $('time.timestamp').timeago()
   $('time[data-format]').each ->
     $(@).text moment($(@).attr('datetime')).format($(@).data('format'))
+  $('time[data-diff]').each ->
+    $(@).text moment($(@).attr('datetime')).diff(new Date(), 'days');
 
   $('[data-list-active-class]').click (e)->
     className = $(e.target).data('list-active-class')

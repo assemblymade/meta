@@ -25,6 +25,43 @@ class DiscoverController < ApplicationController
                         page(params[:page])
   end
 
+  def bounties
+    if params[:filter].blank?
+      cookies[:discover_bounties_filter] ||= 'design'
+      redirect_to discover_path(:bounties, filter: cookies[:discover_bounties_filter])
+    end
+
+    filter = cookies[:discover_bounties_filter] = params[:filter]
+
+    @filters = [{
+      slug: 'all',
+      label: 'All',
+    },{
+      slug: 'design',
+      label: 'Design',
+    }, {
+      slug: 'frontend',
+      label: 'Front-End Development',
+    }, {
+      slug: 'backend',
+      label: 'Back-End Development',
+    }, {
+      slug: 'marketing',
+      label: 'Marketing',
+    }]
+
+    @filters.each do |f|
+      f[:count] = BountyPosting.tagged(f[:slug]).count
+    end
+
+    @postings = BountyPosting.joins(bounty: :product).tagged(filter)
+    if slug = params[:product]
+      @postings = @postings.where('products.slug = ?', slug)
+    end
+
+    @postings = @postings.group_by{|p| p.bounty.product }
+  end
+
   def blog
     @posts = Post.joins(:product).
       where('products.flagged_at is null').

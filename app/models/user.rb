@@ -184,6 +184,13 @@ class User < ActiveRecord::Base
 
   end
 
+  def partnerships
+    Product.
+       joins('inner join transaction_log_entries tle on tle.product_id = products.id').
+       group('products.id').
+       where('wallet_id = ?', id)
+  end
+
   # this is used on signup to auto follow a product
   def follow_product=(slug)
     Watching.watch!(self, Product.find_by!(slug: slug)) unless slug.blank?

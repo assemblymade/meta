@@ -1,4 +1,4 @@
-<%= form_tag product_chat_path(@product), method: :post do %>
+<form action="<%= api_chat_room_comments_path(@chat_room) %>">
   <div class="media alpha js-new-event">
     <div class="pull-left" style="position: relative; top: 4px;">
       <%= avatar_tag(current_user, 30) %>
@@ -14,7 +14,7 @@
       </div>
     </div>
   </div>
-<% end %>
+</form>
 
 <% unless signed_in? %>
   <script>

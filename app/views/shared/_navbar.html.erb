@@ -29,18 +29,17 @@
 
       <ul class="nav navbar-nav">
 
-        <li class="<%= nav_active_class(:platform_discover) %>">
-          <a href="<%= discover_path %>">Discover</a>
+        <li class="<%= nav_active_class(:discover_bounties) %>">
+          <a href="<%= discover_path(:fresh) %>">Products</a>
         </li>
-
-        <li class="<%= nav_active_class(:platform_getting_started) %>">
-          <a href="<%= getting_started_path %>">Get Started</a>
+        <li class="<%= nav_active_class(:discover_bounties) %>">
+          <a href="<%= discover_path(:bounties) %>">Bounties</a>
         </li>
         <li class="<%= nav_active_class(:platform_blog) %>">
-          <a href="<%= discover_path(:blog) %>">Product Blogs</a>
+          <a href="<%= discover_path(:blog) %>">Updates</a>
         </li>
         <li class="<%= nav_active_class(:community) %>">
-          <a href="<%= chat_path %>">Community</a>
+          <a href="<%= chat_rooms_path %>">Community Chat</a>
         </li>
       </ul>
 
@@ -50,7 +49,7 @@
               data-react-class="Navbar"
               data-react-props="<%= {
                 newsFeedPath: notifications_path(format: :json),
-                chatPath: users_chat_rooms_path,
+                chatPath: chat_rooms_path,
                 userPath: user_path(current_user),
                 editUserPath: edit_user_path,
                 balancePath: users_balance_path,
