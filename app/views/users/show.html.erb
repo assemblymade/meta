@@ -126,15 +126,6 @@
         </div>
       <% end %>
 
-      <% if @stream_events.any? %>
-        <h6>Activity</h6>
-        <div class="timeline">
-          <%= render @stream_events %>
-          <% unless @stream_events.last_page? %>
-            <%= render partial: 'more_button' %>
-          <% end %>
-        </div>
-      <% end %>
     </div>
   </div>
 </div>

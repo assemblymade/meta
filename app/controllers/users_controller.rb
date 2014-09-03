@@ -5,18 +5,8 @@ class UsersController < ApplicationController
 
   def show
     set_user
-
-    @stream_events = viewing_self? ? @user.stream_events : @user.stream_events.visible
-    @stream_events = @stream_events.page(page)
-    respond_to do |format|
-      format.html {
-        @contributions = UserContribution.for(@user, !viewing_self?).
-                                          sort_by{|c| -c.cents }.
-                                          reject{|c| Product::PRIVATE.include?(c.product.slug) }
-        respond_with @user
-      }
-      format.js   { render :layout => false }
-    end
+    @wips = @user.watched_wips.order('created_at DESC').limit(20)
+    respond_with @user
   end
 
   def edit
