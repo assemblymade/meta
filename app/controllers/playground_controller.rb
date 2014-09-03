@@ -1,5 +1,4 @@
 class PlaygroundController < ApplicationController
-  layout 'product'
 
   before_action :authorize_staff!
 
