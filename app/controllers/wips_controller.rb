@@ -6,7 +6,6 @@ class WipsController < ProductController
   before_action :set_product
   before_action :set_stories, except: [:index, :new, :create, :search, :mute, :watch]
   before_action :validate_wip_administer , only: [:edit, :update, :destroy]
-  after_action  :mark_wip_viewed, only: [:edit, :show]
 
   def wip_class
     raise 'override'
@@ -142,10 +141,6 @@ class WipsController < ProductController
 
   def validate_wip_administer
     head(:forbidden) unless can? :update, @wip
-  end
-
-  def mark_wip_viewed
-    @wip.updates.for(current_user).viewed! if signed_in?
   end
 
   def find_wips

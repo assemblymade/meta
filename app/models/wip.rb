@@ -231,12 +231,6 @@ class Wip < ActiveRecord::Base
     PusherWorker.perform_async push_channel, 'changed', WipSerializer.new(self).to_json
   end
 
-  # updates
-
-  def updates
-    Wip::Updates.new(self)
-  end
-
   # elasticsearch
   def update_elasticsearch
     return unless title_changed? || state_changed?

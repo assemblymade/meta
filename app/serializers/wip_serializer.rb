@@ -15,15 +15,9 @@ class WipSerializer < ActiveModel::Serializer
              :deliverable
 
   # personalized
-  attributes :new_comments, :unread, :own_comments
+  attributes :own_comments
 
   has_one  :user, :key => :author, serializer: UserSerializer
-
-  def filter(keys)
-    if scope.nil?
-      keys - [:new_comments, :unread]
-    end
-  end
 
   def product_slug
     product.slug
@@ -57,14 +51,6 @@ class WipSerializer < ActiveModel::Serializer
   end
 
   # personalized
-
-  def unread
-    wip.updates.for(scope).unread? if scope
-  end
-
-  def new_comments
-    wip.updates.for(scope).unread_comment_count if scope
-  end
 
   def own_comments
     wip.comments.where(user: scope).count if scope
