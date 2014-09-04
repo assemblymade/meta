@@ -92,13 +92,15 @@
           <ul class="list-group list-group-breakout list-group-padded">
 
             <% @wips.each do |wip| %>
-              <li class="list-group-item">
-                <% if wip.is_a?(Discussion) %>
-                  <%= render 'discussions/summary', discussion: wip %>
-                <% elsif wip.is_a?(Task) %>
-                  <%= render 'bounties/chip', bounty: wip %>
-                <% end %>
-              </li>
+              <% if wip.is_a?(Discussion) || wip.is_a?(Task) %>
+                <li class="list-group-item">
+                  <% if wip.is_a?(Discussion) %>
+                    <%= render 'discussions/summary', discussion: wip %>
+                  <% elsif wip.is_a?(Task) %>
+                    <%= render 'bounties/chip', bounty: wip %>
+                  <% end %>
+                </li>
+              <% end %>
             <% end %>
 
           </ul>
