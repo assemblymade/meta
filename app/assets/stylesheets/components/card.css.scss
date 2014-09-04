@@ -2,15 +2,25 @@
   border: 1px solid $brand-border;
   border-radius: $border-radius-base;
   box-shadow: 0 1px 2px 0 $brand-shadow;
+  margin-bottom: $line-height-computed;
+  background-color: white;
+
+  > :first-child {
+    border-top-left-radius: $border-radius-base;
+    border-top-right-radius: $border-radius-base;
+  }
+
+  > :last-child {
+    border-bottom-left-radius: $border-radius-base;
+    border-bottom-right-radius: $border-radius-base;
+  }
 }
 
 .card-body {
-  padding: 20px;
+  padding: 15px;
 }
 
 .card-footer {
-  padding: 10px 20px;
+  padding: 10px 15px;
   background-color: $brand-bg;
-  border-bottom-left-radius: $border-radius-base;
-  border-bottom-right-radius: $border-radius-base;
 }
