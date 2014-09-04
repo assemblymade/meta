@@ -6,13 +6,16 @@ class UsersController < ApplicationController
   def show
     set_user
 
-    if params[:user].blank?
-      params[:user] = 'started'
+    filters = params.slice(:user, :state)
+
+    if filters[:user].blank?
+      filters[:user] = 'started'
     else
-      params[:state] = true
+      filters[:state] = true
     end
 
-    query = FilterWipsQuery.call(Wip.all, @user, params)
+    query = FilterWipsQuery.call(Wip.all, @user, filters)
+    query = query.ordered_by_activity
     @wips = PaginatingDecorator.new(query)
     respond_with @user
   end
