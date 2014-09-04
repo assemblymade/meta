@@ -63,17 +63,25 @@
           <div class="page-header-meta">
 
             <ul class="nav nav-pills">
-              <li>
-                <a href="<%= user_path(@user, user: 'started') %>">Started</a>
+              <li class="<%= 'active' if params[:user].blank? || current_page?(user_path(@user, user: 'started', filter: 'open')) %>">
+                <a href="<%= user_path(@user, user: 'started', filter: 'open') %>">
+                  Started
+                </a>
               </li>
-              <li>
-                <a href="<%= user_path(@user, user: 'assigned') %>">Assigned</a>
+              <li class="<%= 'active' if current_page?(user_path(@user, user: 'assigned')) %>">
+                <a href="<%= user_path(@user, user: 'assigned') %>">
+                  Assigned
+                </a>
               </li>
-              <li>
-                <a href="<%= user_path(@user, user: 'following') %>">Followed</a>
+              <li class="<%= 'active' if current_page?(user_path(@user, user: 'following')) %>">
+                <a href="<%= user_path(@user, user: 'following') %>">
+                  Following
+                </a>
               </li>
-              <li>
-                <a href="<%= user_path(@user, user: 'awarded') %>">Awarded</a>
+              <li class="<%= 'active' if current_page?(user_path(@user, user: 'awarded')) %>">
+                <a href="<%= user_path(@user, user: 'awarded') %>">
+                  Awarded
+                </a>
               </li>
             </ul>
 
