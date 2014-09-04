@@ -43,6 +43,7 @@ class Wip < ActiveRecord::Base
   scope :tagged_with, ->(name) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name = ?', name) }
   scope :tagged_with_any, ->(names) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name' => names) }
   scope :tagged_with_all, ->(names) { joins(:taggings => :tag).where('wip_tags.name' => names).group('wips.id').having('count(distinct wip_taggings.wip_tag_id) = ?', names.size) }
+  scope :ordered_by_activity, -> { joins(:events).group('wips.id').order('max(events.created_at)') }
 
   attr_accessor :readraptor_tag # set which tag you are viewing
 
