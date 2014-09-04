@@ -324,12 +324,6 @@ ActiveRecord::Schema.define(version: 20140904012629) do
 
   add_index "posts", ["product_id", "slug"], name: "index_posts_on_product_id_and_slug", unique: true, using: :btree
 
-  create_table "potential_users", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.datetime "created_at", null: false
-    t.string   "email",      null: false
-    t.uuid     "product_id", null: false
-  end
-
   create_table "preorders", id: false, force: true do |t|
     t.uuid     "id",         null: false
     t.uuid     "vote_id"
