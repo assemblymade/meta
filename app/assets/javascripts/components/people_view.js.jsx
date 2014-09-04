@@ -21,16 +21,6 @@
 
       return (
         <div>
-          <PeopleFilter
-              interestFilters={this.props.interestFilters}
-              selected={this.state.selected}
-              onFilter={this.onFilter} />
-          <hr/>
-
-          <p className="text-muted text-center">Tip: You can use @mentions to get the attention of {this.filterLabel()} in chat or Bounties.</p>
-
-          <hr/>
-
           <PeopleList
               memberships={this.state.filteredMemberships}
               selected={this.state.selected}
@@ -95,75 +85,12 @@
     }
   })
 
-  var PeopleFilter = React.createClass({
-    render: function() {
-      var self = this;
-      var highlightAll = self.props && !self.props.selected ? 'primary': 'default';
-      var highlightCore = self.props && self.props.selected === 'core' ? 'primary': 'default';
-
-      var tags = _.map(this.props.interestFilters, function(interest){
-        if (interest === 'core') {
-          return;
-        }
-
-        var label = '@' + interest;
-        var highlight = self.props && self.props.selected === interest ? 'primary' : 'default';
-
-        return (
-          <a className={'btn btn-' + highlight}
-              href={'#' + label}
-              onClick={self.filterChanged(interest)}
-              key={interest}>
-            {label}
-          </a>
-        )
-      })
-
-      return (
-        <div className="row">
-          <div className="col-xs-2">
-            Browse by:
-          </div>
-          <div className="col-xs-10 btn-group btn-group-sm">
-            <a className={'text-muted btn btn-' + highlightAll}
-                onClick={this.clearInterest}
-                style={{cursor: 'pointer'}}>
-              All
-            </a>
-            <a className={'text-muted btn btn-' + highlightCore}
-                onClick={this.highlightCore}
-                style={{cursor: 'pointer'}}>
-              @core
-            </a>
-            {tags}
-          </div>
-        </div>
-      )
-    },
-
-    filterChanged: function(interest) {
-      var self = this;
-      return function(e) {
-        self.props.onFilter(interest)
-      };
-    },
-
-    clearInterest: function(e) {
-      this.props.onFilter();
-    },
-
-    highlightCore: function(e) {
-      this.props.onFilter('core')
-    }
-  });
-
   var PeopleList = React.createClass({
     mixins: [PeoplePageMixin],
 
     render: function() {
       return (
         <div className="list-group list-group-breakout list-group-padded">
-          <h4>Builders</h4>
           {this.rows(this.props.memberships)}
         </div>
       )
@@ -186,7 +113,6 @@
           <div className="row"
             key={'row-' + user.id + i}
             style={{
-              'padding-top': '15px',
               'padding-bottom': '15px',
               'border-bottom': '1px solid #ebebeb'
             }}>
