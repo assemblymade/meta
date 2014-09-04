@@ -34,8 +34,7 @@ var Avatar = require('./avatar.js.jsx');
 
           <ul
               className="dropdown-menu dropdown-menu-right"
-              role="menu"
-              style={{ width: 'auto', position: 'absolute', top: '35px', 'padding-top': 0 }}>
+              role="menu">
             <li
                 role="presentation"
                 className="dropdown-header"
@@ -48,7 +47,7 @@ var Avatar = require('./avatar.js.jsx');
                 <div>
                   <strong>Not following</strong>
                 </div>
-                <span className="text-muted">
+                <span className="text-muted hidden-xs">
                   Receive notifications when you are @mentioned
                 </span>
               </a>
@@ -59,7 +58,7 @@ var Avatar = require('./avatar.js.jsx');
                 <div>
                   <strong>Follow updates only</strong>
                 </div>
-                <div className="text-muted">
+                <div className="text-muted hidden-xs">
                   Receive notifications when there are new updates
                 </div>
               </a>
@@ -70,7 +69,7 @@ var Avatar = require('./avatar.js.jsx');
                 <div>
                   <strong>Follow</strong>
                 </div>
-                <div className="text-muted">
+                <div className="text-muted hidden-xs">
                   Receive notifications when there are new updates, discussions, and chat messages
                 </div>
               </a>

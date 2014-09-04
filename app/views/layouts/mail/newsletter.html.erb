@@ -162,7 +162,7 @@
                                     <span class="hide"><span>You're receiving this because you signed up for Assembly.</span></span>
                                   </p>
                                   <p align="left" class="footer-content-left" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;font-size:12px;line-height:15px;color:#CDD1DD;margin-top:0px;margin-bottom:15px;">
-                                    <a href="<%= settings_notifications_url(auth_token: @user.authentication_token, preference: User::MAIL_IMMEDIATE) %>" style="color:#959BAE;text-decoration:none">Receive updates as they happen</a>
+                                    <a href="<%= settings_notifications_url(preference: User::MAIL_IMMEDIATE) %>" style="color:#959BAE;text-decoration:none">Receive updates as they happen</a>
                                     &nbsp;&nbsp;&nbsp;
 
                                     <a href="%tag_unsubscribe_url%" style="color:#CDD1DD;text-decoration:none">Unsubscribe</a>

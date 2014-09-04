@@ -14,7 +14,7 @@
                   <table cellspacing="0" cellpadding="0">
                     <tr>
                       <td class="title">
-                        <a href="<%= product_url(product, auth_token: @user.authentication_token) %>" target="_blank">
+                        <a href="<%= product_url(product) %>" target="_blank">
                           <%= product.name %>
                         </a>
                       </td>
@@ -49,7 +49,7 @@
           <table cellspacing="0" cellpadding="0" width="482">
             <tr>
               <td width="482" align="center">
-                <a href="<%= discover_url(auth_token: @user.authentication_token) %>" target="_blank" class="button other">
+                <a href="<%= discover_url %>" target="_blank" class="button other">
                   Explore the product showcase
                 </a>
               </td>

@@ -24,95 +24,30 @@
         <% if @wip.open? %>to earn <%= format_coins(@wip.product, @wip.contracts.earnable_cents) %>.<% end %>
       </div>
 
-      <ul class="nav nav-tabs text-small" style="border-top: 1px dotted #ebebeb">
-        <li class="active"><a href="#comment" data-toggle="tab">Comment</a></li>
-        <li><a href="#code" data-toggle="tab">Code</a></li>
-        <li><a href="#design" data-toggle="tab">Design</a></li>
-        <li><a href="#copy" data-toggle="tab">Text</a></li>
-      </ul>
+      <div id="comment">
+        <%= form_tag product_wip_comments_path(@wip.product, @wip), method: :post, class: %w(form new_event_comment) do %>
 
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <!-- Comments -->
+          <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
+            <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Say something awesome!', rows: 3, style: 'border-top-left-radius: 0', "data-product-id" => @wip.product.id %>
 
-        <div class="tab-pane active" id="comment">
-          <%= form_tag product_wip_comments_path(@wip.product, @wip), method: :post, class: %w(form new_event_comment) do %>
-
-            <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
-              <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Say something awesome!', rows: 3, style: 'border-top-left-radius: 0', "data-product-id" => @wip.product.id %>
-
-              <div class="dropzone-inner js-dropzone-select">
-                To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <div class="btn-group">
-                <%= button_tag 'Comment', name: 'event_comment[type]', value: 'Event::Comment', type: 'submit', class: %w(btn btn-primary) %>
-                <% if can?(:update, @wip.product) %>
-                  <% if @wip.resolved? %>
-                    <%= button_tag 'Comment & Reopen', name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-default) %>
-                  <% else %>
-                    <%= button_tag 'Comment & Close', name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-default) %>
-                  <% end %>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
-        </div>
-
-
-        <!-- Code -->
-
-        <div class="tab-pane" id="code">
-          <%= form_tag product_wip_code_deliverables_path(@wip.product, @wip), method: :post, class: %w(form) do %>
-
-            <%= text_field_tag 'code_deliverable[url]', nil, class: 'form-control', placeholder: 'Pull Request URL' %>
-
-            <div class="form-actions">
-              <%= submit_tag 'Add Pull Request', class: %w(btn btn-primary) %>
-            </div>
-          <% end %>
-        </div>
-
-
-        <!-- Design -->
-
-        <div class="tab-pane" id="design">
-
-          <div class="well dropzone js-dropzone" id="design-deliverable-dropzone-el">
             <div class="dropzone-inner js-dropzone-select">
-              <div class="upload-state upload-state-ready">
-                Drag &amp; drop a design asset here, or <a class="file-drop-select" href="#">select it from your computer</a>.
-              </div>
+              To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...
             </div>
           </div>
 
-          <script>
-            $(function(){
-              new DesignDeliverableView({
-                el: $('#design-deliverable-dropzone-el'),
-                wip_path: '<%= product_wip_path(@wip.product, @wip) %>'
-              });
-            });
-          </script>
-
-        </div>
-
-
-        <!-- Copy -->
-
-        <div class="tab-pane" id="copy">
-          <%= form_tag product_wip_copy_deliverables_path(@wip.product, @wip), method: :post, class: 'form' do %>
-
-            <%= text_area_tag 'copy_deliverable[body]', nil, class: 'form-control form-type-copy', rows: 3 %>
-
-            <div class="form-actions">
-              <%= submit_tag 'Add Text', class: %w(btn btn-primary) %>
+          <div class="form-actions">
+            <div class="btn-group">
+              <%= button_tag 'Comment', name: 'event_comment[type]', value: 'Event::Comment', type: 'submit', class: %w(btn btn-primary) %>
+              <% if can?(:update, @wip.product) %>
+                <% if @wip.resolved? %>
+                  <%= button_tag 'Comment & Reopen', name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-default) %>
+                <% else %>
+                  <%= button_tag 'Comment & Close', name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-default) %>
+                <% end %>
+              <% end %>
             </div>
-          <% end %>
-        </div>
-
+          </div>
+        <% end %>
       </div>
 
     </div><!-- .media-body -->

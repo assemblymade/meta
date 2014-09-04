@@ -33,6 +33,7 @@ class PostMailer < BaseMailer
     @post.product = @product
     @post.author = @user
     @post.id = SecureRandom.uuid
+    @post.save!
 
     mail(to: @user.email_address, subject: @post.title) do |format|
       format.html { render template: 'post_mailer/created' }

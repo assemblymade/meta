@@ -14,6 +14,7 @@
 ## Setup
 
     $ bundle install
+    $ npm install
 
     # Edit your local configuration
     $ cp .env.sample .env && $EDITOR .env
@@ -21,12 +22,18 @@
     # Setup the database
     $ rake db:setup
 
-    $ foreman start
+    $ forego start [-f Procfile.dev] # if you have a Procfile.dev
 
 ### Compiling Components.js
 
     $ npm install
     $ npm run watch
+
+Alternatively, add the following line to your Procfile.dev:
+
+    node: npm install && npm run watch
+
+
 
 ### Elasticsearch
 

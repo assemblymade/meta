@@ -117,6 +117,13 @@
         Admin
       </a>
     </li>
+
+    <li class="<%= nav_active_class(:plans) %>">
+      <a href="<%= product_payments_path(product) %>">
+        <span class="icon icon-credit-card icon-left"></span>
+        Payments
+      </a>
+    </li>
   <% end %>
 </ul>
 

@@ -45,7 +45,6 @@ class TasksController < WipsController
 
   def show
     @bounty = @wip # fixme: legacy
-    @offers = @bounty.offers
 
     @milestone = MilestoneTask.where('task_id = ?', @bounty.id).first.try(:milestone)
     if signed_in?

@@ -43,7 +43,6 @@
       return (
         <div className="financials">
           <FinancialsKey product={this.props.product} />
-
           <FinancialsMeter product={this.props.product} reports={groupedReports} />
           <FinancialsTable product={this.props.product} reports={groupedReports} />
         </div>
@@ -66,17 +65,20 @@
       // TODO: Break out dl-inline styles into reusable SCSS components
       return (
         <div>
-          <dl className="text-small">
-            <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#48a3ed'}}></dt>
-            <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>{this.props.product.name} annuity</dd>
-            <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#f93232'}}></dt>
-            <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>Expenses (hosting, maintenance, etc.)</dd>
-            <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#fd6b2f'}}></dt>
-            <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>Assembly</dd>
-            <dt style={{'width': '10px', 'height': '10px', display: 'inline-block', 'background-color': '#e9ad1a'}}></dt>
-            <dd style={{'margin-left': '5px', 'margin-right': '15px', display: 'inline', clear: 'left'}}>App Coin holders</dd>
-          </dl>
-          <strong>{moment(this.state.month).format('MMM YYYY')}</strong>
+          <ul className="list-inline omega">
+            <li>
+              <span className="bg-success"></span>
+              <span className="text-success">Payout</span>
+            </li>
+            <li>
+              <span className="bg-warning"></span>
+              <span className="text-warning">Assembly</span>
+            </li>
+            <li>
+              <span className="bg-primary"></span>
+              <span className="text-primary">Expenses</span>
+            </li>
+          </ul>
         </div>
       );
     },
@@ -125,30 +127,31 @@
       }
 
       return (
-        <div className="progress">
-          <div id={name + '-meter'}
-               className="progress-bar"
-               role="progress-bar"
-               style={{ width: annuityWidth + '%' }}>
-            <span>{'$' + numeral(annuity / 100).format('0,0')}</span>
+        <div className="row">
+          <div className="col-sm-2">
+            {moment(this.state.month).format('MMM YYYY')}
           </div>
-          <div id='costs-share'
-               className="progress-bar progress-bar-danger"
-               role="progress-bar"
-               style={{ width: costsWidth + '%' }}>
-            <span>{'$' + numeral(expenses / 100).format('0,0')}</span>
-          </div>
-          <div id='assembly-share'
-               className="progress-bar"
-               role="progress-bar"
-               style={{ width: assemblyWidth + '%', 'background-color': '#fd6b2f' }}>
-            <span>{'$' + numeral(assemblyShare / 100).format('0,0')}</span>
-          </div>
-          <div id='community-meter'
-               className="progress-bar progress-bar-warning"
-               role="progress-bar"
-               style={{ width: communityWidth + '%'}}>
-            <span>{'$' + numeral(communityShare / 100).format('0,0')}</span>
+          <div className="com-sm-10">
+            <div className="progress">
+              <div id='community-meter'
+                   className="progress-bar progress-bar-success"
+                   role="progress-bar"
+                   style={{ width: communityWidth + '%'}}>
+                <span>{'$' + numeral(communityShare / 100).format('0,0')}</span>
+              </div>
+              <div id='assembly-share'
+                   className="progress-bar progress-bar-warning"
+                   role="progress-bar"
+                   style={{ width: assemblyWidth + '%'}}>
+                <span>{'$' + numeral(assemblyShare / 100).format('0,0')}</span>
+              </div>
+              <div id={name + '-meter'}
+                   className="progress-bar"
+                   role="progress-bar"
+                   style={{ width: (annuityWidth + costsWidth) + '%' }}>
+                <span>{'$' + numeral((annuity + expenses) / 100).format('0,0')}</span>
+              </div>
+            </div>
           </div>
         </div>
       );
@@ -184,9 +187,6 @@
                 </th>
                 <th className="text-right">
                   Expenses
-                </th>
-                <th className="text-right">
-                  {name}
                 </th>
                 <th className="text-right">
                   Assembly
@@ -226,12 +226,13 @@
     },
 
     tRow: function(month, total, annuity, costs, assembly, community) {
+      var expenses = annuity + costs;
+
       return (
         <tr style={{cursor: 'pointer'}} onMouseOver={this.monthChanged(month)} key={month}>
           <td id={'financials-' + month}>{moment(month).format('MMM YYYY')}</td>
           <td>{'$' + numeral(total / 100.0).format('0,0')}</td>
-          <td className="text-right">{'$' + numeral(costs / 100.0).format('0,0')}</td>
-          <td className="text-right">{'$' + numeral(annuity / 100.0).format('0,0')}</td>
+          <td className="text-right">{'$' + numeral(expenses / 100.0).format('0,0')}</td>
           <td className={"text-right"}>{'$' + numeral(assembly / 100.0).format('0,0')}</td>
           <td className={"text-right"}>{'$' + numeral((community - assembly) / 100.0).format('0,0')}</td>
         </tr>

@@ -79,7 +79,7 @@ After a successful launch, Helpful is aiming to ramp up marketing. The team is p
                           <tbody>
                             <tr>
                               <td style="border-color: #2ba6cb;">
-                                <a style="color: #fff !important;" href="<%= global_interests_url('design', { auth_token: @user.authentication_token }) %>">Design</a>
+                                <a style="color: #fff !important;" href="<%= global_interests_url('design') %>">Design</a>
                               </td>
                             </tr>
                           </tbody>
@@ -99,7 +99,7 @@ After a successful launch, Helpful is aiming to ramp up marketing. The team is p
                           <tbody>
                             <tr>
                               <td style=>
-                                <a style="color: #fff !important;" href="<%= global_interests_url('backend', { auth_token: @user.authentication_token }) %>">Backend</a>
+                                <a style="color: #fff !important;" href="<%= global_interests_url('backend') %>">Backend</a>
                               </td>
                             </tr>
                           </tbody>
@@ -119,7 +119,7 @@ After a successful launch, Helpful is aiming to ramp up marketing. The team is p
                           <tbody>
                             <tr>
                               <td style="background: #5bc0de !important; border-color: #5bc0de !important;">
-                                <a style="color: #fff !important;" href="<%= global_interests_url('frontend', { auth_token: @user.authentication_token }) %>">Frontend</a>
+                                <a style="color: #fff !important;" href="<%= global_interests_url('frontend') %>">Frontend</a>
                               </td>
                             </tr>
                           </tbody>
@@ -139,7 +139,7 @@ After a successful launch, Helpful is aiming to ramp up marketing. The team is p
                           <tbody>
                             <tr>
                               <td style="background: #d9534f !important; border-color: #d9534f !important;">
-                                <a style="color: #fff !important;" href="<%= global_interests_url('marketing', { auth_token: @user.authentication_token }) %>">Marketing</a>
+                                <a style="color: #fff !important;" href="<%= global_interests_url('marketing') %>">Marketing</a>
                               </td>
                             </tr>
                           </tbody>

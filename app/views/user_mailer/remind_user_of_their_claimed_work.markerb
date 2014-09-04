@@ -6,6 +6,6 @@ Just checking in to see how the <%=@wip.product.name%> task [<%="##{@wip.number}
 If you need help you can always drop in [chat](<%= ENV['PUBLIC_CHAT_URL'] %>) or ask a question in the [task](<%= url_for([@wip.product, @wip])%>). <%= @watchers.collect{|u| link_to("@#{u.username}", user_url(u))}.join(' and ').html_safe  %> upvoted it too so they may also be able to help out.
 <% end %>
 
-No worries if you are still working through it...this [quick link](<%= polymorphic_url([@wip.product, @wip, :checkin], auth_token: @user.authentication_token) %>) will let everyone know you're still on it.
+No worries if you are still working through it...this [quick link](<%= polymorphic_url([@wip.product, @wip, :checkin]) %>) will let everyone know you're still on it.
 
 Matt
