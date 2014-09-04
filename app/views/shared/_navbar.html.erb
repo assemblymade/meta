@@ -73,8 +73,4 @@
       </div>
     </div>
   </div>
-  <% if @product && !user_signed_in? %>
-    <div data-react-class="ProductBanner" data-react-props="<%= { productName: @product.name }.to_json %>" style="text-align: center; width: 100%;">
-    </div>
-  <% end %>
 </div>
