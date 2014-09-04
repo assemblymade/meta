@@ -38,11 +38,19 @@ describe Task do
   end
 
   describe "award" do
-    it "creates award Activity" do
+    it "creates award Activity but does not resolve the task" do
       expect { task.award!(core_member, comment) }.to change(Activity, :count).by(1)
+      expect(task.resolved?).to be_false
     end
 
     # it "increments"
 
+  end
+
+  describe 'close' do
+    it "creates award Activity and resolves the task" do
+      expect { task.close!(core_member) }.to change(Activity, :count).by(1)
+      expect(task.resolved?).to be_true
+    end
   end
 end
