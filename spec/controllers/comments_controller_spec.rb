@@ -17,7 +17,7 @@ describe CommentsController do
     end
 
     it "assigns event" do
-      expect(assigns(:event))
+      expect(assigns(:event)).to be
     end
   end
 end

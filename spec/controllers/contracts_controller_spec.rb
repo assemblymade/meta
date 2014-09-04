@@ -12,7 +12,7 @@ describe ContractsController do
 
       post :create, format: :json, product_id: product.slug, contract: { user: staff_user.username, amount: 0.1 }
       expect(response.status).to eq(201)
-      expect(assigns(:contract))
+      expect(assigns(:contract)).to be
 
       sign_out staff_user
     end
@@ -39,7 +39,7 @@ describe ContractsController do
 
       patch :update, format: :json, product_id: product.slug, id: contract.id, contract: { user: staff_user.id, amount: 0.1 }
       expect(response.status).to eq(201)
-      expect(assigns(:contract))
+      expect(assigns(:contract)).to be
     end
 
     it 'does not let allow unauthorized users to update contracts' do

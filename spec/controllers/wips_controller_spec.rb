@@ -56,7 +56,7 @@ describe TasksController do
     it 'tags a wip' do
       patch :tag, product_id: product.slug, wip_id: wips.first.number, task: { tag_list: ['foo', 'bar', 'baz'] }
       expect(response.status).to eq(302)
-      expect(assigns(:wips))
+      expect(assigns(:wips)).to be
     end
   end
 
