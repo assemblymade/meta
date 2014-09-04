@@ -100,7 +100,13 @@ class WipsController < ProductController
     if winner_id = params.fetch(:event_id)
       authorize! :award, @wip
       @event = Event.find(winner_id)
+
       @wip.award! current_user, @event
+
+      if params[:close]
+        @wip.close! current_user
+      end
+
       if @product.tasks.won_by(@event.user).count == 1
         BadgeMailer.delay(queue: 'mailer').first_win(@event.id)
       end

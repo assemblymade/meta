@@ -27,6 +27,13 @@
                     Award bounty to {{#actor}}@{{username}}{{/actor}}
                   </a>
                 </li>
+
+                <li>
+                  <a class="event-award" href="{{award_url}}?event_id={{id}}&close=true" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
+                    <i class="icon icon-star dropdown-glyph"></i>
+                    Award bounty to {{#actor}}@{{username}}{{/actor}} and close it
+                  </a>
+                </li>
               {{/award_url}}
 
               {{#edit_url}}

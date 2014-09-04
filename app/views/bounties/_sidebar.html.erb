@@ -87,6 +87,37 @@
         review.
       -->
       <p class="omega">A submission is currently being reviewed by the Core Team.</p>
+  <% when 'awarded' %>
+    <div class="panel-heading" style="background-color: #fff;">
+      <div class="progress progress-small omega">
+        <div class="progress-bar progress-bar-success" style="width: 90%;"></div>
+      </div>
+      <h6 class="text-muted omega">
+        Awarded
+      </h6>
+    </div>
+
+    <div class="panel-body text-small">
+      <% if bounty.winners.any? %>
+        <% bounty.winners.each do |winner| %>
+          <% if signed_in? && winner == current_user %>
+            <p>
+              You were awarded
+              <%= format_coins(bounty.product, bounty.contracts.earnable_cents) %>
+              for completing this bounty.
+            </p>
+            <p class="omega"><strong>Keep up the great work!</strong></p>
+          <% else %>
+            <p class="omega">
+              <strong><%= winner.username %></strong>
+              was awarded
+              <%= format_coins(bounty.product, bounty.contracts.earnable_cents) %>
+              for completing this bounty.
+            </p>
+          <% end %>
+        <% end %>
+      <% end %>
+
   <% when 'resolved' %>
     <div class="panel-heading" style="background-color: #fff;">
       <div class="progress progress-small omega">
