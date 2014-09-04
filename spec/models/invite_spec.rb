@@ -56,7 +56,7 @@ describe Invite do
       invite = create_invite(tip_cents: 100)
       invite.claim!(invitee)
 
-      expect(invite.reload.claimed_at).to be_same_time_as(Time.current)
+      expect(invite.reload.claimed_at).to be_within(1).of(Time.current)
     end
 
     it 'sets invitee' do

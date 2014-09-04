@@ -20,6 +20,7 @@ class Story < ActiveRecord::Base
     # ["Launch", "Product"]                   => :product_subscribers,
     # ["Open", "Discussion"]                  => :wip_subscribers,
     # ["Open", "Task"]                        => :wip_subscribers,
+    ["Post", "Post"]                        => :product_subscribers,
     # ["Post", "Discussion"]                  => :wip_subscribers,
     # ["Post", "Task"]                        => :wip_subscribers,
     # ["Reference", "Discussion"]             => :wip_subscribers,
@@ -40,6 +41,7 @@ class Story < ActiveRecord::Base
     ["Comment", "Discussion"]               => :subject_body,
     ["Comment", "Task"]                     => :subject_body,
     ["Comment", "Wip"]                      => :subject_body,
+    ["Post", "Post"]                        => :subject_body,
     ["Start", "Task"]                       => :description
   }
 

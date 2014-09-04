@@ -20,4 +20,8 @@ class Post < ActiveRecord::Base
     super || body.split("\n").first
   end
 
+  def follower_ids
+    product.follower_ids
+  end
+
 end
