@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140902172818) do
+ActiveRecord::Schema.define(version: 20140904201436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,6 +170,22 @@ ActiveRecord::Schema.define(version: 20140902172818) do
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
   add_index "events", ["wip_id", "number"], name: "index_events_on_wip_id_and_number", unique: true, using: :btree
   add_index "events", ["wip_id"], name: "index_events_on_wip_id", using: :btree
+
+  create_table "expense_claim_attachments", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "expense_claim_id", null: false
+    t.uuid     "attachment_id",    null: false
+    t.datetime "created_at",       null: false
+  end
+
+  create_table "expense_claims", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id",  null: false
+    t.uuid     "user_id",     null: false
+    t.integer  "total",       null: false
+    t.string   "description"
+    t.datetime "paid_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "features", id: false, force: true do |t|
     t.uuid     "id",                      null: false

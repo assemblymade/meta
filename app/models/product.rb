@@ -34,6 +34,7 @@ class Product < ActiveRecord::Base
   has_many :discussions
   has_many :event_activities, through: :events, source: :activities
   has_many :events, :through => :wips
+  has_many :expense_claims
   has_many :financial_accounts, class_name: 'Financial::Account'
   has_many :financial_transactions, class_name: 'Financial::Transaction'
   has_many :invites, as: :via

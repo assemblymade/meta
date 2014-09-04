@@ -235,6 +235,7 @@ ASM::Application.routes.draw do
     resources :watchers
 
     resources :payments, only: [:index, :create, :update, :destroy]
+    resources :expense_claims, only: [:create]
 
     resources :product_logos, only: [:index, :show, :create, :update], as: :logos, path: 'logos'
 

@@ -41,6 +41,7 @@ en:
 
   time:
     formats:
+      friendly: "%B %d, %Y"
       formal: "%Y-%m-%d"
 
   activerecord:

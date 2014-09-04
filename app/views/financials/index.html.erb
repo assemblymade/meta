@@ -5,271 +5,77 @@
 
 <div class="stat-group">
   <div class="stat">
-    <div class="stat-title">Cash</div>
-    <!-- round these numbers -->
-    <div class="stat-value">$12,000</div>
-  </div>
-
-  <div class="stat">
     <div class="stat-title">Total Royalties</div>
-    <!-- round these numbers -->
-    <div class="stat-value">$131,478</div>
+    <div class="stat-value"><%= short_currency @product.profit_reports.map(&:profit_post_annuity).reduce(:+) %></div>
   </div>
 
   <div class="stat">
     <div class="stat-title">Total Revenue</div>
-    <div class="stat-value">$166,496</div>
+    <div class="stat-value"><%= short_currency @product.profit_reports.map(&:revenue).reduce(:+) %></div>
   </div>
 
   <div class="stat">
     <div class="stat-title">Total Expenses</div>
-    <div class="stat-value">$20,409</div>
+    <div class="stat-value"><%= short_currency @product.profit_reports.map(&:all_expenses).reduce(:+) %></div>
   </div>
 </div>
 
 <hr>
-
-
-<div class="pull-right">
-  <div class="modal fade" id="new-royalty-modal" tabindex="-1" role="dialog" aria-labelledby="new-royalty-modal-label" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title" id="new-royalty-modal-label">Modal title</h4>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="well well-sm">
-                <dl class="omega">
-                  <dt>Accrued Cash</dt>
-                  <dd>$12,000.00</dd>
-                  <dt>Accrued Expenses</dt>
-                  <dd>&minus;$3,437.00</dd>
-                  <dt>Platform Cost</dt>
-                  <dd>&minus;$3,437.00</dd>
-                  <dt>Royalty</dt>
-                  <dd class="text-success">$21,507.00</dd>
-                </dl>
-              </div>
-            </div>
-            <div class="col-md-8">
-              <div class="form-group">
-                <label class="control-label">Issuer</label>
-                <div class="form-text">
-                  <span class="icon-left">
-                    <%= avatar_tag(User.find_by_username('mdeiters'), 24) %>
-                  </span>
-                  mdeiters
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label">Description</label>
-                <textarea class="form-control" rows="4"></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success">Issue $21,507 in royalties</button>
-        </div>
-      </div>
-    </div>
-  </div><!-- .modal -->
-</div>
-<h4>Recent Royalties</h4>
 
 <table class="table table-responsive table-hover">
   <thead>
     <tr>
       <th></th>
-      <th class="text-left">Accrued Cash</th>
-      <th class="text-right">Accrued Expenses</th>
+      <th class="text-left">Revenue</th>
+      <th class="text-right">Expenses</th>
       <th class="text-right">Platform Cost</th>
       <th class="text-right">Net Royalty</th>
     </tr>
   </thead>
   <tbody>
-    <tr style="cursor:pointer;">
-      <td class="text-muted" id="financials-2014-06-30">1 Jun, 2014</td>
-      <td><a href="#">@mdeiters</a></td>
-      <td>$27,334.00</td>
-      <td class="text-right">&ndash;$3,437.00</td>
-      <td class="text-right">&ndash;$2,389.70</td>
-      <td class="text-right">$21,507.30</td>
-    </tr>
-
-    <tr style="cursor:pointer;">
-      <td class="text-muted" id="financials-2014-05-31">1 May, 2014</td>
-      <td><a href="#">@mdeiters</a></td>
-      <td>$26,632.00</td>
-      <td class="text-right">&minus;$3,474.00</td>
-      <td class="text-right">&minus;$2,315.80</td>
-      <td class="text-right">$20,842.20</td>
-    </tr>
-
-    <tr style="cursor:pointer;">
-      <td class="text-muted" id="financials-2014-04-30">1 Apr, 2014</td>
-      <td><a href="#">@mdeiters</a></td>
-      <td>$30,074.00</td>
-      <td class="text-right">&minus;$3,433.00</td>
-      <td class="text-right">&minus;$2,664.10</td>
-      <td class="text-right">$23,976.90</td>
-    </tr>
-
-    <tr style="cursor:pointer;">
-      <td class="text-muted" id="financials-2014-03-30">1 Mar, 2014</td>
-      <td><a href="#">@mdeiters</a></td>
-      <td>$34,020.00</td>
-      <td class="text-right">&minus;$3,363.00</td>
-      <td class="text-right">&minus;$3,065.70</td>
-      <td class="text-right">$27,591.30</td>
-    </tr>
-
-    <tr style="cursor:pointer;">
-      <td class="text-muted" id="financials-2014-02-28">1 Feb, 2014</td>
-      <td><a href="#">@mdeiters</a></td>
-      <td>$20,704.00</td>
-      <td class="text-right">&minus;$3,704.00</td>
-      <td class="text-right">&minus;$1,700.00</td>
-      <td class="text-right">$15,300.00</td>
-    </tr>
-
-    <tr style="cursor:pointer;">
-      <td class="text-muted" id="financials-2014-01-31">1 Jan, 2014</td>
-      <td><a href="#">@mdeiters</a></td>
-      <td>$27,732.00</td>
-      <td class="text-right">&minus;$2,998.00</td>
-      <td class="text-right">&minus;$2,473.40</td>
-      <td class="text-right">$22,260.60</td>
-    </tr>
-
+    <% @product.profit_reports.order(end_at: :desc).each do |report| %>
+      <tr style="cursor:pointer;">
+        <td class="text-muted" id="financials-<%= report.end_at.strftime("%Y-%m-%d") %>"><%= l report.end_at, format: :month %></td>
+        <td><%= currency report.revenue, precision: 2 %></td>
+        <td class="text-right"><%= currency -(report.expenses + report.annuity), precision: 2 %></td>
+        <td class="text-right"><%= currency -report.fee, precision: 2 %></td>
+        <td class="text-right"><%= currency report.profit_post_annuity, precision: 2 %></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 
 <hr>
 
-<div class="pull-right">
-  <ul class="list-inline">
-    <li>
-      <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#new-expense-modal">
-        Log expense
-      </button>
-    </li>
-  </ul>
+<% if partner?(@product) %>
+  <div class="pull-right">
+    <ul class="list-inline">
+      <li>
+        <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#new-expense-modal">
+          Log expense
+        </button>
+      </li>
+    </ul>
 
-  <div class="modal fade" id="new-expense-modal" tabindex="-1" role="dialog" aria-labelledby="new-expense-modal-label" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title" id="new-expense-modal-label">Log expense</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label class="control-label">Credit</label>
-            <div class="form-text">
-              <span class="icon-left">
-                <%= avatar_tag(User.find_by_username('mdeiters'), 24) %>
-              </span>
-              mdeiters
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="control-label">Amount</label>
-            <div class="input-group">
-              <div class="input-group-addon">$</div>
-              <input type="number" class="form-control input-lg">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="control-label">Description</label>
-            <textarea class="form-control" rows="2"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success">Log expense</button>
-        </div>
-      </div>
-    </div>
-  </div><!-- .modal -->
-
-</div>
+    <%= render 'expense_modal' %>
+  </div>
+<% end %>
 <h4>Recent Expenses</h4>
 
 <table class="table table-hover">
   <tbody>
-    <tr>
-      <td><span class="text-muted">July 25th, 2014</span></td>
-      <td>
-        <a href="#">@chrislloyd</a>
-      </td>
-      <td>
-        Money from this thing
-      </td>
-      <td><span class="text-muted small">PENDING</span></td>
-      <td class="text-right">$28.00</td>
-    </tr>
-    <tr>
-      <td><span class="text-muted">July 25th, 2014</span></td>
-      <td>
-        <a href="#">@chrislloyd</a>
-      </td>
-      <td>
-        Expense for this thing
-      </td>
-      <td></td>
-      <td class="text-right">$18.00</td>
-    </tr>
-    <tr>
-      <td><span class="text-muted">July 25th, 2014</span></td>
-      <td>
-        <a href="#">@chrislloyd</a>
-      </td>
-      <td>
-        Money from this thing
-      </td>
-      <td></td>
-      <td class="text-right">$28.00</td>
-    </tr>
-    <tr>
-      <td><span class="text-muted">July 25th, 2014</span></td>
-      <td>
-        <a href="#">@chrislloyd</a>
-      </td>
-      <td>
-        June Heroku costs
-      </td>
-      <td></td>
-      <td class="text-right">$12.00</td>
-    </tr>
-    <tr>
-      <td><span class="text-muted">June 25th, 2014</span></td>
-      <td>
-        <a href="#">@chrislloyd</a>
-      </td>
-      <td>
-        July Heroku costs
-      </td>
-      <td></td>
-      <td class="text-right">$18.00</td>
-    </tr>
-    <tr>
-      <td><span class="text-muted">May 25th, 2014</span></td>
-      <td>
-        <a href="#">@chrislloyd</a>
-      </td>
-      <td>
-        Charge from small plan
-      </td>
-      <td></td>
-      <td class="text-right">$30.00</td>
-    </tr>
+    <% @product.expense_claims.each do |claim| %>
+      <tr>
+        <td><span class="text-muted"><%= l claim.created_at, format: :friendly %></span></td>
+        <td>
+          <%= user_link_username(claim.user) %>
+        </td>
+        <td>
+          <%= claim.description %>
+        </td>
+        <td><span class="text-muted small">PENDING</span></td>
+        <td class="text-right"><%= currency claim.total %></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
