@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140825185713) do
+ActiveRecord::Schema.define(version: 20140904012629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,16 @@ ActiveRecord::Schema.define(version: 20140825185713) do
     t.decimal  "amount",     null: false
     t.datetime "created_at", null: false
     t.datetime "deleted_at"
+  end
+
+  create_table "awards", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "awarder_id"
+    t.uuid     "event_id"
+    t.uuid     "wip_id"
+    t.uuid     "winner_id"
+    t.integer  "cents"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "code_deliverables", id: false, force: true do |t|
@@ -314,6 +324,12 @@ ActiveRecord::Schema.define(version: 20140825185713) do
 
   add_index "posts", ["product_id", "slug"], name: "index_posts_on_product_id_and_slug", unique: true, using: :btree
 
+  create_table "potential_users", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.datetime "created_at", null: false
+    t.string   "email",      null: false
+    t.uuid     "product_id", null: false
+  end
+
   create_table "preorders", id: false, force: true do |t|
     t.uuid     "id",         null: false
     t.uuid     "vote_id"
@@ -502,7 +518,7 @@ ActiveRecord::Schema.define(version: 20140825185713) do
 
   create_table "transaction_log_entries", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "product_id",     null: false
-    t.uuid     "work_id",        null: false
+    t.uuid     "work_id"
     t.uuid     "wallet_id",      null: false
     t.string   "action",         null: false
     t.text     "value"

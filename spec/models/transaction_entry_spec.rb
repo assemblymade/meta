@@ -10,17 +10,19 @@ describe 'log entries' do
     let(:winning_event) { Event::Comment.new(body: 'Dagron', user: bounty_creator) }
 
     before {
-      TransactionLogEntry.minted!(nil, Time.now, product, product.id, creator.id, 1)
+      TransactionLogEntry.minted!(nil, Time.now, product, creator.id, 100)
       Offer.create!(bounty: bounty, user: creator, amount: 100, ip: '1.1.1.1')
       bounty.events << winning_event
     }
 
+    # (pletcher): I'm worried that this test might have been broken by removing `work_id` from
+    # TransactionLogEntry
     it 'creates mint entry' do
       bounty.award(product.user, winning_event)
 
       expect(
-        TransactionLogEntry.minted.where(work_id: bounty.id).pluck(:action, :wallet_id, :cents)
-      ).to match_array([['minted', bounty_creator.id, 100]])
+        TransactionLogEntry.minted.where(product_id: product.id).pluck(:action, :wallet_id, :cents)
+      ).to include(['minted', creator.id, 100])
     end
 
     it 'credits bounty creator' do
@@ -34,7 +36,7 @@ describe 'log entries' do
     let(:from) { User.make! }
 
     it 'creates debit and credit when task is promoted' do
-      TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, bounty.id, from.id, 3)
+      TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, from.id, 3)
 
       Timecop.travel(Time.now + 5)
 

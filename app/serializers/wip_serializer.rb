@@ -50,9 +50,9 @@ class WipSerializer < ActiveModel::Serializer
     wip.promoted?
   end
 
-  def winner
-    if winner = wip.winner
-      UserSerializer.new(winner)
+  def winners
+    if winners = wip.winners
+      winners.each { |winner| UserSerializer.new(winner) }
     end
   end
 

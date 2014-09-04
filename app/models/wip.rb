@@ -22,6 +22,7 @@ class Wip < ActiveRecord::Base
   has_many :muters, through: :mutings, source: :user
   has_many :taggings, class_name: 'Wip::Tagging'
   has_many :tags, through: :taggings, class_name: 'Wip::Tag'
+  has_many :awards
 
   has_one :milestone
   accepts_nested_attributes_for :milestone
@@ -68,7 +69,7 @@ class Wip < ActiveRecord::Base
   end
 
   def awarded?
-    self.try(:winning_event_id)
+    self.awards.any?
   end
 
   def close(closer, reason=nil)
@@ -85,7 +86,6 @@ class Wip < ActiveRecord::Base
       add_event ::Event::Reopen.new(user: opener, body: reason) do
         self.closer = nil
         self.closed_at = nil
-        self.winning_event = nil
         milestones.each(&:touch)
       end
     end
@@ -122,10 +122,6 @@ class Wip < ActiveRecord::Base
 
   def score_multiplier
     nil
-  end
-
-  def winning_event=(something)
-    # ignore
   end
 
   def awardable?

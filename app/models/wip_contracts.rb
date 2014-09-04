@@ -1,5 +1,5 @@
 class WipContracts
-  attr_reader :product, :task, :auto_tip_contracts
+  attr_reader :product, :task
 
   def initialize(task, auto_tip_contracts=nil)
     @task = task

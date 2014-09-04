@@ -51,14 +51,13 @@ class TransactionLogEntry < ActiveRecord::Base
   def self.end_of_month(time)
     Time.parse(time.end_of_month.strftime("%Y-%m-%dT%T") + '-11:00')
   end
-  
-  def self.minted!(parent_id, created_at, product, work_id, wallet_id, cents, extra=nil)
+
+  def self.minted!(parent_id, created_at, product, wallet_id, cents, extra=nil)
     create!(
       transaction_id: parent_id,
       created_at: created_at,
       product: product,
       action: 'minted',
-      work_id: work_id,
       wallet_id: wallet_id,
       cents: cents,
       extra: extra

@@ -23,6 +23,13 @@ AutoTipContract.blueprint do
   amount { 0.1 }
 end
 
+Award.blueprint do
+  awarder
+  winner
+  event
+  wip
+end
+
 Discussion.blueprint do
   user
   product

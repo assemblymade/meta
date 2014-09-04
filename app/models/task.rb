@@ -1,6 +1,4 @@
 class Task < Wip
-  belongs_to :winning_event, class_name: 'Event'
-
   has_many :deliverables, foreign_key: 'wip_id'
   alias_method :design_deliverables, :deliverables
 
@@ -20,9 +18,9 @@ class Task < Wip
   scope :allocated,   -> { where(state: :allocated) }
   scope :hot,         -> { order(:trending_score => :desc) }
   scope :reviewing,   -> { where(state: :reviewing) }
-  scope :won,         -> { joins(:winning_event) }
-  scope :won_after,   ->(time) { won.where('closed_at >= ?', time) }
-  scope :won_by,      ->(user) { won.where('events.user_id = ?', user.id) }
+  scope :won,         -> { joins(:awards) }
+  scope :won_after,   -> (time) { won.where('closed_at >= ?', time) }
+  scope :won_by,      -> (user) { won.where('awards.winner_id = ?', user.id) }
 
   AUTHOR_TIP = 0.05
   IN_PROGRESS = 'allocated'
@@ -189,10 +187,15 @@ class Task < Wip
     add_activity(closer, Activities::Award) do
       win = ::Event::Win.new(user: closer, event: winning_event)
       add_event(win) do
-        set_closed(closer)
-        self.winning_event = winning_event
+        # set_closed(closer)
+        award = self.awards.create!(
+          awarder: closer,
+          winner: winning_event.user,
+          event: winning_event,
+          wip: self
+        )
 
-        minting = TransactionLogEntry.minted!(nil, Time.current, product, self.id, winning_event.user.id, self.value)
+        minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, self.value)
 
         milestones.each(&:touch)
       end
@@ -247,8 +250,8 @@ class Task < Wip
     work
   end
 
-  def winner
-    winning_event and winning_event.user
+  def winners
+    awards.map(&:winner)
   end
 
   def open?
