@@ -50,7 +50,7 @@ class WipsController < ProductController
       @wip.update_title! current_user, title unless title == @wip.title
     end
 
-    apply_tags()
+    apply_tags
 
     @wip.update_attributes(update_wip_params)
 
@@ -64,7 +64,7 @@ class WipsController < ProductController
   end
 
   def tag
-    apply_tags()
+    apply_tags
 
     respond_with @wip, location: wip_path(@wip)
   end
