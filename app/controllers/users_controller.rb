@@ -6,13 +6,8 @@ class UsersController < ApplicationController
   def show
     set_user
 
-    filters = params.slice(:user, :state)
-
-    if filters[:user].blank?
-      filters[:user] = 'started'
-    else
-      filters[:state] = true
-    end
+    default_filters = { user: 'assigned', state: true }.with_indifferent_access
+    filters = default_filters.merge(params.slice(:user, :state))
 
     query = FilterWipsQuery.call(Wip.all, @user, filters)
     query = query.ordered_by_activity

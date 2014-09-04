@@ -66,9 +66,9 @@
                 Started
               </a>
             </li>
-            <li class="<%= 'active' if current_page?(user_path(@user, user: 'assigned')) %>">
-              <a href="<%= user_path(@user, user: 'assigned') %>">
-                Assigned
+            <li class="<%= 'active' if current_page?(user_path(@user, user: 'started')) %>">
+              <a href="<%= user_path(@user, user: 'started') %>">
+                Created
               </a>
             </li>
             <li class="<%= 'active' if current_page?(user_path(@user, user: 'commented')) %>">
