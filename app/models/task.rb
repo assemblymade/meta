@@ -29,7 +29,7 @@ class Task < Wip
   workflow do
     state :open do
       event :allocate,    :transitions_to => :allocated
-      event :award,       :transitions_to => :resolved
+      event :award,       :transitions_to => :awarded
       event :close,       :transitions_to => :resolved
       event :review_me,   :transitions_to => :reviewing
       event :unallocate,  :transitions_to => :open
@@ -37,14 +37,18 @@ class Task < Wip
     state :allocated do
       event :allocate,    :transitions_to => :allocated
       event :unallocate,  :transitions_to => :open
-      event :award,       :transitions_to => :resolved
+      event :award,       :transitions_to => :awarded
       event :close,       :transitions_to => :resolved
       event :review_me,   :transitions_to => :reviewing
+    end
+    state :awarded do
+      event :award,       :transitions_to => :awarded
+      event :close,       :transitions_to => :resolved
     end
     state :reviewing do
       event :unallocate,  :transitions_to => :open
       event :reject,      :transitions_to => :open
-      event :award,       :transitions_to => :resolved
+      event :award,       :transitions_to => :awarded
       event :close,       :transitions_to => :resolved
     end
     state :resolved do
@@ -187,7 +191,6 @@ class Task < Wip
     add_activity(closer, Activities::Award) do
       win = ::Event::Win.new(user: closer, event: winning_event)
       add_event(win) do
-        # set_closed(closer)
         award = self.awards.create!(
           awarder: closer,
           winner: winning_event.user,
