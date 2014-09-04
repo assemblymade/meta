@@ -43,7 +43,7 @@ describe Wip do
         wip.reload
       }
 
-      its(:current_state) { should == :resolved }
+      its(:current_state) { should == :awarded }
       its(:closed_at) { be_same_time_as Time.current }
     end
 
