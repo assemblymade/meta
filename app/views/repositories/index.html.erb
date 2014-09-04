@@ -21,9 +21,15 @@
         <%= @product.name %> uses GitHub repositories to manage the product's development
         process. Repos give a clear history of every change to the codebase
         &mdash; even changes to PNGs! Not sure what a repo is? Not to worry
-        &mdash; you can crash course
+        &mdash; you can take a crash course
         <a href="http://git-scm.com/book/en/Getting-Started-Git-Basics">here</a>.
       </p>
+      <% if signed_in? && !current_user.has_github_account? %>
+        <a class="btn btn-default" href="<%= user_omniauth_authorize_path(:github) %>" style="margin-bottom:40px">
+          Connect your GitHub account
+        </a>
+      <% end %>
+
       <% if has_repos %>
         <h6>Current Repositories</h6>
         <div class="table-responsive">
@@ -31,12 +37,7 @@
             <tbody>
               <% @product.repos.each do |repo| %>
                 <tr>
-                  <td>
-                    <i class="icon icon-github dropdown-glyph"></i>
-                    <a href="<%= repo.url %>" data-track="product.repo.clicked">
-                      <%= repo.name %>
-                    </a>
-                  </td>
+                  <td><%= render 'shared/repo', repo: repo %></td>
                 </tr>
               <% end %>
             </tbody>
@@ -49,7 +50,7 @@
       <% end %>
 
       <% if @product.slug && can?(:update, @product) %>
-        <h6>Add a new repository</h6>
+        <h6>Create a new repository</h6>
 
         <form role="form" class="form" method='post' action="<%= product_repos_path(@product) %>">
           <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
