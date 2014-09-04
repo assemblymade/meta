@@ -17,10 +17,10 @@
 }
 
 .card-body {
-  padding: 15px;
+  padding: 20px;
 }
 
 .card-footer {
-  padding: 10px 15px;
+  padding: ($line-height-computed/2) 20px;
   background-color: $brand-bg;
 }
