@@ -1,0 +1,16 @@
+<% title 'Notifications' %>
+<%= render 'shared/navbar' %>
+
+<div class="page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div data-react-class="FullPageNewsFeed" data-react-props="<%= {
+          url: notifications_path(format: :json),
+          username: current_user.username
+        }.to_json %>">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
