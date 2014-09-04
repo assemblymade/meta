@@ -17,7 +17,7 @@ describe Invite do
 
     context 'with enough coins' do
       before {
-        TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, bounty.id, invitor.id, 100)
+        TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, invitor.id, 100)
       }
 
       it 'transfers tip from user' do
@@ -42,7 +42,7 @@ describe Invite do
 
   describe '#claim!' do
     before {
-      TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, bounty.id, invitor.id, 100)
+      TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, invitor.id, 100)
     }
 
     it 'transfers coins from escrow to user' do
