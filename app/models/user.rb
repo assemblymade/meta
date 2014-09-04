@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   has_many :votes
   has_many :wips_contributed_to, -> { where(events: { type: Event::MAILABLE }).uniq.order("created_at DESC") }, :through => :events, :source => :wip
   has_many :wips_awarded_to, -> { where(events: { type: Event::Win }).order("created_at DESC") }, :through => :events, :source => :wip
+  has_many :wips_commented_on, -> { where(events: { type: Event::Comment }).order("created_at DESC") }, :through => :events, :source => :wip
   has_many :stream_events, foreign_key: 'actor_id'
   has_many :saved_searches
   has_one  :tax_info

@@ -71,9 +71,9 @@
                 Assigned
               </a>
             </li>
-            <li class="<%= 'active' if current_page?(user_path(@user, user: 'following')) %>">
-              <a href="<%= user_path(@user, user: 'following') %>">
-                Following
+            <li class="<%= 'active' if current_page?(user_path(@user, user: 'commented')) %>">
+              <a href="<%= user_path(@user, user: 'commented') %>">
+                Commented
               </a>
             </li>
             <li class="<%= 'active' if current_page?(user_path(@user, user: 'awarded')) %>">
