@@ -19,6 +19,14 @@ describe UsersController do
 
       expect(assigns(:wips)).to be
     end
+
+    it 'filters wips' do
+      expected_filters = { user: 'assigned', state: true }.with_indifferent_access
+
+      expect(FilterWipsQuery).to receive(:call).with(Wip.all, user, expected_filters).and_call_original
+
+      get :show, id: user.username, user: 'assigned'
+    end
   end
 
   describe '#tracking' do
