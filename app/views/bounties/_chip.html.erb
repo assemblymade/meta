@@ -77,7 +77,7 @@
 
     &middot;
 
-    #<%= bounty.number %> started <%= time_ago_in_words(bounty.created_at) %> ago by <a class="text-muted" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
+    #<%= bounty.number %> created <%= time_ago_in_words(bounty.created_at) %> ago by <a class="text-muted" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
   </div>
 
 </div>
