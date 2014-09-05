@@ -14,7 +14,7 @@ var Avatar = require('./avatar.js.jsx');
     mixins: [NewsFeedMixin],
 
     moreButton: function() {
-      if (this.state.showMore) {
+      if (this.state.stories && this.state.showMore) {
         return <a href="#more" className="btn btn-block" onClick={this.moreStories}>More</a>;
       }
 

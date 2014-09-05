@@ -23,7 +23,7 @@ var Avatar = require('./avatar.js.jsx');
     render: function() {
       return (
         <ul className="dropdown-menu" style={{ 'min-width': '380px', width: '380px' }}>
-          <li style={{ 'overflow-y': 'scroll' }} ref="spinner">
+          <li style={{ 'overflow-y': 'scroll', 'min-height': '60px' }} ref="spinner">
             {this.state.stories ? this.rows(this.state.stories) : null}
           </li>
 
