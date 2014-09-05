@@ -107,15 +107,21 @@
           return;
         }
 
+        var style = {
+          'padding-bottom': '10px',
+          'border-bottom': '1px solid #ebebeb'
+        };
+
+        if (i !== 0) {
+          style['padding-top'] = '15px';
+        }
+
         var user = member.user;
 
         var row = (
           <div className="row"
             key={'row-' + user.id + i}
-            style={{
-              'padding-bottom': '15px',
-              'border-bottom': '1px solid #ebebeb'
-            }}>
+            style={style}>
             {this.avatar(user)}
             {this.member(member)}
           </div>
