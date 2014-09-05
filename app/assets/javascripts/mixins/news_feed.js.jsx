@@ -12,9 +12,9 @@ var update = require('react/lib/update');
     componentDidMount: function() {
       var target = this.refs.spinner && this.refs.spinner.getDOMNode();
       var opts = this.spinnerOptions || {
-        lines: 13,
-        length: 30,
-        radius: 55
+        lines: 10,
+        length: 8,
+        radius: 10
       };
 
       var spinner = this.spinner = new Spinner(opts).spin();
