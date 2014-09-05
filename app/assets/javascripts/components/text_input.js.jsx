@@ -1,18 +1,51 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
-
 (function() {
+  var CONSTANTS = require('../constants');
+  var Dispatcher = require('../dispatcher');
   var TC = CONSTANTS.TEXT_COMPLETE;
 
-  var TextComplete = React.createClass({
+  var TextInput = React.createClass({
     mixins: [React.addons.LinkedStateMixin],
 
+    active: function() {
+      return this.state.inputValue.length >= 2 ? '' : 'disabled';
+    },
+
     getInitialState: function() {
-      return { inputValue: '', transform: (this.props.transform || this.transform) };
+      return {
+        inputValue: '',
+        transform: (this.props.transform || this.transform),
+        hide: true
+      };
+    },
+
+    handleClick: function(e) {
+      Dispatcher.dispatch({
+        action: TC.ACTIONS.ADD_TAG,
+        data: {
+          tag: this.state.transform(this.state.inputValue),
+          url: this.props.url
+        },
+      });
+
+      this.setState({
+        inputValue: '',
+        hide: true
+      });
+    },
+
+    hide: function(e) {
+      this.setState({
+        hide: true
+      });
     },
 
     render: function() {
+      if (this.state.hide) {
+        return <a className="btn btn-default btn-sm btn-block" onClick={this.show}>Add a new tag</a>;
+      }
+
       return (
         <div role="form" className="form-inline">
           <div className="form-group">
@@ -32,6 +65,12 @@ var CONSTANTS = require('../constants');
       );
     },
 
+    show: function(e) {
+      this.setState({
+        hide: false
+      });
+    },
+
     size: function(prefix) {
       switch (this.props.size) {
       case 'small':
@@ -43,36 +82,14 @@ var CONSTANTS = require('../constants');
       }
     },
 
-    active: function() {
-      return this.state.inputValue.length >= 2 ? '' : 'disabled';
-    },
-
-    componentDidMount: function() {
-      Dispatcher.dispatch({
-        action: TC.ACTIONS.SETUP,
-        data: this.getDOMNode()
-      });
-    },
-
-    handleClick: function(e) {
-      Dispatcher.dispatch({
-        action: TC.ACTIONS.ADD_TAG,
-        data: { tag: this.state.transform(this.state.inputValue), url: this.props.url },
-      });
-
-      this.setState({
-        inputValue: ''
-      });
-    },
-
     transform: function(text) {
       return text.replace(/[^\w-]+/g, '-').toLowerCase()
     }
   });
 
   if (typeof module !== 'undefined') {
-    module.exports = TextComplete;
+    module.exports = TextInput;
   }
 
-  window.TextComplete = TextComplete;
+  window.TextInput = TextInput;
 })();

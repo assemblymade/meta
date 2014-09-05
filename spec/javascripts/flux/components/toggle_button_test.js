@@ -1,9 +1,7 @@
 /** @jsx React.DOM */
 
-jest.dontMock(pathToFile('components/toggle_button.js.jsx'));
-
 describe('ToggleButton', function() {
-  var ToggleButton = require(pathToFile('components/toggle_button.js.jsx'));
+  var ToggleButton = require.requireActual(pathToFile('components/toggle_button.js.jsx'));
 
   it('renders a default button', function() {
     var button = TestUtils.renderIntoDocument(

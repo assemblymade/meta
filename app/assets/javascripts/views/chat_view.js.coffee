@@ -105,8 +105,8 @@ class window.ChatView extends Backbone.View
        }),
       document.getElementById('selected-tags')
     );
-    textComplete = React.renderComponent(
-      TextComplete({
+    textInput = React.renderComponent(
+      TextInput({
         width: '125px',
         size: 'small',
         label: 'Add tag',
