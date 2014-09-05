@@ -24,7 +24,8 @@ var TagListStore = require('../stores/tag_list_store');
       return {
         adding: false,
         popoverShown: false,
-        tags: this.props.tags,
+        removeTagVisibility: 'hidden',
+        tags: this.props.tags
       }
     },
 
@@ -32,8 +33,6 @@ var TagListStore = require('../stores/tag_list_store');
       var self = this;
 
       return function(e) {
-        e.preventDefault();
-
         Dispatcher.dispatch({
           action: TAG_LIST.ACTIONS.ADD_TAG,
           data: {
@@ -51,6 +50,12 @@ var TagListStore = require('../stores/tag_list_store');
     handleHide: function() {
       this.setState({
         popoverShown: false
+      });
+    },
+
+    hideRemoveTag: function(e) {
+      this.setState({
+        removeTagVisibility: 'hidden'
       });
     },
 
@@ -85,7 +90,7 @@ var TagListStore = require('../stores/tag_list_store');
     },
 
     popoverButton: function() {
-      if (this.props.destination && this.state.tags.length > 0 && this.state.tags[this.state.tags.length - 1] !== '') {
+      if (this.props.destination && !this.props.newBounty && this.state.tags.length > 0 && this.state.tags[this.state.tags.length - 1] !== '') {
         return (
           <li>
             <BsPopover
@@ -107,7 +112,8 @@ var TagListStore = require('../stores/tag_list_store');
             <a style={{
                   'margin-left': '2px',
                   'font-size': '10px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  visibility: this.state.removeTagVisibility
                 }}
                 onClick={this.removeTag(tag)}>
               &times;
@@ -140,6 +146,12 @@ var TagListStore = require('../stores/tag_list_store');
           {this.popoverButton()}
         </ul>
       );
+    },
+
+    showRemoveTag: function(e) {
+      this.setState({
+        removeTagVisibility: 'visible'
+      });
     },
 
     suggestedTags: function() {
@@ -184,7 +196,11 @@ var TagListStore = require('../stores/tag_list_store');
         }
 
         return (
-          <li key={tag} style={{'margin': '0px'}}>
+          <li
+              key={tag}
+              style={{'margin': '0px'}}
+              onMouseOver={self.showRemoveTag}
+              onMouseOut={self.hideRemoveTag}>
             <a style={style}
                 href={self.props.filterUrl && self.props.destination ?
                   self.props.filterUrl + '?tag=' + tag :

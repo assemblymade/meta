@@ -67,9 +67,30 @@
                   tag.name
                 end.as_json : []),
                 filterUrl: product_wips_path(@bounty.product),
-                destination: true
+                destination: true,
+                newBounty: true
               }.to_json %>">
         </div>
+
+        <div data-react-class="TextInput"
+             data-react-props="<%= {
+               width: "125px",
+               size: "small",
+               label: "Add tag",
+               prepend: "#",
+               prompt: "Add",
+               filterUrl: product_wips_path(@bounty.product)
+             }.to_json %>">
+        </div>
+
+        <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
+        <div data-react-class="TagList"
+              data-react-props="<%= {
+                tags: Wip::Tag.suggested_tags.as_json,
+                destination: false
+              }.to_json %>">
+        </div>
+
       </div>
     <% end %>
   </div>
