@@ -12,7 +12,8 @@
   <div class="page-header-meta">
     <ul class="list-piped pull-right">
       <li>
-        <div data-react-class="CreateBountyButton" data-react-props="<%= { url: product_wips_path(@product) }.to_json %>"></div>
+        <% #<div data-react-class="CreateBountyButton" data-react-props="<%= { url: product_wips_path(@product) }.to_json >"></div> %>
+        <a class="text-success" href="<%= new_product_wip_path(@product) %>">Create Bounty</a>
       </li>
     </ul>
 
