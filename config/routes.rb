@@ -76,6 +76,10 @@ ASM::Application.routes.draw do
       post '/signup', action: :create, :as => :user_registration
     end
 
+    get '/dashboard' => 'dashboard#activity', as: :dashboard
+    get '/dashboard/activity' => 'dashboard#activity', as: :activity_dashboard
+    get '/dashboard/bounties' => 'dashboard#bounties', as: :bounties_dashboard
+
     # settings
     get    '/settings' => 'users#edit', as: :edit_user
     patch  '/settings' => 'users/registrations#update'
