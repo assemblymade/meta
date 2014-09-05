@@ -1,0 +1,19 @@
+<div class="navbar navbar-dashboard">
+  <div class="container">
+    <div class="navbar-right">
+      <ul class="nav navbar-nav">
+        <li class="<%= 'active' if current_page?(dashboard_path) || current_page?(activity_dashboard_path) %>">
+          <a href="<%= dashboard_path %>">Activity</a>
+        </li>
+
+        <li class="<%= 'active' if current_page?(bounties_dashboard_path) %>">
+          <a href="<%= bounties_dashboard_path %>">Bounties</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="navbar-header">
+      <span class="navbar-brand text-muted">Dashboard</span>
+    </div>
+  </div>
+</div>

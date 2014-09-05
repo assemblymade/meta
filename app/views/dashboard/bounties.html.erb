@@ -1,83 +1,34 @@
 <% title @user.username %>
 <%= render 'shared/navbar' %>
+<%= render 'dashboard/navbar' %>
 
 <div class="page page-flat">
   <div class="container">
 
-    <div class="col-md-3 col-xs-3">
-      <%= render 'users/card', user: @user %>
-      <% if can?(:update, @user) %>
-        <!-- FIXME: This URL is a hack -->
-        <a class="btn btn-default btn-block" href="<%= edit_user_path %>">
-          Edit Profile
-        </a>
-        <br>
-      <% end %>
-
-      <% if Rails.env.development? || (signed_in? && current_user.staff?) %>
-        <dl class="well well-sm small">
-          <dt>auth token</dt>
-          <dd><%= @user.authentication_token %> - <%=link_to('impersonate', "/discover?auth_token=#{@user.authentication_token}")%></dd>
-          <dt>email</dt>
-          <%= @user.email %>
-        </dl>
-      <% end %>
-    </div>
-
-    <div class="col-xs-9">
+    <div>
 
       <div class="page-header sheet-header">
 
-        <div class="stat-group" style="margin-bottom: 36px;">
-          <div class="stat">
-            <div class="stat-value">
-              <%= number_with_delimiter(@user.count_contributions) %>
-            </div>
-            <div class="stat-title">
-              Contributions
-            </div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-value">
-              <%= number_with_delimiter @user.sum_app_cents %>
-            </div>
-            <div class="stat-title">
-              App Coins
-            </div>
-          </div>
-
-          <!-- <div class="stat">
-            <div class="stat-value">
-              <%= number_to_currency(0) %>
-            </div>
-            <div class="stat-title">
-              Earned
-            </div>
-          </div> -->
-
-        </div>
-
-        <% unless @wips.empty? && signed_in? && current_user == @user %>
+        <% if @wips.present? %>
 
           <ul class="nav nav-pills">
             <li class="<%= 'active' if params[:user].blank? %>">
-              <a href="<%= user_path(@user) %>">
+              <a href="<%= bounties_dashboard_path %>">
                 Started
               </a>
             </li>
-            <li class="<%= 'active' if current_page?(user_path(@user, user: 'started')) %>">
-              <a href="<%= user_path(@user, user: 'started') %>">
+            <li class="<%= 'active' if current_page?(bounties_dashboard_path(user: 'started')) %>">
+              <a href="<%= bounties_dashboard_path(user: 'started') %>">
                 Created
               </a>
             </li>
-            <li class="<%= 'active' if current_page?(user_path(@user, user: 'commented')) %>">
-              <a href="<%= user_path(@user, user: 'commented') %>">
+            <li class="<%= 'active' if current_page?(bounties_dashboard_path(user: 'commented')) %>">
+              <a href="<%= bounties_dashboard_path(user: 'commented') %>">
                 Commented
               </a>
             </li>
-            <li class="<%= 'active' if current_page?(user_path(@user, user: 'awarded')) %>">
-              <a href="<%= user_path(@user, user: 'awarded') %>">
+            <li class="<%= 'active' if current_page?(bounties_dashboard_path(user: 'awarded')) %>">
+              <a href="<%= bounties_dashboard_path(user: 'awarded') %>">
                 Awarded
               </a>
             </li>
@@ -106,9 +57,9 @@
           </ul>
 
           <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
-        <% end %>
 
-        <% if @wips.empty? && signed_in? && current_user == @user %>
+        <% else %>
+
           <div class="well">
             <%= image_tag 'null-states/profile@2x.png', width: 154, height: 38, class: 'img-center' %>
             <h3>Earn yourself some App Coins!</h3>

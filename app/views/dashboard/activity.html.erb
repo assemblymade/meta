@@ -1,14 +1,51 @@
 <% title 'Notifications' %>
 <%= render 'shared/navbar' %>
+<%= render 'dashboard/navbar' %>
 
 <div class="page">
   <div class="container">
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
+      <div class="col-md-8 col-xs-12">
         <div data-react-class="FullPageNewsFeed" data-react-props="<%= {
           url: notifications_path(format: :json),
-          username: current_user.username
+          username: current_user.username,
+          digest: true
         }.to_json %>">
+        </div>
+      </div>
+
+      <div class="col-md-4 hidden-sm hidden-xs">
+        <div class="panel">
+          <div class="panel-heading">
+            <h6 class="panel-title">Bounties your working on</h6>
+          </div>
+
+          <ul class="nav nav-pills nav-stacked">
+            <% current_user.wips_working_on.each do |wip| %>
+              <li>
+                <a href="<%= product_wip_path(wip.product, wip) %>">
+                  #<%= wip.number %>
+                  <%= wip.title %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <div class="panel-heading">
+            <h6 class="panel-title">Products you follow</h6>
+          </div>
+
+          <ul class="nav nav-pills nav-stacked">
+            <% current_user.followed_products.latest.each do |product| %>
+              <li>
+                <a href="<%= product_path(product) %>">
+                  <%= product.name %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
         </div>
       </div>
     </div>

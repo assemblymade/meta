@@ -37,7 +37,7 @@ var Avatar = require('./avatar.js.jsx');
       var self = this;
 
       return _.map(stories, function(story) {
-        return <Entry key={story.id + 'f'} story={story} actors={self.state.actors} />;
+        return <Entry key={story.id + 'f'} story={story} actors={self.state.actors} digest={self.props.digest} />;
       });
     }
   });
@@ -80,6 +80,10 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     markAsReadButton: function() {
+      if (this.props.digest) {
+        return;
+      }
+
       if (!this.isRead()) {
         return <span className="icon icon-disc" onClick={this.markAsRead} title={'Mark as read'} style={{ cursor: 'pointer' }} />;
       }
@@ -102,37 +106,49 @@ var Avatar = require('./avatar.js.jsx');
       var actors = _.map(this.actors(), func.dot('username')).join(', @')
 
       var classes = React.addons.classSet({
-        'entry-read': this.isRead(),
-        'entry-unread': !this.isRead(),
+        'entry-read': !this.props.digest && this.isRead(),
+        'entry-unread': !this.props.digest && !this.isRead(),
       });
 
       var productName = this.props.story.product_name;
 
       return (
         <div className={classes + ' list-group-item'}>
-          <div className='row'>
-            <div className='col-md-3'>
-              <a href={'/' + this.props.story.product_slug}>{productName}</a>
-              <br />
-              <span className='text-muted text-small'>
-                {this.timestamp()}
-              </span>
-            </div>
+          <div className='list-group-item-heading'>
+            <div className='row'>
+              <div className='col-sm-11 col-sm-offset-1 col-xs-10 col-xs-offset-2'>
+                <div className='pull-right'>
+                  {this.markAsReadButton()}
+                </div>
 
-            <div className='col-md-8'>
-              <a className={classes} href={this.props.story.url} onClick={this.markAsRead}>
-                <span style={{ 'margin-right': '5px' }}>
-                  <Avatar user={this.actors()[0]} />
+                <a href={'/' + this.props.story.product_slug}>
+                  {productName}
+                </a>
+
+                &nbsp;
+
+                <span className='text-muted text-small'>
+                  {this.timestamp()}
                 </span>
-                <strong>{actors}</strong> {this.body()}
-              </a>
-              <span className='text-small text-muted'>
-                {this.preview()}
-              </span>
+              </div>
             </div>
+          </div>
 
-            <div className={'col-md-1 ' + classes}>
-              {this.markAsReadButton()}
+          <div className='list-group-item-text'>
+            <div className='row'>
+              <div className='col-sm-1 col-xs-2'>
+                <Avatar user={this.actors()[0]} />
+              </div>
+
+              <div className='col-sm-11 col-xs-10'>
+                <a href={this.props.story.url} onClick={this.markAsRead} style={{ 'display': 'block', 'padding-bottom': '5px' }}>
+                  <strong>{actors}</strong> {this.body()}
+                </a>
+
+                <span className='text-small text-muted'>
+                  {this.preview()}
+                </span>
+              </div>
             </div>
           </div>
         </div>
