@@ -23,11 +23,7 @@ var Avatar = require('./avatar.js.jsx');
 
     render: function() {
       return (
-        <div className="sheet" style={{ 'min-height': '600px' }}>
-          <div className="page-header sheet-header" style={{ 'padding-left': '20px' }}>
-            <h2 className="page-header-title">Your notifications</h2>
-          </div>
-
+        <div>
           <div className="list-group list-group-breakout" ref="spinner">
             {this.state.stories ? this.rows(this.state.stories) : null}
           </div>
@@ -40,15 +36,9 @@ var Avatar = require('./avatar.js.jsx');
     rows: function(stories) {
       var self = this;
 
-      var entries = _.map(stories, function(story) {
+      return _.map(stories, function(story) {
         return <Entry key={story.id + 'f'} story={story} actors={self.state.actors} />;
       });
-
-      return (
-        <div className="list-group-item" style={{ 'padding-top': '0px', 'padding-bottom': '0px' }}>
-          {entries}
-        </div>
-      );
     }
   });
 
@@ -119,29 +109,31 @@ var Avatar = require('./avatar.js.jsx');
       var productName = this.props.story.product_name;
 
       return (
-        <div className={classes + ' row'}>
-          <div className='col-md-3'>
-            <a href={'/' + this.props.story.product_slug}>{productName}</a>
-            <br />
-            <span className='text-muted text-small'>
-              {this.timestamp()}
-            </span>
-          </div>
-
-          <div className='col-md-8'>
-            <a className={classes} href={this.props.story.url} onClick={this.markAsRead}>
-              <span style={{ 'margin-right': '5px' }}>
-                <Avatar user={this.actors()[0]} />
+        <div className={classes + ' list-group-item'}>
+          <div className='row'>
+            <div className='col-md-3'>
+              <a href={'/' + this.props.story.product_slug}>{productName}</a>
+              <br />
+              <span className='text-muted text-small'>
+                {this.timestamp()}
               </span>
-              <strong>{actors}</strong> {this.body()}
-            </a>
-            <span className='text-small text-muted'>
-              {this.preview()}
-            </span>
-          </div>
+            </div>
 
-          <div className={'col-md-1 ' + classes}>
-            {this.markAsReadButton()}
+            <div className='col-md-8'>
+              <a className={classes} href={this.props.story.url} onClick={this.markAsRead}>
+                <span style={{ 'margin-right': '5px' }}>
+                  <Avatar user={this.actors()[0]} />
+                </span>
+                <strong>{actors}</strong> {this.body()}
+              </a>
+              <span className='text-small text-muted'>
+                {this.preview()}
+              </span>
+            </div>
+
+            <div className={'col-md-1 ' + classes}>
+              {this.markAsReadButton()}
+            </div>
           </div>
         </div>
       );
