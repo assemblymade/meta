@@ -73,6 +73,16 @@ ActiveRecord::Schema.define(version: 20140904201436) do
     t.datetime "deleted_at"
   end
 
+  create_table "awards", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "awarder_id"
+    t.uuid     "event_id"
+    t.uuid     "wip_id"
+    t.uuid     "winner_id"
+    t.integer  "cents"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "bounty_postings", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "bounty_id",  null: false
     t.uuid     "poster_id",  null: false
@@ -87,14 +97,6 @@ ActiveRecord::Schema.define(version: 20140904201436) do
     t.uuid     "wip_id"
     t.uuid     "product_id"
     t.datetime "deleted_at"
-  end
-
-  create_table "awards", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "awarder_id"
-    t.uuid     "event_id"
-    t.uuid     "wip_id"
-    t.uuid     "winner_id"
-    t.integer  "cents"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
