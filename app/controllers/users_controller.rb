@@ -6,12 +6,16 @@ class UsersController < ApplicationController
   def show
     set_user
 
-    default_filters = { user: 'assigned', state: true }.with_indifferent_access
-    filters = default_filters.merge(params.slice(:user, :state))
+    default_filters = {
+      user: 'assigned',
+      state: true,
+      sort: ['commented', 'awarded'].exclude?(params[:user]) && 'newest'
+    }.with_indifferent_access
 
-    query = FilterWipsQuery.call(Wip.all, @user, filters)
-    query = query.ordered_by_activity
+    filters = default_filters.merge(params.slice(:user, :state))
+    query = FilterWipsQuery.call(Task.all, @user, filters)
     @wips = PaginatingDecorator.new(query)
+
     respond_with @user
   end
 

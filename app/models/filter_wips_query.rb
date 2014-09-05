@@ -93,6 +93,8 @@ class FilterWipsQuery
       Wip.order('wips.updated_at DESC')
     when 'least_recently_updated'
       Wip.order('wips.updated_at ASC')
+    when false
+      Wip.all
     else #  (default)
       Wip.order(['multiplier desc', 'created_at desc'])
     end
