@@ -5,14 +5,18 @@
     },
 
     subjectMap: {
+      Discussion: function(discussion) {
+        return 'a discussion';
+      },
+
+      Post: function(post) {
+        return 'a new blog post'
+      },
+
       Task: function(task) {
         if (task) {
           return "#" + task.number + " " + task.title;
         }
-      },
-
-      Discussion: function(discussion) {
-        return 'a discussion';
       },
 
       Wip: function(bounty) {
@@ -25,9 +29,10 @@
     },
 
     verbMap: {
-      'Comment': 'commented on ',
       'Award': 'awarded',
       'Close': 'closed ',
+      'Comment': 'commented on ',
+      'Post': 'published ',
       'Start': 'started '
     }
   };

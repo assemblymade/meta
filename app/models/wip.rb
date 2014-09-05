@@ -23,6 +23,7 @@ class Wip < ActiveRecord::Base
   has_many :postings, class_name: 'BountyPosting', foreign_key: 'bounty_id'
   has_many :taggings, class_name: 'Wip::Tagging'
   has_many :tags, through: :taggings, class_name: 'Wip::Tag'
+  has_many :awards
 
   has_one :milestone
   accepts_nested_attributes_for :milestone
@@ -44,6 +45,7 @@ class Wip < ActiveRecord::Base
   scope :tagged_with, ->(name) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name = ?', name) }
   scope :tagged_with_any, ->(names) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name' => names) }
   scope :tagged_with_all, ->(names) { joins(:taggings => :tag).where('wip_tags.name' => names).group('wips.id').having('count(distinct wip_taggings.wip_tag_id) = ?', names.size) }
+  scope :ordered_by_activity, -> { joins(:events).group('wips.id').order('max(events.created_at)') }
 
   attr_accessor :readraptor_tag # set which tag you are viewing
 
@@ -69,7 +71,7 @@ class Wip < ActiveRecord::Base
   end
 
   def awarded?
-    self.try(:winning_event_id)
+    self.awards.any?
   end
 
   def close(closer, reason=nil)
@@ -86,7 +88,6 @@ class Wip < ActiveRecord::Base
       add_event ::Event::Reopen.new(user: opener, body: reason) do
         self.closer = nil
         self.closed_at = nil
-        self.winning_event = nil
         milestones.each(&:touch)
       end
     end
@@ -128,10 +129,6 @@ class Wip < ActiveRecord::Base
 
   def score_multiplier
     nil
-  end
-
-  def winning_event=(something)
-    # ignore
   end
 
   def awardable?
@@ -238,12 +235,6 @@ class Wip < ActiveRecord::Base
 
   def notify_state_changed
     PusherWorker.perform_async push_channel, 'changed', WipSerializer.new(self).to_json
-  end
-
-  # updates
-
-  def updates
-    Wip::Updates.new(self)
   end
 
   # elasticsearch

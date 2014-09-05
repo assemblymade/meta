@@ -13,9 +13,4 @@ class WipDecorator < ApplicationDecorator
   def formatted_comments_count
     helpers.pluralize(comments_count, 'comment')
   end
-
-  def new_comments(user)
-    return 0 if user.nil?
-    wip.updates.for(user).unread_comment_count || 0
-  end
 end

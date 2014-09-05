@@ -11,7 +11,7 @@ describe Event do
       expect(comment).to receive(:notify_by_email).with(zoolander)
       expect(comment).not_to receive(:notify_by_email).with(asterix)
 
-      comment.notify_users!([asterix, zoolander])
+      comment.notify_users!([])
     end
   end
 end

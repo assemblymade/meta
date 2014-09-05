@@ -14,7 +14,7 @@ describe DiscussionsController do
     end
 
     it "assigns wip" do
-      expect(assigns(:wip))
+      expect(assigns(:wip)).to be
     end
   end
 end

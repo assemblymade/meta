@@ -37,6 +37,13 @@ class PostsController < ProductController
       PostMailer.delay(queue: 'mailer').created(@post.id, watcher.id)
     end
 
+    Activities::Post.publish!(
+      actor: @post.author,
+      subject: @post,
+      target: @product,
+      socket_id: params[:socket_id]
+    )
+
     respond_with @post, location: product_post_path(@post.product, @post)
   end
 

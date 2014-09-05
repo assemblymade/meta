@@ -6,7 +6,6 @@ class WipsController < ProductController
   before_action :set_product
   before_action :set_stories, except: [:index, :new, :create, :search, :mute, :watch]
   before_action :validate_wip_administer , only: [:edit, :update, :destroy]
-  after_action  :mark_wip_viewed, only: [:edit, :show]
 
   def wip_class
     raise 'override'
@@ -50,7 +49,7 @@ class WipsController < ProductController
       @wip.update_title! current_user, title unless title == @wip.title
     end
 
-    apply_tags()
+    apply_tags
 
     @wip.update_attributes(update_wip_params)
 
@@ -64,7 +63,7 @@ class WipsController < ProductController
   end
 
   def tag
-    apply_tags()
+    apply_tags
 
     respond_with @wip, location: wip_path(@wip)
   end
@@ -100,7 +99,13 @@ class WipsController < ProductController
     if winner_id = params.fetch(:event_id)
       authorize! :award, @wip
       @event = Event.find(winner_id)
+
       @wip.award! current_user, @event
+
+      if params[:close]
+        @wip.close! current_user
+      end
+
       if @product.tasks.won_by(@event.user).count == 1
         BadgeMailer.delay(queue: 'mailer').first_win(@event.id)
       end
@@ -136,10 +141,6 @@ class WipsController < ProductController
 
   def validate_wip_administer
     head(:forbidden) unless can? :update, @wip
-  end
-
-  def mark_wip_viewed
-    @wip.updates.for(current_user).viewed! if signed_in?
   end
 
   def find_wips

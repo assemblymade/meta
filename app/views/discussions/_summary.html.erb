@@ -1,4 +1,4 @@
-<div class="item discussion <%= 'unread' if signed_in? && discussion.updates.for(current_user).unread? %>" data-number="<%= discussion.number %>">
+<div class="item discussion" data-number="<%= discussion.number %>">
 
   <div class="summary">
     <a class="summary-target" href="<%= product_discussion_path(discussion.product, discussion) %>">

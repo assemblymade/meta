@@ -56,28 +56,17 @@ class Event < ActiveRecord::Base
     MAILABLE.include? self.class
   end
 
-  # this is called immediately on event created
-  # this  shouldn't email anyone because readraptor will take care of that
-  # FIXME: 3 July 2014: The above no longer seems to be true
-  def notify_users!(users)
-    mentioned = self.mentioned_users
-    users.each do |user|
-      notify_by_email(user) if mentioned.include?(user)
-      update_unreads(user) if mentioned.include?(user)
+  def notify_users!(followers)
+    (self.mentioned_users - [self.user]).each do |mentioned_user|
+      notify_by_email(mentioned_user)
     end
 
-    update_pusher(users, mentioned_users)
+    update_pusher(followers, mentioned_users)
   end
 
   def notify_by_email(user)
     if notify_by_email? && !user.mail_never?
       WipMailer.delay(queue: 'mailer').wip_event_added(user.id, self.id)
-    end
-  end
-
-  def update_unreads(user)
-    if self.is_a? ::Event::Comment
-      wip.updates.for(user).new_comment!
     end
   end
 

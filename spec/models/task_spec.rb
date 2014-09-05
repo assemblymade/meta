@@ -30,7 +30,7 @@ describe Task do
     end
 
     it "increments with a single offer" do
-      TransactionLogEntry.minted!(nil, Time.now, product, task.id, core_member.id, 1)
+      TransactionLogEntry.minted!(nil, Time.now, product, core_member.id, 1)
       Offer.create!(bounty: task, user: core_member, amount: 100, ip: '1.1.1.1')
       expect(task.value).to eq(100)
     end
@@ -38,11 +38,19 @@ describe Task do
   end
 
   describe "award" do
-    it "creates award Activity" do
+    it "creates award Activity but does not resolve the task" do
       expect { task.award!(core_member, comment) }.to change(Activity, :count).by(1)
+      expect(task.resolved?).to be_false
     end
 
     # it "increments"
 
+  end
+
+  describe 'close' do
+    it "creates award Activity and resolves the task" do
+      expect { task.close!(core_member) }.to change(Activity, :count).by(1)
+      expect(task.resolved?).to be_true
+    end
   end
 end

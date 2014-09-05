@@ -8,7 +8,7 @@ describe TipsController do
   before do
     sign_in tipper
 
-    TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, SecureRandom.uuid, tipper.id, 5)
+    TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, tipper.id, 5)
 
     post :create,
       product_id: product.slug,

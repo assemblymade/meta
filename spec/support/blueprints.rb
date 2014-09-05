@@ -25,6 +25,12 @@ end
 
 ChatRoom.blueprint do
   slug { "room_#{sn}" }
+end
+
+Award.blueprint do
+  awarder
+  winner
+  event
   wip
 end
 

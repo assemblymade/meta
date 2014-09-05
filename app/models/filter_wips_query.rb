@@ -53,6 +53,8 @@ class FilterWipsQuery
       user.wips_watched
     when 'awarded'
       user.wips_awarded_to
+    when 'commented'
+      user.wips_commented_on
     else # all
       Wip.all
     end

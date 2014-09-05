@@ -87,6 +87,14 @@ ActiveRecord::Schema.define(version: 20140904201436) do
     t.uuid     "wip_id"
     t.uuid     "product_id"
     t.datetime "deleted_at"
+  end
+
+  create_table "awards", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "awarder_id"
+    t.uuid     "event_id"
+    t.uuid     "wip_id"
+    t.uuid     "winner_id"
+    t.integer  "cents"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -552,7 +560,7 @@ ActiveRecord::Schema.define(version: 20140904201436) do
 
   create_table "transaction_log_entries", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "product_id",     null: false
-    t.uuid     "work_id",        null: false
+    t.uuid     "work_id"
     t.uuid     "wallet_id",      null: false
     t.string   "action",         null: false
     t.text     "value"

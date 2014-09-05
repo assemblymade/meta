@@ -3,10 +3,12 @@
   <div class="pull-right">
 
       <ul class="list-inline text-muted small">
-        <% if bounty.winner.present? %>
-          <li data-toggle="tooltip" title="Awarded to @<%= bounty.winner.username %>">
-            <%= avatar_tag(bounty.winner, 18, style: 'display:inline-block') %>
-          </li>
+        <% if bounty.winners.any? %>
+          <% bounty.winners.each do |winner| %>
+            <li data-toggle="tooltip" title="Awarded to @<%= winner %>">
+              <%= avatar_tag(winner, 18, style: 'display:inline-block') %>
+            </li>
+          <% end %>
         <% elsif bounty.state != 'resolved' %>
           <% bounty.workers.each do |user| %>
             <li data-toggle="tooltip" title="Assigned to @<%= user.username %>">
@@ -57,8 +59,10 @@
       <% when bounty.workers.any? && (bounty.state != 'resolved') %>
         <span class="text-warning" data-toggle="tooltip" title="<%= pluralize(bounty.workers.count, 'person') %> working">
       <% when bounty.state == 'resolved' %>
-        <% if bounty.winner.present? %>
-          <span class="text-muted" data-toggle="tooltip" title="Awarded to @<%= bounty.winner.username %>">
+        <% if bounty.winners.any? %>
+            <% bounty.winners.each do |winner| %>
+              <span class="text-muted" data-toggle="tooltip" title="Awarded to @<%= winner.username %>">
+            <% end %>
         <% else %>
           <span class="text-muted" data-toggle="tooltip" title="Closed">
         <% end %>
@@ -77,7 +81,7 @@
 
     &middot;
 
-    #<%= bounty.number %> started <%= time_ago_in_words(bounty.created_at) %> ago by <a class="text-muted" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
+    #<%= bounty.number %> created <%= time_ago_in_words(bounty.created_at) %> ago by <a class="text-muted" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
   </div>
 
 </div>

@@ -5,8 +5,12 @@ class UsersController < ApplicationController
 
   def show
     set_user
-    default_params = { state: false, user: 'following' }.with_indifferent_access
-    query = FilterWipsQuery.call(Wip.all, @user, default_params.merge(params))
+
+    default_filters = { user: 'assigned', state: true }.with_indifferent_access
+    filters = default_filters.merge(params.slice(:user, :state))
+
+    query = FilterWipsQuery.call(Wip.all, @user, filters)
+    query = query.ordered_by_activity
     @wips = PaginatingDecorator.new(query)
     respond_with @user
   end

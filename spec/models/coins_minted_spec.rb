@@ -1,15 +1,18 @@
 require 'spec_helper'
 
 describe CoinsMinted do
-  let(:product) { Product.make! }
+  let(:proposer) { User.make!(username: 'proposer') }
+  let(:creator) { User.make!(username: 'creator') }
+  let(:product) { Product.make!(user: creator) }
   let(:worker) { User.make! }
   let(:voter) { User.make! }
-  let(:benefactor) { User.make! }
-  let(:proposer) { User.make! }
+  let(:benefactor) { User.make!(username: 'benefactor') }
+
 
   context 'work on wip' do
     let(:work) { Task.make!(product: product, user: proposer) }
     let(:winning_event) { work.comments.make!(user: worker) }
+    let(:award) { work.awards.make!(awarder: proposer, winner: worker, event: winning_event, wip: work) }
 
     it 'transfers coins based on tip contracts' do
       start_at = Time.now
@@ -19,7 +22,8 @@ describe CoinsMinted do
       AutoTipContract.create!(product: product, user: product.user, amount: 0.025)
       AutoTipContract.create!(product: product, user: benefactor, amount: 0.020)
 
-      entry = TransactionLogEntry.minted!(work.id, work.created_at, product, work.id, work.id, 10000)
+
+      entry = TransactionLogEntry.minted!(work.id, work.created_at, product, award.id, 10000)
 
       CoinsMinted.new.perform(entry.id)
 
@@ -38,5 +42,3 @@ describe CoinsMinted do
     end
   end
 end
-
-

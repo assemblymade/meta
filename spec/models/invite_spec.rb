@@ -17,7 +17,7 @@ describe Invite do
 
     context 'with enough coins' do
       before {
-        TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, bounty.id, invitor.id, 100)
+        TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, invitor.id, 100)
       }
 
       it 'transfers tip from user' do
@@ -42,7 +42,7 @@ describe Invite do
 
   describe '#claim!' do
     before {
-      TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, bounty.id, invitor.id, 100)
+      TransactionLogEntry.minted!(SecureRandom.uuid, Time.now, product, invitor.id, 100)
     }
 
     it 'transfers coins from escrow to user' do
@@ -56,7 +56,7 @@ describe Invite do
       invite = create_invite(tip_cents: 100)
       invite.claim!(invitee)
 
-      expect(invite.reload.claimed_at).to be_same_time_as(Time.current)
+      expect(invite.reload.claimed_at).to be_within(1).of(Time.current)
     end
 
     it 'sets invitee' do

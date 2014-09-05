@@ -43,9 +43,8 @@ describe Wip do
         wip.reload
       }
 
-      its(:current_state) { should == :resolved }
+      its(:current_state) { should == :awarded }
       its(:closed_at) { be_same_time_as Time.current }
-      its(:winning_event) { should == winning_event }
     end
 
     context 'closing' do
@@ -56,8 +55,6 @@ describe Wip do
 
       its(:current_state) { should == :resolved }
       its(:closed_at) { be_same_time_as Time.current }
-      its(:winning_event) { should be_nil }
-      its(:winning_event) { should be_nil }
 
       it 'creates activity' do
         expect(Activities::Close.first.target).to eq(wip)

@@ -7,8 +7,9 @@ class User < ActiveRecord::Base
   include Elasticsearch::Model
 
   has_many :activities,    foreign_key: 'owner_id'
-  has_many :core_products, :through => :core_team_memberships, :source => :product
-  has_many :core_team_memberships
+  has_many :core_products, through: :core_team_memberships, source: :product
+  has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
+
   has_many :events
   has_many :products
   has_many :product_logos
@@ -20,7 +21,8 @@ class User < ActiveRecord::Base
   has_many :wips_watched, :through => :watchings, :source => :watchable, :source_type => Wip
   has_many :votes
   has_many :wips_contributed_to, -> { where(events: { type: Event::MAILABLE }).uniq.order("created_at DESC") }, :through => :events, :source => :wip
-  has_many :wips_awarded_to, -> { where(events: { type: Event::Win }).uniq.order("created_at DESC") }, :through => :events, :source => :wip
+  has_many :wips_awarded_to, -> { where(events: { type: Event::Win }).order("created_at DESC") }, :through => :events, :source => :wip
+  has_many :wips_commented_on, -> { where(events: { type: Event::Comment }).order("created_at DESC") }, :through => :events, :source => :wip
   has_many :stream_events, foreign_key: 'actor_id'
   has_many :saved_searches
   has_one  :tax_info

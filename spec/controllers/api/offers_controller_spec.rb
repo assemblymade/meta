@@ -9,7 +9,7 @@ describe Api::OffersController do
     it 'creates contract' do
       sign_in user
 
-      TransactionLogEntry.minted!(nil, Time.now, product, bounty.id, user.id, 1)
+      TransactionLogEntry.minted!(nil, Time.now, product, user.id, 1)
 
       post :create, product_id: product.slug, bounty_id: bounty.number,
         amount: 5000.78, format: :json
