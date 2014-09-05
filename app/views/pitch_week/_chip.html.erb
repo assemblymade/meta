@@ -3,7 +3,7 @@
   <div class="row">
     <%= render 'products/mini_chip', product: product %>
 
-    <div class="col-xs-3">
+    <div class="col-xs-2">
       <div class="progress progress-small omega">
         <div class="progress-bar progress-bar-success" style="width: <%= percentage(product.bio_memberships_count / Product::PITCH_WEEK_REQUIRED_BUILDERS.to_f) %>;">
         </div>
