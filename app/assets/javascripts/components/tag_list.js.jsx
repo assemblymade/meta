@@ -16,6 +16,12 @@ var TagListStore = require('../stores/tag_list_store');
       TagListStore.addChangeListener(this.onChange);
     },
 
+    getDefaultProps: function() {
+      return {
+        tags: []
+      }
+    },
+
     getInitialState: function() {
       return {
         tags: this.props.tags
@@ -146,7 +152,7 @@ var TagListStore = require('../stores/tag_list_store');
             (mappedTags[0] == undefined &&
              mappedTags[1] == undefined))) {
         return (
-          <li style={{color: '#d3d3d3', 'font-size': '13px'}}>No tags yet &mdash; why not add some?</li>
+          <li key="no-tags" style={{color: '#d3d3d3', 'font-size': '13px'}}>No tags yet &mdash; why not add some?</li>
         );
       }
 

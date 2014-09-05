@@ -56,20 +56,22 @@
 
       return (
         <Lightbox id="info-modal" title={product.name + ' is being crowd-built on Assembly.'}>
-          {this.what()}
+          <div className="modal-body">
+            {this.what()}
 
-          <hr />
+            <hr />
 
-          <h4>Crowd-building on Assembly</h4>
-          {this.assembly()}
+            <h4>Crowd-building on Assembly</h4>
+            {this.assembly()}
 
-          <hr />
-          <h4>How do I get started?</h4>
-          {this.gettingStarted()}
+            <hr />
+            <h4>How do I get started?</h4>
+            {this.gettingStarted()}
 
-          <hr />
+            <hr />
 
-          <a className="btn btn-primary btn-block" style={{ cursor: 'pointer' }} onClick={this.signUp}>Start building</a>
+            <a className="btn btn-primary btn-block" style={{ cursor: 'pointer' }} onClick={this.signUp}>Start building</a>
+          </div>
         </Lightbox>
       );
     },

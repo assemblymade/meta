@@ -15,9 +15,7 @@
                 {this.title()}
               </div>
 
-              <div className="modal-body">
-                {this.props.children}
-              </div>
+              {this.props.children}
             </div>
           </div>
         </div>
