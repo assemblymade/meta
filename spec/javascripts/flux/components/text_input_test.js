@@ -18,7 +18,6 @@ describe('TextInput', function() {
     );
 
     expect(input.state.inputValue).toEqual('');
-    expect(input.state.hide).toEqual(true);
     expect(input.state.transform).toEqual(transform);
   });
 

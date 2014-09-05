@@ -44,12 +44,12 @@
     createPosting: function() {
       return <span>
         <a href="#feature" onClick={this.togglePopover}>Feature it</a>&nbsp;to community for 7 days
-        (you have {app.pluralize(this.props.slots, 'spot')} remaining)
+        (you have {app.pluralize(this.props.slots, 'spot')} remaining).
       </span>
     },
 
     postingsFull: function() {
-      return <span>You have no public bounty spots remaining</span>
+      return <span>You have no public bounty spots remaining.</span>
     },
 
     handleCategorySelected: function(category) {

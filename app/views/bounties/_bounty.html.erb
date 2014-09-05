@@ -42,11 +42,14 @@
         <%= time_ago_in_words(bounty.created_at) %> ago by
         <a class="text-stealth-link" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
       </li>
-      <% bounty.tags.each do |tag| %>
-        <li>
-          <span class="tag">#<%= tag.name %></span>
-        </li>
-      <% end %>
+      <li data-react-class="TagList"
+          data-react-props="<%= {
+            filterUrl: product_wips_path(@product),
+            destination: true,
+            tags: bounty.tags.map(&:name),
+            url: product_wip_tag_path(@product, @wip)
+          }.to_json %>">
+      </li>
     </ul>
   </div>
 

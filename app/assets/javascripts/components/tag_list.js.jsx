@@ -16,9 +16,15 @@ var TagListStore = require('../stores/tag_list_store');
       TagListStore.addChangeListener(this.onChange);
     },
 
+    componentWillUnmount: function() {
+      TagListStore.removeChangeListener(this.onChange);
+    },
+
     getInitialState: function() {
       return {
-        tags: this.props.tags
+        adding: false,
+        popoverShown: false,
+        tags: this.props.tags,
       }
     },
 
@@ -30,13 +36,22 @@ var TagListStore = require('../stores/tag_list_store');
 
         Dispatcher.dispatch({
           action: TAG_LIST.ACTIONS.ADD_TAG,
-          data: { tag: tag, url: self.props.url },
+          data: {
+            tag: tag,
+            url: self.props.url
+          },
         });
 
         self.setState({
           tags: self.state.tags
         });
       };
+    },
+
+    handleHide: function() {
+      this.setState({
+        popoverShown: false
+      });
     },
 
     onChange: function() {
@@ -69,6 +84,22 @@ var TagListStore = require('../stores/tag_list_store');
       }
     },
 
+    popoverButton: function() {
+      if (this.props.destination && this.state.tags.length > 0 && this.state.tags[this.state.tags.length - 1] !== '') {
+        return (
+          <li>
+            <BsPopover
+                content={this.suggestedTags()}
+                placement="bottom"
+                visible={this.state.popoverShown}
+                onHide={this.handleHide}>
+              <a onClick={this.togglePopover} style={{ cursor: 'pointer', 'font-size': '13px' }}>{this.tagPopoverText()}</a>
+            </BsPopover>
+          </li>
+        );
+      }
+    },
+
     removeButton: function(tag) {
       if (this.props.destination) {
         return (
@@ -94,7 +125,10 @@ var TagListStore = require('../stores/tag_list_store');
       return function(e) {
         Dispatcher.dispatch({
           action: TAG_LIST.ACTIONS.REMOVE_TAG,
-          data: { tag: tag, url: self.props.url },
+          data: {
+            tag: tag,
+            url: self.props.url
+          },
         });
       };
     },
@@ -103,8 +137,31 @@ var TagListStore = require('../stores/tag_list_store');
       return (
         <ul className="list-inline omega">
           {this.tags(this.state.tags)}
+          {this.popoverButton()}
         </ul>
       );
+    },
+
+    suggestedTags: function() {
+      return (
+        <div style={{ 'text-align': 'center' }}>
+          <TagList
+              destination={false}
+              url={this.props.url}
+              tags={window.app.suggestedTags()} />
+          <hr />
+          <TextInput
+              url={this.props.url}
+              label="Custom tag"
+              width="80px"
+              prompt="+"
+              size="small" />
+        </div>
+      );
+    },
+
+    tagPopoverText: function() {
+      return this.state.popoverShown ? 'Hide' : 'Add tag';
     },
 
     tags: function(tags) {
@@ -127,7 +184,7 @@ var TagListStore = require('../stores/tag_list_store');
         }
 
         return (
-          <li style={{'margin': '0px'}}>
+          <li key={tag} style={{'margin': '0px'}}>
             <a style={style}
                 href={self.props.filterUrl && self.props.destination ?
                   self.props.filterUrl + '?tag=' + tag :
@@ -146,11 +203,27 @@ var TagListStore = require('../stores/tag_list_store');
             (mappedTags[0] == undefined &&
              mappedTags[1] == undefined))) {
         return (
-          <li style={{color: '#d3d3d3', 'font-size': '13px'}}>No tags yet &mdash; why not add some?</li>
+          <li style={{color: '#d3d3d3', 'font-size': '13px'}}>
+            <BsPopover
+                content={this.suggestedTags()}
+                placement="bottom"
+                visible={this.state.popoverShown}
+                onHide={this.handleHide}>
+              <span>
+                No tags yet &mdash; why not <a onClick={this.togglePopover} style={{ cursor: 'pointer', 'font-size': '13px' }}>add some</a>?
+              </span>
+            </BsPopover>
+          </li>
         );
       }
 
       return mappedTags;
+    },
+
+    togglePopover: function(e) {
+      this.setState({
+        popoverShown: !this.state.popoverShown
+      });
     }
   });
 
