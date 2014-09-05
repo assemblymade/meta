@@ -28,8 +28,12 @@
       <th></th>
       <th class="text-left">Revenue</th>
       <th class="text-right">Expenses</th>
-      <th class="text-right">Platform Cost</th>
-      <th class="text-right">Net Royalty</th>
+      <th class="text-right">
+        <span data-toggle="tooltip" title="Assembly keeps 10% of the royalty to cover operating costs">Platform Cost <span class="icon icon-question"></span></span>
+      </th>
+      <th class="text-right">
+        <span data-toggle="tooltip" title="Royalties paid out to <%= @product.name %> partners">Partners Royalty <span class="icon icon-question"></span></span>
+      </th>
     </tr>
   </thead>
   <tbody>
