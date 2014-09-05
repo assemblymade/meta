@@ -43,7 +43,9 @@
         <a class="text-stealth-link" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
       </li>
       <% bounty.tags.each do |tag| %>
-        <li><%= tag.name %></li>
+        <li>
+          <span class="tag">#<%= tag.name %></span>
+        </li>
       <% end %>
     </ul>
   </div>
@@ -122,6 +124,6 @@
         </div>
       </li>
     </ul>
-    
+
   </div>
 </div>
