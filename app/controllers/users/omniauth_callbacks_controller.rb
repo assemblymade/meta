@@ -26,7 +26,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def github
     if signed_in?
-      current_user.update_attributes github_uid: auth_hash['uid'], github_login: auth_hash['extra']['raw_info']['login']
+      LinkGithubAccount.new(current_user, auth_hash['uid'], auth_hash['extra']['raw_info']['login']).perform
       redirect_to user_path(current_user)
     end
   end

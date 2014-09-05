@@ -7,8 +7,9 @@ class User < ActiveRecord::Base
   include Elasticsearch::Model
 
   has_many :activities,    foreign_key: 'owner_id'
-  has_many :core_products, :through => :core_team_memberships, :source => :product
-  has_many :core_team_memberships
+  has_many :core_products, through: :core_team_memberships, source: :product
+  has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
+
   has_many :events
   has_many :products
   has_many :product_logos
