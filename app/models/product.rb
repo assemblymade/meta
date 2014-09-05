@@ -9,6 +9,7 @@ class Product < ActiveRecord::Base
   include Elasticsearch::Model
 
   DEFAULT_BOUNTY_SIZE=10000
+  PITCH_WEEK_REQUIRED_BUILDERS=10
 
   extend FriendlyId
 
@@ -24,6 +25,8 @@ class Product < ActiveRecord::Base
 
   has_many :assets
   has_many :auto_tip_contracts
+  has_many :bounty_postings
+  has_many :chat_rooms
   has_many :completed_missions
   has_many :contract_holders
   has_many :core_team, through: :core_team_memberships, source: :user
@@ -31,6 +34,7 @@ class Product < ActiveRecord::Base
   has_many :discussions
   has_many :event_activities, through: :events, source: :activities
   has_many :events, :through => :wips
+  has_many :expense_claims
   has_many :financial_accounts, class_name: 'Financial::Account'
   has_many :financial_transactions, class_name: 'Financial::Transaction'
   has_many :invites, as: :via
@@ -45,6 +49,7 @@ class Product < ActiveRecord::Base
   has_many :subscribers
   has_many :tasks
   has_many :team_memberships
+  has_many :transaction_log_entries
   has_many :votes, :as => :voteable
   has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
   has_many :watchings, :as => :watchable
@@ -100,6 +105,7 @@ class Product < ActiveRecord::Base
 
   INITIAL_COINS = 6000
   PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
+  LAUNCHED = ((ENV['PRODUCTS_LAUNCHED'] || '').split(','))
   NON_PROFIT = %w(meta)
 
   INFO_FIELDS = %w(goals key_features target_audience competing_products competitive_advantage monetization_strategy)
@@ -121,12 +127,13 @@ class Product < ActiveRecord::Base
   end
 
   def stage
-    # TODO add shipping stage
     case
-    when greenlit_at.nil?
-      :validating
+    when LAUNCHED.include?(slug)
+      'launched'
+    when stealth?
+      'alpha'
     else
-      :building
+      'beta'
     end
   end
 
@@ -149,7 +156,7 @@ class Product < ActiveRecord::Base
   def for_profit?
     not NON_PROFIT.include?(slug)
   end
-  
+
   def partners
     entries = TransactionLogEntry.where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
     User.where(id: entries.keys)
@@ -283,6 +290,10 @@ class Product < ActiveRecord::Base
     touch(:featured_on)
   end
 
+  def main_chat_room
+    chat_rooms.first || ChatRoom.general
+  end
+
   def count_presignups
     votes.select(:user_id).distinct.count
   end
@@ -393,10 +404,6 @@ class Product < ActiveRecord::Base
     self
   end
 
-  def chat_room_key
-    "chat_#{id}"
-  end
-
   def average_bounty
     bounties = TransactionLogEntry.minted.
       where(product_id: product.id).
@@ -407,6 +414,14 @@ class Product < ActiveRecord::Base
     return DEFAULT_BOUNTY_SIZE if bounties.none?
 
     bounties.inject(0, &:+) / bounties.size
+  end
+
+  def ownership
+    ProductOwnership.new(self)
+  end
+
+  def update_partners_count_cache
+    self.partners_count = ownership.user_cents.size
   end
 
   def update_watchings_count!

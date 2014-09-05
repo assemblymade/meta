@@ -16,6 +16,40 @@
   display: none;
 }
 
+.dropzone-standalone {
+  border: 1px solid $gray-lighter;
+  border-radius: $border-radius-base;
+
+  .dz-preview {
+    display: block;
+
+    .dz-details {
+      padding: $padding-large-horizontal;
+    }
+
+    img {
+      border: 1px solid $gray-lighter;
+      border-radius: $border-radius-base;
+    }
+
+    .dz-filename, .dz-size {
+      font-size: $font-size-small;
+    }
+  }
+  .dz-success-mark, .dz-error-mark {
+    display: none;
+  }
+
+  &.dz-drag-hover {
+    background-color: $component-active-bg;
+    border-color: $input-border-focus;
+
+    > .dropzone-inner {
+      border-color: rgba($input-border-focus, .3);
+    }
+  }
+}
+
 .dropzone-inner {
   cursor: pointer;
 

@@ -29,20 +29,19 @@
 
       <ul class="nav navbar-nav">
 
-        <li class="<%= nav_active_class(:platform_discover) %>">
-          <a href="<%= discover_path %>">Discover</a>
+        <li class="<%= nav_active_class(:discover_bounties) %>">
+          <a href="<%= discover_path(:fresh) %>">Products</a>
         </li>
-
-        <li class="<%= nav_active_class(:platform_create) %>">
-          <a href="<%= new_product_path %>">Create</a>
+        <!--
+        <li class="<%= nav_active_class(:discover_bounties) %>">
+          <a href="<%= discover_path(:bounties) %>">Bounties</a>
         </li>
-
-        <li class="<%= nav_active_class(:platform_getting_started) %>">
-          <a href="<%= getting_started_path %>">Get Started</a>
+        -->
+        <li class="<%= nav_active_class(:platform_updates) %>">
+          <a href="<%= discover_path(:updates) %>">Updates</a>
         </li>
-
         <li class="<%= nav_active_class(:community) %>">
-          <a href="<%= chat_path %>">Community</a>
+          <a href="<%= chat_rooms_path %>">Community Chat</a>
         </li>
       </ul>
 
@@ -52,7 +51,7 @@
               data-react-class="Navbar"
               data-react-props="<%= {
                 newsFeedPath: notifications_path(format: :json),
-                chatPath: users_chat_rooms_path,
+                chatPath: chat_rooms_path,
                 userPath: user_path(current_user),
                 editUserPath: edit_user_path,
                 balancePath: users_balance_path,
@@ -76,8 +75,4 @@
       </div>
     </div>
   </div>
-  <% if @product && !user_signed_in? %>
-    <div data-react-class="ProductBanner" data-react-props="<%= { productName: @product.name }.to_json %>" style="text-align: center; width: 100%;">
-    </div>
-  <% end %>
 </div>

@@ -9,7 +9,9 @@ class Watching < ActiveRecord::Base
   validates :user,      presence: true, uniqueness:  { scope: :watchable }
   validates :watchable, presence: true
 
-  default_scope -> { where(unwatched_at: nil) }
+  default_scope { active }
+  scope :active, -> { where(unwatched_at: nil) }
+  scope :subscribed, -> { where(subscription: true) }
 
   after_commit -> { watchable.update_watchings_count! }
 
@@ -41,5 +43,13 @@ class Watching < ActiveRecord::Base
 
   def self.following?(user, watchable)
     where(user: user, watchable: watchable, unwatched_at: nil).any?
+  end
+
+  # private
+
+  def update_counter_cache
+    if watchable.try(:watchings_count)
+      watchable.update watchings_count: watchable.watchings.active.count
+    end
   end
 end

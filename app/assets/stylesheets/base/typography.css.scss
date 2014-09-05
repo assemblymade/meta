@@ -327,9 +327,8 @@ mark,
   text-overflow: ellipsis;
 }
 
-.text-subtle-link {
-  color: inherit;
-  &:hover {
+.text-stealth-link {
+  &, &:hover {
     color: inherit
   }
 }

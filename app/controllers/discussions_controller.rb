@@ -42,7 +42,7 @@ class DiscussionsController < WipsController
 
   def show
     if @wip.main_thread?
-      redirect_to product_chat_path(@wip.product)
+      redirect_to chat_room_path(@wip.product.main_chat_room)
       return
     end
 

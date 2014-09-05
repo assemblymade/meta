@@ -139,11 +139,11 @@ class TasksController < WipsController
   end
 
   def wip_params
-    params.require(:task).permit(:title, :deliverable, tag_list: [])
+    params.require(:task).permit(:title, :description, :deliverable, tag_list: [])
   end
 
   def update_wip_params
-    params.require(:task).permit(:title, :deliverable)
+    params.require(:task).permit(:title, :description, :deliverable)
   end
 
   def to_discussion

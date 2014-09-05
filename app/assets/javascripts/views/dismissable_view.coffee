@@ -4,7 +4,10 @@ class window.DismissableView extends Backbone.View
 
   initialize: ->
     @key = "dismissed-#{@$el.data('dismissable')}"
-    @$el.hide() if $.cookie(@key) == "true"
+    if $.cookie(@key) == "true"
+      @$el.hide()
+    else
+      @$el.show()
 
   dismissClicked: (e)=>
     e.preventDefault()

@@ -1,0 +1,19 @@
+<% product = app.product %>
+<div class="chip">
+  <div class="row">
+    <%= render 'products/mini_chip', product: product %>
+
+    <div class="col-xs-2">
+      <div class="progress progress-small omega">
+        <div class="progress-bar progress-bar-success" style="width: <%= percentage(product.bio_memberships_count / Product::PITCH_WEEK_REQUIRED_BUILDERS.to_f) %>;">
+        </div>
+      </div>
+      <span>
+        <%= product.bio_memberships_count %> / <%= Product::PITCH_WEEK_REQUIRED_BUILDERS %> building
+      </span>
+      <span class="pull-right">
+        <%= time_ago_in_words app.pitch_week_end %> to go
+      </span>
+    </div>
+  </div>
+</div>

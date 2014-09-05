@@ -1,0 +1,28 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Pitch</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <% @applications.each do |app| %>
+    <tr>
+      <td>
+        <strong>
+          <a href="<%= product_path(app.product) %>" target="_blank">
+            <%= app.product.name %>
+          </a>
+        </strong>
+      </td>
+      <td><%= app.product.pitch %></td>
+      <td>
+        <%= link_to 'Approve', admin_pitch_week_application_approve_path(app.id), method: :patch, class: %w(btn btn-xs btn-success) %>
+        <%= link_to 'Decline', admin_pitch_week_application_decline_path(app.id), method: :patch, class: %w(btn btn-xs btn-danger) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= paginate @applications, theme: 'twitter-bootstrap-3' %>

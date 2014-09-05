@@ -1,5 +1,5 @@
 <% title 'New Post', @post.product.name %>
-<% activate_nav! :blog %>
+<% activate_nav! :updates %>
 
 <div class="page-header sheet-header">
   <h1 class="page-header-title">Write a new post for <%= @post.product.name %>'s followers</h1>
@@ -43,10 +43,10 @@
     <div class="col-md-3 col-xs-3">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h6 class="panel-title">Everyone loves a blog post</h6>
+          <h6 class="panel-title">Everyone loves an update</h6>
         </div>
         <div class="panel-body">
-          Blog posts are a great way keep new contributors up to date with progress and new ways to help out. When you are ready, we'll also email the entry to everyone following <%= @product.name %>. You can include images and use Markdown to make it more awesome.
+          Updates are a great way to keep new contributors up to date with progress and new ways to help out. When you are ready, we'll also email the entry to everyone following <%= @product.name %>. You can include images and use Markdown to make it more awesome.
         </div>
       </div>
     </div>

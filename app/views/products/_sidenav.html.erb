@@ -53,39 +53,41 @@
     </li>
   <% end %>
 
-  <li><hr></li>
-
-  <li class="<%= nav_active_class(:chat) %>">
-    <a href="<%= product_chat_path(product) %>">
-      <span class="icon icon-bubbles icon-left"></span>
-      Chat
-    </a>
-  </li>
-
-  <% if can?(:update, product) || product.posts.any? %>
-    <li class="<%= nav_active_class(:blog) %>">
-      <a href="<%= product_posts_path(product) %>">
-        <span class="icon-notebook icon-left"></span>
-        Blog
+  <% if chat_room = product.chat_rooms.first %>
+    <li class="<%= nav_active_class(:chat) %>">
+      <a href="<%= chat_room_path(chat_room) %>">
+        <span class="icon icon-bubbles icon-left"></span>
+        Chat
       </a>
     </li>
   <% end %>
 
-  <li class="<%= nav_active_class(:projects) %>">
-    <a href="<%= product_projects_path(product) %>">
-      <span class="icon icon-folder icon-left"></span>
-      Projects
-    </a>
-  </li>
+  <% if can?(:update, product) || product.posts.any? %>
+    <li class="<%= nav_active_class(:updates) %>">
+      <a href="<%= product_posts_path(product) %>">
+        <span class="icon-notebook icon-left"></span>
+        Updates
+      </a>
+    </li>
+  <% end %>
 
-  <li class="<%= nav_active_class(:bounties) %>">
-    <a href="<%= product_wips_path(product) %>">
-      <span class="icon icon-trophy icon-left"></span>
-      Bounties
-    </a>
-  </li>
+  <% if partner?(product) %>
+    <li class="<%= nav_active_class(:projects) %>">
+      <a href="<%= product_projects_path(product) %>">
+        <span class="icon icon-folder icon-left"></span>
+        Projects
+      </a>
+    </li>
 
-  <li class="<%= nav_active_class(:discussions) %>">
+    <li class="<%= nav_active_class(:bounties) %>">
+      <a href="<%= product_wips_path(product) %>">
+        <span class="icon icon-trophy icon-left"></span>
+        Bounties
+      </a>
+    </li>
+  <% end %>
+
+  <!-- <li class="<%= nav_active_class(:discussions) %>">
     <a href="<%= product_discussions_path(product) %>">
       <span class="icon icon-book-open icon-left"></span>
       Discussions
@@ -104,10 +106,11 @@
       <span class="icon icon-repository icon-left"></span>
       Repositories
     </a>
-  </li>
+  </li> -->
+
 
   <% if staff? %>
-    <li><hr></li>
+  <li><hr></li>
     <li class="<%= nav_active_class(:admin) %>">
       <a href="<%= product_admin_path(product) %>">
         <span class="icon-moustache icon-left"></span>
@@ -122,5 +125,6 @@
       </a>
     </li>
   <% end %>
-
 </ul>
+
+

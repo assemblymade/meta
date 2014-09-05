@@ -1,5 +1,5 @@
 class AddPrimaryKeyToEvents < ActiveRecord::Migration
-def up
+  def up
     execute "ALTER TABLE events ADD PRIMARY KEY (id);"
   end
 

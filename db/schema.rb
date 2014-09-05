@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904012629) do
+ActiveRecord::Schema.define(version: 20140904201436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,26 @@ ActiveRecord::Schema.define(version: 20140904012629) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "bounty_postings", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "bounty_id",  null: false
+    t.uuid     "poster_id",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "expired_at"
+  end
+
+  add_index "bounty_postings", ["expired_at", "bounty_id"], name: "index_bounty_postings_on_expired_at_and_bounty_id", unique: true, using: :btree
+
+  create_table "chat_rooms", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "slug",       null: false
+    t.uuid     "wip_id"
+    t.uuid     "product_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "chat_rooms", ["slug"], name: "index_chat_rooms_on_slug", unique: true, using: :btree
 
   create_table "code_deliverables", id: false, force: true do |t|
     t.uuid     "id",         null: false
@@ -160,6 +180,22 @@ ActiveRecord::Schema.define(version: 20140904012629) do
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
   add_index "events", ["wip_id", "number"], name: "index_events_on_wip_id_and_number", unique: true, using: :btree
   add_index "events", ["wip_id"], name: "index_events_on_wip_id", using: :btree
+
+  create_table "expense_claim_attachments", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "expense_claim_id", null: false
+    t.uuid     "attachment_id",    null: false
+    t.datetime "created_at",       null: false
+  end
+
+  create_table "expense_claims", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id",  null: false
+    t.uuid     "user_id",     null: false
+    t.integer  "total",       null: false
+    t.string   "description"
+    t.datetime "paid_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "features", id: false, force: true do |t|
     t.uuid     "id",                      null: false
@@ -310,6 +346,16 @@ ActiveRecord::Schema.define(version: 20140904012629) do
     t.string   "name",        null: false
   end
 
+  create_table "pitch_week_applications", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id",   null: false
+    t.uuid     "applicant_id", null: false
+    t.boolean  "is_approved"
+    t.datetime "reviewed_at"
+    t.uuid     "reviewer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "posts", id: false, force: true do |t|
     t.uuid     "id",         null: false
     t.uuid     "product_id", null: false
@@ -398,6 +444,10 @@ ActiveRecord::Schema.define(version: 20140904012629) do
     t.hstore   "info"
     t.integer  "quality"
     t.datetime "last_activity_at"
+    t.integer  "bio_memberships_count",  default: 0,     null: false
+    t.datetime "started_building_at"
+    t.datetime "live_at"
+    t.integer  "partners_count"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
