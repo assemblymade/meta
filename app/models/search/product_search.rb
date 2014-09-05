@@ -53,9 +53,11 @@ module Search
       @total = tech_facets['total']
 
       @facets = tech_facets['terms'].map do |term|
-        FacetFilter.new(TechFilter.find(term['term']), term['count'])
+        if filter = TechFilter.find(term['term'])
+          FacetFilter.new(filter, term['count'])
+        end
       end
-      @facets.sort_by!{|f| -f.count }
+      @facets.compact.sort_by!{|f| -f.count }
     end
   end
 end
