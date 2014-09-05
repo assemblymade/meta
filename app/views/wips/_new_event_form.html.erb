@@ -23,7 +23,7 @@
         Add to the discussion or share work
         <% if @wip.open? %>to earn <%= format_coins(@wip.product, @wip.contracts.earnable_cents) %>.<% end %>
       </div>
-
+      
       <div id="comment">
         <%= form_tag product_wip_comments_path(@wip.product, @wip), method: :post, class: %w(form new_event_comment) do %>
 
