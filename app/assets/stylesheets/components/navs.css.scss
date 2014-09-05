@@ -55,30 +55,18 @@
 
 .nav-sidebar {
   margin-bottom: $line-height-computed;
-  border-right: 1px solid $brand-divider;
-
-  > li {
-    border-top: none;
-  }
 
   > li > a {
-    padding: $padding-small-vertical $padding-small-horizontal;
     color: $gray-light;
   }
 
-  > li {
-    &:not(.active) a:hover {
-      background-color: $brand-shadow;
-    }
+  > :not(.active) > a:hover {
+    background-color: $brand-bg;
   }
 
-  > .active {
-    background-color: white;
+  > .active > a {
+    color: $link-color;
     font-weight: bold;
     background-color: $component-active-bg;
-
-    > a {
-      color: $brand-primary;
-    }
   }
 }
