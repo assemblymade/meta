@@ -7,8 +7,14 @@ class WipMailer < BaseMailer
   def wip_created(user_id, wip_id)
     mailgun_tag 'wip#created'
 
-    @user = User.find(user_id)
     @wip = Wip.find(wip_id)
+
+    # Don't spam the core team when Kernel creates a wip
+    if @wip.user == User.find_by(username: 'kernel')
+      return
+    end
+
+    @user = User.find(user_id)
     @product = @wip.product
     @events = @wip.events
 
