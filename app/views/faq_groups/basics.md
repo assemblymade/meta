@@ -48,7 +48,7 @@ A key ingredient to success on Assembly is community support. There are many way
 
 # Who owns the intellectual property?
 
-You do. 
+You do. However, in order for Assembly to monetize the product on behalf of you and the community, we need some non-exclusive rights that are outlined in our [terms of service](https://assembly.com/terms).
 
 # What does transparency mean to Assembly?
 
