@@ -9,7 +9,6 @@ class window.ActivityStream extends Backbone.Collection
   listenForRemote: (pusher, connection) ->
     @socketId = connection.socket_id
     channel = pusher.subscribe(@channelName())
-    console.log('subscribed to', @channelName())
     channel.bind 'add', (attributes)=>
       @add(attributes)
       model = @get(attributes.id)

@@ -11,7 +11,8 @@ class ChatRoomsController < ApplicationController
         ).compact
 
         render json: {
-          chat_rooms: ActiveModel::ArraySerializer.new(@rooms)
+          chat_rooms: ActiveModel::ArraySerializer.new(@rooms),
+          sort_keys: current_user.recent_product_ids.try(:map) {|pid| "chat_#{pid}"} || []
         }
       }
     end

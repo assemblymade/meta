@@ -17,10 +17,8 @@ namespace :activity do
   desc "Rebuilds all the ActivityStreams in Redis"
   task :rebuild => [:destroy, :build]
 
-  desc "Prune out weird and old activities"
+  desc "Prune out weird and orphaned activities"
   task :prune => :environment do
-    ActiveRecord::Base.logger = nil
-
     activities = Activity.all.includes(:subject, :target).select do |a|
       a.subject.nil? || a.target.nil?
     end

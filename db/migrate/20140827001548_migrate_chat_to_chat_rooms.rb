@@ -4,7 +4,6 @@ class MigrateChatToChatRooms < ActiveRecord::Migration
 
     Product.includes(:main_thread).find_each do |p|
       if (wip = p.main_thread) && p.slug.present?
-        shown = %w(meta coderwall buckets helpful).include?(p.slug)
         slug = p.slug == 'meta' ? 'general' : p.slug
         product = p.slug == 'meta' ? nil : p
 
@@ -12,7 +11,6 @@ class MigrateChatToChatRooms < ActiveRecord::Migration
           slug: slug,
           product: product,
           wip: wip,
-          deleted_at: (shown ? nil : Time.now)
         )
 
         Activities::Chat.where(target: wip).update_all(target_id: chat_room.id, target_type: ChatRoom.to_s)
