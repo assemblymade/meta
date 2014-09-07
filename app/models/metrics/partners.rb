@@ -4,10 +4,10 @@ module Metrics
       (-7..0).map do |i|
         day = at + i.days
         builders = Task.won.
-          joins(winning_event: :user).
+          joins(awards: :winner).
           where('is_staff is false').
           where("date(closed_at AT TIME ZONE 'PST') = ?", day).
-          map{|t| t.winning_event.user.username }.uniq
+          map{|t| t.winners.map(&:username) }.flatten.uniq
 
         tippees = Tip.joins(:to).
           where('is_staff is false').
@@ -22,11 +22,12 @@ module Metrics
 
     def self.active_between(start_at, end_at)
       builders = Task.won.
-        joins(winning_event: :user).
+        joins(:events).
+        joins(awards: :winner).
         where('is_staff is false').
         where("events.created_at >= date(? AT TIME ZONE 'PST') and events.created_at <= date(? AT TIME ZONE 'PST')",
           start_at, end_at).
-        map{|t| t.winning_event.user.username }.uniq
+        map{|t| t.winners.map(&:username) }.flatten.uniq
 
       tippees = Tip.joins(:to).
         where('is_staff is false').
