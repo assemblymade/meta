@@ -1,6 +1,6 @@
 class BadgeMailerPreview < ActionMailer::Preview
 
-  def awarded
+  def first_win
     BadgeMailer.first_win Event::Win.sample.event.id
   end
 
