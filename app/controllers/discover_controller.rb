@@ -12,7 +12,7 @@ class DiscoverController < ApplicationController
                         where.not(slug: 'meta').
                         where.not(started_building_at: nil).
                         joins(:product_trend).
-                        where('watchings_count >= ?', 10).
+                        where('watchings_count >= ?', 5).
                         order('product_trends.score desc').
                         page(params[:page])
   end
