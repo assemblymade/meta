@@ -9,7 +9,7 @@ module AnalyticsHelper
   end
 
   def track(event, options=nil)
-    content_tag :script, track_inline(event, options)
+    content_tag(:script, track_inline(event, options)) unless staff?
   end
 
   def analytics_track_events
