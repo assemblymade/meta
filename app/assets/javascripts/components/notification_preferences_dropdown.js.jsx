@@ -24,13 +24,14 @@ var Avatar = require('./avatar.js.jsx');
 
     render: function() {
       return (
-        <div className={this.togglerClasses()}>
-          <a className="toggler-btn" data-toggle="dropdown">
+        <div>
+          <button className={this.togglerClasses()} type="button" data-toggle="dropdown">
             {this.buttonState()}
-          </a>
-          <a className="toggler-badge" href={this.props.productWatchersPath}>
-            {this.state.productWatchersCount}
-          </a>
+
+            <a className="toggler-badge" href={this.props.productWatchersPath}>
+              {this.state.productWatchersCount}
+            </a>
+          </button>
 
           <ul
               className="dropdown-menu dropdown-menu-right"
