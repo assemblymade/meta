@@ -312,6 +312,8 @@ ASM::Application.routes.draw do
       resources :transactions, only: [:index, :show, :new, :create]
     end
 
+    get :chat, to: redirect('/chat/%{product_id}')
+
     # legacy
     get :team, to: redirect(path: '%{product_id}/people')
     get :welcome, to: redirect(path: '%{product_id}')
