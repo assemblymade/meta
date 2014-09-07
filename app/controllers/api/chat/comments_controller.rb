@@ -13,7 +13,7 @@ module Api
             @event.notify_users!(@chat_room.product.followers)
           end
 
-          Activities::Chat.publish!(
+          @activity = Activities::Chat.publish!(
             actor: current_user,
             subject: @event,
             target: @chat_room,
@@ -22,7 +22,7 @@ module Api
         end
 
         respond_to do |format|
-          format.json { render nothing: true }
+          format.json { render json: @activity, serializer: ActivitySerializer }
         end
       end
 
