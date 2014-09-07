@@ -71,7 +71,7 @@
     </li>
   <% end %>
 
-  <% if partner?(product) %>
+  <% if true # partner?(product) %>
     <li class="<%= nav_active_class(:projects) %>">
       <a href="<%= product_projects_path(product) %>">
         <span class="icon icon-folder icon-left"></span>
@@ -87,7 +87,7 @@
     </li>
   <% end %>
 
-  <!-- <li class="<%= nav_active_class(:discussions) %>">
+  <li class="<%= nav_active_class(:discussions) %>">
     <a href="<%= product_discussions_path(product) %>">
       <span class="icon icon-book-open icon-left"></span>
       Discussions
@@ -106,7 +106,7 @@
       <span class="icon icon-repository icon-left"></span>
       Repositories
     </a>
-  </li> -->
+  </li>
 
 
   <% if staff? %>
