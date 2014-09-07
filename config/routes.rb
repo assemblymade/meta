@@ -316,7 +316,7 @@ ASM::Application.routes.draw do
     get :team, to: redirect(path: '%{product_id}/people')
     get :welcome, to: redirect(path: '%{product_id}')
 
-    get '/:number' => 'rooms#deprecated_redirect',
+    get '/:number', to: redirect(path: '%{product_id}/wips/%{number}'),
       constraints: {number: /\d+/},
       as: :shortcut
   end
