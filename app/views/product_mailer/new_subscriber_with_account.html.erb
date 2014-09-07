@@ -12,7 +12,7 @@
                 </h1>
 
                 <p>
-                  Hey <%= @user.username %>, want to help build <%= @product.name %>? <a href="<%= product_chat_url(@product) %>">Dive right in</a>!
+                  Hey <%= @user.username %>, want to help build <%= @product.name %>? <a href="<%= product_path(@product) %>">Dive right in</a>!
                 </p>
                 <p>
                   If you'd rather just get updates about <%= @product.name %>, you don't have to take any further action. But if you'd like to <span style="font-style: italic;">build</span> <%= @product.name %> or offer direct feedback to the team, you can sign up anytime.
