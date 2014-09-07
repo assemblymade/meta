@@ -11,7 +11,7 @@ module Api
           users = User.all
         end
 
-        @users = users.where('last_request_at > ?', 1.hour.ago)
+        @users = users.where('last_request_at > ?', 7.days.ago)
         respond_with(@users)
       end
     end
