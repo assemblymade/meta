@@ -52,6 +52,7 @@
 
     componentDidMount: function() {
       this.loadMembersFromChannel()
+      this.loadMembersFromServer()
 
       this.props.channel.bind(
         'pusher:member_added',
