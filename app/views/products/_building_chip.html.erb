@@ -1,23 +1,5 @@
 <div class="chip">
   <div class="row">
     <%= render 'products/mini_chip', product: product %>
-
-    <div class="col-xs-1 text-center">
-      <div><a class="text-subtle-link" href="<%= product_people_path(product) %>">
-        <strong>+ <%= product.bio_memberships_count %></strong>
-      </a></div>
-      <a class="text-subtle-link" href="<%= product_people_path(product) %>">
-        <span class="text-muted">building</span>
-      </a>
-    </div>
-
-    <div class="col-xs-1 text-center">
-      <div><a class="text-subtle-link" href="<%= product_people_path(product) %>">
-        <strong>+ <%= product.watchings_count %></strong>
-      </a></div>
-      <a class="text-subtle-link" href="<%= product_people_path(product) %>">
-        <span class="text-muted">signups</span>
-      </a>
-    </div>
   </div>
 </div>

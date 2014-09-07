@@ -1,26 +1,5 @@
 <div class="chip">
   <div class="row">
     <%= render 'products/mini_chip', product: product %>
-
-    <div class="col-xs-1 text-center">
-      <div>
-        <a class="text-subtle-link" href="<%= product_partners_path(product) %>">
-          <strong>+ <%= product.partners_count %></strong></div>
-        </a>
-        <a class="text-subtle-link" href="<%= product_partners_path(product) %>">
-          <span class="text-muted">partners</span>
-        </a>
-    </div>
-
-    <div class="col-xs-1 text-center">
-      <a class="text-subtle-link" href="<%= product_financials_path(product) %>">
-        <div><strong><%= short_currency product.profit_reports.order(:end_at).last.try(:revenue) %>
-        </strong></div>
-      </a>
-
-      <a class="text-subtle-link" href="<%= product_financials_path(product) %>">
-        <span class="text-muted">monthly</span>
-      </a>
-    </div>
   </div>
 </div>
