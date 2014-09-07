@@ -106,6 +106,15 @@
     </a>
   </li>
 
+  <% if can?(:edit, product) %>
+    <li class="<%= nav_active_class(:settings) %>">
+      <a href="<%= edit_product_path(product) %>">
+        <span class="glyphicon glyphicon-cog icon-left"></span>
+        Settings
+      </a>
+    </li>
+  <% end %>
+
 
   <% if staff? %>
   <li><hr></li>
