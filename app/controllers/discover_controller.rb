@@ -9,6 +9,7 @@ class DiscoverController < ApplicationController
 
   def trending
     @products = Product.public_products.
+                        where.not(slug: 'meta').
                         where.not(started_building_at: nil).
                         where(live_at: nil).
                         joins(:product_trend).
