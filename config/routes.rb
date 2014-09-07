@@ -57,7 +57,7 @@ ASM::Application.routes.draw do
                                action: 'trending'
                              },
                              constraints: {
-                               action: /trending|live/
+                               action: /trending|live|updates/
                              }
 
   get '/discover/tech/:tech' => 'discover#tech'
