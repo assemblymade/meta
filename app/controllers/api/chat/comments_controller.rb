@@ -28,7 +28,7 @@ module Api
 
       def index
         @chat_room = ChatRoom.find_by!(slug: params[:chat_room_id])
-        @activity_stream = ActivityStream.new(@chat_room).page(params[:top_id])
+        @activity_stream = ActivityStream.new(@chat_room.id).page(params[:top_id])
         respond_to do |format|
           format.json {
             render json: @activity_stream.map {|a| ActivitySerializer.new(a, scope: current_user)}

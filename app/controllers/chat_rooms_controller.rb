@@ -20,6 +20,6 @@ class ChatRoomsController < ApplicationController
 
   def show
     @chat_room = ChatRoom.find_by!(slug: params[:id])
-    @activity_stream = ActivityStream.new(@chat_room).page(params[:top_id])
+    @activity_stream = ActivityStream.new(@chat_room.id).page(params[:top_id])
   end
 end

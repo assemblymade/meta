@@ -7,13 +7,13 @@ class MigrateChatToChatRooms < ActiveRecord::Migration
         slug = p.slug == 'meta' ? 'general' : p.slug
         product = p.slug == 'meta' ? nil : p
 
-        chat_room = ChatRoom.create!(
+        chat_room = ChatRoom.find_by!(
           slug: slug,
           product: product,
           wip: wip,
         )
 
-        Activities::Chat.where(target: wip).update_all(target_id: chat_room.id, target_type: ChatRoom.to_s)
+        Activity.where(target: wip).update_all(target_id: chat_room.id, target_type: ChatRoom.to_s)
       end
     end
 
