@@ -27,11 +27,27 @@
 
 <br>
 
-<ul class="nav nav-stacked nav-sidebar">
+<ul class="nav nav-stacked nav-pills">
   <li class="<%= nav_active_class(:about) %>">
     <a href="<%= product_path(product) %>">
       <span class="icon icon-compass icon-left"></span>
       Idea
+    </a>
+  </li>
+
+  <% if can?(:update, product) || product.posts.any? %>
+    <li class="<%= nav_active_class(:updates) %>">
+      <a href="<%= product_posts_path(product) %>">
+        <span class="icon-notebook icon-left"></span>
+        Updates
+      </a>
+    </li>
+  <% end %>
+
+  <li class="<%= nav_active_class(:bounties) %>">
+    <a href="<%= product_wips_path(product) %>">
+      <span class="icon icon-trophy icon-left"></span>
+      Bounties
     </a>
   </li>
 
@@ -51,6 +67,17 @@
     </li>
   <% end %>
 
+  <% if can?(:edit, product) %>
+    <li class="<%= nav_active_class(:settings) %>">
+      <a href="<%= edit_product_path(product) %>">
+        <span class="glyphicon glyphicon-cog icon-left"></span>
+        Settings
+      </a>
+    </li>
+  <% end %>
+
+  <li><hr></li>
+
   <% if chat_room = product.chat_rooms.first %>
     <li class="<%= nav_active_class(:chat) %>">
       <a href="<%= chat_room_path(chat_room) %>">
@@ -60,30 +87,12 @@
     </li>
   <% end %>
 
-  <% if can?(:update, product) || product.posts.any? %>
-    <li class="<%= nav_active_class(:updates) %>">
-      <a href="<%= product_posts_path(product) %>">
-        <span class="icon-notebook icon-left"></span>
-        Updates
-      </a>
-    </li>
-  <% end %>
-
-  <% if true # partner?(product) %>
-    <li class="<%= nav_active_class(:projects) %>">
-      <a href="<%= product_projects_path(product) %>">
-        <span class="icon icon-folder icon-left"></span>
-        Projects
-      </a>
-    </li>
-
-    <li class="<%= nav_active_class(:bounties) %>">
-      <a href="<%= product_wips_path(product) %>">
-        <span class="icon icon-trophy icon-left"></span>
-        Bounties
-      </a>
-    </li>
-  <% end %>
+  <li class="<%= nav_active_class(:projects) %>">
+    <a href="<%= product_projects_path(product) %>">
+      <span class="icon icon-folder icon-left"></span>
+      Projects
+    </a>
+  </li>
 
   <li class="<%= nav_active_class(:discussions) %>">
     <a href="<%= product_discussions_path(product) %>">
@@ -106,18 +115,9 @@
     </a>
   </li>
 
-  <% if can?(:edit, product) %>
-    <li class="<%= nav_active_class(:settings) %>">
-      <a href="<%= edit_product_path(product) %>">
-        <span class="glyphicon glyphicon-cog icon-left"></span>
-        Settings
-      </a>
-    </li>
-  <% end %>
-
-
   <% if staff? %>
-  <li><hr></li>
+    <li><hr></li>
+
     <li class="<%= nav_active_class(:admin) %>">
       <a href="<%= product_admin_path(product) %>">
         <span class="icon-moustache icon-left"></span>
