@@ -15,9 +15,7 @@
         }.to_json %>">
     </div>
   <% else %>
-    <span class="img-shadow">
-      <%= image_tag product.poster_image.url, class: 'img-rounded', width: '100%', alt: product.name %>
-    </span>
+    <%= image_tag product.poster_image.url, class: 'img-rounded', width: '100%', alt: product.name %>
   <% end %>
 
   <% if @product.homepage_url.present? %>
@@ -126,5 +124,3 @@
     </li>
   <% end %>
 </ul>
-
-
