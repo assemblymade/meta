@@ -1,11 +1,20 @@
 .toggler {
-  display: inline-table;
+  // display: inline-table;
 
   border: 1px solid $brand-divider;
   border-radius: $border-radius-base;
   background-color: $brand-bg;
 
-  cursor: pointer;
+  outline: none;
+  
+    color: $brand-border;
+    font-weight: bold;
+
+    padding: 0;
+
+    padding: (3px - 1px) 10px;
+
+  // cursor: pointer;
 
   &:hover {
     border-color: $brand-border;
@@ -19,9 +28,9 @@
     border-radius: 0 $border-radius-base $border-radius-base 0;
   }
 
-  > .toggler-badge:first-child {
-    border-right: none;
-  }
+  // > .toggler-badge:first-child {
+  //   border-right: none;
+  // }
 
   > :last-child.toggler-badge {
     border-left: none;
@@ -31,13 +40,17 @@
 
 .toggler-btn,
 .toggler-badge {
-  display: table-cell;
+  // display: table-cell;
+
+  display: inline-block;
   padding: (3px - 1px) 10px;
+  margin-left: 10px;
+  margin-right: -10px;
+  margin-top: -2px;
+  margin-bottom: -2px;
 }
 
 .toggler-btn {
-  color: $brand-border;
-  font-weight: bold;
 
   &:hover {
     color: $brand-border;

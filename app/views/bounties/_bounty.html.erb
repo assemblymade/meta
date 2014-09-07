@@ -1,111 +1,133 @@
-<div class="page-header sheet-header omega">
-  <% if false %>
-    <% posting = bounty.postings.first %>
-    <div data-react-class="BountyPostingHeader" data-react-props="<%= {
-      postings_path: api_product_bounty_postings_path(@product),
-      bounty: { number: @bounty.number },
-      product: { slug: @product.slug, name: @product.name},
-      slots: BountyPosting.slots_available(@product),
-      posting: (BountyPostingSerializer.new(posting).as_json if posting)
-    }.to_json %>"></div>
-  <% end %>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="pull-right">
+<% if false %>
+  <% posting = bounty.postings.first %>
+  <div data-react-class="BountyPostingHeader" data-react-props="<%= {
+    postings_path: api_product_bounty_postings_path(@product),
+    bounty: { number: @bounty.number },
+    product: { slug: @product.slug, name: @product.name},
+    slots: BountyPosting.slots_available(@product),
+    posting: (BountyPostingSerializer.new(posting).as_json if posting)
+  }.to_json %>"></div>
+<% end %>
+
+<div class="card">
+  <div class="card-body" style="border-bottom:1px solid #FAFAFA">
+    <h3 class="alpha omega">
+      <%= bounty.title %>
+    </h3>
+
+    <ul class="list-inline omega">
+      <li>
+        <div id="js-bounty-valuation" class="text-large alpha"></div>
+        <script>
+          React.renderComponent(BountyValuation(<%== {
+            offersPath: api_product_bounty_offers_path(@product, bounty),
+            product: { name: @product.name },
+            contracts: bounty.contracts.as_json,
+            offers: ActiveModel::ArraySerializer.new(bounty.offers).as_json,
+            maxOffer: (6 * @product.average_bounty).round(-4),
+            averageBounty: @product.average_bounty,
+            value: bounty.value,
+            open: bounty.open?
+          }.to_json %>), document.getElementById('js-bounty-valuation'));
+        </script>
+      </li>
+      <li>
         <% if bounty.state == 'resolved' %>
           <span class="label label-default">CLOSED</span>
         <% else %>
           <%= render partial: 'bounties/urgency', locals: { task: bounty } %>
         <% end %>
-      </div>
+      </li>
+      <li class="text-muted text-small">
+        Created
+        <%= time_ago_in_words(bounty.created_at) %> ago by
+        <a class="text-stealth-link" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
+      </li>
+      <li data-react-class="TagList"
+          data-react-props="<%= {
+            filterUrl: product_wips_path(@product),
+            destination: true,
+            tags: bounty.tags.map(&:name),
+            url: product_wip_tag_path(@product, @wip)
+          }.to_json %>">
+      </li>
+    </ul>
+  </div>
 
-      <h3 class="page-header-title alpha omega">
-        <%= bounty.title %>
-        <small>#<%= bounty.number %></small>
-      </h3>
-
-      <ul class="list-inline">
-        <li>
-          <h4 id="js-bounty-valuation" class="alpha">
-            <script>
-              React.renderComponent(BountyValuation(<%== {
-                offersPath: api_product_bounty_offers_path(@product, bounty),
-                product: { name: @product.name },
-                contracts: bounty.contracts.as_json,
-                offers: ActiveModel::ArraySerializer.new(bounty.offers).as_json,
-                maxOffer: (6 * @product.average_bounty).round(-4),
-                averageBounty: @product.average_bounty,
-                value: bounty.value,
-                open: bounty.open?
-              }.to_json %>), document.getElementById('js-bounty-valuation'));
-            </script>
-          </h4>
-        </li>
-        <li class="text-muted text-small">
-          Created
-          <%= time_ago_in_words(bounty.created_at) %> ago by
-          <a class="text-stealth-link" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
-        </li>
-      </ul>
-
+  <div class="card-body">
+    <div class="markdown markdown-content text-large">
       <%= product_markdown(bounty.product, bounty.description) %>
+    </div>
 
-      <div class="page-header-meta">
-        <% if can?(:update, bounty) %>
-          <div class="pull-right dropdown">
-            <a href="#" id="bounty-other-actions-dropdown" data-toggle="dropdown">
-              <span class="glyphicon glyphicon-cog"></span>
-              <div class="sr-only">Other actions</div>
+    <% workers = bounty.wip_workers %>
+    <% if workers.any? %>
+    <p class="text-muted">
+        <%= workers.map(&:user).map {|user| user_link_username(user) }.to_sentence.html_safe %>
+        started working on this bounty
+        <time class="timestamp" dateTime="<%= workers.map(&:created_at).max.iso8601 %>"></time>.
+      </p>
+    <% else %>
+      <p class="text-muted">This bounty doesn't have anybody working on it. Jump in!</p>
+    <% end %>
+  </div>
+
+  <div class="card-footer">
+    <% if can?(:update, bounty) %>
+      <div class="pull-right dropdown">
+        <button type="button" class="btn btn-link btn-sm" id="bounty-other-actions-dropdown" data-toggle="dropdown">
+          <span class="glyphicon glyphicon-cog"></span>
+          <div class="sr-only">Other actions</div>
+        </button>
+
+        <ul class="dropdown-menu" role="menu" aria-labelledby="bounty-other-actions-dropdown">
+          <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="<%= edit_product_wip_path(bounty.product, bounty) %>">
+              <span class="icon icon-pencil icon-left"></span>
+              Edit Bounty
             </a>
-
-            <ul class="dropdown-menu" role="menu" aria-labelledby="bounty-other-actions-dropdown">
-              <li role="presentation">
-                <a role="menuitem" tabindex="-1" href="<%= edit_product_wip_path(bounty.product, bounty) %>">
-                  <span class="icon icon-pencil icon-left"></span>
-                  Edit Bounty
-                </a>
-              </li>
-              <li role="presentation">
-                <a role="menuitem" tabindex="-1" href="<%= product_task_to_discussion_path(bounty.product, bounty) %>" data-method="patch" data-confirm="Are you sure?">
-                  <span class="icon icon-arrow-right-circled icon-left"></span>
-                  Make discussion
-                </a>
-              </li>
-            </ul>
-          </div>
-        <% end %>
-        <ul class="list-inline">
-          <li>
-            <% if !bounty.assigned_to?(current_user) %>
-              <%= button_to 'Start Bounty', product_wip_start_work_path(bounty.product, bounty), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-primary btn-sm) %>
-            <% else %>
-              <a title="remove" href="<%= product_wip_stop_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="text-danger">
-                Abandon Bounty
-              </a>
-            <% end %>
           </li>
-          <li>
-            <a href="#new-comment">comment</a>
-          </li>
-          <li>
-            <div data-react-class="InviteFriendBounty" data-react-props="<%= {
-                url: invites_path,
-                invites: (@invites ? serialize_hash(@invites) : []),
-              }.merge(TypeId.as_json(:via, bounty)).to_json %>">
-            </div>
-          </li>
-          <li>
-            <div data-react-class="ToggleButton"
-                 data-react-props="<%= {
-                   bool: watching?(@wip),
-                   text: { true: 'mute thread', false: 'follow thread' },
-                   classes: { true: '', false: '' },
-                   href: { true: product_wip_mute_path(@wip.product, @wip.number), false: product_wip_watch_path(@wip.product, @wip.number) }
-                }.to_json %>">
-            </div>
+          <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="<%= product_task_to_discussion_path(bounty.product, bounty) %>" data-method="patch" data-confirm="Are you sure?">
+              <span class="icon icon-arrow-right-circled icon-left"></span>
+              Make discussion
+            </a>
           </li>
         </ul>
       </div>
-    </div>
+
+    <% end %>
+
+    <ul class="list-inline omega">
+      <li>
+        <% if !bounty.assigned_to?(current_user) %>
+          <%= button_to 'Start working on this bounty', product_wip_start_work_path(bounty.product, bounty), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-primary btn-sm) %>
+        <% else %>
+          <a href="<%= product_wip_stop_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="text-danger">
+            Abandon Bounty
+          </a>
+        <% end %>
+      </li>
+      <li>
+        <a href="#new-comment">Comment</a>
+      </li>
+      <li>
+        <div data-react-class="InviteFriendBounty" data-react-props="<%= {
+            url: invites_path,
+            invites: (@invites ? serialize_hash(@invites) : []),
+          }.merge(TypeId.as_json(:via, bounty)).to_json %>">
+        </div>
+      </li>
+      <li>
+        <div data-react-class="ToggleButton"
+             data-react-props="<%= {
+               bool: watching?(@wip),
+               text: { true: 'Mute', false: 'Follow' },
+               classes: { true: 'btn btn-link btn-sm', false: 'btn btn-link btn-sm' },
+               href: { true: product_wip_mute_path(@wip.product, @wip.number), false: product_wip_watch_path(@wip.product, @wip.number) }
+            }.to_json %>">
+        </div>
+      </li>
+    </ul>
+
   </div>
 </div>

@@ -1,58 +1,19 @@
 .card {
-  @extend .text-sans;
-  display: block;
-  position: relative;
-  color: $text-color;
-  box-shadow: inset 0 0 0 1px $brand-border,
-              0 1px 0 0 $brand-shadow;
+  border: 1px solid $brand-border;
   border-radius: $border-radius-base;
-  background-color: white;
-  overflow: hidden;
+  box-shadow: 0 1px 2px 0 $brand-shadow;
   margin-bottom: $line-height-computed;
-  @include transition-property(box-shadow, translate);
-  @include transition-duration($transition-out-duration);
-  @include transition-timing-function($transition-function);
+  background-color: white;
 
-  &:hover,
-  &.card-active {
-    color: $text-color;
-    text-decoration: none;
-
-    .card-inner {
-      @include transition-duration($transition-in-duration);
-      opacity: 0.05;
-    }
+  > :first-child {
+    border-top-left-radius: $border-radius-base;
+    border-top-right-radius: $border-radius-base;
   }
 
-  .card-inner {
-    position: absolute;
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-size: cover !important;
-    background-position: center !important;
-    opacity: 1;
-    @include transition-property(opacity);
-    @include transition-duration($transition-out-duration);
-    @include transition-timing-function($transition-function);
+  > :last-child {
+    border-bottom-left-radius: $border-radius-base;
+    border-bottom-right-radius: $border-radius-base;
   }
-}
-
-a.card:hover {
-  @include translate(0, -3px);
-  @include transition-duration($transition-in-duration);
-  box-shadow: inset 0 0 0 1px $brand-border,
-              0 3px 3px 0 $brand-shadow;
-}
-
-.card-hero {
-  background-color: $body-bg;
-  width: 100%;
-  height: 0;
-  padding-bottom: percentage(2/3);
-  background-position: center;
-  background-size: cover;
-  box-shadow: inset 0 0 0 1px rgba(black, 0.15);
 }
 
 .card-body {
@@ -60,21 +21,6 @@ a.card:hover {
 }
 
 .card-footer {
-  @include clearfix;
-  padding: 8px 20px;
-  border-top: 1px solid $brand-divider;
-  font-size: $font-size-small;
-  color: $brand-muted;
-}
-
-.card-sm {
-  border-radius: $border-radius-base;
-
-  .card-body {
-    padding: 15px 20px;
-  }
-}
-
-.card-lg {
-  border-radius: $border-radius-large;
+  padding: ($line-height-computed/2) 20px;
+  background-color: $brand-bg;
 }

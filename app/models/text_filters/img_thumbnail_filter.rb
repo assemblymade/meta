@@ -4,9 +4,9 @@ module TextFilters
     def call
       doc.css('img').each do |element|
         if context[:firesize_url] && element['src']
-          element['src'] = File.join(context[:firesize_url], 'frame_0', element['src'])
+          element['src'] = File.join(context[:firesize_url], element['src'])
         end
-        element['class'] = 'img-thumbnail'
+        element['class'] = 'img-rounded'
       end
       doc
     end
