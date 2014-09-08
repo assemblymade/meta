@@ -7,8 +7,12 @@
   <div class="page-header-meta">
     <ul class="list-piped pull-right">
       <li>
-        <% #<div data-react-class="CreateBountyButton" data-react-props="<%= { url: product_wips_path(@product) }.to_json >"></div> %>
-        <a class="text-success" href="<%= new_product_wip_path(@product) %>">Create Bounty</a>
+        <div data-react-class="CreateBountyButton" data-react-props="<%= {
+          product: { name: @product.name },
+          url: product_wips_path(@product),
+          maxOffer: (6 * @product.average_bounty).round(-4),
+          averageBounty: @product.average_bounty
+        }.to_json %>" style="position:relative;top:-8px"></div>
       </li>
     </ul>
 

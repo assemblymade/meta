@@ -9,7 +9,7 @@
     },
 
     render: function() {
-      return <Lightbox title="Create a bounty">
+      return <Lightbox title="Create a bounty" size="modal-lg">
         <form accept-charset="UTF-8" action={this.props.url} className="new_task" id="new_task" name="task[title]" type="text" method="post">
           <div className="modal-body">
             <div className="hide">
@@ -24,24 +24,32 @@
 
             <div className="form-group">
               <label className="control-label" for="task_description">
-                Details
-                <span className="text-muted" style={{'font-weight': '400'}}>(optional)</span>
+                Description
               </label>
-              <div className="markdown-editor-control js-markdown-editor dropzone js-dropzone">
-                <textarea id="description" name="description" className="form-control" rows="4" style={{'height': '176px'}}></textarea>
-                <div className="dropzone-inner js-dropzone-select">
-                  To attach files drag &amp; drop here or <a href="#">select files
-                  from your computer</a>...
+              <MarkdownEditor name="task[description]" />
+            </div>
+
+            <Row>
+              <div className="col-md-6">
+                <h6>Initial Offer</h6>
+                <div className="well">
+                  <InitialOffer product={this.props.product} maxOffer={this.props.maxOffer} averageBounty={this.props.averageBounty} />
                 </div>
               </div>
-            </div>
-            <h6>Tags</h6>
-            <TagList destination={true} />
 
-            <TextInput width="125px" size="small" label="Add tag" prepend="#" prompt="Add" />
+              <div className="col-md-6">
+                <h6>Tags</h6>
+                <TagList destination={true} newBounty={true}  />
 
-            <h6>Suggested tags</h6>
-            <TagList tags={window.app.suggestedTags()} destination={false} />
+                <TextInput width="125px" size="small" label="Add tag" prepend="#" prompt="Add" />
+
+                <h6>Suggested tags</h6>
+                <TagList tags={window.app.suggestedTags()} destination={false} />
+              </div>
+
+            </Row>
+
+
           </div>
           <div className="modal-footer form-actions">
             <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
