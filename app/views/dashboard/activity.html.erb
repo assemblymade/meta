@@ -17,7 +17,7 @@
       <div class="col-md-4 hidden-sm hidden-xs">
         <div class="panel">
           <div class="panel-heading">
-            <h6 class="panel-title">Bounties you're working on</h6>
+            <h6 class="panel-title">Your bounties</h6>
           </div>
 
           <ul class="nav nav-pills nav-stacked">
@@ -26,6 +26,14 @@
                 <a href="<%= product_wip_path(wip.product, wip) %>">
                   #<%= wip.number %>
                   <%= wip.title %>
+                </a>
+              </li>
+            <% end %>
+
+            <% if current_user.wips_working_on.empty? %>
+              <li class="disabled">
+                <a href="#">
+                  You aren't working on any bounties at the moment
                 </a>
               </li>
             <% end %>
@@ -42,6 +50,14 @@
               <li>
                 <a href="<%= product_path(product) %>">
                   <%= product.name %>
+                </a>
+              </li>
+            <% end %>
+
+            <% if current_user.followed_products.empty? %>
+              <li class="disabled">
+                <a href="#">
+                  You haven't started following any products yet
                 </a>
               </li>
             <% end %>
