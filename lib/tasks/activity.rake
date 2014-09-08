@@ -12,6 +12,11 @@ namespace :activity do
         end
       end
     end
+    
+    general = ChatRoom.find_by(slug: 'general')
+    Activity.where(target: general).each do |activity|
+      ActivityStream.new(general.id).redis_push(activity)
+    end
   end
 
   desc "Destroys all the ActivityStreams in Redis"
