@@ -1,14 +1,42 @@
 <div class="card">
-  <%= image_tag product.poster_image.url, width: '100%' %>
-  <div class="card-body">
-    <h6 class="text-muted alpha omega"><%= product.name %></h6>
-    <h5 class="alpha omega"><%= product.pitch %></h5>
+  <div class="overlay">
+    <% if product.poster? %>
+      <%= image_tag firesize(product.poster_image.url, '500x500', 'g_center'), width: '100%' %>
+    <% else %>
+      <%= image_tag image_path('app_icon.png'), width: '100%' %>
+    <% end %>
+    <div class="overlay-content card-body">
+      <div class="">
+        <h6 class="alpha omega" style="color:rgba(255,255,255,0.8);text-shadow: 0 1px 0 rgba(0,0,0,0.1)"><%= product.name %></h6>
+        <h5 class="alpha omega"><%= product.pitch %></h5>
+      </div>
+    </div>
+
   </div>
+
+
   <div class="card-footer small clearfix">
-    <div class="pull-right">
+    <div class="pull-left">
       <span class="label label-default"><%= product.stage.upcase %></span>
     </div>
 
-    <span class="text-muted"><%= pluralize(product.partners_count, 'partner') %></span>
+    <ul class="list-inline omega text-muted pull-right">
+      <li>
+        <span class="glyphicon glyphicon-user"></span>
+        <%= product.partners_count %>
+      </li>
+
+      <li>
+        <span class="glyphicon glyphicon-book"></span>
+        <%= product.posts.count %>
+      </li>
+
+      <li>
+        <span class="glyphicon glyphicon-flag"></span>
+        <%= product.tasks.count %>
+      </li>
+    </span>
+
+
   </div>
 </div>

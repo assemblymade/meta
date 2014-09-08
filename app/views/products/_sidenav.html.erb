@@ -1,34 +1,5 @@
-<div class="hidden-xs hidden-sm">
-  <%= render 'products/launch' unless product.launched? %>
-
-  <% if current_user && product.core_team?(current_user) %>
-    <%= form_for :asset, url: product_logos_path(product), html: {id: 'product-logo-form'} do |f| %>
-      <%= f.hidden_field :attachment_id %>
-      <%= f.hidden_field :name %>
-    <% end %>
-    <div class="js-dropzone"
-        data-target-form="#product-logo-form"
-        data-react-class="DragAndDrop"
-        data-react-props="<%= {
-          url: product.poster_image.url,
-          alt: product.name
-        }.to_json %>">
-    </div>
-  <% else %>
-    <%= image_tag product.poster_image.url, class: 'img-rounded', width: '100%', alt: product.name %>
-  <% end %>
-
-  <% if @product.homepage_url.present? %>
-    <a class="small truncate text-muted text-center" style="display:inline-block;width: 100%;margin-top:5px" href="<%= @product.homepage_url %>" data-track="product.site.clicked">
-      <strong><%= @product.homepage_url %></strong>
-    </a>
-  <% end %>
-</div>
-
-<br>
-
-<ul class="nav nav-stacked nav-pills">
-  <li class="<%= nav_active_class(:about) %>">
+<ul class="nav nav-tabs" style="margin-bottom:24px">
+  <li class="<%= nav_active_class(:idea) %>">
     <a href="<%= product_path(product) %>">
       <span class="icon icon-compass icon-left"></span>
       Idea
@@ -54,7 +25,7 @@
   <li class="<%= nav_active_class(:people) %>">
     <a href="<%= product_people_path(product) %>">
       <span class="icon icon-users icon-left"></span>
-      People
+      Partners
     </a>
   </li>
 
@@ -72,63 +43,6 @@
       <a href="<%= edit_product_path(product) %>">
         <span class="glyphicon glyphicon-cog icon-left"></span>
         Settings
-      </a>
-    </li>
-  <% end %>
-
-  <li><hr></li>
-
-  <% if chat_room = product.chat_rooms.first %>
-    <li class="<%= nav_active_class(:chat) %>">
-      <a href="<%= chat_room_path(chat_room) %>">
-        <span class="icon icon-bubbles icon-left"></span>
-        Chat
-      </a>
-    </li>
-  <% end %>
-
-  <li class="<%= nav_active_class(:projects) %>">
-    <a href="<%= product_projects_path(product) %>">
-      <span class="icon icon-folder icon-left"></span>
-      Projects
-    </a>
-  </li>
-
-  <li class="<%= nav_active_class(:discussions) %>">
-    <a href="<%= product_discussions_path(product) %>">
-      <span class="icon icon-book-open icon-left"></span>
-      Discussions
-    </a>
-  </li>
-
-  <li class="<%= nav_active_class(:assets) %>">
-    <a href="<%= product_assets_path(product) %>">
-      <span class="icon icon-layers icon-left"></span>
-      Assets
-    </a>
-  </li>
-
-  <li class="<%= nav_active_class(:repositories) %>">
-    <a href="<%= product_repos_path(product) %>">
-      <span class="icon icon-repository icon-left"></span>
-      Repositories
-    </a>
-  </li>
-
-  <% if staff? %>
-    <li><hr></li>
-
-    <li class="<%= nav_active_class(:admin) %>">
-      <a href="<%= product_admin_path(product) %>">
-        <span class="icon-moustache icon-left"></span>
-        Admin
-      </a>
-    </li>
-
-    <li class="<%= nav_active_class(:plans) %>">
-      <a href="<%= product_payments_path(product) %>">
-        <span class="icon icon-credit-card icon-left"></span>
-        Payments
       </a>
     </li>
   <% end %>

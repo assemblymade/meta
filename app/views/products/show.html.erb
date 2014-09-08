@@ -1,45 +1,87 @@
 <% title @product.name, @product.pitch %>
-<% activate_nav! :about %>
+<% activate_nav! :idea %>
+<%= track 'product.viewed', ProductAnalyticsSerializer.new(@product, scope: current_user) %>
 
-<div class="page-header sheet-header">
-  <h3 class="alpha omega" style="margin-bottom: 8px"><strong><%= @product.pitch %></strong></h3>
+<div class="row">
+  <div class="col-md-8">
+    <h2 class="alpha"><%= @product.pitch %></h2>
+    <div class="lead"><%= product_markdown(@product, @product.lead) %></div>
+  </div>
 
-  <% unless @product.lead.blank? %>
-    <div class="text-large neuter-paragraphs" style="margin-top: 8px;">
-      <%== @product.lead_html %>
-    </div>
-  <% end %>
+  <div class="col-md-2 col-md-offset-2">
+    <%= image_tag @product.poster_image.url, width: '100%' %>
+  </div>
 </div>
 
-<div class="sheet-body">
-  <div class="row">
-    <div class="col-md-8">
+<div class="row">
+  <div class="col-md-8">
+    <div class="embed-responsive embed-responsive-16by9">
+      <iframe class="embed-responsive-item" width="853" height="480" src="//www.youtube-nocookie.com/embed/OI3shBXlqsw?rel=0" frameborder="0" allowfullscreen></iframe>
+    </div>
 
-      <% if @product.video? %>
-        <div class="embed-responsive embed-responsive-16by9">
-          <iframe class="embed-responsive-item" src="<%= @product.you_tube_video_embed_url %>"></iframe>
+    <br>
+
+    <div class="markdown markdown-normalized text-large">
+      <%== @product.description_html %>
+
+      <% (@product.info || {}).each do |field, value| %>
+        <% if value.present? %>
+          <h2><%= field.titlecase %></h2>
+          <%== markdown(value) %>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <div class="col-md-4">
+
+    <div class="stat-group">
+      <div class="stat">
+        <div class="stat-value"><%= @product.partners_count %></div>
+        <div class="stat-title">Partners</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-value"><%= @product.posts.count %></div>
+        <div class="stat-title">Updates</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-value"><%= @product.tasks.open.count %></div>
+        <div class="stat-title">Bounties</div>
+      </div>
+    </div>
+
+    <a href="<%= product_tasks_path(@product) %>" class="btn btn-lg btn-success btn-block">Help build this</a>
+
+    <br>
+
+    <!-- <h2 class="alpha"> Getting started</h2> -->
+
+    <div class="list-group">
+      <% @product.tasks.take(3).each do |bounty| %>
+        <div class="list-group-item">
+          <%= render 'bounties/chip', bounty: bounty %>
         </div>
       <% end %>
-
-      <!-- Body -->
-      <div class="markdown-normalized text-longform">
-        <%= render 'products/description', product: @product %>
-      </div>
-      <br>
-      <%= render 'products/links' %>
     </div>
 
+    <ul class="list-unstyled large">
+      <% if @product.homepage_url.present? %>
+        <li><a href="<%= @product.homepage_url %>">Homepage</a></li>
+      <% end %>
 
-    <div class="col-md-3 col-md-offset-1">
-      <%= render 'products/people' %>
-    </div>
-  </div><!-- .row -->
+      <% if @product.chat_rooms.any? %>
+        <% chat_room = @product.chat_rooms.first %>
+        <li><a href="<%= chat_room_path(chat_room) %>">Chat</a></li>
+      <% end %>
 
-  <% if current_user.try(:staff?) != true %>
-    <script>
-      analytics.track('product.viewed', <%==
-        ProductAnalyticsSerializer.new(@product, scope: current_user).to_json
-      %>);
-    </script>
-  <% end %>
+      <li><a href="<%= product_projects_path(@product) %>">Projects</a></li>
+      <li><a href="<%= product_discussions_path(@product) %>">Discussions</a></li>
+      <li><a href="<%= product_assets_path(@product) %>">Assets</a></li>
+      <li><a href="<%= product_repos_path(@product) %>">Repositories</a></li>
+    </ul>
+  </div>
+
 </div>

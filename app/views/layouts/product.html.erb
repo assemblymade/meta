@@ -7,8 +7,13 @@
 
 <div class="navbar navbar-product">
   <div class="container">
-    <div class="pull-right">
-      <div
+    <ul class="list-inline omega pull-right">
+      <% unless @product.launched? %>
+        <li>
+          <%= render 'products/launch' %>
+        </li>
+      <% end %>
+      <li
           data-react-class="NotificationPreferencesDropdown"
           data-react-props="<%= {
             productWatchersPath: product_people_path(@product),
@@ -19,28 +24,25 @@
             watchingState: @product.watching_state(current_user),
             afterFollowPath: product_people_path(@product)
           }.to_json %>">
-      </div>
-    </div>
+      </li>
+    </ul>
 
-    <h3 class="alpha omega text-muted">
+    <h4 class="alpha omega" style="line-height:30px;font-weight:normal">
       <%= @product.name %>
-      <% if false %>
-      <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;"><%= @product.stage %></span>
-      <% end %>
-    </h3>
+    </h4>
   </div>
 </div>
 
 <div class="container">
+
+
   <div class="row">
-    <div class="col-md-10 col-md-push-2">
+    <div class="col-md-10 col-md-offset-1">
+      <%= render 'products/sidenav', product: @product %>
       <%= yield %>
     </div>
-
-    <div class="col-md-2 col-md-pull-10">
-      <%= render 'products/sidenav', product: @product %>
-    </div>
   </div>
+
 </div>
 
 <% unless current_user.nil? %>
@@ -85,7 +87,7 @@
   </div>
 <% end %>
 
-<%= render 'shared/footer' unless @disable_footer %>
+<%= render 'shared/footer' %>
 
 <% parent_layout 'application' %>
 
