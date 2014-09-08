@@ -21,9 +21,9 @@ class Activity < ActiveRecord::Base
         PublishActivity.perform_async(a.id) if Story.should_publish?(a)
         room = if a.target.is_a?(ChatRoom)
           a.target
-        elsif product = opts[:product] || a.find_product
-          product.chat_rooms.first
+        elsif product = (opts[:product] || a.find_product)
           product.update!(last_activity_at: a.created_at)
+          product.chat_rooms.first
         end
 
         if room

@@ -40,7 +40,6 @@ class ActivityStream
   end
 
   def redis_push(activity)
-    puts "redis_push: #{key} #{activity.inspect}"
     $redis.zadd(
       key,
       activity.created_at.to_i,
