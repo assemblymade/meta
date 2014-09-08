@@ -28,9 +28,9 @@ var Avatar = require('./avatar.js.jsx');
           <button className={this.togglerClasses()} type="button" data-toggle="dropdown">
             {this.buttonState()}
 
-            <a className="toggler-badge" href={this.props.productWatchersPath}>
+            <span className="toggler-badge">
               {this.state.productWatchersCount}
-            </a>
+            </span>
           </button>
 
           <ul
