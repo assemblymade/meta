@@ -22,10 +22,13 @@
       </div>
     </div>
 
-    <h3 class="alpha omega text-muted">
-      <%= @product.name %>
+    <h3 class="alpha omega">
+      <a class="text-muted" href="<%= product_path(@product) %>">
+        <%= @product.name %>
+      </a>
+
       <% if false %>
-      <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;"><%= @product.stage %></span>
+        <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;"><%= @product.stage %></span>
       <% end %>
     </h3>
   </div>
