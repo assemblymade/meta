@@ -9,11 +9,14 @@ class DashboardController < ApplicationController
   end
 
   def bounties
-    default_filters = { user: 'assigned', state: true }.with_indifferent_access
-    filters = default_filters.merge(params.slice(:user, :state))
+    default_filters = {
+      user: 'assigned',
+      state: true,
+      sort: ['commented', 'awarded'].exclude?(params[:user]) && 'newest'
+    }.with_indifferent_access
 
-    query = FilterWipsQuery.call(Wip.all, current_user, filters)
-    query = query.ordered_by_activity
+    filters = default_filters.merge(params.slice(:user, :state))
+    query = FilterWipsQuery.call(Task.all, current_user, filters)
     @wips = PaginatingDecorator.new(query)
 
     set_empty_state if @wips.empty?
