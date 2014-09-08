@@ -60,6 +60,7 @@ var Avatar = require('./avatar.js.jsx');
                 <h3 className="alpha">
                   <strong>Get notified about products you follow</strong>
                 </h3>
+
                 <p className="text-muted omega">
                   Looks like you don't have any notifications yet. Get involved
                   with the rest of our community. Follow some products,
