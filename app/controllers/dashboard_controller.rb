@@ -16,8 +16,26 @@ class DashboardController < ApplicationController
     query = query.ordered_by_activity
     @wips = PaginatingDecorator.new(query)
 
-    @user = current_user.decorate
+    set_empty_state if @wips.empty?
 
     respond_with @wips
+  end
+
+  def set_empty_state
+    @empty_state_link_location = discover_path
+
+    if params[:user].blank?
+      @empty_state_text = "You aren't working on any bounties"
+      @empty_state_link_text = 'Find a bounty to work on'
+    elsif params[:user] == 'started'
+      @empty_state_text = "You haven't created any bounties"
+      @empty_state_link_text = 'Find a project and create a bounty'
+    elsif params[:user] == 'commented'
+      @empty_state_text = "You haven't commented on any bounties"
+      @empty_state_link_text = 'Read the most active bounties'
+    elsif params[:user] == 'awarded'
+      @empty_state_text = "You haven't been awarded any bounties"
+      @empty_state_link_text = 'Find a bounty to work on'
+    end
   end
 end
