@@ -19,9 +19,9 @@ class Activity < ActiveRecord::Base
     create!(opts).tap do |a|
       if a.publishable
         PublishActivity.perform_async(a.id) if Story.should_publish?(a)
-        a.publish_to_chat
-
         if product = opts[:product] || a.find_product
+          a.publish_to_chat(product)
+
           product.update!(last_activity_at: a.created_at)
         end
       end
@@ -54,20 +54,9 @@ class Activity < ActiveRecord::Base
     subject.try(:product) || target.try(:product)
   end
 
-  # deprecated
-  def streams
-    stream_targets.compact.map do |o|
-      ActivityStream.new(o)
-    end
-  end
-
-  def stream_targets
-    [actor, target]
-  end
-
-  def publish_to_chat
-    streams.each do |stream|
-      stream.push(self)
+  def publish_to_chat(product)
+    if chat_room = product.chat_rooms.first
+      ActivityStream.new(chat_room.id).push(self)
     end
   end
 

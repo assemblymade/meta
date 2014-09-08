@@ -19,10 +19,8 @@ class ActivityStream
     $redis.del(*keys) if keys.any?
   end
 
-  def initialize(object)
-    # remove Draper if object is decorated
-    undecorated = object.try(:object) || object
-    @object = undecorated
+  def initialize(id)
+    @id = id
   end
 
   def each
@@ -100,11 +98,11 @@ class ActivityStream
 # private
 
   def key
-    [KEY_PREFIX, @object.class.name.underscore, @object.id].join(':')
+    [KEY_PREFIX, 'chat_room', @id].join(':')
   end
 
   def channel
-    [KEY_PREFIX, @object.id].join('.')
+    [KEY_PREFIX, @id].join('.')
   end
 
   def meta_key

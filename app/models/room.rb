@@ -20,7 +20,7 @@ class Room < ActiveRecord::Base
   end
 
   def activity_stream
-    ActivityStream.new(self)
+    ActivityStream.new(self.id)
   end
 
 end
