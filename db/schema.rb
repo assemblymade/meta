@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904201436) do
+ActiveRecord::Schema.define(version: 20140906012713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,14 @@ ActiveRecord::Schema.define(version: 20140904201436) do
     t.uuid     "product_id", null: false
     t.datetime "created_at", null: false
     t.hstore   "parameters"
+  end
+
+  create_table "assembly_assets", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "asset_id",   null: false
+    t.uuid     "user_id",    null: false
+    t.uuid     "product_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "assets", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -689,6 +697,7 @@ ActiveRecord::Schema.define(version: 20140904201436) do
     t.text     "twitter_nickname"
     t.uuid     "recent_product_ids",                                    array: true
     t.string   "remember_token"
+    t.string   "public_address"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

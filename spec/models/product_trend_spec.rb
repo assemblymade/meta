@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ProductTrend do
   let(:product) { Product.make! }
-  let(:chat_room) { ChatRoom.make!(product: product) }
+  let(:chat_room) { ChatRoom.make!(product: product, wip: Wip.make!) }
 
   describe '#trend_score' do
 

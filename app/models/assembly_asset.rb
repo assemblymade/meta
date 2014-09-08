@@ -26,5 +26,8 @@ class AssemblyAsset < ActiveRecord::Base
   end
 
   def connection
+    Faraday.new(url: ENV["ASSETS_URL"]) do |faraday|
+      faraday.adapter  :net_http
+    end
   end
 end
