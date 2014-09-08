@@ -4,6 +4,7 @@ ruby '2.1.2'
 
 gem 'active_model_serializers'
 gem 'analytics-ruby', '<1.0'
+gem 'attr_encrypted'
 gem 'aws-sdk', '~> 1.0'
 gem 'bootstrap-sass'
 gem 'bourbon'
