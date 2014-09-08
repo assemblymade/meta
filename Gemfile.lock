@@ -1,4 +1,15 @@
 GIT
+  remote: git://github.com/elasticsearch/elasticsearch-rails.git
+  revision: 304615e5c548448e95cdbca29de197b5a789d0d3
+  ref: 304615e5c548448e95cdbca29de197b5a789d0d3
+  specs:
+    elasticsearch-model (0.1.2)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-rails (0.1.2)
+
+GIT
   remote: git://github.com/github/gemoji.git
   revision: 204ace76dac5ea54ab79a7395640d29b3dd8b0fb
   specs:
@@ -10,17 +21,6 @@ GIT
   specs:
     friendly_id (5.0.3)
       activerecord (>= 4.0.0)
-
-GIT
-  remote: git://github.com/elasticsearch/elasticsearch-rails.git
-  revision: 304615e5c548448e95cdbca29de197b5a789d0d3
-  ref: 304615e5c548448e95cdbca29de197b5a789d0d3
-  specs:
-    elasticsearch-model (0.1.2)
-      activesupport (> 3)
-      elasticsearch (> 0.4)
-      hashie
-    elasticsearch-rails (0.1.2)
 
 GEM
   remote: https://rubygems.org/
