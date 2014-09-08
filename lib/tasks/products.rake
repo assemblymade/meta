@@ -12,6 +12,9 @@ namespace :products do
       sleep 0.3
     end
   end
+
+  task :initialize_assembly_assets_wallet => :environment do
+  end
 end
 
 def assign_key_pair!(product)
