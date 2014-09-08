@@ -2,6 +2,8 @@ class DashboardController < ApplicationController
   respond_to :html
 
   def activity
+    authenticate_user!
+
     @stories = NewsFeed.new(current_user).page(params[:top_id])
     @users = @stories.map(&:activities).flatten.map(&:actor).flatten.uniq
 
@@ -9,6 +11,8 @@ class DashboardController < ApplicationController
   end
 
   def bounties
+    authenticate_user!
+
     default_filters = {
       user: 'assigned',
       state: true,
