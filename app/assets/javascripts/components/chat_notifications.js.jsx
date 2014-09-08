@@ -171,11 +171,11 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
     render: function() {
       var productsPath = '/users/' + this.props.username;
 
-      var desktopNotifications = null
+      var desktopNotifications = null;
       if (!this.state.desktopNotificationsEnabled) {
         desktopNotifications = <li>
-          <DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} /> : null
-        </li>
+          <DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} />
+        </li>;
       }
       return (
         <ul className="dropdown-menu" style={{'min-width': '380px' }}>
