@@ -7,7 +7,7 @@
   </div>
 
 <% else %>
-  <div class="media js-new-event alpha">
+  <div id="new-comment" class="media js-new-event alpha">
 
     <div class="pull-left">
       <% if signed_in? %>
@@ -19,16 +19,11 @@
 
     <div class="media-body ">
 
-      <div class="media-heading">
-        Add to the discussion or share work
-        <% if @wip.open? %>to earn <%= format_coins(@wip.product, @wip.contracts.earnable_cents) %>.<% end %>
-      </div>
-
       <div id="comment">
         <%= form_tag product_wip_comments_path(@wip.product, @wip), method: :post, class: %w(form new_event_comment) do %>
 
           <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
-            <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Say something awesome!', rows: 3, style: 'border-top-left-radius: 0', "data-product-id" => @wip.product.id %>
+            <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Add to the discussion', rows: 3, "data-product-id" => @wip.product.id %>
 
             <div class="dropzone-inner js-dropzone-select">
               To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...

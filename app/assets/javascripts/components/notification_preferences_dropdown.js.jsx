@@ -24,13 +24,14 @@ var Avatar = require('./avatar.js.jsx');
 
     render: function() {
       return (
-        <div className={this.togglerClasses()}>
-          <a className="toggler-btn" data-toggle="dropdown">
+        <div>
+          <button className={this.togglerClasses()} type="button" data-toggle="dropdown">
             {this.buttonState()}
-          </a>
-          <a className="toggler-badge" href={this.props.productWatchersPath}>
-            {this.state.productWatchersCount}
-          </a>
+
+            <a className="toggler-badge" href={this.props.productWatchersPath}>
+              {this.state.productWatchersCount}
+            </a>
+          </button>
 
           <ul
               className="dropdown-menu dropdown-menu-right"
@@ -56,10 +57,10 @@ var Avatar = require('./avatar.js.jsx');
             <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('announcements')}>
               <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'announcements', this.props.productAnnouncementsPath)}>
                 <div>
-                  <strong>Follow announcements only</strong>
+                  <strong>Follow updates only</strong>
                 </div>
                 <div className="text-muted hidden-xs">
-                  Receive notifications when there are new blog posts
+                  Receive notifications when there are new updates
                 </div>
               </a>
             </li>
@@ -70,7 +71,7 @@ var Avatar = require('./avatar.js.jsx');
                   <strong>Follow</strong>
                 </div>
                 <div className="text-muted hidden-xs">
-                  Receive notifications when there are new blog posts, discussions, and chat messages
+                  Receive notifications when there are new updates, discussions, and chat messages
                 </div>
               </a>
             </li>

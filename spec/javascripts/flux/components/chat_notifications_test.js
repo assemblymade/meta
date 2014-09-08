@@ -68,7 +68,6 @@ describe('ChatNotifications', function() {
     );
 
     expect(chat.state.data instanceof Object).toBe(true);
-    expect(chat.state.sortKeys instanceof Array).toBe(true);
     expect(chat.state.acknowledgedAt).toEqual(0);
     expect(chat.state.desktopNotificationsEnabled).toBe(false);
   });
@@ -80,7 +79,7 @@ describe('ChatNotifications', function() {
 
     var div = TestUtils.findRenderedDOMComponentWithTag(chat, 'div').getDOMNode();
 
-    expect(div.textContent).toEqual(' bar foo baz');
+    expect(div.textContent).toEqual(' #foo #bar #baz');
 
     var badges = TestUtils.scryRenderedDOMComponentsWithClass(chat, 'indicator-danger');
 

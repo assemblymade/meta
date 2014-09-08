@@ -121,7 +121,7 @@ $user-davidkaneda: #848C24;
   padding: 30px 0;
 }
 
-.card-product {
+.deprecated-card-product {
   .summary-target {
     color: $text-color;
     font-weight: normal;
@@ -134,17 +134,17 @@ $user-davidkaneda: #848C24;
   }
 }
 
-.card-colored {
+.deprecated-card-colored {
   margin-bottom: 0;
   background-color: $gray;
   box-shadow:
     0 1px 0 0 $brand-shadow;
 
-  .card-hero {
+  .deprecated-card-hero {
     box-shadow: none;
   }
 
-  .card-body {
+  .deprecated-card-body {
     color: white;
 
     .summary,
@@ -168,7 +168,7 @@ $user-davidkaneda: #848C24;
     }
   }
 
-  .card-footer {
+  .deprecated-card-footer {
     border: none;
     background: rgba(0,0,0,0.1);
     font-weight: bold;
@@ -177,27 +177,27 @@ $user-davidkaneda: #848C24;
   }
 }
 
-a.card-colored:hover {
+a.deprecated-card-colored:hover {
   box-shadow: inset 0 0 0 1px $brand-shadow,
               0 3px 3px 0 $brand-shadow;
 }
 
 .product-helpful {
 
-  &.card:not(.card-colored) {
+  &.deprecated-card:not(.deprecated-card-colored) {
     .summary-name {
       color: $product-helpful;
     }
   }
 
-  &.card-colored {
+  &.deprecated-card-colored {
     background-color: $product-helpful;
 
     .summary-name {
       color: lighten($product-helpful, 35%);
     }
 
-    .card-footer {
+    .deprecated-card-footer {
       background: darken($product-helpful, 4%);
     }
   }
@@ -205,20 +205,20 @@ a.card-colored:hover {
 
 .product-family-table {
 
-  &.card:not(.card-colored) {
+  &.deprecated-card:not(.deprecated-card-colored) {
     .summary-name {
       color: $product-family-table;
     }
   }
 
-  &.card-colored {
+  &.deprecated-card-colored {
     background-color: $product-family-table;
 
     .summary-name {
       color: lighten($product-family-table, 28%);
     }
 
-    .card-footer {
+    .deprecated-card-footer {
       background: darken($product-family-table, 9%);
     }
   }
@@ -226,20 +226,20 @@ a.card-colored:hover {
 
 .product-buckets {
 
-  &.card:not(.card-colored) {
+  &.deprecated-card:not(.deprecated-card-colored) {
     .summary-name {
       color: $product-buckets;
     }
   }
 
-  &.card-colored {
+  &.deprecated-card-colored {
     background-color: $product-buckets;
 
     .summary-name {
       color: lighten($product-buckets, 35%);
     }
 
-    .card-footer {
+    .deprecated-card-footer {
       background: darken($product-buckets, 12%);
     }
   }
@@ -247,20 +247,20 @@ a.card-colored:hover {
 
 .product-really-good-emails {
 
-  &.card:not(.card-colored) {
+  &.deprecated-card:not(.deprecated-card-colored) {
     .summary-name {
       color: $product-really-good-emails;
     }
   }
 
-  &.card-colored {
+  &.deprecated-card-colored {
     background-color: $product-really-good-emails;
 
     .summary-name {
       color: lighten($product-really-good-emails, 24%);
     }
 
-    .card-footer {
+    .deprecated-card-footer {
       background: desaturate(darken($product-really-good-emails, 6%), 15%);
     }
   }
@@ -268,42 +268,42 @@ a.card-colored:hover {
 
 .product-assembly-meta {
 
-  &.card:not(.card-colored) {
+  &.deprecated-card:not(.deprecated-card-colored) {
     .summary-name {
       color: $product-assembly-meta;
     }
   }
 
-  &.card-colored {
+  &.deprecated-card-colored {
     background-color: $product-assembly-meta;
   }
 }
 
 .user-whale {
-  &.card-colored {
+  &.deprecated-card-colored {
     background-color: $user-whale;
 
-    .card-inner {
+    .deprecated-card-inner {
       background: url(image-path('users/whale.jpg')) no-repeat;
     }
   }
 }
 
 .user-chexee {
-  &.card-colored {
+  &.deprecated-card-colored {
     background-color: $user-chexee;
 
-    .card-inner {
+    .deprecated-card-inner {
       background: url(image-path('users/chexee.jpeg')) no-repeat;
     }
   }
 }
 
 .user-davidkaneda {
-  &.card-colored {
+  &.deprecated-card-colored {
     background-color: $user-davidkaneda;
 
-    .card-inner {
+    .deprecated-card-inner {
       background: url(image-path('users/davidkaneda.png')) no-repeat;
     }
   }

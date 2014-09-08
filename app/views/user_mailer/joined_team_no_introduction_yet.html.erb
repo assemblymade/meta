@@ -35,7 +35,7 @@
 
                 <% user = User.find_by(username: 'marckohlbrugge')%>
                 <%= avatar_tag(user, 20) %>&nbsp;<%= user_link(user) do %><%= user.username %><% end %>
-                on <a href="<%= product_chat_url('dawn') %>">Dawn</a>
+                on <a href="<%= product_url('dawn') %>">Dawn</a>
                 <hr/>
                 <p>… I'm kind of a jack of all trades doing design, development, marketing, business development, etc. Lately, I've delegated development more and more however, to focus on strategy.</p>
 
@@ -45,7 +45,7 @@
 
                 <% user = User.find_by(username: 'davidkaneda')%>
                 <%= avatar_tag(user, 20) %>&nbsp;<%= user_link(user) do %><%= user.username %><% end %>
-                on <a href="<%= product_chat_url('dawn') %>">Buckets</a>
+                on <a href="<%= product_url('dawn') %>">Buckets</a>
                 <hr/>
                 <p>Designer/developer/startup consultant. Buckets has been my (sadly somewhat neglected) baby for the past year or so. I've built sites in the past with WP, EE, Textpattern, Drupal, Symphony, Craft (just experimented), Middleman, Jekyll, and of course a few hand-rolled systems.</p>
 

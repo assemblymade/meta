@@ -1,0 +1,113 @@
+
+
+<% @product = Product.find_by_slug('kjdb') %>
+
+<%= render 'shared/navbar' %>
+
+<div class="container">
+
+  <div class="alert alert-warning">
+    <div class="pull-right">
+      <a class="btn btn-success btn-xs" href="#">Submit for review</a>
+    </div>
+    <p>This product is pending review. It's only visible to people with a direct link.</p>
+  </div>
+
+  <div class="alert alert-info">
+    <div class="pull-right">
+      Submitted 5 days ago
+    </div>
+    <p>This product was submitted to be reviewed by Assembly.</p>
+  </div>
+
+  <h1><%= @product.name %></h1>
+
+  <ul class="nav nav-pills">
+    <li class="active">
+      <a href="#">
+        <span class="icon icon-compass icon-left"></span>
+        Idea
+      </a>
+    </li>
+    <li><a href="#">Updates</a></li>
+    <li><a href="#">People</a></li>
+    <!-- <li><a href="#">Bounties</a></li> -->
+    <!-- <li><a href="#">Financals</a></li> -->
+  </ul>
+
+  <br>
+
+  <div class="row">
+    <div class="col-md-8">
+      <p class="lead text-large" style="font-size:24px">
+        <%= @product.lead %>.
+      </p>
+    </div>
+  </div>
+
+
+
+  <!-- Video -->
+  <div class="row">
+    <div class="col-md-6">
+
+      <div class="embed-responsive embed-responsive-16by9" style="margin-bottom:24px">
+        <iframe class="embed-responsive-item" width="640" height="480" src="https://www.youtube-nocookie.com/embed/OLyq0xlAa-Y?rel=0" frameborder="0" allowfullscreen></iframe>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="row">
+    <div class="col-md-8">
+      <div class="markdown-normalized text-large">
+        <%= product_markdown(@product, @product.description) %>
+      </div>
+    </div>
+    <div class="col-md-3 col-md-offset-1">
+      <h6 class="text-muted alpha">Elsewhere</h6>
+      <ul class="list-unstyled">
+        <li><a href="#">Homepage</a></li>
+        <li><a href="#">Twitter</a></li>
+        <li><a href="#">GitHub</a></li>
+        <li><a href="#">Trello</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bounties -->
+  <h6 class="text-muted">Get involved</h6>
+  <div class="row">
+    <% @product.tasks.first(3).each do |bounty| %>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body" style="min-height:200px">
+            <h6 class="text-muted alpha omega">Bounty</h6>
+            <h4 class="alpha"><%= bounty.title %></h4>
+            <p class="omega">
+              <%= product_markdown(bounty.product, truncate(bounty.description, length: 120)) %>
+            </p>
+          </div>
+          <div class="card-footer">
+            <span class="text-coins">
+              <span class="icon icon-app-coin"></span>
+              <%= number_with_delimiter(bounty.value) %>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="col-md-4">
+      <div class="well" style="min-height:237px">
+        Add a bounty here
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
+
+
+<%= render 'shared/footer' %>

@@ -13,7 +13,8 @@ var FormGroup = require('./form_group.js.jsx');
     render: function() {
       return (
         <form style={{width:300}} onSubmit={this.handleSubmit}>
-          {this.props.children}
+          <h2 className="alpha">Ask a friend</h2>
+          <p className="text-muted">Know somebody who could help with this? Anybody can help out, all you need to do is ask.</p>
           <hr/>
           <FormGroup error={this.state.errors.username_or_email}>
             <label className="control-label">Username or email address</label>

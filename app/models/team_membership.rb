@@ -6,8 +6,9 @@ class TeamMembership < ActiveRecord::Base
 
   scope :active, -> { where('deleted_at is null') }
   scope :core_team, -> { where('is_core is true') }
+  scope :with_bios, -> { where('bio is not null') }
 
-  after_commit :update_counter_cache
+  after_commit :update_counter_caches
 
   def core_team?
     self.is_core
@@ -15,9 +16,11 @@ class TeamMembership < ActiveRecord::Base
 
   # private
 
-  def update_counter_cache
-    product.team_memberships_count = product.team_memberships.active.count
-    product.save!
+  def update_counter_caches
+    product.update!(
+      team_memberships_count: product.team_memberships.active.count,
+      bio_memberships_count: product.team_memberships.with_bios.count
+    )
   end
 
 end

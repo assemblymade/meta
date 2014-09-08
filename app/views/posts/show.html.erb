@@ -1,5 +1,5 @@
 <% title @post.title, @post.product.name %>
-<% activate_nav! :blog %>
+<% activate_nav! :updates %>
 
 <div class="page-header sheet-header">
   <h2 class="page-header-title"><%= @post.title %></h2>
@@ -33,7 +33,7 @@
   <div class="row">
     <div class="col-md-9">
 
-      <div class="markdown-normalized">
+      <div class="markdown markdown-normalized">
         <%= product_markdown(@post.product, @post.body) %>
       </div>
     </div>

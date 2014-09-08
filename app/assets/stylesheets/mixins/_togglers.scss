@@ -8,15 +8,10 @@
   &:active,
   &.active {
     color: $color;
-    // background-color: darken($background, 10%);
-        border-color: darken($border, 20%);
-  }
-
-  .toggler-btn {
-    color: $color;
+    border-color: darken($border, 20%);
   }
 
   .toggler-badge {
-    background-color: lighten($border, 10%);
+    background-color: mix($background, $border);
   }
 }

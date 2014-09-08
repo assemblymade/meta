@@ -15,8 +15,7 @@
     getInitialState: function() {
       return {
         inputValue: '',
-        transform: (this.props.transform || this.transform),
-        hide: true
+        transform: (this.props.transform || this.transform)
       };
     },
 
@@ -35,17 +34,13 @@
       });
     },
 
-    hide: function(e) {
-      this.setState({
-        hide: true
-      });
+    keyDown: function(e) {
+      if (e.key === 'Enter') {
+        this.handleClick(e);
+      }
     },
 
     render: function() {
-      if (this.state.hide) {
-        return <a className="btn btn-default btn-sm btn-block" onClick={this.show}>Add a new tag</a>;
-      }
-
       return (
         <div role="form" className="form-inline">
           <div className="form-group">
@@ -54,6 +49,8 @@
                    className={"form-control input-" + this.size()}
                    valueLink={this.linkState('inputValue')}
                    style={{width: this.props.width, 'padding-left': '5px'}}
+                   onKeyDown={this.keyDown}
+                   placeholder={this.props.label}
             />
           </div>
           <button type="button"
@@ -63,12 +60,6 @@
           </button>
         </div>
       );
-    },
-
-    show: function(e) {
-      this.setState({
-        hide: false
-      });
     },
 
     size: function(prefix) {

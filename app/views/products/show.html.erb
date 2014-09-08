@@ -2,9 +2,6 @@
 <% activate_nav! :about %>
 
 <div class="page-header sheet-header">
-  <% if can?(:update, @product) %>
-    <a style="position: relative; top: 4px;" class="btn btn-default btn-sm pull-right" href="<%= edit_product_path(@product) %>">Edit Product</a>
-  <% end %>
   <h3 class="alpha omega" style="margin-bottom: 8px"><strong><%= @product.pitch %></strong></h3>
 
   <% unless @product.lead.blank? %>

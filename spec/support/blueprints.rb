@@ -23,6 +23,10 @@ AutoTipContract.blueprint do
   amount { 0.1 }
 end
 
+ChatRoom.blueprint do
+  slug { "room_#{sn}" }
+end
+
 Award.blueprint do
   awarder
   winner

@@ -1,0 +1,47 @@
+<% title 'Bounties' %>
+<% activate_nav! :platform_discover %>
+<% activate_nav! :discover_bounties %>
+
+<%= render 'shared/navbar' %>
+<%= render 'shared/welcome' %>
+
+<div class="page page-flat">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-header">
+          <h2>
+            All open <span class=""><%= params[:filter]%></span> bounties for <%= l Date.today, format: :month %>
+          </h2>
+          <ul class="nav nav-pills">
+            <% @filters.select{|f| f[:count] > 0}.each do |f| %>
+              <li class="<%= 'active' if params[:filter] == f[:slug] %>">
+                <a href="<%= discover_path(:bounties, filter: f[:slug]) %>">
+                  <%= f[:label] %> <span class="badge badge-subtle"><%= f[:count] %></span>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <% @postings.each do |product, postings| %>
+      <div class="row">
+        <div class="col-md-8">
+          <% postings.each do |posting| %>
+            <%= render 'bounty_postings/bounty_chip', bounty: posting.bounty %>
+          <% end %>
+        </div>
+        <div class="col-md-4">
+          <%= render 'bounty_postings/product_chip', product: product %>
+        </div>
+      </div>
+
+      <hr/>
+    <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

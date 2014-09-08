@@ -1,12 +1,12 @@
 namespace :stories do
-
   desc "Republish stories to redis"
   task :republish => :environment do
     NewsFeed.delete_all
     Story.includes(activities: :subject).find_each do |story|
-      puts "story: #{story.id}"
+      puts "story: #{story.id} #{story.verb.rjust(15)} #{story.subject_type}"
       begin
         publish_activity = PublishActivity.new
+        publish_activity.activity = story.activities.first
         publish_activity.push_to_feeds!(story)
         publish_activity.register_with_readraptor!(story)
       rescue => e

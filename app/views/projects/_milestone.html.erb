@@ -1,13 +1,13 @@
 <% cache [milestone, milestone.wip] do %>
-  <a class="card" href="<%= product_project_path(milestone.product, milestone) %>">
+  <a class="deprecated-card" href="<%= product_project_path(milestone.product, milestone) %>">
 
     <% if milestone.milestone_images.any? %>
       <% url = File.join(firesize_url, "263x175", "g_north", "frame_0", URI.escape(milestone.feature_image.attachment.url)) %>
-      <div class="card-hero" style="background-image:url(<%= url %>)">
+      <div class="deprecated-card-hero" style="background-image:url(<%= url %>)">
       </div>
     <% end %>
 
-    <div class="card-body">
+    <div class="deprecated-card-body">
 
       <div class="progress progress-small">
         <div class="progress-bar progress-bar-success" style="width:<%= number_to_percentage(milestone.progress * 100, precision: 0) %>"></div>
@@ -29,6 +29,6 @@
           <% end %>
         </p>
       </div>
-    </div><!-- .card-body -->
+    </div><!-- .deprecated-card-body -->
   </a>
 <% end %>

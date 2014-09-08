@@ -4,7 +4,7 @@
 
 <% if flash[:joined] %>
   <div class="alert alert-success page-alert">
-    Welcome to the <%= @product.name %> team! <a href="<%= product_chat_path(@product) %>">Jump into chat and say Hi</a>
+    Welcome to the <%= @product.name %> team! <a href="<%= @product.main_chat_room %>">Jump into chat and say Hi</a>
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
   </div>
 <% end %>

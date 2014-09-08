@@ -11,19 +11,27 @@
 
         <%= render 'header' %>
 
+        <div class="row">
+          <div class="col-md-9">
+            <p class="lead">Most active products being built on Assembly right now.<br/>
+              Ready to build something people want?
+            </p>
+          </div>
+          <div class="col-md-3">
+            <a href="<%= new_product_path %>" class="btn btn-default pull-right">Start New Product</a>
+          </div>
+        </div>
+
         <div class="list-group list-group-breakout">
           <% @products.each do |product| %>
             <div class="list-group-item">
-              <%= render 'products/chip', product: product %>
+              <%= render 'products/building_chip', product: product %>
             </div>
           <% end %>
         </div>
 
         <%= paginate @products, theme: 'twitter-bootstrap-3' %>
-
       </div>
-
-
     </div>
   </div>
 </div>

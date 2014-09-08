@@ -12,7 +12,6 @@ module Api
       @wip = @product.wips.create!(title: milestone_params[:title], user: current_user)
 
       if @wip.valid?
-        # then create milestone
         @milestone = @wip.create_milestone!(milestone_params[:milestone_attributes].merge(user: current_user, product: @product))
 
         if @milestone.valid?

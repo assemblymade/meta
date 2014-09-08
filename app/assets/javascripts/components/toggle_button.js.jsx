@@ -18,7 +18,7 @@ var ButtonStore = require('../stores/toggle_button_store');
     },
 
     classes: function() {
-      return "btn btn-block " + this.props.classes[this.state.bool];
+      return this.props.classes[this.state.bool];
     },
 
     getInitialState: function() {

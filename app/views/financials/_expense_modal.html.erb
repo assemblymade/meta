@@ -1,0 +1,44 @@
+<div class="modal fade" id="new-expense-modal" tabindex="-1" role="dialog" aria-labelledby="new-expense-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= form_for :expense_claim, url: product_expense_claims_path(@product) do |f| %>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="new-expense-modal-label">Log expense</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="control-label">Credit</label>
+            <div class="form-text">
+              <span class="icon-left">
+                <%= avatar_tag(current_user, 24) %>
+              </span>
+              <%= current_user.username %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Amount</label>
+            <div class="input-group">
+              <div class="input-group-addon">$</div>
+              <%= f.number_field :total_dollars, class: 'form-control input-lg', step: 0.01 %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Description</label>
+            <%= f.text_area :description, class: 'form-control' %>
+          </div>
+
+          <div data-react-class="FormUploader" data-react-props="<%= {
+            inputName: 'expense_claim[attachment_ids][]'
+          }.to_json %>"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Log expense</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

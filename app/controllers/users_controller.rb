@@ -44,7 +44,7 @@ class UsersController < ApplicationController
       suggestions: suggestions
     }
   end
-
+  
   def unread
     authenticate_user!
     entries = UnreadChat.for(current_user)

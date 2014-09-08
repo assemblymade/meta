@@ -4,7 +4,7 @@ class window.ActivityStream extends Backbone.Collection
   model: Activity
 
   channelName: ->
-    ['activitystream', @product.id].join('.')
+    ['activitystream', @id].join('.')
 
   listenForRemote: (pusher, connection) ->
     @socketId = connection.socket_id

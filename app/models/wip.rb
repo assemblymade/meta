@@ -20,6 +20,7 @@ class Wip < ActiveRecord::Base
   has_many :milestone_tasks, foreign_key: 'task_id'
   has_many :mutings
   has_many :muters, through: :mutings, source: :user
+  has_many :postings, class_name: 'BountyPosting', foreign_key: 'bounty_id'
   has_many :taggings, class_name: 'Wip::Tagging'
   has_many :tags, through: :taggings, class_name: 'Wip::Tag'
   has_many :awards
@@ -98,6 +99,11 @@ class Wip < ActiveRecord::Base
         self.title = new_title
       end
     end
+  end
+
+  def sanitized_description
+    text = (description || comments.order(:created_at).last.try(:body))
+    Search::Sanitizer.new.sanitize(text) if text
   end
 
   def to_param

@@ -2,6 +2,12 @@ class ErrorsController < ApplicationController
   layout 'static'
 
   def not_found
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: {}, :status => :not_found
+      end
+    end
   end
 
   def error

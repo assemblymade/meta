@@ -15,10 +15,10 @@
         </div>
 
         <div class="form-group">
-          <%= f.label :description, 'Details', class: 'control-label' %>
+          <%= f.label :description, 'Description', class: 'control-label' %>
 
           <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
-            <%= text_area_tag :description, '', class: 'form-control', rows: 4, required: true %>
+            <%= f.text_area :description, class: 'form-control', rows: 4, required: true %>
             <div class="dropzone-inner js-dropzone-select">
               To attach files drag &amp; drop here or <a href="#">select files
               from your computer</a>...
@@ -67,11 +67,12 @@
                   tag.name
                 end.as_json : []),
                 filterUrl: product_wips_path(@bounty.product),
-                destination: true
+                destination: true,
+                newBounty: true
               }.to_json %>">
         </div>
 
-        <div data-react-class="Typeahead"
+        <div data-react-class="TextInput"
              data-react-props="<%= {
                width: "125px",
                size: "small",

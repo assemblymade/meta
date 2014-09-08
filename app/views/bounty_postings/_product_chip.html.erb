@@ -1,0 +1,25 @@
+<div class="chip">
+  <div>
+    <div class="pull-right">
+      <%= image_tag product.poster_image.url, class: 'img-rounded', height: 60, alt: product.name %>
+    </div>
+    <a class="text-stealth-link" href="<%= product_path(product) %>"><strong><%= product.name %></strong></a>
+    <% if false %>
+      <span class="badge badge-subtle"><%= product.stage %></span>
+    <% end %>
+  </div>
+  <div class="text-muted text-small">
+    <%= product.pitch %>
+  </div>
+
+  <div class="text-muted text-small">
+    <%= number product.partners.count %> partners
+
+    <% if product.profit_reports.any? %>
+      <% report = product.profit_reports.order(:end_at).last %>
+
+      &middot;
+      <%= short_currency report.profit %> last month
+    <% end %>
+  </div>
+</div>

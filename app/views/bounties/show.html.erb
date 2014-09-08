@@ -1,26 +1,19 @@
 <% title @bounty.title, "##{@bounty.number}", @bounty.product.name %>
 <% activate_nav! :bounties %>
-<% breadcrumb product_wips_path(@bounty.product), 'Bounties' %>
-<% breadcrumb product_wip_path(@bounty.product, @bounty), "##{@bounty.number}" %>
+
+<h6 class="text-muted alpha">
+  #<%= @bounty.number %>
+  &mdash;
+  Bounty
+</h6>
 
 <%= render 'bounties/bounty', bounty: @bounty %>
 
-<div class="sheet-body">
-  <div class="row">
-    <div class="col-md-9">
-      <div id="discussion-view-el">
-        <%= render 'wips/discussion', events: @events %>
-        <%= render 'new_event_form' %>
-      </div>
-    </div>
-
-
-    <div class="col-md-3">
-      <hr class="visible-xs-block visible-sm-block">
-      <%= render 'bounties/sidebar', bounty: @bounty %>
-    </div>
-  </div>
+<div class="discussion" id="discussion-view-el">
+  <%= render 'wips/discussion', events: @events %>
+  <%= render 'new_event_form' %>
 </div>
+
 
 <% if signed_in? %>
   <img class="hidden" src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@bounty).first, current_user.id).url %>" />

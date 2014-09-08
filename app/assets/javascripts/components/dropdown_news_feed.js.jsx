@@ -119,7 +119,7 @@ var Avatar = require('./avatar.js.jsx');
     markAsRead: function() {
       Dispatcher.dispatch({
         action: NF.ACTIONS.MARK_AS_READ,
-        data: this.props.story.id
+        data: this.props.story.key
       });
     },
 
