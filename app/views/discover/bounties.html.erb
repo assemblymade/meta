@@ -11,7 +11,7 @@
       <div class="col-md-12">
         <div class="page-header">
           <h2>
-            All open <span class=""><%= params[:filter]%></span> bounties for <%= l Date.today, format: :month %>
+            All open <span class=""><%= params[:filter]%></span> bounties
           </h2>
           <ul class="nav nav-pills">
             <% @filters.select{|f| f[:count] > 0}.each do |f| %>
