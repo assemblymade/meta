@@ -59,7 +59,7 @@ class DiscoverController < ApplicationController
       end
     end
 
-    @postings = BountyPosting.joins(bounty: :product)
+    @postings = BountyPosting.joins(bounty: :product).order(created_at: :desc)
     if filter != 'all'
       @postings = @postings.tagged(filter)
     end
@@ -67,8 +67,6 @@ class DiscoverController < ApplicationController
     if slug = params[:product]
       @postings = @postings.where('products.slug = ?', slug)
     end
-
-    @postings = @postings.group_by{|p| p.bounty.product }
   end
 
   def updates

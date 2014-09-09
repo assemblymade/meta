@@ -26,15 +26,13 @@
       </div>
     </div>
 
-    <% @postings.each do |product, postings| %>
+    <% @postings.each do |posting| %>
       <div class="row">
         <div class="col-md-8">
-          <% postings.each do |posting| %>
-            <%= render 'bounty_postings/bounty_chip', bounty: posting.bounty %>
-          <% end %>
+          <%= render 'bounty_postings/bounty_chip', bounty: posting.bounty %>
         </div>
         <div class="col-md-4">
-          <%= render 'bounty_postings/product_chip', product: product %>
+          <%= render 'bounty_postings/product_chip', product: posting.bounty.product %>
         </div>
       </div>
 
