@@ -7,7 +7,7 @@ module Rack
 
     def call(env)
       res = @app.call(env)
-      
+
       if font_request?(env)
         res[1]['Access-Control-Allow-Origin'] = '*'
       end
@@ -18,7 +18,7 @@ module Rack
   # private
 
     def font_request?(env)
-      env['REQUEST_PATH'].match(/^\/assets/)
+      (env['REQUEST_PATH'] || '').match(/^\/assets/)
     end
 
   end
