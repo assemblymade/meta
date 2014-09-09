@@ -1,37 +1,59 @@
 <% title 'Trending Products' %>
-<% activate_nav! :platform_discover %>
-<% activate_nav! :discover_trending %>
+<% activate_nav! :discover %>
 
 <%= render 'shared/navbar' %>
 
-<div class="page page-flat">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
 
-        <%= render 'header' %>
-
-        <div class="row">
-          <div class="col-md-9">
-            <p class="lead">Most active products being built on Assembly right now.<br/>
-              Ready to build something people want?
-            </p>
+      <h3>Products that are making money</h3>
+      <div class="row">
+        <% @products.take(3).each do |product| %>
+          <div class="col-sm-4">
+            <a href="<%= product_path(product) %>">
+              <!--
+                Extra param to the partial because the data isn't on the
+                product yet - @chrislloyd
+              -->
+              <%= render 'products/card', product: product, pitching: true %>
+            </a>
           </div>
-          <div class="col-md-3">
-            <a href="<%= new_product_path %>" class="btn btn-default pull-right">Start New Product</a>
-          </div>
-        </div>
-
-        <div class="list-group list-group-breakout">
-          <% @products.each do |product| %>
-            <div class="list-group-item">
-              <%= render 'products/building_chip', product: product %>
-            </div>
-          <% end %>
-        </div>
-
-        <%= paginate @products, theme: 'twitter-bootstrap-3' %>
+        <% end %>
       </div>
+
+      <h3>Products that we're building but who don't have any money</h3>
+
+      <div class="list-group list-group-breakout omega">
+        <% @products.limit(5).offset(3).each do |product| %>
+          <a class="list-group-item"  href="<%= product_path(product) %>">
+            <%= render 'products/chip', product: product, pitching: true %>
+          </a>
+        <% end %>
+      </div>
+      <p class="text-center">
+        <a href="#" class="small text-muted">See all</a>
+      </p>
+
+
+      <div class="list-group list-group-breakout omega">
+        <% @products.limit(5).offset(3 + 5).each do |product| %>
+          <a class="list-group-item"  href="<%= product_path(product) %>">
+            <%= render 'products/chip', product: product %>
+          </a>
+        <% end %>
+      </div>
+      <p class="text-center">
+        <a href="#" class="small text-muted">See all</a>
+      </p>
+
+
+      <div class="callout text-large">
+        <a href="#" class="btn btn-success pull-right">Create a new product</a>
+        Didn't find a product that you're interested in?
+        Create your own!
+      </div>
+
     </div>
   </div>
 </div>

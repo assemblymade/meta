@@ -1,3 +1,8 @@
+.list-group-item {
+  padding: ($line-height-computed / 2) ($grid-gutter-width / 2);
+}
+
+
 .list-group-padded {
   > .list-group-item {
     padding: 20px 0;

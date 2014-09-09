@@ -2,24 +2,36 @@
 <% activate_nav! :idea %>
 <%= track 'product.viewed', ProductAnalyticsSerializer.new(@product, scope: current_user) %>
 
-<div class="row">
-  <div class="col-md-8">
-    <h2 class="alpha"><%= @product.pitch %></h2>
-    <div class="lead"><%= product_markdown(@product, @product.lead) %></div>
-  </div>
+<%= render @product %>
 
-  <div class="col-md-2 col-md-offset-2">
-    <%= image_tag @product.poster_image.url, width: '100%' %>
-  </div>
-</div>
+<hr>
 
 <div class="row">
   <div class="col-md-8">
-    <div class="embed-responsive embed-responsive-16by9">
+    <!-- <div class="embed-responsive embed-responsive-16by9">
       <iframe class="embed-responsive-item" width="853" height="480" src="//www.youtube-nocookie.com/embed/OI3shBXlqsw?rel=0" frameborder="0" allowfullscreen></iframe>
+    </div> -->
+
+    <!-- <hr> -->
+    <!-- <div class="well">
+      <ul class="list-inline large omega">
+        <% if @product.homepage_url.present? %>
+          <li><a href="<%= @product.homepage_url %>">Homepage</a></li>
+        <% end %>
+
+        <% if @product.chat_rooms.any? %>
+          <% chat_room = @product.chat_rooms.first %>
+          <li><a href="<%= chat_room_path(chat_room) %>">Chat</a></li>
+        <% end %>
+
+        <li><a href="<%= product_projects_path(@product) %>">Projects</a></li>
+        <li><a href="<%= product_discussions_path(@product) %>">Discussions</a></li>
+        <li><a href="<%= product_assets_path(@product) %>">Assets</a></li>
+        <li><a href="<%= product_repos_path(@product) %>">Repositories</a></li>
+      </ul>
     </div>
 
-    <br>
+    <br> -->
 
     <div class="markdown markdown-normalized text-large">
       <%== @product.description_html %>
@@ -36,12 +48,12 @@
 
   <div class="col-md-4">
 
-    <div class="stat-group">
-      <div class="stat">
-        <div class="stat-value"><%= @product.partners_count %></div>
-        <div class="stat-title">Partners</div>
-      </div>
+    <a href="<%= product_tasks_path(@product) %>" class="btn btn-lg btn-success btn-block">Build this product with us</a>
 
+    <br>
+
+
+    <div class="stat-group">
       <div class="stat">
         <div class="stat-value"><%= @product.posts.count %></div>
         <div class="stat-title">Updates</div>
@@ -51,37 +63,24 @@
         <div class="stat-value"><%= @product.tasks.open.count %></div>
         <div class="stat-title">Bounties</div>
       </div>
+
+      <div class="stat">
+        <div class="stat-value"><%= @product.partners_count %></div>
+        <div class="stat-title">Partners</div>
+      </div>
     </div>
-
-    <a href="<%= product_tasks_path(@product) %>" class="btn btn-lg btn-success btn-block">Help build this</a>
-
-    <br>
 
     <!-- <h2 class="alpha"> Getting started</h2> -->
 
-    <div class="list-group">
-      <% @product.tasks.take(3).each do |bounty| %>
+    <!-- <div class="list-group"> -->
+      <!-- <% @product.tasks.take(3).each do |bounty| %>
         <div class="list-group-item">
-          <%= render 'bounties/chip', bounty: bounty %>
+          <%= render 'bounties/card', bounty: bounty %>
         </div>
-      <% end %>
-    </div>
+      <% end %> -->
+    <!-- </div> -->
 
-    <ul class="list-unstyled large">
-      <% if @product.homepage_url.present? %>
-        <li><a href="<%= @product.homepage_url %>">Homepage</a></li>
-      <% end %>
 
-      <% if @product.chat_rooms.any? %>
-        <% chat_room = @product.chat_rooms.first %>
-        <li><a href="<%= chat_room_path(chat_room) %>">Chat</a></li>
-      <% end %>
-
-      <li><a href="<%= product_projects_path(@product) %>">Projects</a></li>
-      <li><a href="<%= product_discussions_path(@product) %>">Discussions</a></li>
-      <li><a href="<%= product_assets_path(@product) %>">Assets</a></li>
-      <li><a href="<%= product_repos_path(@product) %>">Repositories</a></li>
-    </ul>
   </div>
 
 </div>

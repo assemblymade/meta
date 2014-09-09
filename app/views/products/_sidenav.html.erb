@@ -6,14 +6,12 @@
     </a>
   </li>
 
-  <% if can?(:update, product) || product.posts.any? %>
-    <li class="<%= nav_active_class(:updates) %>">
-      <a href="<%= product_posts_path(product) %>">
-        <span class="icon-notebook icon-left"></span>
-        Updates
-      </a>
-    </li>
-  <% end %>
+  <li class="<%= nav_active_class(:updates) %>">
+    <a href="<%= product_posts_path(product) %>">
+      <span class="icon-notebook icon-left"></span>
+      Updates
+    </a>
+  </li>
 
   <li class="<%= nav_active_class(:bounties) %>">
     <a href="<%= product_wips_path(product) %>">

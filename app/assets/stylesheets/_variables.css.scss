@@ -508,7 +508,7 @@ $list-group-bg:            white;
 $list-group-border:        $brand-divider;
 $list-group-border-radius: 0;
 
-$list-group-hover-bg:          rgba($brand-primary, 0.1);
+$list-group-hover-bg:          $brand-bg;
 $list-group-active-color:      $component-active-color;
 $list-group-active-bg:         $component-active-bg;
 $list-group-active-border:     $list-group-active-bg;

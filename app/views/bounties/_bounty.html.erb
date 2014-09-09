@@ -1,4 +1,4 @@
-<% if false %>
+<% if true %>
   <% posting = bounty.postings.first %>
   <div data-react-class="BountyPostingHeader" data-react-props="<%= {
     postings_path: api_product_bounty_postings_path(@product),
@@ -12,6 +12,7 @@
 <div class="card">
   <div class="card-body" style="border-bottom:1px solid #FAFAFA">
     <h3 class="alpha omega">
+      <span class="glyphicon glyphicon-lock text-muted"></span>
       <%= bounty.title %>
     </h3>
 
@@ -106,6 +107,9 @@
             Abandon Bounty
           </a>
         <% end %>
+      </li>
+      <li>
+        <a href="#" class="btn btn-default btn-sm">Feature this bounty</a>
       </li>
       <li>
         <a href="#new-comment">Comment</a>
