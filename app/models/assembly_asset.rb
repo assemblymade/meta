@@ -4,11 +4,15 @@ class AssemblyAsset < ActiveRecord::Base
 
   def self.grant!(product, user, amount, promo=false)
     AssemblyAsset.transaction do
-      if user.public_address.nil?
+      if user.wallet_public_address.nil?
         assign_key_pair!(user)
       end
 
-      AssemblyAsset.create!(product: product, user: user, asset_id: asset.id) #? asset.transaction_hash
+      if asset = transfer_coins_to_user(product, user, amount)
+        AssemblyAsset.create!(product: product, user: user, asset_id: asset["transaction_hash"])
+      else
+        raise "An error occurred transfering coins from #{product.name} to #{user.username}"
+      end
     end
   end
 
@@ -16,39 +20,42 @@ class AssemblyAsset < ActiveRecord::Base
 
   def assign_key_pair!(user)
     key_pair = get_key_pair
-    public_address = key_pair["public_address"]
 
-    encrypt_and_assign_private_key!(user, key_pair["private_key"])
-    user.update(public_address: public_address)
-  end
-
-  def encrypt_and_sign_private_key(user, key)
-    # http://ruby-doc.org/stdlib-2.1.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#class-OpenSSL::Cipher-label-Encrypting+and+decrypting+some+data
-
-    cipher = OpenSSL::Cipher::AES256.new(:CBC)
-    cipher.encrypt
-    salt = cipher.random_key
-    iv = cipher.random_iv
-    private_key = cipher.update(key) + cipher.final
-
-    user.update(salt: salt, iv: iv, private_key: private_key)
+    user.update(
+      wallet_public_address: key_pair["public_address"],
+      wallet_private_key: key_pair["private_key"]
+    )
   end
 
   def get_key_pair
     get "/v1/addresses"
   end
 
+  def transfer_coins_to_user(product, user, amount)
+    body = {
+      from_public_address: product.wallet_public_address,
+      from_private_key: product.wallet_private_key,
+      amount: amount,
+      source_address: product.wallet_public_address,
+      to_public_address: user.wallet_public_address
+    }
+
+    post "/v1/transactions/transfer", body
+  end
+
   def get(url)
     request :get, url
   end
 
-  def post
+  def post(url, body = {})
+    request :post, url, body
   end
 
   def request(method, url, body = {})
     resp = connection.send(method) do |req|
       req.url url
-      req.headers['Content-Type'] = 'application/json'
+      req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      req.headers['Accept'] =
       req.body = body.to_json
     end
 
