@@ -51,14 +51,18 @@
               <span class="icon icon-chevron-down"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
-              <li>
-                <a href="<%= product_wips_path(@product) %>">Bounties</a>
-              </li>
-              <li>
-                <a href="<%= chat_room_path(@product) %>">Chat</a>
-              </li>
+              <% unless nav_active_class(:community) %>
+                <li>
+                  <a href="<%= chat_room_path(@product) %>">Chat</a>
+                </li>
+              <% end %>
+
               <li>
                 <a href="<%= product_people_path(@product) %>">Team</a>
+              </li>
+
+              <li>
+                <a href="<%= product_wips_path(@product) %>">Bounties</a>
               </li>
             </ul>
           </li>
