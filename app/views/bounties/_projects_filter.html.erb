@@ -1,0 +1,28 @@
+<div class="panel">
+  <div class="panel-heading">
+    <h6 class="panel-title">
+      Projects
+      <% if partner?(@product) %>
+        <span class="pull-right"><a href="<%= new_product_project_path(@product) %>"><span class="glyphicon glyphicon-plus-sign"></span></a></span>
+      <% end %>
+    </h6>
+  </div>
+  <ul class="nav nav-pills nav-stacked text-small">
+    <% projects.sort_by{|m| -m.multiplier }.first(3).each do |m| %>
+      <li class="<%= 'active' if params[:project].to_i == m.number %>">
+        <a href="<%= product_wips_path(@product, project: m.number) %>">
+          <% if m.urgency %>
+            <span class="pull-right label label-<%= m.urgency.slug %>"><%= m.urgency.label %></span>
+          <% end %>
+          <%= m.title %>
+        </a>
+      </li>
+    <% end %>
+    <% if projects.size > 3 %>
+      <li>
+        <a href="<%= product_projects_path(@product) %>"><u>+ <%= projects.size - 3 %> more...</u></a>
+      </li>
+    <% end %>
+
+  </ul>
+</div>

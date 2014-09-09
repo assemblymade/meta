@@ -50,7 +50,7 @@ class ProjectsController < ProductController
       end
     end
 
-    respond_with @wip, location: product_project_path(@product, @milestone)
+    respond_with @wip, location: product_wips_path(@product, bounty: @milestone.number)
   end
 
   def update

@@ -60,11 +60,12 @@ class TasksController < WipsController
   end
 
   def index
-    if params[:state].blank? && params[:bounty].blank?
+    if params[:state].blank? && params[:project].blank?
       params[:state] = 'open'
     end
     @wips = find_wips
-    @milestones = @product.milestones.open.with_open_tasks
+    @project = @product.milestones.find_by(number: params[:project]) if params[:project]
+    @milestones = @product.milestones.open
     @auto_tip_contracts = @product.auto_tip_contracts.active
 
     respond_to do |format|

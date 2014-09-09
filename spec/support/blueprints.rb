@@ -24,6 +24,7 @@ AutoTipContract.blueprint do
 end
 
 ChatRoom.blueprint do
+  wip
   slug { "room_#{sn}" }
 end
 

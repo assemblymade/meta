@@ -26,7 +26,7 @@ class FilterWipsQuery
   end
 
   def filter_clauses
-    [state_filter, deliverable_filter, bounty_filter, tag_filter, sort_order,
+    [state_filter, deliverable_filter, project_filter, tag_filter, sort_order,
      page_selection, user_filter].compact
   end
 
@@ -66,11 +66,11 @@ class FilterWipsQuery
     Wip.where(deliverable: deliverable)
   end
 
-  def bounty_filter
-    return unless bounty
+  def project_filter
+    return unless project
 
     Wip.open.joins(milestone_tasks: :milestone).
-      where('milestones.number' => bounty)
+      where('milestones.number' => project)
   end
 
   def tag_filter
@@ -112,8 +112,8 @@ class FilterWipsQuery
     filters[:deliverable]
   end
 
-  def bounty
-    filters[:bounty]
+  def project
+    filters[:project]
   end
 
   def sort

@@ -1,34 +1,36 @@
-<% cache [@milestone, @milestone.wip, @milestone.product] do %>
-  <div class="page-header sheet-header">
+<div class="page-header sheet-header">
 
-    <h2 class="page-header-title">
-      <%= @milestone.wip.title %>
-    </h2>
+  <h2 class="page-header-title">
+    <%= project.wip.title %>
+  </h2>
 
-    <div class="page-header-meta">
+  <div class="page-header-meta">
+    <% if partner?(@product) %>
       <ul class="list-piped pull-right">
         <li class="list-item">
-          <a class="link-hover-warning" data-toggle="tooltip" data-placement="top" title="Edit Project" href="<%= edit_product_project_path(@milestone.product, @milestone) %>">
+          <a class="link-hover-warning" data-toggle="tooltip" data-placement="top" title="Edit Project" href="<%= edit_product_project_path(project.product, project) %>">
             <i class="icon-pencil" style="margin-right: 2px;"></i>
             Edit</a>
         </li>
       </ul>
+    <% end %>
 
-      <ul class="list-piped">
-        <li>
-          Started by
-          <a href="<%= user_path(@milestone.user) %>">
-            @<%= @milestone.user.username %>
-          </a>
-        </li>
-        <li>
-          <%= pluralize @milestone.tasks.open.count, 'task' %> remaining
-        </li>
-        <li>
-          <%= pluralize @milestone.wip.contributors.count, 'contributor' %>
-        </li>
-      </ul>
-    </div>
-
+    <ul class="list-piped">
+      <li>
+        Started by
+        <a href="<%= user_path(project.user) %>">
+          @<%= project.user.username %>
+        </a>
+      </li>
+      <li>
+        <%= pluralize project.tasks.open.count, 'task' %> remaining
+      </li>
+      <li>
+        <a href="<%= product_project_path(@product, project, anchor: 'comments') %>">
+          <%= pluralize project.wip.comments.count, 'comment' %>
+        </a>
+      </li>
+    </ul>
   </div>
-<% end %>
+
+</div>
