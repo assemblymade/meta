@@ -450,12 +450,12 @@ ActiveRecord::Schema.define(version: 20140908202536) do
     t.integer  "team_memberships_count",            default: 0
     t.datetime "launched_at"
     t.hstore   "info"
-    t.integer  "quality"
-    t.datetime "last_activity_at"
     t.integer  "bio_memberships_count",             default: 0,     null: false
     t.datetime "started_building_at"
     t.datetime "live_at"
     t.integer  "partners_count"
+    t.integer  "quality"
+    t.datetime "last_activity_at"
     t.string   "wallet_public_address"
     t.binary   "encrypted_wallet_private_key"
     t.binary   "encrypted_wallet_private_key_salt"
