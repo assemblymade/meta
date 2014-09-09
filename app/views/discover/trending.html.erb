@@ -9,7 +9,7 @@
 
       <h3>Products that are making money</h3>
       <div class="row">
-        <% @products.take(3).each do |product| %>
+        <% @profitable.each do |product| %>
           <div class="col-sm-4">
             <a href="<%= product_path(product) %>">
               <!--
@@ -25,14 +25,14 @@
       <h3>Products that we're building but who don't have any money</h3>
 
       <div class="list-group list-group-breakout omega">
-        <% @products.limit(10).offset(3).each do |product| %>
+        <% @greenlit.each do |product| %>
           <a class="list-group-item"  href="<%= product_path(product) %>">
             <%= render 'products/chip', product: product, is_pitching: false %>
           </a>
         <% end %>
       </div>
       <p class="text-center">
-        <a href="#">More products</a>
+        <a href="<%= discover_path(:greenlit) %>">More products</a>
       </p>
 
 
@@ -42,14 +42,14 @@
       </div>
 
       <div class="list-group list-group-breakout omega">
-        <% @products.limit(10).offset(3 + 10).each do |product| %>
+        <% @teambuilding.each do |product| %>
           <a class="list-group-item"  href="<%= product_path(product) %>">
             <%= render 'products/chip', product: product, is_pitching: true %>
           </a>
         <% end %>
       </div>
       <p class="text-center">
-        <a href="#" >More ideas</a>
+        <a href="<%= discover_path(:teambuilding) %>">More products</a>
       </p>
 
       <br>

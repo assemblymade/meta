@@ -72,7 +72,9 @@ class Product < ActiveRecord::Base
     )
   }
   scope :declined,         -> { where(is_approved: false) }
-  scope :greenlit,         -> { where('greenlit_at is not null') }
+  scope :profitable,       -> { public_products.where.not(greenlit_at: nil) }
+  scope :greenlit,         -> { public_products.where.not(launched_at: nil).where(greenlit_at: nil) }
+  scope :teambuilding,     -> { stealth }
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
   scope :launched,         -> { where.not(launched_at: nil) }
@@ -84,6 +86,7 @@ class Product < ActiveRecord::Base
   scope :waiting_approval, -> { where('submitted_at is not null and evaluated_at is null') }
   scope :with_repo,        ->(repo) { where('? = ANY(repos)', repo) }
   scope :with_logo,        ->{ where.not(poster: nil).where.not(poster: '') }
+  scope :ordered_by_trend, -> { joins(:product_trend).order('product_trends.score DESC') }
 
 
   validates :slug, uniqueness: { allow_nil: true }

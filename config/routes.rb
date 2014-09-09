@@ -57,7 +57,7 @@ ASM::Application.routes.draw do
                                action: 'trending'
                              },
                              constraints: {
-                               action: /bounties|trending|live|updates/
+                               action: /bounties|trending|live|updates|teambuilding|greenlit|profitable/
                              }
 
   get '/discover/tech/:tech' => 'discover#tech'

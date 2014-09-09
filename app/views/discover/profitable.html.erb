@@ -1,0 +1,34 @@
+<% title 'Profitable Products' %>
+<% activate_nav! :discover_profitable %>
+
+<%= render 'shared/navbar' %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <%= render 'header' %>
+
+      <h3>Products that are making money</h3>
+      <div class="list-group list-group-breakout omega">
+        <% @products.each do |product| %>
+          <a class="list-group-item"  href="<%= product_path(product) %>">
+            <%= render 'products/chip', product: product, is_pitching: false %>
+          </a>
+        <% end %>
+      </div>
+
+      <%= paginate @products, theme: 'twitter-bootstrap-3' %>
+
+      <br>
+
+      <div class="callout text-large">
+        <a href="<%= new_product_path %>" class="btn btn-success pull-right">Create a new product</a>
+        Didn't find a product that you're interested in?
+        Create your own!
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>
