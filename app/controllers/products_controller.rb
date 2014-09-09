@@ -89,8 +89,9 @@ class ProductsController < ProductController
   end
 
   def follow
-    unless Watching.find(product: @product, user: current_user)
+    unless Watching.find_by(product_id: @product.id, user_id: current_user.id)
       if @product == Product.find_by_slug('assemblycoins')
+        # TODO: Validate the public_address
         if public_address = params[:public_address]
           current_user.update(wallet_public_address: public_address)
         end
