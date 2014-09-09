@@ -2,10 +2,16 @@
 
 (function() {
   var Lightbox = React.createClass({
+    getDefaultProps: function() {
+      return {
+        size: ''
+      }
+    },
+    
     render: function() {
       return (
         <div className="modal fade" id={this.props.id} role="dialog" tabIndex="-1" aria-labelledby={this.props.title || "lightbox"} aria-hidden="true">
-          <div className="modal-dialog">
+          <div className={"modal-dialog " + this.props.size}>
             <div className="modal-content">
 
               <div className="modal-header">

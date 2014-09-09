@@ -8,6 +8,11 @@ var TagListStore = require('../stores/tag_list_store');
   var TAG_LIST = CONSTANTS.TAG_LIST;
 
   var TagList = React.createClass({
+    getDefaultProps: function() {
+      return {
+        tags: []
+      }
+    },
     componentWillMount: function() {
       if (this.props.destination) {
         TagListStore.setTags(this.props.tags);

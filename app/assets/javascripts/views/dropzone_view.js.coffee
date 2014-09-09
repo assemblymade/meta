@@ -3,14 +3,14 @@
 signUpload = (file, xhr, formData) ->
   _.each file.form, (v,k) -> formData.append k, v
 
-class DropzoneView extends Backbone.View
+class window.DropzoneView extends Backbone.View
   initialize: (options) ->
     @targetForm = $(options.targetForm)
 
     @dz = new Dropzone(@el,
       accept: @onAccept
       sending: @onSending
-      clickable: @$('.js-dropzone-select')[0]
+      clickable: options['selectEl'] || @$('.js-dropzone-select')[0]
       url: options.url
     )
 

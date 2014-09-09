@@ -19,11 +19,17 @@ class Activity < ActiveRecord::Base
     create!(opts).tap do |a|
       if a.publishable
         PublishActivity.perform_async(a.id) if Story.should_publish?(a)
-        if product = opts[:product] || a.find_product
-          a.publish_to_chat(product)
-
+        room = if a.target.is_a?(ChatRoom)
+          a.target
+        elsif product = (opts[:product] || a.find_product)
           product.update!(last_activity_at: a.created_at)
+          product.chat_rooms.first
         end
+
+        if room
+          a.publish_to_chat(room.id)
+        end
+
       end
     end
   end
@@ -54,10 +60,8 @@ class Activity < ActiveRecord::Base
     subject.try(:product) || target.try(:product)
   end
 
-  def publish_to_chat(product)
-    if chat_room = product.chat_rooms.first
-      ActivityStream.new(chat_room.id).push(self)
-    end
+  def publish_to_chat(room_id)
+    ActivityStream.new(room_id).push(self)
   end
 
   def publishable

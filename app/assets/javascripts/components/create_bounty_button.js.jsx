@@ -11,7 +11,11 @@
     render: function() {
       return <span>
         <a className="btn btn-default btn-sm" onClick={this.handleClick}>Create a Bounty</a>
-        {this.state.createBountyShown ? <CreateBounty onHidden={this.handleCreateBountyHidden} /> : null }
+        {this.state.createBountyShown ? <CreateBounty
+            onHidden={this.handleCreateBountyHidden}
+            product={this.props.product}
+            maxOffer={this.props.maxOffer}
+            averageBounty={this.props.averageBounty} /> : null }
       </span>
     },
 

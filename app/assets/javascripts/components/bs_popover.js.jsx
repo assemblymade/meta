@@ -50,13 +50,15 @@
           $el.popover('show');
         }
 
-        $('body').on('click', function(e) {
-          window.target = $(e.target)
-          if (!$(e.target).is('.popover') &&
-               $(e.target).parents('.popover').length === 0) {
-            this.props.onHide()
-          }
-        }.bind(this))
+        $('body').on('click', this.bodyClickHandler)
+      },
+
+      bodyClickHandler: function(e) {
+        window.target = $(e.target)
+        if (!$(e.target).is('.popover') &&
+             $(e.target).parents('.popover').length === 0) {
+          this.props.onHide()
+        }
       },
 
       componentDidUpdate: function(prevProps, prevState) {
@@ -79,6 +81,7 @@
               $tip.find('.popover-content')[0]
           );
           $(this.getDOMNode()).popover('destroy');
+          $('body').off('click', this.bodyClickHandler)
       },
 
       render: function() {

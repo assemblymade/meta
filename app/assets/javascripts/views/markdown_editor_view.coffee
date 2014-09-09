@@ -17,14 +17,14 @@ insertTextAtCursor = (el, text)->
 
 uploadPlaceholder = (text) -> "![Uploading... #{text}]()"
 
-class MarkdownEditorView extends Backbone.View
+class window.MarkdownEditorView extends Backbone.View
   className: 'js-markdown-editor'
 
   initialize: (options) ->
     @textarea = @$('textarea')
     @textarea.autosize(append: '')
     $.applyTextcomplete(@textarea)
-    dropzone = @$el.data('dz')
+    dropzone = options['dropzone'] || @$el.data('dz')
 
     dropzone.on('addedfile', @onAddedFile)
     dropzone.on('success', @onSuccess)
