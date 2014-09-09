@@ -11,7 +11,7 @@ class BadgeMailer < BaseMailer
     @awarder = @wip.closer
 
     mail to: @user.email_address,
-         subject: "Boom! You got #{pluralize @wip.coins, 'coin'}."
+         subject: "Boom! You got #{pluralize @wip.value, 'coin'}."
   end
 
 end
