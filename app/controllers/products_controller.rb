@@ -120,7 +120,7 @@ class ProductsController < ProductController
   def launch
     authorize! :update, @product
     if @product.update(launched_at: Time.now)
-      ApplyForPitchWeek.perform_async(@product.id, current_user.id)
+      ApplyForPitchWeek.enqueue(@product.id, current_user.id)
       flash[:info] = :applied_for_pitch_week
     end
     respond_with @product, location: product_path(@product)
@@ -209,7 +209,7 @@ class ProductsController < ProductController
 
       flash[:new_product_callout] = true
 
-      Github::CreateProductRepoWorker.perform_async(
+      Github::CreateProductRepoWorker.enqueue(
         product.id,
         product_url(product),
         product.slug

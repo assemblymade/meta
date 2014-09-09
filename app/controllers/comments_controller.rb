@@ -86,7 +86,7 @@ class CommentsController < ProductController
     recipients = event.wip.followers - excluded_users
 
     # register the main content article (no tag) + the email article (email tag) + chat
-    RegisterArticleWithRecipients.perform_async(
+    RegisterArticleWithRecipients.enqueue(
       recipients.map(&:id),
       [nil, :email, :chat],
       Event,

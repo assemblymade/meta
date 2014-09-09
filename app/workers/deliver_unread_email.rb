@@ -1,6 +1,5 @@
-class DeliverUnreadEmail
-  include Sidekiq::Worker
-  sidekiq_options queue: 'mailer'
+class DeliverUnreadEmail < ActiveJob::Base
+  queue_as :mailer
 
   # retrieve unread email from readraptor and mark as read
   def perform(user_id)

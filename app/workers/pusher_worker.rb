@@ -1,5 +1,5 @@
-class PusherWorker
-  include Sidekiq::Worker
+class PusherWorker < ActiveJob::Base
+  queue_as :default
 
   PUSHER_CHANNEL_LIMIT = 100
 

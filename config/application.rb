@@ -19,6 +19,8 @@ module ASM
     # Serve static assets. Heroku needs this for production.
     config.serve_static_assets = true
 
+    config.active_record.raise_in_transactional_callbacks = true
+
     if ENV['ASSET_HOST']
       config.action_controller.asset_host = ENV['ASSET_HOST']
       config.action_mailer.asset_host = ENV['ASSET_HOST']

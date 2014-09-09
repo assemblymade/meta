@@ -56,7 +56,7 @@ class UsersController < ApplicationController
     url = ReadraptorTracker.new(params[:article_id], current_user.id).url
 
     # make request to Readraptor to mark the article as read
-    ReadRaptor::ReadArticle.perform_async(url)
+    ReadRaptor::ReadArticle.enqueue(url)
 
     render json: url
   end

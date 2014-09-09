@@ -1,5 +1,5 @@
-class MarkChatRoomAsRead
-  include Sidekiq::Worker
+class MarkChatRoomAsRead < ActiveJob::Base
+  queue_as :default
 
   def perform(user_id, product_id)
     ReadRaptorClient.new.get(

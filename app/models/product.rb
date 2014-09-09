@@ -93,11 +93,11 @@ class Product < ActiveRecord::Base
                     length: { maximum: 255 }
 
   before_create :generate_authentication_token
-  after_update -> { CreateIdeaWipWorker.perform_async self.id }, :if => :submitted_at_changed?
+  after_update -> { CreateIdeaWipWorker.enqueue self.id }, :if => :submitted_at_changed?
 
   after_commit -> { subscribe_owner_to_notifications }, on: :create
   after_commit -> { add_to_event_stream }, on: :create
-  after_commit -> { Indexer.perform_async(:index, Product.to_s, self.id) }, on: :create
+  after_commit -> { Indexer.enqueue(:index, Product.to_s, self.id) }, on: :create
   after_update :update_elasticsearch
 
 
@@ -457,7 +457,7 @@ class Product < ActiveRecord::Base
   def update_elasticsearch
     return unless (['name', 'pitch', 'description'] - self.changed).any?
 
-    Indexer.perform_async(:index, Product.to_s, self.id)
+    Indexer.enqueue(:index, Product.to_s, self.id)
   end
 
   mappings do

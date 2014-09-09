@@ -32,7 +32,7 @@ class Wip < ActiveRecord::Base
 
   before_validation :set_author_tip, on: :create
   after_commit :set_number, on: :create
-  after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.id) }, on: :create
+  after_commit -> { Indexer.enqueue(:index, Wip.to_s, self.id) }, on: :create
   after_update :update_elasticsearch
 
   scope :available,   ->{ where(state: 'open') }
@@ -234,14 +234,14 @@ class Wip < ActiveRecord::Base
   end
 
   def notify_state_changed
-    PusherWorker.perform_async push_channel, 'changed', WipSerializer.new(self).to_json
+    PusherWorker.enqueue push_channel, 'changed', WipSerializer.new(self).to_json
   end
 
   # elasticsearch
   def update_elasticsearch
     return unless title_changed? || state_changed?
 
-    Indexer.perform_async(:index, Wip.to_s, self.id)
+    Indexer.enqueue(:index, Wip.to_s, self.id)
   end
 
   mappings dynamic: false do

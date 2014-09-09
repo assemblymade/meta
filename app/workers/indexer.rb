@@ -1,6 +1,5 @@
-class Indexer
-  include Sidekiq::Worker
-  sidekiq_options queue: 'elasticsearch', retry: false
+class Indexer < ActiveJob::Base
+  queue_as :elasticsearch
 
   def perform(operation, record_type, record_id)
     klass = record_type.constantize

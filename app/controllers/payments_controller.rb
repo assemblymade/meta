@@ -34,7 +34,7 @@ class PaymentsController < ProductController
   end
 
   def create_new_plan
-    PaymentsWorker.perform_async(
+    PaymentsWorker.enqueue(
       :post,
       "/products/#{@product.slug}/plans",
       current_user.authentication_token,
@@ -46,7 +46,7 @@ class PaymentsController < ProductController
   end
 
   def destroy_plan(id)
-    PaymentsWorker.perform_async(
+    PaymentsWorker.enqueue(
       :delete,
       "/products/#{@product.slug}/plans/#{id}",
       current_user.authentication_token

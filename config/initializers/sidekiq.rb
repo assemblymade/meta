@@ -16,3 +16,4 @@ module Sidekiq
   end
 end
 
+ActiveJob::Base.queue_adapter = :sidekiq

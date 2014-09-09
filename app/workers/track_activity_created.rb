@@ -1,6 +1,5 @@
-class TrackActivityCreated
-  include Sidekiq::Worker
-  sidekiq_options queue: 'analytics'
+class TrackActivityCreated < ActiveJob::Base
+  queue_as :analytics
 
   def perform(activity_id)
     activity = Activity.find(activity_id)

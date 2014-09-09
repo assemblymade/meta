@@ -1,5 +1,5 @@
-class NotifyMentions
-  include Sidekiq::Worker
+class NotifyMentions < ActiveJob::Base
+  queue_as :default
 
   def perform(channels, event, payload, options={})
     Pusher.trigger(channels, event, payload, options)

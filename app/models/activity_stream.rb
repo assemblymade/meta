@@ -10,7 +10,7 @@ class ActivityStream
     activity.id.to_s
   end
 
-  def self.deserialize(*strs)
+  def self.deserialize(strs)
     Activity.where(id: strs).includes(:actor, :subject, :target, :tips)
   end
 
@@ -48,7 +48,7 @@ class ActivityStream
   end
 
   def pusher_push(activity)
-    PusherWorker.perform_async(
+    PusherWorker.enqueue(
       channel,
       "add",
       ActivitySerializer.new(activity).to_json,
@@ -57,7 +57,7 @@ class ActivityStream
   end
 
   def meta_push(activity)
-    PusherWorker.perform_async(
+    PusherWorker.enqueue(
       meta_channel,
       "add",
       ActivitySerializer.new(activity).to_json,
@@ -79,6 +79,7 @@ class ActivityStream
 
   def range(start_index, end_index)
     ids = $redis.zrevrange(key, start_index, end_index)
+
     if ids.present?
       self.class.deserialize(ids).sort_by(&:created_at)
     else

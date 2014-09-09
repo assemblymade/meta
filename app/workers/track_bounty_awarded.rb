@@ -1,6 +1,5 @@
-class TrackBountyAwarded
-  include Sidekiq::Worker
-  sidekiq_options queue: 'analytics'
+class TrackBountyAwarded < ActiveJob::Base
+  queue_as :analytics
 
   def perform(bounty_id)
     bounty = Task.find(bounty_id)

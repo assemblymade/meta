@@ -9,7 +9,7 @@ class NewsFeed
     story.id.to_s
   end
 
-  def self.deserialize(*strs)
+  def self.deserialize(strs)
     Story.where(id: strs).includes(activities: [:actor, :subject, :target])
   end
 

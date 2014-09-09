@@ -1,5 +1,5 @@
-class ApplyForPitchWeek
-  include Sidekiq::Worker
+class ApplyForPitchWeek < ActiveJob::Base
+  queue_as :default
 
   def perform(product_id, applicant_id)
     PitchWeekApplication.create!(

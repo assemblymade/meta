@@ -21,7 +21,7 @@ module Github
 
         product.core_team.each do |user|
           if github_login = user.github_login
-            Github::AddCollaboratorToProductRepoWorker.perform_async(
+            Github::AddCollaboratorToProductRepoWorker.enqueue(
               repo_name,
               github_login
             )

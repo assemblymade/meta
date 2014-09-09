@@ -1,7 +1,7 @@
 require 'core_ext/time_ext'
 
-class RegisterArticleWithRecipients
-  include Sidekiq::Worker
+class RegisterArticleWithRecipients < ActiveJob::Base
+  queue_as :default
   include Rails.application.routes.url_helpers
 
   attr_reader :recipients
@@ -32,7 +32,7 @@ class RegisterArticleWithRecipients
           }]
         end
 
-        ReadRaptor::RegisterArticleWorker.perform_async(opts)
+        ReadRaptor::RegisterArticleWorker.enqueue(opts)
       end
     end
   end

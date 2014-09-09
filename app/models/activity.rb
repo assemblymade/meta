@@ -18,7 +18,7 @@ class Activity < ActiveRecord::Base
   def self.publish!(opts)
     create!(opts).tap do |a|
       if a.publishable
-        PublishActivity.perform_async(a.id) if Story.should_publish?(a)
+        PublishActivity.enqueue(a.id) if Story.should_publish?(a)
         room = if a.target.is_a?(ChatRoom)
           a.target
         elsif product = (opts[:product] || a.find_product)
@@ -37,7 +37,7 @@ class Activity < ActiveRecord::Base
   def track_in_segment
     return if actor && actor.staff?
 
-    TrackActivityCreated.perform_async(self.id)
+    TrackActivityCreated.enqueue(self.id)
   end
 
   # make this object tippable

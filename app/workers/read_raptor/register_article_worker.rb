@@ -1,6 +1,7 @@
 module ReadRaptor
-  class RegisterArticleWorker
-    include Sidekiq::Worker
+  class RegisterArticleWorker < ActiveJob::Base
+    queue_as :default
+    
     include ReadRaptor::Client
 
     def perform(args)

@@ -1,5 +1,5 @@
-class AsmMetricsWorker
-  include Sidekiq::Worker
+class AsmMetricsWorker < ActiveJob::Base
+  queue_as :default
 
   def perform(name, value, at=Time.current)
     return unless ENV['ASM_METRICS_ENDPOINT']

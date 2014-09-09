@@ -12,7 +12,7 @@ class ProductMissionDefinitions
 
     on_completed do
       # create repo
-      # Github::CreateProductRepoWorker.perform_async(
+      # Github::CreateProductRepoWorker.enqueue(
       #   product.id,
       #   Rails.application.routes.url_helpers.product_url(product)
       # )

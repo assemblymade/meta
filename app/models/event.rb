@@ -14,7 +14,7 @@ class Event < ActiveRecord::Base
   has_many :tippers, through: :tips, source: :from
 
   after_commit -> { self.wip.event_added(self); }, on: :create
-  after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.wip.id) }
+  after_commit -> { Indexer.enqueue(:index, Wip.to_s, self.wip.id) }
 
   delegate :product, :to => :wip
 
@@ -65,7 +65,9 @@ class Event < ActiveRecord::Base
   end
 
   def notify_by_email(user)
+    puts "1111111111111111111"
     if notify_by_email? && !user.mail_never?
+      puts "22222222222222222222222"
       WipMailer.delay(queue: 'mailer').wip_event_added(user.id, self.id)
     end
   end
@@ -79,7 +81,7 @@ class Event < ActiveRecord::Base
     # pushes a 'chat' event to the user's channel to trigger
     # it to call for updates. This is part of notifications
     channels = users.map{|u| "@#{u.username}"} + [wip.push_channel]
-    PusherWorker.perform_async channels, 'event.added', event_hash.to_json
+    PusherWorker.enqueue channels, 'event.added', event_hash.to_json
   end
 
   def mentioned_users

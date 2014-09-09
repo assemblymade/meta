@@ -1,6 +1,5 @@
-class CoinsMinted
-  include Sidekiq::Worker
-  sidekiq_options queue: 'critical'
+class CoinsMinted < ActiveJob::Base
+  queue_as :critical
 
   attr_reader :entry, :product, :work
 

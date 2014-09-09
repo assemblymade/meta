@@ -1,6 +1,6 @@
 # TODO: (whatupdave) use webhook so we're doing the same thing as other services
-class AsmTrackUniqueWorker
-  include Sidekiq::Worker
+class AsmTrackUniqueWorker < ActiveJob::Base
+  queue_as :default
 
   def perform(name, distinct_id, at=Time.current)
     metric = Metric.where(

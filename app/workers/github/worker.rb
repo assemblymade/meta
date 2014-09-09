@@ -1,6 +1,6 @@
 module Github
-  class Worker
-    include Sidekiq::Worker
+  class Worker < ActiveJob::Base
+    queue_as :default
 
     def add_webhooks(repo)
       post "/repos/#{repo}/hooks",

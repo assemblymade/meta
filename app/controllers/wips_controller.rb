@@ -109,7 +109,7 @@ class WipsController < ProductController
       if @product.tasks.won_by(@event.user).count == 1
         BadgeMailer.delay(queue: 'mailer').first_win(@event.id)
       end
-      TrackBountyAwarded.perform_async(@wip.id) unless @event.user.staff?
+      TrackBountyAwarded.enqueue(@wip.id) unless @event.user.staff?
     end
     redirect_to product_wip_path(@wip.product, @wip)
   end

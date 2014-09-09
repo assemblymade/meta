@@ -1,6 +1,7 @@
 module ReadRaptor
-  class ReadArticle
-    include Sidekiq::Worker
+  class ReadArticle < ActiveJob::Base
+    queue_as :default
+    
     include ReadRaptor::Client
 
     def perform(url)

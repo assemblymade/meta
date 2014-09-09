@@ -29,7 +29,7 @@ class Webhooks::GithubController < WebhookController
         # http://developer.github.com/v3/activity/events/types/#pushevent
 
         if type == 'push'
-          Github::UpdateCommitCount.perform_async(product.id)
+          Github::UpdateCommitCount.enqueue(product.id)
           payload.commits.each do |commit|
             author = commit['author']
             if username = author['username']
@@ -67,7 +67,7 @@ class Webhooks::GithubController < WebhookController
 
       # the user probably hasn't linked their github account. Fail the pull on github
       repo = ref.repo.split('/')[-2..-1].join('/')
-      ::Github::PullRequestUnknownUserWorker.perform_async(repo, payload.head_sha, ref.github_login)
+      ::Github::PullRequestUnknownUserWorker.enqueue(repo, payload.head_sha, ref.github_login)
       return
     end
 

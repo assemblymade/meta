@@ -1,5 +1,5 @@
-class CreateIdeaWipWorker
-  include Sidekiq::Worker
+class CreateIdeaWipWorker < ActiveJob::Base
+  queue_as :default
 
   def perform(product_id)
     idea  = Product.find(product_id)

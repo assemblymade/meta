@@ -1,5 +1,5 @@
-class PaymentsWorker
-  include Sidekiq::Worker
+class PaymentsWorker < ActiveJob::Base
+  queue_as :default
 
   def perform(method, url, token, body = {})
     self.send(method, url, token, body)

@@ -1,5 +1,5 @@
-class PublishActivity
-  include Sidekiq::Worker
+class PublishActivity < ActiveJob::Base
+  queue_as :default
 
   attr_accessor :activity
 
@@ -29,7 +29,7 @@ class PublishActivity
   end
 
   def register_with_readraptor!(story)
-    ReadRaptor::RegisterArticleWorker.perform_async(
+    ReadRaptor::RegisterArticleWorker.enqueue(
       key: ReadRaptorSerializer.serialize_entity('Story', story.id),
       recipients: story.reader_ids
     )

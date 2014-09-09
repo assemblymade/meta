@@ -1,7 +1,5 @@
-class ApiWorker
-  include Sidekiq::Worker
-
-  private
+class ApiWorker < ActiveJob::Base
+  queue_as :default
 
   def post(url, payload = {})
     request :post, url, payload

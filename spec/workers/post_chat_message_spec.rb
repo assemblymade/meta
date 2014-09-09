@@ -8,7 +8,7 @@ describe PostChatMessage do
 
   describe '#perform' do
     it 'posts a chat message from @kernel in a product' do
-      PostChatMessage.perform_async(product.slug, 'hello, world!')
+      PostChatMessage.enqueue(product.slug, 'hello, world!')
       expect(PostChatMessage.jobs.size).to eq 1
     end
 

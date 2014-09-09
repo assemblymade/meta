@@ -100,7 +100,7 @@ namespace :emails do
     task :daily => :environment do
       users = User.where(mail_preference: 'daily')
       users.each do |user|
-        DeliverUnreadEmail.perform_async(user.id)
+        DeliverUnreadEmail.enqueue(user.id)
       end
     end
 

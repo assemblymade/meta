@@ -1,5 +1,4 @@
 class PostChatMessage < ApiWorker
-  include Sidekiq::Worker
 
   def perform(product_slug, message, check_for_activity=true)
     @product = Product.find_by!(slug: product_slug)

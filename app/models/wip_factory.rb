@@ -42,7 +42,7 @@ class WipFactory
   end
 
   def register_with_readraptor(wip, users)
-    RegisterArticleWithRecipients.perform_async(
+    RegisterArticleWithRecipients.enqueue(
       users.map(&:id),
       [nil, :email, :chat],
       Wip,
@@ -52,6 +52,6 @@ class WipFactory
 
   def push(wip, users)
     channels = users.map{|u| "@#{u.username}"} + [@product.push_channel]
-    PusherWorker.perform_async channels, 'wip.created', WipSerializer.new(wip).to_json
+    PusherWorker.enqueue channels, 'wip.created', WipSerializer.new(wip).to_json
   end
 end

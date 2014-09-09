@@ -13,7 +13,7 @@ class RepositoriesController < ProductController
 
     repo_name = [@product.slug, repo_params].join('')
 
-    Github::CreateProductRepoWorker.perform_async(
+    Github::CreateProductRepoWorker.enqueue(
       @product.id,
       product_url(@product),
       repo_name

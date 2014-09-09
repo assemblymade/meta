@@ -1,5 +1,5 @@
-class NotifyOnlineWorker
-  include Sidekiq::Worker
+class NotifyOnlineWorker < ActiveJob::Base
+  queue_as :default
 
   def perform(user_id)
     user = User.find(user_id)

@@ -38,7 +38,6 @@ class User < ActiveRecord::Base
          :recoverable,
          :registerable,
          :rememberable,
-         :token_authenticatable,
          :trackable,
          :validatable,
          :omniauth_providers => [:facebook, :github, :twitter],
@@ -53,7 +52,7 @@ class User < ActiveRecord::Base
   # Everybody gets an authentication token for quick access from emails
   before_save :ensure_authentication_token
 
-  after_commit -> { Indexer.perform_async(:index, User.to_s, self.id) }, on: :create
+  after_commit -> { Indexer.enqueue(:index, User.to_s, self.id) }, on: :create
 
 
   # default users to immediate email
@@ -212,7 +211,7 @@ class User < ActiveRecord::Base
   end
 
   def username_renamed
-    # UsernameRenameWorker.perform_async self.id, username_was
+    # UsernameRenameWorker.enqueue self.id, username_was
   end
 
   def short_name
@@ -271,4 +270,18 @@ class User < ActiveRecord::Base
     }
   end
 
+  def ensure_authentication_token
+    if authentication_token.blank?
+      self.authentication_token = generate_authentication_token
+    end
+  end
+
+  private
+
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
+  end
 end

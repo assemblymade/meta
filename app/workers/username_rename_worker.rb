@@ -1,5 +1,5 @@
-class UsernameRenameWorker
-  include Sidekiq::Worker
+class UsernameRenameWorker < ActiveJob::Base
+  queue_as :default
 
   # This is a little hacky, we should probably store metadata in the comments we can use to help update them
   def perform(user_id, previous_username)

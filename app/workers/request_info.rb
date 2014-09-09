@@ -1,11 +1,11 @@
-class RequestInfo
-  include Sidekiq::Worker
+class RequestInfo < ActiveJob::Base
+  queue_as :default
 
   def perform(user_id, at, product_id=nil)
     user = User.find(user_id)
 
     update = {
-      last_request_at: at,
+      last_request_at: Time.at(at),
     }
 
     recent_product_ids = user.recent_product_ids || []

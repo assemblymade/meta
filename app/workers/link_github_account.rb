@@ -10,7 +10,7 @@ class LinkGithubAccount
 
     @user.core_team_memberships.each do |membership|
       membership.product.repos.each do |repo|
-        Github::AddCollaboratorToProductRepoWorker.perform_async(repo.full_name, @login)
+        Github::AddCollaboratorToProductRepoWorker.enqueue(repo.full_name, @login)
       end
     end
   end

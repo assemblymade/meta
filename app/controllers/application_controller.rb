@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_request_info!
-    RequestInfo.perform_async current_user.id, Time.current, @product.try(:id)
+    RequestInfo.enqueue current_user.id, Time.current.to_i, @product.try(:id)
   end
 
   def store_location

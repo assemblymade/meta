@@ -97,6 +97,6 @@ class TransactionLogEntry < ActiveRecord::Base
   def schedule_minter
     return unless %w(validated voted).include? action
 
-    MinterWorker.perform_async(id)
+    MinterWorker.enqueue(id)
   end
 end
