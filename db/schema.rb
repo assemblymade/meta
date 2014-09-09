@@ -442,12 +442,12 @@ ActiveRecord::Schema.define(version: 20140904201436) do
     t.integer  "team_memberships_count", default: 0
     t.datetime "launched_at"
     t.hstore   "info"
-    t.integer  "quality"
-    t.datetime "last_activity_at"
     t.integer  "bio_memberships_count",  default: 0,     null: false
     t.datetime "started_building_at"
     t.datetime "live_at"
     t.integer  "partners_count"
+    t.integer  "quality"
+    t.datetime "last_activity_at"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
