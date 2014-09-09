@@ -2,14 +2,14 @@ class AssemblyAsset < ActiveRecord::Base
   belongs_to :product
   belongs_to :user
 
-  def self.grant!(product, user, amount, promo=false)
+  def grant!(promo=false)
     AssemblyAsset.transaction do
       if user.wallet_public_address.nil?
         assign_key_pair!(user)
       end
 
       if asset = transfer_coins_to_user(product, user, amount)
-        AssemblyAsset.create!(product: product, user: user, asset_id: asset["transaction_hash"])
+        update(asset_id: asset["transaction_hash"])
       else
         raise "An error occurred transfering coins from #{product.name} to #{user.username}"
       end
@@ -54,8 +54,7 @@ class AssemblyAsset < ActiveRecord::Base
   def request(method, url, body = {})
     resp = connection.send(method) do |req|
       req.url url
-      req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-      req.headers['Accept'] =
+      req.headers['Content-Type'] = 'application/json'
       req.body = body.to_json
     end
 

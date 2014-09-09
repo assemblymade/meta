@@ -89,6 +89,22 @@ class ProductsController < ProductController
   end
 
   def follow
+    unless Watching.find(product: @product, user: current_user)
+      if @product == Product.find_by_slug('assemblycoins')
+        if public_address = params[:public_address]
+          current_user.update(wallet_public_address: public_address)
+        end
+
+        asset = AssemblyAsset.new(
+          product: @product,
+          user: current_user,
+          amount: 10
+        )
+
+        asset.grant!(promo=true)
+      end
+    end
+
     @product.watch!(current_user)
 
     Activities::Follow.publish!(
@@ -96,10 +112,6 @@ class ProductsController < ProductController
       subject: @product,
       target: @product
     )
-
-    if @product == Product.find_by_slug('assets')
-      AssemblyAsset.grant!(current_user, @product, promo=true)
-    end
 
     render nothing: true, :status => :ok
   end
