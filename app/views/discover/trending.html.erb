@@ -16,7 +16,7 @@
                 Extra param to the partial because the data isn't on the
                 product yet - @chrislloyd
               -->
-              <%= render 'products/card', product: product, pitching: true %>
+              <%= render 'products/card', product: product %>
             </a>
           </div>
         <% end %>
@@ -25,31 +25,37 @@
       <h3>Products that we're building but who don't have any money</h3>
 
       <div class="list-group list-group-breakout omega">
-        <% @products.limit(5).offset(3).each do |product| %>
+        <% @products.limit(10).offset(3).each do |product| %>
           <a class="list-group-item"  href="<%= product_path(product) %>">
-            <%= render 'products/chip', product: product, pitching: true %>
+            <%= render 'products/chip', product: product, is_pitching: false %>
           </a>
         <% end %>
       </div>
       <p class="text-center">
-        <a href="#" class="small text-muted">See all</a>
+        <a href="#">More products</a>
       </p>
 
+
+      <div class="page-header">
+        <h3>New Ideas</h3>
+        <p>These ideas are searching for partners.</p>
+      </div>
 
       <div class="list-group list-group-breakout omega">
-        <% @products.limit(5).offset(3 + 5).each do |product| %>
+        <% @products.limit(10).offset(3 + 10).each do |product| %>
           <a class="list-group-item"  href="<%= product_path(product) %>">
-            <%= render 'products/chip', product: product %>
+            <%= render 'products/chip', product: product, is_pitching: true %>
           </a>
         <% end %>
       </div>
       <p class="text-center">
-        <a href="#" class="small text-muted">See all</a>
+        <a href="#" >More ideas</a>
       </p>
 
+      <br>
 
       <div class="callout text-large">
-        <a href="#" class="btn btn-success pull-right">Create a new product</a>
+        <a href="<%= new_product_path %>" class="btn btn-success pull-right">Create a new product</a>
         Didn't find a product that you're interested in?
         Create your own!
       </div>

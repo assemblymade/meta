@@ -1,24 +1,45 @@
 <div class="chip">
+  <div class="row">
+    <% if !is_pitching %>
+      <div class="col-xs-1 col-sm-1">
+        <%= image_tag(product.poster_image.url, class: 'img-rounded', width: '100%', alt: product.name) %>
+      </div>
+      <div class="col-xs-9 col-md-5">
+        <h4 class="alpha omega"><%= product.name %></h4>
+        <p class="omega"><%= product.pitch %></p>
 
-  <% if !@pitching %>
-    <div class="pull-left" style="margin-right:15px;">
-      <%= image_tag(product.poster_image.url, class: 'img-rounded', width: 48, height: 48, alt: product.name) %>
-    </div>
-  <% end %>
+        <div class="text-muted text-small">
+          <% if is_pitching %>
+            Created by @<%= product.user.username %> <%= time_ago_in_words(product.updated_at) %> ago
+          <% else %>
+            Updated <%= time_ago_in_words(product.updated_at) %> ago
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <div class="col-md-6">
+        <h4 class="alpha omega"><%= product.name %></h4>
+        <p class="omega"><%= product.pitch %></p>
+      </div>
 
-  <ul class="list-inline omega hidden-xs pull-right">
-
-    <% (10 - product.core_team.size).times.each do %>
-      <li>
-        <div class="avatar" style="width:24px;height:24px;border:1px solid #EAEAEA;border-radius:50%"></div>
-      </li>
+      <div class="col-md-6">
+        <ul class="list-inline hidden-xs omega pull-right" style="margin-top:12px">
+          <% (9 - product.partners.size).times.each do %>
+            <li>
+              <div class="avatar img-circle" style="display:inline-block;vertical-align:middle;width:24px;height:24px;border:1px solid #EAEAEA;border-radius:50%"></div>
+            </li>
+          <% end %>
+          <% product.partners.limit(9).each do |user| %>
+            <li>
+              <%= avatar_tag(user, 24) %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
+  </div>
 
-    <% product.core_team.limit(3).each do |user| %>
-      <li>
-        <%= avatar_tag(user, 24) %>
-      </li>
-    <% end %>
+  <!-- <ul class="list-inline omega hidden-xs pull-right">
 
 
 
@@ -29,14 +50,6 @@
         <span class="text-muted">+<%= other_people_size %></span>
       </li>
     <% end %> -->
-  </ul>
-
-  <strong><%= product.name %></strong>
-
-  <div class="visible-xs-block visible-sm-block visible-md-inline visible-lg-inline">
-    <%= product.pitch %>
-  </div>
-
-  <div class="text-muted text-small">Updated <%= time_ago_in_words(product.updated_at) %> ago</div>
+  <!-- </ul> -->
 
 </div>
