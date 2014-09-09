@@ -8,7 +8,7 @@ class BadgeMailer < BaseMailer
     @wip = @event.wip.decorate
     @product = @wip.product
     @user = @event.user
-    @awarder = @wip.closer
+    @awarder = @wip.closer || @wip.awards.last.awarder
 
     mail to: @user.email_address,
          subject: "Boom! You got #{pluralize @wip.value, 'coin'}."
