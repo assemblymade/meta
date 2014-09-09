@@ -44,7 +44,7 @@
           <a href="<%= chat_rooms_path %>">Community Chat</a>
         </li>
 
-        <% if @product %>
+        <% if @product  && !@product.new_record? %>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" style="cursor: pointer;">
               <%= @product.name %>

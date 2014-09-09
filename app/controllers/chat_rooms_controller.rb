@@ -30,7 +30,7 @@ class ChatRoomsController < ApplicationController
     if id == 'general'
       @product = Product.find_by_slug!('meta').decorate
     else
-      @product = Product.find_by_slug!(id).decorate
+      @product = Product.find_by_slug(id).try(:decorate)
     end
   end
 end
