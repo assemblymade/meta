@@ -1,5 +1,6 @@
 class ChatRoomsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_product
 
   def index
     respond_to do |format|
@@ -21,5 +22,15 @@ class ChatRoomsController < ApplicationController
   def show
     @chat_room = ChatRoom.find_by!(slug: params[:id])
     @activity_stream = ActivityStream.new(@chat_room.id).page(params[:top_id])
+  end
+
+  def set_product
+    id = params[:product_id] || params[:id]
+
+    if id == 'general'
+      @product = Product.find_by_slug!('meta').decorate
+    else
+      @product = Product.find_by_slug!(id).decorate
+    end
   end
 end
