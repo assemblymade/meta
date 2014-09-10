@@ -160,13 +160,11 @@ blockquote {
 }
 
 .text-small-caps {
-  @extend .text-sans;
   text-transform: uppercase;
   font-size: 90%;
 }
 
 .text-copy {
-  @extend .text-serif;
   padding: 26px $padding-xxl-horizontal 25px 68px;
   font-size: 15px;
   line-height: 1.764;
