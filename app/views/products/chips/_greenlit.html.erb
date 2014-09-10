@@ -1,0 +1,32 @@
+<div class="chip">
+  <div class="chip-icon">
+    <%= image_tag(firesize(product.poster_image.url, '96x96', 'g_center'), class: 'app-icon', width: '100%', alt: product.name) %>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <h4 class="alpha omega"><%= product.name %></h4>
+      <p class="omega"><%= product.pitch %></p>
+    </div>
+    <div class="col-sm-6 text-right">
+
+      <div class="stat-group omega">
+        <div class="stat">
+          <h4 class="alpha omega">24</h4>
+          <div class="stat-title">Updates</div>
+        </div>
+
+        <div class="stat">
+          <h4 class="alpha omega">12</h4>
+          <div class="stat-title">Bounties</div>
+        </div>
+
+        <div class="stat">
+          <h4 class="alpha omega">123</h4>
+          <div class="stat-title">Partners</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

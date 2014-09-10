@@ -1,3 +1,9 @@
 .chip {
-  @include clearfix;
+  padding-left: ($line-height-computed * 2) + ($grid-gutter-width / 2);
+}
+
+.chip-icon {
+  float: left;
+  margin-left: -(($line-height-computed * 2) + ($grid-gutter-width / 2));
+  width: $line-height-computed * 2;
 }

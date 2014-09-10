@@ -1,4 +1,4 @@
 .app-icon {
   background-color: $gray-light;
-  border-radius: $grid-gutter-width;
+  border-radius: floor(percentage(($border-radius-large * 2) / 48px));
 }

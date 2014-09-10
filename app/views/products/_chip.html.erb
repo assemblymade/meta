@@ -1,43 +1,25 @@
 <div class="chip">
-  <div class="row">
-    <% if !is_pitching %>
-      <div class="col-xs-1 col-sm-1">
-        <%= image_tag(product.poster_image.url, class: 'img-rounded', width: '100%', alt: product.name) %>
-      </div>
-      <div class="col-xs-9 col-md-5">
-        <h4 class="alpha omega"><%= product.name %></h4>
-        <p class="omega"><%= product.pitch %></p>
-
-        <div class="text-muted text-small">
-          <% if is_pitching %>
-            Created by @<%= product.user.username %> <%= time_ago_in_words(product.updated_at) %> ago
-          <% else %>
-            Updated <%= time_ago_in_words(product.updated_at) %> ago
-          <% end %>
-        </div>
-      </div>
-    <% else %>
-      <div class="col-md-6">
-        <h4 class="alpha omega"><%= product.name %></h4>
-        <p class="omega"><%= product.pitch %></p>
-      </div>
-
-      <div class="col-md-6">
-        <ul class="list-inline hidden-xs omega pull-right" style="margin-top:12px">
-          <% (9 - product.partners.size).times.each do %>
-            <li>
-              <div class="avatar img-circle" style="display:inline-block;vertical-align:middle;width:24px;height:24px;border:1px solid #EAEAEA;border-radius:50%"></div>
-            </li>
-          <% end %>
-          <% product.partners.limit(9).each do |user| %>
-            <li>
-              <%= avatar_tag(user, 24) %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+  
+  <div class="chip-icon">
+    <%= image_tag(product.poster_image.url, class: 'img-rounded', width: '100%', alt: product.name) %>
   </div>
+
+
+  <% if !is_pitching %>
+    <h4 class="alpha omega"><%= product.name %></h4>
+    <p class="omega"><%= product.pitch %></p>
+
+    <div class="text-muted text-small">
+      <% if is_pitching %>
+        Created by @<%= product.user.username %> <%= time_ago_in_words(product.updated_at) %> ago
+      <% else %>
+        Updated <%= time_ago_in_words(product.updated_at) %> ago
+      <% end %>
+    </div>
+  <% else %>
+    <h4 class="alpha omega"><%= product.name %></h4>
+    <p class="omega"><%= product.pitch %></p>
+  <% end %>
 
   <!-- <ul class="list-inline omega hidden-xs pull-right">
 

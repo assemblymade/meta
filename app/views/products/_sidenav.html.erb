@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs nav-justified" style="margin-bottom:24px">
+<ul class="nav nav-tabs nav-justified">
   <li class="<%= nav_active_class(:idea) %>">
     <a href="<%= product_path(product) %>">
       <span class="icon icon-compass icon-left"></span>
@@ -27,14 +27,12 @@
     </a>
   </li>
 
-  <% if product.revenue? %>
-    <li class="<%= nav_active_class(:financials) %>">
-      <a href="<%= product_financials_path(product) %>">
-        <span class="icon icon-wallet icon-left"></span>
-        Financials
-      </a>
-    </li>
-  <% end %>
+  <li class="<%= nav_active_class(:financials) %>">
+    <a href="<%= product_financials_path(product) %>">
+      <span class="icon icon-wallet icon-left"></span>
+      Financials
+    </a>
+  </li>
 
   <% if can?(:edit, product) %>
     <li class="<%= nav_active_class(:settings) %>">

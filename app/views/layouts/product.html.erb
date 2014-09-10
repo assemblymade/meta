@@ -5,40 +5,62 @@
 <%= render 'shared/navbar' %>
 <%= render 'shared/welcome' %>
 
-<div class="navbar navbar-product">
+<!-- TODO Refactor this entire thing - @chrislloyd -->
+<div style="padding-top:24px;border-bottom: 1px solid #EAEAEA;margin-bottom:24px">
   <div class="container">
-    <ul class="list-inline omega pull-right">
-      <% unless @product.launched? %>
-        <li>
-          <%= render 'products/launch' %>
-        </li>
-      <% end %>
-      <li
-          data-react-class="NotificationPreferencesDropdown"
-          data-react-props="<%= {
-            productWatchersPath: product_people_path(@product),
-            productWatchersCount: @product.watchings_count,
-            productFollowPath: product_follow_path(@product),
-            productAnnouncementsPath: product_announcements_path(@product),
-            productUnfollowPath: product_unfollow_path(@product),
-            watchingState: @product.watching_state(current_user),
-            afterFollowPath: product_people_path(@product)
-          }.to_json %>">
-      </li>
-    </ul>
-
-    <h4 class="alpha omega" style="line-height:30px;font-weight:normal">
-      <%= @product.name %>
-    </h4>
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="clearfix">
+          <% if controller_name == 'products' && action_name == 'show' %>
+            <div class="pull-right">
+              <ul class="list-inline omega pull-right">
+                <% unless @product.launched? %>
+                  <li>
+                    <%= render 'products/launch' %>
+                  </li>
+                <% end %>
+                <li
+                    data-react-class="NotificationPreferencesDropdown"
+                    data-react-props="<%= {
+                      productWatchersPath: product_people_path(@product),
+                      productWatchersCount: @product.watchings_count,
+                      productFollowPath: product_follow_path(@product),
+                      productAnnouncementsPath: product_announcements_path(@product),
+                      productUnfollowPath: product_unfollow_path(@product),
+                      watchingState: @product.watching_state(current_user),
+                      afterFollowPath: product_people_path(@product)
+                    }.to_json %>">
+                </li>
+              </ul>
+            </div>
+            <%= render @product %>
+          <% else %>
+            <div class="pull-right">
+              <div
+                  data-react-class="NotificationPreferencesDropdown"
+                  data-react-props="<%= {
+                    productWatchersPath: product_people_path(@product),
+                    productWatchersCount: @product.watchings_count,
+                    productFollowPath: product_follow_path(@product),
+                    productAnnouncementsPath: product_announcements_path(@product),
+                    productUnfollowPath: product_unfollow_path(@product),
+                    watchingState: @product.watching_state(current_user),
+                    afterFollowPath: product_people_path(@product)
+                  }.to_json %>">
+              </div>
+            </div>
+            <h3 class="pull-left alpha omega"><%= @product.name %></h3>
+          <% end %>
+        </div>
+        <%= render 'products/sidenav', product: @product %>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="container">
-
-
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
-      <%= render 'products/sidenav', product: @product %>
       <%= yield %>
     </div>
   </div>

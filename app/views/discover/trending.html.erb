@@ -7,7 +7,8 @@
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
 
-      <h3>Products that are making money</h3>
+      <h3 class="text-muted"><span class="text-success">Profitable</span> Products</h3>
+
       <div class="row">
         <% @profitable.each do |product| %>
           <div class="col-sm-4">
@@ -22,12 +23,12 @@
         <% end %>
       </div>
 
-      <h3>Products that we're building but who don't have any money</h3>
+      <h3 class="text-muted"><span class="text-success">Greenlit</span> Products</h3>
 
       <div class="list-group list-group-breakout omega">
         <% @greenlit.each do |product| %>
           <a class="list-group-item"  href="<%= product_path(product) %>">
-            <%= render 'products/chip', product: product, is_pitching: false %>
+            <%= render 'products/chips/greenlit', product: product %>
           </a>
         <% end %>
       </div>
@@ -36,15 +37,13 @@
       </p>
 
 
-      <div class="page-header">
-        <h3>New Ideas</h3>
-        <p>These ideas are searching for partners.</p>
-      </div>
+      <h3 class="text-muted"><span class="text-success">Team Building</span> Products</h3>
+      <hr>
 
       <div class="list-group list-group-breakout omega">
         <% @teambuilding.each do |product| %>
           <a class="list-group-item"  href="<%= product_path(product) %>">
-            <%= render 'products/chip', product: product, is_pitching: true %>
+            <%= render 'products/chips/team_building', product: product %>
           </a>
         <% end %>
       </div>

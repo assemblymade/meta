@@ -2,10 +2,6 @@
 <% activate_nav! :idea %>
 <%= track 'product.viewed', ProductAnalyticsSerializer.new(@product, scope: current_user) %>
 
-<%= render @product %>
-
-<hr>
-
 <div class="row">
   <div class="col-md-8">
     <!-- <div class="embed-responsive embed-responsive-16by9">
@@ -34,6 +30,10 @@
     <br> -->
 
     <div class="markdown markdown-normalized text-large">
+      <div class="lead">
+        <%= product_markdown(@product, @product.lead) %>
+      </div>
+
       <%== @product.description_html %>
 
       <% (@product.info || {}).each do |field, value| %>
