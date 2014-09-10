@@ -9,7 +9,11 @@ class AssemblyAsset < ActiveRecord::Base
       end
 
       if asset = transfer_coins_to_user(product, user, amount)
-        update(asset_id: asset["transaction_hash"])
+        if asset["transaction_hash"]
+          update(asset_id: asset["transaction_hash"])
+        else
+          raise "An error occurred transfering coins from #{product.name} to #{user.username}: \"transaction_hash\" was nil"
+        end
       else
         raise "An error occurred transfering coins from #{product.name} to #{user.username}"
       end
@@ -54,7 +58,7 @@ class AssemblyAsset < ActiveRecord::Base
   def request(method, url, body = {})
     resp = connection.send(method) do |req|
       req.url url
-      req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      req.headers['Content-Type'] = 'application/json'
       req.body = body.to_json
     end
 
