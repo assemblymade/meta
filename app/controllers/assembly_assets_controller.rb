@@ -14,7 +14,7 @@ class AssemblyAssetsController < ProductController
 
         asset.grant!(promo=true)
 
-        flash[:assets_granted] = true
+        flash[:first_assets_granted] = true
       end
     end
 
