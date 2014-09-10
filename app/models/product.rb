@@ -95,7 +95,6 @@ class Product < ActiveRecord::Base
 
   before_create :generate_authentication_token
 
-  after_commit -> { subscribe_owner_to_notifications }, on: :create
   after_commit -> { add_to_event_stream }, on: :create
   after_commit -> { Indexer.perform_async(:index, Product.to_s, self.id) }, on: :create
   after_update :update_elasticsearch
@@ -520,10 +519,6 @@ class Product < ActiveRecord::Base
   end
 
   protected
-
-  def subscribe_owner_to_notifications
-    subscribers.create!(user: user)
-  end
 
   def add_to_event_stream
     StreamEvent.add_create_event!(actor: user, subject: self)

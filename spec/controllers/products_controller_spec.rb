@@ -86,6 +86,10 @@ describe ProductsController do
         expect(Discussion.count).to eq(1)
         expect(assigns(:product).main_thread).to be_persisted
       end
+
+      it 'follows product' do
+        expect(assigns(:product).followers.count).to eq(1)
+      end
     end
 
     it 'fails if terms of service not accepted' do

@@ -15,7 +15,7 @@ module Github
 
     def commit_count(repo)
       s = stats("#{repo}")
-      return 0 if s.nil?
+      return 0 if s.nil? || s.first.nil?
 
       s.first['total']
     end
