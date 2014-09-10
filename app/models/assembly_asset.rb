@@ -54,7 +54,7 @@ class AssemblyAsset < ActiveRecord::Base
   def request(method, url, body = {})
     resp = connection.send(method) do |req|
       req.url url
-      req.headers['Content-Type'] = 'application/json'
+      req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
       req.body = body.to_json
     end
 
