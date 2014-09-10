@@ -124,6 +124,14 @@ class TasksController < WipsController
     @wip.multiply!(current_user, @urgency.multiplier)
   end
 
+  # private
+
+  def find_wips
+    options = params.merge(partner: @product.partner?(current_user))
+    query = FilterWipsQuery.call(product_wips, current_user, options)
+    PaginatingDecorator.new(query)
+  end
+
   def wip_class
     Task
   end

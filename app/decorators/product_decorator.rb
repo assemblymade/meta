@@ -70,6 +70,10 @@ class ProductDecorator < ApplicationDecorator
     you_tube_video_url.present?
   end
 
+  def partner?(user)
+    user && TransactionLogEntry.where(product_id: id).where(wallet_id: user.id).any?
+  end
+
   def reward
     for_profit? ? 'Bounties' : 'Karma'
   end
