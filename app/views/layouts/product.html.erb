@@ -10,32 +10,17 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <div class="clearfix">
-          <% if controller_name == 'products' && action_name == 'show' %>
-            <div class="pull-right">
-              <ul class="list-inline omega pull-right">
-                <% unless @product.launched? %>
-                  <li>
-                    <%= render 'products/launch' %>
-                  </li>
-                <% end %>
-                <li
-                    data-react-class="NotificationPreferencesDropdown"
-                    data-react-props="<%= {
-                      productWatchersPath: product_people_path(@product),
-                      productWatchersCount: @product.watchings_count,
-                      productFollowPath: product_follow_path(@product),
-                      productAnnouncementsPath: product_announcements_path(@product),
-                      productUnfollowPath: product_unfollow_path(@product),
-                      watchingState: @product.watching_state(current_user),
-                      afterFollowPath: product_people_path(@product)
-                    }.to_json %>">
+          <div class="pull-right">
+            <ul class="list-inline pull-right">
+              <% if @product.stealth? %>
+                <li>
+                  <a href="<%= product_welcome_path(@product) %>" class="btn btn-success btn-sm btn-block">
+                    <span class="icon icon-rocket" style="margin-right: 2px;"></span>
+                    Review & Start Building Your Team
+                  </a>
                 </li>
-              </ul>
-            </div>
-            <%= render @product %>
-          <% else %>
-            <div class="pull-right">
-              <div
+              <% end %>
+              <li
                   data-react-class="NotificationPreferencesDropdown"
                   data-react-props="<%= {
                     productWatchersPath: product_people_path(@product),
@@ -46,9 +31,14 @@
                     watchingState: @product.watching_state(current_user),
                     afterFollowPath: product_people_path(@product)
                   }.to_json %>">
-              </div>
-            </div>
-            <h3 class="pull-left alpha omega"><%= @product.name %></h3>
+              </li>
+            </ul>
+          </div>
+
+          <% if current_page?(product_path(@product)) %>
+            <%= render @product %>
+          <% else %>
+            <h3 class="pull-left alpha"><%= @product.name %></h3>
           <% end %>
         </div>
         <%= render 'products/sidenav', product: @product %>
