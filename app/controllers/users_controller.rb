@@ -104,13 +104,13 @@ protected
 
   def set_empty_state
     if params[:user].blank?
-      @empty_state_text = "#{@user.username} isn't working on any bounties"
+      @empty_state_text = "@#{@user.username} isn't working on any bounties"
     elsif params[:user] == 'started'
-      @empty_state_text = "#{@user.username} hasn't created any bounties"
+      @empty_state_text = "@#{@user.username} hasn't created any bounties"
     elsif params[:user] == 'commented'
-      @empty_state_text = "#{@user.username} hasn't commented on any bounties"
+      @empty_state_text = "@#{@user.username} hasn't commented on any bounties"
     elsif params[:user] == 'awarded'
-      @empty_state_text = "#{@user.username} hasn't been awarded any bounties"
+      @empty_state_text = "@#{@user.username} hasn't been awarded any bounties"
     end
   end
 end

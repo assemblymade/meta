@@ -29,7 +29,7 @@
           </span>
           <span>
             {this.props.product.name}
-            &nbsp;coins
+            &nbsp;Coins
           </span>
         </td>
       </tr>
