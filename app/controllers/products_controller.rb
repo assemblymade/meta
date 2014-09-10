@@ -16,7 +16,7 @@ class ProductsController < ProductController
 
     render layout: 'application'
   end
-  
+
   def new2
     render layout: 'application'
   end
@@ -61,11 +61,6 @@ class ProductsController < ProductController
   end
 
   def show
-    if @product.stealth? && @product.draft?
-      redirect_to edit_product_path(@product)
-      return
-    end
-
     @user_metrics = UserMetricsSummary.new(@product, Date.today - 1.day)
 
     page_views = TimedSet.new($redis, "#{@product.id}:show")
