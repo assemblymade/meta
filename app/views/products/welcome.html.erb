@@ -1,8 +1,8 @@
 <div class="sheet-body text-center">
-  <h1><strong>Say hello to your business.</strong></h1>
+  <h1><strong>Say hello to the start of your business on Assembly.</strong></h1>
   <div class="row">
     <div class="col-md-10 col-md-push-1">
-      <p class="lead text-muted" style="margin-bottom: 36px;"><strong><%= @product.name %></strong> is currently in stealth, and is only visible to you and those you share it with. Use this time to flesh out your vision. Once launched, your product can be featured on the Discover page, showcased in the Assembly weekly newsletter, and the whole community can join you in bringing it to life.
+      <p class="lead text-muted" style="margin-bottom: 36px;"><strong><%= @product.name %></strong> is in stealth and only visible to those you share it with. Finish getting <%= @product.name %> ready to build it with the Assembly community.
       </p>
     </div>
   </div>
@@ -12,60 +12,53 @@
 
 <div class="sheet-body">
 
-  <h2 style="margin-bottom: 36px; font-weight: 300;">It's dangerous to go alone! Take these:</h2>
+  <h2 style="margin-bottom: 36px;">Step 1: Prepare product for development</h2>
+  <p>
+    Create a repo so development and design can begin. <a class='btn btn-success btn-xs'>Create Initial Repo</a>
+    <br>
+    <br>
+    Is this product already partially built? <a href='<%= help_path(group: :migrating) %>'>Migrate it to Assembly</a>
+  </p>
+  <p class='tip'>
+    Tip: Repos are for source code and design, the lifeblood of a software product. 
+  </p>
+    
+  <hr>
+  <h2 style="margin-bottom: 36px;">Step 2: Add 3 bounties</h2>
+  <p>
+    Bounties are how others on Assembly get involved in building the product and earning ownership in its success. Those new to your product will see up to 3 bounties you've featured. Featured bounties should be the most important things that could be done next on the product to move it forward. 
+  </p>
+  <p>
+    We've already helped by creating a bounty for you. Since this is a new product this bounty helps you recruit new people to the team. You can keep it or close it and create another one.
+  </p>  
+  <ol>
+    <li>
+      
+    </li>
+    <li>
+      <a class="btn btn-success btn-xs" href="<%= new_product_wip_path(@product) %>">Create Featured Bounty</a>
+    </li>
+    <li>
+      <a class="btn btn-success btn-xs" href="<%= new_product_wip_path(@product) %>">Create Featured Bounty</a>
+    </li>
+  </ol>
+  
+  <p class='tip'>
+    Tip: A good bounty clearly communicates what is needed as well as conclusive steps to be completed. Here are a few good bounties completed on other products you can use as examples (1,2,3). (should this be on bounty modal)
+  </p>
+  
+  
+  <hr>
+  <h2 style="margin-bottom: 36px;">Step 3: Build your team</h2>
+  <p>Every new product has to build a team before the product is greenlit for further development on Assembly. You'll have 30 days to get 10 other people involved in your product and becoming partners. A partner is someone that owns 1 or more of a product's App Coins. If your product doesn't get 10 partners, it will go back in stealth so you can work on improving it.</p>
+  <a class="btn btn-success btn-xs" href="<%= new_product_wip_path(@product) %>">Launch & Build Team</a>
+
+  <p class='tip'>
+    Tip: You can already start building while in stealth and through team building. Products that make continued progress get the brightest people involved in the team.
+  </p>
+  
 
   <div class="row" style="margin-top: 24px; margin-bottom: 24px;">
-
-    <!-- Plan -->
-    <div class="col-md-4">
-      <div class="row">
-        <div class="col-xs-2">
-          <span class="text-large text-primary icon icon-eyeglasses"></span>
-        </div>
-        <div class="col-xs-10">
-          <h4 class="alpha">
-            <a href="<%= product_path(@product) %>">Plan</a>
-          </h4>
-          <p class="text-muted text-small">
-            From marketing to monetization, the Plan is your chance to answer any questions people may have about <%= @product.name %>.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bounties -->
-    <div class="col-md-4">
-      <div class="row">
-        <div class="col-xs-2">
-          <span class="icon icon-trophy text-large text-primary"></span>
-        </div>
-        <div class="col-xs-10">
-          <h4 class="alpha">
-            <a href="<%= product_wips_path(@product) %>">Bounties</a>
-          </h4>
-          <p class="text-muted text-small">
-            Bounties are things you want done. Anybody can work on Bounties, the Core Team awards them and the winner receives its App Coins.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Discussions -->
-    <div class="col-md-4">
-      <div class="row">
-        <div class="col-xs-2">
-          <span class="icon icon-book-open text-large text-primary"></span>
-        </div>
-        <div class="col-xs-10">
-          <h4 class="alpha">
-            <a href="<%= product_discussions_path(@product) %>">Discussions</a>
-          </h4>
-          <p class="text-muted text-small">
-            Discussions let you write about topics that would be too long for chat. You can file them away for later reference.
-          </p>
-        </div>
-      </div>
-    </div>
 
   </div><!-- .row -->
 </div>

@@ -1,0 +1,88 @@
+<% title 'Start a new product' %>
+<% activate_nav! :platform_create %>
+<%= render 'shared/navbar' %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="sheet">
+        <div class="sheet-body">
+
+          <div class="sheet-body text-center">
+            <h1><strong>Build a product on Assembly.</strong></h1>
+            <div class="row">
+              <div class="col-md-10 col-md-push-1">
+                <p class="lead text-muted" style="margin-bottom: 36px;"><strong>Why</strong> because its awesome
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+          <a href="<%= new_idea_path %>" class="btn btn-lg btn-success btn-block">Create Product</a>
+        
+
+          <h2 style="margin-bottom: 36px; font-weight: 300;">It's dangerous to go alone! Take these:</h2>
+
+          <div class="row" style="margin-top: 24px; margin-bottom: 24px;">
+
+            <!-- Plan -->
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-xs-2">
+                  <span class="text-large text-primary icon icon-eyeglasses"></span>
+                </div>
+                <div class="col-xs-10">
+                  <h4 class="alpha">
+                    <a href="#">Plan</a>
+                  </h4>
+                  <p class="text-muted text-small">
+                    From marketing to monetization, the Plan is your chance to answer any questions people may have about
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bounties -->
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-xs-2">
+                  <span class="icon icon-trophy text-large text-primary"></span>
+                </div>
+                <div class="col-xs-10">
+                  <h4 class="alpha">
+                    <a href="#">Bounties</a>
+                  </h4>
+                  <p class="text-muted text-small">
+                    Bounties are things you want done. Anybody can work on Bounties, the Core Team awards them and the winner receives its App Coins.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Discussions -->
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-xs-2">
+                  <span class="icon icon-book-open text-large text-primary"></span>
+                </div>
+                <div class="col-xs-10">
+                  <h4 class="alpha">
+                    <a href="#">Discussions</a>
+                  </h4>
+                  <p class="text-muted text-small">
+                    Discussions let you write about topics that would be too long for chat. You can file them away for later reference.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- .row -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%= render 'shared/footer' %>

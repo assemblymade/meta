@@ -46,9 +46,10 @@ ASM::Application.routes.draw do
   get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
-
+  
   get '/new'      => redirect('/create')
   get '/create'   => 'products#new',     :as => :new_idea
+  get '/create2'  => 'products#new2',    :as => :new_idea2
   resources :ideas, :only => [:index]
 
   get '/discover(/:action)', controller: 'discover',

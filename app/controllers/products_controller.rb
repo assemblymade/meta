@@ -16,6 +16,10 @@ class ProductsController < ProductController
 
     render layout: 'application'
   end
+  
+  def new2
+    render layout: 'application'
+  end
 
   def create
     @product = create_product_with_params
