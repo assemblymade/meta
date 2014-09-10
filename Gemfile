@@ -42,6 +42,7 @@ gem 'omniauth-facebook', '1.4.0' # http://stackoverflow.com/questions/11597130/o
 gem 'omniauth-twitter'
 gem 'omniauth-github'
 # gem 'oink'
+gem 'attr_encryptor'
 gem 'paperclip'
 gem 'pg'
 gem 'pghero'
