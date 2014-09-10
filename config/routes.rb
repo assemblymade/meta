@@ -62,8 +62,6 @@ ASM::Application.routes.draw do
                                action: /bounties|trending|live|updates|teambuilding|greenlit|profitable/
                              }
 
-  get '/discover/tech/:tech' => 'discover#tech'
-
   devise_for :users,
     :skip => [:registrations, :sessions, :confirmations],
     :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :passwords => 'users/passwords' }
