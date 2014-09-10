@@ -8,7 +8,7 @@ describe Api::BountyPostingsController do
   describe '#create' do
     it 'creates posting' do
       sign_in user
-      post :create, product_id: product.slug, bounty: bounty.number
+      post :create, product_id: product.slug, bounty: bounty.number, tag: 'marketing'
 
       expect(
         assigns(:posting).bounty_id

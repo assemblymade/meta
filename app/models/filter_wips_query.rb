@@ -27,7 +27,7 @@ class FilterWipsQuery
 
   def filter_clauses
     [state_filter, deliverable_filter, project_filter, tag_filter, sort_order,
-     page_selection, user_filter].compact
+     page_selection, user_filter, bounty_postings_filter].compact
   end
 
   def state_filter
@@ -77,6 +77,10 @@ class FilterWipsQuery
     return unless tag
 
     Wip.open.joins(:tags).where('wip_tags.name ilike ?', tag)
+  end
+  
+  def bounty_postings_filter
+    Wip.not_posted
   end
 
   def sort_order

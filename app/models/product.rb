@@ -27,7 +27,6 @@ class Product < ActiveRecord::Base
 
   has_many :assets
   has_many :auto_tip_contracts
-  has_many :bounty_postings
   has_many :chat_rooms
   has_many :completed_missions
   has_many :contract_holders
@@ -463,6 +462,10 @@ class Product < ActiveRecord::Base
 
   def draft?
     self.description.blank? && (self.info || {}).values.all?(&:blank?)
+  end
+
+  def bounty_postings
+    BountyPosting.joins(:bounty).where('wips.product_id = ?', id)
   end
 
   # elasticsearch

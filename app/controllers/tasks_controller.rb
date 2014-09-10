@@ -67,6 +67,7 @@ class TasksController < WipsController
     @project = @product.milestones.find_by(number: params[:project]) if params[:project]
     @milestones = @product.milestones.open
     @auto_tip_contracts = @product.auto_tip_contracts.active
+    @featured_bounties = @product.bounty_postings
 
     respond_to do |format|
       format.html { expires_now }

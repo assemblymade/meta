@@ -91,6 +91,8 @@
 <div class="sheet-body">
   <% if @project %>
     <%= render 'projects/header', project: @project %>
+  <% else %>
+    <%= render 'bounties/postings', postings: @featured_bounties %>
   <% end %>
 
   <div class="row">

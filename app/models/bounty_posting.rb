@@ -4,7 +4,9 @@ class BountyPosting < ActiveRecord::Base
 
   default_scope -> { where('expired_at is null') }
 
-  SLOTS = ENV['PUBLIC_BOUNTY_SLOTS'].try(:to_i) || 6
+  validates :bounty, uniqueness: true, presence: true
+
+  SLOTS = ENV['PUBLIC_BOUNTY_SLOTS'].try(:to_i) || 3
 
   def self.tagged(tag)
     includes(bounty: :product).

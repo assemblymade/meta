@@ -56,7 +56,7 @@
       var product = this.props.product.slug
       window.xhr.post(
         this.props.postings_path,
-        { bounty: this.props.bounty.number },
+        { bounty: this.props.bounty.number, tag: category },
         function(err, data) {
           window.app.redirectTo('/discover/bounties?filter=' + category + '&product=' + product)
         }
@@ -77,10 +77,10 @@
   var BountyPostCategories = React.createClass({
     render: function() {
       return <div className="popover-content" style={{"min-width": 360}}>
-        <a href="javascript:;" className="list-group-item" onClick={this.clickHandler('design')}>Design</a>
-        <a href="javascript:;" className="list-group-item" onClick={this.clickHandler('marketing')}>Marketing</a>
-        <a href="javascript:;" className="list-group-item" onClick={this.clickHandler('frontend')}>Front-End Development</a>
-        <a href="javascript:;" className="list-group-item" onClick={this.clickHandler('backend')}>Back-End Development</a>
+        <a className="clickable list-group-item" onClick={this.clickHandler('design')}>Design</a>
+        <a className="clickable list-group-item" onClick={this.clickHandler('marketing')}>Marketing</a>
+        <a className="clickable list-group-item" onClick={this.clickHandler('frontend')}>Front-End Development</a>
+        <a className="clickable list-group-item" onClick={this.clickHandler('backend')}>Back-End Development</a>
       </div>
     },
 

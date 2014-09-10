@@ -1,7 +1,9 @@
 <div class="card">
   <div class="card-body">
     <h5 class="alpha">
-      <%= bounty.title %>
+      <a href="<%= product_wip_path(bounty.product, bounty) %>">
+        <%= bounty.title %>
+      </a>
     </h5>
     <p class="text-muted omega">
       <%= truncate(bounty.description, length: 84) %>
