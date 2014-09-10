@@ -5,19 +5,20 @@
 
 <div class="stat-group">
   <div class="stat">
-    <div class="stat-title">Total Royalties</div>
-    <div class="stat-value"><%= short_currency @product.profit_reports.map(&:profit_post_annuity).reduce(:+) %></div>
-  </div>
-
-  <div class="stat">
     <div class="stat-title">Total Revenue</div>
     <div class="stat-value"><%= short_currency @product.profit_reports.map(&:revenue).reduce(:+) %></div>
   </div>
 
   <div class="stat">
     <div class="stat-title">Total Expenses</div>
-    <div class="stat-value"><%= short_currency @product.profit_reports.map(&:all_expenses).reduce(:+) %></div>
+    <div class="stat-value"><%= short_currency @product.profit_reports.map(&:expenses).reduce(:+) %></div>
   </div>
+
+  <div class="stat">
+    <div class="stat-title">Total Royalties</div>
+    <div class="stat-value"><%= short_currency @product.profit_reports.map(&:profit).reduce(:+) %></div>
+  </div>
+
 </div>
 
 <hr>
@@ -41,9 +42,9 @@
       <tr style="cursor:pointer;">
         <td class="text-muted" id="financials-<%= report.end_at.strftime("%Y-%m-%d") %>"><%= l report.end_at, format: :month %></td>
         <td><%= currency report.revenue, precision: 2 %></td>
-        <td class="text-right"><%= currency -(report.expenses + report.annuity), precision: 2 %></td>
+        <td class="text-right"><%= currency -report.expenses, precision: 2 %></td>
         <td class="text-right"><%= currency -report.fee, precision: 2 %></td>
-        <td class="text-right"><%= currency report.profit_post_annuity, precision: 2 %></td>
+        <td class="text-right"><%= currency report.profit, precision: 2 %></td>
       </tr>
     <% end %>
   </tbody>
