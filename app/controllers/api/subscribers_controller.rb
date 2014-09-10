@@ -8,12 +8,27 @@ module Api
     def create
       email = params[:email]
       product = Product.find_by!(slug: params[:product_id])
-      subscription = Subscriber.create!(product_id: product.id, email: email)
 
       if user = User.find_by(email: email)
-        ProductMailer.delay(queue: 'mailer').new_subscriber_with_account(product, user)
+        if product.followed_by?(user)
+          subscription = Watching.find_by(product: product, user: user)
+        else
+          subscription = Subscriber.upsert!(product: product, user: user)
+        end
+
+        if params[:product_id] == 'assemblycoins'
+          ProductMailer.delay(queue: 'mailer').new_promo_subscriber_with_account(product, user)
+        else
+          ProductMailer.delay(queue: 'mailer').new_subscriber_with_account(product, user)
+        end
       else
-        ProductMailer.delay(queue: 'mailer').new_subscriber(product, email)
+        subscription = Subscriber.create!(product_id: product.id, email: email)
+
+        if params[:product_id] == 'assemblycoins'
+          ProductMailer.delay(queue: 'mailer').new_promo_subscriber(product, email)
+        else
+          ProductMailer.delay(queue: 'mailer').new_subscriber(product, email)
+        end
       end
 
       Activities::Subscribe.publish!(
