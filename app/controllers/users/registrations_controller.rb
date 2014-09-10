@@ -44,9 +44,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if cookies[:assembly_assets_promotion]
       promo_product = Product.find_by_slug('assemblycoins')
 
-      unless AssemblyAsset.find_by(user: current_user, product: promo_product).where('promo_redeemed_at is not null').any?
+      unless AssemblyAsset.find_by(user: current_user, product: promo_product).try(:where, 'promo_redeemed_at is not null').try(:any?)
         asset = AssemblyAsset.create!(
-          product: @product,
+          product: promo_product,
           user: current_user,
           amount: 10,
           promo_redeemed_at: Time.now

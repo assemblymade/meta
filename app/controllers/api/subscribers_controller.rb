@@ -13,7 +13,7 @@ module Api
         if product.followed_by?(user)
           subscription = Watching.find_by(product: product, user: user)
         else
-          subscription = Subscriber.upsert!(product: product, user: user)
+          subscription = Subscriber.upsert!(product, user)
         end
 
         if params[:product_id] == 'assemblycoins'
