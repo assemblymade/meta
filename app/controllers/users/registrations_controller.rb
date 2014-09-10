@@ -7,6 +7,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   after_action :track_signup,          only: [:create]
   after_action :email_welcome_package, only: [:create]
   after_action :claim_invite,          only: [:create]
+  after_action :claim_assets,          only: [:create]
 
   def create
     build_resource(sign_up_params.select{|k,v| v.present? })
@@ -37,6 +38,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def claim_invite
     Invite.find(cookies[:invite]).claim!(resource) if self.resource && cookies[:invite]
+  end
+
+  def claim_assets
+    if cookies[:assembly_assets_promotion]
+      promo_product = Product.find_by_slug('assemblycoins')
+
+      unless AssemblyAsset.find_by(user: current_user, product: promo_product).where('promo_redeemed_at is not null').any?
+        asset = AssemblyAsset.create!(
+          product: @product,
+          user: current_user,
+          amount: 10,
+          promo_redeemed_at: Time.now
+        )
+
+        asset.grant!(promo=true)
+
+        flash[:first_assets_granted] = true
+      end
+
+      session[:previous_url] = product_path(id: 'assemblycoins')
+    end
   end
 
   def sign_up_params
