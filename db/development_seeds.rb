@@ -45,7 +45,7 @@ kjdb = Product.create!(
   description: 'An app that helps you find karaoke venues and songs to sing',
   submitted_at: 7.days.ago,
   evaluated_at: 5.days.ago,
-  is_approved: false
+  started_pitch_week: Time.now
 )
 
 key_cutter = Product.create!(
@@ -57,7 +57,7 @@ key_cutter = Product.create!(
   description: 'Take a photo of your key and you get a copy in the mail',
   submitted_at: 7.days.ago,
   evaluated_at: 5.days.ago,
-  is_approved: false
+  started_pitch_week: nil
 )
 
 splitty = Product.create!(
@@ -70,5 +70,5 @@ splitty = Product.create!(
   description: seed_idea_description('splitty.md'),
   submitted_at: 3.days.ago,
   evaluated_at: 5.days.ago,
-  is_approved: true
+  started_pitch_week: Time.now
 )

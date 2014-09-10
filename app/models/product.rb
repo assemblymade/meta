@@ -61,7 +61,6 @@ class Product < ActiveRecord::Base
   scope :featured,         -> {
     where.not(featured_on: nil).order(featured_on: :desc)
   }
-  scope :approved,         -> { where(is_approved: true) }
   scope :created_in_month, ->(date) {
     where('date(products.created_at) >= ? and date(products.created_at) < ?',
       date.beginning_of_month, date.beginning_of_month + 1.month
@@ -72,15 +71,13 @@ class Product < ActiveRecord::Base
       date.beginning_of_week, date.beginning_of_week + 1.week
     )
   }
-  scope :declined,         -> { where(is_approved: false) }
   scope :profitable,       -> { public_products.where.not(profitable_at: nil) }
   scope :greenlit,         -> { public_products.where.not(greenlit_at: nil).where(profitable_at: nil) }
   scope :teambuilding,     -> { public_products.where.not(started_teambuilding_at: nil).where(greenlit_at: nil) }
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
-  scope :launched,         -> { where.not(launched_at: nil) }
-  scope :stealth,          -> { where(launched_at: nil) }
-  scope :public_products,  -> { where.not(slug: PRIVATE).where(flagged_at: nil).where.not(launched_at: nil) }
+  scope :stealth,          -> { where(started_teambuilding_at: nil) }
+  scope :public_products,  -> { where.not(slug: PRIVATE).where(flagged_at: nil).where.not(started_teambuilding_at: nil) }
   scope :since,            ->(time) { where('created_at >= ?', time) }
   scope :tagged_with_any,  ->(tags) { where('tags && ARRAY[?]::varchar[]', tags) }
   scope :validating,       -> { where(greenlit_at: nil) }
@@ -97,7 +94,6 @@ class Product < ActiveRecord::Base
                     length: { maximum: 255 }
 
   before_create :generate_authentication_token
-  after_update -> { CreateIdeaWipWorker.perform_async self.id }, :if => :submitted_at_changed?
 
   after_commit -> { subscribe_owner_to_notifications }, on: :create
   after_commit -> { add_to_event_stream }, on: :create
@@ -109,7 +105,6 @@ class Product < ActiveRecord::Base
 
   INITIAL_COINS = 6000
   PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
-  LAUNCHED = ((ENV['PRODUCTS_LAUNCHED'] || '').split(','))
   NON_PROFIT = %w(meta)
 
   INFO_FIELDS = %w(goals key_features target_audience competing_products competitive_advantage monetization_strategy)
@@ -138,22 +133,37 @@ class Product < ActiveRecord::Base
   end
 
   def stage
-    case
-    when LAUNCHED.include?(slug)
-      'launched'
-    when stealth?
-      'alpha'
+    if profitable?
+      'profitable'
+    elsif greenlit?
+      'greenlit'
+    elsif teambuilding?
+      'teambuilding'
     else
-      'beta'
+      'stealth'
     end
   end
 
   def launched?
-    !launched_at.nil?
+    !started_teambuilding_at.nil?
   end
 
   def stealth?
-    launched_at.nil?
+    started_teambuilding_at.nil?
+  end
+
+  def teambuilding?
+    !started_teambuilding_at.nil? &&
+      greenlit_at.nil?
+  end
+
+  def greenlit?
+    !greenlit_at.nil? &&
+      profitable_at.nil?
+  end
+
+  def profitable?
+    !profitable_at.nil?
   end
 
   def founded_at
@@ -264,29 +274,6 @@ class Product < ActiveRecord::Base
 
   def submitted?
     !!submitted_at
-  end
-
-  def approve!(evaluator)
-    evaluate!(true, evaluator)
-  end
-
-  def approved?
-    is_approved
-  end
-
-  def decline!(evaluator)
-    evaluate!(false, evaluator)
-  end
-
-  def evaluate!(approved, evaluator)
-    self.evaluated_at = Time.now
-    self.evaluator = evaluator
-    self.is_approved = approved
-    save!
-  end
-
-  def evaluated?
-    !!evaluated_at
   end
 
   def greenlit?

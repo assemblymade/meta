@@ -25,22 +25,6 @@ describe Product do
     expect(product.authentication_token).not_to be_blank
   end
 
-  context 'evaluation' do
-    let(:evaluator) { User.make! }
-
-    it 'can be approved' do
-      expect {
-        product.approve!(evaluator)
-      }.to change { product.is_approved }.from(nil).to(true)
-    end
-
-    it 'is evaluated by a user' do
-      expect {
-        product.decline!(evaluator)
-      }.to change { product.evaluator }.from(nil).to(evaluator)
-    end
-  end
-
   describe '#watchers' do
     let(:watcher) { User.make! }
     subject(:product) { Product.make! }

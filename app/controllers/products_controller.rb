@@ -127,7 +127,7 @@ class ProductsController < ProductController
 
   def launch
     authorize! :update, @product
-    if @product.update(launched_at: Time.now)
+    if @product.update(started_teambuilding_at: Time.now)
       ApplyForPitchWeek.perform_async(@product.id, current_user.id)
       flash[:info] = :applied_for_pitch_week
     end

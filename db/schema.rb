@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140910011546) do
+ActiveRecord::Schema.define(version: 20140910023237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -417,9 +417,6 @@ ActiveRecord::Schema.define(version: 20140910011546) do
     t.string   "name",                                              null: false
     t.string   "pitch"
     t.text     "description"
-    t.datetime "submitted_at"
-    t.datetime "evaluated_at"
-    t.boolean  "is_approved"
     t.integer  "assembly_contribution",             default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -448,14 +445,13 @@ ActiveRecord::Schema.define(version: 20140910011546) do
     t.uuid     "main_thread_id"
     t.uuid     "logo_id"
     t.integer  "team_memberships_count",            default: 0
-    t.datetime "launched_at"
     t.hstore   "info"
+    t.integer  "quality"
+    t.datetime "last_activity_at"
     t.integer  "bio_memberships_count",             default: 0,     null: false
     t.datetime "started_building_at"
     t.datetime "live_at"
     t.integer  "partners_count"
-    t.integer  "quality"
-    t.datetime "last_activity_at"
     t.string   "wallet_public_address"
     t.binary   "encrypted_wallet_private_key"
     t.binary   "encrypted_wallet_private_key_salt"

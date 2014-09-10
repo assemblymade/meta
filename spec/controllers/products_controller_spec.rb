@@ -28,7 +28,7 @@ describe ProductsController do
       end
     end
     context 'product in stealth' do
-      let(:product) { Product.make!(launched_at: nil) }
+      let(:product) { Product.make!(started_teambuilding_at: nil) }
 
       it "redirects to edit if only name and pitch fields are present" do
         get :show, id: product
@@ -156,7 +156,7 @@ describe ProductsController do
   end
 
   describe '#launch' do
-    let(:product) { Product.make!(launched_at: nil, user: creator) }
+    let(:product) { Product.make!(started_teambuilding_at: nil, user: creator) }
 
     before do
       sign_in creator
@@ -175,7 +175,7 @@ describe ProductsController do
 
     it 'sets product to launched' do
       patch :launch, product_id: product
-      expect(product.reload.launched_at.to_i).to be_within(2).of(Time.now.to_i)
+      expect(product.reload.started_teambuilding_at.to_i).to be_within(2).of(Time.now.to_i)
     end
   end
 

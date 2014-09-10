@@ -6,7 +6,7 @@ describe UserContribution do
 
   describe '.for' do
     it 'includes stealth products for own contribution' do
-      stealth_product = Product.make!(launched_at: nil)
+      stealth_product = Product.make!(started_teambuilding_at: nil)
 
       TransactionLogEntry.create!(product_id: stealth_product.id, action: 'credit', cents: 500, wallet_id: user.id, work_id: SecureRandom.uuid)
 
@@ -16,7 +16,7 @@ describe UserContribution do
     end
 
     it "filters out stealth products for other user's contribution" do
-      stealth_product = Product.make!(launched_at: nil)
+      stealth_product = Product.make!(started_teambuilding_at: nil)
       launched_product = Product.make!
 
       [stealth_product, launched_product].each do |product|
