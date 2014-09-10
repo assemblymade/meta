@@ -73,9 +73,9 @@ class Product < ActiveRecord::Base
     )
   }
   scope :declined,         -> { where(is_approved: false) }
-  scope :profitable,       -> { public_products.where.not(greenlit_at: nil) }
-  scope :greenlit,         -> { public_products.where.not(launched_at: nil).where(greenlit_at: nil) }
-  scope :teambuilding,     -> { stealth }
+  scope :profitable,       -> { public_products.where.not(profitable_at: nil) }
+  scope :greenlit,         -> { public_products.where.not(greenlit_at: nil).where(profitable_at: nil) }
+  scope :teambuilding,     -> { public_products.where.not(started_teambuilding_at: nil).where(greenlit_at: nil) }
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
   scope :launched,         -> { where.not(launched_at: nil) }
