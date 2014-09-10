@@ -4,6 +4,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   prepend_before_filter :authenticate_scope!, :only => [:edit_email]
   skip_before_action :validate_confirmed!, only: [:signup, :edit, :edit_email, :update]
 
+  before_action :check_assets_cookie,    only: [:create]
+
   after_action :track_signup,          only: [:create]
   after_action :email_welcome_package, only: [:create]
   after_action :claim_invite,          only: [:create]
@@ -40,6 +42,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
     Invite.find(cookies[:invite]).claim!(resource) if self.resource && cookies[:invite]
   end
 
+  def check_assets_cookie
+    if cookies[:assembly_assets_promotion]
+      session[:previous_url] = product_path(Product.find_by_slug('assemblycoins'))
+    end
+  end
+
   def claim_assets
     if cookies[:assembly_assets_promotion]
       promo_product = Product.find_by_slug('assemblycoins')
@@ -56,8 +64,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
         flash[:first_assets_granted] = true
       end
-
-      session[:previous_url] = product_path(id: 'assemblycoins')
     end
   end
 
