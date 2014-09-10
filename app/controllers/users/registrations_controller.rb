@@ -45,7 +45,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       promo_product = Product.find_by_slug('assemblycoins')
 
       unless AssemblyAsset.find_by(user: current_user, product: promo_product).try(:where, 'promo_redeemed_at is not null').try(:any?)
-        asset = AssemblyAsset.create!(
+        asset = AssemblyAsset.new(
           product: promo_product,
           user: current_user,
           amount: 10,

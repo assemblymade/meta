@@ -58,6 +58,7 @@ class AssemblyAsset < ActiveRecord::Base
   def request(method, url, body = {})
     resp = connection.send(method) do |req|
       req.url url
+      req.headers['Accept'] = 'application/json'
       req.headers['Content-Type'] = 'application/json'
       req.body = body.to_json
     end
@@ -66,7 +67,7 @@ class AssemblyAsset < ActiveRecord::Base
   end
 
   def connection
-    Faraday.new(url: ENV["ASSETS_URL"]) do |faraday|
+    Faraday.new(url: ENV["ASSETS_URL"] || "http://localhost:4444") do |faraday|
       faraday.adapter  :net_http
     end
   end

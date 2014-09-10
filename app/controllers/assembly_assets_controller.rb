@@ -5,7 +5,7 @@ class AssemblyAssetsController < ProductController
   def create
     unless AssemblyAsset.find_by(user: current_user, product: @product).where('promo_redeemed_at is not null').any?
       if @product == Product.find_by_slug('assemblycoins')
-        asset = AssemblyAsset.create!(
+        asset = AssemblyAsset.new(
           product: @product,
           user: current_user,
           amount: 10,

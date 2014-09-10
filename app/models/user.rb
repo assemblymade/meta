@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   include ActiveRecord::UUID
   include Elasticsearch::Model
 
-  attr_encryptor :wallet_private_key, :key => ENV["USER_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt
+  attr_encryptor :wallet_private_key, :key => ENV["USER_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt, :unless => Rails.env.test?
 
   has_many :activities,    foreign_key: 'owner_id'
   has_many :core_products, through: :core_team_memberships, source: :product
