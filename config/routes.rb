@@ -224,6 +224,9 @@ ASM::Application.routes.draw do
 
   get '/interests/:interest' => 'global_interests#toggle', as: :global_interests
 
+  # legacy
+  get '/meta/chat', to: redirect(path: '/chat/general')
+
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do
     match 'flag',    via: [:get, :post]
@@ -312,9 +315,8 @@ ASM::Application.routes.draw do
       resources :transactions, only: [:index, :show, :new, :create]
     end
 
-    get :chat, to: redirect('/chat/%{product_id}')
-
     # legacy
+    get :chat, to: redirect('/chat/%{product_id}')
     get :team, to: redirect(path: '%{product_id}/people')
     get :welcome, to: redirect(path: '%{product_id}')
 

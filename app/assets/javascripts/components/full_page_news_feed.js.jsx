@@ -25,12 +25,22 @@ var Avatar = require('./avatar.js.jsx');
       return (
         <div>
           <div className="list-group list-group-breakout" ref="spinner">
-            {this.state.stories ? this.rows(this.state.stories) : null}
+            {this.renderStories()}
           </div>
 
           {this.moreButton()}
         </div>
       );
+    },
+
+    renderStories: function() {
+      if (!this.state.stories) { return null; }
+
+      if (this.state.stories.length > 0) {
+        return this.rows(this.state.stories);
+      } else {
+        return this.emptyRow();
+      }
     },
 
     rows: function(stories) {
@@ -39,6 +49,35 @@ var Avatar = require('./avatar.js.jsx');
       return _.map(stories, function(story) {
         return <Entry key={story.id + 'f'} story={story} actors={self.state.actors} digest={self.props.digest} />;
       });
+    },
+
+    emptyRow: function() {
+      if (this.props.digest) {
+        return (
+          <div className="row">
+            <div className="col-md-8 col-md-offset-2 col-xs-10 col-xs-1">
+              <div className="well well-lg omega">
+                <h3 className="alpha">
+                  <strong>Get notified about products you follow</strong>
+                </h3>
+
+                <p className="text-muted omega">
+                  Looks like you don't have any notifications yet. Get involved
+                  with the rest of our community. Follow some products,
+                  start a discussion, leave a comment or submit some work.
+                  You'll be notified next time someone responds.
+                </p>
+
+                <div className="text-center">
+                  <a className="btn btn-primary text-center" href="/discover" style={{ 'margin-top': 12 }}>
+                    Find products to follow
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
     }
   });
 

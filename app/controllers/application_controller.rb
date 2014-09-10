@@ -14,15 +14,23 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActionController::UnknownFormat, with: :raise_not_found
 
-  protected
-
   helper_method :after_sign_up_path_for_user
   helper_method :after_sign_in_path_for_user
-  helper_method :after_welcome_path
+
+  protected
 
   def after_sign_up_path_for_user
-    after_welcome_path
+    session[:previous_url] || discover_path
   end
+
+  def after_sign_out_path_for_user
+    session[:previous_url] || root_path
+  end
+
+  def after_sign_in_path_for_user
+    after_sign_up_path_for_user
+  end
+
 
   def strip_auth_token
     unless request.headers['Content-Type'] == 'application/json'
@@ -43,18 +51,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def after_sign_up_path_for(resource)
-    after_sign_up_path_for_user
-  end
-
-  def after_sign_in_path_for_user
-    after_welcome_path
-  end
-
-  def after_welcome_path
-    discover_path
-  end
-
   def validate_confirmed!
     redirect_to :edit_user_email unless current_user.confirmed?
   end
@@ -64,17 +60,12 @@ class ApplicationController < ActionController::Base
   end
 
   def store_location
-    if (request.fullpath != "/login" &&
-        request.fullpath != "/logout" &&
-        request.fullpath != "/signup" &&
-        request.fullpath != "/notifications.json" &&
-        !request.xhr?) # don't store ajax calls
+    ignored_locations = %w(/ /users/auth/facebook/callback /login /logout /signup /notifications.json)
+    if (!request.xhr? &&
+        !ignored_locations.include?(request.path) &&
+        (request.format == "text/html" || request.content_type == "text/html"))
       session[:previous_url] = request.fullpath
     end
-  end
-
-  def after_sign_out_path_for(resource)
-    session[:previous_url] || root_path
   end
 
   # pushes the event into flash which will then be rendered next page load

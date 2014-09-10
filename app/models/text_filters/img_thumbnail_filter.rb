@@ -6,7 +6,7 @@ module TextFilters
         if context[:firesize_url] && element['src']
           element['src'] = File.join(context[:firesize_url], element['src'])
         end
-        element['class'] = 'img-rounded'
+        element['class'] = [element['class'], 'img-rounded'].compact.join(' ')
       end
       doc
     end

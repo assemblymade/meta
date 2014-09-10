@@ -213,8 +213,8 @@
 			originalWidth,
 			originalHeight;
 		// Get the window width and height.
-		windowHeight = $(window).height();
-		windowWidth  = $(window).width();
+		windowHeight = $(window).height() * 0.75;
+		windowWidth  = $(window).width() * 0.75;
 
 		// Get the top, bottom, right, and left padding
 		padTop    = parseInt( that.$element.find('.lightbox-content').css('padding-top')    , 10);

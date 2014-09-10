@@ -43,6 +43,30 @@
         <li class="<%= nav_active_class(:community) %>">
           <a href="<%= chat_rooms_path %>">Community Chat</a>
         </li>
+
+        <% if @product  && !@product.new_record? %>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" style="cursor: pointer;">
+              <%= @product.name %>
+              <span class="icon icon-chevron-down"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <% unless nav_active_class(:community) %>
+                <li>
+                  <a href="<%= chat_room_path(@product) %>">Chat</a>
+                </li>
+              <% end %>
+
+              <li>
+                <a href="<%= product_people_path(@product) %>">Team</a>
+              </li>
+
+              <li>
+                <a href="<%= product_wips_path(@product) %>">Bounties</a>
+              </li>
+            </ul>
+          </li>
+        <% end %>
       </ul>
 
         <% if user_signed_in? %>
