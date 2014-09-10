@@ -16,7 +16,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         set_flash_message :notice, :signed_up if is_navigational_format?
         sign_up(resource_name, resource)
         respond_to do |format|
-          format.html { redirect_to(after_sign_up_path_for(resource)) }
+          format.html { redirect_to(after_sign_up_path_for_user) }
           format.json { render json: resource }
         end
       else

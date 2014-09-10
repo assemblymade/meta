@@ -1,5 +1,5 @@
 require 'spec_helper'
 
 describe AssemblyAsset do
-  pending "add some examples to (or delete) #{__FILE__}"
+  pending "We need to stub out the calls to the Assets API; tests will be in ASAP"
 end

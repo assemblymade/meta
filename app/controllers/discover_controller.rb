@@ -37,29 +37,36 @@ class DiscoverController < ApplicationController
       slug: 'all',
       label: 'All',
     },{
-      slug: 'design',
+      tagged: 'design',
       label: 'Design',
     }, {
-      slug: 'frontend',
+      tagged: 'frontend',
       label: 'Front-End Development',
     }, {
-      slug: 'backend',
+      tagged: 'backend',
       label: 'Back-End Development',
     }, {
-      slug: 'marketing',
+      tagged: 'marketing',
       label: 'Marketing',
     }]
 
     @filters.each do |f|
-      f[:count] = BountyPosting.tagged(f[:slug]).count
+      if tag = f[:tagged]
+        f[:count] = BountyPosting.tagged(f[:tagged]).count
+        f[:slug] = tag
+      else
+        f[:count] = BountyPosting.count
+      end
     end
 
-    @postings = BountyPosting.joins(bounty: :product).tagged(filter)
+    @postings = BountyPosting.joins(bounty: :product).order(created_at: :desc)
+    if filter != 'all'
+      @postings = @postings.tagged(filter)
+    end
+
     if slug = params[:product]
       @postings = @postings.where('products.slug = ?', slug)
     end
-
-    @postings = @postings.group_by{|p| p.bounty.product }
   end
 
   def updates
