@@ -30,9 +30,11 @@
     <br> -->
 
     <div class="markdown markdown-normalized text-large">
-      <div class="lead">
-        <%= product_markdown(@product, @product.lead) %>
-      </div>
+      <% if @product.lead.present? %>
+        <div class="lead">
+          <%= product_markdown(@product, @product.lead) %>
+        </div>
+      <% end %>
 
       <%== @product.description_html %>
 
