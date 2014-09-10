@@ -1,21 +1,21 @@
-<div class="chip">
+<div class="chip chip-sm">
   <div class="chip-icon">
     <%= image_tag(product.user.avatar.url, class: 'avatar', width: '100%', alt: product.name) %>
   </div>
 
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-8">
       <h4 class="alpha omega">
         <%= product.name %>
         <small>by <%= product.user.username %></small>
       </h4>
       <p class="omega"><%= product.pitch %></p>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-4">
 
-            <div class="progress progress-sm" style="width:100%;margin-top:9px;margin-bottom:9px">
-              <div class="progress-bar progress-bar-success" style="width:50%"></div>
-            </div>
+      <div class="progress progress-sm" style="width:100%;margin-top:9px;margin-bottom:9px">
+        <div class="progress-bar progress-bar-success" style="width:50%"></div>
+      </div>
 
       <div class="text-muted">
         <div class="pull-right">

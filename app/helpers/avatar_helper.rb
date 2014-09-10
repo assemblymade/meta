@@ -1,6 +1,6 @@
 module AvatarHelper
 
-  def avatar_tag(user, size, options={})
+  def avatar_tag(user, size = 24, options={})
     url = if user.present?
       user.avatar.url(size * 2)
     else

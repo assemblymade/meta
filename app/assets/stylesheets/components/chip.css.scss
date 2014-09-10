@@ -7,3 +7,12 @@
   margin-left: -(($line-height-computed * 2) + ($grid-gutter-width / 2));
   width: $line-height-computed * 2;
 }
+
+.chip-sm {
+  padding-left: $line-height-computed + ($grid-gutter-width / 2);
+
+  > .chip-icon {
+    margin-left: -($line-height-computed + ($grid-gutter-width / 2));
+    width: $line-height-computed;
+  }
+}

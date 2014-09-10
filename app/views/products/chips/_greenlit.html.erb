@@ -9,24 +9,16 @@
       <p class="omega"><%= product.pitch %></p>
     </div>
     <div class="col-sm-6 text-right">
-
-      <div class="stat-group omega">
-        <div class="stat">
-          <h4 class="alpha omega">24</h4>
-          <div class="stat-title">Updates</div>
-        </div>
-
-        <div class="stat">
-          <h4 class="alpha omega">12</h4>
-          <div class="stat-title">Bounties</div>
-        </div>
-
-        <div class="stat">
-          <h4 class="alpha omega">123</h4>
-          <div class="stat-title">Partners</div>
-        </div>
-      </div>
-
+      <ul class="list-inline omega">
+        <% product.core_team.each do |user| %>
+          <li>
+            <%= avatar_tag(user, 24) %>
+          </li>
+        <% end %>
+      </ul>
+      <span class="small text-muted" style="line-height:24px">
+      +123 other people
+    </span>
     </div>
   </div>
 </div>
