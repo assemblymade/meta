@@ -1,7 +1,9 @@
 /** @jsx React.DOM */
 
 (function() {
-
+  if (typeof $ === 'undefined') {
+    return;
+  }
   // Patch Bootstrap popover to take a React component instead of a
   // plain HTML string
   $.extend($.fn.popover.Constructor.DEFAULTS, {react: false});

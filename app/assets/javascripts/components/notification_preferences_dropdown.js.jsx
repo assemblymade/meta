@@ -130,11 +130,6 @@ var Avatar = require('./avatar.js.jsx');
     updatePreference: function(preference, path) {
       var action = D.ACTIONS.UPDATE_SELECTED;
 
-      if (preference === 'following' &&
-          window.app.currentAnalyticsProduct().get('product_slug') === app.assetsPromotionSlug()) {
-        action = D.ACTIONS.SHOW_PUBLIC_ADDRESS_MODAL;
-      }
-
       Dispatcher.dispatch({
         action: action,
         data: {
