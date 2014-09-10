@@ -30,7 +30,7 @@ module ApplicationHelper
   end
 
   def firesize_url
-    ENV.fetch('FIRESIZE_URL')
+    ENV['FIRESIZE_URL']
   end
 
   def show_event_timestamp(current_stream_event)
