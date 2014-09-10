@@ -24,11 +24,10 @@
 }
 
 .nav-tabs {
-  // border-bottom-width: 3px;
+  border-bottom: none;
 
   > li {
     margin-bottom: 0;
-
   }
 
   > li > a {
@@ -62,8 +61,33 @@
     border-bottom-color: $nav-tabs-active-link-hover-border-color;
   }
 
-  li.active > a,
-  li.active > a:hover {
+  > li.active > a,
+  > li.active > a:hover {
     color: $text-color;
+  }
+}
+
+.nav-tabs.nav-justified {
+
+  > li > a {
+    border-bottom-width: 3px;
+    border-bottom-color: transparent;
+
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  > li > a:hover {
+    border-bottom-color: $nav-tabs-link-hover-border-color;
+  }
+
+  > li.active > a,
+  > li.active > a:hover {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom-color: $nav-tabs-active-link-hover-border-color;
+
+    border-bottom-width: 3px;
   }
 }
