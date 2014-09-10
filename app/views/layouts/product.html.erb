@@ -5,8 +5,9 @@
 <%= render 'shared/navbar' %>
 <%= render 'shared/welcome' %>
 
-
+<% if flash[:first_assets_granted] %>
   <%= render 'products/assets_granted' %>
+<% end %>
 
 <div class="navbar navbar-product">
   <div class="container">
