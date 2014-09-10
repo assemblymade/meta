@@ -54,8 +54,8 @@
       },
 
       bodyClickHandler: function(e) {
-        window.target = $(e.target)
-        if (!$(e.target).is('.popover') &&
+        if (e.target != this.getDOMNode() &&
+            !$(e.target).is('.popover') &&
              $(e.target).parents('.popover').length === 0) {
           this.props.onHide()
         }

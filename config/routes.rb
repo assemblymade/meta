@@ -46,7 +46,7 @@ ASM::Application.routes.draw do
   get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
-  
+
   get '/new'      => redirect('/create')
   get '/create'   => 'products#new',     :as => :new_idea
   get '/create2'  => 'products#new2',    :as => :new_idea2
@@ -207,7 +207,7 @@ ASM::Application.routes.draw do
       end
       resources :projects, only: [:create]
       resources :potential_users, controller: 'subscribers', only: [:create, :destroy]
-      resources :bounty_postings, only: [:create]
+      resources :bounty_postings, only: [:create, :destroy]
     end
 
     resources :textcompletes, only: [:index]

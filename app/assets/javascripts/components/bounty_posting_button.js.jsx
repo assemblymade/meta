@@ -1,28 +1,18 @@
 /** @jsx React.DOM */
 
 (function() {
-  var BountyPostingHeader = React.createClass({
+  var BountyPostingButton = React.createClass({
     getInitialState: function() {
       return {
         posting: this.props.posting
       }
     },
     render: function() {
-      return this.state.posting ? PostedBountyHeader(this.state.posting) : UnpostedBountyHeader(this.props)
+      return this.props.posting ? PostedBountyButton(this.props) : UnpostedBountyButton(this.props)
     }
   })
 
-  var PostedBountyHeader = React.createClass({
-    render: function() {
-      return <p className="text-center text-muted lead">
-        <strong>
-          <time data-diff dateTime={this.props.ends_at}></time> days left
-        </strong> to start this bounty before it expires
-      </p>
-    }
-  })
-
-  var UnpostedBountyHeader = React.createClass({
+  var UnpostedBountyButton = React.createClass({
     getInitialState: function() {
       return {
         popoverShown: false
@@ -30,21 +20,29 @@
     },
 
     render: function() {
+      <span className="text-muted" data-toggle="tooltip" title="You have 3 featured Bounties. Close or unfeature one of them to feature this">There are no available spots to feature this</span>
+
+      return this.props.spotsAvailable > 0 ? this.button() : this.info()
+    },
+
+    button: function() {
       return <BsPopover content={BountyPostCategories({categorySelected: this.handleCategorySelected})}
                 placement="bottom"
                 visible={this.state.popoverShown}
                 onHide={this.handleHide}>
-        <p className="text-center text-muted lead">
-          Only visible to {this.props.product.name} partners.&nbsp;
-          {this.props.slots > 0 ? this.createPosting() : this.postingsFull()}
-        </p>
+        <a className="clickable btn btn-default btn-sm" onClick={this.togglePopover}>Feature this bounty</a>
       </BsPopover>
+    },
+
+    info: function() {
+      return <span className="text-muted" data-toggle="tooltip" title="You have 3 featured Bounties. Close or unfeature one of them to feature this">There are no available spots to feature this</span>
     },
 
     createPosting: function() {
       return <span>
+        This bounty is only visible to
         <a href="#feature" onClick={this.togglePopover}>Feature it</a>&nbsp;to community for 7 days
-        (you have {app.pluralize(this.props.slots, 'spot')} remaining).
+        (you have {app.pluralize(this.props.spotsAvailable, 'spot')} remaining).
       </span>
     },
 
@@ -53,13 +51,12 @@
     },
 
     handleCategorySelected: function(category) {
-      var product = this.props.product.slug
       window.xhr.post(
         this.props.postings_path,
         { bounty: this.props.bounty.number, tag: category },
         function(err, data) {
-          window.app.redirectTo('/discover/bounties?filter=' + category + '&product=' + product)
-        }
+          window.app.redirectTo(this.props.redirectTo)
+        }.bind(this)
       )
       this.setState({popoverShown: false})
     },
@@ -71,6 +68,22 @@
 
     handleHide: function() {
       this.setState({popoverShown: false})
+    }
+  })
+
+  var PostedBountyButton = React.createClass({
+    render: function() {
+      return <a className="clickable btn btn-default btn-sm" onClick={this.handleClick}>Unfeature this</a>
+    },
+
+    handleClick: function() {
+      window.xhr.delete(
+        this.props.posting_path,
+        {},
+        function(err, data) {
+          window.app.redirectTo(this.props.redirectTo)
+        }.bind(this)
+      )
     }
   })
 
@@ -93,8 +106,8 @@
   })
 
   if (typeof module !== 'undefined') {
-    module.exports = BountyPostingHeader
+    module.exports = BountyPostingButton
   }
 
-  window.BountyPostingHeader = BountyPostingHeader
+  window.BountyPostingButton = BountyPostingButton
 })();

@@ -10,6 +10,14 @@ class Api::BountyPostingsController < ApplicationController
     render json: @posting, status: 201
   end
 
+  def destroy
+    @product = Product.find_by!(slug: params[:product_id])
+    @posting = @product.bounty_postings.find(params[:id])
+    @posting.expire!
+
+    render json: @posting, status: 200
+  end
+
   # private
 
   def posting_params

@@ -23,17 +23,23 @@ AutoTipContract.blueprint do
   amount { 0.1 }
 end
 
-ChatRoom.blueprint do
-  wip
-  slug { "room_#{sn}" }
-end
-
 Award.blueprint do
   awarder
   winner
   event
   wip
 end
+
+BountyPosting.blueprint do
+  poster { User.make! }
+  bounty
+end
+
+ChatRoom.blueprint do
+  wip
+  slug { "room_#{sn}" }
+end
+
 
 Discussion.blueprint do
   user
