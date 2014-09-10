@@ -14,15 +14,15 @@
     <div class="col-sm-4">
 
       <div class="progress progress-sm" style="width:100%;margin-top:9px;margin-bottom:9px">
-        <div class="progress-bar progress-bar-success" style="width:50%"></div>
+        <div class="progress-bar progress-bar-success" style="width:<%= product.teambuilding_percentage %>%"></div>
       </div>
 
       <div class="text-muted">
         <div class="pull-right">
-          <strong>12 days</strong>
+          <strong><%= product.teambuilding_days_left %> days</strong>
           left
         </div>
-        5 out of 10 partners
+        <%= product.partners_count %> out of 10 partners
       </div>
     </div>
   </div>

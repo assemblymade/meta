@@ -8,11 +8,16 @@
     <div class="col-md-10 col-md-offset-1">
       <%= render 'header' %>
 
-      <h3>New products that are building their founding teams</h3>
+      <h3 class="text-muted">
+        <span class="text-success">Team Building</span> Products
+
+        <small style="padding-left: 5px">Join products on the ground floor and help define the core idea and initial features.</small>
+      </h3>
+
       <div class="list-group list-group-breakout omega">
         <% @products.each do |product| %>
           <a class="list-group-item"  href="<%= product_path(product) %>">
-            <%= render 'products/chip', product: product, is_pitching: true %>
+            <%= render 'products/chips/team_building', product: product %>
           </a>
         <% end %>
       </div>

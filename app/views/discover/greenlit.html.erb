@@ -8,11 +8,16 @@
     <div class="col-md-10 col-md-offset-1">
       <%= render 'header' %>
 
-      <h3>Products that we're building but who don't have any money</h3>
+      <h3 class="text-muted">
+        <span class="text-success">Greenlit</span> Products
+
+        <small style="padding-left: 5px">Help popular products build out features and focus on launching.</small>
+      </h3>
+
       <div class="list-group list-group-breakout omega">
         <% @products.each do |product| %>
           <a class="list-group-item"  href="<%= product_path(product) %>">
-            <%= render 'products/chip', product: product, is_pitching: false %>
+            <%= render 'products/chips/greenlit', product: product %>
           </a>
         <% end %>
       </div>

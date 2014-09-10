@@ -166,6 +166,18 @@ class Product < ActiveRecord::Base
     !profitable_at.nil?
   end
 
+  def stopped_teambuilding_at
+    started_teambuilding_at + 30.days
+  end
+
+  def teambuilding_days_left
+    [(stopped_teambuilding_at.to_date - started_teambuilding_at.to_date).to_i, 0].max
+  end
+
+  def teambuilding_percentage
+    [product.partners_count, 10].min * 10
+  end
+
   def founded_at
     read_attribute(:founded_at) || created_at
   end

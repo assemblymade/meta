@@ -14,11 +14,11 @@ class DiscoverController < ApplicationController
 
     @greenlit = Product.greenlit.
       ordered_by_trend.
-      limit(10)
+      limit(5)
 
     @teambuilding = Product.teambuilding.
       ordered_by_trend.
-      limit(10)
+      limit(5)
   end
 
   def live
