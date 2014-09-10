@@ -39,12 +39,13 @@ class AssemblyAsset < ActiveRecord::Base
     body = {
       from_public_address: product.wallet_public_address,
       from_private_key: product.wallet_private_key,
-      amount: amount,
+      transfer_amount: amount,
       source_address: product.wallet_public_address,
-      to_public_address: user.wallet_public_address
+      destination: user.wallet_public_address,
+      fee_each: 0.00005
     }
 
-    post "/v1/transactions/transfer", body
+    post "/v1/transactions/transfer/schedule", body
   end
 
   def get(url)

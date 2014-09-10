@@ -2,16 +2,17 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4444/v1/transactions/transfer
+    uri: http://localhost:4444/v1/transactions/transfer/schedule
     body:
       encoding: UTF-8
       string: |
         {
           "from_public_address": "148h2pUrQbqsZw9MDUCFGqyz4q8PgRm2Ks",
           "from_private_key": "5K7iWcvEfPL6XMS3pF5KpSBhttmdciQED1MaqkHg1y5RMaYUGS5",
-          "amount": 10,
+          "transfer_amount": 10,
           "source_address": "148h2pUrQbqsZw9MDUCFGqyz4q8PgRm2Ks",
-          "to_public_address": "1MU2Ctwz2GydBWV9WQcbNqZwbMYBto7MPh"
+          "destination": "1MU2Ctwz2GydBWV9WQcbNqZwbMYBto7MPh",
+          "fee_each": 0.00005
         }
     headers:
       Accept:
