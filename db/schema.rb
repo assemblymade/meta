@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140911185710) do
+ActiveRecord::Schema.define(version: 20140911190821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -751,6 +751,7 @@ ActiveRecord::Schema.define(version: 20140911185710) do
     t.datetime "unwatched_at"
   end
 
+  add_index "watchings", ["unwatched_at", "user_id", "watchable_type"], name: "index_watchings_on_unwatched_at_and_user_id_and_watchable_type", using: :btree
   add_index "watchings", ["watchable_id", "watchable_type"], name: "index_watchings_on_watchable_id_and_watchable_type", using: :btree
 
   create_table "whiteboard_assets", id: false, force: true do |t|
