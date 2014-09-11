@@ -11,7 +11,7 @@ var Dispatcher = require('../dispatcher');
     render: function() {
       return (
         <span id='logo-upload'
-              className='js-dropzone-select'
+              className='img-shadow js-dropzone-select'
               style={{cursor: 'pointer'}}
               onMouseEnter={this.onMouseEnter}
               onMouseLeave={this.onMouseLeave}>
@@ -26,9 +26,9 @@ var Dispatcher = require('../dispatcher');
               display: this.state.display,
               position: 'absolute',
               'text-align': 'center',
+              'margin-top': '-80px',
               width: '100%',
               'z-index': -1,
-              top: '40%',
               'font-size': '12px',
               'font-weight': 'bold'
           }}>

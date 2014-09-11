@@ -15,7 +15,7 @@ However, only the Core Team can award a bounty.
 
 # Where can I request features for Assembly?
 
-You can [submit a bounty](assembly.com/meta/wips), or you can [hop into our chat](assembly.com/meta/chat) and let us know.
+You can [submit a bounty](/meta/wips), or you can [hop into our chat](/meta/chat) and let us know.
 
 
 # How can I change my account settings?

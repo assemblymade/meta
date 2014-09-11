@@ -57,7 +57,7 @@ var Avatar = require('./avatar.js.jsx');
             <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('announcements')}>
               <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'announcements', this.props.productAnnouncementsPath)}>
                 <div>
-                  <strong>Follow updates only</strong>
+                  <strong>Updates only</strong>
                 </div>
                 <div className="text-muted hidden-xs">
                   Receive notifications when there are new updates
@@ -68,7 +68,7 @@ var Avatar = require('./avatar.js.jsx');
             <li role="presentation" style={{ cursor: 'pointer' }} className={this.selectedClass('following')}>
               <a role="menuitem" tabIndex="-1" onClick={this.updatePreference.bind(this, 'following', this.props.productFollowPath)}>
                 <div>
-                  <strong>Follow</strong>
+                  <strong>Following</strong>
                 </div>
                 <div className="text-muted hidden-xs">
                   Receive notifications when there are new updates, discussions, and chat messages
@@ -97,7 +97,7 @@ var Avatar = require('./avatar.js.jsx');
       case 'following':
         return 'Following';
       case 'announcements':
-        return 'Following';
+        return 'Updates only';
       case 'not watching':
         return 'Follow';
       }
