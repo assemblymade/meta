@@ -4,19 +4,13 @@ class AssemblyAsset < ActiveRecord::Base
 
   def grant!(promo=false)
     AssemblyAsset.transaction do
+      return unless user
+
       if user.wallet_public_address.nil?
         assign_key_pair!(user)
       end
 
-      if asset = transfer_coins_to_user(product, user, amount)
-        if asset["transaction_hash"]
-          update(asset_id: asset["transaction_hash"])
-        else
-          raise "An error occurred transfering coins from #{product.name} to #{user.username}: \"transaction_hash\" was nil"
-        end
-      else
-        raise "An error occurred transfering coins from #{product.name} to #{user.username}"
-      end
+      transfer_coins_to_user(product, user, amount)
     end
   end
 
