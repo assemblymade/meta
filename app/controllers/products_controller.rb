@@ -17,7 +17,7 @@ class ProductsController < ProductController
     render layout: 'application'
   end
 
-  def new2
+  def start
     render layout: 'application'
   end
 
