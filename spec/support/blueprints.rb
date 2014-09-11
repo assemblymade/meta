@@ -12,6 +12,12 @@ Activities::Start.blueprint do
   target   { Event::Comment.make! }
 end
 
+AssemblyAsset.blueprint do
+  product { Product.make! }
+  user { User.make! }
+  amount { 10 }
+end
+
 Attachment.blueprint do
   user
   name { Faker::Name.name }
