@@ -20,6 +20,10 @@ class AssemblyAsset < ActiveRecord::Base
     end
   end
 
+  def assets_url
+    ENV["ASSETS_URL"]
+  end
+
   private
 
   def assign_key_pair!(user)
@@ -41,11 +45,11 @@ class AssemblyAsset < ActiveRecord::Base
       from_private_key: product.wallet_private_key,
       transfer_amount: amount,
       source_address: product.wallet_public_address,
-      destination: user.wallet_public_address,
+      to_public_address: user.wallet_public_address,
       fee_each: 0.00005
     }
 
-    post "/v1/transactions/transfer/schedule", body
+    post "/v1/transactions/transfer", body
   end
 
   def get(url)
@@ -68,7 +72,7 @@ class AssemblyAsset < ActiveRecord::Base
   end
 
   def connection
-    Faraday.new(url: ENV["ASSETS_URL"] || "http://localhost:4444") do |faraday|
+    Faraday.new(url: assets_url) do |faraday|
       faraday.adapter  :net_http
     end
   end

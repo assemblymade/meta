@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe AssemblyAsset do
   describe '#grant!' do
+    before do
+      AssemblyAsset.any_instance.stub(:assets_url).and_return('https://assets-api.assembly.com')
+    end
+
     let(:product) {
       Product.make!(
         wallet_public_address: '148h2pUrQbqsZw9MDUCFGqyz4q8PgRm2Ks',

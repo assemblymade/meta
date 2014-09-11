@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4444/v1/transactions/transfer/schedule
+    uri: https://assets-api.assembly.com/v1/transactions/transfer
     body:
       encoding: UTF-8
       string: |
@@ -11,7 +11,7 @@ http_interactions:
           "from_private_key": "5K7iWcvEfPL6XMS3pF5KpSBhttmdciQED1MaqkHg1y5RMaYUGS5",
           "transfer_amount": 10,
           "source_address": "148h2pUrQbqsZw9MDUCFGqyz4q8PgRm2Ks",
-          "destination": "1MU2Ctwz2GydBWV9WQcbNqZwbMYBto7MPh",
+          "to_public_address": "1MU2Ctwz2GydBWV9WQcbNqZwbMYBto7MPh",
           "fee_each": 0.00005
         }
     headers:
@@ -36,7 +36,7 @@ http_interactions:
   recorded_at: Wed, 10 Sep 2014 19:03:11 GMT
 - request:
     method: get
-    uri: http://localhost:4444/v1/addresses
+    uri: https://assets-api.assembly.com/v1/addresses
     headers:
       Accept:
       - application/json
