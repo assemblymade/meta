@@ -40,7 +40,6 @@ class User < ActiveRecord::Base
          :recoverable,
          :registerable,
          :rememberable,
-         :token_authenticatable,
          :trackable,
          :validatable,
          :omniauth_providers => [:facebook, :github, :twitter],
@@ -84,8 +83,9 @@ class User < ActiveRecord::Base
   scope :awaiting_personal_email, -> { where(personal_email_sent_on: nil).where("created_at > ? AND last_request_at < ?", 14.days.ago, 3.days.ago) }
 
   class << self
-    def find_first_by_auth_conditions(warden_conditions)
-      conditions = warden_conditions.dup
+    def find_first_by_auth_conditions(tainted_conditions)
+      conditions = tainted_conditions.dup
+      conditions.try(:permit!)
       if login = conditions.delete(:login).try(:downcase)
         if login.uuid?
           where(conditions).where("id = ?", login).first
@@ -271,6 +271,21 @@ class User < ActiveRecord::Base
         avatar_url: avatar.url.to_s
       }
     }
+  end
+
+  def ensure_authentication_token
+    if authentication_token.blank?
+      self.authentication_token = generate_authentication_token
+    end
+  end
+
+  private
+
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
   end
 
 end
