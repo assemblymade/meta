@@ -65,8 +65,12 @@ class Event < ActiveRecord::Base
   end
 
   def notify_by_email(user)
+    return if EmailLog.sent_to(user.id, self.id.to_sym).any?
+
     if notify_by_email? && !user.mail_never?
-      WipMailer.delay(queue: 'mailer').wip_event_added(user.id, self.id)
+      EmailLog.log_send user.id, :featured_wips_take_two do
+        WipMailer.delay(queue: 'mailer').wip_event_added(user.id, self.id)
+      end
     end
   end
 
