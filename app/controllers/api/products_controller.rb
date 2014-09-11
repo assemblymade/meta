@@ -1,7 +1,7 @@
 module Api
   class ProductsController < ApplicationController
     respond_to :json
-    before_filter :set_access_control_headers
+    after_filter :set_access_control_headers
 
     def info
       @product = Product.find_by!(slug: params[:product_id])
