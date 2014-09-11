@@ -11,6 +11,8 @@ class AssemblyAsset < ActiveRecord::Base
       end
 
       transfer_coins_to_user(product, user, amount)
+
+      save!
     end
   end
 

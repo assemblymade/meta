@@ -32,8 +32,7 @@ describe AssemblyAsset do
         )
 
         asset.grant!
-
-        expect(asset.asset_id).to eq('1sodZtGCamdAsRLhPAGsvHENtVdRm77wn')
+        expect(asset).to be_persisted
       end
     end
 
@@ -52,7 +51,6 @@ describe AssemblyAsset do
 
         expect(no_public_address.wallet_public_address).to eq('1NSXfw7a6KSETARS8MhPpbSgTDbCSoYmJK')
         expect(no_public_address.wallet_private_key).to eq('5Kb4LzM7QacAhc8Ry6yvDN6GFKLgL9wH4ymbUsnJs3CeQyKyhp7')
-        expect(asset.asset_id).to eq('1sodZtGCamdAsRLhPAGsvHENtVdRm77wn')
       end
     end
   end
