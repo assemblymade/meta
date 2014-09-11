@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_action :store_location
   before_action :validate_confirmed!, if: :signed_in?
-  before_action :strip_auth_token,    if: :signed_in?
+  before_action :strip_auth_token
   before_action :strip_invite_token
   after_action  :set_request_info!,   if: :signed_in?
 
@@ -33,8 +33,10 @@ class ApplicationController < ActionController::Base
 
 
   def strip_auth_token
-    unless request.headers['Content-Type'] == 'application/json'
-      redirect_to(url_for(params.except(:auth_token))) if params[:auth_token].present?
+    if params[:auth_token].present? && request.headers['Content-Type'] != 'application/json'
+      user = User.find_by!(authentication_token: params[:auth_token])
+      sign_in user
+      redirect_to(url_for(params.except(:auth_token)))
     end
   end
 

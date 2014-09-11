@@ -12,7 +12,7 @@
         <div class="clearfix">
           <div class="pull-right">
             <ul class="list-inline pull-right">
-              <% if @product.stealth? %>
+              <% if @product.stealth? && partner?(@product) %>
                 <li>
                   <a href="<%= product_welcome_path(@product) %>" class="btn btn-success btn-sm btn-block">
                     <span class="icon icon-rocket" style="margin-right: 2px;"></span>

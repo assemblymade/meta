@@ -2,6 +2,13 @@
 
 (function() {
   var CreateBountyButton = React.createClass({
+    getDefaultProps: function() {
+      return {
+        label: 'Create a Bounty',
+        classes: 'btn btn-default btn-sm'
+      }
+    },
+
     getInitialState: function() {
       return {
         createBountyShown: false
@@ -10,7 +17,7 @@
 
     render: function() {
       return <span>
-        <a className="btn btn-default btn-sm" onClick={this.handleClick}>Create a Bounty</a>
+        <a className={this.props.classes} onClick={this.handleClick}>{this.props.label}</a>
         {this.state.createBountyShown ? <CreateBounty
             onHidden={this.handleCreateBountyHidden}
             product={this.props.product}
