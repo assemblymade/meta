@@ -52,7 +52,7 @@ var Avatar = require('./avatar.js.jsx');
           </li>
 
           <li>
-            <a href='/notifications' className="text-small">All Notifications</a>
+            <a href='/dashboard' className="text-small">All Notifications</a>
           </li>
 
         </ul>
