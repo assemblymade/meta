@@ -8,7 +8,7 @@ class ChatRoomsController < ApplicationController
       format.json {
         @rooms = (
           [ChatRoom.general] +
-          ChatRoom.where(product_id: current_user.followed_product_ids).order(:slug)
+          ChatRoom.where(product_id: current_user.followed_product_ids).includes(wip: :events).order(:slug)
         ).compact
 
         render json: {
