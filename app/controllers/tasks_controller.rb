@@ -70,7 +70,10 @@ class TasksController < WipsController
     @featured_bounties = @product.bounty_postings
 
     respond_to do |format|
-      format.html { expires_now }
+      format.html do
+        expires_now
+        render 'bounties/index'
+      end
       format.json { render json: @wips.map{|w| WipSearchSerializer.new(w) } }
     end
   end
