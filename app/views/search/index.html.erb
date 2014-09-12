@@ -1,39 +1,39 @@
 <% title 'Search', params[:q] %>
 
-  <% if @search %>
+<% if @search %>
 
-    <div class="page-header sheet-header">
-      <h2 class="page-header-title">
-        <i class="icon-magnifier text-muted" style="margin-right: 6px;  font-size: 22px; top: -2px; position: relative;"></i>
-        Search results for
-        <span class="mark"><%= params[:q] %></span>
-        <% if @product %>in <%= @product.name %><% end %>
-      </h2>
-    </div>
+  <div class="page-header sheet-header">
+    <h2 class="page-header-title">
+      <i class="icon-magnifier text-muted" style="margin-right: 6px;  font-size: 22px; top: -2px; position: relative;"></i>
+      Search results for
+      <span class="mark"><%= params[:q] %></span>
+      <% if @product %>in <%= @product.name %><% end %>
+    </h2>
+  </div>
 
-    <div class="sheet-body">
-      <div class="row">
-        <div class="col-md-9 col-xs-9">
+  <div class="sheet-body">
+    <div class="row">
+      <div class="col-md-9 col-xs-9">
 
-          <div class="list-group list-group-breakout list-group-padded">
-            <% @search.results.page(params[:page]).each do |result| %>
-              <div class="list-group-item">
-                <%= render "#{@type}_result", result: result %>
-              </div>
-            <% end %>
-          </div>
-
-          <%= paginate @search.results, theme: 'twitter-bootstrap-3' %>
+        <div class="list-group list-group-breakout list-group-padded">
+          <% @search.results.page(params[:page]).each do |result| %>
+            <div class="list-group-item">
+              <%= render "#{@type}_result", result: result %>
+            </div>
+          <% end %>
         </div>
 
-        <div class="col-md-3 col-xs-3">
-          <%= render 'types' %>
-          <%= render "#{@type.to_s}_facets", facets: @search.facets %>
-        </div>
+        <%= paginate @search.results, theme: 'twitter-bootstrap-3' %>
+      </div>
+
+      <div class="col-md-3 col-xs-3">
+        <%= render 'types' %>
+        <%= render "#{@type.to_s}_facets", facets: @search.facets %>
       </div>
     </div>
+  </div>
 
-  <% else %>
+<% else %>
 
   <div class="page-header sheet-header">
     <form action="<%= polymorphic_path([@product, :search]) %>" class="pull-right form-inline">
@@ -45,4 +45,4 @@
     <h2 class="page-header-title">Search</h2>
   </div>
 
-  <% end %>
+<% end %>

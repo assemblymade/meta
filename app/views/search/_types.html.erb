@@ -4,7 +4,7 @@
     <ul class="nav nav-pills nav-stacked">
       <li>
         <a href="<%= search_path(@filters.merge(type: 'discussion', state: '')) %>">
-          <span class="badge pull-right"><%= @totals.all_discussions %></span>
+          <span class="badge badge-subtle pull-right"><%= @totals.all_discussions %></span>
           All Products
         </a>
       </li>
@@ -12,7 +12,7 @@
     <ul class="nav nav-pills nav-stacked">
       <li class="<%= 'active' if params[:type] == 'discussion' %>">
         <a href="<%= polymorphic_path([@product, :search], @filters.merge(type: 'discussion', state: '')) %>">
-          <span class="badge pull-right"><%= @totals.discussions %></span>
+          <span class="badge badge-subtle pull-right"><%= @totals.discussions %></span>
           <%= @product.name %>
         </a>
       </li>
@@ -21,13 +21,13 @@
     <ul class="nav nav-pills nav-stacked">
       <li class="<%= 'active' if params[:type].blank? || params[:type] == 'product' %>">
         <a href="<%= polymorphic_path([@product, :search], @filters.merge(type: 'product', tech: '')) %>">
-          <span class="badge pull-right"><%= @totals.products %></span>
+          <span class="badge badge-subtle pull-right"><%= @totals.products %></span>
           Products
         </a>
       </li>
       <li class="<%= 'active' if params[:type] == 'discussion' %>">
         <a href="<%= polymorphic_path([@product, :search], @filters.merge(type: 'discussion', state: '')) %>">
-          <span class="badge pull-right"><%= @totals.discussions %></span>
+          <span class="badge badge-subtle pull-right"><%= @totals.discussions %></span>
           Discussions
         </a>
       </li>
