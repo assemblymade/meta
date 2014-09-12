@@ -1,8 +1,10 @@
-.overlay {
+.overlay,
+.img-overlay {
   position: relative;
 }
 
-.overlay-content {
+.overlay-content,
+.img-overlay-content {
   position: absolute;
   bottom: 0;
   width: 100%;
