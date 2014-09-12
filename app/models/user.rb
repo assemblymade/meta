@@ -230,6 +230,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def public_address_url
+    "#{ENV['ASSETS_URL']}/addresses/#{wallet_public_address}"
+  end
+
   def mail_immediate?
     mail_preference == 'immediate'
   end

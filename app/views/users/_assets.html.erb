@@ -21,12 +21,17 @@
               </a>
             </td>
             <td>
-              <%= assets.reduce(0) { |sum, asset| sum + asset.amount } %> <span class="icon icon-app-coin text-coins"></span>
+              <%= assets.map(&:amount).reduce(:+) %> <span class="icon icon-app-coin text-coins"></span>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
+    <% if @user.wallet_public_address %>
+      <div class="container">
+        <a href="<%= @user.public_address_url %>">View raw Assets allocation data</a>
+      </div>
+    <% end %>
   <% else %>
     <div class="well well-lg dotted">
       <p class="text-centered">
