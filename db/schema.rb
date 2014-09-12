@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140908202536) do
+ActiveRecord::Schema.define(version: 20140911190821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,9 @@ ActiveRecord::Schema.define(version: 20140908202536) do
     t.uuid     "story_id"
   end
 
+  add_index "activities", ["story_id"], name: "index_activities_on_story_id", using: :btree
+  add_index "activities", ["target_id"], name: "index_activities_on_target_id", using: :btree
+
   create_table "allocation_events", id: false, force: true do |t|
     t.uuid     "id",                                        null: false
     t.uuid     "allocation_run_id",                         null: false
@@ -48,11 +51,13 @@ ActiveRecord::Schema.define(version: 20140908202536) do
   end
 
   create_table "assembly_assets", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string   "asset_id",   null: false
-    t.uuid     "user_id",    null: false
-    t.uuid     "product_id", null: false
+    t.string   "asset_id"
+    t.uuid     "user_id",           null: false
+    t.uuid     "product_id",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "amount"
+    t.datetime "promo_redeemed_at"
   end
 
   create_table "assets", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -251,6 +256,27 @@ ActiveRecord::Schema.define(version: 20140908202536) do
     t.datetime "updated_at"
   end
 
+  create_table "ideas", id: false, force: true do |t|
+    t.uuid     "id",                                                           null: false
+    t.string   "slug"
+    t.string   "name",                                                         null: false
+    t.string   "pitch"
+    t.text     "description"
+    t.datetime "submitted_at"
+    t.datetime "evaluated_at"
+    t.boolean  "is_approved"
+    t.integer  "assembly_contribution", default: 0,                            null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.uuid     "user_id",                                                      null: false
+    t.text     "lead"
+    t.integer  "view_count",            default: 0
+    t.text     "suggested_perks"
+    t.string   "poster",                default: "/assets/default_poster.jpg"
+    t.integer  "votes_count",           default: 0,                            null: false
+    t.uuid     "evaluator_id"
+  end
+
   create_table "interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.text     "slug",       null: false
     t.datetime "created_at", null: false
@@ -393,6 +419,28 @@ ActiveRecord::Schema.define(version: 20140908202536) do
     t.text     "variation"
   end
 
+  create_table "product_jobs", id: false, force: true do |t|
+    t.uuid     "id",          null: false
+    t.uuid     "user_id",     null: false
+    t.uuid     "product_id",  null: false
+    t.string   "category"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug"
+  end
+
+  add_index "product_jobs", ["slug"], name: "index_product_jobs_on_slug", unique: true, using: :btree
+
+  create_table "product_roles", id: false, force: true do |t|
+    t.uuid     "id",             null: false
+    t.uuid     "product_job_id", null: false
+    t.uuid     "user_id",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.uuid     "product_id",     null: false
+  end
+
   create_table "product_subscriptions", id: false, force: true do |t|
     t.uuid     "id",         null: false
     t.uuid     "product_id", null: false
@@ -417,9 +465,6 @@ ActiveRecord::Schema.define(version: 20140908202536) do
     t.string   "name",                                              null: false
     t.string   "pitch"
     t.text     "description"
-    t.datetime "submitted_at"
-    t.datetime "evaluated_at"
-    t.boolean  "is_approved"
     t.integer  "assembly_contribution",             default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -448,7 +493,6 @@ ActiveRecord::Schema.define(version: 20140908202536) do
     t.uuid     "main_thread_id"
     t.uuid     "logo_id"
     t.integer  "team_memberships_count",            default: 0
-    t.datetime "launched_at"
     t.hstore   "info"
     t.integer  "quality"
     t.datetime "last_activity_at"
@@ -460,11 +504,15 @@ ActiveRecord::Schema.define(version: 20140908202536) do
     t.binary   "encrypted_wallet_private_key"
     t.binary   "encrypted_wallet_private_key_salt"
     t.binary   "encrypted_wallet_private_key_iv"
+    t.datetime "started_teambuilding_at"
+    t.datetime "profitable_at"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
+  add_index "products", ["profitable_at"], name: "index_products_on_profitable_at", using: :btree
   add_index "products", ["repos"], name: "index_products_on_repos", using: :btree
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true, using: :btree
+  add_index "products", ["started_teambuilding_at"], name: "index_products_on_started_teambuilding_at", using: :btree
 
   create_table "profit_reports", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid    "product_id",             null: false
@@ -748,6 +796,7 @@ ActiveRecord::Schema.define(version: 20140908202536) do
     t.datetime "unwatched_at"
   end
 
+  add_index "watchings", ["unwatched_at", "user_id", "watchable_type"], name: "index_watchings_on_unwatched_at_and_user_id_and_watchable_type", using: :btree
   add_index "watchings", ["watchable_id", "watchable_type"], name: "index_watchings_on_watchable_id_and_watchable_type", using: :btree
 
   create_table "whiteboard_assets", id: false, force: true do |t|

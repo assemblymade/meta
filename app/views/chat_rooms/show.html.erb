@@ -106,6 +106,7 @@
     %>);
     activityStream.url = '<%= api_chat_room_comments_path(@chat_room) %>';
     activityStream.id = '<%= @chat_room.id %>'
+    activityStream.product = new Product(<%= json @product, scope: current_user %>);
 
     var activityStreamView = new ActivityStreamView({
       el: $('.js-activity-stream'),
