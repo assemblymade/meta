@@ -20,10 +20,10 @@ var update = require('react/lib/update');
       var spinner = this.spinner = new Spinner(opts).spin();
 
       target.appendChild(spinner.el);
+      NewsFeedStore.addChangeListener(this.getStories);
     },
 
     componentWillMount: function() {
-      NewsFeedStore.addChangeListener(this.getStories);
       this.fetchNewsFeed();
 
       this.onPush(function() {
