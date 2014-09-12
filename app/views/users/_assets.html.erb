@@ -1,0 +1,67 @@
+<div class="page-header sheet-header">
+
+  <% if @user %>
+
+    <div class="stat-group" style="margin-bottom: 36px;">
+      <div class="stat">
+        <div class="stat-value">
+          <%= number_with_delimiter(@user.count_contributions) %>
+        </div>
+        <div class="stat-title">
+          Contributions
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-value">
+          <%= number_with_delimiter @user.sum_app_cents %>
+        </div>
+        <div class="stat-title">
+          App Coins
+        </div>
+      </div>
+
+    </div>
+
+  <% end %>
+
+</div>
+
+<div class="sheet-body">
+  <% if @assets.any? %>
+    <table class="table table-hover">
+      <thead>
+        <th>Product</th>
+        <th>Amount</th>
+        <th>Confirmation</th>
+      </thead>
+      <tbody>
+        <% @assets.each do |asset| %>
+          <tr>
+            <td>
+              <a href="<%= product_path(asset.product) %>">
+                <img src="<%= firesize(asset.product.poster_image.url, '30x30', 'g_center') %>" width="auto" class="app-icon" style="display: inline; margin-right: 5px;"><%= asset.product.name %>
+              </a>
+            </td>
+            <td>
+              <%= asset.amount %> <span class="icon icon-app-coin text-coins"></span>
+            </td>
+            <td>
+              <% if asset.blockchain_url %>
+                <a href="<%= asset.blockchain_url %>">Blockchain.info</a>
+              <% else %>
+                This transaction is being processed.
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="well well-lg dotted">
+      <p class="text-centered">
+        It looks like you haven't earned any Assembly Assets yet. Check out the <a href="<%= product_path(Product.find_by_slug('assemblycoins')) %>">Assets project</a> to earn your first coins.
+      </p>
+    </div>
+  <% end %>
+</div>

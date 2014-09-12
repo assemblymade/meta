@@ -1,0 +1,37 @@
+<% title @user.username %>
+<%= render 'shared/navbar' %>
+
+<div class="page page-flat">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-3">
+
+        <%= render 'users/card', user: @user %>
+
+        <% if can?(:update, @user) %>
+          <!-- FIXME: This URL is a hack -->
+          <a class="btn btn-default btn-block" href="<%= edit_user_path %>">
+            Edit Profile
+          </a>
+          <br>
+        <% end %>
+
+        <% if Rails.env.development? || (signed_in? && current_user.staff?) %>
+          <dl class="well well-sm small">
+            <dt>auth token</dt>
+            <dd><%= @user.authentication_token %> - <%=link_to('impersonate', "/discover?auth_token=#{@user.authentication_token}")%></dd>
+            <dt>email</dt>
+            <%= @user.email %>
+          </dl>
+        <% end %>
+
+      </div>
+
+      <div class="col-xs-9">
+        <%= render 'users/assets' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

@@ -16,6 +16,12 @@ class AssemblyAsset < ActiveRecord::Base
     end
   end
 
+  def blockchain_url
+    if asset_id
+      "https://blockchain.info/tx/#{asset_id}"
+    end
+  end
+
   def assets_url
     ENV["ASSETS_URL"]
   end
