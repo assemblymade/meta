@@ -8,7 +8,4 @@
   <a href="<%= product_path(product) %>"><strong><%= product.name %></strong></a>
   &nbsp;
   <%= product.pitch %>
-  <div>
-    <span class="text-muted text-small">Updated <%= time_ago_in_words(product.main_thread.updated_at) %> ago</span>
-  </div>
 </div>
