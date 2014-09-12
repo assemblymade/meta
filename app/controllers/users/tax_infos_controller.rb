@@ -11,7 +11,7 @@ class Users::TaxInfosController < ApplicationController
     @tax_info = current_user.build_tax_info(tax_info_params)
     if @tax_info.save
       flash[:success] = "Great! Your Tax Information has been submitted"
-      redirect_to users_tax_info_path(form_type: params[:form_type])
+      redirect_to users_balance_path
     else
       render action: :show, form_type: params[:form_type]
     end
@@ -22,7 +22,7 @@ class Users::TaxInfosController < ApplicationController
     @tax_info = current_user.tax_info
     if @tax_info.update_attributes(tax_info_params)
       flash[:success] = "Great! Your Tax Information has been submitted"
-      redirect_to users_tax_info_path(form_type: params[:form_type])
+      redirect_to users_balance_path
     else
       render action: :show, form_type: params[:form_type]
     end
