@@ -9,10 +9,7 @@
   </div>
 <% end %>
 
-<div class="page-header sheet-header">
-  <h2>People</h2>
-  <%= render 'people/nav' %>
-</div>
+<%= render 'people/nav' %>
 
 <% if signed_in? %>
   <% product_membership = current_user.team_memberships.find_by(product: @product) %>
@@ -44,75 +41,32 @@
   <% end %>
 <% end %>
 
-<div class="sheet-body">
+
+<div data-react-class="People" data-react-props="<%= {
+  interestFilters: product_membership_interests(@product, false),
+  memberships: ActiveModel::ArraySerializer.new(@memberships),
+  selected: @selected_filter,
+  currentUser: current_user,
+  updatePath: (product_person_path(@product, current_user) if signed_in?)
+}.to_json %>">
+</div>
+
+
+<% cache @product do %>
   <div class="row">
-    <div class="js-people col-md-9"></div>
-    <div class="col-md-3">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h6 class="panel-title">Core Team</h6>
-        </div>
-        <div class="panel-body">
-          <ul class="list-unstyled">
-            <% @product.core_team.each do |user| %>
-              <li>
-                <a href="<%= user_path(user) %>">
-                  <img class="img-circle" style="margin-right:.5em" src="<%= user.avatar.url(32) %>" width="16" height="16" alt="@<%= user.username %>"><%= user.username %>
-                </a>
-              </li>
-            <% end %>
-          </ul>
-          <hr>
+    <div class="col-md-9 hidden-xs">
+      <div className="list-group list-group-breakout list-group-padded">
+        <h4>Followers</h4>
 
-          <%= form_tag product_core_team_members_path(@product), class: 'form' do %>
-            <% if current_user && @product.core_team?(current_user) %>
-              <fieldset>
-            <% else %>
-              <fieldset disabled>
-            <% end %>
+        <% @followers.each do |follower| %>
+          <span style="display: inline-block; margin-bottom: 3px;">
+            <a href="<%= user_path(follower) %>">
+              <img class="avatar img-circle" src="<%= follower.avatar_url %>" height="30px" width="30px" title="@<%= follower.username %>">
+            </a>
+          </span>
 
-            <div class="input-group input-group-sm" style="margin-bottom: 10px;">
-              <%= label_tag :core_team_member_username, '@', class: 'input-group-addon input-group-addon-sm' %>
-              <%= text_field_tag 'core_team_member[username]', nil, class: 'form-control input-sm', placeholder: 'username' %>
-            </div>
-            <%= submit_tag 'Add to Core Team', class: 'btn btn-default btn-block btn-sm' %>
-          <% end %>
-          </fieldset>
-        </div>
+        <% end %>
       </div>
     </div>
   </div>
-  <% cache @product do %>
-    <div class="row">
-      <div class="col-md-9 hidden-xs">
-        <div className="list-group list-group-breakout list-group-padded">
-          <h4>Followers</h4>
-
-          <% @followers.each do |follower| %>
-            <span style="display: inline-block; margin-bottom: 3px;">
-              <a href="<%= user_path(follower) %>">
-                <img class="avatar img-circle" src="<%= follower.avatar_url %>" height="30px" width="30px" title="@<%= follower.username %>">
-              </a>
-            </span>
-
-          <% end %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</div>
-
-<script>
-$(document).ready(function() {
-
-  $('.js-people').each(function(){
-    React.renderComponent(People({
-      interestFilters: <%== product_membership_interests(@product, false).to_json %>,
-      memberships: <%== ActiveModel::ArraySerializer.new(@memberships).to_json %>,
-      selected: "<%= @selected_filter %>",
-      currentUser: <%== current_user.to_json %>,
-      updatePath: "<%= product_person_path(@product, current_user) if current_user %>"
-    }), this)
-  });
-});
-</script>
+<% end %>
