@@ -11,5 +11,5 @@ class window.DismissableView extends Backbone.View
 
   dismissClicked: (e)=>
     e.preventDefault()
-    $.cookie(@key, "true")
+    $.cookie(@key, "true", { path: '/' })
     @$el.fadeOut()
