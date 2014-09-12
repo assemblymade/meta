@@ -24,6 +24,24 @@ class ProductMailer < ActionMailer::Base
       subject: "Thanks for signing up for #{@product.name}!"
   end
 
+  def new_promo_subscriber(product, email_address)
+    @product = product
+    @email_address = email_address
+
+    mail from: "#{@product.name} <notifications@assemblymail.com>",
+           to: @email_address,
+      subject: "You're one click away from claiming your first Assembly Assets!"
+  end
+
+  def new_promo_subscriber_with_account(product, user)
+    @product = product
+    @user = user
+
+    mail from: "#{@product.name} <notifications@assemblymail.com>",
+           to: @user.email,
+      subject: "You're one click away from claiming your first Assembly Assets!"
+  end
+
   def new_subscriber_with_account(product, user)
     @product = product
     @user = user

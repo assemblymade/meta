@@ -128,6 +128,7 @@ ASM::Application.routes.draw do
     post '/mailgun' => 'mailgun#create'
     post '/mailgun/reply' => 'mailgun#reply'
     post '/github' => 'github#create'
+    post '/assembly_assets/transaction' => 'assembly_assets#transaction'
     post '/readraptor/immediate' => 'read_raptor#immediate'
     post '/readraptor/daily'     => 'read_raptor#daily'
     post '/pusher' => 'pusher#auth'
@@ -247,6 +248,7 @@ ASM::Application.routes.draw do
 
     resources :payments, only: [:index, :create, :update, :destroy]
     resources :expense_claims, only: [:create]
+    resources :assembly_assets, only: [:create]
 
     resources :product_logos, only: [:index, :show, :create, :update], as: :logos, path: 'logos'
 

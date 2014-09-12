@@ -1,0 +1,87 @@
+<table class="row">
+  <tbody>
+    <tr>
+      <td class="wrapper last">
+        <table class="twelve columns">
+          <tbody>
+            <tr>
+              <td class="panel panel-default">
+
+                <h1 class="text-center">
+                  Thanks for signing up for updates on <a href="<%= product_url(@product) %>"><%= @product.name %></a>!
+                </h1>
+
+                <p>
+                  Hey <%= @user.short_name %>,
+                </p>
+
+                <p>
+                  You've already got an <a href="<%= root_url %>">Assembly</a> account. Good work. And now you're signed up for <a href="http://assets.assembly.com">Assembly Assets</a> &mdash; nicely done. We'll send only the most important updates straight from the core team to your inbox.
+                </p>
+
+                <hr>
+
+                <p>
+                  And since you signed up as a beta builder on <a href="<%= product_url(@product) %>">Assembly Assets</a>, we've set 10 Assets coins aside for you to claim &mdash; these Assets translate to a portion of Assets' future revenue.
+                </p>
+
+                <p>
+                  Other projects will have their own Assets too, and all Assets directly reflect the work that contributors have put into a project. When revenue starts coming in, payments start going out commensurate with the work that each user has done.
+                </p>
+
+                <table class="container">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <table class="row">
+                          <tbody>
+                            <tr>
+                              <td class="wrapper">
+                                <table class="twelve columns">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <table class="medium-button radius">
+                                          <tbody>
+                                            <tr>
+                                              <td style="border-color: #428bca !important; background-color: #428bca !important;">
+                                                <a style="color: #fff !important;" href="<%= product_assembly_assets_url(@product, auth_token: @user.authentication_token) %>">Claim your Assets</a>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <br/>
+
+                <p>
+                  Over and out,
+                  <br/>
+                  The <%= @product.name %> team
+                </p>
+
+                <br/>
+                <br/>
+                <p style="color: #999;">
+                  Please don't forward this email; it contains sensitive information pertaining to your account.
+                </p>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

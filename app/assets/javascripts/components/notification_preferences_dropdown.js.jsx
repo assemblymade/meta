@@ -94,12 +94,12 @@ var Avatar = require('./avatar.js.jsx');
 
     buttonState: function() {
       switch (this.state.selected) {
-        case 'following':
-          return 'Following';
-        case 'announcements':
-          return 'Updates only';
-        case 'not watching':
-          return 'Follow';
+      case 'following':
+        return 'Following';
+      case 'announcements':
+        return 'Updates only';
+      case 'not watching':
+        return 'Follow';
       }
     },
 
@@ -127,13 +127,15 @@ var Avatar = require('./avatar.js.jsx');
       }
     },
 
-    updatePreference: function(item, path) {
+    updatePreference: function(preference, path) {
+      var action = D.ACTIONS.UPDATE_SELECTED;
+
       Dispatcher.dispatch({
-        action: D.ACTIONS.UPDATE_SELECTED,
+        action: action,
         data: {
-          item: item,
+          preference: preference,
           path: path,
-          redirectTo: (item === 'following' ? this.props.afterFollowPath : null)
+          redirectTo: (preference === 'following' ? this.props.afterFollowPath : null)
         }
       });
     }

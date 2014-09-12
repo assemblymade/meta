@@ -79,7 +79,7 @@ describe('ChatNotifications', function() {
 
     var div = TestUtils.findRenderedDOMComponentWithTag(chat, 'div').getDOMNode();
 
-    expect(div.textContent).toEqual(' #foo #bar #baz');
+    expect(div.textContent).toEqual(' bar foo baz');
 
     var badges = TestUtils.scryRenderedDOMComponentsWithClass(chat, 'indicator-danger');
 

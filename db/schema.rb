@@ -51,11 +51,13 @@ ActiveRecord::Schema.define(version: 20140911190821) do
   end
 
   create_table "assembly_assets", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string   "asset_id",   null: false
-    t.uuid     "user_id",    null: false
-    t.uuid     "product_id", null: false
+    t.string   "asset_id"
+    t.uuid     "user_id",           null: false
+    t.uuid     "product_id",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "amount"
+    t.datetime "promo_redeemed_at"
   end
 
   create_table "assets", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

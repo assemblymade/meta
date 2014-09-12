@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :validate_confirmed!, if: :signed_in?
   before_action :strip_auth_token
   before_action :strip_invite_token
+  before_action :strip_promo_token
   after_action  :set_request_info!,   if: :signed_in?
 
   rescue_from CanCan::AccessDenied do |e|
@@ -37,6 +38,14 @@ class ApplicationController < ActionController::Base
       user = User.find_by!(authentication_token: params[:auth_token])
       sign_in user
       redirect_to(url_for(params.except(:auth_token)))
+    end
+  end
+
+  def strip_promo_token
+    if params[:assembly_assets_promotion].present?
+      cookies.permanent[:assembly_assets_promotion] = true
+
+      redirect_to(url_for(params.except(:assembly_assets_promotion)))
     end
   end
 

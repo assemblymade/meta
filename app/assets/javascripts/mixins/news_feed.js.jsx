@@ -6,6 +6,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
 var update = require('react/lib/update');
 
 (function() {
+  var MORE_STORIES_LENGTH = 20;
   var NF = CONSTANTS.NEWS_FEED;
 
   var NewsFeedMixin = {
@@ -53,7 +54,7 @@ var update = require('react/lib/update');
       this.setState({
         stories: newStories,
         actors: NewsFeedUsersStore.getUsers(),
-        showMore: (newStories.length - oldStoriesCount === NF.MORE_STORIES_LENGTH)
+        showMore: (newStories.length - oldStoriesCount === MORE_STORIES_LENGTH)
       }, function() {
         if (self.state.stories) {
           self.spinner.stop();
