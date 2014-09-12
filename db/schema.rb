@@ -256,6 +256,27 @@ ActiveRecord::Schema.define(version: 20140911190821) do
     t.datetime "updated_at"
   end
 
+  create_table "ideas", id: false, force: true do |t|
+    t.uuid     "id",                                                           null: false
+    t.string   "slug"
+    t.string   "name",                                                         null: false
+    t.string   "pitch"
+    t.text     "description"
+    t.datetime "submitted_at"
+    t.datetime "evaluated_at"
+    t.boolean  "is_approved"
+    t.integer  "assembly_contribution", default: 0,                            null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.uuid     "user_id",                                                      null: false
+    t.text     "lead"
+    t.integer  "view_count",            default: 0
+    t.text     "suggested_perks"
+    t.string   "poster",                default: "/assets/default_poster.jpg"
+    t.integer  "votes_count",           default: 0,                            null: false
+    t.uuid     "evaluator_id"
+  end
+
   create_table "interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.text     "slug",       null: false
     t.datetime "created_at", null: false
@@ -396,6 +417,28 @@ ActiveRecord::Schema.define(version: 20140911190821) do
     t.uuid     "perk_id"
     t.inet     "ip"
     t.text     "variation"
+  end
+
+  create_table "product_jobs", id: false, force: true do |t|
+    t.uuid     "id",          null: false
+    t.uuid     "user_id",     null: false
+    t.uuid     "product_id",  null: false
+    t.string   "category"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug"
+  end
+
+  add_index "product_jobs", ["slug"], name: "index_product_jobs_on_slug", unique: true, using: :btree
+
+  create_table "product_roles", id: false, force: true do |t|
+    t.uuid     "id",             null: false
+    t.uuid     "product_job_id", null: false
+    t.uuid     "user_id",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.uuid     "product_id",     null: false
   end
 
   create_table "product_subscriptions", id: false, force: true do |t|

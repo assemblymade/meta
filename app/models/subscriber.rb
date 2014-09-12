@@ -5,7 +5,7 @@ class Subscriber < ActiveRecord::Base
   default_scope -> { where(deleted_at: nil) }
 
   validates :product, uniqueness: { scope: :email }
-  
+
   after_commit -> { product.update_watchings_count! }
 
 
