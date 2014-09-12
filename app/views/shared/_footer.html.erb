@@ -27,13 +27,19 @@
       <div class="col-md-2">
         <h5 class="alpha">Discover</h5>
         <ul class="list-unstyled">
-          <li><a href="<%= discover_path %>">Popular</a></li>
-          <li><a href="<%= discover_path(:trending) %>">Trending</a></li>
-          <li><a href="<%= discover_path(:recently_launched) %>">New</a></li>
+          <li><a href="<%= discover_path %>">Products</a></li>
+          <li><a href="<%= discover_path(:bounties) %>">Bounties</a></li>
         </ul>
       </div>
 
-      <div class="col-md-2 col-md-offset-2">
+      <div class="col-md-2">
+        <h5 class="alpha">Start</h5>
+        <ul class="list-unstyled">
+          <li><a href="<%= new_product_path %>">Create a New Product</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-2">
         <h5 class="alpha">Say hello!</h5>
         <ul class="list-unstyled">
           <li><a href="https://twitter.com/asm">Twitter</a></li>
