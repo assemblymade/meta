@@ -17,15 +17,13 @@
           <% end %>
         <% end %>
 
-        <% if (count = bounty.comments_count) > 0 %>
-          <li>
-            <strong>
-              <span class="icon icon-speech icon-left"></span>
-              <%= count %>
-              <span class="sr-only">comments</span>
-            </strong>
-          </li>
-        <% end %>
+        <li>
+          <strong>
+            <span class="icon icon-speech icon-left"></span>
+            <%= bounty.comments_count %>
+            <span class="sr-only">comments</span>
+          </strong>
+        </li>
       </ul>
 
   </div>
