@@ -1,64 +1,173 @@
-<div class="sheet-body text-center">
-  <h1><strong>Say hello to the start of your business on Assembly.</strong></h1>
-  <div class="row">
-    <div class="col-md-10 col-md-push-1">
-      <p class="lead text-muted" style="margin-bottom: 36px;"><strong><%= @product.name %></strong> is in stealth and only visible to those you share it with. Finish getting <%= @product.name %> ready to build it with the Assembly community.
-      </p>
-    </div>
+<br>
+
+<h6 class="omega text-muted">Nice work!</h6>
+<h1 class="alpha text-success">You're almost there</h1>
+<p class="lead text-muted">
+  <strong><%= @product.name %></strong> is currently <strong>stealth</strong>, meaning it is only visible to people you share it with. Before you can start publicly building a team, you need to fill in some more details and submit your product for approval.
+</p>
+
+
+<br>
+<hr>
+<br>
+
+<div class="row">
+  <div class="col-md-4">
+    <h6 class="text-muted omega">Step 1</h6>
+    <h2 class="alpha">Define some work</h2>
+    <p>
+      Bounties are how other people can get involved in your product. A great bounty clearly defines a goal and gives someone all the information they need to reach it.
+    </p>
+    <p style="margin-bottom:36px">
+      Here are some examples of great bounties: 1, 2, 3. We've already created a bounty for you to help you get started.
+    </p>
+
+    <% if @product.tasks.count < 3 %>
+      <a class="btn btn-success btn-block" href="<%= new_product_wip_path(@product) %>">
+        Create <%= pluralize(3 - @product.tasks.count, 'more bounty', 'more bounties') %>
+      </a>
+    <% else %>
+      <div class="btn btn-default btn-block disabled">
+        <span class="text-success">
+          <span class="glyphicon glyphicon-ok-sign"></span>
+          Done!
+        </span>
+      </div>
+    <% end %>
+
+    <hr>
+
+    <p class="small text-muted">
+      <i>Tip:</i> You can feature up to 3 bounties. This highlights it as the most important thing that somebody can tackle.
+    </p>
   </div>
+
+  <div class="col-md-4">
+    <h6 class="text-muted omega">Step 2</h6>
+    <h2 class="alpha">Share your progress</h2>
+    <p>Everybody is curious to see the progress of your product. Write updates to keep them in the loop with the product's progress. People love updates that are fun, short and have engaging visuals.</p>
+    <p>Stuck for ideas? Introduce your product up to this point in a more personal way. Tell everybody <em>your</em> story.</p>
+
+    <% if @product.posts.empty? %>
+      <a class="btn btn-success btn-block" href="<%= new_product_post_path(@product) %>">Write an update</a>
+    <% else %>
+      <div class="btn btn-default btn-block disabled">
+        <span class="text-success">
+          <span class="glyphicon glyphicon-ok-sign"></span>
+          Done!
+        </span>
+      </div>
+    <% end %>
+
+    <hr>
+
+    <p class="small text-muted">
+      <i>Tip:</i> Updates are emailed to everybody who follows your product. Derble chack ur smelling!
+    </p>
+  </div>
+
+  <div class="col-md-4">
+    <h6 class="text-muted omega">Step 3</h6>
+    <h2 class="alpha">Start building</h2>
+    <p>
+      People are much more likely to be excited about your product when they can see some evidence of progress. Create a repository so the design and development of your product can start.
+    </p>
+
+    <p>
+      If you already have a repository checkout our guide to <a href="<%= help_path(group: :migrating) %>">migrating existing products to Assembly</a>.
+    </p>
+
+    <% if @product.commit_count < 3 %>
+      <!-- @product.repos needs to exist -->
+      <a class="btn btn-success btn-block" href="<%= product_repos_path(@product) %>">
+        Create a repository
+      </a>
+    <% else %>
+      <a class="btn btn-default btn-block disabled" href="#">
+        <span class="text-success">
+          <span class="glyphicon glyphicon-ok-sign"></span>
+          Done!
+        </span>
+      </a>
+    <% end %>
+
+    <hr>
+
+    <p class="small text-muted">
+      <i>Tip:</i> Repositories store all the source code and design of a product and are the lifeblood of a software product.
+    </p>
+  </div>
+
 </div>
 
 <hr>
 
-<div class="sheet-body">
+<br>
 
-  <h2 style="margin-bottom: 36px;">Step 1: Prepare product for development</h2>
-  <p>
-    Create a repo so development and design can begin. <a class='btn btn-success btn-xs'>Create Initial Repo</a>
-    <br>
-    <br>
-    Is this product already partially built? <a href='<%= help_path(group: :migrating) %>'>Migrate it to Assembly</a>
-  </p>
-  <p class='tip'>
-    Tip: Repos are for source code and design, the lifeblood of a software product. 
-  </p>
-    
-  <hr>
-  <h2 style="margin-bottom: 36px;">Step 2: Add 3 bounties</h2>
-  <p>
-    Bounties are how others on Assembly get involved in building the product and earning ownership in its success. Those new to your product will see up to 3 bounties you've featured. Featured bounties should be the most important things that could be done next on the product to move it forward. 
-  </p>
-  <p>
-    We've already helped by creating a bounty for you. Since this is a new product this bounty helps you recruit new people to the team. You can keep it or close it and create another one.
-  </p>  
-  <ol>
-    <li>
-      
-    </li>
-    <li>
-      <a class="btn btn-success btn-xs" href="<%= new_product_wip_path(@product) %>">Create Featured Bounty</a>
-    </li>
-    <li>
-      <a class="btn btn-success btn-xs" href="<%= new_product_wip_path(@product) %>">Create Featured Bounty</a>
-    </li>
-  </ol>
-  
-  <p class='tip'>
-    Tip: A good bounty clearly communicates what is needed as well as conclusive steps to be completed. Here are a few good bounties completed on other products you can use as examples (1,2,3). (should this be on bounty modal)
-  </p>
-  
-  
-  <hr>
-  <h2 style="margin-bottom: 36px;">Step 3: Build your team</h2>
-  <p>Every new product has to build a team before the product is greenlit for further development on Assembly. You'll have 30 days to get 10 other people involved in your product and becoming partners. A partner is someone that owns 1 or more of a product's App Coins. If your product doesn't get 10 partners, it will go back in stealth so you can work on improving it.</p>
-  <a class="btn btn-success btn-xs" href="<%= new_product_wip_path(@product) %>">Launch & Build Team</a>
+<h6 class="text-muted omega">Final Step</h6>
+<h2 class="alpha">Submitting for approval</h2>
 
-  <p class='tip'>
-    Tip: You can already start building while in stealth and through team building. Products that make continued progress get the brightest people involved in the team.
-  </p>
-  
+<div class="row">
+  <div class="col-md-6">
+    <p class="lead">
+      We value the time of our community so we like to do a quick check through of your product before we show it to the Assembly community. This process typically takes a few days and we aim to be in constant communication throughout.
+    </p>
+    <p>
+      After your product is approved, it'll enter the <strong>Team Building</strong> phase. This means it has <strong>30 days</strong> to get <strong>10 new partners</strong> onboard (a partner is someone that owns a bit of your product). When it reaches that goal, your product will be become a Greenlit Assembly product. Don't worry if it doesn't reach that goal the first time around: you can try building a team as many times as you want.
+    </p>
+  </div>
 
-  <div class="row" style="margin-top: 24px; margin-bottom: 24px;">
+  <div class="col-md-5 col-md-offset-1">
 
-  </div><!-- .row -->
+    <div class="row">
+      <div class="col-md-4">
+        <a href="<%= user_path('awwstn') %>">
+          <%= avatar_tag(User.find_by_username!('awwstn'), 120, width: '100%', class: 'avatar img-responsive') %>
+        </a>
+      </div>
+
+      <div class="col-md-8">
+        <p class="text-large">
+          <a href="<%= user_path('awwstn') %>">awwstn</a> will be reviewing your product.
+        </p>
+        <p class="text-muted">
+          Please, feel free to <a href="mailto:austin.smith@assembly.com">email @awwstn</a> if you have any questions about your product or the submission process.
+        </p>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h6 class="alpha omega">We <span class="text-success">like</span></h6>
+        <ul class="list-unstyled text-muted small">
+          <li>Interesting new ideas</li>
+          <li>Spelling &amp; grammar</li>
+          <li>Engaged founders</li>
+          <li>Achieveable products</li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <h6 class="alpha omega">We <span class="text-danger">dislike</span></h6>
+        <ul class="list-unstyled text-muted small">
+          <li>Assholes</li>
+          <li>People looking for free work</li>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
 </div>
+
+<br>
+
+<% if @product.posts.empty? || @product.tasks.count < 3 || @product.commit_count.zero? %>
+  <a class="btn btn-lg btn-default disabled" href="#">Submit for approval</a>
+  <br>
+  <br>
+  <p class="text-warning">(You need to complete the 3 steps above before you can submit your product for approval)</a>
+<% else %>
+  <a class="btn btn-lg btn-success" href="#">Submit for approval</a>
+<% end %>
