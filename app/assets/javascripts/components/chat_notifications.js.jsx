@@ -213,12 +213,13 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
       for (var i = 0; i < values.length; i++) {
         var entry = values[i];
         entry.readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
+        entry.lastUpdated = - entry.updated
         entry.sortIndex = this.state.sortKeys.indexOf(entry.id);
         if (entry.sortIndex === -1) {
           entry.sortIndex = values.length
         }
       }
-      values.sort(dynamicSortMultiple("readState", "sortIndex", "label"));
+      values.sort(dynamicSortMultiple("readState", "lastUpdated", "sortIndex"));
 
       return values || [];
     }
