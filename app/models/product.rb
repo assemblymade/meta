@@ -146,7 +146,7 @@ class Product < ActiveRecord::Base
   end
 
   def launched?
-    slug != 'meta' && !launched_at.nil?
+    !launched_at.nil?
   end
 
   def stealth?
