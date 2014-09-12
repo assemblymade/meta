@@ -40,16 +40,19 @@
         Started
       </a>
     </li>
+
     <li class="<%= 'active' if current_page?(url_for(params.merge(user: 'started', only_path: true))) %>">
       <a href="<%= url_for(params.merge(user: 'started', only_path: true)) %>">
         Created
       </a>
     </li>
+
     <li class="<%= 'active' if current_page?(url_for(params.merge(user: 'commented', only_path: true))) %>">
       <a href="<%= url_for(params.merge(user: 'commented', only_path: true)) %>">
         Commented
       </a>
     </li>
+
     <li class="<%= 'active' if current_page?(url_for(params.merge(user: 'awarded', only_path: true))) %>">
       <a href="<%= url_for(params.merge(user: 'awarded', only_path: true)) %>">
         Awarded

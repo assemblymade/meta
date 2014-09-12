@@ -26,6 +26,12 @@ class UsersController < ApplicationController
     @user = current_user.decorate
   end
 
+  def assets
+    authenticate_user!
+    @user = current_user.decorate
+    @assets = AssemblyAsset.where(user: @user)
+  end
+
   def update
     @user.update_attributes(user_params)
     respond_with @user, location: (params[:return_to] || user_path(@user))
@@ -46,7 +52,7 @@ class UsersController < ApplicationController
       suggestions: suggestions
     }
   end
-  
+
   def unread
     authenticate_user!
     entries = UnreadChat.for(current_user)
