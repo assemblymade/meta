@@ -4,7 +4,7 @@
 <div class="page page-flat">
   <div class="container">
     <div class="row">
-      <div class="col-xs-3">
+      <div class="col-sm-3 hidden-xs">
 
         <%= render 'users/card', user: @user %>
 
@@ -17,7 +17,7 @@
         <% end %>
 
         <% if Rails.env.development? || (signed_in? && current_user.staff?) %>
-          <dl class="well well-sm small">
+          <dl class="well well-sm small hidden-xs">
             <dt>auth token</dt>
             <dd><%= @user.authentication_token %> - <%=link_to('impersonate', "/discover?auth_token=#{@user.authentication_token}")%></dd>
             <dt>email</dt>
@@ -27,7 +27,7 @@
 
       </div>
 
-      <div class="col-xs-9">
+      <div class="col-sm-9 col-xs-12">
         <%= render 'users/assets' %>
       </div>
     </div>
