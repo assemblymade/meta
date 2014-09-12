@@ -29,7 +29,7 @@
               <MarkdownEditor name="task[description]" />
             </div>
 
-            <h6>Initial Offer</h6>
+            <h6 className="omega">Initial Offer</h6>
             <div className="well">
               <InitialOffer product={this.props.product} maxOffer={this.props.maxOffer} averageBounty={this.props.averageBounty} />
             </div>
