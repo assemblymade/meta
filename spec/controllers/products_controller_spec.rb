@@ -30,14 +30,7 @@ describe ProductsController do
     context 'product in stealth' do
       let(:product) { Product.make!(started_teambuilding_at: nil) }
 
-      it "redirects to edit if only name and pitch fields are present" do
-        get :show, id: product
-        expect(response).to redirect_to(edit_product_path(product))
-      end
-
-      it "is successful if fields other than name and pitch are present" do
-        product.update_attributes goals: '7'
-
+      it "is successful" do
         get :show, id: product
         expect(response).to be_success
       end
