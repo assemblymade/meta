@@ -8,11 +8,6 @@ var TagListStore = require('../stores/tag_list_store');
   var TAG_LIST = CONSTANTS.TAG_LIST;
 
   var TagList = React.createClass({
-    getDefaultProps: function() {
-      return {
-        tags: []
-      }
-    },
     componentWillMount: function() {
       if (this.props.destination) {
         TagListStore.setTags(this.props.tags);
@@ -23,6 +18,12 @@ var TagListStore = require('../stores/tag_list_store');
 
     componentWillUnmount: function() {
       TagListStore.removeChangeListener(this.onChange);
+    },
+
+    getDefaultProps: function() {
+      return {
+        tags: []
+      }
     },
 
     getInitialState: function() {
@@ -220,6 +221,7 @@ var TagListStore = require('../stores/tag_list_store');
 
       // FIXME: When there are no tags, the client just receives [""], which requires weird checks like this.
       if (this.props.destination &&
+          !this.props.newBounty &&
           (_.isEmpty(mappedTags) ||
             (mappedTags[0] == undefined &&
              mappedTags[1] == undefined))) {
