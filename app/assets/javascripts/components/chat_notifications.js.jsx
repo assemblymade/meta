@@ -182,9 +182,6 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
           <li ref="spinner" style={{'min-height': 120}}>
             <NotificationsList data={_.first(this.sortByLastReadAt(this.state.data), 7)} />
           </li>
-          <li>
-            <a href={productsPath} className="text-small">All Products</a>
-          </li>
           {desktopNotifications}
         </ul>
       );
@@ -239,7 +236,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
         }
 
         return (
-          <a href={entry.url} key={entry.id} className="list-group-item">
+          <a href={entry.url} key={entry.id} className="list-group-item" style={{'border': 'none'}}>
             {badge} {entry.label}
           </a>
         );
