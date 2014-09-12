@@ -23,17 +23,23 @@
                   </a>
                 </li>
               <% end %>
-              <li
-                  data-react-class="NotificationPreferencesDropdown"
-                  data-react-props="<%= {
-                    productWatchersPath: product_people_path(@product),
-                    productWatchersCount: @product.watchings_count,
-                    productFollowPath: product_follow_path(@product),
-                    productAnnouncementsPath: product_announcements_path(@product),
-                    productUnfollowPath: product_unfollow_path(@product),
-                    watchingState: @product.watching_state(current_user),
-                    afterFollowPath: product_people_path(@product)
-                  }.to_json %>">
+              <% if signed_in? %>
+                <li data-react-class="NotificationPreferencesDropdown"
+                    data-react-props="<%= {
+                      productWatchersPath: product_people_path(@product),
+                      productWatchersCount: @product.watchings_count,
+                      productFollowPath: product_follow_path(@product),
+                      productAnnouncementsPath: product_announcements_path(@product),
+                      productUnfollowPath: product_unfollow_path(@product),
+                      watchingState: @product.watching_state(current_user),
+                      afterFollowPath: product_people_path(@product)
+                    }.to_json %>">
+                <% else %>
+                <a class="btn toggler toggler-primary" href="<%= new_user_registration_path %>">
+                  <span>Follow</span>
+                  <span class="toggler-badge"><%= @product.watchings_count %></span>
+                </a>
+                <% end %>
               </li>
             </ul>
           </div>
