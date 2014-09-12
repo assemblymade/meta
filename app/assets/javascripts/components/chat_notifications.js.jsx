@@ -152,6 +152,14 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
       }
     },
 
+    markAllAsRead: function() {
+      _.each(_.values(this.state.data), function(entry) {
+        ChatNotificationsStore['chat:markRoomAsRead'](entry);
+      });
+
+      this.handleChatRoomsChanged();
+    },
+
     latestArticle: function() {
       return _.max(this.articles(), function(a) {
         return a && a.timestamp;
@@ -181,6 +189,11 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
         <ul className="dropdown-menu" style={{'min-width': '380px' }}>
           <li ref="spinner" style={{'min-height': 120}}>
             <NotificationsList data={_.first(this.sortByLastReadAt(this.state.data), 7)} />
+          </li>
+          <li>
+            <a href="#" onClick={this.markAllAsRead} className="list-group-item" style={{'border': 'none'}}>
+              Mark all as read
+            </a>
           </li>
           {desktopNotifications}
         </ul>
