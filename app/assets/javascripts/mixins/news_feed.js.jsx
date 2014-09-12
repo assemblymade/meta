@@ -58,6 +58,30 @@ var update = require('react/lib/update');
       }, function() {
         if (self.state.stories) {
           self.spinner.stop();
+
+          if (!self.state.stories.length) {
+            self._render = self.render;
+
+            self.render = function() {
+              return (
+                <ul className="dropdown-menu" style={{ 'min-width': '380px', width: '380px' }}>
+                  <li style={{ 'overflow-y': 'scroll', 'min-height': '60px' }}>
+                    <div className="text-center" style={{ 'padding-top': '15px' }}>
+                      There don't seem to be any notifications here just yet.
+                    </div>
+                  </li>
+                </ul>
+              );
+            }
+          } else {
+            if (typeof self._render === 'function') {
+              self.render = self._render;
+              self._render = null;
+            }
+          }
+
+          // force a re-render
+          self.forceUpdate();
         }
       });
     },
