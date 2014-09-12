@@ -28,7 +28,7 @@
       <li class="<%= 'active' if params[:type] == 'discussion' %>">
         <a href="<%= polymorphic_path([@product, :search], @filters.merge(type: 'discussion', state: '')) %>">
           <span class="badge badge-subtle pull-right"><%= @totals.discussions %></span>
-          Discussions
+          Bounties
         </a>
       </li>
     </ul>
