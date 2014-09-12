@@ -15,7 +15,8 @@ class window.ActivityView extends Backbone.View
     if template
       @$el.html(template.render(@templateData()))
       $('[data-readraptor-track]', @$el).readraptor()
-      $('.activity-content a').attr('target', '_blank')
+      $('.activity-content a,.media-body a').attr('target', '_blank')
+      console.log('blanking')
 
       if app.product
         model = @model
