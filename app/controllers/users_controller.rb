@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   def assets
     authenticate_user!
     @user = current_user.decorate
-    @assets = AssemblyAsset.where(user: @user)
+    @assets = @user.assembly_assets.group_by { |asset| asset.product }
   end
 
   def update

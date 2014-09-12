@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :core_products, through: :core_team_memberships, source: :product
   has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
 
+  has_many :assembly_assets
   has_many :events
   has_many :products
   has_many :product_logos
@@ -203,6 +204,10 @@ class User < ActiveRecord::Base
 
   def sum_month_points(time)
     Task.won_by(self).inject(0) {|sum, wip| sum + wip.score }
+  end
+
+  def sum_assembly_assets
+    assembly_assets.reduce(0) { |col, asset| asset.amount + col }
   end
 
   def to_param

@@ -105,7 +105,7 @@ ASM::Application.routes.draw do
     post   '/users/confirmation' => 'users/confirmations#create'
 
     get    '/users/:id' => 'users#show', :as => :user
-    get    '/users/:id/assets' => 'users#assets'
+    get    '/users/:id/assets' => 'users#assets', :as => :user_assets
     patch  '/users/:id' => 'users#update'
 
     resources :notifications, only: [:index]
