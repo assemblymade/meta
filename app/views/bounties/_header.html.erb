@@ -1,83 +1,90 @@
 <div class="page-header sheet-header">
   <div class="page-header-meta">
-    <ul class="list-piped pull-right">
-      <li>
-        <div data-react-class="CreateBountyButton" data-react-props="<%= {
-          product: { name: @product.name },
-          url: product_wips_path(@product),
-          maxOffer: (6 * @product.average_bounty).round(-4),
-          averageBounty: @product.average_bounty
-        }.to_json %>" style="position:relative;top:-8px"></div>
-      </li>
-    </ul>
+    <div data-react-class="CreateBountyButton" data-react-props="<%= {
+      product: { name: @product.name },
+      url: product_wips_path(@product),
+      maxOffer: (6 * @product.average_bounty).round(-4),
+      averageBounty: @product.average_bounty
+    }.to_json %>" class="pull-right"></div>
 
-    <ul class="list-piped">
-      <li>
-        <a class="<%= 'bg-primary' if params[:state] == '' %>" href="<%= scoped_product_bounties_path(@product, state: '') %>">
-          <%= @product.tasks.open.count %>
-          open
+    <ul class="nav nav-pills">
+      <li class="<%= 'active' if params[:state].blank? || params[:state] == 'open' %>">
+        <a href="<%= scoped_product_bounties_path(@product, state: 'open') %>">
+          Open
+
+          <span class="badge badge-subtle">
+            <%= @product.tasks.open.count %>
+          </span>
         </a>
       </li>
 
-      <li>
+      <li class="<%= 'active' if params[:state] == 'progress' %>">
         <a href="<%= scoped_product_bounties_path(@product, state: 'progress') %>">
-          <%= @product.tasks.allocated.count %>
-          in progress
+          In Progress
+
+          <span class="badge badge-subtle">
+            <%= @product.tasks.allocated.count %>
+          </span>
         </a>
       </li>
 
-      <li>
+      <li class="<%= 'active' if params[:state] == 'closed' %>">
         <a href="<%= scoped_product_bounties_path(@product, state: 'closed') %>">
-          <%= @product.tasks.closed.count %>
-          closed
+          Closed
+
+          <span class="badge badge-subtle">
+            <%= @product.tasks.closed.count %>
+          </span>
         </a>
       </li>
 
-      <li>
+      <li class="<%= 'active' if params[:state] == 'all' %>">
         <a href="<%= scoped_product_bounties_path(@product, state: 'all') %>">All</a>
       </li>
 
-      <li>
-        Order:
-        <select name="sort" id="bounty-sort">
-          <option value="priority" <%= 'selected' if params[:sort] == 'priority' %>>Priority</option>
-          <option value="most_valuable" <%= 'selected' if params[:sort] == 'most_valuable' %>>Most valuable</option>
-          <option value="least_valuable" <%= 'selected' if params[:sort] == 'least_valuable' %>>Least valuable</option>
-          <option value="newest" <%= 'selected' if params[:sort] == 'newest' %>>Newest</option>
-          <option value="oldest" <%= 'selected' if params[:sort] == 'oldest' %>>Oldest</option>
-          <option value="recently_updated" <%= 'selected' if params[:sort] == 'recently_updated' %>>Recently updated</option>
-          <option value="least_recently_updated" <%= 'selected' if params[:sort] == 'least_recently_updated' %>>Least recently updated</option>
-        </select>
+      <li class="dropdown">
+        <a class="dropdown-toggle" type="button" data-toggle="dropdown" href="#">
+          Order
+          <span class="caret"></span>
+        </a>
 
-        <script>
-          // bless stack overflow http://stackoverflow.com/a/10997390/11236
-
-          function updateURLParameter(url, param, paramVal){
-            var newAdditionalURL = "";
-            var tempArray = url.split("?");
-            var baseURL = tempArray[0];
-            var additionalURL = tempArray[1];
-            var temp = "";
-            if (additionalURL) {
-              tempArray = additionalURL.split("&");
-              for (i=0; i<tempArray.length; i++){
-                if(tempArray[i].split('=')[0] != param){
-                  newAdditionalURL += temp + tempArray[i];
-                  temp = "&";
-                }
-              }
-            }
-
-            var rows_txt = temp + "" + param + "=" + paramVal;
-            return baseURL + "?" + newAdditionalURL + rows_txt;
-          }
-
-          $('#bounty-sort').change(function() {
-            var sortOrder = $(this).val();
-            var newUrl = updateURLParameter(window.location.href, 'sort', sortOrder);
-            window.location = newUrl;
-          })
-        </script>
+        <ul class="dropdown-menu" role="menu">
+          <li class="<%= 'active' if params[:sort] == 'priority' %>" role="presentation">
+            <a href="<%= scoped_product_bounties_path(@product, sort: 'priority') %>" role="menuitem" tabindex="-1" href="#">
+              Priority
+            </a>
+          </li>
+          <li class="<%= 'active' if params[:sort] == 'most_valuable' %>" role="presentation">
+            <a href="<%= scoped_product_bounties_path(@product, sort: 'most_valuable') %>" role="menuitem" tabindex="-1" href="#">
+              Most valuable
+            </a>
+          </li>
+          <li class="<%= 'active' if params[:sort] == 'least_valuable' %>" role="presentation">
+            <a href="<%= scoped_product_bounties_path(@product, sort: 'least_valuable') %>" role="menuitem" tabindex="-1" href="#">
+              Least valuable
+            </a>
+          </li>
+          <li class="<%= 'active' if params[:sort] == 'newest' %>" role="presentation">
+            <a href="<%= scoped_product_bounties_path(@product, sort: 'newest') %>" role="menuitem" tabindex="-1" href="#">
+              Newest
+            </a>
+          </li>
+          <li class="<%= 'active' if params[:sort] == 'oldest' %>" role="presentation">
+            <a href="<%= scoped_product_bounties_path(@product, sort: 'oldest') %>" role="menuitem" tabindex="-1" href="#">
+              Oldest
+            </a>
+          </li>
+          <li class="<%= 'active' if params[:sort] == 'recently_updated' %>" role="presentation">
+            <a href="<%= scoped_product_bounties_path(@product, sort: 'recently_updated') %>" role="menuitem" tabindex="-1" href="#">
+              Recently Updated
+            </a>
+          </li>
+          <li class="<%= 'active' if params[:sort] == 'least_recently_updated' %>" role="presentation">
+            <a href="<%= scoped_product_bounties_path(@product, sort: 'least_recently_updated') %>" role="menuitem" tabindex="-1" href="#">
+              Least recently updated
+            </a>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>

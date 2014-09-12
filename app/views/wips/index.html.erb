@@ -3,16 +3,12 @@
 
 <% @show_urgency_dropdown = @product.core_team?(current_user) %>
 
-<%= render 'bounties/header' if partner?(@product) %>
-
 <div class="sheet-body">
-  <% if @project %>
-    <%= render 'projects/header', project: @project %>
-  <% else %>
-    <%= render 'bounties/postings', postings: @featured_bounties %>
-  <% end %>
+  <%= render 'bounties/postings', postings: @featured_bounties %>
 
-  <% if signed_in? && !partner?(@product) %>
+  <% if partner?(@product) %>
+    <%= render 'bounties/header' %>
+  <% elsif signed_in? %>
     <div data-react-class="CreateBountyButton" data-react-props="<%= new_bounty_props(@product).to_json %>"></div>
 
     <hr>
