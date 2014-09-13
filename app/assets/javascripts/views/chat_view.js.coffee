@@ -101,7 +101,8 @@ class window.ChatView extends Backbone.View
     selectedTags = React.renderComponent(
       TagList({
          tags: [],
-         destination: true
+         destination: true,
+         newBounty: true
        }),
       document.getElementById('selected-tags')
     );

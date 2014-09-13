@@ -75,7 +75,7 @@
           // necessary, but it prevents memory leaks
           var $el = $(this.getDOMNode());
           var popover = $el.data('bs.popover');
-          var $tip = popover.tip();
+          var $tip = popover && popover.tip();
           React.unmountComponentAtNode(
               $tip.find('.popover-title')[0]
           );
