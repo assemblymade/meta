@@ -97,6 +97,10 @@ class ProductsController < ProductController
       target: @product
     )
 
+    if @product == Product.find_by_slug('assets')
+      AssemblyAsset.grant!(current_user, @product, promo=true)
+    end
+
     render nothing: true, :status => :ok
   end
 

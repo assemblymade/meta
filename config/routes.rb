@@ -57,10 +57,8 @@ ASM::Application.routes.draw do
                                action: 'trending'
                              },
                              constraints: {
-                               action: /trending|live|updates/
+                               action: /trending|live|updates|bounties/
                              }
-
-  get '/discover/tech/:tech' => 'discover#tech'
 
   devise_for :users,
     :skip => [:registrations, :sessions, :confirmations],

@@ -55,7 +55,7 @@ var update = require('react/lib/update');
         actors: NewsFeedUsersStore.getUsers(),
         showMore: (newStories.length - oldStoriesCount === NF.MORE_STORIES_LENGTH)
       }, function() {
-        if (self.state.stories.length) {
+        if (self.state.stories) {
           self.spinner.stop();
         }
       });

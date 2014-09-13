@@ -49,7 +49,9 @@ class TransactionLogEntry < ActiveRecord::Base
   end
 
   def self.end_of_month(time)
-    Time.parse(time.end_of_month.strftime("%Y-%m-%dT%T") + '-11:00')
+    ActiveSupport::TimeZone["Hawaii"].parse(
+      time.end_of_mont.strftime("%Y-%m-%dT%T")
+    ).end_of_day
   end
 
   def self.minted!(parent_id, created_at, product, wallet_id, cents, extra=nil)

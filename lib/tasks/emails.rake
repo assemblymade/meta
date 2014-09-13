@@ -79,6 +79,9 @@ namespace :emails do
          unless EmailLog.sent_to(user.id, :joined_team_no_work_yet).any?
            EmailLog.log_send user.id, :joined_team_no_work_yet do
              membership = user.team_memberships.order(created_at: :desc).first
+
+             next if membership.product.core_team?(user)
+
              UserMailer.delay(queue: 'mailer').joined_team_no_work_yet membership.id
            end
          end

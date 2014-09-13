@@ -35,7 +35,8 @@ class Activity < ActiveRecord::Base
   end
 
   def track_in_segment
-    return if actor && actor.staff?
+    puts "after create"
+    return if actor.try(:staff?)
 
     TrackActivityCreated.enqueue(self.id)
   end

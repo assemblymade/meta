@@ -10,6 +10,10 @@ class Users::SessionsController < Devise::SessionsController
       render nothing: true, status: :unauthorized
     end
   end
+  
+  def after_sign_in_path_for(resource)
+    after_sign_in_path_for_user
+  end
 
   # private
 

@@ -6,7 +6,9 @@ module Api
       def create
         body = params[:body] || params[:message] # TODO: (whatupdave) change Kernel to use body
         @chat_room = ChatRoom.includes(:wip).find_by!(slug: params[:chat_room_id])
-        @event = Event.create_from_comment(@chat_room.wip, Event::Comment, body, current_user, params[:socket_id])
+        @chat_room.with_lock do
+          @event = Event.create_from_comment(@chat_room.wip, Event::Comment, body, current_user, params[:socket_id])
+        end
 
         if @event.valid?
           if @chat_room.product

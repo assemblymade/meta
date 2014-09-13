@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   include ActiveRecord::UUID
   include Elasticsearch::Model
 
+  attr_encryptor :wallet_private_key, :key => ENV["USER_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt
+
   has_many :activities,    foreign_key: 'owner_id'
   has_many :core_products, through: :core_team_memberships, source: :product
   has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
@@ -81,8 +83,9 @@ class User < ActiveRecord::Base
   scope :awaiting_personal_email, -> { where(personal_email_sent_on: nil).where("created_at > ? AND last_request_at < ?", 14.days.ago, 3.days.ago) }
 
   class << self
-    def find_first_by_auth_conditions(warden_conditions)
-      conditions = warden_conditions.dup
+    def find_first_by_auth_conditions(tainted_conditions)
+      conditions = tainted_conditions.dup
+      conditions.try(:permit!)
       if login = conditions.delete(:login).try(:downcase)
         if login.uuid?
           where(conditions).where("id = ?", login).first

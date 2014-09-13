@@ -1,14 +1,14 @@
 module Api
   class SubscribersController < ApplicationController
     respond_to :json
-    before_filter :set_access_control_headers
+    after_filter :set_access_control_headers
 
     protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
     def create
       email = params[:email]
       product = Product.find_by!(slug: params[:product_id])
-      subscription = Subscriber.create!(product_id: product.id, email: email)
+      subscription = Subscriber.find_or_create_by!(product_id: product.id, email: email)
 
       if user = User.find_by(email: email)
         ProductMailer.delay(queue: 'mailer').new_subscriber_with_account(product, user)

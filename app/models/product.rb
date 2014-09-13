@@ -15,6 +15,8 @@ class Product < ActiveRecord::Base
 
   friendly_id :slug_candidates, use: :slugged
 
+  attr_encryptor :wallet_private_key, :key => ENV["PRODUCT_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt
+
   belongs_to :user
   belongs_to :evaluator, class_name: 'User'
   belongs_to :main_thread, class_name: 'Discussion'
@@ -95,7 +97,6 @@ class Product < ActiveRecord::Base
   before_create :generate_authentication_token
   after_update -> { CreateIdeaWipWorker.enqueue self.id }, :if => :submitted_at_changed?
 
-  after_commit -> { subscribe_owner_to_notifications }, on: :create
   after_commit -> { add_to_event_stream }, on: :create
   after_commit -> { Indexer.enqueue(:index, Product.to_s, self.id) }, on: :create
   after_update :update_elasticsearch
@@ -124,6 +125,13 @@ class Product < ActiveRecord::Base
     def unique_tags
       pluck('distinct unnest(tags)').sort_by{|t| t.downcase }
     end
+  end
+
+  def wallet_private_key_salt
+    # http://ruby-doc.org/stdlib-2.1.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#class-OpenSSL::Cipher-label-Encrypting+and+decrypting+some+data
+    cipher = OpenSSL::Cipher::AES256.new(:CBC)
+    cipher.encrypt
+    cipher.random_key
   end
 
   def stage
@@ -506,10 +514,6 @@ class Product < ActiveRecord::Base
   end
 
   protected
-
-  def subscribe_owner_to_notifications
-    subscribers.create!(user: user)
-  end
 
   def add_to_event_stream
     StreamEvent.add_create_event!(actor: user, subject: self)

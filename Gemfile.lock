@@ -11,30 +11,6 @@ GIT
     friendly_id (5.0.3)
       activerecord (>= 4.0.0)
 
-GIT
-  remote: git://github.com/elasticsearch/elasticsearch-rails.git
-  revision: 304615e5c548448e95cdbca29de197b5a789d0d3
-  ref: 304615e5c548448e95cdbca29de197b5a789d0d3
-  specs:
-    elasticsearch-model (0.1.2)
-      activesupport (> 3)
-      elasticsearch (> 0.4)
-      hashie
-    elasticsearch-rails (0.1.2)
-
-GIT
-  remote: git://github.com/plataformatec/devise.git
-  revision: a6f3f8cb4a24774b897f4c16ea4bb63a2700a5ac
-  branch: lm-rails-4-2
-  specs:
-    devise (3.3.0)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 3.2.6, < 5)
-      responders
-      thread_safe (~> 0.1)
-      warden (~> 1.2.3)
-
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -82,6 +58,8 @@ GEM
       faraday_middleware (>= 0.8, < 0.10)
       multi_json (~> 1.0)
     arel (6.0.0.beta1)
+    attr_encrypted (1.3.3)
+      encryptor (>= 1.3.0)
     autotest-standalone (4.5.11)
     aws-sdk (1.11.1)
       json (~> 1.4)
@@ -128,6 +106,12 @@ GEM
     customerio (0.5.1)
       httparty (>= 0.5, < 1.0)
     dalli (2.6.4)
+    devise (3.3.0)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     diff-lcs (1.2.4)
     docile (1.1.3)
     draper (1.3.0)
@@ -135,17 +119,23 @@ GEM
       activemodel (>= 3.0)
       activesupport (>= 3.0)
       request_store (~> 1.0.3)
-    elasticsearch (1.0.4)
-      elasticsearch-api (= 1.0.4)
-      elasticsearch-transport (= 1.0.4)
-    elasticsearch-api (1.0.4)
+    elasticsearch (1.0.5)
+      elasticsearch-api (= 1.0.5)
+      elasticsearch-transport (= 1.0.5)
+    elasticsearch-api (1.0.5)
       multi_json
-    elasticsearch-transport (1.0.4)
+    elasticsearch-model (0.1.5)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-rails (0.1.5)
+    elasticsearch-transport (1.0.5)
       faraday
       multi_json
     email_spec (1.5.0)
       launchy (~> 2.1)
       mail (~> 2.2)
+    encryptor (1.3.0)
     erubis (2.7.0)
     execjs (2.0.2)
     fakeweb (1.3.0)
@@ -446,6 +436,7 @@ DEPENDENCIES
   active_model_serializers
   active_record_query_trace
   analytics-ruby (< 1.0)
+  attr_encrypted
   autotest-standalone
   aws-sdk (~> 1.0)
   bootstrap-kaminari-views
@@ -461,10 +452,10 @@ DEPENDENCIES
   curb
   customerio
   dalli
-  devise!
+  devise
   draper
-  elasticsearch-model!
-  elasticsearch-rails!
+  elasticsearch-model
+  elasticsearch-rails
   email_spec
   fakeweb
   ffaker

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904201436) do
+ActiveRecord::Schema.define(version: 20140908202536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,14 @@ ActiveRecord::Schema.define(version: 20140904201436) do
     t.uuid     "product_id", null: false
     t.datetime "created_at", null: false
     t.hstore   "parameters"
+  end
+
+  create_table "assembly_assets", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "asset_id",   null: false
+    t.uuid     "user_id",    null: false
+    t.uuid     "product_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "assets", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -404,50 +412,54 @@ ActiveRecord::Schema.define(version: 20140904201436) do
   add_index "product_trends", ["product_id"], name: "index_product_trends_on_product_id", unique: true, using: :btree
 
   create_table "products", id: false, force: true do |t|
-    t.uuid     "id",                                     null: false
-    t.string   "slug",                                   null: false
-    t.string   "name",                                   null: false
+    t.uuid     "id",                                                null: false
+    t.string   "slug",                                              null: false
+    t.string   "name",                                              null: false
     t.string   "pitch"
     t.text     "description"
     t.datetime "submitted_at"
     t.datetime "evaluated_at"
     t.boolean  "is_approved"
-    t.integer  "assembly_contribution",  default: 0,     null: false
+    t.integer  "assembly_contribution",             default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.uuid     "user_id",                                null: false
+    t.uuid     "user_id",                                           null: false
     t.text     "lead"
-    t.integer  "view_count",             default: 0
+    t.integer  "view_count",                        default: 0
     t.text     "suggested_perks"
     t.string   "poster"
-    t.integer  "votes_count",            default: 0,     null: false
+    t.integer  "votes_count",                       default: 0,     null: false
     t.uuid     "evaluator_id"
     t.datetime "greenlit_at"
     t.text     "free_perk"
-    t.integer  "watchings_count",        default: 0,     null: false
-    t.text     "repos",                                               array: true
-    t.string   "authentication_token",                   null: false
+    t.integer  "watchings_count",                   default: 0,     null: false
+    t.text     "repos",                                                          array: true
+    t.string   "authentication_token",                              null: false
     t.datetime "featured_on"
-    t.string   "tags",                   default: [],                 array: true
-    t.boolean  "can_advertise",          default: false
+    t.string   "tags",                              default: [],                 array: true
+    t.boolean  "can_advertise",                     default: false
     t.datetime "flagged_at"
     t.text     "flagged_reason"
     t.string   "homepage_url"
     t.string   "you_tube_video_url"
-    t.integer  "commit_count",           default: 0,     null: false
+    t.integer  "commit_count",                      default: 0,     null: false
     t.datetime "founded_at"
     t.datetime "public_at"
     t.uuid     "main_thread_id"
     t.uuid     "logo_id"
-    t.integer  "team_memberships_count", default: 0
+    t.integer  "team_memberships_count",            default: 0
     t.datetime "launched_at"
     t.hstore   "info"
     t.integer  "quality"
     t.datetime "last_activity_at"
-    t.integer  "bio_memberships_count",  default: 0,     null: false
+    t.integer  "bio_memberships_count",             default: 0,     null: false
     t.datetime "started_building_at"
     t.datetime "live_at"
     t.integer  "partners_count"
+    t.string   "wallet_public_address"
+    t.binary   "encrypted_wallet_private_key"
+    t.binary   "encrypted_wallet_private_key_salt"
+    t.binary   "encrypted_wallet_private_key_iv"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
@@ -640,16 +652,16 @@ ActiveRecord::Schema.define(version: 20140904201436) do
   end
 
   create_table "users", id: false, force: true do |t|
-    t.uuid     "id",                                       null: false
+    t.uuid     "id",                                                  null: false
     t.string   "name"
     t.string   "customer_id"
-    t.boolean  "is_staff",               default: false,   null: false
-    t.string   "email",                                    null: false
+    t.boolean  "is_staff",                          default: false,   null: false
+    t.string   "email",                                               null: false
     t.string   "encrypted_password"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0
+    t.integer  "sign_in_count",                     default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
@@ -669,8 +681,8 @@ ActiveRecord::Schema.define(version: 20140904201436) do
     t.string   "authentication_token"
     t.text     "bio"
     t.string   "archetype"
-    t.string   "username",                                 null: false
-    t.string   "mail_preference",        default: "daily", null: false
+    t.string   "username",                                            null: false
+    t.string   "mail_preference",                   default: "daily", null: false
     t.integer  "github_uid"
     t.string   "github_login"
     t.string   "payment_option"
@@ -687,8 +699,12 @@ ActiveRecord::Schema.define(version: 20140904201436) do
     t.datetime "personal_email_sent_on"
     t.text     "twitter_uid"
     t.text     "twitter_nickname"
-    t.uuid     "recent_product_ids",                                    array: true
+    t.uuid     "recent_product_ids",                                               array: true
     t.string   "remember_token"
+    t.string   "wallet_public_address"
+    t.binary   "encrypted_wallet_private_key"
+    t.binary   "encrypted_wallet_private_key_salt"
+    t.binary   "encrypted_wallet_private_key_iv"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
