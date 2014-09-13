@@ -2,4 +2,26 @@
   img {
     max-width: 100%;
   }
+
+  :first-child {
+    margin-top: 0;
+  }
+
+  :last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Markdown Normalizer class overrides multiple heading types
+.markdown-normalized {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @extend .h4;
+    margin-top: $line-height-computed * 1.5;
+    margin-bottom: $line-height-computed / 2;
+  }
 }

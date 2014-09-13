@@ -182,7 +182,7 @@ var Avatar = require('./avatar.js.jsx');
           <a href={'#@' + this.props.user.username} onClick={this.handleUserSelected(this.props.user)}>
             <Avatar user={this.props.user}
                 style={{'margin-right': '10px'}} />
-            @{this.props.user.username} <span className="text-muted">{this.props.user.name}</span>
+            <span> @{this.props.user.username} <span className="text-muted">{this.props.user.name}</span></span>
           </a>
         </li>
       )

@@ -1,0 +1,12 @@
+<a href="<%= product_wip_path(posting.bounty.product, posting.bounty) %>">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="alpha">
+        <%= posting.bounty.title %>
+      </h5>
+      <p class="text-muted omega">
+        <%= truncate(posting.bounty.description, length: 84) %>
+      </p>
+    </div>
+  </div>
+</a>

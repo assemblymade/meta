@@ -17,15 +17,13 @@
           <% end %>
         <% end %>
 
-        <% if (count = bounty.comments_count) > 0 %>
-          <li>
-            <strong>
-              <span class="icon icon-speech icon-left"></span>
-              <%= count %>
-              <span class="sr-only">comments</span>
-            </strong>
-          </li>
-        <% end %>
+        <li>
+          <strong>
+            <span class="icon icon-speech icon-left"></span>
+            <%= bounty.comments_count %>
+            <span class="sr-only">comments</span>
+          </strong>
+        </li>
       </ul>
 
   </div>
@@ -81,7 +79,11 @@
 
     &middot;
 
-    #<%= bounty.number %> created <%= time_ago_in_words(bounty.created_at) %> ago by <a class="text-muted" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
+    #<%= bounty.number %> created <%= time_ago_in_words(bounty.created_at) %> ago by <a class="text-muted" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a> 
+
+    <% unless @product %>
+      in <a class="text-muted" href="<%= product_path(bounty.product) %>"><%= bounty.product.name %></a>
+    <% end %>
   </div>
 
 </div>

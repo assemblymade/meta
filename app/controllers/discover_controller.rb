@@ -8,13 +8,17 @@ class DiscoverController < ApplicationController
   end
 
   def trending
-    @products = Product.public_products.
-                        where.not(slug: 'meta').
-                        where.not(started_building_at: nil).
-                        joins(:product_trend).
-                        where('watchings_count >= ?', 5).
-                        order('product_trends.score desc').
-                        page(params[:page])
+    @profitable = Product.profitable.
+      ordered_by_trend.
+      limit(3)
+
+    @greenlit = Product.greenlit.
+      ordered_by_trend.
+      limit(5)
+
+    @teambuilding = Product.teambuilding.
+      ordered_by_trend.
+      limit(5)
   end
 
   def live
@@ -23,6 +27,24 @@ class DiscoverController < ApplicationController
                         joins(:product_trend).
                         order('product_trends.score desc').
                         page(params[:page])
+  end
+
+  def profitable
+    @products = Product.profitable.
+      ordered_by_trend.
+      page(params[:page])
+  end
+
+  def greenlit
+    @products = Product.greenlit.
+      ordered_by_trend.
+      page(params[:page])
+  end
+
+  def teambuilding
+    @products = Product.teambuilding.
+      ordered_by_trend.
+      page(params[:page])
   end
 
   def bounties

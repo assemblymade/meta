@@ -323,9 +323,9 @@ $nav-disabled-link-hover-color: $gray-light;
 $nav-open-link-hover-color: #fff;
 
 // Tabs
-$nav-tabs-border-color: $brand-border;
+$nav-tabs-border-color: $brand-divider;
 
-$nav-tabs-link-hover-border-color: $brand-divider;
+$nav-tabs-link-hover-border-color: $brand-bg;
 
 $nav-tabs-active-link-hover-bg:           transparent;
 $nav-tabs-active-link-hover-color:        $gray;
@@ -336,8 +336,8 @@ $nav-tabs-justified-active-link-border-color: $body-bg;
 
 // Pills
 $nav-pills-border-radius:           $border-radius-base;
-$nav-pills-active-link-hover-bg:    $component-active-bg;
-$nav-pills-active-link-hover-color: $component-active-color;
+$nav-pills-active-link-hover-bg:    $blue; //$component-active-bg;
+$nav-pills-active-link-hover-color: white; // $component-active-color;
 
 
 // Pagination
@@ -469,7 +469,7 @@ $modal-sm: 300px;
 
 // Alerts
 
-$alert-padding:          15px;
+$alert-padding:          $line-height-computed $grid-gutter-width;
 $alert-border-radius:    $border-radius-base;
 $alert-link-font-weight: bold;
 
@@ -508,7 +508,7 @@ $list-group-bg:            white;
 $list-group-border:        $brand-divider;
 $list-group-border-radius: 0;
 
-$list-group-hover-bg:          rgba($brand-primary, 0.1);
+$list-group-hover-bg:          $brand-bg;
 $list-group-active-color:      $component-active-color;
 $list-group-active-bg:         $component-active-bg;
 $list-group-active-border:     $list-group-active-bg;
@@ -542,21 +542,21 @@ $panel-primary-text:       #fff;
 $panel-primary-border:     $brand-primary;
 $panel-primary-heading-bg: $brand-primary;
 
-$panel-success-text:       $state-success-text;
+$panel-success-text:       white;
 $panel-success-border:     $state-success-border;
-$panel-success-heading-bg: $state-success-bg;
+$panel-success-heading-bg: $green;
 
-$panel-info-text:       $state-info-text;
+$panel-info-text:       white;
 $panel-info-border:     $state-info-border;
-$panel-info-heading-bg: $state-info-bg;
+$panel-info-heading-bg: $blue;
 
-$panel-warning-text:       $state-warning-text;
+$panel-warning-text:       white;
 $panel-warning-border:     $state-warning-border;
-$panel-warning-heading-bg: $state-warning-bg;
+$panel-warning-heading-bg: $yellow;
 
-$panel-danger-text:       $state-danger-text;
+$panel-danger-text:       white;
 $panel-danger-border:     $state-danger-border;
-$panel-danger-heading-bg: $state-danger-bg;
+$panel-danger-heading-bg: $red;
 
 
 // Thumbnails

@@ -2,7 +2,6 @@
 <% activate_nav! :financials %>
 <% activate_nav! :financial_overview %>
 
-
 <div class="stat-group">
   <div class="stat">
     <div class="stat-title">Total Revenue</div>
@@ -19,68 +18,92 @@
     <div class="stat-value"><%= short_currency @product.profit_reports.map(&:profit).reduce(:+) %></div>
   </div>
 
+  <div class="stat">
+    <div class="stat-title">Total Royalties</div>
+    <div class="stat-value"><%= short_currency @product.profit_reports.map(&:profit).reduce(:+) %></div>
+  </div>
+
 </div>
 
 <hr>
 
-<table class="table table-responsive table-hover">
-  <thead>
-    <tr>
-      <th></th>
-      <th class="text-left">Revenue</th>
-      <th class="text-right">Expenses</th>
-      <th class="text-right">
-        <span data-toggle="tooltip" title="Assembly keeps 10% of the royalty to cover operating costs">Platform Cost <span class="icon icon-question"></span></span>
-      </th>
-      <th class="text-right">
-        <span data-toggle="tooltip" title="Royalties paid out to <%= @product.name %> partners">Partners Royalty <span class="icon icon-question"></span></span>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @product.profit_reports.order(end_at: :desc).each do |report| %>
-      <tr style="cursor:pointer;">
-        <td class="text-muted" id="financials-<%= report.end_at.strftime("%Y-%m-%d") %>"><%= l report.end_at, format: :month %></td>
-        <td><%= currency report.revenue, precision: 2 %></td>
-        <td class="text-right"><%= currency -report.expenses, precision: 2 %></td>
-        <td class="text-right"><%= currency -report.fee, precision: 2 %></td>
-        <td class="text-right"><%= currency report.profit, precision: 2 %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<hr>
-
-<% if partner?(@product) %>
-  <div class="pull-right">
-    <ul class="list-inline">
-      <li>
-        <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#new-expense-modal">
-          Log expense
-        </button>
-      </li>
-    </ul>
-
-    <%= render 'expense_modal' %>
+<% if @reports.empty? %>
+  <div class="row">
+    <div class="col-md-8 col-xs-12 col-md-offset-2">
+      <div class="well well-lg">
+        <h3 class="alpha">
+          <strong>This product is still working on generating revenue</strong>
+        </h3>
+        <p class="text-muted">Once <%= @product.name %> starts charging customers and
+        generating revenue we'll post all the details on this page. You'll
+        be able to track expenses, determine profits, and, most importantly,
+        see your royalties as a partner.</p>
+        <div class="text-center">
+          <a class="btn btn-primary text-center" href="<%= product_partners_path(@product) %>" style="margin-top:12px;">See who owns <%= @product.name %></a>
+        </div>
+      </div>
+    </div>
   </div>
-<% end %>
-<h4>Recent Expenses</h4>
-
-<table class="table table-hover">
-  <tbody>
-    <% @product.expense_claims.each do |claim| %>
+<% else %>
+  <table class="table table-responsive table-hover">
+    <thead>
       <tr>
-        <td><span class="text-muted"><%= l claim.created_at, format: :friendly %></span></td>
-        <td>
-          <%= user_link_username(claim.user) %>
-        </td>
-        <td>
-          <%= claim.description %>
-        </td>
-        <td><span class="text-muted small">PENDING</span></td>
-        <td class="text-right"><%= currency claim.total %></td>
+        <th></th>
+        <th class="text-left">Revenue</th>
+        <th class="text-right">Expenses</th>
+        <th class="text-right">
+          <span data-toggle="tooltip" title="Assembly keeps 10% of the royalty to cover operating costs">Platform Cost <span class="icon icon-question"></span></span>
+        </th>
+        <th class="text-right">
+          <span data-toggle="tooltip" title="Royalties paid out to <%= @product.name %> partners">Partners Royalty <span class="icon icon-question"></span></span>
+        </th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @product.profit_reports.order(end_at: :desc).each do |report| %>
+        <tr style="cursor:pointer;">
+          <td class="text-muted" id="financials-<%= report.end_at.strftime("%Y-%m-%d") %>"><%= l report.end_at, format: :month %></td>
+          <td><%= currency report.revenue, precision: 2 %></td>
+          <td class="text-right"><%= currency -report.expenses, precision: 2 %></td>
+          <td class="text-right"><%= currency -report.fee, precision: 2 %></td>
+          <td class="text-right"><%= currency report.profit, precision: 2 %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <% if partner?(@product) %>
+    <div class="pull-right">
+      <ul class="list-inline">
+        <li>
+          <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#new-expense-modal">
+            Log expense
+          </button>
+        </li>
+      </ul>
+
+      <%= render 'expense_modal' %>
+    </div>
+  <% end %>
+  <h4>Recent Expenses</h4>
+
+  <table class="table table-hover">
+    <tbody>
+      <% @product.expense_claims.each do |claim| %>
+        <tr>
+          <td><span class="text-muted"><%= l claim.created_at, format: :friendly %></span></td>
+          <td>
+            <%= user_link_username(claim.user) %>
+          </td>
+          <td>
+            <%= claim.description %>
+          </td>
+          <td><span class="text-muted small">PENDING</span></td>
+          <td class="text-right"><%= currency claim.total %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -1,36 +1,53 @@
-var xhr = require('../xhr');
-var Dispatcher = require('../dispatcher');
-var Store = require('../stores/store');
-
 (function() {
+  var PublicAddressPrompt = require('../components/public_address_prompt.js.jsx');
+  var xhr = require('../xhr');
+  var Dispatcher = require('../dispatcher');
+  var Store = require('../stores/store');
   var _selected;
 
   var _store = Object.create(Store);
 
   var _dropdownStore = _.extend(_store, {
+    showPublicAddressModal: function(data) {
+      if (!data) {
+        return;
+      }
+
+      var path = data.path;
+      var preference = data.preference;
+      var redirectTo = data.redirectTo;
+
+      React.renderComponent(PublicAddressPrompt({
+        path: path,
+        redirectTo: redirectTo
+      }), document.getElementById('public-address-prompt'));
+    },
+
     updateSelected: function(data) {
       if (!data) {
         return;
       }
 
-      var item = data.item;
       var path = data.path;
+      var preference = data.preference;
+      var redirectTo = data.redirectTo;
+      var publicAddress = data.publicAddress;
 
-      window.xhr.post(path, {}, function(){
+      window.xhr.post(path, { public_address: publicAddress }, function(){
         if (data.redirectTo) {
-          app.redirectTo(data.redirectTo)
+          app.redirectTo(redirectTo)
         }
       });
 
-      _selected = item;
+      _selected = preference;
     },
 
     getSelected: function() {
       return _selected;
     },
 
-    setSelected: function(item) {
-      _selected = item;
+    setSelected: function(preference) {
+      _selected = preference;
     },
 
     removeSelected: function() {

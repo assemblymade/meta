@@ -1,0 +1,80 @@
+<div class="page-header sheet-header">
+  <div class="page-header-meta">
+    <ul class="list-piped pull-right">
+      <li>
+        <div data-react-class="CreateBountyButton" data-react-props="<%= { url: product_wips_path(@product) }.to_json >"></div>
+        <a class="btn btn-success btn-xs" href="<%= new_product_wip_path(@product) %>">Create Bounty</a>
+      </li>
+    </ul>
+
+    <ul class="list-piped">
+      <li>
+        <a class="<%= 'bg-primary' if params[:state] == '' %>" href="<%= scoped_product_bounties_path(@product, state: '') %>">
+          <%= @product.tasks.open.count %>
+          open
+        </a>
+      </li>
+
+      <li>
+        <a href="<%= scoped_product_bounties_path(@product, state: 'progress') %>">
+          <%= @product.tasks.allocated.count %>
+          in progress
+        </a>
+      </li>
+
+      <li>
+        <a href="<%= scoped_product_bounties_path(@product, state: 'closed') %>">
+          <%= @product.tasks.closed.count %>
+          closed
+        </a>
+      </li>
+
+      <li>
+        <a href="<%= scoped_product_bounties_path(@product, state: 'all') %>">All</a>
+      </li>
+
+      <li>
+        Order:
+        <select name="sort" id="bounty-sort">
+          <option value="priority" <%= 'selected' if params[:sort] == 'priority' %>>Priority</option>
+          <option value="most_valuable" <%= 'selected' if params[:sort] == 'most_valuable' %>>Most valuable</option>
+          <option value="least_valuable" <%= 'selected' if params[:sort] == 'least_valuable' %>>Least valuable</option>
+          <option value="newest" <%= 'selected' if params[:sort] == 'newest' %>>Newest</option>
+          <option value="oldest" <%= 'selected' if params[:sort] == 'oldest' %>>Oldest</option>
+          <option value="recently_updated" <%= 'selected' if params[:sort] == 'recently_updated' %>>Recently updated</option>
+          <option value="least_recently_updated" <%= 'selected' if params[:sort] == 'least_recently_updated' %>>Least recently updated</option>
+        </select>
+
+        <script>
+          // bless stack overflow http://stackoverflow.com/a/10997390/11236
+
+          function updateURLParameter(url, param, paramVal){
+            var newAdditionalURL = "";
+            var tempArray = url.split("?");
+            var baseURL = tempArray[0];
+            var additionalURL = tempArray[1];
+            var temp = "";
+            if (additionalURL) {
+              tempArray = additionalURL.split("&");
+              for (i=0; i<tempArray.length; i++){
+                if(tempArray[i].split('=')[0] != param){
+                  newAdditionalURL += temp + tempArray[i];
+                  temp = "&";
+                }
+              }
+            }
+
+            var rows_txt = temp + "" + param + "=" + paramVal;
+            return baseURL + "?" + newAdditionalURL + rows_txt;
+          }
+
+          $('#bounty-sort').change(function() {
+            var sortOrder = $(this).val();
+            var newUrl = updateURLParameter(window.location.href, 'sort', sortOrder);
+            window.location = newUrl;
+          })
+        </script>
+      </li>
+    </ul>
+  </div>
+</div>

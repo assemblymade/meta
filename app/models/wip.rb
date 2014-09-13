@@ -38,6 +38,7 @@ class Wip < ActiveRecord::Base
   scope :available,   ->{ where(state: 'open') }
   scope :by_product,  ->(product){ where(product_id: product.id) }
   scope :closed,      -> { where('closed_at is not null') }
+  scope :not_posted,  -> { joins('left outer join bounty_postings on bounty_postings.bounty_id = wips.id').where('bounty_postings.id is null') }
   scope :open,        -> { where('closed_at is null') }
   scope :opened_by,   ->(user) { where(user: user) }
   scope :promoted,    -> { where('promoted_at is not null') }
@@ -189,6 +190,11 @@ class Wip < ActiveRecord::Base
     add_event ::Event::TagChange.new(user: author, from: self.tag_names.sort.join(','), to: new_tag_names.sort.join(',')) do
       self.tag_names = new_tag_names
     end
+  end
+
+  def add_tag!(tag_name)
+    self.tag_names = ((tag_names || []) | [tag_name])
+    save!
   end
 
   def tag_names

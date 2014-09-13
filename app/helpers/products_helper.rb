@@ -27,6 +27,15 @@ module ProductsHelper
     product_wips_path(product, deliverable: :design)
   end
 
+  def new_bounty_props(product)
+    {
+      product: { name: @product.name },
+      url: product_wips_path(@product),
+      maxOffer: (6 * @product.average_bounty).round(-4),
+      averageBounty: @product.average_bounty
+    }
+  end
+
   def product_membership_interests(product, with_defaults=false)
     existing_interests = Interest.
       joins(team_membership_interests: :team_membership).

@@ -1,0 +1,91 @@
+<table class="row">
+  <tbody>
+    <tr>
+      <td class="wrapper last">
+        <table class="twelve columns">
+          <tbody>
+            <tr>
+              <td class="panel panel-default">
+
+                <h1 class="text-center">
+                  Thanks for signing up for updates on <a href="<%= product_url(@product) %>"><%= @product.name %></a>!
+                </h1>
+
+                <p>
+                  <%= @product.name %> is being built on <a href="<%= root_url %>">Assembly</a>, a platform for building open-source projects. A product's contributors receive a stake in the product through <a href="http://assets.assembly.com">Assembly Assets</a>. We'll send the most important updates straight from the core team to your inbox.
+                </p>
+
+                <hr>
+
+                <p>
+                  Since you signed up as a beta builder on the <a href="<%= product_url(@product) %>">Assembly Assets project</a>, an Assembly account has been reserved for you with 10 Assets coins &mdash; these Assets translate to a portion of Assets' future revenue.
+                </p>
+
+                <h4>
+                  Why should you sign up?
+                </h4>
+
+                <ol>
+                  <li>
+                    You'll get access to more cool projects, like <a href="<%= product_url(Product.find_by_slug('buckets')) %>">Buckets</a>.
+                  </li>
+
+                  <li>
+                    You can build Assets if you want &mdash; and earn more Assets in the process!
+                  </li>
+
+                  <li>
+                    Did we mention that each project has its own Assets? You earn Assets based directly on your contributions to any of the projects on Assembly, which means real revenue for your work.
+                  </li>
+                </ol>
+
+                <table class="container">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <table class="row">
+                          <tbody>
+                            <tr>
+                              <td class="wrapper">
+                                <table class="twelve columns">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <table class="medium-button radius">
+                                          <tbody>
+                                            <tr>
+                                              <td style="border-color: #428bca !important; background-color: #428bca !important;">
+                                                <a style="color: #fff !important;" href="<%= new_user_registration_url(email: @email_address, assembly_assets_promotion: true) %>">Create your account and claim your Assets</a>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <br/>
+
+                <p>
+                  Over and out,
+                  <br/>
+                  The <%= @product.name %> team
+                </p>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -27,6 +27,7 @@
           }, {})
 
           this.addMembers(members);
+          this.setState({hasRecentlyActiveMembers: true})
         }.bind(this)
       })
     },
@@ -46,6 +47,7 @@
 
     getInitialState: function() {
       return {
+        hasRecentlyActiveMembers: false,
         members: {}
       }
     },
@@ -95,11 +97,18 @@
     },
 
     render: function() {
+      var loading = null
+      if (!this.state.hasRecentlyActiveMembers) {
+          loading = <div className="pull-right spinner"><div className="spinner-icon"></div></div>
+      }
       return (
         <div className="panel-group" id="accordion">
           <div className="panel panel-default">
             <div className="panel-heading">
-              <h6 className="panel-title">Online</h6>
+              <h6 className="panel-title">
+                {loading}
+                Online
+              </h6>
             </div>
             <div className="panel-body small">
               {
@@ -157,6 +166,9 @@
     },
 
     onlineMembers: function() {
+      if (!this.state.hasRecentlyActiveMembers) {
+        return []
+      }
       return _.chain(this.state.members).values().filter(function(member) {
         return isMemberOnline(member)
       }).sortBy(function(member) {
@@ -165,6 +177,9 @@
     },
 
     recentlyActiveMembers: function() {
+      if (!this.state.hasRecentlyActiveMembers) {
+        return []
+      }
       return _.chain(this.state.members).values().filter(function(member) {
         return !isMemberOnline(member) && isMemberRecentlyActive(member)
       }).sortBy(function(member) {

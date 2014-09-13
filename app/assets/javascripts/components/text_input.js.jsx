@@ -36,6 +36,9 @@
 
     keyDown: function(e) {
       if (e.key === 'Enter') {
+        e.stopPropagation();
+        e.preventDefault();
+
         this.handleClick(e);
       }
     },

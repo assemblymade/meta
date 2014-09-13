@@ -2,9 +2,14 @@ class BountyPosting < ActiveRecord::Base
   belongs_to :bounty, class_name: 'Wip', foreign_key: "bounty_id", inverse_of: :postings, touch: true
   belongs_to :poster, class_name: 'User'
 
-  default_scope -> { where('expired_at is null') }
+  scope :open_bounty, -> { joins(:bounty).where('wips.closed_at' => nil) }
+  scope :unexpired, -> { where(expired_at: nil) }
 
-  SLOTS = ENV['PUBLIC_BOUNTY_SLOTS'].try(:to_i) || 6
+  default_scope -> { unexpired.open_bounty }
+
+  validates :bounty, uniqueness: true, presence: true
+
+  SLOTS = ENV['PUBLIC_BOUNTY_SLOTS'].try(:to_i) || 3
 
   def self.tagged(tag)
     includes(bounty: :product).
@@ -24,7 +29,8 @@ class BountyPosting < ActiveRecord::Base
       count
   end
 
-  def ends_at
-    created_at + 7.days
+  def expire!
+    update!(expired_at: Time.now)
   end
+
 end

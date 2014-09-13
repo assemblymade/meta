@@ -12,18 +12,23 @@
 
     render: function() {
       return <div>
-        <div className="clearfix text-muted small">
-          <span className="pull-left">Simple</span>
-          <span className="pull-right">Complex</span>
+        <div className="clearfix text-muted text-small row">
+          <span className="col-md-6">Simple</span>
+          <span className="col-md-6 text-right">Complex</span>
         </div>
         <input type="range" min="0" max="100" onChange={this.handleOfferChanged} defaultValue={initialVal} />
-        <br />
-        <p>
-          <span className="text-success">
-            {this.relativeSize()}
+        <div className="row">
+          <span className="text-coins text-small col-md-2">
+            <span className="icon icon-app-coin"></span>
+            {numeral(this.props.newOffer).format('0,0')}
           </span>
-          <span> the average {this.props.product.name} bounty.</span>
-        </p>
+          <span className="text-right text-small col-md-10">
+            <span className="text-success">
+              {this.relativeSize()}
+            </span>
+            <span> the average {this.props.product.name} bounty.</span>
+          </span>
+        </div>
       </div>
     },
 

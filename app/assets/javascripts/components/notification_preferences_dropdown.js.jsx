@@ -28,9 +28,9 @@ var Avatar = require('./avatar.js.jsx');
           <button className={this.togglerClasses()} type="button" data-toggle="dropdown">
             {this.buttonState()}
 
-            <a className="toggler-badge" href={this.props.productWatchersPath}>
+            <span className="toggler-badge">
               {this.state.productWatchersCount}
-            </a>
+            </span>
           </button>
 
           <ul
@@ -94,12 +94,12 @@ var Avatar = require('./avatar.js.jsx');
 
     buttonState: function() {
       switch (this.state.selected) {
-        case 'following':
-          return 'Following';
-        case 'announcements':
-          return 'Updates only';
-        case 'not watching':
-          return 'Follow';
+      case 'following':
+        return 'Following';
+      case 'announcements':
+        return 'Updates only';
+      case 'not watching':
+        return 'Follow';
       }
     },
 
@@ -127,13 +127,15 @@ var Avatar = require('./avatar.js.jsx');
       }
     },
 
-    updatePreference: function(item, path) {
+    updatePreference: function(preference, path) {
+      var action = D.ACTIONS.UPDATE_SELECTED;
+
       Dispatcher.dispatch({
-        action: D.ACTIONS.UPDATE_SELECTED,
+        action: action,
         data: {
-          item: item,
+          preference: preference,
           path: path,
-          redirectTo: (item === 'following' ? this.props.afterFollowPath : null)
+          redirectTo: (preference === 'following' ? this.props.afterFollowPath : null)
         }
       });
     }

@@ -8,9 +8,10 @@ class FaqGroup
     ['revenue',   'Revenue and App Coins'],
     ['privacy',   'Privacy and Security'],
     ['community', 'Community'],
-    ['launching', 'Creating a Product'],
+    ['launching', 'Start a new Product'],
+    ['migrating', 'Migrate an existing Product'],
     ['platform',  'Using the Assembly Platform'],
-    ['terms',     'Terminology']
+    ['terms',     'Terminology']    
   ]
 
   def self.all

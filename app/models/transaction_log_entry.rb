@@ -31,7 +31,7 @@ class TransactionLogEntry < ActiveRecord::Base
        joins('inner join transaction_log_entries tle on tle.product_id = products.id').
        where('wallet_id = ?', wallet_id)
 
-    query = query.where('launched_at is not null') if launched_only
+    query = query.where.not(started_teambuilding_at: nil) if launched_only
 
     query.group('products.id').map do |product|
      [product.id, product.balance]

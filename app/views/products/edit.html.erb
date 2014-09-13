@@ -71,6 +71,42 @@
 
         <hr>
 
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h6 class="panel-title">Core Team</h6>
+            </div>
+            <div class="panel-body">
+              <ul class="list-unstyled">
+                <% @product.core_team.each do |user| %>
+                  <li>
+                    <a href="<%= user_path(user) %>">
+                      <img class="img-circle" style="margin-right:.5em" src="<%= user.avatar.url(32) %>" width="16" height="16" alt="@<%= user.username %>"><%= user.username %>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+              <hr>
+
+              <%= form_tag product_core_team_members_path(@product), class: 'form' do %>
+                <% if current_user && @product.core_team?(current_user) %>
+                  <fieldset>
+                <% else %>
+                  <fieldset disabled>
+                <% end %>
+
+                <div class="input-group input-group-sm" style="margin-bottom: 10px;">
+                  <%= label_tag :core_team_member_username, '@', class: 'input-group-addon input-group-addon-sm' %>
+                  <%= text_field_tag 'core_team_member[username]', nil, class: 'form-control input-sm', placeholder: 'username' %>
+                </div>
+                <%= submit_tag 'Add to Core Team', class: 'btn btn-default btn-block btn-sm' %>
+              <% end %>
+              </fieldset>
+            </div>
+          </div>
+
+        <hr>
+
         <h6 class="text-muted">The Vision</h6>
 
         <div class="form-group">

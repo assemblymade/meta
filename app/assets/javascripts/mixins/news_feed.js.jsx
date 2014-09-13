@@ -6,6 +6,7 @@ var NewsFeedUsersStore = require('../stores/news_feed_users_store');
 var update = require('react/lib/update');
 
 (function() {
+  var MORE_STORIES_LENGTH = 20;
   var NF = CONSTANTS.NEWS_FEED;
 
   var NewsFeedMixin = {
@@ -20,10 +21,10 @@ var update = require('react/lib/update');
       var spinner = this.spinner = new Spinner(opts).spin();
 
       target.appendChild(spinner.el);
+      NewsFeedStore.addChangeListener(this.getStories);
     },
 
     componentWillMount: function() {
-      NewsFeedStore.addChangeListener(this.getStories);
       this.fetchNewsFeed();
 
       this.onPush(function() {
@@ -53,10 +54,34 @@ var update = require('react/lib/update');
       this.setState({
         stories: newStories,
         actors: NewsFeedUsersStore.getUsers(),
-        showMore: (newStories.length - oldStoriesCount === NF.MORE_STORIES_LENGTH)
+        showMore: (newStories.length - oldStoriesCount === MORE_STORIES_LENGTH)
       }, function() {
         if (self.state.stories) {
           self.spinner.stop();
+
+          if (!self.state.stories.length) {
+            self._render = self.render;
+
+            self.render = function() {
+              return (
+                <ul className="dropdown-menu" style={{ 'min-width': '380px', width: '380px' }}>
+                  <li style={{ 'overflow-y': 'scroll', 'min-height': '60px' }}>
+                    <div className="text-center" style={{ 'padding-top': '15px' }}>
+                      There don't seem to be any notifications here just yet.
+                    </div>
+                  </li>
+                </ul>
+              );
+            }
+          } else {
+            if (typeof self._render === 'function') {
+              self.render = self._render;
+              self._render = null;
+            }
+          }
+
+          // force a re-render
+          self.forceUpdate();
         }
       });
     },

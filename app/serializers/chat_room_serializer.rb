@@ -1,5 +1,5 @@
 class ChatRoomSerializer < ActiveModel::Serializer
-  attributes :id, :label, :url, :updated
+  attributes :id, :label, :url, :updated, :readraptor_url
 
   def id
     object.key
@@ -19,5 +19,9 @@ class ChatRoomSerializer < ActiveModel::Serializer
 
   def last_event
     object.wip.events.order(:created_at).select(:created_at).last
+  end
+
+  def readraptor_url
+    ReadraptorTracker.new(object.key, current_user.id).url
   end
 end

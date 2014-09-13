@@ -1,8 +1,17 @@
 .nav {
+  > li > a {
+    color: $gray-light;
+
+    &:hover {
+      color: $gray-dark;
+    }
+  }
+
   > .active {
     font-weight: bold;
   }
 }
+
 
 .nav-pills {
   > li > a {
@@ -11,5 +20,74 @@
     &:hover {
       color: $gray-dark;
     }
+  }
+}
+
+.nav-tabs {
+  border-bottom: none;
+
+  > li {
+    margin-bottom: 0;
+  }
+
+  > li > a {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+
+    margin-right: 0;
+
+    padding-top: 12px;
+    padding-bottom: 12px;
+
+    &:hover {
+      border-bottom-color: $nav-tabs-link-hover-border-color;
+      color: $blue;
+      background: transparent;
+    }
+  }
+
+  > li > a:hover,
+  > li.active > a,
+  > li.active > a:hover, {
+    border-bottom-width: 3px;
+  }
+
+  > li.active > a,
+  > li.active > a:hover, {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom-color: $nav-tabs-active-link-hover-border-color;
+  }
+
+  > li.active > a,
+  > li.active > a:hover {
+    color: $text-color;
+  }
+}
+
+.nav-tabs.nav-justified {
+
+  > li > a {
+    border-bottom-width: 3px;
+    border-bottom-color: transparent;
+
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  > li > a:hover {
+    border-bottom-color: $nav-tabs-link-hover-border-color;
+  }
+
+  > li.active > a,
+  > li.active > a:hover {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom-color: $nav-tabs-active-link-hover-border-color;
+
+    border-bottom-width: 3px;
   }
 }

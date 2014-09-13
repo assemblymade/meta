@@ -16,13 +16,9 @@ module TextFilters
       unique_element_id = ['lightbox', SecureRandom.uuid].join('-')
 
       <<-ENDHTML
-        <div class="row">
-          <div class="col-xs-12 col-sm-8 col-md-6">
-            <a href="##{unique_element_id}" data-toggle="lightbox">
-              #{image_html}
-            </a>
-          </div>
-        </div>
+        <a href="##{unique_element_id}" data-toggle="lightbox">
+          #{image_html}
+        </a>
         <div id="#{unique_element_id}" class="lightbox" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="lightbox-dialog">
             <div class="lightbox-content">

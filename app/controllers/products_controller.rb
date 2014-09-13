@@ -17,6 +17,10 @@ class ProductsController < ProductController
     render layout: 'application'
   end
 
+  def start
+    render layout: 'application'
+  end
+
   def create
     @product = create_product_with_params
     if @product.valid?
@@ -57,11 +61,6 @@ class ProductsController < ProductController
   end
 
   def show
-    if @product.stealth? && @product.draft?
-      redirect_to edit_product_path(@product)
-      return
-    end
-
     @user_metrics = UserMetricsSummary.new(@product, Date.today - 1.day)
 
     page_views = TimedSet.new($redis, "#{@product.id}:show")
@@ -97,10 +96,6 @@ class ProductsController < ProductController
       target: @product
     )
 
-    if @product == Product.find_by_slug('assets')
-      AssemblyAsset.grant!(current_user, @product, promo=true)
-    end
-
     render nothing: true, :status => :ok
   end
 
@@ -123,8 +118,8 @@ class ProductsController < ProductController
 
   def launch
     authorize! :update, @product
-    if @product.update(launched_at: Time.now)
-      ApplyForPitchWeek.enqueue(@product.id, current_user.id)
+    if @product.update(started_teambuilding_at: Time.now)
+      ApplyForPitchWeek.perform_async(@product.id, current_user.id)
       flash[:info] = :applied_for_pitch_week
     end
     respond_with @product, location: product_path(@product)

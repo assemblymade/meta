@@ -3,47 +3,66 @@
 </script>
 
 <%= render 'shared/navbar' %>
-<%= render 'shared/welcome' %>
+
+<% if flash[:first_assets_granted] %>
+  <%= render 'products/assets_granted' %>
+<% end %>
 
 <div class="navbar navbar-product">
   <div class="container">
-    <div class="pull-right">
-      <div
-          data-react-class="NotificationPreferencesDropdown"
-          data-react-props="<%= {
-            productWatchersPath: product_people_path(@product),
-            productWatchersCount: @product.watchings_count,
-            productFollowPath: product_follow_path(@product),
-            productAnnouncementsPath: product_announcements_path(@product),
-            productUnfollowPath: product_unfollow_path(@product),
-            watchingState: @product.watching_state(current_user),
-            afterFollowPath: product_people_path(@product)
-          }.to_json %>">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="clearfix">
+          <div class="pull-right">
+            <ul class="list-inline pull-right">
+              <% if @product.stealth? && partner?(@product) %>
+                <li>
+                  <a href="<%= product_welcome_path(@product) %>" class="btn btn-success btn-sm btn-block">
+                    <span class="icon icon-rocket" style="margin-right: 2px;"></span>
+                    Review & Start Building Your Team
+                  </a>
+                </li>
+              <% end %>
+              <% if signed_in? %>
+                <li data-react-class="NotificationPreferencesDropdown"
+                    data-react-props="<%= {
+                      productWatchersPath: product_people_path(@product),
+                      productWatchersCount: @product.watchings_count,
+                      productFollowPath: product_follow_path(@product),
+                      productAnnouncementsPath: product_announcements_path(@product),
+                      productUnfollowPath: product_unfollow_path(@product),
+                      watchingState: @product.watching_state(current_user),
+                      afterFollowPath: product_people_path(@product)
+                    }.to_json %>">
+                <% else %>
+                <a class="btn toggler toggler-primary" href="<%= new_user_registration_path %>">
+                  <span>Follow</span>
+                  <span class="toggler-badge"><%= @product.watchings_count %></span>
+                </a>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+
+          <% if current_page?(product_path(@product)) %>
+            <%= render @product %>
+          <% else %>
+            <h3 class="pull-left alpha"><%= @product.name %></h3>
+          <% end %>
+        </div>
+        <%= render 'products/navbar', product: @product %>
       </div>
     </div>
-
-    <h3 class="alpha omega">
-      <a class="text-muted" href="<%= product_path(@product) %>">
-        <%= @product.name %>
-      </a>
-
-      <% if false %>
-        <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;"><%= @product.stage %></span>
-      <% end %>
-    </h3>
   </div>
 </div>
 
 <div class="container">
   <div class="row">
-    <div class="col-md-10 col-md-push-2">
+    <div class="col-md-10 col-md-offset-1">
       <%= yield %>
     </div>
-
-    <div class="col-md-2 col-md-pull-10">
-      <%= render 'products/sidenav', product: @product %>
-    </div>
   </div>
+
 </div>
 
 <% unless current_user.nil? %>
@@ -86,9 +105,11 @@
       </div>
     </form>
   </div>
+
+  <div id="public-address-prompt"></div>
 <% end %>
 
-<%= render 'shared/footer' unless @disable_footer %>
+<%= render 'shared/footer' %>
 
 <% parent_layout 'application' %>
 

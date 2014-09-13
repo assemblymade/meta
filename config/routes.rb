@@ -47,8 +47,10 @@ ASM::Application.routes.draw do
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
 
-  get '/new'      => redirect('/create')
-  get '/create'   => 'products#new',     :as => :new_idea
+  get '/new'      => redirect('/start')
+  get '/create'   => 'products#new',      :as => :new_idea
+  get '/start'    => 'products#start',    :as => :start_idea
+
   resources :ideas, :only => [:index]
 
   get '/discover(/:action)', controller: 'discover',
@@ -57,7 +59,7 @@ ASM::Application.routes.draw do
                                action: 'trending'
                              },
                              constraints: {
-                               action: /trending|live|updates|bounties/
+                               action: /bounties|trending|live|updates|teambuilding|greenlit|profitable/
                              }
 
   devise_for :users,
@@ -103,6 +105,7 @@ ASM::Application.routes.draw do
     post   '/users/confirmation' => 'users/confirmations#create'
 
     get    '/users/:id' => 'users#show', :as => :user
+    get    '/users/:id/assets' => 'users#assets', :as => :user_assets
     patch  '/users/:id' => 'users#update'
 
     resources :notifications, only: [:index]
@@ -125,6 +128,7 @@ ASM::Application.routes.draw do
     post '/mailgun' => 'mailgun#create'
     post '/mailgun/reply' => 'mailgun#reply'
     post '/github' => 'github#create'
+    post '/assembly_assets/transaction' => 'assembly_assets#transaction'
     post '/readraptor/immediate' => 'read_raptor#immediate'
     post '/readraptor/daily'     => 'read_raptor#daily'
     post '/pusher' => 'pusher#auth'
@@ -204,7 +208,7 @@ ASM::Application.routes.draw do
       end
       resources :projects, only: [:create]
       resources :potential_users, controller: 'subscribers', only: [:create, :destroy]
-      resources :bounty_postings, only: [:create]
+      resources :bounty_postings, only: [:create, :destroy]
     end
 
     resources :textcompletes, only: [:index]
@@ -244,6 +248,7 @@ ASM::Application.routes.draw do
 
     resources :payments, only: [:index, :create, :update, :destroy]
     resources :expense_claims, only: [:create]
+    resources :assembly_assets, only: [:create]
 
     resources :product_logos, only: [:index, :show, :create, :update], as: :logos, path: 'logos'
 

@@ -38,6 +38,8 @@ var TagListStore = require('../stores/tag_list_store');
       var self = this;
 
       return function(e) {
+        e.stopPropagation();
+
         Dispatcher.dispatch({
           action: TAG_LIST.ACTIONS.ADD_TAG,
           data: {
@@ -220,6 +222,7 @@ var TagListStore = require('../stores/tag_list_store');
 
       // FIXME: When there are no tags, the client just receives [""], which requires weird checks like this.
       if (this.props.destination &&
+          !this.props.newBounty &&
           (_.isEmpty(mappedTags) ||
             (mappedTags[0] == undefined &&
              mappedTags[1] == undefined))) {
@@ -231,7 +234,7 @@ var TagListStore = require('../stores/tag_list_store');
                 visible={this.state.popoverShown}
                 onHide={this.handleHide}>
               <span>
-                No tags yet &mdash; why not <a onClick={this.togglePopover} style={{ cursor: 'pointer', 'font-size': '13px' }}>add some</a>?
+                No tags yet &mdash; why not <a href="javascript:void(0);" onClick={this.togglePopover}>add some</a>?
               </span>
             </BsPopover>
           </li>

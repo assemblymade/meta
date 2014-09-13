@@ -19,7 +19,7 @@ describe('NotificationPreferencesDropdownStore', function() {
       return true;
     });
 
-    NotificationPreferencesDropdownStore.updateSelected({ item: 'rugby', path: '/' });
+    NotificationPreferencesDropdownStore.updateSelected({ preference: 'rugby', path: '/' });
 
     expect(NotificationPreferencesDropdownStore.getSelected()).to.eql('rugby');
 
@@ -31,7 +31,7 @@ describe('NotificationPreferencesDropdownStore', function() {
       return true;
     });
 
-    NotificationPreferencesDropdownStore.updateSelected({ item: 'baseball', path: '/' });
+    NotificationPreferencesDropdownStore.updateSelected({ preference: 'baseball', path: '/' });
 
     expect(NotificationPreferencesDropdownStore.getSelected()).to.eql('baseball');
 

@@ -3,29 +3,25 @@
 <% activate_nav! :discover_bounties %>
 
 <%= render 'shared/navbar' %>
-<%= render 'shared/welcome' %>
 
-<div class="page page-flat">
+<div class="page-header" style="padding-bottom:0">
   <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="page-header">
-          <h2>
-            All open <span class=""><%= params[:filter]%></span> bounties
-          </h2>
-          <ul class="nav nav-pills">
-            <% @filters.select{|f| f[:count] > 0}.each do |f| %>
-              <li class="<%= 'active' if params[:filter] == f[:slug] %>">
-                <a href="<%= discover_path(:bounties, filter: f[:slug]) %>">
-                  <%= f[:label] %> <span class="badge badge-subtle"><%= f[:count] %></span>
-                </a>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <h2>
+      All open <span class=""><%= params[:filter]%></span> bounties
+    </h2>
+    <ul class="nav nav-tabs">
+      <% @filters.select{|f| f[:count] > 0}.each do |f| %>
+        <li class="<%= 'active' if params[:filter] == f[:slug] %>">
+          <a href="<%= discover_path(:bounties, filter: f[:slug]) %>">
+            <%= f[:label] %> <span class="badge badge-subtle"><%= f[:count] %></span>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 
+  <div class="container">
     <% @postings.each do |posting| %>
       <div class="row">
         <div class="col-md-8">
@@ -40,6 +36,5 @@
     <% end %>
     </div>
   </div>
-</div>
 
 <%= render 'shared/footer' %>
