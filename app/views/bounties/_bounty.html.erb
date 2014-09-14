@@ -14,19 +14,19 @@
 
     <ul class="list-inline omega">
       <li>
-        <div id="js-bounty-valuation" class="text-large alpha"></div>
-        <script>
-          React.renderComponent(BountyValuation(<%== {
-            offersPath: api_product_bounty_offers_path(@product, bounty),
-            product: { name: @product.name },
-            contracts: bounty.contracts.as_json,
-            offers: ActiveModel::ArraySerializer.new(bounty.offers).as_json,
-            maxOffer: (6 * @product.average_bounty).round(-4),
-            averageBounty: @product.average_bounty,
-            value: bounty.value,
-            open: bounty.open?
-          }.to_json %>), document.getElementById('js-bounty-valuation'));
-        </script>
+        <div class="text-large alpha"
+             data-react-class="BountyValuation"
+             data-react-props="<%= {
+               offersPath: api_product_bounty_offers_path(@product, bounty),
+               product: { name: @product.name },
+               contracts: bounty.contracts.as_json,
+               offers: ActiveModel::ArraySerializer.new(bounty.offers).as_json,
+               maxOffer: (6 * @product.average_bounty).round(-4),
+               averageBounty: @product.average_bounty,
+               value: bounty.value,
+               open: bounty.open?
+             }.to_json %>"
+        ></div>
       </li>
       <li>
         <% if bounty.state == 'resolved' %>
