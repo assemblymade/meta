@@ -2,49 +2,55 @@
 <% activate_nav! :financials %>
 <% activate_nav! :financial_overview %>
 
-<div class="stat-group">
-  <div class="stat">
-    <div class="stat-title">Total Revenue</div>
-    <div class="stat-value"><%= short_currency @product.profit_reports.map(&:revenue).reduce(:+) %></div>
-  </div>
-
-  <div class="stat">
-    <div class="stat-title">Total Expenses</div>
-    <div class="stat-value"><%= short_currency @product.profit_reports.map(&:expenses).reduce(:+) %></div>
-  </div>
-
-  <div class="stat">
-    <div class="stat-title">Total Royalties</div>
-    <div class="stat-value"><%= short_currency @product.profit_reports.map(&:profit).reduce(:+) %></div>
-  </div>
-
-  <div class="stat">
-    <div class="stat-title">Total Royalties</div>
-    <div class="stat-value"><%= short_currency @product.profit_reports.map(&:profit).reduce(:+) %></div>
-  </div>
-
-</div>
-
-<hr>
-
 <% if @reports.empty? %>
-  <div class="row">
-    <div class="col-md-8 col-xs-12 col-md-offset-2">
-      <div class="well well-lg">
-        <h3 class="alpha">
-          <strong>This product is still working on generating revenue</strong>
-        </h3>
-        <p class="text-muted">Once <%= @product.name %> starts charging customers and
-        generating revenue we'll post all the details on this page. You'll
-        be able to track expenses, determine profits, and, most importantly,
-        see your royalties as a partner.</p>
-        <div class="text-center">
-          <a class="btn btn-primary text-center" href="<%= product_partners_path(@product) %>" style="margin-top:12px;">See who owns <%= @product.name %></a>
+  <div style="position:relative;min-height:510px;">
+    <%= image_tag 'financials-blankslate.png', class: 'img-responsive', style: 'position:absolute' %>
+
+    <div class="row">
+      <div class="col-md-8 col-xs-12 col-md-offset-2">
+        <div class="well well-lg text-center">
+          <h3 class="alpha">
+            This product hasn't earnt any revenue yet.
+          </h3>
+          <p class="text-muted">
+            Once <%= @product.name %> starts charging customers and earning
+            revenue you'll be able to see the details on this page. You can
+            track expenses, determine profits, and, most importantly, see your
+            royalties as a partner.
+          </p>
+          <div class="text-center">
+            <a class="btn btn-primary" href="<%= product_partners_path(@product) %>" style="margin-top:12px;">See who owns <%= @product.name %></a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 <% else %>
+  <div class="stat-group">
+    <div class="stat">
+      <div class="stat-title">Total Revenue</div>
+      <div class="stat-value"><%= short_currency @product.profit_reports.map(&:revenue).reduce(:+) %></div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Total Expenses</div>
+      <div class="stat-value"><%= short_currency @product.profit_reports.map(&:expenses).reduce(:+) %></div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Total Royalties</div>
+      <div class="stat-value"><%= short_currency @product.profit_reports.map(&:profit).reduce(:+) %></div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Total Royalties</div>
+      <div class="stat-value"><%= short_currency @product.profit_reports.map(&:profit).reduce(:+) %></div>
+    </div>
+
+  </div>
+
+  <hr>
+
   <table class="table table-responsive table-hover">
     <thead>
       <tr>
