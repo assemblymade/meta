@@ -3,90 +3,84 @@
 <% activate_nav! :people_ownership %>
 
 <% cache [@product] do %>
-  <div class="page-header sheet-header">
-    <h2>Ownership</h2>
-    <%= render 'people/nav' %>
-  </div>
+  <%= render 'people/nav' %>
 
-  <div class="sheet-body">
+  <% if !@product.for_profit? %>
+    <%= render 'products/non_profit' %>
+  <% end %>
 
-    <% if !@product.for_profit? %>
-      <%= render 'products/non_profit' %>
-    <% end %>
+  <% if @user_cents.any? %>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="text-left">Partner</th>
+            <th class="text-right">
+              <% if @product.for_profit? %>
+                Coins
+              <% else %>
+                Karma
+              <% end %>
+            </th>
 
-    <% if @user_cents.any? %>
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
+            <th class="text-right">
+              <% if @product.for_profit? %>
+                Ownership
+              <% else %>
+                Percentage
+              <% end %>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- TODO: Include escrow accounts (styled differently) -->
+          <% @user_cents.each do |user, cents| %>
             <tr>
-              <th class="text-left">Partner</th>
-              <th class="text-right">
-                <% if @product.for_profit? %>
-                  Coins
-                <% else %>
-                  Karma
-                <% end %>
-              </th>
-
-              <th class="text-right">
-                <% if @product.for_profit? %>
-                  Ownership
-                <% else %>
-                  Percentage
-                <% end %>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- TODO: Include escrow accounts (styled differently) -->
-            <% @user_cents.each do |user, cents| %>
-              <tr>
-                <td>
-                  <a href="<%= user_path(user) %>">
-                    <%= avatar_tag(user, 20) %>
-                    <span style="margin-left: 4px;"><%= user.username %></span>
-                  </a>
-                </td>
-                <td class="text-right">
-                  <span class="icon icon-app-coin text-coins"></span>
-                  <%= number_with_delimiter(cents) %>
-                </td>
-                <td class="text-right">
-                  <% if cents / @total_cents.to_d < 0.0001 %>
-                    &lt; 0.01%
-                  <% else %>
-                    <%= number_to_percentage(cents / @total_cents.to_d * 100, precision: 2) %>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-
-            <!-- <tr class="active text-muted">
-              <td>Unvested</td>
+              <td>
+                <a href="<%= user_path(user) %>">
+                  <%= avatar_tag(user, 20) %>
+                  <span style="margin-left: 4px;"><%= user.username %></span>
+                </a>
+              </td>
               <td class="text-right">
                 <span class="icon icon-app-coin text-coins"></span>
-                9,800,390
+                <%= number_with_delimiter(cents) %>
               </td>
-              <td class="text-right">-</td>
-            </tr> -->
+              <td class="text-right">
+                <% if cents / @total_cents.to_d < 0.0001 %>
+                  &lt; 0.01%
+                <% else %>
+                  <%= number_to_percentage(cents / @total_cents.to_d * 100, precision: 2) %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
 
-          </tbody>
-        </table>
-      </div>
-    <% else %>
+          <!-- <tr class="active text-muted">
+            <td>Unvested</td>
+            <td class="text-right">
+              <span class="icon icon-app-coin text-coins"></span>
+              9,800,390
+            </td>
+            <td class="text-right">-</td>
+          </tr> -->
 
-      <div class="well well-lg omega">
-        <h3 class="alpha">
-          <strong>Become a <%= @product.name %> partner</strong>
-        </h3>
-        <p class="text-muted">
-          Partners have stake in a product's monthly revenue. Become a partner by earning app coins when you complete tasks with bounties or receive tips from the community for being an inspirational community member. <a href="/help/profits#profits-2">Learn more in the FAQ</a>.
-        </p>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
 
-        <a class="btn btn-success" href="<%= new_product_wip_path(@product) %>">
-          Create a Task
-        </a>
-      </div>
-    <% end %>
-  </div>
+    <div class="well well-lg omega">
+      <h3 class="alpha">
+        <strong>Become a <%= @product.name %> partner</strong>
+      </h3>
+      <p class="text-muted">
+        Partners have stake in a product's monthly revenue. Become a partner by earning app coins when you complete tasks with bounties or receive tips from the community for being an inspirational community member. <a href="/help/profits#profits-2">Learn more in the FAQ</a>.
+      </p>
+
+      <a class="btn btn-success" href="<%= new_product_wip_path(@product) %>">
+        Create a Task
+      </a>
+    </div>
+  <% end %>
 <% end %>
