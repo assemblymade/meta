@@ -231,6 +231,11 @@ ASM::Application.routes.draw do
 
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do
+
+    # Deprecations
+    get '/wips', to: redirect {|p| "/#{p[:product_id]}/bounties" }
+    get '/wips/*', to: redirect {|p, req| "/bounties/#{p[:extra]}" }
+
     match 'flag',    via: [:get, :post]
 
     get 'welcome'
@@ -276,7 +281,7 @@ ASM::Application.routes.draw do
     patch '/wips/:wip_id/to_discussion' => 'tasks#to_discussion', as: :task_to_discussion
 
     resources :work
-    resources :wips, only: [:index, :show, :new, :edit, :create, :update], controller: 'tasks' do
+    resources :wips, only: [:index, :show, :new, :edit, :create, :update], controller: 'tasks', path: 'bounties' do
       get 'search', :on => :collection
 
       get   'checkin'
