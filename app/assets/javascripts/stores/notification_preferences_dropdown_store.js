@@ -33,8 +33,8 @@
       var redirectTo = data.redirectTo;
       var publicAddress = data.publicAddress;
 
-      window.xhr.post(path, { public_address: publicAddress }, function(){
-        if (data.redirectTo) {
+      window.xhr.post(path, { public_address: publicAddress }, function() {
+        if (redirectTo) {
           app.redirectTo(redirectTo)
         }
       });

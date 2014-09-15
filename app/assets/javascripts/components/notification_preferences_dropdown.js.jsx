@@ -124,8 +124,7 @@ var Avatar = require('./avatar.js.jsx');
         action: action,
         data: {
           preference: preference,
-          path: path,
-          redirectTo: (preference === 'following' ? this.props.afterFollowPath : null)
+          path: path
         }
       });
     }
