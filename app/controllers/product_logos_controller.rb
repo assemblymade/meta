@@ -15,7 +15,9 @@ class ProductLogosController < ProductController
 
     @product.update_attributes(logo: logo)
 
-    respond_with @product, location: product_assets_path(@product)
+    respond_with @product do |format|
+      format.html { redirect_to edit_product_path(@product) }
+    end
   end
 
   def show
