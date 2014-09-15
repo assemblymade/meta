@@ -10,7 +10,9 @@
         <div class="row">
           <div class="col-md-9">
             <% @page.each do |post| %>
-              <img src="<%= post.product.poster_image.url %>" class="img-rounded" height="80px" alt="<%= post.product.name %>" style="float: left; margin-right: 20px;">
+              <span style="float: left; margin-right: 20px;">
+                <%= app_icon(post.product, size: 80) %>
+              </span>
               <%= render post %>
               <hr/>
             <% end %>
