@@ -39,7 +39,52 @@
 
   <div class="col-md-4 col-md-offset-1">
 
-    <a href="<%= product_tasks_path(@product) %>" class="btn btn-lg btn-success btn-block">Build this product with us</a>
+    <% if signed_in? %>
+
+      <% product_membership = current_user.team_memberships.find_by(product: @product) %>
+
+      <% if product_membership.nil? || product_membership.bio.nil? %>
+        <button class="btn btn-lg btn-success btn-block" data-toggle="modal" data-target="#intro-modal">Build this product with us</button>
+      <% else %>
+        <a href="<%= product_tasks_path(@product) %>" class="btn btn-lg btn-success btn-block disabled">Build this product with us</a>
+      <% end %>
+
+      <div class="modal fade" id="intro-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Want to be part of <%= @product.name %>? Introduce yourself!</h4>
+              </div>
+              <div class="modal-body">
+                <p>
+                  What skills can you contribute, how much time do you have, and what are you looking to get out of the experience?
+                </p>
+
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                <input name="_method" value="patch" type="hidden">
+
+                <div class="form-group">
+                  <textarea name="membership[bio]" id="bio-editor" class="form-control bio-editor" rows="4" id="self-introduction" placeholder="Hi everyone, I'm Maeby! I love coding in VB6, and I develop apps for IE7 and Windows ME. When I'm not hacking, I like to dabble in design: gradients and 3D effects are my jam! I'm excited to dive in and get to know you all!"></textarea>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Introduce yourself</button>
+              </div>
+
+            </form>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+    <% else %>
+      <a href="<%= product_tasks_path(@product) %>" class="btn btn-lg btn-success btn-block">Build this product with us</a>
+    <% end %>
+
+
 
     <br>
 
