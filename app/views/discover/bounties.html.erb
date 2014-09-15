@@ -7,7 +7,7 @@
 <div class="page-header" style="padding-bottom:0">
   <div class="container">
     <h2>
-      All open <span class=""><%= params[:filter]%></span> bounties
+      All open <span class=""><%= params[:filter_text] %></span> bounties
     </h2>
     <ul class="nav nav-tabs">
       <% @filters.select{|f| f[:count] > 0}.each do |f| %>

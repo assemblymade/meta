@@ -49,11 +49,12 @@ class DiscoverController < ApplicationController
 
   def bounties
     if params[:filter].blank?
-      cookies[:discover_bounties_filter] ||= 'design'
+      cookies[:discover_bounties_filter] ||= 'all'
       redirect_to discover_path(:bounties, filter: cookies[:discover_bounties_filter])
     end
 
     filter = cookies[:discover_bounties_filter] = params[:filter]
+    params[:filter_text] = params[:filter] == 'all' ? '' : params[:filter]
 
     @filters = [{
       slug: 'all',
