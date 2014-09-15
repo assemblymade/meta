@@ -86,7 +86,7 @@ private
   end
 
   def post_params
-    params.require(:post).permit(:title, :summary, :body, :published_at)
+    params.require(:post).permit(:title, :summary, :body, :published_at, :flagged_at)
   end
 
 end
