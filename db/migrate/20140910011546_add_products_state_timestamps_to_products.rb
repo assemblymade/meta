@@ -6,6 +6,9 @@ class AddProductsStateTimestampsToProducts < ActiveRecord::Migration
     add_index :products, :started_teambuilding_at
     add_index :products, :profitable_at
 
+    Product.connection.schema_cache.clear!
+    Product.reset_column_information
+
     Product.all.each do |product|
       if product.partners.count >= 8
         product.update(greenlit_at: Time.now, started_teambuilding_at: Time.now)
