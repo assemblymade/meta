@@ -190,8 +190,9 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
           <li ref="spinner" style={{'min-height': 120}}>
             <NotificationsList data={_.first(this.sortByLastReadAt(this.state.data), 7)} />
           </li>
+          <li className="divider"></li>
           <li>
-            <a href="#" onClick={this.markAllAsRead} className="list-group-item" style={{'border': 'none'}}>
+            <a href="#" onClick={this.markAllAsRead} className="text-small list-group-item" style={{'border': 'none'}}>
               Mark all as read
             </a>
           </li>

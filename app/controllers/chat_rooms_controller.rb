@@ -12,7 +12,7 @@ class ChatRoomsController < ApplicationController
         ).compact
 
         render json: {
-          chat_rooms: ActiveModel::ArraySerializer.new(@rooms, scope: current_user, scope_name: 'current_user'),
+          chat_rooms: ActiveModel::ArraySerializer.new(@rooms, scope: current_user),
           sort_keys: current_user.recent_product_ids.try(:map) {|pid| "chat_#{pid}"} || []
         }
       }
