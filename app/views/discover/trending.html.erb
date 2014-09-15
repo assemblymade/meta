@@ -5,13 +5,14 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-12">
 
-      <h3 class="text-muted">
-        <span class="text-success">Profitable</span> Products
-
-        <small style="padding-left: 5px">Work on growing products that have generated revenue in the last 30 days.</small>
-      </h3>
+      <div class="text-center" style="margin-top:48px;margin-bottom:24px">
+        <h3 class="omega">
+          Profitable Products
+        </h3>
+        <p class="text-muted">Growing products that have generated revenue in the last 30 days.</p>
+      </div>
 
       <div class="row">
         <% @profitable.each do |product| %>
@@ -23,11 +24,19 @@
         <% end %>
       </div>
 
-      <h3 class="text-muted">
-        <span class="text-success">Greenlit</span> Products
 
-        <small style="padding-left: 5px">Help popular products build out features and focus on launching.</small>
-      </h3>
+      <div class="row">
+        <div class="col-md-2 col-md-offset-5">
+          <hr>
+        </div>
+      </div>
+
+      <div class="text-center" style="margin-bottom:24px">
+        <h3 class="omega">
+          Greenlit Products
+        </h3>
+        <p class="text-muted">Help popular products build out features and focus on launching.</p>
+      </div>
 
       <div class="list-group list-group-breakout omega">
         <% @greenlit.each do |product| %>
@@ -40,12 +49,18 @@
         <a href="<%= discover_path(:greenlit) %>">More products</a>
       </p>
 
+      <div class="row">
+        <div class="col-md-2 col-md-offset-5">
+          <hr>
+        </div>
+      </div>
 
-      <h3 class="text-muted">
-        Products <span class="text-success">Building Teams</span>
-
-        <small style="padding-left: 5px">Join products on the ground floor to help define the core idea and initial features.</small>
-      </h3>
+      <div class="text-center" style="margin-bottom:24px">
+        <h3 class="omega">
+          Team Building Products
+        </h3>
+        <p class="text-muted">Join products on the ground floor to help define the core idea and initial features.</p>
+      </div>
 
       <div class="list-group list-group-breakout omega">
         <% @teambuilding.each do |product| %>
