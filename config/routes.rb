@@ -203,7 +203,7 @@ ASM::Application.routes.draw do
         resources :comments, only: [:create]
       end
 
-      resources :bounties, only: [] do
+      resources :bounties, only: [:create] do
         resources :offers, only: [:create, :show]
       end
       resources :projects, only: [:create]
