@@ -30,7 +30,7 @@
 
   <div>
     <a href="<%= product_wip_path(bounty.product, bounty) %>">
-      <strong><%= bounty.title %></strong>
+      <h4 class="alpha omega"><%= bounty.title %></h4>
     </a>
 
     <% bounty.tags.map do |tag| %>
@@ -41,6 +41,7 @@
     <% end %>
   </div>
 
+  <div><%= truncate(bounty.description, length: 100) %></div>
 
   <div class="clearfix small text-muted">
     <% if bounty.open? %>

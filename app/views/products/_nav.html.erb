@@ -1,8 +1,16 @@
 <ul class="nav nav-tabs nav-justified">
+
+  <li class="<%= nav_active_class(:idea) %>">
+    <a href="<%= product_path(product) %>">
+      <span class="icon icon-compass icon-left"></span>
+      Idea
+    </a>
+  </li>
+
   <li class="<%= nav_active_class(:updates) %>">
     <a href="<%= product_posts_path(product) %>">
       <span class="icon icon-graph icon-left"></span>
-      Activity
+      Updates
     </a>
   </li>
 

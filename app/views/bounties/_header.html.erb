@@ -10,7 +10,7 @@
     <ul class="nav nav-pills">
       <li class="<%= 'active' if params[:state].blank? || params[:state] == 'open' %>">
         <a href="<%= scoped_product_bounties_path(@product, state: 'open') %>">
-          Open
+          Todo
 
           <span class="badge badge-subtle">
             <%= @product.tasks.open.count %>
@@ -20,7 +20,7 @@
 
       <li class="<%= 'active' if params[:state] == 'progress' %>">
         <a href="<%= scoped_product_bounties_path(@product, state: 'progress') %>">
-          In Progress
+          Doing
 
           <span class="badge badge-subtle">
             <%= @product.tasks.allocated.count %>
@@ -30,16 +30,12 @@
 
       <li class="<%= 'active' if params[:state] == 'closed' %>">
         <a href="<%= scoped_product_bounties_path(@product, state: 'closed') %>">
-          Closed
+          Done
 
           <span class="badge badge-subtle">
             <%= @product.tasks.closed.count %>
           </span>
         </a>
-      </li>
-
-      <li class="<%= 'active' if params[:state] == 'all' %>">
-        <a href="<%= scoped_product_bounties_path(@product, state: 'all') %>">All</a>
       </li>
 
       <li class="dropdown">
