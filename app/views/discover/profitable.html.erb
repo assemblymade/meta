@@ -17,7 +17,7 @@
       <div class="list-group list-group-breakout omega">
         <% @products.each do |product| %>
           <a class="list-group-item"  href="<%= product_path(product) %>">
-            <%= render 'products/chip', product: product, is_pitching: false %>
+            <%= render 'products/chips/greenlit', product: product %>
           </a>
         <% end %>
       </div>

@@ -17,10 +17,6 @@
         <% @profitable.each do |product| %>
           <div class="col-sm-4">
             <a href="<%= product_path(product) %>">
-              <!--
-                Extra param to the partial because the data isn't on the
-                product yet - @chrislloyd
-              -->
               <%= render 'products/card', product: product %>
             </a>
           </div>
