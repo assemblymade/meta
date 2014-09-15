@@ -232,10 +232,6 @@ ASM::Application.routes.draw do
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do
 
-    # Deprecations
-    get '/wips', to: redirect {|p| "/#{p[:product_id]}/bounties" }
-    get '/wips/*', to: redirect {|p, req| "/bounties/#{p[:extra]}" }
-
     match 'flag',    via: [:get, :post]
 
     get 'welcome'
@@ -327,6 +323,7 @@ ASM::Application.routes.draw do
     get :chat, to: redirect('/chat/%{product_id}')
     get :team, to: redirect(path: '%{product_id}/people')
     get :welcome, to: redirect(path: '%{product_id}')
+    get '/wips/(*all)', to: redirect(path: '/%{product_id}/bounties/%{all}')
 
     get '/:number', to: redirect(path: '%{product_id}/wips/%{number}'),
       constraints: {number: /\d+/},
