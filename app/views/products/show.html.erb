@@ -73,12 +73,12 @@
             <a href="<%= product_tasks_path(@product) %>">completing a bounty</a>.</p>
 
           <div class="progress progress-sm" style="margin-bottom:6px">
-            <div class="progress-bar progress-bar-success" style="width:50%"></div>
+            <div class="progress-bar progress-bar-success" style="width:<%= ((@product.partners_count / 10.0) * 100).round %>%"></div>
           </div>
 
           <div class="clearfix">
             <div class="pull-left"><%= pluralize(@product.partners_count, 'partner') %></div>
-            <div class="pull-right">10 days left</div>
+            <div class="pull-right"><%= pluralize(@product.teambuilding_days_left, 'day') %> left</div>
           </div>
 
         </div>
