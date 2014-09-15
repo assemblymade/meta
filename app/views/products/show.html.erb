@@ -3,31 +3,20 @@
 <%= track 'product.viewed', ProductAnalyticsSerializer.new(@product, scope: current_user) %>
 
 <div class="row">
-  <div class="col-md-8">
-    <!-- <div class="embed-responsive embed-responsive-16by9">
-      <iframe class="embed-responsive-item" width="853" height="480" src="//www.youtube-nocookie.com/embed/OI3shBXlqsw?rel=0" frameborder="0" allowfullscreen></iframe>
-    </div> -->
-
-    <!-- <hr> -->
-    <!-- <div class="well">
-      <ul class="list-inline large omega">
-        <% if @product.homepage_url.present? %>
-          <li><a href="<%= @product.homepage_url %>">Homepage</a></li>
-        <% end %>
-
-        <% if @product.chat_rooms.any? %>
-          <% chat_room = @product.chat_rooms.first %>
-          <li><a href="<%= chat_room_path(chat_room) %>">Chat</a></li>
-        <% end %>
-
-        <li><a href="<%= product_projects_path(@product) %>">Projects</a></li>
-        <li><a href="<%= product_discussions_path(@product) %>">Discussions</a></li>
-        <li><a href="<%= product_assets_path(@product) %>">Assets</a></li>
-        <li><a href="<%= product_repos_path(@product) %>">Repositories</a></li>
-      </ul>
-    </div>
-
-    <br> -->
+  <div class="col-md-7">
+    <% if @product.you_tube_video_url? %>
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe
+          class="embed-responsive-item"
+          width="853"
+          height="480"
+          src="<%= @product.you_tube_video_embed_url %>"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <hr>
+    <% end %>
 
     <div class="markdown markdown-normalized text-large">
       <% if @product.lead.present? %>
@@ -48,7 +37,7 @@
 
   </div>
 
-  <div class="col-md-4">
+  <div class="col-md-4 col-md-offset-1">
 
     <a href="<%= product_tasks_path(@product) %>" class="btn btn-lg btn-success btn-block">Build this product with us</a>
 
@@ -72,16 +61,41 @@
       </div>
     </div>
 
-    <!-- <h2 class="alpha"> Getting started</h2> -->
+    <hr>
 
-    <!-- <div class="list-group"> -->
-      <!-- <% @product.tasks.take(3).each do |bounty| %>
-        <div class="list-group-item">
-          <%= render 'bounties/card', bounty: bounty %>
-        </div>
-      <% end %> -->
-    <!-- </div> -->
+    <h6 class="text-muted">Core Team</h6>
 
+    <div class="list-group list-group-breakout">
+      <% @product.core_team.each do |user| %>
+        <a class="list-group-item" href="<%= user_path(user) %>">
+          <div class="chip chip-sm">
+            <span class="chip-icon"><%= avatar_tag(user) %></span>
+            <span class="text-primary"><%= user.username %></span>
+            <% if user.bio.present? %>
+              &mdash;
+              <span class="text-muted"><%= user.bio %></span>
+            <% end %>
+          </div>
+        </a>
+      <% end %>
+    </div>
+
+    <h6 class="text-muted">Other links</h6>
+    <ul class="list-unstyled large omega">
+      <% if @product.homepage_url.present? %>
+        <li><a href="<%= @product.homepage_url %>">Homepage</a></li>
+      <% end %>
+
+      <% if @product.chat_rooms.any? %>
+        <% chat_room = @product.chat_rooms.first %>
+        <li><a href="<%= chat_room_path(chat_room) %>">Chat</a></li>
+      <% end %>
+
+      <li><a href="<%= product_projects_path(@product) %>">Projects</a></li>
+      <li><a href="<%= product_discussions_path(@product) %>">Discussions</a></li>
+      <li><a href="<%= product_assets_path(@product) %>">Assets</a></li>
+      <li><a href="<%= product_repos_path(@product) %>">Repositories</a></li>
+    </ul>
 
   </div>
 
