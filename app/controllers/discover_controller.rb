@@ -94,7 +94,8 @@ class DiscoverController < ApplicationController
 
   def updates
     @posts = Post.joins(:product).
-      where('products.flagged_at is null').
+      where(products: { flagged_at: nil }).
+      where(flagged_at: nil).
       order(created_at: :desc)
 
     @page = @posts.page(params[:page])
