@@ -1,5 +1,5 @@
-<div class="page-header sheet-header">
-  <div class="page-header-meta">
+<div class="sub-thingy">
+  <% if partner?(@product) %>
     <div data-react-class="CreateBountyButton" data-react-props="<%= {
       product: { name: @product.name },
       url: product_wips_path(@product),
@@ -87,5 +87,7 @@
         </ul>
       </li>
     </ul>
-  </div>
+  <% elsif signed_in? %>
+    <div data-react-class="CreateBountyButton" data-react-props="<%= new_bounty_props(@product).to_json %>"></div>
+  <% end %>
 </div>

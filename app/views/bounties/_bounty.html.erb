@@ -1,13 +1,13 @@
-<p class="text-center text-muted lead">
+<!-- <p class="text-center text-muted lead">
   <% if bounty.current_posting %>
     This is a publicly featured bounty
   <% else %>
     This bounty is only visible to <%= @product.name %> partners
   <% end %>
-</p>
+</p> -->
 
 <div class="card">
-  <div class="card-body" style="border-bottom:1px solid #FAFAFA">
+  <div class="card-heading">
     <h3 class="alpha omega">
       <%= bounty.title %>
     </h3>
@@ -52,19 +52,25 @@
   </div>
 
   <div class="card-body">
-    <div class="markdown markdown-content text-large">
-      <%= product_markdown(bounty.product, bounty.description) %>
-    </div>
+    <% if bounty.description.present? %>
+      <div class="markdown markdown-content text-large">
+        <%= product_markdown(bounty.product, bounty.description) %>
+      </div>
+    <% else %>
+      <p class="large text-muted">(No description)</p>
+    <% end %>
 
+
+    <br>
     <% workers = bounty.wip_workers %>
     <% if workers.any? %>
-    <p class="text-muted">
+      <p class="text-muted">
         <%= workers.map(&:user).map {|user| user_link_username(user) }.to_sentence.html_safe %>
         started working on this bounty
         <time class="timestamp" dateTime="<%= workers.map(&:created_at).max.iso8601 %>"></time>.
       </p>
     <% else %>
-      <p class="text-muted">This bounty doesn't have anybody working on it. Jump in!</p>
+      <p class="text-muted omega small">This bounty doesn't have anybody working on it. Jump in!</p>
     <% end %>
   </div>
 

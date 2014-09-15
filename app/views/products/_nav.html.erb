@@ -1,15 +1,8 @@
 <ul class="nav nav-tabs nav-justified">
-  <li class="<%= nav_active_class(:idea) %>">
-    <a href="<%= product_path(product) %>">
-      <span class="icon icon-compass icon-left"></span>
-      Idea
-    </a>
-  </li>
-
   <li class="<%= nav_active_class(:updates) %>">
     <a href="<%= product_posts_path(product) %>">
-      <span class="icon-notebook icon-left"></span>
-      Updates
+      <span class="icon icon-graph icon-left"></span>
+      Activity
     </a>
   </li>
 
@@ -37,7 +30,7 @@
   <% if can?(:edit, product) %>
     <li class="<%= nav_active_class(:settings) %>">
       <a href="<%= edit_product_path(product) %>">
-        <span class="glyphicon glyphicon-cog icon-left"></span>
+        <span class="icon icon-settings icon-left"></span>
         Settings
       </a>
     </li>

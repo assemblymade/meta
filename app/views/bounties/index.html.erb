@@ -1,69 +1,108 @@
 <% title "Bounties", @product.name %>
 <% activate_nav! :bounties %>
+<%= track 'product.wips.viewed', ProductAnalyticsSerializer.new(@product) %>
 
 <% @show_urgency_dropdown = @product.core_team?(current_user) %>
 
-<div class="sheet-body">
-  <% if @project %>
-    <%= render 'projects/header', project: @project %>
-  <% else %>
-    <%= render 'bounties/postings', postings: @featured_bounties %>
-  <% end %>
+<%= render 'bounties/header' %>
 
-  <% if signed_in? && !partner?(@product) %>
-    <div data-react-class="CreateBountyButton" data-react-props="<%= new_bounty_props(@product).to_json %>"></div>
+<h4 class="text-center">Promoted bounties</h4>
 
-    <hr>
-  <% else partner?(@product) %>
-    <%= render 'bounties/header' if partner?(@product) %>
-  <% end %>
-
-  <div class="row">
-    <% if @product.wips.count > 1 %>
-      <div class="col-md-9">
-
-        <% if @project %>
-          <div class="markdown-normalized" style="margin-bottom: 40px">
-            <%== product_markdown(@project.product, @project.description) %>
-          </div>
-        <% end %>
-
-        <% if @wips.any? %>
-          <ol class="list-group list-group-breakout list-group-padded" id="wips-view-el">
-            <% @wips.each do |task| %>
-              <li class="list-group-item"><%= render 'bounties/chip', bounty: task %></li>
-            <% end %>
-          </ol>
-
-          <% if @wips.size > @wips.limit_value %>
-            <hr>
-
-            <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
-          <% end %>
-        <% end %>
+<% if @featured_bounties.any? %>
+  <div class="list-group list-group-breakout">
+    <% @featured_bounties.map {|posting| posting.bounty }.each do |bounty| %>
+      <div class="list-group-item">
+        <%= render 'bounties/chip', bounty: bounty %>
       </div>
+    <% end %>
+  </div>
+<% else %>
 
+  <p class="text-muted">No featured bounties yet. Create a new bounty and feature it.</p>
+
+<% end %>
+
+<hr style="border-color:#f0ad4e;border-width:2px">
+
+<% if signed_in? %>
+  <% product_membership = current_user.team_memberships.find_by(product: @product) %>
+
+  <% if product_membership.nil? || product_membership.bio.nil? %>
+    <div class="text-center">
+      <h2 class="omega">See the other <%= pluralize(@product.tasks.count, 'bounty') %> by introducing yourself</h2>
+      <p class="text-muted">
+        What skills can you contribute, how much time do you have, and what are you looking to get out of the experience?
+      </p>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
+
+          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+          <input name="_method" value="patch" type="hidden">
+
+          <div class="form-group">
+            <textarea name="membership[bio]" id="bio-editor" class="form-control bio-editor" rows="4" id="self-introduction" placeholder="Hi everyone! I love coding in VB6, and I develop apps for IE7 and Windows ME. When I'm not hacking, I like to dabble in design: gradients and 3D effects are my jam! I'm excited to dive in and get to know you all!"></textarea>
+          </div>
+          <button type="submit" id="join-intro-button" class="btn btn-primary btn-block">Introduce yourself</button>
+        </form>
+      </div>
+    </div>
+  <% else %>
+    <div class="text-center text-muted small" style="color:#FF4400">
+      Later
+    </div>
+    <br>
+
+    <div class="row">
+      <% if @product.wips.any? %>
+        <div class="col-md-9">
+
+          <% if @project %>
+            <div class="markdown-normalized" style="margin-bottom: 40px">
+              <%== product_markdown(@project.product, @project.description) %>
+            </div>
+          <% end %>
+
+          <% if @wips.any? %>
+            <ol class="list-group list-group-breakout list-group-padded" id="wips-view-el">
+              <% @wips.each do |task| %>
+                <li class="list-group-item"><%= render 'bounties/chip', bounty: task %></li>
+              <% end %>
+            </ol>
+
+            <% if @wips.size > @wips.limit_value %>
+              <hr>
+
+              <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
+            <% end %>
+          <% end %>
+        </div>
+
+<<<<<<< HEAD
       <div class="col-md-3">
         <%= render 'bounties/projects_filter', projects: @milestones %>
       </div>
-
-    <% else %>
-      <div class="col-md-6 col-md-offset-3">
-        <div class="well well-lg omega">
-          <h3 class="alpha"><strong>Create the first task</strong></h3>
-          <p class="text-muted omega">
-            Get started by breaking down a new idea into bite-sized chunks
-            that can valued and prioritized. Writing a great description will
-            make it super easy for anyone to jump in and get to work.
-          </p>
+=======
+        <div class="col-md-3">
+          <%= render 'bounties/projects_filter', projects: @milestones if partner?(@product) %>
         </div>
-      </div>
-    <% end %>
-  </div><!-- .row -->
+>>>>>>> Limit to thee featured bounties
 
-  <% unless staff? %>
-    <script>
-      analytics.track('product.wips.viewed', <%== ProductAnalyticsSerializer.new(@product).to_json %>)
-    </script>
+      <% else %>
+        <div class="col-md-6 col-md-offset-3">
+          <div class="well well-lg omega">
+            <h3 class="alpha"><strong>Create the first task</strong></h3>
+            <p class="text-muted omega">
+              Get started by breaking down a new idea into bite-sized chunks
+              that can valued and prioritized. Writing a great description will
+              make it super easy for anyone to jump in and get to work.
+            </p>
+          </div>
+        </div>
+      <% end %>
+    </div><!-- .row -->
+
   <% end %>
-</div>
+<% end %>

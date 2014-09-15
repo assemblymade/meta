@@ -1,202 +1,215 @@
 <% title 'Settings', @product.name %>
 <% activate_nav! :settings %>
 
-<div class="sheet-body">
-  <div class="row">
-    <div class="col-md-12 col-xs-12">
-      <%= form_for @product do |f| %>
+<ul class="nav nav-pills" role="tablist" style="margin-bottom:24px">
+  <li class="active">
+    <a href="#basics" role="tab" data-toggle="tab">Basics</a>
+  </li>
+  <li>
+    <a href="#core-team" role="tab" data-toggle="tab">Core Team</a>
+  </li>
+  <li>
+    <a href="#story" role="tab" data-toggle="tab">Story</a>
+  </li>
+</ul>
 
-        <div class="form-group">
-          <%= f.label :you_tube_video_url, 'Pitch video link', class: 'form-label' %>
-          <div class="row">
-            <div class="col-md-8">
-              <%= f.url_field :you_tube_video_url, class: 'form-control', maxlength: 255 %>
-            </div>
-            <div class="col-md-4">
-              <p class="help-block alpha">
-                Add a link to a video that describes your product. It could be as simple as you talking into a webcam, or
-                as awesome as an animated product video.
-              </p>
-            </div>
-          </div>
-        </div>
+<div class="tab-content">
+  <div class="tab-pane active" id="basics">
 
-        <h6 class="text-muted">Basics</h6>
-
-        <div class="form-group">
-          <%= f.label :name, 'Business name', class: 'form-label' %>
-          <div class="row">
-            <div class="col-md-8">
-              <%= f.text_field :name, class: 'form-control', maxlength: 255, autocomplete: 'off' %>
-            </div>
-            <div class="col-md-4">
-              <p class="help-block alpha">
-                A name is important, but it can always change. If you have a codename already, use that, otherwise don't get too hung up on making it perfect.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :pitch, '5 word pitch', class: 'form-label' %>
-          <div class="row">
-            <div class="col-md-8">
-              <%= f.text_area :pitch, class: 'form-control', placeholder: @four_word_story_example %>
-            </div>
-            <div class="col-md-4">
-              <p class="help-block alpha">
-                If you had 30 seconds to describe your business to a friend, what would you say? Use simple, direct words.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :description, 'The story behind the idea', class: 'form-label' %>
-          <div class="row">
-            <div class="col-md-8">
-              <%= f.text_area :description, class: 'form-control', rows: 2, data: { autosize: '', 'validate-length' => 2 } %>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :homepage_url, 'Product homepage url', class: 'form-label' %>
-          <div class="row">
-            <div class="col-md-8">
-              <%= f.url_field :homepage_url, class: 'form-control', maxlength: 255 %>
-            </div>
-          </div>
-        </div>
-
-        <hr>
+    <%= form_for @product do |f| %>
 
 
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h6 class="panel-title">Core Team</h6>
-            </div>
-            <div class="panel-body">
-              <ul class="list-unstyled">
-                <% @product.core_team.each do |user| %>
-                  <li>
-                    <a href="<%= user_path(user) %>">
-                      <img class="img-circle" style="margin-right:.5em" src="<%= user.avatar.url(32) %>" width="16" height="16" alt="@<%= user.username %>"><%= user.username %>
-                    </a>
-                  </li>
-                <% end %>
-              </ul>
-              <hr>
-
-              <%= form_tag product_core_team_members_path(@product), class: 'form' do %>
-                <% if current_user && @product.core_team?(current_user) %>
-                  <fieldset>
-                <% else %>
-                  <fieldset disabled>
-                <% end %>
-
-                <div class="input-group input-group-sm" style="margin-bottom: 10px;">
-                  <%= label_tag :core_team_member_username, '@', class: 'input-group-addon input-group-addon-sm' %>
-                  <%= text_field_tag 'core_team_member[username]', nil, class: 'form-control input-sm', placeholder: 'username' %>
-                </div>
-                <%= submit_tag 'Add to Core Team', class: 'btn btn-default btn-block btn-sm' %>
-              <% end %>
-              </fieldset>
-            </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <%= f.label :name, 'Name', class: 'form-label' %>
+            <%= f.text_field :name, class: 'form-control input-lg', maxlength: 255, autocomplete: 'off' %>
+            <p class="help-block">
+              A name is important, but it can always change. If you have a codename already, use that, otherwise don't get too hung up on making it perfect.
+            </p>
           </div>
 
-        <hr>
+          <div class="form-group">
+            <%= f.label :pitch, 'Five word pitch', class: 'form-label' %>
+            <%= f.text_field :pitch, class: 'form-control', placeholder: @four_word_story_example %>
+            <p class="help-block">
+              If you had 30 seconds to describe your business to a friend, what would you say? Use simple, direct words.
+            </p>
+          </div>
 
-        <h6 class="text-muted">The Vision</h6>
+          <div class="form-group">
+            <%= f.label :you_tube_video_url, 'Pitch video link', class: 'form-label' %>
+            <%= f.url_field :you_tube_video_url, class: 'form-control', maxlength: 255 %>
+            <p class="help-block">
+              Add a link to a video that describes your product. It could be as simple as you talking into a webcam, or
+              as awesome as an animated product video.
+            </p>
+          </div>
 
-        <div class="form-group">
-          <%= f.label :goals, 'Goals', class: 'form-label' %>
-          <div class="row">
-            <div class="col-md-8">
-              <%= f.text_area :goals, class: 'form-control', data: { autosize: '' }, rows: 2 %>
-            </div>
-            <div class="col-md-4">
-              <p class="help-block alpha">
-                What problems are you trying to solve with the product? Setting goals early often helps align people's expectations later.
-              </p>
-            </div>
+          <div class="form-group">
+            <%= f.label :homepage_url, 'Product homepage url', class: 'form-label' %>
+            <%= f.url_field :homepage_url, class: 'form-control', maxlength: 255 %>
           </div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <%= f.label :key_features, 'Key Features', class: 'form-label' %>
-          <div class="row">
-            <div class="col-md-8">
-              <%= f.text_area :key_features, class: 'form-control', data: { autosize: '' }, rows: 2 %>
-            </div>
-            <div class="col-md-4">
-              <p class="alpha help-block">
-                What do you expect the key features of the product to be? What sets it apart from others?
-              </p>
-            </div>
+      <div class="form-actions">
+        <%= f.submit 'Save', class: 'btn btn-primary' %>
+      </div>
+
+    <% end %>
+  </div>
+
+  <div class="tab-pane" id="core-team">
+
+
+    <table class="table table-responsive">
+      <thead>
+        <tr>
+          <th colspan="2">User</th>
+          <th class="text-right">Joined</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @product.core_team_memberships.each do |membership| %>
+          <tr>
+            <td width="1"><%= avatar_tag(membership.user, 24, style: 'margin-right:5px') %></td>
+            <td><%= membership.user.username %></td>
+            <td class="text-muted text-right">
+              <%= time_ago_in_words(membership.created_at) %> ago
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= form_tag(product_core_team_members_path(@product), class: 'form') do %>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="input-group input-group-sm" style="margin-bottom: 10px;">
+            <%= label_tag :core_team_member_username, '@', class: 'input-group-addon input-group-addon-sm' %>
+            <%= text_field_tag 'core_team_member[username]', nil, class: 'form-control input-sm', placeholder: 'username' %>
           </div>
         </div>
+        <div class="col-sm-4">
+          <%= submit_tag 'Add to Core Team', class: 'btn btn-default btn-block btn-sm' %>
+        </div>
+      </div>
+    <% end %>
 
-        <div class="form-group">
-          <%= f.label :target_audience, 'Target Audience', class: 'form-label' %>
-          <div class="row">
-            <div class="col-md-8">
-              <%= f.text_area :target_audience, class: 'form-control', data: { autosize: '' }, rows: 2 %>
-            </div>
-            <div class="col-md-4">
-              <p class="alpha help-block">
-                Who are you solving problems for? What is unique about that market?
-              </p>
-            </div>
+  </div>
+
+  <div class="tab-pane" id="story">
+
+    <%= form_for @product do |f| %>
+      <div class="row">
+        <div class="col-md-8">
+
+          <div class="form-group">
+            <%= f.label :lead, 'Blurb', class: 'form-label' %>
+            <%= f.text_area :lead, class: 'form-control input-lg', rows: 2 %>
           </div>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <%= f.label :lead, 'Description', class: 'form-label' %>
+          <%= f.text_area :description, class: 'form-control', rows: 2, data: { autosize: '', 'validate-length' => 2 } %>
+        </div>
+      </div>
 
-        <div class="form-group">
-          <%= f.label :competing_products, 'Competing Products', class: 'form-label' %>
-          <div class="row">
-            <div class="col-md-8">
-              <%= f.text_area :competing_products, class: 'form-control', data: { autosize: '' }, rows: 2 %>
-            </div>
-            <div class="col-md-4">
-              <p class="alpha help-block">
-                What do you consider is your biggest competition? For example, Facebook may consider MySpace their biggest competitor.
-              </p>
-            </div>
+      <hr>
+
+      <h6 class="text-muted">The Vision</h6>
+
+      <div class="form-group">
+        <%= f.label :goals, 'Goals', class: 'form-label' %>
+        <div class="row">
+          <div class="col-md-8">
+            <%= f.text_area :goals, class: 'form-control', data: { autosize: '' }, rows: 2 %>
+          </div>
+          <div class="col-md-4">
+            <p class="help-block alpha">
+              What problems are you trying to solve with the product? Setting goals early often helps align people's expectations later.
+            </p>
           </div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <%= f.label :competitive_advantage, 'Competitive Advantage', class: 'form-label' %>
-          <div class="row">
-            <div class="col-md-8">
-              <%= f.text_area :competitive_advantage, class: 'form-control', data: { autosize: '' }, rows: 2 %>
-            </div>
-            <div class="col-md-4">
-              <p class="alpha help-block">
-                What advantage do you have over these competitors that is uniquely yours?
-              </p>
-            </div>
+      <div class="form-group">
+        <%= f.label :key_features, 'Key Features', class: 'form-label' %>
+        <div class="row">
+          <div class="col-md-8">
+            <%= f.text_area :key_features, class: 'form-control', data: { autosize: '' }, rows: 2 %>
+          </div>
+          <div class="col-md-4">
+            <p class="alpha help-block">
+              What do you expect the key features of the product to be? What sets it apart from others?
+            </p>
           </div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <%= f.label :monetization_strategy, 'Monetization Strategy', class: 'form-label' %>
-          <div class="row">
-            <div class="col-md-8">
-              <%= f.text_area :monetization_strategy, class: 'form-control', data: { autosize: '' }, rows: 2 %>
-            </div>
-            <div class="col-md-4">
-              <p class="alpha help-block">
-                How should this product be monetized?
-              </p>
-            </div>
+      <div class="form-group">
+        <%= f.label :target_audience, 'Target Audience', class: 'form-label' %>
+        <div class="row">
+          <div class="col-md-8">
+            <%= f.text_area :target_audience, class: 'form-control', data: { autosize: '' }, rows: 2 %>
+          </div>
+          <div class="col-md-4">
+            <p class="alpha help-block">
+              Who are you solving problems for? What is unique about that market?
+            </p>
           </div>
         </div>
+      </div>
 
-        <div class="form-actions">
-          <%= f.submit 'Save changes to plan', class: 'btn btn-primary' %>
+      <div class="form-group">
+        <%= f.label :competing_products, 'Competing Products', class: 'form-label' %>
+        <div class="row">
+          <div class="col-md-8">
+            <%= f.text_area :competing_products, class: 'form-control', data: { autosize: '' }, rows: 2 %>
+          </div>
+          <div class="col-md-4">
+            <p class="alpha help-block">
+              What do you consider is your biggest competition? For example, Facebook may consider MySpace their biggest competitor.
+            </p>
+          </div>
         </div>
-      <% end %>
-    </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :competitive_advantage, 'Competitive Advantage', class: 'form-label' %>
+        <div class="row">
+          <div class="col-md-8">
+            <%= f.text_area :competitive_advantage, class: 'form-control', data: { autosize: '' }, rows: 2 %>
+          </div>
+          <div class="col-md-4">
+            <p class="alpha help-block">
+              What advantage do you have over these competitors that is uniquely yours?
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :monetization_strategy, 'Monetization Strategy', class: 'form-label' %>
+        <div class="row">
+          <div class="col-md-8">
+            <%= f.text_area :monetization_strategy, class: 'form-control', data: { autosize: '' }, rows: 2 %>
+          </div>
+          <div class="col-md-4">
+            <p class="alpha help-block">
+              How should this product be monetized?
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit 'Save', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+
   </div>
 </div>

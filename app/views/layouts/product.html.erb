@@ -8,60 +8,40 @@
   <%= render 'products/assets_granted' %>
 <% end %>
 
-<div class="navbar navbar-product">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="clearfix">
-          <div class="pull-right">
-            <ul class="list-inline pull-right">
-              <% if @product.stealth? && partner?(@product) %>
-                <li>
-                  <a href="<%= product_welcome_path(@product) %>" class="btn btn-success btn-sm btn-block">
-                    <span class="icon icon-rocket" style="margin-right: 2px;"></span>
-                    Review & Start Building Your Team
-                  </a>
-                </li>
-              <% end %>
-              <% if signed_in? %>
-                <li data-react-class="NotificationPreferencesDropdown"
-                    data-react-props="<%= {
-                      productWatchersPath: product_people_path(@product),
-                      productWatchersCount: @product.watchings_count,
-                      productFollowPath: product_follow_path(@product),
-                      productAnnouncementsPath: product_announcements_path(@product),
-                      productUnfollowPath: product_unfollow_path(@product),
-                      watchingState: @product.watching_state(current_user),
-                      afterFollowPath: product_people_path(@product)
-                    }.to_json %>">
-                <% else %>
-                  <a class="btn toggler toggler-primary" href="<%= new_user_registration_path %>">
-                    <span>Follow</span>
-                    <span class="toggler-badge"><%= @product.watchings_count %></span>
-                  </a>
-                <% end %>
-              </li>
-            </ul>
-          </div>
+<div class="container">
+  <div class="chip" style="margin-top:24px">
+    <div class="chip-icon">
+      <%= app_icon(@product, size: 300) %>
+    </div>
 
-          <% if current_page?(product_path(@product)) %>
-            <%= render @product %>
-          <% else %>
-            <h3 class="pull-left alpha"><%= @product.name %></h3>
-          <% end %>
-        </div>
-        <%= render 'products/navbar', product: @product %>
+    <div class="pull-right">
+      <% if @product.stealth? && partner?(@product) %>
+        <a class="btn btn-link btn-sm" href="<%= product_welcome_path(@product) %>">
+          <span class="icon icon-rocket icon-left"></span>
+          Next steps
+        </a>
+      <% end %>
+      <div
+          data-react-class="NotificationPreferencesDropdown"
+          data-react-props="<%= {
+            productWatchersPath: product_people_path(@product),
+            productWatchersCount: @product.watchings_count,
+            productFollowPath: product_follow_path(@product),
+            productAnnouncementsPath: product_announcements_path(@product),
+            productUnfollowPath: product_unfollow_path(@product),
+            watchingState: @product.watching_state(current_user),
+            afterFollowPath: product_people_path(@product)
+          }.to_json %>">
       </div>
     </div>
-  </div>
-</div>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <%= yield %>
-    </div>
+    <h3 class="alpha omega"><a href="<%= product_path(@product) %>"><%= @product.name %></a></h3>
+    <div class="lead text-muted"><%= @product.pitch %></div>
   </div>
+
+  <%= render 'products/nav', product: @product %>
+  <%= yield %>
+</div>
 
 </div>
 
