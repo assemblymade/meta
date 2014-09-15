@@ -24,7 +24,7 @@ var Avatar = require('./avatar.js.jsx');
 
     render: function() {
       return (
-        <div>
+        <div className="dropdown hidden-sm hidden-xs">
           <button className={this.togglerClasses()} type="button" data-toggle="dropdown">
             {this.buttonState()}
 
@@ -105,19 +105,9 @@ var Avatar = require('./avatar.js.jsx');
 
     togglerClasses: function() {
       return React.addons.classSet({
+        'dropdown-toggle': true,
         'toggler': true,
         'toggler-primary': (this.state.selected === 'not watching')
-      })
-    },
-
-    buttonClasses: function(dropdownToggle) {
-      return React.addons.classSet({
-        'btn': true,
-        'btn-primary': (this.state.selected === 'not watching'),
-        'btn-default': (this.state.selected !== 'not watching'),
-        'btn-sm': true,
-        'dropdown-toggle': dropdownToggle,
-        'toggler-btn': true
       })
     },
 

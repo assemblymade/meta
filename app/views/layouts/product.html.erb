@@ -35,10 +35,10 @@
                       afterFollowPath: product_people_path(@product)
                     }.to_json %>">
                 <% else %>
-                <a class="btn toggler toggler-primary" href="<%= new_user_registration_path %>">
-                  <span>Follow</span>
-                  <span class="toggler-badge"><%= @product.watchings_count %></span>
-                </a>
+                  <a class="btn toggler toggler-primary" href="<%= new_user_registration_path %>">
+                    <span>Follow</span>
+                    <span class="toggler-badge"><%= @product.watchings_count %></span>
+                  </a>
                 <% end %>
               </li>
             </ul>
