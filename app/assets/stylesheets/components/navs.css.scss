@@ -24,8 +24,6 @@
 }
 
 .nav-tabs {
-  border-bottom: none;
-
   > li {
     margin-bottom: 0;
   }
@@ -68,6 +66,7 @@
 }
 
 .nav-tabs.nav-justified {
+  border-bottom: 1px solid $brand-divider;
 
   > li > a {
     border-bottom-width: 3px;
