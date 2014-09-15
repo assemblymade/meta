@@ -1,5 +1,5 @@
 class ChatRoomSerializer < ActiveModel::Serializer
-  attributes :id, :label, :url, :updated, :readraptor_url
+  attributes :id, :label, :url, :updated, :readraptor_url, :product_name
 
   def id
     object.key
@@ -7,6 +7,10 @@ class ChatRoomSerializer < ActiveModel::Serializer
 
   def label
     object.slug
+  end
+
+  def product_name
+    object.product && object.product.name
   end
 
   def url

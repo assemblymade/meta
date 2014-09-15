@@ -242,6 +242,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
   var NotificationsList = React.createClass({
     render: function() {
       var productNodes = this.props.data.map(function(entry){
+        var label = entry.product_name ? entry.product_name : 'Community Chat';
         var badge = null;
 
         if (entry.updated > entry.last_read_at) {
@@ -252,7 +253,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
 
         return (
           <a href={entry.url} key={entry.id} className="list-group-item" style={{'border': 'none'}}>
-            {badge} {entry.label}
+            {badge} {label}
           </a>
         );
       });

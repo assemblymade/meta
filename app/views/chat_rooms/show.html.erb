@@ -71,11 +71,7 @@
                 Back to <%= product.name %>
               </a>
             <% else %>
-              <% if @chat_room.slug == 'general' %>
-                Community Chat
-              <% else %>
-                #<%= @chat_room.slug %>
-              <% end %>
+              Community Chat
             <% end %>
           </h3>
           <div class="js-members"></div>
