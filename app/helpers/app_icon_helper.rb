@@ -4,7 +4,9 @@ module AppIconHelper
     size = props.fetch(:size, 24)
     retina_size = size * 2
 
-    image_url = if product.poster?
+    image_url = if product.logo.present?
+      product.logo.url
+    elsif product.poster.present?
       product.poster_image.url
     else
       image_url('app_icon.png')
