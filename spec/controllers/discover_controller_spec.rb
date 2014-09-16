@@ -5,7 +5,8 @@ describe DiscoverController do
     describe "GET ##{action}" do
       it "is successful" do
         get action.to_sym
-        expect(response).to be_successful
+
+        expect([200, 302].include?(response.status)).to be_true
       end
     end
   end
