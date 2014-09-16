@@ -10,9 +10,15 @@
           <strong>Welcome to Assembly,</strong> a community of people who have ideas and build them. Everything here is a collaborative effort including the vision, development, design and marketing.
         </div>
         <div class="col-md-2">
-          <span class="lead"><strong>Collaborate</strong><br/></span> Jump into
-          any <a href="<%= discover_path(:bounties) %>" style="color: white; text-decoration: underline;">open bounties</a> on
-          products that interest you.
+          <span class="lead"><strong>Collaborate</strong><br/></span> Jump into any
+
+          <% if feature?(:discover_bounties) %>
+            <a href="<%= discover_path(:bounties) %>" style="color: white; text-decoration: underline;">open bounties</a>
+          <% else %>
+            open bounties
+          <% end %>
+
+          on products that interest you.
         </div>
         <div class="col-md-2">
           <span class="lead"><strong>Earn</strong><br/></span> Your contributions to products are rewarded with its App Coins.
