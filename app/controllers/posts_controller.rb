@@ -21,12 +21,13 @@ class PostsController < ProductController
     find_product!
     authenticate_user!
 
-    @post = @product.posts.new(post_params)
-    @post.author = current_user
-
     authorize! :create, @post
 
-    if @post.save
+    if @post.valid?
+      @post = @product.posts.new(post_params)
+      @post.author = current_user
+
+      @post.save
 
       Subscriber.where(product_id: @product.id).each do |email|
         PostMailer.delay(queue: 'mailer').mailing_list(@post.id, email)
