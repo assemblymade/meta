@@ -26,7 +26,7 @@
 
 
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-sm-8">
           <div class="form-group">
             <%= f.label :name, 'Name', class: 'form-label' %>
             <%= f.text_field :name, class: 'form-control input-lg', maxlength: 255, autocomplete: 'off' %>
@@ -58,10 +58,11 @@
           </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <div class="form-group">
             <label class="form-label">Logo image</label>
             <div class="js-dropzone"
+                style="margin-bottom:6px"
                 data-target-form="#product-logo-form"
                 data-react-class="DragAndDrop"
                 data-react-props="<%= {
@@ -69,6 +70,7 @@
                   alt: @product.name
                 }.to_json %>">
             </div>
+            <p class="text-muted text-center">Square (1:1) images only, please.</p>
           </div>
         </div>
       </div>
