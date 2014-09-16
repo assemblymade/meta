@@ -77,8 +77,7 @@
       If you already have a repository checkout our guide to <a href="<%= help_path(group: :migrating) %>">migrating existing products to Assembly</a>.
     </p>
 
-    <% if @product.commit_count < 3 %>
-      <!-- @product.repos needs to exist -->
+    <% if @product.repos.empty? %>
       <a class="btn btn-success btn-block" href="<%= product_repos_path(@product) %>">
         Create a repository
       </a>
@@ -163,11 +162,11 @@
 
 <br>
 
-<% if @product.posts.empty? || @product.tasks.count < 3 || @product.commit_count.zero? %>
+<% if @product.posts.empty? || @product.tasks.count < 3 || @product.repos.empty? %>
   <a class="btn btn-lg btn-default disabled" href="#">Submit for approval</a>
   <br>
   <br>
   <p class="text-warning">(You need to complete the 3 steps above before you can submit your product for approval)</a>
 <% else %>
-  <a class="btn btn-lg btn-success" href="#">Submit for approval</a>
+  <%= button_to 'Submit for approval', product_launch_path(@product), class: 'btn btn-lg btn-success', method: 'patch' %>
 <% end %>
