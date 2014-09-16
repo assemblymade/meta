@@ -17,7 +17,7 @@
       <div class="row">
         <% @profitable.each do |product| %>
           <div class="col-sm-4">
-            <a href="<%= product_path(product) %>">
+            <a data-track="discover.profitable.clicked" href="<%= product_path(product) %>">
               <%= render 'products/card', product: product %>
             </a>
           </div>
@@ -40,7 +40,7 @@
 
       <div class="list-group list-group-breakout omega">
         <% @greenlit.each do |product| %>
-          <a class="list-group-item"  href="<%= product_path(product) %>">
+          <a class="list-group-item" data-track="discover.greenlit.clicked" href="<%= product_path(product) %>">
             <%= render 'products/chips/greenlit', product: product %>
           </a>
         <% end %>
@@ -64,7 +64,7 @@
 
       <div class="list-group list-group-breakout omega">
         <% @teambuilding.each do |product| %>
-          <a class="list-group-item"  href="<%= product_path(product) %>">
+          <a class="list-group-item" data-track="discover.team-building.clicked" href="<%= product_path(product) %>">
             <%= render 'products/chips/team_building', product: product %>
           </a>
         <% end %>
