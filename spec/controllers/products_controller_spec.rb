@@ -83,6 +83,10 @@ describe ProductsController do
       it 'follows product' do
         expect(assigns(:product).followers.count).to eq(1)
       end
+
+      it 'creates a chat room' do
+        expect(assigns(:product).chat_rooms.count).to eq(1)
+      end
     end
 
     it 'fails if terms of service not accepted' do

@@ -177,7 +177,10 @@ class ProductsController < ProductController
       product.team_memberships.create!(user: current_user, is_core: true)
 
       product.watch!(current_user)
-      product.update_attributes main_thread: product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
+
+      main_thread = product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
+      product.update(main_thread: main_thread)
+      product.chat_rooms.create!(wip: main_thread, slug: product.slug)
 
       ownership = params[:ownership] || {}
       core_team_ids = Array(params[:core_team])
