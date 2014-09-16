@@ -8,6 +8,10 @@
   <%= render 'products/assets_granted' %>
 <% end %>
 
+<% if true || flash[:applied_for_pitch_week] %>
+  <%= render 'products/applied_for_pitch_week' %>
+<% end %>
+
 <div class="container">
   <div class="chip" style="margin-top:24px">
     <div class="chip-icon">
