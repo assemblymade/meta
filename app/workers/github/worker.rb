@@ -13,6 +13,39 @@ module Github
         }
     end
 
+    def add_license_and_readme(product, repo_name)
+      return if commit_count("#{ENV['GITHUB_PRODUCTS_ORG']}/#{repo_name}") > 0
+
+      url = "https://#{ENV['GITHUB_PRODUCTS_GITHUB_USER']}:#{ENV['GITHUB_PRODUCTS_GITHUB_TOKEN']}@github.com/asm-products/#{repo_name}.git"
+      Dir.mktmpdir do |dir|
+        Dir.chdir(dir) do
+          g = Git.init(repo_name)
+
+          g.config('user.name', ENV['GITHUB_PRODUCTS_USER_NAME'])
+          g.config('user.email', ENV['GITHUB_PRODUCTS_USER_EMAIL'])
+          g.config('github.user', ENV['GITHUB_PRODUCTS_GITHUB_USER'])
+          g.config('github.token', ENV['GITHUB_PRODUCTS_GITHUB_TOKEN'])
+
+          Dir.chdir(repo_name) do
+            write_erb_file 'README.md', 'app/views/products/git/readme.markdown.erb', product
+            write_erb_file 'LICENSE', 'app/views/products/git/license.text.erb', product
+
+            g.add(:all=>true)
+            g.commit('Initial commit')
+            g.add_remote 'origin', url
+            g.push
+          end
+        end
+      end
+    end
+
+    def write_erb_file(file, view, object)
+      text = ERB.new(
+        File.read(Rails.root.join(view))
+      ).result(SimpleDelegator.new(object).binding)
+      File.write(file, text)
+    end
+
     def commit_count(repo)
       s = stats("#{repo}")
       return 0 if s.nil? || s.first.nil?
