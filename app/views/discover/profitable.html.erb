@@ -8,13 +8,12 @@
     <div class="col-md-10 col-md-offset-1">
       <%= render 'header' %>
 
-      <h3 class="text-muted">
-        <span class="text-success">Profitable</span> Products
-
-        <p>
-          <small>Work on growing products that have generated revenue in the last 30 days.</small>
-        </p>
-      </h3>
+      <div class="text-center" style="margin-top:48px;margin-bottom:24px">
+        <h3 class="omega">
+          Profitable Products
+        </h3>
+        <p class="text-muted">Growing products that have generated revenue in the last 30 days.</p>
+      </div>
 
       <div class="list-group list-group-breakout omega">
         <% @products.each do |product| %>

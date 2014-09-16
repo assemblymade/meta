@@ -8,13 +8,12 @@
     <div class="col-md-10 col-md-offset-1">
       <%= render 'header' %>
 
-      <h3 class="text-muted">
-        <span class="text-success">Greenlit</span> Products
-
-        <p>
-          <small>Help popular products build out features and focus on launching.</small>
-        </p>
-      </h3>
+      <div class="text-center" style="margin-bottom:24px">
+        <h3 class="omega">
+          Greenlit Products
+        </h3>
+        <p class="text-muted">Help popular products build out features and focus on launching.</p>
+      </div>
 
       <div class="list-group list-group-breakout omega">
         <% @products.each do |product| %>
