@@ -3,7 +3,7 @@ module Search
     attr_reader :total, :results, :facets
 
     def initialize(q, filters={})
-      tech_filter = TechFilter.find(filters[:tech])
+      tech_filter = filters[:tech] && TechFilter.find(filters[:tech])
 
       search = {
         query: {

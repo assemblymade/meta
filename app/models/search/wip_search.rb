@@ -48,7 +48,7 @@ module Search
 
       filter_terms = []
 
-      if filter = StateFilter.find(filters[:state])
+      if filters[:state].present? && filter = StateFilter.find(filters[:state])
         filter_terms << { state: filter.slug }
       end
 
