@@ -109,7 +109,12 @@ var TagListStore = require('../stores/tag_list_store');
                 placement="bottom"
                 visible={this.state.popoverShown}
                 onHide={this.handleHide}>
-              <a onClick={this.togglePopover} style={{ cursor: 'pointer', 'font-size': '13px' }}>{this.tagPopoverText()}</a>
+              <a
+                  href="javascript:"
+                  onClick={this.togglePopover}
+                  className="btn btn-default btn-sm">
+                {this.tagPopoverText()}
+              </a>
             </BsPopover>
           </li>
         );
