@@ -10,9 +10,12 @@
         <div class="row">
           <div class="col-md-9">
             <% @page.each do |post| %>
-              <span style="float: left; margin-right: 20px;">
-                <%= app_icon(post.product, size: 80) %>
-              </span>
+              <div class="clearfix">
+                <div class="pull-left icon-left">
+                  <%= app_icon(post.product, size: 24) %>
+                </div>
+                <h4 class="alpha"><%= post.product.name %></h4>
+              </div>
               <%= render post %>
               <hr/>
             <% end %>
