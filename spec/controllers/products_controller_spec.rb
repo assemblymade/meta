@@ -87,6 +87,10 @@ describe ProductsController do
       it 'creates a chat room' do
         expect(assigns(:product).chat_rooms.count).to eq(1)
       end
+
+      it 'updates partners_count cache' do
+        expect(assigns(:product).partners_count).to eq(1)
+      end
     end
 
     it 'fails if terms of service not accepted' do

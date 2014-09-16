@@ -193,8 +193,9 @@ class ProductsController < ProductController
 
       coins_allocated = ownership.values.map(&:to_i).sum
       founder_coins = 100 * Product::INITIAL_COINS
-
       TransactionLogEntry.minted!(nil, Time.now, product, current_user.id, founder_coins)
+      product.update_partners_count_cache
+      product.save!
 
       AutoTipContract.replace_contracts_with_default_core_team_split(product)
 

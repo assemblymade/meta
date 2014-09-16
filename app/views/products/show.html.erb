@@ -92,17 +92,17 @@
     <div class="stat-group">
       <div class="stat">
         <div class="stat-value"><%= @product.posts.count %></div>
-        <div class="stat-title">Updates</div>
+        <div class="stat-title"><%= "Update".pluralize(@product.posts.count) %></div>
       </div>
 
       <div class="stat">
         <div class="stat-value"><%= @product.tasks.open.count %></div>
-        <div class="stat-title">Bounties</div>
+        <div class="stat-title"><%= "Bounty".pluralize(@product.tasks.open.count) %></div>
       </div>
 
       <div class="stat">
         <div class="stat-value"><%= @product.partners_count %></div>
-        <div class="stat-title">Partners</div>
+        <div class="stat-title"><%= "Partner".pluralize(@product.partners_count) %></div>
       </div>
     </div>
 
