@@ -6,11 +6,6 @@ class TasksController < WipsController
   end
 
   def create
-    unless params[:description] || params[:project_id]
-      flash[:no_bounty_description] = "Please fill in a description."
-      return redirect_to new_product_wip_path(@product, wip_params)
-    end
-
     @bounty = WipFactory.create(
       @product,
       product_wips,
