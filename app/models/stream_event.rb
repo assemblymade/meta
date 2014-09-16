@@ -13,7 +13,6 @@ class StreamEvent < ActiveRecord::Base
   scope :since,   -> (date) { where('stream_events.created_at >= ?', date) }
   scope :visible, -> { where(product_flagged: false).joins(:product).where.not(products: { started_teambuilding_at: nil }) }
   before_create :find_and_set_product_id, :set_event_type
-  after_commit :notify, on: :create
 
   class << self
     def add_create_event!(params)
@@ -104,10 +103,6 @@ class StreamEvent < ActiveRecord::Base
 
   def icon_class
     ""
-  end
-
-  def notify
-    CampfireNotifier.delay.send_activity(self.id)
   end
 
   def chat_message(raw_text)
