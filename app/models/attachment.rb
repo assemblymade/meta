@@ -17,12 +17,16 @@ class Attachment < ActiveRecord::Base
   end
 
   def url
-    File.join(ENV["ATTACHMENT_ASSET_HOST"], asset_path)
+    URI.encode(File.join(attachment_host, asset_path))
   end
 
   # private
 
   def set_asset_path
     self.asset_path = File.join("attachments", SecureRandom.uuid, name)
+  end
+
+  def attachment_host
+    ENV["ATTACHMENT_ASSET_HOST"] || ''
   end
 end
