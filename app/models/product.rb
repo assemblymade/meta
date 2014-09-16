@@ -152,8 +152,7 @@ class Product < ActiveRecord::Base
   end
 
   def teambuilding?
-    !started_teambuilding_at.nil? &&
-      greenlit_at.nil?
+    greenlit_at.nil? && started_teambuilding_at && started_teambuilding_at > 30.days.ago
   end
 
   def greenlit?
