@@ -323,7 +323,8 @@ ASM::Application.routes.draw do
     get :chat, to: redirect('/chat/%{product_id}')
     get :team, to: redirect(path: '%{product_id}/people')
     get :welcome, to: redirect(path: '%{product_id}')
-    get '/wips/(*all)', to: redirect(path: '/%{product_id}/bounties/%{all}')
+    get '/wips', to: redirect(path: '/%{product_id}/bounties')
+    get '/wips/*all', to: redirect(path: '/%{product_id}/bounties/%{all}')
 
     get '/:number', to: redirect(path: '%{product_id}/wips/%{number}'),
       constraints: {number: /\d+/},

@@ -10,7 +10,7 @@ class DiscoverController < ApplicationController
 
     @teambuilding = Product.teambuilding.
       ordered_by_trend.
-      limit(5)
+      limit(20)
   end
 
   def profitable
