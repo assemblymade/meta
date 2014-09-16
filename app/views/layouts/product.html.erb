@@ -12,6 +12,10 @@
   <%= render 'products/applied_for_pitch_week' %>
 <% end %>
 
+<% if flash[:no_bounty_description] %>
+  <%= render 'products/no_bounty_description' %>
+<% end %>
+
 <div class="container">
   <div class="chip" style="margin-top:24px">
     <div class="chip-icon">

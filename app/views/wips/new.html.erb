@@ -18,7 +18,7 @@
           <%= f.label :description, 'Description', class: 'control-label' %>
 
           <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
-            <%= f.text_area :description, class: 'form-control', rows: 4, required: true %>
+            <%= f.text_area :description, class: 'form-control', rows: 4, value: params[:description], required: true %>
             <div class="dropzone-inner js-dropzone-select">
               To attach files drag &amp; drop here or <a href="#">select files
               from your computer</a>...
@@ -63,7 +63,7 @@
         <div style="margin-bottom: 10px"
              data-react-class="TagList"
              data-react-props="<%= {
-                tags: (@bounty.tags ? @bounty.tags.map do |tag|
+                tags: (tags = @bounty.tags ? @bounty.tags.map do |tag|
                   tag.name
                 end.as_json : []),
                 filterUrl: product_wips_path(@bounty.product),

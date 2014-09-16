@@ -6,6 +6,11 @@ class TasksController < WipsController
   end
 
   def create
+    unless params[:description] || params[:project_id]
+      flash[:no_bounty_description] = "Please fill in a description."
+      return redirect_to new_product_wip_path(@product, wip_params)
+    end
+
     @bounty = WipFactory.create(
       @product,
       product_wips,
@@ -155,11 +160,11 @@ class TasksController < WipsController
   end
 
   def wip_params
-    params.require(:task).permit(:title, :description, :deliverable, tag_list: [])
+    params.require(:task).permit(:title, :description, tag_list: [])
   end
 
   def update_wip_params
-    params.require(:task).permit(:title, :description, :deliverable)
+    params.require(:task).permit(:title, :description)
   end
 
   def to_discussion

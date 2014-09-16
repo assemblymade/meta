@@ -11,12 +11,6 @@ describe Task do
     product.team_memberships.create!(user: core_member, is_core: true)
   }
 
-  describe 'description' do
-    it 'is required' do
-      expect { Task.make!(description: nil) }.to raise_error(ActiveRecord::RecordInvalid)
-    end
-  end
-
   describe 'allocate' do
     it 'creates assign Activity' do
       expect { task.allocate!(worker) }.to change(Activity, :count).by(1)

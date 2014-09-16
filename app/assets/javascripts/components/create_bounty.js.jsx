@@ -26,7 +26,7 @@
               <label className="control-label" for="task_description">
                 Description
               </label>
-              <MarkdownEditor name="task[description]" />
+              <MarkdownEditor name="task[description]" required="true" />
             </div>
 
             <h6 className="omega">Initial Offer</h6>
