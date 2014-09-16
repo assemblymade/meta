@@ -19,18 +19,33 @@
     <% end %>
 
     <div class="markdown markdown-normalized text-large">
-      <% if @product.lead.present? %>
-        <div class="lead">
-          <%= product_markdown(@product, @product.lead) %>
-        </div>
-      <% end %>
+      <% if @product.lead.present? || @product.description.present? || (@product.info || {}).any? %>
+        <% if @product.lead.present? %>
+          <div class="lead">
+            <%= product_markdown(@product, @product.lead) %>
+          </div>
+        <% end %>
 
-      <%== @product.description_html %>
+        <%== @product.description_html %>
 
-      <% (@product.info || {}).each do |field, value| %>
-        <% if value.present? %>
-          <h2><%= field.titlecase %></h2>
-          <%== markdown(value) %>
+        <% (@product.info || {}).each do |field, value| %>
+          <% if value.present? %>
+            <h2><%= field.titlecase %></h2>
+            <%== markdown(value) %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% if @product.user == current_user %>
+          <p class="lead text-center">
+            This space reserved for a kick ass description.
+          </p>
+          <p class="text-center">
+            <a href="<%= edit_product_path(@product) %>">Update your idea</a>
+          </p>
+        <% else %>
+          <p class="lead text-center">
+            Looks like <%= @product.name %> is just getting started! Check back later and there should be some more details
+          </p>
         <% end %>
       <% end %>
     </div>
