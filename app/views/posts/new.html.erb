@@ -21,6 +21,8 @@
           <%= f.text_area :body, class: 'form-control', rows: 8, placeholder: 'Post body' %>
         </div>
 
+        <%= render 'shared/error_messages', target: @post %>
+
         <div class="form-actions">
           <div class="pull-left">
             <a class="btn btn-default" id="preview-post-btn" href="<%= preview_product_posts_path(@product) %>">Send Preview Email</a>
@@ -35,6 +37,7 @@
               });
             </script>
           </div>
+
           <%= f.submit 'Publish', class: %w(btn btn-primary) %>
         </div>
       <% end %>

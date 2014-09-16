@@ -1,16 +1,10 @@
 <% if target.errors.any? %>
-  <div class="error-explanation">
-    <h2>
-      <%= pluralize(target.errors.count, 'error', 'errors') %>
-      prohibited this <%= target.class.name.downcase %> from being saved:
-    </h2>
-
+  <div class="alert alert-danger">
+    <strong>Oh snap!</strong>
     <ul>
       <% target.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>
-
   </div>
-
 <% end %>
