@@ -57,9 +57,7 @@ var update = require('react/lib/update');
         showMore: (newStories.length - oldStoriesCount === MORE_STORIES_LENGTH)
       }, function() {
         if (self.state.stories) {
-          self.spinner.stop();
-
-          if (!self.state.stories.length) {
+          if (!self.state.stories.length && !self.props.fullPage) {
             self._render = self.render;
 
             self.render = function() {

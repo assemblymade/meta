@@ -13,6 +13,12 @@ var Avatar = require('./avatar.js.jsx');
   var FullPageNewsFeed = React.createClass({
     mixins: [NewsFeedMixin],
 
+    getDefaultProps: function() {
+      return {
+        fullPage: true
+      };
+    },
+
     moreButton: function() {
       if (this.state.stories && this.state.showMore) {
         return <a href="#more" className="btn btn-block" onClick={this.moreStories}>More</a>;
@@ -34,11 +40,15 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     renderStories: function() {
-      if (!this.state.stories) { return null; }
+      if (!this.state.stories) {
+        return null;
+      }
 
       if (this.state.stories.length > 0) {
         return this.rows(this.state.stories);
       } else {
+        this.getStories = function() {};
+
         return this.emptyRow();
       }
     },
@@ -78,6 +88,29 @@ var Avatar = require('./avatar.js.jsx');
           </div>
         );
       }
+
+      return (
+        <div className="list-group-item">
+          <div className="list-group-item-heading">
+            Get notified about products you follow
+          </div>
+
+          <div className='list-group-item-text'>
+            <p className="text-muted omega">
+              Looks like you don't have any notifications yet. Get involved
+              with the rest of our community. Follow some products,
+              start a discussion, leave a comment or submit some work.
+              You'll be notified next time someone responds.
+            </p>
+
+            <div className="text-center">
+              <a className="btn btn-primary text-center" href="/discover" style={{ 'margin-top': 12 }}>
+                Find products to follow
+              </a>
+            </div>
+          </div>
+        </div>
+      );
     }
   });
 
