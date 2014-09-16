@@ -26,10 +26,9 @@ class ProductsController < ProductController
     if @product.valid?
       respond_with(@product, location: product_welcome_path(@product))
 
-      # #schedule_greet doesn't work because product's don't start with a chat room
-      # schedule_greet
+      schedule_greet
       schedule_introductory_bounty
-      # schedule_one_hour_checkin
+      schedule_one_hour_checkin
       schedule_one_day_checkin
     else
       render action: :new, layout: 'application'
@@ -160,9 +159,9 @@ class ProductsController < ProductController
 
     first_milestone_number = (@product.milestones && @product.milestones.first && @product.milestones.first.number) || 1
 
-    # message = "@core, I made something for you: [Launch Checklist](#{product_project_path(@product, first_milestone_number)}). You got this!"
+    message = "@core, I made something for you: [Launch Checklist](#{product_project_path(@product, first_milestone_number)}). You got this!"
 
-    # PostChatMessage.perform_in(1.day, @product.slug, message)
+    PostChatMessage.perform_in(1.day, @product.slug, message)
   end
   # private
 
@@ -217,13 +216,6 @@ class ProductsController < ProductController
       end
 
       flash[:new_product_callout] = true
-
-      # TODO: Move this to an explicit button on the /repositories page
-      # Github::CreateProductRepoWorker.perform_async(
-      #   product.id,
-      #   product_url(product),
-      #   product.slug
-      # )
     end
     product
   end
