@@ -63,6 +63,7 @@ class TasksController < WipsController
     if params[:state].blank? && params[:project].blank?
       params[:state] = 'open'
     end
+
     @wips = find_wips
     @project = @product.milestones.find_by(number: params[:project]) if params[:project]
     @milestones = @product.milestones.open

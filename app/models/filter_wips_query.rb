@@ -106,7 +106,7 @@ class FilterWipsQuery
     when false
       Wip.all
     else #  (default)
-      Wip.order(['multiplier desc', 'created_at desc'])
+      Wip.order('updated_at desc')
     end
   end
 
