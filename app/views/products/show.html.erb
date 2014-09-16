@@ -150,7 +150,7 @@
     <h6 class="text-muted">Other links</h6>
     <ul class="list-unstyled large omega">
       <% if @product.homepage_url.present? %>
-        <li><a href="<%= @product.homepage_url %>">Homepage</a></li>
+        <li><a href="<%= @product.homepage_url %>" target="_blank"><%= @product.homepage_url %></a></li>
       <% end %>
 
       <% if @product.chat_rooms.any? %>
