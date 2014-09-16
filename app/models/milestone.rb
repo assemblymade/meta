@@ -1,3 +1,4 @@
+# TODO: (whatupdave) we should rename this to projects, or ditch it in favor of bounty dependency graphs
 class Milestone < ActiveRecord::Base
   belongs_to :product
   belongs_to :user

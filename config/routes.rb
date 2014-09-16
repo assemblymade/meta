@@ -47,17 +47,18 @@ ASM::Application.routes.draw do
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
 
-  get '/new'      => redirect('/create')
-  get '/create'   => 'products#new',     :as => :new_idea
+  get '/create'   => 'products#new',      :as => :new_idea
+  get '/start'    => 'products#new',    :as => :start_idea
+
   resources :ideas, :only => [:index]
 
   get '/discover(/:action)', controller: 'discover',
                              as: :discover,
                              defaults: {
-                               action: 'trending'
+                               action: 'index'
                              },
                              constraints: {
-                               action: /trending|live|updates|bounties/
+                               action: /bounties|updates|teambuilding|greenlit|profitable/
                              }
 
   devise_for :users,
@@ -103,6 +104,7 @@ ASM::Application.routes.draw do
     post   '/users/confirmation' => 'users/confirmations#create'
 
     get    '/users/:id' => 'users#show', :as => :user
+    get    '/users/:id/assets' => 'users#assets', :as => :user_assets
     patch  '/users/:id' => 'users#update'
 
     resources :notifications, only: [:index]
@@ -125,6 +127,7 @@ ASM::Application.routes.draw do
     post '/mailgun' => 'mailgun#create'
     post '/mailgun/reply' => 'mailgun#reply'
     post '/github' => 'github#create'
+    post '/assembly_assets/transaction' => 'assembly_assets#transaction'
     post '/readraptor/immediate' => 'read_raptor#immediate'
     post '/readraptor/daily'     => 'read_raptor#daily'
     post '/pusher' => 'pusher#auth'
@@ -170,6 +173,7 @@ ASM::Application.routes.draw do
       patch :publish
     end
     resources :users
+    resources :wips
 
     get '/' => redirect('/admin/withdrawals')
   end
@@ -199,12 +203,12 @@ ASM::Application.routes.draw do
         resources :comments, only: [:create]
       end
 
-      resources :bounties, only: [] do
+      resources :bounties, only: [:create] do
         resources :offers, only: [:create, :show]
       end
       resources :projects, only: [:create]
       resources :potential_users, controller: 'subscribers', only: [:create, :destroy]
-      resources :bounty_postings, only: [:create]
+      resources :bounty_postings, only: [:create, :destroy]
     end
 
     resources :textcompletes, only: [:index]
@@ -227,6 +231,7 @@ ASM::Application.routes.draw do
 
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do
+
     match 'flag',    via: [:get, :post]
 
     get 'welcome'
@@ -244,6 +249,7 @@ ASM::Application.routes.draw do
 
     resources :payments, only: [:index, :create, :update, :destroy]
     resources :expense_claims, only: [:create]
+    resources :assembly_assets, only: [:create]
 
     resources :product_logos, only: [:index, :show, :create, :update], as: :logos, path: 'logos'
 
@@ -271,7 +277,7 @@ ASM::Application.routes.draw do
     patch '/wips/:wip_id/to_discussion' => 'tasks#to_discussion', as: :task_to_discussion
 
     resources :work
-    resources :wips, only: [:index, :show, :new, :edit, :create, :update], controller: 'tasks' do
+    resources :wips, only: [:index, :show, :new, :edit, :create, :update], controller: 'tasks', path: 'bounties' do
       get 'search', :on => :collection
 
       get   'checkin'
@@ -317,6 +323,7 @@ ASM::Application.routes.draw do
     get :chat, to: redirect('/chat/%{product_id}')
     get :team, to: redirect(path: '%{product_id}/people')
     get :welcome, to: redirect(path: '%{product_id}')
+    get '/wips/(*all)', to: redirect(path: '/%{product_id}/bounties/%{all}')
 
     get '/:number', to: redirect(path: '%{product_id}/wips/%{number}'),
       constraints: {number: /\d+/},

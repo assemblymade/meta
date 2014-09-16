@@ -38,15 +38,6 @@ class ProductDecorator < ApplicationDecorator
     count_contributors - NUMBER_OF_CONTRIBUTORS_CONSIDERED_IMPORANT
   end
 
-  def presentable_stage
-    case stage
-    when :validating
-      'Idea'
-    when :building
-      'Greenlit'
-    end
-  end
-
   def social_media_title
     "#{name} - #{pitch}"
   end
@@ -68,6 +59,10 @@ class ProductDecorator < ApplicationDecorator
 
   def video?
     you_tube_video_url.present?
+  end
+
+  def partner?(user)
+    user && TransactionLogEntry.where(product_id: id).where(wallet_id: user.id).any?
   end
 
   def reward

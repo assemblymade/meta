@@ -10,6 +10,9 @@
         <div class="row">
           <div class="col-md-9">
             <% @page.each do |post| %>
+              <span style="float: left; margin-right: 20px;">
+                <%= app_icon(post.product, size: 80) %>
+              </span>
               <%= render post %>
               <hr/>
             <% end %>

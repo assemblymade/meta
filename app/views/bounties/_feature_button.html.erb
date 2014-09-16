@@ -1,0 +1,10 @@
+<% posting = bounty.postings.first %>
+<div data-react-class="BountyPostingButton" data-react-props="<%= {
+  posting_path: (api_product_bounty_posting_path(@product, posting.id) if posting),
+  postings_path: api_product_bounty_postings_path(@product),
+  bounty: { number: @bounty.number },
+  product: { slug: @product.slug, name: @product.name},
+  spotsAvailable: BountyPosting.slots_available(@product),
+  posting: (BountyPostingSerializer.new(posting).as_json if posting),
+  redirectTo: product_wips_path(@product)
+}.to_json %>"></div>

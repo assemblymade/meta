@@ -77,15 +77,9 @@ a:hover {
   text-decoration: none;
 }
 
-h2,
-.h2 {
-  // Enable bolding once we've transitioned to Bootstrap completely
-  // font-weight: bold;
-}
-
 h4,
 .h4 {
-  font-weight: bold;
+  line-height: 24px;
 }
 
 h6,
@@ -96,74 +90,25 @@ h6,
   font-weight: bold;
 }
 
-.lead {
-  font-size: 21px;
-  line-height: $line-height-base;
-  margin-bottom: $line-height-computed * 1.556;
-  text-rendering: optimizeLegibility;
-}
-
-.text-sans {
-  font-family: $font-family-sans-serif;
-}
-
-.text-serif {
-  font-family: $font-family-serif;
-}
-
-.text-longform {
-  p,
-  ul,
-  ol {
-    color: $gray-dark;
-  }
-}
-
-.text-light {
-  color: $gray-light;
-}
-
-.text-weight-light {
-  font-weight: 200;
-}
-
 .text-weight-normal {
   font-weight: 400;
 }
 
 .text-weight-bold {
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .text-large,
 .large {
   font-size: $font-size-large;
-
-  .lead {
-    font-size: $font-size-large * 1.3333;
-  }
 }
 
 .text-small {
   font-size: $font-size-small;
 }
 
-.text-warning {
-  color: $brand-warning;
-}
-
 @include text-emphasis-variant('.text-coins', $brand-coins);
 @include text-emphasis-variant('.text-info', $brand-info);
-
-.text-link-bold a {
-  color: inherit;
-  font-weight: bold;
-  text-decoration: none;
-
-  &:hover {
-    color: $link-hover-color;
-  }
-}
 
 .list-inline-piped {
   @extend .text-link-bold;
@@ -207,49 +152,19 @@ h6,
   }
 }
 
-// H4 title and piped nav in cards and lists
-h4 + .list-inline,
-h4 + p {
-  margin-top: -7px;
-}
-
 blockquote {
-  padding: ($line-height-computed / 2) $line-height-computed;
+  padding: 0 $grid-gutter-width;
   margin: $line-height-computed 0;
-  border-width: $blockquote-border-width;
-}
-
-// Markdown Normalizer class overrides multiple heading types
-.markdown-normalized {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @extend .h4;
-    font-weight: bold;
-    margin-top: $line-height-computed * 1.5;
-    margin-bottom: $line-height-computed / 2;
-
-    &:first-child {
-      margin-top: $line-height-computed / 2;
-    }
-  }
-
-  :last-child {
-    margin-bottom: 0;
-  }
+  margin-left: -3px;
+  border-width: 3px;
 }
 
 .text-small-caps {
-  @extend .text-sans;
   text-transform: uppercase;
   font-size: 90%;
 }
 
 .text-copy {
-  @extend .text-serif;
   padding: 26px $padding-xxl-horizontal 25px 68px;
   font-size: 15px;
   line-height: 1.764;
@@ -297,10 +212,6 @@ mark,
   background-color: lighten($state-warning-bg, 5%);
 }
 
-.inline-serif {
-  @extend .text-serif;
-}
-
 .link-hover-primary:hover {
   color: $link-color !important;
   text-decoration: none;
@@ -343,4 +254,9 @@ mark,
 
 .lead {
   font-weight: 400;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

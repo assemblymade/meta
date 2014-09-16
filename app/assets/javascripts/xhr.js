@@ -20,6 +20,10 @@
       this.request('POST', path, data, callback);
     },
 
+    delete: function(path, data, callback) {
+      this.request('DELETE', path, data, callback);
+    },
+
     request: function(method, path, data, callback) {
       if (!callback) {
         callback = function() {};

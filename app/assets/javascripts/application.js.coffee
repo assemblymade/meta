@@ -69,6 +69,9 @@ class window.Application
   isSignedIn: ->
     @currentUser()?
 
+  assetsPromotionSlug: ->
+    'assemblycoins'
+
   redirectTo: (path) ->
     window.location = path
     if window.location.hash

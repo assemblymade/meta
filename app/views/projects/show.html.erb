@@ -2,7 +2,7 @@
 <% activate_nav! :projects %>
 <% breadcrumb product_projects_path(@milestone.product), 'Projects' %>
 
-<%= render 'header' %>
+<%= render 'header', project: @milestone %>
 
 <div class="sheet-body">
   <div class="row">
@@ -24,7 +24,7 @@
       <br>
       <hr>
 
-      <h6>Discussion</h6>
+      <h6 id="comments">Discussion</h6>
       <div id="discussion-view-el">
         <%= render 'wips/discussion', events: @events %>
         <%= render 'discussions/new_event_form' %>

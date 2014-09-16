@@ -2,6 +2,17 @@
 <% activate_nav! :updates %>
 
 <div class="page-header sheet-header">
+  <% if current_user.staff? %>
+    <% if @post.flagged? %>
+      <button class="btn btn-muted disabled pull-right">Post already flagged</button>
+    <% else %>
+      <%= form_for [@post.product, @post] do |f| %>
+        <%= f.hidden_field :flagged_at, value: Time.now %>
+        <%= f.submit 'Flag this post', class: %w(btn btn-danger pull-right) %>
+      <% end %>
+    <% end %>
+  <% end %>
+
   <h1 class="page-header-title">Editing <q><%= @post.title %></q></h1>
 </div>
 

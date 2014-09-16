@@ -35,7 +35,6 @@ class Activity < ActiveRecord::Base
   end
 
   def track_in_segment
-    puts "after create"
     return if actor.try(:staff?)
 
     TrackActivityCreated.perform_async(self.id)

@@ -9,7 +9,7 @@
     },
 
     render: function() {
-      return <Lightbox title="Create a bounty" size="modal-lg">
+      return <Lightbox title="Create a bounty">
         <form accept-charset="UTF-8" action={this.props.url} className="new_task" id="new_task" name="task[title]" type="text" method="post">
           <div className="modal-body">
             <div className="hide">
@@ -29,26 +29,18 @@
               <MarkdownEditor name="task[description]" />
             </div>
 
-            <Row>
-              <div className="col-md-6">
-                <h6>Initial Offer</h6>
-                <div className="well">
-                  <InitialOffer product={this.props.product} maxOffer={this.props.maxOffer} averageBounty={this.props.averageBounty} />
-                </div>
-              </div>
+            <h6 className="omega">Initial Offer</h6>
+            <div className="well">
+              <InitialOffer product={this.props.product} maxOffer={this.props.maxOffer} averageBounty={this.props.averageBounty} />
+            </div>
 
-              <div className="col-md-6">
-                <h6>Tags</h6>
-                <TagList destination={true} newBounty={true}  />
+            <h6>Tags</h6>
+            <TagList destination={true} newBounty={true}  />
 
-                <TextInput width="125px" size="small" label="Add tag" prepend="#" prompt="Add" />
+            <TextInput width="125px" size="small" label="Add tag" prepend="#" prompt="Add" />
 
-                <h6>Suggested tags</h6>
-                <TagList tags={window.app.suggestedTags()} destination={false} />
-              </div>
-
-            </Row>
-
+            <h6>Suggested tags</h6>
+            <TagList tags={window.app.suggestedTags()} destination={false} />
 
           </div>
           <div className="modal-footer form-actions">

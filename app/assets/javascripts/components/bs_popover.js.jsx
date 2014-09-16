@@ -1,7 +1,9 @@
 /** @jsx React.DOM */
 
 (function() {
-
+  if (typeof $ === 'undefined') {
+    return;
+  }
   // Patch Bootstrap popover to take a React component instead of a
   // plain HTML string
   $.extend($.fn.popover.Constructor.DEFAULTS, {react: false});
@@ -54,8 +56,8 @@
       },
 
       bodyClickHandler: function(e) {
-        window.target = $(e.target)
-        if (!$(e.target).is('.popover') &&
+        if (e.target !== this.getDOMNode() &&
+            !$(e.target).is('.popover') &&
              $(e.target).parents('.popover').length === 0) {
           this.props.onHide()
         }
@@ -73,7 +75,7 @@
           // necessary, but it prevents memory leaks
           var $el = $(this.getDOMNode());
           var popover = $el.data('bs.popover');
-          var $tip = popover.tip();
+          var $tip = popover && popover.tip();
           React.unmountComponentAtNode(
               $tip.find('.popover-title')[0]
           );

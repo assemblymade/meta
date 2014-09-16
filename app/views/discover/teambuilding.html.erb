@@ -1,0 +1,40 @@
+<% title 'Products Building Teams' %>
+<% activate_nav! :discover_teambuilding %>
+
+<%= render 'shared/navbar' %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <%= render 'header' %>
+
+      <div class="text-center" style="margin-bottom:24px">
+        <h3 class="omega">
+          Products Building Teams
+        </h3>
+        <p class="text-muted">Join products on the ground floor to help define the core idea and initial features.</p>
+      </div>
+
+      <div class="list-group list-group-breakout omega">
+        <% @products.each do |product| %>
+          <a class="list-group-item"  href="<%= product_path(product) %>">
+            <%= render 'products/chips/team_building', product: product %>
+          </a>
+        <% end %>
+      </div>
+
+      <%= paginate @products, theme: 'twitter-bootstrap-3' %>
+
+      <br>
+
+      <div class="callout text-large">
+        <a href="<%= start_idea_path %>" class="btn btn-success pull-right">Create a new product</a>
+        Didn't find a product that you're interested in?
+        Create your own!
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

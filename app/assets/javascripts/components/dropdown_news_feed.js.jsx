@@ -18,6 +18,20 @@ var Avatar = require('./avatar.js.jsx');
         action: NF.ACTIONS.MARK_ALL_AS_READ,
         data: null
       });
+
+      this.optimisticallyMarkStories();
+    },
+
+    optimisticallyMarkStories: function() {
+      var stories = this.state.stories;
+
+      for (var i = 0, l = stories.length; i < l; i++) {
+        stories[i].last_read_at = 1;
+      }
+
+      this.setState({
+        stories: stories
+      });
     },
 
     render: function() {
@@ -38,7 +52,7 @@ var Avatar = require('./avatar.js.jsx');
           </li>
 
           <li>
-            <a href='/notifications' className="text-small">All Notifications</a>
+            <a href='/dashboard' className="text-small">All Notifications</a>
           </li>
 
         </ul>

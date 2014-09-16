@@ -12,6 +12,12 @@ Activities::Start.blueprint do
   target   { Event::Comment.make! }
 end
 
+AssemblyAsset.blueprint do
+  product { Product.make! }
+  user { User.make! }
+  amount { 10 }
+end
+
 Attachment.blueprint do
   user
   name { Faker::Name.name }
@@ -23,16 +29,23 @@ AutoTipContract.blueprint do
   amount { 0.1 }
 end
 
-ChatRoom.blueprint do
-  slug { "room_#{sn}" }
-end
-
 Award.blueprint do
   awarder
   winner
   event
   wip
 end
+
+BountyPosting.blueprint do
+  poster { User.make! }
+  bounty
+end
+
+ChatRoom.blueprint do
+  wip
+  slug { "room_#{sn}" }
+end
+
 
 Discussion.blueprint do
   user
@@ -56,7 +69,7 @@ Product.blueprint do
   name  { "Product #{sn}" }
   slug  { "product-#{sn}" }
   pitch { Faker::Lorem.paragraph(1) }
-  launched_at { Time.now }
+  started_teambuilding_at { Time.now }
   can_advertise { true }
 end
 

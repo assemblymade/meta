@@ -60,15 +60,21 @@ class TasksController < WipsController
   end
 
   def index
-    if params[:state].blank? && params[:bounty].blank?
+    if params[:state].blank? && params[:project].blank?
       params[:state] = 'open'
     end
+
     @wips = find_wips
-    @milestones = @product.milestones.open.with_open_tasks
+    @project = @product.milestones.find_by(number: params[:project]) if params[:project]
+    @milestones = @product.milestones.open
     @auto_tip_contracts = @product.auto_tip_contracts.active
+    @featured_bounties = @product.bounty_postings
 
     respond_to do |format|
-      format.html { expires_now }
+      format.html do
+        expires_now
+        render 'bounties/index'
+      end
       format.json { render json: @wips.map{|w| WipSearchSerializer.new(w) } }
     end
   end
@@ -120,6 +126,16 @@ class TasksController < WipsController
     authorize! :multiply, @wip
     @urgency = Urgency.find_by_slug!(params[:urgency])
     @wip.multiply!(current_user, @urgency.multiplier)
+  end
+
+  # private
+
+  def find_wips
+    return [] unless signed_in?
+
+    options = params.merge(partner: @product.partner?(current_user))
+    query = FilterWipsQuery.call(product_wips, current_user, options)
+    PaginatingDecorator.new(query)
   end
 
   def wip_class

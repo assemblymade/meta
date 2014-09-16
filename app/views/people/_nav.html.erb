@@ -1,11 +1,13 @@
-<ul class="nav nav-pills">
-  <li class="<%= nav_active_class(:people_overview) %>">
-    <a href="<%= product_people_path(@product) %>">Overview</a>
-  </li>
-  <li class="<%= nav_active_class(:people_ownership) %>">
-    <a href="<%= product_partners_path(@product) %>">Ownership</a>
-  </li>
-  <li class="<%= nav_active_class(:people_contracts) %>">
-    <a href="<%= product_contracts_path(@product) %>">Contracts</a>
-  </li>
-</ul>
+<div class="sub-thingy">
+  <ul class="nav nav-pills">
+    <li class="<%= nav_active_class(:people_overview) %>">
+      <a href="<%= product_people_path(@product) %>">Overview</a>
+    </li>
+    <li class="<%= nav_active_class(:people_ownership) %>">
+      <a href="<%= product_partners_path(@product) %>">Ownership</a>
+    </li>
+    <li class="<%= nav_active_class(:people_contracts) %>">
+      <a href="<%= product_contracts_path(@product) %>">Contracts</a>
+    </li>
+  </ul>
+</div>

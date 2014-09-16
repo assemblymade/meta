@@ -9,7 +9,7 @@ describe ProductRedirector do
     it 'returns the task path with product slug and task number' do
       redirector = ProductRedirector.new(:task)
       path = redirector.call({ product_id: product.id, id: task.id }, nil)
-      expect(path).to eq("/#{product.slug}/wips/#{task.number}")
+      expect(path).to eq("/#{product.slug}/bounties/#{task.number}")
     end
 
     it 'returns the discussion path with product slug and discussion number' do

@@ -1,3 +1,7 @@
 .well-lg {
   padding: ($line-height-computed * 2) $grid-gutter-width;
 }
+
+.dotted {
+  border-style: dashed;
+}

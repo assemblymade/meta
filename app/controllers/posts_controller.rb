@@ -4,10 +4,9 @@ class PostsController < ProductController
   def index
     find_product!
     @post = @product.posts.order(created_at: :desc).first
+
     if @post
-      return redirect_to product_post_path(@post.product, @post)
-    else
-      return redirect_to new_product_post_path(@product)
+      redirect_to product_post_path(@post.product, @post)
     end
   end
 
@@ -87,7 +86,7 @@ private
   end
 
   def post_params
-    params.require(:post).permit(:title, :summary, :body, :published_at)
+    params.require(:post).permit(:title, :summary, :body, :published_at, :flagged_at)
   end
 
 end

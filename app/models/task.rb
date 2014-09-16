@@ -234,7 +234,6 @@ class Task < Wip
         self.events << event
         event
       end
-
     end
   end
 
@@ -255,6 +254,10 @@ class Task < Wip
       end
     end
     work
+  end
+
+  def current_posting
+    postings.first
   end
 
   def winners

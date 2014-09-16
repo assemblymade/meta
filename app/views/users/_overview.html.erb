@@ -1,0 +1,32 @@
+<div class="stat-group" style="margin-bottom: 36px;">
+  <div class="stat">
+    <div class="stat-value">
+      <%= number_with_delimiter(@user.count_contributions) %>
+    </div>
+    <div class="stat-title">
+      Contributions
+    </div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-value">
+      <%= number_with_delimiter @user.sum_app_cents %>
+    </div>
+    <div class="stat-title">
+      App Coins
+    </div>
+  </div>
+
+
+  <div class="stat">
+    <a href="<%= user_assets_path(@user)%>">
+      <div class="stat-value">
+        <%= number_with_delimiter @user.sum_assembly_assets %>
+      </div>
+      <div class="stat-title">
+        Assembly Assets
+      </div>
+    </a>
+  </div>
+
+</div>

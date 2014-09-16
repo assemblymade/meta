@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://assets-api.assembly.com/v1/transactions/transfer
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "from_public_address": "148h2pUrQbqsZw9MDUCFGqyz4q8PgRm2Ks",
+          "from_private_key": "5K7iWcvEfPL6XMS3pF5KpSBhttmdciQED1MaqkHg1y5RMaYUGS5",
+          "transfer_amount": 10,
+          "source_address": "148h2pUrQbqsZw9MDUCFGqyz4q8PgRm2Ks",
+          "to_public_address": "1MU2Ctwz2GydBWV9WQcbNqZwbMYBto7MPh",
+          "fee_each": 0.00005
+        }
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "transaction_hash": "1sodZtGCamdAsRLhPAGsvHENtVdRm77wn",
+          "source_address": "148h2pUrQbqsZw9MDUCFGqyz4q8PgRm2Ks"
+        }
+  recorded_at: Wed, 10 Sep 2014 19:03:11 GMT
+- request:
+    method: get
+    uri: https://assets-api.assembly.com/v1/addresses
+    headers:
+      Accept:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "public_address": "1NSXfw7a6KSETARS8MhPpbSgTDbCSoYmJK",
+          "private_key": "5Kb4LzM7QacAhc8Ry6yvDN6GFKLgL9wH4ymbUsnJs3CeQyKyhp7"
+        }
+  recorded_at: Wed, 10 Sep 2014 19:03:15 GMT

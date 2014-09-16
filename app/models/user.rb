@@ -6,12 +6,13 @@ class User < ActiveRecord::Base
   include ActiveRecord::UUID
   include Elasticsearch::Model
 
-  attr_encryptor :wallet_private_key, :key => ENV["USER_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt
+  attr_encryptor :wallet_private_key, :key => ENV["USER_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt, :unless => Rails.env.test?
 
   has_many :activities,    foreign_key: 'owner_id'
   has_many :core_products, through: :core_team_memberships, source: :product
   has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
 
+  has_many :assembly_assets
   has_many :events
   has_many :products
   has_many :product_logos
@@ -205,6 +206,10 @@ class User < ActiveRecord::Base
     Task.won_by(self).inject(0) {|sum, wip| sum + wip.score }
   end
 
+  def sum_assembly_assets
+    assembly_assets.reduce(0) { |col, asset| asset.amount + col }
+  end
+
   def to_param
     username
   end
@@ -223,6 +228,10 @@ class User < ActiveRecord::Base
     else
       name.split(/ |@/).first.strip
     end
+  end
+
+  def public_address_url
+    "#{ENV['ASSETS_URL']}/addresses/#{wallet_public_address}"
   end
 
   def mail_immediate?

@@ -29,14 +29,16 @@
 
       <ul class="nav navbar-nav">
 
-        <li class="<%= nav_active_class(:discover_bounties) %>">
-          <a href="<%= discover_path(:trending) %>">Products</a>
+        <li class="<%= nav_active_class(:discover) %>">
+          <a href="<%= discover_path %>">Products</a>
         </li>
-        <!--
-        <li class="<%= nav_active_class(:discover_bounties) %>">
-          <a href="<%= discover_path(:bounties) %>">Bounties</a>
-        </li>
-        -->
+
+        <% if feature?(:discover_bounties) %>
+          <li class="<%= nav_active_class(:discover_bounties) %>">
+            <a href="<%= discover_path(:bounties) %>">Bounties</a>
+          </li>
+        <% end %>
+
         <li class="<%= nav_active_class(:platform_updates) %>">
           <a href="<%= discover_path(:updates) %>">Updates</a>
         </li>
@@ -44,29 +46,8 @@
           <a href="<%= chat_rooms_path %>">Community Chat</a>
         </li>
 
-        <% if @product  && !@product.new_record? %>
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" style="cursor: pointer;">
-              <%= @product.name %>
-              <span class="icon icon-chevron-down"></span>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-              <% unless nav_active_class(:community) %>
-                <li>
-                  <a href="<%= chat_room_path(@product) %>">Chat</a>
-                </li>
-              <% end %>
+        <%= yield :navbar %>
 
-              <li>
-                <a href="<%= product_people_path(@product) %>">Team</a>
-              </li>
-
-              <li>
-                <a href="<%= product_wips_path(@product) %>">Bounties</a>
-              </li>
-            </ul>
-          </li>
-        <% end %>
       </ul>
 
         <% if user_signed_in? %>
@@ -100,3 +81,5 @@
     </div>
   </div>
 </div>
+
+<%= render 'shared/welcome' %>

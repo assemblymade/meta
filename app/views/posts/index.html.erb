@@ -1,0 +1,32 @@
+<% title 'Posts', @product.name %>
+<% activate_nav! :updates %>
+
+<div class="sheet-body">
+  <div class="row">
+
+    <div class="col-md-9 col-xs-9 well dotted text-center">
+      <h4 class="text-muted">
+        There don't seem to be any posts here
+      </h4>
+
+      <p>
+        Blog posts by <%= @product.name %>'s partners will appear here just as soon as they're written.
+      </p>
+    </div>
+
+    <div class="col-md-3 col-xs-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h6 class="panel-title">Everyone loves an update</h6>
+        </div>
+        <div class="panel-body">
+          Updates are a great way to keep new contributors up to date with progress and new ways to help out. When you are ready, we'll also email the entry to everyone following <%= @product.name %>. You can include images and use Markdown to make it more awesome.
+        </div>
+      </div>
+
+      <% if can?(:create, Post) %>
+        <%= link_to 'Write a new post', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
+      <% end %>
+    </div>
+  </div>
+</div>

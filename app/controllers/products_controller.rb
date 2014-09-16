@@ -17,12 +17,17 @@ class ProductsController < ProductController
     render layout: 'application'
   end
 
+  def start
+    render layout: 'application'
+  end
+
   def create
     @product = create_product_with_params
     if @product.valid?
       respond_with(@product, location: product_welcome_path(@product))
 
       schedule_greet
+      schedule_introductory_bounty
       schedule_one_hour_checkin
       schedule_one_day_checkin
     else
@@ -57,11 +62,6 @@ class ProductsController < ProductController
   end
 
   def show
-    if @product.stealth? && @product.draft?
-      redirect_to edit_product_path(@product)
-      return
-    end
-
     @user_metrics = UserMetricsSummary.new(@product, Date.today - 1.day)
 
     page_views = TimedSet.new($redis, "#{@product.id}:show")
@@ -97,10 +97,6 @@ class ProductsController < ProductController
       target: @product
     )
 
-    if @product == Product.find_by_slug('assets')
-      AssemblyAsset.grant!(current_user, @product, promo=true)
-    end
-
     render nothing: true, :status => :ok
   end
 
@@ -123,16 +119,20 @@ class ProductsController < ProductController
 
   def launch
     authorize! :update, @product
-    if @product.update(launched_at: Time.now)
+    if @product.update(started_teambuilding_at: Time.now)
       ApplyForPitchWeek.perform_async(@product.id, current_user.id)
-      flash[:info] = :applied_for_pitch_week
+      flash[:applied_for_pitch_week] = true
     end
     respond_with @product, location: product_path(@product)
   end
 
   def schedule_greet
     message = "Hi there! I'm Kernel. #{@product.name} looks pretty sweet. If you need any help, message me at @kernel, and I'll get a human."
-    PostChatMessage.perform_in(1.second, @product.slug, message, false)
+    PostChatMessage.perform_async(@product.slug, message, false)
+  end
+
+  def schedule_introductory_bounty
+    CreateBounty.perform_async(@product.slug)
   end
 
   def schedule_one_hour_checkin
@@ -176,7 +176,10 @@ class ProductsController < ProductController
       product.team_memberships.create!(user: current_user, is_core: true)
 
       product.watch!(current_user)
-      product.update_attributes main_thread: product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
+
+      main_thread = product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
+      product.update(main_thread: main_thread)
+      product.chat_rooms.create!(wip: main_thread, slug: product.slug)
 
       ownership = params[:ownership] || {}
       core_team_ids = Array(params[:core_team])
@@ -189,8 +192,9 @@ class ProductsController < ProductController
 
       coins_allocated = ownership.values.map(&:to_i).sum
       founder_coins = 100 * Product::INITIAL_COINS
-
       TransactionLogEntry.minted!(nil, Time.now, product, current_user.id, founder_coins)
+      product.update_partners_count_cache
+      product.save!
 
       AutoTipContract.replace_contracts_with_default_core_team_split(product)
 
@@ -212,12 +216,6 @@ class ProductsController < ProductController
       end
 
       flash[:new_product_callout] = true
-
-      Github::CreateProductRepoWorker.perform_async(
-        product.id,
-        product_url(product),
-        product.slug
-      )
     end
     product
   end

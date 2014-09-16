@@ -1,0 +1,42 @@
+<div class="page-header sheet-header">
+  <% if @user %>
+    <%= render 'users/overview' %>
+  <% end %>
+</div>
+
+<div class="sheet-body">
+  <% if @assets.any? %>
+    <table class="table table-hover table-responsive">
+      <thead>
+        <th>Product</th>
+        <th>Amount</th>
+      </thead>
+      <tbody>
+        <% @assets.each do |product, assets| %>
+          <tr>
+            <td>
+              <a href="<%= product_path(product) %>">
+                <img src="<%= firesize(product.poster_image.url, '30x30', 'g_center') %>" width="auto" class="app-icon" style="display: inline; margin-right: 5px;">
+                <span class="hidden-xs"><%= product.name %></span>
+              </a>
+            </td>
+            <td>
+              <%= assets.map(&:amount).reduce(:+) %> <span class="icon icon-app-coin text-coins"></span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% if @user.wallet_public_address %>
+      <div class="container">
+        <a href="<%= @user.public_address_url %>">View raw Assets allocation data</a>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="well well-lg dotted">
+      <p class="text-centered">
+        It looks like you haven't earned any Assembly Assets yet. Check out the <a href="<%= product_path(Product.find_by_slug('assemblycoins')) %>">Assets project</a> to earn your first coins.
+      </p>
+    </div>
+  <% end %>
+</div>

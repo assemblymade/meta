@@ -19,7 +19,7 @@
         <h5>Breakdown</h5>
         {BountyContracts({contracts: this.props.contracts, product: this.props.product})}
 
-        <h5>Bounty Valuation</h5>
+        <h5>Bounty Valuations</h5>
         {BountyOffers({offers: this.state.offers, product: this.props.product})}
 
         {(this.props.open && this.props.user) ? this.newOffer() : null}
@@ -29,7 +29,7 @@
     newOffer: function() {
       return <div>
 
-        <h5>What is this worth?</h5>
+        <h5>How many coins do you think this is worth?</h5>
 
         <form className="form">
           <NewBountyOffer
@@ -40,7 +40,7 @@
             averageBounty={this.props.averageBounty}
             onChange={this.handleOfferChanged} />
           <a id="slider" className="btn btn-default btn-block btn-xs" href="#" onClick={this.handleOfferClicked}>
-            Offer {numeral(this.state.newOffer).format('0,0')} coins
+            Value this at {numeral(this.state.newOffer).format('0,0')} {this.props.product.name} Coins
           </a>
         </form>
       </div>

@@ -1,37 +1,44 @@
 class DiscoverController < ApplicationController
+  def index
+    @profitable = Product.profitable.
+      ordered_by_trend.
+      limit(3)
 
-  def fresh
-    @applications = PitchWeekApplication.in_pitch_week.approved.
-      joins(:product).
-      order('products.bio_memberships_count desc').
+    @greenlit = Product.greenlit.
+      ordered_by_trend.
+      limit(5)
+
+    @teambuilding = Product.teambuilding.
+      ordered_by_trend.
+      limit(5)
+  end
+
+  def profitable
+    @products = Product.profitable.
+      ordered_by_trend.
       page(params[:page])
   end
 
-  def trending
-    @products = Product.public_products.
-                        where.not(slug: 'meta').
-                        where.not(started_building_at: nil).
-                        joins(:product_trend).
-                        where('watchings_count >= ?', 5).
-                        order('product_trends.score desc').
-                        page(params[:page])
+  def greenlit
+    @products = Product.greenlit.
+      ordered_by_trend.
+      page(params[:page])
   end
 
-  def live
-    @products = Product.public_products.
-                        where.not(live_at: nil).
-                        joins(:product_trend).
-                        order('product_trends.score desc').
-                        page(params[:page])
+  def teambuilding
+    @products = Product.teambuilding.
+      ordered_by_trend.
+      page(params[:page])
   end
 
   def bounties
     if params[:filter].blank?
-      cookies[:discover_bounties_filter] ||= 'design'
+      cookies[:discover_bounties_filter] ||= 'all'
       redirect_to discover_path(:bounties, filter: cookies[:discover_bounties_filter])
     end
 
     filter = cookies[:discover_bounties_filter] = params[:filter]
+    params[:filter_text] = params[:filter] == 'all' ? '' : params[:filter]
 
     @filters = [{
       slug: 'all',
@@ -71,7 +78,8 @@ class DiscoverController < ApplicationController
 
   def updates
     @posts = Post.joins(:product).
-      where('products.flagged_at is null').
+      where(products: { flagged_at: nil }).
+      where(flagged_at: nil).
       order(created_at: :desc)
 
     @page = @posts.page(params[:page])

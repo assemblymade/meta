@@ -24,4 +24,8 @@ class Post < ActiveRecord::Base
     product.follower_ids
   end
 
+  def flagged?
+    flagged_at.present?
+  end
+
 end

@@ -5,7 +5,7 @@
       <% facets.each do |facet| %>
         <li class="small <%= 'active' if params[:state] == facet.slug %>">
           <a href="<%= polymorphic_path([@product, :search], @filters.merge(state: facet.slug)) %>">
-            <span class="badge pull-right"><%= facet.count %></span>
+            <span class="badge badge-subtle pull-right"><%= facet.count %></span>
             <%= facet.name %>
           </a>
         </li>

@@ -1,37 +1,7 @@
 <div class="page-header sheet-header">
 
   <% if @user %>
-
-    <div class="stat-group" style="margin-bottom: 36px;">
-      <div class="stat">
-        <div class="stat-value">
-          <%= number_with_delimiter(@user.count_contributions) %>
-        </div>
-        <div class="stat-title">
-          Contributions
-        </div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-value">
-          <%= number_with_delimiter @user.sum_app_cents %>
-        </div>
-        <div class="stat-title">
-          App Coins
-        </div>
-      </div>
-
-      <!-- <div class="stat">
-        <div class="stat-value">
-          <%= number_to_currency(0) %>
-        </div>
-        <div class="stat-title">
-          Earned
-        </div>
-      </div> -->
-
-    </div>
-
+    <%= render 'users/overview' %>
   <% end %>
 
   <ul class="nav nav-pills">
@@ -40,16 +10,19 @@
         Started
       </a>
     </li>
+
     <li class="<%= 'active' if current_page?(url_for(params.merge(user: 'started', only_path: true))) %>">
       <a href="<%= url_for(params.merge(user: 'started', only_path: true)) %>">
         Created
       </a>
     </li>
+
     <li class="<%= 'active' if current_page?(url_for(params.merge(user: 'commented', only_path: true))) %>">
       <a href="<%= url_for(params.merge(user: 'commented', only_path: true)) %>">
         Commented
       </a>
     </li>
+
     <li class="<%= 'active' if current_page?(url_for(params.merge(user: 'awarded', only_path: true))) %>">
       <a href="<%= url_for(params.merge(user: 'awarded', only_path: true)) %>">
         Awarded

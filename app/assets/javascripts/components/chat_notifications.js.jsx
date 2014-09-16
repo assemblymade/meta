@@ -152,6 +152,14 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
       }
     },
 
+    markAllAsRead: function() {
+      _.each(_.values(this.state.data), function(entry) {
+        ChatNotificationsStore['chat:markRoomAsRead'](entry);
+      });
+
+      this.handleChatRoomsChanged();
+    },
+
     latestArticle: function() {
       return _.max(this.articles(), function(a) {
         return a && a.timestamp;
@@ -182,8 +190,11 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
           <li ref="spinner" style={{'min-height': 120}}>
             <NotificationsList data={_.first(this.sortByLastReadAt(this.state.data), 7)} />
           </li>
+          <li className="divider"></li>
           <li>
-            <a href={productsPath} className="text-small">All Products</a>
+            <a href="#" onClick={this.markAllAsRead} className="text-small list-group-item" style={{'border': 'none'}}>
+              Mark all as read
+            </a>
           </li>
           {desktopNotifications}
         </ul>
@@ -216,12 +227,13 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
       for (var i = 0; i < values.length; i++) {
         var entry = values[i];
         entry.readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
+        entry.lastUpdated = - entry.updated
         entry.sortIndex = this.state.sortKeys.indexOf(entry.id);
         if (entry.sortIndex === -1) {
           entry.sortIndex = values.length
         }
       }
-      values.sort(dynamicSortMultiple("readState", "sortIndex", "label"));
+      values.sort(dynamicSortMultiple("readState", "lastUpdated", "sortIndex"));
 
       return values || [];
     }
@@ -230,6 +242,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
   var NotificationsList = React.createClass({
     render: function() {
       var productNodes = this.props.data.map(function(entry){
+        var label = entry.product_name ? entry.product_name : 'Community Chat';
         var badge = null;
 
         if (entry.updated > entry.last_read_at) {
@@ -239,8 +252,8 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
         }
 
         return (
-          <a href={entry.url} key={entry.id} className="list-group-item">
-            {badge} {entry.label}
+          <a href={entry.url} key={entry.id} className="list-group-item" style={{'border': 'none'}}>
+            {badge} {label}
           </a>
         );
       });

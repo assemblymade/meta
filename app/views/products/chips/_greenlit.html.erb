@@ -1,0 +1,24 @@
+<div class="chip">
+  <div class="chip-icon">
+    <%= image_tag(firesize(product.poster_image.url, '96x96', 'g_center'), class: 'app-icon', width: '100%', alt: product.name) %>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <h4 class="alpha omega"><%= product.name %></h4>
+      <p class="omega"><%= product.pitch %></p>
+    </div>
+    <div class="col-sm-6 text-right">
+      <ul class="list-inline omega">
+        <% product.core_team.each do |user| %>
+          <li>
+            <%= avatar_tag(user, 24) %>
+          </li>
+        <% end %>
+      </ul>
+      <span class="small text-muted" style="line-height:24px">
+        +<%= product.followers.count %> followers
+      </span>
+    </div>
+  </div>
+</div>

@@ -3,47 +3,54 @@
 </script>
 
 <%= render 'shared/navbar' %>
-<%= render 'shared/welcome' %>
 
-<div class="navbar navbar-product">
-  <div class="container">
-    <div class="pull-right">
-      <div
-          data-react-class="NotificationPreferencesDropdown"
-          data-react-props="<%= {
-            productWatchersPath: product_people_path(@product),
-            productWatchersCount: @product.watchings_count,
-            productFollowPath: product_follow_path(@product),
-            productAnnouncementsPath: product_announcements_path(@product),
-            productUnfollowPath: product_unfollow_path(@product),
-            watchingState: @product.watching_state(current_user),
-            afterFollowPath: product_people_path(@product)
-          }.to_json %>">
-      </div>
-    </div>
+<% if flash[:first_assets_granted] %>
+  <%= render 'products/assets_granted' %>
+<% end %>
 
-    <h3 class="alpha omega">
-      <a class="text-muted" href="<%= product_path(@product) %>">
-        <%= @product.name %>
-      </a>
-
-      <% if false %>
-        <span class="label label-outlined" style="position: relative; top: -2px; font-size: 13px;"><%= @product.stage %></span>
-      <% end %>
-    </h3>
-  </div>
-</div>
+<% if flash[:applied_for_pitch_week] %>
+  <%= render 'products/applied_for_pitch_week' %>
+<% end %>
 
 <div class="container">
-  <div class="row">
-    <div class="col-md-10 col-md-push-2">
-      <%= yield %>
+  <div class="chip" style="margin-top:24px">
+    <div class="chip-icon">
+      <%= app_icon(@product, size: 300) %>
     </div>
 
-    <div class="col-md-2 col-md-pull-10">
-      <%= render 'products/sidenav', product: @product %>
+    <div class="pull-right">
+      <ul class="list-inline">
+        <li>
+          <% if @product.stealth? && partner?(@product) %>
+            <a class="btn btn-link btn-sm" href="<%= product_welcome_path(@product) %>">
+              <span class="icon icon-rocket icon-left"></span>
+              Next steps
+            </a>
+          <% end %>
+        </li>
+        <li
+            data-react-class="NotificationPreferencesDropdown"
+            data-react-props="<%= {
+              productWatchersPath: product_people_path(@product),
+              productWatchersCount: @product.watchings_count,
+              productFollowPath: product_follow_path(@product),
+              productAnnouncementsPath: product_announcements_path(@product),
+              productUnfollowPath: product_unfollow_path(@product),
+              watchingState: @product.watching_state(current_user),
+              afterFollowPath: product_people_path(@product)
+            }.to_json %>">
+        </li>
+      </ul>
     </div>
+
+    <h3 class="alpha omega"><a href="<%= product_path(@product) %>"><%= @product.name %></a></h3>
+    <div class="lead text-muted"><%= @product.pitch %></div>
   </div>
+
+  <%= render 'products/nav', product: @product %>
+  <%= yield %>
+</div>
+
 </div>
 
 <% unless current_user.nil? %>
@@ -86,9 +93,11 @@
       </div>
     </form>
   </div>
+
+  <div id="public-address-prompt"></div>
 <% end %>
 
-<%= render 'shared/footer' unless @disable_footer %>
+<%= render 'shared/footer' %>
 
 <% parent_layout 'application' %>
 

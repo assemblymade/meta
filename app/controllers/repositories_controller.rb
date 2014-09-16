@@ -11,18 +11,20 @@ class RepositoriesController < ProductController
       return redirect_to product_repos_path(@product)
     end
 
-    repo_name = [@product.slug, repo_params].join('')
+    repo_name = [@product.slug, params["name"]].join('')
+    request_through = if params["launchpad"]
+      :launchpad_post
+    else
+      :post
+    end
 
     Github::CreateProductRepoWorker.perform_async(
       @product.id,
       product_url(@product),
-      repo_name
+      repo_name,
+      request_through
     )
-    
-    respond_with(@product, location: product_repos_path(@product))
-  end
 
-  def repo_params
-    params.require(:repository).require(:name)
+    respond_with(@product, location: product_repos_path(@product))
   end
 end

@@ -24,13 +24,13 @@ var Avatar = require('./avatar.js.jsx');
 
     render: function() {
       return (
-        <div>
+        <div className="dropdown hidden-sm hidden-xs">
           <button className={this.togglerClasses()} type="button" data-toggle="dropdown">
             {this.buttonState()}
 
-            <a className="toggler-badge" href={this.props.productWatchersPath}>
+            <span className="toggler-badge">
               {this.state.productWatchersCount}
-            </a>
+            </span>
           </button>
 
           <ul
@@ -94,30 +94,20 @@ var Avatar = require('./avatar.js.jsx');
 
     buttonState: function() {
       switch (this.state.selected) {
-        case 'following':
-          return 'Following';
-        case 'announcements':
-          return 'Updates only';
-        case 'not watching':
-          return 'Follow';
+      case 'following':
+        return 'Following';
+      case 'announcements':
+        return 'Updates only';
+      case 'not watching':
+        return 'Follow';
       }
     },
 
     togglerClasses: function() {
       return React.addons.classSet({
+        'dropdown-toggle': true,
         'toggler': true,
         'toggler-primary': (this.state.selected === 'not watching')
-      })
-    },
-
-    buttonClasses: function(dropdownToggle) {
-      return React.addons.classSet({
-        'btn': true,
-        'btn-primary': (this.state.selected === 'not watching'),
-        'btn-default': (this.state.selected !== 'not watching'),
-        'btn-sm': true,
-        'dropdown-toggle': dropdownToggle,
-        'toggler-btn': true
       })
     },
 
@@ -127,13 +117,14 @@ var Avatar = require('./avatar.js.jsx');
       }
     },
 
-    updatePreference: function(item, path) {
+    updatePreference: function(preference, path) {
+      var action = D.ACTIONS.UPDATE_SELECTED;
+
       Dispatcher.dispatch({
-        action: D.ACTIONS.UPDATE_SELECTED,
+        action: action,
         data: {
-          item: item,
-          path: path,
-          redirectTo: (item === 'following' ? this.props.afterFollowPath : null)
+          preference: preference,
+          path: path
         }
       });
     }

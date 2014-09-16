@@ -26,6 +26,12 @@ class UsersController < ApplicationController
     @user = current_user.decorate
   end
 
+  def assets
+    authenticate_user!
+    @user = current_user.decorate
+    @assets = @user.assembly_assets.group_by { |asset| asset.product }
+  end
+
   def update
     @user.update_attributes(user_params)
     respond_with @user, location: (params[:return_to] || user_path(@user))
@@ -46,7 +52,7 @@ class UsersController < ApplicationController
       suggestions: suggestions
     }
   end
-  
+
   def unread
     authenticate_user!
     entries = UnreadChat.for(current_user)
@@ -104,13 +110,13 @@ protected
 
   def set_empty_state
     if params[:user].blank?
-      @empty_state_text = "#{@user.username} isn't working on any bounties"
+      @empty_state_text = "@#{@user.username} isn't working on any bounties"
     elsif params[:user] == 'started'
-      @empty_state_text = "#{@user.username} hasn't created any bounties"
+      @empty_state_text = "@#{@user.username} hasn't created any bounties"
     elsif params[:user] == 'commented'
-      @empty_state_text = "#{@user.username} hasn't commented on any bounties"
+      @empty_state_text = "@#{@user.username} hasn't commented on any bounties"
     elsif params[:user] == 'awarded'
-      @empty_state_text = "#{@user.username} hasn't been awarded any bounties"
+      @empty_state_text = "@#{@user.username} hasn't been awarded any bounties"
     end
   end
 end

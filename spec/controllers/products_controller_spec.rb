@@ -28,16 +28,9 @@ describe ProductsController do
       end
     end
     context 'product in stealth' do
-      let(:product) { Product.make!(launched_at: nil) }
+      let(:product) { Product.make!(started_teambuilding_at: nil) }
 
-      it "redirects to edit if only name and pitch fields are present" do
-        get :show, id: product
-        expect(response).to redirect_to(edit_product_path(product))
-      end
-
-      it "is successful if fields other than name and pitch are present" do
-        product.update_attributes goals: '7'
-
+      it "is successful" do
         get :show, id: product
         expect(response).to be_success
       end
@@ -89,6 +82,14 @@ describe ProductsController do
 
       it 'follows product' do
         expect(assigns(:product).followers.count).to eq(1)
+      end
+
+      it 'creates a chat room' do
+        expect(assigns(:product).chat_rooms.count).to eq(1)
+      end
+
+      it 'updates partners_count cache' do
+        expect(assigns(:product).partners_count).to eq(1)
       end
     end
 
@@ -160,7 +161,7 @@ describe ProductsController do
   end
 
   describe '#launch' do
-    let(:product) { Product.make!(launched_at: nil, user: creator) }
+    let(:product) { Product.make!(started_teambuilding_at: nil, user: creator) }
 
     before do
       sign_in creator
@@ -179,7 +180,7 @@ describe ProductsController do
 
     it 'sets product to launched' do
       patch :launch, product_id: product
-      expect(product.reload.launched_at.to_i).to be_within(2).of(Time.now.to_i)
+      expect(product.reload.started_teambuilding_at.to_i).to be_within(2).of(Time.now.to_i)
     end
   end
 

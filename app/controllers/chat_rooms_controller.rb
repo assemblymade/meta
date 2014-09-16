@@ -8,11 +8,11 @@ class ChatRoomsController < ApplicationController
       format.json {
         @rooms = (
           [ChatRoom.general] +
-          ChatRoom.where(product_id: current_user.followed_product_ids).order(:slug)
+          ChatRoom.where(product_id: current_user.followed_product_ids).includes(wip: :events).order(:slug)
         ).compact
 
         render json: {
-          chat_rooms: ActiveModel::ArraySerializer.new(@rooms),
+          chat_rooms: ActiveModel::ArraySerializer.new(@rooms, scope: current_user),
           sort_keys: current_user.recent_product_ids.try(:map) {|pid| "chat_#{pid}"} || []
         }
       }

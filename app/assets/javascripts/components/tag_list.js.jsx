@@ -39,6 +39,8 @@ var TagListStore = require('../stores/tag_list_store');
       var self = this;
 
       return function(e) {
+        e.stopPropagation();
+
         Dispatcher.dispatch({
           action: TAG_LIST.ACTIONS.ADD_TAG,
           data: {
@@ -96,7 +98,11 @@ var TagListStore = require('../stores/tag_list_store');
     },
 
     popoverButton: function() {
-      if (this.props.destination && !this.props.newBounty && this.state.tags.length > 0 && this.state.tags[this.state.tags.length - 1] !== '') {
+      if (this.props.destination &&
+          !this.props.newBounty &&
+          this.state.tags.length > 0 &&
+          this.state.tags[this.state.tags.length - 1] !== '') {
+
         return (
           <li>
             <BsPopover
@@ -104,7 +110,12 @@ var TagListStore = require('../stores/tag_list_store');
                 placement="bottom"
                 visible={this.state.popoverShown}
                 onHide={this.handleHide}>
-              <a onClick={this.togglePopover} style={{ cursor: 'pointer', 'font-size': '13px' }}>{this.tagPopoverText()}</a>
+              <a
+                  href="javascript:"
+                  onClick={this.togglePopover}
+                  className="btn btn-default btn-sm">
+                {this.tagPopoverText()}
+              </a>
             </BsPopover>
           </li>
         );
@@ -179,6 +190,10 @@ var TagListStore = require('../stores/tag_list_store');
     },
 
     tagPopoverText: function() {
+      if (this.props.newBounty) {
+        return null;
+      }
+
       return this.state.popoverShown ? 'Hide' : 'Add tag';
     },
 
@@ -233,7 +248,7 @@ var TagListStore = require('../stores/tag_list_store');
                 visible={this.state.popoverShown}
                 onHide={this.handleHide}>
               <span>
-                No tags yet &mdash; why not <a onClick={this.togglePopover} style={{ cursor: 'pointer', 'font-size': '13px' }}>add some</a>?
+                No tags yet &mdash; why not <a href="javascript:void(0);" onClick={this.togglePopover}>add some</a>?
               </span>
             </BsPopover>
           </li>

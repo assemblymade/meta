@@ -28,3 +28,7 @@
 .btn-facebook {
   @include button-variant($btn-facebook-color, $btn-facebook-bg, $btn-facebook-border);
 }
+
+.clickable {
+  cursor: pointer;
+}

@@ -1,13 +1,13 @@
 class CreateProject < ApiWorker
   def perform(product_slug)
     @product = Product.find_by(slug: product_slug)
+    @user = User.find_by(username: 'kernel')
 
     return false unless Activity.where(target_id: @product.id)
                                 .where.not(type: 'Activities::Chat')
                                 .where.not(type: 'Activities::FoundProduct')
+                                .where.not(actor: @user)
                                 .empty?
-
-    @user = User.find_by(username: 'kernel')
 
     post Rails.application.routes.url_helpers.api_product_projects_path(@product),
       wip: {

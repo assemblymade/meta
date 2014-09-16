@@ -1,5 +1,5 @@
 <% title 'Community Chat' %>
-<% activate_nav! :community %>
+<% activate_nav! :community if @chat_room.product.nil? %>
 
 <%= render 'shared/navbar' %>
 
@@ -65,15 +65,15 @@
     <div class="col-md-3 hidden-xs hidden-sm" style="overflow:hidden">
       <div class="row">
         <div class="col-md-11">
-          <h2>
+          <h3>
             <% if product = @chat_room.product %>
-              <a class="text-stealth-link" href="<%= product_path(product) %>">
-                #<%= @chat_room.slug %>
+              <a class="dropdown-toggle" target="_blank" href="<%= product_path(product) %>">
+                Back to <%= product.name %>
               </a>
             <% else %>
-              #<%= @chat_room.slug %>
+              Community Chat
             <% end %>
-          </h2>
+          </h3>
           <div class="js-members"></div>
         </div>
       </div>

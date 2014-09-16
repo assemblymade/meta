@@ -1,0 +1,85 @@
+<div class="sub-thingy">
+  <div data-react-class="CreateBountyButton" data-react-props="<%= {
+    product: { name: @product.name },
+    url: product_wips_path(@product),
+    maxOffer: (6 * @product.average_bounty).round(-4),
+    averageBounty: @product.average_bounty
+  }.to_json %>" class="pull-right"></div>
+
+  <ul class="nav nav-pills">
+    <li class="<%= 'active' if params[:state].blank? || params[:state] == 'open' %>">
+      <a href="<%= scoped_product_bounties_path(@product, state: 'open') %>">
+        Todo
+
+        <span class="badge badge-subtle">
+          <%= @product.tasks.open.count %>
+        </span>
+      </a>
+    </li>
+
+    <li class="<%= 'active' if params[:state] == 'progress' %>">
+      <a href="<%= scoped_product_bounties_path(@product, state: 'progress') %>">
+        Doing
+
+        <span class="badge badge-subtle">
+          <%= @product.tasks.allocated.count %>
+        </span>
+      </a>
+    </li>
+
+    <li class="<%= 'active' if params[:state] == 'closed' %>">
+      <a href="<%= scoped_product_bounties_path(@product, state: 'closed') %>">
+        Done
+
+        <span class="badge badge-subtle">
+          <%= @product.tasks.closed.count %>
+        </span>
+      </a>
+    </li>
+
+    <li class="dropdown">
+      <a class="dropdown-toggle" type="button" data-toggle="dropdown" href="#">
+        Order
+        <span class="caret"></span>
+      </a>
+
+      <ul class="dropdown-menu" role="menu">
+        <li class="<%= 'active' if params[:sort] == 'priority' %>" role="presentation">
+          <a href="<%= scoped_product_bounties_path(@product, sort: 'priority') %>" role="menuitem" tabindex="-1" href="#">
+            Priority
+          </a>
+        </li>
+        <li class="<%= 'active' if params[:sort] == 'most_valuable' %>" role="presentation">
+          <a href="<%= scoped_product_bounties_path(@product, sort: 'most_valuable') %>" role="menuitem" tabindex="-1" href="#">
+            Most valuable
+          </a>
+        </li>
+        <li class="<%= 'active' if params[:sort] == 'least_valuable' %>" role="presentation">
+          <a href="<%= scoped_product_bounties_path(@product, sort: 'least_valuable') %>" role="menuitem" tabindex="-1" href="#">
+            Least valuable
+          </a>
+        </li>
+        <li class="<%= 'active' if params[:sort] == 'newest' %>" role="presentation">
+          <a href="<%= scoped_product_bounties_path(@product, sort: 'newest') %>" role="menuitem" tabindex="-1" href="#">
+            Newest
+          </a>
+        </li>
+        <li class="<%= 'active' if params[:sort] == 'oldest' %>" role="presentation">
+          <a href="<%= scoped_product_bounties_path(@product, sort: 'oldest') %>" role="menuitem" tabindex="-1" href="#">
+            Oldest
+          </a>
+        </li>
+        <li class="<%= 'active' if params[:sort] == 'recently_updated' %>" role="presentation">
+          <a href="<%= scoped_product_bounties_path(@product, sort: 'recently_updated') %>" role="menuitem" tabindex="-1" href="#">
+            Recently Updated
+          </a>
+        </li>
+        <li class="<%= 'active' if params[:sort] == 'least_recently_updated' %>" role="presentation">
+          <a href="<%= scoped_product_bounties_path(@product, sort: 'least_recently_updated') %>" role="menuitem" tabindex="-1" href="#">
+            Least recently updated
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

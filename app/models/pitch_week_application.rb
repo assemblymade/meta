@@ -1,7 +1,7 @@
 class PitchWeekApplication < ActiveRecord::Base
   include Kaminari::ActiveRecordModelExtension
 
-  belongs_to :applicant
+  belongs_to :applicant, class_name: 'User'
   belongs_to :product
 
   scope :approved, -> { where(is_approved: true) }
@@ -9,11 +9,15 @@ class PitchWeekApplication < ActiveRecord::Base
   scope :to_review, -> { where(reviewed_at: nil) }
 
   def review(reviewer, outcome)
-    update(
-      reviewed_at: Time.now,
-      reviewer_id: reviewer.id,
-      is_approved: outcome
-    )
+    ActiveRecord::Base.transaction do
+      update(
+        reviewed_at: Time.now,
+        reviewer_id: reviewer.id,
+        is_approved: outcome
+      )
+
+      product.update(started_teambuilding_at: Time.now)
+    end
   end
 
   def pitch_week_end

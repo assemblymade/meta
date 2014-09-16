@@ -1,5 +1,4 @@
-.card {
-  border: 1px solid $brand-border;
+.card { border: 1px solid $brand-border;
   border-radius: $border-radius-base;
   box-shadow: 0 1px 2px 0 $brand-shadow;
   margin-bottom: $line-height-computed;
@@ -16,6 +15,11 @@
   }
 }
 
+.card-heading {
+  padding: 20px;
+  border-bottom: 1px solid $brand-divider;
+}
+
 .card-body {
   padding: 20px;
 }
@@ -23,4 +27,8 @@
 .card-footer {
   padding: ($line-height-computed/2) 20px;
   background-color: $brand-bg;
+}
+
+.card .markdown img {
+  max-width: 50%;
 }

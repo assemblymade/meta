@@ -3,62 +3,59 @@
 <% activate_nav! :people_contracts %>
 
 
-<div class="page-header sheet-header">
-  <% if current_user && @product.core_team?(current_user) %>
-    <button class="btn btn-success pull-right" data-toggle="modal" data-target="#new-contract-modal">
-      Create contract
-    </button>
+<% if current_user && @product.core_team?(current_user) %>
+  <button class="btn btn-success pull-right" data-toggle="modal" data-target="#new-contract-modal">
+    Create contract
+  </button>
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="new-contract-modal" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
+  <!-- Modal -->
+  <div class="modal fade" id="new-contract-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Create a new contract</h4>
-          </div>
-          <form role="form" method="post" action="<%= product_contracts_path(@product) %>">
-            <div class="modal-body">
-              <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-              <div class="form-group">
-                <!-- Person Picker -->
-                <label class="input-label">Holder</label>
-                <input value="@" name="contract[user]" type="text" class="form-control textcomplete" data-product-id="<%= @product.slug %>">
-              </div>
-
-              <div class="form-group">
-                <label class="input-label">Type</label>
-                <p class="form-control-static">Automatic tip when new coins minted</p>
-              </div>
-
-              <div class="form-group">
-                <label class="input-label">Amount</label>
-                <div data-react-class="ContractInput"
-                     data-react-props="<%= {
-                       startingAmount: '0',
-                       alwaysEditable: true,
-                       name: 'contract[amount]'
-                     }.to_json %>">
-                </div>
-
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Create contract</button>
-              </div>
-            </div>
-          </form>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Create a new contract</h4>
         </div>
+        <form role="form" method="post" action="<%= product_contracts_path(@product) %>">
+          <div class="modal-body">
+            <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+            <div class="form-group">
+              <!-- Person Picker -->
+              <label class="input-label">Holder</label>
+              <input value="@" name="contract[user]" type="text" class="form-control textcomplete" data-product-id="<%= @product.slug %>">
+            </div>
+
+            <div class="form-group">
+              <label class="input-label">Type</label>
+              <p class="form-control-static">Automatic tip when new coins minted</p>
+            </div>
+
+            <div class="form-group">
+              <label class="input-label">Amount</label>
+              <div data-react-class="ContractInput"
+                   data-react-props="<%= {
+                     startingAmount: '0',
+                     alwaysEditable: true,
+                     name: 'contract[amount]'
+                   }.to_json %>">
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Create contract</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
+  </div>
 
-  <% end %>
+<% end %>
 
-  <h2>Contracts</h2>
-  <%= render 'people/nav' %>
-</div>
+<%= render 'people/nav' %>
 
 <div class="sheet-body">
   <table class="table">

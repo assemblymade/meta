@@ -52,18 +52,13 @@
       <% if @product.slug && can?(:update, @product) %>
         <h6>Create a new repository</h6>
 
-        <form role="form" class="form" method='post' action="<%= product_repos_path(@product) %>">
-          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-          <div data-react-class="InputPreview"
-              data-react-props="<%= {
-                addonText: 'github.com/' + ENV["GITHUB_PRODUCTS_ORG"] + '/' + @product.slug,
-                buttonText: 'Create',
-                placeholder: 'Repository suffix',
-                inputName: 'repository[name]'
-              }.to_json %>">
-          </div>
-        </form>
-        <br>
+        <div data-react-class="NewRepositoryPreview"
+            data-react-props="<%= {
+              addonText: 'github.com/' + ENV["GITHUB_PRODUCTS_ORG"] + '/' + @product.slug,
+              placeholder: 'Repository suffix',
+              path: product_repos_path(@product)
+            }.to_json %>">
+        </div>
       <% end %>
     </div>
   </div>

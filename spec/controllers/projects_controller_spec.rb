@@ -27,7 +27,7 @@ describe ProjectsController do
     end
 
     it "redirects" do
-      expect(response).to redirect_to(product_project_path(product, assigns(:milestone)))
+      expect(response).to redirect_to(product_wips_path(product, bounty: assigns(:milestone).number))
     end
 
     it 'creates tasks from titles and adds existing tasks' do
