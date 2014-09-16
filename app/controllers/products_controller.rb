@@ -128,11 +128,11 @@ class ProductsController < ProductController
 
   def schedule_greet
     message = "Hi there! I'm Kernel. #{@product.name} looks pretty sweet. If you need any help, message me at @kernel, and I'll get a human."
-    PostChatMessage.perform_in(1.second, @product.slug, message, false)
+    PostChatMessage.perform_async(@product.slug, message, false)
   end
 
   def schedule_introductory_bounty
-    CreateBounty.perform_in(1.second, @product.slug)
+    CreateBounty.perform_async(@product.slug)
   end
 
   def schedule_one_hour_checkin
