@@ -26,6 +26,8 @@ class ChatRoomSerializer < ActiveModel::Serializer
   end
 
   def readraptor_url
-    ReadraptorTracker.new(object.key, scope.id).url
+    if scope
+      ReadraptorTracker.new(object.key, scope.id).url
+    end
   end
 end
