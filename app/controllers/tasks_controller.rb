@@ -131,7 +131,7 @@ class TasksController < WipsController
   # private
 
   def find_wips
-    return [] unless signed_in?
+    # return [] unless signed_in?
 
     options = params.merge(partner: @product.partner?(current_user))
     query = FilterWipsQuery.call(product_wips, current_user, options)
