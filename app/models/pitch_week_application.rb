@@ -1,7 +1,7 @@
 class PitchWeekApplication < ActiveRecord::Base
   include Kaminari::ActiveRecordModelExtension
 
-  belongs_to :applicant
+  belongs_to :applicant, class_name: 'User'
   belongs_to :product
 
   scope :approved, -> { where(is_approved: true) }

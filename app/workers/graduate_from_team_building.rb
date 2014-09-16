@@ -12,13 +12,13 @@ class GraduateFromTeamBuilding
     successes.each do |product|
       product.update!(greenlit_at: Time.now)
 
-      # send congratulations email from Austin
+      TeamBuildingMailer.success(product.id).deliver
     end
 
     failures.each do |product|
       product.update!(started_teambuilding_at: nil)
 
-      # send bummer email from Austin
+      TeamBuildingMailer.failure(product.id).deliver
     end
   end
 end
