@@ -26,22 +26,23 @@ class PostsController < ProductController
 
     authorize! :create, @post
 
-    @post.save
+    if @post.save
 
-    Subscriber.where(product_id: @product.id).each do |email|
-      PostMailer.delay(queue: 'mailer').mailing_list(@post.id, email)
+      Subscriber.where(product_id: @product.id).each do |email|
+        PostMailer.delay(queue: 'mailer').mailing_list(@post.id, email)
+      end
+
+      @product.watchers.each do |watcher|
+        PostMailer.delay(queue: 'mailer').created(@post.id, watcher.id)
+      end
+
+      Activities::Post.publish!(
+        actor: @post.author,
+        subject: @post,
+        target: @product,
+        socket_id: params[:socket_id]
+      )
     end
-
-    @product.watchers.each do |watcher|
-      PostMailer.delay(queue: 'mailer').created(@post.id, watcher.id)
-    end
-
-    Activities::Post.publish!(
-      actor: @post.author,
-      subject: @post,
-      target: @product,
-      socket_id: params[:socket_id]
-    )
 
     respond_with @post, location: product_post_path(@post.product, @post)
   end
