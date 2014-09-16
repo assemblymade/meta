@@ -6,7 +6,7 @@ class DiscoverController < ApplicationController
 
     @greenlit = Product.greenlit.
       ordered_by_trend.
-      limit(5)
+      limit(20)
 
     @teambuilding = Product.teambuilding.
       ordered_by_trend.
