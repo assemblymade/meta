@@ -21,7 +21,14 @@
   </div>
 </div>
 
-  <div class="container">
+<div class="container">
+  <% if @postings.empty? %>
+    <div class="well well-dotted well-lg">
+      <p class="text-center">
+        It looks like there aren't any bounties ready for work yet. Why not check out <a href="<%= discover_path %>">what's trending</a> to see how you can help?
+      </p>
+    </div>
+  <% else %>
     <% @postings.each do |posting| %>
       <div class="row">
         <div class="col-md-8">
@@ -34,7 +41,9 @@
 
       <hr/>
     <% end %>
-    </div>
+  <% end %>
   </div>
+
+</div>
 
 <%= render 'shared/footer' %>
