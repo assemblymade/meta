@@ -124,19 +124,31 @@
   <div class="tab-pane" id="story">
 
     <%= form_for @product do |f| %>
-      <div class="row">
-        <div class="col-md-8">
-
-          <div class="form-group">
-            <%= f.label :lead, 'Blurb', class: 'form-label' %>
+      <div class="form-group">
+        <%= f.label :lead, 'Blurb', class: 'form-label' %>
+        <div class="row">
+          <div class="col-md-8">
             <%= f.text_area :lead, class: 'form-control input-lg', rows: 2 %>
+          </div>
+          <div class="col-md-4">
+            <p class="help-block alpha">
+              Keep it short. How would you describe your product in a tweet?
+            </p>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-8">
-          <%= f.label :lead, 'Description', class: 'form-label' %>
-          <%= f.text_area :description, class: 'form-control', rows: 2, data: { autosize: '', 'validate-length' => 2 } %>
+
+      <div class="form-group">
+        <%= f.label :description, 'Description', class: 'form-label' %>
+        <div class="row">
+          <div class="col-md-8">
+            <%= f.text_area :description, class: 'form-control', rows: 2, data: { autosize: '', 'validate-length' => 2 } %>
+          </div>
+          <div class="col-md-4">
+            <p class="help-block alpha">
+              Dive into the details. How did you come up with the idea? What makes it great?
+            </p>
+          </div>
         </div>
       </div>
 
