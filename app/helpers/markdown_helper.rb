@@ -51,7 +51,7 @@ module MarkdownHelper
   def markdown_content(name)
     f = "#{name}.markdown"
     Rails.cache.fetch("#{f}#{markdown_mtime(name)}") do
-      markdown(File.read(f))
+      content_tag :div, markdown(File.read(f)), class: 'markdown markdown-content'
     end
   end
 
