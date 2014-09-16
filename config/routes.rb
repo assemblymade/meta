@@ -47,9 +47,8 @@ ASM::Application.routes.draw do
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
 
-  get '/new'      => redirect('/start')
   get '/create'   => 'products#new',      :as => :new_idea
-  get '/start'    => 'products#start',    :as => :start_idea
+  get '/start'    => 'products#new',    :as => :start_idea
 
   resources :ideas, :only => [:index]
 
