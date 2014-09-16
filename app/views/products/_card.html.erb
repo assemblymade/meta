@@ -1,17 +1,13 @@
 <div class="card">
-  <div class="overlay">
-    <% if product.poster? %>
-      <%= image_tag firesize(product.poster_image.url, '500x500', 'g_center'), width: '100%' %>
-    <% else %>
-      <%= image_tag image_path('app_icon.png'), width: '100%' %>
-    <% end %>
-    <div class="overlay-content card-body">
-      <div class="">
-        <h6 class="alpha omega" style="color:rgba(255,255,255,0.8)"><%= product.name %></h6>
-        <h5 class="alpha omega"><%= product.pitch %></h5>
-      </div>
-    </div>
+  <% if product.poster? %>
+    <%= image_tag firesize(product.poster_image.url, '500x500', 'g_center'), width: '100%' %>
+  <% else %>
+    <%= image_tag image_path('app_icon.png'), width: '100%' %>
+  <% end %>
 
+  <div class="card-body" style="min-height:109px">
+    <h5 class="alpha omega" style="color:#333"><%= product.name %></h6>
+    <p class="text-muted alpha omega"><%= product.pitch %></p>
   </div>
 
 
