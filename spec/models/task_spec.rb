@@ -11,9 +11,9 @@ describe Task do
     product.team_memberships.create!(user: core_member, is_core: true)
   }
 
-  describe 'deliverable' do
+  describe 'description' do
     it 'is required' do
-      expect { Task.make!(deliverable: nil) }.to raise_error(ActiveRecord::RecordInvalid)
+      expect { Task.make!(description: nil) }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 

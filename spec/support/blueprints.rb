@@ -84,7 +84,7 @@ Task.blueprint do
   product
   number      { (sn.to_i * 100) + 1 }
   title       { Faker::Company.name }
-  deliverable { 'design' }
+  description { 'Make it awesome' }
 end
 
 TeamMembership.blueprint do
