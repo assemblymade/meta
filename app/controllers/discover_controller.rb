@@ -1,13 +1,5 @@
 class DiscoverController < ApplicationController
-
-  def fresh
-    @applications = PitchWeekApplication.in_pitch_week.approved.
-      joins(:product).
-      order('products.bio_memberships_count desc').
-      page(params[:page])
-  end
-
-  def trending
+  def index
     @profitable = Product.profitable.
       ordered_by_trend.
       limit(3)
@@ -19,14 +11,6 @@ class DiscoverController < ApplicationController
     @teambuilding = Product.teambuilding.
       ordered_by_trend.
       limit(5)
-  end
-
-  def live
-    @products = Product.public_products.
-                        where.not(live_at: nil).
-                        joins(:product_trend).
-                        order('product_trends.score desc').
-                        page(params[:page])
   end
 
   def profitable

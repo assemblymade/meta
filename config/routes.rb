@@ -55,10 +55,10 @@ ASM::Application.routes.draw do
   get '/discover(/:action)', controller: 'discover',
                              as: :discover,
                              defaults: {
-                               action: 'trending'
+                               action: 'index'
                              },
                              constraints: {
-                               action: /bounties|trending|live|updates|teambuilding|greenlit|profitable/
+                               action: /bounties|updates|teambuilding|greenlit|profitable/
                              }
 
   devise_for :users,
