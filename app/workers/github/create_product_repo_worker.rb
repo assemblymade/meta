@@ -29,7 +29,6 @@ module Github
       if ENV['GITHUB_PRODUCTS_ORG']
         repo = send request_through, path, payload
 
-
         add_webhooks([ENV['GITHUB_PRODUCTS_ORG'], product.slug].join('/'))
         add_license_and_readme(product, repo_name) if request_through == :post
 
