@@ -32,14 +32,16 @@
           <%= render 'users/overview' %>
         </div>
 
-        <h2>Core team member of these products</h2>
-        <div class="list-group list-group-breakout">
-          <% @products.each do |product| %>
-            <a class="list-group-item" href="<%= product_path(product) %>">
-              <%= render 'products/chips/greenlit', product: product %>
-            </a>
-          <% end %>
-        </div>
+        <% if @products.present? %>
+          <h2>Core team member of these products</h2>
+          <div class="list-group list-group-breakout">
+            <% @products.each do |product| %>
+              <a class="list-group-item" href="<%= product_path(product) %>">
+                <%= render 'products/chips/greenlit', product: product %>
+              </a>
+            <% end %>
+          </div>
+        <% end %>
 
         <h2>Bounties</h2>
         <%= render 'bounties/filtered' %>
