@@ -1,6 +1,6 @@
 <div class="timeline omega">
   <% events.each.with_index do |(event, html), i| %>
-    <% if i == events.size - 1 && i > 0 %>
+    <% if i == events.size - 1 %>
       <div class="timeline-insert js-timestamp">
         <time class="timestamp" datetime="<%= event.created_at.iso8601 %>"></time>
       </div>
