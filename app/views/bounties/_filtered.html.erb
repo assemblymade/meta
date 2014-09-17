@@ -1,9 +1,5 @@
 <div class="page-header sheet-header">
 
-  <% if @user %>
-    <%= render 'users/overview' %>
-  <% end %>
-
   <ul class="nav nav-pills">
     <li class="<%= 'active' if params[:user].blank? %>">
       <a href="<%= url_for(params.except(:user, only_path: true)) %>">

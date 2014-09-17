@@ -3,13 +3,13 @@
 
 <div class="page page-flat">
   <div class="container">
+
     <div class="row">
-      <div class="col-sm-3 hidden-xs">
+      <div class="col-sm-3 col-xs-12">
 
         <%= render 'users/card', user: @user %>
 
         <% if can?(:update, @user) %>
-          <!-- FIXME: This URL is a hack -->
           <a class="btn btn-default btn-block" href="<%= edit_user_path %>">
             Edit Profile
           </a>
@@ -28,6 +28,20 @@
       </div>
 
       <div class="col-sm-9 col-sx-12">
+        <div class="page-header sheet-header">
+          <%= render 'users/overview' %>
+        </div>
+
+        <h2>Core team member of these products</h2>
+        <div class="list-group list-group-breakout">
+          <% @products.each do |product| %>
+            <a class="list-group-item" href="<%= product_path(product) %>">
+              <%= render 'products/chips/greenlit', product: product %>
+            </a>
+          <% end %>
+        </div>
+
+        <h2>Bounties</h2>
         <%= render 'bounties/filtered' %>
       </div>
     </div>
