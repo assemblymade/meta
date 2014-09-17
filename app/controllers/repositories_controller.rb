@@ -12,7 +12,7 @@ class RepositoriesController < ProductController
     end
 
     repo_name = [@product.slug, params["name"]].join('')
-    request_through = if params["launchpad"]
+    request_through = if params["launchpad"] == "true" # param comes through as a string
       :launchpad_post
     else
       :post

@@ -3,25 +3,35 @@ module Github
     def perform(product_id, homepage, repo_name=nil, request_through=:post)
       product = Product.find(product_id)
       repo_name ||= product.slug
+      request_through = request_through.to_sym
 
-      path = if request_through == :launchpad_post
-        "/github"
-      else
-        "/orgs/#{ENV['GITHUB_PRODUCTS_ORG']}/repos"
+      path = "/orgs/#{ENV['GITHUB_PRODUCTS_ORG']}/repos"
+      payload = {
+        name: repo_name,
+        description: product.pitch,
+        homepage: homepage,
+        private: false,
+        has_issues: false,
+        has_wiki: false,
+        has_downloads: false
+      }
+
+      if request_through == :launchpad_post
+        path = "/github"
+        payload = {
+          name: product.name,
+          slug: repo_name,
+          description: product.pitch,
+          homepage: homepage
+        }
       end
 
       if ENV['GITHUB_PRODUCTS_ORG']
-        repo = send request_through, path,
-          name: repo_name,
-          description: product.pitch,
-          homepage: homepage,
-          private: false,
-          has_issues: false,
-          has_wiki: false,
-          has_downloads: false
+        repo = send request_through, path, payload
+
 
         add_webhooks([ENV['GITHUB_PRODUCTS_ORG'], product.slug].join('/'))
-        add_license_and_readme(product, repo_name)
+        add_license_and_readme(product, repo_name) if request_through == :post
 
         if request_through == :launchpad_post
           notify_core_team(product)

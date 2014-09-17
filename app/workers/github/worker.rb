@@ -48,9 +48,14 @@ module Github
 
     def commit_count(repo)
       s = stats("#{repo}")
-      return 0 if s.nil? || s.first.nil?
 
-      s.first['total'] unless s.first.empty?
+      return 0 if s.nil? || s.first.nil? || s.first.empty?
+
+      begin
+        s.first['total']
+      rescue
+        0
+      end
     end
 
     def stats(repo)
@@ -103,7 +108,8 @@ module Github
     end
 
     def launchpad_connection
-      Faraday.new(url: ENV['LAUNCHPAD_URL']) do |faraday|
+      # ENV['LAUNCHPAD_URL']
+      Faraday.new(url: 'http://launchpad.assembly.com') do |faraday|
         faraday.adapter  :net_http
       end
     end
