@@ -44,6 +44,7 @@
           formValues.push(encodeURIComponent(p) + "=" + encodeURIComponent(data[p]));
         }
       }
+
       request.send(formValues.join("&"));
 
       request.onload = function() {

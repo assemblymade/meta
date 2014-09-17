@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   respond_to :html, :json
 
-  before_action :set_user, only: [:update]
+  before_action :set_user, only: [:update, :dismiss_welcome_banner]
 
   def show
     set_user
@@ -36,8 +36,14 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update_attributes(user_params)
+    @user.update(user_params)
     respond_with @user, location: (params[:return_to] || user_path(@user))
+  end
+
+  def dismiss_welcome_banner
+    @user.update(welcome_banner_dismissed_at: Time.now)
+
+    render nothing: true, status: 204
   end
 
   def search

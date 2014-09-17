@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140915172856) do
+ActiveRecord::Schema.define(version: 20140917162113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -713,6 +713,7 @@ ActiveRecord::Schema.define(version: 20140915172856) do
     t.binary   "encrypted_wallet_private_key"
     t.binary   "encrypted_wallet_private_key_salt"
     t.binary   "encrypted_wallet_private_key_iv"
+    t.datetime "welcome_banner_dismissed_at"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

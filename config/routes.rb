@@ -104,9 +104,10 @@ ASM::Application.routes.draw do
     get    '/users/confirmation' => 'users/confirmations#show', :as => :user_confirmation
     post   '/users/confirmation' => 'users/confirmations#create'
 
-    get    '/users/:id' => 'users#show', :as => :user
-    get    '/users/:id/assets' => 'users#assets', :as => :user_assets
-    patch  '/users/:id' => 'users#update'
+    resources :users, only: [:show, :update]
+
+    get '/users/:id/assets' => 'users#assets', :as => :user_assets
+    post '/users/:id/dismiss_welcome_banner' => 'users#dismiss_welcome_banner', :as => :dismiss_welcome_banner
 
     resources :notifications, only: [:index]
 

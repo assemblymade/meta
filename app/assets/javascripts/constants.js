@@ -84,6 +84,12 @@
       ACTIONS: {
         ADD_TAG: 'addTag'
       }
+    },
+
+    WELCOME_BANNER: {
+      ACTIONS: {
+        WELCOME_BANNER_DISMISSED: 'welcomeBannerDismissed'
+      }
     }
   };
 
