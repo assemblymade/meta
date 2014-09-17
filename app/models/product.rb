@@ -73,7 +73,7 @@ class Product < ActiveRecord::Base
   }
   scope :profitable,       -> { public_products.where.not(profitable_at: nil) }
   scope :greenlit,         -> { public_products.where.not(greenlit_at: nil).where(profitable_at: nil) }
-  scope :teambuilding,     -> { public_products.where.not(started_teambuilding_at: nil).where('started_teambuilding_at < ?', Time.now).where(greenlit_at: nil) }
+  scope :teambuilding,     -> { public_products.where.not(started_teambuilding_at: nil).where('started_teambuilding_at >= ?', 30.days.ago).where(greenlit_at: nil) }
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
   scope :stealth,          -> { where(started_teambuilding_at: nil) }
