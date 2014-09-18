@@ -10,10 +10,7 @@ class WipMailer < BaseMailer
     @wip = Wip.find(wip_id)
 
     # Don't spam the core team when Kernel creates a wip
-    if @wip.user == User.find_by(username: 'kernel')
-      return
-    end
-
+    return if @wip.user == User.find_by(username: 'kernel')
     @user = User.find(user_id)
     @product = @wip.product
     @events = @wip.events
