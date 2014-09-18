@@ -28,7 +28,7 @@
               <div className="col-md-2">
                 <span className="lead"><strong>Collaborate</strong><br/></span> Jump into any
 
-                <a href={this.props.discoverBountiesPath} style={{ color: 'white', 'text-decoration': 'underline' }}>open bounties</a>
+                <a href={this.props.discoverBountiesPath} style={{ color: 'white', 'text-decoration': 'underline' }}> open bounties </a>
 
                 on products that interest you.
               </div>

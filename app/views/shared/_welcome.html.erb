@@ -1,4 +1,4 @@
-<% if true || cookies['dismissed-welcome'].nil? || (current_user && current_user.welcome_banner_dismissed_at.nil?) %>
+<% if cookies['dismissed-welcome'].nil? || (current_user && current_user.welcome_banner_dismissed_at.nil?) %>
   <div data-react-class="WelcomeBanner"
       data-react-props="<%= {
         discoverBountiesPath: discover_path(:bounties),

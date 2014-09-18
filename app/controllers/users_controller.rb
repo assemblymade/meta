@@ -31,7 +31,7 @@ class UsersController < ApplicationController
 
   def assets
     authenticate_user!
-    @user = current_user.decorate
+    @user = User.find_by(username: params[:id]).decorate
     @assets = @user.assembly_assets.group_by { |asset| asset.product }
   end
 
