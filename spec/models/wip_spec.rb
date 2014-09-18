@@ -12,6 +12,19 @@ describe Wip do
   let(:joe_random) { User.make!(is_staff: false) }
   let(:core_member) { user = User.make!; product.team_memberships.create(user: user, is_core: true); user }
 
+  describe '#notify_by_email' do
+    before do
+      WipMailer.stub(:delay).and_return(WipMailer)
+    end
+
+    it 'only sends once per user' do
+      expect(WipMailer).to receive(:wip_created).once
+
+      wip.notify_by_email(owner)
+      wip.notify_by_email(owner)
+    end
+  end
+
   describe 'states' do
     subject { wip }
 

@@ -1,8 +1,8 @@
 class WipMailerPreview < ActionMailer::Preview
 
   def wip_created
-    wip = Wip.where('events_count > 0').first
-    WipMailer.wip_created(User.first.id, wip.id)
+    wip = Wip.where('events_count > 0').sample
+    WipMailer.wip_created(User.sample.id, wip.id)
   end
 
   Event::MAILABLE.each do |klass|
