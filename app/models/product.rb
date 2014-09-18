@@ -77,7 +77,7 @@ class Product < ActiveRecord::Base
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
   scope :stealth,          -> { where(started_teambuilding_at: nil) }
-  scope :public_products,  -> { where.not(slug: PRIVATE).where(flagged_at: nil).where.not(started_teambuilding_at: nil) }
+  scope :public_products,  -> { where.not(slug: PRIVATE).where(flagged_at: nil).advertisable.where.not(started_teambuilding_at: nil) }
   scope :since,            ->(time) { where('created_at >= ?', time) }
   scope :tagged_with_any,  ->(tags) { where('tags && ARRAY[?]::varchar[]', tags) }
   scope :validating,       -> { where(greenlit_at: nil) }
@@ -85,6 +85,7 @@ class Product < ActiveRecord::Base
   scope :with_repo,        ->(repo) { where('? = ANY(repos)', repo) }
   scope :with_logo,        ->{ where.not(poster: nil).where.not(poster: '') }
   scope :ordered_by_trend, -> { joins(:product_trend).order('product_trends.score DESC') }
+  scope :advertisable,     -> { where(can_advertise: true) }
 
 
   validates :slug, uniqueness: { allow_nil: true }
