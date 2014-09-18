@@ -580,7 +580,7 @@ $well-border: $brand-border;
 
 $badge-color:            #fff;
 $badge-link-hover-color: #fff;
-$badge-bg:               $gray;
+$badge-bg:               lighten($gray-light, 20%);
 
 $badge-active-color: $link-color;
 $badge-active-bg:    #fff;

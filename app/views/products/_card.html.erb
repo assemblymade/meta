@@ -11,28 +11,19 @@
   </div>
 
 
-  <div class="card-footer small clearfix">
-    <div class="pull-left">
-      <span class="label label-default"><%= product.stage.upcase %></span>
-    </div>
-
-    <ul class="list-inline omega text-muted pull-right">
+  <div class="card-footer clearfix">
+    <ul class="list-grid">
+      <% product.followers.limit(12).each do |user| %>
+        <li>
+          <%= avatar_tag(user, size: 19) %>
+        </li>
+      <% end %>
       <li>
-        <span class="glyphicon glyphicon-user"></span>
-        <%= product.partners_count %>
+        <span class="badge">+ <%= product.followers.count %></span>
       </li>
+    </ul>
 
-      <li>
-        <span class="glyphicon glyphicon-book"></span>
-        <%= product.posts.count %>
-      </li>
-
-      <li>
-        <span class="glyphicon glyphicon-flag"></span>
-        <%= product.tasks.count %>
-      </li>
-    </span>
-
+    <p class="small text-muted omega">Started <%= product.created_at.strftime("%B %d, %Y") %></p>
 
   </div>
 </div>

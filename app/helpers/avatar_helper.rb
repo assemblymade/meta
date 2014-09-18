@@ -1,6 +1,11 @@
 module AvatarHelper
 
   def avatar_tag(user, size = 24, options={})
+    if size.is_a?(Hash)
+      options = size
+      size = options.delete(:size)
+    end
+
     url = if user.present?
       user.avatar.url(size * 2)
     else
