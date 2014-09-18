@@ -25,7 +25,6 @@
 #= require_tree ./views
 #= require ./textcomplete
 #= require ./polyfills
-#= require xhr
 #= require ./components
 
 class window.Application
