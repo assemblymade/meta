@@ -64,8 +64,6 @@
       path = path + ((/\?/).test(path) ? "&" : "?") + (new Date()).getTime();
 
       request[method](path)
-        .set('Accept', 'application/json')
-        .set('Content-Type', 'application/x-www-form-urlencoded')
         .send(data)
         .end(function(err, res) {
           if (err) {
