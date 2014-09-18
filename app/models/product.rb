@@ -111,14 +111,6 @@ class Product < ActiveRecord::Base
   store_accessor :info, *INFO_FIELDS.map(&:to_sym)
 
   class << self
-    def find_by_id_or_slug!(id_or_slug)
-      if id_or_slug.uuid?
-        find_by!(id: id_or_slug)
-      else
-        find_by!(slug: id_or_slug)
-      end
-    end
-
     def unique_tags
       pluck('distinct unnest(tags)').sort_by{|t| t.downcase }
     end
