@@ -99,15 +99,12 @@
   </div>
 </div>
 
-<%# render 'shared/footer' %>
-
-
-<div class="container text-center">
+<div class="container text-center" style="margin-bottom:60px">
   <ul class="list-inline">
-    <li><a href="">About</a></li>
-    <li><a href="">Blog</a></li>
-    <li><a href="">FAQs</a></li>
-    <li><a href="">Terms</a></li>
-    <li><a href="">Contact Us</a></li>
+    <li><a href="<%= about_path %>">About</a></li>
+    <li><a href="http://blog.assembly.com">Blog</a></li>
+    <li><a href="<%= faq_path %>">FAQs</a></li>
+    <li><a href="<%= tos_path %>">Terms</a></li>
+    <li><a href="mailto:assembly@helpful.io">Contact Us</a></li>
   </ul>
 </div>
