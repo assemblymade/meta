@@ -40,6 +40,7 @@
     "react-tools": "^0.11.1",
     "reactify": "^0.14.0",
     "spin.js": "^2.0.1",
+    "superagent": "^0.18.2",
     "underscore": "^1.6.0"
   },
   "devDependencies": {
