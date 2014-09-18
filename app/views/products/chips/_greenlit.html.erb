@@ -10,15 +10,18 @@
     </div>
     <div class="col-sm-6 text-right">
       <ul class="list-inline omega">
-        <% product.core_team.each do |user| %>
+        <% product.followers.limit(6).each do |user| %>
           <li>
-            <%= avatar_tag(user, 24) %>
+            <%= avatar_tag(user, 18) %>
           </li>
         <% end %>
+        <li>
+          <span class="badge">+ <%= product.followers.count %></span>
+        </li>
       </ul>
-      <span class="small text-muted" style="line-height:24px">
-        +<%= product.followers.count %> followers
-      </span>
+      <p class="text-muted small omega">
+        Started <%= product.created_at.strftime("%B %d, %Y") %>
+      </p>
     </div>
   </div>
 </div>
