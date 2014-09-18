@@ -23,7 +23,7 @@
           <% end %>
         </ol>
 
-        <% if @wips.size > @wips.limit_value %>
+        <% if @wips.total_pages > 1 %>
           <hr>
 
           <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
