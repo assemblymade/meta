@@ -15,6 +15,12 @@ module.exports = {
         return console.error(err);
       }
 
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        return console.error(e);
+      }
+
       stories = _.reduce(
         stories,
         function(hash, story) {

@@ -34,7 +34,7 @@
       var token = tokenEl && tokenEl.content;
 
       var formValues = [];
-      for (var p in data){
+      for (var p in data) {
         if (data.hasOwnProperty(p)) {
           formValues.push(encodeURIComponent(p) + "=" + encodeURIComponent(data[p]));
         }
@@ -50,7 +50,7 @@
             return callback(err);
           }
 
-          return callback(null, res);
+          return callback(null, res.text);
         });
     },
 
@@ -72,16 +72,8 @@
             return callback(err);
           }
 
-          return callback(null, res);
+          return callback(null, res.text);
         });
-
-      request.onload = function() {
-        if (request.status >= 200 && request.status < 400) {
-          return callback(null, request.responseText);
-        }
-
-        callback(new Error(request.responseText));
-      };
     }
   };
 

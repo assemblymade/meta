@@ -25,6 +25,12 @@ var NotificationsMixin = require('../mixins/notifications');
         return console.error(err);
       }
 
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        return console.error(e);
+      }
+
       var users = data.users;
       var stories = data.stories;
 

@@ -47,6 +47,12 @@ var NotificationsMixin = require('../mixins/notifications');
         return console.error(err);
       }
 
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        return console.error(e);
+      }
+
       var chatRooms = data.chat_rooms;
       _sortKeys = data.sort_keys;
 
