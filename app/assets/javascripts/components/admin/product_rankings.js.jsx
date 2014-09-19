@@ -1,11 +1,12 @@
 /** @jsx React.DOM */
+//= require xhr
+//= require components/admin/pagination_links
+//= require components/timestamp
+//= require underscore
+//= require lib/parseuri
+//= require nprogress
 
 (function() {
-  var xhr = require('../../xhr')
-  var PaginationLinks = require('./pagination_links.js.jsx')
-  var parseUri = require('../../lib/parseuri')
-  var Timestamp = require('../timestamp.js.jsx')
-
   var ProductRankings = React.createClass({
     getInitialState: function() {
       var q = parseUri(window.location).queryKey
@@ -199,7 +200,7 @@
   })
 
   if (typeof module !== 'undefined') {
-    module.exports = ProductRankings;
+    module.exports = Avatar;
   }
 
   window.ProductRankings = ProductRankings;

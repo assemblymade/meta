@@ -4,6 +4,4 @@
 //= require jquery
 //= require jquery-timeago
 //= require react
-//= require underscore
-//= require nprogress
-
+//= require components/admin/product_rankings
