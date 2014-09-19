@@ -39,13 +39,18 @@ var InviteBountyForm = require('./invite_bounty_form.js.jsx');
       // )
     },
 
-    togglePopover: function() {
-      this.setState({popoverShown: !this.state.popoverShown })
-      return false
+    togglePopover: function(e) {
+      e.preventDefault();
+
+      this.setState({
+        popoverShown: !this.state.popoverShown
+      });
     },
 
     handleHide: function() {
-      this.setState({popoverShown: false})
+      this.setState({
+        popoverShown: false
+      });
     }
   });
 
