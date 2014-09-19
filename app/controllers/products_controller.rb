@@ -27,7 +27,6 @@ class ProductsController < ProductController
       respond_with(@product, location: product_welcome_path(@product))
 
       schedule_greet
-      schedule_introductory_bounty
       schedule_one_hour_checkin
       schedule_one_day_checkin
     else
