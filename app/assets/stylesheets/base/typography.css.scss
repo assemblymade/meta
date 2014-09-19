@@ -111,8 +111,6 @@ h6,
 @include text-emphasis-variant('.text-info', $brand-info);
 
 .list-inline-piped {
-  @extend .text-link-bold;
-
   > li + li {
     border-left: 1px solid $brand-divider;
     padding-left: 5px + 4px; // + 4px accounts for inline-block whitespace
