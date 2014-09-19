@@ -75,44 +75,63 @@
   </div>
 
   <div class="card-footer">
-    <% if can?(:update, bounty) %>
-      <div class="pull-right dropdown">
-        <button type="button" class="btn btn-link btn-sm" id="bounty-other-actions-dropdown" data-toggle="dropdown">
-          <span class="glyphicon glyphicon-cog"></span>
-          <div class="sr-only">Other actions</div>
-        </button>
+    <ul class="list-inline omega pull-right">
+      <% if can?(:update, bounty) %>
+        <li class="dropdown">
+          <button type="button" class="btn btn-link btn-sm" id="bounty-other-actions-dropdown" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-cog"></span>
+            <div class="sr-only">Other actions</div>
+          </button>
 
-        <ul class="dropdown-menu" role="menu" aria-labelledby="bounty-other-actions-dropdown">
-          <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="<%= edit_product_wip_path(bounty.product, bounty) %>">
-              <span class="icon icon-pencil icon-left"></span>
-              Edit Bounty
-            </a>
-          </li>
-          <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="<%= product_task_to_discussion_path(bounty.product, bounty) %>" data-method="patch" data-confirm="Are you sure?">
-              <span class="icon icon-arrow-right-circled icon-left"></span>
-              Make discussion
-            </a>
-          </li>
-        </ul>
-      </div>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="bounty-other-actions-dropdown">
+            <li role="presentation">
+              <a role="menuitem" tabindex="-1" href="<%= edit_product_wip_path(bounty.product, bounty) %>">
+                <span class="icon icon-pencil icon-left"></span>
+                Edit Bounty
+              </a>
+            </li>
+            <li role="presentation">
+              <a role="menuitem" tabindex="-1" href="<%= product_task_to_discussion_path(bounty.product, bounty) %>" data-method="patch" data-confirm="Are you sure?">
+                <span class="icon icon-arrow-right-circled icon-left"></span>
+                Make discussion
+              </a>
+            </li>
+          </ul>
+        </li>
+      <% end %>
 
-    <% end %>
+      <% if partner?(@product)%>
+        <li>
+          <%= render 'bounties/feature_button', bounty: @bounty %>
+        </li>
+      <% end %>
+
+      <li>
+        <div class="btn-group">
+          <% if !bounty.assigned_to?(current_user) %>
+            <a href="<%= product_wip_start_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-sm btn-primary">
+              Start bounty
+            </a>
+          <% else %>
+            <a href="<%= product_wip_stop_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-sm btn-danger">
+              Abandon bounty
+            </a>
+          <% end %>
+
+          <% if bounty.reviewing? %>
+            <a href="#" class="btn btn-sm btn-success disabled">
+              Mark as done
+            </a>
+          <% else %>
+            <a href="<%= product_wip_review_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-sm <%= bounty.allocated? ? 'btn-success' : 'btn-primary' %> <%= 'disabled' if bounty.reviewing? %>">
+              Mark as done
+            </a>
+          <% end %>
+        </div>
+      </li>
+    </ul>
 
     <ul class="list-inline omega">
-      <li>
-        <% if !bounty.assigned_to?(current_user) %>
-          <%= button_to 'Start working on this bounty', product_wip_start_work_path(bounty.product, bounty), method: :patch, disable_with: 'Starting work…', class: %w(btn btn-primary btn-sm) %>
-        <% else %>
-          <a href="<%= product_wip_stop_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="text-danger">
-            Abandon Bounty
-          </a>
-        <% end %>
-      </li>
-      <% if partner?(@product)%>
-        <li><%= render 'bounties/feature_button', bounty: @bounty %></li>
-      <% end %>
       <li>
         <a href="#new-comment">Comment</a>
       </li>
