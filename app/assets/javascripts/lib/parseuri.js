@@ -33,5 +33,9 @@
   	}
   };
 
-  module.exports = parseUri
+  if (typeof module !== 'undefined') {
+    module.exports = parseUri;
+  }
+
+  window.parseUri = parseUri;
 })()
