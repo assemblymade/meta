@@ -26,6 +26,7 @@ class ProductsController < ProductController
     if @product.valid?
       respond_with(@product, location: product_welcome_path(@product))
 
+      @product.assign_key_pair!
       schedule_greet
       schedule_one_hour_checkin
       schedule_one_day_checkin
