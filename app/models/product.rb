@@ -71,21 +71,22 @@ class Product < ActiveRecord::Base
       date.beginning_of_week, date.beginning_of_week + 1.week
     )
   }
-  scope :profitable,       -> { public_products.where.not(profitable_at: nil) }
+  scope :advertisable,     -> { where(can_advertise: true) }
   scope :greenlit,         -> { public_products.where.not(greenlit_at: nil).where(profitable_at: nil) }
-  scope :teambuilding,     -> { public_products.where.not(started_teambuilding_at: nil).where(started_teambuilding_at: 30.days.ago..Time.now).where(greenlit_at: nil) }
-  scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
+  scope :profitable,       -> { public_products.where.not(profitable_at: nil) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
-  scope :stealth,          -> { where(started_teambuilding_at: nil) }
+  scope :ordered_by_trend, -> { joins(:product_trend).order('product_trends.score DESC') }
   scope :public_products,  -> { where.not(slug: PRIVATE).where(flagged_at: nil).advertisable.where.not(started_teambuilding_at: nil) }
+  scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :since,            ->(time) { where('created_at >= ?', time) }
+  scope :stealth,          -> { where(started_teambuilding_at: nil) }
+  scope :teambuilding,     -> { public_products.where.not(started_teambuilding_at: nil).where(started_teambuilding_at: 30.days.ago..Time.now).where(greenlit_at: nil) }
   scope :tagged_with_any,  ->(tags) { where('tags && ARRAY[?]::varchar[]', tags) }
   scope :validating,       -> { where(greenlit_at: nil) }
   scope :waiting_approval, -> { where('submitted_at is not null and evaluated_at is null') }
   scope :with_repo,        ->(repo) { where('? = ANY(repos)', repo) }
   scope :with_logo,        ->{ where.not(poster: nil).where.not(poster: '') }
-  scope :ordered_by_trend, -> { joins(:product_trend).order('product_trends.score DESC') }
-  scope :advertisable,     -> { where(can_advertise: true) }
+
 
 
   validates :slug, uniqueness: { allow_nil: true }
