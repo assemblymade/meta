@@ -87,8 +87,6 @@ class Product < ActiveRecord::Base
   scope :with_repo,        ->(repo) { where('? = ANY(repos)', repo) }
   scope :with_logo,        ->{ where.not(poster: nil).where.not(poster: '') }
 
-
-
   validates :slug, uniqueness: { allow_nil: true }
   validates :name, presence: true,
                    length: { minimum: 2, maximum: 255 }
@@ -546,7 +544,7 @@ class Product < ActiveRecord::Base
   end
 
   def connection
-    Faraday.new(url: "https://assets-api.assembly.com") do |faraday|
+    Faraday.new(url: ENV["ASSETS_URL"]) do |faraday|
       faraday.adapter  :net_http
     end
   end
