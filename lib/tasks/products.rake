@@ -6,10 +6,12 @@ namespace :products do
   end
 
   task :assign_key_pairs => :environment do
-    Product.find_each do |p|
-      assign_key_pair!(p)
+    Product.find_each do |product|
+      if product.wallet_public_address.nil?
+        assign_key_pair!(product)
 
-      sleep 0.3
+        sleep 0.3
+      end
     end
   end
 
