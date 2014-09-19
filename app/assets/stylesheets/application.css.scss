@@ -53,3 +53,49 @@
   padding-top: 12px; padding-bottom: 12px; border-bottom: 1px solid $brand-divider;
   margin-bottom: 24px;
 }
+
+.masthead {
+  background-color: $black;
+  background-size: cover;
+  padding-top: $line-height-computed;
+  padding-bottom: $line-height-computed;
+  position: relative;
+  margin-bottom: $line-height-computed * 2;
+
+  > .masthead-navbar {
+    .navbar-nav > li > a,
+    .navbar-brand {
+      color: white;
+    }
+
+    .navbar-nav > li > a:hover {
+      background-color: rgba(black, .2);
+    }
+  }
+
+  > * {
+    position: relative;
+  }
+}
+
+.masthead-title {
+  color: white;
+}
+
+.play-button {
+  display: block;
+  margin-top: $line-height-computed * 4;
+  margin-bottom: $line-height-computed * 4;
+  outline: none;
+}
+
+.masthead-gradient {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: rgba($red, 0.6);
+}

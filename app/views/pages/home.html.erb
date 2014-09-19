@@ -1,24 +1,17 @@
 <% title 'Assembly is a new way for people around the world to collectively build, launch, and grow startups.' %>
 <%= track 'home.viewed' %>
 
-<div class="navbar navbar-default navbar-static-top omega">
-  <div class="container-fluid">
+<div class="masthead" style="background-image:url(<%= image_url 'pretty-people-working.jpg' %>)">
+  <div class="masthead-gradient"></div>
 
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#platform-navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+  <div class="navbar navbar-static-top masthead-navbar">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="<%= root_path %>">
+          Assembly
+        </a>
+      </div>
 
-      <a class="navbar-brand" href="<%= root_path %>">
-        <span class="icon icon-logo-filled"></span>
-        Assembly
-      </a>
-    </div>
-
-    <div class="collapse navbar-collapse" id="platform-navbar-collapse">
       <div class="navbar-right">
         <ul class="nav navbar-nav">
           <li>
@@ -29,72 +22,81 @@
         </ul>
       </div>
     </div>
+  </div><!-- .navbar -->
+
+  <div class="container text-center">
+    <h1 class="masthead-title">Build, launch, and grow a startup<br>with talented people around the world.</h1>
+    <a class="play-button" href="#" data-toggle="modal" data-target="#video-modal">
+      <%= image_tag 'play.png' %>
+    </a>
+  </div>
+</div><!-- .masthead -->
+
+<div class="modal fade" id="video-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/102253176?api=1" width="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="page page-flat">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
+<script src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
 
+<script>
+  modal = $('#video-modal');
+  player = $f(modal.find('iframe')[0]);
 
-        <div class="sheet-">
-          <h1 class="text-center">
-            Build, launch, and grow a startup with talented people around the world
-          </h1>
+  modal.on('shown.bs.modal', function() {
+    player.addEvent('ready', function() {
+      console.log(player);
+      console.log('playing', player.api('play'));
 
-          <br>
-          <br>
+    });
+  });
+  modal.on('hide.bs.modal', function() {
+    player.addEvent('ready', function() {
+      console.log(player);
+      console.log('pausing', player.api('pause'));
+    });
+  });
+</script>
 
-          <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <p class="large">
+        <strong>Build a product with others.</strong>
+        Startups on Assembly are unlike traditional companies. They don't have investors, shareholders, or even employees. Instead, a global community creates and owns them, together.
+      </p>
 
-              <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="//player.vimeo.com/video/102253176" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-              </div>
+      <p class="large">
+        <strong>Anyone can work on a product.</strong>
+        The entire process is a collaborative effort, including its vision, development, design and marketing.
+      </p>
 
-              <br>
-              <br>
+      <p class="large">
+        <strong>Share profit as the products you work on make money.</strong>
+        Everyone shares in the success of the startups they help create. Those involved earn App Coins from others in the community for their work. At the end of each month, Assembly pays the bills and splits the proceeds among everyone with App Coins.
+      </p>
 
-            </div>
-          </div>
+      <br>
 
-
-          <div class="row">
-
-            <div class="col-md-10 col-md-offset-1 text-large">
-              <p>
-                <strong>Build a product with others.</strong>
-                Startups on Assembly are unlike traditional companies. They don't have investors, shareholders, or even employees. Instead, a global community creates and owns them, together.
-              </p>
-
-              <p>
-                <strong>Anyone can work on a product.</strong>
-                The entire process is a collaborative effort including its vision, development, design and marketing.
-              </p>
-
-              <p>
-                <strong>Share profit as the products you work on make money.</strong>
-                Everyone shares in the success of the startups they help create. Those involved earn App Coins from others in the community for their work. At the end of each month Assembly pays the bills and splits the proceeds amongst everyone with App Coins.
-              </p>
-            </div>
-
-          </div>
-
-          <br>
-
-
-          <div class="text-center">
-            <a class="btn btn-primary btn-lg" href="<%= new_user_registration_path %>">
-              Get started
-            </a>
-          </div>
-
-          <br>
-          <br>
-
-        </div>
+      <div class="text-center">
+        <a class="btn btn-primary btn-lg" href="<%= new_user_registration_path %>">
+          Get started
+        </a>
       </div>
+
+      <br>
+      <hr>
+      <br>
+
+      <p class="text-center text-muted">
+        Just have a question? <a href="mailto:assembly@helpful.io" data-helpful="assembly">Ask away!</a>
+        <script src="https://assets.helpful.io/assets/widget.js"></script>
+      </p>
     </div>
   </div>
 </div>
