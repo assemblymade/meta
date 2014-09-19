@@ -1,0 +1,44 @@
+<table class="row">
+  <tbody>
+    <tr>
+      <td class="wrapper last">
+        <table class="twelve columns">
+          <tbody>
+            <tr>
+              <td class="panel panel-default">
+
+                <h1>
+                  <%= @product.name %> just picked up a new member!
+                </h1>
+
+                <table>
+                  <tr>
+                    <td>
+                      <%= image_tag(@new_member.avatar.url(120), width: 60, height: 60, class: 'img-circle', style: 'max-width: 60px;margin: 0 15px 15px 0') %>
+
+                      <%= @membership.bio %> <span style="color:#999">– @<%=@new_member.username %></span>
+                    </td>
+                  </tr>
+                </table>
+
+                <br/>
+                <hr/>
+
+                <p><strong>Help @<%= @new_member.username %> get up and running.</strong> Jump into chat and tell them about the current plan for <%= @product.name %> and work with them to get started on the right track</p>
+
+                <table class="button success radius">
+                  <tr>
+                    <td>
+                      <a href="<%= chat_room_url(@product.chat_rooms.first, message: "Welcome @#{@new_member.username}! Can I help you get started with #{@product.name}?") %>">Say hi to @<%= @new_member.username %></a>
+                    </td>
+                  </tr>
+                </table>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

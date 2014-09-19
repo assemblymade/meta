@@ -16,6 +16,10 @@ class window.ChatInput extends Backbone.View
   clearForm: =>
     @$ch.form[0].reset()
     @$ch.textarea.trigger('autosize.resize')
+    @$ch.textarea.text('')
+
+    if window.history.replaceState
+      window.history.replaceState({}, document.title, parseUri(window.location).path)
 
   onKeyDown: (e) =>
     return unless e.which == ENTER_KEY && !e.shiftKey

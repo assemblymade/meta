@@ -149,26 +149,22 @@ class ProductMailer < ActionMailer::Base
       subject: "[Assembly] Good news for #{@product.name}"
   end
 
-  def mission_completed(completed_mission_id, user_id)
-    @completed_mission = CompletedMission.find(completed_mission_id)
-    @product = @completed_mission.product
-    @user = User.find(user_id)
-    @mission = ProductMissionDecorator.new(ProductMission.find(@completed_mission.mission_id, @product))
-
-    subject = I18n.t("missions.#{@completed_mission.mission_id}.reward_title", product: @product.name).strip
-
-    mail from: "#{@product.name} <notifications@assemblymail.com>",
-           to: @user.email,
-      subject: I18n.t("missions.#{@completed_mission.mission_id}.reward_title", product: @product.name).strip
-
-  end
-
   def saved_search_created(saved_search_id)
     @saved_search = SavedSearch.find(saved_search_id)
     @user = @saved_search.user
 
     mail   cc: User.where(is_staff: true).pluck(:email),
       subject: "User subscribed to #{@saved_search.query}"
+  end
+  
+  def new_introduction(to_id, team_membership_id)
+    @to = User.find(to_id)
+    @membership = TeamMembership.find(team_membership_id)
+    @product = @membership.product
+    @new_member = @membership.user
+    
+    mail   to: @to.email,
+      subject: "@#{@new_member.username} just joined the #{@product.name} team!"
   end
 
   def mailgun_tag(name)

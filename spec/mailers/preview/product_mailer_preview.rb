@@ -39,14 +39,6 @@ class ProductMailerPreview < ActionMailer::Preview
     ProductMailer.idea_process_update(product.id)
   end
 
-  def mission_completed
-    product = Product.joins(:completed_missions).
-      group('products.id').
-      having('count(completed_missions.id) > 1').sample
-
-    ProductMailer.mission_completed(product.completed_missions.order(:created_at).first.id, product.user.id)
-  end
-
   def stale_wips
     user = User.find_by(username: 'chrislloyd')
     ProductMailer.stale_wips(user.id)
@@ -54,6 +46,10 @@ class ProductMailerPreview < ActionMailer::Preview
 
   def saved_search_created
     ProductMailer.saved_search_created SavedSearch.sample.id
+  end
+
+  def new_introduction
+    ProductMailer.new_introduction(User.sample.id, TeamMembership.with_bios.sample.id)
   end
 
 
