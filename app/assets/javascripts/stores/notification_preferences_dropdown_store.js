@@ -1,5 +1,4 @@
 (function() {
-  var PublicAddressPrompt = require('../components/public_address_prompt.js.jsx');
   var xhr = require('../xhr');
   var Dispatcher = require('../dispatcher');
   var Store = require('../stores/store');
@@ -8,21 +7,6 @@
   var _store = Object.create(Store);
 
   var _dropdownStore = _.extend(_store, {
-    showPublicAddressModal: function(data) {
-      if (!data) {
-        return;
-      }
-
-      var path = data.path;
-      var preference = data.preference;
-      var redirectTo = data.redirectTo;
-
-      React.renderComponent(PublicAddressPrompt({
-        path: path,
-        redirectTo: redirectTo
-      }), document.getElementById('public-address-prompt'));
-    },
-
     updateSelected: function(data) {
       if (!data) {
         return;
