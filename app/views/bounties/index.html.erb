@@ -4,12 +4,15 @@
 
 <% @show_urgency_dropdown = @product.core_team?(current_user) %>
 
-<%= render 'bounties/header' %>
+<% if @project.nil? %>
+  <%= render 'bounties/header'  %>
+<% else %>
+  <%= render 'bounties/project_header' %>
+<% end %>
 
 <% if @product.wips.any? %>
   <div class="row">
     <div class="col-md-9">
-
       <% if @project %>
         <div class="markdown markdown-normalized large" style="margin-bottom: 48px">
           <%== product_markdown(@project.product, @project.description) %>

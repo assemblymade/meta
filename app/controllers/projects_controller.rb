@@ -66,7 +66,7 @@ class ProjectsController < ProductController
       end
     end
 
-    respond_with @wip, location: product_project_path(@product, @milestone)
+    respond_with @wip, location: product_wips_path(@product, project: @milestone.number)
   end
 
   def images
