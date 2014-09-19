@@ -80,12 +80,6 @@ class DiscussionsController < WipsController
     product_discussion_path(@product, wip)
   end
 
-  def to_task
-    authorize! :update, @wip
-    @wip.move_to!(Task, current_user)
-    respond_with @wip, location: product_wip_path(@wip.product, @wip)
-  end
-
   protected
 
   def find_discussion!

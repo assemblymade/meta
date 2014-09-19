@@ -140,14 +140,6 @@ class Wip < ActiveRecord::Base
     false
   end
 
-  def move_to!(type, mover)
-    # don't allow moving closed WIPs
-    raise ActiveRecord::RecordNotSaved unless mover.can? :move, self
-    add_event ::Event::TypeChange.new(user: mover, from: self.type, to: type) do
-      self.type = type.to_s
-    end
-  end
-
   # following
 
   def followers

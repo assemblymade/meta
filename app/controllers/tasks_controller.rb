@@ -161,10 +161,4 @@ class TasksController < WipsController
   def update_wip_params
     params.require(:task).permit(:title, :description)
   end
-
-  def to_discussion
-    authorize! :update, @wip
-    @wip.move_to!(Discussion, current_user)
-    respond_with @wip, location: product_discussion_path(@product, @wip)
-  end
 end
