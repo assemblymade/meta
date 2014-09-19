@@ -77,6 +77,7 @@
   }
 
   > li > a:hover {
+    cursor: pointer;
     border-bottom-color: $nav-tabs-link-hover-border-color;
   }
 
