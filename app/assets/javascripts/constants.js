@@ -47,8 +47,7 @@
 
     NOTIFICATION_PREFERENCES_DROPDOWN: {
       ACTIONS: {
-        UPDATE_SELECTED: 'updateSelected',
-        SHOW_PUBLIC_ADDRESS_MODAL: 'showPublicAddressModal'
+        UPDATE_SELECTED: 'updateSelected'
       }
     },
 

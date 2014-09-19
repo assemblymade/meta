@@ -1,4 +1,3 @@
-
 {
   "name": "meta",
   "version": "0.0.1",
@@ -6,10 +5,10 @@
   "scripts": {
     "jest": "node_modules/.bin/jest",
     "test": "bin/rake teaspoon && npm run jest",
-    "lint": "node_modules/.bin/jsxhint app/assets/javascripts/components/**.js.jsx",
+    "lint": "node_modules/.bin/jsxhint app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx",
     "postinstall": "npm run bundle",
-    "bundle": "node_modules/.bin/browserify -r underscore -r spin.js -t reactify app/assets/javascripts/components/**.js.jsx -o app/assets/javascripts/components.js",
-    "watch": "node_modules/.bin/watchify -r underscore -r spin.js -t reactify app/assets/javascripts/components/**.js.jsx -o app/assets/javascripts/components.js -v"
+    "bundle": "node_modules/.bin/browserify -r underscore -r spin.js -t reactify app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js",
+    "watch": "node_modules/.bin/watchify -r underscore -r spin.js -t reactify app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js -v"
   },
   "repository": {
     "type": "git",
