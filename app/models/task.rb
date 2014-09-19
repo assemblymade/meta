@@ -176,6 +176,8 @@ class Task < Wip
   end
 
   def review_me(worker)
+    start_work!(worker)
+
     add_activity worker, Activities::Post do
       add_event ::Event::ReviewReady.new(user: worker)
     end

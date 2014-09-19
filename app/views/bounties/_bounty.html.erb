@@ -106,29 +106,31 @@
         </li>
       <% end %>
 
-      <li>
-        <div class="btn-group">
-          <% if !bounty.assigned_to?(current_user) %>
-            <a href="<%= product_wip_start_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-sm btn-primary">
-              Start bounty
-            </a>
-          <% else %>
-            <a href="<%= product_wip_stop_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-sm btn-danger">
-              Abandon bounty
-            </a>
-          <% end %>
+      <% unless bounty.closed? %>
+        <li>
+          <div class="btn-group">
+            <% if !bounty.assigned_to?(current_user) %>
+              <a href="<%= product_wip_start_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-sm btn-primary">
+                Start bounty
+              </a>
+            <% else %>
+              <a href="<%= product_wip_stop_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-sm btn-danger">
+                Abandon bounty
+              </a>
+            <% end %>
 
-          <% if bounty.reviewing? %>
-            <a href="#" class="btn btn-sm btn-success disabled">
-              Mark as done
-            </a>
-          <% else %>
-            <a href="<%= product_wip_review_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-sm <%= bounty.allocated? ? 'btn-success' : 'btn-primary' %> <%= 'disabled' if bounty.reviewing? %>">
-              Mark as done
-            </a>
-          <% end %>
-        </div>
-      </li>
+            <% if bounty.reviewing? %>
+              <a href="#" class="btn btn-sm btn-success disabled">
+                Mark as done
+              </a>
+            <% else %>
+              <a href="<%= product_wip_review_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-sm <%= bounty.allocated? ? 'btn-success' : 'btn-primary' %> <%= 'disabled' if bounty.reviewing? %>">
+                Mark as done
+              </a>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
     </ul>
 
     <ul class="list-inline omega">
