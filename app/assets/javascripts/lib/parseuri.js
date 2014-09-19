@@ -38,4 +38,4 @@
   }
 
   window.parseUri = parseUri;
-})()
+})();
