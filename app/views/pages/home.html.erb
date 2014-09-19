@@ -50,15 +50,12 @@
 
   modal.on('shown.bs.modal', function() {
     player.addEvent('ready', function() {
-      console.log(player);
-      console.log('playing', player.api('play'));
-
+      player.api('play');
     });
   });
   modal.on('hide.bs.modal', function() {
     player.addEvent('ready', function() {
-      console.log(player);
-      console.log('pausing', player.api('pause'));
+      player.api('pause');
     });
   });
 </script>
