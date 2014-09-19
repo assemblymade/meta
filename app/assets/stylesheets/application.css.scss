@@ -83,10 +83,15 @@
 }
 
 .play-button {
-  display: block;
-  margin-top: $line-height-computed * 4;
-  margin-bottom: $line-height-computed * 4;
+  display: inline-block;
+  margin-top: $line-height-computed * 2;
+  margin-bottom: $line-height-computed * 2;
+  padding: ($line-height-computed * 2) ($grid-gutter-width * 2);
   outline: none;
+}
+
+.play-button:hover {
+  background-color: rgba(black, .2);
 }
 
 .play-button:focus {
@@ -94,6 +99,8 @@
 }
 
 .masthead-gradient {
+  @include gradient-vertical(rgb(34, 157, 171), rgb(16, 53, 97), 24%, 100%);
+  
   position: absolute;
 
   top: 0;
@@ -101,5 +108,5 @@
   right: 0;
   bottom: 0;
 
-  background-color: rgba($red, 0.6);
+  opacity: .7;
 }
