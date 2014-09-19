@@ -7,8 +7,10 @@ class EmailLog < ActiveRecord::Base
   end
 
   def self.send_once(user_id, key, params={}, &blk)
-    unless sent_to(user_id, key, params).any?
-      log_send(user_id, key, params, &blk)
+    User.find(user_id).with_lock do
+      unless sent_to(user_id, key, params).any?
+        log_send(user_id, key, params, &blk)
+      end
     end
   end
 
