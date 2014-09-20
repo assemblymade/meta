@@ -30,6 +30,8 @@
       </li>
       <li>
         <% if bounty.state == 'resolved' %>
+          <span class="label label-info">DONE</span>
+        <% elsif bounty.state == 'closed' %>
           <span class="label label-default">CLOSED</span>
         <% else %>
           <%= render partial: 'bounties/urgency', locals: { task: bounty } %>

@@ -28,7 +28,7 @@ class Task < Wip
     state :open do
       event :allocate,    :transitions_to => :allocated
       event :award,       :transitions_to => :awarded
-      event :close,       :transitions_to => :resolved
+      event :close,       :transitions_to => :closed
       event :review_me,   :transitions_to => :reviewing
       event :unallocate,  :transitions_to => :open
     end
@@ -42,6 +42,10 @@ class Task < Wip
     state :awarded do
       event :award,       :transitions_to => :awarded
       event :close,       :transitions_to => :resolved
+    end
+    state :closed do
+      event :unallocate,  :transitions_to => :open
+      event :reopen,      :transitions_to => :open
     end
     state :reviewing do
       event :unallocate,  :transitions_to => :open
