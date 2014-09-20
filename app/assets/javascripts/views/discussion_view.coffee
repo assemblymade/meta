@@ -48,6 +48,9 @@ class window.DiscussionView extends Backbone.View
       when 'Event::Reopen'
         e.preventDefault()
         @addReopen body
+      when 'Event::ReviewReady'
+        e.preventDefault()
+        @addReviewReady body
       when 'Event::Unallocation'
         e.preventDefault()
         @addUnallocation body
@@ -75,6 +78,11 @@ class window.DiscussionView extends Backbone.View
   addRejection: (body)->
     @createEvent 'Event::Rejection', body
     @model.set('state', 'allocated')
+
+  addReviewReady: (body)->
+    @createEvent 'Event::Comment', body
+    @createEvent 'Event::ReviewReady'
+    @model.set('state', 'reviewing')
 
   createEvent: (type, body)->
     app.wipEvents.create _(@eventDefaults).extend(type: type, body: body)

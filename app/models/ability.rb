@@ -39,7 +39,7 @@ class Ability
 
     # WIPs
 
-    can [:comment, :allocation], Wip do
+    can [:comment, :allocation, :review_ready], Wip do
       true
     end
 

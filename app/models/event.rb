@@ -132,6 +132,9 @@ class Event < ActiveRecord::Base
     when Event::Close.to_s
       wip.close!(user, body)
 
+    when Event::ReviewReady.to_s
+      wip.review_me!(user)
+
     when Event::Reopen.to_s
       wip.reopen!(user, body)
 
