@@ -146,7 +146,6 @@ class window.DiscussionView extends Backbone.View
     @validateComment $('#event_comment_body').val()
 
   resetCommentForm: ->
-    console.log('resettin')
     @$('#event_comment_body').val('').text('')
     @validateComment ''
 

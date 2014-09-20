@@ -131,6 +131,17 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     markAsRead: function() {
+      var story = this.state.story;
+
+      story.last_read_at = +Date.now();
+
+      // React doesn't always catch that the story
+      // should update, so we need to update it
+      // optimistically
+      this.setState({
+        story: story
+      });
+
       Dispatcher.dispatch({
         action: NF.ACTIONS.MARK_AS_READ,
         data: this.props.story.key
@@ -180,7 +191,7 @@ var Avatar = require('./avatar.js.jsx');
         <a className={'list-group-item list-group-item-condensed ' + classes}
             href={this.state.story.url}
             style={{ 'font-size': '14px', 'border': 'none' }}
-            onClick={this.state.story.last_read_at ? null : this.markAsRead}>
+            onClick={this.markAsRead}>
 
           <div className="row" style={{ 'margin': '0px', 'max-width': '365px' }}>
             <div className="col-md-1">
