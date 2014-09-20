@@ -58,7 +58,14 @@ class PeopleController < ProductController
 
     update_interests(membership_params[:interests])
 
-    @membership.update_attributes(bio: membership_params[:bio])
+    bio_was = @membership.bio
+    @membership.update(bio: membership_params[:bio])
+
+    if @membership.bio.present? && bio_was.nil?
+      @product.core_team_memberships.pluck(:user_id).each do |user_id|
+        ProductMailer.delay(queue: 'mailer').new_introduction(user_id, @membership.id)
+      end
+    end
 
     respond_to do |format|
       format.json { render json: @membership, serializer: TeamMembershipSerializer }

@@ -156,13 +156,13 @@ class ProductMailer < ActionMailer::Base
     mail   cc: User.where(is_staff: true).pluck(:email),
       subject: "User subscribed to #{@saved_search.query}"
   end
-  
+
   def new_introduction(to_id, team_membership_id)
     @to = User.find(to_id)
     @membership = TeamMembership.find(team_membership_id)
     @product = @membership.product
     @new_member = @membership.user
-    
+
     mail   to: @to.email,
       subject: "@#{@new_member.username} just joined the #{@product.name} team!"
   end
