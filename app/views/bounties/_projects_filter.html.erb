@@ -11,11 +11,11 @@
     <% if (feature_flag=true) # partner?(@product) %>
       <% projects.sort_by{|m| -m.multiplier }.first(3).each do |m| %>
         <li class="<%= 'active' if params[:project].to_i == m.number %>">
-          <a href="<%= product_wips_path(@product, project: m.number) %>">
+          <a href="<%= product_project_path(@product, m) %>">
             <% if m.urgency %>
               <span class="pull-right label label-<%= m.urgency.slug %>"><%= m.urgency.label %></span>
             <% end %>
-            <%= m.title %>
+            <%= m.title %> <span class="label label-primary"><%= m.tasks.count %></span>
           </a>
         </li>
       <% end %>
