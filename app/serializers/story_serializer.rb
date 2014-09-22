@@ -4,8 +4,6 @@ class StorySerializer < ApplicationSerializer
   attributes :actor_ids, :verb, :subject_type, :body_preview, :url, :product_name, :product_slug, :key
   attributes :subjects, :target
 
-  has_many :activities, serializer: ActivitySerializer
-
   def actor_ids
     object.activities.map(&:actor_id)
   end

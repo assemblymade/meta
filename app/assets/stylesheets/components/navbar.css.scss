@@ -14,15 +14,14 @@
   box-shadow: none;
 }
 
-.navbar-item-muted.open .navbar-icon {
-  color: #fff;
-}
-
-.navbar-item-muted .navbar-icon {
-  color: $brand-muted;
-
-  &.glyphicon-highlight {
-    color: #fff;
+.navbar-item-muted {
+  &.open, &:hover {
+    .navbar-icon {
+      color: $gray-darker;
+    }
+  }
+  .navbar-icon {
+    color: #ccc;
   }
 }
 

@@ -27,7 +27,7 @@
             <TitleNotificationsCount />
           </li>
 
-          <li>
+          <li className="navbar-item-muted">
             <DropdownNewsFeedToggler
                 iconClass='icon-bell'
                 href='#stories'
@@ -39,7 +39,7 @@
                 editUserPath={this.props.editUserPath} />
           </li>
 
-          <li>
+          <li className="navbar-item-muted">
             <ChatNotificationsToggler
               iconClass='icon-bubbles'
               href='#notifications'
