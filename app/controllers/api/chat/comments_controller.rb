@@ -11,8 +11,8 @@ module Api
         end
 
         if @event.valid?
-          if @chat_room.product
-            @event.notify_users!(@chat_room.product.followers)
+          if product = @chat_room.product
+            @event.notify_users!(product.followers)
           end
 
           @activity = Activities::Chat.publish!(
@@ -37,6 +37,7 @@ module Api
           }
         end
       end
+
     end
   end
 end

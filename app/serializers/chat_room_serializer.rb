@@ -17,12 +17,10 @@ class ChatRoomSerializer < ActiveModel::Serializer
     chat_room_path(object)
   end
 
+  # This is unix time rather than iso8601 because it's compared with the timestamp
+  # from readraptor, which is also unix time
   def updated
-    last_event.try(:created_at).try(:to_i)
-  end
-
-  def last_event
-    object.wip.events.order(:created_at).select(:created_at).last
+    object.updated_at.to_i
   end
 
   def readraptor_url

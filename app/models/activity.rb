@@ -28,6 +28,7 @@ class Activity < ActiveRecord::Base
 
         if room
           a.publish_to_chat(room.id)
+          room.touch
         end
 
       end
