@@ -11,10 +11,7 @@ class CommentsController < ProductController
 
   def create
     type = comment_params[:type].constantize
-<<<<<<< HEAD
 
-=======
->>>>>>> Show link to bounties on chat
     authorize! type.slug.to_sym, @wip
     @wip.with_lock do
       @event = Event.create_from_comment(@wip, type, comment_params[:body], current_user, comment_params[:socket_id])
