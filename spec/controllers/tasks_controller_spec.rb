@@ -37,6 +37,16 @@ describe TasksController do
     end
   end
 
+  describe '#start_work' do
+    it 'creates an allocation' do
+      sign_in user
+      post :start_work, product_id: product.slug,
+        wip_id: wip.number
+
+      expect(assigns(:allocation)).to be_persisted
+    end
+  end
+
   describe '#create' do
     it 'creates an initial offer' do
       sign_in user

@@ -86,7 +86,8 @@ class TasksController < WipsController
 
     assignee ||= current_user
 
-    @wip.start_work!(assignee)
+    @allocation = @wip.start_work!(assignee)
+
     if !assignee.staff?
       AsmMetrics.product_enhancement
       AsmMetrics.active_user(assignee)

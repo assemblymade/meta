@@ -16,8 +16,8 @@
 
 .timeline-item {
   position: relative;
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 6px;
+  margin-bottom: 6px;
 
   &:first-child {
     margin-top: 0;
@@ -30,6 +30,8 @@
 
 .timeline-insert {
   position: relative;
+  margin-top: 12px;
+  margin-bottom: 12px;
 
   > time {
     font-size: 11px;
