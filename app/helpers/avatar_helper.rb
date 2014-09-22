@@ -25,7 +25,7 @@ module AvatarHelper
 
     image_tag(url, attributes)
   end
-
+    
   def user_link(user, options={}, &blk)
     attributes = {
       href: user_path(user),

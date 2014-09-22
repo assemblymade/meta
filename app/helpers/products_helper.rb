@@ -59,4 +59,13 @@ module ProductsHelper
   def partner?(product)
     current_user && TransactionLogEntry.where(product_id: product.id).where(wallet_id: current_user.id).any?
   end
+
+  def followers_sorted_by_coins(product, limit=10)
+    product.followers.
+      joins('left join transaction_log_entries tle on (tle.wallet_id = users.id and tle.product_id = watchings.watchable_id)').
+      group('users.id').
+      order('sum(cents) desc NULLS LAST').
+      limit(limit).
+      pluck(:username, :email)
+  end
 end

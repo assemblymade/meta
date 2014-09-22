@@ -7,7 +7,11 @@ class Avatar < Struct.new(:user)
   def url(size=nil)
     return helpers.image_path(user.avatar_url.to_s) if user.avatar_url
 
-    digest = Digest::MD5.hexdigest(user.email.downcase)
+    Avatar.url_from_email(user.email.downcase, size)
+  end
+
+  def self.url_from_email(email, size=nil)
+    digest = Digest::MD5.hexdigest(email)
     query = {
       d: 'https://assembly.com/assets/avatars/default.png'
     }

@@ -8,10 +8,10 @@
 
 
   <div class="card-footer clearfix">
-    <ul class="list-grid">
-      <% product.followers.limit(12).each do |user| %>
+    <ul class="list-grid list-grid-tight">
+      <% followers_sorted_by_coins(product, 12).each do |username, email| %>
         <li>
-          <%= avatar_tag(user, size: 19) %>
+          <img alt="@<%= username %>" class="avatar img-circle" height="19" src="<%= Avatar.url_from_email(email) %>" width="19">
         </li>
       <% end %>
       <li>

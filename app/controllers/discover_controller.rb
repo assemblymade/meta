@@ -8,7 +8,7 @@ class DiscoverController < ApplicationController
       ordered_by_trend.
       limit(20)
 
-    @teambuilding = Product.teambuilding.
+    @teambuilding = Product.teambuilding.includes(:user).
       ordered_by_trend.
       limit(20)
   end

@@ -51,9 +51,9 @@ class Product < ActiveRecord::Base
   has_many :tasks
   has_many :team_memberships
   has_many :transaction_log_entries
-  has_many :votes, :as => :voteable
-  has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
-  has_many :watchings, :as => :watchable
+  has_many :votes, as: :voteable
+  has_many :watchers, through: :watchings, source: :user
+  has_many :watchings, as: :watchable
   has_many :wip_activities, through: :wips, source: :activities
   has_many :wips
   has_many :work

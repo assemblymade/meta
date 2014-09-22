@@ -8,32 +8,34 @@
   <div class="row">
     <div class="col-md-12">
 
-      <div class="text-center" style="margin-top:48px;margin-bottom:24px">
-        <h2 class="omega">
-          Work on Launched Products
-        </h2>
-        <p class="text-muted">
-          These are products that have launched. Two are profitable, and the others are on their way!<br>
-          When you work on a profitable product, <strong>you get paid monthly.</strong>
-        </p>
-      </div>
-
-      <div class="row">
-        <% @profitable.each do |product| %>
-          <div class="col-sm-3">
-            <a data-track="discover.profitable.clicked" href="<%= product_path(product) %>">
-              <%= render 'products/card', product: product %>
-            </a>
-          </div>
-        <% end %>
-      </div>
-
-
-      <div class="row">
-        <div class="col-md-2 col-md-offset-5">
-          <hr>
+      <% cache(:discover_launched, expires_in: 6.hours) do %>
+        <div class="text-center" style="margin-top:48px;margin-bottom:24px">
+          <h2 class="omega">
+            Work on Launched Products
+          </h2>
+          <p class="text-muted">
+            These are products that have launched. Two are profitable, and the others are on their way!<br>
+            When you work on a profitable product, <strong>you get paid monthly.</strong>
+          </p>
         </div>
-      </div>
+
+        <div class="row">
+          <% @profitable.each do |product| %>
+            <div class="col-sm-3">
+              <a data-track="discover.profitable.clicked" href="<%= product_path(product) %>">
+                <%= render 'products/card', product: product %>
+              </a>
+            </div>
+          <% end %>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-2 col-md-offset-5">
+            <hr>
+          </div>
+        </div>
+      <% end %>
 
       <div class="text-center" style="margin-bottom:24px">
         <h3 class="omega">

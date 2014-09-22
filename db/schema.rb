@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140922145717) do
+ActiveRecord::Schema.define(version: 20140922203150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -591,6 +591,8 @@ ActiveRecord::Schema.define(version: 20140922145717) do
     t.hstore   "extra"
     t.integer  "cents"
   end
+
+  add_index "transaction_log_entries", ["wallet_id"], name: "index_transaction_log_entries_on_wallet_id", using: :btree
 
   create_table "uniques", id: false, force: true do |t|
     t.uuid     "id",          null: false
