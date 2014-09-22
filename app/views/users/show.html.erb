@@ -22,6 +22,9 @@
             <dd><%= @user.authentication_token %> - <%=link_to('impersonate', "/discover?auth_token=#{@user.authentication_token}")%></dd>
             <dt>email</dt>
             <%= @user.email %>
+            <dt>last request</dt>
+            <%= time_ago_in_words(@user.last_request_at) %> ago
+
           </dl>
         <% end %>
 
