@@ -1,7 +1,7 @@
 <% title 'Community Chat' %>
 <% activate_nav! :community if @chat_room.product.nil? %>
 
-<%= render 'shared/navbar' %>
+<%= render partial: 'shared/navbar', locals: { bounties_link: true } %>
 
 <div class="modal fade"
      id="create-task"

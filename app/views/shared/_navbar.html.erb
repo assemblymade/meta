@@ -42,12 +42,19 @@
         <li class="<%= nav_active_class(:platform_updates) %>">
           <a href="<%= discover_path(:updates) %>">Updates</a>
         </li>
-        
+
         <li class="<%= nav_active_class(:community) %>">
           <a href="<%= chat_rooms_path %>">Community Chat</a>
         </li>
 
-        <%= yield :navbar %>
+        <% if defined? bounties_link %>
+          <li class="dropdown">
+            <li>
+              <a target="_blank" href="<%= product_wips_path(@product) %>"><%= @product.name %> Bounties</a>
+            </li>
+          </li>
+        <% end %>
+
 
       </ul>
 
