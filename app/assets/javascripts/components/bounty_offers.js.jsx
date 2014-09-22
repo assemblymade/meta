@@ -3,7 +3,7 @@
 (function() {
   var BountyOffers = React.createClass({
     render: function() {
-      return <table className="table table-sm small">
+      return <table className="table table-sm text-small">
         <tbody>
           {this.props.offers.map(function(offer){
             return <BountyOffer offer={offer} product={this.props.product} />

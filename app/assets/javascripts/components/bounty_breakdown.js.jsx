@@ -11,7 +11,8 @@
     getInitialState: function() {
       return {
         offers: this.props.offers,
-        newOffer: this.props.averageBounty * 0.10
+        newOffer: this.props.averageBounty * 0.10,
+        saving: false
       }
     },
     render: function() {
@@ -39,9 +40,8 @@
             newOffer={this.state.newOffer}
             averageBounty={this.props.averageBounty}
             onChange={this.handleOfferChanged} />
-          <a id="slider" className="btn btn-default btn-block btn-xs" href="#" onClick={this.handleOfferClicked}>
-            Value this at {numeral(this.state.newOffer).format('0,0')} {this.props.product.name} Coins
-          </a>
+
+          {this.offerButton()}
         </form>
       </div>
     },
@@ -51,6 +51,7 @@
     },
 
     handleOfferClicked: function() {
+      this.setState({saving: true})
       window.xhr.post(
         this.props.offersPath,
         { amount: this.state.newOffer },
@@ -60,6 +61,20 @@
       )
       return false
     },
+
+    offerButton: function() {
+      if (this.state.saving) {
+        return <a className="btn btn-default btn-block btn-xs" style={{"margin-top": "20px"}} disabled>
+          Saving...
+          <div className="pull-right spinner"><div className="spinner-icon"></div></div>
+        </a>
+      } else {
+        return <a id="slider" className="btn btn-default btn-block btn-xs" style={{"margin-top": "20px"}} href="#" onClick={this.handleOfferClicked}>
+          Value this at {numeral(this.state.newOffer).format('0,0')} {this.props.product.name} Coins
+        </a>
+      }
+
+    }
   });
 
   if (typeof module !== 'undefined') {
