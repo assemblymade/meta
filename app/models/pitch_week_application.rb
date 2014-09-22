@@ -16,7 +16,7 @@ class PitchWeekApplication < ActiveRecord::Base
         is_approved: outcome
       )
 
-      product.update(started_teambuilding_at: Time.now)
+      product.update(started_teambuilding_at: Time.now) if outcome
     end
   end
 
