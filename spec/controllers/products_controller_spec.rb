@@ -177,11 +177,6 @@ describe ProductsController do
         patch :launch, product_id: product
       }.to change(ApplyForPitchWeek.jobs, :size).by(1)
     end
-
-    it 'sets product to launched' do
-      patch :launch, product_id: product
-      expect(product.reload.started_teambuilding_at.to_i).to be_within(2).of(Time.now.to_i)
-    end
   end
 
   describe '#follow' do
