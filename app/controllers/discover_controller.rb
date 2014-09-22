@@ -2,7 +2,7 @@ class DiscoverController < ApplicationController
   def index
     @profitable = Product.profitable.
       ordered_by_trend.
-      limit(3)
+      limit(4)
 
     @greenlit = Product.greenlit.
       ordered_by_trend.
