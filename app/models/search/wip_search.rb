@@ -67,8 +67,11 @@ module Search
       @total = state_facets['total']
 
       @facets = state_facets['terms'].map do |term|
-        FacetFilter.new(StateFilter.find(term['term']), term['count'])
-      end
+        if filter = StateFilter.find(term['term'])
+          FacetFilter.new(filter, term['count'])
+        end
+      end.compact
+
     end
   end
 end
