@@ -138,6 +138,8 @@ GEM
     git (1.2.6)
     github-markdown (0.6.4)
     hashie (2.1.2)
+    heroku-deflater (0.5.3)
+      rack (>= 1.4.5)
     hike (1.2.3)
     hogan_assets (1.6.0)
       execjs (>= 1.2.9)
@@ -436,6 +438,7 @@ DEPENDENCIES
   gibbon
   git
   github-markdown
+  heroku-deflater
   hogan_assets
   html-pipeline
   htmlentities

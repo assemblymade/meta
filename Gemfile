@@ -115,6 +115,7 @@ end
 
 group :production do
   gem 'dalli'
+  gem 'heroku-deflater'
   gem 'memcachier'
   gem 'newrelic_rpm'
   gem 'rails_12factor'
