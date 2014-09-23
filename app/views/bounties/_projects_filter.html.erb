@@ -25,6 +25,11 @@
           <a href="<%= product_projects_path(@product) %>"><u>+ <%= projects.size - 3 %> more...</u></a>
         </li>
       <% end %>
+      <% if projects.empty? %>
+        <li class="text-muted" style="padding: 6px 15px">
+          There aren't any projects yet.
+        </li>
+      <% end %>
     <% else %>
       <div class="well">
         Become a partner to see the larger projects that <%= @product.name %> is working on
