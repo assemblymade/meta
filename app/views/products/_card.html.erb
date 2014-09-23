@@ -1,5 +1,5 @@
 <div class="card">
-  <%= image_tag firesize(product.poster_image_url, '500x500', 'g_center'), width: '100%' %>
+  <%= firesize_img product.poster_image_url, 211, 211, 'g_center' %>
 
   <div class="card-body" style="min-height:109px">
     <h5 class="alpha omega" style="color:#333"><%= product.name %></h6>
@@ -11,7 +11,11 @@
     <ul class="list-grid list-grid-tight">
       <% followers_sorted_by_coins(product, 12).each do |username, email| %>
         <li>
-          <img alt="@<%= username %>" class="avatar img-circle" height="19" src="<%= Avatar.url_from_email(email) %>" width="19">
+          <img alt="@<%= username %>"
+            class="avatar img-circle"
+            width="19" height="19"
+            src="<%= Avatar.url_from_email(email, 19) %>"
+            srcset="<%= Avatar.url_from_email(email, 19*2) %>">
         </li>
       <% end %>
       <li>
