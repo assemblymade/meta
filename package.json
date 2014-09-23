@@ -35,6 +35,7 @@
     "jquery": "^2.1.1",
     "marked": "^0.3.2",
     "moment": "^2.8.1",
+    "picturefill": "^0.1.0",
     "react": "^0.11.1",
     "react-spinner": "^0.1.9",
     "react-tools": "^0.11.1",
