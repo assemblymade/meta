@@ -4,6 +4,6 @@
   </button>
 
   <div class="container">
-    Congratulations! You've successfully submitted your product for review. We'll be in touch soon with any feedback; in the meantime, feel free to <a href="mailto:austin.smith@assembly.com" style="text-decoration: underline;">drop us a line</a> if you have any questions.
+    Congratulations! You've successfully submitted your product for review. We'll be in touch soon with any feedback; in the meantime, feel free to <%= mail_to 'austin.smith@assembly.com', 'drop us a line', subject: @product.name, body: product_url(@product), style: 'text-decoration: underline' %> if you have any questions.
   </div>
 </div>

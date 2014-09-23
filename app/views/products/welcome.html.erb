@@ -130,7 +130,7 @@
           <a href="<%= user_path('awwstn') %>">awwstn</a> will be reviewing your product.
         </p>
         <p class="text-muted">
-          Please, feel free to <a href="mailto:austin.smith@assembly.com">email @awwstn</a> if you have any questions about your product or the submission process.
+          Please, feel free to <%= mail_to 'austin.smith@assembly.com', 'email @awwstn', subject: @product.name, body: product_url(@product) %> if you have any questions about your product or the submission process.
         </p>
       </div>
     </div>
