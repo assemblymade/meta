@@ -7,10 +7,10 @@
       <a href="#basics" role="tab" data-toggle="tab">Basics</a>
     </li>
     <li>
-      <a href="#core-team" role="tab" data-toggle="tab">Core Team</a>
+      <a href="#vision" role="tab" data-toggle="tab">Vision</a>
     </li>
     <li>
-      <a href="#story" role="tab" data-toggle="tab">Story</a>
+      <a href="#core-team" role="tab" data-toggle="tab">Core Team</a>
     </li>
   </ul>
 </div>
@@ -23,7 +23,6 @@
     <% end %>
 
     <%= form_for @product do |f| %>
-
 
       <div class="row">
         <div class="col-sm-8">
@@ -56,6 +55,8 @@
             <%= f.label :homepage_url, 'Product homepage url', class: 'form-label' %>
             <%= f.url_field :homepage_url, class: 'form-control', maxlength: 255 %>
           </div>
+
+
         </div>
 
         <div class="col-sm-4">
@@ -73,6 +74,45 @@
             <p class="text-muted text-center">Square (1:1) images only, please.</p>
           </div>
         </div>
+
+      </div>
+
+      <hr>
+
+      <h6>The Story</h6>
+
+      <div class="row">
+        <div class="col-sm-12">
+
+          <div class="form-group">
+            <%= f.label :lead, 'Blurb', class: 'form-label' %>
+            <div class="row">
+              <div class="col-md-8">
+                <%= f.text_area :lead, class: 'form-control input-lg', rows: 2 %>
+              </div>
+              <div class="col-md-4">
+                <p class="help-block alpha">
+                  Keep it short. How would you describe your product in a tweet?
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :description, 'Description', class: 'form-label' %>
+            <div class="row">
+              <div class="col-md-8">
+                <%= f.text_area :description, class: 'form-control', rows: 2, data: { autosize: '', 'validate-length' => 2 } %>
+              </div>
+              <div class="col-md-4">
+                <p class="help-block alpha">
+                  Dive into the details. How did you come up with the idea? What makes it great?
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
 
       <div class="form-actions">
@@ -82,80 +122,9 @@
     <% end %>
   </div>
 
-  <div class="tab-pane" id="core-team">
-
-
-    <table class="table table-responsive">
-      <thead>
-        <tr>
-          <th colspan="2">User</th>
-          <th class="text-right">Joined</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @product.core_team_memberships.each do |membership| %>
-          <tr>
-            <td width="1"><%= avatar_tag(membership.user, 24, style: 'margin-right:5px') %></td>
-            <td><%= membership.user.username %></td>
-            <td class="text-muted text-right">
-              <%= time_ago_in_words(membership.created_at) %> ago
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-
-    <%= form_tag(product_core_team_members_path(@product), class: 'form') do %>
-      <div class="row">
-        <div class="col-sm-8">
-          <div class="input-group input-group-sm" style="margin-bottom: 10px;">
-            <%= label_tag :core_team_member_username, '@', class: 'input-group-addon input-group-addon-sm' %>
-            <%= text_field_tag 'core_team_member[username]', nil, class: 'form-control input-sm', placeholder: 'username' %>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <%= submit_tag 'Add to Core Team', class: 'btn btn-default btn-block btn-sm' %>
-        </div>
-      </div>
-    <% end %>
-
-  </div>
-
-  <div class="tab-pane" id="story">
+  <div class="tab-pane" id="vision">
 
     <%= form_for @product do |f| %>
-      <div class="form-group">
-        <%= f.label :lead, 'Blurb', class: 'form-label' %>
-        <div class="row">
-          <div class="col-md-8">
-            <%= f.text_area :lead, class: 'form-control input-lg', rows: 2 %>
-          </div>
-          <div class="col-md-4">
-            <p class="help-block alpha">
-              Keep it short. How would you describe your product in a tweet?
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :description, 'Description', class: 'form-label' %>
-        <div class="row">
-          <div class="col-md-8">
-            <%= f.text_area :description, class: 'form-control', rows: 2, data: { autosize: '', 'validate-length' => 2 } %>
-          </div>
-          <div class="col-md-4">
-            <p class="help-block alpha">
-              Dive into the details. How did you come up with the idea? What makes it great?
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <hr>
-
-      <h6 class="text-muted">The Vision</h6>
-
       <div class="form-group">
         <%= f.label :goals, 'Goals', class: 'form-label' %>
         <div class="row">
@@ -242,6 +211,44 @@
 
       <div class="form-actions">
         <%= f.submit 'Save', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+
+  </div>
+
+  <div class="tab-pane" id="core-team">
+
+    <table class="table table-responsive">
+      <thead>
+        <tr>
+          <th colspan="2">User</th>
+          <th class="text-right">Joined</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @product.core_team_memberships.each do |membership| %>
+          <tr>
+            <td width="1"><%= avatar_tag(membership.user, 24, style: 'margin-right:5px') %></td>
+            <td><%= membership.user.username %></td>
+            <td class="text-muted text-right">
+              <%= time_ago_in_words(membership.created_at) %> ago
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= form_tag(product_core_team_members_path(@product), class: 'form') do %>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="input-group input-group-sm" style="margin-bottom: 10px;">
+            <%= label_tag :core_team_member_username, '@', class: 'input-group-addon input-group-addon-sm' %>
+            <%= text_field_tag 'core_team_member[username]', nil, class: 'form-control input-sm', placeholder: 'username' %>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <%= submit_tag 'Add to Core Team', class: 'btn btn-default btn-block btn-sm' %>
+        </div>
       </div>
     <% end %>
 
