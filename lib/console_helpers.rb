@@ -1,7 +1,7 @@
 module ASM
   module Console
     def u(username)
-      User.find_by(username: username)
+      User.unscoped.find_by(username: username)
     end
 
     %w(whatupdave chrislloyd jessedodds mdeiters vanstee).each do |username|

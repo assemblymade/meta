@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140923184717) do
+ActiveRecord::Schema.define(version: 20140923232941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -716,9 +716,11 @@ ActiveRecord::Schema.define(version: 20140923184717) do
     t.binary   "encrypted_wallet_private_key_salt"
     t.binary   "encrypted_wallet_private_key_iv"
     t.datetime "welcome_banner_dismissed_at"
+    t.datetime "deleted_at"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
+  add_index "users", ["deleted_at"], name: "index_users_on_deleted_at", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["facebook_uid"], name: "index_users_on_facebook_uid", unique: true, using: :btree
   add_index "users", ["github_uid"], name: "index_users_on_github_uid", unique: true, using: :btree
