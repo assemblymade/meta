@@ -3,7 +3,8 @@
     product: { name: @product.name },
     url: product_wips_path(@product),
     maxOffer: (6 * @product.average_bounty).round(-4),
-    averageBounty: @product.average_bounty
+    averageBounty: @product.average_bounty,
+    createBountyShown: params['modal'] == 'true'
   }.to_json %>" class="pull-right"></div>
 
   <ul class="nav nav-pills">

@@ -23,7 +23,7 @@
     </p>
 
     <% if @product.tasks.count < 3 %>
-      <a class="btn btn-success btn-block" href="<%= new_product_wip_path(@product) %>">
+      <a class="btn btn-success btn-block" href="<%= product_wips_path(@product, modal: true) %>">
         Create <%= pluralize(3 - @product.tasks.count, 'more bounty', 'more bounties') %>
       </a>
     <% else %>
