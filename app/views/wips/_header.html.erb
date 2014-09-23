@@ -44,37 +44,39 @@
           <option value="recently_updated" <%= 'selected' if params[:sort] == 'recently_updated' %>>Recently updated</option>
           <option value="least_recently_updated" <%= 'selected' if params[:sort] == 'least_recently_updated' %>>Least recently updated</option>
         </select>
-
-        <script>
-          // bless stack overflow http://stackoverflow.com/a/10997390/11236
-
-          function updateURLParameter(url, param, paramVal){
-            var newAdditionalURL = "";
-            var tempArray = url.split("?");
-            var baseURL = tempArray[0];
-            var additionalURL = tempArray[1];
-            var temp = "";
-            if (additionalURL) {
-              tempArray = additionalURL.split("&");
-              for (i=0; i<tempArray.length; i++){
-                if(tempArray[i].split('=')[0] != param){
-                  newAdditionalURL += temp + tempArray[i];
-                  temp = "&";
-                }
-              }
-            }
-
-            var rows_txt = temp + "" + param + "=" + paramVal;
-            return baseURL + "?" + newAdditionalURL + rows_txt;
-          }
-
-          $('#bounty-sort').change(function() {
-            var sortOrder = $(this).val();
-            var newUrl = updateURLParameter(window.location.href, 'sort', sortOrder);
-            window.location = newUrl;
-          })
-        </script>
       </li>
     </ul>
   </div>
 </div>
+
+<% content_for :javascript do %>
+  <script>
+    // bless stack overflow http://stackoverflow.com/a/10997390/11236
+
+    function updateURLParameter(url, param, paramVal){
+      var newAdditionalURL = "";
+      var tempArray = url.split("?");
+      var baseURL = tempArray[0];
+      var additionalURL = tempArray[1];
+      var temp = "";
+      if (additionalURL) {
+        tempArray = additionalURL.split("&");
+        for (i=0; i<tempArray.length; i++){
+          if(tempArray[i].split('=')[0] != param){
+            newAdditionalURL += temp + tempArray[i];
+            temp = "&";
+          }
+        }
+      }
+
+      var rows_txt = temp + "" + param + "=" + paramVal;
+      return baseURL + "?" + newAdditionalURL + rows_txt;
+    }
+
+    $('#bounty-sort').change(function() {
+      var sortOrder = $(this).val();
+      var newUrl = updateURLParameter(window.location.href, 'sort', sortOrder);
+      window.location = newUrl;
+    })
+  </script>
+<% end %>

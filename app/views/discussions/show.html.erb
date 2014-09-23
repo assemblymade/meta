@@ -36,7 +36,9 @@
   <% if signed_in? %>
     <img class="hidden" src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@wip).first, current_user.id).url %>">
   <% end %>
+</div>
 
+<% content_for :javascript do %>
   <script>
     app.product = new Product(<%= json @product, scope: current_user %>);
     app.wip = new Wip(<%== WipSerializer.new(@wip).to_json %>);
@@ -55,4 +57,4 @@
 
     analytics.track('product.wip.viewed', <%== WipAnalyticsSerializer.new(@wip, scope: current_user).to_json %>)
   </script>
-</div>
+<% end %>

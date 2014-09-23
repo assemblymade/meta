@@ -173,23 +173,25 @@ Unlike traditional companies with shareholders and employees, everything on Asse
 
 <%= render 'shared/footer' %>
 
-<script>
-  var $body = $(document.body)
-  var $sideBar = $('.asm-about-sidebar')
-  $body.scrollspy({target: '.asm-about-sidebar'})
+<% content_for :javascript do %>
+  <script>
+    var $body = $(document.body)
+    var $sideBar = $('.asm-about-sidebar')
+    $body.scrollspy({target: '.asm-about-sidebar'})
 
-  var sideBarWidth = $sideBar.width()
-  $sideBar.width(sideBarWidth)
+    var sideBarWidth = $sideBar.width()
+    $sideBar.width(sideBarWidth)
 
-  var offsetTop      = $sideBar.offset().top
-  var sideBarMargin  = parseInt($sideBar.children(0).css('margin-top'), 10)
+    var offsetTop      = $sideBar.offset().top
+    var sideBarMargin  = parseInt($sideBar.children(0).css('margin-top'), 10)
 
-  setTimeout(function () {
-    $sideBar.affix({
-      offset: {
-        bottom: $('.footer').outerHeight(true)
-      }
-    })
-  }, 100)
+    setTimeout(function () {
+      $sideBar.affix({
+        offset: {
+          bottom: $('.footer').outerHeight(true)
+        }
+      })
+    }, 100)
 
-</script>
+  </script>
+<% end %>

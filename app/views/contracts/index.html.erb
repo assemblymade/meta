@@ -114,6 +114,9 @@
       </tr>
     <% end %>
   </table>
+</div>
+
+<% content_for :javascript do %>
   <script>
     $('#new-contract-modal').on('show.bs.modal', function(e) {
       $('.textcomplete').each(function() {
@@ -136,4 +139,4 @@
       });
     });
   </script>
-</div>
+<% end %>

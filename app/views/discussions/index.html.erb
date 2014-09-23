@@ -1,9 +1,6 @@
 <% title 'Discussions', @product.name %>
 <% activate_nav! :discussions %>
-
-<script>
-  analytics.track('product.wips.viewed', <%== ProductAnalyticsSerializer.new(@product).to_json %>)
-</script>
+<%= track 'product.wips.viewed',  ProductAnalyticsSerializer.new(@product) %>
 
 <div class="page-header sheet-header">
   <a class="btn btn-success pull-right" href="<%= new_product_discussion_path(@product) %>">

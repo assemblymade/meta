@@ -1,5 +1,6 @@
 <% title 'Community Chat' %>
 <% activate_nav! :community if @chat_room.product.nil? %>
+<%= track 'product.chat.viewed', ProductSerializer.new(@product, scope: current_user) %>
 
 <%= render partial: 'shared/navbar', locals: { bounties_link: true } %>
 
@@ -29,24 +30,6 @@
   padding-left: 0;
 }
 </style>
-
-<script>
-  var resizeChatView = function resizeChatView() {
-    var offsetTop = $('.chat-wrapper').offset().top,
-        windowHeight = $(window).innerHeight(),
-        wrapperHeight = windowHeight - offsetTop;
-
-    $('.chat-wrapper').css({height: wrapperHeight});
-
-    var chatActionsHeight = $('.js-chat-actions').outerHeight();
-
-    $('.js-chat').css({height: (wrapperHeight - chatActionsHeight)})
-    // $('.js-members').css({height: (wrapperHeight - chatActionsHeight - 10)});
-  }
-
-  $(window).resize(resizeChatView)
-  $(document).ready(resizeChatView)
-</script>
 
 <div class="chat-wrapper">
 
@@ -87,101 +70,115 @@
 </div>
 
 
+<% content_for :javascript do %>
+  <script>
+    $(document).ready(function(){
+      var resizeChatView = function resizeChatView() {
+        var offsetTop = $('.chat-wrapper').offset().top,
+            windowHeight = $(window).innerHeight(),
+            wrapperHeight = windowHeight - offsetTop;
 
-<script>
-  <% if @chat_room.product %>
-    app.product = new Product(<%= json @chat_room.product, scope: current_user %>);
-  <% end %>
-  app.chatRoom = { id: '<%= @chat_room.key %>' }
+        $('.chat-wrapper').css({height: wrapperHeight});
 
-  <% if signed_in? %>
-    app.chatRoom.readRaptorChatPath = '<%== ReadraptorTracker.new(@chat_room.key, current_user.id).url %>';
-  <% end %>
+        var chatActionsHeight = $('.js-chat-actions').outerHeight();
 
-  $(document).ready(function() {
-    var activityStream = new ActivityStream(<%=
-      json @activity_stream.map {|a, _|
-        ActivitySerializer.new(a, scope: current_user)
+        $('.js-chat').css({height: (wrapperHeight - chatActionsHeight)})
+        // $('.js-members').css({height: (wrapperHeight - chatActionsHeight - 10)});
       }
-    %>);
-    activityStream.url = '<%= api_chat_room_comments_path(@chat_room) %>';
-    activityStream.id = '<%= @chat_room.id %>'
-    activityStream.product = new Product(<%= json @product, scope: current_user %>);
 
-    var activityStreamView = new ActivityStreamView({
-      el: $('.js-activity-stream'),
-      collection: activityStream,
-      subjectId: '<%= @chat_room.wip_id %>'
-    });
+      $(window).resize(resizeChatView)
+      $(document).ready(resizeChatView)
+    })
 
-    pusher.connection.bind('connected', function() {
-      activityStream.listenForRemote(pusher, pusher.connection);
+    <% if @chat_room.product %>
+      app.product = new Product(<%= json @chat_room.product, scope: current_user %>);
+    <% end %>
+    app.chatRoom = { id: '<%= @chat_room.key %>' }
 
-      var presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
+    <% if signed_in? %>
+      app.chatRoom.readRaptorChatPath = '<%== ReadraptorTracker.new(@chat_room.key, current_user.id).url %>';
+    <% end %>
 
-      $('.js-members').each(function() {
-        var component = React.renderComponent(
-          MembersView({
-            channel: presenceChannel,
-            url: '<%= api_chat_room_users_path(@chat_room) %>'
-          }),
-          this
+    $(document).ready(function() {
+      var activityStream = new ActivityStream(<%=
+        json @activity_stream.map {|a, _|
+          ActivitySerializer.new(a, scope: current_user)
+        }
+      %>);
+      activityStream.url = '<%= api_chat_room_comments_path(@chat_room) %>';
+      activityStream.id = '<%= @chat_room.id %>'
+      activityStream.product = new Product(<%= json @product, scope: current_user %>);
+
+      var activityStreamView = new ActivityStreamView({
+        el: $('.js-activity-stream'),
+        collection: activityStream,
+        subjectId: '<%= @chat_room.wip_id %>'
+      });
+
+      pusher.connection.bind('connected', function() {
+        activityStream.listenForRemote(pusher, pusher.connection);
+
+        var presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
+
+        $('.js-members').each(function() {
+          var component = React.renderComponent(
+            MembersView({
+              channel: presenceChannel,
+              url: '<%= api_chat_room_users_path(@chat_room) %>'
+            }),
+            this
+          );
+        });
+
+        $('.js-members').css({ 'max-height': ($(window).outerHeight() - 150) + 'px' });
+
+        var alreadyJoined = {};
+
+        presenceChannel.bind(
+          'pusher:member_added',
+          function memberJoined(member) {
+            // Slight hack to prevent multiple join messages
+            // for one person
+            if (alreadyJoined[member.id] === 1) {
+              return;
+            }
+
+            alreadyJoined[member.id] = 1;
+
+            var activity = new Activity({
+              id: member.id + rand(10000),
+              actor: member.info,
+              // TODO: change 'type' to 'verb'
+              type: 'activities/join',
+              created: moment().toISOString()
+            });
+
+            activityStream.add(activity);
+          }
         );
       });
 
-      $('.js-members').css({ 'max-height': ($(window).outerHeight() - 150) + 'px' });
+      var chatView = new ChatView({
+        el: $('.js-chat'),
+        collection: activityStream,
+        scrollContainer: $('.js-chat'),
+        scrollPadding: 168
+      });
 
-      var alreadyJoined = {};
+      var chatInput = new ChatInput({
+        el: $('.js-chat-actions')
+      })
 
-      presenceChannel.bind(
-        'pusher:member_added',
-        function memberJoined(member) {
-          // Slight hack to prevent multiple join messages
-          // for one person
-          if (alreadyJoined[member.id] === 1) {
-            return;
-          }
+      window.activityStream = activityStream;
+      window.activityStreamView = activityStreamView;
+      window.chatView = chatView;
 
-          alreadyJoined[member.id] = 1;
-
-          var activity = new Activity({
-            id: member.id + rand(10000),
-            actor: member.info,
-            // TODO: change 'type' to 'verb'
-            type: 'activities/join',
-            created: moment().toISOString()
-          });
-
-          activityStream.add(activity);
-        }
-      );
+      activityStreamView.render();
+      chatView.render();
+      chatView.scrollToLatestActivity();
+      $(window).load(function() {
+        delay(1, chatView.scrollToLatestActivity);
+      });
     });
-
-    var chatView = new ChatView({
-      el: $('.js-chat'),
-      collection: activityStream,
-      scrollContainer: $('.js-chat'),
-      scrollPadding: 168
-    });
-
-    var chatInput = new ChatInput({
-      el: $('.js-chat-actions')
-    })
-
-    window.activityStream = activityStream;
-    window.activityStreamView = activityStreamView;
-    window.chatView = chatView;
-
-    activityStreamView.render();
-    chatView.render();
-    chatView.scrollToLatestActivity();
-    $(window).load(function() {
-      delay(1, chatView.scrollToLatestActivity);
-    });
-  });
-</script>
-
-<!-- Analytics -->
-<script>
-  analytics.track('product.chat.viewed', <%== ProductSerializer.new(@product, scope: current_user).to_json %>)
-</script>
+  </script>
+<% end %>

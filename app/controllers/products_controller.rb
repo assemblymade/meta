@@ -26,7 +26,6 @@ class ProductsController < ProductController
     if @product.valid?
       respond_with(@product, location: product_welcome_path(@product))
 
-
       @product.assign_key_pair! unless Rails.env.test?
       schedule_greet
       schedule_one_hour_checkin

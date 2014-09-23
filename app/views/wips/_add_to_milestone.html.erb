@@ -5,7 +5,9 @@
     <a class="js-add link-hover-success" data-toggle="dropdown" href="#" data-placement="top" title="Add&nbsp;to&nbsp;Project">
       <i class="icon-folder" style="margin-right: 2px;"></i> Project
     </a>
-    <script>$('.js-add').tooltip()</script>
+    <% content_for :javascript do %>
+      <script>$('.js-add').tooltip()</script>
+    <% end %>
 
     <ul class="dropdown-menu">
       <li class="dropdown-header">Projects</li>

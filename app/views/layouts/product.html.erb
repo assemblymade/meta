@@ -1,6 +1,8 @@
-<script>
-  window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);
-</script>
+<% content_for :javascript do %>
+  <script>
+    window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);
+  </script>
+<% end %>
 
 <%= render 'shared/navbar' %>
 
@@ -55,8 +57,6 @@
   <%= yield %>
 </div>
 
-</div>
-
 <% unless current_user.nil? %>
   <div class="modal fade" id="edit-membership-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
@@ -105,8 +105,10 @@
 
 <% parent_layout 'application' %>
 
-<script>
-  $('#edit-membership-modal').on('shown.bs.modal', function() {
-    $('#modal-bio-editor').attr('placeholder', app.defaultBio());
-  });
-</script>
+<% content_for :javascript do %>
+  <script>
+    $('#edit-membership-modal').on('shown.bs.modal', function() {
+      $('#modal-bio-editor').attr('placeholder', app.defaultBio());
+    });
+  </script>
+<% end %>

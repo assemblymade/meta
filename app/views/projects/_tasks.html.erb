@@ -48,25 +48,27 @@
   <ol class="task-list task-list-complete js-complete-tasks-list"></ol>
 </div>
 
-<script>
-  $(document).ready(function() {
-    <% if milestone.nil? %>
-      var completeTasks = new Tasks();
-      var incompleteTasks = new Tasks();
-    <% else %>
-      var completeTasks = new Tasks([], {url: "<%= product_project_tasks_path(milestone.product, milestone) %>" });
-      var incompleteTasks = new Tasks([], {url: "<%= product_project_tasks_path(milestone.product, milestone) %>" });
-    <% end %>
+<% content_for :javascript do %>
+  <script>
+    $(document).ready(function() {
+      <% if milestone.nil? %>
+        var completeTasks = new Tasks();
+        var incompleteTasks = new Tasks();
+      <% else %>
+        var completeTasks = new Tasks([], {url: "<%= product_project_tasks_path(milestone.product, milestone) %>" });
+        var incompleteTasks = new Tasks([], {url: "<%= product_project_tasks_path(milestone.product, milestone) %>" });
+      <% end %>
 
-    new TaskListView({
-      el: $('[data-view=task-list]'),
-      completeTasks: completeTasks,
-      incompleteTasks: incompleteTasks
+      new TaskListView({
+        el: $('[data-view=task-list]'),
+        completeTasks: completeTasks,
+        incompleteTasks: incompleteTasks
+      })
+
+      <% if milestone %>
+        incompleteTasks.set(<%== milestone.nil? ? [] : milestone.tasks.open.map{|t| WipSerializer.new(t) }.to_json %>)
+        completeTasks.set(<%== milestone.nil? ? [] : milestone.tasks.closed.map{|t| WipSerializer.new(t) }.to_json %>)
+      <% end %>
     })
-
-    <% if milestone %>
-      incompleteTasks.set(<%== milestone.nil? ? [] : milestone.tasks.open.map{|t| WipSerializer.new(t) }.to_json %>)
-      completeTasks.set(<%== milestone.nil? ? [] : milestone.tasks.closed.map{|t| WipSerializer.new(t) }.to_json %>)
-    <% end %>
-  })
-</script>
+  </script>
+<% end %>

@@ -1,5 +1,6 @@
 <% title @bounty.title, "##{@bounty.number}", @bounty.product.name %>
 <% activate_nav! :bounties %>
+<%= track 'product.wip.viewed', WipAnalyticsSerializer.new(@wip, scope: current_user) %>
 
 <h6 class="text-muted alpha">
   #<%= @bounty.number %>
@@ -16,30 +17,30 @@
 
 
 <% if signed_in? %>
-  <img class="hidden" src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@bounty).first, current_user.id).url %>" />
+  <img class="hidden" data-src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@bounty).first, current_user.id).url %>" />
 <% end %>
 
-<script>
-  app.product = new Product(<%= json @bounty.product, scope: current_user %>);
-  app.wip = new Wip(<%== WipSerializer.new(@bounty, scope: current_user).to_json %>);
-  app.wipEvents = new WipEvents(<%== @bounty.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
-    url: '<%= product_wip_comments_path(@bounty.product, @bounty) %>'
-  });
-
-  <% if signed_in? %>
-    <% story = Story.associated_with(@bounty).first.try(:id) %>
-    app.wip.readRaptorUrl = '<%== ReadraptorTracker.new(story, current_user.id).url if story %>';
-  <% end %>
-
-  $(document).ready(function() {
-    <%= render 'wips/add_tips_to_wip_events' %>
-
-    app.discussionView = new DiscussionView({
-      el: $('#discussion-view-el'),
-      tipsPath: '<%= product_tips_path(@bounty.product) %>',
-      model: app.wip
+<% content_for :javascript do %>
+  <script>
+    app.product = new Product(<%= json @bounty.product, scope: current_user %>);
+    app.wip = new Wip(<%== WipSerializer.new(@bounty, scope: current_user).to_json %>);
+    app.wipEvents = new WipEvents(<%== @bounty.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
+      url: '<%= product_wip_comments_path(@bounty.product, @bounty) %>'
     });
-  })
 
-  analytics.track('product.wip.viewed', <%== WipAnalyticsSerializer.new(@wip, scope: current_user).to_json %>)
-</script>
+    <% if signed_in? %>
+      <% story = Story.associated_with(@bounty).first.try(:id) %>
+      app.wip.readRaptorUrl = '<%== ReadraptorTracker.new(story, current_user.id).url if story %>';
+    <% end %>
+
+    $(document).ready(function() {
+      <%= render 'wips/add_tips_to_wip_events' %>
+
+      app.discussionView = new DiscussionView({
+        el: $('#discussion-view-el'),
+        tipsPath: '<%= product_tips_path(@bounty.product) %>',
+        model: app.wip
+      });
+    })
+  </script>
+<% end %>

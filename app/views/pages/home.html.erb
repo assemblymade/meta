@@ -44,21 +44,23 @@
 
 <script src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
 
-<script>
-  modal = $('#video-modal');
-  player = $f(modal.find('iframe')[0]);
+<% content_for :javascript do %>
+  <script>
+    modal = $('#video-modal');
+    player = $f(modal.find('iframe')[0]);
 
-  modal.on('shown.bs.modal', function() {
-    player.addEvent('ready', function() {
-      player.api('play');
+    modal.on('shown.bs.modal', function() {
+      player.addEvent('ready', function() {
+        player.api('play');
+      });
     });
-  });
-  modal.on('hide.bs.modal', function() {
-    player.addEvent('ready', function() {
-      player.api('pause');
+    modal.on('hide.bs.modal', function() {
+      player.addEvent('ready', function() {
+        player.api('pause');
+      });
     });
-  });
-</script>
+  </script>
+<% end %>
 
 <div class="container">
   <div class="row">

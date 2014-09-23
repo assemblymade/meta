@@ -17,14 +17,16 @@
 </form>
 
 <% unless signed_in? %>
-  <script>
-    $('#new-comment-form').popover({
-      html: true,
-      content: 'Before you can introduce yourself, you need to <a href="/signup">sign up</a>.',
-      trigger: 'click',
-      title: 'Welcome to the chat',
-      placement: 'top'
-    });
-    $('#new-comment-form').popover('show');
-  </script>
+  <% content_for :javascript do %>
+    <script>
+      $('#new-comment-form').popover({
+        html: true,
+        content: 'Before you can introduce yourself, you need to <a href="/signup">sign up</a>.',
+        trigger: 'click',
+        title: 'Welcome to the chat',
+        placement: 'top'
+      });
+      $('#new-comment-form').popover('show');
+    </script>
+  <% end %>
 <% end %>

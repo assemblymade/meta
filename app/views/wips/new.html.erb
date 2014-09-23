@@ -40,15 +40,7 @@
 
         <div class="form-group">
           <label class="control-label">Initial Offer</label>
-          <div id="js-initial-offer" class="well">
-            <script>
-              React.renderComponent(InitialOffer(<%== {
-                product: { name: @product.name },
-                maxOffer: (6 * @product.average_bounty).round(-4),
-                averageBounty: @product.average_bounty
-              }.to_json %>), document.getElementById('js-initial-offer'));
-            </script>
-          </div>
+          <div id="js-initial-offer" class="well"></div>
         </div>
 
       </div>
@@ -95,3 +87,13 @@
     <% end %>
   </div>
 </div>
+
+<% content_for :javascript do %>
+  <script>
+    React.renderComponent(InitialOffer(<%== {
+      product: { name: @product.name },
+      maxOffer: (6 * @product.average_bounty).round(-4),
+      averageBounty: @product.average_bounty
+    }.to_json %>), document.getElementById('js-initial-offer'));
+  </script>
+<% end %>

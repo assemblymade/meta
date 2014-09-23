@@ -50,25 +50,27 @@
   <ol class="task-list task-list-complete js-complete-tasks-list"></ol>
 </div>
 
-<script>
-  $(document).ready(function() {
-    <% if @milestone.nil? %>
-      var completeTasks = new Tasks();
-      var incompleteTasks = new Tasks();
-    <% else %>
-      var completeTasks = new Tasks([], {url: "<%= product_project_tasks_path(@product, @milestone) %>" });
-      var incompleteTasks = new Tasks([], {url: "<%= product_project_tasks_path(@product, @milestone) %>" });
-    <% end %>
+<% content_for :javascript do %>
+  <script>
+    $(document).ready(function() {
+      <% if @milestone.nil? %>
+        var completeTasks = new Tasks();
+        var incompleteTasks = new Tasks();
+      <% else %>
+        var completeTasks = new Tasks([], {url: "<%= product_project_tasks_path(@product, @milestone) %>" });
+        var incompleteTasks = new Tasks([], {url: "<%= product_project_tasks_path(@product, @milestone) %>" });
+      <% end %>
 
-    new TaskListView({
-      el: $('[data-view=task-list]'),
-      completeTasks: completeTasks,
-      incompleteTasks: incompleteTasks
+      new TaskListView({
+        el: $('[data-view=task-list]'),
+        completeTasks: completeTasks,
+        incompleteTasks: incompleteTasks
+      })
+
+      <% if @milestone %>
+        incompleteTasks.set(<%== @milestone.nil? ? [] : json(@milestone.tasks.open) %>)
+        completeTasks.set(<%== @milestone.nil? ? [] : json(@milestone.tasks.closed) %>)
+      <% end %>
     })
-
-    <% if @milestone %>
-      incompleteTasks.set(<%== @milestone.nil? ? [] : json(@milestone.tasks.open) %>)
-      completeTasks.set(<%== @milestone.nil? ? [] : json(@milestone.tasks.closed) %>)
-    <% end %>
-  })
-</script>
+  </script>
+<% end %>
