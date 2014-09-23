@@ -42,19 +42,17 @@ class ProductDecorator < ApplicationDecorator
     "#{name} - #{pitch}"
   end
 
-  def you_tube_video_id
+  def video_embed_url
     if you_tube_video_url[/youtu\.be\/([^\?]*)/]
-      $1
+      "https://www.youtube.com/embed/#{$1}?autoplay=0"
+    elsif you_tube_video_url[/vimeo.com\/(\d+)/]
+      "https://player.vimeo.com/video/#{$1}"
     else
       # From
       # http://stackoverflow.com/questions/3452546/javascript-regex-how-to-get-youtube-video-id-from-url/4811367#4811367
       you_tube_video_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
-      $5
+      "https://www.youtube.com/embed/#{$5}?autoplay=0"
     end
-  end
-
-  def you_tube_video_embed_url
-    "https://www.youtube.com/embed/#{you_tube_video_id}?autoplay=0"
   end
 
   def video?
