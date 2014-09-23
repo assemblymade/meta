@@ -7,11 +7,11 @@ module Search
     end
 
     def all_discussions
-      @all_discussions ||= Search::WipSearch.new(@query).total
+      @all_discussions ||= Search::WipSearch.new(q: @query).total
     end
 
     def discussions
-      @discussions ||= Search::WipSearch.new(@query).total
+      @discussions ||= Search::WipSearch.new(q: @query).total
     end
 
     def products

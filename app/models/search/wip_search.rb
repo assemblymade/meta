@@ -2,17 +2,8 @@ module Search
   class WipSearch
     attr_reader :total, :results, :facets
 
-    def initialize(q, filters={})
+    def initialize(filters={})
       search = {
-        query: {
-          multi_match: {
-            query: q,
-            fields: [ 'title', 'comments.sanitized_body' ],
-            operator: 'or',
-            fuzziness: 1
-          }
-        },
-
         filter: {
           bool: {
             must: [{
@@ -45,6 +36,17 @@ module Search
           },
         }
       }
+
+      if filters[:q].present?
+        search[:query] = {
+          multi_match: {
+            query: filters[:q],
+            fields: [ 'title', 'comments.sanitized_body' ],
+            operator: 'or',
+            fuzziness: 1
+          }
+        }
+      end
 
       filter_terms = []
 

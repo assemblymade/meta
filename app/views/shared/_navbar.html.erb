@@ -17,14 +17,7 @@
     <div class="collapse navbar-collapse" id="platform-navbar-collapse">
 
       <% if user_signed_in? %>
-        <form action="<%= scoped_search_path %>" class="navbar-form navbar-left">
-          <div class="form-group">
-            <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off"
-              placeholder="<%= @product ? "Search #{@product.name}" : "Search…" %>"  />
-            <input type="hidden" name="type" value="<%= @type %>">
-          </div>
-          <button type="submit" class="btn btn-default sr-only">Search</button>
-        </form>
+        <%= render 'shared/search' %>
       <% end %>
 
       <ul class="nav navbar-nav">
