@@ -11,7 +11,7 @@
 
     getInitialState: function() {
       return {
-        createBountyShown: false
+        createBountyShown: this.props.createBountyShown
       }
     },
 

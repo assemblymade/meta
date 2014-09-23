@@ -10,7 +10,7 @@
   <%= render 'bounties/project_header' %>
 <% end %>
 
-<% if @product.wips.any? %>
+<% if @product.tasks.any? %>
   <div class="row">
     <div class="col-md-9">
       <% if @project %>
@@ -41,12 +41,19 @@
   <% else %>
     <div class="col-md-6 col-md-offset-3">
       <div class="well well-lg omega">
-        <h3 class="alpha"><strong>Create the first task</strong></h3>
-        <p class="text-muted omega">
+        <h3 class="alpha"><strong>Create the first bounty</strong></h3>
+        <p class="text-muted">
           Get started by breaking down a new idea into bite-sized chunks
           that can valued and prioritized. Writing a great description will
           make it super easy for anyone to jump in and get to work.
         </p>
+
+        <div data-react-class="CreateBountyButton" data-react-props="<%= {
+          product: { name: @product.name },
+          url: product_wips_path(@product),
+          maxOffer: (6 * @product.average_bounty).round(-4),
+          averageBounty: @product.average_bounty
+        }.to_json %>" class="omega text-center"></div>
       </div>
     </div>
   </div><!-- .row -->
