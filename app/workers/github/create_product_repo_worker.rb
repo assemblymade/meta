@@ -6,17 +6,20 @@ module Github
       request_through = request_through.to_sym
 
       path = "/orgs/#{ENV['GITHUB_PRODUCTS_ORG']}/repos"
-      payload = {
-        name: repo_name,
-        description: product.pitch,
-        homepage: homepage,
-        private: false,
-        has_issues: false,
-        has_wiki: false,
-        has_downloads: false
-      }
-
-      if request_through == :launchpad_post
+      payload = if request_through == :post
+        # create through github
+        {
+          name: repo_name,
+          description: product.pitch,
+          homepage: homepage,
+          private: false,
+          has_issues: false,
+          has_wiki: false,
+          has_downloads: false,
+          license_template: 'agpl-3.0'
+        }
+      else
+        # create through launchpad
         path = "/github"
         payload = {
           name: product.name,
@@ -30,9 +33,10 @@ module Github
         repo = send request_through, path, payload
 
         add_webhooks([ENV['GITHUB_PRODUCTS_ORG'], product.slug].join('/'))
-        add_license_and_readme(product, repo_name) if request_through == :post
 
-        if request_through == :launchpad_post
+        if request_through == :post
+          add_readme(product, repo_name)
+        else
           notify_core_team(product)
         end
 
@@ -49,6 +53,16 @@ module Github
         end
       end
     end
+
+    def add_readme(product, repo_name)
+      put "/repos/#{ENV['GITHUB_PRODUCTS_ORG']}/#{repo_name}/contents/README.md", {
+        message: "Added default Assembly README.md",
+        content: Base64.strict_encode64(render_erb('app/views/products/git/readme.markdown.erb', product)),
+        name: ENV['GITHUB_PRODUCTS_USER_NAME'],
+        email: ENV['GITHUB_PRODUCTS_USER_EMAIL']
+      }
+    end
+
 
     def notify_core_team(product)
       ProductMailer.delay(queue: 'mailer').notify_core_team(product)

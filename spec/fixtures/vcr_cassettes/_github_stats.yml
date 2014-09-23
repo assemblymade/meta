@@ -1,0 +1,78 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/repos/asm-products/testing-1-2-3/stats/contributors
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      Authorization:
+      - token ohhai
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 23 Sep 2014 20:16:18 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4960'
+      X-Ratelimit-Reset:
+      - '1411505217'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Etag:
+      - '"a7b76c3615e9eea6959fd283e336ffc2"'
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - ''
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - C7BCC090:76F8:BC233D4:5421D511
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - a1d8c69b807c8e21f06cad9da377d1b0
+    body:
+      encoding: UTF-8
+      string: '[{"total":2,"weeks":[{"w":1411257600,"a":673,"d":0,"c":2}],"author":{"login":"whatupdave","id":7064,"avatar_url":"https://avatars.githubusercontent.com/u/7064?v=2","gravatar_id":"","url":"https://api.github.com/users/whatupdave","html_url":"https://github.com/whatupdave","followers_url":"https://api.github.com/users/whatupdave/followers","following_url":"https://api.github.com/users/whatupdave/following{/other_user}","gists_url":"https://api.github.com/users/whatupdave/gists{/gist_id}","starred_url":"https://api.github.com/users/whatupdave/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/whatupdave/subscriptions","organizations_url":"https://api.github.com/users/whatupdave/orgs","repos_url":"https://api.github.com/users/whatupdave/repos","events_url":"https://api.github.com/users/whatupdave/events{/privacy}","received_events_url":"https://api.github.com/users/whatupdave/received_events","type":"User","site_admin":false}}]'
+    http_version:
+  recorded_at: Tue, 23 Sep 2014 20:16:17 GMT
+recorded_with: VCR 2.9.2

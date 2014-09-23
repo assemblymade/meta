@@ -1,0 +1,306 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.github.com/orgs/asm-products/repos
+    body:
+      encoding: UTF-8
+      string: '{"name":"testing-1-2-3","description":"Libero facere beatae mollitia
+        error et aspernatur exercitationem veritatis. Qui officiis aut et autem.","homepage":"https://assembly.com","private":false,"has_issues":false,"has_wiki":false,"has_downloads":false,"license_template":"agpl-3.0"}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      Authorization:
+      - token ohhai
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 23 Sep 2014 20:33:26 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 201 Created
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4935'
+      X-Ratelimit-Reset:
+      - '1411505217'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Etag:
+      - '"e8c20d282d68218293e228d259afeb74"'
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - public_repo, repo
+      Location:
+      - https://api.github.com/repos/asm-products/testing-1-2-3
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      X-Github-Media-Type:
+      - github.v3
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Length:
+      - '6067'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - C7BCC090:76F9:11138C2B:5421D916
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: '{"id":24388291,"name":"testing-1-2-3","full_name":"asm-products/testing-1-2-3","owner":{"login":"asm-products","id":6548361,"avatar_url":"https://avatars.githubusercontent.com/u/6548361?v=2","gravatar_id":"","url":"https://api.github.com/users/asm-products","html_url":"https://github.com/asm-products","followers_url":"https://api.github.com/users/asm-products/followers","following_url":"https://api.github.com/users/asm-products/following{/other_user}","gists_url":"https://api.github.com/users/asm-products/gists{/gist_id}","starred_url":"https://api.github.com/users/asm-products/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/asm-products/subscriptions","organizations_url":"https://api.github.com/users/asm-products/orgs","repos_url":"https://api.github.com/users/asm-products/repos","events_url":"https://api.github.com/users/asm-products/events{/privacy}","received_events_url":"https://api.github.com/users/asm-products/received_events","type":"Organization","site_admin":false},"private":false,"html_url":"https://github.com/asm-products/testing-1-2-3","description":"Libero
+        facere beatae mollitia error et aspernatur exercitationem veritatis. Qui officiis
+        aut et autem.","fork":false,"url":"https://api.github.com/repos/asm-products/testing-1-2-3","forks_url":"https://api.github.com/repos/asm-products/testing-1-2-3/forks","keys_url":"https://api.github.com/repos/asm-products/testing-1-2-3/keys{/key_id}","collaborators_url":"https://api.github.com/repos/asm-products/testing-1-2-3/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/asm-products/testing-1-2-3/teams","hooks_url":"https://api.github.com/repos/asm-products/testing-1-2-3/hooks","issue_events_url":"https://api.github.com/repos/asm-products/testing-1-2-3/issues/events{/number}","events_url":"https://api.github.com/repos/asm-products/testing-1-2-3/events","assignees_url":"https://api.github.com/repos/asm-products/testing-1-2-3/assignees{/user}","branches_url":"https://api.github.com/repos/asm-products/testing-1-2-3/branches{/branch}","tags_url":"https://api.github.com/repos/asm-products/testing-1-2-3/tags","blobs_url":"https://api.github.com/repos/asm-products/testing-1-2-3/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/asm-products/testing-1-2-3/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/asm-products/testing-1-2-3/git/refs{/sha}","trees_url":"https://api.github.com/repos/asm-products/testing-1-2-3/git/trees{/sha}","statuses_url":"https://api.github.com/repos/asm-products/testing-1-2-3/statuses/{sha}","languages_url":"https://api.github.com/repos/asm-products/testing-1-2-3/languages","stargazers_url":"https://api.github.com/repos/asm-products/testing-1-2-3/stargazers","contributors_url":"https://api.github.com/repos/asm-products/testing-1-2-3/contributors","subscribers_url":"https://api.github.com/repos/asm-products/testing-1-2-3/subscribers","subscription_url":"https://api.github.com/repos/asm-products/testing-1-2-3/subscription","commits_url":"https://api.github.com/repos/asm-products/testing-1-2-3/commits{/sha}","git_commits_url":"https://api.github.com/repos/asm-products/testing-1-2-3/git/commits{/sha}","comments_url":"https://api.github.com/repos/asm-products/testing-1-2-3/comments{/number}","issue_comment_url":"https://api.github.com/repos/asm-products/testing-1-2-3/issues/comments/{number}","contents_url":"https://api.github.com/repos/asm-products/testing-1-2-3/contents/{+path}","compare_url":"https://api.github.com/repos/asm-products/testing-1-2-3/compare/{base}...{head}","merges_url":"https://api.github.com/repos/asm-products/testing-1-2-3/merges","archive_url":"https://api.github.com/repos/asm-products/testing-1-2-3/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/asm-products/testing-1-2-3/downloads","issues_url":"https://api.github.com/repos/asm-products/testing-1-2-3/issues{/number}","pulls_url":"https://api.github.com/repos/asm-products/testing-1-2-3/pulls{/number}","milestones_url":"https://api.github.com/repos/asm-products/testing-1-2-3/milestones{/number}","notifications_url":"https://api.github.com/repos/asm-products/testing-1-2-3/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/asm-products/testing-1-2-3/labels{/name}","releases_url":"https://api.github.com/repos/asm-products/testing-1-2-3/releases{/id}","created_at":"2014-09-23T20:33:26Z","updated_at":"2014-09-23T20:33:26Z","pushed_at":"2014-09-23T20:33:26Z","git_url":"git://github.com/asm-products/testing-1-2-3.git","ssh_url":"git@github.com:asm-products/testing-1-2-3.git","clone_url":"https://github.com/asm-products/testing-1-2-3.git","svn_url":"https://github.com/asm-products/testing-1-2-3","homepage":"https://assembly.com","size":0,"stargazers_count":0,"watchers_count":0,"language":null,"has_issues":false,"has_downloads":false,"has_wiki":false,"has_pages":false,"forks_count":0,"mirror_url":null,"open_issues_count":0,"forks":0,"open_issues":0,"watchers":0,"default_branch":"master","permissions":{"admin":true,"push":true,"pull":true},"organization":{"login":"asm-products","id":6548361,"avatar_url":"https://avatars.githubusercontent.com/u/6548361?v=2","gravatar_id":"","url":"https://api.github.com/users/asm-products","html_url":"https://github.com/asm-products","followers_url":"https://api.github.com/users/asm-products/followers","following_url":"https://api.github.com/users/asm-products/following{/other_user}","gists_url":"https://api.github.com/users/asm-products/gists{/gist_id}","starred_url":"https://api.github.com/users/asm-products/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/asm-products/subscriptions","organizations_url":"https://api.github.com/users/asm-products/orgs","repos_url":"https://api.github.com/users/asm-products/repos","events_url":"https://api.github.com/users/asm-products/events{/privacy}","received_events_url":"https://api.github.com/users/asm-products/received_events","type":"Organization","site_admin":false},"network_count":0,"subscribers_count":6}'
+    http_version: 
+  recorded_at: Tue, 23 Sep 2014 20:33:26 GMT
+- request:
+    method: post
+    uri: https://api.github.com/repos/asm-products/testing-1-2-3/hooks
+    body:
+      encoding: UTF-8
+      string: '{"name":"web","active":"true","events":["push","pull_request","pull_request_review_comment","issue_comment"],"config":{"url":"https://assembly.com/webhooks/github","content_type":"json"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      Authorization:
+      - token ohhai
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 23 Sep 2014 20:33:27 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 201 Created
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4934'
+      X-Ratelimit-Reset:
+      - '1411505217'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Etag:
+      - '"1b11b3bd4de9ace428eae252f15f4cad"'
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - admin:repo_hook, public_repo, repo, write:repo_hook
+      Location:
+      - https://api.github.com/repos/asm-products/testing-1-2-3/hooks/3065380
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      X-Github-Media-Type:
+      - github.v3
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Length:
+      - '499'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - C7BCC090:76F9:11138CDE:5421D917
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: '{"url":"https://api.github.com/repos/asm-products/testing-1-2-3/hooks/3065380","test_url":"https://api.github.com/repos/asm-products/testing-1-2-3/hooks/3065380/test","id":3065380,"name":"web","active":true,"events":["push","pull_request","pull_request_review_comment","issue_comment"],"config":{"url":"https://assembly.com/webhooks/github","content_type":"json"},"last_response":{"code":null,"status":"unused","message":null},"updated_at":"2014-09-23T20:33:27Z","created_at":"2014-09-23T20:33:27Z"}'
+    http_version: 
+  recorded_at: Tue, 23 Sep 2014 20:33:27 GMT
+- request:
+    method: put
+    uri: https://api.github.com/repos/asm-products/testing-1-2-3/contents/README.md
+    body:
+      encoding: UTF-8
+      string: '{"message":"Added default Assembly README.md","content":"IyBQcm9kdWN0IDAwMDEKCiMjIExpYmVybyBmYWNlcmUgYmVhdGFlIG1vbGxpdGlhIGVycm9yIGV0IGFzcGVybmF0dXIgZXhlcmNpdGF0aW9uZW0gdmVyaXRhdGlzLiBRdWkgb2ZmaWNpaXMgYXV0IGV0IGF1dGVtLgoKVGhpcyBpcyBhIHByb2R1Y3QgYmVpbmcgYnVpbHQgYnkgdGhlIEFzc2VtYmx5IGNvbW11bml0eS4gWW91IGNhbiBoZWxwIHB1c2ggdGhpcyBpZGVhIGZvcndhcmQgYnkgdmlzaXRpbmcgW2h0dHBzOi8vYXNzZW1ibHkuY29tL3Rlc3RpbmctMS0yLTNdKGh0dHBzOi8vYXNzZW1ibHkuY29tL3Rlc3RpbmctMS0yLTMpLgoKIyMjIEhvdyBBc3NlbWJseSBXb3JrcwoKQXNzZW1ibHkgcHJvZHVjdHMgYXJlIGxpa2Ugb3Blbi1zb3VyY2UgYW5kIG1hZGUgd2l0aCBjb250cmlidXRpb25zIGZyb20gdGhlIGNvbW11bml0eS4gQXNzZW1ibHkgaGFuZGxlcyB0aGUgYm9yaW5nIHN0dWZmIGxpa2UgaG9zdGluZywgc3VwcG9ydCwgZmluYW5jaW5nLCBsZWdhbCwgZXRjLiBPbmNlIHRoZSBwcm9kdWN0IGxhdW5jaGVzIHdlIGNvbGxlY3QgdGhlIHJldmVudWUgYW5kIHNwbGl0IHRoZSBwcm9maXRzIGFtb25nc3QgdGhlIGNvbnRyaWJ1dG9ycy4KClZpc2l0IFtodHRwczovL2Fzc2VtYmx5LmNvbV0oaHR0cHM6Ly9hc3NlbWJseS5jb20pwqB0byBsZWFybiBtb3JlLgo=","name":"maeby-i-am","email":"maeby@assemblymade.com"}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      Authorization:
+      - token ohhai
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 23 Sep 2014 20:33:27 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 201 Created
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4933'
+      X-Ratelimit-Reset:
+      - '1411505217'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Etag:
+      - '"9afe7f330c1dcf8a6ea8b7276b098432"'
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - ''
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      X-Github-Media-Type:
+      - github.v3
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Length:
+      - '1663'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - C7BCC090:76FA:161E6977:5421D917
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: '{"content":{"name":"README.md","path":"README.md","sha":"d8d0c5750b98f55b19624b38be472c69b5910261","size":659,"url":"https://api.github.com/repos/asm-products/testing-1-2-3/contents/README.md?ref=","html_url":"https://github.com/asm-products/testing-1-2-3/blob//README.md","git_url":"https://api.github.com/repos/asm-products/testing-1-2-3/git/blobs/d8d0c5750b98f55b19624b38be472c69b5910261","type":"file","_links":{"self":"https://api.github.com/repos/asm-products/testing-1-2-3/contents/README.md?ref=","git":"https://api.github.com/repos/asm-products/testing-1-2-3/git/blobs/d8d0c5750b98f55b19624b38be472c69b5910261","html":"https://github.com/asm-products/testing-1-2-3/blob//README.md"}},"commit":{"sha":"8d0df7494e2a04b622af002f8a4c8482edb0c949","url":"https://api.github.com/repos/asm-products/testing-1-2-3/git/commits/8d0df7494e2a04b622af002f8a4c8482edb0c949","html_url":"https://github.com/asm-products/testing-1-2-3/commit/8d0df7494e2a04b622af002f8a4c8482edb0c949","author":{"name":"Dave
+        Newman","email":"dave@snappyco.de","date":"2014-09-23T20:33:27Z"},"committer":{"name":"Dave
+        Newman","email":"dave@snappyco.de","date":"2014-09-23T20:33:27Z"},"tree":{"sha":"b606b417b34d9076ad9a685d5181adb400f3e348","url":"https://api.github.com/repos/asm-products/testing-1-2-3/git/trees/b606b417b34d9076ad9a685d5181adb400f3e348"},"message":"Added
+        default Assembly README.md","parents":[{"sha":"5c9d549df7a2ecdbe61baf534cc4dde8182312d7","url":"https://api.github.com/repos/asm-products/testing-1-2-3/git/commits/5c9d549df7a2ecdbe61baf534cc4dde8182312d7","html_url":"https://github.com/asm-products/testing-1-2-3/commit/5c9d549df7a2ecdbe61baf534cc4dde8182312d7"}]}}'
+    http_version: 
+  recorded_at: Tue, 23 Sep 2014 20:33:27 GMT
+- request:
+    method: get
+    uri: https://api.github.com/repos/asm-products/testing-1-2-3/readme
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      Authorization:
+      - token ohhai
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 23 Sep 2014 20:33:29 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4932'
+      X-Ratelimit-Reset:
+      - '1411505217'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Tue, 23 Sep 2014 20:33:27 GMT
+      Etag:
+      - '"1eabd2334d8f4e49d5ceb9ba5ea85131"'
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - ''
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - C7BCC090:76FA:161E6A49:5421D918
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 971af40390ac4398fcdd45c8dab0fbe7
+    body:
+      encoding: UTF-8
+      string: '{"name":"README.md","path":"README.md","sha":"d8d0c5750b98f55b19624b38be472c69b5910261","size":659,"url":"https://api.github.com/repos/asm-products/testing-1-2-3/contents/README.md?ref=master","html_url":"https://github.com/asm-products/testing-1-2-3/blob/master/README.md","git_url":"https://api.github.com/repos/asm-products/testing-1-2-3/git/blobs/d8d0c5750b98f55b19624b38be472c69b5910261","type":"file","content":"IyBQcm9kdWN0IDAwMDEKCiMjIExpYmVybyBmYWNlcmUgYmVhdGFlIG1vbGxp\ndGlhIGVycm9yIGV0IGFzcGVybmF0dXIgZXhlcmNpdGF0aW9uZW0gdmVyaXRh\ndGlzLiBRdWkgb2ZmaWNpaXMgYXV0IGV0IGF1dGVtLgoKVGhpcyBpcyBhIHBy\nb2R1Y3QgYmVpbmcgYnVpbHQgYnkgdGhlIEFzc2VtYmx5IGNvbW11bml0eS4g\nWW91IGNhbiBoZWxwIHB1c2ggdGhpcyBpZGVhIGZvcndhcmQgYnkgdmlzaXRp\nbmcgW2h0dHBzOi8vYXNzZW1ibHkuY29tL3Rlc3RpbmctMS0yLTNdKGh0dHBz\nOi8vYXNzZW1ibHkuY29tL3Rlc3RpbmctMS0yLTMpLgoKIyMjIEhvdyBBc3Nl\nbWJseSBXb3JrcwoKQXNzZW1ibHkgcHJvZHVjdHMgYXJlIGxpa2Ugb3Blbi1z\nb3VyY2UgYW5kIG1hZGUgd2l0aCBjb250cmlidXRpb25zIGZyb20gdGhlIGNv\nbW11bml0eS4gQXNzZW1ibHkgaGFuZGxlcyB0aGUgYm9yaW5nIHN0dWZmIGxp\na2UgaG9zdGluZywgc3VwcG9ydCwgZmluYW5jaW5nLCBsZWdhbCwgZXRjLiBP\nbmNlIHRoZSBwcm9kdWN0IGxhdW5jaGVzIHdlIGNvbGxlY3QgdGhlIHJldmVu\ndWUgYW5kIHNwbGl0IHRoZSBwcm9maXRzIGFtb25nc3QgdGhlIGNvbnRyaWJ1\ndG9ycy4KClZpc2l0IFtodHRwczovL2Fzc2VtYmx5LmNvbV0oaHR0cHM6Ly9h\nc3NlbWJseS5jb20pwqB0byBsZWFybiBtb3JlLgo=\n","encoding":"base64","_links":{"self":"https://api.github.com/repos/asm-products/testing-1-2-3/contents/README.md?ref=master","git":"https://api.github.com/repos/asm-products/testing-1-2-3/git/blobs/d8d0c5750b98f55b19624b38be472c69b5910261","html":"https://github.com/asm-products/testing-1-2-3/blob/master/README.md"}}'
+    http_version: 
+  recorded_at: Tue, 23 Sep 2014 20:33:28 GMT
+recorded_with: VCR 2.9.2
