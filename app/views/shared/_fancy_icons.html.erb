@@ -1,0 +1,22 @@
+<%= favicon_link_tag %>
+
+<% url = image_url('touch-icon.png') %>
+
+<!-- For non-Retina (@1× display) iPhone, iPod Touch, and Android 2.1+ devices: -->
+<link rel="apple-touch-icon-precomposed" href="<%= firesize(url, '57x57') %>"><!-- 57×57px -->
+<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<%= firesize(url, '72x72') %>">
+<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="<%= firesize(url, '76x76') %>">
+<!-- For iPhone with @2× display running iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<%= firesize(url, '114x114') %>">
+<!-- For iPhone with @2× display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="<%= firesize(url, '120x120') %>">
+<!-- For iPad with @2× display running iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<%= firesize(url, '144x144') %>">
+<!-- For iPad with @2× display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="<%= firesize(url, '152x152') %>">
+<!-- For iPhone 6 Plus with @3× display: -->
+<link rel="apple-touch-icon-precomposed" sizes="180x180" href="<%= firesize(url, '180x180') %>">
+<!-- For Chrome for Android: -->
+<link rel="icon" sizes="192x192" href="<%= firesize(url, '192x192') %>">
