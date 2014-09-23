@@ -13,7 +13,7 @@ namespace :db do
     desc 'Download latest database backup'
     task :latest do
       Bundler.with_clean_env do
-        sh("curl `heroku pgbackups:url` -o db/latest.dump")
+        sh("curl `heroku pgbackups:url --app asm-production` -o db/latest.dump")
       end
     end
 
