@@ -37,6 +37,19 @@ var Dispatcher = require('../dispatcher');
             to change the logo
           </span>
 
+          <div className="progress" style={{
+            display: 'none',
+            width: '200px',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            'margin-top': '-12px',
+            'margin-left': '-100px'
+          }}>
+            <div className="progress-bar" role="progressbar" style={{ width: '0%' }}>
+            </div>
+          </div>
+
         </span>
       );
     },
