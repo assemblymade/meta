@@ -6,9 +6,11 @@ class PeopleController < ProductController
 
   def index
     @memberships = @product.team_memberships.active
+
     @followers = User.joins(:watchings)
-      .where('watchings.watchable_id = ?', @product.id)
-      .where('watchings.unwatched_at is null')
+      .where(watchings: { watchable_id: @product.id })
+      .where(watchings: { unwatched_at: nil })
+      .where.not(users: { id: @memberships.pluck('user_id') })
       .limit(100)
       .decorate
 
