@@ -162,7 +162,7 @@ class Task < Wip
 
   def stop_work!(worker)
     self.workers -= [worker]
-    update_attributes(state: 'open') if workers.size == 0
+    update(state: 'open') if workers.size == 0
   end
 
   def allocate(worker)
