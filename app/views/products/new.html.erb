@@ -67,10 +67,10 @@
             <% end %>
 
             <%= form_group @product, :pitch do %>
-              <%= f.label :pitch, '5 word pitch', class: 'control-label' %>
+              <%= f.label :pitch, 'Five word pitch', class: 'control-label' %>
               <div class="row">
                 <div class="col-md-8">
-                  <%= f.text_area :pitch, class: 'form-control', rows: 4 %>
+                  <%= f.text_field :pitch, class: 'form-control', placeholder: @four_word_story_example %>
                 </div>
                 <div class="col-md-4">
                   <p class="help-block alpha">If you had 30 seconds to describe your business to a friend, what would you say? Use simple, direct words.</p>
