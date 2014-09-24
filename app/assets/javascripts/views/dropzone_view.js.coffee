@@ -10,6 +10,7 @@ class window.DropzoneView extends Backbone.View
     @dz = new Dropzone(@el,
       accept: @onAccept
       sending: @onSending
+      uploadprogress: @onUploadProgress
       clickable: options['selectEl'] || @$('.js-dropzone-select')[0]
       url: options.url
     )
@@ -38,11 +39,22 @@ class window.DropzoneView extends Backbone.View
   onSending: (file, xhr, formData) =>
     signUpload(file, xhr, formData)
 
+  onUploadProgress: (progress, bytesSent) =>
+    @showProgress(progress)
+
   onComplete: (file)=>
     @targetForm.each ->
       $('[name="asset[attachment_id]"]', @).val(file.attachment.id)
       $('[name="asset[name]"]', @).val(file.name)
     @targetForm.submit()
+    @hideProgress()
+
+  showProgress: (progress) =>
+    $('.progress', @el).show()
+    $('.progress-bar', @el).css(width: "#{progress.upload.progress}%")
+
+  hideProgress: =>
+    $('.progress', @el).hide()
 
 $(document).ready ->
   # FIXME: extract pattern into a helper

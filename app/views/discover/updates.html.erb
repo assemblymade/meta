@@ -11,10 +11,12 @@
           <div class="col-md-9">
             <% @page.each do |post| %>
               <div class="clearfix">
-                <div class="pull-left icon-left">
-                  <%= app_icon(post.product, size: 24) %>
-                </div>
-                <h4 class="alpha"><%= post.product.name %></h4>
+                <a href="<%= product_path(post.product) %>">
+                  <div class="pull-left icon-left">
+                    <%= app_icon(post.product, size: 24) %>
+                  </div>
+                  <h4 class="alpha"><%= post.product.name %></h4>
+                </a>
               </div>
               <%= render post %>
               <hr/>
