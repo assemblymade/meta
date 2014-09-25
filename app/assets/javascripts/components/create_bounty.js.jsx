@@ -5,7 +5,9 @@
 
   var CreateBounty = React.createClass({
     getDefaultProps: function() {
-      return { csrf: document.getElementsByName('csrf-token')[0].content }
+      return {
+        csrf: document.getElementsByName('csrf-token')[0].content
+      };
     },
 
     render: function() {
@@ -18,12 +20,12 @@
             </div>
 
             <div className="form-group">
-              <label className="form-label" for="task_title">Title</label>
-              <input autofocus="autofocus" value={this.props.title} className="form-control" data-validate-length="2" id="task_title" name="task[title]" type="text" />
+              <label className="form-label">Title</label>
+              <input autofocus="autofocus" defaultValue={this.props.title} className="form-control" data-validate-length="2" id="task_title" name="task[title]" type="text" />
             </div>
 
             <div className="form-group">
-              <label className="control-label" for="task_description">
+              <label className="control-label">
                 Description
               </label>
               <MarkdownEditor name="task[description]" required="true" />

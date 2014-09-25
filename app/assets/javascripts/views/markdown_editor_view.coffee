@@ -52,10 +52,10 @@ $(document).ready ->
     view = new MarkdownEditorView(el: @)
     $(@).data('view', view)
 
-  # listen for modal creation and attach a markdown editor
-  # TODO: Consolidate this code and dropzone_view's code
-  $('#create-task').on('show.bs.modal', (e) ->
-    modalEditor = $('.modal-body .js-markdown-editor')
-    view = new MarkdownEditorView(el: modalEditor)
-    $(modalEditor).data('view', view)
-  )
+  # # listen for modal creation and attach a markdown editor
+  # # TODO: Consolidate this code and dropzone_view's code
+  # $('#create-task').on('show.bs.modal', (e) ->
+  #   modalEditor = $('.modal-body .js-markdown-editor')
+  #   view = new MarkdownEditorView(el: modalEditor)
+  #   $(modalEditor).data('view', view)
+  # )

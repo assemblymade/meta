@@ -91,42 +91,31 @@ class window.ChatView extends Backbone.View
             @collection.unshift(data)
     )
 
+  onHidden: (e) ->
+    $('#create-task').modal('hide');
+
   onCreateWip: (e) ->
     e.preventDefault()
     id = $(e.currentTarget).attr('href')
     body = $(id + ' .activity-content').text().trim()
-    token = $('meta[name=csrf-token]').attr('content')
-    renderedModal = JST['activities/wip'].render({
-      title: body,
-      action: @collection.product.attributes.url,
-      token: token
-    })
-    $('#create-task').html(renderedModal).modal()
-    selectedTags = React.renderComponent(
-      TagList({
-         tags: [],
-         destination: true,
-         newBounty: true
-       }),
-      document.getElementById('selected-tags')
-    );
-    textInput = React.renderComponent(
-      TextInput({
-        width: '125px',
-        size: 'small',
-        label: 'Add tag',
-        prepend: '#',
-        prompt: 'Add',
+    productAttributes = @collection.product.attributes
+    renderedModal = React.renderComponent(
+      CreateBounty({
+        title: body,
+        url: productAttributes.url + '/bounties',
+        averageBounty: productAttributes.average_bounty,
+        maxOffer: parseInt(6 * productAttributes.average_bounty, 10),
+        product: productAttributes,
+        onHidden: @onHidden
       }),
-      document.getElementById('new-tags')
+      document.getElementById('create-task')
     );
-    suggestedTags = React.renderComponent(
-      TagList({
-         tags: window.app.suggestedTags(),
-         destination: false
-       }),
-      document.getElementById('suggested-tags')
-    )
+
+    # FIXME: (pletcher) We need to call this method in addition to the setup
+    #        in CreateBounty's componentDidMount() because the context differs.
+    #        We should fix this once we get rid of those Mustache templates and
+    #        and move everything to React.
+    $('#create-task').modal()
 
 preserveScrollPosition = (container, cb) ->
   scrollTop = container.scrollTop

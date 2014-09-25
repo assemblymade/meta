@@ -69,8 +69,8 @@ $(document).ready ->
 
   # listen for modal creation and attach a dropzone
   # TODO: Consolidate this code and markdown_editor_view's code
-  $('#create-task').on('show.bs.modal', (e) ->
-    modalDropzone = $('.modal-body .js-dropzone')
-    view = new DropzoneView(el: modalDropzone, url: url, targetForm: $(modalDropzone).data('target-form'))
-    $(modalDropzone).data('dz', view.dz)
-  )
+  # $('#create-task').on('show.bs.modal', (e) ->
+  #   modalDropzone = $('.modal-body .js-dropzone')
+  #   view = new DropzoneView(el: modalDropzone, url: url, targetForm: $(modalDropzone).data('target-form'))
+  #   $(modalDropzone).data('dz', view.dz)
+  # )
