@@ -55,35 +55,7 @@ var update = require('react/lib/update');
         stories: newStories,
         actors: NewsFeedUsersStore.getUsers(),
         showMore: (newStories.length - oldStoriesCount === MORE_STORIES_LENGTH)
-      }, function() {
-        if (self.state.stories) {
-          self.spinner.stop();
-
-          if (!self.state.stories.length && !self.props.fullPage) {
-            self._render = self.render;
-
-            self.render = function() {
-              return (
-                <ul className="dropdown-menu" style={{ 'min-width': '380px', width: '380px' }}>
-                  <li style={{ 'overflow-y': 'scroll', 'min-height': '60px' }}>
-                    <div className="text-center" style={{ 'padding-top': '15px' }}>
-                      There don't seem to be any notifications here just yet.
-                    </div>
-                  </li>
-                </ul>
-              );
-            }
-          } else {
-            if (typeof self._render === 'function') {
-              self.render = self._render;
-              self._render = null;
-            }
-          }
-
-          // force a re-render
-          self.forceUpdate();
-        }
-      });
+      }, reconcileStoriesAndSpinner.bind(this));
     },
 
     moreStories: function() {
@@ -108,4 +80,34 @@ var update = require('react/lib/update');
   }
 
   window.NewsFeedMixin = NewsFeedMixin;
+
+  function reconcileStoriesAndSpinner() {
+    if (this.state.stories) {
+      this.spinner.stop();
+
+      if (!this.state.stories.length && !this.props.fullPage) {
+        this._render = this.render;
+
+        this.render = function() {
+          return (
+            <ul className="dropdown-menu" style={{ 'min-width': '380px', width: '380px' }}>
+              <li style={{ 'overflow-y': 'scroll', 'min-height': '60px' }}>
+                <div className="text-center" style={{ 'padding-top': '15px' }}>
+                  There don't seem to be any notifications here just yet.
+                </div>
+              </li>
+            </ul>
+          );
+        }
+      } else {
+        if (typeof this._render === 'function') {
+          this.render = this._render;
+          this._render = null;
+        }
+      }
+
+      // force a re-render
+      this.forceUpdate();
+    }
+  }
 })();

@@ -127,19 +127,19 @@ var NotificationsMixin = require('../mixins/notifications');
         ),
         func.dot('updated')
       );
-    },
+    }
   });
 
-  _store.dispatchIndex = Dispatcher.register(function(payload) {
+  _notificationsStore.dispatchIndex = Dispatcher.register(function(payload) {
     var action = payload.action;
     var data = payload.data;
     var sync = payload.sync;
 
-    if (!_store[action]) {
+    if (!_notificationsStore[action]) {
       return;
     }
 
-    _store[action](data);
+    _notificationsStore[action](data);
 
     if (sync) {
       return _store.emitChange();

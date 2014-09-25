@@ -10,7 +10,73 @@
   var NF = CONSTANTS.NEWS_FEED;
 
   var DropdownNewsFeed = React.createClass({
-    mixins: [NewsFeedMixin],
+    mixins: [EventMixin, NewsFeedMixin],
+
+    actors: function(story, actors) {
+      return _.map(
+        story.actor_ids,
+        function(actorId) {
+          return _.findWhere(actors, { id: actorId })
+        }.bind(this)
+      );
+    },
+
+    body: function(story) {
+      var task = story.verb === 'Start' ? story.subjects[0] : story.target;
+
+      return (
+        <span>
+          {this.verbMap[story.verb]}
+          <strong>
+            {this.subjectMap[story.subject_type].call(this, task)}
+          </strong>
+          {this.product(story)}
+        </span>
+      );
+    },
+
+    ellipsis: function(text) {
+      if (text && text.length > 100) {
+        text = text.substring(0, 100) + '…';
+      }
+
+      return text;
+    },
+
+    entry: function(options) {
+      var story = options.story;
+
+      var actors = _.map(this.actors(story, options.actors), func.dot('username')).join(', @')
+
+      var classes = React.addons.classSet({
+        'entry-read': this.isRead(story),
+        'entry-unread': !this.isRead(story)
+      });
+
+      return (
+        <a className={'list-group-item list-group-item-condensed ' + classes}
+            href={story.url}
+            style={{ 'font-size': '14px', 'border': 'none' }}
+            onClick={this.markAsRead.bind(this, story)}
+            key={options.key}>
+
+          <div className="row" style={{ 'margin': '0px', 'max-width': '365px' }}>
+            <div className="col-md-1">
+              <Avatar user={actors[0]} size={18} />&nbsp;
+            </div>
+
+            <div className="col-md-10">
+              <strong>{actors}</strong> {this.body(story)}<br/>
+              {this.preview(story)}
+            </div>
+          </div>
+        </a>
+      );
+    },
+
+    isRead: function(story) {
+      return story.last_read_at !== 0;
+    },
 
     markAllAsRead: function() {
       Dispatcher.dispatch({
@@ -21,16 +87,52 @@
       this.optimisticallyMarkAllAsRead();
     },
 
+    markAsRead: function(story) {
+      story.last_read_at = moment().unix();
+
+      // React doesn't always catch that the story
+      // should update, so we need to update it
+      // optimistically
+      this.setState({
+        story: story
+      });
+
+      Dispatcher.dispatch({
+        action: NF.ACTIONS.MARK_AS_READ,
+        data: this.props.story.key
+      });
+    },
+
     optimisticallyMarkAllAsRead: function() {
       var stories = _.clone(this.state.stories);
 
       for (var i = 0, l = stories.length; i < l; i++) {
-        stories[i].last_read_at = 1;
+        stories[i].last_read_at = moment().unix();
       }
 
       this.setState({
         stories: stories
       });
+    },
+
+    preview: function(story) {
+      var body_preview = story.body_preview;
+
+      return (
+        <span className='text-muted' style={{
+          'text-overflow': 'ellipsis',
+          'overflow': 'hidden',
+          'white-space':'nowrap',
+          'display': 'inline-block',
+          'width': "280px"
+        }}>
+          {this.ellipsis(body_preview)}
+        </span>
+      );
+    },
+
+    product: function(story) {
+      return ' in ' + story.product_name;
     },
 
     render: function() {
@@ -66,7 +168,13 @@
       return (
         <div className="list-group" style={{ 'max-height': '400px', 'min-height': '50px' }}>
           { _.map(firstTen, function(story) {
-            return <Entry key={story.id} story={story} actors={self.state.actors} fullPage={false} />;
+            var opts = {
+              key: story.id,
+              story: story,
+              actors: self.state.actors
+            };
+
+            return self.entry(opts);
           }) }
         </div>
       );
@@ -75,126 +183,6 @@
     spinnerOptions: {
       lines: 11,
       top: '20%'
-    }
-  });
-
-  var Entry = React.createClass({
-    mixins: [EventMixin],
-
-    actors: function() {
-      return _.map(
-        this.state.story.actor_ids,
-        function(actorId) {
-          return _.findWhere(this.props.actors, { id: actorId })
-        }.bind(this)
-      );
-    },
-
-    body: function() {
-      var story = this.props.story;
-      var task = story.verb === 'Start' ? story.subjects[0] : story.target;
-
-      return (
-        <span>
-          {this.verbMap[story.verb]}
-          <strong>
-            {this.subjectMap[story.subject_type].call(this, task)}
-          </strong>
-          {this.product()}
-        </span>
-      );
-    },
-
-    componentDidMount: function() {
-      if (this.refs.body) {
-        this.refs.body.getDOMNode().innerHTML = this.state.story.subject.body_html;
-      }
-    },
-
-    ellipsis: function(text) {
-      if (text && text.length > 100) {
-        text = text.substring(0, 100) + '…';
-      }
-
-      return text;
-    },
-
-    getInitialState: function() {
-      return {
-        story: this.props.story
-      };
-    },
-
-    isRead: function() {
-      return this.state.story.last_read_at !== 0;
-    },
-
-    markAsRead: function() {
-      var story = this.state.story;
-
-      story.last_read_at = +Date.now();
-
-      // React doesn't always catch that the story
-      // should update, so we need to update it
-      // optimistically
-      this.setState({
-        story: story
-      });
-
-      Dispatcher.dispatch({
-        action: NF.ACTIONS.MARK_AS_READ,
-        data: this.props.story.key
-      });
-    },
-
-    preview: function() {
-      var body_preview = this.state.story.body_preview;
-
-      return (
-        <span className='text-muted' style={{
-          'text-overflow': 'ellipsis',
-          'overflow': 'hidden',
-          'white-space':'nowrap',
-          'display': 'inline-block',
-          'width': "280px"
-        }}>
-          {this.ellipsis(body_preview)}
-        </span>
-      );
-    },
-
-    product: function() {
-      var story = this.state.story;
-
-      return ' in ' + story.product_name;
-    },
-
-    render: function() {
-      var actors = _.map(this.actors(), func.dot('username')).join(', @')
-
-      var classes = React.addons.classSet({
-        'entry-read': this.isRead(),
-        'entry-unread': !this.isRead()
-      });
-
-      return (
-        <a className={'list-group-item list-group-item-condensed ' + classes}
-            href={this.state.story.url}
-            style={{ 'font-size': '14px', 'border': 'none' }}
-            onClick={this.markAsRead}>
-
-          <div className="row" style={{ 'margin': '0px', 'max-width': '365px' }}>
-            <div className="col-md-1">
-              <Avatar user={this.actors()[0]} size={18} />&nbsp;
-            </div>
-
-            <div className="col-md-10">
-              <strong>{actors}</strong> {this.body()}<br/>
-              {this.preview()}
-            </div>
-          </div>
-        </a>
-      );
     }
   });
 

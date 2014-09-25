@@ -154,13 +154,14 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
     },
 
     markAllAsRead: function() {
-
       _.each(_.values(this.state.data), function(entry) {
         Dispatcher.dispatch({
           action: N.ACTIONS.MARK_ROOM_AS_READ,
           data: entry
         });
       });
+
+      this.handleChatRoomsChanged();
     },
 
     latestArticle: function() {

@@ -76,19 +76,6 @@ var NotificationsMixin = require('../mixins/notifications');
       }
     },
 
-    'newsFeed:markStoryAsRead': function(data) {
-      var storyKey = data.key;
-      var url = data.readraptor_url;
-
-      xhr.noCsrfGet(url);
-
-      _optimisticStories[storyKey] = {
-        last_read_at: moment().unix()
-      };
-
-      this.emitChange();
-    },
-
     markedAsRead: function(storyKey) {
       var self = this;
 
@@ -99,7 +86,7 @@ var NotificationsMixin = require('../mixins/notifications');
 
         var story = self.getStory(storyKey);
 
-        // FIXME: Use the value from Readraptor
+        // Add an optimistic timestamp, since we don't get one from Readraptor
         story.last_read_at = moment().unix();
 
         self.setStory(story);
