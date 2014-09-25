@@ -136,6 +136,24 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def update_stage!(new_stage)
+    # Poor man's state machine... TODO use workflow gem
+
+    case new_stage
+    when 'profitable'
+      update! profitable_at: Time.now
+
+    when 'greenlit'
+      update! greenlit_at: Time.now, profitable_at: nil
+
+    when 'teambuilding'
+      update! started_teambuilding_at: Time.now, greenlit_at: nil, profitable_at: nil
+
+    when 'stealth'
+      update! started_teambuilding_at: nil, greenlit_at: nil, profitable_at: nil
+    end
+  end
+
   def launched?
     !started_teambuilding_at.nil?
   end

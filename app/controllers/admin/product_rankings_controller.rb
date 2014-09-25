@@ -4,7 +4,12 @@ class Admin::ProductRankingsController < AdminController
     @sort_direction = %w[asc desc].include?(params[:direction]) ? params[:direction].to_sym : :desc
     @showRanked = %w[true false].include?(params[:showranked]) ? params[:showranked] : 'false'
 
-    @products = Product.all.
+    @products = Product.all
+    if query = params[:q]
+      @products = @products.where("name ilike ?", "%#{query}%")
+    end
+
+    @products = @products.
       order("#{@sort_column} #{@sort_direction} NULLS LAST").
       page(params[:page]).per(200)
 
@@ -21,8 +26,16 @@ class Admin::ProductRankingsController < AdminController
   def update
     @product = Product.find(params[:id])
 
-    quality = Integer(params[:quality]) rescue nil
-    @product.update!(quality: quality)
+    update = {}
+    if params[:quality]
+      quality = Integer(params[:quality]) rescue nil
+      update[:quality] = quality
+      @product.update!(quality: quality)
+    end
+    
+    if params[:stage]
+      @product.update_stage!(params[:stage])
+    end
 
     render nothing: true, status: :ok
   end

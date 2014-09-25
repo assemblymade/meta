@@ -5,6 +5,7 @@
   var PaginationLinks = require('./pagination_links.js.jsx')
   var parseUri = require('../../lib/parseuri')
   var Timestamp = require('../timestamp.js.jsx')
+  var ProductStage = require('./product_stage.js.jsx')
 
   var ProductRankings = React.createClass({
     getInitialState: function() {
@@ -15,6 +16,7 @@
         sortCol: q.sort || 'created_at',
         sortAsc: (q.direction === 'asc'),
         showRanked: (q.showranked === 'true'),
+        query: q.q || '',
         products: {}
       }
 
@@ -27,6 +29,7 @@
 
     render: function() {
       return <div>
+        <input type="text" onChange={this.handleSearchChanged} value={this.state.query} />
         <div className="checkbox">
           <label>
             <input type="checkbox" defaultChecked={this.state.showRanked} onChange={this.handleFilterChanged} /> Show ranked products
@@ -36,11 +39,12 @@
         <table className="table table-striped">
           <thead>
             <tr>
-              <TableSortHeader width={150} onClick={this.handleSortToggled('created_at')} asc={this.sortOrder('created_at')} label="Created" />
               <TableSortHeader width={150} onClick={this.handleSortToggled('name')} asc={this.sortOrder('name')} label="Name" />
               <TableSortHeader width={300} onClick={this.handleSortToggled('pitch')} asc={this.sortOrder('pitch')} label="Pitch" />
+              <TableSortHeader width={150} onClick={this.handleSortToggled('created_at')} asc={this.sortOrder('created_at')} label="Created" />
               <TableSortHeader width={150} onClick={this.handleSortToggled('last_activity_at')} asc={this.sortOrder('last_activity_at')} label="Updated" />
               <TableSortHeader width={150} onClick={this.handleSortToggled('watchings_count')} asc={this.sortOrder('watchings_count')} label="Followers" align="right" />
+              <TableSortHeader width={150} onClick={this.handleSortToggled('stage')} asc={this.sortOrder('stage')} label="Stage" />
               <TableSortHeader width={150} onClick={this.handleSortToggled('quality')} asc={this.sortOrder('quality')} label="Quality Score" align="right" />
             </tr>
           </thead>
@@ -57,6 +61,11 @@
 
         <PaginationLinks page={this.state.page} pages={this.props.totalPages} onPageChanged={this.handlePageChanged} />
       </div>
+    },
+
+    handleSearchChanged: function(e) {
+      this.fetchProducts(this.state.page)
+      this.setState({query: e.target.value})
     },
 
     handleQualityChanged: function(productId) {
@@ -97,13 +106,16 @@
       }.bind(this)
     },
 
-    fetchProducts: function(page) {
+    fetchProducts: _.debounce(function(page, query) {
       page = page || this.state.page
+      query = query || this.state.query
+
       var sortDir = this.state.sortAsc ? 'asc' : 'desc'
       var url = '/admin/products?page=' + page +
         '&sort=' + this.state.sortCol +
         '&direction=' + sortDir +
-        '&showranked=' + this.state.showRanked
+        '&showranked=' + this.state.showRanked +
+        '&q=' + query
 
       window.history.replaceState({}, document.title, url)
       NProgress.start();
@@ -115,7 +127,7 @@
         this.setState({products: products, page: page})
         NProgress.done()
       }.bind(this))
-    },
+    }, 500),
 
     sortOrder: function(col) {
       return this.state.sortCol == col ? this.state.sortAsc : null
@@ -139,15 +151,16 @@
       }
 
       return <tr>
-        <td><Timestamp time={this.props.created} /></td>
         <td>
           <strong>
             <a href={this.props.url} target="_blank" tabIndex="-1">{this.props.name}</a>
           </strong>
         </td>
         <td>{this.props.pitch}</td>
+        <td><Timestamp time={this.props.created} /></td>
         <td><Timestamp time={this.props.last_activity_at} /></td>
         <td className="text-right">{this.props.watchings_count}</td>
+        <td><ProductStage initialLabel={this.props.stage} stages={['profitable', 'greenlit', 'teambuilding', 'stealth']} url={'/admin/products/' + this.props.id} /></td>
         <td className="text-right">
           <input type="text" className="form-control" value={this.state.dirty ? this.state.pendingQualityScore : this.props.quality} style={{'background-color': bgColor}}
             onChange={this.handleChange}
