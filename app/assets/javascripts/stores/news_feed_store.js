@@ -69,14 +69,9 @@ var NotificationsMixin = require('../mixins/notifications');
     },
 
     'newsFeed:markAllAsRead': function() {
-      var self = this;
-
       for (var i in _stories) {
         if (_stories.hasOwnProperty(i)) {
-          var story = _stories[i];
-          var url = '/user/tracking/' + story.key;
-
-          xhr.get(url, self.markedAsRead(story.key));
+          this['newsFeed:markAsRead'](_stories[i].key);
         }
       }
     },

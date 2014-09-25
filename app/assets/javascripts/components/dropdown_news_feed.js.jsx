@@ -1,13 +1,12 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
-var Dispatcher = require('../dispatcher');
-var EventMixin = require('../mixins/event.js.jsx');
-var NewsFeedMixin = require('../mixins/news_feed.js.jsx');
-var NewsFeedStore = require('../stores/news_feed_store');
-var Avatar = require('./avatar.js.jsx');
-
 (function() {
+  var CONSTANTS = require('../constants');
+  var Dispatcher = require('../dispatcher');
+  var EventMixin = require('../mixins/event.js.jsx');
+  var NewsFeedMixin = require('../mixins/news_feed.js.jsx');
+  var NewsFeedStore = require('../stores/news_feed_store');
+  var Avatar = require('./avatar.js.jsx');
   var NF = CONSTANTS.NEWS_FEED;
 
   var DropdownNewsFeed = React.createClass({

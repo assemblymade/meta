@@ -33,7 +33,11 @@ class window.ChatView extends Backbone.View
     @scrollToLatestActivity() if @stuckToBottom
 
   scrollToLatestActivity: =>
+    @updateMembersHeight()
     $(@scrollContainer).scrollTop(999999)
+
+  updateMembersHeight: ->
+    $('.js-members').css({ 'max-height': ($(window).outerHeight() - 150) + 'px' });
 
   optimisticallyCreateActivity: (comment) ->
     @stuckToBottom = true
