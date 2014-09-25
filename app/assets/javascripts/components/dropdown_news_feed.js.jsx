@@ -62,7 +62,7 @@
 
           <div className="row" style={{ 'margin': '0px', 'max-width': '365px' }}>
             <div className="col-md-1">
-              <Avatar user={actors[0]} size={18} />&nbsp;
+              <Avatar user={this.actors(story, options.actors)[0]} size={18} />&nbsp;
             </div>
 
             <div className="col-md-10">
