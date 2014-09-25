@@ -69,17 +69,15 @@ var NotificationsMixin = require('../mixins/notifications');
     },
 
     'newsFeed:markAllAsRead': function() {
-      var unread = _.filter(_stories, function(story) {
-        return story && story.last_read_at === 0;
-      });
-
       var self = this;
 
-      for (var i = 0, l = unread.length; i < l; i++) {
-        var story = unread[i];
-        var url = '/user/tracking/' + story.key;
+      for (var i in _stories) {
+        if (_stories.hasOwnProperty(i)) {
+          var story = _stories[i];
+          var url = '/user/tracking/' + story.key;
 
-        xhr.get(url, self.markedAsRead(story.key, true, (i + 1 === l)));
+          xhr.get(url, self.markedAsRead(story.key));
+        }
       }
     },
 
@@ -96,7 +94,7 @@ var NotificationsMixin = require('../mixins/notifications');
       this.emitChange();
     },
 
-    markedAsRead: function(storyKey, wait, ready) {
+    markedAsRead: function(storyKey) {
       var self = this;
 
       return function markedAsRead(err, data) {
@@ -172,16 +170,16 @@ var NotificationsMixin = require('../mixins/notifications');
     }
   });
 
-  _store.dispatchIndex = Dispatcher.register(function(payload) {
+  _newsFeedStore.dispatchIndex = Dispatcher.register(function(payload) {
     var action = payload.action;
     var data = payload.data;
     var sync = payload.sync;
 
-    if (!_store[action]) {
+    if (!_newsFeedStore[action]) {
       return;
     }
 
-    _store[action](data);
+    _newsFeedStore[action](data);
 
     if (sync) {
       return _store.emitChange();

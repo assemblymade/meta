@@ -163,6 +163,12 @@ class ProductsController < ProductController
   end
   # private
 
+  def create_product_chat(product)
+    main_thread = product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
+    product.update(main_thread: main_thread)
+    product.chat_rooms.create!(wip: main_thread, slug: product.slug)
+  end
+
   def create_product_with_params
     product = current_user.products.create(product_params)
     if product.valid?
@@ -175,9 +181,7 @@ class ProductsController < ProductController
 
       product.watch!(current_user)
 
-      main_thread = product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
-      product.update(main_thread: main_thread)
-      product.chat_rooms.create!(wip: main_thread, slug: product.slug)
+      create_product_chat(product)
 
       ownership = params[:ownership] || {}
       core_team_ids = Array(params[:core_team])

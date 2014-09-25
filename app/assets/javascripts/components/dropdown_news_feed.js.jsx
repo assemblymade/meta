@@ -19,17 +19,17 @@ var Avatar = require('./avatar.js.jsx');
         data: null
       });
 
-      this.optimisticallyMarkStories();
+      this.optimisticallyMarkAllAsRead();
     },
 
-    optimisticallyMarkStories: function() {
-      var stories = this.state.stories;
+    optimisticallyMarkAllAsRead: function() {
+      var stories = _.clone(this.state.stories);
 
       for (var i = 0, l = stories.length; i < l; i++) {
         stories[i].last_read_at = 1;
       }
 
-      this.replaceState({
+      this.setState({
         stories: stories
       });
     },
@@ -138,7 +138,7 @@ var Avatar = require('./avatar.js.jsx');
       // React doesn't always catch that the story
       // should update, so we need to update it
       // optimistically
-      this.replaceState({
+      this.setState({
         story: story
       });
 
@@ -146,15 +146,6 @@ var Avatar = require('./avatar.js.jsx');
         action: NF.ACTIONS.MARK_AS_READ,
         data: this.props.story.key
       });
-    },
-
-    markAsReadButton: function() {
-      if (!this.isRead()) {
-        return <span className="icon icon-disc pull-right" onClick={this.markAsRead} title={'Mark as read'} style={{ cursor: 'pointer' }} />;
-      }
-
-      // TODO: Mark as unread
-      return <span className="icon icon-circle pull-right" style={{ cursor: 'pointer' }} />
     },
 
     preview: function() {

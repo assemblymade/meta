@@ -25,24 +25,25 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
   }
 
   function dynamicSortMultiple() {
-   /*
-    * save the arguments object as it will be overwritten
-    * note that arguments object is an array-like object
-    * consisting of the names of the properties to sort by
-    */
-   var props = arguments;
+    /*
+     * save the arguments object as it will be overwritten
+     * note that arguments object is an array-like object
+     * consisting of the names of the properties to sort by
+     */
+    var props = arguments;
 
-   return function (obj1, obj2) {
-     var i = 0, result = 0, numberOfProperties = props.length;
-     /* try getting a different result from 0 (equal)
-      * as long as we have extra properties to compare
-      */
-     while (result === 0 && i < numberOfProperties) {
-       result = dynamicSort(props[i])(obj1, obj2);
-       i++;
-     }
-     return result;
-   }
+    return function (obj1, obj2) {
+      var i = 0, result = 0, numberOfProperties = props.length;
+      /* try getting a different result from 0 (equal)
+       * as long as we have extra properties to compare
+       */
+      while (result === 0 && i < numberOfProperties) {
+        result = dynamicSort(props[i])(obj1, obj2);
+        i++;
+      }
+
+      return result;
+    }
   }
 
   var ChatNotifications = React.createClass({
@@ -153,11 +154,13 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
     },
 
     markAllAsRead: function() {
-      _.each(_.values(this.state.data), function(entry) {
-        ChatNotificationsStore['chat:markRoomAsRead'](entry);
-      });
 
-      this.handleChatRoomsChanged();
+      _.each(_.values(this.state.data), function(entry) {
+        Dispatcher.dispatch({
+          action: N.ACTIONS.MARK_ROOM_AS_READ,
+          data: entry
+        });
+      });
     },
 
     latestArticle: function() {
