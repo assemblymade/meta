@@ -29,7 +29,7 @@ var Avatar = require('./avatar.js.jsx');
         stories[i].last_read_at = 1;
       }
 
-      this.setState({
+      this.replaceState({
         stories: stories
       });
     },
@@ -138,7 +138,7 @@ var Avatar = require('./avatar.js.jsx');
       // React doesn't always catch that the story
       // should update, so we need to update it
       // optimistically
-      this.setState({
+      this.replaceState({
         story: story
       });
 
