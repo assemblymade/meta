@@ -177,7 +177,7 @@
       chatView.render();
       chatView.scrollToLatestActivity();
       $(window).load(function() {
-        delay(1, function() { chatView.scrollToLatestActivity() });
+        delay(1, chatView.scrollToLatestActivity);
       });
     });
   </script>

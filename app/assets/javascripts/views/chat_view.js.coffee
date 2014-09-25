@@ -32,7 +32,7 @@ class window.ChatView extends Backbone.View
     @$('.js-chat-load-more').toggle(@displayLoadMore)
     @scrollToLatestActivity() if @stuckToBottom
 
-  scrollToLatestActivity: ->
+  scrollToLatestActivity: =>
     $(@scrollContainer).scrollTop(999999)
 
   optimisticallyCreateActivity: (comment) ->
