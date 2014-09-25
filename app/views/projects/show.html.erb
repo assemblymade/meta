@@ -9,7 +9,7 @@
     <div class="col-md-9">
 
       <% if @milestone.feature_image.present? %>
-        <img class="img-thumbnail" src="<%= firesize_url %>/630x300/frame_0/<%= URI.escape @milestone.feature_image.attachment.url %>">
+        <img class="img-thumbnail" src="<%= firesize_url %>/630x300/<%= URI.escape @milestone.feature_image.attachment.url %>">
       <% end %>
 
       <div class="markdown-normalized">
@@ -93,7 +93,7 @@
             <% @assets.each do |asset| %>
               <li>
                 <a href="<%= product_wip_path(asset.wip.product, asset.wip) %>">
-                  <img src="<%= File.join(firesize_url, "48x48", "g_center", "frame_0", URI.encode(asset.attachment.url)) %>">
+                  <img src="<%= File.join(firesize_url, "48x48", "g_center", URI.encode(asset.attachment.url)) %>">
                 </a>
               </li>
             <% end %>

@@ -2,7 +2,7 @@
   <a class="deprecated-card" href="<%= product_project_path(milestone.product, milestone) %>">
 
     <% if milestone.milestone_images.any? %>
-      <% url = File.join(firesize_url, "263x175", "g_north", "frame_0", URI.escape(milestone.feature_image.attachment.url)) %>
+      <% url = File.join(firesize_url, "263x175", "g_north", URI.escape(milestone.feature_image.attachment.url)) %>
       <div class="deprecated-card-hero" style="background-image:url(<%= url %>)">
       </div>
     <% end %>
