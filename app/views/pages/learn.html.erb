@@ -23,7 +23,10 @@
   </div><!-- .navbar -->
 
   <div class="container text-center">
-    <h1 class="masthead-title">Build your idea into a product with our community.</h1>
+    <div class="masthead-title">
+      <h1>Build your idea into a product with our community.</h1>
+      <p class="lead">World-class product designers, engineers, writers, others building product &dash; together.</p>
+    </div>
     <a class="btn btn-success btn-lg" href="#">
       Start Your Product
     </a>
@@ -31,55 +34,51 @@
 </div><!-- .masthead -->
 
 <div class="container">
+  <h3>How to launch a product on Assembly</h3>
+  <hr>
+
+  <ul>
+    <li>
+      <strong>Submit an Idea</strong>
+      <span class="text-muted">for a product</span>
+    </li>
+    <li>
+      <strong>Rally Your Idea</strong>
+      <span class="text-muted">Gather others to build with you</span>
+    </li>
+    <li>
+      <strong>Build the Product</strong>
+      <span class="text-muted">with the Assembly community</span>
+    </li>
+    <li>
+      <strong>Ship the Product!</strong>
+      <span class="text-muted">We take care of the business stuff</span>
+    </li>
+    <li>
+      <strong>Profits paid to Contributors</strong>
+      <span class="text-muted">When a product is profitable</span>
+    </li>
+  </ul>
+</div>
+
+<div class="container-fluid">
   <div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
-      <p class="large">
-        <strong>Build a product with others.</strong>
-        Products on Assembly aren't like traditional companies. They don't have investors, shareholders, or even employees. Instead, a global community creates and owns them, together.
-      </p>
-
-      <p class="large">
-        <strong>Anyone can work on a product.</strong>
-        The entire process is a collaborative effort, including its vision, development, design and marketing.
-      </p>
-
-      <p class="large">
-        <strong>Share profit as the products you work on make money.</strong>
-        Everyone shares in the success of the products they help create. Those involved earn App Coins from others in the community for their work. At the end of each month, Assembly pays the bills and splits the proceeds among everyone with App Coins.
-      </p>
-
-      <br>
-
-      <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
-          <a class="btn btn-primary btn-block btn-lg" href="<%= new_user_registration_path %>">
-            Get started
-          </a>
-        </div>
-      </div>
-
-      <br>
-      <hr>
-      <br>
-
-      <p class="text-center text-muted text-large" style="margin-bottom:48px">
-        Just have a question? <a href="mailto:assembly@helpful.io" data-helpful="assembly">Ask away!</a>
-        <script src="https://assets.helpful.io/assets/widget.js"></script>
-      </p>
+    <div class="col-xs-12 col-sm-4">
+      <h1>3MM</h1>
+      <p class="lead">Customers</p>
+      <p>Over 3 million people have used the products that are being built on Assembly.</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <h1>$160K</h1>
+      <p class="lead">In Profits Paid Out</p>
+      <p>Over $160,000 has been paid out to Assembly App Coin holders in 2014.</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <h1><%= Product.count %></h1>
+      <p class="lead">Products</p>
+      <p><%= Product.count %> products started on Assembly. <%= Product.greenlit.count %> products launched in 2014.</p>
     </div>
   </div>
 </div>
 
-<div class="container" style="margin-bottom:60px">
-  <div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
-      <ul class="list-inline well text-center" style="border:none">
-        <li><a class="text-muted" href="<%= about_path %>">About</a></li>
-        <li><a class="text-muted" href="http://blog.assembly.com">Blog</a></li>
-        <li><a class="text-muted" href="<%= faq_path %>">FAQs</a></li>
-        <li><a class="text-muted" href="<%= tos_path %>">Terms</a></li>
-        <li><a class="text-muted" href="mailto:assembly@helpful.io">Contact Us</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
+<%= render 'shared/footer' %>
