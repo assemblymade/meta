@@ -81,4 +81,46 @@
   </div>
 </div>
 
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 text-center">
+      <div>
+        <div><%= avatar_tag(User.find_by(username: 'peizoelectric'), 50) %></div>
+        <i>Build on Assembly I have a built-in team &dash; no more solo projects. I can't wait to launch Octobox.</i>
+        <br>
+        <span class="small">
+          <strong>Philip Carter - Web Application Developer</strong>
+          <br>
+          <span class="text-muted">@peizoelectric</span>
+        </span>
+      </div>
+      <div>
+        <div><%= avatar_tag(User.find_by(username: 'chexee'), 50) %></div>
+        <i>I choose what to work on and when I work on it. For each product, the idea, direction, and vision are all driven by the people who make it. That's a really powerful idea.</i>
+        <br>
+        <span class="small">
+          <strong>Chelsea Otakan - Interface Designer</strong>
+          <br>
+          <span class="text-muted">@chexee</span>
+        </span>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <h2>Why Assembly?</h2>
+      <h4>Collaborative Ownership</h4>
+      <p>Collaborate on a common product vision with others as a community team. Earn ownership of the product by completing bounties.</p>
+
+      <hr>
+
+      <h4>Make a Difference</h4>
+      <p>Notifications and near-realtime access to finacials, ownership and strategic team decisions so you can guide the direction of the business.</p>
+
+      <hr>
+
+      <h4>Learn While you Build</h4>
+      <p>With with others on product and get exposed to new ideas and skills. Participate in the ideation process, web development, visual design or imagining creative revenue opportunity. Grow your existing experience with product.</p>
+    </div>
+  </div>
+</div>
+
 <%= render 'shared/footer' %>
