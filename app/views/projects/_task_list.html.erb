@@ -55,7 +55,7 @@
     $(document).ready(function() {
       <% if @milestone.nil? %>
         var completeTasks = new Tasks();
-        var incompleteTasks = new Tasks();
+        var incompleteTasks = new Tasks([], {url: "<%= product_wips_path(@product) %>"});
       <% else %>
         var completeTasks = new Tasks([], {url: "<%= product_project_tasks_path(@product, @milestone) %>" });
         var incompleteTasks = new Tasks([], {url: "<%= product_project_tasks_path(@product, @milestone) %>" });
