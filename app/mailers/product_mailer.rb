@@ -30,7 +30,7 @@ class ProductMailer < ActionMailer::Base
 
     mail from: "#{@product.name} <notifications@assemblymail.com>",
            to: @email_address,
-      subject: "You're one click away from claiming your first Assembly Assets!"
+      subject: "You're one click away from claiming your first Assembly Coins!"
   end
 
   def new_promo_subscriber_with_account(product, user)
@@ -39,7 +39,7 @@ class ProductMailer < ActionMailer::Base
 
     mail from: "#{@product.name} <notifications@assemblymail.com>",
            to: @user.email,
-      subject: "You're one click away from claiming your first Assembly Assets!"
+      subject: "You're one click away from claiming your first Assembly Coins!"
   end
 
   def new_subscriber_with_account(product, user)
