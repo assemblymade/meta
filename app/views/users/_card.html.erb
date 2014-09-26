@@ -22,6 +22,13 @@
   </div>
   <div class="list-group small">
 
+    <% if user.staff? %>
+      <a class="list-group-item" href="<%= product_people_path(product_id: 'meta', filter: 'core') %>" title="Assembly Staff">
+        <span class="icon icon-cup"></span>
+        <strong>Assembly Staff</strong>
+      </a>
+    <% end %>
+
     <% if user.twitter_connected? %>
       <a class="list-group-item" href="<%= user.twitter_url %>" title="@<%= @user.twitter_nickname %>">
         <span class="icon icon-twitter"></span>

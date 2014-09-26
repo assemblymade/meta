@@ -5,7 +5,9 @@
   var PeoplePageMixin = require('../mixins/people_page.js.jsx');
 
   var People = React.createClass({
-    render: function(){
+    render: function() {
+      if (!this.state) return <div />;
+
       if (this.props.coreOnly) {
         return (
           <PeopleList
@@ -33,17 +35,9 @@
       )
     },
 
-    componentWillMount: function() {
+    componentDidMount: function() {
       PeopleStore.setPeople(this.props.memberships);
       this.onFilter(this.props.selected);
-    },
-
-    componentDidMount: function() {
-      PeopleStore.addChangeListener(this.onChange);
-    },
-
-    onChange: function() {
-      this.onFilter(this.state.selected);
     },
 
     onFilter: function(interest) {
