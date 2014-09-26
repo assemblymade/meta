@@ -3,7 +3,7 @@ require 'spec_helper'
 describe AssemblyAsset do
   describe '#grant!' do
     before do
-      AssemblyAsset.any_instance.stub(:assets_url).and_return('https://assets-api.assembly.com')
+      AssemblyAsset.any_instance.stub(:assets_url).and_return('https://coins.assembly.com')
     end
 
     let(:product) {

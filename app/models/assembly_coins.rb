@@ -25,7 +25,7 @@ class AssemblyCoins
     end
 
     def connection
-      Faraday.new(url: ENV.fetch("ASSETS_URL")) do |faraday|
+      Faraday.new(url: ENV.fetch("ASSEMBLY_COINS_URL")) do |faraday|
         faraday.adapter  :net_http
       end
     end

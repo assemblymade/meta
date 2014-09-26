@@ -23,7 +23,7 @@ class AssemblyAsset < ActiveRecord::Base
   end
 
   def assets_url
-    ENV["ASSETS_URL"]
+    ENV["ASSEMBLY_COINS_URL"]
   end
 
   private

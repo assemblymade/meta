@@ -233,7 +233,7 @@ class User < ActiveRecord::Base
   end
 
   def public_address_url
-    "#{ENV['ASSETS_URL']}/addresses/#{wallet_public_address}"
+    "#{ENV['ASSEMBLY_COINS_URL']}/addresses/#{wallet_public_address}"
   end
 
   def mail_immediate?
