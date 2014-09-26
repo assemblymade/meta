@@ -184,7 +184,7 @@ class Product < ActiveRecord::Base
   end
 
   def teambuilding_percentage
-    [product.partners_count, 10].min * 10
+    [product.bio_memberships_count, 10].min * 10
   end
 
   def founded_at

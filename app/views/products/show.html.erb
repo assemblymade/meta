@@ -124,16 +124,16 @@
         </div>
         <div class="panel-body">
           <p>
-            This product is growing a team. It needs to reach <strong>10 partners</strong> in
-            <strong>30 days</strong> before it is Greenlit. You can become a partner by
-            <a href="<%= product_tasks_path(@product) %>">completing a bounty</a>.</p>
+            This product is growing a team. It needs to reach <strong>10 team members</strong> in
+            <strong>30 days</strong> before it is Greenlit. You can become a team member by
+            <a href="<%= product_people_path(@product) %>">introducing yourself</a>.</p>
 
           <div class="progress progress-sm" style="margin-bottom:6px">
-            <div class="progress-bar progress-bar-success" style="width:<%= (((@product.partners_count || 0) / 10.0) * 100).round %>%"></div>
+            <div class="progress-bar progress-bar-success" style="width:<%= (((@product.bio_memberships_count || 0) / 10.0) * 100).round %>%"></div>
           </div>
 
           <div class="clearfix">
-            <div class="pull-left"><%= pluralize(@product.partners_count, 'partner') %></div>
+            <div class="pull-left"><%= pluralize(@product.bio_memberships_count, 'partner') %></div>
             <div class="pull-right"><%= pluralize(@product.teambuilding_days_left, 'day') %> left</div>
           </div>
 
