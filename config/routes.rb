@@ -18,8 +18,6 @@ ASM::Application.routes.draw do
 
   root :to => 'pages#home'
 
-  get '/home2' => 'pages#home2'
-
   # Global Chat Experiment
   resources :chat_rooms, only: [:index, :show], path: 'chat'
 
@@ -46,6 +44,8 @@ ASM::Application.routes.draw do
   get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
+  get '/learn'            => 'pages#learn',  :as => :learn
+
 
   get '/create'        => 'products#new',    :as => :new_idea
   get '/start'         => 'products#new',    :as => :start_idea
