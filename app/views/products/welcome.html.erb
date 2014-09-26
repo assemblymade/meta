@@ -162,7 +162,7 @@
 
 <br>
 
-<% if @product.posts.empty? || @product.tasks.count < 3 || @product.repos.empty? %>
+<% if !@product.finished_first_steps? %>
   <a class="btn btn-lg btn-default disabled" href="#">Submit for approval</a>
   <br>
   <br>

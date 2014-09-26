@@ -1,0 +1,13 @@
+<div class="alert alert-info text-center text-large" data-dismissable="welcome">
+  <div class="container">
+    <% if @product.finished_first_steps? %>
+      <strong><%= @product.name %></strong> is still in Stealth. When you're
+      ready to get the community involved,
+      <a href="<%= product_welcome_path(@product) %>"><u>submit it for approval</u></a>.
+    <% else %>
+      <strong><%= @product.name %></strong> is still in Stealth. You can always
+      refer back to the <a href="<%= product_welcome_path(@product)
+      %>"><u>Getting Started page</u></a> to see what's next.
+    <% end %>
+  </div>
+</div>

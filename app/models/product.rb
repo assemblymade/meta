@@ -41,6 +41,7 @@ class Product < ActiveRecord::Base
   has_many :invites, as: :via
   has_many :metrics
   has_many :milestones
+  has_many :pitch_week_applications
   has_many :posts
   has_many :profit_reports
   has_many :rooms
@@ -232,9 +233,12 @@ class Product < ActiveRecord::Base
     team_memberships.active.find_by(user_id: user.id)
   end
 
-  def submit_for_approval!
-    self.submitted_at = Time.now
-    save!
+  def finished_first_steps?
+    posts.exists? && tasks.count >= 3 && repos.present?
+  end
+
+  def awaiting_approval?
+    pitch_week_applications.to_review.exists?
   end
 
   def open_discussions?

@@ -6,6 +6,10 @@
 
 <%= render 'shared/navbar' %>
 
+<% if current_user && @product.core_team?(current_user) && @product.stealth? && !@product.awaiting_approval? %>
+  <%= render 'products/stealth_reminder' %>
+<% end %>
+
 <% if flash[:first_assets_granted] %>
   <%= render 'products/assets_granted' %>
 <% end %>
@@ -26,14 +30,6 @@
 
     <div class="pull-right">
       <ul class="list-inline">
-        <li>
-          <% if @product.stealth? && partner?(@product) %>
-            <a class="btn btn-link btn-sm" href="<%= product_welcome_path(@product) %>">
-              <span class="icon icon-rocket icon-left"></span>
-              Next steps
-            </a>
-          <% end %>
-        </li>
         <li
             data-react-class="NotificationPreferencesDropdown"
             data-react-props="<%= {
