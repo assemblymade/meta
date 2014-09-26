@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://assets-api.assembly.com/v1/transactions/transfer
+    uri: https://coins.assembly.com/v1/transactions/transfer
     body:
       encoding: UTF-8
       string: |
@@ -36,7 +36,7 @@ http_interactions:
   recorded_at: Wed, 10 Sep 2014 19:03:11 GMT
 - request:
     method: get
-    uri: https://assets-api.assembly.com/v1/addresses
+    uri: https://coins.assembly.com/v1/addresses
     headers:
       Accept:
       - application/json
