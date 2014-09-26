@@ -21,6 +21,10 @@
   }
 }
 
+.btn-xl {
+  @include button-size(12px, 30px, 24px, 32px, 5px);
+}
+
 .btn-twitter {
   @include button-variant($btn-twitter-color, $btn-twitter-bg, $btn-twitter-border);
 }

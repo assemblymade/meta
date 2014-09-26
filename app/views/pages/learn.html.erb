@@ -3,7 +3,7 @@
 
 <div class="masthead" style="background-image:url(<%= image_url 'pretty-people-working.jpg' %>)">
   <div class="navbar navbar-static-top masthead-navbar">
-    <div class="container">
+    <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="<%= root_path %>">
           Assembly
@@ -24,10 +24,10 @@
 
   <div class="container text-center">
     <div class="masthead-title">
-      <h1>Build your idea into a product with our community.</h1>
-      <p class="lead">World-class product designers, engineers, writers, others building product &dash; together.</p>
+      <h1 style="font-size: 64px; line-height: 1.2">Build your idea into a product with our community.</h1>
+      <p style="font-size: 32px; line-height: 1.2; padding: 30px 0">World-class product designers, engineers, writers, <br> others building product &dash; together.</p>
     </div>
-    <a class="btn btn-success btn-lg" href="#">
+    <a class="btn btn-success btn-xl" href="<%= new_product_path %>" style="margin: 30px 0">
       Start Your Product
     </a>
   </div>
@@ -61,7 +61,9 @@
   </ul>
 </div>
 
-<div class="container-fluid">
+<hr>
+
+<div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-4">
       <h1>3MM</h1>
@@ -80,6 +82,8 @@
     </div>
   </div>
 </div>
+
+<hr>
 
 <div class="container">
   <div class="row">
