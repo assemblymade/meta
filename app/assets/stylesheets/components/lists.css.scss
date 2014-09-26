@@ -63,3 +63,72 @@
 .list-grid-tight li {
   padding: 2px;
 }
+
+.list-steps {
+  height: 0;
+  margin: 100px 0;
+  padding-left: 0;
+  border: 1px dashed $gray-lighter;
+  position: relative;
+  z-index: -2;
+
+  > li {
+    float: left;
+    height: 100px;
+    list-style-type: none;
+    position: relative;
+    text-align: center;
+    width: 20%;
+
+    > .step {
+      background-color: white;
+      border-radius: 18px;
+      border: 2px solid $gray-lighter;
+      color: $gray-light;
+      height: 36px;
+      font-weight: bold;
+      line-height: 32px;
+      margin: -18px auto 0 auto;
+      text-align: center;
+      width: 36px;
+
+      &.active {
+        border: 2px solid $green;
+        background-color: $green;
+        color: white;
+      }
+    }
+
+    > .body {
+      margin-top: 15px;
+      margin-left: -50%;
+      width: 200%;
+
+      strong {
+        font-size: $font-size-large;
+      }
+    }
+
+    &:nth-child(even) {
+      .body {
+        margin-top: -100px;
+      }
+    }
+  }
+
+  > .overlay {
+    background-color: white;
+    position: absolute;
+    margin-top: -2px;
+    width: 10%;
+    z-index: -1;
+
+    &:first-child {
+      left: 0;
+    }
+
+    &:last-child {
+      right: 0;
+    }
+  }
+}
