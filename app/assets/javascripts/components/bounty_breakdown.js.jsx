@@ -3,18 +3,21 @@
 (function() {
   var BountyBreakdown = React.createClass({
     mixins: [React.addons.LinkedStateMixin],
+
     getDefaultProps: function() {
       return {
         user: app.currentUser()
-      }
+      };
     },
+
     getInitialState: function() {
       return {
         offers: this.props.offers,
         newOffer: this.props.averageBounty * 0.10,
         saving: false
-      }
+      };
     },
+
     render: function() {
       return <div className="popover-content" style={{"min-width": 360}}>
         <h5>Breakdown</h5>
@@ -52,6 +55,7 @@
 
     handleOfferClicked: function() {
       this.setState({saving: true})
+
       window.xhr.post(
         this.props.offersPath,
         { amount: this.state.newOffer },

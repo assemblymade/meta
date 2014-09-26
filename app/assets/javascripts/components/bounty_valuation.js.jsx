@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
+  var BountyBreakdown = require('./bounty_breakdown.js.jsx');
   var BountyValuation = React.createClass({
     getInitialState: function() {
       return {
@@ -22,15 +23,18 @@
         </BsPopover>
     },
 
-    togglePopover: function() {
-      this.setState({popoverShown: !this.state.popoverShown })
-      return false
+    togglePopover: function(e) {
+      this.setState({
+        popoverShown: !this.state.popoverShown
+      });
     },
 
     handleHide: function() {
-      this.setState({popoverShown: false})
+      this.setState({
+        popoverShown: false
+      });
     }
-  })
+  });
 
   if (typeof module !== 'undefined') {
     module.exports = BountyValuation;

@@ -58,7 +58,7 @@ class ProjectsController < ProductController
     authorize! :update, @wip
 
     # update wip
-    if @wip.update_attributes(title: milestone_params[:title])
+    if @wip.update(title: milestone_params[:title])
       # update milestone
       @milestone.update_attributes(milestone_params[:milestone_attributes])
       if @milestone.valid?
