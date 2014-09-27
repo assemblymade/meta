@@ -59,21 +59,23 @@ class DiscoverController < ApplicationController
 
     @filters.each do |f|
       if tag = f[:tagged]
-        f[:count] = BountyPosting.tagged(f[:tagged]).count
+        f[:count] = Task.tagged_with(f[:tagged]).count
         f[:slug] = tag
       else
-        f[:count] = BountyPosting.count
+        f[:count] = Task.count
       end
     end
 
-    @postings = BountyPosting.joins(bounty: :product).order(created_at: :desc)
+    @postings = Task.open.includes(:product).order(created_at: :desc).where(products: { flagged_at: nil })
     if filter != 'all'
-      @postings = @postings.tagged(filter)
+      @postings = @postings.tagged_with(filter)
     end
 
     if slug = params[:product]
       @postings = @postings.where('products.slug = ?', slug)
     end
+
+    @postings = @postings.page(params[:page]).per(25)
   end
 
   def updates

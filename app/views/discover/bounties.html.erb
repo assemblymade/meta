@@ -32,16 +32,18 @@
     <% @postings.each do |posting| %>
       <div class="row">
         <div class="col-md-8">
-          <%= render 'bounty_postings/bounty_chip', bounty: posting.bounty %>
+          <%= render 'bounty_postings/bounty_chip', bounty: posting %>
         </div>
         <div class="col-md-4">
-          <%= render 'bounty_postings/product_chip', product: posting.bounty.product %>
+          <%= render 'bounty_postings/product_chip', product: posting.product %>
         </div>
       </div>
 
       <hr/>
     <% end %>
   <% end %>
+  
+  <%= paginate @postings, theme: 'twitter-bootstrap-3' %>
   </div>
 
 </div>
