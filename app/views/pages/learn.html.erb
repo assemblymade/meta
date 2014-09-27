@@ -109,48 +109,52 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-xs-12 col-sm-6 text-center">
+    <div class="col-xs-12 col-sm-5 text-center">
       <div>
-        <div><%= avatar_tag(User.find_by(username: 'peizoelectric'), 50) %></div>
-        <i>Build on Assembly I have a built-in team &dash; no more solo projects. I can't wait to launch Octobox.</i>
+        <div style="margin: 35px 0 20px 0">
+          <%= avatar_tag(User.find_by(username: 'milosz'), 150) %>
+        </div>
+        <em class="large text-muted">Build on Assembly I have a built-in team &dash; no more solo projects. I can't wait to launch Octobox.</em>
         <br>
-        <span class="small">
-          <strong>Philip Carter - Web Application Developer</strong>
+        <div style="margin-top: 10px">
+          <strong>Milosz Falinski - Web Application Developer</strong>
           <br>
-          <span class="text-muted">@peizoelectric</span>
-        </span>
+          <span class="text-muted">@milosz</span>
+        </div>
       </div>
       <div>
-        <div><%= avatar_tag(User.find_by(username: 'chexee'), 50) %></div>
-        <i>I choose what to work on and when I work on it. For each product, the idea, direction, and vision are all driven by the people who make it. That's a really powerful idea.</i>
+        <div style="margin: 35px 0 20px 0">
+          <%= avatar_tag(User.find_by(username: 'chexee'), 150) %>
+        </div>
+        <em class="large text-muted">I choose what to work on and when I work on it. For each product, the idea, direction, and vision are all driven by the people who make it. That's a really powerful idea.</em>
         <br>
-        <span class="small">
+        <div style="margin-top: 10px">
           <strong>Chelsea Otakan - Interface Designer</strong>
           <br>
           <span class="text-muted">@chexee</span>
-        </span>
+        </div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-1">
       <h1 style="font-size: 48px">Why Assembly?</h1>
 
       <h2 style="font-size: 32px; font-weight: lighter">Collaborative Ownership</h2>
-      <p>Collaborate on a common product vision with others as a community team. Earn ownership of the product by completing bounties.</p>
+      <p class="large">Collaborate on a common product vision with others as a community team. Earn ownership of the product by completing bounties.</p>
 
-      <hr>
+      <hr style="margin-top: 30px; margin-bottom: 40px">
 
       <h2 style="font-size: 32px; font-weight: lighter">Make a Difference</h2>
-      <p>Notifications and near-realtime access to finacials, ownership and strategic team decisions so you can guide the direction of the business.</p>
+      <p class="large">Notifications and near-realtime access to finacials, ownership and strategic team decisions so you can guide the direction of the business.</p>
 
-      <hr>
+      <hr style="margin-top: 30px; margin-bottom: 40px">
 
       <h2 style="font-size: 32px; font-weight: lighter">Learn While you Build</h2>
-      <p>With with others on product and get exposed to new ideas and skills. Participate in the ideation process, web development, visual design or imagining creative revenue opportunity. Grow your existing experience with product.</p>
+      <p class="large">With with others on product and get exposed to new ideas and skills. Participate in the ideation process, web development, visual design or imagining creative revenue opportunity. Grow your existing experience with product.</p>
     </div>
   </div>
 </div>
 
-<hr>
+<hr style="margin-top: 80px">
 
 <div class="container">
   <div class="text-center">
