@@ -42,20 +42,30 @@ class DiscoverController < ApplicationController
 
     @filters = [{
       slug: 'all',
-      label: 'All',
+      shortlabel: 'All',
+      label: 'Every bounty that is half-way decent',
     },{
       tagged: 'design',
+      shortlabel: 'Design',
       label: 'Design',
     }, {
       tagged: 'frontend',
+      shortlabel: 'Frontend',
       label: 'Front-End Development',
     }, {
       tagged: 'backend',
+      shortlabel: 'Backend',
       label: 'Back-End Development',
     }, {
       tagged: 'marketing',
+      shortlabel: 'Marketing',
       label: 'Marketing',
-    }]
+    }, {
+      tagged: 'icon',
+      shortlabel: 'Icons',
+      label: 'Products that need app icons',
+    }
+    ]
 
     @filters.each do |f|
       if tag = f[:tagged]
@@ -66,7 +76,10 @@ class DiscoverController < ApplicationController
       end
     end
 
+    @filter = @filters.find {|f| f[:slug] == params[:filter] }
+
     @postings = Task.open.includes(:product).order(created_at: :desc).where(products: { flagged_at: nil })
+
     if filter != 'all'
       @postings = @postings.tagged_with(filter)
     end

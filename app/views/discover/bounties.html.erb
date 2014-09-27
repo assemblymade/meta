@@ -4,16 +4,16 @@
 
 <%= render 'shared/navbar' %>
 
-<div class="page-header" style="padding-bottom:0">
+<div class="page-header" style="border-bottom:none">
   <div class="container">
     <h2>
-      All open <span class=""><%= params[:filter_text] %></span> bounties
+      <%= @filter[:label] %>
     </h2>
     <ul class="nav nav-tabs">
-      <% @filters.select{|f| f[:count] > 0}.each do |f| %>
+      <% @filters.each do |f| %>
         <li class="<%= 'active' if params[:filter] == f[:slug] %>">
           <a href="<%= discover_path(:bounties, filter: f[:slug]) %>">
-            <%= f[:label] %> <span class="badge badge-subtle"><%= f[:count] %></span>
+            <%= f[:shortlabel] %>
           </a>
         </li>
       <% end %>
@@ -34,7 +34,8 @@
         <div class="col-md-8">
           <%= render 'bounty_postings/bounty_chip', bounty: posting %>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-md-3 col-md-offset-1">
           <%= render 'bounty_postings/product_chip', product: posting.product %>
         </div>
       </div>
@@ -42,7 +43,7 @@
       <hr/>
     <% end %>
   <% end %>
-  
+
   <%= paginate @postings, theme: 'twitter-bootstrap-3' %>
   </div>
 
