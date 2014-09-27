@@ -18,6 +18,37 @@
   }
 }
 
+.panel-subtle {
+  @extend .panel-default;
+
+  padding-bottom: 5px;
+
+  .panel-heading {
+    background-color: white;
+    padding: 0;
+
+    a {
+      color: $link-color;
+      padding: 15px 20px 10px 20px;
+    }
+  }
+
+  .panel-body {
+    padding: 15px 20px;
+
+    p:last-child {
+      margin-bottom: 0px;
+    }
+  }
+
+  .panel-heading + .panel-collapse {
+    .panel-body {
+      border-top: none;
+      padding-top: 0px;
+    }
+  }
+}
+
 // Hack because we can't modify bootstrap
 h6.panel-title {
   font-size: $font-size-h6;
@@ -41,4 +72,10 @@ h6.panel-title {
 
 .panel-body > .list-grid {
   margin: - $padding-small-vertical;
+}
+
+.panel-group {
+  .panel + .panel {
+    margin-top: 15px;
+  }
 }
