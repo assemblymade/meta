@@ -78,7 +78,7 @@ class DiscoverController < ApplicationController
 
     @filter = @filters.find {|f| f[:slug] == params[:filter] }
 
-    @postings = Task.open.includes(:product).order(created_at: :desc).where(products: { flagged_at: nil })
+    @postings = Task.open.unflagged.includes(:product).order(created_at: :desc).where(products: { flagged_at: nil })
 
     if filter != 'all'
       @postings = @postings.tagged_with(filter)

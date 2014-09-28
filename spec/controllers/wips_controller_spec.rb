@@ -90,4 +90,18 @@ describe TasksController do
       expect(assigns(:wip).followed_by?(worker)).to be_true
     end
   end
+
+  describe '#flag' do
+    let(:wip) { wips.first }
+
+    before do
+      sign_in user
+    end
+
+    it 'sets flagged_at and flagged_by on wip' do
+      patch :flag, product_id: product.slug, wip_id: wip.number
+      expect(assigns(:wip).flagged_at).to be_within(10).of(Time.now)
+      expect(assigns(:wip).flagged_by).to eq(user)
+    end
+  end
 end

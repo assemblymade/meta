@@ -9,9 +9,10 @@ class Wip < ActiveRecord::Base
   include Kaminari::ActiveRecordModelExtension
   include Workflow
 
+  belongs_to :closer, class_name: 'User'
+  belongs_to :flagged_by, class_name: 'User'
   belongs_to :product, :touch => (update_parent_product_for_caching = true)
   belongs_to :user
-  belongs_to :closer, class_name: 'User'
 
   has_many :comments, class_name: 'Event::Comment'
   has_many :events
@@ -46,6 +47,7 @@ class Wip < ActiveRecord::Base
   scope :tagged_with, ->(name) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name = ?', name) }
   scope :tagged_with_any, ->(names) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name' => names) }
   scope :tagged_with_all, ->(names) { joins(:taggings => :tag).where('wip_tags.name' => names).group('wips.id').having('count(distinct wip_taggings.wip_tag_id) = ?', names.size) }
+  scope :unflagged, -> { where(flagged_at: nil) }
   scope :ordered_by_activity, -> { joins(:events).group('wips.id').order('max(events.created_at)') }
 
   attr_accessor :readraptor_tag # set which tag you are viewing
@@ -209,6 +211,12 @@ class Wip < ActiveRecord::Base
 
   def tag_list=(names)
     self.tag_names = names.split(',')
+  end
+
+  # flagging
+
+  def flag!(flagger)
+    update! flagged_at: Time.now, flagged_by_id: flagger.id
   end
 
   # callbacks

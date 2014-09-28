@@ -137,6 +137,12 @@ class WipsController < ProductController
     respond_with @wip, location: request.referer
   end
 
+  def flag
+    set_wip
+    @wip.flag!(current_user)
+    respond_with @wip, location: product_wip_path(@product, @wip)
+  end
+
   private
 
   def validate_wip_administer
