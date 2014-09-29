@@ -11,7 +11,7 @@ module Api
 
       if user = User.find_by(email: email)
         if product.followed_by?(user)
-          subscription = Watching.find_by(product: product, user: user)
+          subscription = Watching.find_by(product_id: product.id, user_id: user.id)
         else
           subscription = Subscriber.upsert!(product, user)
         end
