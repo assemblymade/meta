@@ -205,6 +205,12 @@ class Product < ActiveRecord::Base
     User.where(id: entries.keys)
   end
 
+  def partner_ids
+    User.joins(:transaction_log_entries).
+         where('transaction_log_entries.product_id' => id).
+         group('users.id').pluck('users.id')
+  end
+
   def has_metrics?
     for_profit?
   end

@@ -163,6 +163,8 @@ class ProductMailer < ActionMailer::Base
     @product = @membership.product
     @new_member = @membership.user
 
+    mailgun_tag "#{@product.id}#new_introduction"
+
     mail   to: @to.email,
       subject: "@#{@new_member.username} just joined the #{@product.name} team!"
   end

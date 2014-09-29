@@ -64,7 +64,7 @@ class PeopleController < ProductController
     @membership.update(bio: membership_params[:bio])
 
     if @membership.bio.present? && bio_was.nil?
-      @product.core_team_memberships.pluck(:user_id).each do |user_id|
+      @product.partner_ids.each do |user_id|
         ProductMailer.delay(queue: 'mailer').new_introduction(user_id, @membership.id)
       end
     end

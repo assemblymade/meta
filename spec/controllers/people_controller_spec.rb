@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PeopleController do
   let(:product) { Product.make! }
   let(:user) { User.make! }
-  let(:core_member) { User.make! }
+  let(:partner) { User.make! }
 
   describe 'GET #show' do
     it 'is successful' do
@@ -43,8 +43,9 @@ describe PeopleController do
       expect(response).to be_successful
     end
 
-    it 'sends mail to the core team the first time a bio is set' do
-      product.core_team << core_member
+    it 'sends mail to partners the first time a bio is set' do
+      mint_coins product, partner, 1
+
       product.team_memberships.create!(user: user, is_core: false)
 
       patch :update, product_id: product.slug, id: user.id, membership: { bio: 'foo' }, format: :json
@@ -55,7 +56,8 @@ describe PeopleController do
     end
 
     it "doesn't send email when an existing bio is updated" do
-      product.core_team << core_member
+      mint_coins product, partner, 1
+
       product.team_memberships.create!(user: user, is_core: false, bio: 'My first intro')
 
       patch :update, product_id: product.slug, id: user.id, membership: { bio: 'My updated intro' }, format: :json

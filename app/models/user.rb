@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   has_many :saved_searches
   has_one  :tax_info
   has_many :team_memberships
+  has_many :transaction_log_entries, foreign_key: 'wallet_id'
   has_many :watchings
   has_many :withdrawals
 
