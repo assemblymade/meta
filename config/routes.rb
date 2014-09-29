@@ -333,5 +333,4 @@ ASM::Application.routes.draw do
       constraints: {number: /\d+/},
       as: :shortcut
   end
-
 end

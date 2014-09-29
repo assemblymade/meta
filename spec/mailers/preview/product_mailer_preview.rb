@@ -14,6 +14,13 @@ class ProductMailerPreview < ActionMailer::Preview
     ProductMailer.congratulate_on_signups(product.id, 10)
   end
 
+  def new_subscriber
+    product = Product.sample
+    email = 'foo@bar.com'
+
+    ProductMailer.new_subscriber(product, email)
+  end
+
   def new_promo_subscriber
     product = Product.find_by_slug('assemblycoins')
     email = "foo@bar.com"

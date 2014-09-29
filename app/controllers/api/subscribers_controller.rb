@@ -1,41 +1,19 @@
 module Api
-  class SubscribersController < ApplicationController
+  class SubscribersController < ApiController
     respond_to :json
     before_filter :set_access_control_headers
 
     protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
     def create
-      email = params[:email]
+      email = params.require(:email)
       product = Product.find_by!(slug: params[:product_id])
 
       if user = User.find_by(email: email)
-        if product.followed_by?(user)
-          subscription = Watching.find_by(product_id: product.id, user_id: user.id)
-        else
-          subscription = Subscriber.upsert!(product, user)
-        end
-
-        if params[:product_id] == 'assemblycoins'
-          ProductMailer.delay(queue: 'mailer').new_promo_subscriber_with_account(product, user)
-        else
-          ProductMailer.delay(queue: 'mailer').new_subscriber_with_account(product, user)
-        end
+        subscription = subscribe_user(product, user)
       else
-        subscription = Subscriber.find_or_create_by!(product_id: product.id, email: email)
-
-        if params[:product_id] == 'assemblycoins'
-          ProductMailer.delay(queue: 'mailer').new_promo_subscriber(product, email)
-        else
-          ProductMailer.delay(queue: 'mailer').new_subscriber(product, email)
-        end
+        subscription = subscribe_email(product, email)
       end
-
-      Activities::Subscribe.publish!(
-        actor: subscription,
-        subject: product,
-        target: product
-      )
 
       respond_with subscription, location: root_url
     end
@@ -46,6 +24,49 @@ module Api
       end
 
       respond_with nil, location: root_url
+    end
+
+    # private
+
+    def subscribe_user(product, user)
+      subscription = Subscriber.find_by(product_id: product.id, user_id: user.id)
+
+      if subscription.nil?
+        subscription = product.announcements!(user)
+
+        Activities::Subscribe.publish!(
+          actor: user,
+          subject: product,
+          target: product
+        )
+      end
+
+      if params[:product_id] == 'assemblycoins'
+        ProductMailer.delay(queue: 'mailer').new_promo_subscriber_with_account(product, user)
+      else
+        ProductMailer.delay(queue: 'mailer').new_subscriber_with_account(product, user)
+      end
+
+      subscription
+    end
+
+    def subscribe_email(product, email)
+      subscription = Subscriber.find_or_create_by!(product_id: product.id, email: email)
+      if subscription.new_record?
+        Activities::Subscribe.publish!(
+          actor: subscription,
+          subject: product,
+          target: product
+        )
+      end
+
+      if params[:product_id] == 'assemblycoins'
+        ProductMailer.delay(queue: 'mailer').new_promo_subscriber(product, email)
+      else
+        ProductMailer.delay(queue: 'mailer').new_subscriber(product, email)
+      end
+
+      subscription
     end
 
     def product_id

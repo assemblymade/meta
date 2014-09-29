@@ -13,9 +13,10 @@ class Subscriber < ActiveRecord::Base
     if subscriber = Subscriber.unscoped.find_by(product: product, user: user)
       subscriber.deleted_at = nil
       subscriber.email = user.email
-      subscriber.save!
+      subscriber.save
+      subscriber
     else
-      Subscriber.create!(product: product, user: user, email: user.email)
+      Subscriber.create(product: product, user: user, email: user.email)
     end
   end
 
