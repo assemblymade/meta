@@ -209,8 +209,11 @@ ASM::Application.routes.draw do
         resources :offers, only: [:create, :show]
       end
       resources :projects, only: [:create]
-      resources :potential_users, controller: 'subscribers', only: [:create, :destroy]
+      resources :subscribers, only: [:create, :destroy]
       resources :bounty_postings, only: [:create, :destroy]
+
+      # deprecate (launchpad)
+      resources :potential_users, controller: 'subscribers', only: [:create, :destroy]
     end
 
     resources :textcompletes, only: [:index]
