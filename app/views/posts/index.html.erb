@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <% if can?(:create, Post) %>
+      <% if can?(:create, @product.posts.new(author: current_user)) %>
         <%= link_to 'Write a new post', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
       <% end %>
     </div>
