@@ -8,7 +8,7 @@ class AssemblyAssetsController < ProductController
         asset = AssemblyAsset.new(
           product: @product,
           user: current_user,
-          amount: 10,
+          amount: AssemblyAsset::PROMO_COINS,
           promo_redeemed_at: Time.now
         )
 
@@ -27,7 +27,7 @@ class AssemblyAssetsController < ProductController
         asset = AssemblyAsset.new(
           product: @product,
           user: current_user,
-          amount: 10,
+          amount: AssemblyAsset::PROMO_COINS,
           promo_redeemed_at: Time.now
         )
 

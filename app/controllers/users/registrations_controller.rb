@@ -56,7 +56,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         asset = AssemblyAsset.new(
           product: promo_product,
           user: current_user,
-          amount: 10,
+          amount: AssemblyAsset::PROMO_COINS,
           promo_redeemed_at: Time.now
         )
 

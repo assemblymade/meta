@@ -28,7 +28,7 @@ describe AssemblyAsset do
         asset = AssemblyAsset.new(
           product: product,
           user: user,
-          amount: 10
+          amount: AssemblyAsset::PROMO_COINS
         )
 
         asset.grant!
@@ -41,7 +41,7 @@ describe AssemblyAsset do
         asset = AssemblyAsset.new(
           product: product,
           user: no_public_address,
-          amount: 10
+          amount: AssemblyAsset::PROMO_COINS
         )
 
         expect(no_public_address.wallet_public_address).to be_nil
