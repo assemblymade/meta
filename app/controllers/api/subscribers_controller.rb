@@ -1,7 +1,7 @@
 module Api
   class SubscribersController < ApplicationController
     respond_to :json
-    after_filter :set_access_control_headers
+    before_filter :set_access_control_headers
 
     protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
