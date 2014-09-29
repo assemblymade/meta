@@ -6,25 +6,27 @@
           <tbody>
             <tr>
               <td class="panel panel-default">
-
-                <h1 class="text-center">
-                  Thanks for signing up for updates on <a href="<%= product_url(@product) %>"><%= @product.name %></a>!
-                </h1>
+                <h1>Your subscription is confirmed.</h1>
 
                 <p>
-                  <%= @product.name %> is being built on <a href="<%= root_url %>">Assembly</a>, a platform for building open-source projects. When a project on Assembly earns revenue, its contributors are paid based on their contributions. We've reserved an Assembly account for you at this email address; you can sign up <a href="<%= new_user_registration_url(email: @email_address) %>">here</a>.
+                  Thank you for subscribing to <a href="<%= @product.homepage_url.present? ? @product.homepage_url : product_url(@product) %>"><%= @product.name %></a>. We'll let you know the next time we have something special to share. Oh and don't worry, that feeling of excitement is normal.
                 </p>
+
+                <hr/>
+
+                <h3>Get involved and help build it.</h3>
                 <p>
-                  If you'd rather just get updates about <%= @product.name %>, you don't have to take any further action. But if you'd like to <span style="font-style: italic;">build</span> <%= @product.name %> or offer direct feedback to the team, you can sign up anytime.
+                  <%= @product.name %> is being openly built by a distributed community on <%= link_to 'Assembly', product_url(@product) %>. When you sign up you'll get access to other really cool products like <%= @product.name %>. You can even help contribute to products and share in their ownership.
                 </p>
                 <br/>
 
-                <p>
-                  Over and out,
-                  <br/>
-                  The <%= @product.name %> team
-                </p>
-
+                <table class="button success radius">
+                  <tr>
+                    <td>
+                      <a href="<%= new_user_registration_url(email: @email_address) %>">Sign up to Assembly</a>
+                    </td>
+                  </tr>
+                </table>
               </td>
             </tr>
           </tbody>

@@ -7,7 +7,7 @@ class WipMailerPreview < ActionMailer::Preview
 
   Event::MAILABLE.each do |klass|
     define_method "wip_event_#{klass.name.gsub('Event::', '').underscore}" do
-      WipMailer.wip_event_added(User.first.id, klass.first.id)
+      WipMailer.wip_event_added(User.sample.id, klass.sample.id)
     end
   end
 

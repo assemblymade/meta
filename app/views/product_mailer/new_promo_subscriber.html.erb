@@ -6,38 +6,19 @@
           <tbody>
             <tr>
               <td class="panel panel-default">
-
-                <h1 class="text-center">
-                  Thanks for signing up for updates on <a href="<%= product_url(@product) %>"><%= @product.name %></a>!
-                </h1>
+                <h1>Your subscription is confirmed.</h1>
 
                 <p>
-                  <%= @product.name %> is being built on <a href="<%= root_url %>">Assembly</a>, a platform for building open-source projects. A product's contributors receive a stake in the product through <a href="https://coins.assembly.com">Assembly Coins</a>. We'll send the most important updates straight from the core team to your inbox.
+                  Thank you for subscribing to <a href="<%= @product.homepage_url.present? ? @product.homepage_url : product_url(@product) %>"><%= @product.name %></a>. We'll let you know the next time we have something special to share. Oh and don't worry, that feeling of excitement is normal.
                 </p>
 
-                <hr>
+                <hr/>
 
+                <h3>Finish creating an account to earn <%= AssemblyAsset::PROMO_COINS %> ASM Coins.</h3>
                 <p>
-                  Since you signed up as a beta builder on the <a href="<%= product_url(@product) %>">Assembly Coins project</a>, an account has been reserved for you with 10 Coins &mdash; these digital tokens translate to a portion of Assembly Coins' future revenue.
+                  You're one of the first to follow Assembly Coins. This entitles you the opportunity to earn <%= AssemblyAsset::PROMO_COINS %> ASM Coins, which represent ownership in Assembly Coins, for being an early beta tester. All you have to do is create an account on Assembly, which is where we are openly building Assembly Coins. With an account you'll get access to other really cool products and can even help contribute to products, sharing in their ownership.
                 </p>
-
-                <h4>
-                  Why should you sign up?
-                </h4>
-
-                <ol>
-                  <li>
-                    You'll get access to more cool projects, like <a href="<%= product_url(Product.find_by_slug('buckets')) %>">Buckets</a>.
-                  </li>
-
-                  <li>
-                    You can build Assembly Coins if you want &mdash; and earn more Coins in the process!
-                  </li>
-
-                  <li>
-                    Did we mention that each project has its own Coin? You earn Coins based directly on your contributions to any of the projects on Assembly, which means real revenue for your work.
-                  </li>
-                </ol>
+                <br/>
 
                 <table class="container">
                   <tbody>

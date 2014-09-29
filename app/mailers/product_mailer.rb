@@ -21,7 +21,7 @@ class ProductMailer < ActionMailer::Base
 
     mail from: "#{@product.name} <notifications@assemblymail.com>",
            to: @email_address,
-      subject: "Thanks for signing up for #{@product.name}!"
+      subject: "Thanks for signing up for #{@product.name}"
   end
 
   def new_promo_subscriber(product, email_address)

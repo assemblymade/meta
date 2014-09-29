@@ -20,6 +20,7 @@ module MarkdownHelper
     @default_pipeline.call(text)[:output].to_s.html_safe
   end
 
+  # this is used in mailers, so use full urls
   def product_markdown(product, text)
     @product_pipeline ||= HTML::Pipeline.new(PRODUCT_FILTERS,
       asset_root: 'https://a248.e.akamai.net/assets.github.com/images/icons',
@@ -27,8 +28,8 @@ module MarkdownHelper
       firesize_url: ENV['FIRESIZE_URL'],
       # FIXME There is no route "users_path"
       product: product,
-      users_base_url: '/users',
-      people_base_url: EXTENDER.product_people_path(product),
+      users_base_url: File.join(EXTENDER.root_url, 'users'),
+      people_base_url: EXTENDER.product_people_url(product),
       whitelist: html_whitelist
     )
 
