@@ -6,12 +6,12 @@ describe Event do
   let(:zoolander) { User.make!(username: 'Zoolander') }
   let(:comment) { wip.comments.make!(body: 'hello @Asterix and @Zoolander!', user: asterix) }
 
-  describe '#deliver_notifications!' do
+  describe '#notify_users!' do
     it 'notifies mentioned users but not the issuing user' do
       expect(comment).to receive(:notify_by_email).with(zoolander)
       expect(comment).not_to receive(:notify_by_email).with(asterix)
 
-      comment.deliver_notifications!([])
+      comment.notify_users!([])
     end
   end
 end

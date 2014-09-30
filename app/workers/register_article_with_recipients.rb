@@ -4,31 +4,45 @@ class RegisterArticleWithRecipients
   include Sidekiq::Worker
   include Rails.application.routes.url_helpers
 
-  def perform(gid, tags=[])
-    deliver!(GlobalID::Locator.locate(gid), Array(tags))
+  attr_reader :recipients
+
+  def perform(recipient_ids, tags=[], entity_type, entity_id)
+    @recipients = User.find(recipient_ids)
+    @tags = Array(tags)
+    @entity_type = entity_type
+    @entity_id = entity_id
+    deliver!
   end
 
-  def deliver!(article, tags)
-    immediate_recipient_ids = article.immediate_notification_users.map(&:id) - [article.user_id]
-    delayed_recipient_ids = article.follower_ids - [article.user_id]
+  def deliver!
+    return unless ENV['READRAPTOR_URL']
 
-    tags.each do |tag|
-      options = {
-        key: ReadRaptorSerializer.serialize_entity(article.class.to_s, article.id, tag),
-        recipients: delayed_recipient_ids
-      }
+    @recipients.group_by{|u| u.mail_preference }.each do |preference, recipients|
+      @tags.each do |tag|
+        opts = {
+          key: ReadRaptorSerializer.serialize_entity(@entity_type, @entity_id, tag),
+          recipients: recipients.map(&:id)
+        }
 
-      if immediate_recipient_ids.any?
-        options[:via] = [{
-          type: 'webhook',
-          at: 30.seconds.from_now.to_i,
-          recipients: immediate_recipient_ids,
-          url: webhooks_readraptor_immediate_url
-        }]
+        if callback = callbacks[preference]
+          opts[:via] = [{
+            type: 'webhook',
+            at: callback[:at],
+            url: callback[:url]
+          }]
+        end
+
+        ReadRaptor::RegisterArticleWorker.perform_async(opts)
       end
-
-      return unless ENV['READRAPTOR_URL']
-      ReadRaptor::RegisterArticleWorker.perform_async(options)
     end
+  end
+
+  def callbacks
+    {
+      'immediate' => {
+        at: 30.seconds.from_now.to_i,
+        url: webhooks_readraptor_immediate_url,
+      },
+    }
   end
 end

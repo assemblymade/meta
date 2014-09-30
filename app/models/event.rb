@@ -3,8 +3,8 @@ require 'activerecord/uuid'
 # TODO: (whatupdave) rename this. These are wip events (comments, opens, awards etc)
 class Event < ActiveRecord::Base
   include ActiveRecord::UUID
-  include ActionView::Helpers::TextHelper
   include Versioning
+  include ActionView::Helpers::TextHelper
 
   belongs_to :user
   belongs_to :wip, touch: true, counter_cache: true
@@ -56,10 +56,12 @@ class Event < ActiveRecord::Base
     MAILABLE.include? self.class
   end
 
-  def deliver_notifications!(followers)
+  def notify_users!(followers)
     (self.mentioned_users - [self.user]).each do |mentioned_user|
       notify_by_email(mentioned_user)
     end
+
+    update_pusher(followers, mentioned_users)
   end
 
   def notify_by_email(user)
@@ -70,7 +72,7 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def update_pusher
+  def update_pusher(users, mentioned_users)
     event_hash = EventSerializer.for(self, nil).as_json.merge(socket_id: self.socket_id)
     event_hash[:mentions] = mentioned_users.map(&:username)
     event_hash.delete :body
@@ -78,7 +80,7 @@ class Event < ActiveRecord::Base
 
     # pushes a 'chat' event to the user's channel to trigger
     # it to call for updates. This is part of notifications
-    channels = followers.map{|u| "@#{u.username}"} + [wip.push_channel]
+    channels = users.map{|u| "@#{u.username}"} + [wip.push_channel]
     PusherWorker.perform_async channels, 'event.added', event_hash.to_json
   end
 
@@ -92,8 +94,6 @@ class Event < ActiveRecord::Base
 
     users.flatten
   end
-
-  delegate :immediate_notification_users, :followers, :follower_ids, to: :wip
 
   def to_param
     number

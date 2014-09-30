@@ -43,8 +43,10 @@ class WipFactory
 
   def register_with_readraptor(wip, users)
     RegisterArticleWithRecipients.perform_async(
-      wip.global_id,
-      [nil, :email, :chat]
+      users.map(&:id),
+      [nil, :email, :chat],
+      Wip,
+      wip.id
     )
   end
 

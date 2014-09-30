@@ -12,7 +12,7 @@ module Api
 
         if @event.valid?
           if product = @chat_room.product
-            @event.deliver_notifications!(product.followers)
+            @event.notify_users!(product.followers)
           end
 
           @activity = Activities::Chat.publish!(

@@ -144,14 +144,6 @@ class Wip < ActiveRecord::Base
 
   # following
 
-  def immediate_notification_users
-    followers.select(&:mail_immediate?) | participants
-  end
-
-  def participants
-    events.map(&:user).uniq
-  end
-
   def followers
     product.followers - muters
   end
@@ -175,6 +167,13 @@ class Wip < ActiveRecord::Base
   def watch!(user)
     product.watch!(user)
     Muting.unmute!(user, self)
+  end
+
+  def contributors
+    # TODO (whatupdave): when we can unwatch a wip we will need to look at this
+    User.joins(:watchings)
+      .where('watchings.watchable_id = ?', self.id)
+      .where('watchings.unwatched_at is null')
   end
 
   # tagging
