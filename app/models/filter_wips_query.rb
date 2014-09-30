@@ -36,6 +36,8 @@ class FilterWipsQuery
       Wip.open
     when 'progress'
       Wip.where(state: ['allocated', 'reviewing'])
+    when 'reviewing'
+      Wip.where(state: 'reviewing')
     when 'closed'
       Wip.where(state: 'resolved')
     else

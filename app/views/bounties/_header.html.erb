@@ -28,6 +28,16 @@
       </a>
     </li>
 
+    <li class="<%= 'active' if params[:state] == 'reviewing' %>">
+      <a href="<%= scoped_product_bounties_path(@product, state: 'reviewing') %>">
+        Reviewing
+
+        <span class="badge badge-subtle">
+          <%= @product.tasks.reviewing.count %>
+        </span>
+      </a>
+    </li>
+
     <li class="<%= 'active' if params[:state] == 'closed' %>">
       <a href="<%= scoped_product_bounties_path(@product, state: 'closed') %>">
         Done
