@@ -61,8 +61,8 @@ class ProductMailer < ActionMailer::Base
       subject: "#{@product.name} is rolling in signups!"
   end
 
-  def notify_core_team(product)
-    @product = product
+  def notify_core_team(product_id)
+    @product = Product.find(product_id)
 
     entire_core_team = (@product.core_team + [@product.user]).uniq.compact.collect(&:email)
 

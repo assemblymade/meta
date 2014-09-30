@@ -65,7 +65,7 @@ module Github
 
 
     def notify_core_team(product)
-      ProductMailer.delay(queue: 'mailer').notify_core_team(product)
+      ProductMailer.delay(queue: 'mailer').notify_core_team(product.id)
     end
   end
 end
