@@ -3,7 +3,7 @@
 
 <div class="masthead" style="background-image:url(<%= image_url 'pretty-people-working.jpg' %>)">
   <div class="navbar navbar-static-top masthead-navbar">
-    <div class="container-fluid">
+    <div class="container">
       <div class="navbar-header">
         <a class="navbar-brand" href="<%= root_path %>">
           Assembly
@@ -42,13 +42,13 @@
     </div>
   </div>
 
-  <ul class="list list-steps" style="margin-bottom: 130px">
+  <ul class="list list-steps">
     <li class="overlay"></li>
     <li>
       <div class="step active">1</div>
       <div class="body">
-        <strong>Submit an Idea</strong>
-        <div class="text-muted">for a product</div>
+        <a href="<%= new_product_path %>"><strong>Submit an Idea</strong></a>
+        <div class="text-muted">for a web or mobile product</div>
       </div>
     </li>
     <li>
@@ -75,8 +75,8 @@
     <li>
       <div class="step">5</div>
       <div class="body">
-        <strong>Profits paid to Contributors</strong>
-        <div class="text-muted">When a product is profitable</div>
+        <strong>Profits shared</strong>
+        <div class="text-muted">Contributors receive their share</div>
       </div>
     </li>
     <li class="overlay"></li>
@@ -109,8 +109,22 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-xs-12 col-sm-5 text-center">
-      <div>
+    <div class="col-xs-12 text-center">
+      <h1 style="font-size: 48px">Why start a product on Assembly?</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2 col-md-offset-5">
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 text-center">
+      <h2 style="font-size: 32px; font-weight: lighter">What does the community think?</h2>
+
+      <div style="width: 80%; margin: 0 auto">
         <div style="margin: 35px 0 20px 0">
           <%= avatar_tag(User.find_by(username: 'milosz'), 150) %>
         </div>
@@ -122,7 +136,7 @@
           <span class="text-muted">@milosz</span>
         </div>
       </div>
-      <div>
+      <div style="width: 80%; margin: 0 auto">
         <div style="margin: 35px 0 20px 0">
           <%= avatar_tag(User.find_by(username: 'chexee'), 150) %>
         </div>
@@ -135,8 +149,11 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-6 col-sm-offset-1">
-      <h1 style="font-size: 48px">Why Assembly?</h1>
+    <div class="col-xs-12 col-sm-6">
+      <h2 style="font-size: 32px; font-weight: lighter">An alternative to VC-funded and side-project products</h2>
+      <p class="large">Collaborate on a common product vision with others as a community team. Earn ownership of the product by completing bounties.</p>
+
+      <hr style="margin-top: 30px; margin-bottom: 40px">
 
       <h2 style="font-size: 32px; font-weight: lighter">Collaborative Ownership</h2>
       <p class="large">Collaborate on a common product vision with others as a community team. Earn ownership of the product by completing bounties.</p>
