@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-md-2">
+    <span class="icon icon-logo-filled text-large"></span>
+    <span class="sr-only">Assembly</span>
+  </div>
+
+  <div class="col-md-2">
+    <h5 class="alpha">Assembly</h5>
+    <ul class="list-unstyled">
+      <li><a href="<%= about_path %>">About</a></li>
+      <li><a href="<%= product_path('meta') %>">Meta</a></li>
+      <li><a href="<%= blog_path %>">Blog</a></li>
+    </ul>
+  </div>
+
+  <div class="col-md-2">
+    <h5 class="alpha">Help</h5>
+    <ul class="list-unstyled">
+      <li><a href="<%= getting_started_path %>">Getting Started</a></li>
+      <li><a href="<%= faq_path %>">FAQs</a></li>
+      <li><a href="<%= tos_path %>">Terms</a></li>
+    </ul>
+  </div>
+
+  <div class="col-md-2">
+    <h5 class="alpha">Discover</h5>
+    <ul class="list-unstyled">
+      <li><a href="<%= discover_path %>">Products</a></li>
+      <% if feature?(:discover_bounties) %>
+        <li><a href="<%= discover_path(:bounties) %>">Bounties</a></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="col-md-2">
+    <h5 class="alpha">Start</h5>
+    <ul class="list-unstyled">
+      <li><a href="<%= new_product_path %>">Create a New Product</a></li>
+    </ul>
+  </div>
+
+  <div class="col-md-2">
+    <h5 class="alpha">Say hello!</h5>
+    <ul class="list-unstyled">
+      <li><a href="https://twitter.com/asm">Twitter</a></li>
+      <li><a href="https://facebook.com/assemblymade">Facebook</a></li>
+      <li>
+        <a href="mailto:assembly@helpful.io" data-helpful="assembly">Support</a>
+        <script src="https://assets.helpful.io/assets/widget.js"></script>
+      </li>
+    </ul>
+  </div>
+</div><!-- .row -->

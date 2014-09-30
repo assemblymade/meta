@@ -107,76 +107,78 @@
 
 <hr style="margin-top: 0">
 
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12 text-center">
-      <h1 style="font-size: 48px">Why start a product on Assembly?</h1>
+<div class="container-fluid" style="background: #fff url(<%= image_url 'section-gradient.png' %>) no-repeat center bottom">
+  <div class="container" style="padding-bottom: 80px">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <h1 style="font-size: 48px">Why start a product on Assembly?</h1>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-2 col-md-offset-5">
-      <hr>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-5">
+        <hr>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 text-center">
-      <h2 style="font-size: 32px; font-weight: lighter">What does the community think?</h2>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 text-center">
+        <h2 style="font-size: 32px; font-weight: lighter">What does the community think?</h2>
 
-      <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-          <div>
-            <div style="margin: 35px 0 20px 0">
-              <%= avatar_tag(User.find_by(username: 'milosz'), 150) %>
-            </div>
-            <em class="text-muted" style="font-size: 20px">Build on Assembly I have a built-in team &dash; no more solo projects. I can't wait to launch Octobox.</em>
-            <br>
-            <div style="margin-top: 10px">
-              <strong>Milosz Falinski - Web Application Developer</strong>
+        <div class="row">
+          <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+            <div>
+              <div style="margin: 35px 0 20px 0">
+                <%= avatar_tag(User.find_by(username: 'milosz'), 150) %>
+              </div>
+              <em class="text-muted" style="font-size: 20px">Build on Assembly I have a built-in team &dash; no more solo projects. I can't wait to launch Octobox.</em>
               <br>
-              <span class="text-muted">@milosz</span>
+              <div style="margin-top: 10px">
+                <strong>Milosz Falinski - Web Application Developer</strong>
+                <br>
+                <span class="text-muted">@milosz</span>
+              </div>
             </div>
-          </div>
 
-          <div>
-            <div style="margin: 35px 0 20px 0">
-              <%= avatar_tag(User.find_by(username: 'chexee'), 150) %>
-            </div>
-            <em class="text-muted" style="font-size: 20px">I choose what to work on and when I work on it. For each product, the idea, direction, and vision are all driven by the people who make it. That's a really powerful idea.</em>
-            <br>
-            <div style="margin-top: 10px">
-              <strong>Chelsea Otakan - Interface Designer</strong>
+            <div>
+              <div style="margin: 35px 0 20px 0">
+                <%= avatar_tag(User.find_by(username: 'chexee'), 150) %>
+              </div>
+              <em class="text-muted" style="font-size: 20px">I choose what to work on and when I work on it. For each product, the idea, direction, and vision are all driven by the people who make it. That's a really powerful idea.</em>
               <br>
-              <span class="text-muted">@chexee</span>
+              <div style="margin-top: 10px">
+                <strong>Chelsea Otakan - Interface Designer</strong>
+                <br>
+                <span class="text-muted">@chexee</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-      <h2 style="font-size: 32px; font-weight: lighter">An alternative to VC-funded and side-project products</h2>
-      <p class="large">Collaborate on a common product vision with others as a community team. Earn ownership of the product by completing bounties.</p>
+      <div class="col-xs-12 col-sm-6">
+        <h2 style="font-size: 32px; font-weight: lighter">An alternative to VC-funded and side-project products</h2>
+        <p class="large">Collaborate on a common product vision with others as a community team. Earn ownership of the product by completing bounties.</p>
 
-      <hr style="margin-top: 30px; margin-bottom: 40px">
+        <hr style="margin-top: 30px; margin-bottom: 40px">
 
-      <h2 style="font-size: 32px; font-weight: lighter">Collaborative Ownership</h2>
-      <p class="large">Collaborate on a common product vision with others as a community team. Earn ownership of the product by completing bounties.</p>
+        <h2 style="font-size: 32px; font-weight: lighter">Collaborative Ownership</h2>
+        <p class="large">Collaborate on a common product vision with others as a community team. Earn ownership of the product by completing bounties.</p>
 
-      <hr style="margin-top: 30px; margin-bottom: 40px">
+        <hr style="margin-top: 30px; margin-bottom: 40px">
 
-      <h2 style="font-size: 32px; font-weight: lighter">Make a Difference</h2>
-      <p class="large">Notifications and near-realtime access to finacials, ownership and strategic team decisions so you can guide the direction of the business.</p>
+        <h2 style="font-size: 32px; font-weight: lighter">Make a Difference</h2>
+        <p class="large">Notifications and near-realtime access to finacials, ownership and strategic team decisions so you can guide the direction of the business.</p>
 
-      <hr style="margin-top: 30px; margin-bottom: 40px">
+        <hr style="margin-top: 30px; margin-bottom: 40px">
 
-      <h2 style="font-size: 32px; font-weight: lighter">Learn While you Build</h2>
-      <p class="large">With with others on product and get exposed to new ideas and skills. Participate in the ideation process, web development, visual design or imagining creative revenue opportunity. Grow your existing experience with product.</p>
+        <h2 style="font-size: 32px; font-weight: lighter">Learn While you Build</h2>
+        <p class="large">With with others on product and get exposed to new ideas and skills. Participate in the ideation process, web development, visual design or imagining creative revenue opportunity. Grow your existing experience with product.</p>
+      </div>
     </div>
   </div>
 </div>
 
-<hr style="margin-top: 80px">
+<hr style="margin-top: 0">
 
 <div class="container">
   <div class="text-center">
@@ -284,168 +286,172 @@
   </div>
 </div>
 
-<div class="container">
-  <h1 class="text-center" style="font-size: 48px">Smart Questions</h2>
+<div class="container-fluid" style="background: #fff url(<%= image_url 'section-gradient.png' %>) no-repeat center bottom">
+  <div class="container">
+    <h1 class="text-center" style="font-size: 48px">Smart Questions</h2>
 
-  <div class="row">
-    <div class="col-md-2 col-md-offset-5">
-      <hr>
-    </div>
-  </div>
-
-  <div class="panel-group" style="padding: 40px 0">
     <div class="row">
-      <div class="col-xs-12 col-sm-6">
-
-        <div class="panel panel-subtle">
-          <div class="panel-heading">
-            <p class="panel-title">
-              <a href="#why-not-just-do-open-source" data-toggle="collapse" style="display: block">
-                <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
-                Why not just do open source?
-              </a>
-            </p>
-          </div>
-          <div id="why-not-just-do-open-source" class="panel-collapse collapse">
-            <div class="panel-body">
-              <p>Open source is great, Assembly products are built with OSS. What Assembly lets you do is monetize the products you create.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel panel-subtle">
-          <div class="panel-heading">
-            <p class="panel-title">
-              <a href="#what-is-assemblys-fee" data-toggle="collapse" style="display: block">
-                <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
-                What is Assembly's fee?
-              </a>
-            </p>
-          </div>
-          <div id="what-is-assemblys-fee" class="panel-collapse collapse">
-            <div class="panel-body">
-              <p>Assembly takes 10% of the revenue after expenses.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel panel-subtle">
-          <div class="panel-heading">
-            <p class="panel-title">
-              <a href="#who-pays-for-hosting-the-product" data-toggle="collapse" style="display: block">
-                <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
-                Who pays for hosting the product?
-              </a>
-            </p>
-          </div>
-          <div id="who-pays-for-hosting-the-product" class="panel-collapse collapse collapse">
-            <div class="panel-body">
-              <p>In some cases, Assembly will help cover these costs before a product launches. In other cases, members of the community pay for them. In any case, these expenditures will be tracked and reimbursed when the product earns profits.</p>
-              <p>Once a product is live and earning revenue, monthly costs are paid before community earnings are distributed.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel panel-subtle">
-          <div class="panel-heading">
-            <p class="panel-title">
-              <a href="#who-owns-the-intellectual-property" data-toggle="collapse" style="display: block">
-                <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
-                Who owns the intellectual property?
-              </a>
-            </p>
-          </div>
-          <div id="who-owns-the-intellectual-property" class="panel-collapse collapse collapse">
-            <div class="panel-body">
-              <p>You do. However, all products on Assembly are licensed under AGPL, and by agreeing to our terms of service you also are granting non-exclusive rights to Assembly to monetize this IP on behalf of the community (and you).</p>
-            </div>
-          </div>
-        </div>
-
+      <div class="col-md-2 col-md-offset-5">
+        <hr>
       </div>
-      <div class="clearfix visible-xs-block" style="padding-top: 15px"></div>
-      <div class="col-xs-12 col-sm-6">
-
-        <div class="panel panel-subtle">
-          <div class="panel-heading">
-            <p class="panel-title">
-              <a href="#can-an-existing-product-be-moved-to-assembly" data-toggle="collapse" style="display: block">
-                <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
-                Can an existing product be moved to Assembly?
-              </a>
-            </p>
-          </div>
-          <div id="can-an-existing-product-be-moved-to-assembly" class="panel-collapse collapse">
-            <div class="panel-body">
-              <p>Yes. Usually in this case, we'll "pre-allocate" a fair number of coins to you (and anyone else who built the product with you). It will work similarly to a new product being built on Assembly, but you'll be a diluted at a slower rate. If you have more questions about this, reach out to <a href="mailto:chris@assembly.com">chris@assembly.com</a></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel panel-subtle">
-          <div class="panel-heading">
-            <p class="panel-title">
-              <a href="#can-a-product-leave-assembly" data-toggle="collapse" style="display: block">
-                <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
-                Can a product leave Assembly?
-              </a>
-            </p>
-          </div>
-          <div id="can-a-product-leave-assembly" class="panel-collapse collapse">
-            <div class="panel-body">
-              <p>No. An important part of Assembly is that anyone can come help build any product, with full trust that their work (if accepted) will be rewarded with an ownership stake in that product that will translate to a portion of any future revenue.</p>
-              <p>In order for Assembly to ensure that the community's work is rewarded in perpetuity, products being built on Assembly need to stay on Assembly.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel panel-subtle">
-          <div class="panel-heading">
-            <p class="panel-title">
-              <a href="#can-a-product-be-sold" data-toggle="collapse" style="display: block">
-                <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
-                Can a product be sold?
-              </a>
-            </p>
-          </div>
-          <div id="can-a-product-be-sold" class="panel-collapse collapse">
-            <div class="panel-body">
-              <p>Yes. If a third-party offers to acquire an Assembly product and the partners (everyone with ownership stake) decide it is the right decision for the community, the customers and the product, then a product can be sold.</p>
-              <p>When a product is sold, earnings are treated like any other revenue and are paid out to the community.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel panel-subtle">
-          <div class="panel-heading">
-            <p class="panel-title">
-              <a href="#is-assembly-legal" data-toggle="collapse" style="display: block">
-                <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
-                Is Assembly legal?
-              </a>
-            </p>
-          </div>
-          <div id="is-assembly-legal" class="panel-collapse collapse">
-            <div class="panel-body">
-              <p>Yes, of course. We've worked hard to figure out the legal challenges of letting people build businesses in this new way.</p>
-              <p>Each product on Assembly is legally structured as a partnership, where all stakeholders are partners. The product's profits are paid out to partners as royalties, based on each partner's App Coin ownership.</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
     </div>
-  </div>
-</div>
 
-<div class="container-fluid">
-  <div class="callout text-large">
-    <div class="container">
-      <a href="<%= start_idea_path %>" class="btn btn-success pull-right">Learn More</a>
+    <div class="panel-group" style="padding: 40px 0">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#why-not-just-do-open-source" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Why not just do open source?
+                </a>
+              </p>
+            </div>
+            <div id="why-not-just-do-open-source" class="panel-collapse collapse">
+              <div class="panel-body">
+                <p>Open source is great, Assembly products are built with OSS. What Assembly lets you do is monetize the products you create.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#what-is-assemblys-fee" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  What is Assembly's fee?
+                </a>
+              </p>
+            </div>
+            <div id="what-is-assemblys-fee" class="panel-collapse collapse">
+              <div class="panel-body">
+                <p>Assembly takes 10% of the revenue after expenses.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#who-pays-for-hosting-the-product" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Who pays for hosting the product?
+                </a>
+              </p>
+            </div>
+            <div id="who-pays-for-hosting-the-product" class="panel-collapse collapse collapse">
+              <div class="panel-body">
+                <p>In some cases, Assembly will help cover these costs before a product launches. In other cases, members of the community pay for them. In any case, these expenditures will be tracked and reimbursed when the product earns profits.</p>
+                <p>Once a product is live and earning revenue, monthly costs are paid before community earnings are distributed.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#who-owns-the-intellectual-property" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Who owns the intellectual property?
+                </a>
+              </p>
+            </div>
+            <div id="who-owns-the-intellectual-property" class="panel-collapse collapse collapse">
+              <div class="panel-body">
+                <p>You do. However, all products on Assembly are licensed under AGPL, and by agreeing to our terms of service you also are granting non-exclusive rights to Assembly to monetize this IP on behalf of the community (and you).</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="clearfix visible-xs-block" style="padding-top: 15px"></div>
+        <div class="col-xs-12 col-sm-6">
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#can-an-existing-product-be-moved-to-assembly" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Can an existing product be moved to Assembly?
+                </a>
+              </p>
+            </div>
+            <div id="can-an-existing-product-be-moved-to-assembly" class="panel-collapse collapse">
+              <div class="panel-body">
+                <p>Yes. Usually in this case, we'll "pre-allocate" a fair number of coins to you (and anyone else who built the product with you). It will work similarly to a new product being built on Assembly, but you'll be a diluted at a slower rate. If you have more questions about this, reach out to <a href="mailto:chris@assembly.com">chris@assembly.com</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#can-a-product-leave-assembly" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Can a product leave Assembly?
+                </a>
+              </p>
+            </div>
+            <div id="can-a-product-leave-assembly" class="panel-collapse collapse">
+              <div class="panel-body">
+                <p>No. An important part of Assembly is that anyone can come help build any product, with full trust that their work (if accepted) will be rewarded with an ownership stake in that product that will translate to a portion of any future revenue.</p>
+                <p>In order for Assembly to ensure that the community's work is rewarded in perpetuity, products being built on Assembly need to stay on Assembly.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#can-a-product-be-sold" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Can a product be sold?
+                </a>
+              </p>
+            </div>
+            <div id="can-a-product-be-sold" class="panel-collapse collapse">
+              <div class="panel-body">
+                <p>Yes. If a third-party offers to acquire an Assembly product and the partners (everyone with ownership stake) decide it is the right decision for the community, the customers and the product, then a product can be sold.</p>
+                <p>When a product is sold, earnings are treated like any other revenue and are paid out to the community.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#is-assembly-legal" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Is Assembly legal?
+                </a>
+              </p>
+            </div>
+            <div id="is-assembly-legal" class="panel-collapse collapse">
+              <div class="panel-body">
+                <p>Yes, of course. We've worked hard to figure out the legal challenges of letting people build businesses in this new way.</p>
+                <p>Each product on Assembly is legally structured as a partnership, where all stakeholders are partners. The product's profits are paid out to partners as royalties, based on each partner's App Coin ownership.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="text-large" style="padding: 30px; font-size: 24px">
+      <a href="<%= start_idea_path %>" class="btn btn-success btn-lg pull-right">Learn More</a>
       Already have a product and want to migrate it to Assembly?
     </div>
   </div>
 </div>
 
-<%= render 'shared/footer' %>
+<hr style="margin-top: 0; margin-bottom: 0">
+
+<div class="container">
+  <div class="footer" style="border-top: none; margin-top: 0">
+    <%= render 'shared/footer_nav' %>
+  </div>
+</div>
