@@ -5,6 +5,20 @@
 
 <div class="container">
 
+  <br>
+
+  <div class="text-center">
+
+    <% if signed_in? && flash[:notice] %>
+      <p class="text-muted text-large omega">Hey @<%= current_user.username %>, <a class="text-muted" href="http://media1.giphy.com/media/JQNM4AgN7lFUA/giphy.gif" style="text-decoration: underline">high five</a> and welcome to Assembly.</p>
+    <% end %>
+
+    <h1 class="omega" style="font-size:48px">Find a product you'd like to work on,</h1>
+    <p class="text-muted" style="font-size:36px">or <a class="text-success" href="<%= new_product_path %>">start your own</a> that others can work on with you.</p>
+  </div>
+
+  <hr>
+
   <div class="row">
     <div class="col-md-12">
 
