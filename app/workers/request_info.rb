@@ -2,7 +2,8 @@ class RequestInfo
   include Sidekiq::Worker
 
   def perform(user_id, at, product_id=nil)
-    user = User.find(user_id)
+    user = User.find_by(id: user_id)
+    return if user.nil?
 
     update = {
       last_request_at: at,
