@@ -27,8 +27,8 @@ class PostsController < ProductController
     authorize! :create, @post
 
     if @post.save
-      Subscriber.where(product_id: @product.id).each do |email|
-        PostMailer.delay(queue: 'mailer').mailing_list(@post.id, email)
+      @product.subscribers.each do |subscriber|
+        PostMailer.delay(queue: 'mailer').mailing_list(@post.id, subscriber.email)
       end
 
       @product.watchers.each do |watcher|
