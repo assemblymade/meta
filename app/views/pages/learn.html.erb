@@ -1,7 +1,7 @@
 <% title 'Build your idea into a product with our community' %>
 <%= track 'learn.viewed' %>
 
-<div class="masthead" style="background-image:url(<%= image_url 'pretty-people-working.jpg' %>)">
+<div class="masthead" style="background: linear-gradient(rgba(193, 190, 102, .8), rgba(40, 93, 125, .8)), url(<%= image_url 'faces.jpg' %>); min-height: 787px">
   <div class="navbar navbar-static-top masthead-navbar">
     <div class="container">
       <div class="navbar-header">
@@ -22,12 +22,12 @@
     </div>
   </div><!-- .navbar -->
 
-  <div class="container text-center">
+  <div class="container text-center" style="margin-top: 100px">
     <div class="masthead-title">
       <h1 style="font-size: 64px; line-height: 1.2">Build your idea into a product with our community.</h1>
       <p style="font-size: 32px; line-height: 1.2; padding: 30px 0">World-class product designers, engineers, writers, <br> others building product &dash; together.</p>
     </div>
-    <a class="btn btn-success btn-xl" href="<%= new_product_path %>" style="margin: 30px 0">
+    <a class="btn btn-success btn-xl" href="<%= new_product_path %>" style="margin: 30px 0; box-shadow: 0 0 0 3px rgba(0, 0, 0, .1)">
       Start Your Product
     </a>
   </div>
@@ -100,7 +100,7 @@
     <div class="col-xs-12 col-sm-4" style="padding: 50px 40px">
       <h1 style="font-size: 80px; margin: 0"><%= Product.count %></h1>
       <h2 style="font-weight: lighter; margin-top: 0">Products</h1>
-      <p class="text-muted"><%= Product.count %> products started on Assembly. <%= Product.greenlit.count %> products launched in 2014.</p>
+      <p class="text-muted"><%= Product.count %> products started on Assembly. <br> <%= Product.greenlit.count %> products launched in 2014.</p>
     </div>
   </div>
 </div>
@@ -124,28 +124,33 @@
     <div class="col-xs-12 col-sm-6 text-center">
       <h2 style="font-size: 32px; font-weight: lighter">What does the community think?</h2>
 
-      <div style="width: 80%; margin: 0 auto">
-        <div style="margin: 35px 0 20px 0">
-          <%= avatar_tag(User.find_by(username: 'milosz'), 150) %>
-        </div>
-        <em class="large text-muted">Build on Assembly I have a built-in team &dash; no more solo projects. I can't wait to launch Octobox.</em>
-        <br>
-        <div style="margin-top: 10px">
-          <strong>Milosz Falinski - Web Application Developer</strong>
-          <br>
-          <span class="text-muted">@milosz</span>
-        </div>
-      </div>
-      <div style="width: 80%; margin: 0 auto">
-        <div style="margin: 35px 0 20px 0">
-          <%= avatar_tag(User.find_by(username: 'chexee'), 150) %>
-        </div>
-        <em class="large text-muted">I choose what to work on and when I work on it. For each product, the idea, direction, and vision are all driven by the people who make it. That's a really powerful idea.</em>
-        <br>
-        <div style="margin-top: 10px">
-          <strong>Chelsea Otakan - Interface Designer</strong>
-          <br>
-          <span class="text-muted">@chexee</span>
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+          <div>
+            <div style="margin: 35px 0 20px 0">
+              <%= avatar_tag(User.find_by(username: 'milosz'), 150) %>
+            </div>
+            <em class="text-muted" style="font-size: 20px">Build on Assembly I have a built-in team &dash; no more solo projects. I can't wait to launch Octobox.</em>
+            <br>
+            <div style="margin-top: 10px">
+              <strong>Milosz Falinski - Web Application Developer</strong>
+              <br>
+              <span class="text-muted">@milosz</span>
+            </div>
+          </div>
+
+          <div>
+            <div style="margin: 35px 0 20px 0">
+              <%= avatar_tag(User.find_by(username: 'chexee'), 150) %>
+            </div>
+            <em class="text-muted" style="font-size: 20px">I choose what to work on and when I work on it. For each product, the idea, direction, and vision are all driven by the people who make it. That's a really powerful idea.</em>
+            <br>
+            <div style="margin-top: 10px">
+              <strong>Chelsea Otakan - Interface Designer</strong>
+              <br>
+              <span class="text-muted">@chexee</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -358,6 +363,7 @@
         </div>
 
       </div>
+      <div class="clearfix visible-xs-block" style="padding-top: 15px"></div>
       <div class="col-xs-12 col-sm-6">
 
         <div class="panel panel-subtle">
