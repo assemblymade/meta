@@ -4,7 +4,8 @@ class TransactionLogEntry < ActiveRecord::Base
   scope :credit,       -> { where(action: 'credit') }
   scope :in_user_wallets, -> { joins('inner join users on users.id = wallet_id') }
   scope :minted,       -> { where(action: 'minted') }
-  scope :to_month_end, ->(time) { where('transaction_log_entries.created_at < ?', TransactionLogEntry.end_of_month(time.to_time)) }
+  scope :from_month_start, ->(time) { where('transaction_log_entries.created_at >= ?', TransactionLogEntry.start_of_month(time.to_time)) }
+  scope :to_month_end, ->(time) { where('transaction_log_entries.created_at <= ?', TransactionLogEntry.end_of_month(time.to_time)) }
   scope :validated,    -> { where(action: 'validated') }
   scope :with_cents,   -> { where.not(cents: nil) }
 
@@ -52,6 +53,12 @@ class TransactionLogEntry < ActiveRecord::Base
     ActiveSupport::TimeZone["Hawaii"].parse(
       time.end_of_month.strftime("%Y-%m-%dT%T")
     ).end_of_day
+  end
+
+  def self.start_of_month(time)
+    ActiveSupport::TimeZone["Hawaii"].parse(
+      time.beginning_of_month.strftime("%Y-%m-%dT%T")
+    ).beginning_of_day
   end
 
   def self.minted!(parent_id, created_at, product, wallet_id, cents, extra=nil)
