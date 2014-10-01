@@ -7,6 +7,7 @@ class Product < ActiveRecord::Base
   include ActiveRecord::UUID
   include Kaminari::ActiveRecordModelExtension
   include Elasticsearch::Model
+  include Workflow
 
   DEFAULT_BOUNTY_SIZE=10000
   PITCH_WEEK_REQUIRED_BUILDERS=10
@@ -111,6 +112,31 @@ class Product < ActiveRecord::Base
   INFO_FIELDS = %w(goals key_features target_audience competing_products competitive_advantage monetization_strategy)
 
   store_accessor :info, *INFO_FIELDS.map(&:to_sym)
+
+  workflow_column :state
+
+  workflow do
+    state :stealth do
+      event :submit,
+        transitions_to: :awaiting_approval
+    end
+
+    state :awaiting_approval do
+      event :accept,
+        transitions_to: :team_building
+
+      event :reject,
+        transitions_to: :stealth
+    end
+
+    state :team_building do
+      event :greenlight,
+        transitions_to: :greenlit
+    end
+
+    state :greenlit
+    state :profitable
+  end
 
   class << self
     def unique_tags
