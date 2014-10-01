@@ -6,22 +6,6 @@ describe Webhooks::GithubController do
   let!(:wip) { product.tasks.make!(number: 5, product: product) }
   let!(:user) { User.make!(github_uid: 7064, github_login: 'whatupdave') }
 
-  describe 'pull request' do
-    before do
-      request.headers["HTTP_ACCEPT"] = "application/json"
-      request.headers["X-Github-Event"] = "pull_request"
-      post :create, JSON.parse(File.read(Rails.root.join('spec/fixtures/github/pull_request.json')))
-    end
-
-    it "returns 200" do
-      expect(response.response_code).to eq(200)
-    end
-
-    it 'adds pull request to WIP' do
-      assigns(:wip).events.map(&:type).should include('Event::CodeAdded')
-    end
-  end
-
   describe 'push' do
     before do
       request.headers["HTTP_ACCEPT"] = "application/json"
