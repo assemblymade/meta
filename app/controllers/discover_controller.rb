@@ -46,7 +46,7 @@ class DiscoverController < ApplicationController
 
   def updates
     @posts = Post.joins(:product).
-      where.not(products: { started_teambuilding_at: nil }).
+      where.not(products: { state: ['stealth', 'reviewing'] }).
       where(products: { flagged_at: nil }).
       where(flagged_at: nil).
       order(created_at: :desc)

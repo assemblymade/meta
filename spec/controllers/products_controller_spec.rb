@@ -28,7 +28,7 @@ describe ProductsController do
       end
     end
     context 'product in stealth' do
-      let(:product) { Product.make!(started_teambuilding_at: nil) }
+      let(:product) { Product.make! }
 
       it "is successful" do
         get :show, id: product
@@ -161,7 +161,7 @@ describe ProductsController do
   end
 
   describe '#launch' do
-    let(:product) { Product.make!(started_teambuilding_at: nil, user: creator) }
+    let(:product) { Product.make!(user: creator) }
 
     before do
       sign_in creator

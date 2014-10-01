@@ -135,6 +135,9 @@ class Product < ActiveRecord::Base
     state :team_building do
       event :greenlight,
         transitions_to: :greenlit
+
+      event :reject,
+        transitions_to: :stealth
     end
 
     state :greenlit do
@@ -199,24 +202,7 @@ class Product < ActiveRecord::Base
   end
 
   def launched?
-    !started_teambuilding_at.nil?
-  end
-
-  def stealth?
-    started_teambuilding_at.nil?
-  end
-
-  def teambuilding?
-    greenlit_at.nil? && started_teambuilding_at && started_teambuilding_at > 30.days.ago
-  end
-
-  def greenlit?
-    !greenlit_at.nil? &&
-      profitable_at.nil?
-  end
-
-  def profitable?
-    !profitable_at.nil?
+    current_state >= :team_building
   end
 
   def stopped_teambuilding_at

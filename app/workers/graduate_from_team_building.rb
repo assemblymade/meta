@@ -10,13 +10,13 @@ class GraduateFromTeamBuilding
     end
 
     successes.each do |product|
-      product.update!(greenlit_at: Time.now)
+      product.greenlight!
 
       TeamBuildingMailer.success(product.id).deliver
     end
 
     failures.each do |product|
-      product.update!(started_teambuilding_at: nil)
+      product.reject!
 
       TeamBuildingMailer.failure(product.id).deliver
     end
