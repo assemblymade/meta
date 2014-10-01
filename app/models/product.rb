@@ -16,6 +16,8 @@ class Product < ActiveRecord::Base
 
   friendly_id :slug_candidates, use: :slugged
 
+  alias_attribute :stage, :state
+
   attr_encryptor :wallet_private_key, :key => ENV["PRODUCT_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt, :unless => Rails.env.test?
 
   belongs_to :user
@@ -118,10 +120,10 @@ class Product < ActiveRecord::Base
   workflow do
     state :stealth do
       event :submit,
-        transitions_to: :awaiting_approval
+        transitions_to: :reviewing
     end
 
-    state :awaiting_approval do
+    state :reviewing do
       event :accept,
         transitions_to: :team_building
 
@@ -134,7 +136,11 @@ class Product < ActiveRecord::Base
         transitions_to: :greenlit
     end
 
-    state :greenlit
+    state :greenlit do
+      event :launch,
+        transitions_to: :profitable
+    end
+
     state :profitable
   end
 
@@ -144,6 +150,33 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def on_stealth_entry(prev_state, event, *args)
+    update!(
+      started_teambuilding_at: nil,
+      greenlit_at: nil,
+      profitable_at: nil
+    )
+  end
+
+  def on_team_building_entry(prev_state, event, *args)
+    update!(
+      started_teambuilding_at: Time.now,
+      greenlit_at: nil,
+      profitable_at: nil
+    )
+  end
+
+  def on_greenlit_entry(prev_state, event, *args)
+    update!(
+      greenlit_at: Time.now,
+      profitable_at: nil
+    )
+  end
+
+  def on_profitable_entry(prev_state, event, *args)
+    update!(profitable_at: Time.now)
+  end
+
   def wallet_private_key_salt
     # http://ruby-doc.org/stdlib-2.1.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#class-OpenSSL::Cipher-label-Encrypting+and+decrypting+some+data
     cipher = OpenSSL::Cipher::AES256.new(:CBC)
@@ -151,33 +184,16 @@ class Product < ActiveRecord::Base
     cipher.random_key
   end
 
-  def stage
-    if profitable?
-      'profitable'
-    elsif greenlit?
-      'greenlit'
-    elsif teambuilding?
-      'teambuilding'
-    else
-      'stealth'
-    end
-  end
-
   def update_stage!(new_stage)
-    # Poor man's state machine... TODO use workflow gem
-
     case new_stage
     when 'profitable'
-      update! profitable_at: Time.now
-
+      launch!
     when 'greenlit'
-      update! greenlit_at: Time.now, profitable_at: nil
-
+      greenlight!
     when 'teambuilding'
-      update! started_teambuilding_at: Time.now, greenlit_at: nil, profitable_at: nil
-
+      approve!
     when 'stealth'
-      update! started_teambuilding_at: nil, greenlit_at: nil, profitable_at: nil
+      reject!
     end
   end
 
