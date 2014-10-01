@@ -50,7 +50,7 @@ class TransactionLogEntry < ActiveRecord::Base
 
   def self.end_of_month(time)
     ActiveSupport::TimeZone["Hawaii"].parse(
-      time.end_of_mont.strftime("%Y-%m-%dT%T")
+      time.end_of_month.strftime("%Y-%m-%dT%T")
     ).end_of_day
   end
 
