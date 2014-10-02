@@ -72,4 +72,4 @@ Assembly.
 
 # Who covers the costs of development?
 
-In most cases, Assembly helps cover costs, and in others, costs that you spend on a product can be tracked and will be reimbursed when the prodcut earns revenue. We have restrictions to this, but generally we financially assist growing product get off the ground.
+In most cases, Assembly helps cover costs, and in others, costs that you spend on a product can be tracked and will be reimbursed when the product earns revenue. We have restrictions to this, but generally we financially assist growing product get off the ground.
