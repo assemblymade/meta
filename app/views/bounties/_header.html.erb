@@ -40,7 +40,7 @@
 
     <li class="<%= 'active' if params[:state] == 'closed' %>">
       <a href="<%= scoped_product_bounties_path(@product, state: 'closed') %>">
-        Done
+        Resolved
 
         <span class="badge badge-subtle">
           <%= @product.tasks.closed.count %>
