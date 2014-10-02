@@ -33,7 +33,9 @@ class DiscoverController < ApplicationController
 
   def bounties
     if params[:filter].blank?
-      cookies[:discover_bounties_filter] ||= 'all'
+      if cookies[:discover_bounties_filter].blank?
+        cookies[:discover_bounties_filter] = 'all'
+      end
       redirect_to discover_path(:bounties, filter: cookies[:discover_bounties_filter])
     end
 
@@ -43,27 +45,27 @@ class DiscoverController < ApplicationController
     @filters = [{
       slug: 'all',
       shortlabel: 'All',
-      label: 'Every bounty that is half-way decent',
-    },{
+      label: 'All Open Bounties',
+    }, {
       tagged: 'design',
       shortlabel: 'Design',
-      label: 'Design',
+      label: 'Open Design Bounties',
     }, {
       tagged: 'frontend',
       shortlabel: 'Frontend',
-      label: 'Front-End Development',
+      label: 'Open Front-End Development Bounties',
     }, {
       tagged: 'backend',
       shortlabel: 'Backend',
-      label: 'Back-End Development',
+      label: 'Open Back-End Development Bounties',
+    }, {
+      tagged: 'product',
+      shortlabel: 'Product',
+      label: 'Open Product Bounties',
     }, {
       tagged: 'marketing',
       shortlabel: 'Marketing',
-      label: 'Marketing',
-    }, {
-      tagged: 'icon',
-      shortlabel: 'Icons',
-      label: 'Products that need app icons',
+      label: 'Open Marketing Bounties',
     }
     ]
 
