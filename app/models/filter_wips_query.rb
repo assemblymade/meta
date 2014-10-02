@@ -39,7 +39,7 @@ class FilterWipsQuery
     when 'reviewing'
       Wip.where(state: 'reviewing')
     when 'closed'
-      Wip.where(state: 'resolved')
+      Wip.closed
     else
       Wip.all
     end
