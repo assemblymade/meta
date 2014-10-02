@@ -3,7 +3,7 @@ class SearchController < ProductController
   layout :search_layout
 
   def index
-    find_product! if params[:product_id]
+    find_product! if params[:product_id].present?
 
     @totals = Search::Totals.new(params[:q])
 
@@ -36,9 +36,15 @@ class SearchController < ProductController
       @search = Search::ProductSearch.new(params[:q], @filters)
       @totals.products = @search.total
     end
+
+    @filter_description = [
+      params[:state].try(:titleize) || 'All',
+      @filters[:tech],
+      @type.to_s.pluralize
+    ].compact.join(' ')
   end
 
   def search_layout
-    params[:product_id] ? 'product' : 'global'
+    params[:product_id].present? ? 'product' : 'global'
   end
 end
