@@ -143,6 +143,12 @@ class WipsController < ProductController
     respond_with @wip, location: product_wip_path(@product, @wip)
   end
 
+  def unflag
+    set_wip
+    @wip.unflag!
+    respond_with @wip, location: product_wip_path(@product, @wip)
+  end
+
   private
 
   def validate_wip_administer

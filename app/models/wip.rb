@@ -219,6 +219,14 @@ class Wip < ActiveRecord::Base
     update! flagged_at: Time.now, flagged_by_id: flagger.id
   end
 
+  def unflag!
+    update! flagged_at: nil, flagged_by_id: nil
+  end
+
+  def flagged?
+    !flagged_at.nil?
+  end
+
   # callbacks
 
   def push_channel
