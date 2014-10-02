@@ -129,7 +129,7 @@
             }.to_json %>">
         </div>
       </li>
-      <% if current_user.staff? %>
+      <% if current_user && current_user.staff? %>
         <li>
           <div data-react-class="ToggleButton"
                data-react-props="<%= {
