@@ -88,7 +88,7 @@ class Product < ActiveRecord::Base
   scope :with_logo,        ->{ where.not(poster: nil).where.not(poster: '') }
 
   scope :stealth,      -> { where(state: 'stealth') }
-  scope :teambuilding, -> { public_products.where(state: 'team_building') }
+  scope :team_building, -> { public_products.where(state: 'team_building') }
   scope :greenlit,     -> { public_products.where(state: 'greenlit') }
   scope :profitable,   -> { public_products.where(state: 'profitable') }
 
@@ -156,7 +156,7 @@ class Product < ActiveRecord::Base
 
   def on_stealth_entry(prev_state, event, *args)
     update!(
-      started_teambuilding_at: nil,
+      started_team_building_at: nil,
       greenlit_at: nil,
       profitable_at: nil
     )
@@ -164,7 +164,7 @@ class Product < ActiveRecord::Base
 
   def on_team_building_entry(prev_state, event, *args)
     update!(
-      started_teambuilding_at: Time.now,
+      started_team_building_at: Time.now,
       greenlit_at: nil,
       profitable_at: nil
     )
@@ -194,7 +194,7 @@ class Product < ActiveRecord::Base
       launch!
     when 'greenlit'
       greenlight!
-    when 'teambuilding'
+    when 'team_building'
       approve!
     when 'stealth'
       reject!
@@ -205,15 +205,15 @@ class Product < ActiveRecord::Base
     current_state >= :team_building
   end
 
-  def stopped_teambuilding_at
-    started_teambuilding_at + 30.days
+  def stopped_team_building_at
+    started_team_building_at + 30.days
   end
 
-  def teambuilding_days_left
-    [(stopped_teambuilding_at.to_date - Date.today).to_i, 0].max
+  def team_building_days_left
+    [(stopped_team_building_at.to_date - Date.today).to_i, 0].max
   end
 
-  def teambuilding_percentage
+  def team_building_percentage
     [product.bio_memberships_count, 10].min * 10
   end
 

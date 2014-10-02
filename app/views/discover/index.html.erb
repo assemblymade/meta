@@ -147,14 +147,14 @@
       </div>
 
       <div class="list-group list-group-breakout omega">
-        <% @teambuilding.each do |product| %>
+        <% @team_building.each do |product| %>
           <a class="list-group-item" data-track="discover.team-building.clicked" href="<%= product_path(product) %>">
             <%= render 'products/chips/team_building', product: product %>
           </a>
         <% end %>
       </div>
       <p class="text-center">
-        <a href="<%= discover_path(:teambuilding) %>">More products</a>
+        <a href="<%= discover_path(:team_building) %>">More products</a>
       </p>
 
       <br>

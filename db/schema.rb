@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141003152458) do
+ActiveRecord::Schema.define(version: 20141003213711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -464,7 +464,7 @@ ActiveRecord::Schema.define(version: 20141003152458) do
     t.binary   "encrypted_wallet_private_key"
     t.binary   "encrypted_wallet_private_key_salt"
     t.binary   "encrypted_wallet_private_key_iv"
-    t.datetime "started_teambuilding_at"
+    t.datetime "started_team_building_at"
     t.datetime "profitable_at"
     t.string   "state"
   end
@@ -473,7 +473,7 @@ ActiveRecord::Schema.define(version: 20141003152458) do
   add_index "products", ["profitable_at"], name: "index_products_on_profitable_at", using: :btree
   add_index "products", ["repos"], name: "index_products_on_repos", using: :btree
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true, using: :btree
-  add_index "products", ["started_teambuilding_at"], name: "index_products_on_started_teambuilding_at", using: :btree
+  add_index "products", ["started_team_building_at"], name: "index_products_on_started_team_building_at", using: :btree
   add_index "products", ["state"], name: "index_products_on_state", using: :btree
 
   create_table "profit_reports", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
