@@ -2,19 +2,22 @@ class CoinsMinted
   include Sidekiq::Worker
   sidekiq_options queue: 'critical'
 
-  attr_reader :entry, :product, :work
+  attr_reader :entry, :product, :bounty
 
   def perform(minted_entry_id)
     @entry = TransactionLogEntry.find(minted_entry_id)
     @product = @entry.product
     @award = Award.find(@entry.wallet_id)
-    @work = @award.wip
+    @bounty = @award.wip
     @winner = @award.winner
 
     return unless @winner.present? # older wips may not have a winner if they were awarded, but re-opened
 
     transfer_coins_to_user_wallets!
+
     @product.update_partners_count_cache
+    @bounty.update_coins_cache!
+
     @product.save!
   end
 
@@ -22,7 +25,7 @@ class CoinsMinted
     entry.with_lock do
       entry_balance = entry.cents
 
-      tip_entries = work.contracts.tip_contracts.each do |contract|
+      tip_entries = bounty.contracts.tip_contracts.each do |contract|
         tip = contract.percentage * entry.cents
 
         entry_balance -= tip

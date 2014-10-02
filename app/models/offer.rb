@@ -11,6 +11,8 @@ class Offer < ActiveRecord::Base
 
   delegate :product, to: :bounty
 
+  after_commit -> { bounty.update_coins_cache! }
+
   def influence
     partner = Partner.new(self.product, self.user)
     [partner.coins, partner.ownership, partner.total_coins]

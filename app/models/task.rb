@@ -124,6 +124,7 @@ class Task < Wip
       end
     end
   end
+  alias_method :calculate_current_value, :value
 
   def score
     votes_count * score_multiplier
@@ -318,6 +319,15 @@ class Task < Wip
   def multiplier_not_changed
     if multiplier_changed? && !open?
       errors.add(:multiplier, "cannot be changed on closed Bounty")
+    end
+  end
+
+  def update_coins_cache!
+    contracts.tap do |c|
+      self.update!(
+        total_coins_cache: c.total_cents,
+        earnable_coins_cache: c.earnable_cents
+      )
     end
   end
 end

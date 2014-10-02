@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140928233124) do
+ActiveRecord::Schema.define(version: 20141002173927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -807,30 +807,32 @@ ActiveRecord::Schema.define(version: 20140928233124) do
   add_index "wip_workers", ["wip_id", "user_id"], name: "index_wip_workers_on_wip_id_and_user_id", unique: true, using: :btree
 
   create_table "wips", id: false, force: true do |t|
-    t.uuid     "id",                                           null: false
-    t.uuid     "user_id",                                      null: false
-    t.uuid     "product_id",                                   null: false
-    t.text     "title",                                        null: false
+    t.uuid     "id",                                               null: false
+    t.uuid     "user_id",                                          null: false
+    t.uuid     "product_id",                                       null: false
+    t.text     "title",                                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "number"
     t.uuid     "closer_id"
     t.datetime "closed_at"
-    t.integer  "votes_count",                default: 0,       null: false
+    t.integer  "votes_count",                    default: 0,       null: false
     t.uuid     "winning_event_id"
     t.datetime "promoted_at"
-    t.integer  "events_count",               default: 0,       null: false
-    t.integer  "comments_count",             default: 0,       null: false
+    t.integer  "events_count",                   default: 0,       null: false
+    t.integer  "comments_count",                 default: 0,       null: false
     t.datetime "pinned_at"
-    t.integer  "trending_score",   limit: 8
+    t.integer  "trending_score",       limit: 8
     t.string   "state"
     t.string   "type"
-    t.string   "deliverable",                default: "other", null: false
-    t.decimal  "multiplier",                 default: 1.0,     null: false
-    t.decimal  "author_tip",                 default: 0.0,     null: false
+    t.string   "deliverable",                    default: "other", null: false
+    t.decimal  "multiplier",                     default: 1.0,     null: false
+    t.decimal  "author_tip",                     default: 0.0,     null: false
     t.text     "description"
     t.datetime "flagged_at"
     t.uuid     "flagged_by_id"
+    t.integer  "earnable_coins_cache"
+    t.integer  "total_coins_cache"
   end
 
   add_index "wips", ["flagged_at"], name: "index_wips_on_flagged_at", using: :btree
