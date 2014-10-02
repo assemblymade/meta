@@ -30,7 +30,7 @@ class TextcompleteSearch
   end
 
   def find_users
-    User.where('username ILIKE ?', "#{cleaned_query}%").limit(limit).pluck(:username, :name)
+    User.where('username ILIKE ?', "#{cleaned_query}%").limit(limit).order("last_request_at DESC").pluck(:username, :name)
   end
 
   def wips

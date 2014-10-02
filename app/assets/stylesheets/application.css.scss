@@ -54,34 +54,6 @@
   margin-bottom: 24px;
 }
 
-.masthead {
-  background-color: $black;
-  background-size: cover;
-  padding-top: $line-height-computed;
-  padding-bottom: $line-height-computed;
-  position: relative;
-  margin-bottom: $line-height-computed * 2;
-
-  > .masthead-navbar {
-    .navbar-nav > li > a,
-    .navbar-brand {
-      color: white;
-    }
-
-    .navbar-nav > li > a:hover {
-      background-color: rgba(black, .2);
-    }
-  }
-
-  > * {
-    position: relative;
-  }
-}
-
-.masthead-title {
-  color: white;
-}
-
 .play-button {
   display: inline-block;
   margin-top: $line-height-computed * 2;

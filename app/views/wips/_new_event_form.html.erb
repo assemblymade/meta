@@ -34,7 +34,7 @@
             <div class="btn-group">
               <%= button_tag 'Comment', name: 'event_comment[type]', value: 'Event::Comment', type: 'submit', class: %w(btn btn-primary) %>
               <% unless @wip.resolved? || @wip.closed? %>
-                <%= button_tag 'Comment & Mark as done', name: 'event_comment[type]', value: 'Event::ReviewReady', type: 'submit', class: %w(btn btn-default) %>
+                <%= button_tag 'Comment & Submit for review', name: 'event_comment[type]', value: 'Event::ReviewReady', type: 'submit', class: %w(btn btn-default) %>
               <% end %>
 
               <% if can?(:update, @wip.product) %>

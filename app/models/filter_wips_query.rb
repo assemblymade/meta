@@ -94,9 +94,9 @@ class FilterWipsQuery
   def sort_order
     case sort
     when 'most_valuable'
-      Wip.order('(multiplier * votes_count) DESC')
+      Wip.order('total_coins_cache DESC')
     when 'least_valuable'
-      Wip.order('(multiplier * votes_count) ASC')
+      Wip.order('total_coins_cache ASC')
     when 'newest'
       Wip.order('wips.created_at DESC')
     when 'oldest'

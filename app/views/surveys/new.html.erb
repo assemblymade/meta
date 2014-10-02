@@ -1,0 +1,261 @@
+<% title 'This is happening!' %>
+<%= track 'welcome.viewed' %>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+
+      <div class="text-center">
+        <h1>This is happening!</h1>
+
+        <p>We currently have 56 products being built in different stages from idea to launched product. There's a lot to sort through to find a product you're stoked to work on. Take 231 seconds to fill out some cool info below and @awwwstn or @benshyong will be able to better connect you to products that are a good fit.</p>
+
+        <p class="small">or maybe you want to <a href="#">start a product</a> or you're all &ldquo;Geez man! <a href="#">Just let me dive in!</a>!&rdquo;</p>
+
+
+        <p>There are 8 questions. None of them are required. The more you fill out, the more helpful we can be, yo.</p>
+
+      </div>
+
+      <hr>
+
+      <%= form_tag '/welcome', class: 'form', method: 'post' do %>
+
+        <div class="form-group">
+          <h2>
+            1. What kinds of stuff do you like to do?
+          </h2>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              <strong>Design</strong>
+              <small>Interfaces, Information/Architecture, Brand, Logos, Icons</small>
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              <strong>Strategy</strong>
+              <small>HTML, CSS, SCSS, Javascript</small>
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              <strong>Frontend Dev</strong>
+              <small>HTML, CSS, SCSS, Javascript</small>
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              <strong>Backend Dev</strong>
+              <small>Ruby on Rails, Python, PHP, Go</small>
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              <strong>Marketing</strong>
+              <small>Social, Growth, Emails</small>
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              <strong>Writing</strong>
+              <small>Blogging, Copywriting, Content Strategy</small>
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              <strong>Air Guitar</strong>
+              <small>and other Air Instruments</small>
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <strong>Other</strong>
+              <input class="form-control input-sm" type="text">
+            </label>
+          </div>
+        </div><!-- 1. What kinds of stuff do you like to do? -->
+
+
+        <div class="form-group">
+          <h2>2. What's more important to you?</h2>
+          <p>If you had to choose.</p>
+
+          <div class="radio">
+            <label>
+              <input type="radio" name="most_important">
+              Potential recurring income
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input type="radio" name="most_important">
+              Doing interesting work
+            </label>
+          </div>
+
+        </div><!-- 2. What's more important to you? -->
+
+        <div class="form-group">
+          <h2>3. How much time do you have to spend?</h2>
+          <p>If you had to choose.</p>
+
+          <div class="radio">
+            <label>
+              <input type="radio" name="time_to_spend">
+              I'm looking for short burst work
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input type="radio" name="time_to_spend">
+              I like big challenging tasks
+            </label>
+          </div>
+        </div><!-- 3. How much time do you have to spend? -->
+
+        <div class="form-group">
+          <h2>4. What's your experience?</h2>
+          <p>Everyone has an interesting background of work and experience. What's the simplest version of yours? Ever been a part of a start? Ever worked on other products? Ever been a MExican Lucha Libre wrestling champion?</p>
+
+          <%= react_component 'CharacterLimitedTextarea', limit: 500 %>
+
+        </div><!-- 4. What's your experience? -->
+
+
+        <div class="form-group">
+          <h2>
+            5. What tools do you currently prefer in the work you do?
+          </h2>
+          <p>Assembly doesn't replace your tools, but it helps to know what our community is using.</p>
+
+          <h4>Design</h4>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              Photoshop
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              Sketch
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              Illustrator
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              Other
+              <input class="form-control input-sm" type="text">
+            </label>
+          </div>
+
+          <h4>Development</h4>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              Photoshop
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              Sketch
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              Illustrator
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              Other
+              <input class="form-control input-sm" type="text">
+            </label>
+          </div>
+        </div><!-- 5. What tools do you currently prefer in the work you do? -->
+
+        <div class="form-group">
+          <h2>
+            6. What platforms do you enjoy working on?
+          </h2>
+          <p>Assembly doesn't replace your tools, but it helps to know what our community is using.</p>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              Web
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              iOS
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">
+              Android
+            </label>
+          </div>
+
+          <div class="checkbox">
+            <label>
+              Other
+              <input class="form-control input-sm" type="text">
+            </label>
+          </div>
+        </div><!-- 6. What platforms do you enjoy working on? -->
+
+        <div class="form-group">
+          <h2>7. How'd you hear about Assembly?</h2>
+
+          <select class="form-control">
+            <option>test</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Send this to the Connection Doctor!</button>
+        </div>
+
+      <% end %>
+
+    </div>
+  </div><!-- .row -->
+</div><!-- .container -->

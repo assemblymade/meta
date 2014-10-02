@@ -7,9 +7,10 @@
         <div class="sheet-body">
 
           <div class="text-center">
-            <h1 class="omega">Join Assembly and start building.</h1>
+            <h1 class="omega">Join Assembly</h1>
+            <p>This is what you're looking forward to experiencing in the Assembly community. We're just getting started, but we believe we're on to something and with you, it's gonna get better.</p>
             <p class="text-muted">
-              <a href="<%= new_user_session_path %>">Already have an account?</a>
+              <a href="<%= new_user_session_path %>">Already a member? Sign in.</a>
             </p>
           </div>
 
@@ -19,14 +20,14 @@
 
             <%= f.hidden_field :avatar_url %>
             <%= f.hidden_field :facebook_uid %>
+            <%= f.hidden_field :name %>
             <%= f.hidden_field :extra_data %>
             <%= f.hidden_field :location %>
-            <%= f.hidden_field :name %>
             <%= hidden_field_tag 'user[follow_product]' %>
 
             <% if f.object.facebook_uid.blank? %>
               <div class="text-center">
-                <a class="btn btn-facebook btn-lg" href="<%= user_omniauth_authorize_path(:facebook) %>">Quick sign up using Facebook</a>
+                <a class="btn btn-facebook btn-lg" href="<%= user_omniauth_authorize_path(:facebook) %>">Supersonic sign up with Facebook</a>
               </div>
 
               <fieldset class="hr-line">
@@ -55,8 +56,8 @@
                 </p>
               <% end %>
 
-              <%= f.label :username, class: 'control-label' %>
-              <%= f.text_field :username, autofocus: true, class: 'form-control input-lg', placeholder: 'jane' %>
+              <%= f.label :username, 'Username', class: 'control-label' %>
+              <%= f.text_field :username, class: 'form-control input-lg', placeholder: 'jane' %>
             </div>
 
             <div class="form-group <%= 'has-error' if f.object.errors[:email].any? %>">
@@ -80,17 +81,20 @@
               <%= f.label :password, class: 'control-label' %>
               <%= f.password_field :password, autocomplete: false, class: 'form-control input-lg' %>
               <p class="help-block">
-                8 characters minimum. Choose something easy for you to remember but hard for somebody else to guess.
+                8 characters minimum. You're smart, choose a good one.
               </p>
             </div>
 
-            <%= f.submit 'Sign up for Assembly', class: 'btn btn-default btn-block btn-lg' %>
-            <p class="text-center small text-muted">
-              <br>
-              By signing up, you agree to Assembly's <a href="<%= tos_path %>">Terms of Service</a>.
-            </p>
+            <div class="text-center">
+              <button class="btn btn-default btn-lg" type="submit"><span class="text-success">Join Assembly</span></button>
+            </div>
 
           <% end %>
+
+          <p class="text-center small text-muted">
+            <br>
+            By signing up, you agree to Assembly's <a href="<%= tos_path %>">Terms of Service</a>.
+          </p>
         </div>
       </div>
     </div>

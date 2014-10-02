@@ -44,7 +44,6 @@ ASM::Application.routes.draw do
   get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
-  get '/learn'            => 'pages#learn',  :as => :learn
 
 
   get '/create'        => 'products#new',    :as => :new_idea
@@ -75,8 +74,14 @@ ASM::Application.routes.draw do
 
     # Registrations
     controller 'users/registrations' do
-      get  '/signup', action: :new, :as => :new_user_registration
-      post '/signup', action: :create, :as => :user_registration
+      get  '/signup', action: :new, as: :new_user_registration
+      post '/signup', action: :create, as: :user_registration
+    end
+
+    controller :surveys do
+      get  '/welcome', action: :new
+      post '/welcome', action: :create
+      get  '/welcome/thanks', action: :show
     end
 
     get '/dashboard' => 'dashboard#activity', as: :dashboard
@@ -157,8 +162,6 @@ ASM::Application.routes.draw do
   # redirect support-foo to helpful
   get '/support-foo', to: redirect('/helpful')
   get '/support-foo/*extra', to: redirect {|p, req| "/helpful/#{p[:extra]}" }
-
-  get '/welcome', to: 'welcome#index', as: :welcome
 
   # Admin
   namespace :admin do
