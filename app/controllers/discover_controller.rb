@@ -33,7 +33,9 @@ class DiscoverController < ApplicationController
 
   def bounties
     if params[:filter].blank?
-      cookies[:discover_bounties_filter] ||= 'all'
+      if cookies[:discover_bounties_filter].blank?
+        cookies[:discover_bounties_filter] = 'all'
+      end
       redirect_to discover_path(:bounties, filter: cookies[:discover_bounties_filter])
     end
 
