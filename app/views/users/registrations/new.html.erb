@@ -20,6 +20,7 @@
 
             <%= f.hidden_field :avatar_url %>
             <%= f.hidden_field :facebook_uid %>
+            <%= f.hidden_field :name %>
             <%= f.hidden_field :extra_data %>
             <%= f.hidden_field :location %>
             <%= hidden_field_tag 'user[follow_product]' %>
@@ -48,17 +49,6 @@
               </div>
             <% end %>
 
-            <div class="form-group <%= 'has-error' if f.object.errors[:name].any? %>">
-              <% if f.object.errors[:name].any? %>
-                <p class="help-block pull-right">
-                  <%= f.object.errors[:name].to_sentence %>
-                </p>
-              <% end %>
-
-              <%= f.label :name, 'Real life name', class: 'control-label' %>
-              <%= f.text_field :name, autofocus: true, class: 'form-control input-lg', placeholder: 'Jane Smith' %>
-            </div>
-
             <div class="form-group <%= 'has-error' if f.object.errors[:username].any? %>">
               <% if f.object.errors[:username].any? %>
                 <p class="help-block pull-right">
@@ -66,7 +56,7 @@
                 </p>
               <% end %>
 
-              <%= f.label :username, 'Assembly @username', class: 'control-label' %>
+              <%= f.label :username, 'Username', class: 'control-label' %>
               <%= f.text_field :username, class: 'form-control input-lg', placeholder: 'jane' %>
             </div>
 
