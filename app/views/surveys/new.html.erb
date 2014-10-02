@@ -1,24 +1,30 @@
 <% title 'This is happening!' %>
 <%= track 'welcome.viewed' %>
 
+<%= render 'shared/navbar' %>
+
 <div class="container">
 
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
 
+      <br>
+
       <div class="text-center">
-        <h1>This is happening!</h1>
+        <h1 style="font-size:48px">This is happening!</h1>
 
-        <p>We currently have 56 products being built in different stages from idea to launched product. There's a lot to sort through to find a product you're stoked to work on. Take 231 seconds to fill out some cool info below and @awwwstn or @benshyong will be able to better connect you to products that are a good fit.</p>
+        <p class="large text-muted">We currently have 56 products being built in different stages from idea to launched product. There's a lot to sort through to find a product you're stoked to work on. Take 231 seconds to fill out some cool info below and @awwwstn or @benshyong will be able to better connect you to products that are a good fit.</p>
 
-        <p class="small">or maybe you want to <a href="#">start a product</a> or you're all &ldquo;Geez man! <a href="#">Just let me dive in!</a>!&rdquo;</p>
+        <br>
+
+        <p class="text-muted">or maybe you want to <a class="bold" href="<%= new_product_path %>" style="font-weight:bold;text-decoration:underline">start a product</a> or you're all &ldquo;Geez man! <a href="<%= discover_path %>" style="font-weight:bold;text-decoration:underline">Just let me dive in!!</a>&rdquo;</p>
 
 
-        <p>There are 8 questions. None of them are required. The more you fill out, the more helpful we can be, yo.</p>
+        <h3 style="font-weight:normal;margin-bottom:4rem">There are 7 questions. None of them are required. The more you fill out, the more helpful we can be, yo.</h3>
 
       </div>
 
-      <hr>
+      <hr style="margin-bottom:4rem">
 
       <%= form_tag '/welcome', class: 'form', method: 'post' do %>
 
@@ -31,7 +37,7 @@
             <label>
               <input type="checkbox">
               <strong>Design</strong>
-              <small>Interfaces, Information/Architecture, Brand, Logos, Icons</small>
+              <span class="text-muted">Interfaces, Information/Architecture, Brand, Logos, Icons</span>
             </label>
           </div>
 
@@ -39,7 +45,7 @@
             <label>
               <input type="checkbox">
               <strong>Strategy</strong>
-              <small>HTML, CSS, SCSS, Javascript</small>
+              <span class="text-muted">HTML, CSS, SCSS, Javascript</span>
             </label>
           </div>
 
@@ -47,7 +53,7 @@
             <label>
               <input type="checkbox">
               <strong>Frontend Dev</strong>
-              <small>HTML, CSS, SCSS, Javascript</small>
+              <span class="text-muted">HTML, CSS, SCSS, Javascript</span>
             </label>
           </div>
 
@@ -55,7 +61,7 @@
             <label>
               <input type="checkbox">
               <strong>Backend Dev</strong>
-              <small>Ruby on Rails, Python, PHP, Go</small>
+              <span class="text-muted">Ruby on Rails, Python, PHP, Go</span>
             </label>
           </div>
 
@@ -63,7 +69,7 @@
             <label>
               <input type="checkbox">
               <strong>Marketing</strong>
-              <small>Social, Growth, Emails</small>
+              <span class="text-muted">Social, Growth, Emails</span>
             </label>
           </div>
 
@@ -71,7 +77,7 @@
             <label>
               <input type="checkbox">
               <strong>Writing</strong>
-              <small>Blogging, Copywriting, Content Strategy</small>
+              <span class="text-muted">Blogging, Copywriting, Content Strategy</span>
             </label>
           </div>
 
@@ -79,7 +85,7 @@
             <label>
               <input type="checkbox">
               <strong>Air Guitar</strong>
-              <small>and other Air Instruments</small>
+              <span class="text-muted">and other Air Instruments</span>
             </label>
           </div>
 
@@ -91,6 +97,7 @@
           </div>
         </div><!-- 1. What kinds of stuff do you like to do? -->
 
+        <br style="line-height:60px">
 
         <div class="form-group">
           <h2>2. What's more important to you?</h2>
@@ -112,6 +119,8 @@
 
         </div><!-- 2. What's more important to you? -->
 
+        <br style="line-height:60px">
+
         <div class="form-group">
           <h2>3. How much time do you have to spend?</h2>
           <p>If you had to choose.</p>
@@ -131,6 +140,8 @@
           </div>
         </div><!-- 3. How much time do you have to spend? -->
 
+        <br style="line-height:60px">
+
         <div class="form-group">
           <h2>4. What's your experience?</h2>
           <p>Everyone has an interesting background of work and experience. What's the simplest version of yours? Ever been a part of a start? Ever worked on other products? Ever been a MExican Lucha Libre wrestling champion?</p>
@@ -139,6 +150,7 @@
 
         </div><!-- 4. What's your experience? -->
 
+        <br style="line-height:60px">
 
         <div class="form-group">
           <h2>
@@ -207,6 +219,8 @@
           </div>
         </div><!-- 5. What tools do you currently prefer in the work you do? -->
 
+        <br style="line-height:60px">
+
         <div class="form-group">
           <h2>
             6. What platforms do you enjoy working on?
@@ -242,6 +256,8 @@
           </div>
         </div><!-- 6. What platforms do you enjoy working on? -->
 
+        <br style="line-height:60px">
+
         <div class="form-group">
           <h2>7. How'd you hear about Assembly?</h2>
 
@@ -249,6 +265,8 @@
             <option>test</option>
           </select>
         </div>
+
+        <br style="line-height:60px">
 
         <div class="form-actions">
           <button class="btn btn-primary" type="submit">Send this to the Connection Doctor!</button>
@@ -259,3 +277,5 @@
     </div>
   </div><!-- .row -->
 </div><!-- .container -->
+
+<%= render 'shared/footer' %>

@@ -12,6 +12,10 @@ textarea {
   resize: vertical;
 }
 
+input[type=radio], input[type=checkbox] {
+  margin-top: 6px;
+}
+
 .markdown-editor-control {
   position: relative;
 
