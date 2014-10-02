@@ -34,38 +34,30 @@ class DiscoverController < ApplicationController
   def bounties
     if params[:filter].blank?
       if cookies[:discover_bounties_filter].blank?
-        cookies[:discover_bounties_filter] = 'all'
+        cookies[:discover_bounties_filter] = 'design'
       end
       redirect_to discover_path(:bounties, filter: cookies[:discover_bounties_filter])
     end
 
     filter = cookies[:discover_bounties_filter] = params[:filter]
-    params[:filter_text] = params[:filter] == 'all' ? '' : params[:filter]
+    params[:filter_text] = params[:filter] == 'design' ? '' : params[:filter]
 
     @filters = [{
-      slug: 'all',
-      shortlabel: 'All',
-      label: 'All Open Bounties',
-    }, {
       tagged: 'design',
       shortlabel: 'Design',
-      label: 'Open Design Bounties',
+      label: 'Featured Design Bounties',
     }, {
       tagged: 'frontend',
       shortlabel: 'Frontend',
-      label: 'Open Front-End Development Bounties',
+      label: 'Featured Front-End Development Bounties',
     }, {
       tagged: 'backend',
       shortlabel: 'Backend',
-      label: 'Open Back-End Development Bounties',
+      label: 'Featured Back-End Development Bounties',
     }, {
       tagged: 'product',
       shortlabel: 'Product',
-      label: 'Open Product Bounties',
-    }, {
-      tagged: 'marketing',
-      shortlabel: 'Marketing',
-      label: 'Open Marketing Bounties',
+      label: 'Featured Product Bounties',
     }
     ]
 
@@ -80,11 +72,11 @@ class DiscoverController < ApplicationController
 
     @filter = @filters.find {|f| f[:slug] == params[:filter] }
 
-    @postings = Task.open.unflagged.includes(:product).order(created_at: :desc).where(products: { flagged_at: nil })
-
-    if filter != 'all'
-      @postings = @postings.tagged_with(filter)
-    end
+    @postings = Task.open.unflagged.
+                  includes(:product).
+                  order(created_at: :desc).
+                  where(products: { flagged_at: nil }).
+                  tagged_with(filter)
 
     if slug = params[:product]
       @postings = @postings.where('products.slug = ?', slug)
