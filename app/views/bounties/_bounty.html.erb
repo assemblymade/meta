@@ -129,6 +129,18 @@
             }.to_json %>">
         </div>
       </li>
+      <% if current_user.staff? %>
+        <li>
+          <div data-react-class="ToggleButton"
+               data-react-props="<%= {
+                 bool: bounty.flagged?,
+                 text: { true: 'Flagged', false: 'Unflagged' },
+                 classes: { true: 'btn btn-xs btn-danger', false: 'btn btn-xs btn-success' },
+                 href: { true: product_wip_unflag_path(bounty.product, bounty), false: product_wip_flag_path(bounty.product, bounty) }
+              }.to_json %>">
+          </div>
+        </li>
+      <% end %>
     </ul>
 
   </div>

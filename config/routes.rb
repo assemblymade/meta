@@ -303,6 +303,7 @@ ASM::Application.routes.draw do
       patch 'mute'
       patch 'tag'
       patch 'flag'
+      patch 'unflag'
 
       resources :comments, only: [:show, :create, :edit, :update]
     end
