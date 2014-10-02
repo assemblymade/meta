@@ -89,6 +89,7 @@ group :development, :test do
   gem 'pry'
   gem 'quiet_assets'
   gem 'rspec-rails'
+  gem 'spring-commands-rspec'
   gem 'terminal-table'
   gem 'timecop'
   gem 'ffaker'
