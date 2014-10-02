@@ -44,7 +44,7 @@ class DiscoverController < ApplicationController
       slug: 'all',
       shortlabel: 'All',
       label: 'All Open Bounties',
-    },{
+    }, {
       tagged: 'design',
       shortlabel: 'Design',
       label: 'Open Design Bounties',
@@ -52,7 +52,7 @@ class DiscoverController < ApplicationController
       tagged: 'frontend',
       shortlabel: 'Frontend',
       label: 'Open Front-End Development Bounties',
-    }, 
+    }, {
       tagged: 'backend',
       shortlabel: 'Backend',
       label: 'Open Back-End Development Bounties',
