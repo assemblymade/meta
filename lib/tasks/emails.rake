@@ -137,14 +137,18 @@ namespace :emails do
         EmailLog.send_once(user.id, key) do
           balance = User::Balance.new(user)
 
-          if !user.sponsored? && balance.available_earnings > 0
-            puts "  #{user.username} $#{"%.02f" % (balance.available_earnings / 100.0)}"
-            balance_entry_ids = User::BalanceEntry.joins(:profit_report).
+          if !user.sponsored?
+            balance_entries = User::BalanceEntry.joins(:profit_report).
                   where('profit_reports.end_at = ?', end_at).
-                  where(user_id: user.id).
-                  pluck(:id)
+                  where(user_id: user.id)
 
-            UserBalanceMailer.delay(queue: 'mailer').new_balance(balance_entry_ids)
+            earnings = balance_entries.sum(:earnings)
+
+            if earnings > 0
+              puts "  #{user.username} $#{"%.02f" % (earnings / 100.0)}"
+
+              UserBalanceMailer.delay(queue: 'mailer').new_balance(balance_entries.pluck(:id))
+            end
           end
         end
       end
