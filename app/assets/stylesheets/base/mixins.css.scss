@@ -47,3 +47,10 @@
         }
     }
 }
+
+@mixin clip-path($path) {
+  -webkit-clip-path: $path;
+  -moz-clip-path: $path;
+  -ms-clip-path: $path;
+  clip-path: $path;
+}

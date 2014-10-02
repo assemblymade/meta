@@ -2,7 +2,7 @@
 <%= track 'learn.viewed' %>
 
 <div class="masthead" style="background: linear-gradient(160deg, rgba(255, 232, 80, .8), rgba(26, 88, 131, .85) 70%), url(<%= image_url 'faces.jpg' %>); min-height: 787px; padding-top: 0">
-  <%= render 'shared/start_navbar' %>
+  <%= render 'shared/navbar' %>
 
   <div class="container text-center" style="margin-top: 100px">
     <div class="masthead-title">
@@ -129,7 +129,7 @@
           <div class="col-xs-12 col-sm-10 col-sm-offset-1">
             <div>
               <div style="margin: 35px 0 20px 0">
-                <div class="avatar-comment" style="background-image: url('<%= User.find_by(username: 'milosz').avatar.url(170) %>')"></div>
+                <div class="avatar-comment" style="background: linear-gradient(160deg, rgba(254, 234, 115, .5), rgba(30, 89, 129, .5)), url('<%= Avatar.url_from_email(User.find_by(username: 'milosz').email.downcase, 170) %>')"></div>
               </div>
               <em class="text-serif text-muted" style="font-size: 20px; line-height: 1.1">Build on Assembly I have a built-in team &dash; no more solo projects. I can't wait to launch Octobox.</em>
               <br>
@@ -142,7 +142,7 @@
 
             <div>
               <div style="margin: 35px 0 20px 0">
-                <div class="avatar-comment" style="background-image: url('<%= User.find_by(username: 'chexee').avatar.url(170) %>')"></div>
+                <div class="avatar-comment" style="background: linear-gradient(160deg, rgba(254, 234, 115, .5), rgba(30, 89, 129, .5)), url('<%= Avatar.url_from_email(User.find_by(username: 'chexee').email.downcase, 170) %>')"></div>
               </div>
               <em class="text-serif text-muted" style="font-size: 20px; line-height: 1.1">I choose what to work on and when I work on it. For each product, the idea, direction, and vision are all driven by the people who make it. That's a really powerful idea.</em>
               <br>

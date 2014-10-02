@@ -4,9 +4,8 @@
 }
 
 .avatar-comment {
-  background-size: 170px 170px;
+  @include clip-path(polygon(10px 0px, 160px 0px, 160px 150px, 95px 150px, 85px 170px, 75px 150px, 10px 150px));
   height: 170px;
   width: 170px;
   margin: 0 auto;
-  -webkit-clip-path: polygon(10px 0px, 160px 0px, 160px 150px, 95px 150px, 85px 170px, 75px 150px, 10px 150px);
 }
