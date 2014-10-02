@@ -1,202 +1,439 @@
-<% title 'Start a new product' %>
-<% activate_nav! :platform_create %>
-<%= render 'shared/navbar' %>
+<% title 'Build your idea into a product with our community' %>
+<%= track 'learn.viewed' %>
+
+<div class="masthead" style="background: linear-gradient(160deg, rgba(255, 232, 80, .8), rgba(26, 88, 131, .85) 70%), url(<%= image_url 'faces.jpg' %>); min-height: 787px; padding-top: 0">
+  <%= render 'shared/start_navbar' %>
+
+  <div class="container text-center" style="margin-top: 100px">
+    <div class="masthead-title">
+      <h1 style="font-size: 64px; line-height: 1.2">Build your idea into a product with our community.</h1>
+      <p style="font-size: 32px; line-height: 1.2; padding: 30px 0">World-class product designers, engineers, writers, <br> others building product &dash; together.</p>
+    </div>
+    <a class="btn btn-success btn-xl" href="<%= new_product_path %>" style="margin: 30px 0; box-shadow: 0 0 0 3px rgba(0, 0, 0, .1)">
+      Start Your Product
+    </a>
+  </div>
+</div><!-- .masthead -->
 
 <div class="container">
+  <h1 class="text-center" style="font-weight: lighter">How to launch a product on Assembly</h1>
+
   <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="sheet">
-        <div class="sheet-body">
+    <div class="col-xs-2 col-xs-offset-5">
+      <hr>
+    </div>
+  </div>
 
-          <div class="sheet-body text-center">
-            <!-- <h1><strong>Bring your product ideas to life on Assembly.</strong></h1> -->
-            <h1><strong>Turn an idea into a profitable software business</strong></h1>            
-            <div class="row">
-              <div class="col-md-10 col-md-push-1">
-                <p class="lead text-muted" style="margin-bottom: 36px;">
-                  Building with the Assembly community lets you think <strong>bigger</strong> and go <strong>further</strong>.
-                </p>
+  <ul class="list list-steps">
+    <li class="overlay"></li>
+    <li>
+      <div class="step active">1</div>
+      <div class="body">
+        <a href="<%= new_product_path %>"><strong>Submit an Idea</strong></a>
+        <div class="text-muted">for a web or mobile product</div>
+      </div>
+    </li>
+    <li>
+      <div class="step">2</div>
+      <div class="body">
+        <strong>Rally Your Idea</strong>
+        <div class="text-muted">Gather others to build with you</div>
+      </div>
+    </li>
+    <li>
+      <div class="step">3</div>
+      <div class="body">
+        <strong>Build the Product</strong>
+        <div class="text-muted">with the Assembly community</div>
+      </div>
+    </li>
+    <li>
+      <div class="step">4</div>
+      <div class="body">
+        <strong>Ship the Product!</strong>
+        <div class="text-muted">We take care of the business stuff</div>
+      </div>
+    </li>
+    <li>
+      <div class="step">5</div>
+      <div class="body">
+        <strong>Profits shared</strong>
+        <div class="text-muted">Contributors receive their share</div>
+      </div>
+    </li>
+    <li class="overlay"></li>
+  </ul>
+</div>
+
+<hr style="margin-bottom: 0">
+
+<div class="container text-center">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4" style="padding: 50px 40px">
+      <h1 style="font-size: 80px; margin: 0">3MM</h1>
+      <h2 style="font-weight: lighter; margin-top: 0">Customers</h1>
+      <p class="text-muted">Over 3 million people have used the products being built on Assembly.</p>
+    </div>
+    <div class="col-xs-12 col-sm-4" style="padding: 50px 40px; border-left: 1px solid #eee; border-right: 1px solid #eee">
+      <h1 style="font-size: 80px; margin: 0">$160K</h1>
+      <h2 style="font-weight: lighter; margin-top: 0">In Profits Paid Out</h1>
+      <p class="text-muted">Over $160,000 has been paid out to Assembly App Coin holders in 2014.</p>
+    </div>
+    <div class="col-xs-12 col-sm-4" style="padding: 50px 40px">
+      <h1 style="font-size: 80px; margin: 0"><%= Product.count %></h1>
+      <h2 style="font-weight: lighter; margin-top: 0">Products</h1>
+      <p class="text-muted"><%= Product.count %> products started on Assembly. <br> <%= Product.greenlit.count %> products launched in 2014.</p>
+    </div>
+  </div>
+</div>
+
+<hr style="margin-top: 0">
+
+<div class="container-fluid" style="background: #fff url(<%= image_url 'section-gradient.png' %>) no-repeat center bottom">
+  <div class="container" style="padding-bottom: 80px">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <h1 style="font-size: 48px">Why start a product on Assembly?</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-2 col-xs-offset-5">
+        <hr>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-sm-push-6">
+        <h2 style="font-size: 32px; font-weight: lighter">An alternative to VC-funded and side-project products</h2>
+        <p class="large">Collaborate on a common product vision with others as a community team. Earn ownership of the product by completing bounties.</p>
+
+        <hr style="margin-top: 30px; margin-bottom: 40px">
+
+        <h2 style="font-size: 32px; font-weight: lighter">Collaborative Ownership</h2>
+        <p class="large">Collaborate on a common product vision with others as a community team. Earn ownership of the product by completing bounties.</p>
+
+        <hr style="margin-top: 30px; margin-bottom: 40px">
+
+        <h2 style="font-size: 32px; font-weight: lighter">Make a Difference</h2>
+        <p class="large">Notifications and near-realtime access to finacials, ownership and strategic team decisions so you can guide the direction of the business.</p>
+
+        <hr style="margin-top: 30px; margin-bottom: 40px">
+
+        <h2 style="font-size: 32px; font-weight: lighter">Learn While you Build</h2>
+        <p class="large">With with others on product and get exposed to new ideas and skills. Participate in the ideation process, web development, visual design or imagining creative revenue opportunity. Grow your existing experience with product.</p>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-sm-pull-6 text-center">
+        <h2 style="font-size: 32px; font-weight: lighter">What does the community think?</h2>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+            <div>
+              <div style="margin: 35px 0 20px 0">
+                <%= avatar_tag(User.find_by(username: 'milosz'), 150) %>
+              </div>
+              <em class="text-muted" style="font-size: 20px">Build on Assembly I have a built-in team &dash; no more solo projects. I can't wait to launch Octobox.</em>
+              <br>
+              <div style="margin-top: 10px">
+                <strong>Milosz Falinski - Web Application Developer</strong>
+                <br>
+                <span class="text-muted">@milosz</span>
               </div>
             </div>
-            
-            <div class="row">
-              <div class='col-md-5'>
-                <ul>
-                  <li>Harness the creative potential of the world</li>
-                  <li>Make working alone a thing of the past</li>
-                  <li>Focus on what you love, working side-by-side with others that complement your skills</li>
-                  <li>Earn ongoing income from the products you build when they do well</li>
-                  <li>Diversify your experience and portfolio</li>
-                </ul>
+
+            <div>
+              <div style="margin: 35px 0 20px 0">
+                <%= avatar_tag(User.find_by(username: 'chexee'), 150) %>
               </div>
-              
-              <div class='col-md-5'>
-                <h3><strong>3,000,000+</strong> people have used products that are being built on Assembly</h3>
-                <h3><strong>$160,000+</strong> have been paid out to Assembly App Coin holders</h3>
-                <h3><strong>754</strong> products have been started on Assembly</h3>
+              <em class="text-muted" style="font-size: 20px">I choose what to work on and when I work on it. For each product, the idea, direction, and vision are all driven by the people who make it. That's a really powerful idea.</em>
+              <br>
+              <div style="margin-top: 10px">
+                <strong>Chelsea Otakan - Interface Designer</strong>
+                <br>
+                <span class="text-muted">@chexee</span>
               </div>
             </div>
           </div>
-
-          <div class="row">
-            <h3>Its simple to start your distributed businesses on Assembly:</h3>
-            <ol>
-              <li>Everyone with software ideas and app ideas can bring them to the Assembly community.</li>  
-              <li>Developers, designers, and others around the world help build the ones they like most on Assembly.</li>
-              <li>Assembly collects the products' revenue and splits it with all those that helped bring them to life.</li>
-            </ol>
-            <div class='col-md-5'>
-              Got a product idea? Let's give it a name: 
-              <input></input><em>(you can change this later)</em>
-              
-              <a href="<%= new_idea_path %>" class="btn btn-lg btn-success btn-block">Create Product</a>
-            </div>
-          </div>
-
-        
-
-          <h2 style="margin-bottom: 36px; font-weight: 300;">There's no need to incorporate, setup bank accounts, find a lawyer, create employment contracts, get accountants, and other product distractions. Assembly takes care of the boring stuff so you can focus on what you love.
-</h2>
-
-          <div class="row" style="margin-top: 24px; margin-bottom: 24px;">
-
-            <!-- Plan -->
-            <div class="col-md-4">
-              <div class="row">
-                <div class="col-xs-2">
-                  <span class="text-large text-primary icon icon-eyeglasses"></span>
-                </div>
-                <div class="col-xs-10">
-                  <h4 class="alpha">
-                    <a href="#">Collaboration</a>
-                  </h4>
-                  <p class="text-muted text-small">
-                    I have to work on these right now. stay on top of bugs and focus on features. Your project's issues page can be as simple or as sophisticated as you like. Filter by open and closed issues, assignees, labels, and milestones. Sort by issue age, number of comments, and update time. Anyone may create and view issues on public repositories.
-
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Bounties -->
-            <div class="col-md-4">
-              <div class="row">
-                <div class="col-xs-2">
-                  <span class="icon icon-trophy text-large text-primary"></span>
-                </div>
-                <div class="col-xs-10">
-                  <h4 class="alpha">
-                    <a href="#">Transparency</a>
-                  </h4>
-                  <p class="text-muted text-small">
-                    I have to work on these right now.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Discussions -->
-            <div class="col-md-4">
-              <div class="row">
-                <div class="col-xs-2">
-                  <span class="icon icon-book-open text-large text-primary"></span>
-                </div>
-                <div class="col-xs-10">
-                  <h4 class="alpha">
-                    <a href="#">Liberty</a>
-                  </h4>
-                  <p class="text-muted text-small">
-                    I have to work on these right now.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-          </div><!-- .row -->
-        
-          <div class="row">
-            <blockquote>
-              It's great to be able to collaborate with other people so easily. I've been a solo developer for 4 years so it makes a nice change. - @intrications
-            </blockquote>
-            
-            <blockquote>
-              Assembly gives me is something close to my dream job...working on my own [dreams] but also helping other people to accomplish their dreams. I just love it. - @benjam1n
-            </blockquote>            
-          </div>
-          
-          <div class='row'>
-            <h2 style="margin-bottom: 36px; font-weight: 300;">Each Assembly is uniquely special.</h2>
-            <ul>
-              <li>The software is  open sourced and grants a non-exclusive license to Assembly so it can collect revenue on behalf of the contributors.</li>
-              <li>All product financials and metrics are radically transparent to all those building it.</li>
-              <li>The domain for websites and App Store account for mobile apps is managed by Assembly to ensure everyone is fairly rewarded.</li>
-              <li>The revenue and finances are handled by Assembly so you can trust the income after expenses is split amongst those who helped build it.</li>
-            </ul>
-          </div>          
-
-          <div class='row'>
-            <h2>FAQ</h2>
-
-            <h3>Why not just do open source?</h3>
-            <p>
-              Open source is great, Assembly products are built with OSS. 
-              What Assembly lets you do is monetize the products you create
-            </p>
-
-            <h3>What is Assembly's fee?</h3>
-            <p>
-              Assembly takes 10% of the revenue after expenses.
-            </p>
-
-            <h3>Who pays for hosting the product?</h3>
-            <p>
-              In some cases, Assembly will help cover these costs before a product launches. In other cases, members of the community pay for them. In any case, these expenditures will be tracked and reimbursed when the product earns profits.
-            </p>
-            <p>
-              Once a product is live and earning revenue, monthly costs are paid before community earnings are distributed.
-            </p>
-            
-            <h3>Who owns the intellectual property?</h3>
-            <p>
-              You do. However, all products on Assembly are licensed under AGPL, and by agreeing to our terms of service you also are granting non-exclusive rights to Assembly to monetize this IP on behalf of the community (and you).
-            </p>
-            
-            <h3>I've already built a product and it makes money, can I put it on Assembly?</h3>
-            <p>
-              Yes. Usually in this case, we'll "pre-allocate" a fair number of coins to you (and anyone else who built the product with you). It will work similarly to a new product being built on Assembly, but you'll be a diluted at a slower rate. If you have more questions about this, reach out to chris@assembly.com
-            </p>
-
-            <h3>Can a product leave Assembly?</h3>
-            <p>
-              No. An important part of Assembly is that anyone can come help build any product, with full trust that their work (if accepted) will be rewarded with an ownership stake in that product that will translate to a portion of any future revenue.
-            </p>
-            <p>
-              In order for Assembly to ensure that the community's work is rewarded in perpetuity, products being built on Assembly need to stay on Assembly.
-            </p>
-            
-            <h3>Can a product be sold?</h3>
-            <p>
-              Yes. If a third-party offers to acquire an Assembly product and the partners (everyone with ownership stake) decide it is the right decision for the community, the customers and the product, then a product can be sold.
-            </p>
-            <p>
-              When a product is sold, earnings are treated like any other revenue and are paid out to the community.
-            </p>
-              
-            <h3>Is Assembly legal?</h3>
-            <p>
-              Yes, of course. We've worked hard to figure out the legal challenges of letting people build businesses in this new way.
-            </p>
-            <p>
-              Each product on Assembly is legally structured as a partnership, where all stakeholders are partners. The product's profits are paid out to partners as royalties, based on each partner's App Coin ownership.
-            </p>
-            
-          </div>
-
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<hr style="margin-top: 0">
 
-<%= render 'shared/footer' %>
+<div class="container">
+  <div class="text-center">
+    <h1 style="font-size: 48px">What Assembly Does For You</h1>
+
+    <div class="row">
+      <div class="col-xs-2 col-xs-offset-5">
+        <hr>
+      </div>
+    </div>
+
+    <h2 style="font-size: 32px; font-weight: lighter">Do what you're best at, let us do the rest.</h2>
+    <p class="lead text-muted">Leave the hassles to us. We take care of the nauseating business setup, legal docs, hosting and accounting so that great product ideas can be free form the obstacles that too often kill them before they get off the ground.</p>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <div>
+        <div style="position: absolute">
+          <span class="glyphicon glyphicon-ok text-success"></span>
+        </div>
+        <div style="margin-left: 30px">
+          <h4>Hosting, Domain, and other starting costs are covered</h4>
+          <p>Don’t worry about raising capital, Assembly helps every app get started on Heroku and we’ll even cover the costs until revenue exceeds the expenses. Don’t want to Heroku, we’re working with other providers and your always welcome to use anything else that would help your business and expense it to the product.</p>
+        </div>
+      </div>
+
+      <br>
+
+      <div>
+        <div style="position: absolute">
+          <span class="glyphicon glyphicon-ok text-success"></span>
+        </div>
+        <div style="margin-left: 30px">
+          <h4>No Accountants required</h4>
+          <p>Assembly creates a financial dashboard so you can see how handle the business financials (so you don’t have to). When money comes in, expenses are covered, and you get paid from the proceeds.</p>
+        </div>
+      </div>
+
+      <br>
+
+      <div>
+        <div style="position: absolute">
+          <span class="glyphicon glyphicon-ok text-success"></span>
+        </div>
+        <div style="margin-left: 30px">
+          <h4>Collect payments using the best tools</h4>
+          <p>Our Stripe adapter lets you get all the power of stripe without the hassle of incorporating and setting up company bank accounts. Assembly collects the funds for all the products so it can report them to the community and distribute them to the everyone that built it. Collect revenue other ways? <a href="mailto:assembly@helpful.io">Contact Us</a>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+      <div>
+        <div style="position: absolute">
+          <span class="glyphicon glyphicon-ok text-success"></span>
+        </div>
+        <div style="margin-left: 30px">
+          <h4>Control the finances with a virtual account</h4>
+          <p>Each product’s core team (that’s you and whomever you invite) can use income or donated funds to cover any costs they choose.</p>
+        </div>
+      </div>
+
+      <br>
+
+      <div>
+        <div style="position: absolute">
+          <span class="glyphicon glyphicon-ok text-success"></span>
+        </div>
+        <div style="margin-left: 30px">
+          <h4>Keep your IP</h4>
+          <p>All source code is open sourced to the community using the AGPL license. Assembly additionally retains a non-exclusive license so we can collect and distribute revenue on behalf of the contributors.</p>
+        </div>
+      </div>
+
+      <br>
+
+      <div>
+        <div style="position: absolute">
+          <span class="glyphicon glyphicon-ok text-success"></span>
+        </div>
+        <div style="margin-left: 30px">
+          <h4>Legally, we have you covered</h4>
+          <p>Assembly handles the legal stuff (sorry, we don’t support illegal products).</p>
+        </div>
+      </div>
+
+      <br>
+
+      <div>
+        <div style="position: absolute">
+          <span class="glyphicon glyphicon-ok text-success"></span>
+        </div>
+        <div style="margin-left: 30px">
+          <h4>Protection</h4>
+          <p>We manage domain the domain for websites and App Store accounts for mobile apps. This is held in escrow to ensure everyone is fairly rewarded. If a product ever leaves assembly, these assets are then transferred to the owners.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center" style="padding-top: 20px">
+    <h2 style="font-size: 32px; font-weight: lighter">Assembly is a collaborator on your product.</h2>
+    <p class="lead">For this high level of collaboration, we own 10% of your product.</p>
+  </div>
+</div>
+
+<div class="container-fluid" style="background: #fff url(<%= image_url 'section-gradient.png' %>) no-repeat center bottom">
+  <div class="container">
+    <h1 class="text-center" style="font-size: 48px">Smart Questions</h2>
+
+    <div class="row">
+      <div class="col-xs-2 col-xs-offset-5">
+        <hr>
+      </div>
+    </div>
+
+    <div class="panel-group" style="padding: 40px 0">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6" style="margin-bottom: 15px">
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#why-not-just-do-open-source" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Why not just do open source?
+                </a>
+              </p>
+            </div>
+            <div id="why-not-just-do-open-source" class="panel-collapse collapse">
+              <div class="panel-body">
+                <p>Open source is great, Assembly products are built with OSS. What Assembly lets you do is monetize the products you create.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#what-is-assemblys-fee" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  What is Assembly's fee?
+                </a>
+              </p>
+            </div>
+            <div id="what-is-assemblys-fee" class="panel-collapse collapse">
+              <div class="panel-body">
+                <p>Assembly takes 10% of the revenue after expenses.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#who-pays-for-hosting-the-product" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Who pays for hosting the product?
+                </a>
+              </p>
+            </div>
+            <div id="who-pays-for-hosting-the-product" class="panel-collapse collapse collapse">
+              <div class="panel-body">
+                <p>In some cases, Assembly will help cover these costs before a product launches. In other cases, members of the community pay for them. In any case, these expenditures will be tracked and reimbursed when the product earns profits.</p>
+                <p>Once a product is live and earning revenue, monthly costs are paid before community earnings are distributed.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#who-owns-the-intellectual-property" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Who owns the intellectual property?
+                </a>
+              </p>
+            </div>
+            <div id="who-owns-the-intellectual-property" class="panel-collapse collapse collapse">
+              <div class="panel-body">
+                <p>You do. However, all products on Assembly are licensed under AGPL, and by agreeing to our terms of service you also are granting non-exclusive rights to Assembly to monetize this IP on behalf of the community (and you).</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-6">
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#can-an-existing-product-be-moved-to-assembly" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Can an existing product be moved to Assembly?
+                </a>
+              </p>
+            </div>
+            <div id="can-an-existing-product-be-moved-to-assembly" class="panel-collapse collapse">
+              <div class="panel-body">
+                <p>Yes. Usually in this case, we'll "pre-allocate" a fair number of coins to you (and anyone else who built the product with you). It will work similarly to a new product being built on Assembly, but you'll be a diluted at a slower rate. If you have more questions about this, reach out to <a href="mailto:chris@assembly.com">chris@assembly.com</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#can-a-product-leave-assembly" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Can a product leave Assembly?
+                </a>
+              </p>
+            </div>
+            <div id="can-a-product-leave-assembly" class="panel-collapse collapse">
+              <div class="panel-body">
+                <p>No. An important part of Assembly is that anyone can come help build any product, with full trust that their work (if accepted) will be rewarded with an ownership stake in that product that will translate to a portion of any future revenue.</p>
+                <p>In order for Assembly to ensure that the community's work is rewarded in perpetuity, products being built on Assembly need to stay on Assembly.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#can-a-product-be-sold" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Can a product be sold?
+                </a>
+              </p>
+            </div>
+            <div id="can-a-product-be-sold" class="panel-collapse collapse">
+              <div class="panel-body">
+                <p>Yes. If a third-party offers to acquire an Assembly product and the partners (everyone with ownership stake) decide it is the right decision for the community, the customers and the product, then a product can be sold.</p>
+                <p>When a product is sold, earnings are treated like any other revenue and are paid out to the community.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-subtle">
+            <div class="panel-heading">
+              <p class="panel-title">
+                <a href="#is-assembly-legal" data-toggle="collapse" style="display: block">
+                  <span class="glyphicon glyphicon-chevron-down small pull-right" style="margin-top: 5px"></span>
+                  Is Assembly legal?
+                </a>
+              </p>
+            </div>
+            <div id="is-assembly-legal" class="panel-collapse collapse">
+              <div class="panel-body">
+                <p>Yes, of course. We've worked hard to figure out the legal challenges of letting people build businesses in this new way.</p>
+                <p>Each product on Assembly is legally structured as a partnership, where all stakeholders are partners. The product's profits are paid out to partners as royalties, based on each partner's App Coin ownership.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="text-large" style="padding: 30px; font-size: 24px">
+      <a href="<%= start_idea_path %>" class="btn btn-success btn-lg pull-right">Learn More</a>
+      Already have a product and want to migrate it to Assembly?
+    </div>
+  </div>
+</div>
+
+<hr style="margin-top: 0; margin-bottom: 0">
+
+<div class="container">
+  <div class="footer" style="border-top: none; margin-top: 0">
+    <%= render 'shared/footer_nav' %>
+  </div>
+</div>

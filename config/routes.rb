@@ -44,7 +44,6 @@ ASM::Application.routes.draw do
   get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
-  get '/learn'            => 'pages#learn',  :as => :learn
 
 
   get '/create'        => 'products#new',    :as => :new_idea
