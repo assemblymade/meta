@@ -1,3 +1,5 @@
+require 'timed_set'
+
 class ProductsController < ProductController
   respond_to :html, :json
 
