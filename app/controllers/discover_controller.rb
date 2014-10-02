@@ -32,57 +32,16 @@ class DiscoverController < ApplicationController
   end
 
   def bounties
-    if params[:filter].blank?
-      if cookies[:discover_bounties_filter].blank?
-        cookies[:discover_bounties_filter] = 'design'
-      end
-      redirect_to discover_path(:bounties, filter: cookies[:discover_bounties_filter])
-    end
+    default_filter = cookies[:discover_bounties_filter] || 'design'
+    @filter = cookies[:discover_bounties_filter] = params.fetch(:filter, default_filter)
 
-    filter = cookies[:discover_bounties_filter] = params[:filter]
-    params[:filter_text] = params[:filter] == 'design' ? '' : params[:filter]
+    redirect_to discover_path(:bounties, filter: @filter) if params[:filter].blank?
 
-    @filters = [{
-      tagged: 'design',
-      shortlabel: 'Design',
-      label: 'Featured Design Bounties',
-    }, {
-      tagged: 'frontend',
-      shortlabel: 'Frontend',
-      label: 'Featured Front-End Development Bounties',
-    }, {
-      tagged: 'backend',
-      shortlabel: 'Backend',
-      label: 'Featured Back-End Development Bounties',
-    }, {
-      tagged: 'product',
-      shortlabel: 'Product',
-      label: 'Featured Product Bounties',
-    }
-    ]
+    @postings = Task.open.unflagged.tagged_with(@filter).order(created_at: :desc).
+      includes(:product).where(products: { flagged_at: nil }).
+      page(params[:page]).per(25)
 
-    @filters.each do |f|
-      if tag = f[:tagged]
-        f[:count] = Task.tagged_with(f[:tagged]).count
-        f[:slug] = tag
-      else
-        f[:count] = Task.count
-      end
-    end
-
-    @filter = @filters.find {|f| f[:slug] == params[:filter] }
-
-    @postings = Task.open.unflagged.
-                  includes(:product).
-                  order(created_at: :desc).
-                  where(products: { flagged_at: nil }).
-                  tagged_with(filter)
-
-    if slug = params[:product]
-      @postings = @postings.where('products.slug = ?', slug)
-    end
-
-    @postings = @postings.page(params[:page]).per(25)
+    @postings = @postings.where(products: { slug: params[:product] }) if params[:product]
   end
 
   def updates
@@ -94,4 +53,14 @@ class DiscoverController < ApplicationController
 
     @page = @posts.page(params[:page])
   end
+
+  def filters
+    {
+      design:   'Featured Design Bounties',
+      frontend: 'Featured Front-End Development Bounties',
+      backend:  'Featured Back-End Development Bounties',
+      product:  'Featured Product Bounties'
+    }.with_indifferent_access
+  end
+  helper_method :filters
 end

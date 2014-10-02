@@ -7,13 +7,14 @@
 <div class="page-header" style="border-bottom:none">
   <div class="container">
     <h2>
-      <%= @filter[:label] %>
+      <%= filters[@filter] %>
     </h2>
+
     <ul class="nav nav-tabs">
-      <% @filters.each do |f| %>
-        <li class="<%= 'active' if params[:filter] == f[:slug] %>">
-          <a href="<%= discover_path(:bounties, filter: f[:slug]) %>">
-            <%= f[:shortlabel] %>
+      <% filters.keys.each do |filter| %>
+        <li class="<%= 'active' if @filter == filter %>">
+          <a href="<%= discover_path(:bounties, filter: filter) %>">
+            <%= filter.capitalize %>
           </a>
         </li>
       <% end %>
@@ -22,31 +23,29 @@
 </div>
 
 <div class="container">
+  <% @postings.each do |posting| %>
+    <div class="row">
+      <div class="col-md-8">
+        <%= render 'bounty_postings/bounty_chip', bounty: posting %>
+      </div>
+
+      <div class="col-md-3 col-md-offset-1">
+        <%= render 'bounty_postings/product_chip', product: posting.product %>
+      </div>
+    </div>
+
+    <hr/>
+  <% end %>
+
   <% if @postings.empty? %>
     <div class="well well-dotted well-lg">
       <p class="text-center">
         It looks like there aren't any bounties ready for work yet. Why not check out <a href="<%= discover_path %>">what's trending</a> to see how you can help?
       </p>
     </div>
-  <% else %>
-    <% @postings.each do |posting| %>
-      <div class="row">
-        <div class="col-md-8">
-          <%= render 'bounty_postings/bounty_chip', bounty: posting %>
-        </div>
-
-        <div class="col-md-3 col-md-offset-1">
-          <%= render 'bounty_postings/product_chip', product: posting.product %>
-        </div>
-      </div>
-
-      <hr/>
-    <% end %>
   <% end %>
 
   <%= paginate @postings, theme: 'twitter-bootstrap-3' %>
-  </div>
-
 </div>
 
 <%= render 'shared/footer' %>
