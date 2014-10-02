@@ -2,7 +2,7 @@
 
 (function() {
 
-  var CharacterLimitedTextarea = React.createClass({
+  var LimitedCharacterTextarea = React.createClass({
 
     propTypes: {
       limit: React.PropTypes.number
@@ -24,7 +24,7 @@
         <div className={cs}>
           <textarea className="form-control" name={this.props.name} id={this.props.id} onChange={this.updateText}></textarea>
           <p className="help-block">
-            {this.characterCount()} characters
+            {this.characterCount()} characters left
           </p>
         </div>
       )
@@ -49,9 +49,9 @@
   // --
 
   if (typeof module !== 'undefined') {
-    module.exports = CharacterLimitedTextarea
+    module.exports = LimitedCharacterTextarea
   }
 
-  window.CharacterLimitedTextarea = CharacterLimitedTextarea
+  window.LimitedCharacterTextarea = LimitedCharacterTextarea
 
 })()
