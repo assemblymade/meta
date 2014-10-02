@@ -17,17 +17,5 @@ describe DiscoverController do
 
       expect(response.status).to eq(302)
     end
-
-    it 'sets the filter to design if blank' do
-      get :bounties
-
-      expect(response).to redirect_to(discover_path(action: 'bounties', filter: 'design'))
-    end
-
-    it 'saves the filter as a cookie' do
-      get :bounties, filter: 'backend'
-
-      expect(response.cookies['discover_bounties_filter']).to eq('backend')
-    end
   end
 end

@@ -32,15 +32,57 @@ class DiscoverController < ApplicationController
   end
 
   def bounties
-    @filter = cookies[:discover_bounties_filter] ||= params.fetch(:filter, 'design')
+    if params[:filter].blank?
+      if cookies[:discover_bounties_filter].blank?
+        cookies[:discover_bounties_filter] = 'design'
+      end
+      redirect_to discover_path(:bounties, filter: cookies[:discover_bounties_filter])
+    end
 
-    redirect_to discover_path(:bounties, filter: @filter) if params[:filter].blank?
+    filter = cookies[:discover_bounties_filter] = params[:filter]
+    params[:filter_text] = params[:filter] == 'design' ? '' : params[:filter]
 
-    @postings = Task.open.unflagged.tagged_with(@filter).order(created_at: :desc).
-      includes(:product).merge(Product.public_products).
-      page(params[:page]).per(25)
+    @filters = [{
+      tagged: 'design',
+      shortlabel: 'Design',
+      label: 'Featured Design Bounties',
+    }, {
+      tagged: 'frontend',
+      shortlabel: 'Frontend',
+      label: 'Featured Front-End Development Bounties',
+    }, {
+      tagged: 'backend',
+      shortlabel: 'Backend',
+      label: 'Featured Back-End Development Bounties',
+    }, {
+      tagged: 'product',
+      shortlabel: 'Product',
+      label: 'Featured Product Bounties',
+    }
+    ]
 
-    @postings = @postings.where(products: { slug: params[:product] }) if params[:product]
+    @filters.each do |f|
+      if tag = f[:tagged]
+        f[:count] = Task.tagged_with(f[:tagged]).count
+        f[:slug] = tag
+      else
+        f[:count] = Task.count
+      end
+    end
+
+    @filter = @filters.find {|f| f[:slug] == params[:filter] }
+
+    @postings = Task.open.unflagged.
+                  includes(:product).
+                  order(created_at: :desc).
+                  where(products: { flagged_at: nil }).
+                  tagged_with(filter)
+
+    if slug = params[:product]
+      @postings = @postings.where('products.slug = ?', slug)
+    end
+
+    @postings = @postings.page(params[:page]).per(25)
   end
 
   def updates
@@ -52,14 +94,4 @@ class DiscoverController < ApplicationController
 
     @page = @posts.page(params[:page])
   end
-
-  def filters
-    {
-      design:   'Featured Design Bounties',
-      frontend: 'Featured Front-End Development Bounties',
-      backend:  'Featured Back-End Development Bounties',
-      product:  'Featured Product Bounties'
-    }
-  end
-  helper_method :filters
 end
