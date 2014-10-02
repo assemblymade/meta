@@ -1,5 +1,5 @@
 FEATURES = {
-  discover_bounties: -> { false }
+  discover_bounties: -> { true }
 }.freeze
 
 def feature?(name, *args)
