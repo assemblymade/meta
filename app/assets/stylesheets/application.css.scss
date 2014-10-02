@@ -90,16 +90,12 @@
   > .glyphicon {
     display: block;
     font-size: $font-size-large;
+    margin-left: -36px;
     position: absolute;
   }
 
   > .feature-title {
     line-height: 1.1;
     margin-top: 0;
-    margin-left: 30px;
-  }
-
-  > .feature-body {
-    margin-left: 30px;
   }
 }
