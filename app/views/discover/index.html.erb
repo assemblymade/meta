@@ -19,6 +19,70 @@
 
   <hr>
 
+  <% if staff? %>
+
+    <br>
+
+    <div class="text-center">
+      <h2>Based on your interests (staff only)</h2>
+    </div>
+    <br>
+
+
+    <% Product.where(slug: 'gig-radio').limit(2).each do |product| %>
+      <%= render 'products/chips/greenlit', product: product %>
+      <hr class="omega">
+
+      <div class="list-group list-group-breakout omega">
+        <% product.tasks.order(updated_at: :desc).limit(3).each do |bounty| %>
+          <div class="list-group-item" style="padding-left:0;padding-right:0">
+            <div class="row">
+              <div class="col-sm-8">
+
+                <a  href="<%= product_task_path(bounty.product, bounty) %>">
+                  <h4 class="alpha omega"><%= bounty.title %></h4>
+                </a>
+
+                <ul class="list-inline omega">
+                  <li >
+
+                    <span class="text-warning">
+                      <span class="icon icon-app-coin"></span>
+                      <span class="js-coins"><%= number_with_delimiter(WipContracts.new(bounty, @auto_tip_contracts).earnable_cents.floor) %></span>
+                    </span>
+
+                  </li>
+                  <li>
+                    <span class="text-muted">
+                      Created <%= time_ago_in_words(bounty.created_at) %> ago by
+                      @<%= bounty.user.username %>
+                    </span>
+                  </li>
+                </ul>
+
+              </div>
+
+              <div class="col-sm-4">
+                <% bounty.tags.each do |tag| %>
+                  <a class="h4 omega" href="#" style="font-weight: normal"><%= tag.name.titleize %></a>
+                <% end %>
+                <p class="small text-muted omega">HTML, SCSS, Javascript</p>
+              </div>
+            </div>
+
+          </div>
+        <% end %>
+      </div>
+
+      <p>
+        <a href="<%= product_tasks_path(product) %>" style="text-decoration:underline">View all <%= pluralize(product.tasks.count, 'bounty') %></a>
+      </p>
+
+      <br style="line-height:60px">
+
+    <% end %>
+  <% end %>
+
   <div class="row">
     <div class="col-md-12">
 
