@@ -43,27 +43,27 @@ class DiscoverController < ApplicationController
     @filters = [{
       slug: 'all',
       shortlabel: 'All',
-      label: 'Every bounty that is half-way decent',
+      label: 'All Open Bounties',
     },{
       tagged: 'design',
       shortlabel: 'Design',
-      label: 'Design',
+      label: 'Open Design Bounties',
     }, {
       tagged: 'frontend',
       shortlabel: 'Frontend',
-      label: 'Front-End Development',
-    }, {
+      label: 'Open Front-End Development Bounties',
+    }, 
       tagged: 'backend',
       shortlabel: 'Backend',
-      label: 'Back-End Development',
+      label: 'Open Back-End Development Bounties',
+    }, {
+      tagged: 'product',
+      shortlabel: 'Product',
+      label: 'Open Product Bounties',
     }, {
       tagged: 'marketing',
       shortlabel: 'Marketing',
-      label: 'Marketing',
-    }, {
-      tagged: 'icon',
-      shortlabel: 'Icons',
-      label: 'Products that need app icons',
+      label: 'Open Marketing Bounties',
     }
     ]
 
