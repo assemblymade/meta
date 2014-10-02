@@ -119,11 +119,6 @@
           }.merge(TypeId.as_json(:via, bounty)).to_json %>">
         </div>
       </li>
-      <% if partner?(@product)%>
-        <li>
-          <%= render 'bounties/feature_button', bounty: @bounty %>
-        </li>
-      <% end %>
       <li>
         <div data-react-class="ToggleButton"
              data-react-props="<%= {
