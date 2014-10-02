@@ -82,3 +82,24 @@
 
   opacity: .7;
 }
+
+.feature {
+  padding-bottom: $padding-large-vertical;
+  position: relative;
+
+  > .glyphicon {
+    display: block;
+    font-size: $font-size-large;
+    position: absolute;
+  }
+
+  > .feature-title {
+    line-height: 1.1;
+    margin-top: 0;
+    margin-left: 30px;
+  }
+
+  > .feature-body {
+    margin-left: 30px;
+  }
+}
