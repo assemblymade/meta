@@ -14,6 +14,16 @@
     </a>
   </li>
 
+  <% if @product.chat_rooms.any? %>
+    <% chat_room = @product.chat_rooms.first %>
+    <li>
+      <a href="<%= chat_room_path(chat_room) %>">
+        <span class="icon icon-speech-bubble icon-left"></span>
+        Chat
+      </a>
+    </li>
+  <% end %>
+
   <li class="<%= nav_active_class(:bounties) %>">
     <a href="<%= product_wips_path(product) %>">
       <span class="icon icon-trophy icon-left"></span>
