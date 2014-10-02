@@ -227,6 +227,10 @@ class Wip < ActiveRecord::Base
     !flagged_at.nil?
   end
 
+  def featured?
+    flagged_at.nil?
+  end
+
   # callbacks
 
   def push_channel
