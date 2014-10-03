@@ -118,7 +118,7 @@
       pusher.connection.bind('connected', function() {
         activityStream.listenForRemote(pusher, pusher.connection);
 
-        var presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
+        window.presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
 
         $('.js-members').each(function() {
           var component = React.renderComponent(
@@ -162,10 +162,6 @@
         scrollContainer: $('.js-chat'),
         scrollPadding: 168
       });
-
-      var chatInput = new ChatInput({
-        el: $('.js-chat-actions')
-      })
 
       window.activityStream = activityStream;
       window.activityStreamView = activityStreamView;

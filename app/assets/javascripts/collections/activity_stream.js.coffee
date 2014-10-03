@@ -8,8 +8,8 @@ class window.ActivityStream extends Backbone.Collection
 
   listenForRemote: (pusher, connection) ->
     @socketId = connection.socket_id
-    channel = pusher.subscribe(@channelName())
-    channel.bind 'add', (attributes)=>
+    window.chatChannel = pusher.subscribe(@channelName())
+    chatChannel.bind 'add', (attributes)=>
       @add(attributes)
       model = @get(attributes.id)
       model.url = '/activities/' + model.id

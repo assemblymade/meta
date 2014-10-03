@@ -31,6 +31,7 @@
   },
   "homepage": "https://assembly.com",
   "dependencies": {
+    "Set": "^0.4.1",
     "browserify": "^5.9.1",
     "jquery": "^2.1.1",
     "marked": "^0.3.2",
