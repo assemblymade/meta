@@ -19,24 +19,25 @@
       </style>
 
       <div class="list-group">
-        <a class="list-group-item" href="#" data-track="surveys.show.the-basics.clicked">
-          <h3 class="alpha omega text-primary">The Basics <span class="text-muted" style="font-weight:normal">See how Assembly works</span></h3>
-          <p class="omega">This is dummy copy. It is not meant to be read. It has been palced here solely to demonstrate the look and feel of finished.</p>
+        <a class="list-group-item" href="<%= faq_path %>" data-track="surveys.show.exit.clicked" data-props='{"link": "answers-smart-questions"}'>
+          <h3 class="alpha omega text-primary">
+            Answers to Smart Questions
+            <span class="text-muted" style="font-weight:normal">Our version of a FAQ</span>
+          </h3>
+          <p class="omega">If you still have more questions about how Assembly works, we have <i>super</i> comprehensive guide to it all.</p>
         </a>
 
-        <a class="list-group-item" href="<%= faq_path %>" data-track="surveys.show.answers-smart-questions.clicked">
-          <h3 class="alpha omega text-primary">Answers Smart Question <span class="text-muted" style="font-weight:normal">Our version of a FAQ</span></h3>
-          <p class="omega">This is dummy copy. It is not meant to be read. It has been palced here solely to demonstrate the look and feel of finished.</p>
+        <a class="list-group-item" href="<%= discover_path %>"data-track="surveys.show.exit.clicked" data-props='{"link": "see-the-products"}'>
+          <h3 class="alpha omega text-primary">
+            See The Products
+            <span class="text-muted" style="font-weight:normal">View the <%= pluralize(43, 'ongoing product') %></span>
+          </h3>
+          <p class="omega">All the products on Assembly are eager for your help. Don't worry about jumping in!</p>
         </a>
 
-        <a class="list-group-item" href="<%= discover_path %>" data-track="surveys.show.see-the-products.clicked">
-          <h3 class="alpha omega text-primary">See The Products <span class="text-muted" style="font-weight:normal">View the <%= pluralize(43, 'ongoing product') %></span></h3>
-          <p class="omega">This is dummy copy. It is not meant to be read. It has been palced here solely to demonstrate the look and feel of finished.</p>
-        </a>
-
-        <a class="list-group-item" href="<%= product_path('meta') %>" data-track="surveys.show.meta.clicked">
+        <a class="list-group-item" href="<%= product_path('meta') %>" data-track="surveys.show.exit.clicked" data-props='{"link": "meta"}'>
           <h3 class="alpha omega text-primary">Jump into Meta <span class="text-muted" style="font-weight:normal">See How Assembly is being built</span></h3>
-          <p class="omega">This is dummy copy. It is not meant to be read. It has been palced here solely to demonstrate the look and feel of finished.</p>
+          <p class="omega">We use Assembly to build Assembly. Check out how we work, suggest features, or just say &ldquo;hi&rdquo;.</p>
         </a>
       </div><!-- .list-group -->
 
