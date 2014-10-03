@@ -325,7 +325,7 @@ class Product < ActiveRecord::Base
   end
 
   def event_creator_ids
-    Event.joins(:wip).where('wips.product_id = ?', self.id).group('events.user_id').count.keys
+    ::Event.joins(:wip).where('wips.product_id = ?', self.id).group('events.user_id').count.keys
   end
 
   def wip_creator_ids
