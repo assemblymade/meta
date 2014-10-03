@@ -256,7 +256,7 @@ $navbar-collapse-max-height: 340px;
 
 $navbar-default-color:  $gray;
 $navbar-default-bg:     $brand-bg;
-$navbar-default-border: darken($navbar-default-bg, 5%);
+$navbar-default-border: none;
 
 // Navbar links
 $navbar-default-link-color:          $gray-light;
