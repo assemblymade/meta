@@ -3,7 +3,7 @@ require 'spec_helper'
 describe TasksController do
   let(:user) { User.make! }
   let(:worker) { User.make! }
-  let(:product) { Product.make!(user: user, started_teambuilding_at: Time.now) }
+  let(:product) { Product.make!(user: user, state: 'team_building') }
   let!(:wips) { [Task.make!(user: user, product: product)] }
   let!(:event) { Event::Comment.make!(wip: wips.first, user: worker) }
 

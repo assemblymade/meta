@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe UsersController do
   let!(:user) { User.make! }
-  let!(:product) { Product.make!(user: user, started_teambuilding_at: Time.now) }
+  let!(:product) { Product.make!(user: user, state: 'team_building') }
   let!(:wip) { Task.make!(user: user, product: product) }
 
   before { sign_in user }

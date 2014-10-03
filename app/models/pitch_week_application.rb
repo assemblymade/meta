@@ -8,15 +8,19 @@ class PitchWeekApplication < ActiveRecord::Base
   scope :in_pitch_week, ->(at=Time.now) { where('reviewed_at > ?', at - 7.days) }
   scope :to_review, -> { where(reviewed_at: nil) }
 
-  def review(reviewer, outcome)
+  def review(reviewer, approved)
     ActiveRecord::Base.transaction do
       update(
         reviewed_at: Time.now,
         reviewer_id: reviewer.id,
-        is_approved: outcome
+        is_approved: approved
       )
 
-      product.update(started_teambuilding_at: Time.now) if outcome
+      if approved
+        product.accept!
+      else
+        product.reject!
+      end
     end
   end
 

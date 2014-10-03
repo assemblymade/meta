@@ -117,7 +117,7 @@
       </div>
     </div>
 
-    <% if @product.teambuilding? %>
+    <% if @product.team_building? %>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h6 class="panel-title">Team Building</h6>
@@ -134,7 +134,7 @@
 
           <div class="clearfix">
             <div class="pull-left"><%= pluralize(@product.bio_memberships_count, 'team member') %></div>
-            <div class="pull-right"><%= pluralize(@product.teambuilding_days_left, 'day') %> left</div>
+            <div class="pull-right"><%= pluralize(@product.team_building_days_left, 'day') %> left</div>
           </div>
 
         </div>

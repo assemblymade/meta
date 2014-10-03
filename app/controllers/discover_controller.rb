@@ -8,7 +8,7 @@ class DiscoverController < ApplicationController
       ordered_by_trend.
       limit(20)
 
-    @teambuilding = Product.teambuilding.includes(:user).
+    @team_building = Product.team_building.includes(:user).
       ordered_by_trend.
       limit(20)
   end
@@ -25,8 +25,8 @@ class DiscoverController < ApplicationController
       page(params[:page])
   end
 
-  def teambuilding
-    @products = Product.teambuilding.
+  def team_building
+    @products = Product.team_building.
       ordered_by_trend.
       page(params[:page])
   end
@@ -46,7 +46,7 @@ class DiscoverController < ApplicationController
 
   def updates
     @posts = Post.joins(:product).
-      where.not(products: { started_teambuilding_at: nil }).
+      where.not(products: { state: ['stealth', 'reviewing'] }).
       where(products: { flagged_at: nil }).
       where(flagged_at: nil).
       order(created_at: :desc)

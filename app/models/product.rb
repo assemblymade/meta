@@ -7,6 +7,7 @@ class Product < ActiveRecord::Base
   include ActiveRecord::UUID
   include Kaminari::ActiveRecordModelExtension
   include Elasticsearch::Model
+  include Workflow
 
   DEFAULT_BOUNTY_SIZE=10000
   PITCH_WEEK_REQUIRED_BUILDERS=10
@@ -14,6 +15,8 @@ class Product < ActiveRecord::Base
   extend FriendlyId
 
   friendly_id :slug_candidates, use: :slugged
+
+  alias_attribute :stage, :state
 
   attr_encryptor :wallet_private_key, :key => ENV["PRODUCT_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt, :unless => Rails.env.test?
 
@@ -73,20 +76,21 @@ class Product < ActiveRecord::Base
     )
   }
   scope :advertisable,     -> { where(can_advertise: true) }
-  scope :greenlit,         -> { public_products.where.not(greenlit_at: nil).where(profitable_at: nil) }
-  scope :profitable,       -> { public_products.where.not(profitable_at: nil) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
   scope :ordered_by_trend, -> { joins(:product_trend).order('product_trends.score DESC') }
-  scope :public_products,  -> { where.not(slug: PRIVATE).where(flagged_at: nil).advertisable.where.not(started_teambuilding_at: nil) }
+  scope :public_products,  -> { where.not(slug: PRIVATE).where(flagged_at: nil).advertisable.where.not(state: ['stealth', 'reviewing']) }
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :since,            ->(time) { where('created_at >= ?', time) }
-  scope :stealth,          -> { where(started_teambuilding_at: nil) }
-  scope :teambuilding,     -> { public_products.where.not(started_teambuilding_at: nil).where(started_teambuilding_at: 30.days.ago..Time.now).where(greenlit_at: nil) }
   scope :tagged_with_any,  ->(tags) { where('tags && ARRAY[?]::varchar[]', tags) }
   scope :validating,       -> { where(greenlit_at: nil) }
   scope :waiting_approval, -> { where('submitted_at is not null and evaluated_at is null') }
   scope :with_repo,        ->(repo) { where('? = ANY(repos)', repo) }
   scope :with_logo,        ->{ where.not(poster: nil).where.not(poster: '') }
+
+  scope :stealth,      -> { where(state: 'stealth') }
+  scope :team_building, -> { public_products.where(state: 'team_building') }
+  scope :greenlit,     -> { public_products.where(state: 'greenlit') }
+  scope :profitable,   -> { public_products.where(state: 'profitable') }
 
   validates :slug, uniqueness: { allow_nil: true }
   validates :name, presence: true,
@@ -112,10 +116,69 @@ class Product < ActiveRecord::Base
 
   store_accessor :info, *INFO_FIELDS.map(&:to_sym)
 
+  workflow_column :state
+
+  workflow do
+    state :stealth do
+      event :submit,
+        transitions_to: :reviewing
+    end
+
+    state :reviewing do
+      event :accept,
+        transitions_to: :team_building
+
+      event :reject,
+        transitions_to: :stealth
+    end
+
+    state :team_building do
+      event :greenlight,
+        transitions_to: :greenlit
+
+      event :reject,
+        transitions_to: :stealth
+    end
+
+    state :greenlit do
+      event :launch,
+        transitions_to: :profitable
+    end
+
+    state :profitable
+  end
+
   class << self
     def unique_tags
       pluck('distinct unnest(tags)').sort_by{|t| t.downcase }
     end
+  end
+
+  def on_stealth_entry(prev_state, event, *args)
+    update!(
+      started_team_building_at: nil,
+      greenlit_at: nil,
+      profitable_at: nil
+    )
+  end
+
+  def on_team_building_entry(prev_state, event, *args)
+    update!(
+      started_team_building_at: Time.now,
+      greenlit_at: nil,
+      profitable_at: nil
+    )
+  end
+
+  def on_greenlit_entry(prev_state, event, *args)
+    update!(
+      greenlit_at: Time.now,
+      profitable_at: nil
+    )
+  end
+
+  def on_profitable_entry(prev_state, event, *args)
+    update!(profitable_at: Time.now)
   end
 
   def wallet_private_key_salt
@@ -125,66 +188,32 @@ class Product < ActiveRecord::Base
     cipher.random_key
   end
 
-  def stage
-    if profitable?
-      'profitable'
-    elsif greenlit?
-      'greenlit'
-    elsif teambuilding?
-      'teambuilding'
-    else
-      'stealth'
-    end
-  end
-
   def update_stage!(new_stage)
-    # Poor man's state machine... TODO use workflow gem
-
     case new_stage
     when 'profitable'
-      update! profitable_at: Time.now
-
+      launch!
     when 'greenlit'
-      update! greenlit_at: Time.now, profitable_at: nil
-
-    when 'teambuilding'
-      update! started_teambuilding_at: Time.now, greenlit_at: nil, profitable_at: nil
-
+      greenlight!
+    when 'team_building'
+      accept!
     when 'stealth'
-      update! started_teambuilding_at: nil, greenlit_at: nil, profitable_at: nil
+      reject!
     end
   end
 
   def launched?
-    !started_teambuilding_at.nil?
+    current_state >= :team_building
   end
 
-  def stealth?
-    started_teambuilding_at.nil?
+  def stopped_team_building_at
+    started_team_building_at + 30.days
   end
 
-  def teambuilding?
-    greenlit_at.nil? && started_teambuilding_at && started_teambuilding_at > 30.days.ago
+  def team_building_days_left
+    [(stopped_team_building_at.to_date - Date.today).to_i, 0].max
   end
 
-  def greenlit?
-    !greenlit_at.nil? &&
-      profitable_at.nil?
-  end
-
-  def profitable?
-    !profitable_at.nil?
-  end
-
-  def stopped_teambuilding_at
-    started_teambuilding_at + 30.days
-  end
-
-  def teambuilding_days_left
-    [(stopped_teambuilding_at.to_date - Date.today).to_i, 0].max
-  end
-
-  def teambuilding_percentage
+  def team_building_percentage
     [product.bio_memberships_count, 10].min * 10
   end
 

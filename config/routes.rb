@@ -58,7 +58,7 @@ ASM::Application.routes.draw do
                                action: 'index'
                              },
                              constraints: {
-                               action: /bounties|updates|teambuilding|greenlit|profitable/
+                               action: /bounties|updates|team_building|greenlit|profitable/
                              }
 
   devise_for :users,

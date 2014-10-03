@@ -69,7 +69,6 @@ Product.blueprint do
   name  { "Product #{sn}" }
   slug  { "product-#{sn}" }
   pitch { Faker::Lorem.paragraph(1) }
-  started_teambuilding_at { Time.now }
   can_advertise { true }
 end
 

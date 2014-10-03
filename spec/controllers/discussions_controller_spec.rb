@@ -4,7 +4,7 @@ describe DiscussionsController do
   render_views
 
   let(:user) { User.make! }
-  let(:product) { Product.make!(user: user, started_teambuilding_at: Time.now) }
+  let(:product) { Product.make!(user: user, state: 'team_building') }
   let(:wip) { Discussion.make!(product: product) }
 
   describe '#show' do

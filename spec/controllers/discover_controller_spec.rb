@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe DiscoverController do
-  [:index, :profitable, :greenlit, :teambuilding, :updates].each do |action|
+  [:index, :profitable, :greenlit, :team_building, :updates].each do |action|
     describe "GET ##{action}" do
       it "is successful" do
         get action.to_sym

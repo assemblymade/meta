@@ -160,7 +160,7 @@
         <td><Timestamp time={this.props.created} /></td>
         <td><Timestamp time={this.props.last_activity_at} /></td>
         <td className="text-right">{this.props.watchings_count}</td>
-        <td><ProductStage initialLabel={this.props.stage} stages={['profitable', 'greenlit', 'teambuilding', 'stealth']} url={'/admin/products/' + this.props.id} /></td>
+        <td><ProductStage initialLabel={this.props.stage} stages={['profitable', 'greenlit', 'team_building', 'stealth']} url={'/admin/products/' + this.props.id} /></td>
         <td className="text-right">
           <input type="text" className="form-control" value={this.state.dirty ? this.state.pendingQualityScore : this.props.quality} style={{'background-color': bgColor}}
             onChange={this.handleChange}
