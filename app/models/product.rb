@@ -195,7 +195,7 @@ class Product < ActiveRecord::Base
     when 'greenlit'
       greenlight!
     when 'team_building'
-      approve!
+      accept!
     when 'stealth'
       reject!
     end

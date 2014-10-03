@@ -17,7 +17,7 @@ class PitchWeekApplication < ActiveRecord::Base
       )
 
       if approved
-        product.approve!
+        product.accept!
       else
         product.reject!
       end
