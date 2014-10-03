@@ -9,10 +9,6 @@ class ChatRoomSerializer < ActiveModel::Serializer
     object.slug
   end
 
-  def product_name
-    object.product && object.product.name
-  end
-
   def url
     chat_room_path(object)
   end

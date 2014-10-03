@@ -1,4 +1,4 @@
-<% title 'Community Chat' %>
+<% title @chat_room.name %>
 <% activate_nav! :community if @chat_room.product.nil? %>
 <%= track 'product.chat.viewed', ProductSerializer.new(@product, scope: current_user) %>
 

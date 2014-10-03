@@ -15,6 +15,22 @@ class ChatRoom < ActiveRecord::Base
     "chat_#{id}"
   end
 
+  def name
+    if general?
+      'Community Chat'
+    else
+      [product_name, 'Chat'].join(' ')
+    end
+  end
+
+  def product_name
+    product && product.name
+  end
+
+  def general?
+    slug == 'general'
+  end
+
   def to_param
     slug
   end
