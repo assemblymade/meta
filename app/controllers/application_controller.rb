@@ -121,4 +121,17 @@ class ApplicationController < ActionController::Base
     render(text: 'Not Found', status: 404)
   end
 
+
+  helper_method :log_trial_choose, :log_trial_complete
+
+  def log_trial_choose(trial)
+    Rails.logger.debug "experiment=%s alternative=%s user=%s" %
+    [ trial.experiment.name, trial.alternative, current_user.try(:id) ]
+  end
+
+  def log_trial_complete(trial)
+    Rails.logger.debug "experiment=%s alternative=%s user=%s complete=true" %
+    [ trial.experiment.name, trial.alternative, current_user.try(:id) ]
+  end
+
 end

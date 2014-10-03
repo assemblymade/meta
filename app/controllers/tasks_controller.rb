@@ -53,6 +53,8 @@ class TasksController < WipsController
 
     @events = Event.render_events(@bounty.events.order(:number), current_user)
 
+    finished('long_user_survey_on_signup')
+
     respond_to do |format|
       format.html { render 'bounties/show' }
       format.json { render json: @bounty, serializer: WipSerializer }
