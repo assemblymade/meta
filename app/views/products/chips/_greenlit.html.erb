@@ -12,7 +12,9 @@
       <ul class="list-inline omega">
         <% product.followers.limit(6).each do |user| %>
           <li>
-            <%= avatar_tag(user, 18) %>
+            <a href="<%= user_path(user) %>">
+              <%= avatar_tag(user, 18) %>
+            </a>
           </li>
         <% end %>
         <li>
