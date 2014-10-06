@@ -26,7 +26,7 @@ describe Users::RegistrationsController do
 
       it "redirects to the discover products page by default" do
         post(:create, user: user_attributes)
-        expect(response.location).to eq(discover_url)
+        expect(response.location).to eq(url_for(controller: 'surveys', action: 'new'))
       end
     end
   end
