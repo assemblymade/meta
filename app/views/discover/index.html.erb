@@ -19,22 +19,26 @@
 
   <hr>
 
-  <% if staff? %>
+  <% if signed_in? %>
 
     <br>
 
     <div class="text-center">
-      <h2>Based on your interests (staff only)</h2>
+      <h2>Based on your interests</h2>
     </div>
     <br>
 
 
-    <% Product.where(slug: 'gig-radio').limit(2).each do |product| %>
+    <% Product.joins(:wips => :tags).where(
+      flagged_at: nil,
+      state: ['greenlit', 'profitable'],
+      wip_tags: {name: current_user.interested_tags},
+    ).limit(3).group('products.id').each do |product| %>
       <%= render 'products/chips/greenlit', product: product %>
       <hr class="omega">
 
       <div class="list-group list-group-breakout omega">
-        <% product.tasks.order(updated_at: :desc).limit(3).each do |bounty| %>
+        <% product.tasks.joins(:tags).where('wip_tags.name IN(?)', current_user.interested_tags).order(updated_at: :desc).limit(3).each do |bounty| %>
           <div class="list-group-item" style="padding-left:0;padding-right:0">
             <div class="row">
               <div class="col-sm-8">
@@ -63,10 +67,15 @@
               </div>
 
               <div class="col-sm-4">
-                <% bounty.tags.each do |tag| %>
-                  <a class="h4 omega" href="#" style="font-weight: normal"><%= tag.name.titleize %></a>
+                <%
+                  tags = bounty.tags.map {|t| t.name.downcase }
+                  user_tags = tags & current_user.interested_tags
+                  other_tags = tags - user_tags
+                %>
+                <% user_tags.each do |tag| %>
+                  <a class="h4 omega" href="#" style="font-weight: normal"><%= tag.titleize %></a>
                 <% end %>
-                <p class="small text-muted omega">HTML, SCSS, Javascript</p>
+                <p class="small text-muted omega"><%= other_tags.map(&:titleize).to_sentence %></p>
               </div>
             </div>
 
