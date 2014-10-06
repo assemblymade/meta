@@ -205,12 +205,6 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
       );
     },
 
-    setBadge: function(total) {
-      if (window.fluid) {
-        window.fluid.dockBadge = total;
-      }
-    },
-
     spinnerOptions: {
       lines: 11,
       top: '20%'

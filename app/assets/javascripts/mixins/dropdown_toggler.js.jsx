@@ -10,6 +10,10 @@
       if (total > 0) {
         badge = this.badge(total);
         classes.push('glyphicon-highlight');
+
+        if (window.fluid) {
+          window.fluid.dockBadge = total;
+        }
       }
 
       return (
