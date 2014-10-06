@@ -38,6 +38,18 @@
     }
   };
 
+  // use single body click handler so multiple popovers don't clobber
+  var Set = require('Set')
+  var $ignoreNodes = $()
+  $('body').on('click', function(e){
+    if ($ignoreNodes.has(e.target).length === 0 &&
+        !$ignoreNodes.is(e.target) &&
+        !$(e.target).is('.popover') &&
+         $(e.target).parents('.popover').length === 0) {
+      $('body').trigger('hideBsPopovers')
+    }
+  })
+
   var BsPopover = React.createClass({
     componentDidMount: function() {
       var $el = $(this.getDOMNode());
@@ -56,15 +68,8 @@
         $el.popover('show');
       }
 
-      $('body').on('click', this.bodyClickHandler)
-    },
-
-    bodyClickHandler: function(e) {
-      if (e.target !== this.getDOMNode() &&
-          !$(e.target).is('.popover') &&
-           $(e.target).parents('.popover').length === 0) {
-        this.props.onHide()
-      }
+      $ignoreNodes = $ignoreNodes.add(this.getDOMNode())
+      $('body').bind('hideBsPopovers', this.props.onHide)
     },
 
     componentDidUpdate: function(prevProps, prevState) {
@@ -81,13 +86,15 @@
       var popover = $el.data('bs.popover');
       var $tip = popover && popover.tip();
       React.unmountComponentAtNode(
-          $tip.find('.popover-title')[0]
+        $tip.find('.popover-title')[0]
       );
       React.unmountComponentAtNode(
-          $tip.find('.popover-content')[0]
+        $tip.find('.popover-content')[0]
       );
+
       $(this.getDOMNode()).popover('destroy');
-      $('body').off('click', this.bodyClickHandler);
+      $ignoreNodes.remove(this.getDOMNode())
+      $('body').off('hideBsPopovers', this.props.onHide);
     },
 
     render: function() {

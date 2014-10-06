@@ -15,7 +15,7 @@
         placement="bottom"
         visible={this.state.popoverShown}
         onHide={this.handleHide}>
-          <a className="text-coins" href="#" id="bounty-amount-link" onClick={this.togglePopover}>
+          <a className="text-coins" href="javascript:;" id="bounty-amount-link" onClick={this.togglePopover}>
             <span className="icon icon-app-coin"></span>
               {numeral(this.props.contracts.earnable).format('0,0')}
             <span className="caret"></span>
