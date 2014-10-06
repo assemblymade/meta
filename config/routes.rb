@@ -79,9 +79,9 @@ ASM::Application.routes.draw do
     end
 
     controller :surveys do
-      get  '/welcome', action: :new
-      post '/welcome', action: :create
-      get  '/welcome/thanks', action: :show
+      get   '/welcome', action: :new
+      patch '/welcome', action: :create
+      get   '/welcome/thanks', action: :show
     end
 
     get '/dashboard' => 'dashboard#activity', as: :dashboard
