@@ -126,6 +126,10 @@ class Task < Wip
   end
   alias_method :calculate_current_value, :value
 
+  def active_offers
+    offers.group_by(&:user).flat_map { |u, o| o.sort_by(&:created_at).last }
+  end
+
   def score
     votes_count * score_multiplier
   end
