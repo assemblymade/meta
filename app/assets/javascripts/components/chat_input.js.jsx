@@ -1,8 +1,6 @@
 /** @jsx React.DOM */
 
 (function(){
-  var ENTER_KEY = 13
-
   var subscribing;
 
   var Set = require('Set')
@@ -57,7 +55,7 @@
       return <div className="media-body" id="comment">
         <div className="js-markdown-editor js-dropzone">
           <textarea className="form-control" rows="1" style={inputStyle}
-            onKeyPress={this.handleKeyDown(ENTER_KEY)}
+            onKeyPress={this.onEnterKey(this.handleEnter)}
             onChange={this.handleChange} value={this.state.message} />
         </div>
         <ChatTypingLabel usernames={this.state.typingUsernames} />
@@ -68,13 +66,16 @@
       this.setState({message: e.target.value});
     },
 
-    handleKeyDown: function(keycode) {
+    onEnterKey: function(fn) {
+      var ENTER_KEY = 13
+
       return function(e) {
-        if (e.charCode !== keycode || e.shiftKey) {
-          return
+        e = e || window.event || {};
+        var charCode = e.charCode || e.keyCode || e.which;
+        if (!e.shiftKey && charCode == ENTER_KEY) {
+          fn(e)
         }
-        this.handleEnter(e)
-      }.bind(this)
+      }
     },
 
     handleEnter: function(e) {
