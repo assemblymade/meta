@@ -16,7 +16,7 @@
 
     getInitialState: function() {
       return {
-        message: '',
+        message: this.props.message || '',
         typingUsernames: []
       }
     },
