@@ -79,7 +79,7 @@ ASM::Application.routes.draw do
     end
 
     controller :surveys do
-      get   '/welcome', action: :new
+      get   '/welcome', action: :new, as: :new_survey
       patch '/welcome', action: :create
       get   '/welcome/thanks', action: :show
     end
