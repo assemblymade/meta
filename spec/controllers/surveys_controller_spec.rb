@@ -15,7 +15,7 @@ describe SurveysController do
   describe "#create" do
     it "redirects to #show" do
       sign_in(user)
-      post :create
+      post :create, user: {interested_tags: ['design']}
       expect(response).to redirect_to('/welcome/thanks')
     end
   end
