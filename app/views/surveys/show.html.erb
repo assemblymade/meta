@@ -30,7 +30,7 @@
         <a class="list-group-item" href="<%= discover_path %>"data-track="surveys.show.exit.clicked" data-props='{"link": "see-the-products"}'>
           <h3 class="alpha omega text-primary">
             See The Products
-            <span class="text-muted" style="font-weight:normal">View the <%= pluralize(43, 'ongoing product') %></span>
+            <span class="text-muted" style="font-weight:normal">View the <%= pluralize(Product.where(state: ['profitable', 'green_lit', 'teambuilding']).count, 'ongoing product') %></span>
           </h3>
           <p class="omega">All the products on Assembly are eager for your help. Don't worry about jumping in!</p>
         </a>
