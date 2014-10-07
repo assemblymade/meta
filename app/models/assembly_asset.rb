@@ -1,9 +1,9 @@
 class AssemblyAsset < ActiveRecord::Base
   belongs_to :product
   belongs_to :user
-  
+
   PROMO_COINS=100
-  
+
   def grant!(promo=false)
     AssemblyAsset.transaction do
       return unless user

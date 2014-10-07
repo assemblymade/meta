@@ -60,9 +60,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
           promo_redeemed_at: Time.now
         )
 
-        asset.grant!(promo=true)
+        begin
+          asset.grant!(promo=true)
 
-        flash[:first_assets_granted] = true
+          flash[:first_assets_granted] = true
+        rescue => e
+          flash[:assets_error] = "There was a problem communicating with the Assembly Coins API. We've been alerted and will resolve the issue and send you your first Coins right away."
+        end
       end
     end
   end

@@ -14,6 +14,10 @@
   <%= render 'products/assets_granted' %>
 <% end %>
 
+<% if flash[:assets_error] %>
+  <%= render 'products/assets_error' %>
+<% end %>
+
 <% if flash[:applied_for_pitch_week] %>
   <%= render 'products/applied_for_pitch_week' %>
 <% end %>
