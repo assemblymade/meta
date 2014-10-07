@@ -143,9 +143,13 @@ class Product < ActiveRecord::Base
     state :greenlit do
       event :launch,
         transitions_to: :profitable
+
+      event :remove,
+        transitions_to: :stealth
     end
 
-    state :profitable
+    state :profitable do
+      event :remove, transitions_to: :stealth end
   end
 
   class << self
