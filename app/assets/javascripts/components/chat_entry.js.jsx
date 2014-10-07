@@ -56,8 +56,8 @@
 
     body: function() {
       var classes = React.addons.classSet({
-        "text-muted activity-content markdown markdown-normalized": true,
-        // "text-muted": (typeof this.props.entry.message_html === 'undefined')
+        "activity-content markdown markdown-normalized": true,
+        "text-muted": (typeof this.props.entry.message_html === 'undefined')
       })
 
       var message = this.props.entry.message_html || marked(this.props.entry.message)
