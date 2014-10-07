@@ -9,13 +9,13 @@
   var ChatEntry = React.createClass({
     render: function() {
       return (
-        <div className="activity activity-chat" id={"comment-" + this.props.entry.number}>
+        <div className="activity activity-chat chat-entry" id={"comment-" + this.props.entry.number}>
           <div className="pull-left activity-avatar">
-            <AvatarLink size={30} url={this.props.user.url} username={this.props.user.username} avatar_url={this.props.user.avatar_url} />
+            <AvatarLink size={24} url={this.props.user.url} username={this.props.user.username} avatar_url={this.props.user.avatar_url} />
           </div>
           <div className="activity-body">
             <div className="activity-actions">
-              <ul className="list-inline pull-right omega">
+              <ul className="list-inline pull-right omega hidden-xs">
                 <li>
                   <div className="dropdown">
                     <a href="#" className="dropdown-toggle" data-toggle="dropdown">
@@ -56,8 +56,8 @@
 
     body: function() {
       var classes = React.addons.classSet({
-        "activity-content markdown markdown-normalized": true,
-        "text-muted": (typeof this.props.entry.message_html === 'undefined')
+        "text-muted activity-content markdown markdown-normalized": true,
+        // "text-muted": (typeof this.props.entry.message_html === 'undefined')
       })
 
       var message = this.props.entry.message_html || marked(this.props.entry.message)

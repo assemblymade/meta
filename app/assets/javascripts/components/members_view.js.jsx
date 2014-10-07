@@ -72,50 +72,29 @@
     renderMember: function(member) {
       var isOnline = isMemberOnline(member)
       var classes = React.addons.classSet({
-        'text-success': isOnline,
-        'text-muted': !isOnline
+        'block overflow-hidden': true,
+        'active': isOnline,
+        'inactive': (!isOnline)
       })
-
-      var marker
-      if(isOnline) {
-        marker = (<span className="indicator indicator-success">&nbsp;</span>)
-      } else {
-        marker = (<span className="indicator indicator-default">&nbsp;</span>)
-      }
 
       return (
         <a key={member.id} className={classes} href={member.url} >
-          <div className="clearfix">
-            <div className="left mr2">
-              {marker}
-            </div>
-            <div className="overflow-hidden">
-              {member.username}
-            </div>
-          </div>
+          @{member.username}
         </a>
       )
     },
 
     render: function() {
-      var loading = null
+      // Loading
       if (!this.state.hasRecentlyActiveMembers) {
-          loading = <div className="right spinner"><div className="spinner-icon"></div></div>
+        return (
+          <div className="spinner">
+            <div className="spinner-icon"></div>
+          </div>
+        )
       }
-      return (
-        <div>
-          <h6 className="mt0 mb2 clearfix">
-            {loading}
-            People
-          </h6>
-          <div>
-            { _.map(this.onlineMembers(), this.renderMember) }
-          </div>
-          <div>
-            { _.map(this.recentlyActiveMembers(), this.renderMember) }
-          </div>
-        </div>
-      )
+
+      return <div>{ _.map(this.onlineMembers(), this.renderMember) }</div>
     },
 
     addMembers: function(members) {

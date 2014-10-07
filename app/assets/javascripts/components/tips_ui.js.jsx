@@ -32,15 +32,18 @@
     },
 
     render: function() {
-      var totalCents = this.totalCents()
+      var totalCents = this.totalCents(),
+          opacity = 1.0,
+          tooltip = null
 
-      var tooltip = null
       if (!this.props.currentUser) {
         tooltip = 'You need to sign up before you can tip'
       } else if (this.state.userCents <= 0) {
+        opacity = 0.5
         tooltip = 'You have no coins to tip'
       } else if (this.currentUserIsRecipient()) {
         tooltip = "You can't tip yourself"
+        opacity = 0
       }
 
       var tippers = null
@@ -49,7 +52,7 @@
       }
 
       return (
-        <div className="js-tips">
+        <div className="js-tips" style={{opacity: opacity}}>
           <div className={totalCents > 0 ? 'text-coins' : null}>
             <a ref="button" href="javascript:;" data-placement="top" data-toggle="tooltip" title={tooltip} onClick={this.currentUserCanTip() ? this.handleClick : null}>
               <span className="icon icon-app-coin"></span>

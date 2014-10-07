@@ -1,5 +1,5 @@
 <% title @chat_room.name %>
-<% activate_nav! :community if @chat_room.product.nil? %>
+<% activate_nav! :community %>
 <%= track 'product.chat.viewed', ProductSerializer.new(@product, scope: current_user) %>
 
 <%= render partial: 'shared/navbar', locals: { bounties_link: true } %>
@@ -25,6 +25,16 @@
 
 <style>
 
+  .active,
+  .active:hover {
+    color: white;
+  }
+
+  .inactive,
+  .inactive:hover {
+    color: rgba(255, 255, 255, .6) !important;
+  }
+
   .nc {
     background: white;
     position: absolute;
@@ -32,7 +42,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-
 
     display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
     display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
@@ -43,15 +52,19 @@
     justify-content: center;
   }
 
-  .nc-channels {
-    background-color: #333;
+  .nc-channels a {
     color: white;
+  }
+
+  .nc-channels {
+    background-color: #235B66;
+    color: rgba(255, 255, 255, .6);
 
     min-width: 220px;
     max-width: 220px;
 
-    padding: 10px;
-    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .nc-messages {
@@ -68,7 +81,6 @@
     -ms-flex-direction: column;
     flex-direction: column;
 
-
     flex-wrap: nowrap;
     justify-content: flex-end;
     align-content: stretch;
@@ -79,14 +91,14 @@
   }
 
   .nc-messages-content {
-    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
     flex-grow: 1;
     -webkit-flex-grow: 1;
   }
 
   .nc-messages-footer {
     min-height: 80px;
-    padding: 10px;
   }
 
 </style>
@@ -98,12 +110,24 @@
 
     <div class="nc-channels hidden-xs visible-sm-block visible-md-block visible-lg-block">
 
-      <div class="mb2">
-        <h6 class="mt0 mb2">Channels</h6>
-        <div data-react-class="ChannelsList" data-react-props="<%= { currentRoom: @chat_room.key }.to_json %>"></div>
+      <a class="block px3 py2" href="<%= product_path(@chat_room.product) %>">
+        <h4 class="my0" style="color:rgba(255,255,255,.6)">
+          <span class="icon icon-chevron-left icon-left mxn1"></span>
+          <%= @chat_room.product.name %>
+        </h4>
+      </a>
+
+      <hr class="my0" style="border-color:rgba(0,0,0,0.1)">
+
+      <div class="p3">
+        <h5 class="mt0 mb2" style="color:rgba(255,255,255,.6)">Channels</h5>
+        <%= react_component 'ChannelsList', currentRoom: @chat_room.key %>
       </div>
 
-      <div class="mb2">
+      <hr class="my0" style="border-color:rgba(0,0,0,0.1)">
+
+      <div class="p3">
+        <h5 class="mt0 mb2" style="color:rgba(255,255,255,.6)">People</h5>
         <div class="js-members"></div>
       </div>
     </div>
@@ -112,7 +136,7 @@
       <div class="nc-messages-content">
 
         <div class="chat js-chat">
-          <div class="p2">
+          <div class="py2 px3">
             <div class="align-center mb2">
               <a class="btn btn-default btn-block btn-sm js-chat-load-more" href="<%= api_chat_room_comments_path(@chat_room, format: 'json') %>" style="margin-top: 36px;">Load more</a>
             </div>
@@ -123,7 +147,7 @@
 
       </div>
 
-      <div class="nc-messages-footer">
+      <div class="nc-messages-footer px3 py2">
 
         <div class="js-chat-actions">
           <%= render 'discussions/chat_box' %>

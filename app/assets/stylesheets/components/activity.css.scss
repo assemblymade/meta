@@ -58,3 +58,17 @@
     font-size: $font-size-small;
   }
 }
+
+.chat-entry {
+  line-height: 18px;
+  padding-left: 24px + 12px;
+
+  > .pull-left {
+    margin-left: -(24px + 12px);
+  }
+
+  .chat-actor {
+    font-size: 15px;
+    color: $text-color;
+  }
+}
