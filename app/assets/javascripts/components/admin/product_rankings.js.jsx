@@ -5,7 +5,7 @@
   var PaginationLinks = require('./pagination_links.js.jsx')
   var parseUri = require('../../lib/parseuri')
   var Timestamp = require('../timestamp.js.jsx')
-  var ProductStage = require('./product_stage.js.jsx')
+  var ProductState = require('./product_state.js.jsx')
 
   var ProductRankings = React.createClass({
     getInitialState: function() {
@@ -161,7 +161,7 @@
         <td><Timestamp time={this.props.created} /></td>
         <td><Timestamp time={this.props.last_activity_at} /></td>
         <td className="text-right">{this.props.watchings_count}</td>
-        <td><ProductStage state={this.state.state} url={'/admin/products/' + this.props.id} /></td>
+        <td><ProductState state={this.state.state} url={'/admin/products/' + this.props.id} /></td>
         <td className="text-right">
           <input type="text" className="form-control" value={this.state.dirty ? this.state.pendingQualityScore : this.props.quality} style={{'background-color': bgColor}}
             onChange={this.handleChange}

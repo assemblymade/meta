@@ -16,8 +16,6 @@ class Product < ActiveRecord::Base
 
   friendly_id :slug_candidates, use: :slugged
 
-  alias_attribute :stage, :state
-
   attr_encryptor :wallet_private_key, :key => ENV["PRODUCT_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt, :unless => Rails.env.test?
 
   belongs_to :user
@@ -190,19 +188,6 @@ class Product < ActiveRecord::Base
     cipher = OpenSSL::Cipher::AES256.new(:CBC)
     cipher.encrypt
     cipher.random_key
-  end
-
-  def update_stage!(new_stage)
-    case new_stage
-    when 'profitable'
-      launch!
-    when 'greenlit'
-      greenlight!
-    when 'team_building'
-      accept!
-    when 'stealth'
-      reject!
-    end
   end
 
   def launched?

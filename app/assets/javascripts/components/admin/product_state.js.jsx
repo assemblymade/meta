@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  var ProductStage = React.createClass({
+  var ProductState = React.createClass({
     getInitialState: function() {
       return {
         state: this.props.state
@@ -35,7 +35,7 @@
       return this.eventsForState().map(function(u){
         return (
           <li key={u}>
-            <a onClick={this.updateStage(u)}>
+            <a onClick={this.updateState(u)}>
               <span>{u}</span>
             </a>
           </li>
@@ -43,7 +43,7 @@
       }.bind(this))
     },
 
-    updateStage: function(event) {
+    updateState: function(event) {
       return function() {
         $.ajax({
           url: this.props.url,
@@ -61,8 +61,8 @@
   });
 
   if (typeof module !== 'undefined') {
-    module.exports = ProductStage;
+    module.exports = ProductState;
   }
 
-  window.ProductStage = ProductStage;
+  window.ProductState = ProductState;
 })();
