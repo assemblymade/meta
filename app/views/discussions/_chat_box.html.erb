@@ -1,8 +1,5 @@
 <form action="<%= api_chat_room_comments_path(@chat_room) %>">
-  <div class="media alpha js-new-event">
-    <div class="pull-left" style="position: relative; top: 4px;">
-      <%= avatar_tag(current_user, 30) %>
-    </div>
+  <div class="js-new-event">
 
     <% if !signed_in? %>
       <div class="media-body" id="comment">
