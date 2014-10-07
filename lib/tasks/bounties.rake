@@ -4,7 +4,7 @@ namespace :bounties do
     require 'csv'
     include ActionView::Helpers::DateHelper
     puts "Enter output file name:"
-    filename = STDIN.gets.chomp
+    filename = STDIN.gets.chomp || 'open_bounties.csv'
     query = Task.open.where('created_at <= :six_months_ago', :six_months_ago => Time.now - 6.months)
 
     CSV.open(filename, 'w') do |row|
