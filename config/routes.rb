@@ -204,6 +204,7 @@ ASM::Application.routes.draw do
       get :workers
 
       get :core_team
+      get :authorization
       namespace :chat do
         resources :comments, only: [:create]
       end

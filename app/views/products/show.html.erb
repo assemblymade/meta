@@ -175,6 +175,19 @@
       <li><a href="<%= product_repos_path(@product) %>">Repositories</a></li>
     </ul>
 
+    <% if current_user && @product.core_team?(current_user) %>
+      <h6 class="text-muted">Product Authentication Token</h6>
+
+      <div class="list-group list-group-breakout well">
+        <p class="text-muted">
+          Keep this token safe. Only the core team has access to it, and it's needed to set up payments. See <a href="<%= product_path('payments') %>">Assembly Payments</a> for more info.
+        </p>
+        <strong><%= @product.authentication_token %></strong>
+      </div>
+
+    <% end %>
+
   </div>
+
 
 </div>

@@ -33,6 +33,12 @@ module Api
       respond_with @workers
     end
 
+    def authorization
+      @product = Product.find_by!(slug: params[:product_id])
+
+      respond_with authorized: @product.authentication_token == params[:token]
+    end
+
     def core_team
       @product = Product.find_by!(slug: params[:product_id])
       @user = User.find_by!(authentication_token: params[:token])
