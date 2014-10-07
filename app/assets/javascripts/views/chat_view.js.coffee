@@ -18,10 +18,6 @@ class window.ChatView extends Backbone.View
 
     @stuckToBottom = true
 
-    @scrollContainer.css(
-      'overflow-x':'hidden'
-      'overflow-y':'scroll'
-    )
     @scrollContainer.on 'scroll', this.loadMoreWhenNearTop
     @displayLoadMore = true
     @pageSize = 50

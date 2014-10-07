@@ -72,8 +72,8 @@
     renderMember: function(member) {
       var isOnline = isMemberOnline(member)
       var classes = React.addons.classSet({
-        'text-weight-bold text-success': isOnline,
-        'text-emphasis': !isOnline
+        'text-success': isOnline,
+        'text-muted': !isOnline
       })
 
       var marker
@@ -84,50 +84,35 @@
       }
 
       return (
-        <div key={member.id}>
-          <a className={classes} href={member.url}>
-            <div className="pull-right">
-            {marker}
+        <a key={member.id} className={classes} href={member.url} >
+          <div className="clearfix">
+            <div className="left mr2">
+              {marker}
             </div>
-            <img className="avatar" src={member.avatar_url} width="16" height="16" alt={member.username} style={{marginRight: 10}} />
-            {member.username}
-          </a>
-        </div>
+            <div className="overflow-hidden">
+              {member.username}
+            </div>
+          </div>
+        </a>
       )
     },
 
     render: function() {
       var loading = null
       if (!this.state.hasRecentlyActiveMembers) {
-          loading = <div className="pull-right spinner"><div className="spinner-icon"></div></div>
+          loading = <div className="right spinner"><div className="spinner-icon"></div></div>
       }
       return (
-        <div className="panel-group" id="accordion">
-          <div className="panel panel-default">
-            <div className="panel-heading">
-              <h6 className="panel-title">
-                {loading}
-                Online
-              </h6>
-            </div>
-            <div className="panel-body small">
-              {
-                _.map(this.onlineMembers(), this.renderMember)
-              }
-            </div>
-            <div className="panel-heading">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseRecent" className="text-muted">
-                <i className="icon icon-chevron-up pull-right"></i>
-                <h6 className="panel-title">Recently Active</h6>
-              </a>
-            </div>
-            <div id="collapseRecent" className="panel-collapse collapse in">
-              <div className="panel-body small">
-              {
-                _.map(this.recentlyActiveMembers(), this.renderMember)
-              }
-              </div>
-            </div>
+        <div>
+          <h6 className="mt0 mb2 clearfix">
+            {loading}
+            People
+          </h6>
+          <div>
+            { _.map(this.onlineMembers(), this.renderMember) }
+          </div>
+          <div>
+            { _.map(this.recentlyActiveMembers(), this.renderMember) }
           </div>
         </div>
       )
