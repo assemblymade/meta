@@ -6,7 +6,7 @@ describe 'User signup' do
 
     expect(assigns(:user).username).to eq('lumpy')
 
-    expect(response).to redirect_to('/discover')
+    expect(response).to redirect_to('/welcome')
   end
 
   it 'creates a user and redirects to the previous page' do
