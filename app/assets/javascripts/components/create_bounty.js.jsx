@@ -10,6 +10,18 @@
       };
     },
 
+    getInitialState: function() {
+      return {
+        changed: false
+      };
+    },
+
+    handleChange: function() {
+      this.setState({
+        changed: true
+      });
+    },
+
     render: function() {
       return <Lightbox title="Create a bounty">
         <form accept-charset="UTF-8" action={this.props.url} className="new_task" id="new_task" name="task[title]" type="text" method="post">
@@ -21,7 +33,7 @@
 
             <div className="form-group">
               <label className="form-label">Title</label>
-              <input autofocus="autofocus" defaultValue={this.props.title} className="form-control" data-validate-length="2" id="task_title" name="task[title]" type="text" />
+              <input autofocus="autofocus" defaultValue={this.props.title} className="form-control" data-validate-length="2" id="task_title" name="task[title]" type="text" onChange={this.handleChange} />
             </div>
 
             <div className="form-group">
@@ -54,9 +66,15 @@
     },
 
     componentDidMount: function() {
-      $(this.getDOMNode()).modal({
-        show: true
-      }).on('hidden.bs.modal', this.props.onHidden)
+      var modal = $(this.getDOMNode()).modal({ show: true })
+      modal.on('hide.bs.modal', this.confirmHide)
+      modal.on('hidden.bs.modal', this.props.onHidden)
+    },
+
+    confirmHide: function() {
+      if(this.state.changed) {
+        return confirm('Are you sure you want to discard this unsaved bounty?');
+      }
     }
   })
 
