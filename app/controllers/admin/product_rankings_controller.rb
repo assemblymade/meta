@@ -33,10 +33,10 @@ class Admin::ProductRankingsController < AdminController
       @product.update!(quality: quality)
     end
     
-    if params[:stage]
-      @product.update_stage!(params[:stage])
+    if params[:event]
+      @product.process_event!(params[:event])
     end
 
-    render nothing: true, status: :ok
+    render json: @product, serializer: ProductRankingSerializer
   end
 end

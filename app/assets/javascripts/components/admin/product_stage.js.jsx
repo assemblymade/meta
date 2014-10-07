@@ -3,14 +3,16 @@
 (function() {
   var ProductStage = React.createClass({
     getInitialState: function() {
-      return { label: this.props.initialLabel }
+      return {
+        state: this.props.state
+      }
     },
 
     render: function() {
       return (
         <div className="dropdown" style={{"display":"inline-block"}}>
           <a data-toggle="dropdown" style={{"cursor":"pointer"}}>
-            <span className={this.labelClass(this.state.label)}>{this.state.label}</span>
+            <span>{this.state.state}</span>
           </a>
           <ul className="dropdown-menu">
             {this.listItems()}
@@ -19,32 +21,42 @@
       )
     },
 
+    eventsForState: function() {
+      return {
+        stealth: ['submit'],
+        reviewing: ['accept', 'reject'],
+        team_building: ['greenlight', 'reject'],
+        greenlit: ['launch', 'remove'],
+        profitable: ['remove']
+      }[this.state.state] || [];
+    },
+
     listItems: function() {
-      return this.props.stages.map(function(u){
+      return this.eventsForState().map(function(u){
         return (
           <li key={u}>
             <a onClick={this.updateStage(u)}>
-              <span className={this.labelClass(u)}>{u}</span>
+              <span>{u}</span>
             </a>
           </li>
         )
       }.bind(this))
     },
 
-    updateStage: function(label) {
+    updateStage: function(event) {
       return function() {
-        this.setState({label: label})
         $.ajax({
           url: this.props.url,
           dataType: 'json',
           type: 'PATCH',
-          data: { stage: label }
+          data: { event: event },
+          success: function(product) {
+            this.setState({
+              state: product.state
+            });
+          }.bind(this)
         });
       }.bind(this)
-    },
-
-    labelClass: function(stage) {
-      return ""
     }
   });
 
