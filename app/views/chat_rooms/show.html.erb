@@ -21,19 +21,6 @@
   bottom: 0;
   left: 0;
 }
-.page {
-  padding-bottom: 0;
-}
-.chat-wrapper > .row {
-  position: absolute;
-  top: 0;
-}
-.chat-wrapper > .row > .col-md-9 {
-  padding-right: 0;
-}
-.chat-wrapper > .row > .col-md-3 {
-  padding-left: 0;
-}
 </style>
 
 <style>
@@ -94,7 +81,7 @@
 
       <div class="mb2">
         <h6 class="mt0 mb2">Channels</h6>
-        <% ChatRoom.order(updated_at: :desc).limit(10).each do |chan| %>
+        <% @rooms.each do |chan| %>
           <a class="block" href="<%= chat_room_path(chan) %>">#<%= chan.slug %></a>
         <% end %>
       </div>

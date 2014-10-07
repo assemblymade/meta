@@ -21,6 +21,12 @@ class ChatRoomsController < ApplicationController
 
   def show
     @chat_room = ChatRoom.find_by!(slug: params[:id])
+
+    @rooms = (
+      [ChatRoom.general] +
+      ChatRoom.where(product_id: current_user.followed_product_ids).includes(:product).order(updated_at: :desc)
+    ).uniq.compact
+
     @activity_stream = ActivityStream.new(@chat_room.id).page(params[:top_id])
   end
 
