@@ -33,7 +33,15 @@
       return <div>
         {rooms.map(function(roomId){
           var room = this.state.rooms[roomId]
-          return <a className="block" href={room.url}>#{room.label}</a>
+          var unread = this.state.rooms[roomId].updated > this.state.rooms[roomId].last_read_at
+          var badge = null
+          if (unread) {
+            badge = <span
+                className="indicator indicator-info"
+                style={{ 'position': 'relative', 'left': '3px', 'top': '-1px' }} />
+          }
+
+          return <a className="block" href={room.url}>#{room.label} {badge}</a>
         }.bind(this))}
 
         {this.state.showAll ? null : this.showAll()}
