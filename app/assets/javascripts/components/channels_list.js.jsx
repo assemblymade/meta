@@ -13,6 +13,10 @@
   // short list should be: unread mixed with most recently read
 
   var ChannelsList = React.createClass({
+    propTypes: {
+      currentRoom: React.PropTypes.string.isRequired
+    },
+
     getInitialState: function() {
       return _.extend(getStateFromStore(), {
         showAll: false
@@ -41,7 +45,12 @@
                 style={{ 'position': 'relative', 'left': '3px', 'top': '-1px' }} />
           }
 
-          return <a className="block" href={room.url}>#{room.label} {badge}</a>
+          var classes = React.addons.classSet({
+            'block': true,
+            'text-white': this.props.currentRoom == roomId
+          })
+
+          return <a className={classes} href={room.url}>#{room.label} {badge}</a>
         }.bind(this))}
 
         {this.state.showAll ? null : this.showAll()}
