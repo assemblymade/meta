@@ -63,16 +63,18 @@
     <% end %>
 
 
-    <br>
-    <% workers = bounty.wip_workers %>
-    <% if workers.any? %>
-      <p class="text-muted">
-        <%= workers.map(&:user).map {|user| user_link_username(user) }.to_sentence.html_safe %>
-        started working on this bounty
-        <time class="timestamp" dateTime="<%= workers.map(&:created_at).max.iso8601 %>"></time>.
-      </p>
-    <% else %>
-      <p class="text-muted omega small">This bounty doesn't have anybody working on it. Jump in!</p>
+    <% if @product.core_team?(current_user) %>
+      <br>
+      <% workers = bounty.wip_workers %>
+      <% if workers.any? %>
+        <p class="text-muted">
+          <%= workers.map(&:user).map {|user| user_link_username(user) }.to_sentence.html_safe %>
+          started working on this bounty
+          <time class="timestamp" dateTime="<%= workers.map(&:created_at).max.iso8601 %>"></time>.
+        </p>
+      <% else %>
+        <p class="text-muted omega small">This bounty doesn't have anybody working on it. Jump in!</p>
+      <% end %>
     <% end %>
   </div>
 
