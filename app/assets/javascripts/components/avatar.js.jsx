@@ -15,6 +15,10 @@
     },
 
     avatarUrl: function() {
+      if (this.props.avatar_url) {
+        return this.props.avatar_url
+      }
+
       if (!this.props.user || !this.props.user.avatar_url || this.props.alwaysDefault) {
         return '/assets/avatars/default.png';
       }

@@ -12,7 +12,29 @@ class window.ActivityView extends Backbone.View
 
   render: =>
     template = JST[@model.get('type')]
-    if template
+    if @model.get('type') == 'activities/chat'
+      subject = @model.attributes.subject
+      tipsProps = null
+      if @model.id
+        tipsProps =
+          viaType: 'Activity'
+          viaId: @model.id
+          recipient: @model.get('actor')
+          tips: @model.get('tips')
+
+
+      React.renderComponent(
+        ChatEntry({
+          user: @model.attributes.actor,
+          tips: tipsProps,
+          entry: {
+            number: subject.number,
+            message: subject.body,
+            message_html: subject.body_html
+          }
+        }), @$el[0])
+
+    else if template
       @$el.html(template.render(@templateData()))
       $('[data-readraptor-track]', @$el).readraptor()
       $('.activity-content a,.media-body a').attr('target', '_blank')
