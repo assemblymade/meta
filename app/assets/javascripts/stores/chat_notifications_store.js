@@ -6,7 +6,7 @@ var NotificationsMixin = require('../mixins/notifications');
 
 (function() {
   var _chatRooms = {};
-   var _sortKeys = [];
+  var _sortKeys = [];
   var _optimisticChatRooms = {};
   var _store = Object.create(Store);
 

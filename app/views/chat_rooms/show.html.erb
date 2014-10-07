@@ -100,9 +100,7 @@
 
       <div class="mb2">
         <h6 class="mt0 mb2">Channels</h6>
-        <% @rooms.each do |chan| %>
-          <a class="block" href="<%= chat_room_path(chan) %>">#<%= chan.slug %></a>
-        <% end %>
+        <div data-react-class="ChannelsList"></div>
       </div>
 
       <div class="mb2">

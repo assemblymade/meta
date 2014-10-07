@@ -1,0 +1,87 @@
+/** @jsx React.DOM */
+
+(function(){
+  var ChatRoomStore = require('../stores/chat_notifications_store')
+  var shortListLength = 5
+
+  function getStateFromStore() {
+    return {
+      rooms: ChatRoomStore.getChatRooms()
+    }
+  }
+
+  // short list should be: unread mixed with most recently read
+
+  var ChannelsList = React.createClass({
+    getInitialState: function() {
+      return _.extend(getStateFromStore(), {
+        showAll: false
+      })
+    },
+
+    componentDidMount: function() {
+      ChatRoomStore.addChangeListener(this._onChange)
+    },
+
+    componentWillUnmount: function() {
+      ChatRoomStore.removeChangeListener(this._onChange)
+    },
+
+    render: function() {
+      var rooms = this.state.showAll ? _.keys(this.state.rooms) : this.shortList(shortListLength)
+
+      return <div>
+        {rooms.map(function(roomId){
+          var room = this.state.rooms[roomId]
+          return <a className="block" href={room.url}>#{room.label}</a>
+        }.bind(this))}
+
+        {this.state.showAll ? null : this.showAll()}
+      </div>
+    },
+
+    // take the top X rooms, sorted by ones with unread messages, then most recently visited
+    shortList: function(count) {
+      var rooms = this.state.rooms
+      if (rooms) {
+        var unreadRecentRoomIds = _.first(_.sortBy(_.keys(rooms), function(roomId){
+          var unread = rooms[roomId].updated > rooms[roomId].last_read_at
+          return -rooms[roomId].last_read_at * (unread ? 2 : 1)
+        }), count)
+
+        return _.sortBy(unreadRecentRoomIds, function(roomId){
+          return rooms[roomId].label == 'general' ? '_______' : rooms[roomId].label
+        })
+      }
+      return []
+    },
+
+    showAll: function() {
+      var rooms = _.size(this.state.rooms)
+      if (rooms > shortListLength){
+        return <a className="block clickable" onClick={this.handleShowAllClicked}>Show all {_.size(this.state.rooms)}</a>
+      } else {
+        return null
+      }
+    },
+
+    handleShowAllClicked: function() {
+      this.setState({ showAll: true })
+    },
+
+    // change from stores
+    _onChange: function() {
+      this.setState(getStateFromStore())
+    }
+  })
+
+  if (typeof module !== 'undefined') {
+    module.exports = ChannelsList
+  }
+
+  window.ChannelsList = ChannelsList
+})()
+
+// <% @rooms.each do |chan| %>
+//   <a class="block" href="<%= chat_room_path(chan) %>">#<%= chan.slug %></a>
+// <% end %>
