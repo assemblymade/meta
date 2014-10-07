@@ -93,3 +93,37 @@ $space-4: 48px;
 .p4  { padding:       $space-4 }
 .py4 { padding-top:   $space-4; padding-bottom: $space-4 }
 .px4 { padding-left:  $space-4; padding-right:  $space-4 }
+
+
+.sm-show,
+.md-show,
+.lg-show {
+  display: none !important;
+}
+
+
+@media (min-width: 40em) {
+  .sm-show { display: block !important }
+}
+
+@media (min-width: 52em) {
+  .md-show { display: block !important }
+}
+
+@media (min-width: 64em) {
+  .lg-show { display: block !important }
+}
+
+@media (min-width: 40em) {
+  .sm-hide { display: none !important }
+}
+
+@media (min-width: 52em) {
+  .md-hide { display: none !important }
+}
+
+@media (min-width: 64em) {
+  .lg-hide { display: none !important }
+}
+
+.display-none { display: none !important }
