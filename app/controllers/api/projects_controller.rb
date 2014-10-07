@@ -34,7 +34,8 @@ module Api
             @product.tasks,
             current_user,
             request.remote_ip,
-            title: attrs[:title]
+            title: attrs[:title],
+            description: attrs[:description]
           )
           milestone.tasks << task
         end
@@ -42,7 +43,7 @@ module Api
     end
 
     def milestone_params
-      params.require(:wip).permit(:title, milestone_attributes: [:description], milestone_tasks_attributes: [:id, :title], milestone_images_attributes: [:attachment_id])
+      params.require(:wip).permit(:title, milestone_attributes: [:description], milestone_tasks_attributes: [:id, :title, :description], milestone_images_attributes: [:attachment_id])
     end
 
     private
