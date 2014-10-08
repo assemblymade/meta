@@ -1,5 +1,8 @@
 .label {
-  padding: .2em .5em;
+  border-radius: 2px;
+  font-size: 14px;
+  font-weight: normal;
+  padding: 2px 7px;
 }
 
 .label-urgent {
@@ -12,6 +15,17 @@
 
 .label-someday {
   background-color: $yellow;
+}
+
+.label-muted {
+  background-color: white;
+  border: 1px solid $gray-lighter;
+  color: $gray-light;
+
+  &:hover, &.hover {
+    border: 1px solid darken($gray-lighter, 10%);
+    color: darken($gray-light, 10%) !important;
+  }
 }
 
 .label-outlined {

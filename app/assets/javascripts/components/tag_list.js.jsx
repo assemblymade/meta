@@ -30,7 +30,7 @@ var TagListStore = require('../stores/tag_list_store');
       return {
         adding: false,
         popoverShown: false,
-        removeTagVisibility: 'hidden',
+        removeTagVisibility: 'none',
         tags: this.props.tags
       }
     },
@@ -63,7 +63,7 @@ var TagListStore = require('../stores/tag_list_store');
 
     hideRemoveTag: function(e) {
       this.setState({
-        removeTagVisibility: 'hidden'
+        removeTagVisibility: 'none'
       });
     },
 
@@ -125,17 +125,18 @@ var TagListStore = require('../stores/tag_list_store');
     removeButton: function(tag) {
       if (this.props.destination) {
         return (
-          <span>
-            <a style={{
-                  'margin-left': '2px',
-                  'font-size': '10px',
-                  cursor: 'pointer',
-                  visibility: this.state.removeTagVisibility
-                }}
-                onClick={this.removeTag(tag)}>
-              &times;
-            </a>
-          </span>
+          <button style={{
+                'color': '#777',
+                'padding': '0',
+                'margin-left': '4px',
+                'font-size': '10px',
+                cursor: 'pointer',
+                display: this.state.removeTagVisibility
+              }}
+              className="btn btn-label"
+              onClick={this.removeTag(tag)}>
+            &times;
+          </button>
         );
       }
 
@@ -146,6 +147,9 @@ var TagListStore = require('../stores/tag_list_store');
       var self = this;
 
       return function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
         Dispatcher.dispatch({
           action: TAG_LIST.ACTIONS.REMOVE_TAG,
           data: {
@@ -167,7 +171,7 @@ var TagListStore = require('../stores/tag_list_store');
 
     showRemoveTag: function(e) {
       this.setState({
-        removeTagVisibility: 'visible'
+        removeTagVisibility: 'inline'
       });
     },
 
@@ -203,13 +207,13 @@ var TagListStore = require('../stores/tag_list_store');
 
       var mappedTags = _.map(tags, function(tag) {
         var style = {
-          'font-size': '14px',
           cursor: 'pointer'
         };
 
+        var classes = 'label label-muted';
+
         if (!self.props.destination && addedTags && addedTags.indexOf(tag) >= 0) {
           style.cursor = 'default';
-          style.color = '#d3d3d3';
         }
 
         if (!tag) {
@@ -223,13 +227,14 @@ var TagListStore = require('../stores/tag_list_store');
               onMouseOver={self.showRemoveTag}
               onMouseOut={self.hideRemoveTag}>
             <a style={style}
+                className={classes}
                 href={self.props.filterUrl && self.props.destination ?
                   self.props.filterUrl + '?tag=' + tag :
                   'javascript:void(0);'}
                 onClick={self.handleClick(tag)}>
               {tag}
+              {self.removeButton(tag)}
             </a>
-            {self.removeButton(tag)}
           </li>
         );
       });

@@ -2,12 +2,6 @@
 <% activate_nav! :bounties %>
 <%= track 'product.wip.viewed', WipAnalyticsSerializer.new(@wip, scope: current_user) %>
 
-<h6 class="text-muted alpha">
-  #<%= @bounty.number %>
-  &mdash;
-  Bounty
-</h6>
-
 <%= render 'bounties/bounty', bounty: @bounty %>
 
 <div class="discussion" id="discussion-view-el">
