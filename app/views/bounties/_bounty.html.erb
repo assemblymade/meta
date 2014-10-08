@@ -73,7 +73,7 @@
           <div data-react-class="ToggleButton"
                data-react-props="<%= {
                  bool: bounty.flagged?,
-                 text: { true: 'Flagged', false: 'Unflagged' },
+                 text: { true: 'Unflag', false: 'Flag' },
                  classes: { true: 'btn btn-sm btn-label', false: 'btn btn-sm btn-label' },
                  icon: 'flag',
                  href: { true: product_wip_unflag_path(bounty.product, bounty), false: product_wip_flag_path(bounty.product, bounty) }
@@ -120,24 +120,26 @@
     </ul>
 
     <ul class="list-inline omega pull-right">
-      <li>
-        <div data-react-class="InviteFriendBounty" data-react-props="<%= {
-            url: invites_path,
-            invites: (@invites ? serialize_hash(@invites) : []),
-          }.merge(TypeId.as_json(:via, bounty)).to_json %>">
-        </div>
-      </li>
-      <li>
-        <% if !bounty.assigned_to?(current_user) %>
-          <a href="<%= product_wip_start_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-success">
-            Work on this bounty
-          </a>
-        <% else %>
-          <a href="<%= product_wip_stop_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-sm btn-danger">
-            Abandon bounty
-          </a>
-        <% end %>
-      </li>
+      <% unless bounty.closed? || bounty.resolved? %>
+        <li>
+          <div data-react-class="InviteFriendBounty" data-react-props="<%= {
+              url: invites_path,
+              invites: (@invites ? serialize_hash(@invites) : []),
+            }.merge(TypeId.as_json(:via, bounty)).to_json %>">
+          </div>
+        </li>
+        <li>
+          <% if !bounty.assigned_to?(current_user) %>
+            <a href="<%= product_wip_start_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-success">
+              Work on this bounty
+            </a>
+          <% else %>
+            <a href="<%= product_wip_stop_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-sm btn-danger">
+              Abandon bounty
+            </a>
+          <% end %>
+        </li>
+      <% end %>
     </ul>
 
   </div>
