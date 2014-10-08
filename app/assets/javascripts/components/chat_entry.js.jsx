@@ -7,6 +7,10 @@
   var marked = require('marked')
 
   var ChatEntry = React.createClass({
+    componentDidMount: function() {
+      window.app.mountReactComponents(this.getDOMNode())
+    },
+
     render: function() {
       return (
         <div className="activity activity-chat chat-entry" id={"comment-" + this.props.entry.number}>

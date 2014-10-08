@@ -54,6 +54,7 @@ class window.WipEventView extends Backbone.View
         }), @)
 
     @$('time').timeago() # display new timestamp
+    window.app.mountReactComponents(@$el[0])
     @
 
   templateData: ->

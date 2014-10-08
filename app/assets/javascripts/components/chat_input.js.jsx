@@ -22,6 +22,7 @@
     componentDidMount: function() {
       // grabbing a pusher channel outside of react. We can fix this when chat is all reactified
       subscribing = setInterval(this.subscribeToPresenceChannel, 50)
+      $(this.refs.textarea.getDOMNode()).on('change', this.handleChange)
     },
 
     subscribeToPresenceChannel: function() {
@@ -55,6 +56,7 @@
       return <div className="media-body" id="comment">
         <div className="js-markdown-editor js-dropzone">
           <textarea className="form-control" rows="1" style={inputStyle}
+            ref="textarea"
             onKeyPress={this.onEnterKey(this.handleEnter)}
             onChange={this.handleChange} value={this.state.message} />
         </div>

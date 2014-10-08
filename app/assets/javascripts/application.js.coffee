@@ -91,3 +91,12 @@ class window.Application
   currentProductBalance: ->
     if user = @currentUser()
       user.get('product_balance')[app.product.id]
+
+  mountReactComponents: (el)->
+    for node in el.querySelectorAll('[data-react-class]')
+      className = node.getAttribute('data-react-class')
+      constructor = window[className]
+      propsJson = node.getAttribute('data-react-props')
+      props = propsJson && JSON.parse(propsJson)
+      React.renderComponent(constructor(props), node)
+
