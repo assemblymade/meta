@@ -6,6 +6,8 @@ class TipMailer < BaseMailer
   layout 'email'
 
   def tipped(tip_id)
+    mailgun_campaign 'notifications'
+
     @tip = Tip.find(tip_id)
     @product = @tip.product
     @user = @tip.to

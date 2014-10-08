@@ -5,6 +5,7 @@ class UserMailer < BaseMailer
 
   def welcome(user_id)
     mailgun_tag 'user#welcome'
+    mailgun_campaign 'community'
 
     @user = User.find(user_id)
 
@@ -15,6 +16,7 @@ class UserMailer < BaseMailer
 
   def follow_up(user_id)
     mailgun_tag 'user#follow_up'
+    mailgun_campaign 'community'
 
     @user = User.find(user_id)
     @user.touch(:personal_email_sent_on)
@@ -26,7 +28,7 @@ class UserMailer < BaseMailer
 
   def featured_wips(user)
     mailgun_tag 'user#featured_wips'
-    mailgun_campaign 'd2lii'
+    mailgun_campaign 'notifications'
 
     @user = user
 
@@ -36,6 +38,8 @@ class UserMailer < BaseMailer
   end
 
   def featured_work_apology(product, user)
+    mailgun_campaign 'community'
+
     @product = product
     @user = user
     @example = Product.find_by(slug: 'coderwall')
@@ -46,6 +50,7 @@ class UserMailer < BaseMailer
   end
 
   def remind_user_of_their_claimed_work(user_id, wip_id)
+    mailgun_campaign 'community'
     mailgun_tag 'user#remind_user_claimed_work'
 
     @user     = User.find(user_id)
@@ -60,6 +65,7 @@ class UserMailer < BaseMailer
   end
 
   def joined_team_no_work_yet(membership_id)
+    mailgun_campaign 'community'
     mailgun_tag 'user#joined_team_no_work_yet'
 
     @membership = TeamMembership.find(membership_id)
@@ -72,6 +78,7 @@ class UserMailer < BaseMailer
   end
 
   def joined_team_no_introduction_yet(membership_id)
+    mailgun_campaign 'notifications'
     mailgun_tag 'user#joined_team_no_introduction_yet'
 
     @membership = TeamMembership.find(membership_id)

@@ -7,7 +7,9 @@ class DigestMailer < BaseMailer
   layout 'mail/newsletter'
 
   def weekly(user_id, newsletter_id)
+    mailgun_campaign 'newsletter'
     mailgun_tag 'digest#weekly'
+
     @user = User.find(user_id)
     @newsletter = Newsletter.find(newsletter_id)
 

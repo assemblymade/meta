@@ -1,6 +1,7 @@
 class TextMailer < Devise::Mailer
 
   def pitch_week_intro(user_id, product_id)
+    mailgun_campaign 'community'
     mailgun_tag 'user#pitch_week_intro'
 
     @user = User.find(user_id)

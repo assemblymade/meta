@@ -5,6 +5,7 @@ class WipMailer < BaseMailer
   layout 'mail/wip_mailer'
 
   def wip_created(user_id, wip_id)
+    mailgun_campaign 'notifications'
     mailgun_tag 'wip#created'
 
     @wip = Wip.find(wip_id)
@@ -27,6 +28,7 @@ class WipMailer < BaseMailer
   end
 
   def wip_event_added(user_id, event_id)
+    mailgun_campaign 'notifications'
     mailgun_tag "wip#event_added"
 
     @user = User.find(user_id)

@@ -4,6 +4,8 @@ class BadgeMailer < BaseMailer
   layout 'email'
 
   def first_win(event_id)
+    mailgun_campaign 'notifications'
+
     @event = Event.find(event_id)
     @wip = @event.wip.decorate
     @product = @wip.product

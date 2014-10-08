@@ -8,6 +8,8 @@ class UserBalanceMailer < BaseMailer
   layout 'email'
 
   def new_balance(balance_entry_ids)
+    mailgun_campaign 'notifications'
+
     @balance_entries = User::BalanceEntry.where(id: balance_entry_ids).includes(:profit_report, :user)
     @earnings = @balance_entries.sum(:earnings)
     @end_at = @balance_entries.first.profit_report.end_at
@@ -18,6 +20,8 @@ class UserBalanceMailer < BaseMailer
   end
 
   def withdrawal_created(withdrawal_id)
+    mailgun_campaign 'notifications'
+
     @withdrawal = User::Withdrawal.find(withdrawal_id)
     @user = @withdrawal.user
 

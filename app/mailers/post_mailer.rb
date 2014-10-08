@@ -5,6 +5,8 @@ class PostMailer < BaseMailer
   helper :markdown
 
   def created(post_id, user_id)
+    mailgun_campaign 'notifications'
+
     @post = Post.find(post_id)
     @user = User.find(user_id)
 
@@ -17,6 +19,8 @@ class PostMailer < BaseMailer
   end
 
   def mailing_list(post_id, email_address)
+    mailgun_campaign 'notifications'
+
     @post = Post.find(post_id)
 
     mailgun_tag "post##{@post.product.slug}"
@@ -26,6 +30,8 @@ class PostMailer < BaseMailer
   end
 
   def preview(product_id, params, author_id)
+    mailgun_campaign 'notifications'
+
     @product = Product.find(product_id)
     @post = Post.new(params)
     @user = User.find(author_id)

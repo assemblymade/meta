@@ -7,6 +7,7 @@ class UnreadMailer < BaseMailer
   layout 'email'
 
   def unread_content(user_id, unread_articles=[])
+    mailgun_campaign 'notifications'
     mailgun_tag 'digest#unread'
 
     @user = User.find(user_id)

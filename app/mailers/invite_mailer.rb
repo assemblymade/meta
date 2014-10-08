@@ -4,6 +4,8 @@ class InviteMailer < BaseMailer
   helper :markdown
 
   def invited(invite_id)
+    mailgun_campaign 'notifications'
+
     @invite = Invite.find(invite_id)
     @invitor = @invite.invitor
     @via = @invite.via

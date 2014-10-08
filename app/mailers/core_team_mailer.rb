@@ -1,6 +1,8 @@
 class CoreTeamMailer < BaseMailer
 
   def welcome(product_id, user_id)
+    mailgun_campaign 'notifications'
+
     @product = Product.find(product_id)
     @user = @product.core_team.find(user_id)
 
@@ -10,6 +12,8 @@ class CoreTeamMailer < BaseMailer
   end
 
   def featured_work(product)
+    mailgun_campaign 'community'
+
     @product = product
 
     active_core_team = (@product.core_team + [@product.user]).uniq.compact.delete_if { |c|

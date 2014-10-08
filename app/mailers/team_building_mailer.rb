@@ -2,6 +2,8 @@ class TeamBuildingMailer < BaseMailer
   layout false
 
   def success(product_id)
+    mailgun_campaign 'notifications'
+
     @product = Product.find(product_id)
     @application = PitchWeekApplication.where(product_id: @product.id).
       order('created_at DESC').
@@ -14,6 +16,8 @@ class TeamBuildingMailer < BaseMailer
   end
 
   def failure(product_id)
+    mailgun_campaign 'notifications'
+
     @product = Product.find(product_id)
     @application = PitchWeekApplication.where(product_id: @product.id).
       order('created_at DESC').

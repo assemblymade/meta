@@ -7,6 +7,8 @@ class ProductMailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper
 
   def congrats_on_your_first_user(product_id)
+    mailgun_campaign 'notifications'
+
     @product = Product.find(product_id)
     entire_core_team = (@product.core_team + [@product.user]).uniq.compact.collect(&:email)
 
@@ -16,6 +18,8 @@ class ProductMailer < ActionMailer::Base
   end
 
   def new_subscriber(product, email_address)
+    mailgun_campaign 'notifications'
+
     @product = product
     @email_address = email_address
 
@@ -25,6 +29,8 @@ class ProductMailer < ActionMailer::Base
   end
 
   def new_promo_subscriber(product, email_address)
+    mailgun_campaign 'notifications'
+
     @product = product
     @email_address = email_address
 
@@ -34,6 +40,8 @@ class ProductMailer < ActionMailer::Base
   end
 
   def new_promo_subscriber_with_account(product, user)
+    mailgun_campaign 'notifications'
+
     @product = product
     @user = user
 
@@ -43,6 +51,8 @@ class ProductMailer < ActionMailer::Base
   end
 
   def new_subscriber_with_account(product, user)
+    mailgun_campaign 'notifications'
+
     @product = product
     @user = user
 
@@ -52,6 +62,8 @@ class ProductMailer < ActionMailer::Base
   end
 
   def congratulate_on_signups(product_id, number)
+    mailgun_campaign 'notifications'
+
     @product = Product.find(product_id)
     @number = number
     entire_core_team = (@product.core_team + [@product.user]).uniq.compact.collect(&:email)
@@ -62,6 +74,8 @@ class ProductMailer < ActionMailer::Base
   end
 
   def notify_core_team(product_id)
+    mailgun_campaign 'notifications'
+
     @product = Product.find(product_id)
 
     entire_core_team = (@product.core_team + [@product.user]).uniq.compact.collect(&:email)
@@ -72,6 +86,8 @@ class ProductMailer < ActionMailer::Base
   end
 
   def stale_wips(user_id)
+    mailgun_campaign 'notifications'
+
     @product = Product.find_by!(slug: 'helpful')
     @wips = @product.wips.where(state: %w(open allocated)).stale_by(20.hours.ago).to_a
     @user = User.find(user_id)
@@ -82,6 +98,8 @@ class ProductMailer < ActionMailer::Base
   end
 
   def flagged(curret_user_id, product_id, message)
+    mailgun_campaign 'notifications'
+
     @current_user = User.find(curret_user_id)
     @product      = Product.find(product_id)
     @message      = message
@@ -92,6 +110,7 @@ class ProductMailer < ActionMailer::Base
   end
 
   def status_update(user_id, status_update_id)
+    mailgun_campaign 'notifications'
     mailgun_tag 'product#status_update'
 
     @user = User.find(user_id)
@@ -139,6 +158,7 @@ class ProductMailer < ActionMailer::Base
   end
 
   def idea_process_update(product_id)
+    mailgun_campaign 'notifications'
     mailgun_tag 'product#idea_process_update'
 
     @product = Product.find(product_id)
@@ -150,6 +170,8 @@ class ProductMailer < ActionMailer::Base
   end
 
   def saved_search_created(saved_search_id)
+    mailgun_campaign 'notifications'
+
     @saved_search = SavedSearch.find(saved_search_id)
     @user = @saved_search.user
 
@@ -158,6 +180,8 @@ class ProductMailer < ActionMailer::Base
   end
 
   def new_introduction(to_id, team_membership_id)
+    mailgun_campaign 'notifications'
+
     @to = User.find(to_id)
     @membership = TeamMembership.find(team_membership_id)
     @product = @membership.product

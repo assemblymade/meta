@@ -4,6 +4,8 @@ class ShowcaseMailer < BaseMailer
   default 'X-Mailgun-Tag' => 'showcase#notification'
 
   def product_soon_to_be_featured(showcase_id)
+    mailgun_campaign 'notifications'
+
     @showcase = Showcase.find(showcase_id)
     @product = @showcase.product
     @user = @product.user
@@ -15,6 +17,8 @@ class ShowcaseMailer < BaseMailer
   end
 
   def product_is_featured(showcase_id)
+    mailgun_campaign 'notifications'
+
     @showcase = Showcase.find(showcase_id)
     @product = @showcase.product
     @user = @product.user
@@ -26,6 +30,8 @@ class ShowcaseMailer < BaseMailer
   end
 
   def scheduled(*showcase_ids)
+    mailgun_campaign 'notifications'
+
     @showcases = Showcase.where(id: showcase_ids)
     mail(
       cc: User.where(is_staff: true).pluck(:email),
