@@ -1,4 +1,4 @@
-class ProductMailer < ActionMailer::Base
+class ProductMailer < BaseMailer
   helper :markdown
   helper :wip
 
