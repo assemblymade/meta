@@ -85,16 +85,9 @@
     },
 
     render: function() {
-      // Loading
-      if (!this.state.hasRecentlyActiveMembers) {
-        return (
-          <div className="spinner">
-            <div className="spinner-icon"></div>
-          </div>
-        )
-      }
-
-      return <div>{ _.map(this.onlineMembers(), this.renderMember) }</div>
+      return <div>
+        { _.map(this.members(), this.renderMember) }
+      </div>
     },
 
     addMembers: function(members) {
@@ -129,25 +122,14 @@
       }
     },
 
-    onlineMembers: function() {
+    members: function() {
       if (!this.state.hasRecentlyActiveMembers) {
         return []
       }
       return _.chain(this.state.members).values().filter(function(member) {
-        return isMemberOnline(member)
+        return isMemberRecentlyActive(member)
       }).sortBy(function(member) {
-        return member.username.toLowerCase()
-      }).value()
-    },
-
-    recentlyActiveMembers: function() {
-      if (!this.state.hasRecentlyActiveMembers) {
-        return []
-      }
-      return _.chain(this.state.members).values().filter(function(member) {
-        return !isMemberOnline(member) && isMemberRecentlyActive(member)
-      }).sortBy(function(member) {
-        return member.username.toLowerCase()
+        return (isMemberOnline(member) ? '0' : '1') + member.username.toLowerCase()
       }).value()
     }
   });
