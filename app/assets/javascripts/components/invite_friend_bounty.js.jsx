@@ -25,7 +25,7 @@ var InviteBountyForm = require('./invite_bounty_form.js.jsx');
           placement="bottom"
           visible={this.state.popoverShown}
           onHide={this.handleHide}>
-            <a href="javascript:void(0);" onClick={this.togglePopover}>Recruit help</a>
+            <a href="javascript:void(0);" onClick={this.togglePopover} className="btn btn-sm btn-label">Recruit help</a>
         </BsPopover>
       )
     },

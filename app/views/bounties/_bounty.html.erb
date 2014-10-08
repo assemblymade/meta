@@ -38,7 +38,7 @@
             filterUrl: product_wips_path(@product),
             destination: true,
             tags: bounty.tags.map(&:name),
-            url: product_wip_tag_path(@product, @wip)
+            url: product_wip_tag_path(@product, bounty)
           }.to_json %>">
       </li>
       <li class="text-muted">
@@ -50,6 +50,9 @@
 
     <h1 class="alpha omega">
       <%= bounty.title %>
+      <small style="font-size: 30px; color: #b4b4b4">
+        #<%= @bounty.number %>
+      </small>
     </h1>
   </div>
 
@@ -64,14 +67,14 @@
   </div>
 
   <div class="card-footer clearfix">
-    <ul class="list-inline omega pull-left">
+    <ul class="list-inline omega pull-left" style="padding-top: 4px">
       <% if current_user && current_user.staff? %>
         <li>
           <div data-react-class="ToggleButton"
                data-react-props="<%= {
                  bool: bounty.flagged?,
                  text: { true: 'Flagged', false: 'Unflagged' },
-                 classes: { true: 'btn btn-sm btn-link', false: 'btn btn-sm btn-link' },
+                 classes: { true: 'btn btn-sm btn-label', false: 'btn btn-sm btn-label' },
                  icon: 'flag',
                  href: { true: product_wip_unflag_path(bounty.product, bounty), false: product_wip_flag_path(bounty.product, bounty) }
               }.to_json %>">
@@ -80,7 +83,7 @@
       <% end %>
       <% if can?(:update, bounty) %>
         <li>
-          <a href="<%= edit_product_wip_path(bounty.product, bounty) %>" class="btn btn-sm btn-link">
+          <a href="<%= edit_product_wip_path(bounty.product, bounty) %>" class="btn btn-sm btn-label">
             <span class="icon icon-pencil icon-left"></span>
             Edit
           </a>
@@ -90,12 +93,12 @@
         <li>
           <%= form_tag product_wip_comments_path(bounty.product, bounty), method: :post, class: %w(form new_event_comment) do %>
             <% if bounty.resolved? || bounty.closed? %>
-              <%= button_tag name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-sm btn-link) do %>
+              <%= button_tag name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-sm btn-label) do %>
                 <span class="icon icon-check"></span>
                 Reopen
               <% end %>
             <% else %>
-              <%= button_tag name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-sm btn-link) do %>
+              <%= button_tag name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-sm btn-label) do %>
                 <span class="icon icon-close icon-left"></span>
                 Close
               <% end %>
@@ -106,11 +109,11 @@
       <li>
         <div data-react-class="ToggleButton"
              data-react-props="<%= {
-               bool: watching?(@wip),
+               bool: watching?(bounty),
                text: { true: 'Mute', false: 'Follow' },
                icon: 'volume-off',
-               classes: { true: 'btn btn-link btn-sm', false: 'btn btn-link btn-sm' },
-               href: { true: product_wip_mute_path(@wip.product, @wip.number), false: product_wip_watch_path(@wip.product, @wip.number) }
+               classes: { true: 'btn btn-label btn-sm', false: 'btn btn-label btn-sm' },
+               href: { true: product_wip_mute_path(bounty.product, bounty.number), false: product_wip_watch_path(bounty.product, bounty.number) }
             }.to_json %>">
         </div>
       </li>
@@ -126,7 +129,7 @@
       </li>
       <li>
         <% if !bounty.assigned_to?(current_user) %>
-          <a href="<%= product_wip_start_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-sm btn-success">
+          <a href="<%= product_wip_start_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-success">
             Work on this bounty
           </a>
         <% else %>
