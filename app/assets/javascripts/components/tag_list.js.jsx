@@ -147,6 +147,9 @@ var TagListStore = require('../stores/tag_list_store');
       var self = this;
 
       return function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
         Dispatcher.dispatch({
           action: TAG_LIST.ACTIONS.REMOVE_TAG,
           data: {
