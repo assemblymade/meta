@@ -34,17 +34,22 @@ class window.MarkdownEditorView extends Backbone.View
     @addUploadPlaceholder(file.name)
 
   onSuccess: (file) =>
-    @replaceUploadPlaceholder(file.name, file.attachment.get('href'))
+    @replaceUploadPlaceholder(file.type, file.name, file.attachment.get('href'))
 
   onComplete: (file) =>
-    @textarea.trigger('autosize.resize')
+    @textarea.trigger('autosize.resize').trigger('change')
 
   addUploadPlaceholder: (key) ->
     insertTextAtCursor(@textarea[0], uploadPlaceholder(key))
 
-  replaceUploadPlaceholder: (key, href) ->
+  replaceUploadPlaceholder: (type, key, href) ->
     placeholder = uploadPlaceholder(key)
-    @textarea.val(@textarea.val().replace(placeholder, "![#{key}](#{href})"))
+    replacement = if type.match(/image|pdf|png|psd/)
+      "![#{key}](#{href})"
+    else
+      "[#{key}](#{href})"
+
+    @textarea.val(@textarea.val().replace(placeholder, replacement))
 
 
 $(document).ready ->
