@@ -38,6 +38,7 @@
             filterUrl: product_wips_path(@product),
             destination: true,
             tags: bounty.tags.map(&:name),
+            newBounty: true,
             url: product_wip_tag_path(@product, bounty)
           }.to_json %>">
       </li>

@@ -17,6 +17,17 @@
   background-color: $yellow;
 }
 
+.label-muted {
+  background-color: white;
+  border: 1px solid $gray-lighter;
+  color: $gray-light;
+
+  &:hover, &.hover {
+    border: 1px solid darken($gray-lighter, 10%);
+    color: darken($gray-light, 10%) !important;
+  }
+}
+
 .label-outlined {
   background: transparent;
   box-shadow: inset 0 0 0 1px $brand-border;
