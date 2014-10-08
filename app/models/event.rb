@@ -6,6 +6,7 @@ class Event < ActiveRecord::Base
   include Versioning
   include ActionView::Helpers::TextHelper
 
+  belongs_to :event
   belongs_to :user
   belongs_to :wip, touch: true, counter_cache: true
 
