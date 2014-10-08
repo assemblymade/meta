@@ -70,16 +70,18 @@
     },
 
     renderMember: function(member) {
-      var isOnline = isMemberOnline(member)
-      var classes = React.addons.classSet({
-        'block overflow-hidden': true,
-        'active': isOnline,
-        'inactive': (!isOnline)
-      })
+      var indicator = null
+
+      if (isMemberOnline(member)) {
+        indicator = (
+          <div className="indicator indicator-success icon-right"></div>
+        )
+      }
 
       return (
-        <a key={member.id} className={classes} href={member.url} >
+        <a key={member.id} className="block overflow-hidden inactive" href={member.url}>
           @{member.username}
+          {indicator}
         </a>
       )
     },

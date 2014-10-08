@@ -34,27 +34,29 @@
     render: function() {
       var rooms = this.state.showAll ? _.keys(this.state.rooms) : this.shortList(shortListLength)
 
-      return <div>
-        {rooms.map(function(roomId){
-          var room = this.state.rooms[roomId]
-          var unread = this.state.rooms[roomId].updated > this.state.rooms[roomId].last_read_at
-          var badge = null
-          if (unread) {
-            badge = <span
-                className="indicator indicator-info"
-                style={{ 'position': 'relative', 'left': '3px', 'top': '-1px' }} />
-          }
+      return (
+        <div>
+          {rooms.map(function(roomId){
+            var room = this.state.rooms[roomId],
+                hasUnread = room.updated > room.last_read_at,
+                isActive = this.props.currentRoom === roomId
 
-          var classes = React.addons.classSet({
-            'block': true,
-            'text-white': this.props.currentRoom == roomId
-          })
+            var classes = React.addons.classSet({
+              'block clearfix text-white': true,
+              'bold': hasUnread,
+              'channel-list-active': isActive
+            })
 
-          return <a className={classes} href={room.url}>#{room.label} {badge}</a>
-        }.bind(this))}
+            return (
+              <a className={classes} href={room.url}>
+                #{room.label}
+              </a>
+            )
+          }.bind(this))}
 
-        {this.state.showAll ? null : this.showAll()}
-      </div>
+          {this.state.showAll ? null : this.showAll()}
+        </div>
+      )
     },
 
     // take the top X rooms, sorted by ones with unread messages, then most recently visited
@@ -76,7 +78,9 @@
     showAll: function() {
       var rooms = _.size(this.state.rooms)
       if (rooms > shortListLength){
-        return <a className="block clickable" onClick={this.handleShowAllClicked}>Show all {_.size(this.state.rooms)}</a>
+        return (
+          <a className="block py1 caps small bold" onClick={this.handleShowAllClicked} href="javascript:;" style={{color: "rgba(255,255,255,0.2)"}}>Show all {rooms}</a>
+        )
       } else {
         return null
       }
@@ -98,7 +102,3 @@
 
   window.ChannelsList = ChannelsList
 })()
-
-// <% @rooms.each do |chan| %>
-//   <a class="block" href="<%= chat_room_path(chan) %>">#<%= chan.slug %></a>
-// <% end %>
