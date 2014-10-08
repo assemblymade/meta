@@ -10,11 +10,19 @@ var ButtonStore = require('../stores/toggle_button_store');
     propTypes: {
       text: React.PropTypes.object.isRequired,
       classes: React.PropTypes.object.isRequired,
-      href: React.PropTypes.object.isRequired
+      href: React.PropTypes.object.isRequired,
+      icon: React.PropTypes.string
     },
 
     buttonText: function() {
       return this.props.text[this.state.bool];
+    },
+
+    icon: function() {
+      if(this.props.icon) {
+        var iconClasses = ['icon', 'icon-left', 'icon-' + this.props.icon].join(' ');
+        return <span className={iconClasses}></span>;
+      }
     },
 
     classes: function() {
@@ -44,7 +52,12 @@ var ButtonStore = require('../stores/toggle_button_store');
     },
 
     render: function() {
-      return <a className={this.classes()} onClick={this.onClick}>{this.buttonText()}</a>
+      return (
+        <a className={this.classes()} onClick={this.onClick} href="#">
+          {this.icon()}
+          {this.buttonText()}
+        </a>
+      );
     }
   });
 
