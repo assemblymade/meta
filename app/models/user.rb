@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
 
   has_many :assembly_assets
+  has_many :awards, foreign_key: 'winner_id'
   has_many :events
   has_many :products
   has_many :product_logos
@@ -24,7 +25,7 @@ class User < ActiveRecord::Base
   has_many :wips_watched, :through => :watchings, :source => :watchable, :source_type => Wip
   has_many :votes
   has_many :wips_contributed_to, -> { where(events: { type: Event::MAILABLE }).group('wips.id').order('MAX(events.created_at) DESC') }, :through => :events, :source => :wip
-  has_many :wips_awarded_to, -> { where(events: { type: Event::Win }).group('wips.id').order('MAX(events.created_at) DESC') }, :through => :events, :source => :wip
+  has_many :wips_awarded_to, through: :awards, source: :wip
   has_many :wips_commented_on, -> { where(events: { type: Event::Comment }).group('wips.id').order('MAX(events.created_at) DESC') }, :through => :events, :source => :wip
   has_many :stream_events, foreign_key: 'actor_id'
   has_many :saved_searches
