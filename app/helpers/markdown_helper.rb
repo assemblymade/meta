@@ -7,11 +7,13 @@ module MarkdownHelper
     TextFilters::ImgThumbnailFilter
   ]
 
-  PRODUCT_FILTERS = DEFAULT_FILTERS + [
+  PRODUCT_FILTERS = [
+    TextFilters::MarkdownFilter,
+    HTML::Pipeline::SanitizationFilter,
     TextFilters::UserMentionFilter,
     TextFilters::ShortcutFilter,
     TextFilters::AssetInlineFilter,
-    TextFilters::LightboxImageFilter,
+    TextFilters::ImgThumbnailFilter,
     HTML::Pipeline::EmojiFilter,
   ]
 
