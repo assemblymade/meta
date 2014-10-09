@@ -42,7 +42,7 @@
             url: product_wip_tag_path(@product, bounty)
           }.to_json %>">
       </li>
-      <li class="text-muted">
+      <li class="text-muted" style="font-size: 14px; color: #a5a5a5">
         Created by
         <a class="text-stealth-link" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a>
         <%= time_ago_in_words(bounty.created_at) %> ago
@@ -68,14 +68,14 @@
   </div>
 
   <div class="card-footer clearfix">
-    <ul class="list-inline omega pull-left" style="padding-top: 4px">
+    <ul class="list-inline alpha omega pull-left">
       <% if current_user && current_user.staff? %>
-        <li>
+        <li class="alpha">
           <div data-react-class="ToggleButton"
                data-react-props="<%= {
                  bool: bounty.flagged?,
                  text: { true: 'Unflag', false: 'Flag' },
-                 classes: { true: 'btn btn-sm btn-label', false: 'btn btn-sm btn-label' },
+                 classes: { true: 'btn btn-label', false: 'btn btn-label' },
                  icon: 'flag',
                  href: { true: product_wip_unflag_path(bounty.product, bounty), false: product_wip_flag_path(bounty.product, bounty) }
               }.to_json %>">
@@ -84,7 +84,7 @@
       <% end %>
       <% if can?(:update, bounty) %>
         <li>
-          <a href="<%= edit_product_wip_path(bounty.product, bounty) %>" class="btn btn-sm btn-label">
+          <a href="<%= edit_product_wip_path(bounty.product, bounty) %>" class="btn btn-label">
             <span class="icon icon-pencil icon-left"></span>
             Edit
           </a>
@@ -94,12 +94,12 @@
         <li>
           <%= form_tag product_wip_comments_path(bounty.product, bounty), method: :post, class: %w(form new_event_comment) do %>
             <% if bounty.resolved? || bounty.closed? %>
-              <%= button_tag name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-sm btn-label) do %>
+              <%= button_tag name: 'event_comment[type]', value: 'Event::Reopen', type: 'submit', class: %w(btn btn-label) do %>
                 <span class="icon icon-check"></span>
                 Reopen
               <% end %>
             <% else %>
-              <%= button_tag name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-sm btn-label) do %>
+              <%= button_tag name: 'event_comment[type]', value: 'Event::Close', type: 'submit', class: %w(btn btn-label) do %>
                 <span class="icon icon-close icon-left"></span>
                 Close
               <% end %>
@@ -113,14 +113,14 @@
                bool: watching?(bounty),
                text: { true: 'Mute', false: 'Follow' },
                icon: 'volume-off',
-               classes: { true: 'btn btn-label btn-sm', false: 'btn btn-label btn-sm' },
+               classes: { true: 'btn btn-label', false: 'btn btn-label' },
                href: { true: product_wip_mute_path(bounty.product, bounty.number), false: product_wip_watch_path(bounty.product, bounty.number) }
             }.to_json %>">
         </div>
       </li>
     </ul>
 
-    <ul class="list-inline omega pull-right">
+    <ul class="list-inline alpha omega pull-right">
       <% unless bounty.closed? || bounty.resolved? %>
         <li>
           <div data-react-class="InviteFriendBounty" data-react-props="<%= {
@@ -129,13 +129,13 @@
             }.merge(TypeId.as_json(:via, bounty)).to_json %>">
           </div>
         </li>
-        <li>
+        <li class="omega">
           <% if !bounty.assigned_to?(current_user) %>
             <a href="<%= product_wip_start_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-success">
               Work on this bounty
             </a>
           <% else %>
-            <a href="<%= product_wip_stop_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-sm btn-danger">
+            <a href="<%= product_wip_stop_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-danger">
               Abandon bounty
             </a>
           <% end %>
