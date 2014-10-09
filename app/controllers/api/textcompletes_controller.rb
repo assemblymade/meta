@@ -3,10 +3,12 @@ module Api
     respond_to :json
 
     def index
-      @product = if params[:product_id].uuid?
-        Product.find(params[:product_id])
-      else
-        Product.find_by!(slug: params[:product_id])
+      if product_id = params[:product_id]
+        @product = if product_id.uuid?
+          Product.find(product_id)
+        else
+          Product.find_by!(slug: product_id)
+        end
       end
 
       textcompletes = { textcompletes: TextcompleteSearch.call(@product, params[:query]) }

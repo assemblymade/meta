@@ -13,7 +13,8 @@
         username: current_user.username,
         room: "chat.#{@chat_room.id}",
         url: api_chat_room_comments_path(@chat_room),
-        message: params[:message]
+        message: params[:message],
+        searchUrl: "/_es"
       }.to_json %>"></div>
     </div>
     <% end %>
