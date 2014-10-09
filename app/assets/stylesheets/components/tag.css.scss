@@ -1,4 +1,26 @@
 .tag {
-  font-size: $font-size-small;
-  color: $text-muted;
+  background-color: white;
+  border: 1px solid $gray-lighter;
+  border-radius: 2px;
+  color: $gray-light;
+  font-size: 14px;
+  padding: 2px 7px;
+
+  &:hover,
+  &.hover {
+    border: 1px solid darken($gray-lighter, 10%);
+    color: darken($gray-light, 10%) !important;
+
+    .remove {
+      display: inline;
+    }
+  }
+
+  .remove {
+    color: #777;
+    display: none;
+    font-size: 10px;
+    margin-left: 7px;
+    padding: 0;
+  }
 }
