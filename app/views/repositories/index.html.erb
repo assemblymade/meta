@@ -56,7 +56,8 @@
             data-react-props="<%= {
               addonText: 'github.com/' + ENV["GITHUB_PRODUCTS_ORG"] + '/' + @product.slug,
               placeholder: 'Repository suffix (optional)',
-              path: product_repos_path(@product)
+              path: product_repos_path(@product),
+              existingRepos: (has_repos ? @product.repos.map(&:name) : [])
             }.to_json %>">
         </div>
       <% end %>
