@@ -1,6 +1,6 @@
 .bold { font-weight: bold }
 .regular { font-weight: regular }
-.italics { font-style: italic }
+.italic { font-style: italic }
 .caps {
   text-transform: uppercase;
   letter-spacing: .1em;
@@ -86,6 +86,14 @@ $space-4: 48px;
 .mx-auto { margin-left: auto; margin-right: auto; }
 
 // Padding
+
+.p0  { padding: 0 }
+.pt0 { padding-top: 0 }
+.pr0 { padding-right: 0 }
+.pb0 { padding-bottom: 0 }
+.pl0 { padding-left: 0 }
+.px0 { padding-left: 0; padding-right: 0 }
+.py0 { padding-top: 0; padding-bottom: 0 }
 
 .p1  { padding:       $space-1 }
 .py1 { padding-top:   $space-1; padding-bottom: $space-1 }

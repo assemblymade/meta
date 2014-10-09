@@ -1,18 +1,19 @@
-<div class="media" {{#target}}id="{{anchor}}"{{/target}}>
-  <div class="pull-left">
-    <div class="marker marker-default">
-      <i class="icon icon-arrow-right"></i>
-    </div>
+<div class="activity activity-chat chat-entry" {{#subject}}id="{{anchor}}" data-readraptor-track="{{readraptor_track_id}}"{{/subject}}>
+
+  <div class="pull-left activity-avatar">
+    {{#actor}}
+      <img class="avatar" src="{{avatar_url}}" width="24" height="24">
+    {{/actor}}
   </div>
 
-  <div class="media-body">
-    <div class="media-heading omega">
-
+  <div class="activity-body">
+    <div class="activity-actions">
       {{#actor}}
-        <a href="{{url}}" title="@{{username}}">@{{username}}</a>
+        <a class="chat-actor">{{username}}</a>
       {{/actor}}
-
-      entered chat
+    </div>
+    <div class="italic text-muted">
+      joined channel
     </div>
   </div>
 </div>
