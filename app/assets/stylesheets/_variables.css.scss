@@ -65,6 +65,7 @@ $text-copy: darken($text-copy-bg, 75%);
 // Typography
 
 $font-family-sans-serif: "Source Sans Pro";
+$font-family-sans-serif-semibold: "Source Sans Pro Semibold";
 $font-family-serif:      Georgia, "Times New Roman", Times, serif;
 $font-family-monospace:  "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace;
 $font-family-base:       $font-family-sans-serif;
@@ -85,7 +86,7 @@ $line-height-computed: floor(($font-size-base * $line-height-base)); // 24px
 
 $headings-font-family: inherit;
 $headings-font-weight: 600;
-$headings-line-height: 1.4;
+$headings-line-height: 1.2;
 $headings-color:       inherit;
 
 
