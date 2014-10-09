@@ -5,10 +5,17 @@
   var xhr = require('../xhr');
 
   var NewRepositoryPreview = React.createClass({
+    buttonState: function() {
+      return this.props.existingRepos.indexOf(window.app.currentAnalyticsProduct().get('product_slug') + this.state.inputPreview) !== -1 ||
+          (this.props.existingRepos.length > 0 && this.state.inputPreview.length < 2);
+    },
+
     componentDidMount: function() {
       $('#create-with-launchpad').tooltip({
         container: 'body'
       });
+
+      console.log(this.props);
     },
 
     componentWillUnmount: function() {
@@ -113,7 +120,7 @@
           <FormGroup>
             <div className="form-group text-muted omega">
               <label>
-                <strong>{this.props.addonText + this.state.inputPreview}</strong>
+                {this.props.addonText + this.state.inputPreview}
               </label>
             </div>
             <div className="input-group" style={{ width: '70%' }}>
@@ -126,6 +133,7 @@
                 <a
                     href="javascript:"
                     className="btn btn-primary"
+                    disabled={this.buttonState()}
                     onClick={this.createEmptyRepo}>
                   Create empty repo
                 </a>
@@ -133,6 +141,7 @@
                     href="javascript:"
                     className="btn btn-primary"
                     onClick={this.createWithLaunchpad}
+                    disabled={this.buttonState()}
                     data-toggle="tooltip"
                     title="Let Assembly generate a landing page automatically using GitHub Pages.">
                   Create with landing page
