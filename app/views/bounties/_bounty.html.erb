@@ -8,7 +8,7 @@
 
 <div class="card">
   <div class="card-heading">
-    <ul class="list-inline omega">
+    <ul class="list-inline" style="margin-bottom: 6px">
       <li>
         <div class="text-large alpha"
              data-react-class="BountyValuation"
@@ -57,7 +57,7 @@
     </h1>
   </div>
 
-  <div class="card-body">
+  <div class="card-body bounty-description">
     <% if bounty.description.present? %>
       <div class="markdown markdown-content text-large">
         <%= product_markdown(bounty.product, bounty.description) %>
