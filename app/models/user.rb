@@ -278,10 +278,11 @@ class User < ActiveRecord::Base
   def suggest_username
     {
       input: username,
+      weight: last_request_at.to_i,
       payload: {
         id: id,
         name: name,
-        avatar_url: avatar.url.to_s
+        avatar_url: avatar.url.to_s,
       }
     }
   end

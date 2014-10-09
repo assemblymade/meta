@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 (function(){
+  var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
   var subscribing;
 
   var Set = require('Set')
@@ -53,19 +54,54 @@
 
     render: function() {
       var inputStyle = {"overflow": "hidden", "word-wrap": "break-word", "resize": "none", "height": "38px"}
-      return <div className="media-body" id="comment">
-        <div className="js-markdown-editor js-dropzone">
-          <textarea className="form-control" rows="1" style={inputStyle}
-            ref="textarea"
-            onKeyPress={this.onEnterKey(this.handleEnter)}
-            onChange={this.handleChange} value={this.state.message} />
-        </div>
-        <ChatTypingLabel usernames={this.state.typingUsernames} />
+      return <div id="comment">
+        <TypeaheadUserSearch
+            url={this.props.searchUrl}
+            username={this.state.usernameSearch}
+            onUserChanged={this.handleUserChanged}
+            onUserSelected={this.handleUserSelected}>
+          <div className="js-markdown-editor js-dropzone">
+            <textarea className="form-control" rows="1" style={inputStyle}
+              ref="textarea"
+              onKeyPress={this.onEnterKey(this.handleEnter)}
+              onChange={this.handleChange} value={this.state.message} />
+          </div>
+          <ChatTypingLabel usernames={this.state.typingUsernames} />
+        </TypeaheadUserSearch>
       </div>
     },
 
     handleChange: function(e) {
-      this.setState({message: e.target.value});
+      var username = null
+      var matches = e.target.value.match(USER_SEARCH_REGEX)
+      if (matches) {
+        username = matches.slice(-1)[0] || ''
+      }
+
+      this.setState({
+        message: e.target.value,
+        usernameSearch: username
+      });
+    },
+
+    handleUserChanged: function(user) {
+      if (user) {
+        this.setState({message: this.replaceQueryWithUser(user)})
+      }
+    },
+
+    handleUserSelected: function(user) {
+      if (user) {
+        this.setState({message: this.replaceQueryWithUser(user)})
+      }
+
+      this.setState({usernameSearch: null})
+    },
+
+    replaceQueryWithUser: function(user, suffix) {
+      return this.state.message.replace(USER_SEARCH_REGEX, function(match, space, username, offset, string){
+        return space + '@' + user.username + (suffix || '')
+      })
     },
 
     onEnterKey: function(fn) {

@@ -144,57 +144,6 @@ var Avatar = require('./avatar.js.jsx');
     }
   })
 
-  var UserPicker = React.createClass({
-    render: function() {
-      var style = {
-        position: 'absolute',
-        'z-index': 100,
-        top: 27,
-        left: 0,
-        display: 'block'
-      }
-
-      return (
-        <ul className="dropdown-menu" style={style}>
-          {this.rows()}
-        </ul>
-      )
-    },
-
-    rows: function() {
-      var i = -1
-      return _.map(this.props.users, function(user){
-        i += 1
-        return <UserPickerEntry key={user.username} user={user} selected={i === this.props.highlightIndex} onUserSelected={this.props.onUserSelected} />
-      }.bind(this))
-    }
-  })
-
-  var UserPickerEntry = React.createClass({
-    render: function() {
-      var className = 'textcomplete-item'
-      if (this.props.selected) {
-        className += ' active'
-      }
-
-      return (
-        <li className={className}>
-          <a href={'#@' + this.props.user.username} onClick={this.handleUserSelected(this.props.user)}>
-            <Avatar user={this.props.user}
-                style={{'margin-right': '10px'}} />
-            <span> @{this.props.user.username} <span className="text-muted">{this.props.user.name}</span></span>
-          </a>
-        </li>
-      )
-    },
-
-    handleUserSelected: function(user) {
-      return function() {
-        this.props.onUserSelected(user)
-      }.bind(this)
-    }
-  });
-
   if (typeof module !== 'undefined') {
     module.exports = PersonPicker;
   }
