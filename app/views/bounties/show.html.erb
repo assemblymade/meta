@@ -5,6 +5,20 @@
 <%= render 'bounties/bounty', bounty: @bounty %>
 
 <div class="discussion" id="discussion-view-el">
+  <% if true # current_user && @bounty.workers.size > 1 && @bounty.workers.include?(current_user) %>
+    <div class="alert alert-success">
+      <a href="#" class="btn btn-default pull-right">
+        <span class="icon icon-comment"></span>
+        Discuss the work
+      </a>
+
+      <p>
+        <strong>Right on!</strong>
+        One other person said they were working on this bounty 4 days ago.
+      </p>
+    </div>
+  <% end %>
+
   <%= render 'wips/discussion', events: @events %>
   <%= render 'new_event_form' %>
 </div>
