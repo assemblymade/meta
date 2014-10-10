@@ -51,7 +51,7 @@ class ActivityStream
     PusherWorker.perform_async(
       channel,
       "add",
-      { id: activity.id },
+      ApplicationSerializer.new(activity).as_json,
       socket_id: activity.socket_id
     )
   end
