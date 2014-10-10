@@ -12,7 +12,7 @@ class DeliverUnreadEmail
     retries = 0
     begin
       unread_article_ids = client.undelivered_articles(user.id)
-    rescue IOError
+    rescue
       retry if (retries += 1) < 10
       raise
     end
