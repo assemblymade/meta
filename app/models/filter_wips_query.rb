@@ -38,7 +38,7 @@ class FilterWipsQuery
       Wip.where(state: ['allocated', 'reviewing'])
     when 'reviewing'
       Wip.where(state: 'reviewing')
-    when 'closed'
+    when 'closed', 'resolved'
       Wip.closed
     else
       Wip.all
