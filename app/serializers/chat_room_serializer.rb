@@ -1,3 +1,5 @@
+require 'readraptor_tracker'
+
 class ChatRoomSerializer < ActiveModel::Serializer
   attributes :id, :label, :url, :updated, :readraptor_url, :product_name
 
