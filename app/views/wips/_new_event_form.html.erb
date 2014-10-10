@@ -35,7 +35,7 @@
               <li>
                 <% unless @wip.resolved? || @wip.closed? %>
                   <%= button_tag name: 'event_comment[type]', value: 'Event::ReviewReady', type: 'submit', class: %w(btn btn-default green) do %>
-                    <span class="icon icon-document"></span>
+                    <span class="icon icon-document icon-left"></span>
                     Submit work for review
                   <% end %>
                 <% end %>

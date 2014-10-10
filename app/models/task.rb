@@ -335,4 +335,8 @@ class Task < Wip
       )
     end
   end
+
+  def most_recent_other_wip_worker(user)
+    wip_workers.where.not(user_id: user.id).order('created_at DESC').first
+  end
 end
