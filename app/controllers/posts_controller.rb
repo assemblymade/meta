@@ -58,20 +58,20 @@ class PostsController < ProductController
 
   def show
     find_product!
-    @post = @product.posts.find_by_slug(params[:id]) || Post.find(params[:id])
+    find_post!
   end
 
   def edit
     find_product!
     authenticate_user!
-    @post = @product.posts.find_by_slug(params.fetch(:id)) || Post.find(params.fetch(:id))
+    find_post!
     authorize! :update, @post
   end
 
   def update
     find_product!
     authenticate_user!
-    @post = @product.posts.find_by_slug(params.fetch(:id)) || Post.find(params.fetch(:id))
+    find_post!
     authorize! :update, @post
 
     @post.update_attributes(post_params)
@@ -80,6 +80,14 @@ class PostsController < ProductController
   end
 
 private
+
+  def find_post!
+    if (params[:id] || '').uuid?
+      @post = Post.find(params[:id])
+    else
+      @post = @product.posts.find_by_slug!(params[:id])
+    end
+  end
 
   def upgrade_stylesheet?
     true

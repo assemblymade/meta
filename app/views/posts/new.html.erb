@@ -52,7 +52,7 @@
       e.preventDefault();
       var btn = $(this),
           msg = btn.text();
-      $.post(btn.attr('href') + '?' + $('#new_post').serialize());
+      $.post(btn.attr('href'), $('#new_post').serialize());
       btn.text('Sent!');
       delay(3000, function() { btn.text(msg); });
     });
