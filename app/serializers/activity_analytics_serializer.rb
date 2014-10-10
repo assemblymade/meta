@@ -14,4 +14,8 @@ class ActivityAnalyticsSerializer < ActiveModel::Serializer
     @product ||= object.subject.product
   end
 
+  def user_type
+    product.core_team?(actor) ? "Core" : "User"
+  end
 end
+
