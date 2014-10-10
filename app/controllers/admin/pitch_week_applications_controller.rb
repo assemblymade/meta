@@ -1,6 +1,7 @@
 class Admin::PitchWeekApplicationsController < AdminController
   def index
     @applications = PitchWeekApplication.includes(:product).
+      where(products: { state: 'reviewing' }).
       to_review.order(created_at: :desc).page(params[:page])
   end
 
