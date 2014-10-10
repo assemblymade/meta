@@ -1,5 +1,4 @@
 <ul class="nav nav-tabs no-border">
-
   <li class="<%= nav_active_class(:idea) %>">
     <a href="<%= product_path(product) %>">
       <span class="icon icon-compass icon-left"></span>
@@ -10,19 +9,9 @@
   <li class="<%= nav_active_class(:updates) %>">
     <a href="<%= product_posts_path(product) %>">
       <span class="icon icon-graph icon-left"></span>
-      Updates
+      Activity
     </a>
   </li>
-
-  <% if @product.chat_rooms.any? %>
-    <% chat_room = @product.chat_rooms.first %>
-    <li>
-      <a href="<%= chat_room_path(chat_room) %>">
-        <span class="icon icon-speech-bubble icon-left"></span>
-        Chat
-      </a>
-    </li>
-  <% end %>
 
   <li class="<%= nav_active_class(:bounties) %>">
     <a href="<%= product_wips_path(product) %>">
@@ -35,13 +24,6 @@
     <a href="<%= product_people_path(product) %>">
       <span class="icon icon-users icon-left"></span>
       Team
-    </a>
-  </li>
-
-  <li class="<%= nav_active_class(:financials) %>">
-    <a href="<%= product_financials_path(product) %>">
-      <span class="icon icon-wallet icon-left"></span>
-      Financials
     </a>
   </li>
 </ul>

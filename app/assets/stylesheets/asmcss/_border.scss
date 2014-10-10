@@ -14,20 +14,20 @@ $border-color: $brand-border;
 .not-rounded { border-radius: 0 }
 .rounded { border-radius: 3px }
 .rounded-top {
-  border-radius-top-left: 3px;
-  border-radius-top-right: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
 .rounded-right {
-  border-radius-top-right: 3px;
-  border-radius-bottom-right: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 .rounded-bottom {
-  border-radius-top-left: 3px;
-  border-radius-top-right: 3px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 .rounded-left {
-  border-radius-top-left: 3px;
-  border-radius-top-right: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 
 .circle  { border-radius: 50% }

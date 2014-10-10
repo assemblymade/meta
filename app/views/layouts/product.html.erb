@@ -58,14 +58,23 @@
       <%= render 'products/navbar', product: @product %>
     </div>
 
-    <% if can?(:edit, @product) %>
-      <div class="right hidden-xs">
-        <a class="inline-block gray py2" href="<%= edit_product_path(@product) %>">
+
+    <div class="right hidden-xs">
+
+      <% if @product.homepage_url.present? %>
+        <a class="inlne-block gray py2" href="<%= @product.homepage_url %>">
+          <span class="glyphicon glyphicon-home icon-left"></span>
+          <%= URI(@product.homepage_url).host %>
+        </a>
+      <% end %>
+
+      <% if can?(:edit, @product) %>
+        <a class="inline-block gray py2 ml2" href="<%= edit_product_path(@product) %>">
           <span class="glyphicon glyphicon-pencil icon-left"></span>
           Edit product
         </a>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 
   <%= yield %>
