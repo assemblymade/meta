@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs nav-justified" style="margin-bottom:24px">
+<ul class="nav nav-tabs no-border">
 
   <li class="<%= nav_active_class(:idea) %>">
     <a href="<%= product_path(product) %>">
@@ -44,13 +44,4 @@
       Financials
     </a>
   </li>
-
-  <% if can?(:edit, product) %>
-    <li class="<%= nav_active_class(:settings) %>">
-      <a href="<%= edit_product_path(product) %>">
-        <span class="icon icon-settings icon-left"></span>
-        Settings
-      </a>
-    </li>
-  <% end %>
 </ul>
