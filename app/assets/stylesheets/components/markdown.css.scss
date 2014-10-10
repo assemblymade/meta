@@ -25,3 +25,12 @@
     margin-bottom: $line-height-computed / 2;
   }
 }
+
+// hack to shrink images in bounties but not the lightbox
+.shrink-images {
+  img { max-width: 50%;}
+
+  .modal-content {
+    img { max-width: 100%; }
+  }
+}
