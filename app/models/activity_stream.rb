@@ -28,18 +28,18 @@ class ActivityStream
   end
 
   def push(activity)
-    redis_push(activity)
-    pusher_push(activity)
+    redis_push(key, activity)
+    pusher_push(channel, activity)
 
     if PUSH_TO_META.include?(activity.class)
-      meta_redis_push(activity)
-      meta_push(activity)
+      redis_push(meta_key, activity)
+      pusher_push(meta_channel, activity)
     end
 
     activity
   end
 
-  def redis_push(activity)
+  def redis_push(key, activity)
     $redis.zadd(
       key,
       activity.created_at.to_i,
@@ -47,29 +47,12 @@ class ActivityStream
     )
   end
 
-  def pusher_push(activity)
+  def pusher_push(channel, activity)
     PusherWorker.perform_async(
       channel,
       "add",
-      ActivitySerializer.new(activity).to_json,
+      { id: activity.id },
       socket_id: activity.socket_id
-    )
-  end
-
-  def meta_push(activity)
-    PusherWorker.perform_async(
-      meta_channel,
-      "add",
-      ActivitySerializer.new(activity).to_json,
-      socket_id: activity.socket_id
-    )
-  end
-
-  def meta_redis_push(activity)
-    $redis.zadd(
-      meta_key,
-      activity.created_at.to_i,
-      self.class.serialize(activity)
     )
   end
 
