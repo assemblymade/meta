@@ -129,15 +129,24 @@
             }.merge(TypeId.as_json(:via, bounty)).to_json %>">
           </div>
         </li>
-        <li class="omega">
-          <% if !bounty.assigned_to?(current_user) %>
+        <% if !bounty.assigned_to?(current_user) %>
+          <li class="omega">
             <a href="<%= product_wip_start_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-success">
               Work on this bounty
             </a>
-          <% else %>
-            <a href="<%= product_wip_stop_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-danger">
+          </li>
+        <% else %>
+          <li>
+            <a href="<%= product_wip_stop_work_path(bounty.product, bounty, user: current_user) %>" data-method="patch" class="btn btn-label red">
               Abandon bounty
             </a>
+          </li>
+          <li class="omega">
+            <a href="#" class="btn btn-default green" data-scroll="true" data-target="#event_comment_body">
+              <span class="icon icon-document"></span>
+              Submit work for review
+            </a>
+          </li>
           <% end %>
         </li>
       <% end %>
