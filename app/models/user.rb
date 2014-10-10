@@ -5,6 +5,7 @@ require 'stripe'
 class User < ActiveRecord::Base
   include ActiveRecord::UUID
   include Elasticsearch::Model
+  include GlobalID::Identification
 
   attr_encryptor :wallet_private_key, :key => ENV["USER_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt, :unless => Rails.env.test?
 
@@ -118,6 +119,10 @@ class User < ActiveRecord::Base
       union_query = Arel::Nodes::Union.new(wip_creators.arel, event_creators.arel)
       User.find_by_sql(union_query.to_sql)
     end
+  end
+
+  def assign_key_pair!
+    AssignBitcoinKeyPairWorker.perform_async(self.to_global_id)
   end
 
   def has_github_account?

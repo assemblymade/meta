@@ -7,6 +7,7 @@ class Product < ActiveRecord::Base
   include ActiveRecord::UUID
   include Kaminari::ActiveRecordModelExtension
   include Elasticsearch::Model
+  include GlobalID::Identification
   include Workflow
 
   DEFAULT_BOUNTY_SIZE=10000
@@ -557,12 +558,7 @@ class Product < ActiveRecord::Base
   end
 
   def assign_key_pair!
-    if key_pair = AssemblyCoins.get_key_pair
-      update!(
-        wallet_public_address: key_pair["public_address"],
-        wallet_private_key: key_pair["private_key"]
-      )
-    end
+    AssignBitcoinKeyPairWorker.perform_async(self.to_global_id)
   end
 
   protected
