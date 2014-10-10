@@ -32,28 +32,31 @@ namespace :bounties do
 
     require 'date'
 
-    # pull production data
-    Rake::Task["db:restore"].invoke
-
     rows = []
-    weeks = 3.downto(0).to_a
+    weeks = 4.downto(-1).to_a
     ceiling = weeks.max
 
     weeks.each do |d|
       silence_stream(STDOUT) do
-        query = Task.where(created_at: (d+1).week.ago..d.week.ago)
+        if d == -1
+          query = Task.where(created_at: Date.today.beginning_of_week..Time.now)
+        else
+          query = Task.where(created_at: (d+1).week.ago.beginning_of_week..d.week.ago.beginning_of_week)
+        end
+
+        prev_row = rows[ceiling-1-d]
 
         # anything written to STDOUT here will be silenced
-        rows << [ d == 0 ? "this week" : "#{(d+1).week.ago.strftime('%b %d, %y')}",
+        rows << [ "#{(d+1).week.ago.beginning_of_week.strftime('%b %d, %y')}",
                   # created
                   created = filtered_query(query).count.to_f,
-                  d == ceiling ? " - " : percent_change(created, rows[ceiling-1-d][1]),
+                  d == ceiling ? " - " : percent_change(created, prev_row[1]),
                   # award/creation ratio
-                  awd_crtd = (filtered_query(query.where(state: :awarded)).count / created).round(2),
-                  d == ceiling ? " - " : percent_change(awd_crtd, rows[ceiling-1-d][3]),
+                  awd_crtd = (filtered_query(query.where(state: :awarded)).count / created),
+                  d == ceiling ? " - " : percent_change(awd_crtd, prev_row[3]),
                   # close/creation ratio
-                  clsd_crtd = (filtered_query(query.where(state: :resolved)).count / created).round(2),
-                  d == ceiling ? " - " : percent_change(clsd_crtd, rows[ceiling-1-d][5])
+                  clsd_crtd = (filtered_query(query.where(state: :resolved)).count / created),
+                  d == ceiling ? " - " : percent_change(clsd_crtd, prev_row[5])
                 ]
       end
     end
