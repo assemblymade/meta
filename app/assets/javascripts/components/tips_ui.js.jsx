@@ -43,7 +43,6 @@
         tooltip = 'You have no coins to tip'
       } else if (this.currentUserIsRecipient()) {
         tooltip = "You can't tip yourself"
-        opacity = 0
       }
 
       var tippers = null
