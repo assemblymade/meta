@@ -455,6 +455,7 @@ DEPENDENCIES
   hogan_assets
   html-pipeline
   htmlentities
+  httparty
   jquery-rails
   kaminari
   leftronic

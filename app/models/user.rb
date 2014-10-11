@@ -307,4 +307,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  def assign_key_pair!
+    AssignBitcoinKeyPairWorker.perform_async(self.to_global_id)
+  end
+
 end
