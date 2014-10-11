@@ -34,6 +34,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
         format.json { render :json => { errors: resource.errors }, :status => :unprocessable_entity }
       end
     end
+
+    assign_key_pair!
+
   end
 
   protected
