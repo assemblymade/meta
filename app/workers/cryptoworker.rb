@@ -48,13 +48,8 @@ class CryptoWorker
       body['to_public_address'] = user_id.wallet_public_address
       body['fee_each'] = ENV.fetch("STANDARD_BTC_FEE")
       body['from_private_key'] = product.wallet_private_key
-
-      body['private_key'] = product.wallet_private_key
-      body['fee_each'] = ENV.fetch("STANDARD_BTC_FEE")
-      body['name'] = product.name+" Coins"
-      body['email'] = "barisser@assembly.com"
-      body['description'] = "" #We can think about this for later
-      body['initial_coins'] = total_coins.to_s
+      body['issuing_address'] = product.wallet_public_address
+      body['transfer_amount'] = coins.to_s
 
       response = post("https://coins.assembly.com/v1/transactions/transfer", body.to_json)
   end
