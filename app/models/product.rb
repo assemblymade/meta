@@ -557,8 +557,18 @@ class Product < ActiveRecord::Base
     slug
   end
 
-  def assign_key_pair!
-    AssignBitcoinKeyPairWorker.perform_async(self.to_global_id)
+  def retrieve_key_pair
+    AssemblyCoin::AssignBitcoinKeyPairWorker.perform_async(
+      self.to_global_id,
+      :assign_key_pair
+    )
+  end
+
+  def assign_key_pair(key_pair)
+    update!(
+      wallet_public_address: key_pair["public_address"],
+      wallet_private_key: key_pair["private_key"]
+    )
   end
 
   protected
