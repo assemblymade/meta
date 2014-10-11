@@ -1,35 +1,30 @@
-<table class="row">
+<table class="container" style="background:#fff;">
   <tbody>
     <tr>
-      <td class="wrapper last">
-        <table class="twelve columns">
+      <td>
+        <table class="row">
           <tbody>
             <tr>
-              <td class="panel panel-default">
-                <div>
-                  <a href="<%= user_url(@post.author) %>">
-                    <img class="img-circle" src="<%= @post.author.avatar.url(48) %>" width="24" height="24" alt="@<%= @post.author.username %>" style="margin-right:5px;">
-                    <%= @post.author.username %>
-                  </a>
-                  wrote a new post for
-                  <a href="<%= product_url(@post.product) %>"><%= @post.product.name %></a>:
-                </div>
-                <br />
-                <blockquote>
-                  <h5 class="alpha" style="margin-top:0"><%= @post.title %></h5>
-                  <%= product_markdown(@post.product, @post.summary) %>
-                </blockquote>
+              <td class="wrapper last">
+                <table class="twelve columns">
+                  <tbody>
+                    <tr>
+                      <td class="text-pad">
 
-                <table class="button radius">
-                  <tr>
-                    <td>
-                      <a href="<%= product_post_url(@post.product, @post) %>">Read more</a>
-                    </td>
-                  </tr>
+                        <div style="padding:24px 0">
+                          <h1><%= @post.title %></h1>
+                          <p class="small text-muted">Posted by @<%= @post.author.username %>.</p>
+                      </div>
+
+                          <%= product_markdown(@post.product, @post.body) %>
+
+                      </td>
+                      <td class="expander"></td>
+
+                    </tr>
+                  </tbody>
                 </table>
-
               </td>
-              <td class="expander"></td>
             </tr>
           </tbody>
         </table>
