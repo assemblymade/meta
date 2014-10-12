@@ -28,18 +28,19 @@ class ActivityStream
   end
 
   def push(activity)
-    redis_push(key, activity)
-    pusher_push(channel, activity)
+    redis_push(activity)
+    pusher_push(activity)
 
     if PUSH_TO_META.include?(activity.class)
-      redis_push(meta_key, activity)
-      pusher_push(meta_channel, activity)
+      redis_push(activity, meta_key)
+      pusher_push(activity, meta_channel)
     end
 
     activity
   end
 
-  def redis_push(key, activity)
+  def redis_push(activity, key=nil)
+    key ||= self.key
     $redis.zadd(
       key,
       activity.created_at.to_i,
@@ -47,7 +48,8 @@ class ActivityStream
     )
   end
 
-  def pusher_push(channel, activity)
+  def pusher_push(activity, channel=nil)
+    channel ||= self.channel
     PusherWorker.perform_async(
       channel,
       "add",
