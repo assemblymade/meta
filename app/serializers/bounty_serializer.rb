@@ -1,5 +1,7 @@
 class BountySerializer < ApplicationSerializer
-  attributes :contracts, :number, :offers, :offers_url, :open, :state,
+  include MarkdownHelper
+
+  attributes :contracts, :markdown_description, :number, :offers, :offers_url, :open, :state,
     :tag_url, :title, :urgency_url, :value
 
   has_one :product
@@ -11,6 +13,10 @@ class BountySerializer < ApplicationSerializer
   has_many :offers
 
   has_many :tags
+
+  def markdown_description
+    product_markdown(product, bounty.description)
+  end
 
   def open
     bounty.open?

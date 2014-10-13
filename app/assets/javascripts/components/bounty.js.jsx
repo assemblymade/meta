@@ -46,6 +46,16 @@
       );
     },
 
+    renderDescription: function() {
+      var bounty = this.props;
+
+      if(bounty.markdown_description) {
+        return <div className="markdown markdown-content text-large" dangerouslySetInnerHTML={{__html: bounty.markdown_description}}></div>;
+      } else {
+        return <p className="large text-muted">(No description)</p>;
+      }
+    },
+
     render: function() {
       var bounty = this.props;
 
@@ -74,10 +84,14 @@
             <h1 className="alpha omega">
               {this.props.title}
               {' '}
-              <small style={{'font-size': '30px', 'color': '#b4b4b4'}}>
+              <small style={{ 'font-size': '30px', 'color': '#b4b4b4' }}>
                 #{this.props.number}
               </small>
             </h1>
+          </div>
+
+          <div className="card-body bounty-description">
+            {this.renderDescription()}
           </div>
         </div>
       );
