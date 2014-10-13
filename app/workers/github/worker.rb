@@ -58,6 +58,12 @@ module Github
         req.body = body.to_json
       end
 
+      log = ['  ', method, url, body.inspect, "[#{resp.status}]"]
+      if !resp.success?
+        log << resp.body.inspect
+      end
+
+      Rails.logger.info log.join(' ')
       JSON.load(resp.body)
     end
 
