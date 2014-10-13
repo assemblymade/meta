@@ -16,7 +16,7 @@ class Watching < ActiveRecord::Base
   after_commit -> { watchable.update_watchings_count! }
 
   def self.auto_watch!(user, watchable)
-    return if where(user: user, watchable: watchable).where('auto_subscribed_at is not null').any?
+    return if unscoped.where(user: user, watchable: watchable).where('auto_subscribed_at is not null').any?
 
     watch!(user, watchable, auto_watch_at=Time.now)
   end
