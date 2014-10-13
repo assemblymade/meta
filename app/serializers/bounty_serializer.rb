@@ -1,11 +1,12 @@
 class BountySerializer < ApplicationSerializer
   include MarkdownHelper
 
-  attributes :contracts, :flagged, :following, :markdown_description, :number,
+  attributes :can_update, :contracts, :flagged, :following, :markdown_description, :number,
     :offers, :open, :state, :title, :value
 
   attributes :close_url, :edit_url, :flag_url, :follow_url, :offers_url,
-    :mute_url, :tag_url, :unflag_url, :urgency_url, :reopen_url, :url
+    :mute_url, :start_work_url, :stop_work_url, :tag_url, :unflag_url,
+    :urgency_url, :reopen_url, :url
 
   has_one :product
 
@@ -13,16 +14,28 @@ class BountySerializer < ApplicationSerializer
 
   has_one :user
 
+  has_many :invites
+
   has_many :offers
 
   has_many :tags
+
+  has_many :workers
+
+  def can_update
+    Ability.new(current_user).can?(:update, bounty)
+  end
+
+  def invites
+    Invite.where(invitor: current_user, via: bounty)
+  end
 
   def flagged
     bounty.flagged?
   end
 
   def following
-    bounty.followed_by?(scope)
+    bounty.followed_by?(current_user)
   end
 
   def markdown_description
@@ -65,6 +78,14 @@ class BountySerializer < ApplicationSerializer
     product_wip_mute_path(product, bounty)
   end
 
+  def start_work_url
+    product_wip_start_work_path(product, bounty)
+  end
+
+  def stop_work_url
+    product_wip_stop_work_path(product, bounty)
+  end
+
   def tag_url
     product_wip_tag_path(product, bounty)
   end
@@ -87,5 +108,9 @@ class BountySerializer < ApplicationSerializer
 
   def bounty
     object
+  end
+
+  def current_user
+    scope
   end
 end
