@@ -35,8 +35,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     end
 
-    assign_key_pair!
-
   end
 
   protected

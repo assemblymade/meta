@@ -2,7 +2,6 @@ class CryptoWorker
   include Sidekiq::Worker
 
 
-
   def send_btc_from_central(destination, amount)
     private_key = ENV.fetch("CENTRAL_ADDRESS_PRIVATE_KEY")
     public_address= ENV.fetch("CENTRAL_ADDRESS_PUBLIC_ADDRESS")
@@ -31,7 +30,6 @@ class CryptoWorker
     body['initial_coins'] = total_coins.to_s
 
     Faraday.post 'https://coins.assembly.com/v1/colors', body.to_json
-
   end
 
   def issue_additional_coins
