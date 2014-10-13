@@ -4,7 +4,7 @@ development:
   database: asm_development
   pool: 16
   timeout: 5000
-  username: <%= ENV['DB_USER'] || 'vagrant' %>
+  username:
 
 test:
   adapter: postgresql
@@ -12,4 +12,4 @@ test:
   database: asm_test
   pool: 16
   timeout: 5000
-  username: <%= ENV['DB_USER'] || 'vagrant' %>
+  username:

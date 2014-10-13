@@ -18,6 +18,7 @@
 
     # Edit your local configuration
     $ cp .env.sample .env && $EDITOR .env
+    $ cp config/database.yml.sample config/database.yml
 
     # Setup the database
     $ rake db:setup

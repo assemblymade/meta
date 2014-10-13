@@ -57,4 +57,15 @@ describe Watching do
       expect(Watching.watched?(non_watcher, watchable)).to be_false
     end
   end
+
+  describe 'auto_watch!' do
+    it 'should ignore auto_watch the second time' do
+      Watching.auto_watch!(user, watchable)
+      Watching.unwatch!(user, watchable)
+
+      Watching.auto_watch!(user, watchable)
+
+      expect(Watching.watched?(user, watchable)).to be_false
+    end
+  end
 end
