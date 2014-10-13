@@ -58,7 +58,11 @@
 
       <% product_membership = current_user.team_memberships.find_by(product: @product) %>
 
-      <a href="<%= product_people_path(@product) %>" class="btn btn-lg btn-success btn-block">Build this product with us</a>
+      <div class="mb3" style="font-size:18px;line-height:24px">
+        <strong>Welcome <%= current_user.username %>!</strong> If you like the idea of what's being built here, jump in! There are a lot of ways to get involved. When you do work on an Assembly product you become part owner in it.
+      </div>
+
+      <a class="btn btn-lg btn-success btn-block mb3" href="<%= product_people_path(@product) %>">Introduce yourself</a>
 
       <div class="modal fade" id="intro-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -92,30 +96,9 @@
       </div><!-- /.modal -->
 
     <% else %>
-      <a href="<%= product_tasks_path(@product) %>" class="btn btn-lg btn-success btn-block">Build this product with us</a>
+      <a class="btn btn-lg btn-success btn-block mb3" href="<%= product_tasks_path(@product) %>">Introduce yourself</a>
     <% end %>
 
-
-
-    <br>
-
-
-    <div class="stat-group">
-      <div class="stat">
-        <div class="stat-value"><%= @product.posts.count %></div>
-        <div class="stat-title"><%= "Update".pluralize(@product.posts.count) %></div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-value"><%= @product.tasks.open.count %></div>
-        <div class="stat-title"><%= "Bounty".pluralize(@product.tasks.open.count) %></div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-value"><%= @product.partners_count %></div>
-        <div class="stat-title"><%= "Partner".pluralize(@product.partners_count) %></div>
-      </div>
-    </div>
 
     <% if @product.team_building? %>
       <div class="panel panel-default">
@@ -141,39 +124,63 @@
       </div>
     <% end %>
 
-    <h6 class="text-muted">Core Team</h6>
-
-    <div class="list-group list-group-breakout">
-      <% @product.core_team.each do |user| %>
-        <a class="list-group-item" href="<%= user_path(user) %>">
-          <div class="chip chip-sm">
-            <span class="chip-icon"><%= avatar_tag(user) %></span>
-            <span class="text-primary"><%= user.username %></span>
-            <% if user.bio.present? %>
-              &mdash;
-              <span class="text-muted"><%= user.bio %></span>
-            <% end %>
-          </div>
+    <div class="border rounded-top rounded-bottom mb4">
+      <% if false # @product.homepage_url.present? %>
+        <a href="<%= @product.homepage_url %>" target="_blank">
+          <%= @product.homepage_url %>
         </a>
-      <% end %>
-    </div>
-
-    <h6 class="text-muted">Other links</h6>
-    <ul class="list-unstyled large omega">
-      <% if @product.homepage_url.present? %>
-        <li><a href="<%= @product.homepage_url %>" target="_blank"><%= @product.homepage_url %></a></li>
       <% end %>
 
       <% if @product.chat_rooms.any? %>
         <% chat_room = @product.chat_rooms.first %>
-        <li><a href="<%= chat_room_path(chat_room) %>">Chat</a></li>
+        <a class="block p2 px3 gray border-bottom" href="<%= chat_room_path(chat_room) %>">
+          <span class="icon icon-bubbles icon-left"><span>
+          Chat
+        </a>
       <% end %>
 
-      <li><a href="<%= product_projects_path(@product) %>">Projects</a></li>
-      <li><a href="<%= product_discussions_path(@product) %>">Discussions</a></li>
-      <li><a href="<%= product_assets_path(@product) %>">Assets</a></li>
-      <li><a href="<%= product_repos_path(@product) %>">Repositories</a></li>
-    </ul>
+      <a class="block p2 px3 gray border-bottom" href="<%= product_projects_path(@product) %>">
+        <span class="icon icon-grid icon-left"><span>
+        Projects
+      </a>
+
+      <a class="block p2 px3 gray border-bottom" href="<%= product_discussions_path(@product) %>">
+        <span class="icon icon-book-open icon-left"><span>
+        Discussions
+      </a>
+
+      <a class="block p2 px3 gray border-bottom" href="<%= product_assets_path(@product) %>">
+        <span class="icon icon-layers icon-left"><span>
+        Assets
+      </a>
+
+      <a class="block p2 px3 gray border-bottom" href="<%= product_repos_path(@product) %>">
+        <span class="icon icon-doc icon-left"><span>
+        Repositories
+      </a>
+
+      <a class="block p2 px3 gray" href="<%= product_financials_path(@product) %>">
+        <span class="icon icon-wallet icon-left"></span>
+        Financials
+      </a>
+    </div>
+
+    <h6 class="gray caps">Core Team</h6>
+
+    <div>
+      <% @product.core_team.each do |user| %>
+        <a class="block clearfix py2 <%= 'border-bottom' unless  user == @product.core_team.last %>" href="<%= user_path(user) %>">
+
+            <div class="left mr2"><%= avatar_tag(user, size: 24) %></div>
+            <div class="overflow-hidden">
+              <div><%= user.username %></div>
+              <% if user.bio.present? %>
+                <div class="gray"><%= user.bio %></div>
+              <% end %>
+            </div>
+        </a>
+      <% end %>
+    </div>
 
     <% if current_user && @product.core_team?(current_user) %>
       <h6 class="text-muted">Product Authentication Token</h6>

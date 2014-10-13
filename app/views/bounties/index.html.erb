@@ -2,8 +2,6 @@
 <% activate_nav! :bounties %>
 <%= track 'product.wips.viewed', ProductAnalyticsSerializer.new(@product) %>
 
-<% @show_urgency_dropdown = @product.core_team?(current_user) %>
-
 <% if @project.nil? %>
   <%= render 'bounties/header'  %>
 <% else %>
@@ -35,6 +33,17 @@
     </div>
 
   <div class="col-md-3">
+    <div class="panel">
+      <div data-react-class="CreateBountyButton" data-react-props="<%= {
+        classes: 'btn btn-default btn-block',
+        product: { name: @product.name },
+        url: product_wips_path(@product),
+        maxOffer: (6 * @product.average_bounty).round(-4),
+        averageBounty: @product.average_bounty,
+        createBountyShown: params['modal'] == 'true'
+      }.to_json %>"></div>
+    </div>
+
     <%= render 'bounties/projects_filter', projects: @milestones %>
   </div>
 

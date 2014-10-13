@@ -41,7 +41,8 @@ var C = require('../constants').CONTRACT;
               type="number"
               className="form-control"
               min="0"
-              step="0.1"
+              max={ContractStore.getAvailablePercentage(this.props.startingAmount)}
+              step="0.01"
               value={this.state.amount}
               onChange={this.onChange} />
           <span className="input-group-addon">%</span>
@@ -66,15 +67,7 @@ var C = require('../constants').CONTRACT;
     },
 
     onChange: function(e) {
-      var inputValue = e.target.value;
-
-      if (inputValue < 0) {
-        inputValue = 0;
-      }
-
-      this.setState({
-        amount: Math.min(inputValue, ContractStore.getAvailablePercentage(this.props.startingAmount))
-      });
+      this.setState({ amount: e.target.value });
 
       var confirmLink = $(this.props.confirmButton);
 

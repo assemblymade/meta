@@ -36,11 +36,15 @@
 
     componentDidUpdate: function(prevProps, prevState) {
       if (prevState.message === '' && this.state.message !== '') {
-        this.channel.trigger('client-typing', { add: this.props.username})
+        this.updateTyping({ add: this.props.username })
       } else if (prevState.message !== '' && this.state.message === '') {
-        this.channel.trigger('client-typing', { remove: this.props.username})
+        this.updateTyping({ remove: this.props.username })
       }
     },
+
+    updateTyping: _.debounce(function(op) {
+      this.channel.trigger('client-typing', op)
+    }, 1000),
 
     handleSomeoneTyping: function(msg) {
       var usernames = new Set(this.state.typingUsernames)

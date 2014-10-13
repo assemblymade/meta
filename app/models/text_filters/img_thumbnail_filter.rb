@@ -6,9 +6,9 @@ module TextFilters
         if context[:firesize_url] && el['src']
           el.name = 'div'
 
-          firesize_args = ['500x']
+          firesize_args = []
           if %w[.pdf .psd].include?(File.extname(el['src']))
-            firesize_args << 'frame_0'
+            firesize_args =['500x', 'frame_0']
           end
 
           preview_url = File.join(context[:firesize_url], firesize_args, el['src'])

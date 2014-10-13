@@ -6,7 +6,17 @@ class DeliverUnreadEmail
   def perform(user_id)
     user = User.find(user_id)
     client = ReadRaptorClient.new
-    unread_article_ids = client.undelivered_articles(user.id)
+
+    # TODO: Ugh. This is failing randomly in ReadRaptor
+    unread_article_ids = []
+    retries = 0
+    begin
+      unread_article_ids = client.undelivered_articles(user.id)
+    rescue
+      retry if (retries += 1) < 10
+      raise
+    end
+
     unread_articles = ReadRaptorSerializer.deserialize(unread_article_ids)
 
     return if unread_articles.empty?

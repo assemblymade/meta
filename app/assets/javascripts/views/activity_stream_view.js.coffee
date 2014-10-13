@@ -2,7 +2,7 @@
 #= require collections/activity_stream
 #= require views/activity_view
 
-SCROLL_TOLERANCE = 10
+SCROLL_TOLERANCE = 20
 
 class window.ActivityStreamView extends Backbone.View
   collection: ActivityStream
@@ -22,7 +22,7 @@ class window.ActivityStreamView extends Backbone.View
       React.unmountComponentAtNode(@)
       $(@).remove()
 
-    tsContainer = $('<div class="timeline-insert js-timestamp"></div>').insertBefore('.timeline-item:last')
+    tsContainer = $('<div class="timeline-insert js-timestamp">&nbsp;</div>').insertBefore('.timeline-item:last')
     lastTime = @collection.last().get('created')
     React.renderComponent(Timestamp({time: lastTime}), tsContainer[0])
 
@@ -44,6 +44,7 @@ class window.ActivityStreamView extends Backbone.View
   # Event Handlers
 
   onCollectionAdd: (model, collection, info) =>
+    @listenTo(model, 'sync', => lockScrollToBottom()) # scroll the content after message is fetched from the server
     lockScrollToBottom(=>
       @buildSubviewForModel(model, collection.indexOf(model))
     )
@@ -64,7 +65,7 @@ lockScrollToBottom = (cb) ->
   windowHeight = $(window).height()
   documentHeight = $(document).height()
 
-  cb()
+  cb() if cb
 
   if (scrolled + windowHeight) >= (documentHeight - SCROLL_TOLERANCE)
-    $(document).scrollTop($(document).height())
+    $('.nc-messages-content').scrollTop($('.js-chat').height())

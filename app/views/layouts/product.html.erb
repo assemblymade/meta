@@ -27,33 +27,56 @@
 <% end %>
 
 <div class="container">
-  <div class="chip" style="margin-top:24px">
-    <div class="chip-icon">
-      <%= app_icon(@product, size: 48*2) %>
+
+  <div class="mt3 mb3">
+    <div class="left mr2">
+      <%= app_icon(@product, size: 48) %>
     </div>
 
-    <div class="pull-right">
-      <ul class="list-inline">
-        <li
-            data-react-class="NotificationPreferencesDropdown"
-            data-react-props="<%= {
-              productWatchersPath: product_people_path(@product),
-              productWatchersCount: @product.watchings_count,
-              productFollowPath: product_follow_path(@product),
-              productAnnouncementsPath: product_announcements_path(@product),
-              productUnfollowPath: product_unfollow_path(@product),
-              watchingState: @product.watching_state(current_user),
-              afterFollowPath: product_people_path(@product)
-            }.to_json %>">
-        </li>
-      </ul>
+    <div class="right">
+      <div class="py2">
+        <%= react_component('NotificationPreferencesDropdown',
+          productWatchersPath: product_people_path(@product),
+          productWatchersCount: @product.watchings_count,
+          productFollowPath: product_follow_path(@product),
+          productAnnouncementsPath: product_announcements_path(@product),
+          productUnfollowPath: product_unfollow_path(@product),
+          watchingState: @product.watching_state(current_user),
+          afterFollowPath: product_people_path(@product)
+        ) %>
+      </div>
     </div>
 
-    <h3 class="alpha omega"><a href="<%= product_path(@product) %>"><%= @product.name %></a></h3>
-    <div class="lead text-muted"><%= @product.pitch %></div>
+    <div class="overflow-hidden">
+      <h3 class="my0" style="line-height:24px"><a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a></h3>
+      <div class="h4 my0 gray"><%= @product.pitch %></div>
+    </div>
   </div>
 
-  <%= render 'products/nav', product: @product %>
+  <div class="clearfix border-bottom mb3">
+    <div class="left">
+      <%= render 'products/navbar', product: @product %>
+    </div>
+
+
+    <div class="right hidden-xs">
+
+      <% if @product.homepage_url.present? %>
+        <a class="inlne-block gray py2" href="<%= @product.homepage_url %>">
+          <span class="glyphicon glyphicon-home icon-left"></span>
+          <%= URI(@product.homepage_url).host %>
+        </a>
+      <% end %>
+
+      <% if can?(:edit, @product) %>
+        <a class="inline-block gray py2 ml2" href="<%= edit_product_path(@product) %>">
+          <span class="glyphicon glyphicon-pencil icon-left"></span>
+          Edit product
+        </a>
+      <% end %>
+    </div>
+  </div>
+
   <%= yield %>
 </div>
 

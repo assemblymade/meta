@@ -12,7 +12,7 @@ class window.ActivityView extends Backbone.View
 
   render: =>
     template = JST[@model.get('type')]
-    if @model.get('type') == 'activities/chat'
+    if @model.get('type') == 'activities/chat' && @model.attributes.subject
       subject = @model.attributes.subject
       tipsProps = null
       if @model.id
