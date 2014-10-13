@@ -56,6 +56,7 @@ class User < ActiveRecord::Base
   before_create :skip_confirmation!
 
   # Everybody gets an authentication token for quick access from emails
+  before_save :assign_key_pair!
   before_save :ensure_authentication_token
 
   after_commit -> { Indexer.perform_async(:index, User.to_s, self.id) }, on: :create
@@ -305,6 +306,10 @@ class User < ActiveRecord::Base
       token = Devise.friendly_token
       break token unless User.where(authentication_token: token).first
     end
+  end
+
+  def assign_key_pair!
+    AssignBitcoinKeyPairWorker.perform_async(self.to_global_id)
   end
 
 end
