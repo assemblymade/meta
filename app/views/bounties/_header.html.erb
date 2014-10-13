@@ -1,51 +1,20 @@
 <div class="sub-thingy">
-  <div data-react-class="CreateBountyButton" data-react-props="<%= {
-    product: { name: @product.name },
-    url: product_wips_path(@product),
-    maxOffer: (6 * @product.average_bounty).round(-4),
-    averageBounty: @product.average_bounty,
-    createBountyShown: params['modal'] == 'true'
-  }.to_json %>" class="pull-right"></div>
-
-  <ul class="nav nav-pills">
-    <li class="<%= 'active' if params[:state].blank? || params[:state] == 'open' %>">
-      <a href="<%= scoped_product_bounties_path(@product, state: 'open') %>">
-        Todo
-
-        <span class="badge badge-subtle">
-          <%= @product.tasks.open.count %>
-        </span>
+  <ul class="nav nav-pills pull-right">
+    <li class="dropdown">
+      <a class="dropdown-toggle" type="button" data-toggle="dropdown" href="#">
+        Tags
+        <span class="caret"></span>
       </a>
-    </li>
 
-    <li class="<%= 'active' if params[:state] == 'progress' %>">
-      <a href="<%= scoped_product_bounties_path(@product, state: 'progress') %>">
-        Doing
-
-        <span class="badge badge-subtle">
-          <%= @product.tasks.allocated.count %>
-        </span>
-      </a>
-    </li>
-
-    <li class="<%= 'active' if params[:state] == 'reviewing' %>">
-      <a href="<%= scoped_product_bounties_path(@product, state: 'reviewing') %>">
-        Reviewing
-
-        <span class="badge badge-subtle">
-          <%= @product.tasks.reviewing.count %>
-        </span>
-      </a>
-    </li>
-
-    <li class="<%= 'active' if params[:state] == 'closed' %>">
-      <a href="<%= scoped_product_bounties_path(@product, state: 'closed') %>">
-        Resolved
-
-        <span class="badge badge-subtle">
-          <%= @product.tasks.closed.count %>
-        </span>
-      </a>
+      <ul class="dropdown-menu" role="menu">
+        <% Wip::Tag.suggested_tags.each do |tag| %>
+          <li class="<%= 'active' if params[:tag] == tag %>" role="presentation">
+            <a href="<%= scoped_product_bounties_path(@product, tag: tag) %>" role="menuitem" tabindex="-1" href="#">
+              <%= tag %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
     </li>
 
     <li class="dropdown">
@@ -91,6 +60,48 @@
           </a>
         </li>
       </ul>
+    </li>
+  </ul>
+
+  <ul class="nav nav-pills">
+    <li class="<%= 'active' if params[:state].blank? || params[:state] == 'open' %>">
+      <a href="<%= scoped_product_bounties_path(@product, state: 'open') %>">
+        Todo
+
+        <span class="badge badge-subtle">
+          <%= @product.tasks.open.count %>
+        </span>
+      </a>
+    </li>
+
+    <li class="<%= 'active' if params[:state] == 'progress' %>">
+      <a href="<%= scoped_product_bounties_path(@product, state: 'progress') %>">
+        Doing
+
+        <span class="badge badge-subtle">
+          <%= @product.tasks.allocated.count %>
+        </span>
+      </a>
+    </li>
+
+    <li class="<%= 'active' if params[:state] == 'reviewing' %>">
+      <a href="<%= scoped_product_bounties_path(@product, state: 'reviewing') %>">
+        Reviewing
+
+        <span class="badge badge-subtle">
+          <%= @product.tasks.reviewing.count %>
+        </span>
+      </a>
+    </li>
+
+    <li class="<%= 'active' if params[:state] == 'closed' %>">
+      <a href="<%= scoped_product_bounties_path(@product, state: 'closed') %>">
+        Resolved
+
+        <span class="badge badge-subtle">
+          <%= @product.tasks.closed.count %>
+        </span>
+      </a>
     </li>
   </ul>
 </div>
