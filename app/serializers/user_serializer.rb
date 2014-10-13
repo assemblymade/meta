@@ -1,7 +1,11 @@
 class UserSerializer < ApplicationSerializer
   include MarkdownHelper
 
-  attributes :url, :username, :avatar_url, :last_online, :bio
+  attributes :avatar_url, :bio, :last_online, :staff, :url, :username
+
+  def staff
+    object.staff?
+  end
 
   def url
     user_path(object)

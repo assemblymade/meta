@@ -2,6 +2,12 @@
 
 (function() {
   var Bounty = React.createClass({
+    getDefaultProps: function() {
+      return {
+        currentUser: app.currentUser()
+      };
+    },
+
     renderBountyValuation: function() {
       var bounty = this.props;
       var maxOffer = Math.round(6 * bounty.product.average_bounty / 10000) * 10000
@@ -56,6 +62,128 @@
       }
     },
 
+    renderFlagButton: function() {
+      var bounty = this.props;
+      var isStaff = this.props.currentUser.get('staff');
+
+      if(isStaff) {
+        return (
+          <li className="alpha">
+            <ToggleButton
+              bool={bounty.flagged}
+              text={{ true: 'Unflag', false: 'Flag' }}
+              classes={{ true: 'btn btn-label', false: 'btn btn-label' }}
+              icon={{ true: 'flag', false: 'flag' }}
+              href={{ true: bounty.unflag_url, false: bounty.flag_url }} />
+          </li>
+        );
+      }
+    },
+
+    renderEditButton: function() {
+      var bounty = this.props;
+      var canUpdate = true;
+
+      if(canUpdate) {
+        return (
+          <li>
+            <a href={bounty.edit_url} className="btn btn-label">
+              <span className="icon icon-pencil icon-left"></span>
+              Edit
+            </a>
+          </li>
+        );
+      }
+    },
+
+    renderOpenButton: function() {
+      var bounty = this.props;
+      var canUpdate = true;
+      var open = bounty.open;
+
+      if(canUpdate) {
+        return (
+          <li>
+            <ToggleButton
+              bool={open}
+              text={{ true: 'Close', false: 'Reopen' }}
+              icon={{ true: 'close', false: 'check' }}
+              classes={{ true: 'btn btn-label', false: 'btn btn-label' }}
+              href={{ true: bounty.close_url, false: bounty.reopen_url }} />
+          </li>
+        )
+      }
+    },
+
+    renderFollowButton: function() {
+      var bounty = this.props;
+
+      return (
+        <li>
+          <ToggleButton
+            bool={bounty.following}
+            text={{ true: 'Mute', false: 'Follow' }}
+            icon={{ true: 'volume-off', false: 'volume-2' }}
+            classes={{ true: 'btn btn-label', false: 'btn btn-label' }}
+            href={{ true: bounty.mute_url, false: bounty.watch_url }} />
+        </li>
+      );
+    },
+
+    renderInviteFriendButton: function() {
+      var bounty = this.props;
+      var closed = bounty.state == 'resolved' || bounty.state == 'closed'
+
+      if(!closed) {
+        return (
+          <li>
+            <InviteFriendBounty
+              url={'/user/invites'}
+              invites={bounty.invites} />
+          </li>
+        );
+      }
+    },
+
+    renderStartWorkButton: function() {
+      var bounty = this.props;
+      var isWorking = bounty.user.id == this.props.currentUser.get('id');
+      
+      if(isWorking) {
+        return (
+          <li>
+            <a href="#" onClick={this.abandonBounty} className="btn btn-label red">
+              Abandon bounty
+            </a>
+          </li>
+        );
+      } else {
+        return (
+          <li className="omega">
+            <a href="#" onClick={this.abandonBounty} className="btn btn-default green">
+              Work on this bounty
+            </a>
+          </li>
+        )
+      }
+    },
+
+    renderSubmitWorkButton: function() {
+      var bounty = this.props;
+      var isWorking = bounty.user.id == this.props.currentUser.get('id');
+
+      if(isWorking) {
+        return (
+          <li className="omega">
+            <a href="#" className="btn btn-default green" data-scroll="true" data-target="#event_comment_body">
+              <span className="icon icon-document icon-left"></span>
+              Submit work for review
+            </a>
+          </li>
+        );
+      }
+    },
+
     render: function() {
       var bounty = this.props;
 
@@ -92,6 +220,21 @@
 
           <div className="card-body bounty-description">
             {this.renderDescription()}
+          </div>
+
+          <div className="card-footer clearfix">
+            <ul className="list-inline alpha omega pull-left">
+              {this.renderFlagButton()}
+              {this.renderEditButton()}
+              {this.renderOpenButton()}
+              {this.renderFollowButton()}
+            </ul>
+
+            <ul className="list-inline alpha omega pull-right">
+              {this.renderInviteFriendButton()}
+              {this.renderStartWorkButton()}
+              {this.renderSubmitWorkButton()}
+            </ul>
           </div>
         </div>
       );
