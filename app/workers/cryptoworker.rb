@@ -11,9 +11,8 @@ class CryptoWorker
     params[:destination] =  destination
     params[:private_key] = private_key
     params[:amount] = amount
-    params.to_json
 
-    post("https://coins.assembly.com/v1/btc", params)
+    Faraday.post 'https://coins.assembly.com/v1/btc', params.to_json
 
   end
 
@@ -31,7 +30,7 @@ class CryptoWorker
     body['description'] = "" #We can think about this for later
     body['initial_coins'] = total_coins.to_s
 
-    response = post("https://coins.assembly.com/v1/colors", body.to_json)
+    Faraday.post 'https://coins.assembly.com/v1/colors', body.to_json
 
   end
 
@@ -51,7 +50,7 @@ class CryptoWorker
       body['issuing_address'] = product.wallet_public_address
       body['transfer_amount'] = coins.to_s
 
-      response = post("https://coins.assembly.com/v1/transactions/transfer", body.to_json)
+      Faraday.post 'https://coins.assembly.com/v1/transactions/transfer', body.to_json
   end
 
   def transfer_coins(product_id, giver_user_id, recipient_user_id, coins)
@@ -67,30 +66,7 @@ class CryptoWorker
     body['issuing_address'] = product.wallet_public_address
     body['transfer_amount'] = coins.to_s
 
-    response = post("https://coins.assembly.com/v1/transactions/transfer", body.to_json)
-
+    Faraday.post 'https://coins.assembly.com/v1/transactions/transfer', body.to_json
   end
-
-  def get(url)
-    response=HTTParty.get(
-      url
-    )
-    return response
-
-  end
-
-
-  def post(url, body)
-    response=HTTParty.post(url,
-      :body => body.to_json,
-      :headers => {
-        'Content-Type' => 'application/json',
-        }
-    )
-    return response
-
-  end
-
-
 
 end
