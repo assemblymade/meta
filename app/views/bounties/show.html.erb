@@ -2,6 +2,9 @@
 <% activate_nav! :bounties %>
 <%= track 'product.wip.viewed', WipAnalyticsSerializer.new(@wip, scope: current_user) %>
 
+<div data-react-class="Bounty" data-react-props="<%= BountySerializer.new(@bounty, scope: current_user).to_json %>">
+</div>
+
 <%= render 'bounties/bounty', bounty: @bounty %>
 
 <% if current_user && @bounty.workers.size > 1 && @bounty.workers.include?(current_user) %>
