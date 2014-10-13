@@ -1,12 +1,13 @@
 class BountySerializer < ApplicationSerializer
   include MarkdownHelper
 
-  attributes :can_update, :contracts, :flagged, :following, :markdown_description, :number,
-    :offers, :open, :state, :title, :value
+  attributes :can_update, :contracts, :flagged, :following,
+    :markdown_description, :most_recent_other_wip_worker, :number, :offers,
+    :open, :state, :title, :value
 
-  attributes :close_url, :edit_url, :flag_url, :follow_url, :offers_url,
-    :mute_url, :start_work_url, :stop_work_url, :tag_url, :unflag_url,
-    :urgency_url, :reopen_url, :url
+  attributes :chat_room_url, :close_url, :edit_url, :flag_url, :follow_url,
+    :offers_url, :mute_url, :start_work_url, :stop_work_url, :tag_url,
+    :unflag_url, :urgency_url, :reopen_url, :url
 
   has_one :product
 
@@ -19,6 +20,8 @@ class BountySerializer < ApplicationSerializer
   has_many :offers
 
   has_many :tags
+
+  has_many :wip_workers
 
   has_many :workers
 
@@ -42,12 +45,20 @@ class BountySerializer < ApplicationSerializer
     product_markdown(product, bounty.description)
   end
 
+  def most_recent_other_wip_worker
+    bounty.most_recent_other_wip_worker(current_user)
+  end
+
   def open
     bounty.open?
   end
 
   def offers
     bounty.active_offers
+  end
+
+  def chat_room_url
+    chat_room_path(product.main_chat_room)
   end
 
   def close_url

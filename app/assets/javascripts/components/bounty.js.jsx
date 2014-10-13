@@ -224,58 +224,94 @@
       }
     },
 
+    renderDiscussWorkBanner: function() {
+      var bounty = this.state.bounty;
+      var currentUserId = this.props.currentUser && this.props.currentUser.get('id');
+      var mostRecentWorkerId = bounty.most_recent_other_wip_worker && bounty.most_recent_other_wip_worker.user_id;
+
+      var working = _.any(bounty.workers, function(worker) { return worker.id == currentUserId });
+      var otherWorker = _.find(bounty.workers, function(worker) { return worker.id == mostRecentWorkerId });
+
+      if(!working || !otherWorker) { return; }
+
+      var otherWorkersCount = bounty.workers.length - 1;
+      var workersPhrase = otherWorkersCount == 1 ? '1 other person' : otherWorkersCount + ' other people';
+
+      var message = "Hey @" + otherWorker.username + ". Mind if I help out with #" + bounty.number + "?";
+      var discussUrl = bounty.chat_room_url + '?message=' + encodeURIComponent(message);
+
+      return (
+        <div style={{ 'padding': '15px', 'background-color': '#EBF8CA', 'border': '1px solid #E6F3C6', 'border-radius': '3px', 'font-size': '16px', 'line-height': '38px', 'margin-bottom': '30px' }}>
+          <a href={discussUrl} className="btn btn-default pull-right">
+            <span className="icon icon-bubble icon-left"></span>
+            Discuss the work
+          </a>
+
+          <p className="omega gray-light" style={{ 'margin-left': '6px' }}>
+            <strong className="black">Right on!</strong>
+            {' '}
+            {workersPhrase} started working on this bounty {moment(bounty.most_recent_other_wip_worker.created_at).fromNow()}.
+          </p>
+        </div>
+      );
+    },
+
     render: function() {
       var bounty = this.state.bounty;
 
       return (
-        <div className="card">
-          <div className="card-heading">
-            <ul className="list-inline" style={{ 'margin-bottom': '6px' }}>
-              <li className="text-large">
-                {this.renderBountyValuation()}
-              </li>
-              <li>
-                {this.renderUrgency()}
-              </li>
-              <li>
-                {this.renderTagList()}
-              </li>
-              <li className="text-muted" style={{ 'font-size': '14px', 'color': '#a5a5a5' }}>
-                Created by
+        <div>
+          <div className="card">
+            <div className="card-heading">
+              <ul className="list-inline" style={{ 'margin-bottom': '6px' }}>
+                <li className="text-large">
+                  {this.renderBountyValuation()}
+                </li>
+                <li>
+                  {this.renderUrgency()}
+                </li>
+                <li>
+                  {this.renderTagList()}
+                </li>
+                <li className="text-muted" style={{ 'font-size': '14px', 'color': '#a5a5a5' }}>
+                  Created by
+                  {' '}
+                  <a className="text-stealth-link" href={bounty.user.url}>@{bounty.user.username}</a>
+                  {' '}
+                  {moment(bounty.created).fromNow()}
+                </li>
+              </ul>
+
+              <h1 className="alpha omega">
+                {this.state.bounty.title}
                 {' '}
-                <a className="text-stealth-link" href={bounty.user.url}>@{bounty.user.username}</a>
-                {' '}
-                {moment(bounty.created).fromNow()}
-              </li>
-            </ul>
+                <small style={{ 'font-size': '30px', 'color': '#b4b4b4' }}>
+                  #{this.state.bounty.number}
+                </small>
+              </h1>
+            </div>
 
-            <h1 className="alpha omega">
-              {this.state.bounty.title}
-              {' '}
-              <small style={{ 'font-size': '30px', 'color': '#b4b4b4' }}>
-                #{this.state.bounty.number}
-              </small>
-            </h1>
+            <div className="card-body bounty-description">
+              {this.renderDescription()}
+            </div>
+
+            <div className="card-footer clearfix">
+              <ul className="list-inline alpha omega pull-left">
+                {this.renderFlagButton()}
+                {this.renderEditButton()}
+                {this.renderOpenButton()}
+                {this.renderFollowButton()}
+              </ul>
+
+              <ul className="list-inline alpha omega pull-right">
+                {this.renderInviteFriendButton()}
+                {this.renderStartWorkButton()}
+                {this.renderSubmitWorkButton()}
+              </ul>
+            </div>
           </div>
 
-          <div className="card-body bounty-description">
-            {this.renderDescription()}
-          </div>
-
-          <div className="card-footer clearfix">
-            <ul className="list-inline alpha omega pull-left">
-              {this.renderFlagButton()}
-              {this.renderEditButton()}
-              {this.renderOpenButton()}
-              {this.renderFollowButton()}
-            </ul>
-
-            <ul className="list-inline alpha omega pull-right">
-              {this.renderInviteFriendButton()}
-              {this.renderStartWorkButton()}
-              {this.renderSubmitWorkButton()}
-            </ul>
-          </div>
+          {this.renderDiscussWorkBanner()}
         </div>
       );
     }
