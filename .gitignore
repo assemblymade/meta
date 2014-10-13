@@ -16,6 +16,7 @@ Procfile.dev
 
 db/*.dump
 dump.rdb
+config/database.yml
 
 /.ruby-version
 
