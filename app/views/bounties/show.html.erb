@@ -5,27 +5,10 @@
 <div data-react-class="Bounty" data-react-props="<%= { bounty: BountySerializer.new(@bounty, scope: current_user) }.to_json %>">
 </div>
 
-<%= render 'bounties/bounty', bounty: @bounty %>
-
-<% if current_user && @bounty.workers.size > 1 && @bounty.workers.include?(current_user) %>
-  <div style="padding: 15px; background-color: #EBF8CA; border: 1px solid #E6F3C6; border-radius: 3px; font-size: 16px; line-height: 38px; margin-bottom: 30px">
-    <a href="<%= chat_room_path(@bounty.product.chat_rooms.first, message: "Hey @#{@bounty.most_recent_other_wip_worker(current_user).user.username}. Mind if I help out with #{product_wip_url(@bounty.product, @bounty)}?") %>" class="btn btn-default pull-right">
-      <span class="icon icon-bubble icon-left"></span>
-      Discuss the work
-    </a>
-
-    <p class="omega gray-light" style="margin-left: 6px">
-      <strong class="black">Right on!</strong>
-      <%= pluralize(@bounty.workers.count - 1, 'other person', 'other people') %> started working on this bounty <%= time_ago_in_words(@bounty.most_recent_other_wip_worker(current_user).created_at) %> ago.
-    </p>
-  </div>
-<% end %>
-
 <div class="discussion" id="discussion-view-el">
   <%= render 'wips/discussion', events: @events %>
   <%= render 'new_event_form' %>
 </div>
-
 
 <% if signed_in? %>
   <img class="hidden" data-src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@bounty).first, current_user.id).url %>" />

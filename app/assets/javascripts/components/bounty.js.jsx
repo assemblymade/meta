@@ -184,7 +184,10 @@
           success: function() {
             bounty.workers = bounty.workers.concat(this.props.currentUser.attributes);
             this.setState({ bounty: bounty });
-          }.bind(this)
+          }.bind(this),
+          error: function() {
+            window.location = '/login?alert=true';
+          }
         });
       }.bind(this);
 
