@@ -29,4 +29,11 @@ class Urgency
   def self.multipliers
     all.map(&:multiplier)
   end
+  
+  def serializable_hash
+    {
+      label: label,
+      multiplier: multiplier
+    }
+  end
 end
