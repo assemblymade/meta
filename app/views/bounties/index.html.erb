@@ -2,8 +2,6 @@
 <% activate_nav! :bounties %>
 <%= track 'product.wips.viewed', ProductAnalyticsSerializer.new(@product) %>
 
-<% @show_urgency_dropdown = @product.core_team?(current_user) %>
-
 <% if @project.nil? %>
   <%= render 'bounties/header'  %>
 <% else %>
