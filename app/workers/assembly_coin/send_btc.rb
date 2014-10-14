@@ -1,9 +1,9 @@
 module AssemblyCoin
-  class MoveBtc < AssemblyCoin::Worker
+  class SendBtc < AssemblyCoin::Worker
 
     def perform(product_id)
 
-      product = Products.find_by(:id => product_id)
+      product = Products.find(product_id)
       destination = product.wallet_public_address
 
       current_btc=GetBtcBalance.new.get_btc_balance(destination)
@@ -17,7 +17,7 @@ module AssemblyCoin
         product.last_checked_btc = current_time
         product.save!
 
-        Transactions.new.send_btc(public_address, destination, private_key, amount)\
+        Transactions.new.send_btc(public_address, destination, private_key, amount)
       end
     end
   end

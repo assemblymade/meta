@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
 
   after_commit -> { Indexer.perform_async(:index, User.to_s, self.id) }, on: :create
-  after_commit :assign_key_pair!
+  on_create :assign_key_pair!
 
   # default users to immediate email
   MAIL_DAILY = 'daily'

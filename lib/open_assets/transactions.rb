@@ -1,25 +1,29 @@
 module OpenAssets
   class Transactions
 
+    SATOSHIS=100_000_000
+
     def get_btc_balance(public_address)
       url = "https://blockchain.info/"
       remote = OpenAssets::Remote.new(url)
       end_url="q/addressbalance/"+public_address
 
       satoshi_balance = remote.get end_url
-      btc_balance = satoshi_balance.to_f/100000000
+      btc_balance = satoshi_balance.to_f/SATOSHIS
 
       return btc_balance
     end
 
-    def send_btc(public_address, destination, private_key, amount)
+    def send_btc(destination, amount)
       private_key = ENV.fetch("CENTRAL_ADDRESS_PRIVATE_KEY")
       public_address= ENV.fetch("CENTRAL_ADDRESS_PUBLIC_ADDRESS")
 
-      params = {"public_address" => public_address}
-      params[:destination] =  destination
-      params[:private_key] = private_key
-      params[:amount] = amount
+      params = {
+        public_address: public_address,
+        destination: destination,
+        private_key: private_key,
+        amount: amount
+      }
 
       remote = OpenAssets::Remote.new("https://coins.assembly.com")
       end_url="v1/btc"
@@ -28,16 +32,17 @@ module OpenAssets
 
 
     def forge_coins(product_id, total_coins)
-      product = Product.find_by(id: product_id)
+      product = Product.find(product_id)
 
-      body={}
-      body['public_address'] = product.wallet_public_address
-      body['private_key'] = product.wallet_private_key
-      body['fee_each'] = ENV.fetch("STANDARD_BTC_FEE")
-      body['name'] = product.name+" Coins"
-      body['email'] = "barisser@assembly.com"
-      body['description'] = "" #We can think about this for later
-      body['initial_coins'] = total_coins.to_s
+      body = {
+        public_address: product.wallet_public_address,
+        private_key: product.wallet_private_key,
+        fee_each: ENV.fetch("STANDARD_BTC_FEE"),
+        name: product.name + " Coins",
+        email: "barisser@assembly.com",
+        description: "",
+        initial_coins: total_coins.to_s
+      }
 
       remote = OpenAssets::Remote.new("https://coins.assembly.com")
       end_url="v1/colors"
@@ -46,16 +51,17 @@ module OpenAssets
 
 
     def transfer_coins(product_id, user_id, coins)
-      product = Product.find_by(id: product_id)
-      user = User.find_by(id: user_id)
+      product = Product.find(product_id)
+      user = User.find(user_id)
 
-      body={}
-      body['from_public_address'] = product.wallet_public_address
-      body['to_public_address'] = user.wallet_public_address
-      body['fee_each'] = ENV.fetch("STANDARD_BTC_FEE")
-      body['from_private_key'] = product.wallet_private_key
-      body['issuing_address'] = product.wallet_public_address
-      body['transfer_amount'] = coins.to_s
+      body = {
+        from_public_address: product.wallet_public_address,
+        to_public_address: user.wallet_public_address,
+        fee_each: ENV.fetch("STANDARD_BTC_FEE"),
+        from_private_key: product.wallet_private_key,
+        issuing_address: product.wallet_public_address,
+        transfer_amount: coins.to_s
+      }
 
       remote = OpenAssets::Remote.new("https://coins.assembly.com")
       end_url="v1/transactions/transfer"
