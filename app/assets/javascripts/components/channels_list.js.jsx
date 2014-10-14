@@ -62,11 +62,14 @@
     // take the top X rooms, sorted by ones with unread messages, then most recently visited
     shortList: function(count) {
       var rooms = this.state.rooms
-      if (rooms) {
-        var unreadRecentRoomIds = _.first(_.sortBy(_.keys(rooms), function(roomId){
+      if (rooms && _.keys(rooms).length > 0) {
+        var unreadRecentRoomIds = _.sortBy(_.keys(rooms), function(roomId){
           var unread = rooms[roomId].updated > rooms[roomId].last_read_at
           return -rooms[roomId].last_read_at * (unread ? 2 : 1)
-        }), count)
+        })
+
+        unreadRecentRoomIds = [this.props.currentRoom].concat(_.without(unreadRecentRoomIds, this.props.currentRoom))
+        unreadRecentRoomIds = _.first(unreadRecentRoomIds, count)
 
         return _.sortBy(unreadRecentRoomIds, function(roomId){
           return rooms[roomId].label == 'general' ? '_______' : rooms[roomId].label
