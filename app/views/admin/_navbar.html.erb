@@ -10,6 +10,9 @@
       <li class="<%= "active" if product_rankings_controller? %>">
         <%= link_to 'Products', admin_product_rankings_path %>
       </li>
+      <li class="<%= "active" if controller_active?(:bounties) %>">
+        <%= link_to 'Bounties', admin_bounties_path %>
+      </li>
       <li class="<%= "active" if controller_active?(:pitch_week_applications) %>">
         <%= link_to 'Pitch Week', admin_pitch_week_applications_path %>
       </li>
