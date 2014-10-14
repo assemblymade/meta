@@ -218,7 +218,7 @@
       if(isWorking) {
         return (
           <li className="omega">
-            <a href="#" className="btn btn-default text-success" data-scroll="true" data-target="#event_comment_body">
+            <a href="#" className="btn btn-default" style={{ 'color': '#5cb85c !important' }} data-scroll="true" data-target="#event_comment_body">
               <span className="icon icon-document icon-left"></span>
               Submit work for review
             </a>
