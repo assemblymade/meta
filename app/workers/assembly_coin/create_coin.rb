@@ -6,8 +6,10 @@ module AssemblyCoin
       state = product.state
       if state === 'greenlit' or state === 'profitable' then
         Transactions.new.forge_coins(product_id, total_coins)
+
+        product.update!(issued_coins: true)
       end
-      
+
     end
 
   end

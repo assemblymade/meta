@@ -54,7 +54,7 @@ module OpenAssets
     end
 
 
-    def transfer_coins(product_id, user_id, coins)
+    def award_coins(product_id, user_id, coins)
       product = Product.find(product_id)
       user = User.find(user_id)
 
@@ -70,6 +70,10 @@ module OpenAssets
       remote = OpenAssets::Remote.new("https://coins.assembly.com")
       end_url="v1/transactions/transfer"
       remote.post end_url, body.to_json
+    end
+
+    def transfer_coins(giver_user_id, receiver_user_id, coins, product_id)
+
     end
 
   end

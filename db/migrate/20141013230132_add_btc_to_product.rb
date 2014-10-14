@@ -1,7 +1,7 @@
 class AddBtcToProduct < ActiveRecord::Migration
   def change
     add_column :products, :last_checked_btc, :timestamp
-    add_column :products, :issued_coins, :boolean
+    add_column :products, :last_issued_coins, :timestamp
 
     change_table :transaction_log_entries do |t|
       t.string :queue_id
