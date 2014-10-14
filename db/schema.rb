@@ -256,25 +256,6 @@ ActiveRecord::Schema.define(version: 20141013230132) do
     t.datetime "updated_at"
   end
 
-  create_table "ideas", id: false, force: true do |t|
-    t.uuid     "id",                                null: false
-    t.string   "slug"
-    t.string   "name",                              null: false
-    t.string   "pitch"
-    t.text     "description"
-    t.datetime "submitted_at"
-    t.datetime "evaluated_at"
-    t.boolean  "is_approved"
-    t.integer  "presale_amount"
-    t.text     "presale_description"
-    t.integer  "assembly_contribution", default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.uuid     "user_id",                           null: false
-    t.string   "lead"
-    t.integer  "view_count",            default: 0
-  end
-
   create_table "interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.text     "slug",       null: false
     t.datetime "created_at", null: false
@@ -418,18 +399,6 @@ ActiveRecord::Schema.define(version: 20141013230132) do
     t.uuid     "perk_id"
     t.inet     "ip"
     t.text     "variation"
-  end
-
-  create_table "presales", id: false, force: true do |t|
-    t.uuid     "id",         null: false
-    t.uuid     "user_id",    null: false
-    t.uuid     "idea_id",    null: false
-    t.integer  "amount",     null: false
-    t.string   "charge_id"
-    t.string   "last4"
-    t.datetime "charged_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "product_subscriptions", id: false, force: true do |t|
