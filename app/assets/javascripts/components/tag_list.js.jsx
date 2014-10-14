@@ -146,7 +146,7 @@ var TagListStore = require('../stores/tag_list_store');
 
     render: function() {
       return (
-        <ul className="list-inline omega">
+        <ul className="list-inline">
           {this.tags(this.state.tags)}
           {this.popoverButton()}
         </ul>
@@ -195,7 +195,7 @@ var TagListStore = require('../stores/tag_list_store');
         }
 
         return (
-          <li key={tag} style={{'margin': '0px'}}>
+          <li key={tag} style={{'margin': '10px 0 0 0'}}>
             <a style={style}
                 className="tag"
                 href={self.props.filterUrl && self.props.destination ?
