@@ -38,7 +38,7 @@ class DiscoverController < ApplicationController
     redirect_to discover_path(:bounties, filter: @filter) if params[:filter].blank?
 
     @postings = Task.open.unflagged.tagged_with(@filter).order(created_at: :desc).
-      includes(:product).where(products: { flagged_at: nil }).
+      includes(:product).where(products: { flagged_at: nil }).where.not(products: { state: 'stealth'}).
       page(params[:page]).per(25)
 
     @postings = @postings.where(products: { slug: params[:product] }) if params[:product]

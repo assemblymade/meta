@@ -149,6 +149,18 @@ class WipsController < ProductController
     respond_with @wip, location: product_wip_path(@product, @wip)
   end
 
+  def close
+    set_wip
+    @wip.close!(current_user)
+    respond_with @wip
+  end
+
+  def reopen
+    set_wip
+    @wip.reopen!(current_user, nil)
+    respond_with @wip
+  end
+
   private
 
   def validate_wip_administer
