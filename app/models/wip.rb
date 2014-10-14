@@ -264,19 +264,38 @@ class Wip < ActiveRecord::Base
     Indexer.perform_async(:index, Wip.to_s, self.id)
   end
 
-  mappings dynamic: false do
-    indexes :title,  analyzer: 'snowball'
-    indexes :hidden, index: 'not_analyzed'
-    indexes :state,  index: 'not_analyzed'
+  settings(
+    analysis: {
+      analyzer: {
+        ngram_analyzer: {
+          tokenizer: 'ngram_tokenizer'
+        }
+      },
+      tokenizer: {
+        ngram_tokenizer: {
+          type: 'nGram',
+          min_gram: 3,
+          max_gram: 25,
+          token_chars: ['letter', 'digit']
+        }
+      }
+    }
+  ) do
+    mappings dynamic: false do
+      indexes :title,  index: 'ngram_analyzer'
+      indexes :hidden, index: 'not_analyzed'
+      indexes :state,  index: 'not_analyzed'
 
-    indexes :comments do
-      indexes :sanitized_body, analyzer: 'snowball'
-    end
+      indexes :comments do
+        indexes :sanitized_body, analyzer: 'snowball'
+      end
 
-    indexes :product do
-      indexes :slug, index: 'not_analyzed'
+      indexes :product do
+        indexes :slug, index: 'not_analyzed'
+      end
     end
   end
+
 
   def as_indexed_json(options={})
     as_json(
