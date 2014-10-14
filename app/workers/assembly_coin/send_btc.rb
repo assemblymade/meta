@@ -3,7 +3,7 @@ module AssemblyCoin
 
     def perform(product_id)
 
-      product = Products.find(product_id)
+      product = Product.find(product_id)
       destination = product.wallet_public_address
 
       current_btc=GetBtcBalance.new.get_btc_balance(destination)
