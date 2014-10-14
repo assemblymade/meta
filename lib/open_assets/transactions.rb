@@ -14,6 +14,10 @@ module OpenAssets
       return btc_balance
     end
 
+    def get_central_btc_balance()
+      return get_btc_balance(ENV.fetch("CENTRAL_ADDRESS_PUBLIC_ADDRESS"))
+    end
+
     def send_btc(destination, amount)
       private_key = ENV.fetch("CENTRAL_ADDRESS_PRIVATE_KEY")
       public_address= ENV.fetch("CENTRAL_ADDRESS_PUBLIC_ADDRESS")
