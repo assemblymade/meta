@@ -83,7 +83,7 @@ module BountyStatsHelper
           query = Task.where(state: :resolved).where(closed_at: startt..endt)
         end
         dates << startt
-        results << filtered_query(query, user_type).count.to_f
+        results << Rails.cache.fetch("#{status}_#{user_type}_#{endt.to_i}") do; filtered_query(query, user_type).count.to_f; end
       end
     end
     results
