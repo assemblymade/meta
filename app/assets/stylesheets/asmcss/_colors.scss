@@ -1,19 +1,19 @@
-$navy:   #235B66;
-$teal:   #10A3B8;
-$green:  #94BB2B;
-$yellow: #FBCA32;
-$red:    #F35443;
-$black:  #111;
-$gray:   #AAA;
-$silver: #DDD;
-$white:  #FFF;
+$asmcss-navy:   #235B66;
+$asmcss-teal:   #10A3B8;
+$asmcss-green:  #94BB2B;
+$asmcss-yellow: #FBCA32;
+$asmcss-red:    #F35443;
+$asmcss-black:  #111;
+$asmcss-gray:   #AAA;
+$asmcss-silver: #DDD;
+$asmcss-white:  #FFF;
 
-.navy { color: $navy }
-.teal { color: $teal }
-.green { color: $green }
-.yellow { color: $yellow }
-.red { color: $red }
-.black { color: $black }
-.gray { color: $gray }
-.silver { color: $silver }
-.white { color: $white }
+.navy { color: $asmcss-navy }
+.teal { color: $asmcss-teal }
+.green { color: $asmcss-green }
+.yellow { color: $asmcss-yellow }
+.red { color: $asmcss-red }
+.black { color: $asmcss-black }
+.gray { color: $asmcss-gray }
+.silver { color: $asmcss-silver }
+.white { color: $asmcss-white }
