@@ -1,9 +1,13 @@
 class Admin::BountiesController < AdminController
 
   include BountyStatsHelper
+  require 'date'
 
   def index
     # TODO clean up: this code is really gross
+    @avg_bounty_age = avg_bounty_lifespan
+    @avg_bounty_last_week = avg_bounty_lifespan(1.week.ago.beginning_of_week, Date.today.beginning_of_week)
+
     @created = created
     @created_c = created('core')
     @created_s = created('staff')
