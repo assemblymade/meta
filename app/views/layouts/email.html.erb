@@ -10,94 +10,10 @@
       <tr>
         <td class="center" align="center" valign="top">
           <center>
-            <table class="container">
-              <tr>
-                <td>
 
-                  <!-- Header -->
+            <%= yield %>
 
-                  <table class="row header hide-for-small">
-                    <tr>
-                      <td class="wrapper">
-                        <table class="six columns">
-                          <tr>
-                            <td class="left-text-pad">
-                              <a href="<%= root_url %>" target="_blank" title="Assembly">
-                                <img alt="Assembly Logo" src="<%= image_url('logo-wordmark-dark@2x.png') %>" width="36" height="32" />
-                              </a>
-                            </td>
-                            <td class="expander"></td>
-                          </tr>
-                        </table>
-                      </td>
-                      <td class="wrapper last">
-                        <table class="six columns hide-for-small">
-                          <tr>
-                            <td class="text-right right-text-pad header-date">
-                              <%# TODO Remove when everything is BaseMailer %>
-                              <% @date ||= Date.today %>
-                              <span class="header-date-day">
-                                <%= @date.strftime('%A').upcase %>
-                              </span>
-                              <span class="text-muted">
-                                <%= @date.strftime('%B %-d, %Y').upcase %>
-                              </span>
-                            </td>
-                            <td class="expander"></td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-
-                  <!-- Body -->
-
-                  <%= yield %>
-
-                  <!-- Footer -->
-
-                  <table class="row footer">
-                    <tr>
-                      <td class="wrapper">
-                        <table class="six columns">
-                          <tr>
-                            <td class="left-text-pad">
-                              <p>
-                                You've received this email because you signed up for Assembly or an Assembly product.
-                                <% if @mailgun_tag %>
-                                  <!-- FIXME: Add notification type name here -->
-                                  Unsubscribe from
-                                  <a href="%tag_unsubscribe_url%">emails like this</a>
-                                  or
-                                  <a href="%unsubscribe_url%" target="_blank">all emails</a>.
-                                <% else %>
-                                  <a href="%unsubscribe_url%" target="_blank">Unsubscribe</a>.
-                                <% end %>
-                              </p>
-                            </td>
-                            <td class="expander"></td>
-                          </tr>
-                        </table>
-                      </td>
-
-                      <td class="wrapper last">
-                        <table class="six columns">
-                          <tr>
-                            <td class="right-text-pad text-right">
-                              <strong class="text-muted">Assembly Made, Inc.</strong><br />
-                              3030A 16th Street<br />
-                              San Francisco, 94103<br />
-                              California, USA
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-
-                </td>
-              </tr>
-            </table>
+            <%= render 'layouts/email/footer' %>
           </center>
         </td>
       </tr>
