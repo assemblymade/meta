@@ -4,20 +4,24 @@ module AssemblyCoin
     def perform(product_id)
 
       product = Product.find(product_id)
-      destination = product.wallet_public_address
 
-      current_btc=GetBtcBalance.new.get_btc_balance(destination)
-      current_time =  Time.now.getutc
+      if product.state === 'greenlit' or product.state === 'profitable' then
+        destination = product.wallet_public_address
 
-      time_since_last_checked = current_time - product.last_checked_btc
+        current_btc=GetBtcBalance.new.get_btc_balance(destination)
+        current_time =  Time.now.getutc
 
-      if ENV['MIN_PRODUCT_BTC'] > current_btc and time_since_last_checked > 3600 then
-        amount = ENV['MIN_PRODUCT_BTC'] - current_btc
+        time_since_last_checked = current_time - product.last_checked_btc
 
-        product.update!(last_checked_btc: current_time)
+        if ENV['MIN_PRODUCT_BTC'] > current_btc and time_since_last_checked > 3600 then
+          amount = ENV['MIN_PRODUCT_BTC'] - current_btc
 
-        Transactions.new.send_btc(public_address, destination, private_key, amount)
+          product.update!(last_checked_btc: current_time)
+
+          Transactions.new.send_btc(public_address, destination, private_key, amount)
+        end
       end
+
     end
   end
 end
