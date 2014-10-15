@@ -1,5 +1,5 @@
 <% title @chat_room.name %>
-<% activate_nav! :community %>
+<% activate_nav! :community if params[:id] == 'general' %>
 <%= track 'product.chat.viewed', ProductSerializer.new(@product, scope: current_user) %>
 
 <%= render partial: 'shared/navbar', locals: { bounties_link: true } %>
