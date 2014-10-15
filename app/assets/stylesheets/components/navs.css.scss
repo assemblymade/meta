@@ -64,6 +64,13 @@
   > li.active > a:hover {
     color: $text-color;
   }
+
+  > li.active {
+    a:hover,
+    a:focus {
+      cursor: pointer;
+    }
+  }
 }
 
 .nav-tabs.nav-justified {
