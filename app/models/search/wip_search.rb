@@ -42,8 +42,7 @@ module Search
           multi_match: {
             query: filters[:q],
             fields: [ 'title', 'comments.sanitized_body' ],
-            operator: 'or',
-            fuzziness: 1
+            operator: 'or'
           }
         }
       end

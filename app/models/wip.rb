@@ -264,17 +264,19 @@ class Wip < ActiveRecord::Base
     Indexer.perform_async(:index, Wip.to_s, self.id)
   end
 
-  mappings dynamic: false do
-    indexes :title,  analyzer: 'snowball'
-    indexes :hidden, index: 'not_analyzed'
-    indexes :state,  index: 'not_analyzed'
+  settings NGRAM_ANALYZER do
+    mappings do
+      indexes :title,  analyzer: 'ngram_analyzer'
+      indexes :hidden, index: 'not_analyzed'
+      indexes :state,  index: 'not_analyzed'
 
-    indexes :comments do
-      indexes :sanitized_body, analyzer: 'snowball'
-    end
+      indexes :comments do
+        indexes :sanitized_body, analyzer: 'snowball'
+      end
 
-    indexes :product do
-      indexes :slug, index: 'not_analyzed'
+      indexes :product do
+        indexes :slug, index: 'not_analyzed'
+      end
     end
   end
 

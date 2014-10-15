@@ -3,3 +3,22 @@ if ENV['ELASTICSEARCH_URL']
 end
 Kaminari::Hooks.init
 Elasticsearch::Model::Response::Response.__send__ :include, Elasticsearch::Model::Response::Pagination::Kaminari
+
+NGRAM_ANALYZER = {
+  analysis: {
+    filter: {
+      ngram_filter: {
+        type: 'nGram',
+        min_gram: 2,
+        max_gram: 15
+      }
+    },
+    analyzer: {
+      ngram_analyzer: {
+        tokenizer: 'lowercase',
+        filter: ['ngram_filter'],
+        type: 'custom'
+      }
+    }
+  }
+}
