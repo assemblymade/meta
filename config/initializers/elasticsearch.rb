@@ -9,7 +9,7 @@ NGRAM_ANALYZER = {
     filter: {
       ngram_filter: {
         type: 'nGram',
-        min_gram: 2,
+        min_gram: 4,
         max_gram: 15
       }
     },
