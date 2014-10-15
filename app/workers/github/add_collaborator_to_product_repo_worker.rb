@@ -16,7 +16,7 @@ module Github
     end
 
     def find_repo_team(repo)
-      get("/repos/#{repo.full_name}/teams").find{|team| team['name'] == repo.name }
+      get("/repos/#{repo.full_name}/teams").find{|team| team['name'] == repo.name rescue false }
     end
 
     def create_repo_team(repo)
