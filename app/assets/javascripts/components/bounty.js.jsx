@@ -155,6 +155,12 @@
 
     renderStartWorkButton: function() {
       var bounty = this.state.bounty;
+      var closed = bounty.state == 'resolved' || bounty.state == 'closed'
+
+      if(closed) {
+        return;
+      }
+
       var currentUserId = this.props.currentUser && this.props.currentUser.get('id');
       var isWorking = !!_.find(bounty.workers, function(worker) { return worker.id == currentUserId });
 
@@ -212,6 +218,12 @@
 
     renderSubmitWorkButton: function() {
       var bounty = this.state.bounty;
+      var closed = bounty.state == 'resolved' || bounty.state == 'closed'
+
+      if(closed) {
+        return;
+      }
+
       var currentUserId = this.props.currentUser && this.props.currentUser.get('id');
       var isWorking = !!_.find(bounty.workers, function(worker) { return worker.id == currentUserId });
 
@@ -227,8 +239,31 @@
       }
     },
 
+    renderClosedNotice: function() {
+      var bounty = this.state.bounty;
+      var closed = bounty.state == 'resolved' || bounty.state == 'closed'
+
+      if(!closed) {
+        return
+      }
+
+      return (
+        <li className="omega">
+          <a href="#" className="btn btn-default disabled">
+            {bounty.state == 'resolved' ? 'Completed & Closed' : 'Closed'}
+          </a>
+        </li>
+      )
+    },
+
     renderDiscussWorkBanner: function() {
       var bounty = this.state.bounty;
+      var closed = bounty.state == 'resolved' || bounty.state == 'closed'
+
+      if(closed) {
+        return;
+      }
+
       var currentUserId = this.props.currentUser && this.props.currentUser.get('id');
       var mostRecentWorkerId = bounty.most_recent_other_wip_worker && bounty.most_recent_other_wip_worker.user_id;
 
@@ -310,6 +345,7 @@
                 {this.renderInviteFriendButton()}
                 {this.renderStartWorkButton()}
                 {this.renderSubmitWorkButton()}
+                {this.renderClosedNotice()}
               </ul>
             </div>
           </div>
