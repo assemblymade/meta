@@ -43,7 +43,7 @@ class window.TaskListView extends Backbone.View
   create: ->
     title = @children.newTaskInput.val().trim()
 
-    model = new TaskItem(title: _.escape(title))
+    model = new TaskItem(title: title)
     @incompleteTasks.add model
 
     matches = /^#?(\d+)\s*$/.exec(title)
