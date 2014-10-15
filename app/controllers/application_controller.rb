@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def after_sign_up_path_for_user
-    session[:previous_url] || url_for(controller: '/surveys', action: 'new')
+    url_for(controller: '/surveys', action: 'new')
   end
 
   def after_sign_out_path_for_user

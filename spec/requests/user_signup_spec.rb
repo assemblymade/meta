@@ -15,7 +15,7 @@ describe 'User signup' do
 
     expect(assigns(:user).username).to eq('lumpy')
 
-    expect(response).to redirect_to('/discover/updates')
+    expect(response).to redirect_to('/welcome')
   end
 end
 

@@ -6,13 +6,9 @@ class SurveysController < ApplicationController
   end
 
   def create
-    current_user.update(
-      interested_tags: user_params.fetch(:interested_tags),
-      most_important_quality: user_params[:most_important_quality],
-      how_much_time: user_params[:how_much_time],
-      previous_experience: user_params[:previous_experience],
-      platforms: user_params[:platforms]
-    )
+    permitted_params = user_params
+    permitted_params[:platforms].reject!(&:blank?) if permitted_params[:platforms]
+    current_user.update(permitted_params)
     redirect_to action: :show
   end
 
@@ -22,7 +18,8 @@ class SurveysController < ApplicationController
   # private
 
   def user_params
-    params.require(:user)
+    params.require(:user).
+      permit(:most_important_quality, :how_much_time, :previous_experience, interested_tags: [], platforms: [])
   end
 
 end
