@@ -12,7 +12,7 @@ module Github
     end
 
     def find_or_create_repo_team(repo)
-      find_repo_team(repo) || create_repo_team(repo)
+      find_repo_team(repo) || create_repo_team(repo) || find_repo_team(repo)
     end
 
     def find_repo_team(repo)
@@ -25,7 +25,7 @@ module Github
                 repo_names: [repo.name],
                 permission: 'push'
 
-      repo.name
+      nil
     end
 
     def add_user_to_team(team_id, github_username)
