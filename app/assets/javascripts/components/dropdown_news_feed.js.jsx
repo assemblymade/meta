@@ -81,7 +81,8 @@
     markAllAsRead: function() {
       Dispatcher.dispatch({
         action: NF.ACTIONS.MARK_ALL_AS_READ,
-        data: null
+        data: null,
+        sync: true
       });
 
       this.optimisticallyMarkAllAsRead();
@@ -99,7 +100,8 @@
 
       Dispatcher.dispatch({
         action: NF.ACTIONS.MARK_AS_READ,
-        data: this.props.story.key
+        data: this.props.story.key,
+        sync: true
       });
     },
 
