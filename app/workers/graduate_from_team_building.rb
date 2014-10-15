@@ -2,11 +2,10 @@ class GraduateFromTeamBuilding
   include Sidekiq::Worker
 
   def perform
-    expired = Product.where('started_team_building_at < ?', 30.days.ago).
-      where(greenlit_at: nil)
+    expired = Product.team_building.where('started_team_building_at < ?', 30.days.ago)
 
     successes, failures = *expired.partition do |product|
-      product.partners.count >= 10
+      product.bio_memberships_count >= 10
     end
 
     successes.each do |product|
