@@ -24,6 +24,8 @@ module Github
                 name: repo.name,
                 repo_names: [repo.name],
                 permission: 'push'
+
+      repo.name
     end
 
     def add_user_to_team(team_id, github_username)
