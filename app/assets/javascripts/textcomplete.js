@@ -45,7 +45,11 @@ $.applyTextcomplete = function($element) {
     }
   ];
 
-  $element.textcomplete(strategies);
+  var options = {
+    appendTo: $('body')
+  };
+
+  $element.textcomplete(strategies, options);
 };
 
 $(document).ready(function() {
