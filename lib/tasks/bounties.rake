@@ -1,10 +1,45 @@
 namespace :bounties do
   
+  task :analysis => :environment do
+
+    def seconds_to_days(seconds)
+      seconds.to_f / 60 / 60 / 24
+    end
+
+    def first_event(instance, event_type)
+      instance.events.where(type: event_type).order(:created_at).first
+    end
+
+    require 'csv'
+    puts "Enter output file name:"
+    input = STDIN.gets.chomp
+    filename = input.empty? ? 'bounty_analysis.csv' : input
+    CSV.open(filename, 'w') do |row|
+      row << ["time to award", "time to first comment",
+              "comment count", "time to start work",
+              "time from start work to first award",
+              "time from first comment to first award",
+              "closed?", "awarded?"]
+      Task.all.each do |t|
+        row << [(seconds_to_days(t.awards.first.created_at - t.created_at).abs rescue -1),
+                (seconds_to_days(t.comments.first.created_at - t.created_at).abs rescue -1),
+                t.comments_count,
+                (seconds_to_days(first_event(t, "Event::Allocation").created_at - t.created_at).abs rescue -1),
+                (seconds_to_days(t.awards.first.created_at - first_event(t, "Event::Allocation").created_at).abs rescue -1),
+                (seconds_to_days(t.comments.first.created_at - t.awards.first.created_at).abs rescue -1),
+                t.state == "resolved" ? 1 : 0,
+                t.awards.empty? ? 0 : 1]
+      end
+    end
+  end
+
+
   task :open => :environment do
     require 'csv'
     include ActionView::Helpers::DateHelper
     puts "Enter output file name:"
-    filename = STDIN.gets.chomp || 'open_bounties.csv'
+    input STDIN.gets.chomp
+    filename = input.empty? ? 'open_bounties.csv' : input
     query = Task.open.where('created_at <= :six_months_ago', :six_months_ago => Time.now - 6.months)
 
     CSV.open(filename, 'w') do |row|
