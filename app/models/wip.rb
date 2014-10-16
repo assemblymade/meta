@@ -15,6 +15,7 @@ class Wip < ActiveRecord::Base
   belongs_to :user
 
   has_many :comments, class_name: 'Event::Comment'
+  has_one  :chat_room
   has_many :events
   has_many :offers, inverse_of: :bounty
   has_many :milestones, through: :milestone_tasks
@@ -340,6 +341,10 @@ class Wip < ActiveRecord::Base
 
   def track_activity
     StreamEvent.add_create_event!(actor: user, subject: self, target: product)
+  end
+
+  def chat?
+    !chat_room.nil?
   end
 
   def to_partial_path

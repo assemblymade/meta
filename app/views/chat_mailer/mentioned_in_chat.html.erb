@@ -1,0 +1,47 @@
+<table class="row">
+  <tr>
+    <td class="wrapper">
+      <table class="twelve columns">
+        <tr>
+          <td class="panel wrapper">
+            <table>
+              <tr>
+                <td>
+                  <h1>
+                    Hey <%= @user.username%>,
+                  </h1>
+
+                  <p>You were mentioned in #<%= @chat_room.slug %> chat by @<%= @event.user.username %>:</p>
+                </td>
+              </tr>
+            </table>
+            <table>
+              <tr>
+                <td class="one sub-columns">
+                  <%= image_tag(@event.user.avatar.url(60), width: 30, height: 30, class: 'img-circle') %>
+                </td>
+                <td>
+                  <% if product = @event.wip.product %>
+                    <%= product_markdown(product, @event.body) %>
+                  <% else %>
+                    <%= markdown(@event.body) %>
+                  <% end %>
+                </td>
+
+              </tr>
+            </table>
+
+            <table class="button success radius">
+              <tr>
+                <td>
+                  <a href="<%= chat_room_url(@chat_room) %>">Jump into chat with @<%= @event.user.username %></a>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

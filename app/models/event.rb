@@ -66,6 +66,9 @@ class Event < ActiveRecord::Base
   end
 
   def notify_by_email(user)
+    # hack to not send out immediate emails for chat messages
+    return if wip.chat?
+
     if notify_by_email? && !user.mail_never?
       EmailLog.send_once user.id, self.id do
         WipMailer.delay(queue: 'mailer').wip_event_added(user.id, self.id)
@@ -93,7 +96,7 @@ class Event < ActiveRecord::Base
       end
     end
 
-    users.flatten
+    users.flatten.uniq
   end
 
   def to_param
