@@ -49,6 +49,7 @@ class Task < Wip
       event :reopen,      :transitions_to => :open
     end
     state :reviewing do
+      event :allocate,    :transitions_to => :allocated
       event :unallocate,  :transitions_to => :open
       event :reject,      :transitions_to => :open
       event :award,       :transitions_to => :awarded
