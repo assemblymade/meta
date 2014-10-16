@@ -15,7 +15,7 @@ class DiscoverController < ApplicationController
   end
 
   def team_building
-    @products = team_building.page(params[:page])
+    @products = team_building_products.page(params[:page])
   end
 
   def bounties
