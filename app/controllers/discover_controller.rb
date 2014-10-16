@@ -54,6 +54,10 @@ class DiscoverController < ApplicationController
   end
 
   def interesting_products
+    unless current_user && current_user.interested_tags.present?
+      return Product.none
+    end
+
     Product.joins(wips: :tags).
       where(flagged_at: nil).
       where(state: ['greenlit', 'profitable']).

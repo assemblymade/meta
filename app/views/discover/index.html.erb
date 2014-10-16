@@ -19,15 +19,15 @@
 
   <hr>
 
-  <% if signed_in? %>
+  <% if @interesting.present? %>
 
     <br>
 
     <div class="text-center">
       <h2>Based on your interests</h2>
     </div>
-    <br>
 
+    <br>
 
     <% @interesting.each do |product| %>
       <%= render 'products/chips/greenlit', product: product %>
