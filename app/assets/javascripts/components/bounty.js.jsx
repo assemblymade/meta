@@ -69,6 +69,37 @@
       }
     },
 
+    renderWorkers: function() {
+      var bounty = this.state.bounty;
+      if(!bounty.can_update) { return }
+
+      var workers = bounty.workers.map(function(worker) {
+        return <a href={worker.url}>{worker.username}</a>
+      })
+
+      var commasLength = workers.length - 2
+      var conjunction = workers.length > 1 ? [' and '] : []
+      var breaks = Array(commasLength > 0 ? commasLength : 0).join().split(',').map(function() { return ', ' }).concat(conjunction)
+
+      var sentence = _.flatten(_.zip(workers, breaks))
+
+      var mostRecentWorker = _.max(_.map(bounty.wip_workers, function(w) { return w.created_at }))
+
+      return (
+        <div>
+          <br />
+
+          <p className="text-muted omega">
+            {sentence}
+            {' '}
+            started working on this bounty
+
+            <time className="timestamp" dateTime={mostRecentWorker}></time>.
+          </p>
+        </div>
+      )
+    },
+
     renderFlagButton: function() {
       var bounty = this.state.bounty;
       var isStaff = this.props.currentUser && this.props.currentUser.get('staff');
@@ -331,6 +362,7 @@
 
             <div className="card-body bounty-description">
               {this.renderDescription()}
+              {this.renderWorkers()}
             </div>
 
             <div className="card-footer clearfix">
