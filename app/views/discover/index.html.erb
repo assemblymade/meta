@@ -29,11 +29,7 @@
     <br>
 
 
-    <% Product.joins(:wips => :tags).where(
-      flagged_at: nil,
-      state: ['greenlit', 'profitable'],
-      wip_tags: {name: current_user.interested_tags},
-    ).limit(3).group('products.id').each do |product| %>
+    <% @interesting.each do |product| %>
       <%= render 'products/chips/greenlit', product: product %>
       <hr class="omega">
 
