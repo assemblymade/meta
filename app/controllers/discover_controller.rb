@@ -1,34 +1,21 @@
 class DiscoverController < ApplicationController
   def index
-    @profitable = Product.profitable.
-      ordered_by_trend.
-      limit(4)
-
-    @greenlit = Product.greenlit.
-      ordered_by_trend.
-      limit(20)
-
-    @team_building = Product.team_building.includes(:user).
-      ordered_by_trend.
-      limit(20)
+    @interesting = interesting_products.limit(3)
+    @profitable = profitable_products.limit(4)
+    @greenlit = greenlit_products.limit(20)
+    @team_building = team_building_products.limit(20)
   end
 
   def profitable
-    @products = Product.profitable.
-      ordered_by_trend.
-      page(params[:page])
+    @products = profitable_products.page(params[:page])
   end
 
   def greenlit
-    @products = Product.greenlit.
-      ordered_by_trend.
-      page(params[:page])
+    @products = greenlit_products.page(params[:page])
   end
 
   def team_building
-    @products = Product.team_building.
-      ordered_by_trend.
-      page(params[:page])
+    @products = team_building_products.page(params[:page])
   end
 
   def bounties
@@ -52,6 +39,34 @@ class DiscoverController < ApplicationController
       order(created_at: :desc)
 
     @page = @posts.page(params[:page])
+  end
+
+  def profitable_products
+    trendy_products.profitable
+  end
+
+  def greenlit_products
+    trendy_products.greenlit
+  end
+
+  def team_building_products
+    trendy_products.team_building.includes(:user)
+  end
+
+  def interesting_products
+    unless current_user && current_user.interested_tags.present?
+      return Product.none
+    end
+
+    Product.joins(wips: :tags).
+      where(flagged_at: nil).
+      where(state: ['greenlit', 'profitable']).
+      where(wip_tags: { name: current_user.interested_tags }).
+      group('products.id')
+  end
+
+  def trendy_products
+    Product.ordered_by_trend
   end
 
   def filters

@@ -71,7 +71,7 @@
 
     renderWorkers: function() {
       var bounty = this.state.bounty;
-      if(!bounty.can_update) { return }
+      if(!bounty.can_update || !bounty.workers.length) { return }
 
       var workers = bounty.workers.map(function(worker) {
         return <a href={worker.url}>{worker.username}</a>
@@ -79,7 +79,10 @@
 
       var commasLength = workers.length - 2
       var conjunction = workers.length > 1 ? [' and '] : []
-      var breaks = Array(commasLength > 0 ? commasLength : 0).join().split(',').map(function() { return ', ' }).concat(conjunction)
+
+      var breaks = [];
+      for(i = 0; i < commasLength; i++) { breaks.push(', '); }
+      breaks.push(conjunction)
 
       var sentence = _.flatten(_.zip(workers, breaks))
 
