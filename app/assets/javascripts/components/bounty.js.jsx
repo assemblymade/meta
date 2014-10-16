@@ -71,7 +71,7 @@
 
     renderWorkers: function() {
       var bounty = this.state.bounty;
-      if(!bounty.can_update) { return }
+      if(!bounty.can_update || !bounty.workers.length) { return }
 
       var workers = bounty.workers.map(function(worker) {
         return <a href={worker.url}>{worker.username}</a>
