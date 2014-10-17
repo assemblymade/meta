@@ -213,6 +213,8 @@ ASM::Application.routes.draw do
       resources :bounties, only: [:create] do
         resources :offers, only: [:create, :show]
       end
+
+      resources :posts, only: [:create]
       resources :projects, only: [:create]
       resources :subscribers, only: [:create, :destroy]
       resources :bounty_postings, only: [:create, :destroy]
