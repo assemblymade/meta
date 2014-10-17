@@ -44,6 +44,7 @@
               <TableSortHeader width={150} onClick={this.handleSortToggled('created_at')} asc={this.sortOrder('created_at')} label="Created" />
               <TableSortHeader width={150} onClick={this.handleSortToggled('last_activity_at')} asc={this.sortOrder('last_activity_at')} label="Updated" />
               <TableSortHeader width={150} onClick={this.handleSortToggled('watchings_count')} asc={this.sortOrder('watchings_count')} label="Followers" align="right" />
+              <TableSortHeader width={150} onClick={this.handleSortToggled('open_tasks_count')} asc={this.sortOrder('open_tasks_count')} label="Open Tasks" align="right" />
               <TableSortHeader width={150} onClick={this.handleSortToggled('state')} asc={this.sortOrder('state')} label="State" />
               <TableSortHeader width={150} onClick={this.handleSortToggled('quality')} asc={this.sortOrder('quality')} label="Quality Score" align="right" />
             </tr>
@@ -161,6 +162,7 @@
         <td><Timestamp time={this.props.created} /></td>
         <td><Timestamp time={this.props.last_activity_at} /></td>
         <td className="text-right">{this.props.watchings_count}</td>
+        <td className="text-right">{this.props.open_tasks_count}</td>
         <td><ProductState state={this.state.state} url={'/admin/products/' + this.props.id} /></td>
         <td className="text-right">
           <input type="text" className="form-control" value={this.state.dirty ? this.state.pendingQualityScore : this.props.quality} style={{'background-color': bgColor}}
