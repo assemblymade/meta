@@ -104,7 +104,7 @@ namespace :metrics do
   desc "Monthly Total Winnings - Actual work accepted & won"
   task :mtw => :environment do
     data = by_month do |date|
-      total = Task.joins(winning_event: :user).where('users.is_staff is false').where("closed_at >= date(?) and closed_at <= date(?)", date.beginning_of_month, date.end_of_month).won.size
+      total = Award.joins(:winner).where('users.is_staff is false').where("awards.created_at >= date(?) and awards.created_at <= date(?)", date.beginning_of_month, date.end_of_month).count
       [Date::MONTHNAMES[date.month], total]
     end
     data.each do |month, total|
@@ -115,7 +115,7 @@ namespace :metrics do
   desc "Monthly Products Developed - Products being worked on"
   task :mpd => :environment do
     data = by_month do |date|
-      total = Task.joins(winning_event: :user).where('users.is_staff is false').where("closed_at >= date(?) and closed_at <= date(?)", date.beginning_of_month, date.end_of_month).won.collect(&:product_id).uniq.size
+      total = Award.joins(:winner).where('users.is_staff is false').where("awards.created_at >= date(?) and awards.created_at <= date(?)", date.beginning_of_month, date.end_of_month).won.collect(&:product_id).uniq.size
       [Date::MONTHNAMES[date.month], total]
     end
     data.each do |month, total|
@@ -138,7 +138,7 @@ namespace :metrics do
 
   def by_month
     data = []
-    ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014", "1-apr-2014", "1-may-2014", "1-jun-2014", "1-jul-2014", "1-aug-2014"].each do |month|
+    ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014", "1-apr-2014", "1-may-2014", "1-jun-2014", "1-jul-2014", "1-aug-2014", "1-sep-2014"].each do |month|
       data << yield(Date.parse(month))
     end
     data
