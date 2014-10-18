@@ -64,6 +64,7 @@ class ProductsController < ProductController
   end
 
   def show
+    return redirect_to(about_url) if @product.meta?
     @user_metrics = UserMetricsSummary.new(@product, Date.today - 1.day)
 
     page_views = TimedSet.new($redis, "#{@product.id}:show")

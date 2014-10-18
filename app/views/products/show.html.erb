@@ -125,12 +125,6 @@
     <% end %>
 
     <div class="border rounded-top rounded-bottom mb4">
-      <% if false # @product.homepage_url.present? %>
-        <a href="<%= @product.homepage_url %>" target="_blank">
-          <%= @product.homepage_url %>
-        </a>
-      <% end %>
-
       <% if @product.chat_rooms.any? %>
         <% chat_room = @product.chat_rooms.first %>
         <a class="block p2 px3 gray border-bottom" href="<%= chat_room_path(chat_room) %>">
