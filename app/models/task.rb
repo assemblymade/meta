@@ -8,6 +8,7 @@ class Task < Wip
   has_many :wip_workers, class_name: 'Wip::Worker', foreign_key: 'wip_id', inverse_of: :wip
   has_many :votes, :as => :voteable, :after_add => :vote_added
   has_many :workers, :through => :wip_workers, :source => :user
+  has_many :news_feed_items, as: :target
 
   validate :multiplier_not_changed
 

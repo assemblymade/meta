@@ -214,7 +214,7 @@ ASM::Application.routes.draw do
         resources :offers, only: [:create, :show]
       end
 
-      resources :posts, only: [:create]
+      resources :activities, controller: 'news_feed_items', only: [:create]
       resources :projects, only: [:create]
       resources :subscribers, only: [:create, :destroy]
       resources :bounty_postings, only: [:create, :destroy]
@@ -285,6 +285,8 @@ ASM::Application.routes.draw do
       patch :close, on: :member
       resources :comments, only: [:show, :create, :edit, :update]
     end
+
+    resources :news_feed_items, only: [:index]
 
     resources :repositories, only: [:index, :create, :destroy], as: :repos
 

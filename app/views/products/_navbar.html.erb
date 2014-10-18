@@ -11,6 +11,13 @@
 
   <li class="<%= nav_active_class(:updates) %>">
     <a href="<%= product_posts_path(product) %>">
+      <span class="icon icon-pin icon-left"></span>
+      Posts
+    </a>
+  </li>
+
+  <li class="<%= nav_active_class(:activity) %>">
+    <a href="<%= product_news_feed_items_path(product) %>">
       <span class="icon icon-graph icon-left"></span>
       Activity
     </a>

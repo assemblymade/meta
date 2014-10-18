@@ -1,5 +1,5 @@
 module Api
-  class PostsController < ApplicationController
+  class NewsFeedItemsController < ApplicationController
     respond_to :json
     after_filter :set_access_control_headers
 
@@ -8,25 +8,25 @@ module Api
     def create
       set_product_and_authenticate!
       set_user_and_authenticate!
-      #%B %d, %Y at %M:%S
-      new_params = post_params.merge(title: "#{post_params[:title]} on #{Time.now.strftime('%B %d, %Y, at %T')}" )
 
-      @post = @product.posts.new(new_params)
-      @post.author = @user
+      @item = @product.news_feed_items.new(
+        source_id: @user.id,
+        message: message,
+      )
 
-      if @post.save
+      if @item.save
         publish!
       end
 
-      respond_with @post, status: 201, location: product_post_url(@product, @post)
+      respond_with @item, status: 201, location: api_product_activities_url(@product)
     end
 
     private
 
     def publish!
-      Activities::Post.publish!(
-        actor: @post.author,
-        subject: @post,
+      Activities::NewsFeedItem.publish!(
+        actor: @user,
+        subject: @item,
         target: @product
       )
     end
@@ -43,12 +43,16 @@ module Api
     def set_user_and_authenticate!
       unless @user = User.find_by(authentication_token: params[:user_token])
         response = { status: 401, message: "Invalid user token" }
-        respond_with response, status: 401
+        respond_with response, status: 401, location: api_product_activities_url(@product)
       end
     end
 
-    def post_params
-      params.require(:post).permit(:title, :body)
+    def message
+      news_feed_item_params[:message]
+    end
+
+    def news_feed_item_params
+      params.require(:news_feed_item).permit(:message)
     end
 
     def set_access_control_headers

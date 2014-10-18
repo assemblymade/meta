@@ -1,0 +1,14 @@
+<% title 'Activity', @product.name %>
+<% activate_nav! 'activity' %>
+
+<div class="sheet-body">
+  <div class="row">
+
+    <div class="col-md-8 col-md-offset-2 col-xs-12">
+      <% @news_feed_items.each do |item| %>
+        <div data-react-class="NewsFeedItem" data-react-props="<%= item.to_json %>">
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
