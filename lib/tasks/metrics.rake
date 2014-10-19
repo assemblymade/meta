@@ -115,7 +115,13 @@ namespace :metrics do
   desc "Monthly Products Developed - Products being worked on"
   task :mpd => :environment do
     data = by_month do |date|
-      total = Award.joins(:winner).where('users.is_staff is false').where("awards.created_at >= date(?) and awards.created_at <= date(?)", date.beginning_of_month, date.end_of_month).won.collect(&:product_id).uniq.size
+      total = Award.
+        joins(:winner).
+        joins(:wip).
+        where('users.is_staff is false').
+        where("awards.created_at >= date(?) and awards.created_at <= date(?)",
+            date.beginning_of_month, date.end_of_month).
+        group('wips.product_id').count.size
       [Date::MONTHNAMES[date.month], total]
     end
     data.each do |month, total|
