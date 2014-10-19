@@ -4,8 +4,8 @@
   var CONSTANTS = require('../constants');
   var Dispatcher = require('../dispatcher');
   var TitleNotificationsCount = require('./title_notifications_count.js.jsx');
-  var DropdownNewsFeedToggler = require('./dropdown_news_feed_toggler.js.jsx');
-  var DropdownNewsFeed = require('./dropdown_news_feed.js.jsx');
+  var DropdownNotificationsToggler = require('./dropdown_notifications_toggler.js.jsx');
+  var DropdownNotifications = require('./dropdown_notifications.js.jsx');
   var ChatNotificationsToggler = require('./chat_notifications_toggler.js.jsx');
   var ChatNotifications = require('./chat_notifications.js.jsx');
   var UserNavbarDropdown = require('./user_navbar_dropdown.js.jsx');
@@ -28,13 +28,13 @@
           </li>
 
           <li className="navbar-item-muted">
-            <DropdownNewsFeedToggler
+            <DropdownNotificationsToggler
                 iconClass='icon-bell'
                 href='#stories'
                 label='Notifications' />
 
-            <DropdownNewsFeed
-                url={this.props.newsFeedPath}
+            <DropdownNotifications
+                url={this.props.notificationsPath}
                 username={this.props.user.username}
                 editUserPath={this.props.editUserPath} />
           </li>

@@ -1,15 +1,15 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
-var NewsFeedStore = require('../stores/news_feed_store');
-var NewsFeedUsersStore = require('../stores/news_feed_users_store');
-var update = require('react/lib/update');
-
 (function() {
-  var MORE_STORIES_LENGTH = 20;
-  var NF = CONSTANTS.NEWS_FEED;
+  var CONSTANTS = require('../constants');
+  var NotificationsStore = require('../stores/notifications_store');
+  var NotificationsUsersStore = require('../stores/notifications_users_store');
+  var update = require('react/lib/update');
 
-  var NewsFeedMixin = {
+  var NF = CONSTANTS.NOTIFICATIONS;
+  var MORE_STORIES_LENGTH = NF.MORE_STORIES_LENGTH;
+
+  var NotificationsMixin = {
     componentDidMount: function() {
       var target = this.refs.spinner && this.refs.spinner.getDOMNode();
       var opts = this.spinnerOptions || {
@@ -21,18 +21,18 @@ var update = require('react/lib/update');
       var spinner = this.spinner = new Spinner(opts).spin();
 
       target.appendChild(spinner.el);
-      NewsFeedStore.addChangeListener(this.getStories);
+      NotificationsStore.addChangeListener(this.getStories);
     },
 
     componentWillMount: function() {
-      this.fetchNewsFeed();
+      this.fetchNotifications();
 
       this.onPush(function() {
-        this.fetchNewsFeed();
+        this.fetchNotifications();
       }.bind(this));
     },
 
-    fetchNewsFeed: _.debounce(function() {
+    fetchNotifications: _.debounce(function() {
       Dispatcher.dispatch({
         action: NF.ACTIONS.FETCH_STORIES,
         data: this.props.url
@@ -49,11 +49,11 @@ var update = require('react/lib/update');
     getStories: function() {
       var self = this;
       var oldStoriesCount = this.state.stories && this.state.stories.length;
-      var newStories = NewsFeedStore.getStories();
+      var newStories = NotificationsStore.getStories();
 
       this.setState({
         stories: newStories,
-        actors: NewsFeedUsersStore.getUsers(),
+        actors: NotificationsUsersStore.getUsers(),
         showMore: (newStories.length - oldStoriesCount === MORE_STORIES_LENGTH)
       }, reconcileStoriesAndSpinner.bind(this));
     },
@@ -76,10 +76,10 @@ var update = require('react/lib/update');
   };
 
   if (typeof module !== 'undefined') {
-    module.exports = NewsFeedMixin;
+    module.exports = NotificationsMixin;
   }
 
-  window.NewsFeedMixin = NewsFeedMixin;
+  window.NotificationsMixin = NotificationsMixin;
 
   function reconcileStoriesAndSpinner() {
     if (this.state.stories) {

@@ -33,14 +33,21 @@
       }
     },
 
-    NEWS_FEED: {
+    NEWS_FEED_ITEM: {
       ACTIONS: {
-        ACKNOWLEDGE: 'newsFeed:acknowledge',
-        FETCH_STORIES: 'newsFeed:fetchStories',
-        FETCH_MORE_STORIES: 'newsFeed:fetchMoreStories',
-        MARK_AS_READ: 'newsFeed:markAsRead',
-        MARK_ALL_AS_READ: 'newsFeed:markAllAsRead',
-        MARK_STORY_AS_READ: 'newsFeed:markStoryAsRead'
+        CONFIRM_COMMENT: 'confirmComment',
+        OPTIMISTICALLY_ADD_COMMENT: 'optimisticallyAddComment'
+      }
+    },
+
+    NOTIFICATIONS: {
+      ACTIONS: {
+        ACKNOWLEDGE: 'notifications:acknowledge',
+        FETCH_STORIES: 'notifications:fetchStories',
+        FETCH_MORE_STORIES: 'notifications:fetchMoreStories',
+        MARK_AS_READ: 'notifications:markAsRead',
+        MARK_ALL_AS_READ: 'notifications:markAllAsRead',
+        MARK_STORY_AS_READ: 'notifications:markStoryAsRead'
       },
       MORE_STORIES_LENGTH: 20
     },

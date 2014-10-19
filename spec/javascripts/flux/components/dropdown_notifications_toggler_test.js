@@ -1,19 +1,19 @@
 /** @jsx React.DOM */
 
-jest.dontMock(pathToFile('components/dropdown_news_feed_toggler.js.jsx'));
+jest.dontMock(pathToFile('components/dropdown_notifications_toggler.js.jsx'));
 jest.dontMock(pathToFile('mixins/dropdown_toggler.js.jsx'));
 jest.dontMock(pathToFile('mixins/local_storage'));
 
-describe('DropdownNewsFeedToggler', function() {
+describe('DropdownNotificationsToggler', function() {
   global.moment = require.requireActual('moment');
   global.document.title = 'testing123';
 
   var Dispatcher = require(pathToFile('dispatcher'));
-  var NewsFeedStore = require(pathToFile('stores/news_feed_store'));
+  var NotificationsStore = require(pathToFile('stores/notifications_store'));
   var CONSTANTS = require.requireActual(pathToFile('constants'));
-  var Toggler = require(pathToFile('components/dropdown_news_feed_toggler.js.jsx'));
+  var Toggler = require(pathToFile('components/dropdown_notifications_toggler.js.jsx'));
 
-  var NF = CONSTANTS.NEWS_FEED;
+  var NF = CONSTANTS.NOTIFICATIONS;
   var toggler;
 
   beforeEach(function() {
@@ -28,10 +28,10 @@ describe('DropdownNewsFeedToggler', function() {
     it('stores and dispatches an acknowledgment', function() {
       toggler.acknowledge();
 
-      expect(localStorage.newsFeedAck).toBeCloseTo(moment().unix(), 2);
+      expect(localStorage.notificationsAck).toBeCloseTo(moment().unix(), 2);
       expect(Dispatcher.dispatch).toBeCalledWith({
         action: NF.ACTIONS.ACKNOWLEDGE,
-        data: localStorage.newsFeedAck,
+        data: localStorage.notificationsAck,
         sync: true
       });
     });
@@ -39,7 +39,7 @@ describe('DropdownNewsFeedToggler', function() {
 
   describe('badge()', function() {
     beforeEach(function() {
-      NewsFeedStore.getUnreadCount.mockReturnValueOnce(2);
+      NotificationsStore.getUnreadCount.mockReturnValueOnce(2);
 
       // don't use the above-defined toggler
       badgedToggler = TestUtils.renderIntoDocument(
@@ -61,18 +61,18 @@ describe('DropdownNewsFeedToggler', function() {
   });
 
   describe('badgeCount()', function() {
-    it('gets the unread count after toggler.state.acknowledgedAt from the NewsFeedStore', function() {
+    it('gets the unread count after toggler.state.acknowledgedAt from the NotificationsStore', function() {
       toggler.badgeCount();
 
-      expect(NewsFeedStore.getUnreadCount).toBeCalledWith(0);
+      expect(NotificationsStore.getUnreadCount).toBeCalledWith(0);
     });
   });
 
   describe('componentWillMount()', function() {
-    it('registers a change listener on the NewsFeedStore', function() {
+    it('registers a change listener on the NotificationsStore', function() {
       toggler.componentWillMount();
 
-      expect(NewsFeedStore.addChangeListener).toBeCalledWith(toggler.getStories);
+      expect(NotificationsStore.addChangeListener).toBeCalledWith(toggler.getStories);
     });
   });
 
@@ -90,10 +90,10 @@ describe('DropdownNewsFeedToggler', function() {
   });
 
   describe('getStories()', function() {
-    it('gets the stories from the NewsFeedStore', function() {
+    it('gets the stories from the NotificationsStore', function() {
       toggler.getStories();
 
-      expect(NewsFeedStore.getStories).toBeCalled();
+      expect(NotificationsStore.getStories).toBeCalled();
     });
   });
 

@@ -3,15 +3,15 @@
 var CONSTANTS = require('../constants');
 var Dispatcher = require('../dispatcher');
 var EventMixin = require('../mixins/event.js.jsx');
-var NewsFeedMixin = require('../mixins/news_feed.js.jsx');
-var NewsFeedStore = require('../stores/news_feed_store');
+var NotificationsMixin = require('../mixins/notifications.js.jsx');
+var NotificationsStore = require('../stores/notifications_store');
 var Avatar = require('./avatar.js.jsx');
 
 (function() {
-  var NF = CONSTANTS.NEWS_FEED;
+  var NF = CONSTANTS.NOTIFICATIONS;
 
-  var FullPageNewsFeed = React.createClass({
-    mixins: [NewsFeedMixin],
+  var FullPageNotifications = React.createClass({
+    mixins: [NotificationsMixin],
 
     getDefaultProps: function() {
       return {
@@ -229,8 +229,8 @@ var Avatar = require('./avatar.js.jsx');
   });
 
   if (typeof module !== 'undefined') {
-    module.exports = FullPageNewsFeed;
+    module.exports = FullPageNotifications;
   }
 
-  window.FullPageNewsFeed = FullPageNewsFeed;
+  window.FullPageNotifications = FullPageNotifications;
 })();

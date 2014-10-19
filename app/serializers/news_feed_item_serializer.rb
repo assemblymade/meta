@@ -1,10 +1,10 @@
 class NewsFeedItemSerializer < ApplicationSerializer
-  attributes :message
+  attributes :message, :url
 
   has_one :product
   has_one :target
   has_one :user
-  has_many :news_feed_item_comments
+  has_many :news_feed_item_comments, serializer: NewsFeedItemCommentSerializer
 
   def message
     object.message
@@ -16,6 +16,10 @@ class NewsFeedItemSerializer < ApplicationSerializer
 
   def target
     object.target_type.try(:constantize).try(:find, object.target_id)
+  end
+
+  def url
+    product_activity_path(product, object.number)
   end
 
   def user

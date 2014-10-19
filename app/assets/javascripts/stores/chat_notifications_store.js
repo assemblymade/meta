@@ -2,7 +2,7 @@ var xhr = require('../xhr');
 var merge = require('react/lib/merge');
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
-var NotificationsMixin = require('../mixins/notifications');
+var ReadTimesMixin = require('../mixins/read_times');
 
 (function() {
   var _chatRooms = {};
@@ -10,7 +10,7 @@ var NotificationsMixin = require('../mixins/notifications');
   var _optimisticChatRooms = {};
   var _store = Object.create(Store);
 
-  var _notificationsStore = _.extend(_store, NotificationsMixin, {
+  var _notificationsStore = _.extend(_store, ReadTimesMixin, {
     'chat:acknowledge': this.noop,
 
     'chat:markRoomAsRead': function(payload) {
