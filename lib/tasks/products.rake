@@ -8,7 +8,7 @@ namespace :products do
   task :assign_key_pairs => :environment do
     Product.find_each do |product|
       if product.wallet_public_address.nil?
-        AssignBitcoinKeyPairWorker.new.perform(product.to_global_id)
+        assign_key_pair!(product)
       end
     end
   end

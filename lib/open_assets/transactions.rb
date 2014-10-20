@@ -48,6 +48,8 @@ module OpenAssets
         initial_coins: total_coins.to_s
       }
 
+      puts "Forging #{total_coins}  #{product.name} Coins for #{product.wallet_public_address}"
+
       remote = OpenAssets::Remote.new("https://coins.assembly.com")
       end_url="v1/colors"
       remote.post end_url, body.to_json
@@ -74,6 +76,22 @@ module OpenAssets
 
     def transfer_coins(giver_user_id, receiver_user_id, coins, product_id)
 
+      sender = User.find(giver_user_id)
+      receiver = User.find(receiver_user_id)
+
+      issuing_address = Product.find(product_id).wallet_public_address
+      from_public_address = User.find(giver_user_id).wallet_public_address
+      from_private_key = User.fi
+      to_public_address = User.find(receiver_user_id).wallet_public_address
+
+    end
+
+    def get_btc_pair()
+      url = "https://coins.assembly.com"
+      remote = OpenAssets::Remote.new(url)
+      end_url="/v1/addresses"
+
+      pair = remote.get end_url
     end
 
   end

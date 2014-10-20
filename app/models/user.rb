@@ -122,10 +122,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def assign_key_pair!
-    AssemblyCoin::AssignBitcoinKeyPairWorker.perform_async(self.to_global_id)
-  end
-
   def has_github_account?
     !github_uid.blank?
   end
@@ -299,6 +295,27 @@ class User < ActiveRecord::Base
     end
   end
 
+  def retrieve_key_pair_sync
+    AssemblyCoin::AssignBitcoinKeyPairWorker.new.perform(
+      self.to_global_id,
+      :assign_key_pair
+    )
+  end
+
+  def retrieve_key_pair
+    AssemblyCoin::AssignBitcoinKeyPairWorker.perform_async(
+      self.to_global_id,
+      :assign_key_pair
+    )
+  end
+
+  def assign_key_pair(key_pair)
+    update!(
+      wallet_public_address: key_pair["public_address"],
+      wallet_private_key: key_pair["private_key"]
+    )
+  end
+
   private
 
   def generate_authentication_token
@@ -308,8 +325,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def assign_key_pair!
-    AssignBitcoinKeyPairWorker.perform_async(self.to_global_id)
-  end
+
 
 end

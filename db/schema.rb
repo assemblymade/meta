@@ -468,6 +468,7 @@ ActiveRecord::Schema.define(version: 20141013230132) do
     t.datetime "profitable_at"
     t.string   "state"
     t.datetime "last_checked_btc"
+    t.datetime "issued_coins"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree

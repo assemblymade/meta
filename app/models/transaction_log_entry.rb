@@ -9,6 +9,9 @@ class TransactionLogEntry < ActiveRecord::Base
   scope :validated,    -> { where(action: 'validated') }
   scope :with_cents,   -> { where.not(cents: nil) }
 
+  scope :unsynced, -> { where(queue_id: nil) }
+  scope :unsynced_by_id, -> (wallet_id){ where(wallet_id: wallet_id) }
+
   # after_commit :schedule_minter
 
   def self.balance(product, wallet_id)
