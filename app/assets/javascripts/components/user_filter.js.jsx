@@ -14,8 +14,6 @@
           </a>
 
           <ul className="dropdown-menu" role="menu">
-            <li role="presentation" className="divider"></li>
-
             <li role="presentation" className="dropdown-header">You</li>
             {this.listItems([this.props.current_user])}
 
