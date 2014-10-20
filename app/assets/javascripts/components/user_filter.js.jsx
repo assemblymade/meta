@@ -21,15 +21,6 @@
 
             <li role="presentation" className="dropdown-header">Core Team</li>
             {this.listItems(this.props.core_team)}
-            <li>
-              <a href={this.props.buildUrl({ user: current_user })} role="menuitem" tabIndex="-1">
-                <Avatar user={current_user} />
-                {' '}
-                <span>@{current_user.username}</span>
-                {' '}
-                <span className="text-muted">{current_user.name}</span>
-              </a>
-            </li>
           </ul>
         </li>
       )
@@ -37,8 +28,10 @@
 
     listItems: function(users) {
       return users.map(function(user) {
+        selected = user.id == this.props.selected_user_id
+
         return (
-          <li key={user.id}>
+          <li className={selected ? 'active' : ''} key={user.id}>
             <a href={this.props.buildUrl({ user: user })} role="menuitem" tabIndex="-1">
               <Avatar user={user} />
               {' '}

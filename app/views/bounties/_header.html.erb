@@ -47,9 +47,9 @@
     selected_state: params[:state],
     selected_tag: params[:tag],
     selected_sort: params[:sort],
-    selected_user: @selected_user,
-    current_user: current_user,
-    core_team: @product.core_team - [current_user],
+    selected_user_id: @selected_user.id,
+    current_user: UserSerializer.new(current_user),
+    core_team: ActiveModel::ArraySerializer.new(@product.core_team.reject { |c| c.id == current_user.id }),
     url: product_tasks_path(@product)
   }.to_json %>"></div>
 </div>

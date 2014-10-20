@@ -19,7 +19,7 @@
     },
 
     clearFilters: function() {
-      if(this.props.selected_user || this.props.selected_tag || this.props.selected_sort) {
+      if(this.props.selected_user_id || this.props.selected_tag || this.props.selected_sort) {
         return (
           <li>
             <a href={this.props.url} className="btn btn-default">
@@ -35,8 +35,7 @@
 
       var query = _.compact(_.map(['state', 'tag', 'sort', 'user_id'], function(query) {
         if(query == 'user_id') {
-          var user = options['user'] || this.props['selected_user']
-          var value = user && user.id
+          var value = options['user'] && options['user'].id || this.props['selected_user_id']
         } else {
           var value = options[query] || this.props['selected_' + query]
         }
