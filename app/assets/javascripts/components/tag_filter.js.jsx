@@ -7,6 +7,7 @@
         <li className="dropdown">
           <a className="dropdown-toggle" type="button" data-toggle="dropdown" href="#">
             Tag
+            {' '}
             <span className="caret"></span>
           </a>
 

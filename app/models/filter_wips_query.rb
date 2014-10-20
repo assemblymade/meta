@@ -27,7 +27,7 @@ class FilterWipsQuery
 
   def filter_clauses
     [state_filter, deliverable_filter, project_filter, tag_filter, sort_order,
-     page_selection, user_filter].compact
+     page_selection, user_filter, user_id_filter].compact
   end
 
   def state_filter
@@ -64,6 +64,12 @@ class FilterWipsQuery
     else # all
       Wip.all
     end
+  end
+
+  def user_id_filter
+    Wip.joins(:events).
+      where(events: { user_id: user_id_params }).
+      uniq
   end
 
   def deliverable_filter
@@ -148,5 +154,9 @@ class FilterWipsQuery
 
   def user_params
     filters[:user]
+  end
+
+  def user_id_params
+    filters[:user_id]
   end
 end

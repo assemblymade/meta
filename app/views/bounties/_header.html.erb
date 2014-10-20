@@ -1,16 +1,5 @@
-<div class="sub-thingy">
-  <div class="pull-right" data-react-class="BountyFilters" data-react-props="<%= {
-    tags: Wip::Tag.suggested_tags,
-    product: { slug: @product.slug },
-    selected_state: params[:state],
-    selected_tag: params[:tag],
-    selected_sort: params[:sort],
-    selected_user: @selected_user,
-    defaultUsers: [current_user],
-    url: product_tasks_path(@product)
-  }.to_json %>"></div>
-
-  <ul class="nav nav-pills">
+<div class="sub-thingy clearfix">
+  <ul class="nav nav-pills pull-left">
     <li class="<%= 'active' if params[:state].blank? || params[:state] == 'open' %>">
       <a href="<%= scoped_product_bounties_path(@product, state: 'open') %>">
         Todo
@@ -51,4 +40,16 @@
       </a>
     </li>
   </ul>
+
+  <div class="pull-right" data-react-class="BountyFilters" data-react-props="<%= {
+    tags: Wip::Tag.suggested_tags,
+    product: { slug: @product.slug },
+    selected_state: params[:state],
+    selected_tag: params[:tag],
+    selected_sort: params[:sort],
+    selected_user: @selected_user,
+    current_user: current_user,
+    core_team: @product.core_team - [current_user],
+    url: product_tasks_path(@product)
+  }.to_json %>"></div>
 </div>

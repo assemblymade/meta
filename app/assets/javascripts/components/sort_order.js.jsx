@@ -7,6 +7,7 @@
         <li className="dropdown">
           <a className="dropdown-toggle" type="button" data-toggle="dropdown" href="#">
             Order
+            {' '}
             <span className="caret"></span>
           </a>
 
