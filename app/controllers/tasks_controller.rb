@@ -71,7 +71,7 @@ class TasksController < WipsController
     @milestones = @product.milestones.open
     @auto_tip_contracts = @product.auto_tip_contracts.active
     @featured_bounties = @product.bounty_postings
-    @selected_user = User.find_by(id: params[:user])
+    @selected_user = User.find_by(id: params[:user]) if params[:user].present?
 
     respond_to do |format|
       format.html do
