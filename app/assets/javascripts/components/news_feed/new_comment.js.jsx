@@ -2,25 +2,14 @@
 
 (function() {
   var CONSTANTS = require('../../constants').NEWS_FEED_ITEM;
-  var NewsFeedItemStore = require('../../stores/news_feed_item_store');
   var xhr = require('../../xhr');
   var ENTER = 13;
 
   var NewsFeedItemNewComment = React.createClass({
-    componentDidMount: function() {
-      NewsFeedItemStore.addChangeListener(this.getNewsFeedItemComments);
-    },
-
     getInitialState: function() {
       return {
         comment: ''
       }
-    },
-
-    getNewsFeedItemComments: function() {
-      var comments = NewsFeedItemStore.getComments();
-
-      console.log(comments);
     },
 
     onChange: function(e) {
@@ -40,7 +29,7 @@
 
     render: function() {
       return (
-        <div className="row new-comment">
+        <div className="row">
           <div className="col-md-1 hidden-sm hidden-xs">
             <Avatar user={window.app.currentUser().attributes} size={32} />
           </div>
@@ -59,13 +48,24 @@
 
     submitComment: function() {
       var comment = this.state.comment;
+      var thread = this.props.thread;
+      var createdAt = Date.now();
 
       if (comment.length >= 2) {
-        xhr.post(this.props.url, { body: comment }, _confirmComment);
+        xhr.post(this.props.url, { body: comment }, _confirmComment(thread, createdAt));
 
         Dispatcher.dispatch({
           action: CONSTANTS.ACTIONS.OPTIMISTICALLY_ADD_COMMENT,
-          data: comment
+          data: {
+            body: comment,
+            created_at: createdAt,
+            news_feed_item_id: thread,
+            user: window.app.currentUser().attributes
+          }
+        });
+
+        this.setState({
+          comment: ''
         });
       }
     }
@@ -75,11 +75,16 @@
     module.exports = NewsFeedItemNewComment;
   }
 
-  function _confirmComment(err, data) {
-    if (err) {
-      return console.error(err);
-    }
+  function _confirmComment(thread, timestamp) {
+    return function (err, data) {
+      if (err) {
+        return console.error(err);
+      }
 
-    console.log(data);
+      Dispatcher.dispatch({
+        action: CONSTANTS.ACTIONS.CONFIRM_COMMENT,
+        data: { thread: thread, timestamp: timestamp }
+      });
+    };
   }
 })();

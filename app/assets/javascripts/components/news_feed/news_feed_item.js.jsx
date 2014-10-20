@@ -34,8 +34,7 @@
             {this.body()}
           </div>
           <NewsFeedItemComments
-            url={this.props.url}
-            comments={this.props.news_feed_item_comments} />
+            item={this.props} />
         </div>
       );
     },
@@ -58,7 +57,6 @@
     },
 
     renderWithoutTarget: function() {
-      console.log(this.props);
       return (
         <div className="card-body">
           {this.header()}

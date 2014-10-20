@@ -10,7 +10,15 @@
   };
 
   var NewsFeedItemStore = _.extend(_store, {
+    getComments: function(thread) {
+      var optimistic = comments.optimistic[thread] || [];
+      var confirmed = comments.confirmed[thread] || [];
 
+      return {
+        optimistic: optimistic,
+        confirmed: confirmed
+      };
+    }
   });
 
   NewsFeedItemStore.dispatchIndex = Dispatcher.register(function(payload) {
@@ -29,12 +37,41 @@
     }
   });
 
-  function confirmComment(comment) {
-    console.log(comment);
+  function confirmComment(data) {
+    var thread = data.thread;
+    var timestamp = data.timestamp;
+
+    var optimisticThread = comments.optimistic[thread] || [];
+
+    var optimisticComment;
+    for (var i = 0, l = optimisticThread.length; i < l; i++) {
+      if (optimisticThread[i].created_at === timestamp) {
+        optimisticComment = optimisticThread[i];
+        optimisticThread = optimisticThread.splice(i, 1);
+      }
+    }
+
+    if (optimisticComment) {
+      if (comments.confirmed[thread]) {
+        comments.confirmed[thread].push(optimisticComment);
+      } else {
+        comments.confirmed[thread] = [optimisticComment];
+      }
+    }
+
+    NewsFeedItemStore.emitChange();
+
+    comments.confirmed[thread] = [];
   }
 
   function optimisticallyAddComment(comment) {
-    console.log(comment);
+    if (comments.optimistic[comment.news_feed_item_id]) {
+      comments.optimistic[comment.news_feed_item_id].push(comment);
+    } else {
+      comments.optimistic[comment.news_feed_item_id] = [comment]
+    }
+
+    NewsFeedItemStore.emitChange();
   }
 
   if (typeof module !== 'undefined') {
