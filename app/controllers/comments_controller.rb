@@ -28,6 +28,9 @@ class CommentsController < ProductController
           socket_id: params[:socket_id]
         )
 
+        # FIXME: (pletcher) There's gotta be a better way to do this
+        publish_to_news_feed
+
         @product.auto_watch!(current_user)
         @event.notify_users!(@wip.followers)
       end
@@ -79,6 +82,15 @@ class CommentsController < ProductController
       AsmMetrics.product_enhancement
       AsmMetrics.active_user(current_user)
       AsmMetrics.active_builder(current_user)
+    end
+  end
+
+  def publish_to_news_feed
+    if news_feed_item = NewsFeedItem.find_by(target: @wip)
+      news_feed_item.news_feed_item_comments.create(
+        user_id: @event.user.id,
+        body: comment_params[:body]
+      )
     end
   end
 

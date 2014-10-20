@@ -11,6 +11,8 @@ class NewsFeedItemCommentsController < ProductController
       body: params[:body]
     )
 
+    @news_feed_item.update(updated_at: Time.now)
+
     forward_comment
 
     respond_with @item, location: product_activities_url(@product)
