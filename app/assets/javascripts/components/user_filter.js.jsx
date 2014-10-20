@@ -14,16 +14,22 @@
           </a>
 
           <ul className="dropdown-menu" role="menu">
-            <li role="presentation" className="dropdown-header">You</li>
-            {this.listItems([this.props.current_user])}
-
-            <li role="presentation" className="divider"></li>
-
+            {this.currentUserList()}
             <li role="presentation" className="dropdown-header">Core Team</li>
             {this.listItems(this.props.core_team)}
           </ul>
         </li>
       )
+    },
+
+    currentUserList: function() {
+      if(this.props.current_user) {
+        return [
+          <li role="presentation" className="dropdown-header">You</li>,
+          this.listItems([this.props.current_user]),
+          <li role="presentation" className="divider"></li>
+        ]
+      }
     },
 
     listItems: function(users) {

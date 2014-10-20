@@ -43,13 +43,12 @@
 
   <div class="pull-right" data-react-class="BountyFilters" data-react-props="<%= {
     tags: Wip::Tag.suggested_tags,
-    product: { slug: @product.slug },
     selected_state: params[:state],
     selected_tag: params[:tag],
     selected_sort: params[:sort],
     selected_user_id: @selected_user && @selected_user.id,
     current_user: UserSerializer.new(current_user),
-    core_team: ActiveModel::ArraySerializer.new(@product.core_team.reject { |c| c.id == current_user && current_user.id }),
+    core_team: ActiveModel::ArraySerializer.new(@core_team),
     url: product_tasks_path(@product)
   }.to_json %>"></div>
 </div>
