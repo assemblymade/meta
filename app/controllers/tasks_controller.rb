@@ -72,7 +72,7 @@ class TasksController < WipsController
     @auto_tip_contracts = @product.auto_tip_contracts.active
     @featured_bounties = @product.bounty_postings
     @selected_user = User.find_by(id: params[:user_id]) if params[:user_id].present?
-    @core_team = @product.core_team.reject { |u| u.id == current_user.id }
+    @core_team = @product.core_team.reject { |u| u.id == current_user && current_user.id }
 
     respond_to do |format|
       format.html do
