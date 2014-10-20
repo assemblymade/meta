@@ -69,6 +69,40 @@
       }
     },
 
+    renderWorkers: function() {
+      var bounty = this.state.bounty;
+      if(!bounty.can_update || !bounty.workers.length) { return }
+
+      var workers = bounty.workers.map(function(worker) {
+        return <a href={worker.url}>{worker.username}</a>
+      })
+
+      var commasLength = workers.length - 2
+      var conjunction = workers.length > 1 ? [' and '] : []
+
+      var breaks = [];
+      for(i = 0; i < commasLength; i++) { breaks.push(', '); }
+      breaks.push(conjunction)
+
+      var sentence = _.flatten(_.zip(workers, breaks))
+
+      var mostRecentWorker = _.max(_.map(bounty.wip_workers, function(w) { return w.created_at }))
+
+      return (
+        <div>
+          <br />
+
+          <p className="text-muted omega">
+            {sentence}
+            {' '}
+            started working on this bounty
+
+            <time className="timestamp" dateTime={mostRecentWorker}></time>.
+          </p>
+        </div>
+      )
+    },
+
     renderFlagButton: function() {
       var bounty = this.state.bounty;
       var isStaff = this.props.currentUser && this.props.currentUser.get('staff');
@@ -155,6 +189,12 @@
 
     renderStartWorkButton: function() {
       var bounty = this.state.bounty;
+      var closed = bounty.state == 'resolved' || bounty.state == 'closed'
+
+      if(closed) {
+        return;
+      }
+
       var currentUserId = this.props.currentUser && this.props.currentUser.get('id');
       var isWorking = !!_.find(bounty.workers, function(worker) { return worker.id == currentUserId });
 
@@ -212,6 +252,12 @@
 
     renderSubmitWorkButton: function() {
       var bounty = this.state.bounty;
+      var closed = bounty.state == 'resolved' || bounty.state == 'closed'
+
+      if(closed) {
+        return;
+      }
+
       var currentUserId = this.props.currentUser && this.props.currentUser.get('id');
       var isWorking = !!_.find(bounty.workers, function(worker) { return worker.id == currentUserId });
 
@@ -227,8 +273,31 @@
       }
     },
 
+    renderClosedNotice: function() {
+      var bounty = this.state.bounty;
+      var closed = bounty.state == 'resolved' || bounty.state == 'closed'
+
+      if(!closed) {
+        return
+      }
+
+      return (
+        <li className="omega">
+          <a href="#" className="btn btn-default disabled">
+            {bounty.state == 'resolved' ? 'Completed & Closed' : 'Closed'}
+          </a>
+        </li>
+      )
+    },
+
     renderDiscussWorkBanner: function() {
       var bounty = this.state.bounty;
+      var closed = bounty.state == 'resolved' || bounty.state == 'closed'
+
+      if(closed) {
+        return;
+      }
+
       var currentUserId = this.props.currentUser && this.props.currentUser.get('id');
       var mostRecentWorkerId = bounty.most_recent_other_wip_worker && bounty.most_recent_other_wip_worker.user_id;
 
@@ -296,6 +365,7 @@
 
             <div className="card-body bounty-description">
               {this.renderDescription()}
+              {this.renderWorkers()}
             </div>
 
             <div className="card-footer clearfix">
@@ -310,6 +380,7 @@
                 {this.renderInviteFriendButton()}
                 {this.renderStartWorkButton()}
                 {this.renderSubmitWorkButton()}
+                {this.renderClosedNotice()}
               </ul>
             </div>
           </div>

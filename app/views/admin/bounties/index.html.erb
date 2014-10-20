@@ -1,0 +1,67 @@
+<h5>Avg bounty lifespan: <%= @avg_bounty_age['avg_life'] %></h5>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2"></th>
+      <th>Global</th>
+      <th>Core</th>
+      <th>Staff</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>start week</th>
+      <th>weekly</th>
+      <!-- <th>bi-weekly</th> -->
+      <th>weekly</th>
+      <!-- <th>bi-weekly</th> -->
+      <th>weekly</th>
+      <!-- <th>bi-weekly</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="6">Created (count)</td>
+      <% @created_counts.shift.each do |c| %>
+        <td><%= c.respond_to?(:strftime) ? c.strftime('%b %d, %y') : c %></td>
+      <% end %>
+    </tr>
+    <% @created_counts.each do |cc| %>
+      <tr>
+        <% cc.each do |c| %>
+          <td><%= c.respond_to?(:strftime) ? c.strftime('%b %d, %y') : c %></td>
+        <% end %>
+      </tr>
+    <% end %>
+    <tr>
+      <td rowspan="6">Awarded/Created (ratio)</td>
+      <% @awarded_counts.shift.each do |c| %>
+        <td><%= c.respond_to?(:strftime) ? c.strftime('%b %d, %y') : c %></td>
+      <% end %>
+    </tr>
+
+    <% @awarded_counts.each_with_index do |cc| %>
+      <tr>
+        <% cc.each do |c| %>
+          <td><%= c.respond_to?(:strftime) ? c.strftime('%b %d, %y') : c %></td>
+        <% end %>
+      </tr>
+    <% end %>
+    <tr>
+      <td rowspan="6">Closed/Created (ratio)</td>
+      <% @closed_counts.shift.each do |c| %>
+        <td><%= c.respond_to?(:strftime) ? c.strftime('%b %d, %y') : c %></td>
+      <% end %>
+    </tr>
+
+    <% @closed_counts.each do |cc| %>
+      <tr>
+        <% cc.each do |c| %>
+          <td><%= c.respond_to?(:strftime) ? c.strftime('%b %d, %y') : c %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+

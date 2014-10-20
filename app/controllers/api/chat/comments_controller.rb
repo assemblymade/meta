@@ -13,6 +13,7 @@ module Api
         if @event.valid?
           if product = @chat_room.product
             @event.notify_users!(product.followers)
+            email_mentioned_users(@event)
           end
 
           @activity = Activities::Chat.publish!(
@@ -38,6 +39,13 @@ module Api
         end
       end
 
+      def email_mentioned_users(event)
+        (event.mentioned_users - [event.user]).each do |mentioned_user|
+          EmailLog.send_once mentioned_user.id, event.id do
+            ChatMailer.delay(queue: 'mailer').mentioned_in_chat(mentioned_user.id, event.id)
+          end
+        end
+      end
     end
   end
 end

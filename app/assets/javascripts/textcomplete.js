@@ -36,7 +36,7 @@ $.applyTextcomplete = function($element) {
 
         if(detail) {
           templateString.push('<span class="text-muted">');
-          templateString.push(_.escape(detail));
+          templateString.push(detail);
           templateString.push('</span>');
         }
 
@@ -45,7 +45,11 @@ $.applyTextcomplete = function($element) {
     }
   ];
 
-  $element.textcomplete(strategies);
+  var options = {
+    appendTo: $('body')
+  };
+
+  $element.textcomplete(strategies, options);
 };
 
 $(document).ready(function() {

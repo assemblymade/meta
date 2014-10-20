@@ -7,7 +7,7 @@ class PitchWeekMailer < BaseMailer
     @application = PitchWeekApplication.find(application_id)
     @product = @application.product
 
-    mail to: 'team@assembly.com',
+    mail to: 'austin.smith@assembly.com',
       subject: "#{@product.name} was just submitted for approval"
   end
 end

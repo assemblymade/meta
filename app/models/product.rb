@@ -30,7 +30,6 @@ class Product < ActiveRecord::Base
   has_many :assets
   has_many :auto_tip_contracts
   has_many :chat_rooms
-  has_many :completed_missions
   has_many :contract_holders
   has_many :core_team, through: :core_team_memberships, source: :user
   has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
@@ -474,11 +473,6 @@ class Product < ActiveRecord::Base
 
   def update_watchings_count!
     update! watchings_count: (subscribers.count + followers.count)
-  end
-
-  # missions
-  def current_mission
-    ProductMission.next_mission_for_product(self)
   end
 
   def tags_string

@@ -15,6 +15,7 @@ class Wip < ActiveRecord::Base
   belongs_to :user
 
   has_many :comments, class_name: 'Event::Comment'
+  has_one  :chat_room
   has_many :events
   has_many :offers, inverse_of: :bounty
   has_many :milestones, through: :milestone_tasks
@@ -264,17 +265,19 @@ class Wip < ActiveRecord::Base
     Indexer.perform_async(:index, Wip.to_s, self.id)
   end
 
-  mappings dynamic: false do
-    indexes :title,  analyzer: 'snowball'
-    indexes :hidden, index: 'not_analyzed'
-    indexes :state,  index: 'not_analyzed'
+  settings NGRAM_ANALYZER do
+    mappings do
+      indexes :title,  analyzer: 'ngram_analyzer'
+      indexes :hidden, index: 'not_analyzed'
+      indexes :state,  index: 'not_analyzed'
 
-    indexes :comments do
-      indexes :sanitized_body, analyzer: 'snowball'
-    end
+      indexes :comments do
+        indexes :sanitized_body, analyzer: 'snowball'
+      end
 
-    indexes :product do
-      indexes :slug, index: 'not_analyzed'
+      indexes :product do
+        indexes :slug, index: 'not_analyzed'
+      end
     end
   end
 
@@ -338,6 +341,10 @@ class Wip < ActiveRecord::Base
 
   def track_activity
     StreamEvent.add_create_event!(actor: user, subject: self, target: product)
+  end
+
+  def chat?
+    !chat_room.nil?
   end
 
   def to_partial_path

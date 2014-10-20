@@ -12,11 +12,11 @@ module Github
     end
 
     def find_or_create_repo_team(repo)
-      find_repo_team(repo) || create_repo_team(repo)
+      find_repo_team(repo) || create_repo_team(repo) || find_repo_team(repo)
     end
 
     def find_repo_team(repo)
-      get("/repos/#{repo.full_name}/teams").find{|team| team['name'] == repo.name }
+      get("/repos/#{repo.full_name}/teams").find{|team| team['name'] == repo.name rescue false }
     end
 
     def create_repo_team(repo)
@@ -24,6 +24,8 @@ module Github
                 name: repo.name,
                 repo_names: [repo.name],
                 permission: 'push'
+
+      nil
     end
 
     def add_user_to_team(team_id, github_username)

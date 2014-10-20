@@ -1,69 +1,5 @@
-<div class="sub-thingy">
-  <ul class="nav nav-pills pull-right">
-    <li class="dropdown">
-      <a class="dropdown-toggle" type="button" data-toggle="dropdown" href="#">
-        Tags
-        <span class="caret"></span>
-      </a>
-
-      <ul class="dropdown-menu" role="menu">
-        <% Wip::Tag.suggested_tags.each do |tag| %>
-          <li class="<%= 'active' if params[:tag] == tag %>" role="presentation">
-            <a href="<%= scoped_product_bounties_path(@product, tag: tag) %>" role="menuitem" tabindex="-1" href="#">
-              <%= tag %>
-            </a>
-          </li>
-        <% end %>
-      </ul>
-    </li>
-
-    <li class="dropdown">
-      <a class="dropdown-toggle" type="button" data-toggle="dropdown" href="#">
-        Order
-        <span class="caret"></span>
-      </a>
-
-      <ul class="dropdown-menu" role="menu">
-        <li class="<%= 'active' if params[:sort] == 'priority' %>" role="presentation">
-          <a href="<%= scoped_product_bounties_path(@product, sort: 'priority') %>" role="menuitem" tabindex="-1" href="#">
-            Priority
-          </a>
-        </li>
-        <li class="<%= 'active' if params[:sort] == 'most_valuable' %>" role="presentation">
-          <a href="<%= scoped_product_bounties_path(@product, sort: 'most_valuable') %>" role="menuitem" tabindex="-1" href="#">
-            Most valuable
-          </a>
-        </li>
-        <li class="<%= 'active' if params[:sort] == 'least_valuable' %>" role="presentation">
-          <a href="<%= scoped_product_bounties_path(@product, sort: 'least_valuable') %>" role="menuitem" tabindex="-1" href="#">
-            Least valuable
-          </a>
-        </li>
-        <li class="<%= 'active' if params[:sort] == 'newest' %>" role="presentation">
-          <a href="<%= scoped_product_bounties_path(@product, sort: 'newest') %>" role="menuitem" tabindex="-1" href="#">
-            Newest
-          </a>
-        </li>
-        <li class="<%= 'active' if params[:sort] == 'oldest' %>" role="presentation">
-          <a href="<%= scoped_product_bounties_path(@product, sort: 'oldest') %>" role="menuitem" tabindex="-1" href="#">
-            Oldest
-          </a>
-        </li>
-        <li class="<%= 'active' if params[:sort] == 'recently_updated' %>" role="presentation">
-          <a href="<%= scoped_product_bounties_path(@product, sort: 'recently_updated') %>" role="menuitem" tabindex="-1" href="#">
-            Recently Updated
-          </a>
-        </li>
-        <li class="<%= 'active' if params[:sort] == 'least_recently_updated' %>" role="presentation">
-          <a href="<%= scoped_product_bounties_path(@product, sort: 'least_recently_updated') %>" role="menuitem" tabindex="-1" href="#">
-            Least recently updated
-          </a>
-        </li>
-      </ul>
-    </li>
-  </ul>
-
-  <ul class="nav nav-pills">
+<div class="sub-thingy clearfix">
+  <ul class="nav nav-pills pull-left">
     <li class="<%= 'active' if params[:state].blank? || params[:state] == 'open' %>">
       <a href="<%= scoped_product_bounties_path(@product, state: 'open') %>">
         Todo
@@ -104,4 +40,15 @@
       </a>
     </li>
   </ul>
+
+  <div class="pull-right" data-react-class="BountyFilters" data-react-props="<%= {
+    tags: Wip::Tag.suggested_tags,
+    selected_state: params[:state],
+    selected_tag: params[:tag],
+    selected_sort: params[:sort],
+    selected_user_id: @selected_user && @selected_user.id,
+    current_user: UserSerializer.new(current_user),
+    core_team: ActiveModel::ArraySerializer.new(@core_team),
+    url: product_tasks_path(@product)
+  }.to_json %>"></div>
 </div>

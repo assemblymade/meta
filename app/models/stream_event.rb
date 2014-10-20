@@ -31,10 +31,6 @@ class StreamEvent < ActiveRecord::Base
       create!(params.merge(verb: 'signup'))
     end
 
-    def add_mission_completed_event!(params)
-      create!(params.merge(verb: 'complete'))
-    end
-
     def add_promoted_event!(params)
       create!(params.merge(verb: 'promote'))
     end

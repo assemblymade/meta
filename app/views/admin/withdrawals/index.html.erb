@@ -4,8 +4,9 @@
       <th></th>
       <th>User</th>
       <th>Payment Option</th>
-      <th>Amount</th>
-      <th>Withhold</th>
+      <th>Total Requested</th>
+      <th>Withholding</th>
+      <th>Amount Payable</th>
       <th>Payment sent</th>
       <th></th>
     </tr>
@@ -22,6 +23,7 @@
       </td>
       <td><%= currency withdrawal.total_amount %></td>
       <td><%= currency withdrawal.amount_withheld %></td>
+      <td><%= currency withdrawal.payable_amount %></td>
       <td><%= withdrawal.payment_sent_at %></td>
       <td>
         <% if withdrawal.payment_sent_at.nil? %>

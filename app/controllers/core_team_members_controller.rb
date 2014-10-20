@@ -23,10 +23,12 @@ class CoreTeamMembersController < ProductController
       )
 
       if user.has_github_account?
-        Github::AddCollaboratorToProductRepoWorker.perform_async(
-          @product.slug,
-          user.github_login
-        )
+        (@product.repos || []).each do |repo|
+          Github::AddCollaboratorToProductRepoWorker.perform_async(
+            repo.url,
+            user.github_login
+          )
+        end
       end
     end
 

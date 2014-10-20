@@ -30,7 +30,7 @@ module Github
       end
 
       if ENV['GITHUB_PRODUCTS_ORG']
-        repo = send request_through, path, payload
+        send(request_through, path, payload)
 
         add_webhooks([ENV['GITHUB_PRODUCTS_ORG'], product.slug].join('/'))
 
@@ -40,13 +40,15 @@ module Github
           notify_core_team(product)
         end
 
-        product.repos |= [Repo::Github.new("https://github.com/#{ENV['GITHUB_PRODUCTS_ORG']}/#{repo_name}")]
+        repo = Repo::Github.new("https://github.com/#{ENV['GITHUB_PRODUCTS_ORG']}/#{repo_name}")
+
+        product.repos |= [repo]
         product.save!
 
         product.core_team.each do |user|
           if github_login = user.github_login
             Github::AddCollaboratorToProductRepoWorker.perform_async(
-              repo_name,
+              repo.url,
               github_login
             )
           end
