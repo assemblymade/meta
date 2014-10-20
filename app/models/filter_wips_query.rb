@@ -67,9 +67,11 @@ class FilterWipsQuery
   end
 
   def user_id_filter
-    Wip.joins(:events).
-      where(events: { user_id: user_id_params }).
-      uniq
+    if user_id_params.present? 
+      Wip.joins(:events).
+        where(events: { user_id: user_id_params }).
+        uniq
+    end
   end
 
   def deliverable_filter
