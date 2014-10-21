@@ -29,24 +29,25 @@
     </ul>
   </div>
 
-  <div class="center mt4 mb3">
-    <% if params[:tag].present? %>
-      <div class="h1 mt0 mb0">
-        There are
-        <strong><%= pluralize(@products.count, 'product') %></strong>
-        with a total of
-        <strong>
-          <%= pluralize(@products.map {|p| p.tasks.open.count }.sum, "#{params[:tag].titleize} Bounty") %>
-        </strong>.
-      </div>
-    <% else %>
-      <div class="h1 mt0 mb0">Find a product you'd like to work on,</div>
-      <div class="h3 mt0 mb0 mid-gray">or <a class="green" href="<%= new_product_path %>">start your own</a> that others can work on with you.</div>
-    <% end %>
-  </div>
-
   <% page_cache_key = ['discover', 'products', params[:tag], params[:sort]].compact.join('_') %>
   <% cache(page_cache_key, expires_in: 6.hours) do %>
+
+    <div class="center mt4 mb3">
+      <% if params[:tag].present? %>
+        <div class="h1 mt0 mb0">
+          There are
+          <strong><%= pluralize(@products.count, 'product') %></strong>
+          with a total of
+          <strong>
+            <% t = (params[:tag] == 'writing' ? 'copy' : params[:tag]) %>
+            <%= pluralize(@products.map {|p| p.tasks.joins(taggings: :tag).open.where(wip_tags: {name: t}).count }.sum, "#{params[:tag].titleize} Bounty") %>
+          </strong>.
+        </div>
+      <% else %>
+        <div class="h1 mt0 mb0">Find a product you'd like to work on,</div>
+        <div class="h3 mt0 mb0 mid-gray">or <a class="green" href="<%= new_product_path %>">start your own</a> that others can work on with you.</div>
+      <% end %>
+    </div>
 
     <div class="clearfix mb2 mxn3">
       <% @products.each do |product| %>
