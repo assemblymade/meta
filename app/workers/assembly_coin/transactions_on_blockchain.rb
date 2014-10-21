@@ -28,7 +28,7 @@ module AssemblyCoin
             AssemblyCoin::AwardCoins.new.perform(product_id, user.id, sumvalue)
           end
 
-          ids = TransactionLogEntry.where(wallet_id: wallet_id, product_id: product_id)
+          ids = TransactionLogEntry.where(wallet_id: wallet_id, product_id: product_id, queue_id: nil)
           ids.each do |id|
             TransactionLogEntry.find_by(id: id).update!(queue_id: Time.now.to_s)
           end
