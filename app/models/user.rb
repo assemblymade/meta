@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
 
   after_commit -> { Indexer.perform_async(:index, User.to_s, self.id) }, on: :create
-  after_commit :retrieve_key_pair_sync, on: :create
+  after_commit :retrieve_key_pair, on: :create
 
   # default users to immediate email
   MAIL_DAILY = 'daily'
@@ -303,7 +303,7 @@ class User < ActiveRecord::Base
   end
 
   def retrieve_key_pair
-    AssemblyCoin::AssignBitcoinKeyPairWorker.new.perform_async(
+    AssemblyCoin::AssignBitcoinKeyPairWorker.perform_async(
       self.to_global_id,
       :assign_key_pair
     )
