@@ -45,7 +45,7 @@
     <% end %>
   </div>
 
-  <% if true # cache(:discover_launched, expires_in: 6.hours) do %>
+  <% cache(:discover_launched, expires_in: 6.hours) do %>
 
     <div class="clearfix mb2 mxn3">
       <% @products.each do |product| %>
