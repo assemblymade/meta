@@ -1,4 +1,6 @@
 class NewsFeedItem < ActiveRecord::Base
+  include Kaminari::ActiveRecordModelExtension
+  
   belongs_to :target, polymorphic: true
   belongs_to :product
   has_many :news_feed_item_comments

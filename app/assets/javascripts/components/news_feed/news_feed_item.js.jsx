@@ -27,14 +27,24 @@
       );
     },
 
+    product: function() {
+      return (
+        <div className="icon-right pull-right">
+          <a href={this.props.product.url}>
+            <img className="app-icon" src={this.props.logo_url} style={{ width: '48px', margin: '18px' }}/>
+          </a>
+        </div>
+      );
+    },
+
     render: function() {
       return (
         <div>
+          {this.product()}
           <div className="card" style={{ 'margin-bottom': '0px', 'border-radius': '0px' }}>
             {this.body()}
           </div>
-          <NewsFeedItemComments
-            item={this.props} />
+          <NewsFeedItemComments item={this.props} />
         </div>
       );
     },
