@@ -152,6 +152,37 @@ namespace :metrics do
     end
   end
 
+  desc "Dollars earned and dollars withdrawn"
+  task :dollars => :environment do
+    include ActionView::Helpers::NumberHelper
+    include CurrencyHelper
+    data = by_month do |date|
+      earned = ProfitReport.where(end_at: date.end_of_month).map(&:payable).reduce(0, :+)
+
+      all_earnings = ProfitReport.where('end_at <= ?', date.end_of_month).
+        map(&:user_balances).flatten.reject{|entry| entry.user.staff? }.map(&:earnings).reduce(0, :+)
+      all_withdrawals = User::Withdrawal.
+        where("created_at <= date(?)", date.end_of_month).
+        sum(:total_amount)
+
+      held = all_earnings - all_withdrawals
+      
+      paid = User::Withdrawal.
+        where("created_at > date(?) and created_at <= date(?)", date.beginning_of_month, date.end_of_month).
+        sum(:total_amount)
+
+      [Date::MONTHNAMES[date.month], [earned, held, paid]]
+    end
+    puts [' '.rjust(10), 'Earned'.rjust(15), 'Held'.rjust(15), 'Withdrawn'.rjust(15)].join(' ')
+    totals = [0, 0, 0]
+    data.each do |month, (earned, held, paid)|
+      puts [month.rjust(10), currency(earned).rjust(15), currency(held).rjust(15), currency(paid).rjust(15)].join(' ')
+      totals = [totals[0] + earned, held, totals[2] + paid]
+    end
+    puts [' '.rjust(10), '------------'.rjust(15), '------------'.rjust(15), '------------'.rjust(15)].join(' ')
+    puts [' '.rjust(10), currency(totals[0]).rjust(15), currency(totals[1]).rjust(15), currency(totals[2]).rjust(15)].join(' ')
+  end
+
   task :all => ['metrics:total_users', 'metrics:created', 'metrics:mau','metrics:mac','metrics:mtc','metrics:map','metrics:mtw','metrics:mpd','metrics:mps']
 
   desc "Sparklines of Top Product Activity"
@@ -168,7 +199,7 @@ namespace :metrics do
 
   def by_month
     data = []
-    ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014", "1-apr-2014", "1-may-2014", "1-jun-2014", "1-jul-2014", "1-aug-2014", "1-sep-2014"].each do |month|
+    ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014", "1-apr-2014", "1-may-2014", "1-jun-2014", "1-jul-2014", "1-aug-2014", "1-sep-2014", "1-oct-2014"].each do |month|
       data << yield(Date.parse(month))
     end
     data

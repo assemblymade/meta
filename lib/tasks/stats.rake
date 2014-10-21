@@ -169,4 +169,28 @@ namespace :stats do
       end
     end
   end
+
+  task :balances => :environment do
+    include ActionView::Helpers::NumberHelper
+    include CurrencyHelper
+
+    balances = Hash[
+      User::BalanceEntry.
+        joins(:user).
+        where('users.is_staff is false').
+        group(:user_id).having('sum(earnings) >= ?', 10000).sum(:earnings).map{|k,v| [User.find(k).username, v]}
+    ]
+    withdrawals = Hash[User::Withdrawal.group(:user_id).sum(:total_amount).map{|k,v| [User.find(k).username, v]}]
+
+    users_withdrawn = withdrawals.size
+    users_not_withdrawn = (balances.keys - withdrawals.keys).size
+
+    puts [''.ljust(20), 'Withdrawn'.rjust(15), 'balance'.rjust(15)].join(' ')
+    balances.sort_by{|k,v| -v}.each do |username, earnings|
+      withdrawal = withdrawals[username] ? currency(withdrawals[username]) : ''
+      balance = earnings - (withdrawals[username] || 0)
+      puts [username.ljust(20), withdrawal.rjust(15), currency(balance).rjust(15)].join(' ')
+    end
+    puts "#{users_not_withdrawn} users have not made a withdrawal"
+  end
 end
