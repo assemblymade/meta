@@ -20,7 +20,10 @@ class DiscoverController < ApplicationController
         params[:tag]
       end
 
-      @products = @products.where(wip_tags: { name: tag })
+      @products = @products.where(
+        wip_tags: { name: tag },
+        wips: { state: 'open' }
+      )
     end
 
     @products = case params[:sort]
