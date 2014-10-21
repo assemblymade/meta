@@ -70,7 +70,7 @@
   padding-left: 0;
   border: 1px dashed $gray-lighter;
   position: relative;
-  z-index: -2;
+  z-index: 2;
 
   > li {
     float: left;
@@ -89,8 +89,10 @@
       font-weight: bold;
       line-height: 32px;
       margin: -18px auto 0 auto;
+      position: relative;
       text-align: center;
       width: 36px;
+      z-index: 3;
 
       &.active {
         border: 2px solid $green;
@@ -115,7 +117,7 @@
     position: absolute;
     margin-top: -2px;
     width: 10%;
-    z-index: -1;
+    z-index: 1;
 
     &:first-child {
       left: 0;
