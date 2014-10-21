@@ -154,6 +154,18 @@ namespace :metrics do
 
   task :all => ['metrics:total_users', 'metrics:created', 'metrics:mau','metrics:mac','metrics:mtc','metrics:map','metrics:mtw','metrics:mpd','metrics:mps']
 
+  desc "Sparklines of Top Product Activity"
+  task :spark => :environment do
+    products = Activity.where('created_at > ?', 1.month.ago).map { |a| [a.find_product.name, a.created_at.at_beginning_of_week.to_i] }
+    groups = products.group_by(&:first).map { |p, a| [p, a.map(&:last)] }
+    counts = groups.map { |p, a| [p, Range.new(1.month.ago.at_beginning_of_week.to_i, Time.now.at_beginning_of_week.to_i).step(1.week).map { |d| a.count { |a| a == d } }] }.sort_by { |d, a| -a.sum }
+    counts.each do |name, counts|
+      puts name
+      puts Sparkr.sparkline(counts)
+      puts
+    end
+  end
+
   def by_month
     data = []
     ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014", "1-apr-2014", "1-may-2014", "1-jun-2014", "1-jul-2014", "1-aug-2014", "1-sep-2014"].each do |month|
