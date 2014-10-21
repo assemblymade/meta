@@ -140,6 +140,18 @@ namespace :metrics do
     end
   end
 
+  desc "Monthly Coins Minted"
+  task :mcm => :environment do
+    include ActionView::Helpers::NumberHelper
+    data = by_month do |date|
+      total = TransactionLogEntry.minted.where("created_at >= date(?) and created_at <= date(?)", date.beginning_of_month, date.end_of_month).sum(:cents)
+      [Date::MONTHNAMES[date.month], total]
+    end
+    data.each do |month, total|
+      puts [month.rjust(10), number_with_delimiter(total).rjust(15), 'Coins minted'].join(' ')
+    end
+  end
+
   task :all => ['metrics:total_users', 'metrics:created', 'metrics:mau','metrics:mac','metrics:mtc','metrics:map','metrics:mtw','metrics:mpd','metrics:mps']
 
   def by_month

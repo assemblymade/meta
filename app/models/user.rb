@@ -295,13 +295,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def retrieve_key_pair_sync
-    AssemblyCoin::AssignBitcoinKeyPairWorker.new.perform(
-      self.to_global_id,
-      :assign_key_pair
-    )
-  end
-
   def retrieve_key_pair
     AssemblyCoin::AssignBitcoinKeyPairWorker.perform_async(
       self.to_global_id,
