@@ -185,12 +185,17 @@ namespace :stats do
     users_withdrawn = withdrawals.size
     users_not_withdrawn = (balances.keys - withdrawals.keys).size
 
+    totals = [0,0]
     puts [''.ljust(20), 'Withdrawn'.rjust(15), 'balance'.rjust(15)].join(' ')
     balances.sort_by{|k,v| -v}.each do |username, earnings|
       withdrawal = withdrawals[username] ? currency(withdrawals[username]) : ''
       balance = earnings - (withdrawals[username] || 0)
+      totals = [totals[0] + (withdrawals[username] || 0), totals[1] + balance]
       puts [username.ljust(20), withdrawal.rjust(15), currency(balance).rjust(15)].join(' ')
     end
+    puts [''.ljust(20), '----------'.rjust(15), '----------'.rjust(15)].join(' ')
+    puts [''.ljust(20), currency(totals[0]).rjust(15), currency(totals[1]).rjust(15)].join(' ')
+    puts
     puts "#{users_not_withdrawn} users have not made a withdrawal"
   end
 end
