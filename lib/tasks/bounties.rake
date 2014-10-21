@@ -96,6 +96,95 @@ namespace :bounties do
     puts Terminal::Table.new :headings => ['Date', 'Created', '% change', 'Awarded/Created', '% change', 'Closed/Created', '% change'], :rows => rows
   end
 
+  task :historical_ratios => :environment do
+    def percent_change(a, b)
+      "#{(((a-b).to_f / b) * 100).round(1)}%"
+    end
+
+    def filtered_query(query, user_type=nil)
+      query = query.
+              select{|t| t.user.username != "kernel" && 
+                         t.product.slug != "meta" &&
+                         t.product.slug != "asm" &&
+                         t.product.slug != "asm-ideas" &&
+                         t.comments_count > 0}
+      if user_type == "core"
+        query = query.select{|t| t.product.core_team?(t.user)}
+      elsif user_type == "staff"
+        query = query.select{|t| t.user.staff?}
+      end
+      query
+    end
+
+    require 'date'
+
+    rows_global, rows_core, rows_staff = [], [], []
+    weeks = 4.downto(-1).to_a
+    ceiling = weeks.max
+
+    weeks.each do |d|
+      puts "getting stats..Week #{d}"
+      silence_stream(STDOUT) do
+        if d == -1
+          query = Task.where(["created_at < ?", Time.now])
+        else
+          query = Task.where(["created_at < ?", d.week.ago.beginning_of_week])
+        end
+
+        prev_row = rows_global[ceiling-1-d]
+
+        # anything written to STDOUT here will be silenced
+        rows_global << [ "#{(d+1).week.ago.beginning_of_week.strftime('%b %d, %y')}",
+                  # created
+                  created = filtered_query(query).count.to_f,
+                  d == ceiling ? " - " : percent_change(created, prev_row[1]),
+                  # award/creation ratio
+                  awd_crtd = (filtered_query(query.where(state: :awarded)).count / created),
+                  d == ceiling ? " - " : percent_change(awd_crtd, prev_row[3]),
+                  # close/creation ratio
+                  clsd_crtd = (filtered_query(query.where(state: :resolved)).count / created),
+                  d == ceiling ? " - " : percent_change(clsd_crtd, prev_row[5])
+                ]
+
+        prev_row = rows_core[ceiling-1-d]
+
+        # anything written to STDOUT here will be silenced
+        rows_core << [ "#{(d+1).week.ago.beginning_of_week.strftime('%b %d, %y')}",
+                  # created
+                  created = filtered_query(query, "core").count.to_f,
+                  d == ceiling ? " - " : percent_change(created, prev_row[1]),
+                  # award/creation ratio
+                  awd_crtd = (filtered_query(query.where(state: :awarded), "core").count / created),
+                  d == ceiling ? " - " : percent_change(awd_crtd, prev_row[3]),
+                  # close/creation ratio
+                  clsd_crtd = (filtered_query(query.where(state: :resolved), "core").count / created),
+                  d == ceiling ? " - " : percent_change(clsd_crtd, prev_row[5])
+                ]
+
+        prev_row = rows_staff[ceiling-1-d]
+
+        # anything written to STDOUT here will be silenced
+        rows_staff << [ "#{(d+1).week.ago.beginning_of_week.strftime('%b %d, %y')}",
+                  # created
+                  created = filtered_query(query, "staff").count.to_f,
+                  d == ceiling ? " - " : percent_change(created, prev_row[1]),
+                  # award/creation ratio
+                  awd_crtd = (filtered_query(query.where(state: :awarded), "staff").count / created),
+                  d == ceiling ? " - " : percent_change(awd_crtd, prev_row[3]),
+                  # close/creation ratio
+                  clsd_crtd = (filtered_query(query.where(state: :resolved), "staff").count / created),
+                  d == ceiling ? " - " : percent_change(clsd_crtd, prev_row[5])
+                ]
+      end
+    end
+    puts "GLOBAL _________________________"
+    puts Terminal::Table.new :headings => ['Date', 'Created', '% change', 'Awarded/Created', '% change', 'Closed/Created', '% change'], :rows => rows_global
+    puts "CORE ___________________________"
+    puts Terminal::Table.new :headings => ['Date', 'Created', '% change', 'Awarded/Created', '% change', 'Closed/Created', '% change'], :rows => rows_core
+    puts "STAFF __________________________"
+    puts Terminal::Table.new :headings => ['Date', 'Created', '% change', 'Awarded/Created', '% change', 'Closed/Created', '% change'], :rows => rows_staff
+  end
+
   task :push_to_news_feed => :environment do
     Task.open.where(created_at: 2.weeks.ago..Time.now).each do |task|
       NewsFeedItem.create(
@@ -106,3 +195,4 @@ namespace :bounties do
     end
   end
 end
+
