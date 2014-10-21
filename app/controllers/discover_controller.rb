@@ -6,6 +6,7 @@ class DiscoverController < ApplicationController
     @team_building = team_building_products.limit(20)
     # --
     @products = Product.joins(wips: { taggings: :tag })
+                       .where.not(slug: 'meta')
                        .where(flagged_at: nil)
                        .where(state: %w(greenlit profitable team_building))
                        .distinct
