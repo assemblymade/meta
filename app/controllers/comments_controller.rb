@@ -89,7 +89,7 @@ class CommentsController < ProductController
     if news_feed_item = NewsFeedItem.find_by(target: @wip)
       news_feed_item.news_feed_item_comments.create(
         user_id: @event.user.id,
-        body: comment_params[:body]
+        body: comment_params[:body].truncate(250)
       )
     end
   end
