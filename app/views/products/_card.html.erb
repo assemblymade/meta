@@ -1,29 +1,67 @@
-<div class="card">
-  <%= firesize_img product.poster_image_url, 211, 211, 'g_center' %>
+<div class="bg-white rounded border clearfix overflow-hidden">
+  <div class="md-show">
+    <% case %>
+    <% when product.profitable? || product.greenlit? %>
+      <div class="md-show">
+        <%= firesize_img product.poster_image_url, 340, 340, 'g_center' %>
+      </div>
+    <% when product.team_building? %>
+      <div class="square bg-white">
+        <div class="square-content p3">
+          <div>
+            <div class="h1 mt0 mb0 green"><%= product.team_building_days_left %></div>
+            <div class="h4 mt0 green">days left</div>
 
-  <div class="card-body" style="min-height:109px">
-    <h5 class="alpha omega" style="color:#333"><%= product.name %></h6>
-    <p class="text-muted alpha omega"><%= product.pitch %></p>
+            <div class="progress progress-sm mb2">
+              <div class="progress-bar bg-green" style="width:<%= product.team_building_percentage %>%"></div>
+            </div>
+            <p class="mb0 small mid-gray">
+              This product
+              <% if product.bio_memberships_count >= 10 %>
+                has
+                <strong><%= pluralize(product.bio_memberships_count, 'partner') %></strong>
+                and will start using Assembly.
+              <% else %>
+                needs
+                <strong><%= pluralize([10 - product.bio_memberships_count, 0].max, 'more partner') %></strong>
+                to start using Assembly.
+              <% end %>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div class="square">
+        <div class="square-content bg-red ">
+          <div class="md-show m2 full-width border">
+            <%= firesize_img product.poster_image_url, 340, 340, 'g_center' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 
+  <div class="p3">
+    <h4 class="mt0 mb0 blue"><%= product.name %></h4>
+    <p class="mid-gray mb2 full-width" style="min-height:6.5rem">
+      <%= product.pitch %>
+    </p>
 
-  <div class="card-footer clearfix">
-    <ul class="list-grid list-grid-tight">
-      <% followers_sorted_by_coins(product, 12).each do |username, email| %>
-        <li>
-          <img alt="@<%= username %>"
-            class="avatar img-circle"
-            width="19" height="19"
-            src="<%= Avatar.url_from_email(email, 19) %>"
-            srcset="<%= Avatar.url_from_email(email, 19*2) %>">
+    <div class="clearfix">
+      <ul class="list-reset mb0 mxn1 overflow-hidden full-width" style="height:2rem">
+        <li class="left ml1">
+          <span class="badge bg-light-gray">
+            <span class="icon icon-users"></span>
+            <%= product.partners.count %></span>
         </li>
-      <% end %>
-      <li>
-        <span class="badge">+ <%= product.followers.count %></span>
-      </li>
-    </ul>
 
-    <p class="small text-muted omega">Started <%= product.created_at.strftime("%B %d, %Y") %></p>
+        <% followers_sorted_by_coins(product, 10).each do |user| %>
+          <li class="left ml1"><%= avatar_tag(user, 18) %></li>
+        <% end %>
 
+      </ul>
+
+    </div>
   </div>
+
 </div>

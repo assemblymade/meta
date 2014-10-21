@@ -74,8 +74,6 @@
 }
 
 .nav-tabs.nav-justified {
-  border-bottom: 1px solid $brand-divider;
-
   > li > a {
     border-bottom-width: 3px;
     border-bottom-color: transparent;
@@ -97,5 +95,90 @@
     border-bottom-color: $nav-tabs-active-link-hover-border-color;
 
     border-bottom-width: 3px;
+
+    background-color: $gray-lighter;
+  }
+}
+
+.nav-skills {
+  margin-left: -1px;
+
+  > li {
+    float: left;
+    width: 50%;
+
+    border-bottom: 1px solid $brand-divider;
+
+    > a {
+      display: block;
+      text-align: center;
+      border-left: 1px solid $brand-divider;
+
+      padding-top: 24px;
+      padding-bottom: 24px - 3px;
+
+      font-size: 14px;
+      text-transform: uppercase;
+      font-weight: 600;
+
+      color: $blue;
+
+      border-bottom: 3px solid transparent;
+
+      &:hover {
+        color: $blue;
+        background-color: white;
+        border-bottom-color: $blue
+      }
+    }
+  }
+
+  > .active {
+    > a {
+      background-color: $brand-divider;
+      color: $text-color;
+      border-bottom-color: $blue;
+      &:hover {
+        color: $text-color;
+        background-color: $brand-divider;
+      }
+    }
+  }
+}
+
+@media all and (min-width: $screen-sm-min) {
+  .nav-skills {
+    > li {
+      width: percentage(100 / 6 / 100);
+
+      > a {
+        padding-top: 48px;
+        padding-bottom: 48px - 3px;
+      }
+    }
+  }
+}
+
+.nav-mini-pills {
+  > li {
+    display: inline-block;
+    > a {
+      border-radius: 30px;
+      padding-left: 15px;
+      padding-right: 15px;
+
+      line-height: 28px;
+      padding-top: 0;
+      padding-bottom: 0;
+
+      font-size: 14px;
+    }
+  }
+  > .active {
+    > a,
+    > a:hover {
+      background-color: $blue;
+      color: white;
+    }
   }
 }

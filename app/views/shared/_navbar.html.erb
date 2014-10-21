@@ -23,7 +23,7 @@
       <ul class="nav navbar-nav">
 
         <li class="<%= nav_active_class(:discover) %>">
-          <a href="<%= discover_path %>">Products</a>
+          <a href="<%= discover_path %>">Discover</a>
         </li>
 
         <% if feature?(:discover_bounties) %>
@@ -39,15 +39,6 @@
         <li class="<%= nav_active_class(:community) %>">
           <a href="<%= chat_rooms_path %>">Community Chat</a>
         </li>
-
-        <% if defined? bounties_link %>
-          <li class="dropdown">
-            <li>
-              <a target="_blank" href="<%= product_wips_path(@product) %>"><%= @product.name %> Bounties</a>
-            </li>
-          </li>
-        <% end %>
-
 
       </ul>
 

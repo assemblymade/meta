@@ -4,6 +4,35 @@ class DiscoverController < ApplicationController
     @profitable = profitable_products.limit(4)
     @greenlit = greenlit_products.limit(20)
     @team_building = team_building_products.limit(20)
+    # --
+    @products = Product.joins(wips: { taggings: :tag })
+                       .where(flagged_at: nil)
+                       .where(state: %w(greenlit profitable team_building))
+                       .distinct
+                       .limit(100)
+
+    if params[:tag].present?
+      # transform tag here so that the label in the HTML is still "writing"
+      tag = if params[:tag] == 'writing'
+        'copy'
+      else
+        params[:tag]
+      end
+
+      @products = @products.where(wip_tags: { name: tag })
+    end
+
+    @products = case params[:sort]
+      when 'new'
+        @products.order('products.started_team_building_at DESC')
+      when 'popular'
+        @products.sort_by {|p| -p.partners.size }
+      when 'teambuilding'
+        @products.sort_by {|p| p.bio_memberships_count }
+      else
+        @products.ordered_by_trend
+      end
+
   end
 
   def profitable

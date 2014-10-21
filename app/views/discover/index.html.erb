@@ -3,175 +3,71 @@
 
 <%= render 'shared/navbar' %>
 
-<div class="container">
+<ul class="nav nav-skills bg-white mb2">
+  <% %w(Frontend Backend Design Marketing Writing Strategy).each do |skill| %>
+    <li class="<%= 'active' if params[:tag] == skill.downcase %>"><a class="px2 py4" href="?tag=<%= skill.downcase %>"><%= skill %></a></li>
+  <% end %>
+</ul>
 
-  <br>
 
-  <div class="text-center">
+<div class="container mb4">
 
-    <% if signed_in? && flash[:notice] %>
-      <p class="text-muted text-large omega">Hey @<%= current_user.username %>, <a class="text-muted" href="http://media1.giphy.com/media/JQNM4AgN7lFUA/giphy.gif" style="text-decoration: underline">high five</a> and welcome to Assembly.</p>
-    <% end %>
-
-    <h1 class="omega" style="font-size:48px">Find a product you'd like to work on,</h1>
-    <p class="text-muted" style="font-size:36px">or <a class="text-success" href="<%= new_product_path %>">start your own</a> that others can work on with you.</p>
+  <div class="center mt2">
+    <ul class="nav nav-mini-pills">
+      <li class="<%= 'active' if params[:sort] == 'active' || params[:sort].blank? %>">
+        <a href="?sort=active">Most Active</a>
+      </li>
+      <li class="<%= 'active' if params[:sort] == 'popular' %>">
+        <a href="?sort=popular">Most Popular</a>
+      </li>
+      <li class="<%= 'active' if params[:sort] == 'new' %>">
+        <a href="?sort=new">New to Assembly</a>
+      </li>
+      <li class="<%= 'active' if params[:sort] == 'teambuilding' %>">
+        <a href="?sort=teambuilding">Needs Teammates</a>
+      </li>
+    </ul>
   </div>
 
-  <hr>
-
-  <% if @interesting.present? %>
-
-    <br>
-
-    <div class="text-center">
-      <h2>Based on your interests</h2>
-    </div>
-
-    <br>
-
-    <% @interesting.each do |product| %>
-      <%= render 'products/chips/greenlit', product: product %>
-      <hr class="omega">
-
-      <div class="list-group list-group-breakout omega">
-        <% product.tasks.joins(:tags).where('wip_tags.name IN(?)', current_user.interested_tags).order(updated_at: :desc).limit(3).each do |bounty| %>
-          <div class="list-group-item" style="padding-left:0;padding-right:0">
-            <div class="row">
-              <div class="col-sm-8">
-
-                <a  href="<%= product_task_path(bounty.product, bounty) %>">
-                  <h4 class="alpha omega"><%= bounty.title %></h4>
-                </a>
-
-                <ul class="list-inline omega">
-                  <li >
-
-                    <span class="text-warning">
-                      <span class="icon icon-app-coin"></span>
-                      <span class="js-coins"><%= number_with_delimiter(WipContracts.new(bounty, @auto_tip_contracts).earnable_cents.floor) %></span>
-                    </span>
-
-                  </li>
-                  <li>
-                    <span class="text-muted">
-                      Created <%= time_ago_in_words(bounty.created_at) %> ago by
-                      @<%= bounty.user.username %>
-                    </span>
-                  </li>
-                </ul>
-
-              </div>
-
-              <div class="col-sm-4">
-                <%
-                  tags = bounty.tags.map {|t| t.name.downcase }
-                  user_tags = tags & current_user.interested_tags
-                  other_tags = tags - user_tags
-                %>
-                <% user_tags.each do |tag| %>
-                  <a class="h4 omega" href="#" style="font-weight: normal"><%= tag.titleize %></a>
-                <% end %>
-                <p class="small text-muted omega"><%= other_tags.map(&:titleize).to_sentence %></p>
-              </div>
-            </div>
-
-          </div>
-        <% end %>
+  <div class="center mt4 mb3">
+    <% if params[:tag].present? %>
+      <div class="h1 mt0 mb0">
+        There are
+        <strong><%= pluralize(@products.count, 'Product') %></strong>
+        with a total of
+        <strong>
+          <%= pluralize(@products.map {|p| p.tasks.open.count }.sum, "#{params[:tag].titleize} Bounty") %>
+        </strong>.
       </div>
-
-      <p>
-        <a href="<%= product_tasks_path(product) %>" style="text-decoration:underline">View all <%= pluralize(product.tasks.count, 'bounty') %></a>
-      </p>
-
-      <br style="line-height:60px">
-
+    <% else %>
+      <div class="h1 mt0 mb0">Find a product you'd like to work on,</div>
+      <div class="h3 mt0 mb0 mid-gray">or <a class="green" href="<%= new_product_path %>">start your own</a> that others can work on with you.</div>
     <% end %>
-  <% end %>
+  </div>
 
-  <div class="row">
-    <div class="col-md-12">
+  <% if true # cache(:discover_launched, expires_in: 6.hours) do %>
 
-      <% cache(:discover_launched, expires_in: 6.hours) do %>
-        <div class="text-center" style="margin-top:48px;margin-bottom:24px">
-          <h2 class="omega">
-            Work on Launched Products
-          </h2>
-          <p class="text-muted">
-            These are products that have launched. Two are profitable, and the others are on their way!<br>
-            When you work on a profitable product, <strong>you get paid monthly.</strong>
-          </p>
-        </div>
-
-        <div class="row">
-          <% @profitable.each do |product| %>
-            <div class="col-sm-3">
-              <a data-track="discover.profitable.clicked" href="<%= product_path(product) %>">
-                <%= render 'products/card', product: product %>
-              </a>
-            </div>
-          <% end %>
-        </div>
-
-
-        <div class="row">
-          <div class="col-md-2 col-md-offset-5">
-            <hr>
-          </div>
+    <div class="clearfix mb2 mxn3">
+      <% @products.each do |product| %>
+        <div class="md-col md-col-4 lg-col-3 p3">
+          <a data-track="discover.profitable.clicked" href="<%= product_path(product) %>">
+            <%= render 'products/card', product: product %>
+          </a>
         </div>
       <% end %>
+    </div>
 
-      <div class="text-center" style="margin-bottom:24px">
-        <h3 class="omega">
-          Greenlit Products
-        </h3>
-        <p class="text-muted">Help popular products build out features and focus on launching.</p>
-      </div>
+  <% end %>
 
-      <div class="list-group list-group-breakout omega">
-        <% @greenlit.each do |product| %>
-          <a class="list-group-item" data-track="discover.greenlit.clicked" href="<%= product_path(product) %>">
-            <%= render 'products/chips/greenlit', product: product %>
-          </a>
-        <% end %>
-      </div>
-      <p class="text-center">
-        <a href="<%= discover_path(:greenlit) %>">More products</a>
-      </p>
-
-      <div class="row">
-        <div class="col-md-2 col-md-offset-5">
-          <hr>
-        </div>
-      </div>
-
-      <div class="text-center" style="margin-bottom:24px">
-        <h3 class="omega">
-          Products Building Teams
-        </h3>
-        <p class="text-muted">Join products on the ground floor to help define the core idea and initial features.</p>
-      </div>
-
-      <div class="list-group list-group-breakout omega">
-        <% @team_building.each do |product| %>
-          <a class="list-group-item" data-track="discover.team-building.clicked" href="<%= product_path(product) %>">
-            <%= render 'products/chips/team_building', product: product %>
-          </a>
-        <% end %>
-      </div>
-      <p class="text-center">
-        <a href="<%= discover_path(:team_building) %>">More products</a>
-      </p>
-
-      <br>
-
-      <div class="callout text-large">
-        <a href="<%= start_idea_path %>" class="btn btn-success pull-right">Create a new product</a>
-        Didn't find a product that you're interested in?
-        Create your own!
-      </div>
-
+  <div class="bg-white rounded clearfix">
+    <div class="col col-6 py3">
+      Didn't find a product that you're interested in?
+    </div>
+    <div class="col col-6 p3">
+      <a href="<%= start_idea_path %>" class="button button-blue center block">Start your own product</a>
     </div>
   </div>
+
 </div>
 
 <%= render 'shared/footer' %>

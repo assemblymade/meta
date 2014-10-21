@@ -65,7 +65,6 @@ module ProductsHelper
       joins('left join transaction_log_entries tle on (tle.wallet_id = users.id and tle.product_id = watchings.watchable_id)').
       group('users.id').
       order('sum(cents) desc NULLS LAST').
-      limit(limit).
-      pluck(:username, :email)
+      limit(limit)
   end
 end
