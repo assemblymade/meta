@@ -34,7 +34,7 @@ class DiscoverController < ApplicationController
   def updates
     if current_user && current_user.staff?
       @posts = ActiveModel::ArraySerializer.new(
-        NewsFeedItem.all.order(updated_at: :desc),
+        NewsFeedItem.limit(20).order(updated_at: :desc),
         each_serializer: NewsFeedItemSerializer
       ).as_json
       @page = Kaminari.paginate_array(@posts).page(params[:page])

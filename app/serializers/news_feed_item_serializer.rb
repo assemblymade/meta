@@ -12,7 +12,7 @@ class NewsFeedItemSerializer < ApplicationSerializer
     elsif product.poster.present?
       product.poster_image.url
     else
-      image_url('app_icon.png')
+      '/assets/app_icon.png'
     end
   end
 
