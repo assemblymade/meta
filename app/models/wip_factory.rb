@@ -19,6 +19,8 @@ class WipFactory
       add_description(wip)
       watch_product
 
+      NewsFeedItem.create_with_target(wip)
+
       users = @product.followers
 
       register_with_readraptor(wip, users)

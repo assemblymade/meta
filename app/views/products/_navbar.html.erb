@@ -11,10 +11,19 @@
 
   <li class="<%= nav_active_class(:updates) %>">
     <a href="<%= product_posts_path(product) %>">
-      <span class="icon icon-graph icon-left"></span>
-      Activity
+      <span class="icon icon-pin icon-left"></span>
+      Posts
     </a>
   </li>
+
+  <% if current_user && current_user.staff? %>
+    <li class="<%= nav_active_class(:activity) %>">
+      <a href="<%= product_activities_path(product) %>">
+        <span class="icon icon-graph icon-left"></span>
+        Activity
+      </a>
+    </li>
+  <% end %>
 
   <li class="<%= nav_active_class(:bounties) %>">
     <a href="<%= product_wips_path(product) %>">

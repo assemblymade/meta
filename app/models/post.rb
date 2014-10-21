@@ -8,6 +8,8 @@ class Post < ActiveRecord::Base
   belongs_to :product
   belongs_to :author, class_name: 'User'
 
+  has_many :news_feed_items, as: :target
+
   validates :product, presence: true
   validates :author,  presence: true
   validates :title,   uniqueness: true, presence: true

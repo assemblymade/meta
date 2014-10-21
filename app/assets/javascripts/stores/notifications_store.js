@@ -1,15 +1,15 @@
 var xhr = require('../xhr');
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
-var NewsFeedUsersStore = require('../stores/news_feed_users_store');
-var NotificationsMixin = require('../mixins/notifications');
+var NotificationsUsersStore = require('../stores/notifications_users_store');
+var ReadTimesMixin = require('../mixins/read_times');
 
 (function() {
   var _stories = {};
   var _optimisticStories = {};
   var _store = Object.create(Store);
 
-  var _newsFeedStore = _.extend(_store, NotificationsMixin, {
+  var _notificationsStore = _.extend(_store, ReadTimesMixin, {
     addStory: function(data) {
       if (!data) {
         return;
@@ -35,7 +35,7 @@ var NotificationsMixin = require('../mixins/notifications');
       var stories = data.stories;
 
       if (!_.isEmpty(users)) {
-        NewsFeedUsersStore.setUsers(users);
+        NotificationsUsersStore.setUsers(users);
       }
 
       var url = this.rrUrl() +
@@ -52,26 +52,26 @@ var NotificationsMixin = require('../mixins/notifications');
       xhr.noCsrfGet(url, this.handleReadRaptor(stories, 'key'));
     },
 
-    'newsFeed:acknowledge': this.noop,
+    'notifications:acknowledge': this.noop,
 
-    'newsFeed:fetchStories': function(url) {
+    'notifications:fetchStories': function(url) {
       xhr.get(url, this.handleFetchedStories.bind(this));
     },
 
-    'newsFeed:fetchMoreStories': function(url) {
-      xhr.get(url, this.handleFetchedStories.bind(this));
+    'notifications:fetchMoreStories': function(url) {
+      this['notifications:fetchStories'](url);
     },
 
-    'newsFeed:markAsRead': function(storykey) {
+    'notifications:markAsRead': function(storykey) {
       var url = '/user/tracking/' + storykey;
 
       xhr.get(url, this.markedAsRead(storykey));
     },
 
-    'newsFeed:markAllAsRead': function() {
+    'notifications:markAllAsRead': function() {
       for (var i in _stories) {
         if (_stories.hasOwnProperty(i)) {
-          this['newsFeed:markAsRead'](_stories[i].key);
+          this['notifications:markAsRead'](_stories[i].key);
         }
       }
     },
@@ -152,16 +152,16 @@ var NotificationsMixin = require('../mixins/notifications');
     }
   });
 
-  _newsFeedStore.dispatchIndex = Dispatcher.register(function(payload) {
+  _notificationsStore.dispatchIndex = Dispatcher.register(function(payload) {
     var action = payload.action;
     var data = payload.data;
     var sync = payload.sync;
 
-    if (!_newsFeedStore[action]) {
+    if (!_notificationsStore[action]) {
       return;
     }
 
-    _newsFeedStore[action](data);
+    _notificationsStore[action](data);
 
     if (sync) {
       return _store.emitChange();
@@ -169,8 +169,8 @@ var NotificationsMixin = require('../mixins/notifications');
   });
 
   if (typeof module !== 'undefined') {
-    module.exports = _newsFeedStore;
+    module.exports = _notificationsStore;
   }
 
-  window.NewsFeedStore = _newsFeedStore;
+  window.NotificationsStore = _notificationsStore;
 })();

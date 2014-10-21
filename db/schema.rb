@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141013230132) do
+ActiveRecord::Schema.define(version: 20141017225249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -329,6 +329,27 @@ ActiveRecord::Schema.define(version: 20141013230132) do
     t.uuid     "wip_id",     null: false
     t.uuid     "user_id",    null: false
     t.datetime "created_at", null: false
+    t.datetime "deleted_at"
+  end
+
+  create_table "news_feed_item_comments", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "news_feed_item_id"
+    t.uuid     "user_id"
+    t.string   "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "deleted_at"
+  end
+
+  create_table "news_feed_items", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "source_id"
+    t.string   "message"
+    t.uuid     "product_id"
+    t.uuid     "target_id"
+    t.string   "target_type"
+    t.integer  "number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "deleted_at"
   end
 

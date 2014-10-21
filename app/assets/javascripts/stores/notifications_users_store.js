@@ -7,7 +7,7 @@ var Store = require('../stores/store');
 
   var _store = Object.create(Store);
 
-  var _newsFeedUsersStore = _.extend(_store, {
+  var _notificationsUsersStore = _.extend(_store, {
     setUsers: function(users) {
       _users = users;
     },
@@ -30,8 +30,8 @@ var Store = require('../stores/store');
   });
 
   if (typeof module !== 'undefined') {
-    module.exports = _newsFeedUsersStore;
+    module.exports = _notificationsUsersStore;
   }
 
-  window.NewsFeedUsersStore = _newsFeedUsersStore;
+  window.NewsFeedUsersStore = _notificationsUsersStore;
 })();

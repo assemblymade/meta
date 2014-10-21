@@ -32,13 +32,20 @@ class DiscoverController < ApplicationController
   end
 
   def updates
-    @posts = Post.joins(:product).
-      where.not(products: { state: ['stealth', 'reviewing'] }).
-      where(products: { flagged_at: nil }).
-      where(flagged_at: nil).
-      order(created_at: :desc)
-
-    @page = @posts.page(params[:page])
+    if current_user && current_user.staff?
+      @posts = ActiveModel::ArraySerializer.new(
+        NewsFeedItem.limit(20).order(updated_at: :desc),
+        each_serializer: NewsFeedItemSerializer
+      ).as_json
+      @page = Kaminari.paginate_array(@posts).page(params[:page])
+    else
+      @posts = Post.joins(:product).
+        where.not(products: { state: ['stealth', 'reviewing'] }).
+        where(products: { flagged_at: nil }).
+        where(flagged_at: nil).
+        order(created_at: :desc)
+      @page = @posts.page(params[:page])
+    end
   end
 
   def profitable_products

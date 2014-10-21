@@ -213,6 +213,8 @@ ASM::Application.routes.draw do
       resources :bounties, only: [:create] do
         resources :offers, only: [:create, :show]
       end
+
+      resources :activities, controller: 'news_feed_items', only: [:create]
       resources :projects, only: [:create]
       resources :subscribers, only: [:create, :destroy]
       resources :bounty_postings, only: [:create, :destroy]
@@ -283,6 +285,9 @@ ASM::Application.routes.draw do
       patch :close, on: :member
       resources :comments, only: [:show, :create, :edit, :update]
     end
+
+    resources :news_feed_items, only: [:index], path: 'activities', as: :activities
+    post '/activities/:activity_id' => 'news_feed_item_comments#create', as: :activity
 
     resources :repositories, only: [:index, :create, :destroy], as: :repos
 

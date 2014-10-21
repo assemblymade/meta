@@ -9,7 +9,7 @@
     },
 
     render: function() {
-      var size = this.props.size && this.props.size.toString();
+      var size = this.props.size.toString();
 
       return <img className="avatar img-circle" src={this.avatarUrl()} height={size} width={size} />;
     },

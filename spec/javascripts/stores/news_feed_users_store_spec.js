@@ -3,19 +3,19 @@
 //= require react
 //= require components
 
-describe('NewsFeedUsersStore', function() {
+describe('NotificationsUsersStore', function() {
   describe('setUsers', function() {
     before(function() {
-      NewsFeedUsersStore.removeAllUsers();
+      NotificationsUsersStore.removeAllUsers();
     });
 
     after(function() {
-      NewsFeedUsersStore.removeAllUsers();
+      NotificationsUsersStore.removeAllUsers();
     });
 
 
     it('sets the users', function() {
-      NewsFeedUsersStore.setUsers({
+      NotificationsUsersStore.setUsers({
         doorknob: {
           open: true
         },
@@ -24,7 +24,7 @@ describe('NewsFeedUsersStore', function() {
         }
       });
 
-      expect(NewsFeedUsersStore.getUsers()).to.eql({
+      expect(NotificationsUsersStore.getUsers()).to.eql({
         doorknob: {
           open: true
         },
@@ -37,19 +37,19 @@ describe('NewsFeedUsersStore', function() {
 
   describe('addUsers', function() {
     before(function() {
-      NewsFeedUsersStore.removeAllUsers();
+      NotificationsUsersStore.removeAllUsers();
     });
 
     after(function() {
-      NewsFeedUsersStore.removeAllUsers();
+      NotificationsUsersStore.removeAllUsers();
     });
 
     it('adds a user', function() {
-      NewsFeedUsersStore.addUsers({
+      NotificationsUsersStore.addUsers({
         zia: 'maria'
       });
 
-      expect(NewsFeedUsersStore.getUsers().zia).to.eql('maria');
+      expect(NotificationsUsersStore.getUsers().zia).to.eql('maria');
     });
   });
 });

@@ -1,14 +1,14 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
-var ChatNotificationsStore = require('../stores/chat_notifications_store');
-var NewsFeedStore = require('../stores/news_feed_store');
-
 (function() {
+  var CONSTANTS = require('../constants');
+  var ChatNotificationsStore = require('../stores/chat_notifications_store');
+  var NotificationsStore = require('../stores/notifications_store');
+
   var TitleNotificationsCount = React.createClass({
     componentWillMount: function() {
       ChatNotificationsStore.addChangeListener(this.setTitle);
-      NewsFeedStore.addChangeListener(this.setTitle);
+      NotificationsStore.addChangeListener(this.setTitle);
     },
 
     getDefaultProps: function() {
@@ -29,7 +29,7 @@ var NewsFeedStore = require('../stores/news_feed_store');
 
     setTitle: function() {
       var chatCount = ChatNotificationsStore.getUnreadCount(parseInt(localStorage.chatAck, 10)) || 0;
-      var newsCount = NewsFeedStore.getUnreadCount(parseInt(localStorage.newsFeedAck, 10)) || 0;
+      var newsCount = NotificationsStore.getUnreadCount(parseInt(localStorage.notificationsAck, 10)) || 0;
 
       var total = chatCount + newsCount;
 

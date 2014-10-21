@@ -1,5 +1,4 @@
 namespace :bounties do
-  
   task :analysis => :environment do
 
     def seconds_to_days(seconds)
@@ -33,7 +32,6 @@ namespace :bounties do
     end
   end
 
-
   task :open => :environment do
     require 'csv'
     include ActionView::Helpers::DateHelper
@@ -45,9 +43,9 @@ namespace :bounties do
     CSV.open(filename, 'w') do |row|
       row << ['Product', 'Bounty', 'Comments', 'created at', 'updated at', 'State', 'Link']
       query.each do |q|
-        row << [q.title, (q.product.name rescue 'nil'), 
-                q.comments_count, time_ago_in_words(q.created_at), 
-                time_ago_in_words(q.updated_at), q.state, 
+        row << [q.title, (q.product.name rescue 'nil'),
+                q.comments_count, time_ago_in_words(q.created_at),
+                time_ago_in_words(q.updated_at), q.state,
                 "https://assembly.com/#{q.slug rescue 'nil'}"]
       end
     end
@@ -60,8 +58,8 @@ namespace :bounties do
 
     def filtered_query(query)
       query.
-      select{|t| t.user.staff? && 
-                 t.user.username != "kernel" && 
+      select{|t| t.user.staff? &&
+                 t.user.username != "kernel" &&
                  t.product.slug != "meta"}
     end
 
@@ -97,5 +95,14 @@ namespace :bounties do
     end
     puts Terminal::Table.new :headings => ['Date', 'Created', '% change', 'Awarded/Created', '% change', 'Closed/Created', '% change'], :rows => rows
   end
-end
 
+  task :push_to_news_feed => :environment do
+    Task.open.where(created_at: 2.weeks.ago..Time.now).each do |task|
+      NewsFeedItem.create(
+        product: task.product,
+        source_id: task.user.id,
+        target: task
+      )
+    end
+  end
+end

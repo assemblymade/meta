@@ -30,7 +30,7 @@ class window.WipEventView extends Backbone.View
   initialize: (@options) ->
     @listenTo @model, 'change', @render
     Dispatcher.dispatch
-      action: CONSTANTS.NEWS_FEED.ACTIONS.MARK_STORY_AS_READ
+      action: CONSTANTS.NOTIFICATIONS.ACTIONS.MARK_STORY_AS_READ
       data: { key: 'Story_' + app.wip.id, readraptor_url: app.wip.readRaptorUrl }
       sync: true
 

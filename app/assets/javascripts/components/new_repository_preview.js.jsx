@@ -14,8 +14,6 @@
       $('#create-with-launchpad').tooltip({
         container: 'body'
       });
-
-      console.log(this.props);
     },
 
     componentWillUnmount: function() {

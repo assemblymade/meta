@@ -4,18 +4,18 @@ var CONSTANTS = require('../constants');
 var Dispatcher = require('../dispatcher');
 var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
 var LocalStorageMixin = require('../mixins/local_storage');
-var NewsFeedStore = require('../stores/news_feed_store');
+var NotificationsStore = require('../stores/notifications_store');
 
 (function() {
-  var NF = CONSTANTS.NEWS_FEED;
+  var NF = CONSTANTS.NOTIFICATIONS;
 
-  var DropdownNewsFeedToggler = React.createClass({
+  var DropdownNotificationsToggler = React.createClass({
     mixins: [DropdownTogglerMixin, LocalStorageMixin],
 
     acknowledge: function() {
       var timestamp = moment().unix();
 
-      localStorage.newsFeedAck = timestamp;
+      localStorage.notificationsAck = timestamp;
 
       this.setState({
         acknowledgedAt: timestamp
@@ -33,11 +33,11 @@ var NewsFeedStore = require('../stores/news_feed_store');
     },
 
     badgeCount: function() {
-      return NewsFeedStore.getUnreadCount(this.state.acknowledgedAt);
+      return NotificationsStore.getUnreadCount(this.state.acknowledgedAt);
     },
 
     componentWillMount: function() {
-      NewsFeedStore.addChangeListener(this.getStories);
+      NotificationsStore.addChangeListener(this.getStories);
     },
 
     getDefaultProps: function() {
@@ -49,13 +49,13 @@ var NewsFeedStore = require('../stores/news_feed_store');
     getInitialState: function() {
       return {
         stories: null,
-        acknowledgedAt: this.storedAck('newsFeedAck')
+        acknowledgedAt: this.storedAck('notificationsAck')
       };
     },
 
     getStories: function() {
       this.setState({
-        stories: NewsFeedStore.getStories()
+        stories: NotificationsStore.getStories()
       });
     },
 
@@ -88,8 +88,8 @@ var NewsFeedStore = require('../stores/news_feed_store');
   });
 
   if (typeof module !== 'undefined') {
-    module.exports = DropdownNewsFeedToggler;
+    module.exports = DropdownNotificationsToggler;
   }
 
-  window.DropdownNewsFeedToggler = DropdownNewsFeedToggler;
+  window.DropdownNotificationsToggler = DropdownNotificationsToggler;
 })();

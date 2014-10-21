@@ -1,7 +1,5 @@
-jest.dontMock(pathToFile('stores/news_feed_store'));
-
-describe('NewsFeedStore', function() {
-  var NewsFeedStore = require(pathToFile('stores/news_feed_store'));
+describe('NotificationsStore', function() {
+  var NotificationsStore = require.requireActual(pathToFile('stores/notifications_store'));
   var xhr = require(pathToFile('xhr'));
   var app = {
     currentUser: function() {
@@ -13,10 +11,10 @@ describe('NewsFeedStore', function() {
     }
   };
 
-  describe('newsFeed:fetchStories()', function() {
+  describe('notifications:fetchStories()', function() {
     it('fetches stories', function() {
-      NewsFeedStore['newsFeed:fetchStories']('/rex');
-      expect(xhr.get).toBeCalledWith('/rex', NewsFeedStore.handleReadRaptor);
+      NotificationsStore['notifications:fetchStories']('/rex');
+      expect(xhr.get).toBeCalledWith('/rex', NotificationsStore.handleReadRaptor);
     });
   });
 
@@ -37,9 +35,9 @@ describe('NewsFeedStore', function() {
         }
       ];
 
-      NewsFeedStore.setStories(stories);
+      NotificationsStore.setStories(stories);
 
-      expect(NewsFeedStore.getUnreadCount(555)).toEqual(1);
+      expect(NotificationsStore.getUnreadCount(555)).toEqual(1);
     });
   });
 });
