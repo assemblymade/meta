@@ -19,7 +19,7 @@ class NewsFeedItemSerializer < ApplicationSerializer
   end
 
   def url
-    product_activity_path(product, object.number)
+    product_activity_path(product, object)
   end
 
   def user

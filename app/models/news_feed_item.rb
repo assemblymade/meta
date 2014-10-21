@@ -12,12 +12,4 @@ class NewsFeedItem < ActiveRecord::Base
       target: target
     )
   end
-
-  def set_number
-    return unless number.nil?
-
-    Room.create_for!(product, self).tap do |shortcut|
-      self.update_column :number, shortcut.number
-    end
-  end
 end

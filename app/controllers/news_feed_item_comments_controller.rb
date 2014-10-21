@@ -36,9 +36,6 @@ class NewsFeedItemCommentsController < ProductController
   end
 
   def set_news_feed_item!
-    @news_feed_item = NewsFeedItem.find_by(
-      product: @product,
-      number: params[:activity_id]
-    )
+    @news_feed_item = NewsFeedItem.find(params[:activity_id])
   end
 end
