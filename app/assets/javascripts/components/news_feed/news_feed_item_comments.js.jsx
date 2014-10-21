@@ -23,22 +23,16 @@
       }
 
       return (
-        <div className="row comment" style={style} key={comment.id}>
-          <div className="col-md-1 hidden-sm hidden-xs">
+        <div className="row comment p2" style={style} key={comment.id}>
+          <div className="left mr2">
             <Avatar user={comment.user} size={32} />
           </div>
-          <div className="col-md-11">
-            <div className="row">
-              <div className="col-md-12">
+          <div className="overflow-hidden">
+            <div>
                 {this.username(comment.user)}
                 {this.timestamp(comment.created_at)}
-              </div>
             </div>
-            <div className="row">
-              <div className="col-md-12">
-                <span>{comment.body}</span>
-              </div>
-            </div>
+            <div>{comment.body}</div>
           </div>
         </div>
       );
@@ -89,7 +83,7 @@
 
     timestamp: function(created_at) {
       return (
-        <span className="text-muted" style={{ 'margin-top': '5px' }}>
+        <span className="text-muted mt1">
           {$.timeago(new Date(created_at))}
         </span>
       );
@@ -97,7 +91,7 @@
 
     username: function(user) {
       return (
-        <span style={{ 'margin-right': '10px' }}>
+        <span className="mr2">
           <strong>
             <a href={user.url}>{user.username}</a>
           </strong>

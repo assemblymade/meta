@@ -30,8 +30,8 @@
     product: function() {
       return (
         <div className="icon-right pull-right">
-          <a href={this.props.product.url}>
-            <img className="app-icon" src={this.props.logo_url} style={{ width: '48px', margin: '18px' }}/>
+          <a href={this.props.product.url} title={this.props.product.name}>
+            <img className="app-icon" src={this.props.logo_url} style={{ width: '48px', margin: '18px' }} />
           </a>
         </div>
       );

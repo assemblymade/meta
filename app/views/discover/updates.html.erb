@@ -11,8 +11,7 @@
           <div class="col-md-9">
             <% if current_user && current_user.staff? %>
               <% @posts.each do |item| %>
-                <div data-react-class="NewsFeedItem" data-react-props="<%= item.to_json %>">
-                </div>
+                <div data-react-class="NewsFeedItem" data-react-props="<%= item.to_json %>"></div>
               <% end %>
             <% else %>
               <% @page.each do |post| %>

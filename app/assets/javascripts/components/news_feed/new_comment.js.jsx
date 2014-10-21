@@ -29,18 +29,19 @@
 
     render: function() {
       return (
-        <div className="row">
-          <div className="col-md-1 hidden-sm hidden-xs">
+        <div className="clearfix">
+          <div className="left p1">
             <Avatar user={window.app.currentUser().attributes} size={32} />
           </div>
-          <div className="col-md-11">
+          <div className="overflow-hidden p1">
             <textarea type="text"
+                className="form-input"
                 rows="1"
                 value={this.state.comment}
                 onKeyPress={this.onKeyPress}
                 onChange={this.onChange}
                 placeholder="Press <enter> to comment"
-                style={{ width: '100%', padding: '5px' }} />
+                style={{ width: '100%' }} />
           </div>
         </div>
       );
@@ -67,6 +68,8 @@
         this.setState({
           comment: ''
         });
+
+        window.analytics.track('news_feed_item.comment', { product: (window.app.currentAnalyticsProduct())})
       }
     }
   });

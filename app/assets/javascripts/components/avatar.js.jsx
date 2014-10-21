@@ -11,7 +11,7 @@
     render: function() {
       var size = this.props.size.toString();
 
-      return <img className="avatar img-circle" src={this.avatarUrl()} height={size} width={size} />;
+      return <img className="avatar" src={this.avatarUrl()} height={size} width={size} />;
     },
 
     avatarUrl: function() {
