@@ -16,7 +16,15 @@ module Github
     end
 
     def find_repo_team(repo)
-      get("/repos/#{repo.full_name}/teams").find{|team| team['name'] == repo.name rescue false }
+      team = nil
+      page = 1
+
+      while team.nil? &&
+            ((results = get("/orgs/#{repo.username}/teams?per_page=100&page=#{page}")).any?)
+        team = results.find{|team| team['name'] == repo.name rescue false }
+        page += 1
+      end
+      team
     end
 
     def create_repo_team(repo)
