@@ -11,10 +11,11 @@ class CommentsController < ProductController
 
   def create
     type = comment_params[:type].constantize
+    body = comment_params[:body]
 
     authorize! type.slug.to_sym, @wip
     @wip.with_lock do
-      @event = Event.create_from_comment(@wip, type, comment_params[:body], current_user, comment_params[:socket_id])
+      @event = Event.create_from_comment(@wip, type, body, current_user, comment_params[:socket_id])
     end
 
     if @event.valid?
@@ -29,7 +30,7 @@ class CommentsController < ProductController
         )
 
         # FIXME: (pletcher) There's gotta be a better way to do this
-        publish_to_news_feed
+        NewsFeedItemComment.publish_to_news_feed(@wip, @event, body)
 
         @product.auto_watch!(current_user)
         @event.notify_users!(@wip.followers)
@@ -82,15 +83,6 @@ class CommentsController < ProductController
       AsmMetrics.product_enhancement
       AsmMetrics.active_user(current_user)
       AsmMetrics.active_builder(current_user)
-    end
-  end
-
-  def publish_to_news_feed
-    if news_feed_item = NewsFeedItem.find_by(target: @wip)
-      news_feed_item.news_feed_item_comments.create(
-        user_id: @event.user.id,
-        body: comment_params[:body].truncate(250)
-      )
     end
   end
 
