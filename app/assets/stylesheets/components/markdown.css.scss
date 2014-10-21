@@ -21,8 +21,9 @@
   h5,
   h6 {
     @extend .h4;
-    margin-top: $line-height-computed * 1.5;
-    margin-bottom: $line-height-computed / 2;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
   }
 }
 

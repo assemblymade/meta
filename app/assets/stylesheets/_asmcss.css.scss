@@ -1,1 +1,102 @@
-@import 'asmcss/*';
+@import 'basscss';
+
+html {
+  font-size: 12px;
+}
+
+body {
+  font-family: $font-family-sans-serif;
+  line-height: $line-height-base;
+  font-size: 1.3333333333rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-sans-serif;
+  line-height: $headings-line-height;
+}
+
+p, dl, ol, ul {
+  font-size: 1.33333rem;
+}
+
+p.lead,
+.lead p {
+  font-size: 2rem !important;
+}
+
+strong,
+.bold {
+  font-weight: 600;
+}
+
+a {
+  color: $link-color;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+pre, code, samp {
+  font-family: $font-family-monospace;
+  font-size: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 { font-weight: 600 }
+
+h1, .h1 { font-size: $font-size-h1 } // 64px
+h2, .h2 { font-size: $font-size-h2 } // 32px
+h3, .h3 { font-size: $font-size-h3 } // 24px
+h4, .h4 { font-size: $font-size-h4 } // 8px
+h5, .h5 { font-size: $font-size-h5 } // 16px
+h6, .h6 { font-size: $font-size-h6 } // 14px
+
+.border { border-color: $brand-border }
+.border-top { border-color: $brand-border }
+.border-right { border-color: $brand-border }
+.border-bottom { border-color: $brand-border }
+.border-left { border-color: $brand-border }
+
+input,
+select,
+textarea,
+fieldset {
+  margin-bottom: 0;
+}
+
+input[type=text],
+input[type=datetime],
+input[type=datetime-local],
+input[type=email],
+input[type=month],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=tel],
+input[type=time],
+input[type=url],
+input[type=week] {
+  height: auto;
+  padding: 6px 12px;
+  line-height: $line-height-base;
+}
+
+.blue { color: $blue }
+.bg-blue { background-color: $blue }
+
+.green { color: $green }
+.bg-green { background-color: $green }
+
+// --
+
+.no-border { border: none }
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.button {
+  padding-left: 2em;
+  padding-right: 2em;
+  border-radius: 2em;
+}

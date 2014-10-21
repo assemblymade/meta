@@ -1,5 +1,11 @@
 module AvatarHelper
 
+  # <img alt="@<%= username %>"
+  #   class="avatar img-circle"
+  #   width="24" height="24"
+  #   src="<%= Avatar.url_from_email(email, 24) %>"
+  #   srcset="<%= Avatar.url_from_email(email, 24*2) %>">
+
   def avatar_tag(user, size = 24, options={})
     if size.is_a?(Hash)
       options = size
@@ -25,7 +31,7 @@ module AvatarHelper
 
     image_tag(url, attributes)
   end
-    
+
   def user_link(user, options={}, &blk)
     attributes = {
       href: user_path(user),

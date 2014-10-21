@@ -48,8 +48,8 @@
     </div>
 
     <div class="overflow-hidden">
-      <h3 class="my0" style="line-height:24px"><a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a></h3>
-      <div class="h4 my0 gray"><%= @product.pitch %></div>
+      <h3 class="mt0 mb0" style="line-height:24px"><a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a></h3>
+      <div class="h4 mt0 mb0 gray"><%= @product.pitch %></div>
     </div>
   </div>
 
@@ -62,14 +62,14 @@
     <div class="right hidden-xs">
 
       <% if @product.homepage_url.present? %>
-        <a class="inlne-block gray py2" href="<%= @product.homepage_url %>">
+        <a class="inlne-block mid-gray py2" href="<%= @product.homepage_url %>">
           <span class="glyphicon glyphicon-home icon-left"></span>
           <%= URI(@product.homepage_url).host %>
         </a>
       <% end %>
 
       <% if can?(:edit, @product) %>
-        <a class="inline-block gray py2 ml2" href="<%= edit_product_path(@product) %>">
+        <a class="inline-block mid-gray py2 ml2" href="<%= edit_product_path(@product) %>">
           <span class="glyphicon glyphicon-pencil icon-left"></span>
           Edit product
         </a>

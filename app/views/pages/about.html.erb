@@ -113,13 +113,13 @@ Unlike traditional companies with shareholders and employees, everything on Asse
 
       <h3 id="team">The Team</h3>
 
-      <div class="row">
+      <div class="clearfix">
         <% Product.find_by_slug('meta').core_team.order('random()').each do |user| %>
-          <div class="col-sm-3" style="margin-bottom:24px">
+          <div class="col sm-col-3">
             <a href="<%= user_path(user) %>" title="<%= user.bio %>">
               <div class="img-overlay">
-                <%= image_tag(user.avatar.url(360), width: '100%', class: 'img-rounded') %>
-                <div class="img-overlay-content text-center" style="text-shadow: 0 1px 1px rgba(0,0,0,0.4)">
+                <%= image_tag(user.avatar.url(360), class: 'full-width') %>
+                <div class="img-overlay-content bold text-center" style="text-shadow: 0 1px 1px rgba(0,0,0,0.4)">
                   <h5>@<%= user.username %></h5>
                 </div>
               </div>

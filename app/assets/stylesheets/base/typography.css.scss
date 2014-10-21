@@ -1,27 +1,9 @@
-
 a:hover {
   text-decoration: none;
 }
 
-h4,
-.h4 {
-  line-height: 24px;
-}
-
-h6,
-.h6,
-.upper-spaced {
-  text-transform: uppercase;
-  letter-spacing: 0.8pt;
-  font-weight: bold;
-}
-
 .text-weight-normal {
   font-weight: 400;
-}
-
-.text-weight-bold {
-  font-weight: bold;
 }
 
 .text-large,
@@ -35,10 +17,6 @@ h6,
 
 .text-serif {
   font-family: $font-family-serif;
-}
-
-.h1, .h2, .h3, .h4, .h5, .h6 {
-  font-weight: inherit;
 }
 
 @include text-emphasis-variant('.text-coins', $brand-coins);
@@ -187,10 +165,6 @@ mark,
 
 .text-white {
   color: #fff;
-}
-
-.lead {
-  font-weight: 400;
 }
 
 .ellipsis {

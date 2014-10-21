@@ -1,10 +1,11 @@
 @import 'variables',
-         'bootstrap',
-         'mixins/*',
+         'bootstrap';
+@import 'mixins/*',
          'base/*',
          'components/*',
-         'slop',
-         'asmcss';
+         'slop';
+
+@import 'asmcss';
 
 .hide-long-links {
   .long-link { display: none; }
