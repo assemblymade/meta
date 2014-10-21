@@ -1,6 +1,4 @@
 namespace :bounties do
-<<<<<<< HEAD
-
   task :analysis => :environment do
 
     def seconds_to_days(seconds)
