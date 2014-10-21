@@ -33,7 +33,7 @@
     <% if params[:tag].present? %>
       <div class="h1 mt0 mb0">
         There are
-        <strong><%= pluralize(@products.count, 'Product') %></strong>
+        <strong><%= pluralize(@products.count, 'product') %></strong>
         with a total of
         <strong>
           <%= pluralize(@products.map {|p| p.tasks.open.count }.sum, "#{params[:tag].titleize} Bounty") %>
