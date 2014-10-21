@@ -7,10 +7,14 @@ module OpenAssets
     end
 
     def get(url)
-      request :get, url
+      request :get, url, {}
     end
 
-    def request(method, url, body = {})
+    def post(url, params)
+      request :post, url, params
+    end
+
+    def request(method, url, body)
       resp = connection.send(method) do |req|
         req.url url
         req.body = body

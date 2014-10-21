@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141006163311) do
+ActiveRecord::Schema.define(version: 20141013230132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -467,6 +467,8 @@ ActiveRecord::Schema.define(version: 20141006163311) do
     t.datetime "started_team_building_at"
     t.datetime "profitable_at"
     t.string   "state"
+    t.datetime "last_checked_btc"
+    t.datetime "issued_coins"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
@@ -583,15 +585,22 @@ ActiveRecord::Schema.define(version: 20141006163311) do
   add_index "tips", ["product_id", "from_id", "to_id", "via_id"], name: "index_tips_on_product_id_and_from_id_and_to_id_and_via_id", unique: true, using: :btree
 
   create_table "transaction_log_entries", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "product_id",     null: false
+    t.uuid     "product_id",       null: false
     t.uuid     "work_id"
-    t.uuid     "wallet_id",      null: false
-    t.string   "action",         null: false
+    t.uuid     "wallet_id",        null: false
+    t.string   "action",           null: false
     t.text     "value"
     t.datetime "created_at"
     t.uuid     "transaction_id"
     t.hstore   "extra"
     t.integer  "cents"
+    t.string   "queue_id"
+    t.string   "transaction_hash"
+    t.boolean  "success"
+    t.string   "destination"
+    t.string   "color_address"
+    t.integer  "color_amount"
+    t.string   "transaction_type"
   end
 
   add_index "transaction_log_entries", ["wallet_id"], name: "index_transaction_log_entries_on_wallet_id", using: :btree

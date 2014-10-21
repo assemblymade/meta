@@ -20,7 +20,7 @@ class AssemblyCoins
       begin
         JSON.load(resp.body)
       rescue => e
-        puts "#{e.message}"
+        Rails.logger.info "[coins] #{e.message}"
       end
     end
 

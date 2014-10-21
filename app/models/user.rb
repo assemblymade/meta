@@ -56,10 +56,11 @@ class User < ActiveRecord::Base
   before_create :skip_confirmation!
 
   # Everybody gets an authentication token for quick access from emails
+
   before_save :ensure_authentication_token
 
   after_commit -> { Indexer.perform_async(:index, User.to_s, self.id) }, on: :create
-
+  after_commit :retrieve_key_pair, on: :create
 
   # default users to immediate email
   MAIL_DAILY = 'daily'
@@ -119,10 +120,6 @@ class User < ActiveRecord::Base
       union_query = Arel::Nodes::Union.new(wip_creators.arel, event_creators.arel)
       User.find_by_sql(union_query.to_sql)
     end
-  end
-
-  def assign_key_pair!
-    AssignBitcoinKeyPairWorker.perform_async(self.to_global_id)
   end
 
   def has_github_account?
@@ -298,6 +295,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  def retrieve_key_pair
+    AssemblyCoin::AssignBitcoinKeyPairWorker.perform_async(
+      self.to_global_id,
+      :assign_key_pair
+    )
+  end
+
+  def assign_key_pair(key_pair)
+    update!(
+      wallet_public_address: key_pair["public_address"],
+      wallet_private_key: key_pair["private_key"]
+    )
+  end
+
   private
 
   def generate_authentication_token
@@ -306,5 +317,7 @@ class User < ActiveRecord::Base
       break token unless User.where(authentication_token: token).first
     end
   end
+
+
 
 end
