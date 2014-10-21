@@ -27,14 +27,14 @@ class DiscoverController < ApplicationController
     end
 
     @products = case params[:sort]
+      when 'trending'
+        @products.ordered_by_trend
       when 'new'
         @products.order('products.started_team_building_at DESC')
-      when 'popular'
-        @products.sort_by {|p| -p.partners.size }
       when 'teambuilding'
         @products.sort_by {|p| p.bio_memberships_count }
-      else
-        @products.ordered_by_trend
+      else # popular
+        @products.sort_by {|p| -p.partners.size }
       end
 
   end

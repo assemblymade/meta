@@ -14,11 +14,11 @@
 
   <div class="center mt2">
     <ul class="nav nav-mini-pills">
-      <li class="<%= 'active' if params[:sort] == 'active' || params[:sort].blank? %>">
-        <a href="?sort=active&amp;tag=<%= params[:tag] %>">Most Active</a>
+      <li class="<%= 'active' if params[:sort] == 'popular' || params[:sort].blank? %>">
+        <a href="?sort=popular&amp;tag=<%= params[:tag] %>">Popular</a>
       </li>
-      <li class="<%= 'active' if params[:sort] == 'popular' %>">
-        <a href="?sort=popular&amp;tag=<%= params[:tag] %>">Most Popular</a>
+      <li class="<%= 'active' if params[:sort] == 'trending' %>">
+        <a href="?sort=trending&amp;tag=<%= params[:tag] %>">Trending</a>
       </li>
       <li class="<%= 'active' if params[:sort] == 'new' %>">
         <a href="?sort=new&amp;tag=<%= params[:tag] %>">New to Assembly</a>
