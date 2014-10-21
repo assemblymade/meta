@@ -97,7 +97,7 @@ namespace :bounties do
   end
 
   task :push_to_news_feed => :environment do
-    Task.open.each do |task|
+    Task.open.where(created_at: 2.weeks.ago..Time.now).each do |task|
       NewsFeedItem.create(
         product: task.product,
         source_id: task.user.id,
