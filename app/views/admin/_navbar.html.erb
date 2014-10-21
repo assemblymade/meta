@@ -25,6 +25,9 @@
       <li class="<%= "active" if controller_active?(:users) %>">
         <%= link_to 'Users', admin_users_path %>
       </li>
+      <li class="<%= "active" if controller_active?(:leaderboard) %>">
+        <%= link_to 'Leaderboard', admin_leaderboard_index_path %>
+      </li>
       <li>
         <%= link_to 'Sidekiq', '/admin/sidekiq' %>
       </li>
