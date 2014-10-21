@@ -135,7 +135,7 @@ GEM
     gibbon (1.1.3)
       httparty
       multi_json (>= 1.3.4)
-    git (1.2.6)
+    git (1.2.8)
     github-markdown (0.6.4)
     globalid (0.3.0)
       activesupport (>= 4.1.0)
