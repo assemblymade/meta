@@ -5,7 +5,7 @@
 
 <ul class="nav nav-skills bg-white mb2">
   <% %w(Frontend Backend Design Marketing Writing Strategy).each do |skill| %>
-    <li class="<%= 'active' if params[:tag] == skill.downcase %>"><a class="px2 py4" href="?tag=<%= skill.downcase %>"><%= skill %></a></li>
+    <li class="<%= 'active' if params[:tag] == skill.downcase %>"><a class="px2 py4" href="?tag=<%= skill.downcase %>&amp;sort=<%= params[:sort] %>"><%= skill %></a></li>
   <% end %>
 </ul>
 
@@ -15,16 +15,16 @@
   <div class="center mt2">
     <ul class="nav nav-mini-pills">
       <li class="<%= 'active' if params[:sort] == 'active' || params[:sort].blank? %>">
-        <a href="?sort=active">Most Active</a>
+        <a href="?sort=active&amp;tag=<%= params[:tag] %>">Most Active</a>
       </li>
       <li class="<%= 'active' if params[:sort] == 'popular' %>">
-        <a href="?sort=popular">Most Popular</a>
+        <a href="?sort=popular&amp;tag=<%= params[:tag] %>">Most Popular</a>
       </li>
       <li class="<%= 'active' if params[:sort] == 'new' %>">
-        <a href="?sort=new">New to Assembly</a>
+        <a href="?sort=new&amp;tag=<%= params[:tag] %>">New to Assembly</a>
       </li>
       <li class="<%= 'active' if params[:sort] == 'teambuilding' %>">
-        <a href="?sort=teambuilding">Needs Teammates</a>
+        <a href="?sort=teambuilding&amp;tag=<%= params[:tag] %>">Needs Teammates</a>
       </li>
     </ul>
   </div>
