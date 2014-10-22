@@ -53,6 +53,12 @@ var ReadTimesMixin = require('../mixins/read_times');
         return console.error(e);
       }
 
+      if (window.app.chatRoom) {
+        if (!_.find(data.chat_rooms, function(room){ return room.id == window.app.chatRoom.id })) {
+          data.chat_rooms.push(window.app.chatRoom)
+        }
+      }
+
       var chatRooms = data.chat_rooms;
       _sortKeys = data.sort_keys;
 
