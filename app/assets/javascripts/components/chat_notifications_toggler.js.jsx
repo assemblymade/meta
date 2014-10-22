@@ -27,14 +27,6 @@ var LocalStorageMixin = require('../mixins/local_storage');
       });
     },
 
-    badge: function() {
-      return (
-        <span
-            className='indicator indicator-danger'
-            style={{ position: 'relative', top: '5px' }} />
-      );
-    },
-
     badgeCount: function() {
       return this.shouldRead() ? ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt) : 0;
     },

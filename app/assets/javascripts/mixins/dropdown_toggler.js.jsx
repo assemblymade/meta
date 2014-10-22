@@ -3,13 +3,14 @@
 (function() {
   var DropdownTogglerMixin = {
     render: function() {
-      var classes = ['icon', 'navbar-icon', this.props.iconClass];
+      var classes = ['icon', this.props.iconClass];
       var total = this.badgeCount();
-      var badge = null;
+      var badgeTotal = null;
+      var badgeClasses = ['badge', 'badge-navbar'];
 
       if (total > 0) {
-        badge = this.badge(total);
-        classes.push('glyphicon-highlight');
+        badgeTotal = this.badge && this.badge();
+        badgeClasses.push('active');
 
         if (window.fluid) {
           window.fluid.dockBadge = total;
@@ -17,9 +18,11 @@
       }
 
       return (
-        <a href={this.props.href} data-toggle='dropdown' onClick={this.acknowledge}>
-          <span className={classes.join(' ')}></span>
-          {badge}
+        <a href={this.props.href} data-toggle='dropdown' onClick={this.acknowledge}  style={{ padding: '12px 6px' }}>
+          <span className={badgeClasses.join(' ')}>
+            <span className={classes.join(' ')}></span>
+            {badgeTotal}
+          </span>
           <span className='visible-xs-inline' style={{ 'margin-left': '5px' }}>
             {this.props.label}
           </span>

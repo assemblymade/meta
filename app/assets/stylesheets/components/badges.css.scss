@@ -2,6 +2,18 @@
   border-radius: 999px;
 }
 
+.badge-navbar {
+  background-color: $gray-lighter;
+  color: #648990;
+  font-size: 14px;
+  padding: 6px 12px 3px;
+
+  &.active {
+    background-color: #ff4f38;
+    color: white;
+  }
+}
+
 .badge-notification {
   position: absolute;
   top: 6px;
