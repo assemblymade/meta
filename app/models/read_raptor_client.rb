@@ -40,12 +40,17 @@ class ReadRaptorClient
 
   def request(method, url, body)
     return unless ENV['READRAPTOR_URL']
-    Rails.logger.info "  [readraptor] #{method} #{url}"
 
     resp = connection.send(method) do |req|
       req.url url
       req.body = body.to_json
     end
+
+    log = ['  ', method, url, body.inspect, "[#{resp.status}]"]
+    if !resp.success?
+      log << resp.body.inspect
+    end
+    Rails.logger.info log.join(' ')
 
     JSON.load(resp.body) rescue nil
   end

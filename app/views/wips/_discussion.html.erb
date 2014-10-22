@@ -3,6 +3,12 @@
     <% if i == events.size - 1 %>
       <div class="timeline-insert js-timestamp">
         <time class="timestamp" datetime="<%= event.created_at.iso8601 %>"></time>
+        <span data-react-class="ReadReceipts" data-react-props="<%= {
+          url: readraptor_article_path(ReadRaptorSerializer.serialize_entities(events.last[0]).first),
+          track_url: (ReadraptorTracker.new(
+            ReadRaptorSerializer.serialize_entities(events.last[0]).first, current_user.id
+          ).url if signed_in?)
+        }.to_json %>"></span>
       </div>
     <% end %>
 

@@ -1,5 +1,7 @@
 #= require notify.js
 
+# this is the bounty/discussions view
+
 class window.DiscussionView extends Backbone.View
   events:
     'click   .js-new-event' : 'onNewCommentClicked'

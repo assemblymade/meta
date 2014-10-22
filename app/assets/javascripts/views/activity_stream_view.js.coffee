@@ -4,6 +4,8 @@
 
 SCROLL_TOLERANCE = 20
 
+# This is the chat view
+
 class window.ActivityStreamView extends Backbone.View
   collection: ActivityStream
 

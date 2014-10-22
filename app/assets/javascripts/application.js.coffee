@@ -87,6 +87,12 @@ class window.Application
       "#{val} #{name}"
     else
       "#{val} #{name}s"
+  
+  pluralized: (val, singular, plural)->
+    if val == 1
+      singular
+    else
+      plural
 
   currentProductBalance: ->
     if user = @currentUser()
