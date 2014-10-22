@@ -34,7 +34,7 @@
     },
 
     usernames: function() {
-      var alphabetical = _.sortBy(this.state.readers, function(username) { username.toLowerCase() })
+      var alphabetical = _.sortBy(this.state.readers, function(username) { return username.toLowerCase() })
       return _.map(alphabetical, function(username){ return '@' + username }).join(' ')
     },
 

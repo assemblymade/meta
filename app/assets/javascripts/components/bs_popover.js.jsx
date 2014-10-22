@@ -39,7 +39,6 @@
   };
 
   // use single body click handler so multiple popovers don't clobber
-  var Set = require('Set')
   var $ignoreNodes = $()
   $('body').on('click', function(e){
     if ($ignoreNodes.has(e.target).length === 0 &&
@@ -93,7 +92,7 @@
       );
 
       $(this.getDOMNode()).popover('destroy');
-      $ignoreNodes.remove(this.getDOMNode())
+      $ignoreNodes = _.without($ignoreNodes, this.getDOMNode())
       $('body').off('hideBsPopovers', this.props.onHide);
     },
 
