@@ -35,7 +35,7 @@
 
     margin-right: 0;
 
-    padding-top: 12px;
+    padding-top: 13px;
     padding-bottom: 12px;
 
     &:hover {
@@ -69,6 +69,14 @@
     a:hover,
     a:focus {
       cursor: pointer;
+    }
+  }
+
+  &.navbar-nav {
+    border-bottom: 0;
+
+    > li.active > a {
+      font-weight: normal;
     }
   }
 }

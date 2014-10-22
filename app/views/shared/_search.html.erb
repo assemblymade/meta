@@ -1,7 +1,7 @@
-<form action="<%= scoped_search_path %>" class="navbar-form navbar-left">
-  <div class="form-group">
-    <input type="text" name="q" value="<%= params[:q] %>" class="form-control" autocomplete="off"
-      placeholder="<%= @product ? "Search #{@product.name}" : "Search…" %>"  />
+<form action="<%= scoped_search_path %>" class="navbar-form navbar-left" style="margin-top: 8px; margin-right: 12px">
+  <div class="form-group has-feedback">
+    <input type="search" name="q" value="<%= params[:q] %>" placeholder="<%= @product ? "Search #{@product.name}" : "Search" %>" class="form-control form-control-search" autocomplete="off" />
+    <span class="icon icon-magnifier form-control-feedback"></span>
     <input type="hidden" name="type" value="<%= @type %>">
   </div>
   <button type="submit" class="btn btn-default sr-only">Search</button>

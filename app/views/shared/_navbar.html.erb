@@ -20,24 +20,14 @@
         <%= render 'shared/search' %>
       <% end %>
 
-      <ul class="nav navbar-nav">
+      <ul class="nav nav-tabs navbar-nav">
 
         <li class="<%= nav_active_class(:discover) %>">
           <a href="<%= discover_path %>">Discover</a>
         </li>
 
-        <% if feature?(:discover_bounties) %>
-          <li class="<%= nav_active_class(:discover_bounties) %>">
-            <a href="<%= discover_path(:bounties) %>">Bounties</a>
-          </li>
-        <% end %>
-
         <li class="<%= nav_active_class(:platform_updates) %>">
-          <a href="<%= discover_path(:updates) %>">Updates</a>
-        </li>
-
-        <li class="<%= nav_active_class(:community) %>">
-          <a href="<%= chat_rooms_path %>">Community Chat</a>
+          <a href="<%= discover_path(:updates) %>">What’s Happening</a>
         </li>
 
       </ul>
@@ -56,19 +46,22 @@
               }.to_json %>">
         <% else %>
           <div class="navbar-right">
-            <ul class="nav navbar-nav">
+            <a class="btn btn-success navbar-btn" href="<%= new_user_registration_path %>">
+              Sign up
+            </a>
+          </div>
+
+          <div class="navbar-right">
+            <ul class="nav nav-tabs navbar-nav">
               <li>
                 <a href="<%= new_user_session_path %>">
                   Log in
                 </a>
               </li>
             </ul>
-
-            <a class="btn btn-success navbar-btn" href="<%= new_user_registration_path %>">Sign up</a>
           </div>
         <% end %>
 
-        </ul>
       </div>
     </div>
   </div>
