@@ -1,5 +1,5 @@
 module Activities
-  class FoundProduct < Activity
+  class Found < Activity
     def publishable
       true
     end

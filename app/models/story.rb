@@ -14,7 +14,7 @@ class Story < ActiveRecord::Base
     ["Comment", "Task"]                     => :wip_subscribers,
     ["Comment", "Wip"]                      => :wip_subscribers,
     # ["CreateCoreTeamMembership", "Product"] => :product_subscribers,
-    # ["FoundProduct", "Product"]             => :product_subscribers,
+    # ["Found", "Product"]             => :product_subscribers,
     # ["GitPush", "Work"]                     => :product_subscribers,
     # ["Introduce", "TeamMembership"]         => :product_subscribers,
     # ["Launch", "Product"]                   => :product_subscribers,

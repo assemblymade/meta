@@ -5,7 +5,7 @@ class CreateProject < ApiWorker
 
     return false unless Activity.where(target_id: @product.id)
                                 .where.not(type: 'Activities::Chat')
-                                .where.not(type: 'Activities::FoundProduct')
+                                .where.not(type: 'Activities::Found')
                                 .empty?
 
     post Rails.application.routes.url_helpers.api_product_projects_path(@product),

@@ -8,7 +8,7 @@ class PostChatMessage < ApiWorker
       # TODO: Double-check this query, make it more efficient
       return false unless Activity.where(target_id: @product.id)
                                   .where.not(type: 'Activities::Chat')
-                                  .where.not(type: 'Activities::FoundProduct')
+                                  .where.not(type: 'Activities::Found')
                                   .empty?
     end
 

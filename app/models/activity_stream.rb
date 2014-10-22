@@ -4,7 +4,7 @@ class ActivityStream
 
   KEY_PREFIX = 'activitystream'
   DEFAULT_PAGE_LENGTH = 50
-  PUSH_TO_META = [Activities::FoundProduct, Activities::Launch]
+  PUSH_TO_META = [Activities::Launch]
 
   def self.serialize(activity)
     activity.id.to_s

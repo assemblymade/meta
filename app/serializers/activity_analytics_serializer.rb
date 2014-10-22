@@ -1,6 +1,6 @@
 class ActivityAnalyticsSerializer < ActiveModel::Serializer
   attributes :product_id, :product_slug
-  attributes :verb, :verb_subject
+  attributes :verb, :verb_subject, :verb_and_subject
 
   def product_id
     product.id
@@ -16,6 +16,10 @@ class ActivityAnalyticsSerializer < ActiveModel::Serializer
 
   def user_type
     product.core_team?(actor) ? "Core" : "User"
+  end
+
+  def verb_and_subject
+    "#{verb}.#{verb_subject}"
   end
 end
 
