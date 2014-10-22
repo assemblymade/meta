@@ -46,19 +46,22 @@
               }.to_json %>">
         <% else %>
           <div class="navbar-right">
-            <ul class="nav navbar-nav">
+            <a class="btn btn-success navbar-btn" href="<%= new_user_registration_path %>">
+              Sign up
+            </a>
+          </div>
+
+          <div class="navbar-right">
+            <ul class="nav nav-tabs navbar-nav">
               <li>
                 <a href="<%= new_user_session_path %>">
                   Log in
                 </a>
               </li>
             </ul>
-
-            <a class="btn btn-success navbar-btn" href="<%= new_user_registration_path %>">Sign up</a>
           </div>
         <% end %>
 
-        </ul>
       </div>
     </div>
   </div>
