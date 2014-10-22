@@ -157,6 +157,7 @@ namespace :metrics do
     include ActionView::Helpers::NumberHelper
     include CurrencyHelper
     data = by_month do |date|
+      revenue = ProfitReport.where(end_at: date.end_of_month).sum(:revenue)
       earned = ProfitReport.where(end_at: date.end_of_month).map(&:payable).reduce(0, :+)
 
       all_earnings = ProfitReport.where('end_at <= ?', date.end_of_month).
@@ -166,21 +167,21 @@ namespace :metrics do
         sum(:total_amount)
 
       held = all_earnings - all_withdrawals
-      
+
       paid = User::Withdrawal.
         where("created_at > date(?) and created_at <= date(?)", date.beginning_of_month, date.end_of_month).
         sum(:total_amount)
 
-      [Date::MONTHNAMES[date.month], [earned, held, paid]]
+      [Date::MONTHNAMES[date.month], [revenue, earned, held, paid]]
     end
-    puts [' '.rjust(10), 'Earned'.rjust(15), 'Held'.rjust(15), 'Withdrawn'.rjust(15)].join(' ')
-    totals = [0, 0, 0]
-    data.each do |month, (earned, held, paid)|
-      puts [month.rjust(10), currency(earned).rjust(15), currency(held).rjust(15), currency(paid).rjust(15)].join(' ')
-      totals = [totals[0] + earned, held, totals[2] + paid]
+    puts [' '.rjust(10), 'Revenue'.rjust(15), 'Earned'.rjust(15), 'Held'.rjust(15), 'Withdrawn'.rjust(15)].join(' ')
+    totals = [0, 0, 0, 0]
+    data.each do |month, (revenue, earned, held, paid)|
+      puts [month.rjust(10), currency(revenue).rjust(15), currency(earned).rjust(15), currency(held).rjust(15), currency(paid).rjust(15)].join(' ')
+      totals = [totals[0] + revenue, totals[1] + earned, held, totals[3] + paid]
     end
-    puts [' '.rjust(10), '------------'.rjust(15), '------------'.rjust(15), '------------'.rjust(15)].join(' ')
-    puts [' '.rjust(10), currency(totals[0]).rjust(15), currency(totals[1]).rjust(15), currency(totals[2]).rjust(15)].join(' ')
+    puts [' '.rjust(10), '------------'.rjust(15), '------------'.rjust(15), '------------'.rjust(15), '------------'.rjust(15)].join(' ')
+    puts [' '.rjust(10), currency(totals[0]).rjust(15), currency(totals[1]).rjust(15), currency(totals[2]).rjust(15), currency(totals[3]).rjust(15)].join(' ')
   end
 
   task :all => ['metrics:total_users', 'metrics:created', 'metrics:mau','metrics:mac','metrics:mtc','metrics:map','metrics:mtw','metrics:mpd','metrics:mps']

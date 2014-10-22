@@ -8,6 +8,7 @@ class ProfitReport < ActiveRecord::Base
   validates :revenue, presence: :true
 
   validates :end_at, presence: :true, uniqueness: { scope: :product }
+  validate :end_at_end_of_month
 
   before_validation :set_coins
 
@@ -57,5 +58,9 @@ class ProfitReport < ActiveRecord::Base
 
   def set_coins
     self.coins = TransactionLogEntry.to_month_end(end_at).where(product: product).in_user_wallets.sum(:cents)
+  end
+
+  def end_at_end_of_month
+    errors[:end_at] << "must be last day of month" if self.end_at != self.end_at.end_of_month
   end
 end
