@@ -10,6 +10,13 @@
   <% end %>
 
   <% if @user_cents.any? %>
+
+    <% if url = OpenAssets::Cryptodata.new.color_url(@product) %>
+      <a href="<%= url %>">
+        <button type="button" class="btn btn-default">Check it out on the Blockchain</button>
+      </a>
+    <% end %>
+
     <div class="table-responsive">
       <table class="table">
         <thead>
