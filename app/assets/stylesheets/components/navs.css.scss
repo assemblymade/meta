@@ -71,6 +71,14 @@
       cursor: pointer;
     }
   }
+
+  &.navbar-nav {
+    margin-bottom: -2px;
+
+    > li.active > a {
+      font-weight: normal;
+    }
+  }
 }
 
 .nav-tabs.nav-justified {

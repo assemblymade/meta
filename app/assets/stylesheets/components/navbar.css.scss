@@ -16,6 +16,10 @@
 
 .navbar-form .form-control {
   box-shadow: none;
+
+  @placeholder {
+    color: $gray-light;
+  }
 }
 
 .navbar-item-muted {

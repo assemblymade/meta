@@ -40,3 +40,26 @@ input[type=radio], input[type=checkbox] {
     right: 0;
   }
 }
+
+.form-control-search {
+  background-color: #f5f5f5;
+  border: 1px solid #f5f5f5;
+  border-radius: 18px;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+
+  & + .form-control-feedback {
+    color: #648990;
+  }
+
+  &:focus + .form-control-feedback {
+    color: $blue;
+  }
+}
+
+.icon.form-control-feedback {
+  position: absolute;
+  top: 10px !important;
+  right: 10px !important;
+  z-index: 2;
+}
