@@ -23,7 +23,7 @@
       }
 
       return (
-        <div className="row comment p2" style={style} key={comment.id}>
+        <div className="comment p1" style={style} key={comment.id}>
           <div className="left mr2">
             <Avatar user={comment.user} size={32} />
           </div>
@@ -72,7 +72,7 @@
 
     render: function() {
       return (
-        <div className="well" style={{ 'border-radius': '0px' }}>
+        <div className="card-footer" style={{ 'border-radius': '0px' }}>
           {this.comments()}
           {this.optimisticComments()}
           <hr style={{ 'margin-top': '0px' }}/>

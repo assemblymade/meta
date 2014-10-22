@@ -1,7 +1,7 @@
 class TaskSerializer < ApplicationSerializer
   include ReadraptorTrackable
 
-  attributes :number, :title, :url, :body_preview
+  attributes :number, :title, :url, :body_preview, :tags, :value
   attributes :state, :urgency
 
   def url
@@ -14,5 +14,9 @@ class TaskSerializer < ApplicationSerializer
 
   def body_preview
     object.description
+  end
+
+  def value
+    WipContracts.new(object, object.product.auto_tip_contracts.active).earnable_cents.floor
   end
 end
