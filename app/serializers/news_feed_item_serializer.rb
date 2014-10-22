@@ -1,20 +1,10 @@
 class NewsFeedItemSerializer < ApplicationSerializer
-  attributes :logo_url, :message, :url
+  attributes :message, :url
 
   has_one :product
   has_one :target
   has_one :user
   has_many :news_feed_item_comments, serializer: NewsFeedItemCommentSerializer
-
-  def logo_url
-    image_url = if product.logo.present?
-      product.logo.url
-    elsif product.poster.present?
-      product.poster_image.url
-    else
-      '/assets/app_icon.png'
-    end
-  end
 
   def message
     object.message

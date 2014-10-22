@@ -2,9 +2,17 @@
 
 (function() {
   var Avatar = require('../avatar.js.jsx');
+  var NewsFeedBountyItemBody = require('./bounty_item/body.js.jsx');
+  var NewsFeedBountyItemTitle = require('./bounty_item/title.js.jsx');
   var NewsFeedItemComments = require('./news_feed_item_comments.js.jsx');
 
   var NewsFeedItem = React.createClass({
+    propTypes: {
+      product: React.PropTypes.object.isRequired,
+      target: React.PropTypes.object,
+      user: React.PropTypes.object.isRequired
+    },
+
     avatar: function() {
       return (
         <span className="mr2">
@@ -24,26 +32,18 @@
       );
     },
 
-    product: function() {
+    productAndTitle: function() {
       var product = this.props.product;
       var target = this.props.target;
 
       return (
         <div className="card-heading clearfix">
           <div className="col col-1">
-            <a href={this.props.product.url} title={this.props.product.name}>
-              <img className="app-icon" src={this.props.logo_url} style={{ width: '48px' }} />
+            <a href={product.url} title={product.name}>
+              <img className="app-icon" src={product.logo_url} style={{ width: '48px' }} />
             </a>
           </div>
-          <div className="ml1 col col-10" style={{ 'font-size': '24px', 'line-height': '1em' }}>
-            <span className="text-coins text-weight-bold">
-              <span className="icon icon-app-coin"></span>
-              <span>{numeral(target.value).format('0,0')}</span>
-            </span>
-            <span>
-              &nbsp;{target.title} <a href={target.url} style={{'color': '#d3d3d3'}}>#{target.number}</a>
-            </span>
-          </div>
+          {this.targetTitle()}
         </div>
       );
     },
@@ -53,11 +53,42 @@
         <div className="mb4">
           {this.header()}
           <div className="card" style={{ 'margin-bottom': '0px', 'border-radius': '0px' }}>
-            {this.product()}
+            {this.productAndTitle()}
+            {this.targetBody()}
             <NewsFeedItemComments item={this.props} />
           </div>
         </div>
       );
+    },
+
+    targetBody: function() {
+      var target = this.props.target;
+
+      switch (target.type) {
+      case 'task':
+        return <NewsFeedBountyItemBody bounty={target} />;
+      default:
+        return null;
+      }
+    },
+
+    targetTitle: function() {
+      var target = this.props.target;
+
+      switch (target.type) {
+      case 'task':
+        return <NewsFeedBountyItemTitle bounty={target} />;
+      default:
+        return (
+          <div className="ml1 col col-10" style={{ 'font-size': '24px', 'line-height': '1em' }}>
+            <span>
+              &nbsp;<a href={target.url} style={{color: '#333'}}>
+                {target.title}
+              </a>
+            </span>
+          </div>
+        );
+      }
     },
 
     targetType: function() {
