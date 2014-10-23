@@ -49,14 +49,13 @@
         var user = this.props.user;
 
         return (
-          <div className="card-heading clearfix text-center">
-            <div className="col col-1">
-              <a href={product.url} title={product.name}>
-                <img className="app-icon" src={product.logo_url} style={{ width: '48px' }} />
-              </a>
-            </div>
-            <div className="col col-11">
-              <span style={{ 'font-weight': 'bold', 'font-size': '24px' }}>{target.bio}</span>
+          <div className="p3 clearfix" style={{ 'border-bottom': '1px solid #f5f5f5' }}>
+            <a className="block left mr3" href={product.url} title={product.name}>
+              <AppIcon app={product} size={48} />
+            </a>
+
+            <div className="overflow-hidden h4 mt0 mb0">
+              {target.bio}
             </div>
           </div>
         );
