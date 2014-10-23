@@ -4,6 +4,7 @@
   var Avatar = require('../avatar.js.jsx');
   var NewsFeedBountyItemBody = require('./bounty_item/body.js.jsx');
   var NewsFeedBountyItemTitle = require('./bounty_item/title.js.jsx');
+  var NewsFeedPostItemBody = require('./post_item/body.js.jsx');
   var NewsFeedItemComments = require('./news_feed_item_comments.js.jsx');
 
   var NewsFeedItem = React.createClass({
@@ -67,7 +68,10 @@
       switch (target.type) {
       case 'task':
         return <NewsFeedBountyItemBody bounty={target} />;
+      case 'post':
+        return <NewsFeedPostItemBody post={target} />;
       default:
+        console.log(target);
         return null;
       }
     },

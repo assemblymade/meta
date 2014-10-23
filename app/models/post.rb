@@ -16,6 +16,8 @@ class Post < ActiveRecord::Base
   validates :slug,    presence: true
   validates :summary, length: { minimum: 2, maximum: 140 }, allow_blank: true
 
+  after_commit :push_to_news_feed, on: :create
+
   friendly_id :title, use: :slugged
 
   def summary
@@ -28,6 +30,14 @@ class Post < ActiveRecord::Base
 
   def flagged?
     flagged_at.present?
+  end
+
+  def push_to_news_feed
+    NewsFeedItem.create_with_target(self)
+  end
+
+  def user
+    author
   end
 
 end
