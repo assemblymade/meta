@@ -27,6 +27,16 @@
   }
 }
 
+.navbar {
+  .avatar {
+    opacity: 0.9;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
 .navbar-product {
   border-bottom: 1px solid $brand-divider;
   padding-top: ($navbar-height - 36px) / 2;
