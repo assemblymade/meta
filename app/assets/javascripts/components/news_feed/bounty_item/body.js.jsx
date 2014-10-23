@@ -8,7 +8,7 @@
       var bounty = this.props.bounty;
 
       return (
-        <div className="card-body">
+        <div className="p3">
           <span dangerouslySetInnerHTML={{__html: bounty.markdown_description}} />
         </div>
       );

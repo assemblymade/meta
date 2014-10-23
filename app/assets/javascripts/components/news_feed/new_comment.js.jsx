@@ -30,18 +30,18 @@
     render: function() {
       return (
         <div className="clearfix">
-          <div className="left p1">
-            <Avatar user={window.app.currentUser().attributes} size={32} />
+          <div className="left mr3">
+            <Avatar user={window.app.currentUser().attributes} size={36} />
           </div>
-          <div className="overflow-hidden p1">
+          <div className="overflow-hidden">
             <textarea type="text"
-                className="form-input"
+                className="form-control"
                 rows="1"
                 value={this.state.comment}
                 onKeyPress={this.onKeyPress}
                 onChange={this.onChange}
                 placeholder="Press <enter> to comment"
-                style={{ width: '100%' }} />
+                />
           </div>
         </div>
       );

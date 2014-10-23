@@ -14,24 +14,17 @@
     },
 
     comment: function(comment, optimistic) {
-      var style = {
-        'margin-bottom': '10px'
-      };
-
       if (optimistic) {
         style.opacity = 0.5;
       }
 
       return (
-        <div className="comment p1" style={style} key={comment.id}>
-          <div className="left mr2">
-            <Avatar user={comment.user} size={32} />
+        <div className="h6 mb3 clearfix" key={comment.id}>
+          <div className="left mr3">
+            <Avatar user={comment.user} size={36} />
           </div>
           <div className="overflow-hidden">
-            <div>
-                {this.username(comment.user)}
-                {this.timestamp(comment.created_at)}
-            </div>
+            {this.username(comment.user)}
             <div>{comment.body}</div>
           </div>
         </div>
@@ -48,15 +41,13 @@
       if (numberOfComments > numberOfCommentsToShow) {
         return (
           <div>
-            <div className="p1">
-              <a href="javascript:void(0);" onClick={this.showMoreComments}>
-                <span className="icon icon-bubble"></span>
-                &nbsp;Show more
-              </a>
-              <span className="pull-right">
-                {'Showing ' + numberOfCommentsToShow + ' of ' + numberOfComments}
-              </span>
-            </div>
+            <a href="javascript:void(0);" onClick={this.showMoreComments}>
+              <span className="icon icon-bubble"></span>
+              &nbsp;Show more
+            </a>
+            <span className="pull-right">
+              {'Showing ' + numberOfCommentsToShow + ' of ' + numberOfComments}
+            </span>
             {_.last(comments, numberOfCommentsToShow)}
           </div>
         );
@@ -100,9 +91,8 @@
 
     render: function() {
       return (
-        <div className="card-footer" style={{ 'border-radius': '0px' }}>
+        <div className="p3" style={{ 'border-top': '1px solid #f5f5f5' }}>
           {this.comments()}
-          <hr style={{ 'margin-top': '0px' }}/>
           <NewComment url={this.state.url} thread={this.props.item.id} />
         </div>
       );
@@ -124,11 +114,7 @@
 
     username: function(user) {
       return (
-        <span className="mr2">
-          <strong>
-            <a href={user.url}>{user.username}</a>
-          </strong>
-        </span>
+        <a href={user.url}>{user.username}</a>
       );
     }
   });

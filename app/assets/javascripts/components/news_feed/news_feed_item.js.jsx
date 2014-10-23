@@ -23,12 +23,20 @@
     },
 
     header: function() {
+      var user = this.props.user;
+      var target = this.props.target;
+
       return (
-        <div className="mb1">
-          {this.avatar()}
-          {this.username()}
-          {this.targetType()}
-          {this.timestamp()}
+        <div className="mb2 clearfix h6">
+          <div className="mr2 left">
+            <Avatar user={this.props.user} size={48} />
+          </div>
+          <div className="overflow-hidden py2">
+            <a href={user.url}>{user.username}</a>
+            {this.targetVerb(target.type)}
+            <a href={target.url}>{this.targetNoun(target.type)}</a>
+            {' '} at {moment(new Date(this.props.created)).format('h:mm a')}
+          </div>
         </div>
       );
     },
@@ -55,22 +63,23 @@
       }
 
       return (
-        <div className="card-heading clearfix">
-          <div className="col col-1">
-            <a href={product.url} title={product.name}>
-              <img className="app-icon" src={product.logo_url} style={{ width: '48px' }} />
-            </a>
-          </div>
-          {this.targetTitle()}
+        <div className="p3 clearfix" style={{ 'border-bottom': '1px solid #f5f5f5' }}>
+          <a className="block left mr3" href={product.url} title={product.name}>
+            <AppIcon app={product} size={48} />
+          </a>
+
+          <span className="overflow-hidden">
+            {this.targetTitle()}
+          </span>
         </div>
       );
     },
 
     render: function() {
       return (
-        <div className="mb4">
+        <div>
           {this.header()}
-          <div className="card" style={{ 'margin-bottom': '0px', 'border-radius': '0px' }}>
+          <div className="bg-white mb4 rounded overflow-hidden">
             {this.productAndTitle()}
             {this.targetBody()}
             <NewsFeedItemComments item={this.props} />
@@ -100,9 +109,9 @@
         return <NewsFeedBountyItemTitle bounty={target} />;
       default:
         return (
-          <div className="ml1 col col-10" style={{ 'font-size': '24px', 'line-height': '1em' }}>
+          <div className="h4">
             <span>
-              &nbsp;<a href={target.url} style={{color: '#333'}}>
+              <a href={target.url} style={{color: '#333'}}>
                 {target.title}
               </a>
             </span>

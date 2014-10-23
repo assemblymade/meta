@@ -84,7 +84,7 @@ $line-height-base:     1.6;
 $line-height-computed: floor(($font-size-base * $line-height-base)); // 24px
 
 $headings-font-family: inherit;
-$headings-font-weight: 600;
+$headings-font-weight: normal;
 $headings-line-height: 1.2;
 $headings-color:       inherit;
 

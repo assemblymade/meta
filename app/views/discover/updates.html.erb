@@ -3,7 +3,15 @@
 
 <%= render 'shared/navbar' %>
 
-<div class="page page-flat">
+<% if current_user && current_user.staff? %>
+  <style>
+    body {
+      background-color: #f5f5f5;
+    }
+  </style>
+<% end %>
+
+<div class="mt4 mb4">
   <div class="container">
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
@@ -11,7 +19,7 @@
           <div class="col-md-9">
             <% if current_user && current_user.staff? %>
               <% @posts.each do |item| %>
-                <div data-react-class="NewsFeedItem" data-react-props="<%= item.to_json %>"></div>
+                <%= react_component 'NewsFeedItem', item %>
               <% end %>
             <% else %>
               <% @page.each do |post| %>
