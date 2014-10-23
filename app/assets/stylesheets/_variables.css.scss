@@ -192,7 +192,7 @@ $input-border:        $brand-border;
 $input-border-radius: $border-radius-base;
 $input-border-focus:  lighten($brand-primary, 15%);
 
-$input-color-placeholder: lighten($gray-light, 25%);
+$input-color-placeholder: #999999;
 
 $input-height-base:  ($line-height-computed + ($padding-base-vertical * 2) + 2);
 $input-height-large: (ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2);

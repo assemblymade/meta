@@ -16,6 +16,14 @@ input[type=radio], input[type=checkbox] {
   margin-top: 6px;
 }
 
+.form-control {
+  &:focus {
+    @include placeholder {
+      color: #cccccc;
+    }
+  }
+}
+
 .markdown-editor-control {
   position: relative;
 
@@ -69,16 +77,8 @@ input[type=radio], input[type=checkbox] {
     padding-left: 20px;
     padding-right: 10px;
 
-    &::-webkit-input-placeholder {
-      color: #999999;
-    }
-
     &:focus {
       border: 1px solid $blue;
-
-      &::-webkit-input-placeholder {
-        color: #cccccc;
-      }
     }
 
     & + .form-control-feedback {
