@@ -42,7 +42,14 @@
 
         return (
           <div className="card-heading clearfix text-center">
-            <span style={{ 'font-weight': 'bold', 'font-size': '24px' }}>{target.bio}</span>
+            <div className="col col-1">
+              <a href={product.url} title={product.name}>
+                <img className="app-icon" src={product.logo_url} style={{ width: '48px' }} />
+              </a>
+            </div>
+            <div className="col col-11">
+              <span style={{ 'font-weight': 'bold', 'font-size': '24px' }}>{target.bio}</span>
+            </div>
           </div>
         );
       }
