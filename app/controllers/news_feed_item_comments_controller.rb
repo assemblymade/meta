@@ -18,6 +18,7 @@ class NewsFeedItemCommentsController < ProductController
 
   def forward_comment
     if target = @news_feed_item.target
+      return if target.class == TeamMembership
       event = Event.create_from_comment(
         target,
         Event::Comment,
