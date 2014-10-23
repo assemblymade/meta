@@ -6,7 +6,10 @@
   background-color: $gray-lighter;
   color: #648990;
   font-size: 14px;
-  padding: 6px 12px 3px;
+  height: 24px;
+  line-height: 14px;
+  padding: 5px 12px;
+  vertical-align: middle;
 
   &.active {
     background-color: #ff4f38;

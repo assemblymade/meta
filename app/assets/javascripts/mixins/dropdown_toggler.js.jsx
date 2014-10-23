@@ -18,7 +18,7 @@
       }
 
       return (
-        <a href={this.props.href} data-toggle='dropdown' onClick={this.acknowledge}  style={{ padding: '12px 6px' }}>
+        <a href={this.props.href} data-toggle='dropdown' onClick={this.acknowledge}  style={{ padding: '13px 6px 12px' }}>
           <span className={badgeClasses.join(' ')}>
             <span className={classes.join(' ')}></span>
             {badgeTotal}
