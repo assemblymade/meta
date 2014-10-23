@@ -12,20 +12,20 @@ module BountyStatsHelper
     Wip.connection.execute(query).first
   end
 
-  def created(user_type = nil, week_range = 1, history = 4)
+  def created(user_type = nil, history = 4, week_range = 1)
     stat_helper('created', week_range, history, user_type)
   end
 
-  def awarded(user_type = nil, week_range = 1, history = 4)
+  def awarded(user_type = nil, history = 4, week_range = 1)
     stat_helper('awarded', week_range, history, user_type)
   end
 
-  def closed(user_type = nil, week_range = 1, history = 4)
+  def closed(user_type = nil, history = 4, week_range = 1)
     stat_helper('closed', week_range, history, user_type)
   end
 
   # TODO: this is not DRY
-  def date_helper(week_range = 1, history = 4)
+  def date_helper(history = 4, week_range = 1)
     dates = []
     weeks = history.downto(-1).to_a
     ceiling = weeks.max
@@ -52,6 +52,8 @@ module BountyStatsHelper
       query = query.select{|t| t.product.core_team?(t.user)}
     elsif user_type == 'staff'
       query = query.select{|t| t.user.staff?}
+    elsif user_type == 'noncore'
+      query = query.select{|t| !t.product.core_team?(t.user) && !t.user.staff?}
     end
     query
   end
@@ -83,7 +85,7 @@ module BountyStatsHelper
           query = Task.where(state: :resolved).where(closed_at: startt..endt)
         end
         dates << startt
-        results << Rails.cache.fetch("#{status}_#{user_type}_#{endt.to_i}") do; filtered_query(query, user_type).count.to_f; end
+        results << Rails.cache.fetch("#{status}_#{user_type}_#{endt.to_i}_#{history}") do; filtered_query(query, user_type).count.to_f; end
       end
     end
     results
