@@ -116,7 +116,7 @@
 
       return (
         <span>
-          {this.targetVerb(target.type)} <a href={target.url}>{this.targetNoun(target.type)}</a>
+          {this.targetVerb(target.type)} {this.targetNoun(target.type)}
         </span>
       );
     },
@@ -128,14 +128,14 @@
         return typeMap[type].call(this);
       }
 
-      return type;
+      return <a href={this.props.target.url}>{type}</a>;
     },
 
     targetVerb: function(type) {
       var typeMap = this.typeMap.verbs;
 
       if (typeMap[type]) {
-        return typeMap[type];
+        return typeMap[type].call(this);
       }
 
       return ' posted a new ';
@@ -151,15 +151,33 @@
 
     typeMap: {
       verbs: {
-        team_membership: ' joined the '
+        task: function() {
+          return (
+            <span>
+              &nbsp;posted a new <a href={this.props.target.url}>bounty</a>
+            </span>
+          );
+        },
+
+        team_membership: function() {
+          return ' joined the ';
+        }
       },
       nouns: {
         post: function() {
           return 'update';
         },
+
         task: function() {
-          return 'bounty';
+          var product = this.props.product;
+
+          return  (
+            <span>
+              in <a href={product.url}>{product.name}</a>
+            </span>
+          );
         },
+
         team_membership: function() {
           var product = this.props.product;
 
