@@ -52,21 +52,13 @@ class PeopleController < ProductController
       @membership = @product.team_memberships.create!(user: current_user, is_core: false)
     end
 
-    if params[:introduction]
-      track_params = ProductAnalyticsSerializer.new(@product, scope: current_user).as_json
-      track_event 'product.team.introduced', track_params
-      introduce()
-    end
-
     update_interests(membership_params[:interests])
 
     bio_was = @membership.bio
     @membership.update(bio: membership_params[:bio])
 
     if @membership.bio.present? && bio_was.nil?
-      @product.partner_ids.each do |user_id|
-        ProductMailer.delay(queue: 'mailer').new_introduction(user_id, @membership.id)
-      end
+      process_introduction
     end
 
     respond_to do |format|
@@ -112,16 +104,25 @@ class PeopleController < ProductController
     @membership.team_membership_interests.destroy(interests)
   end
 
-  def introduce
+  def membership_params
+    params.require(:membership).permit({:interests => []}, :bio)
+  end
+
+  def process_introduction
+    @product.partner_ids.each do |user_id|
+      ProductMailer.delay(queue: 'mailer').new_introduction(user_id, @membership.id)
+    end
+
+    track_params = ProductAnalyticsSerializer.new(@product, scope: current_user).as_json
+    track_event 'product.team.introduced', track_params
+
+    NewsFeedItem.create_with_target(@membership)
+
     Activities::Introduce.publish!(
       actor: @membership.user,
       subject: @membership,
       target: @product
     )
-  end
-
-  def membership_params
-    params.require(:membership).permit({:interests => []}, :bio)
   end
 
 end

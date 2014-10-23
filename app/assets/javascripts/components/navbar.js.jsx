@@ -28,6 +28,18 @@
           </li>
 
           <li className="navbar-item-muted">
+            <ChatNotificationsToggler
+              iconClass='icon-bubble'
+              href='#notifications'
+              label='Chat' />
+
+            <ChatNotifications
+                url={this.props.chatPath}
+                username={this.props.user.username}
+            />
+          </li>
+
+          <li className="navbar-item-muted">
             <DropdownNotificationsToggler
                 iconClass='icon-bell'
                 href='#stories'
@@ -39,21 +51,9 @@
                 editUserPath={this.props.editUserPath} />
           </li>
 
-          <li className="navbar-item-muted">
-            <ChatNotificationsToggler
-              iconClass='icon-bubbles'
-              href='#notifications'
-              label='Chat' />
-
-            <ChatNotifications
-                url={this.props.chatPath}
-                username={this.props.user.username}
-            />
-          </li>
-
           <li className='dropdown'>
-            <a href='#' className='dropdown-toggle' data-toggle='dropdown' key={'navbar dropdown'}>
-              <Avatar user={this.props.user} size="22" />
+            <a href='#' className='dropdown-toggle' data-toggle='dropdown' key={'navbar dropdown'} style={{ padding: '13px 6px 12px' }}>
+              <Avatar user={this.props.user} size="26" />
               <span className='visible-xs-inline' style={{ 'margin-left': '5px' }}>
                 {this.props.user.username}
               </span>

@@ -2,100 +2,179 @@
 
 (function() {
   var Avatar = require('../avatar.js.jsx');
+  var NewsFeedBountyItemBody = require('./bounty_item/body.js.jsx');
+  var NewsFeedBountyItemTitle = require('./bounty_item/title.js.jsx');
+  var NewsFeedPostItemBody = require('./post_item/body.js.jsx');
   var NewsFeedItemComments = require('./news_feed_item_comments.js.jsx');
 
   var NewsFeedItem = React.createClass({
+    propTypes: {
+      product: React.PropTypes.object.isRequired,
+      target: React.PropTypes.object,
+      user: React.PropTypes.object.isRequired
+    },
+
     avatar: function() {
       return (
-        <span style={{ 'margin-right': '10px' }}>
-          <Avatar user={this.props.user} size={36} />
+        <span className="mr2">
+          <Avatar user={this.props.user} size={48} />
         </span>
       );
     },
 
-    body: function() {
-      return this.props.target ? this.renderWithTarget() : this.renderWithoutTarget();
-    },
-
     header: function() {
       return (
-        <div>
+        <div className="mb1">
           {this.avatar()}
           {this.username()}
+          {this.targetType()}
           {this.timestamp()}
         </div>
       );
     },
 
-    product: function() {
+    productAndTitle: function() {
+      var product = this.props.product;
+      var target = this.props.target;
+
+      if (target.type === 'team_membership') {
+        var user = this.props.user;
+
+        return (
+          <div className="card-heading clearfix text-center">
+            <div className="col col-1">
+              <a href={product.url} title={product.name}>
+                <img className="app-icon" src={product.logo_url} style={{ width: '48px' }} />
+              </a>
+            </div>
+            <div className="col col-11">
+              <span style={{ 'font-weight': 'bold', 'font-size': '24px' }}>{target.bio}</span>
+            </div>
+          </div>
+        );
+      }
+
       return (
-        <div className="icon-right pull-right">
-          <a href={this.props.product.url} title={this.props.product.name}>
-            <img className="app-icon" src={this.props.logo_url} style={{ width: '48px', margin: '18px' }} />
-          </a>
+        <div className="card-heading clearfix">
+          <div className="col col-1">
+            <a href={product.url} title={product.name}>
+              <img className="app-icon" src={product.logo_url} style={{ width: '48px' }} />
+            </a>
+          </div>
+          {this.targetTitle()}
         </div>
       );
     },
 
     render: function() {
       return (
-        <div>
-          {this.product()}
+        <div className="mb4">
+          {this.header()}
           <div className="card" style={{ 'margin-bottom': '0px', 'border-radius': '0px' }}>
-            {this.body()}
+            {this.productAndTitle()}
+            {this.targetBody()}
+            <NewsFeedItemComments item={this.props} />
           </div>
-          <NewsFeedItemComments item={this.props} />
         </div>
       );
     },
 
-    renderWithTarget: function() {
+    targetBody: function() {
       var target = this.props.target;
-      return (
-        <div className="card-body">
-          {this.header()}
-          <div className="row">
-            <a href={target.url}>
-              <div className="col-md-12 card" style={{ 'margin-top': '20px', 'margin-bottom': '0px', border: '1px solid #ececec' }}>
-                <h5 style={{ color: '#333' }}>{target.title}</h5>
-                <p style={{ color: '#333' }}>{target.body_preview}</p>
-              </div>
-            </a>
+
+      switch (target.type) {
+      case 'task':
+        return <NewsFeedBountyItemBody bounty={target} />;
+      case 'post':
+        return <NewsFeedPostItemBody post={target} />;
+      default:
+        return null;
+      }
+    },
+
+    targetTitle: function() {
+      var target = this.props.target;
+
+      switch (target.type) {
+      case 'task':
+        return <NewsFeedBountyItemTitle bounty={target} />;
+      default:
+        return (
+          <div className="ml1 col col-10" style={{ 'font-size': '24px', 'line-height': '1em' }}>
+            <span>
+              &nbsp;<a href={target.url} style={{color: '#333'}}>
+                {target.title}
+              </a>
+            </span>
           </div>
-        </div>
+        );
+      }
+    },
+
+    targetType: function() {
+      var target = this.props.target;
+
+      return (
+        <span>
+          {this.targetVerb(target.type)} <a href={target.url}>{this.targetNoun(target.type)}</a>
+        </span>
       );
     },
 
-    renderWithoutTarget: function() {
-      return (
-        <div className="card-body">
-          {this.header()}
-          <div className="row">
-            <div className="col-md-12" style={{ 'margin-top': '20px' }}>
-              <p style={{ 'font-size': '24px' }}>{this.props.message}</p>
-            </div>
-          </div>
-        </div>
-      );
+    targetNoun: function(type) {
+      var typeMap = this.typeMap.nouns;
+
+      if (typeMap[type]) {
+        return typeMap[type].call(this);
+      }
+
+      return type;
+    },
+
+    targetVerb: function(type) {
+      var typeMap = this.typeMap.verbs;
+
+      if (typeMap[type]) {
+        return typeMap[type];
+      }
+
+      return ' posted a new ';
     },
 
     timestamp: function() {
       return (
-        <span className="text-muted" style={{ 'margin-top': '5px' }}>
-          {$.timeago(new Date(this.props.created))}
+        <span className="text-muted mr5">
+          &nbsp;at {moment(new Date(this.props.created)).format('h:mm a')}
         </span>
       );
+    },
+
+    typeMap: {
+      verbs: {
+        team_membership: ' joined the '
+      },
+      nouns: {
+        post: function() {
+          return 'update';
+        },
+        task: function() {
+          return 'bounty';
+        },
+        team_membership: function() {
+          var product = this.props.product;
+
+          return <a href={product.url + '/people'}>{product.name} team</a>;
+        }
+      }
     },
 
     username: function() {
       var user = this.props.user;
 
       return (
-        <span style={{ 'margin-right': '10px' }}>
-          <strong>
-            <a href={"/users/" + user.username}>{user.username}</a>
-          </strong>
-        </span>
+        <strong>
+          <a href={user.url}>{user.username}</a>
+        </strong>
       );
     }
   });

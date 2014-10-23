@@ -3,15 +3,15 @@ class ActivityAnalyticsSerializer < ActiveModel::Serializer
   attributes :verb, :verb_subject, :verb_and_subject
 
   def product_id
-    product.id
+    product.try(:id)
   end
 
   def product_slug
-    product.slug
+    product.try(:slug)
   end
 
   def product
-    @product ||= object.subject.product
+    @product ||= object.subject.try(:product)
   end
 
   def user_type

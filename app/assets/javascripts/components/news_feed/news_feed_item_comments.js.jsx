@@ -23,7 +23,7 @@
       }
 
       return (
-        <div className="row comment p2" style={style} key={comment.id}>
+        <div className="comment p1" style={style} key={comment.id}>
           <div className="left mr2">
             <Avatar user={comment.user} size={32} />
           </div>
@@ -39,9 +39,36 @@
     },
 
     comments: function() {
+      var confirmedComments = this.confirmedComments();
+      var optimisticComments = this.optimisticComments();
+      var comments = confirmedComments.concat(optimisticComments);
+      var numberOfComments = comments.length;
+      var numberOfCommentsToShow = this.state.numberOfCommentsToShow;
+
+      if (numberOfComments > numberOfCommentsToShow) {
+        return (
+          <div>
+            <div className="p1">
+              <a href="javascript:void(0);" onClick={this.showMoreComments}>
+                <span className="icon icon-bubble"></span>
+                &nbsp;Show more
+              </a>
+              <span className="pull-right">
+                {'Showing ' + numberOfCommentsToShow + ' of ' + numberOfComments}
+              </span>
+            </div>
+            {_.last(comments, numberOfCommentsToShow)}
+          </div>
+        );
+      }
+
+      return comments;
+    },
+
+    confirmedComments: function() {
       return this.state.comments.map(function(comment) {
         return this.comment(comment);
-      }.bind(this))
+      }.bind(this));
     },
 
     getComments: function() {
@@ -60,6 +87,7 @@
       return {
         comments: item.news_feed_item_comments,
         optimisticComments: [],
+        numberOfCommentsToShow: 5,
         url: item.url
       };
     },
@@ -72,13 +100,18 @@
 
     render: function() {
       return (
-        <div className="well" style={{ 'border-radius': '0px' }}>
+        <div className="card-footer" style={{ 'border-radius': '0px' }}>
           {this.comments()}
-          {this.optimisticComments()}
           <hr style={{ 'margin-top': '0px' }}/>
           <NewComment url={this.state.url} thread={this.props.item.id} />
         </div>
       );
+    },
+
+    showMoreComments: function(e) {
+      this.setState({
+        numberOfCommentsToShow: this.state.numberOfCommentsToShow + 5
+      });
     },
 
     timestamp: function(created_at) {
