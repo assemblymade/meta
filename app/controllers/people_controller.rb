@@ -112,8 +112,12 @@ class PeopleController < ProductController
     @product.partner_ids.each do |user_id|
       ProductMailer.delay(queue: 'mailer').new_introduction(user_id, @membership.id)
     end
+
     track_params = ProductAnalyticsSerializer.new(@product, scope: current_user).as_json
     track_event 'product.team.introduced', track_params
+
+    NewsFeedItem.create_with_target(@membership)
+
     Activities::Introduce.publish!(
       actor: @membership.user,
       subject: @membership,

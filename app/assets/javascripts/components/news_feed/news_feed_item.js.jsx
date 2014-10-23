@@ -37,6 +37,16 @@
       var product = this.props.product;
       var target = this.props.target;
 
+      if (target.type === 'team_membership') {
+        var user = this.props.user;
+
+        return (
+          <div className="card-heading clearfix text-center">
+            <span style={{ 'font-weight': 'bold', 'font-size': '24px' }}>{target.bio}</span>
+          </div>
+        );
+      }
+
       return (
         <div className="card-heading clearfix">
           <div className="col col-1">
@@ -71,7 +81,6 @@
       case 'post':
         return <NewsFeedPostItemBody post={target} />;
       default:
-        console.log(target);
         return null;
       }
     },
@@ -100,9 +109,29 @@
 
       return (
         <span>
-          &nbsp;posted a new <a href={target.url}>{this.transformType(target.type)}</a>
+          {this.targetVerb(target.type)} <a href={target.url}>{this.targetNoun(target.type)}</a>
         </span>
       );
+    },
+
+    targetNoun: function(type) {
+      var typeMap = this.typeMap.nouns;
+
+      if (typeMap[type]) {
+        return typeMap[type].call(this);
+      }
+
+      return type;
+    },
+
+    targetVerb: function(type) {
+      var typeMap = this.typeMap.verbs;
+
+      if (typeMap[type]) {
+        return typeMap[type];
+      }
+
+      return ' posted a new ';
     },
 
     timestamp: function() {
@@ -113,16 +142,23 @@
       );
     },
 
-    transformType: function(type) {
-      var typeMap = {
-        task: 'bounty'
-      };
+    typeMap: {
+      verbs: {
+        team_membership: ' joined the '
+      },
+      nouns: {
+        post: function() {
+          return 'update';
+        },
+        task: function() {
+          return 'bounty';
+        },
+        team_membership: function() {
+          var product = this.props.product;
 
-      if (typeMap[type]) {
-        return typeMap[type];
+          return <a href={product.url + '/people'}>{product.name} team</a>;
+        }
       }
-
-      return type;
     },
 
     username: function() {
