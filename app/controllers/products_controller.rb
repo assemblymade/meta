@@ -3,7 +3,7 @@ require 'timed_set'
 class ProductsController < ProductController
   respond_to :html, :json
 
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :follow, :unfollow, :announcements]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :follow, :unfollow, :announcements, :welcome]
   before_action :set_product,
     only: [:show, :edit, :update, :follow, :announcements, :unfollow, :metrics, :flag, :feature, :launch]
 
@@ -39,6 +39,7 @@ class ProductsController < ProductController
 
   def welcome
     find_product!
+    authorize! :update, @product
   end
 
   def admin
