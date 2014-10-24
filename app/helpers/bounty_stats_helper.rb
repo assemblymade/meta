@@ -1,6 +1,7 @@
 module BountyStatsHelper
 
   require 'date'
+  require 'csv'
 
   def avg_bounty_lifespan(startd=nil, endd=nil)
     query = "SELECT avg(closed_at - created_at) AS avg_life FROM wips WHERE wips.type IN ('Task') AND wips.state = 'resolved'"
@@ -35,7 +36,7 @@ module BountyStatsHelper
           # the current week
           startt = week_range == 1 ? Date.today.beginning_of_week : week_range.week.ago.beginning_of_week
         else
-          startt = (d+week_range).week.ago.beginning_of_week
+          startt = (d+week_range).week.ago.beginning_of_week.to_date
         end
         dates << startt
       end
@@ -91,4 +92,17 @@ module BountyStatsHelper
     results
   end
 
+  def array_to_csv(array, headers=nil)
+    headers ||= ["Date", "Global", "Core", "Noncore", "Staff"]
+    CSV.generate do |csv|
+      csv << headers unless headers.nil?
+      array.each do |row|
+        csv << row
+      end
+    end
+  end
+
 end
+
+
+
