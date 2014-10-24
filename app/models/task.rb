@@ -207,6 +207,8 @@ class Task < Wip
   end
 
   def award(closer, winning_event)
+    stop_work!(winning_event.user)
+
     minting = nil
     add_activity(closer, Activities::Award) do
       win = ::Event::Win.new(user: closer, event: winning_event)
