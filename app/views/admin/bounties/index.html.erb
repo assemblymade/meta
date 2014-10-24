@@ -1,10 +1,12 @@
 <h5>Avg bounty lifespan: <%= @avg_bounty_age['avg_life'] %></h5>
+<p><i>Append weeks=N param to get more history</i></p>
 <table class="table table-striped">
   <thead>
     <tr>
       <th colspan="2"></th>
       <th>Global</th>
       <th>Core</th>
+      <th>Non Core</th>
       <th>Staff</th>
     </tr>
     <tr>
@@ -15,12 +17,13 @@
       <th>weekly</th>
       <!-- <th>bi-weekly</th> -->
       <th>weekly</th>
+      <th>weekly</th>
       <!-- <th>bi-weekly</th> -->
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td rowspan="6">Created (count)</td>
+      <td rowspan="<%= @history + 2 %>">Created (count)</td>
       <% @created_counts.shift.each do |c| %>
         <td><%= c.respond_to?(:strftime) ? c.strftime('%b %d, %y') : c %></td>
       <% end %>
@@ -33,7 +36,7 @@
       </tr>
     <% end %>
     <tr>
-      <td rowspan="6">Awarded/Created (ratio)</td>
+      <td rowspan="<%= @history + 2 %>">Awarded/Created (ratio)</td>
       <% @awarded_counts.shift.each do |c| %>
         <td><%= c.respond_to?(:strftime) ? c.strftime('%b %d, %y') : c %></td>
       <% end %>
@@ -47,7 +50,7 @@
       </tr>
     <% end %>
     <tr>
-      <td rowspan="6">Closed/Created (ratio)</td>
+      <td rowspan="<%= @history + 2 %>">Closed/Created (ratio)</td>
       <% @closed_counts.shift.each do |c| %>
         <td><%= c.respond_to?(:strftime) ? c.strftime('%b %d, %y') : c %></td>
       <% end %>
