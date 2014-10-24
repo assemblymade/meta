@@ -28,7 +28,7 @@
       var target = this.props.target;
 
       return (
-        <div className="mb2 clearfix h6">
+        <div className="clearfix h6 mt0 mb2">
           <div className="mr1 left">
             <AppIcon app={this.props.product} size={24} />
           </div>
