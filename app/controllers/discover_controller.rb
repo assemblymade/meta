@@ -65,7 +65,7 @@ class DiscoverController < ApplicationController
   end
 
   def updates
-    if current_user && current_user.staff?
+    if signed_in? && current_user.staff?
       @posts = ActiveModel::ArraySerializer.new(
         NewsFeedItem.limit(20).order(updated_at: :desc),
         each_serializer: NewsFeedItemSerializer
@@ -78,6 +78,7 @@ class DiscoverController < ApplicationController
         where(flagged_at: nil).
         order(created_at: :desc)
       @page = @posts.page(params[:page])
+      render 'deprecated_updates'
     end
   end
 

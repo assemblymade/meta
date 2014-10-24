@@ -1,0 +1,48 @@
+<% title 'Updates' %>
+<% activate_nav! :platform_updates %>
+
+<%= render 'shared/navbar' %>
+
+<div class="mt4 mb4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="row">
+          <div class="col-md-9">
+            <% @page.each do |post| %>
+              <div class="clearfix">
+                <a href="<%= product_path(post.product) %>">
+                  <div class="pull-left icon-left">
+                    <%= app_icon(post.product, size: 24) %>
+                  </div>
+                  <h4 class="alpha"><%= post.product.name %></h4>
+                </a>
+              </div>
+              <%= render post %>
+              <hr/>
+            <% end %>
+          </div>
+          <div class="col-md-3">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h6 class="panel-title">Recent Posts</h6>
+              </div>
+
+              <div class="list-group">
+                <% @posts.limit(10).each do |post| %>
+                  <a class="list-group-item small" href="<%= product_post_path(post.product, post) %>">
+                    <strong class="text-primary"><%= post.title %></strong>
+                  </a>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <%= paginate @page, theme: 'twitter-bootstrap-3' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>
