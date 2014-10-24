@@ -9,7 +9,7 @@
   </li>
   <% end %>
 
-  <li class="<%= nav_active_class(:updates) %>">
+  <li class="<%= nav_active_class(:posts) %>">
     <a href="<%= product_posts_path(product) %>">
       <span class="icon icon-pin icon-left"></span>
       Posts
@@ -17,10 +17,10 @@
   </li>
 
   <% if current_user && current_user.staff? %>
-    <li class="<%= nav_active_class(:activity) %>">
-      <a href="<%= product_activities_path(product) %>">
+    <li class="<%= nav_active_class(:updates) %>">
+      <a href="<%= product_updates_path(product) %>">
         <span class="icon icon-graph icon-left"></span>
-        Activity
+        Updates
       </a>
     </li>
   <% end %>
@@ -40,5 +40,5 @@
     </a>
   </li>
   <% end %>
-  
+
 </ul>
