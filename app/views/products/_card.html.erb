@@ -1,5 +1,5 @@
-<div class="bg-white rounded border clearfix overflow-hidden">
-  <div class="md-show">
+<div class="bg-white rounded clearfix overflow-hidden shadow">
+  <div class="md-show border-bottom">
     <% case %>
     <% when product.profitable? || product.greenlit? %>
       <div class="md-show">
@@ -43,7 +43,7 @@
 
   <div class="p3">
     <div class="mt0 mb0 blue"><%= product.name %></div>
-    <p class="mid-gray mb2 full-width" style="min-height:6.5rem">
+    <p class="gray-darker h6 mt0 mb2 full-width" style="min-height:6.5rem">
       <%= product.pitch %>
     </p>
 
