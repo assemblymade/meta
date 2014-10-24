@@ -9,22 +9,12 @@
   }
 </style>
 
-<div class="mt4 mb4">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="row">
-          <div class="col-md-9">
-            <% @posts.each do |item| %>
-              <%= react_component 'NewsFeedItem', item %>
-            <% end %>
-          </div>
-        </div>
-
-        <%= paginate @page, theme: 'twitter-bootstrap-3' %>
-      </div>
+<div class="container mt2 mb4">
+  <div class="clearfix">
+    <div class="col sm-col-6">
+      <% @posts.each do |item| %>
+        <%= react_component 'NewsFeedItem', item %>
+      <% end %>
     </div>
   </div>
 </div>
-
-<%= render 'shared/footer' %>
