@@ -60,6 +60,10 @@ h6, .h6 {
 .border-bottom { border-color: $brand-border }
 .border-left { border-color: $brand-border }
 
+.rounded { border-radius: 4px }
+
+.shadow { box-shadow: 0 0 2px rgba(black, .05) }
+
 input,
 select,
 textarea,
