@@ -19,7 +19,7 @@
       }
 
       return (
-        <div className="h6 mb3 clearfix" key={comment.id}>
+        <div className="h6 mt0 mb3 clearfix" key={comment.id}>
           <div className="left mr2 mt1">
             <Avatar user={comment.user} size={36} />
           </div>
