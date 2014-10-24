@@ -116,7 +116,7 @@
     <div class="nc-channels hidden-xs visible-sm-block visible-md-block visible-lg-block">
 
       <% if @chat_room.product %>
-        <a class="block px3 py2" href="<%= product_path(@chat_room.product) %>">
+        <a class="block px3 py2" href="<%= product_path(@chat_room.product) %>" target="_blank">
           <h4 class="mt0 mb0" style="color:rgba(255,255,255,.6)">
             <span class="icon icon-chevron-left icon-left mxn1"></span>
             <%= @chat_room.product.name %>
