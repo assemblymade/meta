@@ -171,6 +171,9 @@ ASM::Application.routes.draw do
   namespace :admin do
     resources :leaderboard, only: [:index]
     resources :bounties, only: [:index]
+    namespace :bounties do
+      get :graph_data
+    end
     resources :profit_reports, path: 'profit-reports', only: [:index, :show]
     resources :product_rankings, path: 'products', only: [:index, :update]
     resources :withdrawals, only: [:index] do
