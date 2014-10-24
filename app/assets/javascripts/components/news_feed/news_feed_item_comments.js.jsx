@@ -20,12 +20,12 @@
 
       return (
         <div className="h6 mb3 clearfix" key={comment.id}>
-          <div className="left mr3">
+          <div className="left mr2 mt1">
             <Avatar user={comment.user} size={36} />
           </div>
           <div className="overflow-hidden">
             {this.username(comment.user)}
-            <div>{comment.body}</div>
+            <div className="gray-darker">{comment.body}</div>
           </div>
         </div>
       );

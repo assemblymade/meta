@@ -30,7 +30,7 @@
     render: function() {
       return (
         <div className="clearfix">
-          <div className="left mr3">
+          <div className="left mr2">
             <Avatar user={window.app.currentUser().attributes} size={36} />
           </div>
           <div className="overflow-hidden">
