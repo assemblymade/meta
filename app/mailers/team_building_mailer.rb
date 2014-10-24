@@ -8,7 +8,7 @@ class TeamBuildingMailer < BaseMailer
     @application = PitchWeekApplication.where(product_id: @product.id).
       order('created_at DESC').
       first
-    @user = @application.applicant
+    @user = @application.applicant || @product.core_team.order('created_at DESC').first
 
     mail to: @user.email_address,
       from: 'austin.smith@assembly.com',
@@ -22,7 +22,7 @@ class TeamBuildingMailer < BaseMailer
     @application = PitchWeekApplication.where(product_id: @product.id).
       order('created_at DESC').
       first
-    @user = @application.applicant
+    @user = @application.applicant || @product.core_team.order('created_at DESC').first
 
     mail to: @user.email_address,
       from: 'austin.smith@assembly.com',
