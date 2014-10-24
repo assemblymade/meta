@@ -4,6 +4,12 @@
   var NewsFeedItem = require('./news_feed_item.js.jsx')
 
   var NewsFeed = React.createClass({
+    getInitialState: function() {
+      return {
+        news_feed_items: this.props.news_feed_items.reverse()
+      }
+    },
+
     render: function() {
       return (
         <div className="container mt2 mb4">
@@ -27,25 +33,28 @@
     },
 
     renderLeftNewsFeedItems: function() {
-      return this.partitionedNewsFeedItems()[0].map(function(item) {
+      return this.partitionedNewsFeedItems()[0].reverse().map(function(item) {
+        item.key = item.id;
         return NewsFeedItem(item);
       })
     },
 
     renderRightNewsFeedItems: function() {
-      return this.partitionedNewsFeedItems()[1].map(function(item) {
+      return this.partitionedNewsFeedItems()[1].reverse().map(function(item) {
+        item.key = item.id;
         return NewsFeedItem(item);
       })
     },
 
     partitionedNewsFeedItems: function() {
-      return _.partition(this.props.news_feed_items, function(item) {
-        return this.props.news_feed_items.indexOf(item) % 2 == 0
+      return _.partition(this.state.news_feed_items, function(item) {
+        return this.state.news_feed_items.indexOf(item) % 2 == 0
       }.bind(this))
     },
 
     renderNewsFeedItems: function() {
-      return this.props.news_feed_items.map(function(item) {
+      return _.clone(this.state.news_feed_items).reverse().map(function(item) {
+        item.key = item.id;
         return NewsFeedItem(item);
       })
     },
