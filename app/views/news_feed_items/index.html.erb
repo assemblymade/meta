@@ -1,14 +1,4 @@
 <% title 'Activity', @product.name %>
 <% activate_nav! 'activity' %>
 
-<div class="col-md-8 col-md-offset-2 col-xs-12">
-  <% unless @news_feed_items.empty? %>
-    <% @news_feed_items.each do |item| %>
-      <%= react_component "NewsFeedItem", item %>
-    <% end %>
-  <% else %>
-    <div class="well text-center">
-      There hasn't been any activity on this product yet. Why not <a href="<%= product_wips_path(@product) %>">start some tasks</a>?
-    </div>
-  <% end %>
-</div>
+<%= react_component 'NewsFeed', news_feed_items: @news_feed_items %>

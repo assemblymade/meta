@@ -9,12 +9,4 @@
   }
 </style>
 
-<div class="container mt2 mb4">
-  <div class="clearfix">
-    <div class="col sm-col-6">
-      <% @posts.each do |item| %>
-        <%= react_component 'NewsFeedItem', item %>
-      <% end %>
-    </div>
-  </div>
-</div>
+<%= react_component 'NewsFeed', news_feed_items: @posts %>

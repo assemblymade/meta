@@ -291,7 +291,7 @@ GEM
     rails-assets-nprogress (0.1.6)
     rails-assets-numeral (1.5.3)
     rails-assets-spin.js (2.0.1)
-    rails-assets-underscore (1.5.2)
+    rails-assets-underscore (1.7.0)
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
@@ -496,7 +496,7 @@ DEPENDENCIES
   rails-assets-nprogress (= 0.1.6)
   rails-assets-numeral (= 1.5.3)
   rails-assets-spin.js (= 2.0.1)
-  rails-assets-underscore (= 1.5.2)
+  rails-assets-underscore (= 1.7.0)
   rails_12factor
   rails_stdout_logging
   react-rails (~> 0.10.0.0)
