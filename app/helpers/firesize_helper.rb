@@ -1,5 +1,9 @@
 module FiresizeHelper
   def firesize(url, *args)
+    if %w[.pdf .psd].include?(File.extname(url))
+      args << ['frame_0']
+    end
+
     File.join(firesize_url || '', args, URI.escape(url))
   end
 
