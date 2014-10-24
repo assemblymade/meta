@@ -189,12 +189,6 @@
       activityStream.id = '<%= @chat_room.id %>'
       activityStream.product = new Product(<%= json @product, scope: current_user %>);
 
-      var activityStreamView = new ActivityStreamView({
-        el: $('.js-activity-stream'),
-        collection: activityStream,
-        subjectId: '<%= @chat_room.wip_id %>'
-      });
-
       pusher.connection.bind('connected', function() {
         activityStream.listenForRemote(pusher, pusher.connection);
 
@@ -244,10 +238,8 @@
       });
 
       window.activityStream = activityStream;
-      window.activityStreamView = activityStreamView;
       window.chatView = chatView;
 
-      activityStreamView.render();
       chatView.render();
       chatView.scrollToLatestActivity();
       $(window).load(function() {

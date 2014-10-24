@@ -1,6 +1,7 @@
 #= require collections/activity_stream
 
 ENTER_KEY = 13
+BOTTOM_SCROLL_MARGIN = 350
 
 class window.ChatView extends Backbone.View
   collection: ActivityStream
@@ -10,23 +11,62 @@ class window.ChatView extends Backbone.View
     'click   .js-chat-create-wip': 'onCreateWip'
 
   initialize: (options)->
-    @ch =
-      loadMore: @$('.js-chat-load-more')
-
-    @listenTo(@collection, 'add', @render)
-    @scrollContainer = options.scrollContainer
-
     @stuckToBottom = true
-
-    @scrollContainer.on 'scroll', this.loadMoreWhenNearTop
+    @scrollContainer = options.scrollContainer
     @displayLoadMore = true
     @pageSize = 50
 
+    @ch =
+      loadMore: @$('.js-chat-load-more')
+      stream: @$('.js-activity-stream')
+
+    $(window).on('focus', @onWindowFocus)
+    @listenTo(@collection, 'add', @onCollectionAdd)
+    @scrollContainer.on 'scroll', this.handleScroll
     app.on 'comment:scheduled', @optimisticallyCreateActivity.bind(@)
+
+    @collection.each (model, index, collection) =>
+      @buildSubviewForModel(model, index)
+
+    @updateReadAt()
 
   render: =>
     @$('.js-chat-load-more').toggle(@displayLoadMore)
-    @scrollToLatestActivity() if @stuckToBottom
+
+  renderTimestamp: ->
+    @$('.timeline-insert.js-timestamp').each ->
+      React.unmountComponentAtNode(@)
+      $(@).remove()
+
+    tsContainer = $('<div class="timeline-insert js-timestamp">&nbsp;</div>').insertBefore('.timeline-item:last')
+    lastTime = @collection.last().get('created')
+    React.renderComponent(Timestamp({time: lastTime}), tsContainer[0])
+
+  onCollectionAdd: (model, collection, info) =>
+    @listenTo(model, 'sync', => @preserveScrollPosition()) # scroll the content after message is fetched from the server
+    @preserveScrollPosition(=>
+      @buildSubviewForModel(model, collection.indexOf(model))
+    )
+
+  updateReadAt: _.debounce(=>
+    Dispatcher.dispatch({
+      action: CONSTANTS.CHAT_NOTIFICATIONS.ACTIONS.MARK_ROOM_AS_READ,
+      data: {id: app.chatRoom.id, readraptor_url: app.chatRoom.readRaptorChatPath},
+      sync: true
+    });
+  , 200)
+
+  buildSubviewForModel: (model, index) ->
+    view = new ActivityView(model: model, subjectId: @options.subjectId, tipsPath: @options.tipsPath)
+
+    if index == 0
+      @ch.stream.prepend(view.el)
+    else
+      @$(".timeline-item:nth-child(#{index})").after(view.el)
+
+    view.render()
+    @renderTimestamp() if @collection.any()
+    @updateReadAt()
 
   scrollToLatestActivity: =>
     @updateMembersHeight()
@@ -36,8 +76,6 @@ class window.ChatView extends Backbone.View
     $('.js-members').css({ 'max-height': ($(window).outerHeight() - 140) + 'px' });
 
   optimisticallyCreateActivity: (comment) ->
-    @stuckToBottom = true
-
     activity = new Activity(
       type: 'activities/chat'
       created: (new Date()).toISOString()
@@ -60,7 +98,9 @@ class window.ChatView extends Backbone.View
     e.preventDefault()
     this.loadMore(e)
 
-  loadMoreWhenNearTop: (e)=>
+  handleScroll: (e)=>
+    @stuckToBottom = (@$el.height() - (e.currentTarget.scrollTop + @scrollContainer.height())) < BOTTOM_SCROLL_MARGIN
+
     if @displayLoadMore
       nearTop = 200
       if e.currentTarget.scrollTop < nearTop
@@ -71,7 +111,6 @@ class window.ChatView extends Backbone.View
     originalText = @ch.loadMore.text()
     currentTopEvent = @collection.first()
     @ch.loadMore.attr('disabled', true).text('Loading…')
-    oldHeight = @scrollContainer[0].scrollHeight
 
     $.ajax(
       type: 'GET'
@@ -82,7 +121,7 @@ class window.ChatView extends Backbone.View
       success: (datas) =>
         @displayLoadMore = datas.length >= @pageSize
         @render()
-        preserveScrollPosition @scrollContainer[0], =>
+        @preserveScrollPosition =>
           for data in _.sortBy(datas, (data) -> data['created']).reverse()
             @collection.unshift(data)
     )
@@ -113,8 +152,13 @@ class window.ChatView extends Backbone.View
     #        and move everything to React.
     $('#create-task').modal()
 
-preserveScrollPosition = (container, cb) ->
-  scrollTop = container.scrollTop
-  scrollHeight = container.scrollHeight
-  cb()
-  container.scrollTop = (container.scrollHeight - scrollHeight + scrollTop)
+  preserveScrollPosition: (cb) ->
+    if @stuckToBottom
+      cb() if cb
+      @scrollToLatestActivity()
+    else
+      container = @scrollContainer[0]
+      scrollTop = container.scrollTop
+      scrollHeight = container.scrollHeight
+      cb() if cb
+      container.scrollTop = (container.scrollHeight - scrollHeight + scrollTop)

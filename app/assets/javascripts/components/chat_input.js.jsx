@@ -44,7 +44,7 @@
 
     updateTyping: _.debounce(function(op) {
       this.channel.trigger('client-typing', op)
-    }, 1000),
+    }, 3000),
 
     handleSomeoneTyping: function(msg) {
       var usernames = new Set(this.state.typingUsernames)
