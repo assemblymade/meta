@@ -53,7 +53,7 @@
 
           <li className='dropdown'>
             <a href='#' className='dropdown-toggle' data-toggle='dropdown' key={'navbar dropdown'} style={{ padding: '13px 6px 12px' }}>
-              <Avatar user={this.props.user} size="26" />
+              <Avatar user={this.props.user} size="24" />
               <span className='visible-xs-inline' style={{ 'margin-left': '5px' }}>
                 {this.props.user.username}
               </span>
