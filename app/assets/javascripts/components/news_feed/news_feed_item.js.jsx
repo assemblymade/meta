@@ -34,7 +34,7 @@
           <div className="overflow-hidden py2">
             <a href={user.url}>{user.username}</a>
             {this.targetVerb(target.type)}
-            <a href={target.url}>{this.targetNoun(target.type)}</a>
+            {this.targetNoun(target.type)}
             {' '} at {moment(new Date(this.props.created)).format('h:mm a')}
           </div>
         </div>
@@ -100,6 +100,16 @@
       }
     },
 
+    targetNoun: function(type) {
+      var typeMap = this.typeMap.nouns;
+
+      if (typeMap[type]) {
+        return typeMap[type].call(this);
+      }
+
+      return <a href={this.props.target.url}>{type}</a>;
+    },
+
     targetTitle: function() {
       var target = this.props.target;
 
@@ -129,16 +139,6 @@
       );
     },
 
-    targetNoun: function(type) {
-      var typeMap = this.typeMap.nouns;
-
-      if (typeMap[type]) {
-        return typeMap[type].call(this);
-      }
-
-      return <a href={this.props.target.url}>{type}</a>;
-    },
-
     targetVerb: function(type) {
       var typeMap = this.typeMap.verbs;
 
@@ -158,6 +158,27 @@
     },
 
     typeMap: {
+      nouns: {
+        post: function() {
+          return 'update';
+        },
+
+        task: function() {
+          var product = this.props.product;
+
+          return  (
+            <span>
+              &nbsp;in <a href={product.url}>{product.name}</a>
+            </span>
+          );
+        },
+
+        team_membership: function() {
+          var product = this.props.product;
+
+          return <a href={product.url + '/people'}>{product.name} team</a>;
+        }
+      },
       verbs: {
         task: function() {
           return (
@@ -169,27 +190,6 @@
 
         team_membership: function() {
           return ' joined the ';
-        }
-      },
-      nouns: {
-        post: function() {
-          return 'update';
-        },
-
-        task: function() {
-          var product = this.props.product;
-
-          return  (
-            <span>
-              in <a href={product.url}>{product.name}</a>
-            </span>
-          );
-        },
-
-        team_membership: function() {
-          var product = this.props.product;
-
-          return <a href={product.url + '/people'}>{product.name} team</a>;
         }
       }
     },
