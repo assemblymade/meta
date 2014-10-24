@@ -10,7 +10,7 @@
         <div class="square-content p3">
           <div>
             <div class="h1 mt0 mb0 green"><%= product.team_building_days_left %></div>
-            <div class="h4 mt0 green">days left</div>
+            <div class="h4 mt0 green"><%= 'day'.pluralize(product.team_building_days_left) %> left</div>
 
             <div class="progress progress-sm mb2">
               <div class="progress-bar bg-green" style="width:<%= product.team_building_percentage %>%"></div>
