@@ -107,7 +107,14 @@
         return typeMap[type].call(this);
       }
 
-      return <a href={this.props.target.url}>{type}</a>;
+      var product = this.props.product;
+
+      return (
+        <span>
+          <a href={this.props.target.url}>{type}</a>
+          {' '} in <a href={product.url}>{product.name}</a>
+        </span>
+      );
     },
 
     targetTitle: function() {
