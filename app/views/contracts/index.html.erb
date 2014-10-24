@@ -162,23 +162,6 @@
               tip when coins are minted
             <% end %>
           </td>
-          <td>
-            <% if contract.active? && can_update %>
-              <a id="edit-contract-<%= contract.user.username %>"
-                  style="cursor: pointer"
-                  data-path="<%= product_contract_path(@product, contract) %>"
-                  class="edit-contract text-danger">Edit</a>
-              <a id="end-contract-<%= contract.user.username %>"
-                  style="cursor: pointer"
-                  data-path="<%= product_contract_path(@product, contract) %>"
-                  class="end-contract text-danger">End</a>
-              <a id="confirm-contract-change-<%= contract.user.username %>"
-                  class="text-danger"
-                  style="cursor: pointer; visibility: hidden;">Confirm</a>
-            <% else %>
-              <time class="timestamp" datetime="<%= contract.deleted_at.iso8601 unless contract.deleted_at.nil? %>"></time>
-            <% end %>
-          </td>
         </tr>
       <% end %>
     </table>
