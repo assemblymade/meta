@@ -41,7 +41,7 @@
       if (numberOfComments > numberOfCommentsToShow) {
         return (
           <div>
-            <a href="javascript:void(0);" onClick={this.showMoreComments}>
+            <a href="javascript:void(0);" onClick={this.showMoreComments(numberOfComments)}>
               <span className="icon icon-bubble"></span>
               &nbsp;Show more
             </a>
@@ -78,7 +78,7 @@
       return {
         comments: item.news_feed_item_comments,
         optimisticComments: [],
-        numberOfCommentsToShow: 5,
+        numberOfCommentsToShow: 10,
         url: item.url
       };
     },
@@ -98,10 +98,12 @@
       );
     },
 
-    showMoreComments: function(e) {
-      this.setState({
-        numberOfCommentsToShow: this.state.numberOfCommentsToShow + 5
-      });
+    showMoreComments: function(total) {
+      return function(e) {
+        this.setState({
+          numberOfCommentsToShow: total
+        });
+      }.bind(this);
     },
 
     timestamp: function(created_at) {
