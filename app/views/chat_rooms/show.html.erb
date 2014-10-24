@@ -115,14 +115,16 @@
 
     <div class="nc-channels hidden-xs visible-sm-block visible-md-block visible-lg-block">
 
-      <a class="block px3 py2" href="<%= product_path(@chat_room.product) %>">
-        <h4 class="mt0 mb0" style="color:rgba(255,255,255,.6)">
-          <span class="icon icon-chevron-left icon-left mxn1"></span>
-          <%= @chat_room.product.name %>
-        </h4>
-      </a>
+      <% if @chat_room.product %>
+        <a class="block px3 py2" href="<%= product_path(@chat_room.product) %>">
+          <h4 class="mt0 mb0" style="color:rgba(255,255,255,.6)">
+            <span class="icon icon-chevron-left icon-left mxn1"></span>
+            <%= @chat_room.product.name %>
+          </h4>
+        </a>
 
-      <hr class="mt0 mb0" style="border-color:rgba(0,0,0,0.1)">
+        <hr class="mt0 mb0" style="border-color:rgba(0,0,0,0.1)">
+      <% end %>
 
       <div class="p3">
         <h5 class="mt0 mb2" style="color:rgba(255,255,255,.6)">Channels</h5>
