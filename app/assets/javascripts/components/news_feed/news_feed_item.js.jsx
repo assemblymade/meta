@@ -28,10 +28,10 @@
 
       return (
         <div className="mb2 clearfix h6">
-          <div className="mr2 left">
-            <Avatar user={this.props.user} size={48} />
+          <div className="mr1 left">
+            <AppIcon app={this.props.product} size={24} />
           </div>
-          <div className="overflow-hidden py2">
+          <div className="overflow-hidden">
             <a href={user.url}>{user.username}</a>
             {this.targetVerb(target.type)}
             {this.targetNoun(target.type)}
@@ -46,12 +46,11 @@
       var target = this.props.target;
 
       if (target.type === 'team_membership') {
-        var user = this.props.user;
 
         return (
           <div className="p3 clearfix" style={{ 'border-bottom': '1px solid #f5f5f5' }}>
             <a className="block left mr3" href={product.url} title={product.name}>
-              <AppIcon app={product} size={48} />
+              <Avatar user={this.props.user} size={48} />
             </a>
 
             <div className="overflow-hidden h4 mt0 mb0">
@@ -64,7 +63,7 @@
       return (
         <div className="p3 clearfix" style={{ 'border-bottom': '1px solid #f5f5f5' }}>
           <a className="block left mr3" href={product.url} title={product.name}>
-            <AppIcon app={product} size={48} />
+            <Avatar user={this.props.user} size={48} />
           </a>
 
           <span className="overflow-hidden">
