@@ -9,4 +9,11 @@
   }
 </style>
 
-<%= react_component 'NewsFeed', news_feed_items: @posts %>
+<div class="mx-auto">
+  <div class="clearfix py2">
+    <div class="col sm-col-2">&nbsp;</div>
+    <div class="col sm-col-8">
+      <%= react_component 'NewsFeed', news_feed_items: @posts %>
+    </div>
+  </div>
+</div>

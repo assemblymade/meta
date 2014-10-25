@@ -24,20 +24,15 @@
 
     render: function() {
       return (
-        <div className="container mt2 mb4">
-          <div className="row">
-            <div className="col-xs-12">
-              {this.renderNewsFeedItems()}
-            </div>
-          </div>
-          <span style={{ width: '100%' }}>
+        <div>
+          {this.renderNewsFeedItems()}
+          <div className="mb4">
             <a href="javascript:void(0);"
                 onClick={this.fetchMoreNewsFeedItems}
-                className="btn btn-default"
-                style={{ width: '100%' }}>
-              More
+                className="btn btn-default btn-block">
+              Load more
             </a>
-          </span>
+          </div>
         </div>
       );
     },
