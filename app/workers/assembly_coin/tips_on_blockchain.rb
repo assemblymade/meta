@@ -14,6 +14,7 @@ module AssemblyCoin
 
           if not User.find_by(id: sender).nil? and not User.find_by(id: receiver).nil?
               OpenAssets::transfer_coins(sender, receiver, coins, product)
+              TransactionLogEntry.where(transaction_id: tx).update!(queue_id: Time.now.to_s)
           end
         end
       end
