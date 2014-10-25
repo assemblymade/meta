@@ -44,7 +44,7 @@
             <AppIcon app={this.props.product} size={42} />
           </div>
           <div className="overflow-hidden p2">
-            A new <a href={target.url}>{this.targetNoun(target.type)}</a>
+            New <a href={target.url}>{this.targetNoun(target.type)}</a>
             {' '} in <a href={product.url}>{product.name}</a>
             {' '} {moment(new Date(this.props.updated)).fromNow()}
           </div>

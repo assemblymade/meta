@@ -65,27 +65,17 @@ class DiscoverController < ApplicationController
   end
 
   def updates
-    if signed_in? && current_user.staff?
-      limit = 20
-      offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
+    limit = 20
+    offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
 
-      @posts = ActiveModel::ArraySerializer.new(
-        NewsFeedItem.public_items.limit(limit).offset(offset).order(updated_at: :desc),
-        each_serializer: NewsFeedItemSerializer
-      ).as_json
+    @posts = ActiveModel::ArraySerializer.new(
+      NewsFeedItem.public_items.limit(limit).offset(offset).order(updated_at: :desc),
+      each_serializer: NewsFeedItemSerializer
+    ).as_json
 
-      respond_to do |format|
-        format.html
-        format.json { render json: @posts }
-      end
-    else
-      @posts = Post.joins(:product).
-        where.not(products: { state: ['stealth', 'reviewing'] }).
-        where(products: { flagged_at: nil }).
-        where(flagged_at: nil).
-        order(created_at: :desc)
-      @page = @posts.page(params[:page])
-      render 'deprecated_updates'
+    respond_to do |format|
+      format.html
+      format.json { render json: @posts }
     end
   end
 
