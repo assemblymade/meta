@@ -62,7 +62,7 @@
         case 'team_membership':
           return <NewsFeedItemIntroduction introduction={target} user={this.props.user} />;
         default:
-          return <NewsFeedItemPost post={target} user={this.props.user} />;
+          return <NewsFeedItemPost product={this.props.product} post={target} user={this.props.user} />;
       }
     },
 

@@ -5,12 +5,14 @@
 
     propTypes: {
       post: React.PropTypes.object.isRequired,
-      user: React.PropTypes.object.isRequired
+      user: React.PropTypes.object.isRequired,
+      product: React.PropTypes.object.isRequired
     },
 
     render: function() {
       var post = this.props.post
       var user = this.props.user
+      var product = this.props.product
 
       return (
         <div className="p3">
@@ -30,6 +32,8 @@
           </div>
 
           <div className="gray-darker" dangerouslySetInnerHTML={{__html: post.markdown_body}} />
+
+          <a className="btn btn-default btn-sm" href={product.url}>Read more</a>
         </div>
       )
     }
