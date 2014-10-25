@@ -16,9 +16,6 @@ module TextFilters
 
     def self.mentioned_usernames_in(text, product = nil)
       text.gsub MentionPattern do |match|
-        puts 'asdkjf;lskdjfa;lksdjfl;aksdfj'
-        puts match.inspect
-        puts text.inspect
         mention = $1.downcase
 
         if mention == 'core'
