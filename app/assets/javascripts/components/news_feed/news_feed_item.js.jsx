@@ -6,6 +6,7 @@
   var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
   var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
   var NewsFeedItemComments = require('./news_feed_item_comments.js.jsx');
+  var moment = require('moment');
   var ONE_DAY = 24 * 60 * 60 * 1000;
 
   var NewsFeedItem = React.createClass({
@@ -45,7 +46,7 @@
           <div className="overflow-hidden p2">
             A new <a href={target.url}>{this.targetNoun(target.type)}</a>
             {' '} in <a href={product.url}>{product.name}</a>
-            {' '} at {moment(new Date(this.props.updated)).format('h:mm a')}
+            {' '} {moment(new Date(this.props.updated)).fromNow()}
           </div>
         </div>
       );
