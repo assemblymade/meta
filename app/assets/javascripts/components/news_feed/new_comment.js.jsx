@@ -28,6 +28,10 @@
     },
 
     render: function() {
+      if (!window.app.currentUser()) {
+        return <span />;
+      }
+      
       return (
         <div className="clearfix">
           <div className="left mr2">
