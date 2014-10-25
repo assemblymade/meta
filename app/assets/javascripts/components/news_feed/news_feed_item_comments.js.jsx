@@ -30,7 +30,7 @@
           </div>
           <div className="overflow-hidden">
             <a className="block" style={{'line-height': 18}} href={user.url}>{user.username}</a>
-            <div className="gray-dark">{comment.body}</div>
+            <div className="gray-darker">{comment.body}</div>
           </div>
         </div>
       );
