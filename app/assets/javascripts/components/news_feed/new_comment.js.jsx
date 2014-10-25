@@ -84,9 +84,15 @@
         return console.error(err);
       }
 
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        console.log(e);
+      }
+
       Dispatcher.dispatch({
         action: CONSTANTS.ACTIONS.CONFIRM_COMMENT,
-        data: { thread: thread, timestamp: timestamp }
+        data: { thread: thread, timestamp: timestamp, comment: data }
       });
     };
   }

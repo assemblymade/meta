@@ -10,6 +10,10 @@ class NewsFeedItemSerializer < ApplicationSerializer
     object.message
   end
 
+  def news_feed_item_comments
+    object.news_feed_item_comments.order(created_at: :asc)
+  end
+
   def product
     Product.find(object.product_id)
   end

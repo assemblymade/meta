@@ -12,7 +12,7 @@ class NewsFeedItemCommentsController < ProductController
   def create
     @item = @news_feed_item.news_feed_item_comments.create(
       user_id: current_user.id,
-      body: product_markdown(@product, params[:body])
+      body: params[:body]
     )
 
     forward_comment
@@ -22,19 +22,26 @@ class NewsFeedItemCommentsController < ProductController
 
   def forward_comment
     if target = @news_feed_item.target
-      return if DO_NOT_FORWARD_TO.include?(target.class)
-      event = Event.create_from_comment(
-        target,
-        Event::Comment,
-        @item.body,
-        current_user
-      )
+      if DO_NOT_FORWARD_TO.include?(target.class)
+        Activities::NewsFeedItemComment.publish!(
+          actor: @item.user,
+          subject: @item,
+          target: @item
+        )
+      else
+        event = Event.create_from_comment(
+          target,
+          Event::Comment,
+          @item.body,
+          current_user
+        )
 
-      Activities::Comment.publish!(
-        actor: event.user,
-        subject: event,
-        target: target
-      )
+        Activities::Comment.publish!(
+          actor: event.user,
+          subject: event,
+          target: target
+        )
+      end
     end
   end
 

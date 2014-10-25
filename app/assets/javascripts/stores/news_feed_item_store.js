@@ -40,16 +40,15 @@
   function confirmComment(data) {
     var thread = data.thread;
     var timestamp = data.timestamp;
-
     var optimisticThread = comments.optimistic[thread] || [];
 
-    var optimisticComment;
     for (var i = 0, l = optimisticThread.length; i < l; i++) {
       if (optimisticThread[i].created_at === timestamp) {
-        optimisticComment = optimisticThread[i];
         optimisticThread = optimisticThread.splice(i, 1);
       }
     }
+
+    var optimisticComment = data.comment;
 
     if (optimisticComment) {
       if (comments.confirmed[thread]) {
