@@ -22,7 +22,7 @@ class TaskSerializer < ApplicationSerializer
 
   def markdown_description
     # Only show the first paragraph
-    Nokogiri::HTML(product_markdown(product, body_preview)).css('p').first.to_html
+    Nokogiri::HTML(product_markdown(product, body_preview)).css('p').first.try(:to_html)
   end
 
   def value
