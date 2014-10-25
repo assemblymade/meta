@@ -1,6 +1,7 @@
 class TaskSerializer < ApplicationSerializer
   include ReadraptorTrackable
   include MarkdownHelper
+  include Nokogiri
 
   attributes :number, :title, :url, :body_preview, :value, :markdown_description
   attributes :state, :urgency
@@ -20,7 +21,8 @@ class TaskSerializer < ApplicationSerializer
   end
 
   def markdown_description
-    product_markdown(product, body_preview)
+    # Only show the first paragraph
+    Nokogiri::HTML(product_markdown(product, body_preview)).css('p').first.to_html
   end
 
   def value

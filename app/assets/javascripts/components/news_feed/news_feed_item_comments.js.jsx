@@ -14,8 +14,9 @@
     },
 
     comment: function(comment, optimistic) {
+      var className = 'gray-darker';
       if (optimistic) {
-        style.opacity = 0.5;
+        className = 'gray-light';
       }
 
       return (
@@ -25,7 +26,7 @@
           </div>
           <div className="overflow-hidden">
             {this.username(comment.user)}
-            <div className="gray-darker">{comment.body}</div>
+            <div className={className}>{comment.body}</div>
           </div>
         </div>
       );
@@ -43,7 +44,7 @@
           <div>
             <a href="javascript:void(0);" onClick={this.showMoreComments(numberOfComments)}>
               <span className="icon icon-bubble"></span>
-              &nbsp;Show more
+              {' '}Show all
             </a>
             <span className="pull-right">
               {'Showing ' + numberOfCommentsToShow + ' of ' + numberOfComments}
@@ -78,7 +79,7 @@
       return {
         comments: item.news_feed_item_comments,
         optimisticComments: [],
-        numberOfCommentsToShow: 10,
+        numberOfCommentsToShow: 3,
         url: item.url
       };
     },

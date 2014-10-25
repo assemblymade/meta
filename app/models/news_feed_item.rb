@@ -5,6 +5,8 @@ class NewsFeedItem < ActiveRecord::Base
   belongs_to :product
   has_many :news_feed_item_comments
 
+  scope :public_items, -> { joins(:product).where('products.state not in (?)', ['stealth', 'reviewing']) }
+
   def self.create_with_target(target)
     # Prevent @kernel from appearing in the News Feed
     # (gross)

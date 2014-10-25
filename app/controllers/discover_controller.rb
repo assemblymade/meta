@@ -66,11 +66,18 @@ class DiscoverController < ApplicationController
 
   def updates
     if signed_in? && current_user.staff?
+      limit = 20
+      offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
+
       @posts = ActiveModel::ArraySerializer.new(
-        NewsFeedItem.limit(20).order(updated_at: :desc),
+        NewsFeedItem.public_items.limit(limit).offset(offset).order(updated_at: :desc),
         each_serializer: NewsFeedItemSerializer
       ).as_json
-      @page = Kaminari.paginate_array(@posts).page(params[:page])
+
+      respond_to do |format|
+        format.html
+        format.json { render json: @posts }
+      end
     else
       @posts = Post.joins(:product).
         where.not(products: { state: ['stealth', 'reviewing'] }).
@@ -118,5 +125,6 @@ class DiscoverController < ApplicationController
       product:  'Featured Product Bounties'
     }.with_indifferent_access
   end
+
   helper_method :filters
 end

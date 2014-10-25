@@ -18,7 +18,7 @@ module Api
         publish!
       end
 
-      respond_with @item, status: 201, location: api_product_activities_url(@product)
+      respond_with @item, status: 201, location: api_product_updates_url(@product)
     end
 
     private
@@ -43,7 +43,7 @@ module Api
     def set_user_and_authenticate!
       unless @user = User.find_by(authentication_token: params[:user_token])
         response = { status: 401, message: "Invalid user token" }
-        respond_with response, status: 401, location: api_product_activities_url(@product)
+        respond_with response, status: 401, location: api_product_updates_url(@product)
       end
     end
 

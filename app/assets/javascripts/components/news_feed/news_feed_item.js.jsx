@@ -6,6 +6,7 @@
   var NewsFeedBountyItemTitle = require('./bounty_item/title.js.jsx');
   var NewsFeedPostItemBody = require('./post_item/body.js.jsx');
   var NewsFeedItemComments = require('./news_feed_item_comments.js.jsx');
+  var ONE_DAY = 24 * 60 * 60 * 1000;
 
   var NewsFeedItem = React.createClass({
     propTypes: {
@@ -35,7 +36,6 @@
           <div className="overflow-hidden">
             {' '} New <a href={target.url}>{this.targetNoun(target.type)}</a>
             {' '} in <a href={product.url}>{product.name}</a>
-            {' '} at {moment(new Date(this.props.created)).format('h:mm a')}
           </div>
         </div>
       );
@@ -129,11 +129,13 @@
     },
 
     timestamp: function() {
-      return (
-        <span className="text-muted mr5">
-          &nbsp;at {moment(new Date(this.props.created)).format('h:mm a')}
-        </span>
-      );
+      var updated = new Date(this.props.updated);
+
+      if (Date.now() - updated > ONE_DAY) {
+        return $.timeago(updated);
+      }
+
+      return moment(updated).startOf('day').fromNow();
     },
 
     typeMap: {

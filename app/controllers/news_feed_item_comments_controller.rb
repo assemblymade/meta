@@ -13,7 +13,7 @@ class NewsFeedItemCommentsController < ProductController
 
     forward_comment
 
-    respond_with @item, location: product_activities_url(@product)
+    respond_with @item, location: product_updates_url(@product)
   end
 
   def forward_comment
