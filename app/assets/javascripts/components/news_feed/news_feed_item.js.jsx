@@ -46,7 +46,6 @@
           <div className="overflow-hidden p2">
             New <a href={target.url}>{this.targetNoun(target.type)}</a>
             {' '} in <a href={product.url}>{product.name}</a>
-            {' '} {moment(new Date(this.props.updated)).fromNow()}
           </div>
         </div>
       );
