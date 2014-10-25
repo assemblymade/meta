@@ -1,6 +1,7 @@
 .avatar {
   @extend .img-circle;
   background-color: $body-bg;
+  display: block;
 }
 
 .avatar-comment {

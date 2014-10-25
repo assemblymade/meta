@@ -19,14 +19,18 @@
         className = 'gray-light';
       }
 
+      var user = comment.user
+
+      // TODO The line-height=18 is a hack. The `h6` should set the LH.
+
       return (
         <div className="h6 mt0 mb3 clearfix" key={comment.id}>
-          <div className="left mr2 mt1">
-            <Avatar user={comment.user} size={36} />
+          <div className="left mr2">
+            <Avatar user={user} size={24} />
           </div>
           <div className="overflow-hidden">
-            {this.username(comment.user)}
-            <div className={className}>{comment.body}</div>
+            <a className="block" style={{'line-height': 18}} href={user.url}>{user.username}</a>
+            <div className="gray-dark">{comment.body}</div>
           </div>
         </div>
       );
@@ -42,13 +46,11 @@
       if (numberOfComments > numberOfCommentsToShow) {
         return (
           <div>
-            <a href="javascript:void(0);" onClick={this.showMoreComments(numberOfComments)}>
+            <a className="block h6 blue clearfix mt0 mb3" href="javascript:void(0);" onClick={this.showMoreComments(numberOfComments)}>
               <span className="icon icon-bubble"></span>
-              {' '}Show all
+              &nbsp;View all {numberOfComments} comments
             </a>
-            <span className="pull-right">
-              {'Showing ' + numberOfCommentsToShow + ' of ' + numberOfComments}
-            </span>
+
             {_.last(comments, numberOfCommentsToShow)}
           </div>
         );
@@ -92,7 +94,7 @@
 
     render: function() {
       return (
-        <div className="p3" style={{ 'border-top': '1px solid #f5f5f5' }}>
+        <div className="p3 border-top">
           {this.comments()}
           <NewComment url={this.state.url} thread={this.props.item.id} />
         </div>
@@ -105,20 +107,6 @@
           numberOfCommentsToShow: total
         });
       }.bind(this);
-    },
-
-    timestamp: function(created_at) {
-      return (
-        <span className="text-muted mt1">
-          {$.timeago(new Date(created_at))}
-        </span>
-      );
-    },
-
-    username: function(user) {
-      return (
-        <a href={user.url}>{user.username}</a>
-      );
     }
   });
 
