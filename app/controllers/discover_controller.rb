@@ -1,4 +1,11 @@
 class DiscoverController < ApplicationController
+  FILTER_MAP = {
+    tasks: 'Wip',
+    introductions: 'TeamMembership',
+    posts: 'Post',
+    discussions: 'Wip'
+  }
+
   def index
     @interesting = interesting_products.limit(3)
     @profitable = profitable_products.limit(4)
@@ -68,8 +75,21 @@ class DiscoverController < ApplicationController
     limit = 20
     offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
 
+    if filter = FILTER_MAP[params[:filter] && params[:filter].to_sym]
+      items = NewsFeedItem.public_items
+        .limit(limit)
+        .offset(offset)
+        .where(target_type: filter)
+        .order(updated_at: :desc)
+    else
+      items = NewsFeedItem.public_items
+        .limit(limit)
+        .offset(offset)
+        .order(updated_at: :desc)
+    end
+
     @posts = ActiveModel::ArraySerializer.new(
-      NewsFeedItem.public_items.limit(limit).offset(offset).order(updated_at: :desc),
+      items,
       each_serializer: NewsFeedItemSerializer
     ).as_json
 

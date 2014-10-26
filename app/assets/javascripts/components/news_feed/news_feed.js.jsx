@@ -1,22 +1,61 @@
 /** @jsx React.DOM */
 
 (function() {
-  var NewsFeedItem = require('./news_feed_item.js.jsx')
+  var NewsFeedItem = require('./news_feed_item.js.jsx');
+  var FILTERS = ['tasks', 'introductions', 'posts'];
 
   var NewsFeed = React.createClass({
     fetchMoreNewsFeedItems: function(e) {
       this.setState({
         page: this.state.page + 1
       }, function() {
+        var url = window.location.pathname + '?page=' + this.state.page +
+          '&filter=' + this.state.filter;
+
         window.xhr.get(
-          window.location + '?page=' + this.state.page,
+          url,
           this._handleMoreNewsFeedItems
         );
       }.bind(this));
     },
 
+    filterBy: function(filter, e) {
+      this.setState({
+        filter: filter
+      }, function() {
+        var url = window.location.pathname + '?page=' + this.state.page +
+          '&filter=' + filter;
+
+        window.xhr.get(url, this._handleFilteredNewsFeedItems);
+      }.bind(this));
+    },
+
+    filters: function() {
+      return (
+        <div className="text-center">
+          <div>
+            Show only:
+          </div>
+          <div className="btn-group mb2">
+            {_.map(FILTERS, function(filter) {
+              var buttonClass = this.state.filter === filter ?
+                'primary' :
+                'default';
+              return (
+                <a className={"btn btn-sm btn-" + buttonClass}
+                    onClick={this.filterBy.bind(this, filter)}>
+                  {filter}
+                </a>
+              );
+            }.bind(this))}
+          </div>
+        </div>
+      );
+    },
+
     getInitialState: function() {
       return {
+        filter: (window.parseUri(window.location).queryKey.filter || ''),
         news_feed_items: this.props.news_feed_items,
         page: (window.parseUri(window.location).queryKey.page || 1)
       };
@@ -25,6 +64,7 @@
     render: function() {
       return (
         <div>
+          {this.filters()}
           {this.renderNewsFeedItems()}
           <div className="mb4">
             <a href="javascript:void(0);"
@@ -72,6 +112,23 @@
       );
     },
 
+    _handleFilteredNewsFeedItems: function(err, results) {
+      if (err) {
+        return console.log(err);
+      }
+
+      var items;
+      try {
+        items = JSON.parse(results);
+      } catch (e) {
+        return console.log(e);
+      }
+
+      this.setState({
+        news_feed_items: items
+      });
+    },
+
     _handleMoreNewsFeedItems: function(err, results) {
       if (err) {
         return console.log(error);
@@ -83,6 +140,8 @@
       } catch (e) {
         return console.log(e);
       }
+
+      console.log('ummmmm')
 
       this.setState(React.addons.update(
         this.state, {
