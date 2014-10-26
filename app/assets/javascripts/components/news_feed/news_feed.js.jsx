@@ -61,6 +61,12 @@
     },
 
     render: function() {
+      window.analytics.track(
+        'news_feed_item.viewed', {
+          product: (window.app.currentAnalyticsProduct())
+        }
+      );
+      
       return (
         <div>
           {this.filters()}
@@ -139,8 +145,6 @@
       } catch (e) {
         return console.log(e);
       }
-
-      console.log('ummmmm')
 
       this.setState(React.addons.update(
         this.state, {

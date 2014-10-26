@@ -31,7 +31,7 @@
       if (!window.app.currentUser()) {
         return <span />;
       }
-      
+
       return (
         <div className="clearfix">
           <div className="left mr2">
@@ -73,7 +73,11 @@
           comment: ''
         });
 
-        window.analytics.track('news_feed_item.comment', { product: (window.app.currentAnalyticsProduct())})
+        window.analytics.track(
+          'news_feed_item.commented', {
+            product: (window.app.currentAnalyticsProduct()) 
+          }
+        );
       }
     }
   });
