@@ -1,6 +1,6 @@
 class DiscoverController < ApplicationController
   FILTER_MAP = {
-    tasks: 'Wip',
+    bounties: 'Wip',
     introductions: 'TeamMembership',
     posts: 'Post',
     discussions: 'Wip'

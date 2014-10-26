@@ -2,7 +2,7 @@
 
 (function() {
   var NewsFeedItem = require('./news_feed_item.js.jsx');
-  var FILTERS = ['tasks', 'introductions', 'posts'];
+  var FILTERS = ['bounties', 'introductions', 'posts'];
 
   var NewsFeed = React.createClass({
     fetchMoreNewsFeedItems: function(e) {
