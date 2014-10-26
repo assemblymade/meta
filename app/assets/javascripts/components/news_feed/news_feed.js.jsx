@@ -32,23 +32,22 @@
 
     filters: function() {
       return (
-        <div className="text-center">
-          <div>
-            Show only:
-          </div>
-          <div className="btn-group mb2">
+        <div className="center">
+          <ul className="nav nav-mini-pills">
             {_.map(FILTERS, function(filter) {
-              var buttonClass = this.state.filter === filter ?
-                'primary' :
-                'default';
+              var buttonClass = filter === this.state.filter ?
+                'active' :
+                '';
               return (
-                <a className={"btn btn-sm btn-" + buttonClass}
-                    onClick={this.filterBy.bind(this, filter)}>
-                  {filter}
-                </a>
+                <li className={buttonClass}>
+                  <a href="javascript:void(0);"
+                      onClick={this.filterBy.bind(this, filter)}>
+                    {filter}
+                  </a>
+                </li>
               );
             }.bind(this))}
-          </div>
+          </ul>
         </div>
       );
     },
