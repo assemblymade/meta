@@ -38,4 +38,50 @@ namespace :activity do
       a.destroy
     end
   end
+
+
+  task :commits_vs_account_age => :environment do
+    require 'csv'
+    headers = ["gitPushCount", "accountAge", "username", "userType"]
+    CSV.open('cva.csv', 'a') do |csv|
+      csv << headers
+
+      User.all.each do |u|
+        csv << [u.activities.where(type: 'Activities::GitPush').count, 
+                (Time.now - u.created_at)/(60*60*24),
+                u.username,
+                u.staff? ? "Staff" : u.products.count > 0 ? "Core" : "Contributor"]
+      end
+    end
+  end
+
+  task :product_commits => :environment do
+    require 'csv'
+    headers = ["work", "productAge", "productName"]
+    CSV.open('pcva.csv', 'a') do |csv|
+      csv << headers
+
+      Product.all.each do |p|
+        csv << [p.work.count,
+                (Time.now - p.created_at)/(60*60*24),
+                p.name]
+      end
+    end
+  end
+
+  task :activity_vs_age => :environment do
+    require 'csv'
+    headers = ["Activity Count", "Account Age", "Username", "User Type"]
+    CSV.open('ava.csv', 'a') do |csv|
+      csv << headers
+
+      User.all.each do |u|
+        csv << [u.activities.count, 
+                (Time.now - u.created_at)/(60*60*24),
+                u.username,
+                u.staff? ? "Staff" : u.products.count > 0 ? "Core" : "Contributor"]
+      end
+    end
+  end
+
 end
