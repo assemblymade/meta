@@ -6,6 +6,8 @@ class DiscoverController < ApplicationController
     discussions: 'Wip'
   }
 
+  META = Product.find_by(slug: 'meta')
+
   def index
     @interesting = interesting_products.limit(3)
     @profitable = profitable_products.limit(4)
@@ -80,11 +82,13 @@ class DiscoverController < ApplicationController
         .limit(limit)
         .offset(offset)
         .where(target_type: filter)
+        .where.not(product_id: META.id)
         .order(updated_at: :desc)
     else
       items = NewsFeedItem.public_items
         .limit(limit)
         .offset(offset)
+        .where.not(product_id: META.id)
         .order(updated_at: :desc)
     end
 
