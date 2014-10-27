@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       sort: ['commented', 'awarded'].exclude?(params[:user]) && 'newest'
     }.with_indifferent_access
 
-    filters = default_filters.merge(params.slice(:user, :state))
+    filters = default_filters.merge(params.slice(:user, :state, :page))
     query = FilterWipsQuery.call(Task.all, @user, filters)
     @wips = PaginatingDecorator.new(query)
 

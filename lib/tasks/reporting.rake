@@ -3,6 +3,7 @@ namespace :reporting do
   task :users => :environment do
     ProfitReport.all.each do |report|
       puts "#{report.end_at} #{report.product.slug} #{report.coins} earnable:$#{"%.02f" % (report.earnable / 100.0)}  fee:$#{"%.02f" % (report.fee / 100.0)}"
+      next if report.user_balances.any?
 
       total_coins = 0
       total_percentage = 0

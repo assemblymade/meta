@@ -127,33 +127,33 @@
     <div class="border rounded-top rounded-bottom mb4">
       <% if @product.chat_rooms.any? %>
         <% chat_room = @product.chat_rooms.first %>
-        <a class="block p2 px3 gray border-bottom" href="<%= chat_room_path(chat_room) %>">
+        <a class="block p2 px3 border-bottom" href="<%= chat_room_path(chat_room) %>">
           <span class="icon icon-bubbles icon-left"></span>
           Chat
         </a>
       <% end %>
 
-      <a class="block p2 px3 gray border-bottom" href="<%= product_projects_path(@product) %>">
+      <a class="block p2 px3 border-bottom" href="<%= product_projects_path(@product) %>">
         <span class="icon icon-grid mr1"></span>
         Projects
       </a>
 
-      <a class="block p2 px3 gray border-bottom" href="<%= product_discussions_path(@product) %>">
+      <a class="block p2 px3 border-bottom" href="<%= product_discussions_path(@product) %>">
         <span class="icon icon-book-open mr1"></span>
         Discussions
       </a>
 
-      <a class="block p2 px3 gray border-bottom" href="<%= product_assets_path(@product) %>">
+      <a class="block p2 px3 border-bottom" href="<%= product_assets_path(@product) %>">
         <span class="icon icon-layers mr1"></span>
         Assets
       </a>
 
-      <a class="block p2 px3 gray border-bottom" href="<%= product_repos_path(@product) %>">
+      <a class="block p2 px3 border-bottom" href="<%= product_repos_path(@product) %>">
         <span class="icon icon-doc mr1"></span>
         Repositories
       </a>
 
-      <a class="block p2 px3 gray" href="<%= product_financials_path(@product) %>">
+      <a class="block p2 px3" href="<%= product_financials_path(@product) %>">
         <span class="icon icon-wallet mr1"></span>
         Financials
       </a>

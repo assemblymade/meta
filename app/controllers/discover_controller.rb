@@ -1,4 +1,11 @@
 class DiscoverController < ApplicationController
+  FILTER_MAP = {
+    bounties: 'Wip',
+    introductions: 'TeamMembership',
+    posts: 'Post',
+    discussions: 'Wip'
+  }
+
   def index
     @interesting = interesting_products.limit(3)
     @profitable = profitable_products.limit(4)
@@ -65,19 +72,30 @@ class DiscoverController < ApplicationController
   end
 
   def updates
-    if current_user && current_user.staff?
-      @posts = ActiveModel::ArraySerializer.new(
-        NewsFeedItem.limit(20).order(updated_at: :desc),
-        each_serializer: NewsFeedItemSerializer
-      ).as_json
-      @page = Kaminari.paginate_array(@posts).page(params[:page])
+    limit = 20
+    offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
+
+    if filter = FILTER_MAP[params[:filter] && params[:filter].to_sym]
+      items = NewsFeedItem.public_items
+        .limit(limit)
+        .offset(offset)
+        .where(target_type: filter)
+        .order(updated_at: :desc)
     else
-      @posts = Post.joins(:product).
-        where.not(products: { state: ['stealth', 'reviewing'] }).
-        where(products: { flagged_at: nil }).
-        where(flagged_at: nil).
-        order(created_at: :desc)
-      @page = @posts.page(params[:page])
+      items = NewsFeedItem.public_items
+        .limit(limit)
+        .offset(offset)
+        .order(updated_at: :desc)
+    end
+
+    @posts = ActiveModel::ArraySerializer.new(
+      items,
+      each_serializer: NewsFeedItemSerializer
+    ).as_json
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @posts }
     end
   end
 
@@ -117,5 +135,6 @@ class DiscoverController < ApplicationController
       product:  'Featured Product Bounties'
     }.with_indifferent_access
   end
+
   helper_method :filters
 end

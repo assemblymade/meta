@@ -1,19 +1,35 @@
-$asmcss-navy:   #235B66;
-$asmcss-teal:   #10A3B8;
-$asmcss-green:  #94BB2B;
-$asmcss-yellow: #FBCA32;
-$asmcss-red:    #F35443;
-$asmcss-black:  #111;
-$asmcss-gray:   #AAA;
-$asmcss-silver: #DDD;
-$asmcss-white:  #FFF;
+$white:        #FFF;
+$gray-lighter: #F4F4F5;
+$gray-light:   #ECEDEF;
+$gray:         #C2C7D0;
+$gray-dark:    #9A9FAA;
+$gray-darker:  #666D78;
+$black:        #353941;
+$green:        #33D6A6;
+$blue:         #338EDA;
+$red:          #EC3750;
+$yellow:       #F2D930;
 
-.navy { color: $asmcss-navy }
-.teal { color: $asmcss-teal }
-.green { color: $asmcss-green }
-.yellow { color: $asmcss-yellow }
-.red { color: $asmcss-red }
-.black { color: $asmcss-black }
-.gray { color: $asmcss-gray }
-.silver { color: $asmcss-silver }
-.white { color: $asmcss-white }
+.white        { color: $white }
+.gray-lighter { color: $gray-lighter }
+.gray-light   { color: $gray-light }
+.gray         { color: $gray }
+.gray-dark    { color: $gray-dark }
+.gray-darker  { color: $gray-darker }
+.black        { color: $black }
+.green        { color: $green }
+.blue         { color: $blue }
+.red          { color: $red }
+.yellow       { color: $yellow }
+
+.bg-white        { background-color: $white }
+.bg-gray-lighter { background-color: $gray-lighter }
+.bg-gray-light   { background-color: $gray-light }
+.bg-gray         { background-color: $gray }
+.bg-gray-dark    { background-color: $gray-dark }
+.bg-gray-darker  { background-color: $gray-darker }
+.bg-black        { background-color: $black }
+.bg-green        { background-color: $green }
+.bg-blue         { background-color: $blue }
+.bg-red          { background-color: $red }
+.bg-yellow       { background-color: $yellow }

@@ -28,20 +28,24 @@
     },
 
     render: function() {
+      if (!window.app.currentUser()) {
+        return <span />;
+      }
+
       return (
         <div className="clearfix">
-          <div className="left p1">
-            <Avatar user={window.app.currentUser().attributes} size={32} />
+          <div className="left mr2">
+            <Avatar user={window.app.currentUser().attributes} size={24} />
           </div>
-          <div className="overflow-hidden p1">
+          <div className="overflow-hidden">
             <textarea type="text"
-                className="form-input"
+                className="form-control"
                 rows="1"
                 value={this.state.comment}
                 onKeyPress={this.onKeyPress}
                 onChange={this.onChange}
                 placeholder="Press <enter> to comment"
-                style={{ width: '100%' }} />
+                />
           </div>
         </div>
       );
@@ -69,7 +73,11 @@
           comment: ''
         });
 
-        window.analytics.track('news_feed_item.comment', { product: (window.app.currentAnalyticsProduct())})
+        window.analytics.track(
+          'news_feed_item.commented', {
+            product: (window.app.currentAnalyticsProduct()) 
+          }
+        );
       }
     }
   });
@@ -84,9 +92,15 @@
         return console.error(err);
       }
 
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        console.log(e);
+      }
+
       Dispatcher.dispatch({
         action: CONSTANTS.ACTIONS.CONFIRM_COMMENT,
-        data: { thread: thread, timestamp: timestamp }
+        data: { thread: thread, timestamp: timestamp, comment: data }
       });
     };
   }

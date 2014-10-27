@@ -41,6 +41,7 @@ class Task < Wip
       event :review_me,   :transitions_to => :reviewing
     end
     state :awarded do
+      event :allocate,    :transitions_to => :awarded
       event :award,       :transitions_to => :awarded
       event :close,       :transitions_to => :resolved
       event :review_me,   :transitions_to => :reviewing
@@ -50,7 +51,7 @@ class Task < Wip
       event :reopen,      :transitions_to => :open
     end
     state :reviewing do
-      event :allocate,    :transitions_to => :allocated
+      event :allocate,    :transitions_to => :reviewing
       event :unallocate,  :transitions_to => :open
       event :reject,      :transitions_to => :open
       event :award,       :transitions_to => :awarded
@@ -206,6 +207,8 @@ class Task < Wip
   end
 
   def award(closer, winning_event)
+    stop_work!(winning_event.user)
+
     minting = nil
     add_activity(closer, Activities::Award) do
       win = ::Event::Win.new(user: closer, event: winning_event)

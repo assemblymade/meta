@@ -1,6 +1,7 @@
 module BountyStatsHelper
 
   require 'date'
+  require 'csv'
 
   def avg_bounty_lifespan(startd=nil, endd=nil)
     query = "SELECT avg(closed_at - created_at) AS avg_life FROM wips WHERE wips.type IN ('Task') AND wips.state = 'resolved'"
@@ -12,20 +13,20 @@ module BountyStatsHelper
     Wip.connection.execute(query).first
   end
 
-  def created(user_type = nil, week_range = 1, history = 4)
+  def created(user_type = nil, history = 4, week_range = 1)
     stat_helper('created', week_range, history, user_type)
   end
 
-  def awarded(user_type = nil, week_range = 1, history = 4)
+  def awarded(user_type = nil, history = 4, week_range = 1)
     stat_helper('awarded', week_range, history, user_type)
   end
 
-  def closed(user_type = nil, week_range = 1, history = 4)
+  def closed(user_type = nil, history = 4, week_range = 1)
     stat_helper('closed', week_range, history, user_type)
   end
 
   # TODO: this is not DRY
-  def date_helper(week_range = 1, history = 4)
+  def date_helper(history = 4, week_range = 1)
     dates = []
     weeks = history.downto(-1).to_a
     ceiling = weeks.max
@@ -35,7 +36,7 @@ module BountyStatsHelper
           # the current week
           startt = week_range == 1 ? Date.today.beginning_of_week : week_range.week.ago.beginning_of_week
         else
-          startt = (d+week_range).week.ago.beginning_of_week
+          startt = (d+week_range).week.ago.beginning_of_week.to_date
         end
         dates << startt
       end
@@ -52,6 +53,8 @@ module BountyStatsHelper
       query = query.select{|t| t.product.core_team?(t.user)}
     elsif user_type == 'staff'
       query = query.select{|t| t.user.staff?}
+    elsif user_type == 'noncore'
+      query = query.select{|t| !t.product.core_team?(t.user) && !t.user.staff?}
     end
     query
   end
@@ -83,10 +86,23 @@ module BountyStatsHelper
           query = Task.where(state: :resolved).where(closed_at: startt..endt)
         end
         dates << startt
-        results << Rails.cache.fetch("#{status}_#{user_type}_#{endt.to_i}") do; filtered_query(query, user_type).count.to_f; end
+        results << Rails.cache.fetch("#{status}_#{user_type}_#{endt.to_i}_#{history}") do; filtered_query(query, user_type).count.to_f; end
       end
     end
     results
   end
 
+  def array_to_csv(array, headers=nil)
+    headers ||= ["Date", "Global", "Core", "Noncore", "Staff"]
+    CSV.generate do |csv|
+      csv << headers unless headers.nil?
+      array.each do |row|
+        csv << row
+      end
+    end
+  end
+
 end
+
+
+

@@ -2,7 +2,7 @@
 
 $black:         #333;
 
-$blue:          #428bca;
+$blue:          #338EDA;
 $green:         #5cb85c;
 $cyan:          #5bc0de;
 $yellow:        #f0ad4e;
@@ -84,7 +84,7 @@ $line-height-base:     1.6;
 $line-height-computed: floor(($font-size-base * $line-height-base)); // 24px
 
 $headings-font-family: inherit;
-$headings-font-weight: 600;
+$headings-font-weight: normal;
 $headings-line-height: 1.2;
 $headings-color:       inherit;
 
@@ -118,6 +118,8 @@ $padding-xs-horizontal: 5px;
 
 $line-height-large: 1.33;
 $line-height-small: 1.5;
+
+$line-height-computed-small: floor(($font-size-small * $line-height-small));
 
 $border-radius-base:  3px;
 $border-radius-large: 5px;

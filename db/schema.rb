@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141017225249) do
+ActiveRecord::Schema.define(version: 20141025004451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -335,7 +335,7 @@ ActiveRecord::Schema.define(version: 20141017225249) do
   create_table "news_feed_item_comments", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "news_feed_item_id"
     t.uuid     "user_id"
-    t.string   "body"
+    t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
@@ -642,6 +642,8 @@ ActiveRecord::Schema.define(version: 20141017225249) do
     t.integer  "coins",            null: false
     t.integer  "earnings",         null: false
   end
+
+  add_index "user_balance_entries", ["profit_report_id", "user_id"], name: "index_user_balance_entries_on_profit_report_id_and_user_id", unique: true, using: :btree
 
   create_table "user_payment_options", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid   "user_id",         null: false

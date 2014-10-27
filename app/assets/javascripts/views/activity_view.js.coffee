@@ -15,7 +15,8 @@ class window.ActivityView extends Backbone.View
     if @model.get('type') == 'activities/chat' && @model.attributes.subject
       subject = @model.attributes.subject
       tipsProps = null
-      if @model.id
+
+      if @model.id and window.app.product
         tipsProps =
           viaType: 'Activity'
           viaId: @model.id

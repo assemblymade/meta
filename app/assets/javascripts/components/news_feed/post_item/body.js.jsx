@@ -8,7 +8,7 @@
       var post = this.props.post;
 
       return (
-        <div className="card-body">
+        <div className="p3">
           <span dangerouslySetInnerHTML={{__html: post.markdown_body}} />
           <a href={post.url} className="pull-right">more</a>
         </div>

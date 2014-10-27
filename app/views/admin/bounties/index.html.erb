@@ -1,26 +1,51 @@
-<h5>Avg bounty lifespan: <%= @avg_bounty_age['avg_life'] %></h5>
+<%= stylesheet_link_tag 'admin' %>
+
+<div class="row">
+  <div id="legend"></div>
+  <h5>Avg bounty lifespan: <%= @avg_bounty_age['avg_life'] %></h5>
+  <p><i>Append weeks=N param to get more history</i></p>
+</div>
+
+<div class="charts_container">
+  <div class="chart_container">
+    <h5>Bounties Created</h5>
+    <div class="chart" id="bounties-created"></div>
+    <div id="slider"></div>
+  </div>
+  <div class="chart_container">
+    <h5>Award Ratio</h5>
+    <div class="chart" id="award-ratio"></div>
+    <div id="slider"></div>
+  </div>
+  <div class="chart_container">
+    <h5>Close Ratio</h5>
+    <div class="chart" id="close-ratio"></div>
+    <div id="close-ratio-x"></div>
+  </div>
+</div>
+
+
 <table class="table table-striped">
   <thead>
     <tr>
       <th colspan="2"></th>
       <th>Global</th>
       <th>Core</th>
+      <th>Non Core</th>
       <th>Staff</th>
     </tr>
     <tr>
       <th></th>
       <th>start week</th>
       <th>weekly</th>
-      <!-- <th>bi-weekly</th> -->
       <th>weekly</th>
-      <!-- <th>bi-weekly</th> -->
       <th>weekly</th>
-      <!-- <th>bi-weekly</th> -->
+      <th>weekly</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td rowspan="6">Created (count)</td>
+      <td rowspan="<%= @history + 2 %>">Created (count)</td>
       <% @created_counts.shift.each do |c| %>
         <td><%= c.respond_to?(:strftime) ? c.strftime('%b %d, %y') : c %></td>
       <% end %>
@@ -33,7 +58,7 @@
       </tr>
     <% end %>
     <tr>
-      <td rowspan="6">Awarded/Created (ratio)</td>
+      <td rowspan="<%= @history + 2 %>">Awarded/Created (ratio)</td>
       <% @awarded_counts.shift.each do |c| %>
         <td><%= c.respond_to?(:strftime) ? c.strftime('%b %d, %y') : c %></td>
       <% end %>
@@ -47,7 +72,7 @@
       </tr>
     <% end %>
     <tr>
-      <td rowspan="6">Closed/Created (ratio)</td>
+      <td rowspan="<%= @history + 2 %>">Closed/Created (ratio)</td>
       <% @closed_counts.shift.each do |c| %>
         <td><%= c.respond_to?(:strftime) ? c.strftime('%b %d, %y') : c %></td>
       <% end %>
@@ -63,5 +88,95 @@
   </tbody>
 </table>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<%= javascript_include_tag('admin/d3.v2') %>
+<%= javascript_include_tag('admin/rickshaw.min') %>
+
+<script type="text/javascript">
+  new Rickshaw.Graph.Ajax( {
+    element: document.getElementById("bounties-created"),
+    width: 300,
+    height: 100,
+    renderer: 'line',
+    dataURL: '<%= admin_bounties_graph_data_url(format: :json, type: "bounty_creation", weeks: 4) %>',
+    onComplete: function(transport) {
+      var graph = transport.graph;
+      var detail = new Rickshaw.Graph.HoverDetail({ graph: graph });
+    },
+    series: [
+      {
+        name: 'Global',
+        color: '#c05020',
+      }, {
+        name: 'Core',
+        color: '#30c020',
+      }, {
+        name: 'Noncore',
+        color: '#6060c0'
+      }, {
+        name: 'Staff',
+        color: "#d66a00"
+      }
+    ]
+  });
+
+  new Rickshaw.Graph.Ajax( {
+    element: document.getElementById("award-ratio"),
+    width: 300,
+    height: 100,
+    renderer: 'line',
+    dataURL: '<%= admin_bounties_graph_data_url(format: :json, type: "award_ratio", weeks: 4) %>',
+    onComplete: function(transport) {
+      var graph = transport.graph;
+      var detail = new Rickshaw.Graph.HoverDetail({ graph: graph });
+    },
+    series: [
+      {
+        name: 'Global',
+        color: '#c05020',
+      }, {
+        name: 'Core',
+        color: '#30c020',
+      }, {
+        name: 'Noncore',
+        color: '#6060c0'
+      }, {
+        name: 'Staff',
+        color: "#d66a00"
+      }
+    ]
+  });
+
+  new Rickshaw.Graph.Ajax({
+    element: document.getElementById("close-ratio"),
+    width: 300,
+    height: 100,
+    renderer: 'line',
+    dataURL: '<%= admin_bounties_graph_data_url(format: :json, type: "close_ratio", weeks: 4) %>',
+    onComplete: function(transport) {
+      var graph = transport.graph;
+      var detail = new Rickshaw.Graph.HoverDetail({ graph: graph });
+      var legend = new Rickshaw.Graph.Legend( {
+        graph: graph,
+        element: document.getElementById('legend')
+      });
+    },
+    series: [
+      {
+        name: 'Global',
+        color: '#c05020',
+      }, {
+        name: 'Core',
+        color: '#30c020',
+      }, {
+        name: 'Noncore',
+        color: '#6060c0'
+      }, {
+        name: 'Staff',
+        color: "#d66a00"
+      }
+    ]
+  });
+</script>
 
 

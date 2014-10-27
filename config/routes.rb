@@ -171,6 +171,9 @@ ASM::Application.routes.draw do
   namespace :admin do
     resources :leaderboard, only: [:index]
     resources :bounties, only: [:index]
+    namespace :bounties do
+      get :graph_data
+    end
     resources :profit_reports, path: 'profit-reports', only: [:index, :show]
     resources :product_rankings, path: 'products', only: [:index, :update]
     resources :withdrawals, only: [:index] do
@@ -291,7 +294,7 @@ ASM::Application.routes.draw do
       resources :comments, only: [:show, :create, :edit, :update]
     end
 
-    resources :news_feed_items, only: [:index], path: 'activities', as: :activities
+    resources :news_feed_items, only: [:index], path: 'updates', as: :updates
     post '/activities/:activity_id' => 'news_feed_item_comments#create', as: :activity
 
     resources :repositories, only: [:index, :create, :destroy], as: :repos

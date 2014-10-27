@@ -58,62 +58,115 @@
 <%= render 'people/nav' %>
 
 <div class="sheet-body">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Created</th>
-        <th>Holder</th>
-        <th>Amount</th>
-        <th>Ended</th>
-      </tr>
-    </thead>
-    <% current_user_on_core_team = @product.core_team?(current_user) %>
-    <% @product.auto_tip_contracts.order(:deleted_at => :desc, created_at: :asc).each do |contract| %>
-      <% can_update = current_user_on_core_team || current_user.id == contract.user_id %>
-      <tr class="<%= 'text-muted' if contract.deleted_at? %>">
-        <td>
-          <time class="timestamp" datetime="<%= contract.created_at.iso8601 %>"></time>
-        </td>
-        <td>
-          <a href="<%= user_path(contract.user) %>">@<%= contract.user.username %></a>
-        </td>
-        <td style="width: 15%; min-width: 50px;">
-          <% if contract.active? && can_update %>
-            <div data-react-class="ContractInput"
-                 data-react-props="<%= {
-                   alwaysEditable: false,
-                   user: contract.user,
-                   startingAmount: '%.2f' % (contract.amount * 100).to_f,
-                   contract: contract.as_json,
-                   updatePath: product_contract_path(contract.product, contract),
-                   confirmButton: "#confirm-contract-change-" + contract.user.username
-                 }.to_json %>">
-            </div>
-          <% else %>
-            <strong><%= number_to_percentage(contract.amount * 100, precision: 2) %></strong>
-            tip when coins are minted
-          <% end %>
-        </td>
-        <td>
-          <% if contract.active? && can_update %>
-            <a id="edit-contract-<%= contract.user.username %>"
-                style="cursor: pointer"
-                data-path="<%= product_contract_path(@product, contract) %>"
-                class="edit-contract text-danger">Edit</a>
-            <a id="end-contract-<%= contract.user.username %>"
-                style="cursor: pointer"
-                data-path="<%= product_contract_path(@product, contract) %>"
-                class="end-contract text-danger">End</a>
-            <a id="confirm-contract-change-<%= contract.user.username %>"
-                class="text-danger"
-                style="cursor: pointer; visibility: hidden;">Confirm</a>
-          <% else %>
-            <time class="timestamp" datetime="<%= contract.deleted_at.iso8601 unless contract.deleted_at.nil? %>"></time>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
+  <% current_user_on_core_team = @product.core_team?(current_user) %>
+  <% active, ended = @product.auto_tip_contracts.order(:deleted_at => :desc, created_at: :asc).partition{|p| p.deleted_at == nil } %>
+
+  <% if active.any? %>
+    <h3>Current contracts</h3>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Created</th>
+          <th>Holder</th>
+          <th>Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <% active.each do |contract| %>
+        <% can_update = current_user_on_core_team || current_user.id == contract.user_id %>
+
+        <tr class="<%= 'text-muted' if contract.deleted_at? %>">
+          <td>
+            <time class="timestamp" datetime="<%= contract.created_at.iso8601 %>"></time>
+          </td>
+          <td>
+            <a href="<%= user_path(contract.user) %>">@<%= contract.user.username %></a>
+          </td>
+          <td style="width: 15%; min-width: 50px;">
+            <% if contract.active? && can_update %>
+              <div data-react-class="ContractInput"
+                   data-react-props="<%= {
+                     alwaysEditable: false,
+                     user: contract.user,
+                     startingAmount: '%.2f' % (contract.amount * 100).to_f,
+                     contract: contract.as_json,
+                     updatePath: product_contract_path(contract.product, contract),
+                     confirmButton: "#confirm-contract-change-" + contract.user.username
+                   }.to_json %>">
+              </div>
+            <% else %>
+              <strong><%= number_to_percentage(contract.amount * 100, precision: 2) %></strong>
+              tip when coins are minted
+            <% end %>
+          </td>
+          <td>
+            <% if contract.active? && can_update %>
+              <a id="edit-contract-<%= contract.user.username %>"
+                  style="cursor: pointer"
+                  data-path="<%= product_contract_path(@product, contract) %>"
+                  class="edit-contract text-danger">Edit</a>
+              <a id="end-contract-<%= contract.user.username %>"
+                  style="cursor: pointer"
+                  data-path="<%= product_contract_path(@product, contract) %>"
+                  class="end-contract text-danger">End</a>
+              <a id="confirm-contract-change-<%= contract.user.username %>"
+                  class="text-danger"
+                  style="cursor: pointer; visibility: hidden;">Confirm</a>
+            <% else %>
+              <time class="timestamp" datetime="<%= contract.deleted_at.iso8601 unless contract.deleted_at.nil? %>"></time>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+  <% if ended.any? %>
+
+    <h3>Old contracts</h3>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Ended</th>
+          <th>Holder</th>
+          <th>Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <% ended.each do |contract| %>
+        <tr class="<%= 'text-muted' if contract.deleted_at? %>">
+          <td>
+            <time class="timestamp" datetime="<%= contract.created_at.iso8601 %>"></time>
+          </td>
+          <td>
+            <a href="<%= user_path(contract.user) %>">@<%= contract.user.username %></a>
+          </td>
+          <td style="width: 15%; min-width: 50px;">
+            <% if contract.active? && can_update %>
+              <div data-react-class="ContractInput"
+                   data-react-props="<%= {
+                     alwaysEditable: false,
+                     user: contract.user,
+                     startingAmount: '%.2f' % (contract.amount * 100).to_f,
+                     contract: contract.as_json,
+                     updatePath: product_contract_path(contract.product, contract),
+                     confirmButton: "#confirm-contract-change-" + contract.user.username
+                   }.to_json %>">
+              </div>
+            <% else %>
+              <strong><%= number_to_percentage(contract.amount * 100, precision: 2) %></strong>
+              tip when coins are minted
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
 </div>
 
 <% content_for :javascript do %>

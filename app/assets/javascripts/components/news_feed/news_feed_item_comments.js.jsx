@@ -14,25 +14,23 @@
     },
 
     comment: function(comment, optimistic) {
-      var style = {
-        'margin-bottom': '10px'
-      };
-
+      var className = 'gray-darker';
       if (optimistic) {
-        style.opacity = 0.5;
+        className = 'gray-light';
       }
 
+      var user = comment.user
+
+      // TODO The line-height=18 is a hack. The `h6` should set the LH.
+
       return (
-        <div className="comment p1" style={style} key={comment.id}>
+        <div className="h6 mt0 mb3 clearfix" key={comment.id}>
           <div className="left mr2">
-            <Avatar user={comment.user} size={32} />
+            <Avatar user={user} size={24} />
           </div>
           <div className="overflow-hidden">
-            <div>
-                {this.username(comment.user)}
-                {this.timestamp(comment.created_at)}
-            </div>
-            <div>{comment.body}</div>
+            <a className="block" style={{'line-height': 18}} href={user.url}>{user.username}</a>
+            <div className={className} dangerouslySetInnerHTML={{ __html: comment.markdown_body || window.marked(comment.body) }}></div>
           </div>
         </div>
       );
@@ -48,15 +46,11 @@
       if (numberOfComments > numberOfCommentsToShow) {
         return (
           <div>
-            <div className="p1">
-              <a href="javascript:void(0);" onClick={this.showMoreComments}>
-                <span className="icon icon-bubble"></span>
-                &nbsp;Show more
-              </a>
-              <span className="pull-right">
-                {'Showing ' + numberOfCommentsToShow + ' of ' + numberOfComments}
-              </span>
-            </div>
+            <a className="block h6 blue clearfix mt0 mb3" href="javascript:void(0);" onClick={this.showMoreComments(numberOfComments)}>
+              <span className="icon icon-bubble"></span>
+              &nbsp;View all {numberOfComments} comments
+            </a>
+
             {_.last(comments, numberOfCommentsToShow)}
           </div>
         );
@@ -87,7 +81,7 @@
       return {
         comments: item.news_feed_item_comments,
         optimisticComments: [],
-        numberOfCommentsToShow: 5,
+        numberOfCommentsToShow: 3,
         url: item.url
       };
     },
@@ -100,36 +94,19 @@
 
     render: function() {
       return (
-        <div className="card-footer" style={{ 'border-radius': '0px' }}>
+        <div className="p3 border-top">
           {this.comments()}
-          <hr style={{ 'margin-top': '0px' }}/>
           <NewComment url={this.state.url} thread={this.props.item.id} />
         </div>
       );
     },
 
-    showMoreComments: function(e) {
-      this.setState({
-        numberOfCommentsToShow: this.state.numberOfCommentsToShow + 5
-      });
-    },
-
-    timestamp: function(created_at) {
-      return (
-        <span className="text-muted mt1">
-          {$.timeago(new Date(created_at))}
-        </span>
-      );
-    },
-
-    username: function(user) {
-      return (
-        <span className="mr2">
-          <strong>
-            <a href={user.url}>{user.username}</a>
-          </strong>
-        </span>
-      );
+    showMoreComments: function(total) {
+      return function(e) {
+        this.setState({
+          numberOfCommentsToShow: total
+        });
+      }.bind(this);
     }
   });
 
