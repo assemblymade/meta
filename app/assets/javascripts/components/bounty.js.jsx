@@ -103,6 +103,24 @@
       )
     },
 
+    renderPopularizeButton: function() {
+      var news_item = this.props.news_feed_item;
+
+      if (window.app.staff()) {
+        return (
+          <li className="alpha">
+            <ToggleButton
+              bool={news_item.popular_at !== null}
+              text={{ true: 'Depopularize', false: 'Popularize' }}
+              classes={{ true: 'btn btn-label', false: 'btn btn-label' }}
+              icon={{ true: 'thumbs-down', false: 'fire' }}
+              href={{ true: news_item.url + '/depopularize', false: news_item.url + '/popularize' }} />
+          </li>
+        );
+      }
+    },
+
+
     renderFlagButton: function() {
       var bounty = this.state.bounty;
       var isStaff = this.props.currentUser && this.props.currentUser.get('staff');
@@ -371,6 +389,7 @@
             <div className="card-footer clearfix">
               <ul className="list-inline alpha omega pull-left">
                 {this.renderFlagButton()}
+                {this.renderPopularizeButton()}
                 {this.renderEditButton()}
                 {this.renderOpenButton()}
                 {this.renderFollowButton()}

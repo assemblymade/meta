@@ -294,7 +294,10 @@ ASM::Application.routes.draw do
       resources :comments, only: [:show, :create, :edit, :update]
     end
 
-    resources :news_feed_items, only: [:index], path: 'updates', as: :updates
+    resources :news_feed_items, only: [:index, :show], path: 'updates', as: :updates do
+      patch 'popularize'
+      patch 'depopularize'
+    end
     post '/activities/:activity_id' => 'news_feed_item_comments#create', as: :activity
 
     resources :repositories, only: [:index, :create, :destroy], as: :repos

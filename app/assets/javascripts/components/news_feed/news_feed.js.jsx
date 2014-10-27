@@ -2,13 +2,24 @@
 
 (function() {
   var NewsFeedItem = require('./news_feed_item.js.jsx');
-  var FILTERS = {
-    bounties: 'Bounties',
-    introductions: 'Introductions',
-    posts: 'Posts'
-  }
+  // var NewsFeedFilter = require('./news_feed_filter.js.jsx')
 
   var NewsFeed = React.createClass({
+    getDefaultProps: function() {
+      var filters = {
+        bounties: 'Bounties',
+        introductions: 'Introductions',
+        posts: 'Posts'
+      }
+      if (window.app.featureEnabled('hot-updates')) {
+        filters['hot'] = 'Hot'
+      }
+
+      return {
+        filters: filters
+      }
+    },
+
     fetchMoreNewsFeedItems: function(e) {
       this.setState({
         page: this.state.page + 1
@@ -38,8 +49,8 @@
       return (
         <div className="center mt2">
           <ul className="nav nav-mini-pills">
-            {_.map(_.keys(FILTERS), function(filter) {
-              var label = FILTERS[filter];
+            {_.map(_.keys(this.props.filters), function(filter) {
+              var label = this.props.filters[filter];
               var buttonClass = filter === this.state.filter ?
                 'active' :
                 '';
@@ -71,7 +82,7 @@
           product: (window.app.currentAnalyticsProduct())
         }
       );
-      
+
       return (
         <div>
           {this.filters()}

@@ -2,8 +2,10 @@
 <% activate_nav! :bounties %>
 <%= track 'product.wip.viewed', WipAnalyticsSerializer.new(@wip, scope: current_user) %>
 
-<div data-react-class="Bounty" data-react-props="<%= { bounty: BountySerializer.new(@bounty, scope: current_user) }.to_json %>">
-</div>
+<%= react_component 'Bounty', {
+    bounty: BountySerializer.new(@bounty, scope: current_user),
+    news_feed_item: (NewsFeedItemSerializer.new(@bounty.news_feed_item) if @bounty.news_feed_item)
+  } %>
 
 <div class="discussion" id="discussion-view-el">
   <%= render 'wips/discussion', events: @events %>

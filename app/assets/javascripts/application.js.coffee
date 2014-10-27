@@ -87,7 +87,7 @@ class window.Application
       "#{val} #{name}"
     else
       "#{val} #{name}s"
-  
+
   pluralized: (val, singular, plural)->
     if val == 1
       singular
@@ -106,3 +106,9 @@ class window.Application
       props = propsJson && JSON.parse(propsJson)
       React.renderComponent(constructor(props), node)
 
+
+  featureEnabled: (feature)->
+    @staff()
+
+  staff: ()->
+    @currentUser() && @currentUser().get('staff')

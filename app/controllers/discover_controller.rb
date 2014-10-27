@@ -1,5 +1,5 @@
 class DiscoverController < ApplicationController
-  FILTER_MAP = {
+  TYPE_FILTERS = {
     bounties: 'Wip',
     introductions: 'TeamMembership',
     posts: 'Post',
@@ -77,23 +77,20 @@ class DiscoverController < ApplicationController
     limit = 20
     offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
 
-    if filter = FILTER_MAP[params[:filter] && params[:filter].to_sym]
-      items = NewsFeedItem.public_items
-        .limit(limit)
-        .offset(offset)
-        .where(target_type: filter)
-        .where.not(product: META)
-        .order(updated_at: :desc)
-    else
-      items = NewsFeedItem.public_items
-        .limit(limit)
-        .offset(offset)
-        .where.not(product: META)
-        .order(updated_at: :desc)
+    query = NewsFeedItem.public_items.
+              limit(limit).
+              offset(offset).
+              where.not(product: META).
+              order(updated_at: :desc)
+
+    if filter = TYPE_FILTERS[params[:filter] && params[:filter].to_sym]
+      query = query.where(target_type: filter)
+    elsif params[:filter] == 'hot'
+      query = query.where.not(popular_at: nil)
     end
 
     @posts = ActiveModel::ArraySerializer.new(
-      items,
+      query,
       each_serializer: NewsFeedItemSerializer
     ).as_json
 
@@ -101,6 +98,10 @@ class DiscoverController < ApplicationController
       format.html
       format.json { render json: @posts }
     end
+  end
+
+  def popular_updates
+
   end
 
   def profitable_products

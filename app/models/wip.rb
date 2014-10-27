@@ -22,6 +22,7 @@ class Wip < ActiveRecord::Base
   has_many :milestone_tasks, foreign_key: 'task_id'
   has_many :mutings
   has_many :muters, through: :mutings, source: :user
+  has_one  :news_feed_item, foreign_key: 'target_id'
   has_many :postings, class_name: 'BountyPosting', foreign_key: 'bounty_id'
   has_many :taggings, class_name: 'Wip::Tagging'
   has_many :tags, through: :taggings, class_name: 'Wip::Tag'

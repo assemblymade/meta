@@ -1,5 +1,5 @@
 class NewsFeedItemSerializer < ApplicationSerializer
-  attributes :message, :url
+  attributes :message, :url, :popular_at
 
   has_one :product
   has_one :target
@@ -23,7 +23,7 @@ class NewsFeedItemSerializer < ApplicationSerializer
   end
 
   def url
-    product_activity_path(product, object)
+    product_update_path(product, object)
   end
 
   def user
