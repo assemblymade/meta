@@ -1,7 +1,7 @@
 <form action="<%= scoped_search_path %>" class="navbar-form navbar-left" style="margin: 7px 12px 7px 0; padding-left: 3px;">
   <div class="form-group has-feedback">
     <div class="input-group input-group-search">
-      <% if @product %>
+      <% if @product && @product.persisted? %>
         <label class="control-label">This product</label>
       <% end %>
       <input type="search" name="q" value="<%= params[:q] %>" placeholder="Search" class="form-control" autocomplete="off" />
