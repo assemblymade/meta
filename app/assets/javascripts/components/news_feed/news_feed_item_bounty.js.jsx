@@ -40,7 +40,7 @@
 
           <div className="gray-darker" dangerouslySetInnerHTML={{__html: bounty.markdown_description}} />
 
-          <a className="btn btn-default btn-sm" href={bounty.url}>Read more</a>
+          <a className="btn btn-pill btn-sm" href={bounty.url}>Read more</a>
         </div>
       )
     }

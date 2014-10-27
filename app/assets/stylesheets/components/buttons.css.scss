@@ -36,6 +36,21 @@
   @include button-size(12px, 30px, 24px, 32px, 5px);
 }
 
+.btn-pill {
+  @include button-variant($brand-primary, white, $brand-primary);
+  @include button-size($padding-base-vertical, $padding-base-horizontal + ($line-height-computed / 2), $font-size-base, $line-height-base, ($line-height-computed / 2) + $padding-base-vertical + 1);
+
+  font-weight: normal;
+
+  &:hover {
+    color: $link-hover-color;
+  }
+
+  &.btn-sm {
+    @include button-size($padding-small-vertical, $padding-small-horizontal + 6px, $font-size-small, $line-height-computed-small, ($line-height-computed-small / 2) + $padding-small-vertical + 1);
+  }
+}
+
 .btn-twitter {
   @include button-variant($btn-twitter-color, $btn-twitter-bg, $btn-twitter-border);
 }

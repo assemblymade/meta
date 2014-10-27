@@ -119,6 +119,8 @@ $padding-xs-horizontal: 5px;
 $line-height-large: 1.33;
 $line-height-small: 1.5;
 
+$line-height-computed-small: floor(($font-size-small * $line-height-small));
+
 $border-radius-base:  3px;
 $border-radius-large: 5px;
 $border-radius-small: 2px;
