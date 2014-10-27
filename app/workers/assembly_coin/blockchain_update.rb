@@ -2,7 +2,6 @@ module AssemblyCoin
   class BlockchainUpdate < AssemblyCoin::Worker
 
     def perform(product)
-      answer=[]
       distinct_txs = TransactionLogEntry.where(action: 'credit', product_id: product.id, queue_id: nil).select(:transaction_id).distinct
 
       distinct_txs.each do |distinct_tx|
@@ -21,7 +20,7 @@ module AssemblyCoin
             product_id =  award_transaction_entry.product_id
 
             if not User.find_by(id: receiver_id).nil? and sumvalue > 0
-              AssemblyCoin::AwardCoins.new.perform(product_id, receiver_id, sumvalue)
+              #AssemblyCoin::AwardCoins.new.perform(product_id, receiver_id, sumvalue)
               award_transaction_entry.update!(queue_id: Time.now.to_s)
             end
 
@@ -33,13 +32,12 @@ module AssemblyCoin
             sumvalue = award_transaction_entry.cents.to_i
             product = Product.find_by(id: award_transaction_entry.product_id)
             if sumvalue>0 and not receiver.nil?
-              OpenAssets::transfer_coins(sender, receiver, sumvalue, product)
+              #OpenAssets::transfer_coins(sender, receiver, sumvalue, product)
               award_transaction_entry.update!(queue_id: Time.now.to_s)
             end
           end
         end
       end
-      answer
     end
   end
 end
