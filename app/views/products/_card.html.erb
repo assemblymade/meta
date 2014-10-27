@@ -48,11 +48,12 @@
     </p>
 
     <div class="clearfix">
-      <ul class="list-reset mb0 mxn1 overflow-hidden full-width" style="height:2rem">
+      <ul class="list-reset mb0 mxn1 overflow-hidden full-width" style="height:1.5rem">
         <li class="left ml1">
-          <span class="badge bg-light-gray">
+          <div class="badge bg-light-gray block" style="padding-top:0;padding-bottom:0;line-height:1.5rem">
             <span class="icon icon-users"></span>
-            <%= product.partners.count %></span>
+            <%= product.partners.count %>
+          </div>
         </li>
 
         <% followers_sorted_by_coins(product, 10).each do |user| %>
