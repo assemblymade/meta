@@ -106,7 +106,7 @@
     renderPopularizeButton: function() {
       var news_item = this.props.news_feed_item;
 
-      if (window.app.staff()) {
+      if (news_item && window.app.staff()) {
         return (
           <li className="alpha">
             <ToggleButton
