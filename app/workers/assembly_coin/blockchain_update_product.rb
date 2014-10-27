@@ -1,5 +1,5 @@
 module AssemblyCoin
-  class BlockchainUpdate < AssemblyCoin::Worker
+  class BlockchainUpdateProduct < AssemblyCoin::Worker
 
     def perform(product)
       distinct_txs = TransactionLogEntry.where(action: 'credit', product_id: product.id, queue_id: nil).select(:transaction_id).distinct
