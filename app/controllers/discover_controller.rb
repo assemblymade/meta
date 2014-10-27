@@ -82,13 +82,13 @@ class DiscoverController < ApplicationController
         .limit(limit)
         .offset(offset)
         .where(target_type: filter)
-        .where.not(product_id: META.id)
+        .where.not(product: META)
         .order(updated_at: :desc)
     else
       items = NewsFeedItem.public_items
         .limit(limit)
         .offset(offset)
-        .where.not(product_id: META.id)
+        .where.not(product: META)
         .order(updated_at: :desc)
     end
 
