@@ -2,7 +2,11 @@
 
 (function() {
   var NewsFeedItem = require('./news_feed_item.js.jsx');
-  var FILTERS = ['bounties', 'introductions', 'posts'];
+  var FILTERS = {
+    bounties: 'Bounties',
+    introductions: 'Introductions',
+    posts: 'Posts'
+  }
 
   var NewsFeed = React.createClass({
     fetchMoreNewsFeedItems: function(e) {
@@ -32,9 +36,10 @@
 
     filters: function() {
       return (
-        <div className="center">
+        <div className="center mt2">
           <ul className="nav nav-mini-pills">
-            {_.map(FILTERS, function(filter) {
+            {_.map(_.keys(FILTERS), function(filter) {
+              var label = FILTERS[filter];
               var buttonClass = filter === this.state.filter ?
                 'active' :
                 '';
@@ -42,7 +47,7 @@
                 <li className={buttonClass}>
                   <a href="javascript:void(0);"
                       onClick={this.filterBy.bind(this, filter)}>
-                    {filter}
+                    {label}
                   </a>
                 </li>
               );
@@ -70,7 +75,9 @@
       return (
         <div>
           {this.filters()}
-          {this.renderNewsFeedItems()}
+          <div className="mt4">
+            {this.renderNewsFeedItems()}
+          </div>
           <div className="mb4">
             <a href="javascript:void(0);"
                 onClick={this.fetchMoreNewsFeedItems}
