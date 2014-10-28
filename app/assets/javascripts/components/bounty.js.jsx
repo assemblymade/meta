@@ -337,7 +337,7 @@
             Discuss the work
           </a>
 
-          <p className="omega gray-light" style={{ 'margin-left': '6px' }}>
+          <p className="omega gray-darker" style={{ 'margin-left': '6px' }}>
             <strong className="black">Right on!</strong>
             {' '}
             {workersPhrase} started working on this bounty {moment(bounty.most_recent_other_wip_worker.created_at).fromNow()}.
