@@ -49,7 +49,7 @@ module AssemblyCoin
                 )
                 Rails.logger.info "ADDED KEYPAIR TO #{receiver.username}"
               end
-
+            end
 
             sumvalue = award_transaction_entry.cents.to_i
             product = Product.find_by(id: award_transaction_entry.product_id)
