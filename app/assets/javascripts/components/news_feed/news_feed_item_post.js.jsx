@@ -14,6 +14,10 @@
       var user = this.props.user
       var product = this.props.product
 
+      if (!post) {
+        return <div />;
+      }
+
       return (
         <div className="p3">
           <a href={post.url} className="block h4 mt0 mb2 black">
@@ -31,7 +35,7 @@
             </div>
           </div>
 
-          <div className="gray-darker" dangerouslySetInnerHTML={{__html: post.markdown_body}} />
+          <div className="gray-darker" dangerouslySetInnerHTML={{__html: (post.markdown_body || post.description)}} />
 
           <a className="btn btn-pill btn-sm" href={post.url}>Read more</a>
         </div>

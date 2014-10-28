@@ -18,7 +18,8 @@
 
     typeMap: {
       task: 'bounty',
-      team_membership: 'team member'
+      team_membership: 'team member',
+      news_feed_item_post: 'update'
     },
 
     render: function() {
@@ -56,12 +57,13 @@
       var target = this.props.target
 
       switch (target.type) {
-        case 'task':
-          return <NewsFeedItemBounty bounty={target} user={this.props.user} />;
-        case 'team_membership':
-          return <NewsFeedItemIntroduction introduction={target} user={this.props.user} />;
-        default:
-          return <NewsFeedItemPost product={this.props.product} post={target} user={this.props.user} />;
+      case 'task':
+        return <NewsFeedItemBounty bounty={target} user={this.props.user} />;
+      case 'team_membership':
+        return <NewsFeedItemIntroduction introduction={target} user={this.props.user} />;
+      default:
+        console.log(this.props.user);
+        return <NewsFeedItemPost product={this.props.product} post={target} user={this.props.user} />;
       }
     },
 

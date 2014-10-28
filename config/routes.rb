@@ -222,7 +222,7 @@ ASM::Application.routes.draw do
         resources :offers, only: [:create, :show]
       end
 
-      resources :activities, controller: 'news_feed_items', only: [:create]
+      resources :news_feed_items, only: [:create], path: 'updates', as: :updates
       resources :projects, only: [:create]
       resources :subscribers, only: [:create, :destroy]
       resources :bounty_postings, only: [:create, :destroy]
