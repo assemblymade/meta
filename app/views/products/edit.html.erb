@@ -12,6 +12,9 @@
     <li>
       <a href="#core-team" role="tab" data-toggle="tab">Core Team</a>
     </li>
+    <li>
+      <a href="#integrations" role="tab" data-toggle="tab">Integrations</a>
+    </li>
   </ul>
 </div>
 
@@ -228,7 +231,7 @@
       <tbody>
         <% @product.core_team_memberships.each do |membership| %>
           <tr>
-            <td width="1"><%= avatar_tag(membership.user, 24, style: 'margin-right:5px') %></td>
+            <td><%= avatar_tag(membership.user, 24, style: 'margin-right:5px') %></td>
             <td><%= membership.user.username %></td>
             <td class="text-muted text-right">
               <%= time_ago_in_words(membership.created_at) %> ago
@@ -252,5 +255,13 @@
       </div>
     <% end %>
 
+  </div>
+
+  <div class="tab-pane" id="integrations">
+    We're working on automating integrations. If you just can't wait, or if you just want a taste of what's to come, you can set up a MailChimp webhook for
+    <%= @product.name %>'s email signups by pointing MailChimp to the following URL:
+    <div class="text-center well">
+      https://mailchimp.assembly.com/products/<%= @product.slug %>/activities?token=<%= @product.authentication_token %>
+    <div>
   </div>
 </div>
