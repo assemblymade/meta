@@ -20,7 +20,8 @@ module AssemblyCoin
             product_id =  award_transaction_entry.product_id
 
             if not User.find_by(id: receiver_id).nil? and sumvalue > 0
-              #AssemblyCoin::AwardCoins.new.perform(product_id, receiver_id, sumvalue)
+              AssemblyCoin::AwardCoins.new.perform(product_id, receiver_id, sumvalue)
+              Rails.logger.info "[coins] Awarding Coins for #{product_id} to #{receiver_id}"
               award_transaction_entry.update!(queue_id: Time.now.to_s)
             end
 
@@ -32,7 +33,8 @@ module AssemblyCoin
             sumvalue = award_transaction_entry.cents.to_i
             product = Product.find_by(id: award_transaction_entry.product_id)
             if sumvalue>0 and not receiver.nil?
-              #OpenAssets::transfer_coins(sender, receiver, sumvalue, product)
+              OpenAssets::transfer_coins(sender, receiver, sumvalue, product)
+              Rails.logger.info "[coins] Tipping Coins for #{product_id} from #{sender} to #{receiver_id}"
               award_transaction_entry.update!(queue_id: Time.now.to_s)
             end
           end
