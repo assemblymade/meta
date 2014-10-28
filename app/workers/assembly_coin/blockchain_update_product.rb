@@ -18,10 +18,20 @@ module AssemblyCoin
             receiver_id = award_transaction_entry.wallet_id
             sumvalue = award_transaction_entry.cents.to_i
             product_id =  award_transaction_entry.product_id
+            receiver = User.find_by(id: receiver_id)
 
-            if not User.find_by(id: receiver_id).nil? and sumvalue > 0
+            if not receiver.nil? and sumvalue > 0
+
+              if receiver.wallet_public_address.nil?
+                AssemblyCoin::AssignBitcoinKeyPairWorker.new.perform(
+                  receiver.to_global_id,
+                  :assign_key_pair
+                )
+                Rails.logger.info "ADDED KEYPAIR TO #{receiver.username}"
+              end
+
               AssemblyCoin::AwardCoins.new.perform(product_id, receiver_id, sumvalue)
-              Rails.logger.info "[coins] Awarding Coins for #{product_id} to #{receiver_id}"
+              Rails.logger.info "[coins] Awarding #{sumvalue.to_s} Coins for #{product_id} to #{receiver_id}"
               award_transaction_entry.update!(queue_id: Time.now.to_s)
             end
 
@@ -30,11 +40,21 @@ module AssemblyCoin
             award_transaction_entry = TransactionLogEntry.where(transaction_id: distinct_tx.transaction_id, queue_id: nil, action: 'credit').first
             receiver_id = award_transaction_entry.wallet_id
             receiver = User.find_by(id: receiver_id)
+
+            if receiver.wallet_public_address.nil?
+              AssemblyCoin::AssignBitcoinKeyPairWorker.new.perform(
+                receiver.to_global_id,
+                :assign_key_pair
+              )
+              Rails.logger.info "ADDED KEYPAIR TO #{receiver.username}"
+            end
+
+
             sumvalue = award_transaction_entry.cents.to_i
             product = Product.find_by(id: award_transaction_entry.product_id)
             if sumvalue>0 and not receiver.nil?
               OpenAssets::Transactions.new.transfer_coins(sender, receiver, sumvalue, product)
-              Rails.logger.info "[coins] Tipping Coins for #{product_id} from #{sender} to #{receiver_id}"
+              Rails.logger.info "[coins] Tipping #{sumvalue.to_s} Coins for #{product_id} from #{sender} to #{receiver_id}"
               award_transaction_entry.update!(queue_id: Time.now.to_s)
             end
           end
