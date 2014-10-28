@@ -33,7 +33,7 @@
 
           <div className="gray-darker" dangerouslySetInnerHTML={{__html: post.markdown_body}} />
 
-          <a className="btn btn-pill btn-sm" href={product.url}>Read more</a>
+          <a className="btn btn-pill btn-sm" href={post.url}>Read more</a>
         </div>
       )
     }
