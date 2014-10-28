@@ -53,10 +53,15 @@
 
       return (
         <li className={className}>
-          <a href={'#@' + this.props.user.username} onClick={this.handleUserSelected(this.props.user)}>
-            <Avatar user={this.props.user}
-                style={{'margin-right': '10px'}} />
-            <span> @{this.props.user.username} <span className="text-muted">{this.props.user.name}</span></span>
+          <a className="block clearfix py1 px2" href={'#@' + this.props.user.username} onClick={this.handleUserSelected(this.props.user)}>
+            <div className="left mr2">
+              <Avatar user={this.props.user} />
+            </div>
+            <div className="overflow-hidden">
+              @{this.props.user.username}
+              {' '}
+              <span className="text-muted">{this.props.user.name}</span>
+            </div>
           </a>
         </li>
       )
