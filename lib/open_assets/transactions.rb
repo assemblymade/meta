@@ -74,15 +74,25 @@ module OpenAssets
       remote.post end_url, body.to_json
     end
 
-    def transfer_coins(giver_user_id, receiver_user_id, coins, product_id)
+    def transfer_coins(sender, receiver, coins, product)
 
-      sender = User.find(giver_user_id)
-      receiver = User.find(receiver_user_id)
+      issuing_address = product.wallet_public_address
+      from_public_address = sender.wallet_public_address
+      from_private_key = sender.wallet_private_key
+      to_public_address = receiver.wallet_public_address
 
-      issuing_address = Product.find(product_id).wallet_public_address
-      from_public_address = User.find(giver_user_id).wallet_public_address
-      from_private_key = User.fi
-      to_public_address = User.find(receiver_user_id).wallet_public_address
+      body = {
+        issuing_address: issuing_address,
+        to_public_address: to_public_address,
+        fee_each: ENV.fetch("STANDARD_BTC_FEE"),
+        from_public_address: from_public_address,
+        from_private_key: from_private_key,
+        transfer_amount: coins.to_s
+      }
+
+      remote = OpenAssets::Remote.new("https://coins.assembly.com")
+      end_url="v1/transactions/transfer"
+      remote.post end_url, body.to_json
 
     end
 

@@ -5,7 +5,7 @@ module AssemblyCoin
       product = Product.find(product_id)
 
       distinct_wallets = TransactionLogEntry.
-        where(action: 'minted', product_id: product_id, queue_id: nil).
+        where(action: 'credit', product_id: product_id, queue_id: nil).
         select(:wallet_id).
         distinct
 
@@ -21,14 +21,14 @@ module AssemblyCoin
             Rails.logger.info "ADDED KEYPAIR TO #{user.username}"
           end
 
-          sumvalue = TransactionLogEntry.where(action: 'minted',queue_id: nil, wallet_id: wallet_id, product_id: product_id).sum(:cents)
+          sumvalue = TransactionLogEntry.where(queue_id: nil, wallet_id: wallet_id, product_id: product_id).sum(:cents)
 
           if sumvalue > 0
             Rails.logger.info "sending #{sumvalue} coins to #{user.username} from #{product.wallet_public_address}"
             AssemblyCoin::AwardCoins.new.perform(product_id, user.id, sumvalue)
           end
 
-          ids = TransactionLogEntry.where(action: 'minted', wallet_id: wallet_id, product_id: product_id, queue_id: nil)
+          ids = TransactionLogEntry.where(wallet_id: wallet_id, product_id: product_id, queue_id: nil)
           ids.each do |id|
             TransactionLogEntry.find_by(id: id).update!(queue_id: Time.now.to_s)
           end
