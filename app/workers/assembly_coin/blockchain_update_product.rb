@@ -41,13 +41,14 @@ module AssemblyCoin
             receiver_id = award_transaction_entry.wallet_id
             receiver = User.find_by(id: receiver_id)
 
-            if receiver.wallet_public_address.nil?
-              AssemblyCoin::AssignBitcoinKeyPairWorker.new.perform(
-                receiver.to_global_id,
-                :assign_key_pair
-              )
-              Rails.logger.info "ADDED KEYPAIR TO #{receiver.username}"
-            end
+            if not receiver.nil?
+              if receiver.wallet_public_address.nil?
+                AssemblyCoin::AssignBitcoinKeyPairWorker.new.perform(
+                  receiver.to_global_id,
+                  :assign_key_pair
+                )
+                Rails.logger.info "ADDED KEYPAIR TO #{receiver.username}"
+              end
 
 
             sumvalue = award_transaction_entry.cents.to_i
