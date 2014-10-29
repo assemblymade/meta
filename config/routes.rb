@@ -49,7 +49,7 @@ ASM::Application.routes.draw do
   get '/_rr/articles/:id' => 'readraptor#show', as: :readraptor_article
 
   get '/create'        => 'products#new',    :as => :new_idea
-  get '/start'         => 'products#new',    :as => :start_idea
+  get '/start'         => 'products#start',  :as => :start_idea
 
   get '/styleguide' => 'pages#styleguide'
 
