@@ -50,7 +50,6 @@ ASM::Application.routes.draw do
 
   get '/create'        => 'products#new',    :as => :new_idea
   get '/start'         => 'products#new',    :as => :start_idea
-  get '/let-me-see'    => 'products#start'
 
   get '/styleguide' => 'pages#styleguide'
 
