@@ -19,7 +19,7 @@
         <a href="<%= user_path(withdrawal.user) %>">@<%= withdrawal.user.username %></a>
       </td>
       <td>
-        <%= render withdrawal.user.payment_option %>
+        <%= render withdrawal.user.payment_option if withdrawal.user.payment_option %>
       </td>
       <td><%= currency withdrawal.total_amount %></td>
       <td><%= currency withdrawal.amount_withheld %></td>
