@@ -40,7 +40,7 @@ module Api
     end
 
     def core_team
-      @product = Product.find_by!(slug: params[:product_id])
+      @product = Product.find_by(id: params[:product_id]) || Product.find_by(slug: params[:product_id])
       @user = User.find_by!(authentication_token: params[:token])
 
       respond_with authorized: @product.core_team.include?(@user)
