@@ -9,13 +9,13 @@ class NewsFeedItemsController < ProductController
 
   def popularize
     @news_feed_item = NewsFeedItem.find(params[:update_id])
-    @news_feed_item.update!(popular_at: Time.now)
+    @news_feed_item.update_columns(popular_at: Time.now)
     render nothing: true, status: 200
   end
 
   def depopularize
     @news_feed_item = NewsFeedItem.find(params[:update_id])
-    @news_feed_item.update!(popular_at: nil)
+    @news_feed_item.update_columns(popular_at: nil)
     render nothing: true, status: 200
   end
 
