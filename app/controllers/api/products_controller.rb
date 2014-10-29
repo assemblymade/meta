@@ -34,7 +34,7 @@ module Api
     end
 
     def authorization
-      @product = Product.find_by!(slug: params[:product_id])
+      @product = Product.find(params[:product_id]) || Product.find_by(slug: params[:product_id])
 
       respond_with authorized: @product.authentication_token == params[:token]
     end
