@@ -5,7 +5,7 @@
   var BountyValuation = React.createClass({
     getInitialState: function() {
       return {
-        popoverShown: false,
+        popoverShown: true,
       }
     },
 

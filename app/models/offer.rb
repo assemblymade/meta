@@ -26,4 +26,8 @@ class Offer < ActiveRecord::Base
     inf / partner.total_coins.to_f
   end
 
+  def earnable
+    amount - (bounty.contracts.tip_percentage * amount)
+  end
+
 end
