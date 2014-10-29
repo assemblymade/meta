@@ -54,7 +54,7 @@ module AssemblyCoin
             sumvalue = award_transaction_entry.cents.to_i
             product = Product.find_by(id: award_transaction_entry.product_id)
             if sumvalue>0 and not receiver.nil?
-              OpenAssets::Transactions.new.transfer_coins(sender, receiver, sumvalue, product)
+              OpenAssets::Transactions.new.transfer_coins(sender, receiver, sumvalue, product, "tip")
               Rails.logger.info "[coins] Tipping #{sumvalue.to_s} Coins for #{product_id} from #{sender} to #{receiver_id}"
               award_transaction_entry.update!(queue_id: Time.now.to_s)
             end
