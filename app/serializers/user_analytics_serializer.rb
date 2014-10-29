@@ -10,6 +10,8 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
 
   attributes :comments, :following, :ideas, :wips
 
+  attributes :most_important_quality
+
   def id
     object.id
   end
