@@ -1,7 +1,9 @@
 module AssemblyCoin
   class BlockchainUpdateProduct < AssemblyCoin::Worker
 
-    def perform(product)
+    def perform(product)      
+      AssemblyCoin::MaintainBtcBalance.new.perform(product_id)
+
       distinct_txs = TransactionLogEntry.where(action: 'credit', product_id: product.id, queue_id: nil).select(:transaction_id).distinct
 
       distinct_txs.each do |distinct_tx|
