@@ -44,7 +44,7 @@
       <div class="step">3</div>
       <div class="body">
         <strong>Ship it</strong>
-        <div class="text-muted">Don’t worry about the costs; We’ve got your back.</div>
+        <div class="text-muted">Don’t worry about the costs. We’ve got your back.</div>
       </div>
     </li>
     <li>
@@ -134,9 +134,9 @@
       <p class="text-muted">Over <%= amount_to_currency @profit, precision: 0 %> has been paid out to Assembly App Coin holders.</p>
     </div>
     <div class="col-xs-12 col-sm-4" style="padding: 50px 40px">
-      <h1 style="font-size: 80px; line-height: 1; margin: 0"><%= Product.where(state: [:team_building, :greenlit, :profitable]).count %></h1>
+      <h1 style="font-size: 80px; line-height: 1; margin: 0"><%= Product.count %></h1>
       <h2 style="font-weight: lighter; margin-top: 0">Products</h1>
-      <p class="text-muted"><%= Product.where(state: [:team_building, :greenlit, :profitable]).count %> products started on Assembly. <br> <%= Product.where(state: [:greenlit, :profitable]).count %> products launched in 2014.</p>
+      <p class="text-muted"><%= Product.count %> products started on Assembly. <br> <%= Product.where(state: [:team_building, :greenlit, :profitable]).count %> products currently being built.</p>
     </div>
   </div>
 </div>
