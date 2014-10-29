@@ -84,4 +84,59 @@ namespace :activity do
     end
   end
 
+  task :types_stacked => :environment do
+    require 'csv'
+
+    headers = [ 'month', 
+                'chat', 
+                'comment',
+                'start',
+                'award',
+                'close',
+                'post',
+                'gitPush',
+                'tip',
+                'introduce',
+                'follow',
+                'subscribe',
+                'createCoreTeamMembership',
+                'destroyContract',
+                'createContract',
+                'open',
+                'found',
+                'updateContract',
+                'launch',
+                'unassign',
+                'update',
+                'assign',
+                'reference'
+              ]
+
+    time = Activity.limit(1).order(:created_at).pluck(:created_at).first
+
+    CSV.open('activity_types_stacked.csv', 'a') do |csv|
+      csv << headers
+
+      while(time < Time.now - 1.month)
+        ah = Activity.where(created_at: time..time+1.month).group(:type).count
+        row = Array.new(headers.length, 0)
+
+        row[0] =  time.strftime('%b-%Y')
+
+        ah.each do |k,v|
+          col = k.split('::').last
+          col = col[0].downcase + col[1..-1]
+
+          index = headers.index(col)
+
+          row[index] = v
+        end
+
+        csv << row
+
+        time += 1.month
+      end
+    end
+  end
+
 end
