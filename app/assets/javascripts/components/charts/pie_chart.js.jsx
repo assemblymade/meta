@@ -29,7 +29,9 @@
 
     _pie: function(data) {
       return d3.layout.pie()
-        .sort(null)
+        .sort(function(a, b) {
+          return a.quantity > b.quantity ? 1 : a.quantity < b.quantity ? -1 : 0;
+        })
         .value(function(d) { return d.quantity; }).call(null, data);
     },
 
@@ -54,11 +56,11 @@
         .attr("class", "arc");
 
       var dataLength = this.props.data.length;
-
+      console.log(this.state.data);
       g.append("path")
         .attr("d", this._arc())
         .style("fill", function(d, i) {
-          return _this._color(dataLength - (i + 1));
+          return _this._color(d.data.quantity);
         });
 
       // FIXME: The labels should show up as tooltips at the very least
