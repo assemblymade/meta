@@ -129,14 +129,14 @@
       <p class="text-muted">3+ million people this year have used the products being built on Assembly.</p>
     </div>
     <div class="col-xs-12 col-sm-4" style="padding: 50px 40px; border-left: 1px solid #eee; border-right: 1px solid #eee">
-      <h1 style="font-size: 80px; line-height: 1; margin: 0">$180K</h1>
+      <h1 style="font-size: 80px; line-height: 1; margin: 0"><%= short_currency @profit %></h1>
       <h2 style="font-weight: lighter; margin-top: 0">In Profits Paid Out</h1>
-      <p class="text-muted">Over $180,000 has been paid out to Assembly App Coin holders.</p>
+      <p class="text-muted">Over <%= amount_to_currency @profit, precision: 0 %> has been paid out to Assembly App Coin holders.</p>
     </div>
     <div class="col-xs-12 col-sm-4" style="padding: 50px 40px">
-      <h1 style="font-size: 80px; line-height: 1; margin: 0"><%= Product.count %></h1>
+      <h1 style="font-size: 80px; line-height: 1; margin: 0"><%= Product.where(state: [:team_building, :greenlit, :profitable]).count %></h1>
       <h2 style="font-weight: lighter; margin-top: 0">Products</h1>
-      <p class="text-muted"><%= Product.count %> products started on Assembly. <br> <%= Product.greenlit.count %> products launched in 2014.</p>
+      <p class="text-muted"><%= Product.where(state: [:team_building, :greenlit, :profitable]).count %> products started on Assembly. <br> <%= Product.where(state: [:greenlit, :profitable]).count %> products launched in 2014.</p>
     </div>
   </div>
 </div>
@@ -759,7 +759,7 @@
     <div class="text-large" style="padding: 60px 30px; font-size: 20px">
       <a href="<%= start_idea_path %>" class="btn btn-success btn-lg pull-right mb3">Nope, I’m ready to create this thing!</a>
       Already have a product and want to put it on Assembly? 
-      <a href="<%= start_idea_path %>">Learn more.
+      <a href="<%= help_path(:migrating) %>">Learn more.
     </div>
   </div>
 </div>
