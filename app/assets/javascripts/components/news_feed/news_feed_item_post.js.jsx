@@ -1,8 +1,7 @@
 (function() {
   var d3 = require('d3');
-  var PieChart = require('../pie_chart.js.jsx');
-  // TODO: Fix these colors, they're hideous
-  var COLORS = ["#0b64a0","#f4b425",  "#fcedd6", "#f7e3bf", "#fcce65", "#fec92d", "#f4b425"];
+  var PieChart = require('../charts/pie_chart.js.jsx');
+
   module.exports = React.createClass({
     displayName: 'NewsFeedItemPost',
 
@@ -63,7 +62,7 @@
       }
 
       var type = parsed[1];
-      var values = parsed[2].split('\n');
+      var values = parsed[2].split('\n').slice(0, -1);
 
       var columns = values.map(function(value) {
         value = value.split(',');
@@ -71,11 +70,9 @@
         if (value[1]) {
           return { text: value[0], quantity: parseInt(value[1]) };
         }
-
-        return false;
       });
 
-      return <PieChart data={columns} colorRange={COLORS} width={400} height={320} />;
+      return <PieChart data={columns} width={400} height={320} />;
     }
   });
 

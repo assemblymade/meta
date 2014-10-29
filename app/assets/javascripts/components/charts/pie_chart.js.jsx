@@ -7,26 +7,19 @@
 
   var PieChart = React.createClass({
     propTypes: {
-      data: React.PropTypes.array.isRequired,
-      colorRange: React.PropTypes.array.isRequired
+      data: React.PropTypes.array.isRequired
     },
 
     getInitialState: function() {
       return {
         data: this.props.data,
-        colorRange: this.props.colorRange,
         arcRadius: Math.min(this.props.width, this.props.height) / 2,
       };
     },
 
     _me: null,
 
-    _color: function() {
-      dataLength = this.state.data.length;
-      return d3.scale.linear()
-      .domain([0, dataLength])
-        .range(this.state.colorRange);
-    },
+    _color: d3.scale.category20c(),
 
     _arc: function() {
       return d3.svg.arc()
@@ -37,16 +30,21 @@
     _pie: function(data) {
       return d3.layout.pie()
         .sort(null)
-        .value(function(d) { return d.quantity; }).call(null,data);
+        .value(function(d) { return d.quantity; }).call(null, data);
     },
 
     _renderGraph: function() {
       var _this = this;
+
       // Based on http://bl.ocks.org/mbostock/3887235
       if(!this._me){
         this._me = d3.select(this.getDOMNode()).append('g')
-        .attr("transform", "translate(" +
-          this.props.width / 2 + "," + this.props.height / 2 + ")"
+        .attr(
+          "transform",
+          "translate(" +
+            this.props.width / 2 + "," +
+            this.props.height / 2 +
+          ")"
         );
       }
 
@@ -55,19 +53,22 @@
         .enter().append("g")
         .attr("class", "arc");
 
+      var dataLength = this.props.data.length;
+
       g.append("path")
         .attr("d", this._arc())
         .style("fill", function(d, i) {
-          return _this._color().call(null, i);
+          return _this._color(dataLength - (i + 1));
         });
 
       // FIXME: The labels should show up as tooltips at the very least
+      //        See: http://jsfiddle.net/thudfactor/HdwTH/
       g.append("text")
         .attr("transform", function(d) {
           return "translate(" + _this._arc().centroid(d) + ")";
         })
         .attr("dy", ".35em")
-        .style("text-anchor", "middle")
+        .style("text-anchor", "start")
         .text(function(d) { return d.data.text; });
     },
 
