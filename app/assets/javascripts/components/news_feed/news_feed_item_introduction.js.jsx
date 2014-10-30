@@ -33,8 +33,6 @@
               <div className="h4 mt0 mb0">{introduction.bio}</div>
             </div>
           </div>
-
-          <a className="text-small" href={introduction.url}>Read more</a>
         </div>
       )
     }
