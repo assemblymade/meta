@@ -17,20 +17,19 @@ namespace :news_feed_items do
   task :process_work => :environment do
     GITHUB = User.find_by(username: 'GitHub')
 
-    Work.where('created_at >= ?', 1.day.ago).
+    Work.where('created_at >= ?', 2.days.ago).
     group_by(&:product).each do |product, work|
       if work.count > 1
         shas = []
         users = work.map do |w|
           next unless username = w.user.try(:username)
-
           shas << w.metadata['sha']
-          "<li>@#{username}: <a href=\"#{w.url}\">#{w.metadata['message']}</a></li>"
+          "<li>@#{username}: <a href=\"#{w.url}\"><span style=\"color: #6e6e6e;\">#{w.metadata['message']}</span></a></li>"
         end
 
         message = "<ul>#{users.join('')}</ul>"
 
-        url = if shas.count > 1
+        url = if shas.any?
           work.first.url.gsub!(/commit\/.*/, "compare/#{shas.first}...#{shas.last}")
         end
 
@@ -42,7 +41,7 @@ namespace :news_feed_items do
 
         product.news_feed_items.create(
           source: GITHUB,
-          target: NewsFeedItemGitCommit.create(title: title, description: message)
+          target: NewsFeedItemPost.create(title: title, description: message)
         )
       end
     end

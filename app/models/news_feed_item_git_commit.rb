@@ -1,2 +1,0 @@
-class NewsFeedItemGitCommit < NewsFeedItemPost
-end
