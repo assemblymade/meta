@@ -24,6 +24,6 @@ class User::BalanceEntry < ActiveRecord::Base
   end
 
   def pending?(at=Time.now)
-    payable_earnings > 0 && at <= profit_report.grace_ends_at
+    payable_earnings > 0 && at.to_date <= profit_report.grace_ends_at
   end
 end
