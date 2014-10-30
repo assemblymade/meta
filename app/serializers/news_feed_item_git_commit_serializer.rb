@@ -1,0 +1,2 @@
+class NewsFeedItemGitCommitSerializer < NewsFeedItemPostSerializer
+end

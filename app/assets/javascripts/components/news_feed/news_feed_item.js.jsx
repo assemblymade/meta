@@ -19,7 +19,8 @@
     typeMap: {
       task: 'bounty',
       team_membership: 'team member',
-      news_feed_item_post: 'update'
+      news_feed_item_post: 'update',
+      news_feed_item_git_commit: 'commit'
     },
 
     render: function() {

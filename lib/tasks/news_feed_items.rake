@@ -17,37 +17,32 @@ namespace :news_feed_items do
   task :process_work => :environment do
     GITHUB = User.find_by(username: 'GitHub')
 
-    Work.where('created_at >= ?', 7.days.ago).
-    where.not(product: Product.find_by(slug: 'meta')).
+    Work.where('created_at >= ?', 1.day.ago).
     group_by(&:product).each do |product, work|
-      if work.count > 5
+      if work.count > 1
+        shas = []
         users = work.map do |w|
-          w.user.try(:username)
-        end.reduce({}) do |memo, username|
-          if memo[username]
-            memo[username] = memo[username] + 1
-          else
-            memo[username] = 1
-          end
+          next unless username = w.user.try(:username)
 
-          memo
+          shas << w.metadata['sha']
+          "<li>@#{username}: <a href=\"#{w.url}\">#{w.metadata['message']}</a></li>"
         end
 
-        message = "<ul>"
+        message = "<ul>#{users.join('')}</ul>"
 
-        users.map do |username, commits|
-          if commits == 1
-            message = message + "<li>@#{username}: #{commits} commit</li>"
-          else
-            message = message + "<li>@#{username}: #{commits} commits</li>"
-          end
+        url = if shas.count > 1
+          work.first.url.gsub!(/commit\/.*/, "compare/#{shas.first}...#{shas.last}")
         end
 
-        message = message + "</ul>"
+        title = if url
+          "[#{work.count} commits pushed in the past day](#{url})"
+        else
+          "[#{work.count} commits pushed in the past day](#{work.first.url})"
+        end
 
         product.news_feed_items.create(
           source: GITHUB,
-          target: NewsFeedItemPost.create(title: "#{work.count} commits pushed this week", description: message)
+          target: NewsFeedItemGitCommit.create(title: title, description: message)
         )
       end
     end
