@@ -20,6 +20,14 @@
 
       return (
         <div className="p3">
+          <div className="left">
+            <AppIcon app={this.props.product} size={42} />
+          </div>
+          <div className="overflow-hidden p2">
+            <a href={product.url}>{product.name}</a>
+            <span className="gray-dark pull-right">{post.type.replace(/_/g, '')}</span>
+          </div>
+
           <a href={post.url} className="block h4 mt0 mb2 black">
             {post.title}
           </a>
@@ -29,15 +37,12 @@
               <Avatar user={user} size={18} />
             </div>
             <div className="overflow-hidden">
-              Created by
-              {' '}
               <a className="gray" href={user.url}>{user.username}</a>
             </div>
           </div>
 
           <div className="gray-darker" dangerouslySetInnerHTML={{__html: (post.markdown_body || post.description)}} />
-
-          <a className="btn btn-pill btn-sm" href={post.url}>Read more</a>
+          <a className="text-small" href={post.url}>Read more</a>
         </div>
       )
     }

@@ -25,7 +25,6 @@
     render: function() {
       return (
         <div>
-          {this.renderHeader()}
           <div className="bg-white mb4 rounded overflow-hidden shadow">
             {this.renderTarget()}
             <NewsFeedItemComments item={this.props} />
@@ -54,17 +53,16 @@
 
 
     renderTarget: function() {
+      var product = this.props.product
       var target = this.props.target
 
       switch (target.type) {
       case 'task':
-        return <NewsFeedItemBounty bounty={target} user={this.props.user} />;
+        return <NewsFeedItemBounty product={product} bounty={target} user={this.props.user} />;
       case 'team_membership':
-        return <NewsFeedItemIntroduction introduction={target} user={this.props.user} />;
-      case 'work':
-        return <NewsFeedItemWork work={target} user={this.props.user} />;
+        return <NewsFeedItemIntroduction product={product} introduction={target} user={this.props.user} />;
       default:
-        return <NewsFeedItemPost product={this.props.product} post={target} user={this.props.user} />;
+        return <NewsFeedItemPost product={product} post={target} user={this.props.user} />;
       }
     },
 

@@ -11,10 +11,20 @@
 
     render: function() {
       var bounty = this.props.bounty
+      var product = this.props.product
       var user = this.props.user
 
       return (
         <div className="p3">
+
+          <div className="left">
+            <AppIcon app={this.props.product} size={42} />
+          </div>
+          <div className="overflow-hidden p2">
+            <a href={product.url}>{product.name}</a>
+            <span className="gray-dark pull-right">{this.tags()}</span>
+          </div>
+
           <a href={bounty.url} className="h4 mt0 mb2 block" style={{ color: '#333' }}>
             <strong className="text-coins">
               <span className="icon icon-app-coin"></span>
@@ -26,23 +36,37 @@
             {' '}
             <span className="gray-dark">#{bounty.number}</span>
           </a>
+          <div className="gray-darker" dangerouslySetInnerHTML={{__html: bounty.markdown_description}} />
 
           <div className="clearfix gray h6 mt0 mb2">
             <div className="left mr1">
               <Avatar user={user} size={18} />
             </div>
             <div className="overflow-hidden">
-              Created by
-              {' '}
               <a className="gray" href={user.url}>{user.username}</a>
             </div>
           </div>
 
-          <div className="gray-darker" dangerouslySetInnerHTML={{__html: bounty.markdown_description}} />
-
-          <a className="btn btn-pill btn-sm" href={bounty.url}>Read more</a>
+          <a className="text-small" href={bounty.url}>Read more</a>
         </div>
       )
+    },
+
+    tags: function() {
+      var bounty = this.props.bounty;
+      var product = this.props.product;
+
+      return _.map(bounty.tags, function(tag) {
+        var name = tag.name;
+
+        return (
+          <a className="mr1"
+              href={product.url + '/bounties?state=open&tag=' + name}
+              style={{ color: '#6e6e6e' }}>
+            {name}
+          </a>
+        );
+      }.bind(this));
     }
   })
 
