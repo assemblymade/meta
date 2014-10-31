@@ -40,6 +40,8 @@
         url: product_wips_path(@product),
         maxOffer: (6 * @product.average_bounty).round(-4),
         averageBounty: @product.average_bounty,
+        coinsMinted: @product.coins_minted,
+        profitLastMonth: @product.profit_last_month,
         createBountyShown: params['modal'] == 'true'
       }.to_json %>"></div>
     </div>

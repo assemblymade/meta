@@ -464,6 +464,15 @@ class Product < ActiveRecord::Base
     bounties.inject(0, &:+) / bounties.size
   end
 
+  def coins_minted
+    transaction_log_entries.with_cents.sum(:cents)
+  end
+
+  def profit_last_month
+    last_report = profit_reports.order('end_at DESC').first
+    last_report && last_report.profit
+  end
+
   def ownership
     ProductOwnership.new(self)
   end

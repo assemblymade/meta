@@ -22,7 +22,10 @@
             onHidden={this.handleCreateBountyHidden}
             product={this.props.product}
             maxOffer={this.props.maxOffer}
-            averageBounty={this.props.averageBounty} /> : null }
+            averageBounty={this.props.averageBounty}
+            coinsMinted={this.props.coinsMinted}
+            profitLastMonth={this.props.profitLastMonth}
+            /> : null }
       </span>
     },
 
