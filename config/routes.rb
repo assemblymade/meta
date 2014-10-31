@@ -332,6 +332,8 @@ ASM::Application.routes.draw do
       patch 'urgency', action: :urgency, as: :urgency
     end
 
+    resources :resources, only: [:index]
+
     resources :tips, only: [:create]
 
     resources :contracts, only: [:index, :create, :update, :destroy]
