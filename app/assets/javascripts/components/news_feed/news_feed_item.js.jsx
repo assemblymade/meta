@@ -24,11 +24,9 @@
 
     render: function() {
       return (
-        <div>
-          <div className="bg-white mb4 rounded overflow-hidden shadow">
-            {this.renderTarget()}
-            {this.renderComments()}
-          </div>
+        <div className="bg-white mb4 rounded overflow-hidden shadow">
+          {this.renderTarget()}
+          {this.renderComments()}
         </div>
       );
     },
