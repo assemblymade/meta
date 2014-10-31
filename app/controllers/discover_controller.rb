@@ -25,6 +25,8 @@ class DiscoverController < ApplicationController
       # transform tag here so that the label in the HTML is still "writing"
       tag = if params[:tag] == 'writing'
         'copy'
+      elsif params[:tag] == 'mobile'
+        ['mobile', 'ios', 'android']
       else
         params[:tag]
       end
