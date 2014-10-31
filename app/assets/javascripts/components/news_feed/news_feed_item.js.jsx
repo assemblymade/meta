@@ -19,8 +19,7 @@
     typeMap: {
       task: 'bounty',
       team_membership: 'team member',
-      news_feed_item_post: 'update',
-      news_feed_item_git_commit: 'commit'
+      news_feed_item_post: 'update'
     },
 
     render: function() {
@@ -62,18 +61,7 @@
       default:
         return <NewsFeedItemPost product={product} post={target} user={this.props.user} />;
       }
-    },
-
-    targetNoun: function(type) {
-      var typeMap = this.typeMap;
-
-      if (typeMap[type]) {
-        return typeMap[type];
-      }
-
-      return type;
     }
-
   });
 
   if (typeof module !== 'undefined') {
