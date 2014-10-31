@@ -28,7 +28,7 @@
             <span className="gray-dark pull-right">{post.type.replace(/_/g, '')}</span>
           </div>
 
-          <a href={post.url} className="block h4 mt0 mb2 black" dangerouslySetInnerHTML={{__html: post.title }} />
+          <a href={post.url} className="block h4 mt0 mb2 black" dangerouslySetInnerHTML={{__html: window.marked(post.title) }} />
           <div className="clearfix gray h6 mt0 mb2">
             <div className="left mr1">
               <Avatar user={user} size={18} />
