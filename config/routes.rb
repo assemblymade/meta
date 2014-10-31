@@ -49,7 +49,7 @@ ASM::Application.routes.draw do
   get '/_rr/articles/:id' => 'readraptor#show', as: :readraptor_article
 
   get '/create'        => 'products#new',    :as => :new_idea
-  get '/start'         => 'products#new',    :as => :start_idea
+  get '/start'         => 'products#start',  :as => :start_idea
 
   get '/styleguide' => 'pages#styleguide'
 
@@ -297,7 +297,7 @@ ASM::Application.routes.draw do
       patch 'popularize'
       patch 'depopularize'
     end
-    post '/activities/:activity_id' => 'news_feed_item_comments#create', as: :activity
+    post '/updates/:update_id' => 'news_feed_item_comments#create', as: :activity
 
     resources :repositories, only: [:index, :create, :destroy], as: :repos
 

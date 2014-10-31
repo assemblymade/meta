@@ -24,7 +24,7 @@ namespace :news_feed_items do
         users = work.map do |w|
           next unless username = w.user.try(:username)
           shas << w.metadata['sha']
-          "<li>@#{username}: <a href=\"#{w.url}\"><span style=\"color: #6e6e6e;\">#{w.metadata['message']}</span></a></li>"
+          "<li>@#{username}: <a href=\"#{w.url}\">#{w.metadata['message']}</a></li>"
         end
 
         message = "<ul>#{users.join('')}</ul>"
