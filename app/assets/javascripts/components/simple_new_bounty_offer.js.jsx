@@ -33,36 +33,10 @@
       ];
     },
 
-    renderExampleList: function() {
-      return this.examples().map(function(example) {
-        return (
-          <li className="left gray"
-            style={{ width: '33%', 'text-align': 'center !important' }}
-            dangerouslySetInnerHTML={{ __html: example.join(', <br/>') }} />
-        )
-      }.bind(this))
-    },
-
     render: function() {
       return (
         <div className="px4 py3">
-          <ul className="list-unstyled mxn4">
-            {this.renderSuggestionList()}
-          </ul>
-
-          <input type="range" min="1" max="5" step="1" list="steps" onChange={this.handleOfferChange} />
-
-          <datalist id="steps">
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
-            <option value="4"></option>
-            <option value="5"></option>
-          </datalist>
-
-          <ul className="list-unstyled align-left h6 py2" style={{ 'margin': '0 -21%' }}>
-            {this.renderExampleList()}
-          </ul>
+          <Slider steps={this.suggestions()} />
         </div>
       )
     },
