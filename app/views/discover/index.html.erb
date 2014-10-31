@@ -10,7 +10,7 @@
 <%= render 'shared/navbar' %>
 
 <ul class="nav nav-skills bg-white mb2">
-  <% %w(Frontend Backend Design Marketing Writing Strategy).each do |skill| %>
+  <% %w(Frontend Backend Design Marketing Writing Mobile).each do |skill| %>
     <li class="<%= 'active' if params[:tag] == skill.downcase %>"><a class="px2 py4" href="?tag=<%= skill.downcase %>&amp;sort=<%= params[:sort] %>"><%= skill %></a></li>
   <% end %>
 </ul>
