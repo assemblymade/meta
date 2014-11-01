@@ -43,7 +43,7 @@
         </table>
       </div>
 
-      <!--
+<!--
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
@@ -74,7 +74,7 @@
         <% end %>
       </div>
 
-
+-->
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
@@ -85,24 +85,26 @@
         <div class="panel-body">
           External services can be added to pull in rich data about <%= @product.name %>.
         </div>
-
-        <table class="table">
+        <table className="table">
           <tr>
             <td style="width:10px">
-              <span class="px1 glyphicon glyphicon-ok text-success"></span>
+              <% # gah! %>
+              <% if @product.integrations.include?(Integration.find_by(provider: 'google')) %>
+                <span class="px1 glyphicon glyphicon-ok text-success"></span>
+              <% end %>
             </td>
-            <td style="width:100px">
-              <img height="20" src="https://segment.com/build/private/project-integrations/build/components/logo-mailchimp@0.2.0/images/logo.svg" />
-
+            <td>
+              <a href="<%= product_integrations_path(@product, 'google') %>" id="google">
+                <img height="20" src="https://developers.google.com/analytics/images/terms/google-analytics-logo.png" />
+              </a>
             </td>
             <td class="text-muted">
-              Posts daily updates on new subscribers
+              Post weekly updates on page views and site metrics
             </td>
           </tr>
         </table>
       </div>
 
-      !-->
     </div>
   </div>
 </div>

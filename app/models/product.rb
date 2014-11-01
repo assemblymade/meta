@@ -39,6 +39,7 @@ class Product < ActiveRecord::Base
   has_many :expense_claims
   has_many :financial_accounts, class_name: 'Financial::Account'
   has_many :financial_transactions, class_name: 'Financial::Transaction'
+  has_many :integrations
   has_many :invites, as: :via
   has_many :metrics
   has_many :milestones

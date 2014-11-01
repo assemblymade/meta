@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141031000002) do
+ActiveRecord::Schema.define(version: 20141031205809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,16 +169,6 @@ ActiveRecord::Schema.define(version: 20141031000002) do
     t.datetime "created_at"
   end
 
-  create_table "domains", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "product_id",             null: false
-    t.string   "name",                   null: false
-    t.string   "state",                  null: false
-    t.integer  "dnsimple_id"
-    t.string   "dnsimple_transfer_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "email_logs", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id",    null: false
     t.text     "key",        null: false
@@ -262,6 +252,16 @@ ActiveRecord::Schema.define(version: 20141031000002) do
     t.datetime "frontend"
     t.datetime "backend"
     t.datetime "marketing"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "integrations", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id",    null: false
+    t.string   "access_token",  null: false
+    t.string   "refresh_token"
+    t.string   "token_type"
+    t.string   "provider",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
