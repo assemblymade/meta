@@ -246,6 +246,11 @@ ASM::Application.routes.draw do
 
   get '/interests/:interest' => 'global_interests#toggle', as: :global_interests
 
+  # custom oauth :(
+  get '/:product_id/integrations/:provider/authorize' => 'integrations#authorize', as: :product_integrations
+  get '/integrations/:provider/token' => 'integrations#token'
+  get '/integrations/:provider/callback' => 'integrations#callback'
+
   # legacy
   get '/meta/chat', to: redirect(path: '/chat/general')
 
