@@ -17,8 +17,7 @@ namespace :news_feed_items do
   task :process_work => :environment do
     GITHUB = User.find_by(username: 'GitHub')
 
-    Work.where('created_at >= ?', 7.days.ago).
-    where.not(product: Product.find_by(slug: 'meta')).
+    Work.where('created_at >= ?', 2.days.ago).
     group_by(&:product).each do |product, work|
       next unless work.count > 5
 
