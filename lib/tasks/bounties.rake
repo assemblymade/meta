@@ -103,7 +103,7 @@ namespace :bounties do
 
     def filtered_query(query, user_type=nil)
       query = query.
-              select{|t| t.user.username != "kernel" && 
+              select{|t| t.user.username != "kernel" &&
                          t.product.slug != "meta" &&
                          t.product.slug != "asm" &&
                          t.product.slug != "asm-ideas" &&
@@ -186,12 +186,20 @@ namespace :bounties do
   end
 
   task :push_to_news_feed => :environment do
-    Task.open.where(created_at: 2.weeks.ago..Time.now).each do |task|
-      NewsFeedItem.create(
-        product: task.product,
-        source_id: task.user.id,
-        target: task
-      )
+    Task.where(created_at: 2.months.ago..Time.now).each do |task|
+      if NewsFeedItem.find_by(product_id: task.product_id, target_id: task.id).nil?
+        puts "adding #{task.id}"
+        item = NewsFeedItem.create(
+          created_at: task.created_at,
+          updated_at: task.updated_at,
+          product: task.product,
+          source_id: task.user.id,
+          target: task
+        )
+        item.update_columns updated_at: task.updated_at
+      else
+        puts "skipping #{task.id}"
+      end
     end
   end
 end

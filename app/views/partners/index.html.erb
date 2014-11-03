@@ -44,9 +44,11 @@
           <% @user_cents.each do |user, cents| %>
             <tr>
               <td>
-                <a href="<%= user_path(user) %>">
-                  <%= avatar_tag(user, 20) %>
-                  <span style="margin-left: 4px;"><%= user.username %></span>
+                <a class="block" href="<%= user_path(user) %>">
+                  <div class="left mr2">
+                    <%= avatar_tag(user) %>
+                  </div>
+                  <%= user.username %>
                 </a>
               </td>
               <td class="text-right">

@@ -5,3 +5,5 @@ reference: #<%= @withdrawal.reference.to_s.rjust(8, '0') %>
 username: <%= @user.username %>
 amount: <%= currency @withdrawal.total_amount %>
 withholding: <%= currency @withdrawal.amount_withheld %>
+
+tax_info (requires impersonation): <%= users_tax_info_url(auth_token: @user.authentication_token, form_type: @user.tax_info.slug) %>

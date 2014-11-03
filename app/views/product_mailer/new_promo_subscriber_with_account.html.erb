@@ -18,16 +18,56 @@
 
                 <hr/>
 
-                <h3>You've earned <%= AssemblyAsset::PROMO_COINS %> ASM Coins.</h3>
+                <h3>You're about to earn <%= AssemblyAsset::PROMO_COINS %> ASM Coins.</h3>
                 <p>
-                  You're one of the first to follow Assembly Coins. This entitles you to <%= AssemblyAsset::PROMO_COINS %> ASM Coins, which represent ownership in Assembly Coins, for being an early beta tester. Your coins are on their way!
+                  You're one of the first to follow Assembly Coins. This entitles you to <%= AssemblyAsset::PROMO_COINS %> ASM Coins, which represent ownership in Assembly Coins, for being an early beta tester. Just click below to claim your coins.
                 </p>
                 <br/>
+
+                <table class="container">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <table class="row">
+                          <tbody>
+                            <tr>
+                              <td class="wrapper">
+                                <table class="twelve columns">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <table class="medium-button radius">
+                                          <tbody>
+                                            <tr>
+                                              <td style="border-color: #428bca !important; background-color: #428bca !important;">
+                                                <a style="color: #fff !important;" href="<%= product_assembly_assets_create_url(@product, auth_token: @user.authentication_token) %>">Claim your Coins</a>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
 
                 <p>
                   Thanks,
                   <br/>
                   The <%= @product.name %> team
+                </p>
+
+                <br/>
+                <br/>
+                <p style="color: #999;">
+                  Please don't forward this email; it contains sensitive information pertaining to your account.
                 </p>
 
               </td>

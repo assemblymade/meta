@@ -27,11 +27,15 @@ class Wip::Tag < ActiveRecord::Base
     %w(
       simple
       challenging
-      development
-      design
-      product
       frontend
       backend
+      development
+      android
+      ios
+      mobile
+      design
+      logo
+      product
       copy
       bug
       api

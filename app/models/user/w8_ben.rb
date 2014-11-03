@@ -5,6 +5,10 @@ class User::W8Ben < User::TaxInfo
 
   INTERNATIONAL_WITHHOLDING = 0.37
 
+  def slug
+    'w8ben'
+  end
+
   def withholding
     INTERNATIONAL_WITHHOLDING
   end

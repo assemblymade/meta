@@ -4,14 +4,19 @@
   var Avatar = React.createClass({
     getDefaultProps: function() {
       return {
-        size: 24
+        size: 24,
+        style: {}
       };
     },
 
     render: function() {
       var size = this.props.size.toString();
 
-      return <img className="avatar" src={this.avatarUrl()} height={size} width={size} />;
+      return <img className="avatar"
+          src={this.avatarUrl()}
+          height={size}
+          width={size}
+          style={this.props.style} />;
     },
 
     avatarUrl: function() {

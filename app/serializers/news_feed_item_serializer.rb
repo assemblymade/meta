@@ -1,15 +1,11 @@
 class NewsFeedItemSerializer < ApplicationSerializer
-  attributes :message, :url, :popular_at
+  attributes :url, :popular_at
 
   has_one :product
   has_one :target
   has_one :user
   has_many :news_feed_item_comments, serializer: NewsFeedItemCommentSerializer
-
-  def message
-    object.message
-  end
-
+  
   def news_feed_item_comments
     object.news_feed_item_comments.order(created_at: :asc)
   end

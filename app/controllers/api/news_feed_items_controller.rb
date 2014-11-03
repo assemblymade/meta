@@ -11,7 +11,7 @@ module Api
 
       @item = @product.news_feed_items.new(
         source_id: @user.id,
-        message: message,
+        target: NewsFeedItemPost.create(title: @user.username, description: params[:message])
       )
 
       if @item.save
@@ -32,7 +32,11 @@ module Api
     end
 
     def set_product_and_authenticate!
-      @product = Product.find_by(slug: params[:product_id])
+      @product = if params[:product_id].uuid?
+        Product.find(params[:product_id])
+      else
+        Product.find_by(slug: params[:product_id])
+      end
 
       unless @product.authentication_token == params[:token]
         response = { status: 401, message: "Invalid product token" }
@@ -45,14 +49,6 @@ module Api
         response = { status: 401, message: "Invalid user token" }
         respond_with response, status: 401, location: api_product_updates_url(@product)
       end
-    end
-
-    def message
-      news_feed_item_params[:message]
-    end
-
-    def news_feed_item_params
-      params.require(:news_feed_item).permit(:message)
     end
 
     def set_access_control_headers

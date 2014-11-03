@@ -3,6 +3,7 @@ class NewsFeedItem < ActiveRecord::Base
 
   belongs_to :target, polymorphic: true
   belongs_to :product
+  belongs_to :source, class: User
   has_many :news_feed_item_comments
 
   scope :public_items, -> { joins(:product).where('products.state not in (?)', ['stealth', 'reviewing']) }
@@ -13,7 +14,7 @@ class NewsFeedItem < ActiveRecord::Base
     unless target.user.username == 'kernel'
       create!(
         product: target.product,
-        source_id: target.user.id,
+        source: target.user,
         target: target
       )
     end

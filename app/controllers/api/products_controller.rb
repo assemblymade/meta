@@ -34,13 +34,22 @@ module Api
     end
 
     def authorization
-      @product = Product.find_by!(slug: params[:product_id])
+      @product = if params[:product_id].uuid?
+        Product.find(params[:product_id])
+      else
+        Product.find_by(slug: params[:product_id])
+      end
 
       respond_with authorized: @product.authentication_token == params[:token]
     end
 
     def core_team
-      @product = Product.find_by!(slug: params[:product_id])
+      @product = if params[:product_id].uuid?
+        Product.find(params[:product_id])
+      else
+        Product.find_by(slug: params[:product_id])
+      end
+      
       @user = User.find_by!(authentication_token: params[:token])
 
       respond_with authorized: @product.core_team.include?(@user)

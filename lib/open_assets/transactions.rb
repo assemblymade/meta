@@ -66,7 +66,8 @@ module OpenAssets
         fee_each: ENV.fetch("STANDARD_BTC_FEE"),
         from_private_key: product.wallet_private_key,
         issuing_address: product.wallet_public_address,
-        transfer_amount: coins.to_s
+        transfer_amount: coins.to_s,
+        type: ""
       }
 
       remote = OpenAssets::Remote.new("https://coins.assembly.com")
@@ -74,7 +75,7 @@ module OpenAssets
       remote.post end_url, body.to_json
     end
 
-    def transfer_coins(sender, receiver, coins, product)
+    def transfer_coins(sender, receiver, coins, product, type)
 
       issuing_address = product.wallet_public_address
       from_public_address = sender.wallet_public_address
@@ -87,7 +88,8 @@ module OpenAssets
         fee_each: ENV.fetch("STANDARD_BTC_FEE"),
         from_public_address: from_public_address,
         from_private_key: from_private_key,
-        transfer_amount: coins.to_s
+        transfer_amount: coins.to_s,
+        type: type
       }
 
       remote = OpenAssets::Remote.new("https://coins.assembly.com")

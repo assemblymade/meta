@@ -10,7 +10,7 @@
 <%= render 'shared/navbar' %>
 
 <ul class="nav nav-skills bg-white mb2">
-  <% %w(Frontend Backend Design Marketing Writing Strategy).each do |skill| %>
+  <% %w(Frontend Backend Design Marketing Writing Mobile).each do |skill| %>
     <li class="<%= 'active' if params[:tag] == skill.downcase %>"><a class="px2 py4" href="?tag=<%= skill.downcase %>&amp;sort=<%= params[:sort] %>"><%= skill %></a></li>
   <% end %>
 </ul>
@@ -51,7 +51,7 @@
         </div>
       <% else %>
         <div class="h1 mt0 mb0">Find a product you'd like to work on,</div>
-        <div class="h3 mt0 mb0 mid-gray">or <a class="green" href="<%= new_product_path %>">start your own</a> that others can work on with you.</div>
+        <div class="h3 mt0 mb0 mid-gray">or <a class="green" href="<%= start_idea_path %>">start your own</a> that others can work on with you.</div>
       <% end %>
     </div>
 

@@ -24,7 +24,7 @@ describe SurveysController do
 
     it "doesn't require any answers" do
       post :create, user: {previous_experience: "", platforms: [""]}
-      expect(response).to redirect_to('/welcome/thanks')
+      expect(response).to redirect_to('/discover')
     end
 
     it 'saves all the answers' do

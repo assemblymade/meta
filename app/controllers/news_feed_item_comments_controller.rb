@@ -11,7 +11,7 @@ class NewsFeedItemCommentsController < ProductController
 
   def create
     @item = @news_feed_item.news_feed_item_comments.create(
-      user_id: current_user.id,
+      user: current_user,
       body: params[:body]
     )
 
@@ -46,6 +46,6 @@ class NewsFeedItemCommentsController < ProductController
   end
 
   def set_news_feed_item!
-    @news_feed_item = NewsFeedItem.find(params[:activity_id])
+    @news_feed_item = NewsFeedItem.find(params[:update_id])
   end
 end
