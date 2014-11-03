@@ -22,7 +22,9 @@ namespace :news_feed_items do
     group_by(&:product).each do |product, work|
       next unless work.count > 5
 
+      shas = []
       users = work.map do |w|
+        shas << w.metadata['sha']
         w.user.try(:username)
       end.reduce({}) do |memo, username|
         if memo[username]
@@ -44,11 +46,19 @@ namespace :news_feed_items do
         end
       end
 
+      url = if shas.any?
+        work.first.url.gsub!(/commit\/.*/, "compare/#{shas.first}...#{shas.last}")
+      else
+        work.first.url
+      end
+
+      title = "#{work.count} commits pushed this week"
+
       message = message + "</ul>"
 
       product.news_feed_items.create(
         source: GITHUB,
-        target: NewsFeedItemPost.create(title: "#{work.count} commits pushed this week", description: message)
+        target: NewsFeedItemPost.create(title: title, description: message, url: url)
       )
     end
   end
