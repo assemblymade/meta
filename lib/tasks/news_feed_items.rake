@@ -48,7 +48,7 @@ namespace :news_feed_items do
       url = if shas.any?
         work.first.url.gsub!(/commit\/.*/, "compare/#{shas.first}...#{shas.last}")
       else
-        work.first.url
+        work.last.url
       end
 
       title = "#{work.count} commits pushed this week"
