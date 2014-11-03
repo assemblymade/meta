@@ -25,7 +25,7 @@
           </div>
           <div className="overflow-hidden p2">
             <a href={product.url}>{product.name}</a>
-            <span className="gray-dark pull-right">{post.type.replace(/_/g, '')}</span>
+            <span className="gray-dark pull-right">{this.type(post.type)}</span>
           </div>
 
           <a href={post.url} className="block h4 mt0 mb2 black">
@@ -45,6 +45,14 @@
           <a className="text-small" href={post.url}>Read more</a>
         </div>
       )
+    },
+
+    type: function(type) {
+      if (type === 'news_feed_item_post') {
+        return 'update';
+      }
+
+      return type.replace(/_/g, '')
     }
   })
 
