@@ -12,31 +12,13 @@
 
     getInitialState: function() {
       return {
-        changed: false,
-        valueToggle: 'simple',
-        coinValue: 5000
+        changed: false
       };
     },
 
     handleChange: function() {
       this.setState({
         changed: true
-      });
-    },
-
-    handleValueToggleClick: function(selection) {
-      return function() {
-        this.setState({
-          valueToggle: selection
-        });
-
-        return false;
-      }.bind(this)
-    },
-
-    handleCoinValueChange: function(event) {
-      this.setState({
-        coinValue: event.target.value
       });
     },
 

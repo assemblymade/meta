@@ -45,7 +45,7 @@
             <div className="col-xs-12">
               <div style={{ position: 'relative' }}>
                 <span className="icon icon-app-coin text-coins" style={{ position: 'absolute', top: '12px', left: '8px' }}></span>
-                <input type="text" defaultValue={this.state.value} onChange={this.handleOfferChange} className="form-control text-coins bold input-lg" style={{ 'padding-left': '30px' }} />
+                <input name="offer" type="text" defaultValue={this.state.value} onChange={this.handleOfferChange} className="form-control text-coins bold input-lg" style={{ 'padding-left': '30px' }} />
               </div>
             </div>
           </div>
@@ -81,8 +81,6 @@
     },
 
     handleOfferChange: function(e) {
-      this.props.onChange(e.target.value);
-
       this.setState({
         value: parseInt(e.target.value)
       })

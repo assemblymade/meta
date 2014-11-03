@@ -1,6 +1,12 @@
 (function() {
+  var BountyValuationSlider = require('./bounty_valuation_slider.js.jsx')
+
   var SimpleNewBountyOffer = React.createClass({
-    mixins: [React.addons.LinkedStateMixin],
+    getInitialState: function() {
+      return {
+        offer: this.suggestions()[2]
+      }
+    },
 
     suggestions: function() {
       var middle = Math.round(this.props.averageBounty / 1000) * 1000
@@ -35,14 +41,17 @@
 
     render: function() {
       return (
-        <div className="px4 py3">
-          <Slider steps={this.suggestions()} />
+        <div style={{ padding: '24px 60px'}}>
+          <BountyValuationSlider steps={this.suggestions()} onChange={this.handleChange} />
+          <input name="offer" type="hidden" value={this.state.offer} />
         </div>
       )
     },
 
-    handleOfferChange: function(e) {
-      this.props.onChange(this.suggestions()[e.target.value]);
+    handleChange: function(e) {
+      this.setState({
+        offer: e.target.value
+      })
     }
   });
 

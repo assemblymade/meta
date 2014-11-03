@@ -1,5 +1,5 @@
 (function() {
-  var Slider = React.createClass({
+  var BountyValuationSlider = React.createClass({
     getDefaultProps: function() {
       return {
         steps: []
@@ -9,8 +9,7 @@
     getInitialState: function() {
       return {
         dragging: false,
-        selectedStep: Math.round(Math.max(this.props.steps.length - 1, 0) / 2),
-        unchanged: true
+        selectedStep: Math.round(Math.max(this.props.steps.length - 1, 0) / 2)
       }
     },
 
@@ -22,12 +21,15 @@
         document.removeEventListener('mousemove', this.handleMouseMove)
         document.removeEventListener('mouseup', this.handleMouseUp)
       }
+
+      if(this.state.selectedStep != state.selectedStep) {
+        this.props.onChange({ target: { value: this.props.steps[this.state.selectedStep] }})
+      }
     },
 
     handleClick: function(event) {
       this.setState({
-        selectedStep: this.stepAtPosition(event.pageX),
-        unchanged: false
+        selectedStep: this.stepAtPosition(event.pageX)
       })
 
       event.stopPropagation()
@@ -46,8 +48,7 @@
       }
 
       this.setState({
-        selectedStep: this.stepAtPosition(event.pageX),
-        unchanged: false
+        selectedStep: this.stepAtPosition(event.pageX)
       })
 
       event.stopPropagation()
@@ -115,7 +116,7 @@
 
           <div className="slider-cursor" style={{ left: this.selectedStepPosition() + '%' }} onMouseDown={this.handleMouseDown}></div>
 
-          <div className="popover fade bottom in" role="tooltip" style={{ top: 15, left: this.selectedStepPosition() + '%', 'margin-left': -60, width: 120, display: 'block' }}>
+          <div className="popover fade bottom in" role="tooltip" style={{ top: 15, left: this.selectedStepPosition() + '%', 'margin-left': -80, width: 160, display: 'block' }}>
             <div className="arrow"></div>
             <div className="popover-content h6 gray">
               {this.selectedStepExamples()}
@@ -127,8 +128,8 @@
   })
 
   if (typeof module !== 'undefined') {
-    module.exports = Slider
+    module.exports = BountyValuationSlider
   }
 
-  window.Slider = Slider
+  window.BountyValuationSlider = BountyValuationSlider
 })()

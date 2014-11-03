@@ -10,7 +10,6 @@
 
     getInitialState: function() {
       return {
-        value: this.props.averageBounty * 0.10,
         toggle: 'simple'
       }
     },
@@ -21,45 +20,19 @@
       })
     },
 
-    handleOfferChange: function() {
-      // do nothing so far
-    },
-
     renderValueControl: function() {
       if(this.state.toggle === 'simple') {
-        return (
-          <SimpleNewBountyOffer
-            product={this.props.product}
-            user={this.props.user}
-            maxOffer={this.props.maxOffer}
-            newOffer={this.state.newOffer}
-            averageBounty={this.props.averageBounty}
-            coinsMinted={this.props.coinsMinted}
-            profitLastMonth={this.props.profitLastMonth}
-            onChange={this.handleOfferChange} />
-        )
+        return this.transferPropsTo(<SimpleNewBountyOffer />)
       } else {
-        return (
-          <AdvancedNewBountyOffer
-            product={this.props.product}
-            user={this.props.user}
-            maxOffer={this.props.maxOffer}
-            newOffer={this.state.newOffer}
-            averageBounty={this.props.averageBounty}
-            coinsMinted={this.props.coinsMinted}
-            profitLastMonth={this.props.profitLastMonth}
-            onChange={this.handleOfferChange} />
-        )
+        return this.transferPropsTo(<AdvancedNewBountyOffer />)
       }
     },
 
     render: function() {
-      var toggle = <a onClick={this.handleToggleClick} href="#">{this.state.toggle == 'simple' ? 'Advanced' : 'Simple'}</a>
-
       return (
         <div className="form-group">
           <div className="btn-group right">
-            {toggle}
+            <a onClick={this.handleToggleClick} href="#">{this.state.toggle == 'simple' ? 'Advanced' : 'Simple'}</a>
           </div>
 
           <label className="control-label">
