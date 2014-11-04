@@ -10,22 +10,16 @@ module BountyGuidance
 
     MEDIAN_DOLLAR_BOUNTY_VALUE = 25
 
+    MAX_PROFIT_REPORTS = 30  #maximum number of months of profit backhistory to query
 
-    MAX_PROFIT_REPORTS_TO_CONSIDER = 30  #maximum number of months of profit backhistory to query
 
     def work_done(product)
       product.tasks.won.count
     end
 
     def product_profits_yearly(product)  #averaged and extrapolated
-      profit_reports = product.profit_reports
+      profit_reports = product.profit_reports.limit(MAX_PROFIT_REPORTS)
       sumvalue = 0
-
-      if profit_reports.count >MAX_PROFIT_REPORTS_TO_CONSIDER
-        start = profit_reports.count - MAX_PROFIT_REPORTS_TO_CONSIDER
-        theend = profit_reports.count
-        profit_reports = profit_reports[start, theend]
-      end
 
       profit_reports.each do |profit_report|
         if profit_reports.last.annuity==0
@@ -52,9 +46,8 @@ module BountyGuidance
       sum_coins_awarded(product) * yearly_profit / (product_profits_yearly(product) - yearly_profit)
     end
 
-    def get_unvested_coins(product)
-      #product.unvested_coins
-      10000000
+    def unvested_coins(product)
+      product.unvested_coins
     end
 
     def sum_coins_awarded(product)
@@ -94,13 +87,13 @@ module BountyGuidance
     end
 
     def compute_guidance(product, increment) #increment should be 0-4
-      if product.state == 'profitable'
+      if product.state == 'profitable' && product_profits_yearly(product) > 0
         dollar_target = EXPONENTIAL_INCREMENT**(increment-2) * MEDIAN_DOLLAR_BOUNTY_VALUE
         coins_for_profit_after_dilution(product, dollar_target)
       else
         sigmoid = adjusted_work_weight(product)
         incremented = sigmoid * EXPONENTIAL_INCREMENT ** (increment - MIDPOINTS_N / 2)
-        outcome = incremented * get_unvested_coins(product)
+        outcome = incremented * unvested_coins(product)
         outcome
       end
     end
