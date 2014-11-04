@@ -25,6 +25,7 @@
             averageBounty={this.props.averageBounty}
             coinsMinted={this.props.coinsMinted}
             profitLastMonth={this.props.profitLastMonth}
+            steps={this.props.steps}
             /> : null }
       </span>
     },

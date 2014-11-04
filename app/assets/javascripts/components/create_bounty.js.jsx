@@ -44,7 +44,7 @@
             </div>
 
             <div className="form-group mb2">
-              <InitialOffer product={this.props.product} maxOffer={this.props.maxOffer} averageBounty={this.props.averageBounty} coinsMinted={this.props.coinsMinted} profitLastMonth={this.props.profitLastMonth} />
+              <InitialOffer product={this.props.product} maxOffer={this.props.maxOffer} averageBounty={this.props.averageBounty} coinsMinted={this.props.coinsMinted} profitLastMonth={this.props.profitLastMonth} steps={this.props.steps} /> 
             </div>
 
             <h6>Tags</h6>

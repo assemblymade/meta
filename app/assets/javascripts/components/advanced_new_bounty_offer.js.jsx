@@ -2,7 +2,7 @@
   var AdvancedNewBountyOffer = React.createClass({
     getInitialState: function() {
       return {
-        value: Math.round(this.props.averageBounty / 1000) * 1000
+        value: this.props.steps[2]
       }
     },
 
