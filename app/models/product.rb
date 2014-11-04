@@ -566,6 +566,10 @@ class Product < ActiveRecord::Base
     )
   end
 
+  def unvested_coins
+    [10_000_000, transaction_log_entries.sum(:cents)].max
+  end
+
   protected
 
   def add_to_event_stream
