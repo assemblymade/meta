@@ -30,4 +30,8 @@ class Offer < ActiveRecord::Base
     amount - (bounty.contracts.tip_percentage * amount)
   end
 
+  def earnable=(earnable_amount)
+    self.amount = (earnable_amount / (1 - bounty.contracts.tip_percentage)).to_i
+  end
+
 end

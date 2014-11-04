@@ -41,9 +41,9 @@
       var profitLastMonth = Math.round(this.props.profitLastMonth / 100)
 
       if(profitLastMonth) {
-        return "of profits each month<br /> (out of $" + profitLastMonth + "/mo)"
+        return "each month out <br /> of $" + profitLastMonth + "/mo"
       } else {
-        return "of profits each month<br /> (if you made $20,000/mo)"
+        return "each month if you <br /> made $20,000/mo"
       }
     },
 
@@ -54,7 +54,7 @@
             <div className="col-xs-12">
               <div style={{ position: 'relative' }}>
                 <span className="icon icon-app-coin text-coins" style={{ position: 'absolute', top: '12px', left: '8px' }}></span>
-                <input name="offer" type="text" defaultValue={this.state.value} onChange={this.handleOfferChange} className="form-control text-coins bold input-lg" style={{ 'padding-left': '30px' }} />
+                <input name="earnable" type="text" defaultValue={this.state.value} onChange={this.handleOfferChange} className="form-control text-coins bold input-lg" style={{ 'padding-left': '30px' }} />
               </div>
             </div>
           </div>
@@ -64,7 +64,7 @@
                 <div className="stat-value">
                   {this.renderOwnership()}
                 </div>
-                <div className="stat-title">
+                <div className="stat-title ml2 mr2">
                   onwership<br />
                   in {this.props.product.name}
                 </div>
@@ -73,14 +73,14 @@
                 <div className="stat-value">
                   {this.renderPayout()}
                 </div>
-                <div className="stat-title" dangerouslySetInnerHTML={{ __html: this.renderProfitLastMonth() }} />
+                <div className="stat-title ml2 mr2" dangerouslySetInnerHTML={{ __html: this.renderProfitLastMonth() }} />
               </div>
               <div className="stat">
                 <div className="stat-value">
                   {this.renderSellingPrice()}
                 </div>
-                <div className="stat-title ml3 mr3">
-                  if {this.props.product.name} was sold for $1 million
+                <div className="stat-title ml2 mr2">
+                  if {this.props.product.name} was <br /> sold for $1 million
                 </div>
               </div>
             </div>

@@ -37,19 +37,11 @@
       })
     },
 
-    examples: function(suggestion) {
-      return [
-        ['Bug fixes', 'Feedback'],
-        ['Mockups', 'Feature dev', 'Homepage copy'],
-        ['Site redesign', 'Execute marketing plan', 'Implement major feature']
-      ];
-    },
-
     render: function() {
       return (
         <div style={{ padding: '24px 60px'}}>
           <BountyValuationSlider steps={this.props.steps} onChange={this.handleChange} />
-          <input name="offer" type="hidden" value={this.state.offer} />
+          <input name="earnable" type="hidden" value={this.state.offer} />
         </div>
       )
     },

@@ -67,10 +67,10 @@
     selectedStepExamples: function() {
       return [
         'Bug fixes, Feedback',
-        'Mockups, Feature dev, Homepage copy',
-        'Mockups, Feature dev, Homepage copy',
-        'Site redesign, Execute marketing plan, Implement major feature',
-        'Site redesign, Execute marketing plan, Implement major feature'
+        'Mockups, Small features, Homepage copy',
+        'Design assets, Front-end styling, Styleguide',
+        'Rebranding, Full stack features, Performance tuning',
+        'Entire site redesign, Execute marketing plan'
       ][this.state.selectedStep]
     },
 
