@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20141031205809) do
 
   create_table "domains", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "product_id",         null: false
+    t.uuid     "user_id",            null: false
     t.string   "name",               null: false
     t.string   "state",              null: false
     t.string   "provider"

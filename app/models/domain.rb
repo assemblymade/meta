@@ -10,7 +10,7 @@ class Domain < ActiveRecord::Base
   workflow do
     state :external do
       event :transfer_initiated, transitions_to: :transferring
-      event :transfer_errored, transitions_to: :transfer_error
+      event :transfer_failed, transitions_to: :transfer_fail
       event :purchase_application, transitions_to: :applied_for_purchase
     end
     state :transferring do
@@ -19,9 +19,14 @@ class Domain < ActiveRecord::Base
     state :applied_for_purchase do
       event :purchase_approved, transitions_to: :purchasing
     end
-    state :transfer_error do
+    state :transfer_fail do
       event :clear_error, transitions_to: :external
     end
     state :owned
+  end
+
+  def transfer_failed(error)
+    update!(status: error)
+    DomainMailer.delay(queue: :mailer).transfer_failed(self.id)
   end
 end

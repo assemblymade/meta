@@ -77,7 +77,7 @@
                 <button type="button" className={'btn btn-default'} onClick={this.props.onCancel}>
                   Cancel
                 </button>
-                <button onClick={this.submitForm} type="submit" className={'btn btn-success'} data-disable-with="Starting...">
+                <SubmitButton onClick={this.submitForm} className="btn btn-success" disableWith="Starting..." disabled={this.state.submitting}>
                   Start Transfer
                 </button>
               </div>
@@ -88,7 +88,7 @@
     },
 
     onFormSuccess: function(domain) {
-      console.log(domain)
+      window.location.reload()
     }
   })
 

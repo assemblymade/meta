@@ -35,7 +35,11 @@
                   <%= domain.name %>
                 </td>
                 <td>
-                  <span class="pull-right label label-info mr1"><%= domain.state %></span>
+                  <% if domain.status %>
+                    <span class="pull-right label label-danger mr1" data-toggle="tooltip" title="<%= domain.status %>">Error</span>
+                  <% else %>
+                    <span class="pull-right label label-info mr1"><%= domain.state %></span>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

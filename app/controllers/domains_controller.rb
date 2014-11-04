@@ -2,7 +2,9 @@ class DomainsController < ProductController
   before_action :find_product!
 
   def create
-    @domain = @product.domains.create(domain_params)
+    authorize! :update, @product
+
+    @domain = @product.domains.create(domain_params.merge(user_id: current_user.id))
     if @domain.valid?
       Dnsimple::StartDomainTransfer.perform_async(@domain.id)
       render json: @domain

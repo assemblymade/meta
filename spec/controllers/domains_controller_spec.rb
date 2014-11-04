@@ -6,6 +6,9 @@ describe DomainsController do
 
   describe 'new domain transfer' do
     it 'creates a domain' do
+      product.core_team << user
+      sign_in user
+
       post :create, product_id: product.slug, domain: {
           name: 'candykingdom.com',
           transfer_auth_code: 'bubblegum'
@@ -20,9 +23,6 @@ describe DomainsController do
       expect(
         assigns(:domain).transfer_auth_code
       ).to eq('bubblegum')
-      expect(
-        assigns(:domain).state
-      ).to eq('transferring')
     end
 
   end

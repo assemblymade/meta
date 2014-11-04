@@ -11,7 +11,7 @@ module Dnsimple
       if status == 200
         domain.transfer_initiated!
       else
-        domain.update!(status: body['message'])
+        domain.transfer_failed!(body['message'])
       end
     end
 
