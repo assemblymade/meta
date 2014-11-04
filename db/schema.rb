@@ -169,6 +169,18 @@ ActiveRecord::Schema.define(version: 20141031205809) do
     t.datetime "created_at"
   end
 
+  create_table "domains", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id",         null: false
+    t.string   "name",               null: false
+    t.string   "state",              null: false
+    t.string   "provider"
+    t.integer  "provider_domain_id"
+    t.string   "transfer_auth_code"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "email_logs", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id",    null: false
     t.text     "key",        null: false

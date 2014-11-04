@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.dnsimple.com/v1/domain_transfers
+    body:
+      encoding: UTF-8
+      string: '{"domain":{"name":"choosefun.com","registrant_id":"1878"},"transfer_order":{"authinfo":"hey
+        joe"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      X-Dnsimple-Token:
+      - founders@assembly.com:RaUNWJOsM5TnDBvxXAze
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 04 Nov 2014 00:43:49 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '1'
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with
+      Access-Control-Allow-Methods:
+      - GET,POST,PUT,DELETE,OPTIONS
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 4077a056-38af-442b-93eb-e5b5a8f529b9
+      X-Runtime:
+      - '2.168929'
+    body:
+      encoding: UTF-8
+      string: '{"message":"success"}'
+    http_version:
+  recorded_at: Tue, 04 Nov 2014 00:43:49 GMT
+recorded_with: VCR 2.9.2

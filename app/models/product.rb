@@ -34,6 +34,7 @@ class Product < ActiveRecord::Base
   has_many :core_team, through: :core_team_memberships, source: :user
   has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
   has_many :discussions
+  has_many :domains
   has_many :event_activities, through: :events, source: :activities
   has_many :events, :through => :wips
   has_many :expense_claims

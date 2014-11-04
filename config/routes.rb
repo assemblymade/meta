@@ -337,6 +337,7 @@ ASM::Application.routes.draw do
     end
 
     resources :resources, only: [:index]
+    resources :domains, only: [:create]
 
     resources :tips, only: [:create]
 
