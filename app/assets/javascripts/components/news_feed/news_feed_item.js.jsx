@@ -59,18 +59,7 @@
       default:
         return <NewsFeedItemPost product={product} post={target} user={this.props.user} />;
       }
-    },
-
-    targetNoun: function(type) {
-      var typeMap = this.typeMap;
-
-      if (typeMap[type]) {
-        return typeMap[type];
-      }
-
-      return type;
     }
-
   });
 
   if (typeof module !== 'undefined') {

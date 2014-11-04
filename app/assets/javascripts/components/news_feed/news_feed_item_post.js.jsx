@@ -28,10 +28,7 @@
             <span className="gray-dark pull-right">{this.type(post.type)}</span>
           </div>
 
-          <a href={post.url} className="block h4 mt0 mb2 black">
-            {post.title}
-          </a>
-
+          <a href={post.url} className="block h4 mt0 mb2 black" dangerouslySetInnerHTML={{__html: window.marked(post.title) }} />
           <div className="clearfix gray h6 mt0 mb2">
             <div className="left mr1">
               <Avatar user={user} size={18} />
