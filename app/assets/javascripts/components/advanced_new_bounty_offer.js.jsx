@@ -18,6 +18,15 @@
       }
     },
 
+    renderSellingPrice: function() {
+      var value = this.state.value
+      var ownership = value / (value + this.props.coinsMinted);
+
+      var sellingPrice = Math.round(ownership * 1000000);
+
+      return "$" + sellingPrice
+    },
+
     renderPayout: function() {
       var value = this.state.value
       var ownership = value / (value + this.props.coinsMinted);
@@ -62,17 +71,17 @@
               </div>
               <div className="stat">
                 <div className="stat-value">
-                  {this.renderOwnership()}
-                </div>
-                <div className="stat-title">
-                  of unvested<br /> {this.props.product.name} coins
-                </div>
-              </div>
-              <div className="stat">
-                <div className="stat-value">
                   {this.renderPayout()}
                 </div>
                 <div className="stat-title" dangerouslySetInnerHTML={{ __html: this.renderProfitLastMonth() }} />
+              </div>
+              <div className="stat">
+                <div className="stat-value">
+                  {this.renderSellingPrice()}
+                </div>
+                <div className="stat-title ml3 mr3">
+                  if {this.props.product.name} was sold for $1 million
+                </div>
               </div>
             </div>
           </div>
@@ -82,7 +91,7 @@
 
     handleOfferChange: function(e) {
       this.setState({
-        value: parseInt(e.target.value)
+        value: parseInt(e.target.value) || 0
       })
     }
   });
