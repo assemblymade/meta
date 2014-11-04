@@ -12,6 +12,9 @@ module BountyGuidance
 
     MAX_PROFIT_REPORTS = 30  #maximum number of months of profit backhistory to query
 
+    def self.suggestions(product)
+      (0..4).map { |i| new.compute_guidance(product, i) }
+    end
 
     def work_done(product)
       product.tasks.won.count
