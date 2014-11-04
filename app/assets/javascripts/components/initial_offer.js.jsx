@@ -32,7 +32,7 @@
       return (
         <div className="form-group">
           <div className="btn-group right">
-            <a onClick={this.handleToggleClick} href="#">{this.state.toggle == 'simple' ? 'Advanced' : 'Simple'}</a>
+            <a onClick={this.handleToggleClick} href="#">{this.state.toggle == 'simple' ? 'Custom' : 'Simple'}</a>
           </div>
 
           <label className="control-label">
