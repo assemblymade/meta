@@ -1,13 +1,17 @@
 class NewsFeedItemSerializer < ApplicationSerializer
-  attributes :url, :popular_at
+  attributes :url, :popular_at, :layout
 
   has_one :product
   has_one :target
   has_one :user
   has_many :news_feed_item_comments, serializer: NewsFeedItemCommentSerializer
-  
+
   def news_feed_item_comments
     object.news_feed_item_comments.order(created_at: :asc)
+  end
+
+  def layout
+    object.target_type
   end
 
   def product

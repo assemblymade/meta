@@ -1,5 +1,5 @@
-<% title 'Repositories', @product.name %>
-<% activate_nav! :repositories %>
+<% title 'Resources', @product.name %>
+<% activate_nav! :resources %>
 
 <div class="page-header sheet-header">
   <h2 class="page-header-title">Shared Resources</h2>
@@ -89,8 +89,19 @@
         <div class="panel-body">
           External services can be added to pull in rich data about <%= @product.name %>.
         </div>
-        <table className="table">
-          <tr>
+        <% integration = Integration.find_by(product: @product, provider: 'google') %>
+        <%= react_component('Integrations', {
+          product: @product,
+          google: {
+            logo: 'https://developers.google.com/analytics/images/terms/google-analytics-logo.png',
+            description: 'Post weekly updates on page views and site metrics',
+            initialActivated: !integration.nil?,
+            initialAccount: integration && integration.config && integration.config['account_name'],
+            initialProfile: integration && integration.config && integration.config['profile_name'],
+            initialProperty: integration && integration.config && integration.config['property_name']
+          }
+        }) %>
+         <!-- <tr>
             <td style="width:10px">
               <% # gah! %>
               <% if @product.integrations.include?(Integration.find_by(provider: 'google')) %>
@@ -105,8 +116,10 @@
             <td class="text-muted">
               Post weekly updates on page views and site metrics
             </td>
-          </tr>
-        </table>
+            <td>
+              <a href="javascript:void(0);" onClick={this.configure}>Configure</a>
+            </td>
+          </tr> -->
       </div>
 
     </div>
