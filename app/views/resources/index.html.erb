@@ -15,9 +15,11 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-title">
-            <div class="dropdown pull-right">
-              <%= react_component 'AddDomain', domains_url: product_domains_path(@product) %>
-            </div>
+            <% if can? :update, @product %>
+              <div class="dropdown pull-right">
+                <%= react_component 'AddDomain', domains_url: product_domains_path(@product) %>
+              </div>
+            <% end %>
 
             <h3 class="panel-title">Domains</h3>
           </div>
