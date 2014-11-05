@@ -98,29 +98,28 @@
       var suggestion = <div>Do some stuff, <br /> and then give an example yo!</div>
 
       return (
-        <div className="slider" onClick={this.handleClick}>
-          <ul className="slider-steps list-unstyled" style={{ width: 100 + this.stepPosition() + '%', 'margin-left': -this.stepPosition()/2 + '%' }}>
-            {this.props.steps.map(function(step) {
-              return (
-                <li style={{ width: this.stepWidth() + '%' }}>
-                  <span className="icon icon-app-coin"></span>
-                  {' '}
-                  {step}
-                </li>
-              )
-            }.bind(this))}
-          </ul>
+        <div>
+          <div className="slider" onClick={this.handleClick}>
+            <ul className="slider-steps list-unstyled" style={{ width: 100 + this.stepPosition() + '%', 'margin-left': -this.stepPosition()/2 + '%' }}>
+              {this.props.steps.map(function(step) {
+                return (
+                  <li style={{ width: this.stepWidth() + '%' }}>
+                    <span className="icon icon-app-coin"></span>
+                    {' '}
+                    {step}
+                  </li>
+                )
+              }.bind(this))}
+            </ul>
 
-          <div className="slider-bar" style={{ width: this.selectedStepPosition() + '%' }}>
+            <div className="slider-bar" style={{ width: this.selectedStepPosition() + '%' }}></div>
+
+            <div className="slider-cursor" style={{ left: this.selectedStepPosition() + '%' }} onMouseDown={this.handleMouseDown}></div>
           </div>
 
-          <div className="slider-cursor" style={{ left: this.selectedStepPosition() + '%' }} onMouseDown={this.handleMouseDown}></div>
-
-          <div className="popover fade bottom in" role="tooltip" style={{ top: 15, left: this.selectedStepPosition() + '%', 'margin-left': -80, width: 160, display: 'block' }}>
-            <div className="arrow"></div>
-            <div className="popover-content h6 gray">
-              {this.selectedStepExamples()}
-            </div>
+          <div className="h6 gray mt2">
+            <strong>Examples: </strong>
+            {this.selectedStepExamples()}
           </div>
         </div>
       )

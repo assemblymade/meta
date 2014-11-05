@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
 (function() {
+  var Lightbox = require('./lightbox.js.jsx')
+
   var BountyBreakdown = React.createClass({
     mixins: [React.addons.LinkedStateMixin],
 
@@ -17,6 +19,11 @@
         saving: false,
         showingDetails: false
       };
+    },
+
+    componentDidMount: function() {
+      var modal = $(this.getDOMNode()).modal({ show: true })
+      modal.on('hidden.bs.modal', this.props.onHidden)
     },
 
     renderVoters: function() {
@@ -81,41 +88,43 @@
 
     render: function() {
       return (
-        <div style={{ 'min-width': '300px' }}>
-          <div className="row p2 border-bottom" style={{ 'margin-top': '-9px', 'padding-bottom': '18px' }}>
-            <div className="col-xs-12">
-              <div className="row">
-                <div className="col-xs-6">
-                  <div className="h6 gray-dark mt0 mb1">Value</div>
-                  <div className="text-coins bold h3 mt0 mb0">
-                    <span className="icon icon-app-coin"></span>
-                    {' '}
-                    {numeral(this.props.contracts.earnable).format('0,0')}
+        <Lightbox title="Vote on this bounty">
+          <div style={{ 'min-width': '300px' }}>
+            <div className="row p2 border-bottom" style={{ 'margin-top': '-9px', 'padding-bottom': '18px' }}>
+              <div className="col-xs-12">
+                <div className="row">
+                  <div className="col-xs-6">
+                    <div className="h6 gray-dark mt0 mb1">Value</div>
+                    <div className="text-coins bold h3 mt0 mb0">
+                      <span className="icon icon-app-coin"></span>
+                      {' '}
+                      {numeral(this.props.contracts.earnable).format('0,0')}
+                    </div>
+                  </div>
+                  <div className="col-xs-6">
+                    <div className="h6 gray-dark mt0 mb1">Voters</div>
+                    <div className="clearfix">
+                      <ul className="list-reset mb0 mxn1 overflow-hidden full-width" style={{ height: '2rem' }}>
+                        {this.renderVoters()}
+                        {this.renderExtraVoters()}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-                <div className="col-xs-6">
-                  <div className="h6 gray-dark mt0 mb1">Voters</div>
-                  <div className="clearfix">
-                    <ul className="list-reset mb0 mxn1 overflow-hidden full-width" style={{ height: '2rem' }}>
-                      {this.renderVoters()}
-                      {this.renderExtraVoters()}
-                    </ul>
-                  </div>
-                </div>
+
+                {this.renderDetails()}
               </div>
-
-              {this.renderDetails()}
             </div>
-          </div>
 
-          <div className="center" style={{ position: 'absolute', 'margin-top': '-16px', width: '90%' }}>
-            <a onClick={this.handleShowDetailsClicked} className="h6 p1 gray bg-white" href="#">
-              {this.state.showingDetails ? 'Hide' : 'Show'} details
-            </a>
-          </div>
+            <div className="center" style={{ position: 'absolute', 'margin-top': '-16px', width: '90%' }}>
+              <a onClick={this.handleShowDetailsClicked} className="h6 p1 gray bg-white" href="#">
+                {this.state.showingDetails ? 'Hide' : 'Show'} details
+              </a>
+            </div>
 
-          {this.renderNewOffer()}
-        </div>
+            {this.renderNewOffer()}
+          </div>
+        </Lightbox>
       )
     },
 

@@ -5,33 +5,46 @@
   var BountyValuation = React.createClass({
     getInitialState: function() {
       return {
-        popoverShown: false,
+        shown: false,
       }
     },
 
+    renderLightbox: function() {
+      if(!this.state.shown) {
+        return
+      }
+
+      return this.transferPropsTo(
+        <BountyBreakdown onHidden={this.handleHide} />
+      )
+    },
+
     render: function() {
-      return <BsPopover
-        content={BountyBreakdown(this.props)}
-        placement="bottom"
-        visible={this.state.popoverShown}
-        onHide={this.handleHide}>
-          <a className="text-coins text-weight-bold" href="javascript:;" id="bounty-amount-link" onClick={this.togglePopover}>
+      return (
+        <span>
+          <a className="text-coins text-weight-bold" href="#" id="bounty-amount-link" onClick={this.toggle}>
             <span className="icon icon-app-coin"></span>
             {' '}
             {numeral(this.props.contracts.earnable).format('0,0')}
           </a>
-        </BsPopover>
+
+          {this.renderLightbox()}
+        </span>
+      )
     },
 
-    togglePopover: function(e) {
+    toggle: function(event) {
       this.setState({
-        popoverShown: !this.state.popoverShown
+        shown: !this.state.shown
       });
+
+      event.stopPropagation();
+      event.preventDefault();
     },
 
     handleHide: function() {
       this.setState({
-        popoverShown: false
+        shown: false
       });
     }
   });
