@@ -8,6 +8,10 @@
 <div class="sheet-body">
   <div class="row">
     <div class="col-xs-8 col-md-8">
+
+      <%= render 'shared/flash' %>
+
+
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-title">
@@ -38,7 +42,7 @@
                   <% if domain.status %>
                     <span class="pull-right label label-danger mr1" data-toggle="tooltip" title="<%= domain.status %>">Error</span>
                   <% else %>
-                    <span class="pull-right label label-info mr1"><%= domain.state %></span>
+                    <span class="pull-right label label-info mr1"><%= t "domains.#{domain.state}" %></span>
                   <% end %>
                 </td>
               </tr>

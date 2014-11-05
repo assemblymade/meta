@@ -11,8 +11,7 @@ class CreateDomains < ActiveRecord::Migration
       t.string  :transfer_auth_code
 
       t.string  :status
-
-      t.timestamps
+            t.timestamps
     end
   end
 end

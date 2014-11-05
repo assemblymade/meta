@@ -18,6 +18,7 @@ class Domain < ActiveRecord::Base
     end
     state :applied_for_purchase do
       event :purchase_approved, transitions_to: :purchasing
+      event :purchase_denied, transitions_to: :external
     end
     state :transfer_fail do
       event :clear_error, transitions_to: :external
@@ -28,5 +29,9 @@ class Domain < ActiveRecord::Base
   def transfer_failed(error)
     update!(status: error)
     DomainMailer.delay(queue: :mailer).transfer_failed(self.id)
+  end
+
+  def purchase_application
+    DomainMailer.delay(queue: :mailer).purchase_application(self.id)
   end
 end

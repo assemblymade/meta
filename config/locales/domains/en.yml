@@ -1,0 +1,7 @@
+en:
+  domains:
+    external: External
+    transferring: Transferring
+    applied_for_purchase: Applied for purchase
+    transfer_fail: Transfer failed
+    owned: Community owned
