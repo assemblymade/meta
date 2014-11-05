@@ -245,6 +245,12 @@ ASM::Application.routes.draw do
 
   get '/interests/:interest' => 'global_interests#toggle', as: :global_interests
 
+  # custom oauth :(
+  get '/integrations/:provider/token' => 'integrations#token'
+  get '/integrations/:provider/callback' => 'integrations#callback'
+  get '/:product_id/integrations/:provider/authorize' => 'integrations#authorize', as: :product_integrations
+  put '/:product_id/integrations/:provider/update' => 'integrations#update'
+
   # legacy
   get '/meta/chat', to: redirect(path: '/chat/general')
 
@@ -330,6 +336,9 @@ ASM::Application.routes.draw do
     resources :tasks, only: [] do
       patch 'urgency', action: :urgency, as: :urgency
     end
+
+    resources :resources, only: [:index]
+    resources :domains, only: [:create]
 
     resources :tips, only: [:create]
 

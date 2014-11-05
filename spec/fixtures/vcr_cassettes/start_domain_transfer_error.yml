@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.dnsimple.com/v1/domain_transfers
+    body:
+      encoding: UTF-8
+      string: '{"domain":{"name":"partycloud.com","registrant_id":"7777"},"transfer_order":{"authinfo":"duffman"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      X-Dnsimple-Token:
+      - founders@assembly.com:RaUNWJOsM5TnDBvxXAze
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 04 Nov 2014 00:43:46 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Status:
+      - 400 Bad Request
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '1'
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with
+      Access-Control-Allow-Methods:
+      - GET,POST,PUT,DELETE,OPTIONS
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - c8429916-3fe7-4504-9b1c-228c99e3bf82
+      X-Runtime:
+      - '1.238081'
+    body:
+      encoding: UTF-8
+      string: '{"message":"The domain partycloud.com is already registered"}'
+    http_version:
+  recorded_at: Tue, 04 Nov 2014 00:43:46 GMT
+recorded_with: VCR 2.9.2
