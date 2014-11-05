@@ -21,9 +21,6 @@
           <li>
             <a href="javascript:;" onClick={this.handleTransferClicked}>Transfer a domain you own</a>
           </li>
-          <li>
-            <a href="javascript:;" onClick={this.handlePurchaseClicked}>Apply for a domain purchase</a>
-          </li>
         </ul>
 
         <NewDomainTransfer ref="transfer"
