@@ -22,17 +22,9 @@
 
     renderValueControl: function() {
       if(this.state.toggle === 'simple') {
-        return (
-          <div className="p3">
-            {this.transferPropsTo(<SimpleBountyOffer />)}
-          </div>
-        )
+        return this.transferPropsTo(<SimpleBountyOffer />)
       } else {
-        return (
-          <div className="py3">
-            {this.transferPropsTo(<CustomBountyOffer />)}
-          </div>
-        )
+        return this.transferPropsTo(<CustomBountyOffer />)
       }
     },
 
@@ -47,7 +39,9 @@
             Value
           </label>
 
-          {this.renderValueControl()}
+          <div className="py3">
+            {this.renderValueControl()}
+          </div>
         </div>
       )
     }

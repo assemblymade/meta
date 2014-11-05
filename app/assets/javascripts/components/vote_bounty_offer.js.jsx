@@ -31,7 +31,7 @@
     renderValueControl: function() {
       if(this.state.toggle === 'simple') {
         return (
-          <div className="px3 mt4">
+          <div className="mt4">
             {this.transferPropsTo(<SimpleBountyOffer />)}
           </div>
         )
@@ -74,7 +74,7 @@
         return (
           <div>
             <div style={{ padding: '6px 30px' }}>
-              <div className="px3 mt4">
+              <div className="mt4">
                 {this.transferPropsTo(<SimpleBountyOffer />)}
               </div>
             </div>

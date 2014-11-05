@@ -153,7 +153,7 @@
 
     handleOfferClicked: function() {
       window.xhr.post(
-        this.props.offersPath,
+        this.props.offers_url,
         { earnable: this.state.offer },
         function(data) {
           window.location.reload()
