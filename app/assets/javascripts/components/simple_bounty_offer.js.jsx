@@ -1,7 +1,7 @@
 (function() {
   var BountyValuationSlider = require('./bounty_valuation_slider.js.jsx')
 
-  var SimpleNewBountyOffer = React.createClass({
+  var SimpleBountyOffer = React.createClass({
     getDefaultProps: function() {
       return {
         steps: this.suggestions()
@@ -9,6 +9,12 @@
     },
 
     getInitialState: function() {
+      var offer = this.props.steps[2]
+
+      if(this.props.onChange) {
+        this.props.onChange({ target: { value: offer }})
+      }
+
       return {
         offer: this.props.steps[2]
       }
@@ -39,7 +45,7 @@
 
     render: function() {
       return (
-        <div style={{ padding: '24px 60px'}}>
+        <div>
           <BountyValuationSlider steps={this.props.steps} onChange={this.handleChange} />
           <input name="earnable" type="hidden" value={this.state.offer} />
         </div>
@@ -50,12 +56,16 @@
       this.setState({
         offer: e.target.value
       })
+
+      if(this.props.onChange) {
+        this.props.onChange(e);
+      }
     }
   });
 
   if (typeof module !== 'undefined') {
-    module.exports = SimpleNewBountyOffer;
+    module.exports = SimpleBountyOffer;
   }
 
-  window.SimpleNewBountyOffer = SimpleNewBountyOffer;
+  window.SimpleBountyOffer = SimpleBountyOffer;
 })();

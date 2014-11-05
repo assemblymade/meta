@@ -15,19 +15,23 @@
       }
     },
 
+    renderCreateBounty: function() {
+      if(!this.state.createBountyShown) {
+        return
+      }
+
+      return this.transferPropsTo(
+        <CreateBounty onHidden={this.handleCreateBountyHidden} />
+      )
+    },
+
     render: function() {
-      return <span>
-        <a className={this.props.classes} onClick={this.handleClick}>{this.props.label}</a>
-        {this.state.createBountyShown ? <CreateBounty
-            onHidden={this.handleCreateBountyHidden}
-            product={this.props.product}
-            maxOffer={this.props.maxOffer}
-            averageBounty={this.props.averageBounty}
-            coinsMinted={this.props.coinsMinted}
-            profitLastMonth={this.props.profitLastMonth}
-            steps={this.props.steps}
-            /> : null }
-      </span>
+      return (
+        <span>
+          <a className={this.props.classes} onClick={this.handleClick}>{this.props.label}</a>
+          {this.renderCreateBounty()}
+        </span>
+      )
     },
 
     handleCreateBountyHidden: function() {

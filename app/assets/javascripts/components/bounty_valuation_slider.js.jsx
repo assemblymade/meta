@@ -117,9 +117,11 @@
             <div className="slider-cursor" style={{ left: this.selectedStepPosition() + '%' }} onMouseDown={this.handleMouseDown}></div>
           </div>
 
-          <div className="h6 gray mt2">
+          <div className="h6 mt2">
             <strong>Examples: </strong>
-            {this.selectedStepExamples()}
+            <span className="gray-dark">
+              {this.selectedStepExamples()}
+            </span>
           </div>
         </div>
       )

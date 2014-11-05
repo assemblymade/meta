@@ -4,8 +4,8 @@
   var BountyContracts = React.createClass({
     render: function() {
       var contracts = this.props.contracts
-      return <table className="table table-condensed small">
-        <tbody>
+      return (
+        <ul className="list-unstyled">
           {contracts.author ? <BountyContract
             tooltip={"Tip to @" + contracts.author.username + "for creating this Bounty"}
             label="Bounty Author"
@@ -21,29 +21,29 @@
               tooltip={"Tip to @" + c.username}
               coins={c.percentage * contracts.total} />
           })}
-
-          <BountyContract label="You would earn"
-            coins={contracts.earnable} />
-        </tbody>
-      </table>;
+        </ul>
+      )
     }
   });
 
   var BountyContract = React.createClass({
     render: function() {
-      return <tr>
-        <td className="text-muted">
+      return (
+        <li>
+          <span className="text-coins mt0 mb0" style={{ display: 'inline-block', width: '60px' }}>
+            <span className="icon icon-app-coin"></span>
+            {' '}
+            {numeral(this.props.coins).format('0,0')}
+          </span>
+          {' '}
+          to 
+          {' '}
           <span data-toggle="tooltip" title={this.props.tooltip} data-placement="left">
             {this.props.label}
           </span>
-        </td>
-        <td className="text-right">
-          <span className="text-coins">
-            <span className="icon icon-app-coin"></span>
-            <span className="js-coins"> {numeral(this.props.coins).format('0,0')}</span>
-          </span>
-        </td>
-      </tr>
+          {' '}
+        </li>
+      )
     }
   })
 

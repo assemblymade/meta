@@ -22,6 +22,12 @@
       });
     },
 
+    renderBountyOffer: function() {
+      return this.transferPropsTo(
+        <CreateBountyOffer /> 
+      )
+    },
+
     render: function() {
       return <Lightbox title="Create a bounty">
         <form accept-charset="UTF-8" action={this.props.url} className="new_task" id="new_task" name="task[title]" type="text" method="post">
@@ -44,7 +50,7 @@
             </div>
 
             <div className="form-group mb2">
-              <InitialOffer product={this.props.product} maxOffer={this.props.maxOffer} averageBounty={this.props.averageBounty} coinsMinted={this.props.coinsMinted} profitLastMonth={this.props.profitLastMonth} steps={this.props.steps} /> 
+              {this.renderBountyOffer()}
             </div>
 
             <h6>Tags</h6>

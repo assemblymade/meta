@@ -1,8 +1,14 @@
 (function() {
-  var AdvancedNewBountyOffer = React.createClass({
+  var CustomBountyOffer = React.createClass({
     getInitialState: function() {
+      var value = this.props.steps[2]
+
+      if(this.props.onChange) {
+        this.props.onChange({ target: { value: value }})
+      }
+
       return {
-        value: this.props.steps[2]
+        value: value
       }
     },
 
@@ -49,16 +55,14 @@
 
     render: function() {
       return (
-        <div className="py3">
-          <div className="row">
-            <div className="col-xs-12">
-              <div style={{ position: 'relative' }}>
-                <span className="icon icon-app-coin text-coins" style={{ position: 'absolute', top: '12px', left: '8px' }}></span>
-                <input name="earnable" type="text" defaultValue={this.state.value} onChange={this.handleOfferChange} className="form-control text-coins bold input-lg" style={{ 'padding-left': '30px' }} />
-              </div>
+        <div>
+          <div>
+            <div style={{ position: 'relative' }}>
+              <span className="icon icon-app-coin text-coins" style={{ position: 'absolute', top: '12px', left: '8px' }}></span>
+              <input name="earnable" type="text" defaultValue={this.state.value} onChange={this.handleOfferChange} className="form-control text-coins bold input-lg" style={{ 'padding-left': '30px' }} />
             </div>
           </div>
-          <div className="row mt2">
+          <div className="mt2">
             <div className="stat-group">
               <div className="stat">
                 <div className="stat-value">
@@ -93,12 +97,16 @@
       this.setState({
         value: parseInt(e.target.value) || 0
       })
+
+      if(this.props.onChange) {
+        this.props.onChange(e);
+      }
     }
   });
 
   if (typeof module !== 'undefined') {
-    module.exports = AdvancedNewBountyOffer;
+    module.exports = CustomBountyOffer;
   }
 
-  window.AdvancedNewBountyOffer = AdvancedNewBountyOffer;
+  window.CustomBountyOffer = CustomBountyOffer;
 })();

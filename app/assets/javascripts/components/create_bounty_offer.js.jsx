@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  var InitialOffer = React.createClass({
+  var CreateBountyOffer = React.createClass({
     getDefaultProps: function() {
       return {
         user: app.currentUser()
@@ -22,9 +22,17 @@
 
     renderValueControl: function() {
       if(this.state.toggle === 'simple') {
-        return this.transferPropsTo(<SimpleNewBountyOffer />)
+        return (
+          <div className="p3">
+            {this.transferPropsTo(<SimpleBountyOffer />)}
+          </div>
+        )
       } else {
-        return this.transferPropsTo(<AdvancedNewBountyOffer />)
+        return (
+          <div className="py3">
+            {this.transferPropsTo(<CustomBountyOffer />)}
+          </div>
+        )
       }
     },
 
@@ -39,17 +47,15 @@
             Value
           </label>
 
-          <div style={{ height: 200 }}>
-            {this.renderValueControl()}
-          </div>
+          {this.renderValueControl()}
         </div>
       )
     }
   });
 
   if (typeof module !== 'undefined') {
-    module.exports = InitialOffer;
+    module.exports = CreateBountyOffer;
   }
 
-  window.InitialOffer = InitialOffer;
+  window.CreateBountyOffer = CreateBountyOffer;
 })();

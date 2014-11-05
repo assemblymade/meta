@@ -2,8 +2,8 @@
   @include box-shadow(inset 0 1px 2px rgba(0, 0, 0, .1));
 
   background-color: $gray-lighter;
-  border-radius: 3px;
-  height: 6px;
+  border-radius: 6px;
+  height: 12px;
   margin-top: 30px;
   margin-bottom: $line-height-computed;
   position: relative;
@@ -13,7 +13,7 @@
   @include box-shadow(inset 0 -1px 0 rgba(0, 0, 0, .15));
 
   background-color: $brand-coins;
-  border-radius: 3px;
+  border-radius: 6px;
   float: left;
   height: 100%;
   width: 0%;
@@ -22,12 +22,12 @@
 .slider-cursor {
   @include box-shadow(0 1px 1px rgba(0, 0, 0, .40));
 
-  border-radius: 10px;
-  height: 20px;
-  width: 20px;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
   background-color: white;
   position: absolute;
-  margin: (-10px + 3px/2) 0 0 -10px;
+  margin: (-15px + 12px/2) 0 0 -15px;
   cursor: 'pointer';
 }
 

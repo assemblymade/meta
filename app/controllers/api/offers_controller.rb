@@ -5,10 +5,21 @@ module Api
     def create
       @product = Product.find_by!(slug: params[:product_id])
       @bounty = @product.tasks.find_by!(number: params[:bounty_id])
-      @offer = @bounty.offers.create!(
-        user: current_user,
-        amount: offer_params.fetch(:amount).to_i,
-        ip: request.ip
+
+      offer_attributes = offer_params
+
+      [:amount, :earnable].each do |key|
+        offer_attributes[key] = offer_attributes[key].to_i if offer_attributes.key?(key)
+      end
+
+      @offer = Offer.create!(
+        {
+          bounty: @bounty,
+          user: current_user,
+          ip: request.ip
+        }.merge(
+          offer_attributes.slice(:amount, :earnable)
+        )
       )
 
       respond_with(
@@ -17,10 +28,10 @@ module Api
       )
     end
 
-  private
+    private
 
     def offer_params
-      params.permit(:product_id, :bounty_id, :amount)
+      params.permit(:product_id, :bounty_id, :amount, :earnable)
     end
   end
 end

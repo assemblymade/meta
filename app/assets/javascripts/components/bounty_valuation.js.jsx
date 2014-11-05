@@ -15,7 +15,7 @@
       }
 
       return this.transferPropsTo(
-        <BountyBreakdown onHidden={this.handleHide} />
+        <BountyBreakdown onHidden={this.handleHide} steps={this.props.steps} />
       )
     },
 
