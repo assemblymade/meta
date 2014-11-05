@@ -96,9 +96,12 @@
       var commentItem = null
 
       if ((typeof commentCount !== "undefined" && commentCount !== null) &&  commentCount > 0) {
+
+        var commentsUrl = this.props.target.url + "#comments"
+
         commentItem = (
           <li className="left px1">
-            <a className="gray" href="#">
+            <a className="gray" href={commentsUrl}>
               <span className="fa fa-comment mr1"></span>
               {commentCount}
             </a>
