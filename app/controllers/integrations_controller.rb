@@ -33,8 +33,10 @@ class IntegrationsController < ProductController
   def update
     find_product!
 
-    Integration.find_by!(product: @product, provider: params[:provider]).
-      update(config: integration_params[:config])
+    i = Integration.find_by!(product: @product, provider: params[:provider])
+    i.update(config: integration_params[:config])
+
+    MonsoonWorker.perform_async(params[:provider], i.id)
 
     redirect_to product_resources_path(@product)
   end
