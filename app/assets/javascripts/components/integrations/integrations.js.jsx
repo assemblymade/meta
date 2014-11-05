@@ -8,10 +8,6 @@
       product: React.PropTypes.object.isRequired
     },
 
-    configure: function(provider) {
-
-    },
-
     render: function() {
       var product = this.props.product;
 
