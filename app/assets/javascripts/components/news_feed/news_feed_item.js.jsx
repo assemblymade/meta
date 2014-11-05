@@ -24,59 +24,42 @@
 
     render: function() {
       return (
-        <div>
-          {this.renderHeader()}
-          <div className="bg-white mb4 rounded overflow-hidden shadow">
-            {this.renderTarget()}
-            <NewsFeedItemComments item={this.props} />
-          </div>
+        <div className="bg-white mb4 rounded overflow-hidden shadow">
+          {this.renderTarget()}
+          {this.renderComments()}
         </div>
       );
     },
 
-    renderHeader: function() {
-      var user = this.props.user;
+    renderComments: function() {
       var product = this.props.product;
       var target = this.props.target;
 
-      return (
-        <div className="clearfix h6 mt0 mb2">
-          <div className="left">
-            <AppIcon app={this.props.product} size={42} />
+      switch(target.type) {
+      case 'team_membership':
+        return (
+          <div className="text-center h4 mt0 mb3 clearfix">
+            <a href={product.url + '/chat'}>Say hi in chat!</a>
           </div>
-          <div className="overflow-hidden p2">
-            New <a href={target.url}>{this.targetNoun(target.type)}</a>
-            {' '} in <a href={product.url}>{product.name}</a>
-          </div>
-        </div>
-      );
+        );
+      default:
+        return <NewsFeedItemComments item={this.props} />;
+      }
     },
 
-
     renderTarget: function() {
+      var product = this.props.product
       var target = this.props.target
 
       switch (target.type) {
       case 'task':
-        return <NewsFeedItemBounty bounty={target} user={this.props.user} />;
+        return <NewsFeedItemBounty product={product} bounty={target} user={this.props.user} />;
       case 'team_membership':
-        return <NewsFeedItemIntroduction introduction={target} user={this.props.user} />;
+        return <NewsFeedItemIntroduction product={product} introduction={target} user={this.props.user} />;
       default:
-        console.log(this.props.user);
-        return <NewsFeedItemPost product={this.props.product} post={target} user={this.props.user} />;
+        return <NewsFeedItemPost product={product} post={target} user={this.props.user} />;
       }
-    },
-
-    targetNoun: function(type) {
-      var typeMap = this.typeMap;
-
-      if (typeMap[type]) {
-        return typeMap[type];
-      }
-
-      return type;
     }
-
   });
 
   if (typeof module !== 'undefined') {

@@ -12,7 +12,7 @@ class Users::BalancesController < ApplicationController
       flash[:info] = "Please finalize your tax information"
       redirect_to users_tax_info_path
       return
-    elsif !current_user.payment_option?
+    elsif current_user.payment_option.nil?
       flash[:info] = "Please select a payment option"
       redirect_to users_payment_option_path
       return

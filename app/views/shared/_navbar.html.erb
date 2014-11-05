@@ -32,37 +32,36 @@
 
       </ul>
 
-        <% if user_signed_in? %>
-          <div
-              class="navbar-right"
-              data-react-class="Navbar"
-              data-react-props="<%= {
-                notificationsPath: notifications_path(format: :json),
-                chatPath: chat_rooms_path,
-                userPath: user_path(current_user),
-                editUserPath: edit_user_path,
-                balancePath: users_balance_path,
-                destroyUserSessionPath: destroy_user_session_path
-              }.to_json %>">
-        <% else %>
-          <div class="navbar-right">
-            <a class="btn btn-success navbar-btn" href="<%= new_user_registration_path %>">
-              Sign up
-            </a>
-          </div>
+      <% if user_signed_in? %>
+        <div
+            class="navbar-right"
+            data-react-class="Navbar"
+            data-react-props="<%= {
+              notificationsPath: notifications_path(format: :json),
+              chatPath: chat_rooms_path,
+              userPath: user_path(current_user),
+              editUserPath: edit_user_path,
+              balancePath: users_balance_path,
+              destroyUserSessionPath: destroy_user_session_path
+            }.to_json %>"></div>
+      <% else %>
+        <div class="navbar-right">
+          <a class="btn btn-success navbar-btn" href="<%= new_user_registration_path %>">
+            Sign up
+          </a>
+        </div>
 
-          <div class="navbar-right">
-            <ul class="nav nav-tabs navbar-nav">
-              <li>
-                <a href="<%= new_user_session_path %>">
-                  Log in
-                </a>
-              </li>
-            </ul>
-          </div>
-        <% end %>
+        <div class="navbar-right">
+          <ul class="nav nav-tabs navbar-nav">
+            <li>
+              <a href="<%= new_user_session_path %>">
+                Log in
+              </a>
+            </li>
+          </ul>
+        </div>
+      <% end %>
 
-      </div>
     </div>
   </div>
 </div>

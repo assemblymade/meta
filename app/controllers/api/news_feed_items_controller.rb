@@ -32,7 +32,11 @@ module Api
     end
 
     def set_product_and_authenticate!
-      @product = Product.find(params[:product_id]) || Product.find_by(slug: params[:product_id])
+      @product = if params[:product_id].uuid?
+        Product.find(params[:product_id])
+      else
+        Product.find_by(slug: params[:product_id])
+      end
 
       unless @product.authentication_token == params[:token]
         response = { status: 401, message: "Invalid product token" }

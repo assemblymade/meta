@@ -35,7 +35,7 @@ class Webhooks::GithubController < WebhookController
                 product: product,
                 user: user,
                 url: commit['url'],
-                metadata: { author: author, message: commit['message'], distinct: commit['distinct'] }
+                metadata: { author: author, message: commit['message'], distinct: commit['distinct'], sha: commit['sha'] }
               )
 
               Activities::GitPush.publish!(

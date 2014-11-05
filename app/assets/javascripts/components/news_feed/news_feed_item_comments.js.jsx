@@ -81,7 +81,7 @@
       return {
         comments: item.news_feed_item_comments,
         optimisticComments: [],
-        numberOfCommentsToShow: 3,
+        numberOfCommentsToShow: 1,
         url: item.url
       };
     },

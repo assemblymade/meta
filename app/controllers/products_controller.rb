@@ -20,6 +20,7 @@ class ProductsController < ProductController
   end
 
   def start
+    @profit = ProfitReport.all.map(&:profit).sum.round(-6)
     render layout: 'application'
   end
 

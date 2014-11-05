@@ -188,7 +188,9 @@
                     <tr>
                       <td>
                         <a href="<%= user_path(user) %>">
-                          <span style="margin-right: 4px;"><%= avatar_tag(user, 20) %></span>
+                          <div class="left mr2">
+                            <%= avatar_tag(user, 24) %>
+                          </div>
                           <strong><%= user.username %></strong>
                         </a>
                       </td>

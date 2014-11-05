@@ -358,6 +358,7 @@ ActiveRecord::Schema.define(version: 20141104192023) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "url"
   end
 
   create_table "news_feed_items", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
