@@ -1,8 +1,10 @@
 class IntegrationsController < ProductController
   respond_to :json
 
+  before_action :authenticate_user!, except: [:token]
+  before_action :validate_user!, only: [:update]
+
   def authorize
-    authenticate_user!
     find_product!
 
     redirect_to integration.new.call(:authorize, @product)
@@ -29,6 +31,7 @@ class IntegrationsController < ProductController
   end
 
   def update
+    validate_user!
     find_product!
 
     i = Integration.find_by!(product: @product, provider: params[:provider])
@@ -37,6 +40,10 @@ class IntegrationsController < ProductController
     MonsoonWorker.perform_async(params[:provider], i.id)
 
     redirect_to product_resources_path(@product)
+  end
+
+  def validate_user!
+    head(:forbidden) unless can? :update, @wip
   end
 
   def integration

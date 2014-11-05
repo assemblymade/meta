@@ -77,20 +77,22 @@
           </table>
         <% end %>
       </div>
-
 -->
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
-            <button class="btn btn-default btn-xs pull-right">Add integration</button>
-            Integrations
-          </h3>
+          <% if current_user && @product.core_team?(current_user) %>
+            <h3 class="panel-title">
+              <button class="btn btn-default btn-xs pull-right">Add integration</button>
+              Integrations
+            </h3>
+          <% end %>
         </div>
         <div class="panel-body">
           External services can be added to pull in rich data about <%= @product.name %>.
         </div>
         <% integration = Integration.find_by(product: @product, provider: 'google') %>
         <%= react_component('Integrations', {
+          editable: current_user && @product.core_team?(current_user),
           product: @product,
           google: {
             logo: 'https://developers.google.com/analytics/images/terms/google-analytics-logo.png',
@@ -101,25 +103,6 @@
             initialProperty: integration && integration.config && integration.config['property_name']
           }
         }) %>
-         <!-- <tr>
-            <td style="width:10px">
-              <% # gah! %>
-              <% if @product.integrations.include?(Integration.find_by(provider: 'google')) %>
-                <span class="px1 glyphicon glyphicon-ok text-success"></span>
-              <% end %>
-            </td>
-            <td>
-              <a href="<%= product_integrations_path(@product, 'google') %>" id="google">
-                <img height="20" src="https://developers.google.com/analytics/images/terms/google-analytics-logo.png" />
-              </a>
-            </td>
-            <td class="text-muted">
-              Post weekly updates on page views and site metrics
-            </td>
-            <td>
-              <a href="javascript:void(0);" onClick={this.configure}>Configure</a>
-            </td>
-          </tr> -->
       </div>
 
     </div>
