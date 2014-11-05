@@ -94,7 +94,7 @@
 
     render: function() {
       return (
-        <div className="p3 border-top">
+        <div className="p3">
           {this.comments()}
           <NewComment url={this.state.url} thread={this.props.item.id} />
         </div>

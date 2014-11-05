@@ -1,6 +1,12 @@
 .markdown {
+  word-wrap: break-word;
+
   img {
     max-width: 100%;
+  }
+
+  p, ul, ol {
+    color: inherit;
   }
 
   :first-child {
@@ -22,7 +28,7 @@
   h6 {
     @extend .h4;
     margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-weight: 600;
   }
 }

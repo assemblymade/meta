@@ -1,41 +1,28 @@
-(function() {
+var Avatar = require('../avatar.js.jsx')
 
-  var Avatar = require('../avatar.js.jsx')
+module.exports = React.createClass({
+  displayName: 'NewsFeedItemIntroduction',
 
-  module.exports = React.createClass({
-    displayName: 'NewsFeedItemIntroduction',
+  propTypes: {
+    user: React.PropTypes.object.isRequired,
+    intro: React.PropTypes.string.isRequired,
+  },
 
-    propTypes: {
-      introduction: React.PropTypes.object.isRequired
-    },
+  render: function() {
+    var user = this.props.user
 
-    render: function() {
-      var introduction = this.props.introduction
-      var product = this.props.product
-      var user = this.props.user
-
-      return (
-        <div className="p3 clearfix">
-          <div className="left">
-            <AppIcon app={this.props.product} size={42} />
+    return (
+      <div className="p3">
+        <a className="h3 block bold mt0 mb3 blue" href={user.url}>
+          <div className="mb2">
+            <Avatar user={user} size={96} />
           </div>
-          <div className="overflow-hidden p2">
-            <a href={product.url}>{product.name}</a>
-          </div>
-
-          <div className="mt2 mb2 text-center">
-            <a href={user.url} className="block">
-              <Avatar user={user} size={96} style={{ display: 'inline !important' }} />
-              <span className="block">{user.username}</span>
-            </a>
-
-            <div className="overflow-hidden">
-              <div className="h4 mt0 mb0">{introduction.bio}</div>
-            </div>
-          </div>
+          {user.username}
+        </a>
+        <div class="gray-darker">
+          {this.props.intro}
         </div>
-      )
-    }
-  })
-
-})()
+      </div>
+    )
+  }
+})

@@ -85,7 +85,7 @@ h6, .h6 {
   border-bottom-left-radius: 4px;
 }
 
-.shadow { box-shadow: 0 0 2px rgba(black, .05) }
+.shadow { box-shadow: 0 1px 1px $brand-shadow }
 
 input,
 select,

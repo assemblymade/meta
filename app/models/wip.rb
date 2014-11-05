@@ -348,6 +348,10 @@ class Wip < ActiveRecord::Base
     !chat_room.nil?
   end
 
+  def comments_count
+    comments.count
+  end
+
   def to_partial_path
     # Special case for Projects
     if self.class == Wip

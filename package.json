@@ -33,8 +33,10 @@
   "dependencies": {
     "Set": "^0.4.1",
     "browserify": "^5.9.1",
+    "imagesloaded": "^3.1.8",
     "jquery": "^2.1.1",
     "marked": "^0.3.2",
+    "masonry": "braznaavtrav/masonry",
     "moment": "^2.8.1",
     "picturefill": "^0.1.0",
     "react": "^0.11.1",

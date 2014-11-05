@@ -3,17 +3,14 @@
 
 <%= render 'shared/navbar' %>
 
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
 <style>
   body {
-    background-color: #F4F4F5;
+    background-color: #F5F5F4;
   }
 </style>
 
-<div class="container">
-  <div class="clearfix py2">
-    <div class="col sm-col-2">&nbsp;</div>
-    <div class="col sm-col-8">
-      <%= react_component 'NewsFeed', news_feed_items: @posts %>
-    </div>
-  </div>
+<div class="container py2">
+  <%= react_component 'NewsFeed', news_feed_items: @posts %>
 </div>

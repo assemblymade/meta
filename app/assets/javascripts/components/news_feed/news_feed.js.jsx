@@ -2,9 +2,13 @@
 
 (function() {
   var NewsFeedItem = require('./news_feed_item.js.jsx');
+  var MasonryMixin = require('../../mixins/masonry_mixin.js')
   // var NewsFeedFilter = require('./news_feed_filter.js.jsx')
 
   var NewsFeed = React.createClass({
+
+    mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0})],
+
     getDefaultProps: function() {
       var filters = {
         bounties: 'Bounties',
@@ -55,7 +59,7 @@
                 'active' :
                 '';
               return (
-                <li className={buttonClass}>
+                <li className={buttonClass} key={filter}>
                   <a href="javascript:void(0);"
                       onClick={this.filterBy.bind(this, filter)}>
                     {label}
@@ -85,10 +89,14 @@
 
       return (
         <div>
-          {this.filters()}
-          <div className="mt4">
-            {this.renderNewsFeedItems()}
+          <div>
+            {this.filters()}
           </div>
+
+          <div className="clearfix mxn2" ref="masonryContainer">
+            {this.renderItems()}
+          </div>
+
           <div className="mb4">
             <a href="javascript:void(0);"
                 onClick={this.fetchMoreNewsFeedItems}
@@ -97,33 +105,17 @@
             </a>
           </div>
         </div>
-      );
+      )
     },
 
-    renderLeftNewsFeedItems: function() {
-      return this.partitionedNewsFeedItems()[0].reverse().map(function(item) {
-        item.key = item.id;
-        return NewsFeedItem(item);
-      });
-    },
-
-    renderRightNewsFeedItems: function() {
-      return this.partitionedNewsFeedItems()[1].reverse().map(function(item) {
-        item.key = item.id;
-        return NewsFeedItem(item);
-      });
-    },
-
-    partitionedNewsFeedItems: function() {
-      return _.partition(this.state.news_feed_items, function(item) {
-        return this.state.news_feed_items.indexOf(item) % 2 == 0
-      }.bind(this));
-    },
-
-    renderNewsFeedItems: function() {
+    renderItems: function() {
       return this.state.news_feed_items.map(function(item) {
         item.key = item.id;
-        return NewsFeedItem(item);
+        return (
+          <div className="sm-col sm-col-4 p2">
+            {NewsFeedItem(item)}
+          </div>
+        )
       });
     },
 
