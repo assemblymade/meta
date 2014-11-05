@@ -64,6 +64,10 @@
                 <strong>{this.props.header}</strong>
               </div>
               <div className="modal-body">
+                <p>
+                  To get started, make sure you visit your existing registrar and get the domain ready for transfer. This will usually involve unlocking it and getting a Transfer Authorization Code.
+                </p>
+
                 <FormGroup error={this.state.errors.name}>
                   <label className="control-label">Domain name</label>
                   <input name="domain[name]" type="text" className="form-control" placeholder="example.com" autofocus />
@@ -79,7 +83,7 @@
                 </button>
                 <SubmitButton onClick={this.submitForm} className="btn btn-success" disableWith="Starting..." disabled={this.state.submitting}>
                   Start Transfer
-                </button>
+                </SubmitButton>
               </div>
             </div>
           </div>

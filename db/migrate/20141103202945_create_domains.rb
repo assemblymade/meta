@@ -6,8 +6,8 @@ class CreateDomains < ActiveRecord::Migration
       t.string  :name,       null: false
       t.string  :state,      null: false
 
-      t.string  :provider
-      t.integer :provider_domain_id
+      t.string  :registrar
+      t.string  :registrar_domain_id
       t.string  :transfer_auth_code
 
       t.string  :status

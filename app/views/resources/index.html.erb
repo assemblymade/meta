@@ -10,13 +10,13 @@
     <div class="col-xs-8 col-md-8">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <div class="panel-title">
             <div class="dropdown pull-right">
               <%= react_component 'AddDomain', domains_url: product_domains_path(@product) %>
             </div>
 
-            Domains
-          </h3>
+            <h3 class="panel-title">Domains</h3>
+          </div>
         </div>
         <div class="panel-body">
           Domains held in trust by Assembly on behalf of the community are guaranteed to remain available for the members of <%= @product.name %> for the life of the product.

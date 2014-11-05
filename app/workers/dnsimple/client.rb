@@ -1,17 +1,21 @@
 module Dnsimple
-  module Client
+  class Client
+    def get(url)
+      request(:get, url)
+    end
+
     def post(url, body)
       request(:post, url, body)
     end
 
-    def request(method, url, body)
+    def request(method, url, body=nil)
       resp = connection.send(method) do |req|
         req.url File.join(base_url, url)
 
         req.headers['X-DNSimple-Token'] = auth_token
         req.headers['Accept'] = 'application/json'
         req.headers['Content-Type'] = 'application/json'
-        req.body = body.to_json
+        req.body = body.to_json if body
       end
 
       log = ['DNSIMPLE', method, url, body.inspect, "[#{resp.status}]"]

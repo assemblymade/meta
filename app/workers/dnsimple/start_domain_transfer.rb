@@ -1,6 +1,5 @@
 module Dnsimple
   class StartDomainTransfer
-    include Client
     include Sidekiq::Worker
 
     def perform(domain_id)
@@ -16,15 +15,15 @@ module Dnsimple
     end
 
     def start_transfer(domain)
-      post('/domain_transfers',
-              domain: {
-                name: domain.name,
-                registrant_id: ENV['DNSIMPLE_REGISTRANT_ID']
-              },
-              transfer_order: {
-                authinfo: domain.transfer_auth_code
-              }
-            )
+      Dnsimple::Client.new.post('/domain_transfers',
+        domain: {
+          name: domain.name,
+          registrant_id: ENV['DNSIMPLE_REGISTRANT_ID']
+        },
+        transfer_order: {
+          authinfo: domain.transfer_auth_code
+        }
+      )
     end
   end
 end
