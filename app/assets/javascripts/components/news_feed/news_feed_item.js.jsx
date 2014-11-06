@@ -67,14 +67,14 @@
 
       return (
         <div>
-          <div className="px3 py2 clearfix border-bottom">
+          <a className="block px3 py2 clearfix border-bottom" href={product.url}>
             <div className="left mr2">
               <AppIcon app={product} size={24} />
             </div>
             <div className="overflow-hidden">
               <div className="black">{product.name}</div>
             </div>
-          </div>
+          </a>
         </div>
       );
     },
