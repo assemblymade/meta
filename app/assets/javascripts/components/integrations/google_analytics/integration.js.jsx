@@ -31,11 +31,43 @@
       });
     },
 
+    configureColumn: function() {
+      if (this.props.editable) {
+        return (
+          <td>
+            <a href="javascript:void(0);"
+                className="btn btn-sm btn-default"
+                onClick={this.configure}>
+              Configure
+            </a>
+            {this.modal()}
+          </td>
+        );
+      }
+
+      return <td />;
+    },
+
     getInitialState: function() {
       return {
         activated: this.props.initialActivated,
         modalShown: false
       };
+    },
+
+    integrationLink: function() {
+      var product = this.props.product;
+      var provider = this.props.provider;
+
+      if (this.editable) {
+        return (
+          <a href={'/' + product.slug + '/integrations/' + provider} id={provider}>
+            <img height="20" src={this.props.logo} />
+          </a>
+        );
+      }
+
+      return <img height="20" src={this.props.logo} />;
     },
 
     modal: function() {
@@ -62,21 +94,12 @@
             {this.check()}
           </td>
           <td>
-            <a href={'/' + product.slug + '/integrations/' + provider} id={provider}>
-              <img height="20" src={this.props.logo} />
-            </a>
+            {this.integrationLink()}
           </td>
           <td className="text-muted">
             {this.props.description}
           </td>
-          <td>
-            <a href="javascript:void(0);"
-                className="btn btn-sm btn-default"
-                onClick={this.configure}>
-              Configure
-            </a>
-            {this.modal()}
-          </td>
+          {this.configureColumn()}
         </tr>
       );
     }
