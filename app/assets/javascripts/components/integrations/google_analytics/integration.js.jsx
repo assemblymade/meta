@@ -57,11 +57,11 @@
 
     integrationLink: function() {
       var product = this.props.product;
-      var provider = this.props.provider;
+      var provider = 'google';
 
-      if (this.editable) {
+      if (this.props.editable) {
         return (
-          <a href={'/' + product.slug + '/integrations/' + provider} id={provider}>
+          <a href={'/' + product.slug + '/integrations/' + provider + '/authorize'} id={provider}>
             <img height="20" src={this.props.logo} />
           </a>
         );

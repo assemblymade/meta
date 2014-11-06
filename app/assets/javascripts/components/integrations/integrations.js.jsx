@@ -13,7 +13,7 @@
 
       return (
         <table className="table">
-          {GoogleAnalyticsIntegration(_.extend({}, this.props.google, { product: product }))}
+          {GoogleAnalyticsIntegration(_.extend({}, this.props.google, { product: product, editable: this.props.editable }))}
         </table>
       );
     }
