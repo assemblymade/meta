@@ -69,7 +69,7 @@
                   {this.renderOwnership()}
                 </div>
                 <div className="stat-title ml2 mr2">
-                  onwership<br />
+                  ownership<br />
                   in {this.props.product.name}
                 </div>
               </div>
