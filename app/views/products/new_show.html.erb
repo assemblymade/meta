@@ -1,0 +1,141 @@
+<style>
+  body { background-color: #F5F6F5 }
+</style>
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+<%= render 'shared/navbar' %>
+
+
+<div class="container mt3">
+  <div class="clearfix mnx3">
+
+    <div class="sm-col sm-col-8 px2">
+
+
+      <div class="bg-white rounded p3 mb2">
+
+        <div class="table p0 mb0" style="table-layout:fixed">
+
+          <a class="table-cell center" href="#">
+            <div class="h1 blue mt0 mb0">
+              <span class="fa fa-font"></span>
+            </div>
+            <div class="">Text</div>
+          </a>
+
+          <a class="table-cell center" href="#">
+            <div class="h1 yellow mt0 mb0">
+              <span class="fa fa-trophy"></span>
+            </div>
+            <div class="">Bounty</div>
+          </a>
+
+          <a class="table-cell center" href="#">
+            <div class="h1 green mt0 mb0">
+              <span class="fa fa-image"></span>
+            </div>
+            <div class="">Image</div>
+          </a>
+
+          <a class="table-cell center" href="#">
+            <div class="h1 red mt0 mb0">
+              <span class="fa fa-film"></span>
+            </div>
+            <div class="">Video</div>
+          </a>
+
+        </div>
+      </div>
+
+      <div class="py2">
+        <ul class="list-reset clearfix h6 mxn2 mt0 mb0 bold gray">
+          <li class="left px2">Search</li>
+          <li class="left px2">
+            Filter
+            <span class="fa fa-chevron-down"></span>
+          </li>
+          <li class="left px2">
+            Sort
+            <span class="fa fa-chevron-down"></span>
+          </li>
+        </ul>
+      </div>
+
+      <%= react_component 'NewsFeedList', news_feed_items: ActiveModel::ArraySerializer.new(
+        @product.news_feed_items.order(updated_at: :desc)
+      ).as_json %>
+    </div>
+
+    <div class="sm-col sm-col-4 px3">
+      <div class="bg-white rounded mb3">
+
+        <div class="p3">
+          <div class="mb2">
+            <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 48 %>
+          </div>
+          <div class="h2 mt0 mb0"><%= @product.name %></div>
+          <div class="h4 mt0 mb0 gray"><%= @product.pitch %></div>
+
+          <% if @product.homepage_url? %>
+            <a class="block mt2 mb2" href="#"><%= @product.homepage_url %></a>
+          <% end %>
+
+          <a class="btn btn-primary btn-block" href="#">Follow</a>
+        </div>
+
+        <hr class="mt0 mb0 border-bottom">
+
+        <% if @product.chat_rooms.any? %>
+          <% chat_room = @product.chat_rooms.first %>
+          <a class="block p2 px3 border-bottom" href="<%= chat_room_path(chat_room) %>">
+            <span class="fa fa-comments gray icon-left"></span>
+            Chat
+          </a>
+        <% end %>
+
+        <a class="block p2 px3 border-bottom" href="<%= product_posts_path(@product) %>">
+          <span class="fa fa-font blue mr1"></span>
+          Posts
+        </a>
+
+        <a class="block p2 px3 border-bottom" href="<%= product_tasks_path(@product) %>">
+          <span class="fa fa-trophy yellow mr1"></span>
+          Bounties
+        </a>
+
+        <a class="block p2 px3 border-bottom" href="<%= product_people_path(@product) %>">
+          <span class="fa fa-users gray mr1"></span>
+          People
+        </a>
+
+        <a class="block p2 px3 border-bottom" href="<%= product_discussions_path(@product) %>">
+          <span class="fa fa-font blue mr1"></span>
+          Discussions
+        </a>
+
+        <a class="block p2 px3 border-bottom" href="<%= product_assets_path(@product) %>">
+          <span class="fa fa-image green mr1"></span>
+          Assets
+        </a>
+
+        <a class="block p2 px3 border-bottom" href="<%= product_projects_path(@product) %>">
+          <span class="fa fa-tasks gray mr1"></span>
+          Projects
+        </a>
+
+        <a class="block p2 px3 border-bottom" href="<%= product_repos_path(@product) %>">
+          <span class="fa fa-github gray mr1"></span>
+          Repositories
+        </a>
+
+        <a class="block p2 px3" href="<%= product_financials_path(@product) %>">
+          <span class="fa fa-money gray mr1"></span>
+          Financials
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</div>

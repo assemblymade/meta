@@ -76,6 +76,11 @@ class ProductsController < ProductController
       page_views.drop_older_than(5.minutes)
     end
 
+    if signed_in? && current_user.staff?
+      render 'products/new_show', layout: 'application'
+      return
+    end
+
     respond_to do |format|
       format.html { render }
       format.json { render json: @product }
