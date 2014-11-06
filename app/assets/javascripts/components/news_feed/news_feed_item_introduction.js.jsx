@@ -19,7 +19,7 @@ module.exports = React.createClass({
           </div>
           {user.username}
         </a>
-        <div class="gray-darker">
+        <div className="gray-darker">
           {this.props.intro}
         </div>
       </div>

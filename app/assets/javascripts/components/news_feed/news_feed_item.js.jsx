@@ -53,7 +53,7 @@
         return <NewsFeedItemPost body={target.markdown_body} url={target.url} title={target.title} />;
 
       default:
-        return <NewsFeedItemPost title={target.name || target.title} body={this.props.description_html} url={target.url} />;
+        return <NewsFeedItemPost title={target.name || target.title} body={target.description} url={target.url} />;
       }
     },
 
