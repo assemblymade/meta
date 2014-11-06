@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
 
   has_many :assembly_assets
   has_many :awards, foreign_key: 'winner_id'
+  has_many :deeds
   has_many :events
   has_many :products
   has_many :product_logos
@@ -37,6 +38,7 @@ class User < ActiveRecord::Base
   has_many :withdrawals
 
   has_one :payment_option
+  has_one :chronicle
 
   devise :confirmable,
          :database_authenticatable,

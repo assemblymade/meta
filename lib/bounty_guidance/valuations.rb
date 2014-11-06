@@ -48,6 +48,10 @@ module BountyGuidance
       product_profits_yearly(product) / sum_coins_awarded(product)
     end
 
+    def estimated_flat_coin_value(product, price_to_earnings_ratio)
+      profits_per_coin(product) * price_to_earnings_ratio
+    end
+
     def coins_for_profit_after_dilution(product, yearly_profit)
       sum_coins_awarded(product) * yearly_profit / (product_profits_yearly(product) - yearly_profit)
     end

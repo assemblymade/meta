@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028222032) do
+ActiveRecord::Schema.define(version: 20141105225711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,17 @@ ActiveRecord::Schema.define(version: 20141028222032) do
 
   add_index "bounty_postings", ["expired_at", "bounty_id"], name: "index_bounty_postings_on_expired_at_and_bounty_id", unique: true, using: :btree
 
+  create_table "btc_payments", force: true do |t|
+    t.integer  "btcusdprice_at_moment"
+    t.datetime "created_at"
+    t.string   "action"
+    t.string   "sender"
+    t.string   "sender_address"
+    t.string   "recipient"
+    t.string   "recipient_address"
+    t.integer  "btc_change",            limit: 8
+  end
+
   create_table "chat_rooms", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "slug",       null: false
     t.uuid     "wip_id"
@@ -115,6 +126,12 @@ ActiveRecord::Schema.define(version: 20141028222032) do
   end
 
   add_index "chat_rooms", ["slug"], name: "index_chat_rooms_on_slug", unique: true, using: :btree
+
+  create_table "chronicles", force: true do |t|
+    t.string   "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "code_deliverables", id: false, force: true do |t|
     t.uuid     "id",         null: false
@@ -162,11 +179,33 @@ ActiveRecord::Schema.define(version: 20141028222032) do
     t.datetime "created_at"
   end
 
+  create_table "deeds", force: true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.integer  "karma_value"
+    t.string   "karma_event_type"
+    t.integer  "karma_event_id"
+    t.integer  "chronicle_id"
+  end
+
   create_table "deliverables", id: false, force: true do |t|
     t.uuid     "id",            null: false
     t.uuid     "wip_id",        null: false
     t.uuid     "attachment_id", null: false
     t.datetime "created_at"
+  end
+
+  create_table "domains", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id",          null: false
+    t.uuid     "user_id",             null: false
+    t.string   "name",                null: false
+    t.string   "state",               null: false
+    t.string   "registrar"
+    t.string   "registrar_domain_id"
+    t.string   "transfer_auth_code"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "email_logs", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -254,6 +293,17 @@ ActiveRecord::Schema.define(version: 20141028222032) do
     t.datetime "marketing"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "integrations", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id",    null: false
+    t.string   "access_token",  null: false
+    t.string   "refresh_token"
+    t.string   "token_type"
+    t.string   "provider",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.json     "config"
   end
 
   create_table "interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -347,6 +397,7 @@ ActiveRecord::Schema.define(version: 20141028222032) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "url"
   end
 
   create_table "news_feed_items", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
