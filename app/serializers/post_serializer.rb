@@ -8,7 +8,7 @@ class PostSerializer < ApplicationSerializer
   end
 
   def markdown_body
-    product_markdown(product, object.body.truncate(300))
+    product_markdown(product, object.body)
   end
 
   def url
