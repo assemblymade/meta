@@ -3,7 +3,6 @@
 (function() {
   var NewsFeedItem = require('./news_feed_item.js.jsx');
   var MasonryMixin = require('../../mixins/masonry_mixin.js')
-  // var NewsFeedFilter = require('./news_feed_filter.js.jsx')
 
   var NewsFeed = React.createClass({
 
@@ -110,9 +109,8 @@
 
     renderItems: function() {
       return this.state.news_feed_items.map(function(item) {
-        item.key = item.id;
         return (
-          <div className="sm-col sm-col-4 p2">
+          <div className="sm-col sm-col-4 p2" key={item.id}>
             {NewsFeedItem(item)}
           </div>
         )

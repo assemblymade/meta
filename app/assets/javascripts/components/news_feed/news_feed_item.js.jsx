@@ -113,7 +113,7 @@
       if (typeof tags !== "undefined" && tags !== null) {
         tagItems = _.map(tags, function(tag) {
           return (
-            <li className="left px1">
+            <li className="left px1" key={tag.id}>
               <span className="h6 mt0 mb0 gray">#{tag.name}</span>
             </li>
           )
