@@ -269,6 +269,8 @@ ASM::Application.routes.draw do
     get 'search' => 'search#index'
     patch :launch
 
+    get :old
+
     resources :assets
     resources :watchers
 
