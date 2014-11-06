@@ -1,0 +1,64 @@
+.slider {
+  @include box-shadow(inset 0 1px 2px rgba(0, 0, 0, .1));
+
+  background-color: $gray-lighter;
+  border-radius: 6px;
+  height: 12px;
+  margin-top: 30px;
+  margin-bottom: $line-height-computed;
+  position: relative;
+}
+
+.slider-bar {
+  @include box-shadow(inset 0 -1px 0 rgba(0, 0, 0, .15));
+
+  background-color: $brand-coins;
+  border-radius: 6px;
+  float: left;
+  height: 100%;
+  width: 0%;
+}
+
+.slider-cursor {
+  @include box-shadow(0 1px 1px rgba(0, 0, 0, .40));
+
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  background-color: white;
+  position: absolute;
+  margin: (-15px + 12px/2) 0 0 -15px;
+  cursor: 'pointer';
+}
+
+.slider-steps {
+  margin-top: -30px;
+  position: absolute;
+  width: 100%;
+
+  > li {
+    background-color: transparent;
+    color: $brand-coins;
+    float: left;
+    font-size: 13px;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+
+    &.selected {
+      font-size: 15px;
+    }
+
+    &:before {
+      bottom: -6px;
+      color: $gray-light;
+      content: '|';
+      font-size: 6px;
+      left: 50%;
+      position: absolute;
+    }
+  }
+}
+
+.slider-examples {
+}
