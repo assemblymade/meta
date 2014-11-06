@@ -44,7 +44,7 @@
       }
     },
 
-    renderCoreTeam: function() {
+    render: function() {
       return (
         <div>
           <ul className="nav nav-tabs">
@@ -65,22 +65,6 @@
           </div>
         </div>
       )
-    },
-
-    render: function() {
-      if(this.props.can_update) {
-        return this.renderCoreTeam();
-      } else {
-        return (
-          <div>
-            <div style={{ padding: '6px 30px' }}>
-              <div className="mt4">
-                {this.transferPropsTo(<SimpleBountyOffer />)}
-              </div>
-            </div>
-          </div>
-        )
-      }
     }
   });
 
