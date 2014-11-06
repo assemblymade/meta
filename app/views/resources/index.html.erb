@@ -98,7 +98,7 @@
         </div>
         <% integration = Integration.find_by(product: @product, provider: 'google') %>
         <%= react_component('Integrations', {
-          editable: current_user && @product.core_team?(current_user).is_core,
+          editable: current_user && @product.core_team?(current_user),
           product: @product,
           google: {
             logo: 'https://developers.google.com/analytics/images/terms/google-analytics-logo.png',
