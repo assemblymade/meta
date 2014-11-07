@@ -7,6 +7,7 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
   attributes :partner_of, :core_team_of
 
   attributes :most_recent_product_name
+  attributes :most_recent_product_slug
 
   attributes :comments, :following, :ideas, :wips
 
@@ -43,6 +44,10 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
 
   def most_recent_product_name
     object.products.order(:created_at).last.try(:name)
+  end
+
+  def most_recent_product_slug
+    object.products.order(:created_at).last.try(:slug)
   end
 
   def ideas
