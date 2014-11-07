@@ -11,7 +11,7 @@ class TransactionLogReport
       CSV.generate do |csv|
         csv << ["Time", "Work", "Wallet", "Action", "Value"]
         @entries.each do |entry|
-          csv << [entry.created_at.iso8601, entry.work_id, entry.wallet_id, entry.action, entry.value]
+          csv << [entry.created_at.iso8601, entry.work_id, entry.wallet_id, entry.action, entry.cents]
         end
       end
     end
