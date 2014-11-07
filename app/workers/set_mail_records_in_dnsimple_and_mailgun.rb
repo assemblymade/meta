@@ -31,7 +31,7 @@ class SetMailRecordsInDnsimpleAndMailgun
   def get_mail_records(domain_name)
     data, status = mailgun.get "/domains/#{domain_name}"
     if status == 404
-      data, status = mailgun.post '/domains', name: domain.name, wildcard: true
+      data, status = mailgun.post '/domains', name: domain_name, wildcard: true
     end
     data['receiving_dns_records']
   end
