@@ -17,6 +17,8 @@ class SetMailRecordsInDnsimpleAndMailgun
     end
 
     UpdateCoreTeamEmailForwards.perform_async(domain.product.id)
+
+    domain.email_forwarding_added!
   end
 
   def get_dns_records(domain_name)

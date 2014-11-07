@@ -23,7 +23,10 @@ class Domain < ActiveRecord::Base
     state :transfer_fail do
       event :clear_error, transitions_to: :external
     end
-    state :owned
+    state :owned do
+      event :email_forwarding_added, transitions_to: :forwarding_email
+    end
+    state :forwarding_email
   end
 
   def transfer_failed(error)
