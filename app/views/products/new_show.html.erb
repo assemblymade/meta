@@ -80,7 +80,10 @@
           <div class="h4 mt0 mb0 gray"><%= @product.pitch %></div>
 
           <% if @product.homepage_url? %>
-            <a class="block mt2 mb2" href="#"><%= @product.homepage_url %></a>
+            <a class="block mt2 mb2" href="<%= @product.homepage_url %>">
+              <span class="fa fa-globe"></span>
+              <%= URI(@product.homepage_url.downcase).host %>
+            </a>
           <% end %>
 
           <%= react_component('NotificationPreferencesDropdown',
