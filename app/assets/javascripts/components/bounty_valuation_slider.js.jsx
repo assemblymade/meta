@@ -97,13 +97,11 @@
     render: function() {
       return (
         <div>
-          <div className="slider ml1 mr1" onClick={this.handleClick}>
-            <ul className="slider-steps list-unstyled" style={{ width: 100 + this.stepPosition() + '%', 'margin-left': -this.stepPosition()/2 + '%', padding: '0 15px' }}>
+          <div className="slider" onClick={this.handleClick}>
+            <ul className="slider-steps list-unstyled" style={{ width: 100 + this.stepPosition() + '%', 'margin-left': -this.stepPosition()/2 + '%', padding: '0 17px' }}>
               {this.props.steps.map(function(step) {
                 return (
                   <li style={{ width: this.stepWidth() + '%' }}>
-                    <span className="icon icon-app-coin"></span>
-                    {' '}
                     {step}
                   </li>
                 )
@@ -112,7 +110,7 @@
 
             <div className="slider-bar" style={{ width: this.selectedStepPosition() + '%' }}></div>
 
-            <div style={{ margin: '0 12px', position: 'relative' }}>
+            <div style={{ margin: '0 13px', position: 'relative' }}>
               <div className="slider-cursor" style={{ left: this.selectedStepPosition() + '%' }} onMouseDown={this.handleMouseDown}></div>
             </div>
           </div>
