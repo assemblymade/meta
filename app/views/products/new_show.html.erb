@@ -19,21 +19,21 @@
 
         <div class="table p0 mb0" style="table-layout:fixed">
 
-          <a class="table-cell center" href="#">
+          <a class="table-cell center" href="<%= new_product_post_path(@product) %>">
             <div class="h1 blue mt0 mb0">
               <span class="fa fa-font"></span>
             </div>
-            <div class="">Text</div>
+            <div>Text</div>
           </a>
 
-          <a class="table-cell center" href="#">
+          <a class="table-cell center" href="<%= new_product_wip_path(@product) %>">
             <div class="h1 yellow mt0 mb0">
               <span class="fa fa-trophy"></span>
             </div>
-            <div class="">Bounty</div>
+            <div>Bounty</div>
           </a>
 
-          <a class="table-cell center" href="#">
+          <a class="table-cell center" href="<%= new_product_asset_path(@product) %>">
             <div class="h1 green mt0 mb0">
               <span class="fa fa-image"></span>
             </div>
