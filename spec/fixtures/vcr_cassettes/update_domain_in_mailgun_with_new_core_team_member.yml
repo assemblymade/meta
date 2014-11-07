@@ -1,0 +1,120 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api:@api.mailgun.net/v2/routes
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.7
+      Date:
+      - Fri, 07 Nov 2014 00:10:30 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '366'
+      Connection:
+      - keep-alive
+      Content-Disposition:
+      - inline
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '600'
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, DELETE, OPTIONS
+      Access-Control-Allow-Headers:
+      - Content-Type, x-requested-with
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total_count": 1,
+          "items": [
+            {
+              "description": "Wip event replies",
+              "created_at": "Wed, 18 Sep 2013 00:24:14 GMT",
+              "actions": [
+                "forward(\"https://assembly.com/webhooks/mailgun/reply\")"
+              ],
+              "priority": 0,
+              "expression": "match_recipient(\".*@assemblymail.com\")",
+              "id": "5238f2ae5a761865510006c3"
+            }
+          ]
+        }
+    http_version:
+  recorded_at: Fri, 07 Nov 2014 00:10:30 GMT
+- request:
+    method: post
+    uri: https://api:@api.mailgun.net/v2/routes
+    body:
+      encoding: US-ASCII
+      string: description=Forwarding+for+partycloud+core+team&expression=match_recipient%28%22.%2A%40partycloud.com%22%29&action%5B%5D=forward%28%22vanwilder%40partycloud.com%22%29&action%5B%5D=stop%28%29
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.7
+      Date:
+      - Fri, 07 Nov 2014 00:10:31 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '370'
+      Connection:
+      - keep-alive
+      Content-Disposition:
+      - inline
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '600'
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, DELETE, OPTIONS
+      Access-Control-Allow-Headers:
+      - Content-Type, x-requested-with
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "message": "Route has been created",
+          "route": {
+            "description": "Forwarding for partycloud core team",
+            "created_at": "Fri, 07 Nov 2014 00:10:31 GMT",
+            "actions": [
+              "forward(\"vanwilder@partycloud.com\")",
+              "stop()"
+            ],
+            "priority": 0,
+            "expression": "match_recipient(\".*@partycloud.com\")",
+            "id": "545c0df71257324031676358"
+          }
+        }
+    http_version:
+  recorded_at: Fri, 07 Nov 2014 00:10:30 GMT
+recorded_with: VCR 2.9.2
