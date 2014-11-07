@@ -21,13 +21,13 @@ class Tip < ActiveRecord::Base
 
     karma_value = 1
     if not to.nil?
-      chronicle_id = Chronicle.where(user_id: self.to_id)
+      chronicle_id = Chronicle.where(user_id: to.id)
     else
-      chronicle = Chronicle.create(user_id: self.to_id)
+      chronicle = Chronicle.create(user_id: to.id)
       chronicle_id = chronicle.id
     end
 
-    Deed.create!({karma_value: karma_value, karam_event: self, user_id: self.to_id, chronicle_id: chronicle_id})
+    Deed.create!({karma_value: karma_value, karma_event: tip, user_id: to.id, chronicle_id: chronicle_id})
 
 
     tip
