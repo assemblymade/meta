@@ -2,7 +2,7 @@
 @import 'ink';
 @import 'base/mixins';
 
-$headings-font-weight: bold;
+$headings-font-weight: 600;
 
 $font-size-h1: 24px;
 $font-size-h2: 24px;
@@ -87,7 +87,7 @@ pre {
 
   a {
     color: white !important;
-    font-weight: bold;
+    font-weight: 600;
   }
 }
 
@@ -141,7 +141,7 @@ pre {
   font-size: 13px;
   text-transform: uppercase;
   line-height: 32px;
-  font-weight: bold;
+  font-weight: 600;
   letter-spacing: 0.618pt;
 }
 

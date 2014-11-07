@@ -150,7 +150,7 @@ $task-list-complete-bg: lighten($body-bg, 2%);
 
   .task-list-item-title {
     color: $task-list-incomplete-copy;
-    font-weight: bold;
+    font-weight: 600;
   }
 }
 

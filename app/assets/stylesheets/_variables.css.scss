@@ -147,7 +147,7 @@ $table-border-color: $brand-divider;
 
 // Buttons
 
-$btn-font-weight:    bold;
+$btn-font-weight:    600;
 
 $btn-default-color:  $brand-primary;
 $btn-default-bg:     #fff;
@@ -473,7 +473,7 @@ $modal-sm: 300px;
 
 $alert-padding:          $line-height-computed $grid-gutter-width;
 $alert-border-radius:    $border-radius-base;
-$alert-link-font-weight: bold;
+$alert-link-font-weight: 600;
 
 $alert-success-bg:     $state-success-bg;
 $alert-success-text:   $state-success-text;
@@ -587,7 +587,7 @@ $badge-bg:               lighten($gray-light, 20%);
 $badge-active-color: $link-color;
 $badge-active-bg:    #fff;
 
-$badge-font-weight:   bold;
+$badge-font-weight:   600;
 $badge-line-height:   1;
 $badge-border-radius: $border-radius-base;
 
@@ -618,7 +618,7 @@ $carousel-caption-color: #fff;
 
 // Close
 
-$close-font-weight: bold;
+$close-font-weight: 600;
 $close-color:       #000;
 $close-text-shadow: 0 1px 0 #fff;
 

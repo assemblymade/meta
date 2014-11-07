@@ -31,7 +31,7 @@ $user-davidkaneda: #848C24;
     font-size: 46px;
     margin-top: 0;
     margin-bottom: 28px;
-    font-weight: bold;
+    font-weight: 600;
     color: $text-copy;
 
     &:after {
@@ -106,7 +106,7 @@ $user-davidkaneda: #848C24;
 
 
   h4 {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 22px;
     margin-bottom: $line-height-computed;
     color: $text-accent;
@@ -129,7 +129,7 @@ $user-davidkaneda: #848C24;
   }
 
   .summary-name {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 15px;
   }
 }
@@ -171,7 +171,7 @@ $user-davidkaneda: #848C24;
   .deprecated-card-footer {
     border: none;
     background: rgba(0,0,0,0.1);
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     padding: 6px 20px;
   }
