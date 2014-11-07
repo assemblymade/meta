@@ -16,20 +16,7 @@
     },
 
     renderBountyValuation: function() {
-      var bounty = this.state.bounty;
-      var maxOffer = Math.round(6 * bounty.product.average_bounty / 10000) * 10000
-
-      return (
-        <BountyValuation
-          offersPath={bounty.offers_url}
-          product={bounty.product}
-          contracts={bounty.contracts}
-          offers={bounty.offers}
-          maxOffer={maxOffer}
-          averageBounty={bounty.product.average_bounty}
-          value={bounty.value}
-          open={bounty.open} />
-      );
+      return BountyValuation(_.extend(this.state.bounty, this.props.valuation))
     },
 
     renderUrgency: function() {

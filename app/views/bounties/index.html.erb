@@ -40,6 +40,9 @@
         url: product_wips_path(@product),
         maxOffer: (6 * @product.average_bounty).round(-4),
         averageBounty: @product.average_bounty,
+        coinsMinted: @product.coins_minted,
+        profitLastMonth: @product.profit_last_month,
+        steps: BountyGuidance::Valuations.suggestions(@product),
         createBountyShown: params['modal'] == 'true'
       }.to_json %>"></div>
     </div>
@@ -61,7 +64,10 @@
           product: { name: @product.name },
           url: product_wips_path(@product),
           maxOffer: (6 * @product.average_bounty).round(-4),
-          averageBounty: @product.average_bounty
+          averageBounty: @product.average_bounty,
+          coinsMinted: @product.coins_minted,
+          profitLastMonth: @product.profit_last_month,
+          steps: BountyGuidance::Valuations.suggestions(@product)
         }.to_json %>" class="omega text-center"></div>
       </div>
     </div>

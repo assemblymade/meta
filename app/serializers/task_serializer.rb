@@ -3,7 +3,7 @@ class TaskSerializer < ApplicationSerializer
   include MarkdownHelper
   include Nokogiri
 
-  attributes :number, :title, :url, :body_preview, :value, :markdown_description
+  attributes :number, :title, :url, :value, :markdown_description, :comments_count
   attributes :state, :urgency
 
   has_many :tags
@@ -16,13 +16,8 @@ class TaskSerializer < ApplicationSerializer
     @product ||= object.product
   end
 
-  def body_preview
-    object.description
-  end
-
   def markdown_description
-    # Only show the first paragraph
-    Nokogiri::HTML(product_markdown(product, body_preview)).css('p').first.try(:to_html)
+    product_markdown(product, object.description)
   end
 
   def value

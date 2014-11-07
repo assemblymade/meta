@@ -38,6 +38,7 @@
       request.setRequestHeader('Accept', 'application/json');
       request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
+      // NB: This fails on nested data
       var formValues = [];
       for(var p in data){
         if (data.hasOwnProperty(p)) {
@@ -47,13 +48,7 @@
 
       request.send(formValues.join("&"));
 
-      request.onload = function() {
-        if (request.status >= 200 && request.status < 400) {
-          return callback(null, request.responseText);
-        }
-
-        callback(new Error(request.responseText));
-      }
+      request.onload = onload(request, callback);
     },
 
     noCsrfRequest: function(method, path, data, callback) {
@@ -63,13 +58,7 @@
 
       var request = new XMLHttpRequest();
 
-      request.onload = function() {
-        if (request.status >= 200 && request.status < 400) {
-          return callback(null, request.responseText);
-        }
-
-        callback(new Error(request.responseText));
-      };
+      request.onload = onload(request, callback);
 
       // bypass the browser's cache:
       // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache
@@ -83,4 +72,14 @@
   }
 
   window.xhr = xhr;
+
+  function onload(request, callback) {
+    return function() {
+      if (request.status >= 200 && request.status < 400) {
+        return callback(null, request.responseText);
+      }
+
+      callback(new Error(request.responseText));
+    };
+  }
 })();

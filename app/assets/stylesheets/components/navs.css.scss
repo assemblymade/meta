@@ -8,7 +8,7 @@
   }
 
   > .active {
-    font-weight: bold;
+    font-weight: 600;
   }
 }
 
@@ -78,6 +78,24 @@
     > li.active > a {
       font-weight: normal;
     }
+  }
+}
+
+.nav-tabs.nav-slim {
+  > li > a {
+    margin-left: 10px;
+    margin-right: 10px;
+
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  > li:first-child > a {
+    margin-left: 0;
+  }
+
+  > li:last-child > a {
+    margin-right: 0;
   }
 }
 

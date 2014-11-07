@@ -5,7 +5,7 @@ class ProductsController < ProductController
 
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :follow, :unfollow, :announcements, :welcome]
   before_action :set_product,
-    only: [:show, :edit, :update, :follow, :announcements, :unfollow, :metrics, :flag, :feature, :launch]
+    only: [:show, :old, :edit, :update, :follow, :announcements, :unfollow, :metrics, :flag, :feature, :launch]
 
   def new
     @product = Product.new
@@ -76,8 +76,31 @@ class ProductsController < ProductController
       page_views.drop_older_than(5.minutes)
     end
 
+    if signed_in? && current_user.staff?
+      render 'products/new_show', layout: 'application'
+      return
+    end
+
     respond_to do |format|
       format.html { render }
+      format.json { render json: @product }
+    end
+  end
+
+  # The old show page
+  def old
+    return redirect_to(about_url) if @product.meta?
+    @user_metrics = UserMetricsSummary.new(@product, Date.today - 1.day)
+
+    page_views = TimedSet.new($redis, "#{@product.id}:show")
+
+    if page_views.add(request.remote_ip)
+      Product.increment_counter(:view_count, @product.id)
+      page_views.drop_older_than(5.minutes)
+    end
+
+    respond_to do |format|
+      format.html { render 'show' }
       format.json { render json: @product }
     end
   end

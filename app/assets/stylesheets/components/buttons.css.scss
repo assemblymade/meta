@@ -67,7 +67,7 @@
   @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $border-radius-base);
 
   color: $link-color;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   border-radius: 0;
 

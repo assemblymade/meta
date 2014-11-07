@@ -17,6 +17,7 @@
       <td><%= withdrawal.created_at %></td>
       <td>
         <a href="<%= user_path(withdrawal.user) %>">@<%= withdrawal.user.username %></a>
+        <a href="<%= users_tax_info_url(auth_token: withdrawal.user.authentication_token, form_type: withdrawal.user.tax_info.slug) %>">(<%= withdrawal.user.tax_info.slug %>)</a>
       </td>
       <td>
         <%= render withdrawal.user.payment_option if withdrawal.user.payment_option %>

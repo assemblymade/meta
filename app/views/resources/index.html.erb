@@ -1,0 +1,116 @@
+<% title 'Resources', @product.name %>
+<% activate_nav! :resources %>
+
+<div class="page-header sheet-header">
+  <h2 class="page-header-title">Shared Resources</h2>
+</div>
+
+<div class="sheet-body">
+  <div class="row">
+    <div class="col-xs-8 col-md-8">
+
+      <%= render 'shared/flash' %>
+
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <% if can? :update, @product %>
+              <div class="dropdown pull-right">
+                <%= react_component 'AddDomain', domains_url: product_domains_path(@product) %>
+              </div>
+            <% end %>
+
+            <h3 class="panel-title">Domains</h3>
+          </div>
+        </div>
+        <div class="panel-body">
+          Domains held in trust by Assembly on behalf of the community are guaranteed to remain available for the members of <%= @product.name %> for the life of the product.
+        </div>
+
+        <% if @product.domains.any? %>
+          <table class="table">
+            <% @product.domains.each do |domain| %>
+              <tr>
+                <td style="width:10px">
+                  <% if domain.owned? %>
+                    <span class="px1 glyphicon glyphicon-ok text-success"></span>
+                  <% end %>
+                </td>
+                <td>
+                  <%= domain.name %>
+                </td>
+                <td>
+                  <% if domain.status %>
+                    <span class="pull-right label label-danger mr1" data-toggle="tooltip" title="<%= domain.status %>">Error</span>
+                  <% else %>
+                    <span class="pull-right label label-info mr1"><%= t "domains.#{domain.state}" %></span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
+      </div>
+
+<!--
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <button class="btn btn-default btn-xs pull-right">Add repo</button>
+            Repositories
+          </h3>
+        </div>
+        <div class="panel-body">
+          Repositories held in trust by Assembly on behalf of the community are guaranteed to remain available for the members of <%= @product.name %> for the life of the product.
+        </div>
+
+        <% if @product.repos.any? %>
+          <table class="table">
+            <% @product.repos.each do |repo| %>
+              <tr>
+                <td style="width:10px">
+                  <span class="px1 glyphicon glyphicon-ok text-success"></span>
+                </td>
+                <td>
+                  <i class="icon icon-github"></i>
+                  <a href="https://github.com/asm-products/firesize" data-track="product.repo.clicked">
+                    asm-products/firesize
+                  </a>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
+      </div>
+-->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <% if current_user && @product.core_team?(current_user) %>
+            <h3 class="panel-title">
+              <button class="btn btn-default btn-xs pull-right">Add integration</button>
+              Integrations
+            </h3>
+          <% end %>
+        </div>
+        <div class="panel-body">
+          External services can be added to pull in rich data about <%= @product.name %>.
+        </div>
+        <% integration = Integration.find_by(product: @product, provider: 'google') %>
+        <%= react_component('Integrations', {
+          editable: current_user && @product.core_team?(current_user),
+          product: @product,
+          google: {
+            logo: 'https://developers.google.com/analytics/images/terms/google-analytics-logo.png',
+            description: 'Post weekly updates on page views and site metrics',
+            initialActivated: !integration.nil?,
+            initialAccount: integration && integration.config && integration.config['account_name'],
+            initialProfile: integration && integration.config && integration.config['profile_name'],
+            initialProperty: integration && integration.config && integration.config['property_name']
+          }
+        }) %>
+      </div>
+
+    </div>
+  </div>
+</div>

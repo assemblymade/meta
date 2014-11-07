@@ -20,11 +20,11 @@
               <% if product.bio_memberships_count >= 10 %>
                 has
                 <strong><%= pluralize(product.bio_memberships_count, 'partner') %></strong>
-                and will start using Assembly.
+                and will be greenlit.
               <% else %>
                 needs
                 <strong><%= pluralize([10 - product.bio_memberships_count, 0].max, 'more partner') %></strong>
-                to start using Assembly.
+                to be greenlit.
               <% end %>
             </p>
           </div>

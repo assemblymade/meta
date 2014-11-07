@@ -53,7 +53,7 @@ h4, .h4 {
   line-height: 2rem;
 } // 18px/24px
 h5, .h5 {
-  font-size: 1rem;
+  font-size: 1.33333333333333rem;
   line-height: 2rem;
 } // 16px/24px
 h6, .h6 {
@@ -85,7 +85,7 @@ h6, .h6 {
   border-bottom-left-radius: 4px;
 }
 
-.shadow { box-shadow: 0 0 2px rgba(black, .05) }
+.shadow { box-shadow: 0 1px 1px $brand-shadow }
 
 input,
 select,

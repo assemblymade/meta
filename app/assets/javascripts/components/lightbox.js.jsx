@@ -38,7 +38,7 @@
 
     footer: function() {
       if (this.props.footer) {
-        return <div className="modal-footer">
+        return <div className="p3 border-top">
           {this.props.footer}
         </div>
       }

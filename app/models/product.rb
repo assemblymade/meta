@@ -34,11 +34,13 @@ class Product < ActiveRecord::Base
   has_many :core_team, through: :core_team_memberships, source: :user
   has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
   has_many :discussions
+  has_many :domains
   has_many :event_activities, through: :events, source: :activities
   has_many :events, :through => :wips
   has_many :expense_claims
   has_many :financial_accounts, class_name: 'Financial::Account'
   has_many :financial_transactions, class_name: 'Financial::Transaction'
+  has_many :integrations
   has_many :invites, as: :via
   has_many :metrics
   has_many :milestones
@@ -464,6 +466,15 @@ class Product < ActiveRecord::Base
     bounties.inject(0, &:+) / bounties.size
   end
 
+  def coins_minted
+    transaction_log_entries.with_cents.sum(:cents)
+  end
+
+  def profit_last_month
+    last_report = profit_reports.order('end_at DESC').first
+    last_report && last_report.profit
+  end
+
   def ownership
     ProductOwnership.new(self)
   end
@@ -564,6 +575,10 @@ class Product < ActiveRecord::Base
       wallet_public_address: key_pair["public_address"],
       wallet_private_key: key_pair["private_key"]
     )
+  end
+
+  def unvested_coins
+    [10_000_000, transaction_log_entries.sum(:cents)].max
   end
 
   protected
