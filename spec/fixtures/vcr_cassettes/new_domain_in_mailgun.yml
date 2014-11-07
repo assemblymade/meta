@@ -1,0 +1,278 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.dnsimple.com/v1/domains/partycloud.com/records
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      X-Dnsimple-Token:
+      - founders@assembly.com:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 06 Nov 2014 21:46:15 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=315360000
+      - max-age=631138519
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '1'
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with
+      Access-Control-Allow-Methods:
+      - GET,POST,PUT,DELETE,OPTIONS
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 6d8f7e63-926d-42a7-9cf1-5059896314f8
+      X-Runtime:
+      - '0.045590'
+    body:
+      encoding: UTF-8
+      string: '[{"record":{"id":3363302,"domain_id":159052,"parent_id":null,"name":"","content":"mxa.mailgun.org","ttl":3600,"prio":10,"record_type":"MX","system_record":null,"created_at":"2014-11-06T21:37:25.380Z","updated_at":"2014-11-06T21:37:25.380Z"}},{"record":{"id":3349858,"domain_id":159052,"parent_id":null,"name":"","content":"ns1.dnsimple.com","ttl":3600,"prio":null,"record_type":"NS","system_record":true,"created_at":"2014-11-04T05:45:01.842Z","updated_at":"2014-11-04T05:45:01.842Z"}},{"record":{"id":3349859,"domain_id":159052,"parent_id":null,"name":"","content":"ns2.dnsimple.com","ttl":3600,"prio":null,"record_type":"NS","system_record":true,"created_at":"2014-11-04T05:45:01.865Z","updated_at":"2014-11-04T05:45:01.865Z"}},{"record":{"id":3349860,"domain_id":159052,"parent_id":null,"name":"","content":"ns3.dnsimple.com","ttl":3600,"prio":null,"record_type":"NS","system_record":true,"created_at":"2014-11-04T05:45:01.887Z","updated_at":"2014-11-04T05:45:01.887Z"}},{"record":{"id":3349861,"domain_id":159052,"parent_id":null,"name":"","content":"ns4.dnsimple.com","ttl":3600,"prio":null,"record_type":"NS","system_record":true,"created_at":"2014-11-04T05:45:01.909Z","updated_at":"2014-11-04T05:45:01.909Z"}},{"record":{"id":3349857,"domain_id":159052,"parent_id":null,"name":"","content":"ns1.dnsimple.com
+        admin.dnsimple.com 2014110401 86400 7200 604800 300","ttl":3600,"prio":null,"record_type":"SOA","system_record":true,"created_at":"2014-11-04T05:45:01.746Z","updated_at":"2014-11-04T05:45:01.746Z"}}]'
+    http_version:
+  recorded_at: Thu, 06 Nov 2014 21:46:15 GMT
+- request:
+    method: get
+    uri: https://api:@api.mailgun.net/v2/domains/partycloud.com
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.7
+      Date:
+      - Thu, 06 Nov 2014 21:46:15 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1211'
+      Connection:
+      - keep-alive
+      Content-Disposition:
+      - inline
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '600'
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, DELETE, OPTIONS
+      Access-Control-Allow-Headers:
+      - Content-Type, x-requested-with
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "domain": {
+            "created_at": "Thu, 06 Nov 2014 20:28:10 GMT",
+            "name": "partycloud.com",
+            "smtp_login": "postmaster@partycloud.com",
+            "smtp_password": "fff34cbf4999f19ba21a68fe60215b36",
+            "spam_action": "disabled",
+            "state": "unverified",
+            "wildcard": true
+          },
+          "receiving_dns_records": [
+            {
+              "priority": "10",
+              "record_type": "MX",
+              "valid": "unknown",
+              "value": "mxa.mailgun.org"
+            },
+            {
+              "priority": "10",
+              "record_type": "MX",
+              "valid": "unknown",
+              "value": "mxb.mailgun.org"
+            }
+          ],
+          "sending_dns_records": [
+            {
+              "name": "partycloud.com",
+              "record_type": "TXT",
+              "valid": "unknown",
+              "value": "v=spf1 include:mailgun.org ~all"
+            },
+            {
+              "name": "krs._domainkey.partycloud.com",
+              "record_type": "TXT",
+              "valid": "unknown",
+              "value": "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC3ZLt4dS6zAkLgZnP7MZBtlAxIyuUBewfX4OPYQEmWjSOdMrpkw5qeA81OMFufPx2+i+Y8Zk5O6A734sCfnRsIcVaErztz6uM1PZWrI1zA3118yc6NPnczvTqSeD2G7U+VXw6UnVWyle+qxjJxMLLLTafiZYAwAsfvqD+42JwIgQIDAQAB"
+            },
+            {
+              "name": "email.partycloud.com",
+              "record_type": "CNAME",
+              "valid": "unknown",
+              "value": "mailgun.org"
+            }
+          ]
+        }
+    http_version:
+  recorded_at: Thu, 06 Nov 2014 21:46:15 GMT
+- request:
+    method: post
+    uri: https://api.dnsimple.com/v1/domains/partycloud.com/records
+    body:
+      encoding: UTF-8
+      string: '{"record":{"name":"","record_type":"MX","content":"mxa.mailgun.org","prio":"10"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      X-Dnsimple-Token:
+      - founders@assembly.com:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 06 Nov 2014 21:46:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Status:
+      - 422 Unprocessable Entity
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '1'
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with
+      Access-Control-Allow-Methods:
+      - GET,POST,PUT,DELETE,OPTIONS
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - a770b642-29e6-43b0-95ed-d549858d3d75
+      X-Runtime:
+      - '0.046900'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJkb21haW5fbmFtZSI6ImNoZXhlZS58ZSIsIm5hbWUiOiIiLCJlcnJvcnMi
+        OltdLCJ3YXJuaW5nIjoiY2hleGVlLm1lIOKGkiBteGEubWFpbGd1bi5vcmcg
+        YWxyZWFkeSBleGlzdHMgc28gaXQgd2FzIGlnbm9yZWQuIn0=
+    http_version:
+  recorded_at: Thu, 06 Nov 2014 21:46:15 GMT
+- request:
+    method: post
+    uri: https://api.dnsimple.com/v1/domains/partycloud.com/records
+    body:
+      encoding: UTF-8
+      string: '{"record":{"name":"","record_type":"MX","content":"mxb.mailgun.org","prio":"10"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.9
+      X-Dnsimple-Token:
+      - founders@assembly.com:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 06 Nov 2014 21:46:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Status:
+      - 201 Created
+      Strict-Transport-Security:
+      - max-age=315360000
+      - max-age=631138519
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '1'
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Authorization,Accepts,Content-Type,X-DNSimple-Token,X-DNSimple-Domain-Token,X-CSRF-Token,x-requested-with
+      Access-Control-Allow-Methods:
+      - GET,POST,PUT,DELETE,OPTIONS
+      Location:
+      - https://api.dnsimple.com/domains/partycloud.com/records/3363346
+      Etag:
+      - '"6083704ca9cd62476f4327a93a337236"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 99c61170-7a11-4c49-8860-f88e35079095
+      X-Runtime:
+      - '0.168178'
+    body:
+      encoding: UTF-8
+      string: '{"record":{"id":3363346,"domain_id":159052,"parent_id":null,"name":"","content":"mxb.mailgun.org","ttl":3600,"prio":10,"record_type":"MX","system_record":null,"created_at":"2014-11-06T21:46:16.583Z","updated_at":"2014-11-06T21:46:16.583Z"}}'
+    http_version:
+  recorded_at: Thu, 06 Nov 2014 21:46:16 GMT
+recorded_with: VCR 2.9.2

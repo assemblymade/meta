@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.9
       X-Dnsimple-Token:
-      - founders@assembly.com:RaUNWJOsM5TnDBvxXAze
+      - founders@assembly.com:
       Accept:
       - application/json
       Content-Type:
