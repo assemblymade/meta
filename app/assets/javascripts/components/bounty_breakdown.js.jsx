@@ -24,6 +24,8 @@
     componentDidMount: function() {
       var modal = $(this.getDOMNode()).modal({ show: true })
       modal.on('hidden.bs.modal', this.props.onHidden)
+
+      analytics.track('bounty.valuation.view', { product: app.currentAnalyticsProduct().get('product_slug') });
     },
 
     renderVoters: function() {
