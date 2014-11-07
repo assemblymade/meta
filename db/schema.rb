@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20141105225711) do
-=======
-ActiveRecord::Schema.define(version: 20141104192023) do
->>>>>>> 18bc3a94c1a2233dda74a6e1b07d0e0de16fbd75
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,7 +128,7 @@ ActiveRecord::Schema.define(version: 20141104192023) do
   add_index "chat_rooms", ["slug"], name: "index_chat_rooms_on_slug", unique: true, using: :btree
 
   create_table "chronicles", force: true do |t|
-    t.string   "user_id"
+    t.uuid     "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -184,7 +180,7 @@ ActiveRecord::Schema.define(version: 20141104192023) do
   end
 
   create_table "deeds", force: true do |t|
-    t.integer  "user_id"
+    t.uuid     "user_id"
     t.datetime "created_at"
     t.integer  "karma_value"
     t.string   "karma_event_type"
