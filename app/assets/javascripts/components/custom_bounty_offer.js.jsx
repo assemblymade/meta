@@ -63,7 +63,7 @@
             </div>
           </div>
           <div className="mt2">
-            <div className="stat-group">
+            <div className="stat-group mb0">
               <div className="stat">
                 <div className="stat-value">
                   {this.renderOwnership()}

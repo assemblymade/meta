@@ -92,48 +92,55 @@
 
     render: function() {
       return (
-        <Lightbox title="How many coins is this bounty worth?">
-          <div style={{ 'min-width': '300px' }}>
-            <div className="row border-bottom mb1" style={{ padding: '6px 30px' }}>
-              <div className="col-xs-12">
-                <a onClick={this.handleShowDetailsClicked} className="h6 gray bg-white right" href="#">
-                  {this.state.showingDetails ? 'Hide' : 'Show'} details
-                </a>
+        <Lightbox>
+          <div className="p3 border-bottom">
+            <a className="close" data-dismiss="modal">
+              <span className="h3" aria-hidden="true">&times;</span>
+              <span className="sr-only">Close</span>
+            </a>
 
-                <div className="mt1">
-                  <span className="bold mr1 h6">Current value</span>
-                  {' '}
-                  <span className="text-coins bold mt1 mb0 h6">
-                    <span className="icon icon-app-coin"></span>
-                    {' '}
-                    {numeral(this.props.contracts.earnable).format('0,0')}
-                  </span>
-                </div>
-
-                {this.renderDetails()}
-              </div>
-            </div>
-
-            <div>
-              {this.renderNewOffer()}
-            </div>
+            <span className="h3 mt0 mb0">
+              How many coins is this bounty worth?
+            </span>
           </div>
 
-          <div className="modal-footer form-actions">
-            <div className="left left-align" style={{ 'line-height': 36 }}>
-              <div className="bold mt0 mb1 h6">
-                Your vote
+          <div style={{ 'min-width': '300px' }}>
+            <div className="border-bottom px3 py2">
+              <a onClick={this.handleShowDetailsClicked} className="h6 mt0 mb0 gray bg-white right" href="#">
+                {this.state.showingDetails ? 'Hide' : 'Show'} details
+              </a>
+
+              <div className="bold h6 mt0 mb0">
+                <span className="mr1">
+                  Current value
+                </span>
+                <span className="text-coins">
+                  <span className="icon icon-app-coin"></span>
+                  {' '}
+                  {numeral(this.props.contracts.earnable).format('0,0')}
+                </span>
               </div>
-              <div className="text-coins bold mt0 mb0 h1">
+
+              {this.renderDetails()}
+            </div>
+
+            {this.renderNewOffer()}
+          </div>
+
+          <div className="p3 border-top clearfix">
+            <div className="bold mt0 mb1 h6">
+              Your vote
+            </div>
+
+            <div className="left" style={{ 'line-height': 38 }}>
+              <div className="text-coins bold mt0 mb0 h2">
                 <span className="icon icon-app-coin"></span>
                 {' '}
                 {numeral(this.state.offer).format('0,0')}
               </div>
             </div>
 
-            <div style={{ 'margin-top': 27 }}>
-              <button className="btn btn-primary" name="button" type="submit" onClick={this.handleOfferClicked}>Vote</button>
-            </div>
+            <button className="btn btn-primary right px4" name="button" type="submit" onClick={this.handleOfferClicked}>Vote</button>
           </div>
         </Lightbox>
       )

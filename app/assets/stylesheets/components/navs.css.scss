@@ -81,6 +81,24 @@
   }
 }
 
+.nav-tabs.nav-slim {
+  > li > a {
+    margin-left: 10px;
+    margin-right: 10px;
+
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  > li:first-child > a {
+    margin-left: 0;
+  }
+
+  > li:last-child > a {
+    margin-right: 0;
+  }
+}
+
 .nav-tabs.nav-justified {
   > li > a {
     border-bottom-width: 3px;

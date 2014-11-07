@@ -30,37 +30,29 @@
 
     renderValueControl: function() {
       if(this.state.toggle === 'simple') {
-        return (
-          <div className="mt4">
-            {this.transferPropsTo(<SimpleBountyOffer />)}
-          </div>
-        )
+        return this.transferPropsTo(<SimpleBountyOffer />)
       } else {
-        return (
-          <div className="mt2">
-            {this.transferPropsTo(<CustomBountyOffer />)}
-          </div>
-        )
+        return this.transferPropsTo(<CustomBountyOffer />)
       }
     },
 
     render: function() {
       return (
         <div>
-          <ul className="nav nav-tabs">
-            <li style={{ 'margin-left': 30 }} className={this.state.toggle == 'simple' ? 'active' : null}>
-              <a onClick={this.handleClick('simple')} href="#">
+          <ul className="px3 nav nav-tabs nav-slim h6 mt0 mb0">
+            <li className={this.state.toggle == 'simple' ? 'active' : null}>
+              <a onClick={this.handleClick('simple')} href="#" style={{ 'line-height': '1.5rem', 'padding-top': 12, 'padding-bottom': 9 }}>
                 Simple
               </a>
             </li>
             <li className={this.state.toggle == 'custom' ? 'active' : null}>
-              <a onClick={this.handleClick('custom')} href="#">
+              <a onClick={this.handleClick('custom')} href="#" style={{ 'line-height': '1.5rem', 'padding-top': 12, 'padding-bottom': 9 }}>
                 Custom
               </a>
             </li>
           </ul>
 
-          <div style={{ padding: '6px 30px' }}>
+          <div className="p3">
             {this.renderValueControl()}
           </div>
         </div>
