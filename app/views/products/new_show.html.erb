@@ -83,7 +83,15 @@
             <a class="block mt2 mb2" href="#"><%= @product.homepage_url %></a>
           <% end %>
 
-          <a class="btn btn-primary btn-block" href="#">Follow</a>
+          <%= react_component('NotificationPreferencesDropdown',
+            productWatchersPath: product_people_path(@product),
+            productWatchersCount: @product.watchings_count,
+            productFollowPath: product_follow_path(@product),
+            productAnnouncementsPath: product_announcements_path(@product),
+            productUnfollowPath: product_unfollow_path(@product),
+            watchingState: @product.watching_state(current_user),
+            afterFollowPath: product_people_path(@product)
+          ) %>
         </div>
 
         <hr class="mt0 mb0 border-bottom">
