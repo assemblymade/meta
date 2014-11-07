@@ -76,7 +76,7 @@ class DiscoverController < ApplicationController
   end
 
   def updates
-    limit = 20
+    limit = 40
     offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
 
     query = NewsFeedItem.public_items.
@@ -91,8 +91,10 @@ class DiscoverController < ApplicationController
       query = query.where.not(popular_at: nil)
     end
 
+    posts = query.to_a.reject{|q| q.target.try(:flagged?) }
+
     @posts = ActiveModel::ArraySerializer.new(
-      query,
+      posts,
       each_serializer: NewsFeedItemSerializer
     ).as_json
 
