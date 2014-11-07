@@ -103,7 +103,7 @@
               How many coins is this bounty worth?
             </div>
 
-            <div className="gray-dark h6">
+            <div className="gray-dark h6 mt1 mb0">
               Your vote will be weighted according to your ownership in {this.props.product.name}.
             </div>
           </div>
