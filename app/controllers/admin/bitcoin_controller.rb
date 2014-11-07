@@ -1,7 +1,7 @@
 class Admin::BitcoinController < AdminController
 
   def index
-    @payments = BtcPayment.all
+    @payment_btc_sum = BtcPayment.sum(:btc_change)
   end
 
 end

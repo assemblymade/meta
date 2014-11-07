@@ -98,7 +98,7 @@ module BountyGuidance
     end
 
     def adjusted_work_weight(product)
-      factor = 2 * (SIGMOID_AVERAGE_MAX_CONSTANT) / (1.0 + 3.0 ** (work_done(product) / BOUNTIES_PER_HALFWAY_SIGMOID )) + SIGMOID_BASELINE_CONSTANT
+      factor = 0.5020 * 2 * (SIGMOID_AVERAGE_MAX_CONSTANT) / (1.0 + 3.0 ** (work_done(product) / BOUNTIES_PER_HALFWAY_SIGMOID - 5)) + SIGMOID_BASELINE_CONSTANT
     end
 
     def compute_guidance(product, increment) #increment should be 0-4
