@@ -1,4 +1,18 @@
-<h3>Bitcoin Payment History</h3>
+<h2>Bitcoin Payment History</h2>
+
+<br>
+<h4>Sum BTC Available
+<br>
+<% sum = 0 %>
+<% sumin = 0 %>
+<% sumout = 0 %>
+<% @payments.each do |p| %>
+<% sum = sum + p.btc_change/100000000.0 %>
+<% end %>
+<%= sum %> BTC<br><%= sum*OpenAssets::Transactions.new.get_btc_spot_price_coinbase().round(2) %>
+Current USD Value:
+</h4>
+<br>
 
 <table class="table table-striped">
   <thead>
@@ -16,15 +30,17 @@
   </thead>
   <tbody>
     <% @payments.each do |p| %>
-      <td><%= p.created_at %></td>
-      <td><%= p.action %></td>
-      <td><%= p.sender %></td>
-      <td><%= p.recipient %></td>
-      <td><%= p.sender_address %></td>
-      <td><%= p.recipient_address %></td>
-      <td><%= p.btc_change/100000000 %></td>
-      <td><%= p.btcusdprice_at_moment/100 %></td>
-      <td><%= p.btcusdprice_at_moment/100*p.btc_change / 100000000 %></td>
+      <tr>
+        <td><%= p.created_at %></td>
+        <td><%= p.action %></td>
+        <td><%= p.sender %></td>
+        <td><%= p.recipient %></td>
+        <td><%= p.sender_address %></td>
+        <td><%= p.recipient_address %></td>
+        <td><%= p.btc_change/100000000 %></td>
+        <td><%= p.btcusdprice_at_moment/100 %></td>
+        <td><%= p.btcusdprice_at_moment/100*p.btc_change / 100000000 %></td>
+      </tr>
     <% end %>
 
   </tbody>
