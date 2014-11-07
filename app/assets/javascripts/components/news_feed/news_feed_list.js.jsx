@@ -1,10 +1,9 @@
 /** @jsx React.DOM */
 
-var NewsFeedItem = require('./news_feed_item.js.jsx');
+var NewsFeedTile = require('./news_feed_tile.js.jsx');
 var MasonryMixin = require('../../mixins/masonry_mixin.js')
 
 module.exports = React.createClass({
-
   displayName: 'NewsFeedList',
 
   getInitialState: function() {
@@ -25,7 +24,7 @@ module.exports = React.createClass({
     return this.state.news_feed_items.map(function(item) {
       return (
         <div className="p2" key={item.id}>
-          {NewsFeedItem(item)}
+          {NewsFeedTile(item)}
         </div>
       )
     })

@@ -7,7 +7,9 @@ namespace :news_feed_items do
           item.news_feed_item_comments.create(
             news_feed_item: item,
             body: comment.body,
-            user_id: comment.user.id
+            user_id: comment.user.id,
+            created_at: comment.created_at,
+            updated_at: comment.updated_at
           )
         end
       end

@@ -9,6 +9,7 @@
   var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
   var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
   var NewsFeedItemComments = require('./news_feed_item_comments.js.jsx');
+  var Tile = require('../tile.js.jsx')
   var moment = require('moment');
   var ONE_DAY = 24 * 60 * 60 * 1000;
 
@@ -27,11 +28,11 @@
 
     render: function() {
       return (
-        <div className="bg-white rounded shadow">
+        <Tile>
           {this.renderSource()}
           {this.renderTarget()}
           {this.renderComments()}
-        </div>
+        </Tile>
       );
     },
 
