@@ -1,11 +1,4 @@
 class DiscoverController < ApplicationController
-  TYPE_FILTERS = {
-    bounties: 'Wip',
-    introductions: 'TeamMembership',
-    posts: 'Post',
-    discussions: 'Wip'
-  }
-
   META = Product.find_by(slug: 'meta')
 
   def index
@@ -79,19 +72,29 @@ class DiscoverController < ApplicationController
     limit = 40
     offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
 
-    query = NewsFeedItem.public_items.
-              limit(limit).
-              offset(offset).
-              where.not(product: META).
-              order(updated_at: :desc)
+    # (pletcher) This is so ugly -- maybe we should move tags to
+    #            NewsFeedItems?
+    if params[:filter] && params[:filter] != 'hot'
+      query = Wip.tagged_with(params[:filter]).
+        limit(limit).
+        offset(offset).
+        includes(:news_feed_item).
+        where.not('news_feed_items.product_id = ?', META.id).
+        order(updated_at: :desc).
+        map(&:news_feed_item)
+    else
+      query = NewsFeedItem.public_items.
+                limit(limit).
+                offset(offset).
+                where.not(product: META).
+                order(updated_at: :desc)
+    end
 
-    if filter = TYPE_FILTERS[params[:filter] && params[:filter].to_sym]
-      query = query.where(target_type: filter)
-    elsif params[:filter] == 'hot'
+    if params[:filter] == 'hot'
       query = query.where.not(popular_at: nil)
     end
 
-    posts = query.to_a.reject{|q| q.target.try(:flagged?) }
+    posts = query.to_a.reject{ |q| q.try(:target).try(:flagged?) }
 
     @posts = ActiveModel::ArraySerializer.new(
       posts,

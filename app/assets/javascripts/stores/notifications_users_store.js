@@ -33,5 +33,5 @@ var Store = require('../stores/store');
     module.exports = _store;
   }
 
-  window.NewsFeedUsersStore = _store;
+  window.NotificationsUsersStore = _store;
 })();

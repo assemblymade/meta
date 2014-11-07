@@ -9,18 +9,23 @@
     mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0})],
 
     getDefaultProps: function() {
-      var filters = {
-        bounties: 'Bounties',
-        introductions: 'Introductions',
-        posts: 'Posts'
-      }
+      var filters = lowerCaseAndReflect([
+        'Frontend',
+        'Backend',
+        'Design',
+        'Marketing',
+        'Writing'
+      ]);
+
       if (window.app.featureEnabled('hot-updates')) {
-        filters['hot'] = 'Hot'
+        filters['Hot'] = 'hot';
+      } else {
+        filters['Mobile'] = 'mobile';
       }
 
       return {
         filters: filters
-      }
+      };
     },
 
     fetchMoreNewsFeedItems: function(e) {
@@ -50,24 +55,9 @@
 
     filters: function() {
       return (
-        <div className="center mt2">
-          <ul className="nav nav-mini-pills">
-            {_.map(_.keys(this.props.filters), function(filter) {
-              var label = this.props.filters[filter];
-              var buttonClass = filter === this.state.filter ?
-                'active' :
-                '';
-              return (
-                <li className={buttonClass} key={filter}>
-                  <a href="javascript:void(0);"
-                      onClick={this.filterBy.bind(this, filter)}>
-                    {label}
-                  </a>
-                </li>
-              );
-            }.bind(this))}
-          </ul>
-        </div>
+        <ul className="nav nav-skills bg-white mb2">
+          {_.map(_.keys(this.props.filters), renderFilterListItem.bind(this))}
+        </ul>
       );
     },
 
@@ -161,6 +151,36 @@
       ));
     }
   });
+
+  function renderFilterListItem(filter) {
+    var label = this.props.filters[filter];
+
+    var buttonClass = filter === this.state.filter ?
+      'active' :
+      '';
+
+    // var onClick= this.filterBy.bind(this, filter);
+
+    return (
+      <li className={buttonClass} key={filter}>
+        <a href={"?filter=" + filter}>
+          {label}
+        </a>
+      </li>
+    );
+  }
+
+  function lowerCaseAndReflect(array) {
+    var map = {};
+
+    for (var i = 0, l = array.length; i < l; i++) {
+      var item = array[i];
+
+      map[item.toLowerCase()] = item;
+    }
+
+    return map;
+  }
 
   if (typeof module !== 'undefined') {
     module.exports = NewsFeed;
