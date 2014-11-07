@@ -39,7 +39,7 @@ describe('DropdownNotificationsToggler', function() {
 
   describe('badge()', function() {
     beforeEach(function() {
-      NotificationsStore.getUnreadCount.mockReturnValueOnce(2);
+      NotificationsStore.getUnreadCount.mockReturnValue(2);
 
       // don't use the above-defined toggler
       badgedToggler = TestUtils.renderIntoDocument(
@@ -52,11 +52,11 @@ describe('DropdownNotificationsToggler', function() {
 
       var badge = TestUtils.findRenderedDOMComponentWithClass(
         badgedToggler,
-        'badge-notification'
+        'badge-navbar'
       ).getDOMNode();
 
       expect(badge).toBeDefined();
-      expect(badge.innerHTML).toEqual('2');
+      expect(badge.textContent).toEqual('2');
     });
   });
 

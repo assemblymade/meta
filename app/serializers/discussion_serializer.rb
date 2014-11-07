@@ -13,6 +13,6 @@ class DiscussionSerializer < ApplicationSerializer
   end
 
   def description_html
-    product_markdown(product, object.comments.first.body)
+    product_markdown(product, object.comments.first.try(:body))
   end
 end
