@@ -32,7 +32,7 @@ class WipContracts
   end
 
   def tip_cents
-    @tip_cents ||= tip_contracts.map{|c| c.percentage * total_cents }.reduce(:+)
+    @tip_cents ||= tip_contracts.map{|c| c.percentage * total_cents }.reduce(:+).round.to_i
   end
 
   def tip_percentage

@@ -99,14 +99,18 @@
               <span className="sr-only">Close</span>
             </a>
 
-            <span className="h3 mt0 mb0">
+            <div className="h3 mt0 mb0">
               How many coins is this bounty worth?
-            </span>
+            </div>
+
+            <div className="gray-dark h6 mt1 mb0">
+              Your vote will be weighted according to your ownership in {this.props.product.name}.
+            </div>
           </div>
 
           <div style={{ 'min-width': '300px' }}>
             <div className="border-bottom px3 py2">
-              <a onClick={this.handleShowDetailsClicked} className="h6 mt0 mb0 gray bg-white right" href="#">
+              <a onClick={this.handleShowDetailsClicked} className="h6 mt0 mb0 gray-dark bg-white right" href="#">
                 {this.state.showingDetails ? 'Hide' : 'Show'} details
               </a>
 
@@ -132,12 +136,10 @@
               Your vote
             </div>
 
-            <div className="left" style={{ 'line-height': 38 }}>
-              <div className="text-coins bold mt0 mb0 h2">
-                <span className="icon icon-app-coin"></span>
-                {' '}
-                {numeral(this.state.offer).format('0,0')}
-              </div>
+            <div className="left text-coins bold mt0 mb0 h1" style={{ 'line-height': 38 }}>
+              <span className="icon icon-app-coin"></span>
+              {' '}
+              {numeral(this.state.offer).format('0,0')}
             </div>
 
             <button className="btn btn-primary right px4" name="button" type="submit" onClick={this.handleOfferClicked}>Vote</button>

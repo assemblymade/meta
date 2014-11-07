@@ -42,7 +42,7 @@
           <ul className="px3 nav nav-tabs nav-slim h6 mt0 mb0">
             <li className={this.state.toggle == 'simple' ? 'active' : null}>
               <a onClick={this.handleClick('simple')} href="#" style={{ 'line-height': '1.5rem', 'padding-top': 12, 'padding-bottom': 9 }}>
-                Simple
+                Suggested
               </a>
             </li>
             <li className={this.state.toggle == 'custom' ? 'active' : null}>

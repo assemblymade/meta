@@ -1,17 +1,14 @@
 .slider {
-  @include box-shadow(inset 0 1px 2px rgba(0, 0, 0, .1));
-
   background-color: $gray-lighter;
-  border-radius: 6px;
-  height: 12px;
+  border-radius: 7px;
+  height: 14px;
   margin-top: 30px;
   margin-bottom: $line-height-computed;
   position: relative;
+
 }
 
 .slider-bar {
-  @include box-shadow(inset 0 -1px 0 rgba(0, 0, 0, .15));
-
   background-color: $brand-coins;
   border-radius: 6px;
   float: left;
@@ -20,15 +17,24 @@
 }
 
 .slider-cursor {
-  @include box-shadow(0 1px 1px rgba(0, 0, 0, .40));
-
   border-radius: 50%;
-  height: 30px;
-  width: 30px;
+  border: 4px solid $brand-coins;
+  height: 26px;
+  width: 26px;
   background-color: white;
   position: absolute;
-  margin: (-15px + 12px/2) 0 0 -15px;
-  cursor: 'pointer';
+  margin: (-13px + 14px/2) 0 0 -13px;
+  cursor: pointer;
+
+  &:before {
+    background-color: darken($gray-lighter, 20%);
+    border-radius: 50%;
+    content: '';
+    height: 6px;
+    width: 6px;
+    display: block;
+    margin: 6px 0 0 6px;
+  }
 }
 
 .slider-steps {
