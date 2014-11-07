@@ -40,5 +40,15 @@
     </a>
   </li>
   <% end %>
+  <% if chat_room = @product.chat_rooms.first%>
+    <li>
+      <a target="_blank" href="<%= chat_room_path(chat_room) %>">
+        <span class="icon icon-bubble icon-left"></span>
+        Live chat
+      </a>
+    </li>
+  <% end %>
+
+
 
 </ul>
