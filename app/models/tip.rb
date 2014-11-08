@@ -25,11 +25,11 @@ class Tip < ActiveRecord::Base
       if not chronicle.nil?
         chronicle_id = chronicle.id
       else
-        chronicle = Chronicle.create(user_id: to.id)
+        chronicle = Chronicle.create!(user_id: to.id)
         chronicle_id = chronicle.id
       end
     else
-      chronicle = Chronicle.create(user_id: to.id)
+      chronicle = Chronicle.create!(user_id: to.id)
       chronicle_id = chronicle.id
     end
 
