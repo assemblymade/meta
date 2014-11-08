@@ -92,6 +92,7 @@
             </div>
             <div className="overflow-hidden">
               <div className="black">{product.name}</div>
+              <div className="gray-dark">{product.pitch}</div>
             </div>
           </a>
         </div>
@@ -129,11 +130,17 @@
       }
 
       var tagItems = null
+      var baseUrl = this.props.target.url;
       if (typeof tags !== "undefined" && tags !== null) {
         tagItems = _.map(tags, function(tag) {
+          var url = baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
           return (
             <li className="left px1" key={tag.id}>
-              <span className="h6 mt0 mb0 gray">#{tag.name}</span>
+              <span className="h6 mt0 mb0">
+                <a className="gray" href={url}>
+                  {tag.name.toUpperCase()}
+                </a>
+              </span>
             </li>
           )
         })
@@ -158,7 +165,11 @@
 
         return (
           <div className="border-top">
-            <div className="block px3 py1 gray">Last comment</div>
+            <div className="block px3 py1 gray">
+              <a className="gray" href={this.props.target.url + '#comments'}>
+                Last comment
+              </a>
+            </div>
             <div className="clearfix px3" key={comment.id} style={{ 'padding-bottom': '12px' }}>
               <div className="left mr2">
                 <Avatar user={user} size={24} />

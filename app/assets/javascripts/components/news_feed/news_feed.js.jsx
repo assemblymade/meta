@@ -78,20 +78,21 @@
 
       return (
         <div>
-          <div>
-            {this.filters()}
-          </div>
 
-          <div className="clearfix mxn2" ref="masonryContainer">
-            {this.renderItems()}
-          </div>
+          {this.filters()}
 
-          <div className="mb4">
-            <a href="javascript:void(0);"
-                onClick={this.fetchMoreNewsFeedItems}
-                className="btn btn-default btn-block">
-              Load more
-            </a>
+          <div className="container py2">
+            <div className="clearfix mxn2" ref="masonryContainer">
+              {this.renderItems()}
+            </div>
+
+            <div className="mb4">
+              <a href="javascript:void(0);"
+                  onClick={this.fetchMoreNewsFeedItems}
+                  className="btn btn-default btn-block">
+                Load more
+              </a>
+            </div>
           </div>
         </div>
       )

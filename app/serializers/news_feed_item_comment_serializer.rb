@@ -9,7 +9,7 @@ class NewsFeedItemCommentSerializer < ApplicationSerializer
   end
 
   def markdown_body
-    product_markdown(object.product, body)
+    product_markdown(object.product, body.try(:truncate, 200, separator: /\s/))
   end
 
 end
