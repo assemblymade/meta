@@ -21,7 +21,7 @@ class Tip < ActiveRecord::Base
 
     karma_value = 1
     if not to.nil?
-      chronicle_id = Chronicle.where(user_id: to.id)
+      chronicle_id = Chronicle.find_by(user_id: to.id).id
     else
       chronicle = Chronicle.create(user_id: to.id)
       chronicle_id = chronicle.id
