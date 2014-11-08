@@ -277,11 +277,6 @@ ASM::Application.routes.draw do
 
     resources :payments, only: [:index, :create, :update, :destroy]
     resources :expense_claims, only: [:create]
-    resources :assembly_assets, only: [:create]
-
-    # this route is ugly, but it's so that the email campaign works
-    get '/assembly_assets/create' => 'assembly_assets#email_promo', as: :assembly_assets_create
-
     resources :product_logos, only: [:index, :show, :create, :update], as: :logos, path: 'logos'
 
     resources :projects, only: [:index, :show, :new, :create, :edit, :update] do
