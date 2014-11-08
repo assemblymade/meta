@@ -74,6 +74,7 @@ class DiscoverController < ApplicationController
 
     # (pletcher) This is so ugly -- maybe we should move tags to
     #            NewsFeedItems?
+
     if params[:filter] && params[:filter] != 'hot'
       query = Wip.tagged_with(params[:filter]).
         limit(limit).
@@ -96,10 +97,12 @@ class DiscoverController < ApplicationController
 
     posts = query.to_a.reject{ |q| q.try(:target).try(:flagged?) }
 
-    @posts = ActiveModel::ArraySerializer.new(
-      posts,
-      each_serializer: NewsFeedItemSerializer
-    ).as_json
+    @posts = Rails.cache.fetch("/discover/updates/filter=#{params[:filter] || 'all'}-#{query.first.updated_at}", expires_in: 10.minutes) do
+      ActiveModel::ArraySerializer.new(
+        posts,
+        each_serializer: NewsFeedItemSerializer
+      ).as_json
+    end
 
     respond_to do |format|
       format.html

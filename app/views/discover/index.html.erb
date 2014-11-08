@@ -14,7 +14,7 @@
   <% page_cache_key = ['discover', 'products', params[:tag], params[:sort]].compact.join('_') %>
   <% cache(page_cache_key, expires_in: 6.hours) do %>
 
-    <div class="center mt1 mb3">
+    <div class="center mt3 mb3">
       <% if params[:tag].present? %>
         <div class="h1 mt0 mb0">
           There are
@@ -31,7 +31,7 @@
       <% end %>
     </div>
 
-    <div class="center mt2">
+    <div class="center mt3 mb2">
       <ul class="nav nav-mini-pills">
         <li class="<%= 'active' if params[:sort] == 'popular' || params[:sort].blank? %>">
           <a href="?sort=popular&amp;tag=<%= params[:tag] %>">Popular</a>

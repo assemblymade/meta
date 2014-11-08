@@ -21,7 +21,7 @@ class TaskSerializer < ApplicationSerializer
   end
 
   def short_description
-    product_markdown(product, object.description.truncate(200, separator: /\s/))
+    product_markdown(product, object.description.try(:truncate, 200, separator: /\s/))
   end
 
   def value

@@ -100,7 +100,7 @@
     renderItems: function() {
       return this.state.news_feed_items.map(function(item) {
         return (
-          <div className="sm-col sm-col-4 p2" key={item.id}>
+          <div className="sm-col sm-col-6 p2" key={item.id}>
             {NewsFeedItem(item)}
           </div>
         )

@@ -154,12 +154,12 @@
 
       if (comments.length) {
         var comment = comments[comments.length - 1];
-        var user = this.props.user;
+        var user = comment.user;
 
         return (
           <div className="border-top">
-            <div className="block px3 gray">Most recent comment</div>
-            <div className="clearfix px3 py2" key={comment.id}>
+            <div className="block px3 py1 gray">Last comment</div>
+            <div className="clearfix px3" key={comment.id} style={{ 'padding-bottom': '12px' }}>
               <div className="left mr2">
                 <Avatar user={user} size={24} />
               </div>
