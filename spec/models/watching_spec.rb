@@ -27,21 +27,6 @@ describe Watching do
     end
   end
 
-  describe 'unwatch! a product' do
-    before do
-      Watching.watch!(user, watchable)
-      Watching.watch!(user, wip)
-    end
-
-    it 'unwatches all wips when unwatching a product' do
-      Watching.unwatch!(user, watchable)
-
-      expect(watchable.followers).not_to include(user)
-      expect(wip.followers).not_to include(user)
-    end
-  end
-
-
   describe 'watched?' do
     let!(:non_watcher) { User.make! }
 
