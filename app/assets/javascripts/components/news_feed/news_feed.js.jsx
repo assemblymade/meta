@@ -124,7 +124,7 @@
 
           {this.filters()}
 
-          <div className="container py2">
+          <div className="container">
             <div className="py1 text-center">
               {this.displayCount()}
             </div>
