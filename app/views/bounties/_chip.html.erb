@@ -48,7 +48,7 @@
 
   <!-- coins -->
   <div>
-    <% if !@product.meta? %>
+    <% if !bounty.product.meta? %>
 
       <% case %>
       <% when bounty.state == 'open' || (bounty.state == 'reviewing' && bounty.workers.empty?) %>
