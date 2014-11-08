@@ -3,8 +3,8 @@ class TaskSerializer < ApplicationSerializer
   include MarkdownHelper
   include Nokogiri
 
-  attributes :number, :title, :url, :value, :markdown_description, :comments_count
-  attributes :state, :urgency
+  attributes :number, :title, :url, :value, :markdown_description
+  attributes :state, :urgency, :short_description, :comments_count
 
   has_many :tags
 
@@ -18,6 +18,10 @@ class TaskSerializer < ApplicationSerializer
 
   def markdown_description
     product_markdown(product, object.description)
+  end
+
+  def short_description
+    product_markdown(product, object.description.truncate(200, separator: /\s/))
   end
 
   def value

@@ -5,6 +5,7 @@
 
 (function() {
   var Avatar = require('../avatar.js.jsx');
+  var Markdown = require('../markdown.js.jsx');
   var NewsFeedItemBounty = require('./news_feed_item_bounty.js.jsx');
   var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
   var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
@@ -32,6 +33,7 @@
           {this.renderSource()}
           {this.renderTarget()}
           {this.renderComments()}
+          {this.renderLastComment()}
         </Tile>
       );
     },
@@ -42,19 +44,35 @@
 
       switch (target.type) {
       case 'task':
-        return <NewsFeedItemBounty product={product} bounty={target} user={this.props.user} title={target.title} coins={target.value} />;
+        return <NewsFeedItemBounty
+          product={product}
+          bounty={target}
+          user={this.props.user}
+          title={target.title}
+          coins={target.value} />;
 
       case 'team_membership':
-        return <NewsFeedItemIntroduction user={target.user} intro={target.bio} />;
+        return <NewsFeedItemIntroduction
+          user={target.user}
+          intro={target.bio} />;
 
       case 'discussion':
-        return <NewsFeedItemPost body={target.description_html} url={target.url} title={target.title} />;
+        return <NewsFeedItemPost
+          body={target.description_html}
+          url={target.url}
+          title={target.title} />;
 
       case 'post':
-        return <NewsFeedItemPost body={target.markdown_body} url={target.url} title={target.title} />;
+        return <NewsFeedItemPost
+          body={target.markdown_body}
+          url={target.url}
+          title={target.title} />;
 
       default:
-        return <NewsFeedItemPost title={target.name || target.title} body={target.description} url={target.url} />;
+        return <NewsFeedItemPost
+          title={target.name || target.title}
+          body={target.description}
+          url={target.url} />;
       }
     },
 
@@ -128,7 +146,33 @@
             {tagItems}
           </ul>
         </div>
-      )
+      );
+    },
+
+    renderLastComment: function() {
+      var comments = this.props.news_feed_item_comments;
+
+      if (comments.length) {
+        var comment = comments[comments.length - 1];
+        var user = this.props.user;
+
+        return (
+          <div className="border-top">
+            <div className="block px3 gray">Most recent comment</div>
+            <div className="clearfix px3 py2" key={comment.id}>
+              <div className="left mr2">
+                <Avatar user={user} size={24} />
+              </div>
+              <div className="overflow-hidden">
+                <a className="block bold black" style={{'line-height': 18}} href={user.url}>{user.username}</a>
+                <div className='gray-darker'>
+                  <Markdown content={comment.markdown_body || window.marked(comment.body)} normalize={true} />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
     },
 
     targetNoun: function(type) {

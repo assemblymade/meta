@@ -11,27 +11,10 @@
 
 <div class="container mb4">
 
-  <div class="center mt2">
-    <ul class="nav nav-mini-pills">
-      <li class="<%= 'active' if params[:sort] == 'popular' || params[:sort].blank? %>">
-        <a href="?sort=popular&amp;tag=<%= params[:tag] %>">Popular</a>
-      </li>
-      <li class="<%= 'active' if params[:sort] == 'trending' %>">
-        <a href="?sort=trending&amp;tag=<%= params[:tag] %>">Trending</a>
-      </li>
-      <li class="<%= 'active' if params[:sort] == 'new' %>">
-        <a href="?sort=new&amp;tag=<%= params[:tag] %>">New to Assembly</a>
-      </li>
-      <li class="<%= 'active' if params[:sort] == 'teambuilding' %>">
-        <a href="?sort=teambuilding&amp;tag=<%= params[:tag] %>">Needs Teammates</a>
-      </li>
-    </ul>
-  </div>
-
   <% page_cache_key = ['discover', 'products', params[:tag], params[:sort]].compact.join('_') %>
   <% cache(page_cache_key, expires_in: 6.hours) do %>
 
-    <div class="center mt4 mb3">
+    <div class="center mt1 mb3">
       <% if params[:tag].present? %>
         <div class="h1 mt0 mb0">
           There are
@@ -46,6 +29,23 @@
         <div class="h1 mt0 mb0">Find a product you'd like to work on,</div>
         <div class="h3 mt0 mb0 mid-gray">or <a class="green" href="<%= start_idea_path %>">start your own</a> that others can work on with you.</div>
       <% end %>
+    </div>
+
+    <div class="center mt2">
+      <ul class="nav nav-mini-pills">
+        <li class="<%= 'active' if params[:sort] == 'popular' || params[:sort].blank? %>">
+          <a href="?sort=popular&amp;tag=<%= params[:tag] %>">Popular</a>
+        </li>
+        <li class="<%= 'active' if params[:sort] == 'trending' %>">
+          <a href="?sort=trending&amp;tag=<%= params[:tag] %>">Trending</a>
+        </li>
+        <li class="<%= 'active' if params[:sort] == 'new' %>">
+          <a href="?sort=new&amp;tag=<%= params[:tag] %>">New to Assembly</a>
+        </li>
+        <li class="<%= 'active' if params[:sort] == 'teambuilding' %>">
+          <a href="?sort=teambuilding&amp;tag=<%= params[:tag] %>">Needs Teammates</a>
+        </li>
+      </ul>
     </div>
 
     <div class="clearfix mb2 mxn3">

@@ -240,7 +240,7 @@
         return (
           <li>
             <a href="#" onClick={stopWork} className="btn btn-label red">
-              Abandon bounty
+              Abandon
             </a>
           </li>
         );

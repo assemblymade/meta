@@ -26,7 +26,7 @@
             <AppCoins n={bounty.value} />
           </div>
           <div className="gray-darker">
-            <Markdown content={bounty.markdown_description} normalized={true} />
+            <Markdown content={bounty.short_description} normalized={true} />
           </div>
         </div>
       )
