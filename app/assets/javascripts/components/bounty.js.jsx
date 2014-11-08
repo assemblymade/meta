@@ -341,9 +341,9 @@
           <div className="card">
             <div className="card-heading">
               <ul className="list-inline" style={{ 'margin-bottom': '6px' }}>
-                <li className="text-large">
+                {this.props.show_coins ? <li className="text-large">
                   {this.renderBountyValuation()}
-                </li>
+                </li> : null}
                 <li>
                   {this.renderUrgency()}
                 </li>
