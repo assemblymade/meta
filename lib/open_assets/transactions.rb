@@ -29,9 +29,18 @@ module OpenAssets
         amount: amount
       }
 
+      current_price = get_btc_spot_price_coinbase()*100
+      sender = "Assembly Central"
+      recipient = destination
+      sender_address = public_address
+      recipient_address = destination
+      BtcPayment.create!({btcusdprice_at_moment: current_price, created_at: DateTime.now, action: "Sent BTC", sender: sender, recipient: recipient, sender_address: sender_address, recipient_address: recipient_address, btc_change: amount*-100000000})
+
+
       remote = OpenAssets::Remote.new("https://coins.assembly.com")
       end_url="v1/btc"
       remote.post end_url, params.to_json
+
     end
 
 
@@ -104,6 +113,30 @@ module OpenAssets
       end_url="/v1/addresses"
 
       pair = remote.get end_url
+    end
+
+    def get_btc_spot_price_coinbase()
+      url = "https://coinbase.com"
+      remote = OpenAssets::Remote.new(url)
+      end_url = "/api/v1/prices/spot_rate"
+      price = remote.get end_url
+      price = price['amount'].to_f
+    end
+
+    def btc_pay_user(username, user_public_address, amount)
+      send_btc(destination, amount)
+      current_price = get_btc_spot_price_coinbase()*100
+      BtcPayment.create!({btcusdprice_at_moment: current_price, created_at: DateTime.now, action: "Paid User", sender: "Assembly Central", recipient: "#{username}", sender_address: ENV.fetch("CENTRAL_ADDRESS_PUBLIC_ADDRESS"), recipient_address: user_public_address, btc_change: -1*amount*100000000})
+    end
+
+    def record_btc_purchase(amount)
+      current_price = get_btc_spot_price_coinbase()*100
+      BtcPayment.create!({btcusdprice_at_moment: current_price, created_at: DateTime.now, action: "Bought BTC", recipient: "Assembly Central Address", recipient_address: ENV.fetch("CENTRAL_ADDRESS_PUBLIC_ADDRESS"), btc_change: amount*100000000})
+    end
+
+    def record_outflow(amount, action, destination_address, datetime, who_received)
+      current_price = get_btc_spot_price_coinbase()*100
+      BtcPayment.create!({btcusdprice_at_moment: current_price, created_at: datetime, action: action, recipient: who_received, recipient_address: destination_address, btc_change: -100000000*amount, sender: "Assembly Central", sender_address: ENV.fetch("CENTRAL_ADDRESS_PUBLIC_ADDRESS")})
     end
 
   end

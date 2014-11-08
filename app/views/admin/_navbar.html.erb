@@ -28,6 +28,9 @@
       <li class="<%= "active" if controller_active?(:leaderboard) %>">
         <%= link_to 'Leaderboard', admin_leaderboard_index_path %>
       </li>
+      <li class="<%= "active" if controller_active?(:bitcoin) %>">
+        <%= link_to 'Bitcoin', '/admin/bitcoin' %>
+      </li>
       <li>
         <%= link_to 'Sidekiq', '/admin/sidekiq' %>
       </li>

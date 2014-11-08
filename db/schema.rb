@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141104192023) do
+ActiveRecord::Schema.define(version: 20141105225711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,17 @@ ActiveRecord::Schema.define(version: 20141104192023) do
 
   add_index "bounty_postings", ["expired_at", "bounty_id"], name: "index_bounty_postings_on_expired_at_and_bounty_id", unique: true, using: :btree
 
+  create_table "btc_payments", force: true do |t|
+    t.integer  "btcusdprice_at_moment"
+    t.datetime "created_at"
+    t.string   "action"
+    t.string   "sender"
+    t.string   "sender_address"
+    t.string   "recipient"
+    t.string   "recipient_address"
+    t.integer  "btc_change",            limit: 8
+  end
+
   create_table "chat_rooms", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "slug",       null: false
     t.uuid     "wip_id"
@@ -115,6 +126,12 @@ ActiveRecord::Schema.define(version: 20141104192023) do
   end
 
   add_index "chat_rooms", ["slug"], name: "index_chat_rooms_on_slug", unique: true, using: :btree
+
+  create_table "chronicles", force: true do |t|
+    t.uuid     "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "code_deliverables", id: false, force: true do |t|
     t.uuid     "id",         null: false
@@ -160,6 +177,15 @@ ActiveRecord::Schema.define(version: 20141104192023) do
   create_table "daily_actives", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.integer  "count"
     t.datetime "created_at"
+  end
+
+  create_table "deeds", force: true do |t|
+    t.uuid     "user_id"
+    t.datetime "created_at"
+    t.integer  "karma_value"
+    t.string   "karma_event_type"
+    t.integer  "karma_event_id"
+    t.integer  "chronicle_id"
   end
 
   create_table "deliverables", id: false, force: true do |t|
