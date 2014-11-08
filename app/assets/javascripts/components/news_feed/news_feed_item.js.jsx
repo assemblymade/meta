@@ -87,12 +87,12 @@
       return (
         <div>
           <a className="block px3 py2 clearfix border-bottom" href={product.url}>
-            <div className="left mr2">
-              <AppIcon app={product} size={24} />
+            <div className="left mr1">
+              <AppIcon app={product} size={32} />
             </div>
-            <div className="overflow-hidden">
+            <div className="overflow-hidden" style={{ 'line-height': 16 }}>
               <div className="black">{product.name}</div>
-              <div className="gray-dark">{product.pitch}</div>
+              <div className="gray-dark text-small">{product.pitch}</div>
             </div>
           </a>
         </div>
@@ -137,7 +137,7 @@
           return (
             <li className="left px1" key={tag.id}>
               <span className="h6 mt0 mb0">
-                <a className="gray" href={url}>
+                <a className="gray bold" href={url}>
                   {tag.name.toUpperCase()}
                 </a>
               </span>
@@ -149,8 +149,10 @@
       return (
         <div className="px3 py2 h6 mt0 mb0">
           <ul className="list-reset clearfix mxn1">
-            {commentItem}
             {tagItems}
+          </ul>
+          <ul className="list-reset clearfix mxn1">
+            {commentItem}
           </ul>
         </div>
       );
