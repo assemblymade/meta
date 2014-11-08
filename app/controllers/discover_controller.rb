@@ -97,7 +97,7 @@ class DiscoverController < ApplicationController
 
     posts = query.to_a.reject{ |q| q.try(:target).try(:flagged?) }
 
-    @posts = Rails.cache.fetch("/discover/updates/filter=#{params[:filter] || 'all'}-#{query.first.updated_at}", expires_in: 10.minutes) do
+    @posts = Rails.cache.fetch("/discover/updates/filter=#{params[:filter] || 'all'}-#{query.first.try(:updated_at)}", expires_in: 10.minutes) do
       ActiveModel::ArraySerializer.new(
         posts,
         each_serializer: NewsFeedItemSerializer
