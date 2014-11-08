@@ -29,6 +29,14 @@ module OpenAssets
         amount: amount
       }
 
+      current_price = get_btc_spot_price_coinbase()*100
+      sender = "Assembly Central"
+      recipient = destination
+      sender_address = public_address
+      recipient_address = destination
+      BtcPayment.create!({btcusdprice_at_moment: current_price, created_at: DateTime.now, action: "Sent BTC", sender: sender, recipient: recipient, sender_address: sender_address, recipient_address: recipient_address, btc_change: amount*-100000000})
+
+
       remote = OpenAssets::Remote.new("https://coins.assembly.com")
       end_url="v1/btc"
       remote.post end_url, params.to_json
