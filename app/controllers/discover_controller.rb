@@ -1,5 +1,13 @@
 class DiscoverController < ApplicationController
   META = Product.find_by(slug: 'meta')
+  COUNTABLE_FILTERS = [
+    'Frontend',
+    'Backend',
+    'Design',
+    'Marketing',
+    'Writing',
+    'Mobile'
+  ]
 
   def index
     @interesting = interesting_products.limit(3)
@@ -102,6 +110,14 @@ class DiscoverController < ApplicationController
         posts,
         each_serializer: NewsFeedItemSerializer
       ).as_json
+    end
+
+    @counts = Rails.cache.fetch("/discover/updates/counts", expires_in: 12.hours) do
+      COUNTABLE_FILTERS.reduce({}) do |memo, filter|
+        filter = filter.downcase
+        memo[filter] = Wip.tagged_with(filter).count
+        memo
+      end
     end
 
     respond_to do |format|

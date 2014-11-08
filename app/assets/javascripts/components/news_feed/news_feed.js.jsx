@@ -8,20 +8,31 @@
 
     mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0})],
 
+    count: function(count) {
+      if (count) {
+        return <div className="gray">About {count} bounties</div>;
+      }
+    },
+
+    countFor: function(filter) {
+      return this.props.filter_counts[filter];
+    },
+
     getDefaultProps: function() {
       var filters = lowerCaseAndReflect([
         'Frontend',
         'Backend',
         'Design',
         'Marketing',
-        'Writing'
+        'Writing',
+        'Mobile'
       ]);
 
-      if (window.app.featureEnabled('hot-updates')) {
-        filters['Hot'] = 'hot';
-      } else {
-        filters['Mobile'] = 'mobile';
-      }
+      // if (window.app.featureEnabled('hot-updates')) {
+      //   filters['Hot'] = 'hot';
+      // } else {
+      //   filters['Mobile'] = 'mobile';
+      // }
 
       return {
         filters: filters
@@ -56,7 +67,7 @@
     filters: function() {
       return (
         <ul className="nav nav-skills bg-white mb2">
-          {_.map(_.keys(this.props.filters), renderFilterListItem.bind(this))}
+          {_.map(_.keys(this.props.filters), this.renderFilterListItem)}
         </ul>
       );
     },
@@ -116,6 +127,29 @@
       );
     },
 
+    renderFilterListItem: function(filter) {
+      var label = this.props.filters[filter];
+      var buttonClass = filter === this.state.filter ?
+        'active' :
+        '';
+      var count = this.countFor(filter);
+
+      // var onClick = this.filterBy.bind(this, filter);
+
+      var onClick = function() {
+        window.analytics.track('news_feed_item.filter.clicked', { filter: filter });
+      };
+
+      return (
+        <li className={buttonClass} key={filter}>
+          <a href={"?filter=" + filter} onClick={onClick}>
+            {label}
+            {this.count(count)}
+          </a>
+        </li>
+      );
+    },
+
     _handleFilteredNewsFeedItems: function(err, results) {
       if (err) {
         return console.log(err);
@@ -152,24 +186,6 @@
       ));
     }
   });
-
-  function renderFilterListItem(filter) {
-    var label = this.props.filters[filter];
-
-    var buttonClass = filter === this.state.filter ?
-      'active' :
-      '';
-
-    // var onClick= this.filterBy.bind(this, filter);
-
-    return (
-      <li className={buttonClass} key={filter}>
-        <a href={"?filter=" + filter}>
-          {label}
-        </a>
-      </li>
-    );
-  }
 
   function lowerCaseAndReflect(array) {
     var map = {};
