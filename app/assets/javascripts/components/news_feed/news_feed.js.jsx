@@ -18,6 +18,26 @@
       return this.props.filter_counts[filter];
     },
 
+    displayCount: function() {
+      var filter = this.state.hoverFilter;
+
+      if (filter) {
+        var count = this.countFor(filter);
+
+        return (
+          <span className="gray-darker text-large">
+            There are about
+            <span className="bold">
+              {' '}<span className="text-info">{count}</span> {filter}
+            </span>
+            {' '} bounties
+          </span>
+        );
+      }
+
+      return <span className="text-large">&nbsp;</span>
+    },
+
     getDefaultProps: function() {
       var filters = lowerCaseAndReflect([
         'Frontend',
@@ -80,6 +100,18 @@
       };
     },
 
+    handleFilterMouseOver: function(filter, e) {
+      this.setState({
+        hoverFilter: filter,
+      });
+    },
+
+    handleFilterMouseOut: function(filter, e) {
+      this.setState({
+        hoverFilter: null,
+      });
+    },
+
     render: function() {
       window.analytics.track(
         'news_feed_item.viewed', {
@@ -93,6 +125,9 @@
           {this.filters()}
 
           <div className="container py2">
+            <div className="py1 text-center">
+              {this.displayCount()}
+            </div>
             <div className="clearfix mxn2" ref="masonryContainer">
               {this.renderItems()}
             </div>
@@ -110,7 +145,7 @@
     },
 
     renderItems: function() {
-      return this.state.news_feed_items.map(function(item) {
+      return _.map(this.state.news_feed_items, function(item) {
         return (
           <div className="sm-col sm-col-6 p2" key={item.id}>
             {NewsFeedItem(item)}
@@ -132,7 +167,6 @@
       var buttonClass = filter === this.state.filter ?
         'active' :
         '';
-      var count = this.countFor(filter);
 
       // var onClick = this.filterBy.bind(this, filter);
 
@@ -142,9 +176,11 @@
 
       return (
         <li className={buttonClass} key={filter}>
-          <a href={"?filter=" + filter} onClick={onClick}>
+          <a href={"?filter=" + filter}
+              onClick={onClick}
+              onMouseOver={this.handleFilterMouseOver.bind(this, filter)}
+              onMouseOut={this.handleFilterMouseOut.bind(this, filter)}>
             {label}
-            {this.count(count)}
           </a>
         </li>
       );
