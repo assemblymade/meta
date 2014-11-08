@@ -8,6 +8,14 @@
 
     mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0})],
 
+    componentDidMount: function() {
+      window.analytics.track(
+        'news_feed_item.viewed', {
+          product: (window.app.currentAnalyticsProduct())
+        }
+      );
+    },
+
     count: function(count) {
       if (count) {
         return <div className="gray">About {count} bounties</div>;
@@ -63,8 +71,11 @@
       this.setState({
         page: this.state.page + 1
       }, function() {
-        var url = window.location.pathname + '?page=' + this.state.page +
-          '&filter=' + this.state.filter;
+        var url = window.location.pathname + '?page=' + this.state.page;
+
+        if (this.state.filter) {
+          url += '&filter=' + this.state.filter;
+        }
 
         window.xhr.get(
           url,
@@ -113,12 +124,6 @@
     },
 
     render: function() {
-      window.analytics.track(
-        'news_feed_item.viewed', {
-          product: (window.app.currentAnalyticsProduct())
-        }
-      );
-
       return (
         <div>
 
