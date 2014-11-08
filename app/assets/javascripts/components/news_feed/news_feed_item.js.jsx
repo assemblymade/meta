@@ -38,67 +38,6 @@
       );
     },
 
-    renderTarget: function() {
-      var product = this.props.product
-      var target = this.props.target
-
-      switch (target.type) {
-      case 'task':
-        return <NewsFeedItemBounty
-          product={product}
-          bounty={target}
-          user={this.props.user}
-          title={target.title}
-          coins={target.value} />;
-
-      case 'team_membership':
-        return <NewsFeedItemIntroduction
-          user={target.user}
-          intro={target.bio} />;
-
-      case 'discussion':
-        return <NewsFeedItemPost
-          body={target.description_html}
-          url={target.url}
-          title={target.title} />;
-
-      case 'post':
-        return <NewsFeedItemPost
-          body={target.markdown_body}
-          url={target.url}
-          title={target.title} />;
-
-      default:
-        return <NewsFeedItemPost
-          title={target.name || target.title}
-          body={target.description}
-          url={target.url} />;
-      }
-    },
-
-    renderSource: function() {
-      var product = this.props.product
-      var user = this.props.user
-
-      if (typeof product === "undefined" || product === null) {
-        return null;
-      }
-
-      return (
-        <div>
-          <a className="block px3 py2 clearfix border-bottom" href={product.url}>
-            <div className="left mr1">
-              <AppIcon app={product} size={32} />
-            </div>
-            <div className="overflow-hidden" style={{ 'line-height': 16 }}>
-              <div className="black">{product.name}</div>
-              <div className="gray-dark text-small">{product.pitch}</div>
-            </div>
-          </a>
-        </div>
-      );
-    },
-
     renderComments: function() {
       var product = this.props.product
       var target = this.props.target
@@ -185,6 +124,67 @@
             </div>
           </div>
         );
+      }
+    },
+
+    renderSource: function() {
+      var product = this.props.product
+      var user = this.props.user
+
+      if (typeof product === "undefined" || product === null) {
+        return null;
+      }
+
+      return (
+        <div>
+          <a className="block px3 py2 clearfix border-bottom" href={product.url}>
+            <div className="left mr1">
+              <AppIcon app={product} size={32} />
+            </div>
+            <div className="overflow-hidden" style={{ 'line-height': 16 }}>
+              <div className="black">{product.name}</div>
+              <div className="gray-dark text-small">{product.pitch}</div>
+            </div>
+          </a>
+        </div>
+      );
+    },
+
+    renderTarget: function() {
+      var product = this.props.product
+      var target = this.props.target
+
+      switch (target.type) {
+      case 'task':
+        return <NewsFeedItemBounty
+          product={product}
+          bounty={target}
+          user={this.props.user}
+          title={target.title}
+          coins={target.value} />;
+
+      case 'team_membership':
+        return <NewsFeedItemIntroduction
+          user={target.user}
+          intro={target.bio} />;
+
+      case 'discussion':
+        return <NewsFeedItemPost
+          body={target.description_html}
+          url={target.url}
+          title={target.title} />;
+
+      case 'post':
+        return <NewsFeedItemPost
+          body={target.markdown_body}
+          url={target.url}
+          title={target.title} />;
+
+      default:
+        return <NewsFeedItemPost
+          title={target.name || target.title}
+          body={target.description}
+          url={target.url} />;
       }
     },
 
