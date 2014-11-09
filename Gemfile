@@ -88,19 +88,20 @@ group :development, :test do
   gem 'active_record_query_trace'
   # gem 'debugger' # enable once ruby 2.1.1 is supported
   gem 'email_spec'
+  gem 'fakeweb'
+  gem 'ffaker'
   # gem "letter_opener"
   gem 'machinist', '~> 2'
   gem 'pry'
+  gem 'pry-rails'
   gem 'quiet_assets'
+  gem 'rest_client'
   gem 'rspec-rails'
   gem 'spring-commands-rspec'
+  gem 'teaspoon'
   gem 'terminal-table'
   gem 'timecop'
-  gem 'ffaker'
   gem 'syntax'
-  gem 'fakeweb'
-  gem 'rest_client'
-  gem 'teaspoon'
 end
 
 group :development do

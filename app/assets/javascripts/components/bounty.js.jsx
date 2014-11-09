@@ -169,7 +169,7 @@
               text={{ true: 'Mute', false: 'Follow' }}
               icon={{ true: 'volume-off', false: 'volume-2' }}
               classes={{ true: 'btn btn-label', false: 'btn btn-label' }}
-              href={{ true: bounty.mute_url, false: bounty.watch_url }} />
+              href={{ true: bounty.mute_url, false: bounty.follow_url }} />
           </li>
         );
       }

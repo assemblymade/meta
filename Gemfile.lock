@@ -239,6 +239,8 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
+    pry-rails (0.3.2)
+      pry (>= 0.9.10)
     puma (2.6.0)
       rack (>= 1.1, < 2.0)
     pusher (0.12.0)
@@ -471,6 +473,7 @@ DEPENDENCIES
   pghero
   premailer-rails
   pry
+  pry-rails
   puma
   pusher
   quiet_assets

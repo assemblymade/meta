@@ -350,4 +350,7 @@ class Wip < ActiveRecord::Base
     end
   end
 
+  def update_watchings_count!
+    update! watchings_count: followings.count
+  end
 end
