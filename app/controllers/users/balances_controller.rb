@@ -8,11 +8,11 @@ class Users::BalancesController < ApplicationController
   end
 
   def withdraw
-    if current_user.tax_info.nil?
+    if current_user.tax_info.nil? || !current_user.tax_info.valid?
       flash[:info] = "Please finalize your tax information"
       redirect_to users_tax_info_path
       return
-    elsif current_user.payment_option.nil?
+    elsif current_user.payment_option.nil? || !current_user.payment_option.valid?
       flash[:info] = "Please select a payment option"
       redirect_to users_payment_option_path
       return

@@ -1,0 +1,12 @@
+en:
+  activerecord:
+    attributes:
+      user/debit_payment_option:
+        recipient_id: Debit card
+
+    errors:
+      models:
+        user/debit_payment_option:
+          attributes:
+            recipient_id:
+              blank: failed to process. Please try another card or contact us

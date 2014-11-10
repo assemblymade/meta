@@ -91,6 +91,7 @@ group :development, :test do
   gem 'fakeweb'
   gem 'ffaker'
   # gem "letter_opener"
+  gem 'i18n-debug'
   gem 'machinist', '~> 2'
   gem 'pry'
   gem 'pry-rails'
