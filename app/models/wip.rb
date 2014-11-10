@@ -158,6 +158,10 @@ class Wip < ActiveRecord::Base
     Watching.unwatch!(user, self)
   end
 
+  def auto_watch!(user)
+    Watching.auto_watch!(user, self)
+  end
+
   def contributors
     # TODO (whatupdave): when we can unwatch a wip we will need to look at this
     User.joins(:watchings)

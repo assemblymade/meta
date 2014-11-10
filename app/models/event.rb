@@ -64,6 +64,10 @@ class Event < ActiveRecord::Base
 
     update_pusher(followers, mentioned_users)
   end
+  
+  def auto_watch!(user)
+    wip.auto_watch!(user)
+  end
 
   def notify_by_email(user)
     # hack to not send out immediate emails for chat messages

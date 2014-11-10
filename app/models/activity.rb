@@ -14,7 +14,7 @@ class Activity < ActiveRecord::Base
   after_commit :track_in_segment, on: :create
 
   attr_accessor :socket_id
-  
+
   def self.publish!(opts)
     create!(opts).tap do |a|
       if a.publishable

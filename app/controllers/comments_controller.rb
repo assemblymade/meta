@@ -22,6 +22,8 @@ class CommentsController < ProductController
       if type == Event::Comment
         register_with_readraptor(@event)
 
+        @event.auto_watch!(current_user)
+
         Activities::Comment.publish!(
           actor: @event.user,
           subject: @event,
