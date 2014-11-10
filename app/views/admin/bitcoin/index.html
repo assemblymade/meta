@@ -30,17 +30,20 @@ Current USD Value:
   </thead>
   <tbody>
     <% @payments.each do |p| %>
-      <tr>
-        <td><%= p.created_at %></td>
-        <td><%= p.action %></td>
-        <td><%= p.sender %></td>
-        <td><%= p.recipient %></td>
-        <td><%= p.sender_address %></td>
-        <td><%= p.recipient_address %></td>
-        <td><%= p.btc_change/100000000 %></td>
-        <td><%= p.btcusdprice_at_moment/100 %></td>
-        <td><%= p.btcusdprice_at_moment/100*p.btc_change / 100000000 %></td>
-      </tr>
+      if not p.btcusdprice_at_moment.nil?
+        <tr>
+          <td><%= p.created_at %></td>
+          <td><%= p.action %></td>
+          <td><%= p.sender %></td>
+          <td><%= p.recipient %></td>
+          <td><%= p.sender_address %></td>
+          <td><%= p.recipient_address %></td>
+          <td><%= p.btc_change/100000000 %></td>
+          <td><%= p.btcusdprice_at_moment/100 %></td>
+          <td><%= p.btcusdprice_at_moment/100*p.btc_change / 100000000 %></td>
+        </tr>
+      end
+
     <% end %>
 
   </tbody>
