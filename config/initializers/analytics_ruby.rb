@@ -1,6 +1,8 @@
+require 'segment/analytics'
+
 if ENV['SEGMENT_API_KEY']
-  Analytics.init({
-      secret: ENV['SEGMENT_API_KEY']
+  Analytics = Segment::Analytics.new({
+      write_key: ENV['SEGMENT_API_KEY']
   })
 else
   class Analytics
