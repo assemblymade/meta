@@ -136,6 +136,10 @@ class User < ActiveRecord::Base
     Avatar.new(self)
   end
 
+  def karma_total
+    Deed.where(user_id: self.id).sum(:karma_value)
+  end
+
   def staff?
     is_staff?
   end

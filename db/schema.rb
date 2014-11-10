@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 20141110175909) do
 
   add_index "chat_rooms", ["slug"], name: "index_chat_rooms_on_slug", unique: true, using: :btree
 
-  create_table "chronicles", force: true do |t|
+  create_table "chronicles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -179,13 +179,13 @@ ActiveRecord::Schema.define(version: 20141110175909) do
     t.datetime "created_at"
   end
 
-  create_table "deeds", force: true do |t|
+  create_table "deeds", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id"
     t.datetime "created_at"
     t.integer  "karma_value"
     t.string   "karma_event_type"
-    t.integer  "chronicle_id"
     t.uuid     "karma_event_id"
+    t.integer  "chronicle_id"
   end
 
   create_table "deliverables", id: false, force: true do |t|

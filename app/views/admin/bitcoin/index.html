@@ -30,7 +30,7 @@ Current USD Value:
   </thead>
   <tbody>
     <% @payments.each do |p| %>
-      if not p.btcusdprice_at_moment.nil?
+      <% if not p.btcusdprice_at_moment.nil? %>
         <tr>
           <td><%= p.created_at %></td>
           <td><%= p.action %></td>
@@ -42,7 +42,7 @@ Current USD Value:
           <td><%= p.btcusdprice_at_moment.to_f/100 %></td>
           <td><%= p.btcusdprice_at_moment.to_f/100*p.btc_change.to_f / 100000000 %></td>
         </tr>
-      end
+    <% end %>
 
     <% end %>
 

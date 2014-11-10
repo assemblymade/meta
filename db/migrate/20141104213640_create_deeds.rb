@@ -1,6 +1,6 @@
 class CreateDeeds < ActiveRecord::Migration
   def change
-    create_table :deeds do |t|
+    create_table :deeds, id: :uuid do |t|
 
       t.uuid :user_id
       t.datetime :created_at

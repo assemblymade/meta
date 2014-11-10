@@ -165,6 +165,9 @@ class Product < ActiveRecord::Base
       greenlit_at: nil,
       profitable_at: nil
     )
+
+    Deed.new.award_for_product_to_stealth(product)
+
   end
 
   def on_team_building_entry(prev_state, event, *args)
