@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141105225711) do
+ActiveRecord::Schema.define(version: 20141110175909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,8 +184,8 @@ ActiveRecord::Schema.define(version: 20141105225711) do
     t.datetime "created_at"
     t.integer  "karma_value"
     t.string   "karma_event_type"
-    t.integer  "karma_event_id"
     t.integer  "chronicle_id"
+    t.uuid     "karma_event_id"
   end
 
   create_table "deliverables", id: false, force: true do |t|
