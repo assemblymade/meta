@@ -30,12 +30,6 @@
           <a href="<%= discover_path(:updates) %>">What’s Happening</a>
         </li>
 
-        <% if @product %>
-          <li>
-              <a href="<%= product_wips_path(@product || 'meta') %>"><%= @product.name %> Bounties</a>
-          </li>
-        <% end %>
-
       </ul>
 
       <% if user_signed_in? %>
