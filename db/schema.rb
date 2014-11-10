@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141105225711) do
+ActiveRecord::Schema.define(version: 20141109204339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -860,6 +860,7 @@ ActiveRecord::Schema.define(version: 20141105225711) do
   end
 
   add_index "watchings", ["unwatched_at", "user_id", "watchable_type"], name: "index_watchings_on_unwatched_at_and_user_id_and_watchable_type", using: :btree
+  add_index "watchings", ["user_id", "watchable_id"], name: "index_watchings_on_user_id_and_watchable_id", unique: true, using: :btree
   add_index "watchings", ["watchable_id", "watchable_type"], name: "index_watchings_on_watchable_id_and_watchable_type", using: :btree
 
   create_table "whiteboard_assets", id: false, force: true do |t|
@@ -930,6 +931,7 @@ ActiveRecord::Schema.define(version: 20141105225711) do
     t.uuid     "flagged_by_id"
     t.integer  "earnable_coins_cache"
     t.integer  "total_coins_cache"
+    t.integer  "watchings_count"
   end
 
   add_index "wips", ["flagged_at"], name: "index_wips_on_flagged_at", using: :btree

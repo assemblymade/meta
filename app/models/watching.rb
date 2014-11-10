@@ -27,7 +27,6 @@ class Watching < ActiveRecord::Base
     else
       watching = create!(user: user, watchable: watchable, auto_subscribed_at: auto_watch_at)
     end
-
     watching
   end
 

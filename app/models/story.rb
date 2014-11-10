@@ -26,7 +26,6 @@ class Story < ActiveRecord::Base
     # ["Reference", "Discussion"]             => :wip_subscribers,
     # ["Reference", "Task"]                   => :wip_subscribers,
     # ["Reference", "Wip"]                    => :wip_subscribers,
-    # ["Start", "Discussion"]                 => :product_subscribers,
     ["Start", "Task"]                       => :product_subscribers,
     # ["Unassign", "Discussion"]              => :wip_subscribers,
     # ["Unassign", "Task"]                    => :wip_subscribers,
@@ -77,7 +76,7 @@ class Story < ActiveRecord::Base
   # private
 
   def product_subscribers
-    subjects.first.follower_ids
+    subjects.first.product.follower_ids
   end
 
   def wip_subscribers
