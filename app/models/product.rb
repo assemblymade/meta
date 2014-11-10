@@ -166,7 +166,7 @@ class Product < ActiveRecord::Base
       profitable_at: nil
     )
 
-    Deed.new.award_for_product_to_stealth(product)
+    Karma::Kalkulate.new.award_for_product_to_stealth(self)
 
   end
 
