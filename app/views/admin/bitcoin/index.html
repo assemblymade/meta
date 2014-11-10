@@ -39,8 +39,8 @@ Current USD Value:
           <td><%= p.sender_address %></td>
           <td><%= p.recipient_address %></td>
           <td><%= p.btc_change/100000000 %></td>
-          <td><%= p.btcusdprice_at_moment/100 %></td>
-          <td><%= p.btcusdprice_at_moment/100*p.btc_change / 100000000 %></td>
+          <td><%= p.btcusdprice_at_moment.to_f/100 %></td>
+          <td><%= p.btcusdprice_at_moment.to_f/100*p.btc_change.to_f / 100000000 %></td>
         </tr>
       end
 
