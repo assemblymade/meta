@@ -13,8 +13,7 @@ class WipSerializer < ActiveModel::Serializer
              :score,
              :score_multiplier,
              :deliverable,
-             :can_close,
-             :contracts
+             :can_close
 
   # personalized
   attributes :own_comments

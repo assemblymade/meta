@@ -5,7 +5,7 @@ class TaskSerializer < ApplicationSerializer
 
   attributes :number, :title, :url, :value, :markdown_description,
     :state, :short_description, :comments_count, :thumbnails, :push_channel,
-    :steps, :offers_url
+    :steps, :offers_url, :contracts
 
   has_one :urgency
 
