@@ -13,6 +13,8 @@ class TipsController < ProductController
         add_cents
       )
 
+      Karma::Kalkulate.new.karma_from_tip(@tip)
+
       TipMailer.delay(queue: 'mailer').tipped(@tip.id)
       Activities::Tip.publish!(
         actor: current_user,
