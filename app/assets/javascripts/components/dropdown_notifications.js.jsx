@@ -100,7 +100,7 @@
 
       Dispatcher.dispatch({
         action: NF.ACTIONS.MARK_AS_READ,
-        data: this.props.story.key,
+        data: story.key,
         sync: true
       });
     },

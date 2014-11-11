@@ -1,0 +1,16 @@
+redis:
+  image: redis:2.8
+  ports:
+    - "6379:6379"
+
+elasticsearch:
+  image: barnybug/elasticsearch:0.90.13
+  ports:
+    - "9200:9200"
+
+node:
+  image: node:latest
+  command: ./bin/npm-watch
+  working_dir: /app
+  volumes:
+    - .:/app
