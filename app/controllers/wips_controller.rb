@@ -134,7 +134,10 @@ class WipsController < ProductController
   def mute
     set_wip
     @wip.unfollow!(current_user)
-    respond_with @wip, location: request.referer
+    respond_to do |format|
+      format.html { redirect_to product_wip_path(@product, @wip) }
+      format.json { render json: @wip }
+    end
   end
 
   def flag
