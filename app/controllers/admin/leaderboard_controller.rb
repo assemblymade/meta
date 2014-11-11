@@ -13,7 +13,8 @@ class Admin::LeaderboardController < AdminController
         user: user,
         activity_count: count,
         daily_avg: count / ((Time.now - user.created_at) / 1.day),
-        joined_at: user.created_at
+        joined_at: user.created_at,
+        karma_total: user.karma_total
       }.with_indifferent_access
     end
 
@@ -27,4 +28,3 @@ class Admin::LeaderboardController < AdminController
     @data
   end
 end
-

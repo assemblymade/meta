@@ -153,10 +153,8 @@ class Product < ActiveRecord::Base
       event :remove, transitions_to: :stealth end
   end
 
-  class << self
-    def unique_tags
-      pluck('distinct unnest(tags)').sort_by{|t| t.downcase }
-    end
+  def self.unique_tags
+    pluck('distinct unnest(tags)').sort_by{|t| t.downcase }
   end
 
   def on_stealth_entry(prev_state, event, *args)
@@ -165,6 +163,7 @@ class Product < ActiveRecord::Base
       greenlit_at: nil,
       profitable_at: nil
     )
+
   end
 
   def on_team_building_entry(prev_state, event, *args)

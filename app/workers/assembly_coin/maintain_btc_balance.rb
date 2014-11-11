@@ -27,7 +27,8 @@ module AssemblyCoin
           Rails.logger.info "[coins] Sending #{amount} BTC to #{destination} from #{public_address}"
           OpenAssets::Transactions.new.send_btc(destination, amount)
 
-          BtcPayment.create!({created_at: DateTime.now, action: "Maintained Balance for Product #{product.name}", sender: "Assembly Central", recipient: "#{product.name}", sender_address: ENV.fetch("CENTRAL_ADDRESS_PUBLIC_ADDRESS"), recipient_address: destination, btc_change: amount*100000000})
+          current_price = get_btc_spot_price_coinbase()*100
+          BtcPayment.create!({btcusdprice_at_moment: current_price, created_at: DateTime.now, action: "Maintained Balance for Product #{product.name}", sender: "Assembly Central", recipient: "#{product.name}", sender_address: ENV.fetch("CENTRAL_ADDRESS_PUBLIC_ADDRESS"), recipient_address: destination, btc_change: amount*-100000000})
         else
           Rails.logger.info "[coins] #{product.id} wallet has sufficient Bitcoin"
         end

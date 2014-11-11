@@ -7,6 +7,9 @@ class InvitesController < ApplicationController
     @invite = Invite.create_and_send(invite_params.merge(invitor: current_user))
     track_analytics(@invite)
     respond_with @invite, location: request.referer
+
+    Karma::Kalkulate.new.karma_from_invite(@invite)
+
   end
 
   # private
