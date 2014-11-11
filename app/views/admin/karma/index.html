@@ -1,0 +1,19 @@
+<h2>Inkredibly Karismatik Karakters</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Total Karma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @top_users.each do |p| %>
+        <tr>
+          <td><%= p[0] %></td>
+          <td><%= p[1] %></td>
+        </tr>
+    <% end %>
+
+  </tbody>
+</table>
