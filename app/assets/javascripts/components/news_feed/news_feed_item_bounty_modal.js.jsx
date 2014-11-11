@@ -30,7 +30,7 @@ module.exports = React.createClass({
 
     window.app.setCurrentAnalyticsProduct(this.props.product);
 
-    analytics.track('news_feed_item.bounty.viewed', { bounty: this.props.bounty });
+    analytics.track('product.wip.viewed', { bounty: this.props.bounty, news_feed: true });
 
     this.fetchBounty();
   },
@@ -40,7 +40,18 @@ module.exports = React.createClass({
   },
 
   fetchBounty: function() {
-    var url = this.props.item.target.url + '.json';
+    var target = this.props.item.target;
+    var url = target.url + '.json';
+
+    window.history.pushState({ news_feed: true }, target.title, target.url);
+
+    $(window).bind('popstate', function() {
+      var state = window.history.state;
+
+      if (!state) {
+        $(this.getDOMNode()).modal('hide');
+      }
+    }.bind(this));
 
     $.get(url, function(response) {
       this.setState({
@@ -75,13 +86,9 @@ module.exports = React.createClass({
 
     // (pletcher) TODO: Don't render the bounty in a modal
     return (
-      <Lightbox size="modal-lg">
+      <Lightbox size="modal-lg" title={product.name + ' - ' + bounty.title}>
         {this.state.ready ?
-          [<a className="close" data-dismiss="modal" key={"close-nfi-bounty-modal-" + bounty.id} style={{ 'margin-right': '16px', 'margin-top': '8px' }}>
-              <span className="h3" aria-hidden="true">&times;</span>
-              <span className="sr-only">Close</span>
-            </a>,
-            <Bounty
+          [<Bounty
               key={bounty.id}
               bounty={bounty}
               noInvites={true}
