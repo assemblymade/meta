@@ -1,5 +1,13 @@
 class DiscoverController < ApplicationController
   META = Product.find_by(slug: 'meta')
+  COUNTABLE_FILTERS = [
+    'Frontend',
+    'Backend',
+    'Design',
+    'Marketing',
+    'Writing',
+    'Mobile'
+  ]
 
   def index
     @interesting = interesting_products.limit(3)
@@ -96,12 +104,21 @@ class DiscoverController < ApplicationController
     end
 
     posts = query.to_a.reject{ |q| q.try(:target).try(:flagged?) }
+    cache_key = "/discover/updates/filter=#{params[:filter] || 'all'}&page=#{params[:page] || '1'}-#{query.first.try(:updated_at).try(:to_i) || '0'}"
 
-    @posts = Rails.cache.fetch("/discover/updates/filter=#{params[:filter] || 'all'}-#{query.first.try(:updated_at)}", expires_in: 10.minutes) do
+    @posts = Rails.cache.fetch("#{cache_key}", expires_in: 10.minutes) do
       ActiveModel::ArraySerializer.new(
         posts,
         each_serializer: NewsFeedItemSerializer
       ).as_json
+    end
+
+    @counts = Rails.cache.fetch("/discover/updates/counts", expires_in: 12.hours) do
+      COUNTABLE_FILTERS.reduce({}) do |memo, filter|
+        filter = filter.downcase
+        memo[filter] = Wip.tagged_with(filter).count
+        memo
+      end
     end
 
     respond_to do |format|

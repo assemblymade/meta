@@ -9,7 +9,7 @@ module Api
       offer_attributes = offer_params
 
       [:amount, :earnable].each do |key|
-        offer_attributes[key] = offer_attributes[key].to_i if offer_attributes.key?(key)
+        offer_attributes[key] = offer_attributes[key].to_s.gsub(/[^\d.]/, '').to_i if offer_attributes.key?(key)
       end
 
       @offer = Offer.create!(

@@ -136,7 +136,7 @@ class WipsController < ProductController
 
   def mute
     set_wip
-    @wip.mute!(current_user)
+    @wip.unfollow!(current_user)
     respond_with @wip, location: request.referer
   end
 

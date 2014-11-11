@@ -47,7 +47,7 @@ describe WipGroup do
   end
 
   it "collects watchers" do
-    watchers.each {|u| tasks[0].product.watch!(u) }
+    watchers.each {|u| tasks[0].watch!(u) }
 
     group = WipGroup.new(tasks)
 

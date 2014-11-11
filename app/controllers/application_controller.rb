@@ -81,7 +81,7 @@ class ApplicationController < ActionController::Base
 
   # pushes the event into flash which will then be rendered next page load
   def track_event(name, options=nil)
-    Analytics.delay.track(
+    Analytics.track(
         user_id: current_user.try(:id),
         event: name,
         properties: options

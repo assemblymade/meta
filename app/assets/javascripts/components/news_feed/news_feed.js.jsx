@@ -8,20 +8,59 @@
 
     mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0})],
 
+    componentDidMount: function() {
+      window.analytics.track(
+        'news_feed_item.viewed', {
+          product: (window.app.currentAnalyticsProduct())
+        }
+      );
+    },
+
+    count: function(count) {
+      if (count) {
+        return <div className="gray">About {count} bounties</div>;
+      }
+    },
+
+    countFor: function(filter) {
+      return this.props.filter_counts[filter];
+    },
+
+    displayCount: function() {
+      var filter = this.state.hoverFilter;
+
+      if (filter) {
+        var count = this.countFor(filter);
+
+        return (
+          <span className="gray-darker text-large">
+            There are about
+            <span className="bold">
+              {' '}<span className="text-info">{count}</span> {filter}
+            </span>
+            {' '} bounties
+          </span>
+        );
+      }
+
+      return <span className="text-large">&nbsp;</span>
+    },
+
     getDefaultProps: function() {
       var filters = lowerCaseAndReflect([
         'Frontend',
         'Backend',
         'Design',
         'Marketing',
-        'Writing'
+        'Writing',
+        'Mobile'
       ]);
 
-      if (window.app.featureEnabled('hot-updates')) {
-        filters['Hot'] = 'hot';
-      } else {
-        filters['Mobile'] = 'mobile';
-      }
+      // if (window.app.featureEnabled('hot-updates')) {
+      //   filters['Hot'] = 'hot';
+      // } else {
+      //   filters['Mobile'] = 'mobile';
+      // }
 
       return {
         filters: filters
@@ -32,8 +71,11 @@
       this.setState({
         page: this.state.page + 1
       }, function() {
-        var url = window.location.pathname + '?page=' + this.state.page +
-          '&filter=' + this.state.filter;
+        var url = window.location.pathname + '?page=' + this.state.page;
+
+        if (this.state.filter) {
+          url += '&filter=' + this.state.filter;
+        }
 
         window.xhr.get(
           url,
@@ -56,7 +98,7 @@
     filters: function() {
       return (
         <ul className="nav nav-skills bg-white mb2">
-          {_.map(_.keys(this.props.filters), renderFilterListItem.bind(this))}
+          {_.map(_.keys(this.props.filters), this.renderFilterListItem)}
         </ul>
       );
     },
@@ -69,19 +111,28 @@
       };
     },
 
-    render: function() {
-      window.analytics.track(
-        'news_feed_item.viewed', {
-          product: (window.app.currentAnalyticsProduct())
-        }
-      );
+    handleFilterMouseOver: function(filter, e) {
+      this.setState({
+        hoverFilter: filter,
+      });
+    },
 
+    handleFilterMouseOut: function(filter, e) {
+      this.setState({
+        hoverFilter: null,
+      });
+    },
+
+    render: function() {
       return (
         <div>
 
           {this.filters()}
 
-          <div className="container py2">
+          <div className="container">
+            <div className="py1 text-center">
+              {this.displayCount()}
+            </div>
             <div className="clearfix mxn2" ref="masonryContainer">
               {this.renderItems()}
             </div>
@@ -99,7 +150,7 @@
     },
 
     renderItems: function() {
-      return this.state.news_feed_items.map(function(item) {
+      return _.map(this.state.news_feed_items, function(item) {
         return (
           <div className="sm-col sm-col-6 p2" key={item.id}>
             {NewsFeedItem(item)}
@@ -113,6 +164,30 @@
         <div className="well text-center">
           There hasn't been any activity on this product yet. Why not <a href="#">start some tasks</a>?
         </div>
+      );
+    },
+
+    renderFilterListItem: function(filter) {
+      var label = this.props.filters[filter];
+      var buttonClass = filter === this.state.filter ?
+        'active' :
+        '';
+
+      // var onClick = this.filterBy.bind(this, filter);
+
+      var onClick = function() {
+        window.analytics.track('news_feed_item.filter.clicked', { filter: filter });
+      };
+
+      return (
+        <li className={buttonClass} key={filter}>
+          <a href={"?filter=" + filter}
+              onClick={onClick}
+              onMouseOver={this.handleFilterMouseOver.bind(this, filter)}
+              onMouseOut={this.handleFilterMouseOut.bind(this, filter)}>
+            {label}
+          </a>
+        </li>
       );
     },
 
@@ -152,24 +227,6 @@
       ));
     }
   });
-
-  function renderFilterListItem(filter) {
-    var label = this.props.filters[filter];
-
-    var buttonClass = filter === this.state.filter ?
-      'active' :
-      '';
-
-    // var onClick= this.filterBy.bind(this, filter);
-
-    return (
-      <li className={buttonClass} key={filter}>
-        <a href={"?filter=" + filter}>
-          {label}
-        </a>
-      </li>
-    );
-  }
 
   function lowerCaseAndReflect(array) {
     var map = {};

@@ -95,7 +95,7 @@
 
     handleOfferChange: function(e) {
       this.setState({
-        value: parseInt(e.target.value) || 0
+        value: parseInt(e.target.value.replace(/[^\d]/g, '')) || 0
       })
 
       if(this.props.onChange) {

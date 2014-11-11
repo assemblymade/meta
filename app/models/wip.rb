@@ -17,11 +17,12 @@ class Wip < ActiveRecord::Base
   has_many :comments, class_name: 'Event::Comment'
   has_one  :chat_room
   has_many :events
+  has_many :followings, class_name: 'Watching', as: :watchable
+  has_many :followers, through: :followings, source: :user
   has_many :offers, inverse_of: :bounty
   has_many :milestones, through: :milestone_tasks
   has_many :milestone_tasks, foreign_key: 'task_id'
   has_many :mutings
-  has_many :muters, through: :mutings, source: :user
   has_one  :news_feed_item, foreign_key: 'target_id'
   has_many :postings, class_name: 'BountyPosting', foreign_key: 'bounty_id'
   has_many :taggings, class_name: 'Wip::Tagging'
@@ -144,31 +145,21 @@ class Wip < ActiveRecord::Base
     false
   end
 
-  # following
-
-  def followers
-    product.followers - muters
-  end
-
-  def follower_ids
-    product.follower_ids - muter_ids
-  end
-
   def followed_by?(user)
-    product.followed_by?(user) && !muted_by?(user)
+    Watching.following?(user, self)
   end
 
-  def muted_by?(user)
-    !mutings.find_by(user: user, deleted_at: nil).nil?
-  end
-
-  def mute!(user)
-    Muting.mute!(user, self)
-  end
-
+  # TODO: rename to follow
   def watch!(user)
-    product.watch!(user)
-    Muting.unmute!(user, self)
+    Watching.watch!(user, self)
+  end
+
+  def unfollow!(user)
+    Watching.unwatch!(user, self)
+  end
+
+  def auto_watch!(user)
+    Watching.auto_watch!(user, self)
   end
 
   def contributors
@@ -363,4 +354,7 @@ class Wip < ActiveRecord::Base
     end
   end
 
+  def update_watchings_count!
+    update! watchings_count: followings.count
+  end
 end

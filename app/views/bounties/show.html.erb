@@ -13,7 +13,8 @@
       coinsMinted: @product.coins_minted,
       profitLastMonth: @product.profit_last_month,
       steps: BountyGuidance::Valuations.suggestions(@product)
-    }
+    },
+    show_coins: !@product.meta?
   } %>
 
 <div class="discussion" id="discussion-view-el">

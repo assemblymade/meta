@@ -10,7 +10,7 @@ module Actions
       if recipient_id.nil?
         create_recipient!
       else
-        update_recipient!
+        update_recipient! || create_recipient!
       end
     end
 
@@ -23,7 +23,7 @@ module Actions
         card: @card_token,
         metadata: metadata
       ).tap do |recipient|
-        @user.payment_option.update_attributes(
+        @user.payment_option.update(
           recipient_id: recipient.id,
           last4: last4(recipient)
         )
@@ -31,7 +31,12 @@ module Actions
     end
 
     def update_recipient!
-      recipient = Stripe::Recipient.retrieve(recipient_id)
+      recipient = nil
+      begin
+        recipient = Stripe::Recipient.retrieve(recipient_id)
+      rescue Stripe::InvalidRequestError
+        return nil
+      end
 
       recipient.name = @user.name
       recipient.email = @user.email

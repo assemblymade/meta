@@ -51,6 +51,8 @@ module ASM
 
     config.skylight.probes = %w(net_http excon redis)
 
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**/*.{rb,yml}').to_s]
+
     console do
       require 'console_helpers'
       Rails::ConsoleMethods.send :include, ASM::Console

@@ -167,7 +167,7 @@ class Task < Wip
 
   def start_work!(worker)
     self.workers << worker unless self.workers.include?(worker)
-    Analytics.delay.track(user_id: worker.id, event: 'product.wip.start_work', properties: WipAnalyticsSerializer.new(self, scope: worker).as_json)
+    Analytics.track(user_id: worker.id, event: 'product.wip.start_work', properties: WipAnalyticsSerializer.new(self, scope: worker).as_json)
     allocate!(worker) unless self.workers.count > 1
   end
 

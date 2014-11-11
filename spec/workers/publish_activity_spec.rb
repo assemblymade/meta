@@ -29,7 +29,7 @@ describe PublishActivity do
 
     watcher = User.make!
 
-    product.watch!(watcher)
+    discussion.watch!(watcher)
 
     PublishActivity.new.perform(activity.id)
     expect(NewsFeed.new(watcher).first.attributes.slice('verb', 'subject_type')).to eq(
