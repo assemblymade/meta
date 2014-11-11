@@ -151,9 +151,11 @@
     },
 
     renderNewOffer: function() {
-      return this.transferPropsTo(
-        <VoteBountyOffer onChange={this.handleOfferChanged} />
-      )
+      return VoteBountyOffer(
+        _.extend({}, this.props, {
+          onChange: this.handleOfferChanged
+        })
+      );
     },
 
     handleOfferChanged: function(event) {

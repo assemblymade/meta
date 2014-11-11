@@ -72,6 +72,8 @@ module.exports = React.createClass({
       };
     }
 
+    console.warn('No CSRF token was found. Changes might fail to post.');
+
     return {};
   },
 

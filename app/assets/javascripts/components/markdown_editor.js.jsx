@@ -16,6 +16,8 @@
         };
       }
 
+      console.warn('No attachment upload URL was found. Attachments might fail to upload.');
+
       return {};
     },
 

@@ -12,13 +12,8 @@
   var Avatar = require('./avatar.js.jsx');
 
   var Navbar = React.createClass({
-    getDefaultProps: function() {
-      return {
-        user: app.currentUser().attributes
-      };
-    },
-
     render: function() {
+      var appUser = window.app.currentUser().attributes
       var user = this.props.currentUser;
 
       return (
@@ -35,7 +30,7 @@
 
             <ChatNotifications
                 url={this.props.chatPath}
-                username={this.props.user.username}
+                username={appUser.username}
             />
           </li>
 
@@ -47,19 +42,19 @@
 
             <DropdownNotifications
                 url={this.props.notificationsPath}
-                username={this.props.user.username}
+                username={appUser.username}
                 editUserPath={this.props.editUserPath} />
           </li>
 
           <li className='dropdown'>
             <a href='#' className='dropdown-toggle' data-toggle='dropdown' key={'navbar dropdown'} style={{ padding: '15px 6px 13px' }}>
-              <Avatar user={this.props.user} size="24" />
+              <Avatar user={appUser} size="24" />
               <span className='visible-xs-inline' style={{ 'margin-left': '5px' }}>
-                {this.props.user.username}
+                {appUser.username}
               </span>
             </a>
 
-            {this.transferPropsTo(<UserNavbarDropdown />)}
+            {UserNavbarDropdown(_.extend({}, this.props))}
           </li>
         </ul>
       );

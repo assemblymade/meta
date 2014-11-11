@@ -14,7 +14,7 @@
 
       return {
         currentUser: currentUser,
-        url: app.product.get('url') + '/tips'
+        url: app.product && app.product.get('url') + '/tips'
       }
     },
 

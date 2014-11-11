@@ -2,12 +2,6 @@
 
 (function(){
   var ReadReceipts = React.createClass({
-    getDefaultProps: function() {
-      return {
-        currentUser: window.app.currentUser().attributes
-      }
-    },
-
     getInitialState: function() {
       return {
         readers: null
@@ -39,6 +33,7 @@
     },
 
     getReadReceipts: function() {
+      var currentUser = window.app.currentUser().attributes;
       xhr.noCsrfGet(this.props.url, function(err, body) {
         if (err) {
           return console.error(err)
@@ -46,7 +41,7 @@
 
         var article = JSON.parse(body)
 
-        var otherUsers = _.without(article.read_by, (this.props.currentUser && this.props.currentUser.username))
+        var otherUsers = _.without(article.read_by, (currentUser && currentUser.username))
 
         this.setState({ readers: otherUsers })
       }.bind(this))

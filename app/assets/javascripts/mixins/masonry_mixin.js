@@ -16,11 +16,15 @@ module.exports = function MasonryMixin(ref, options) {
         return
       }
 
-      var el = this.refs[ref].getDOMNode()
+      try {
+        var el = this.refs[ref].getDOMNode()
 
-      this.masonry = new Masonry(el, options)
-      el.focus()
-      this.imagesLoaded()
+        this.masonry = new Masonry(el, options)
+        el.focus()
+        this.imagesLoaded()
+      } catch (e) {
+        console.error(e);
+      }
     },
 
     componentDidUpdate: function() {

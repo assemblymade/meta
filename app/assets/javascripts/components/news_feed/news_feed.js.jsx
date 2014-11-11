@@ -98,10 +98,12 @@
     },
 
     getInitialState: function() {
+      var queryKey = window.parseUri(window.location).queryKey || {};
+
       return {
-        filter: (window.parseUri(window.location).queryKey.filter || ''),
+        filter: (queryKey.filter || ''),
         news_feed_items: this.props.news_feed_items,
-        page: (window.parseUri(window.location).queryKey.page || 1)
+        page: (queryKey.page || 1)
       };
     },
 
