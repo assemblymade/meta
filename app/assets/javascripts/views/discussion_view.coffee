@@ -34,9 +34,9 @@ class window.DiscussionView extends Backbone.View
     if window.pusher
       pusher.connection.bind 'connected', => @eventDefaults.socket_id = pusher.connection.socket_id
 
-      channel = window.pusher.subscribe(@model.get('push_channel'))
-      channel.bind 'changed', (msg) => @model.set msg
-      channel.bind 'event.added', @eventPushed
+      channel = window.pusher.subscribe(@model.get('push_channel')) unless window.pusher.channels.find(@model.get('push_channel'))
+      channel?.bind 'changed', (msg) => @model.set msg
+      channel?.bind 'event.added', @eventPushed
 
   onNewCommentClicked: (e)->
     body = $('#event_comment_body').val()

@@ -41,7 +41,7 @@
   // use single body click handler so multiple popovers don't clobber
   var $ignoreNodes = $()
   $('body').on('click', function(e){
-    if ($ignoreNodes.has(e.target).length === 0 &&
+    if ($ignoreNodes && $ignoreNodes.has(e.target).length === 0 &&
         !$ignoreNodes.is(e.target) &&
         !$(e.target).is('.popover') &&
          $(e.target).parents('.popover').length === 0) {
@@ -92,8 +92,8 @@
       );
 
       $(this.getDOMNode()).popover('destroy');
-      $ignoreNodes = _.without($ignoreNodes, this.getDOMNode())
-      $('body').off('hideBsPopovers', this.props.onHide);
+      // $ignoreNodes = _.without($ignoreNodes, this.getDOMNode())
+      // $('body').off('hideBsPopovers', this.props.onHide);
     },
 
     render: function() {
