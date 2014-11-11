@@ -3,6 +3,7 @@ module Karma
 
     FOUNDER_BOUNTY_MULTIPLER = 0.05
     BOUNTY_KARMA_VALUE = 10.0
+    BOUNTY_CREATOR_KARMA_SHARE = 0.3 #30%
 
     def karma_from_product_founding(product)
       kumulative_karma = 1.0  #starting karma
@@ -13,7 +14,17 @@ module Karma
     end
 
 
-    def karma_from_bounty_creation_after_completion(product)
+    def karma_from_bounty_creation_after_completion(the_wip, author_id)
+      user_id = author_id
+      chronicle = Chronicle.find_by(user_id: user_id)
+      if not chronicle.nil?
+        chronicle_id = chronicle.id
+      else
+        chronicle = Chronicle.create!(user_id: user_id)
+        chronicle_id = chronicle.id
+      end
+
+      Deed.create!({karma_value: BOUNTY_KARMA_VALUE*BOUNTY_CREATOR_KARMA_SHARE, karma_event: the_wip, user_id: author_id, chronicle_id: chronicle_id})
 
     end
 
@@ -25,7 +36,6 @@ module Karma
         chronicle = Chronicle.create!(user_id: user_id)
         chronicle_id = chronicle.id
       end
-      puts chronicle.id
 
       Deed.create!({karma_value: BOUNTY_KARMA_VALUE, karma_event: the_wip, user_id: user_id, chronicle_id: chronicle_id})
     end
