@@ -121,7 +121,7 @@
                 {this.renderAverage()}
               </div>
               <div className="stat-title ml2 mr2">
-                of the average {this.props.product.name} bounty
+                the average {this.props.product.name} bounty
               </div>
             </div>
           </div>
