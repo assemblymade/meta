@@ -12,7 +12,8 @@ class WipSerializer < ActiveModel::Serializer
              :comments_count,
              :score,
              :score_multiplier,
-             :deliverable
+             :deliverable,
+             :can_close
 
   # personalized
   attributes :own_comments
@@ -21,6 +22,10 @@ class WipSerializer < ActiveModel::Serializer
 
   def product_slug
     product.slug
+  end
+
+  def can_close
+    Ability.new(scope).can?(:close, wip)
   end
 
   def product_name

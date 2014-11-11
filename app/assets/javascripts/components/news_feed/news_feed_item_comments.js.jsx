@@ -23,6 +23,29 @@ module.exports = React.createClass({
     NewsFeedItemStore.addChangeListener(this.getComments);
   },
 
+  getComments: function() {
+    var comments = NewsFeedItemStore.getComments(this.props.item.id);
+
+    this.setState({
+      comment: '',
+      comments: this.state.comments.concat(comments.confirmed),
+      optimisticComments: comments.optimistic,
+      // This is pretty hacky (chrislloyd)
+      numberOfCommentsToShow: (comments.optimistic.length ? this.state.numberOfCommentsToShow : this.state.numberOfCommentsToShow + 1)
+    });
+  },
+
+  getInitialState: function() {
+    var item = this.props.item;
+
+    return {
+      comments: item.news_feed_item_comments,
+      optimisticComments: [],
+      numberOfCommentsToShow: 1,
+      url: item.url
+    };
+  },
+
   render: function() {
     return (
       <div>
@@ -101,29 +124,6 @@ module.exports = React.createClass({
         </div>
       )
     });
-  },
-
-  getComments: function() {
-    var comments = NewsFeedItemStore.getComments(this.props.item.id);
-
-    this.setState({
-      comment: '',
-      comments: this.state.comments.concat(comments.confirmed),
-      optimisticComments: comments.optimistic,
-      // This is pretty hacky (chrislloyd)
-      numberOfCommentsToShow: (comments.optimistic.length ? this.state.numberOfCommentsToShow : this.state.numberOfCommentsToShow + 1)
-    });
-  },
-
-  getInitialState: function() {
-    var item = this.props.item;
-
-    return {
-      comments: item.news_feed_item_comments,
-      optimisticComments: [],
-      numberOfCommentsToShow: 1,
-      url: item.url
-    };
   },
 
   showMoreComments: function(total) {

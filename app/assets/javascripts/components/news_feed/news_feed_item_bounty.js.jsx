@@ -1,8 +1,9 @@
 (function() {
 
+  var AppCoins = require('../app_coins.js.jsx')
   var Avatar = require('../avatar.js.jsx')
   var Markdown = require('../markdown.js.jsx')
-  var AppCoins = require('../app_coins.js.jsx')
+  var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx')
   var Thumbnail = require('../thumbnail.js.jsx')
 
   module.exports = React.createClass({
@@ -11,26 +12,79 @@
     propTypes: {
       coins: React.PropTypes.number.isRequired,
       title: React.PropTypes.string.isRequired,
-      bounty: React.PropTypes.object.isRequired
+      bounty: React.PropTypes.object.isRequired,
+      item: React.PropTypes.object.isRequired
+    },
+
+    getInitialState: function() {
+      return {
+        modalShown: false
+      };
+    },
+
+    modal: function() {
+      if (this.state.modalShown) {
+        return NewsFeedItemBountyModal(_.extend({}, this.props, { onHidden: this.onModalHidden }));
+      }
+
+      return null;
+    },
+
+    onModalHidden: function() {
+      this.setState({
+        modalShown: false
+      });
     },
 
     render: function() {
-      var bounty = this.props.bounty
-      var product = this.props.product
-      var user = this.props.user
+      var bounty = this.props.bounty;
+      var product = this.props.product;
+      var user = this.props.user;
+
+      var urgencies = ['Urgent', 'Now', 'Someday'];
 
       return (
-        <div className="p3">
-          <a className="h3 bold mt0 mb2 blue" href={bounty.url}>{bounty.title}</a>
-          <div className="yellow mb3">
-            <AppCoins n={bounty.value} />
+        <div className="p3" style={{ cursor: 'pointer', 'background-color': '#fcfcfc' }} onClick={this.showBounty}>
+          <a className="h3 bold mt0 mb2 blue" href={bounty.url} onClick={this.suppressModal} key="bounty-link">
+            {bounty.title}
+          </a>
+          <div className="yellow mb3" key="bounty-value">
+            <span className="mr2">
+              <AppCoins n={bounty.value} />
+            </span>
+            <Urgency
+              initialLabel={bounty.urgency.label}
+              urgencies={urgencies}
+              state={bounty.state}
+              url={bounty.urgency_url} />
           </div>
           <div className="gray-darker">
             <Markdown content={bounty.short_description} normalized={true} />
             {this.thumbnails()}
           </div>
+          <div key="nfib-modal" style={{ cursor: 'default', width: '80%' }}>
+            {this.modal()}
+          </div>
         </div>
       )
+    },
+
+    showBounty: function(e) {
+      e.stopPropagation();
+
+      var width = window.innerWidth;
+
+      if (width > 480) {
+        this.setState({
+          modalShown: true
+        });
+      } else {
+        window.location = this.props.bounty.url;
+      }
+    },
+
+    suppressModal: function(e) {
+      e.stopPropagation();
     },
 
     tags: function() {

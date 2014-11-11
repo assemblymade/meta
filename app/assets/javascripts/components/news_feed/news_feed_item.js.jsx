@@ -161,7 +161,9 @@
           bounty={target}
           user={this.props.user}
           title={target.title}
-          coins={target.value} />;
+          coins={target.value}
+          comments={this.props.news_feed_item_comments}
+          item={this.props} />;
 
       case 'team_membership':
         return <NewsFeedItemIntroduction

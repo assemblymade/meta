@@ -3,6 +3,10 @@
 (function() {
   var BountyBreakdown = require('./bounty_breakdown.js.jsx');
   var BountyValuation = React.createClass({
+    propTypes: {
+      contracts: React.PropTypes.object.isRequired
+    },
+
     getInitialState: function() {
       return {
         shown: false,
@@ -14,6 +18,7 @@
         return
       }
 
+      // (pletcher) TODO: this.transferPropsTo is deprecated
       return this.transferPropsTo(
         <BountyBreakdown onHidden={this.handleHide} steps={this.props.steps} />
       )

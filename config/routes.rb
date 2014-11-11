@@ -323,6 +323,7 @@ ASM::Application.routes.draw do
       post 'code_deliverables'
       patch 'watch'
       patch 'mute'
+      get 'mute'
       patch 'tag'
       patch 'flag'
       patch 'unflag'

@@ -15,11 +15,17 @@
     renderOwnership: function() {
       var value = this.state.value
       var ownership = value / (value + this.props.coinsMinted) * 100;
-      var roundedOwnership = Math.floor(ownership * 1000) / 1000
 
-      if(roundedOwnership < 0.001) {
+      if(ownership < 0.001) {
         return "< 0.001%"
+      } else if(ownership < 1) {
+        var roundedOwnership = Math.floor(ownership * 1000) / 1000
+        return roundedOwnership + "%"
+      } else if(ownership < 10) {
+        var roundedOwnership = Math.floor(ownership * 100) / 100
+        return roundedOwnership + "%"
       } else {
+        var roundedOwnership = Math.floor(ownership)
         return roundedOwnership + "%"
       }
     },
@@ -53,6 +59,76 @@
       }
     },
 
+    renderAverage: function() {
+      var average = this.state.value / this.props.averageBounty
+
+      if(average < 0.001) {
+        return "< 0.001x"
+      } else if(average < 1) {
+        var roundedAverage = Math.floor(average * 1000) / 1000
+        return roundedAverage + 'x'
+      } else if(average < 10) {
+        var roundedAverage = Math.floor(average * 100) / 100
+        return roundedAverage + 'x'
+      } else {
+        var roundedAverage = Math.floor(average)
+        return roundedAverage + 'x'
+      }
+    },
+
+    renderStats: function() {
+      if(this.props.profitLastMonth) {
+        return(
+          <div className="stat-group mb0">
+            <div className="stat">
+              <div className="stat-value">
+                {this.renderOwnership()}
+              </div>
+              <div className="stat-title ml2 mr2">
+                ownership<br />
+                in {this.props.product.name}
+              </div>
+            </div>
+            <div className="stat">
+              <div className="stat-value">
+                {this.renderPayout()}
+              </div>
+              <div className="stat-title ml2 mr2" dangerouslySetInnerHTML={{ __html: this.renderProfitLastMonth() }} />
+            </div>
+            <div className="stat">
+              <div className="stat-value">
+                {this.renderSellingPrice()}
+              </div>
+              <div className="stat-title ml2 mr2">
+                if {this.props.product.name} was <br /> sold for $1 million
+              </div>
+            </div>
+          </div>
+        )
+      } else {
+        return(
+          <div className="stat-group mb0">
+            <div className="stat">
+              <div className="stat-value">
+                {this.renderOwnership()}
+              </div>
+              <div className="stat-title ml2 mr2">
+                ownership in {this.props.product.name}
+              </div>
+            </div>
+            <div className="stat">
+              <div className="stat-value">
+                {this.renderAverage()}
+              </div>
+              <div className="stat-title ml2 mr2">
+                the average {this.props.product.name} bounty
+              </div>
+            </div>
+          </div>
+        )
+      }
+    },
+
     render: function() {
       return (
         <div>
@@ -63,31 +139,7 @@
             </div>
           </div>
           <div className="mt2">
-            <div className="stat-group mb0">
-              <div className="stat">
-                <div className="stat-value">
-                  {this.renderOwnership()}
-                </div>
-                <div className="stat-title ml2 mr2">
-                  ownership<br />
-                  in {this.props.product.name}
-                </div>
-              </div>
-              <div className="stat">
-                <div className="stat-value">
-                  {this.renderPayout()}
-                </div>
-                <div className="stat-title ml2 mr2" dangerouslySetInnerHTML={{ __html: this.renderProfitLastMonth() }} />
-              </div>
-              <div className="stat">
-                <div className="stat-value">
-                  {this.renderSellingPrice()}
-                </div>
-                <div className="stat-title ml2 mr2">
-                  if {this.props.product.name} was <br /> sold for $1 million
-                </div>
-              </div>
-            </div>
+            {this.renderStats()}
           </div>
         </div>
       )

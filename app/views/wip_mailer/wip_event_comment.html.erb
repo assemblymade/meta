@@ -1,1 +1,12 @@
 <%= product_markdown(@event.wip.product, @event.body) %>
+
+<% content_for :footer do %>
+  <p style="font-size:small;-webkit-text-size-adjust:none;color:#666;">
+    &mdash;
+    <br>
+    Reply to this email or <a href="<%= product_wip_url(@wip.product, @wip) %>">view WIP on Assembly</a>
+    <br>
+    <br>
+    <a href="<%= product_wip_mute_url(@wip.product, @wip) %>">Stop receiving emails</a> when new comments are posted to this thread
+  </p>
+<% end %>

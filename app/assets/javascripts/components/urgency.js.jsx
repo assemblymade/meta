@@ -7,7 +7,10 @@
     },
 
     render: function() {
-      if(this.props.state == 'open') {
+      var state = this.props.state;
+      var openStates = ['open', 'allocated', 'awarded'];
+
+      if(openStates.indexOf(state) > -1) {
         return this.renderOpen();
       } else {
         return this.renderNotOpen();

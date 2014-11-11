@@ -49,7 +49,6 @@ class WipMailer < BaseMailer
 
     mail(options) do |format|
       begin
-        format.text { render event_template }
         format.html { render event_template }
       end
     end

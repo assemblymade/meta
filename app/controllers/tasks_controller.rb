@@ -57,9 +57,14 @@ class TasksController < WipsController
 
     finished('long_user_survey_on_signup')
 
+    @json =
+
     respond_to do |format|
       format.html { render 'bounties/show' }
-      format.json { render json: @bounty, serializer: WipSerializer }
+      format.json { render json: {
+        bounty: WipSerializer.new(@bounty, scope: current_user),
+        events: @bounty.events.map { |e| EventSerializer.for(e, current_user) }
+      } }
     end
   end
 

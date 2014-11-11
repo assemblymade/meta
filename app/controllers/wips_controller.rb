@@ -1,7 +1,7 @@
 class WipsController < ProductController
   respond_to :html, :json
 
-  before_filter :set_no_cache, only: [:index]
+  before_filter :set_no_cache, only: [:index, :show]
   before_action :authenticate_user!, :except => [:show, :index, :search]
   before_action :set_product
   before_action :set_stories, except: [:index, :new, :create, :search, :mute, :watch]
@@ -137,7 +137,10 @@ class WipsController < ProductController
   def mute
     set_wip
     @wip.unfollow!(current_user)
-    respond_with @wip, location: request.referer
+    respond_to do |format|
+      format.html { redirect_to product_wip_path(@product, @wip) }
+      format.json { render json: @wip }
+    end
   end
 
   def flag

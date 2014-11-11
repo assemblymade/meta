@@ -1,10 +1,14 @@
 <%= yield %>
 
-<p style="font-size:small;-webkit-text-size-adjust:none;color:#666;">
-  &mdash;
-  <br>
-  Reply to this email or <a href="<%= product_wip_url(@wip.product, @wip) %>">view WIP on Assembly</a>
-  <br>
-  <br>
-  Too many emails? <a href="<%= settings_notifications_url(preference: User::MAIL_DAILY) %>">Switch to a daily digest</a>
-</p>
+<% if content_for?(:footer) %>
+  <%= yield(:footer) %>
+<% else %>
+  <p style="font-size:small;-webkit-text-size-adjust:none;color:#666;">
+    &mdash;
+    <br>
+    Reply to this email or <a href="<%= product_wip_url(@wip.product, @wip) %>">view WIP on Assembly</a>
+    <br>
+    <br>
+    Too many emails? <a href="<%= settings_notifications_url(preference: User::MAIL_DAILY) %>">Switch to a daily digest</a>
+  </p>
+<% end %>

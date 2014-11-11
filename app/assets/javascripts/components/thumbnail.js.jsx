@@ -4,7 +4,7 @@ module.exports = React.createClass({
   displayName: 'Thumbnail',
   propTypes: {
     src: React.PropTypes.string.isRequired,
-    size: React.PropTypes.string
+    size: React.PropTypes.number
   },
 
   getDefaultProps: function() {

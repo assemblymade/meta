@@ -43,7 +43,8 @@ class WipContracts
     @core_team_contracts ||= auto_tip_contracts.select{|c| product.core_team.include? c.user }
   end
 
-  def as_json
+  # (pletcher) FIXME: Serializers call this method with an argument; it was failing
+  def as_json(arg=nil)
     h = {
       total: total_cents,
       earnable: earnable_cents,

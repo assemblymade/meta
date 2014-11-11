@@ -89,15 +89,24 @@ class CommentsController < ProductController
   end
 
   def register_with_readraptor(event)
+    # exclude mentioned users because they currently get emailed straight away rather than going through
+    # readraptor
     excluded_users = [event.user, event.mentioned_users].flatten.compact.uniq
     recipients = event.wip.followers - excluded_users
 
-    # register the main content article (no tag) + the email article (email tag) + chat
+    # forcing an immediate email until we get notifications sorted out
+    callback = {
+      at: 5.minutes.from_now.to_i,
+      url: webhooks_readraptor_immediate_url,
+    }
+
     RegisterArticleWithRecipients.perform_async(
       recipients.map(&:id),
-      [nil, :email, :chat],
+      # register the main content article (no tag) + the email article (email tag)
+      [nil, :email],
       Event,
-      event.id
+      event.id,
+      callback
     )
   end
 end
