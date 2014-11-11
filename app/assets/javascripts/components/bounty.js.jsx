@@ -8,7 +8,7 @@
 
     getDefaultProps: function() {
       return {
-        currentUser: app.currentUser(),
+        currentUser: window.app.currentUser(),
         bounty: null
       };
     },

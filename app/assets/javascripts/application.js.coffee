@@ -27,17 +27,6 @@
 #= require ./polyfills
 #= require ./components
 
-$(window).bind 'popstate', ->
-  state = window.history.state
-
-  # (pletcher) TODO: This is a stopgap until we have a more robust
-  # way of handling pushState
-  if !state
-    window.location = window.location
-  else if state.url
-    window.location = state.url
-
-
 class window.Application
   _.extend(@.prototype, Backbone.Events)
 

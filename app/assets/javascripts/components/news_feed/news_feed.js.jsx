@@ -16,12 +16,6 @@
       );
     },
 
-    count: function(count) {
-      if (count) {
-        return <div className="gray">About {count} bounties</div>;
-      }
-    },
-
     countFor: function(filter) {
       return this.props.filter_counts[filter];
     },

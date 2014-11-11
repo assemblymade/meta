@@ -46,16 +46,11 @@ module.exports = React.createClass({
 
     window.history.pushState({ url: target.url }, target.title, target.url);
 
-    // Remove the default popstate listener (in application.js.coffee) so that
-    // we can just hide the modals on this page
-    $(window).off('popstate');
     $(window).bind('popstate', function(e) {
       var state = window.history.state;
 
       if (!state) {
         $('.modal').modal('hide');
-      } else if (state.url) {
-        window.location = state.url;
       }
     }.bind(this));
 
@@ -69,9 +64,15 @@ module.exports = React.createClass({
   },
 
   getDefaultProps: function() {
-    return {
-      csrf: document.getElementsByName('csrf-token')[0].content
-    };
+    var csrfTokenElement = document.getElementsByName('csrf-token')[0];
+
+    if (csrfTokenElement) {
+      return {
+        csrf: csrfTokenElement.content
+      };
+    }
+
+    return {};
   },
 
   getInitialState: function() {
