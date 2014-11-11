@@ -64,7 +64,7 @@ class Event < ActiveRecord::Base
 
     update_pusher(followers, mentioned_users)
   end
-  
+
   def auto_watch!(user)
     wip.auto_watch!(user)
   end

@@ -18,14 +18,6 @@
           return "#" + task.number + " " + task.title;
         }
       },
-
-      Wip: function(bounty) {
-        if (this.props.fullPage) {
-          return "#" + bounty.number + " " + bounty.title;
-        }
-
-        return "#" + bounty.number;
-      },
     },
 
     verbMap: {

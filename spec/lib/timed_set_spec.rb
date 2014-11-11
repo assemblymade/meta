@@ -4,7 +4,11 @@ require 'timed_set'
 
 describe TimedSet do
   before(:each) do
-    @redis = Redis.new(host: '127.0.0.1', db: 15)
+    @redis = if url = ENV['REDIS_URL']
+      Redis.new(url: url)
+    else
+      Redis.new(host: '127.0.0.1', db: 15)
+    end
   end
 
   after(:each) do

@@ -154,8 +154,6 @@ GEM
     httpauth (0.2.0)
     httpclient (2.3.4.1)
     i18n (0.6.11)
-    i18n-debug (1.0.0)
-      i18n (~> 0.0)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -460,7 +458,6 @@ DEPENDENCIES
   hogan_assets
   html-pipeline
   htmlentities
-  i18n-debug
   jquery-rails
   kaminari
   leftronic
