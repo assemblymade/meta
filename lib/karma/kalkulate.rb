@@ -4,7 +4,7 @@ module Karma
     FOUNDER_BOUNTY_MULTIPLER = 0.05
     BOUNTY_KARMA_VALUE = 10.0
     BOUNTY_CREATOR_KARMA_SHARE = 0.3 #30%
-    KARMA_FROM_INVITE = 2.0
+    KARMA_FROM_INVITE = 3.0
     KARMA_FROM_COMPLETED_INVITE = 10.0
 
     def get_chronicle_id(user_id)
@@ -34,10 +34,10 @@ module Karma
       Deed.create!({karma_value: KARMA_FROM_INVITE, karma_event: invite, user_id: recipient_id, chronicle_id: chronicle_id})
     end
 
-    def karma_from_bounty_creation_after_completion(the_wip, author_id)
-      user_id = author_id
+    def karma_from_bounty_creation_after_completion(the_wip)
+      user_id = the_wip.user_id   #The author is always the user_id on the WIP
       chronicle_id = get_chronicle_id(user_id)
-      Deed.create!({karma_value: BOUNTY_KARMA_VALUE*BOUNTY_CREATOR_KARMA_SHARE, karma_event: the_wip, user_id: author_id, chronicle_id: chronicle_id})
+      Deed.create!({karma_value: BOUNTY_KARMA_VALUE*BOUNTY_CREATOR_KARMA_SHARE, karma_event: the_wip, user_id: user_id, chronicle_id: chronicle_id})
     end
 
 
@@ -61,8 +61,6 @@ module Karma
 
       #CHECK IF THIS WAS AN INVITE, reward invitor if YES
       wip_done_by_invitee(the_wip, user_id)
-
-
     end
 
     def award_for_product_to_stealth(product)
@@ -71,6 +69,18 @@ module Karma
 
       chronicle_id = get_chronicle_id(user_id)
       Deed.create!({karma_value: karma_value, karma_event: product, user_id: user_id, chronicle_id: chronicle_id})
+    end
+
+    def top_users(top_n)
+      karma_users = Deed.uniq.pluck(:user_id)
+      karma_totals = []
+
+      karma_users.each do |k|
+        karma_totals.append( [k, Deed.where(user_id: k).sum(:karma_value)] )
+      end
+
+      @karma_results = karma_totals.sort{|a,b| b[1] <=> a[1]}[0, top_n]
+
     end
 
 

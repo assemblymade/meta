@@ -31,6 +31,9 @@
       <li class="<%= "active" if controller_active?(:bitcoin) %>">
         <%= link_to 'Bitcoin', '/admin/bitcoin' %>
       </li>
+      <li class="<%= "active" if controller_active?(:karma) %>">
+        <%= link_to 'Karma', '/admin/karma' %>
+      </li>
       <li>
         <%= link_to 'Sidekiq', '/admin/sidekiq' %>
       </li>
