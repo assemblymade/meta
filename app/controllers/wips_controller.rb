@@ -1,7 +1,7 @@
 class WipsController < ProductController
   respond_to :html, :json
 
-  before_filter :set_no_cache, only: [:index]
+  before_filter :set_no_cache, only: [:index, :show]
   before_action :authenticate_user!, :except => [:show, :index, :search]
   before_action :set_product
   before_action :set_stories, except: [:index, :new, :create, :search, :mute, :watch]

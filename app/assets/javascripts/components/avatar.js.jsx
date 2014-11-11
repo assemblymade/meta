@@ -2,6 +2,12 @@
 
 (function() {
   var Avatar = React.createClass({
+    propTypes: {
+      avatar_url: React.PropTypes.string,
+      size: React.PropTypes.oneOfType([ React.PropTypes.number, React.PropTypes.string ]),
+      user: React.PropTypes.object
+    },
+
     getDefaultProps: function() {
       return {
         size: 24,

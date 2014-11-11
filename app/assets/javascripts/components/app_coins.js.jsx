@@ -10,10 +10,10 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div className="text-coins">
+      <span className="text-coins">
         <span className="icon icon-app-coin mr1"></span>
         {numeral(this.props.n).format('0,0')}
-      </div>
+      </span>
     )
   }
 })

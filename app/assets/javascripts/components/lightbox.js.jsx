@@ -2,6 +2,10 @@
 
 (function() {
   var Lightbox = React.createClass({
+    propTypes: {
+      title: React.PropTypes.string
+    },
+
     getDefaultProps: function() {
       return {
         size: ''
@@ -15,7 +19,6 @@
             <div className="modal-content">
 
               {this.header()}
-
               {this.props.children}
             </div>
             {this.footer()}
