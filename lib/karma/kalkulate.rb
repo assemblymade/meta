@@ -17,8 +17,7 @@ module Karma
 
     end
 
-    def karma_from_bounty_completion(the_wip)
-      user_id = the_wip.user_id
+    def karma_from_bounty_completion(the_wip, user_id)
       chronicle = Chronicle.find_by(user_id: user_id)
       if not chronicle.nil?
         chronicle_id = chronicle.id

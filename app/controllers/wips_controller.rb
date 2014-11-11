@@ -113,7 +113,7 @@ class WipsController < ProductController
     end
     redirect_to product_wip_path(@wip.product, @wip)
 
-    Karma::Kalkulate.new.karma_from_bounty_completion(@wip)
+    Karma::Kalkulate.new.karma_from_bounty_completion(@wip, current_user.id)
 
   end
 
