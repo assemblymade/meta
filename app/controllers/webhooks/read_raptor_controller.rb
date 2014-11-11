@@ -13,7 +13,9 @@ class Webhooks::ReadRaptorController < WebhookController
   def entities
     (params["pending"] || []).map{|id| id.split('_') }.map do |type, id, tag|
       # we should ignore any tags, the main content article has no tag
-      type.constantize.find(id) if tag.nil?
+      if tag.nil?
+        type.constantize.find(id) rescue nil
+      end
     end.compact
   end
 end
