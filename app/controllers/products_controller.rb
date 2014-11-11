@@ -29,6 +29,8 @@ class ProductsController < ProductController
     if @product.valid?
       respond_with(@product, location: product_welcome_path(@product))
 
+      Karma::Kalkulate.new.award_for_product_to_stealth(@product)
+
       @product.retrieve_key_pair
       schedule_greet
       schedule_one_hour_checkin

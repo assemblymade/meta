@@ -8,6 +8,7 @@
       <th><%= link_to 'Total Activity Count', admin_leaderboard_index_path %></th>
       <th><%= link_to 'Daily Avg', admin_leaderboard_index_path(sort: 'daily_avg') %></th>
       <th><%= link_to 'Account Age', admin_leaderboard_index_path(sort: 'joined_at') %></th>
+      <th><%= Karma %></th>
     </tr>
   </thead>
   <tbody>
@@ -18,9 +19,8 @@
         <td><%= d["activity_count"] %></td>
         <td><%= d["daily_avg"] %></td>
         <td><%= time_ago_in_words(d["joined_at"]) %></td>
+        <td><%= d["karma_total"] %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-

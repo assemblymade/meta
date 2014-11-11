@@ -112,6 +112,9 @@ class WipsController < ProductController
       TrackBountyAwarded.perform_async(@wip.id, @event.user.id)
     end
     redirect_to product_wip_path(@wip.product, @wip)
+
+    Karma::Kalkulate.new.karma_from_bounty_completion(@wip)
+
   end
 
   def search
