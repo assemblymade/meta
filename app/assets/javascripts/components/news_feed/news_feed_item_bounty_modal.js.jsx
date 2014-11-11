@@ -39,17 +39,23 @@ module.exports = React.createClass({
     $(this.getDOMNode()).off('hidden.bs.modal');
   },
 
-  fetchBounty: function() {
-    var target = this.props.item.target;
+  fetchBounty: function(target) {
+    target = target || this.props.item.target;
+
     var url = target.url + '.json';
 
-    window.history.pushState({ news_feed: true }, target.title, target.url);
+    window.history.pushState({ url: target.url }, target.title, target.url);
 
-    $(window).bind('popstate', function() {
+    // Remove the default popstate listener (in application.js.coffee) so that
+    // we can just hide the modals on this page
+    $(window).off('popstate');
+    $(window).bind('popstate', function(e) {
       var state = window.history.state;
 
       if (!state) {
-        $(this.getDOMNode()).modal('hide');
+        $('.modal').modal('hide');
+      } else if (state.url) {
+        window.location = state.url;
       }
     }.bind(this));
 
