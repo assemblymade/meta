@@ -90,7 +90,7 @@
 
 <% content_for :javascript do %>
   <script>
-    React.renderComponent(BountyOffer(<%== {
+    React.render(BountyOffer(<%== {
       product: { name: @product.name },
       maxOffer: (6 * @product.average_bounty).round(-4),
       averageBounty: @product.average_bounty

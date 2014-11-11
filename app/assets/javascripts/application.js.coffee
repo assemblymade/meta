@@ -104,7 +104,7 @@ class window.Application
       constructor = window[className]
       propsJson = node.getAttribute('data-react-props')
       props = propsJson && JSON.parse(propsJson)
-      React.renderComponent(constructor(props), node)
+      React.render(constructor(props), node)
 
 
   featureEnabled: (feature)->

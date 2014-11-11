@@ -34,6 +34,4 @@
   if (typeof module !== 'undefined') {
     module.exports = DropdownTogglerMixin;
   }
-
-  window.DropdownTogglerMixin = DropdownTogglerMixin;
 })();

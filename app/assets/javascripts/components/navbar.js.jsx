@@ -49,12 +49,12 @@
           <li className='dropdown'>
             <a href='#' className='dropdown-toggle' data-toggle='dropdown' key={'navbar dropdown'} style={{ padding: '15px 6px 13px' }}>
               <Avatar user={appUser} size="24" />
-              <span className='visible-xs-inline' style={{ 'margin-left': '5px' }}>
+              <span className='visible-xs-inline' style={{ marginLeft: '5px' }}>
                 {appUser.username}
               </span>
             </a>
 
-            {UserNavbarDropdown(_.extend({}, this.props))}
+            <UserNavbarDropdown {...this.props} />
           </li>
         </ul>
       );

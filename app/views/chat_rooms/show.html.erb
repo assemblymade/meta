@@ -201,7 +201,7 @@
         window.presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
 
         $('.js-members').each(function() {
-          var component = React.renderComponent(
+          var component = React.render(
             MembersView({
               channel: presenceChannel,
               url: '<%= api_chat_room_users_path(@chat_room) %>'

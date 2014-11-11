@@ -4,7 +4,7 @@
 
 <% content_for :javascript do %>
   <script>
-    React.renderComponent(
+    React.render(
       ProductRankings(<%== {
         page: params[:page],
         sortCol: params[:sort],
