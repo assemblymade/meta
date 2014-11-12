@@ -242,7 +242,7 @@ class Wip < ActiveRecord::Base
 
   def notify_by_email(user)
     EmailLog.send_once(user.id, id) do
-      WipMailer.delay(queue: 'mailer').wip_created(user.id, id) unless user.mail_never?
+      # WipMailer.delay(queue: 'mailer').wip_created(user.id, id) unless user.mail_never?
     end
   end
 
