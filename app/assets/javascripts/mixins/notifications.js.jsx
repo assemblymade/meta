@@ -90,9 +90,9 @@
 
         this.render = function() {
           return (
-            <ul className="dropdown-menu" style={{ 'min-width': '380px', width: '380px' }}>
-              <li style={{ 'overflow-y': 'scroll', 'min-height': '60px' }}>
-                <div className="text-center" style={{ 'padding-top': '15px' }}>
+            <ul className="dropdown-menu" style={{ minWidth: '380px', width: '380px' }}>
+              <li style={{ overflowY: 'scroll', minHeight: '60px' }}>
+                <div className="text-center" style={{ paddingTop: '15px' }}>
                   There don't seem to be any notifications here just yet.
                 </div>
               </li>

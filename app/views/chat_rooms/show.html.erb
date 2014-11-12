@@ -58,7 +58,7 @@
   }
 
   .nc-channels {
-    background-color: #235B66;
+    background-color: #353941;
     color: rgba(255, 255, 255, .6);
 
     min-width: 220px;
@@ -201,7 +201,7 @@
         window.presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
 
         $('.js-members').each(function() {
-          var component = React.renderComponent(
+          var component = React.render(
             MembersView({
               channel: presenceChannel,
               url: '<%= api_chat_room_users_path(@chat_room) %>'

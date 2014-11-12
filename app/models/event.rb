@@ -64,7 +64,7 @@ class Event < ActiveRecord::Base
 
     update_pusher(followers, mentioned_users)
   end
-  
+
   def auto_watch!(user)
     wip.auto_watch!(user)
   end
@@ -75,7 +75,7 @@ class Event < ActiveRecord::Base
 
     if notify_by_email? && !user.mail_never?
       EmailLog.send_once user.id, self.id do
-        WipMailer.delay(queue: 'mailer').wip_event_added(user.id, self.id)
+        # WipMailer.delay(queue: 'mailer').wip_event_added(user.id, self.id)
       end
     end
   end

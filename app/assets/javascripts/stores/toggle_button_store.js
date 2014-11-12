@@ -1,5 +1,4 @@
 var xhr = require('../xhr');
-var merge = require('react/lib/merge');
 var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
 

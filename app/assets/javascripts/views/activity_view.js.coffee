@@ -24,7 +24,7 @@ class window.ActivityView extends Backbone.View
           tips: @model.get('tips')
 
 
-      React.renderComponent(
+      React.render(
         ChatEntry({
           user: @model.attributes.actor,
           tips: tipsProps,
@@ -43,7 +43,7 @@ class window.ActivityView extends Backbone.View
       if app.product
         model = @model
         $('.js-insert-tips', @$el).each ->
-          React.renderComponent(TipsUi({
+          React.render(TipsUi({
             viaType: 'Activity',
             viaId: model.id,
             recipient: model.get('actor'),

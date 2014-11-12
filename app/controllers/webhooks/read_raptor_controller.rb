@@ -5,6 +5,7 @@ class Webhooks::ReadRaptorController < WebhookController
 
     entities.each do |entity|
       entity.notify_by_email(user)
+      Rails.logger.info "readraptor_notify key=#{params["pending"]} user=#{user.username} entity=#{entity.id}"
     end
 
     render nothing: true, status: 200

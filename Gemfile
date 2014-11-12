@@ -69,7 +69,7 @@ gem 'rails-assets-jquery.inview',       '1.0.0'
 gem 'rails-assets-spin.js',             '2.0.1'
 gem 'rails-assets-underscore',          '1.7.0'
 gem 'rails_stdout_logging', group: [:development, :production]
-gem 'react-rails', '~> 0.10.0.0'
+gem 'react-rails', '~> 0.12.0.0'
 gem 'redcarpet'
 gem 'redis'
 gem 'sanitize'
@@ -92,7 +92,7 @@ group :development, :test do
   gem 'fakeweb'
   gem 'ffaker'
   # gem "letter_opener"
-  gem 'i18n-debug'
+  # gem 'i18n-debug'
   gem 'machinist', '~> 2'
   gem 'pry'
   gem 'pry-rails'

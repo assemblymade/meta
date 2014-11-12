@@ -31,14 +31,18 @@ class StorySerializer < ApplicationSerializer
   end
 
   def subjects
-    ActiveModel::ArraySerializer.new(
-      object.activities.map(&:subject)
-    )
+    if subject = object.activities.first.try(:subject)
+      if serializer = Story.subject_serializer(subject)
+        object.activities.map(&:subject).map{|s| serializer.new(subject) }
+      end
+    end || []
   end
 
   def target
     if target = object.activities.first.try(:target)
-      target.active_model_serializer.new(target)
+      if serializer = Story.subject_serializer(target)
+        serializer.new(target)
+      end
     end
   end
 

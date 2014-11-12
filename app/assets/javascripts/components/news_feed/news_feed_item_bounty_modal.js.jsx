@@ -39,17 +39,18 @@ module.exports = React.createClass({
     $(this.getDOMNode()).off('hidden.bs.modal');
   },
 
-  fetchBounty: function() {
-    var target = this.props.item.target;
+  fetchBounty: function(target) {
+    target = target || this.props.item.target;
+
     var url = target.url + '.json';
 
-    window.history.pushState({ news_feed: true }, target.title, target.url);
+    window.history.pushState({ url: target.url }, target.title, target.url);
 
-    $(window).bind('popstate', function() {
+    $(window).bind('popstate', function(e) {
       var state = window.history.state;
 
       if (!state) {
-        $(this.getDOMNode()).modal('hide');
+        $('.modal').modal('hide');
       }
     }.bind(this));
 
@@ -63,9 +64,17 @@ module.exports = React.createClass({
   },
 
   getDefaultProps: function() {
-    return {
-      csrf: document.getElementsByName('csrf-token')[0].content
-    };
+    var csrfTokenElement = document.getElementsByName('csrf-token')[0];
+
+    if (csrfTokenElement) {
+      return {
+        csrf: csrfTokenElement.content
+      };
+    }
+
+    console.warn('No CSRF token was found. Changes might fail to post.');
+
+    return {};
   },
 
   getInitialState: function() {

@@ -34,7 +34,7 @@ module.exports = React.createClass({
           <Avatar user={author} size={24} />
         </div>
         <div className="overflow-hidden">
-          <a className="block bold black" style={{'line-height': '1.5rem'}} href={author.url}>{author.username}</a>
+          <a className="block bold black" style={{ lineHeight: '1.5rem' }} href={author.url}>{author.username}</a>
 
           <div className={cs}>
             <Markdown content={body} normalized="true" />

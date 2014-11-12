@@ -19,7 +19,7 @@ module.exports = React.createClass({
 
     _.each(comments, function(e){
       $('.js-insert-tips', $('#' + e.get('anchor'))).each(function() {
-        React.renderComponent(TipsUi({
+        React.render(TipsUi({
           viaType: 'Event',
           viaId: e.id,
           recipient: e.get('actor'),

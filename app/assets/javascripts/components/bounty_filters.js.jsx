@@ -2,20 +2,20 @@
 
 (function() {
   var UserFilter = require ('./user_filter.js.jsx')
-  var TagFitler = require ('./tag_filter.js.jsx')
+  var TagFilter = require ('./tag_filter.js.jsx')
   var SortOrder = require ('./sort_order.js.jsx')
 
   var BountyFilters = React.createClass({
     userFilter: function() {
-      return this.transferPropsTo(<UserFilter buildUrl={this.buildUrl} />)
+      return UserFilter(_.extend({}, this.props, { buildUrl: this.buildUrl }))
     },
 
     tagFilter: function() {
-      return this.transferPropsTo(<TagFitler buildUrl={this.buildUrl} />)
+      return TagFilter(_.extend({}, this.props, { buildUrl: this.buildUrl }))
     },
 
     sortOrder: function() {
-      return this.transferPropsTo(<SortOrder buildUrl={this.buildUrl} />)
+      return SortOrder(_.extend({}, this.props, { buildUrl: this.buildUrl }))
     },
 
     clearFilters: function() {

@@ -1,26 +1,56 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
-var Dispatcher = require('../dispatcher');
-var LocalStorageMixin = require('../mixins/local_storage.js');
-var ChatNotificationStore = require('../stores/chat_notifications_store');
-var DesktopNotifications = require('./desktop_notifications.js.jsx');
-
 (function() {
+  var CONSTANTS = require('../constants');
+
+  var ChatNotificationStore = require('../stores/chat_notifications_store');
+  var DesktopNotifications = require('./desktop_notifications.js.jsx');
+  var Dispatcher = require('../dispatcher');
+  var LocalStorageMixin = require('../mixins/local_storage.js');
+  var Spinner = require('./spinner.js.jsx');
+
   var ICON_URL = 'https://d8izdk6bl4gbi.cloudfront.net/80x/http://f.cl.ly/items/1I2a1j0M0w0V2p3C3Q0M/Assembly-Twitter-Avatar.png';
   var N = CONSTANTS.CHAT_NOTIFICATIONS;
+
+  var NotificationsList = React.createClass({
+    render: function() {
+      var productNodes = this.props.data.map(function(entry){
+        var label = entry.product_name ? entry.product_name : 'Community Chat';
+        var badge = null;
+
+        if (entry.updated > entry.last_read_at) {
+          badge = <span
+              className="indicator indicator-danger pull-right"
+              style={{ 'position': 'relative', 'top': '10px' }} />;
+        }
+
+        return (
+          <a href={entry.url} key={entry.id} className="list-group-item" style={{ border: 'none'}}>
+            {badge} {label}
+          </a>
+        );
+      });
+
+      return (
+        <div style={{ maxHeight: 400, overflowY: 'scroll'}}>
+          {productNodes}
+        </div>
+      );
+    }
+  });
 
   function dynamicSort(property) {
     var sortOrder = 1;
 
     if (property[0] === "-") {
-     sortOrder = -1;
-     property = property.substr(1);
+      sortOrder = -1;
+      property = property.substr(1);
     }
 
     return function (a, b) {
-     var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-     return result * sortOrder;
+      var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+
+      return result * sortOrder;
     }
   }
 
@@ -55,20 +85,6 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
       }));
     },
 
-    componentDidMount: function() {
-      // $('[data-toggle]', this.getDOMNode()).tooltip();
-      var target = this.refs.spinner.getDOMNode();
-      var opts = this.spinnerOptions || {
-        lines: 11,
-        length: 30,
-        radius: 55
-      };
-
-      var spinner = this.spinner = new Spinner(opts).spin();
-
-      target.appendChild(spinner.el);
-    },
-
     componentWillMount: function() {
       var _this = this;
 
@@ -76,6 +92,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
         if (_.contains(msg.mentions, _this.props.username)) {
           _this.desktopNotify(msg);
         }
+
         _this.fetchNotifications();
       });
 
@@ -96,6 +113,7 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
 
         notifyClick: function() {
           $(window).focus();
+
           if (window.app.wip.id != event.wip.id) {
             window.app.redirectTo(event.wip.url);
           }
@@ -128,15 +146,12 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
     },
 
     handleChatRoomsChanged: function() {
-      var self = this;
+      var data = ChatNotificationsStore.getChatRooms();
 
       this.setState({
-        data: ChatNotificationsStore.getChatRooms(),
-        sortKeys: ChatNotificationsStore.getSortKeys()
-      }, function() {
-        if (!_.isEmpty(self.state.data)) {
-          self.spinner.stop();
-        }
+        data: data,
+        sortKeys: ChatNotificationsStore.getSortKeys(),
+        spin: _.isEmpty(data)
       });
     },
 
@@ -190,25 +205,28 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
           <DesktopNotifications onChange={this.handleDesktopNotificationsStateChange} />
         </li>;
       }
+
       return (
-        <ul className="dropdown-menu" style={{'min-width': '380px' }}>
-          <li ref="spinner" style={{'min-height': 120}}>
-            <NotificationsList data={_.first(this.sortByLastReadAt(this.state.data), 7)} />
+        <ul className="dropdown-menu" style={{ minWidth: '380px' }}>
+          <li style={{ minHeight: '120px' }}>
+            {
+              this.state.spin ?
+                <Spinner /> :
+                <NotificationsList data={_.first(this.sortByLastReadAt(this.state.data), 7)} />
+            }
           </li>
+
           <li className="divider"></li>
+
           <li>
-            <a href="#" onClick={this.markAllAsRead} className="text-small list-group-item" style={{'border': 'none'}}>
+            <a href="javascript:void(0);" onClick={this.markAllAsRead} className="text-small list-group-item" style={{'border': 'none'}}>
               Mark all as read
             </a>
           </li>
+
           {desktopNotifications}
         </ul>
       );
-    },
-
-    spinnerOptions: {
-      lines: 11,
-      top: '20%'
     },
 
     storedAckChanged: function() {
@@ -225,43 +243,19 @@ var DesktopNotifications = require('./desktop_notifications.js.jsx');
       var values = _.values(data);
       for (var i = 0; i < values.length; i++) {
         var entry = values[i];
+
         entry.readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
         entry.lastUpdated = - entry.updated
         entry.sortIndex = this.state.sortKeys.indexOf(entry.id);
+
         if (entry.sortIndex === -1) {
           entry.sortIndex = values.length
         }
       }
+
       values.sort(dynamicSortMultiple("readState", "lastUpdated", "sortIndex"));
 
       return values || [];
-    }
-  });
-
-  var NotificationsList = React.createClass({
-    render: function() {
-      var productNodes = this.props.data.map(function(entry){
-        var label = entry.product_name ? entry.product_name : 'Community Chat';
-        var badge = null;
-
-        if (entry.updated > entry.last_read_at) {
-          badge = <span
-              className="indicator indicator-danger pull-right"
-              style={{ 'position': 'relative', 'top': '10px' }} />;
-        }
-
-        return (
-          <a href={entry.url} key={entry.id} className="list-group-item" style={{'border': 'none'}}>
-            {badge} {label}
-          </a>
-        );
-      });
-
-      return (
-        <div style={{'max-height': 400, 'overflow-y': 'scroll'}}>
-          {productNodes}
-        </div>
-      );
     }
   });
 

@@ -39,9 +39,9 @@
     "masonry": "braznaavtrav/masonry",
     "moment": "^2.8.1",
     "picturefill": "^0.1.0",
-    "react": "^0.11.1",
+    "react": "^0.12.0",
     "react-spinner": "^0.1.9",
-    "react-tools": "^0.11.1",
+    "react-tools": "^0.12.0",
     "reactify": "^0.14.0",
     "spin.js": "^2.0.1",
     "underscore": "^1.6.0"

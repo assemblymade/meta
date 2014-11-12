@@ -23,7 +23,7 @@
             <span className={classes.join(' ')}></span>
             {badgeTotal}
           </span>
-          <span className='visible-xs-inline' style={{ 'margin-left': '5px' }}>
+          <span className='visible-xs-inline' style={{ marginLeft: '5px' }}>
             {this.props.label}
           </span>
         </a>
@@ -34,6 +34,4 @@
   if (typeof module !== 'undefined') {
     module.exports = DropdownTogglerMixin;
   }
-
-  window.DropdownTogglerMixin = DropdownTogglerMixin;
 })();

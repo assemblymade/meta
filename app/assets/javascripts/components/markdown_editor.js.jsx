@@ -8,9 +8,17 @@
     },
 
     getDefaultProps: function() {
-      return {
-        url: $('meta[name=attachment-upload-url]').attr('content')
+      var attachmentUploadUrlTag = $('meta[name=attachment-upload-url]');
+
+      if (attachmentUploadUrlTag) {
+        return {
+          url: attachmentUploadUrlTag.attr('content')
+        };
       }
+
+      console.warn('No attachment upload URL was found. Attachments might fail to upload.');
+
+      return {};
     },
 
     componentDidMount: function() {

@@ -73,7 +73,7 @@
     tips: function() {
       if (this.props.tips) {
         return <li>
-          {TipsUi(this.props.tips)}
+          <TipsUi {...this.props.tips} />
         </li>
       }
       return null

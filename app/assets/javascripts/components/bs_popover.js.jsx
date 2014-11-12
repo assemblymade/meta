@@ -26,12 +26,12 @@
       var $title = $tip.find('.popover-title');
 
       if (title) {
-        React.renderComponent(title, $title[0]);
+        React.render(title, $title[0]);
       } else {
         $title.hide();
       }
 
-      React.renderComponent(
+      React.render(
         content,
         $tip.find('.popover-content')[0]
       );

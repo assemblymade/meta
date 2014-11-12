@@ -59,6 +59,10 @@ class Story < ActiveRecord::Base
     Story.where(id: story_ids)
   end
 
+  def self.subject_serializer(subject)
+    "Story::#{subject.class.model_name.name}Serializer".constantize rescue nil
+  end
+
   def reader_ids
     send STREAM_MAPPINGS.fetch([verb, subject_type])
   end

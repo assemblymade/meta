@@ -5,7 +5,6 @@
   var MasonryMixin = require('../../mixins/masonry_mixin.js')
 
   var NewsFeed = React.createClass({
-
     mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0})],
 
     componentDidMount: function() {
@@ -14,12 +13,6 @@
           product: (window.app.currentAnalyticsProduct())
         }
       );
-    },
-
-    count: function(count) {
-      if (count) {
-        return <div className="gray">About {count} bounties</div>;
-      }
     },
 
     countFor: function(filter) {
@@ -104,10 +97,12 @@
     },
 
     getInitialState: function() {
+      var queryKey = window.parseUri(window.location).queryKey || {};
+
       return {
-        filter: (window.parseUri(window.location).queryKey.filter || ''),
+        filter: (queryKey.filter || ''),
         news_feed_items: this.props.news_feed_items,
-        page: (window.parseUri(window.location).queryKey.page || 1)
+        page: (queryKey.page || 1)
       };
     },
 
@@ -162,7 +157,7 @@
     renderEmpty: function() {
       return (
         <div className="well text-center">
-          There hasn't been any activity on this product yet. Why not <a href="#">start some tasks</a>?
+          There hasn't been any activity yet. Why not <a href="/chat/meta">jump into chat</a> to see where you can help?
         </div>
       );
     },
@@ -174,7 +169,6 @@
         '';
 
       // var onClick = this.filterBy.bind(this, filter);
-
       var onClick = function() {
         window.analytics.track('news_feed_item.filter.clicked', { filter: filter });
       };

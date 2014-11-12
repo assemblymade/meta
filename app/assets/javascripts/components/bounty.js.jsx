@@ -8,7 +8,6 @@
 
     getDefaultProps: function() {
       return {
-        currentUser: app.currentUser(),
         bounty: null
       };
     },
@@ -104,13 +103,14 @@
 
     renderDiscussWorkBanner: function() {
       var bounty = this.state.bounty;
-      var closed = bounty.state === 'resolved' || bounty.state === 'closed'
+      var closed = bounty.state === 'resolved' || bounty.state === 'closed';
+      var currentUser = window.app.currentUser();
 
       if (closed) {
         return;
       }
 
-      var currentUserId = this.props.currentUser && this.props.currentUser.get('id');
+      var currentUserId = currentUser && currentUser.get('id');
       var mostRecentWorkerId = bounty.most_recent_other_wip_worker && bounty.most_recent_other_wip_worker.user_id;
 
       var working = _.any(bounty.workers, function(worker) { return worker.id == currentUserId });
@@ -125,13 +125,21 @@
       var discussUrl = bounty.chat_room_url + '?message=' + encodeURIComponent(message);
 
       return (
-        <div style={{ 'padding': '15px', 'background-color': '#EBF8CA', 'border': '1px solid #E6F3C6', 'border-radius': '3px', 'font-size': '16px', 'line-height': '38px', 'margin-bottom': '30px' }}>
+        <div style={{
+            'padding': '15px',
+            backgroundColor: '#EBF8CA',
+            'border': '1px solid #E6F3C6',
+            borderRadius: '3px',
+            fontSize: '16px',
+            lineHeight: '38px',
+            marginBottom: '30px'
+        }}>
           <a href={discussUrl} className="btn btn-default pull-right">
             <span className="icon icon-bubble icon-left"></span>
             Discuss the work
           </a>
 
-          <p className="omega gray-darker" style={{ 'margin-left': '6px' }}>
+          <p className="omega gray-darker" style={{ marginLeft: '6px' }}>
             <strong className="black">Right on!</strong>
             {' '}
             {workersPhrase} started working on this bounty {moment(bounty.most_recent_other_wip_worker.created_at).fromNow()}.
@@ -144,7 +152,8 @@
       var bounty = this.state.bounty;
 
       if (bounty.markdown_description) {
-        return <div className="markdown markdown-content text-large" dangerouslySetInnerHTML={{__html: bounty.markdown_description}}></div>;
+        return <div className="markdown markdown-content text-large"
+            dangerouslySetInnerHTML={{__html: bounty.markdown_description}} />;
       } else {
         return <p className="large text-muted">(No description)</p>;
       }
@@ -167,7 +176,8 @@
 
     renderFlagButton: function() {
       var bounty = this.state.bounty;
-      var isStaff = this.props.currentUser && this.props.currentUser.get('staff');
+      var currentUser = window.app.currentUser();
+      var isStaff = currentUser && currentUser.get('staff');
 
       if(isStaff) {
         return (
@@ -184,9 +194,10 @@
     },
 
     renderFollowButton: function() {
+      var currentUser = window.app.currentUser();
       var bounty = this.state.bounty;
 
-      if(this.props.currentUser) {
+      if(currentUser) {
         return (
           <li>
             <ToggleButton
@@ -256,6 +267,7 @@
     },
 
     renderStartWorkButton: function() {
+      var currentUser = window.app.currentUser();
       var bounty = this.state.bounty;
       var closed = bounty.state == 'resolved' || bounty.state == 'closed'
 
@@ -263,7 +275,7 @@
         return;
       }
 
-      var currentUserId = this.props.currentUser && this.props.currentUser.get('id');
+      var currentUserId = currentUser && currentUser.get('id');
       var isWorking = !!_.find(bounty.workers, function(worker) { return worker.id == currentUserId });
 
       var stopWork = function(event) {
@@ -285,12 +297,14 @@
         event.stopPropagation();
         event.preventDefault();
 
+        var currentUser = window.app.currentUser();
+
         $.ajax({
           url: bounty.start_work_url,
           dataType: 'json',
           type: 'PATCH',
           success: function() {
-            bounty.workers = bounty.workers.concat(this.props.currentUser.attributes);
+            bounty.workers = bounty.workers.concat(currentUser.attributes);
             this.setState({ bounty: bounty });
           }.bind(this),
           error: function() {
@@ -319,6 +333,7 @@
     },
 
     renderSubmitWorkButton: function() {
+      var currentUser = window.app.currentUser();
       var bounty = this.state.bounty;
       var closed = bounty.state == 'resolved' || bounty.state == 'closed'
 
@@ -326,7 +341,7 @@
         return;
       }
 
-      var currentUserId = this.props.currentUser && this.props.currentUser.get('id');
+      var currentUserId = currentUser && currentUser.get('id');
       var isWorking = !!_.find(bounty.workers, function(worker) { return worker.id == currentUserId });
 
       if(isWorking) {

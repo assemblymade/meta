@@ -6,18 +6,6 @@
   DEBOUNCE_TIMEOUT = 2000
 
   var TipsUi = React.createClass({
-    getDefaultProps: function() {
-      var currentUser = app.currentUser()
-      if (currentUser) {
-        currentUser = currentUser.attributes
-      }
-
-      return {
-        currentUser: currentUser,
-        url: app.product.get('url') + '/tips'
-      }
-    },
-
     getInitialState: function() {
       return {
         tips: _.reduce(this.props.tips, function(h, tip) { h[tip.from.id] = tip; return h }, {}),
@@ -34,9 +22,11 @@
     render: function() {
       var totalCents = this.totalCents(),
           opacity = 1.0,
-          tooltip = null
+          tooltip = null,
+          currentUser = window.app.currentUser().attributes,
+          url = app.product && app.product.get('url') + '/tips'
 
-      if (!this.props.currentUser) {
+      if (!currentUser) {
         tooltip = 'You need to sign up before you can tip'
       } else if (this.state.userCents <= 0) {
         opacity = 0.5
@@ -64,6 +54,7 @@
     },
 
     optimisticTip: function() {
+      var currentUser = window.app.currentUser().attributes
       var increment = COIN_INCREMENT[Math.min(this.state.pendingClicks, COIN_INCREMENT.length-1)]
       var update = {
         pendingClicks: { $set: this.state.pendingClicks + 1 },
@@ -71,20 +62,22 @@
           $set: this.state.pendingCents + increment
         }, tips: {}}
 
-      var tip = this.state.tips[this.props.currentUser.id]
+      var tip = this.state.tips[currentUser.id]
       if (tip) {
-        update.tips[this.props.currentUser.id] = { $merge: { cents: tip.cents + increment } }
+        update.tips[currentUser.id] = { $merge: { cents: tip.cents + increment } }
       } else {
-        update.tips[this.props.currentUser.id] = { $set: { from: this.props.currentUser, cents: increment } }
+        update.tips[currentUser.id] = { $set: { from: currentUser, cents: increment } }
       }
 
       this.setState(React.addons.update(this.state, update))
     },
 
     save: _.debounce(function() {
+      var url = app.product && app.product.get('url') + '/tips';
+
       $.ajax({
         type: "POST",
-        url: this.props.url,
+        url: url,
         dataType: 'json',
         data: {
           tip: {
@@ -108,7 +101,8 @@
     },
 
     currentUserIsRecipient: function() {
-      return this.props.currentUser.id == this.props.recipient.id
+      var currentUser = window.app.currentUser().attributes
+      return currentUser.id == this.props.recipient.id
     },
 
     totalCents: function() {

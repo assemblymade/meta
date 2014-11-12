@@ -2,23 +2,20 @@
 
 (function() {
   var CONSTANTS = require('../constants');
-  var Dispatcher = require('../dispatcher');
-  var TitleNotificationsCount = require('./title_notifications_count.js.jsx');
-  var DropdownNotificationsToggler = require('./dropdown_notifications_toggler.js.jsx');
-  var DropdownNotifications = require('./dropdown_notifications.js.jsx');
-  var ChatNotificationsToggler = require('./chat_notifications_toggler.js.jsx');
-  var ChatNotifications = require('./chat_notifications.js.jsx');
-  var UserNavbarDropdown = require('./user_navbar_dropdown.js.jsx');
+
   var Avatar = require('./avatar.js.jsx');
+  var ChatNotifications = require('./chat_notifications.js.jsx');
+  var ChatNotificationsToggler = require('./chat_notifications_toggler.js.jsx');
+  var Dispatcher = require('../dispatcher');
+  var DropdownNotifications = require('./dropdown_notifications.js.jsx');
+  var DropdownNotificationsToggler = require('./dropdown_notifications_toggler.js.jsx');
+  var TitleNotificationsCount = require('./title_notifications_count.js.jsx');
+  var UserNavbarDropdown = require('./user_navbar_dropdown.js.jsx');
+
 
   var Navbar = React.createClass({
-    getDefaultProps: function() {
-      return {
-        user: app.currentUser().attributes
-      };
-    },
-
     render: function() {
+      var appUser = window.app.currentUser().attributes;
       var user = this.props.currentUser;
 
       return (
@@ -35,8 +32,7 @@
 
             <ChatNotifications
                 url={this.props.chatPath}
-                username={this.props.user.username}
-            />
+                username={appUser.username} />
           </li>
 
           <li className="navbar-item-muted">
@@ -47,19 +43,19 @@
 
             <DropdownNotifications
                 url={this.props.notificationsPath}
-                username={this.props.user.username}
+                username={appUser.username}
                 editUserPath={this.props.editUserPath} />
           </li>
 
           <li className='dropdown'>
-            <a href='#' className='dropdown-toggle' data-toggle='dropdown' key={'navbar dropdown'} style={{ padding: '15px 6px 13px' }}>
-              <Avatar user={this.props.user} size="24" />
-              <span className='visible-xs-inline' style={{ 'margin-left': '5px' }}>
-                {this.props.user.username}
+            <a href='javascript:void(0);' className='dropdown-toggle' data-toggle='dropdown' key={'navbar dropdown'} style={{ padding: '15px 6px 13px' }}>
+              <Avatar user={appUser} size="24" />
+              <span className='visible-xs-inline' style={{ marginLeft: '5px' }}>
+                {appUser.username}
               </span>
             </a>
 
-            {this.transferPropsTo(<UserNavbarDropdown />)}
+            <UserNavbarDropdown {...this.props} />
           </li>
         </ul>
       );

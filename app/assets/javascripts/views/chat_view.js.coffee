@@ -40,7 +40,7 @@ class window.ChatView extends Backbone.View
 
     tsContainer = $('<div class="timeline-insert js-timestamp">&nbsp;</div>').insertBefore('.timeline-item:last')
     lastTime = @collection.last().get('created')
-    React.renderComponent(Timestamp({time: lastTime}), tsContainer[0])
+    React.render(Timestamp({time: lastTime}), tsContainer[0])
 
   onCollectionAdd: (model, collection, info) =>
     @listenTo(model, 'sync', => @preserveScrollPosition()) # scroll the content after message is fetched from the server
@@ -134,7 +134,7 @@ class window.ChatView extends Backbone.View
     id = $(e.currentTarget).attr('href')
     body = $(id + ' .activity-content').text().trim()
     productAttributes = @collection.product.attributes
-    renderedModal = React.renderComponent(
+    renderedModal = React.render(
       CreateBounty({
         title: body,
         url: productAttributes.url + '/bounties',

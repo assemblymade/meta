@@ -1,3 +1,5 @@
+/** @jsx React.DOM */
+
 (function() {
 
   module.exports = React.createClass({
