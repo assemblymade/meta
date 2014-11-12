@@ -15,11 +15,10 @@ class DiscoverController < ApplicationController
     @greenlit = greenlit_products.limit(20)
     @team_building = team_building_products.limit(20)
     # --
-    @products = Product.joins(wips: { taggings: :tag })
+    @products = Product.includes(:logo)
                        .where.not(slug: 'meta')
                        .where(flagged_at: nil)
                        .where(state: %w(greenlit profitable team_building))
-                       .distinct
                        .limit(100)
 
     if params[:tag].present?
@@ -32,10 +31,11 @@ class DiscoverController < ApplicationController
         params[:tag]
       end
 
-      @products = @products.where(
-        wip_tags: { name: tag },
-        wips: { state: 'open' }
-      )
+      @products = @products.joins(wips: { taggings: :tag })
+                            .where(
+                              wip_tags: { name: tag },
+                              wips: { state: 'open' }
+                            )
     end
 
     @products = case params[:sort]
@@ -46,7 +46,7 @@ class DiscoverController < ApplicationController
       when 'teambuilding'
         @products.sort_by {|p| p.bio_memberships_count }
       else # popular
-        @products.sort_by {|p| -p.partners.size }
+        @products.sort_by {|p| -p.partners_count }
       end
 
   end

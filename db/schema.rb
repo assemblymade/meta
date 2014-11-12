@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141110175909) do
+ActiveRecord::Schema.define(version: 20141112233831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -682,6 +682,7 @@ ActiveRecord::Schema.define(version: 20141110175909) do
     t.string   "transaction_type"
   end
 
+  add_index "transaction_log_entries", ["wallet_id", "product_id"], name: "index_transaction_log_entries_on_wallet_id_and_product_id", using: :btree
   add_index "transaction_log_entries", ["wallet_id"], name: "index_transaction_log_entries_on_wallet_id", using: :btree
 
   create_table "uniques", id: false, force: true do |t|

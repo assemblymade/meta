@@ -61,7 +61,7 @@ module ProductsHelper
   end
 
   def followers_sorted_by_coins(product, limit=10)
-    product.followers.
+    User.joins(:watchings).
       joins('left join transaction_log_entries tle on (tle.wallet_id = users.id and tle.product_id = watchings.watchable_id)').
       group('users.id').
       order('sum(cents) desc NULLS LAST').
