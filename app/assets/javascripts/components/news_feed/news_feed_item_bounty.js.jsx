@@ -45,7 +45,7 @@
 
       return (
         <div className="p3" style={{ cursor: 'pointer', 'background-color': '#fcfcfc' }} onClick={this.showBounty}>
-          <a className="h3 bold mt0 mb2 blue" href={bounty.url} onClick={this.suppressModal} key="bounty-link">
+          <a className="h3 bold mt0 mb2 blue" href="javascript:void(0);" onClick={this.showBounty} key="bounty-link">
             {bounty.title}
           </a>
           <div className="yellow mb3" key="bounty-value">
@@ -81,10 +81,6 @@
       } else {
         window.location = this.props.bounty.url;
       }
-    },
-
-    suppressModal: function(e) {
-      e.stopPropagation();
     },
 
     tags: function() {
