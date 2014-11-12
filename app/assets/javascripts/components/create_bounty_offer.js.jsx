@@ -2,12 +2,6 @@
 
 (function() {
   var CreateBountyOffer = React.createClass({
-    getDefaultProps: function() {
-      return {
-        user: app.currentUser()
-      }
-    },
-
     getInitialState: function() {
       return {
         toggle: 'simple'
@@ -21,10 +15,12 @@
     },
 
     renderValueControl: function() {
+      var currentUser = window.app.currentUser();
+
       if(this.state.toggle === 'simple') {
-        return this.transferPropsTo(<SimpleBountyOffer />)
+        return <SimpleBountyOffer {...this.props} user={currentUser} />
       } else {
-        return this.transferPropsTo(<CustomBountyOffer />)
+        return <CustomBountyOffer {...this.props} user={currentUser} />
       }
     },
 

@@ -7,12 +7,6 @@
   var BountyBreakdown = React.createClass({
     mixins: [React.addons.LinkedStateMixin],
 
-    getDefaultProps: function() {
-      return {
-        user: app.currentUser()
-      };
-    },
-
     getInitialState: function() {
       return {
         offers: this.props.offers,
@@ -153,7 +147,8 @@
     renderNewOffer: function() {
       return VoteBountyOffer(
         _.extend({}, this.props, {
-          onChange: this.handleOfferChanged
+          onChange: this.handleOfferChanged,
+          user: window.app.currentUser()
         })
       );
     },

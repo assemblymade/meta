@@ -66,7 +66,7 @@
       if (tip) {
         update.tips[currentUser.id] = { $merge: { cents: tip.cents + increment } }
       } else {
-        update.tips[currentUser.id] = { $set: { from: this.props.currentUser, cents: increment } }
+        update.tips[currentUser.id] = { $set: { from: currentUser, cents: increment } }
       }
 
       this.setState(React.addons.update(this.state, update))

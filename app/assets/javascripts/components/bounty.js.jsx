@@ -8,7 +8,6 @@
 
     getDefaultProps: function() {
       return {
-        currentUser: window.app.currentUser(),
         bounty: null
       };
     },
@@ -104,13 +103,14 @@
 
     renderDiscussWorkBanner: function() {
       var bounty = this.state.bounty;
-      var closed = bounty.state === 'resolved' || bounty.state === 'closed'
+      var closed = bounty.state === 'resolved' || bounty.state === 'closed';
+      var currentUser = window.app.currentUser();
 
       if (closed) {
         return;
       }
 
-      var currentUserId = this.props.currentUser && this.props.currentUser.get('id');
+      var currentUserId = currentUser && currentUser.get('id');
       var mostRecentWorkerId = bounty.most_recent_other_wip_worker && bounty.most_recent_other_wip_worker.user_id;
 
       var working = _.any(bounty.workers, function(worker) { return worker.id == currentUserId });
@@ -167,7 +167,8 @@
 
     renderFlagButton: function() {
       var bounty = this.state.bounty;
-      var isStaff = this.props.currentUser && this.props.currentUser.get('staff');
+      var currentUser = window.app.currentUser();
+      var isStaff = currentUser && currentUser.get('staff');
 
       if(isStaff) {
         return (
@@ -184,9 +185,10 @@
     },
 
     renderFollowButton: function() {
+      var currentUser = window.app.currentUser();
       var bounty = this.state.bounty;
 
-      if(this.props.currentUser) {
+      if(currentUser) {
         return (
           <li>
             <ToggleButton
@@ -256,6 +258,7 @@
     },
 
     renderStartWorkButton: function() {
+      var currentUser = window.app.currentUser();
       var bounty = this.state.bounty;
       var closed = bounty.state == 'resolved' || bounty.state == 'closed'
 
@@ -263,7 +266,7 @@
         return;
       }
 
-      var currentUserId = this.props.currentUser && this.props.currentUser.get('id');
+      var currentUserId = currentUser && currentUser.get('id');
       var isWorking = !!_.find(bounty.workers, function(worker) { return worker.id == currentUserId });
 
       var stopWork = function(event) {
@@ -285,12 +288,14 @@
         event.stopPropagation();
         event.preventDefault();
 
+        var currentUser = window.app.currentUser();
+
         $.ajax({
           url: bounty.start_work_url,
           dataType: 'json',
           type: 'PATCH',
           success: function() {
-            bounty.workers = bounty.workers.concat(this.props.currentUser.attributes);
+            bounty.workers = bounty.workers.concat(currentUser.attributes);
             this.setState({ bounty: bounty });
           }.bind(this),
           error: function() {
@@ -319,6 +324,7 @@
     },
 
     renderSubmitWorkButton: function() {
+      var currentUser = window.app.currentUser();
       var bounty = this.state.bounty;
       var closed = bounty.state == 'resolved' || bounty.state == 'closed'
 
@@ -326,7 +332,7 @@
         return;
       }
 
-      var currentUserId = this.props.currentUser && this.props.currentUser.get('id');
+      var currentUserId = currentUser && currentUser.get('id');
       var isWorking = !!_.find(bounty.workers, function(worker) { return worker.id == currentUserId });
 
       if(isWorking) {
