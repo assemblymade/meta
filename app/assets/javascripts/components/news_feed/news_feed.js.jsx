@@ -120,7 +120,6 @@
     },
 
     render: function() {
-      console.log(this.filters());
       return (
         <div>
 
@@ -171,7 +170,6 @@
         '';
 
       // var onClick = this.filterBy.bind(this, filter);
-      console.log(filter);
       var onClick = function() {
         window.analytics.track('news_feed_item.filter.clicked', { filter: filter });
       };
