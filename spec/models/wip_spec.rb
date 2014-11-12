@@ -18,7 +18,6 @@ describe Wip do
     end
 
     it 'only sends once per user' do
-      pending("Waiting on changes from @whatupdave")
       expect(WipMailer).to receive(:wip_created).once
 
       wip.notify_by_email(owner)
