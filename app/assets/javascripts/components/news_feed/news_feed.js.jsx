@@ -107,7 +107,6 @@
     },
 
     handleFilterMouseOver: function(filter, e) {
-      console.log('called');
       this.setState({
         hoverFilter: filter,
       });

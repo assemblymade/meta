@@ -1,5 +1,6 @@
 global.React = require('react/addons');
 global.TestUtils = React.addons.TestUtils;
+global.path = require.requireActual('path');
 global._ = require('underscore');
 global.$ = require('jquery');
 global.app = {};

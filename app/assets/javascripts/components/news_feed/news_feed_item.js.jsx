@@ -4,6 +4,7 @@
 // var _ = require('underscore')
 
 (function() {
+  var AppIcon = require('../app_icon.js.jsx');
   var Avatar = require('../avatar.js.jsx');
   var Markdown = require('../markdown.js.jsx');
   var NewsFeedItemBounty = require('./news_feed_item_bounty.js.jsx');
@@ -42,8 +43,8 @@
       var product = this.props.product
       var target = this.props.target
 
-      var commentCount = this.props.target.comments_count
-      var tags = this.props.target.tags
+      var commentCount = target && target.comments_count
+      var tags = target && target.tags
 
       // Don't show any footer if there's no comments or tags
       // This isn't great, we should always have something for people to do
@@ -100,7 +101,7 @@
     renderLastComment: function() {
       var comments = this.props.news_feed_item_comments;
 
-      if (comments.length) {
+      if (comments && comments.length) {
         var comment = comments[comments.length - 1];
         var user = comment.user;
 
@@ -154,39 +155,41 @@
       var product = this.props.product
       var target = this.props.target
 
-      switch (target.type) {
-      case 'task':
-        return <NewsFeedItemBounty
-          product={product}
-          bounty={target}
-          user={this.props.user}
-          title={target.title}
-          coins={target.value}
-          comments={this.props.news_feed_item_comments}
-          item={this.props} />;
+      if (target) {
+        switch (target.type) {
+        case 'task':
+          return <NewsFeedItemBounty
+            product={product}
+            bounty={target}
+            user={this.props.user}
+            title={target.title}
+            coins={target.value}
+            comments={this.props.news_feed_item_comments}
+            item={this.props} />;
 
-      case 'team_membership':
-        return <NewsFeedItemIntroduction
-          user={target.user}
-          intro={target.bio} />;
+        case 'team_membership':
+          return <NewsFeedItemIntroduction
+            user={target.user}
+            intro={target.bio} />;
 
-      case 'discussion':
-        return <NewsFeedItemPost
-          body={target.description_html}
-          url={target.url}
-          title={target.title} />;
+        case 'discussion':
+          return <NewsFeedItemPost
+            body={target.description_html}
+            url={target.url}
+            title={target.title} />;
 
-      case 'post':
-        return <NewsFeedItemPost
-          body={target.markdown_body}
-          url={target.url}
-          title={target.title} />;
+        case 'post':
+          return <NewsFeedItemPost
+            body={target.markdown_body}
+            url={target.url}
+            title={target.title} />;
 
-      default:
-        return <NewsFeedItemPost
-          title={target.name || target.title}
-          body={target.description}
-          url={target.url} />;
+        default:
+          return <NewsFeedItemPost
+            title={target.name || target.title}
+            body={target.description}
+            url={target.url} />;
+        }
       }
     },
 
