@@ -16,10 +16,22 @@
       }
     },
 
-    handleFilterClick: function(filter, option) {
+    addFilter: function(filter) {
+      var filters = this.state.filters
+
+      if(filter.type == 'order') {
+        filters = _.reject(filters, function(f) { return f.type == 'order' })
+      }
+
+      return filters.concat(filter)
+    },
+
+    handleFilterClick: function(filter) {
       return function(event) {
+        var filters = this.addFilter(filter)
+
         this.setState({
-          filters: _.uniq(this.state.filters.concat(filter))
+          filters: filters
         })
       }.bind(this)
     },
@@ -53,6 +65,42 @@
       return <BountyFilterButton name={'Tag'} options={options} onFilterClick={this.handleFilterClick} />
     },
 
+    renderCreatorFilter: function() {
+      var options = this.props.creators.map(function(user) {
+        return { name: '@' + user.username, value: user.username }
+      }).map(function(option) {
+        return _.extend(option, ({ type: 'creator' }))
+      })
+
+      return <BountyFilterButton name={'Creator'} options={options} onFilterClick={this.handleFilterClick} />
+    },
+
+    renderWorkerFilter: function() {
+      var options = this.props.workers.map(function(user) {
+        return { name: '@' + user.username, value: user.username }
+      }).map(function(option) {
+        return _.extend(option, ({ type: 'worker' }))
+      })
+
+      return <BountyFilterButton name={'Worker'} options={options} onFilterClick={this.handleFilterClick} />
+    },
+
+    renderOrderFilter: function() {
+      var options = [
+        { name: 'Priority',               value: 'priority' },
+        { name: 'Most valuable',          value: 'most_valuable' },
+        { name: 'Lease valuable',         value: 'least_valuable' },
+        { name: 'Newest',                 value: 'newest' },
+        { name: 'Oldest',                 value: 'oldest' },
+        { name: 'Recently updated',       value: 'recently_updated' },
+        { name: 'Least recently updated', value: 'least_recently_updated' }
+      ].map(function(option) {
+        return _.extend(option, ({ type: 'order' }))
+      })
+
+      return <BountyFilterButton name={'Order'} options={options} onFilterClick={this.handleFilterClick} />
+    },
+
     render: function() {
       return (
         <div>
@@ -71,73 +119,9 @@
               <ul className="nav nav-pills">
                 {this.renderStateFilter()}
                 {this.renderTagFilter()}
-
-                <li className="dropdown">
-                  <a className="dropdown-toggle" data-toggle="dropdown" href="#">
-                    Creator <span className="caret"></span>
-                  </a>
-
-                  <ul className="dropdown-menu">
-                    <li className="selected">
-                      <a href="#">
-                        @vanstee
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        @chrislloyd
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        @whatupdave
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-
-                <li className="dropdown">
-                  <a className="dropdown-toggle" data-toggle="dropdown" href="#">
-                    Worker <span className="caret"></span>
-                  </a>
-
-                  <ul className="dropdown-menu">
-                    <li className="selected">
-                      <a href="#">
-                        @vanstee
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        @chrislloyd
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        @whatupdave
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-
-                <li className="dropdown">
-                  <a className="dropdown-toggle" data-toggle="dropdown" href="#">
-                    Order <span className="caret"></span>
-                  </a>
-
-                  <ul className="dropdown-menu">
-                    <li className="selected">
-                      <a href="#">
-                        Highest priority
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        Lowest priority
-                      </a>
-                    </li>
-                  </ul>
-                </li>
+                {this.renderCreatorFilter()}
+                {this.renderWorkerFilter()}
+                {this.renderOrderFilter()}
               </ul>
             </div>
           </div>

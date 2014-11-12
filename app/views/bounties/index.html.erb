@@ -2,7 +2,11 @@
 <% activate_nav! :bounties %>
 <%= track 'product.wips.viewed', ProductAnalyticsSerializer.new(@product) %>
 
-<%= react_component 'BountyFilter', tags: Wip::Tag.suggested_tags %>
+<%= react_component 'BountyFilter', {
+  tags: Wip::Tag.suggested_tags,
+  creators: User.joins(:wips).where(wips: { type: 'Task', product_id: @product }).uniq.order('username ASC').map { |u| UserSerializer.new(u) },
+  workers: User.joins(wip_workers: :wip).where(wips: { type: 'Task', product_id: @product }).uniq.order('username ASC').map { |u| UserSerializer.new(u) }
+} %>
 
 <div class="border-top mt2 mb2"></div>
 
