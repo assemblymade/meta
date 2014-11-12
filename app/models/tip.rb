@@ -19,23 +19,6 @@ class Tip < ActiveRecord::Base
       tip.save!
     end
 
-    karma_value = 1
-    if not to.nil?
-      chronicle = Chronicle.find_by(user_id: to.id)
-      if not chronicle.nil?
-        chronicle_id = chronicle.id
-      else
-        chronicle = Chronicle.create!(user_id: to.id)
-        chronicle_id = chronicle.id
-      end
-    else
-      chronicle = Chronicle.create!(user_id: to.id)
-      chronicle_id = chronicle.id
-    end
-
-    Deed.create!({karma_value: karma_value, karma_event: tip, user_id: to.id, chronicle_id: chronicle_id})
-
-
     tip
   end
 end
