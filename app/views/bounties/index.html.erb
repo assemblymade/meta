@@ -2,17 +2,13 @@
 <% activate_nav! :bounties %>
 <%= track 'product.wips.viewed', ProductAnalyticsSerializer.new(@product) %>
 
-<%= render 'bounties/header'  %>
+<%= react_component 'BountyFilter', tags: Wip::Tag.suggested_tags %>
 
-<div class="clearfix mxn2">
+<div class="border-top mt2 mb2"></div>
 
+<div class="row">
   <% if @product.tasks.any? %>
-
-    <div class="sm-col sm-col-4 px2" style="float: right !important">
-      <%= render 'bounties/projects_filter', projects: @milestones %>
-    </div>
-
-    <div class="sm-col sm-col-8 px2">
+    <div class="col-xs-12">
       <% if @wips.any? %>
 
         <% @wips.each do |task| %>
@@ -26,7 +22,6 @@
         <% end %>
       <% end %>
     </div>
-
   <% else %>
 
     <div class="col-md-6 col-md-offset-3">
@@ -49,7 +44,5 @@
         }.to_json %>" class="omega text-center"></div>
       </div>
     </div>
-
   <% end %>
-
 </div>
