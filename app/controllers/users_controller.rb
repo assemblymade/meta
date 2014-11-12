@@ -21,8 +21,12 @@ class UsersController < ApplicationController
 
     set_empty_state if @wips.empty?
 
-    @show_karma = current_user.is_staff?
-  
+    if signed_in?
+      @show_karma = current_user.is_staff?
+    else
+      @show_karma = false
+    end
+
     respond_with @user
   end
 
