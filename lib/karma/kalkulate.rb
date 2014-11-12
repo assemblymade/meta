@@ -4,8 +4,8 @@ module Karma
     FOUNDER_BOUNTY_MULTIPLER = 0.05
     BOUNTY_KARMA_VALUE = 10.0
     BOUNTY_CREATOR_KARMA_SHARE = 0.3 #30%
-    KARMA_FROM_INVITE = 3.0
-    KARMA_FROM_COMPLETED_INVITE = 10.0
+    KARMA_FROM_INVITE = 2.0
+    KARMA_FROM_COMPLETED_INVITE = 8.0
     TIP_RECIPIENT_KARMA = 1.0
 
     def get_chronicle_id(user_id)
@@ -122,6 +122,19 @@ module Karma
       Product.all.each do |p|
         award_for_product_to_stealth(p)
       end
+    end
+
+    def retroactively_add_invite_karma()
+      Invite.all.each do |i|
+        karma_from_invite(i)
+      end
+    end
+
+    def retroactively_build_all()
+      retroactively_add_bounty_karma()
+      retroactively_add_tip_karma()
+      retroactively_add_product_karma()
+      retroactively_add_invite_karma()
     end
 
   end
