@@ -92,6 +92,22 @@ module Karma
       @karma_results = karma_totals.sort{|a,b| b[1] <=> a[1]}[0, top_n]
     end
 
+    def karma_rank(user_id)
+      karma_users = Deed.uniq.pluck(:user_id)
+      karma_totals = {}
+
+      karma_users.each do |k|
+        karma_totals[k]=[Deed.where(user_id: k).sum(:karma_value)]
+      end
+      karma_totals=Hash[karma_totals.sort_by{|k,v| v}.reverse]
+
+      rank = karma_totals.keys.index(user_id)
+      if rank.nil?
+        rank = "Neophyte"
+      end
+      rank
+    end
+
     def karma_from_tip(tip)
       to_id = tip.to_id
       chronicle_id = get_chronicle_id(to_id)

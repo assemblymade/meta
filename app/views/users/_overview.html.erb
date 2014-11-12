@@ -1,10 +1,18 @@
 <div class="stat-group" style="margin-bottom: 36px;">
   <div class="stat">
     <div class="stat-value">
+      <% if @show_karma %>
+      <%= number_with_delimiter(@user.karma_total) %>
+      <% else %>
       <%= number_with_delimiter(@user.count_contributions) %>
+      <% end %>
     </div>
     <div class="stat-title">
-      Contributions
+      <% if @show_karma %>
+      <%= "Karma" %>
+      <% else %>
+      <%= "Contributions" %>
+      <% end %>
     </div>
   </div>
 
