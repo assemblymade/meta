@@ -202,7 +202,7 @@
           style.cursor = 'default';
         }
 
-        var backgroundColor = TAG_STYLES[tag];
+        var backgroundColor = TAG_STYLES[tag.toLowerCase()];
 
         if (backgroundColor) {
           style.color = '#fff';
