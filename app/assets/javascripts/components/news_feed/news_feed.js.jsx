@@ -5,7 +5,6 @@
   var MasonryMixin = require('../../mixins/masonry_mixin.js')
 
   var NewsFeed = React.createClass({
-
     mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0})],
 
     componentDidMount: function() {
@@ -108,6 +107,7 @@
     },
 
     handleFilterMouseOver: function(filter, e) {
+      console.log('called');
       this.setState({
         hoverFilter: filter,
       });
@@ -120,6 +120,7 @@
     },
 
     render: function() {
+      console.log(this.filters());
       return (
         <div>
 
@@ -158,7 +159,7 @@
     renderEmpty: function() {
       return (
         <div className="well text-center">
-          There hasn't been any activity on this product yet. Why not <a href="#">start some tasks</a>?
+          There hasn't been any activity yet. Why not <a href="/chat/meta">jump into chat</a> to see where you can help?
         </div>
       );
     },
@@ -170,7 +171,7 @@
         '';
 
       // var onClick = this.filterBy.bind(this, filter);
-
+      console.log(filter);
       var onClick = function() {
         window.analytics.track('news_feed_item.filter.clicked', { filter: filter });
       };

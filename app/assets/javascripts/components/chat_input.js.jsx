@@ -4,7 +4,6 @@
   var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
   var subscribing;
 
-  var React = require('react');
   var Set = require('Set');
 
   var ChatInput = React.createClass({

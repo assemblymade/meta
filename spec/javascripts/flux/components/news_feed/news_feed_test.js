@@ -36,6 +36,9 @@ describe('NewsFeed', function() {
       NewsFeed
     );
 
-
+    var filters = TestUtils.scryRenderedDOMComponentsWithTag(
+      'div',
+      nf
+    );
   });
 });
