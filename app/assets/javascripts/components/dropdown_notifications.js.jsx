@@ -60,7 +60,7 @@
             onClick={this.markAsRead.bind(this, story)}
             key={options.key}>
 
-          <div className="row" style={{ 'margin': '0px', 'max-width': '365px' }}>
+          <div className="row" style={{ 'margin': '0px', maxWidth: '365px' }}>
             <div className="col-md-2">
               <Avatar user={this.actors(story, options.actors)[0]} size={18} />&nbsp;
             </div>
@@ -122,9 +122,9 @@
 
       return (
         <span className='text-muted' style={{
-          'text-overflow': 'ellipsis',
+          textOverflow: 'ellipsis',
           'overflow': 'hidden',
-          'white-space':'nowrap',
+          whiteSpace: 'nowrap',
           'display': 'inline-block',
           'width': "280px"
         }}>
@@ -139,12 +139,12 @@
 
     render: function() {
       return (
-        <ul className="dropdown-menu" style={{ 'min-width': '380px', width: '380px' }}>
-          <li style={{ 'overflow-y': 'scroll', 'min-height': '60px' }} ref="spinner">
+        <ul className="dropdown-menu" style={{ minWidth: '380px', width: '380px' }}>
+          <li style={{ overflowY: 'scroll', minHeight: '60px' }} ref="spinner">
             {this.state.stories ? this.rows(this.state.stories) : null}
           </li>
 
-          <li className="divider" style={{ 'margin-top': '0px' }} />
+          <li className="divider" style={{ marginTop: '0px' }} />
 
           <li>
             <a href={this.props.editUserPath} className="text-small">Settings</a>
@@ -168,7 +168,7 @@
       var firstTen = _.first(stories, 10);
 
       return (
-        <div className="list-group" style={{ 'max-height': '400px', 'min-height': '50px' }}>
+        <div className="list-group" style={{ maxHeight: '400px', minHeight: '50px' }}>
           { _.map(firstTen, function(story) {
             var opts = {
               key: story.id,

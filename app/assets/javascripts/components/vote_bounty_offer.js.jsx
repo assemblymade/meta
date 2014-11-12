@@ -37,12 +37,12 @@
         <div>
           <ul className="px3 nav nav-tabs nav-slim h6 mt0 mb0">
             <li className={this.state.toggle == 'simple' ? 'active' : null}>
-              <a onClick={this.handleClick('simple')} href="#" style={{ 'line-height': '1.5rem', 'padding-top': 12, 'padding-bottom': 9 }}>
+              <a onClick={this.handleClick('simple')} href="#" style={{ lineHeight: '1.5rem', paddingTop: 12, paddingBottom: 9 }}>
                 Suggested
               </a>
             </li>
             <li className={this.state.toggle == 'custom' ? 'active' : null}>
-              <a onClick={this.handleClick('custom')} href="#" style={{ 'line-height': '1.5rem', 'padding-top': 12, 'padding-bottom': 9 }}>
+              <a onClick={this.handleClick('custom')} href="#" style={{ lineHeight: '1.5rem', paddingTop: 12, paddingBottom: 9 }}>
                 Custom
               </a>
             </li>

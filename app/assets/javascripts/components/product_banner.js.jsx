@@ -40,19 +40,19 @@
         <div className="banner" style={{
           'margin-top': '10px',
           display: this.state.display,
-          'background-color': '#f3f3f3',
-          'width': '100%',
-          'padding': '10px',
-          'margin': '0px',
-          'line-height': '1.5em',
-          'font-size': '1.1em',
-          'font-weight': 'bold'
+          backgroundColor: '#f3f3f3',
+          width: '100%',
+          padding: '10px',
+          margin: '0px',
+          lineHeight: '1.5em',
+          fontSize: '1.1em',
+          fontWeight: 'bold'
         }}>
           How do I <a style={{ cursor: 'pointer' }} onClick={this.showModal}>get started</a>?
           <span id="hide-banner"
                 style={{
                   cursor: 'pointer',
-                  'padding-left': '10px'
+                  paddingLeft: '10px'
                 }}
                 onClick={this.dismiss}
                 data-toggle="tooltip"

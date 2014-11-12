@@ -48,7 +48,7 @@
             })
 
             return (
-              <a className={classes} href={room.url}>
+              <a className={classes} href={room.url} key={room.url}>
                 #{room.label}
               </a>
             )

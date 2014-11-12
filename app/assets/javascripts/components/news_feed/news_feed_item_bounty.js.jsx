@@ -44,12 +44,18 @@
       var urgencies = ['Urgent', 'Now', 'Someday'];
 
       return (
-        <div className="p3" style={{ cursor: 'pointer', 'background-color': '#fcfcfc' }} onClick={this.showBounty}>
-          <a className="h3 bold mt0 mb2 blue" href="javascript:void(0);" onClick={this.showBounty} key="bounty-link">
+        <div className="p3"
+              style={{ cursor: 'pointer', backgroundColor: '#fcfcfc' }}
+              onClick={this.showBounty}
+              key={'nfbi-' + bounty.id}>
+          <a className="h3 bold mt0 mb2 blue"
+              href="javascript:void(0);"
+              onClick={this.showBounty}
+              key={"bounty-link-" + bounty.id}>
             {bounty.title}
           </a>
-          <div className="yellow mb3" key="bounty-value">
-            <span className="mr2">
+          <div className="yellow mb3" key={"bounty-value-" + bounty.id}>
+            <span className="mr2" key={'mr2' + bounty.id}>
               <AppCoins n={bounty.value} />
             </span>
             <Urgency
@@ -58,11 +64,11 @@
               state={bounty.state}
               url={bounty.urgency_url} />
           </div>
-          <div className="gray-darker">
+          <div className="gray-darker" key={'nfbi-body-' + bounty.id}>
             <Markdown content={bounty.short_description} normalized={true} />
             {this.thumbnails()}
           </div>
-          <div key="nfib-modal" style={{ cursor: 'default', width: '80%' }}>
+          <div key={"nfib-modal-" + bounty.id} style={{ cursor: 'default', width: '80%' }}>
             {this.modal()}
           </div>
         </div>
@@ -104,18 +110,16 @@
       var thumbnails = this.props.bounty.thumbnails;
 
       if (thumbnails.length) {
-        var thumbs = _.map(thumbnails, function(thumb) {
+        var thumbs = _.map(thumbnails, function(thumb, i) {
           return (
-            <span className="px2">
+            <span className="px2" key={'thumb-' + i}>
               <Thumbnail src={thumb} size={100} />
             </span>
           );
         });
 
-        thumbs.append
-
         return (
-          <div className="clearfix">
+          <div className="clearfix" key={'thumbs-container-' + this.props.bounty.id}>
             <div className="gray py1">Images</div>
             {thumbs}
           </div>

@@ -104,7 +104,7 @@
             </div>
           </div>
 
-          <div style={{ 'min-width': '300px' }}>
+          <div style={{ minWidth: '300px' }}>
             <div className="border-bottom px3 py2">
               <a onClick={this.handleShowDetailsClicked} className="h6 mt0 mb0 gray-dark bg-white right" href="#">
                 {this.state.showingDetails ? 'Hide' : 'Show'} details
@@ -132,7 +132,7 @@
               Your vote
             </div>
 
-            <div className="left text-coins bold mt0 mb0 h1" style={{ 'line-height': 38 }}>
+            <div className="left text-coins bold mt0 mb0 h1" style={{ lineHeight: '38px' }}>
               <span className="icon icon-app-coin"></span>
               {' '}
               {numeral(this.state.offer).format('0,0')}

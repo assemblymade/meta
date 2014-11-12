@@ -25,12 +25,12 @@ var Dispatcher = require('../dispatcher');
           <span style={{
               display: this.state.display,
               position: 'absolute',
-              'text-align': 'center',
-              'margin-top': '-80px',
+              textAlign: 'center',
+              marginTop: '-80px',
               width: '100%',
-              'z-index': -1,
-              'font-size': '12px',
-              'font-weight': 'bold'
+              zIndex: -1,
+              fontSize: '12px',
+              fontWeight: 'bold'
           }}>
             Drag and drop or click here
             <br />
@@ -43,8 +43,8 @@ var Dispatcher = require('../dispatcher');
             position: 'absolute',
             top: '50%',
             left: '50%',
-            'margin-top': '-12px',
-            'margin-left': '-100px'
+            marginTop: '-12px',
+            marginLeft: '-100px'
           }}>
             <div className="progress-bar" role="progressbar" style={{ width: '0%' }}>
             </div>

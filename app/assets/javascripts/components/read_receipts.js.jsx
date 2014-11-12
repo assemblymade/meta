@@ -22,7 +22,7 @@
         return <span />
       }
 
-      return <span className="text-muted text-small" style={{"margin-left": "5px"}}>
+      return <span className="text-muted text-small" style={{ marginLeft: "5px"}}>
         seen by {this.state.readers.length} {app.pluralized(this.state.readers.length, 'person', 'people')}
       </span>
     },

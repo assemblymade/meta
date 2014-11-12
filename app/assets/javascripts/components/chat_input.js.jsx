@@ -4,7 +4,8 @@
   var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
   var subscribing;
 
-  var Set = require('Set')
+  var React = require('react');
+  var Set = require('Set');
 
   var ChatInput = React.createClass({
     propTypes: {
@@ -65,7 +66,13 @@
     },
 
     render: function() {
-      var inputStyle = {"overflow": "hidden", "word-wrap": "break-word", "resize": "none", "height": "38px"}
+      var inputStyle = {
+        overflow: "hidden",
+        wordWrap: "break-word",
+        resize: "none",
+        height: "38px"
+      };
+
       return <div id="comment">
         <TypeaheadUserSearch
             url={this.props.searchUrl}
@@ -78,7 +85,9 @@
               onKeyPress={this.onEnterKey(this.handleEnter)}
               onChange={this.handleChange} value={this.state.message} />
           </div>
+
           <ChatTypingLabel usernames={this.state.typingUsernames} />
+
         </TypeaheadUserSearch>
       </div>
     },

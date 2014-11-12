@@ -89,7 +89,7 @@
 
   var BountyPostCategories = React.createClass({
     render: function() {
-      return <div className="popover-content" style={{"min-width": 360}}>
+      return <div className="popover-content" style={{ minWidth: 360 }}>
         <a className="clickable list-group-item" onClick={this.clickHandler('design')}>Design</a>
         <a className="clickable list-group-item" onClick={this.clickHandler('marketing')}>Marketing</a>
         <a className="clickable list-group-item" onClick={this.clickHandler('frontend')}>Front-End Development</a>

@@ -125,13 +125,21 @@
       var discussUrl = bounty.chat_room_url + '?message=' + encodeURIComponent(message);
 
       return (
-        <div style={{ 'padding': '15px', 'background-color': '#EBF8CA', 'border': '1px solid #E6F3C6', 'border-radius': '3px', 'font-size': '16px', 'line-height': '38px', 'margin-bottom': '30px' }}>
+        <div style={{
+            'padding': '15px',
+            backgroundColor: '#EBF8CA',
+            'border': '1px solid #E6F3C6',
+            borderRadius: '3px',
+            fontSize: '16px',
+            lineHeight: '38px',
+            marginBottom: '30px'
+        }}>
           <a href={discussUrl} className="btn btn-default pull-right">
             <span className="icon icon-bubble icon-left"></span>
             Discuss the work
           </a>
 
-          <p className="omega gray-darker" style={{ 'margin-left': '6px' }}>
+          <p className="omega gray-darker" style={{ marginLeft: '6px' }}>
             <strong className="black">Right on!</strong>
             {' '}
             {workersPhrase} started working on this bounty {moment(bounty.most_recent_other_wip_worker.created_at).fromNow()}.
@@ -144,7 +152,8 @@
       var bounty = this.state.bounty;
 
       if (bounty.markdown_description) {
-        return <div className="markdown markdown-content text-large" dangerouslySetInnerHTML={{__html: bounty.markdown_description}}></div>;
+        return <div className="markdown markdown-content text-large"
+            dangerouslySetInnerHTML={{__html: bounty.markdown_description}} />;
       } else {
         return <p className="large text-muted">(No description)</p>;
       }

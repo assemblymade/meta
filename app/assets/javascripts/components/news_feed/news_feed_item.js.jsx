@@ -111,12 +111,12 @@
                 Last comment
               </a>
             </div>
-            <div className="clearfix px3" key={comment.id} style={{ 'padding-bottom': '12px' }}>
+            <div className="clearfix px3" key={comment.id} style={{ paddingBottom: '12px' }}>
               <div className="left mr2">
                 <Avatar user={user} size={24} />
               </div>
               <div className="overflow-hidden">
-                <a className="block bold black" style={{'line-height': 18}} href={user.url}>{user.username}</a>
+                <a className="block bold black" style={{ lineHeight: '18px' }} href={user.url}>{user.username}</a>
                 <div className='gray-darker'>
                   <Markdown content={comment.markdown_body || window.marked(comment.body)} normalize={true} />
                 </div>
@@ -141,7 +141,7 @@
             <div className="left mr1">
               <AppIcon app={product} size={32} />
             </div>
-            <div className="overflow-hidden" style={{ 'line-height': 16 }}>
+            <div className="overflow-hidden" style={{ lineHeight: '16px' }}>
               <div className="black">{product.name}</div>
               <div className="gray-dark text-small">{product.pitch}</div>
             </div>
