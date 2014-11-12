@@ -23,7 +23,7 @@ class WipMailer < BaseMailer
       to:   @user.email,
       subject: "[#{@wip.product.slug}] #{@wip.title} (##{@wip.number})"
     )
-q
+
     if ENV['STOP_EMAILS']
       mail.perform_deliveries = false
       Rails.logger.info "prevent_mail=wip_created to=#{@user.username} wip=#{@wip.id}"
