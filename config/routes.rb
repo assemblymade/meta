@@ -138,7 +138,7 @@ ASM::Application.routes.draw do
     post '/mailgun/reply' => 'mailgun#reply'
     post '/github' => 'github#create'
     post '/assembly_assets/transaction' => 'assembly_assets#transaction'
-    post '/readraptor/immediate' => 'read_raptor#immediate'
+    post '/readraptor/immediate/:entity_id' => 'read_raptor#immediate', as: :readraptor_immediate
     post '/readraptor/daily'     => 'read_raptor#daily'
     post '/pusher' => 'pusher#auth'
   end

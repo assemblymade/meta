@@ -1,7 +1,7 @@
 class ChatMailerPreview < ActionMailer::Preview
   def mentioned_in_chat
-    
-    
+
+
     room = ChatRoom.joins(wip: :events).sample
     event = room.wip.events.sample
 

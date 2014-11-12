@@ -20,7 +20,7 @@ class CommentsController < ProductController
 
     if @event.valid?
       if type == Event::Comment
-        register_with_readraptor(@event)
+        RegisterEventInReadraptor.perform_async(@event.to_global_id.to_s)
 
         @event.auto_watch!(current_user)
 
@@ -35,7 +35,6 @@ class CommentsController < ProductController
         NewsFeedItemComment.publish_to_news_feed(@wip, @event, body)
 
         @product.auto_watch!(current_user)
-        @event.notify_users!(@wip.followers)
       end
 
       track_analytics(@event)
@@ -86,27 +85,5 @@ class CommentsController < ProductController
       AsmMetrics.active_user(current_user)
       AsmMetrics.active_builder(current_user)
     end
-  end
-
-  def register_with_readraptor(event)
-    # exclude mentioned users because they currently get emailed straight away rather than going through
-    # readraptor
-    excluded_users = [event.user, event.mentioned_users].flatten.compact.uniq
-    recipients = event.wip.followers - excluded_users
-
-    # forcing an immediate email until we get notifications sorted out
-    callback = {
-      at: 5.minutes.from_now.to_i,
-      url: webhooks_readraptor_immediate_url,
-    }
-
-    RegisterArticleWithRecipients.perform_async(
-      recipients.map(&:id),
-      # register the main content article (no tag) + the email article (email tag)
-      [nil, :email],
-      Event,
-      event.id,
-      callback
-    )
   end
 end

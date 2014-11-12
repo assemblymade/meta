@@ -24,6 +24,8 @@ class WipMailer < BaseMailer
       subject: "[#{@wip.product.slug}] #{@wip.title} (##{@wip.number})"
     )
 
+    mail.perform_deliveries = false if ENV['STOP_EMAILS']
+
     mail options
   end
 
@@ -46,6 +48,8 @@ class WipMailer < BaseMailer
       to: @user.email,
       subject: "[#{@product.slug}] #{@wip.title} (##{@wip.number})"
     )
+
+    mail.perform_deliveries = false if ENV['STOP_EMAILS']
 
     mail(options) do |format|
       begin
