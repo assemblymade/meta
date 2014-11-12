@@ -7,7 +7,7 @@
 
   var BountyFilters = React.createClass({
     userFilter: function() {
-      return UserFilter(_.extend({}, this.props, { buildUrl: this.build }))
+      return UserFilter(_.extend({}, this.props, { buildUrl: this.buildUrl }))
     },
 
     tagFilter: function() {
