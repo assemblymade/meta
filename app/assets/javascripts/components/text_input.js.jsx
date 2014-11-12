@@ -46,21 +46,20 @@
     render: function() {
       return (
         <div role="form" className="form-inline">
-          <div className="form-group">
+          <div className={"form-group input-group-" + this.size()}>
             <label className="sr-only">{this.props.label}</label>
             <input type="text"
                    className={"form-control input-" + this.size()}
                    valueLink={this.linkState('inputValue')}
-                   style={{width: this.props.width, 'padding-left': '5px'}}
+                   style={{ width: this.props.width }}
                    onKeyDown={this.keyDown}
                    placeholder={this.props.label}
             />
           </div>
-          <button type="button"
-                  className={"btn btn-default btn-" + this.size() + ' ' + this.active()}
-                  onClick={this.handleClick}>
+          <a className={"btn btn-default btn-" + this.size() + ' ' + this.active()}
+                onClick={this.handleClick}>
             {this.props.prompt}
-          </button>
+          </a>
         </div>
       );
     },
@@ -73,6 +72,8 @@
         return 'md';
       case 'large':
         return 'lg';
+      default:
+        return 'md';
       }
     },
 

@@ -262,7 +262,8 @@ class ProductsController < ProductController
       :poster,
       :homepage_url,
       :you_tube_video_url,
-      :terms_of_service
+      :terms_of_service,
+      {:tags => []}
     ] + Product::INFO_FIELDS.map(&:to_sym)
 
     params.require(:product).permit(*fields)
