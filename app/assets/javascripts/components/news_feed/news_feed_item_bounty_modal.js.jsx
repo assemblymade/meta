@@ -45,16 +45,6 @@ module.exports = React.createClass({
 
     var url = target.url + '.json';
 
-    window.history.pushState({ url: target.url }, target.title, target.url);
-
-    $(window).bind('popstate', function(e) {
-      var state = window.history.state;
-
-      if (!state) {
-        $('.modal').modal('hide');
-      }
-    }.bind(this));
-
     $.get(url, function(response) {
       this.setState({
         bounty: response.bounty,
@@ -80,7 +70,8 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      ready: false
+      ready: false,
+      events: []
     };
   },
 
@@ -100,7 +91,7 @@ module.exports = React.createClass({
       <div className="left mr2">
         <AppIcon app={product} />
       </div>
-      <a href={'/' + product.slug}>{product.name}</a>
+      <a href={bounty.url}>{product.name}</a>
     </div>;
 
     return (
@@ -173,7 +164,7 @@ module.exports = React.createClass({
       var bDate = new Date(b.timestamp);
 
       return aDate > bDate ? 1 : bDate > aDate ? -1 : 0;
-    })
+    });
 
     return _.map(events, function(event, i) {
       var type = event.type;

@@ -1,8 +1,8 @@
 /** @jsx React.DOM */
 
 (function() {
-  var NewsFeedItem = require('./news_feed_item.js.jsx');
   var MasonryMixin = require('../../mixins/masonry_mixin.js');
+  var NewsFeedItem = require('./news_feed_item.js.jsx');
   var Spinner = require('../spinner.js.jsx');
 
   var NewsFeed = React.createClass({
