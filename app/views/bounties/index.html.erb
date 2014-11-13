@@ -34,17 +34,7 @@
 
   <div class="col-md-3">
     <div class="panel">
-      <div data-react-class="CreateBountyButton" data-react-props="<%= {
-        classes: 'btn btn-default btn-block',
-        product: { name: @product.name },
-        url: product_wips_path(@product),
-        maxOffer: (6 * @product.average_bounty).round(-4),
-        averageBounty: @product.average_bounty,
-        coinsMinted: @product.coins_minted,
-        profitLastMonth: @product.profit_last_month,
-        steps: BountyGuidance::Valuations.suggestions(@product),
-        createBountyShown: params['modal'] == 'true'
-      }.to_json %>"></div>
+      <%= render 'bounties/create_button' %>
     </div>
 
     <%= render 'bounties/projects_filter', projects: @milestones %>
