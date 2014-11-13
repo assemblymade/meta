@@ -20,7 +20,7 @@
 
           <div className="border-top mt2 mb2"></div>
           
-          <BountyList bounties={this.props.bounties} />
+          <BountyList bounties={this.props.bounties} product={this.props.product} />
         </div>
       )
     }

@@ -50,10 +50,134 @@
       )
     },
 
+    renderTitle: function() {
+      var bounty = this.props.bounty
+
+      return (
+        <a href={bounty.url}>
+          <strong>{bounty.title}</strong>
+        </a>
+      )
+    },
+
+    renderTags: function() {
+      return this.props.bounty.tags.map(function(tag) {
+        return (
+          <span>
+            {' '}
+            <a className="small text-info" href={tag.url}>
+              #{tag.name.toLowerCase()}
+            </a>
+          </span>
+        )
+      })
+    },
+
+    renderUrgency: function() {
+      var bounty = this.props.bounty
+
+      return (
+        <div className="pull-right">
+          <Urgency initialLabel={bounty.urgency.label} />
+        </div>
+      )
+    },
+
+    renderAward: function() {
+      var bounty = this.props.bounty
+
+      if(bounty.product.meta) {
+        return
+      }
+
+      var className = null
+      var titles = null
+      if(bounty.state == 'open' || (bounty.state == 'reviewing' && !bounty.workers.length)) {
+        className = 'text-warning'
+        titles = ['Available']
+      } else if(bounty.state != 'resolved' && bounty.workers.length) {
+        className = 'text-warning'
+
+        if(bounty.workers.length == 1) {
+          titles = ['1 person working']
+        } else {
+          titles = [bounty.workers.length + ' people working']
+        }
+      } else if(bounty.state == 'resolved' && bounty.winners.length) {
+        className = 'text-muted'
+        
+        titles = bounty.winners.map(function(user) {
+          return 'Awarded to @' + user.username
+        })
+      } else if(bounty.state == 'resolved') {
+        className = 'text-muted'
+        titles = ['Closed']
+      }
+
+      return titles.map(function(title) {
+        return (
+          <span className={className} data-toggle="tooltip" title={title}>
+            <span className="icon icon-app-coin"></span>
+            {' '}
+            <span>{bounty.earnable}</span>
+          </span>
+        )
+      })
+    },
+
+    renderProductLabel: function() {
+      if(this.props.product) {
+        return
+      }
+
+      var product = this.props.bounty.product
+
+      return (
+        <span>
+          in
+          {' '}
+          <a className="text-muted" href={product.url}>
+            {product.name}
+          </a>
+        </span>
+      )
+    },
+
     render: function() {
+      var bounty = this.props.bounty
+
       return (
         <div>
-          {this.renderWinners()}
+          <div>
+            {this.renderWinners()}
+          </div>
+
+          <div>
+            {this.renderTitle()}
+            {this.renderTags()}
+          </div>
+
+          <div className="clearfix small text-muted">
+            {this.renderUrgency()}
+
+            {this.renderAward()}
+            {' '}
+            &middot;
+            {' '}
+            #{bounty.number}
+            {' '}
+            &middot;
+            {' '}
+            <a className="text-muted" href={bounty.user.url}>
+              @{bounty.user.username}
+            </a>
+            {' '}
+            &middot;
+            {' '}
+            last update {moment(bounty.update_at).fromNow()}
+            {' '}
+            {this.renderProductLabel()}
+          </div>
         </div>
       )
     }
@@ -65,67 +189,3 @@
 
   window.BountyListItem = BountyListItem
 })();
-
-/*
-        <div>
-          <a href="<%= product_wip_path(bounty.product, bounty) %>">
-            <strong><%= bounty.title %></strong>
-          </a>
-
-          <% bounty.tags.map do |tag| %>
-            &nbsp;
-            <a className="small text-info" href="<%= product_wips_path(bounty.product, tag: tag.name) %>">
-              #<%= tag.name.downcase %>
-            </a>
-          <% end %>
-        </div>
-
-      <div className="clearfix small text-muted">
-        <% if bounty.open? %>
-          <div className="pull-right">
-            <%= render partial: 'bounties/urgency', locals: { task: bounty } %>
-          </div>
-        <% end %>
-
-        <!-- coins -->
-        <div>
-          <% if !bounty.product.meta? %>
-            <% case %>
-            <% when bounty.state == 'open' || (bounty.state == 'reviewing' && bounty.workers.empty?) %>
-              <span className="text-warning" data-toggle="tooltip" title="Available">
-            <% when bounty.workers.any? && (bounty.state != 'resolved') %>
-              <span className="text-warning" data-toggle="tooltip" title="<%= pluralize(bounty.workers.count, 'person') %> working">
-            <% when bounty.state == 'resolved' %>
-              <% if bounty.winners.any? %>
-                  <% bounty.winners.each do |winner| %>
-                    <span className="text-muted" data-toggle="tooltip" title="Awarded to @<%= winner.username %>">
-                  <% end %>
-              <% else %>
-                <span className="text-muted" data-toggle="tooltip" title="Closed">
-              <% end %>
-            <% end %>
-
-              <% if bounty.state == 'resolved' && !bounty.winner.present? %>
-                  <span className="icon icon-app-coin"></span>
-                  <span><%= number_with_delimiter(WipContracts.new(bounty, @auto_tip_contracts).earnable_cents.floor) %></span>
-              <% else %>
-                <span className="icon icon-app-coin"></span>
-                <span className="js-coins"><%= number_with_delimiter(WipContracts.new(bounty, @auto_tip_contracts).earnable_cents.floor) %></span>
-              <% end %>
-            </span>
-
-            &middot;
-          <% end %>
-
-          #<%= bounty.number %> &middot;
-          <a className="text-muted" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a> &middot;
-          last update <%= time_ago_in_words(bounty.updated_at) %> ago
-
-          <% unless @product %>
-            in <a className="text-muted" href="<%= product_path(bounty.product) %>"><%= bounty.product.name %></a>
-          <% end %>
-        </div>
-      </div>
-      )
-    }
-    */

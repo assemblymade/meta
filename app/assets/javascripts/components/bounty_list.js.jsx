@@ -16,10 +16,12 @@
     },
 
     renderBountyListItems: function() {
+      var product = this.props.product
+
       return this.props.bounties.map(function(bounty) {
         return (
           <li className="list-group-item">
-            <BountyListItem bounty={bounty} />
+            <BountyListItem bounty={bounty} product={product} />
           </li>
         )
       })
