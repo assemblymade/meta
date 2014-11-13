@@ -12,8 +12,8 @@ json.stories @stories do |story|
     json.product_name story.activities.first.try(:target).try(:product).try(:name)
     json.url story_url(story)
 
-    if subject = story.activities.first.try(:subject)
-      if subject.try(:title)
+    if first_subject = story.activities.first.try(:subject)
+      if first_subject.try(:number) && first_subject.try(:title)
         json.subjects do
           json.array! story.activities.map(&:subject), :number, :title
         end
@@ -21,9 +21,10 @@ json.stories @stories do |story|
     end
 
     if target = story.activities.first.try(:target)
-      if target.try(:title)
+      if target.try(:number) && target.try(:title)
         json.target do
-          json.extract! target, :number, :title
+          json.number target.try(:number)
+          json.title target.try(:title)
         end
       end
     end
