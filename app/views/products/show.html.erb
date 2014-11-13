@@ -1,4 +1,5 @@
 <% title @product.name, @product.pitch %>
+<% provide(:description, @product.pitch) %>
 <% activate_nav! :idea %>
 <%= track 'product.viewed', ProductAnalyticsSerializer.new(@product, scope: current_user) %>
 
