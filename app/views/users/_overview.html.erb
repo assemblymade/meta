@@ -2,7 +2,11 @@
   <div class="stat">
     <div class="stat-value">
       <% if @show_karma %>
+      <%= "<a href=".html_safe %>
+      "<%= user_karma_path(@user)%>"
+      <%= ">".html_safe %>
       <%= number_with_delimiter(@user.karma_total) %>
+      <%= "</a>".html_safe %>
       <% else %>
       <%= number_with_delimiter(@user.count_contributions) %>
       <% end %>

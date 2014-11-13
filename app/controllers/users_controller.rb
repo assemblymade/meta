@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     set_empty_state if @wips.empty?
 
     @show_karma = current_user && current_user.staff?
-  
+
     respond_with @user
   end
 
@@ -33,8 +33,32 @@ class UsersController < ApplicationController
 
   def assets
     authenticate_user!
+    @show_karma = current_user && current_user.staff?
     @user = User.find_by(username: params[:id]).decorate
     @assets = @user.assembly_assets.group_by { |asset| asset.product }
+  end
+
+  def karma
+    @show_karma = current_user && current_user.staff?
+    @user = User.find_by(username: params[:id]).decorate
+    @deeds = Karma::Kronikler.new.deeds_by_user(@user.id).reverse
+    @karma_history = Karma::Kronikler.new.karma_history_by_user(@user.id)
+    @karma_product_history = Karma::Kronikler.new.karma_product_history_by_user(@user.id)
+
+    @pi_chart_data = [["Product", "Karma"]]
+    @productlist = @karma_product_history[1]
+    (0..@productlist.count-1).each do |i|
+      @pi_chart_data.append([@productlist[i], @karma_product_history[0].last[i+1]])
+    end
+
+    @karma_product_data = [["Date"]+@karma_product_history[1]]
+    @karma_product_history[0].each do |k|
+      @karma_product_data.append(k)
+    end
+
+    @karma_total_history = [['Date' ,'Bounties', 'Tips', 'Invites', 'Products']]
+    @karma_total_history = @karma_total_history + @karma_history
+
   end
 
   def update

@@ -114,6 +114,7 @@ ASM::Application.routes.draw do
 
     resources :users, only: [:show, :update]
 
+    get '/users/:id/karma' => 'users#karma', :as => :user_karma
     get '/users/:id/assets' => 'users#assets', :as => :user_assets
     post '/users/:id/dismiss_welcome_banner' => 'users#dismiss_welcome_banner', :as => :dismiss_welcome_banner
 
