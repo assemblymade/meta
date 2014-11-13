@@ -163,7 +163,6 @@
             user={this.props.user}
             title={target.title}
             coins={target.value}
-            comments={this.props.news_feed_item_comments}
             item={this.props} />;
 
         case 'team_membership':
@@ -173,7 +172,7 @@
 
         case 'discussion':
           return <NewsFeedItemPost
-            body={target.markdown_body}
+            body={target.markdown_body || target.description_html}
             url={target.url}
             title={target.title} />;
 
@@ -186,7 +185,7 @@
         default:
           return <NewsFeedItemPost
             title={target.name || target.title}
-            body={target.description}
+            body={target.description || target.body}
             url={target.url} />;
         }
       }

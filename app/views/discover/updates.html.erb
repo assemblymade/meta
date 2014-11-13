@@ -11,7 +11,7 @@
   }
 </style>
 
-<%= react_component 'NewsFeed', url: discover_path(action: 'updates', format: 'json'), filter_counts: @counts %>
+ <%= react_component 'NewsFeed', url: discover_path(action: 'updates', format: 'json'), items: @posts, filter_counts: @counts %>
 
 <%= render 'shared/footer' %>
 

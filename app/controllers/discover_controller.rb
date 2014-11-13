@@ -77,34 +77,41 @@ class DiscoverController < ApplicationController
   end
 
   def updates
-    limit = 40
+    limit = 20
     offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
 
     # (pletcher) This is so ugly -- maybe we should move tags to
     #            NewsFeedItems?
-
-    if params[:filter] && params[:filter] != 'hot'
-      query = Wip.tagged_with(params[:filter]).
-        limit(limit).
-        offset(offset).
-        includes(:news_feed_item).
-        where.not('news_feed_items.product_id = ?', META.id).
-        order(updated_at: :desc).
-        map(&:news_feed_item)
-    else
-      query = NewsFeedItem.public_items.
-                limit(limit).
-                offset(offset).
-                where.not(product: META).
-                order(updated_at: :desc)
-    end
-
-    if params[:filter] == 'hot'
-      query = query.where.not(popular_at: nil)
-    end
-
-    @posts = query.to_a.reject{ |q| q.try(:target).try(:flagged?) }
     @cache_key = "/discover/updates/filter=#{params[:filter] || 'all'}&page=#{params[:page] || '1'}"
+
+    @posts = Rails.cache.fetch(@cache_key, expires_in: 10.minutes) do
+      if params[:filter] && params[:filter] != 'hot'
+        query = Wip.tagged_with(params[:filter]).
+          limit(limit).
+          offset(offset).
+          includes(:news_feed_item).
+          where.not('news_feed_items.product_id = ?', META.id).
+          order(updated_at: :desc).
+          map(&:news_feed_item)
+      else
+        query = NewsFeedItem.public_items.
+                  limit(limit).
+                  offset(offset).
+                  where.not(product: META).
+                  order(updated_at: :desc)
+      end
+
+      if params[:filter] == 'hot'
+        query = query.where.not(popular_at: nil)
+      end
+
+      posts = query.to_a.reject{ |q| q.try(:target).try(:flagged?) }
+
+      ActiveModel::ArraySerializer.new(
+        posts,
+        each_serializer: NewsFeedItemSerializer
+      ).as_json
+    end
 
     @counts = Rails.cache.fetch("/discover/updates/counts", expires_in: 12.hours) do
       COUNTABLE_FILTERS.reduce({}) do |memo, filter|
@@ -112,6 +119,11 @@ class DiscoverController < ApplicationController
         memo[filter] = Wip.tagged_with(filter).count
         memo
       end
+    end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @posts }
     end
   end
 

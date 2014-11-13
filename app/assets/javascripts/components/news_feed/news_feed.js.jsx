@@ -19,7 +19,7 @@
         }
       );
 
-      window.xhr.get(this.props.url, this._handleMoreNewsFeedItems);
+      this.initializeEagerFetching();
     },
 
     countFor: function(filter) {
@@ -46,10 +46,10 @@
       return <span className="text-large">&nbsp;</span>
     },
 
-    fetchMoreNewsFeedItems: function(e) {
+    eagerlyFetchMoreNewsFeedItems: function(e) {
       this.setState({
-        page: this.state.page + 1,
-        loading: true
+        disableLoadMoreButton: true,
+        page: this.state.page + 1
       }, function() {
         var url = window.location.pathname + '?page=' + this.state.page;
 
@@ -63,6 +63,8 @@
         );
       }.bind(this));
     },
+
+    fetchMoreNewsFeedItems: _.debounce(this.eagerlyFetchMoreNewsFeedItems, 200),
 
     filterBy: function(filter, e) {
       this.setState({
@@ -109,8 +111,8 @@
 
       return {
         filter: (queryKey.filter || ''),
-        items: [],
-        loading: true,
+        items: this.props.items,
+        loading: false,
         page: (queryKey.page || 1)
       };
     },
@@ -127,7 +129,31 @@
       });
     },
 
+    initializeEagerFetching: function() {
+      this.previousDistance = 0;
+      this.farthestTraveled = 0;
+
+      var self = this;
+
+      $(document).scroll(function(e) {
+        var distanceFromTop = document.body.scrollTop;
+
+        if (distanceFromTop > self.farthestTraveled &&
+            distanceFromTop - self.previousDistance > 3000) {
+          self.eagerlyFetchMoreNewsFeedItems();
+          self.previousDistance = distanceFromTop;
+          self.farthestTraveled = distanceFromTop;
+        }
+      });
+    },
+
     render: function() {
+      var disabled = false;
+
+      if (this.state.disableLoadMoreButton) {
+        disabled = true;
+      }
+
       return (
         <div>
           {this.filters()}
@@ -143,9 +169,9 @@
 
             <div className="mb4" key="news-feed-load-more">
               <a href="javascript:void(0);"
-                  onClick={this.fetchMoreNewsFeedItems}
-                  className="btn btn-default btn-block">
-                Load more
+                    onClick={this.fetchMoreNewsFeedItems}
+                    className="btn btn-default btn-block" disabled={disabled}>
+                {this.state.disabled ? <Spinner /> : 'Load more'}
               </a>
             </div>
           </div>
