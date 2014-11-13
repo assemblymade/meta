@@ -47,6 +47,7 @@
 
     handleFilterClick: function(filter) {
       return function(event) {
+        event.preventDefault()
         this.setFilters(this.state.filters.concat(filter))
       }.bind(this)
     },

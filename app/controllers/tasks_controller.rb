@@ -76,9 +76,7 @@ class TasksController < WipsController
     end
 
     @wips = find_wips
-    @milestones = @product.milestones.open
     @auto_tip_contracts = @product.auto_tip_contracts.active
-    @featured_bounties = @product.bounty_postings
     @selected_user = User.find_by(id: params[:user_id]) if params[:user_id].present?
     @core_team = @product.core_team.reject { |u| u.id == current_user && current_user.id }
 
@@ -87,7 +85,13 @@ class TasksController < WipsController
         expires_now
         render 'bounties/index'
       end
-      format.json { render json: @wips.map{|w| BountySerializer.new(w) } }
+
+      format.json do
+        render json: @wips,
+          serializer: PaginationSerializer,
+          each_serializer: BountySerializer,
+          root: :bounties
+      end
     end
   end
 

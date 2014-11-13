@@ -112,6 +112,8 @@
       } else if(bounty.state == 'resolved') {
         className = 'text-muted'
         titles = ['Closed']
+      } else {
+        return
       }
 
       return titles.map(function(title) {
@@ -174,7 +176,7 @@
             {' '}
             &middot;
             {' '}
-            last update {moment(bounty.update_at).fromNow()}
+            last update {moment(bounty.updated).fromNow()}
             {' '}
             {this.renderProductLabel()}
           </div>

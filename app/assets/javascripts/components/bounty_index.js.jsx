@@ -3,6 +3,7 @@
 (function() {
   var BountyFilter = require('./bounty_filter.js.jsx')
   var BountyList = require('./bounty_list.js.jsx')
+  var PaginationLinks = require('./pagination_links.js.jsx')
   var Spinner = require('./spinner.js.jsx')
 
   var BountyIndex = React.createClass({
@@ -10,29 +11,43 @@
       return {
         bounties: this.props.initialBounties,
         filters: this.props.initialFilters,
-        loading: false
+        loading: false,
+        page: 1,
+        pages: 1
       }
     },
 
-    getBounties: function(filters) {
+    getBounties: function(filters, page) {
       var path = this.getBountiesPath()
-      var params = this.filtersAsParams(filters)
+      var params = this.params(filters, page)
 
       $.getJSON(path, params, function(response) {
         this.setState({
-          bounties: response,
-          loading: false
+          bounties: response.bounties,
+          loading: false,
+          page: response.meta.pagination.page,
+          pages: response.meta.pagination.pages,
         });
       }.bind(this));
     },
 
-    handleChange: function(filters) {
+    handleFiltersChange: function(filters) {
       this.setState({
         filters: filters,
-        loading: true
+        loading: true,
+        page: 1
       })
 
-      this.getBounties(filters)
+      this.getBounties(filters, 1)
+    },
+
+    handlePageChange: function(page) {
+      this.setState({
+        loading: true,
+        page: page
+      })
+
+      this.getBounties(this.state.filters, page)
     },
 
     render: function() {
@@ -40,13 +55,15 @@
 
       return (
         <div>
-          <BountyFilter {...bountyFilterProps} onChange={this.handleChange} />
+          <BountyFilter {...bountyFilterProps} onChange={this.handleFiltersChange} />
 
           <div className="border-top mt2 mb2"></div>
 
           {this.state.loading ? <Spinner /> : null}
           
           <BountyList bounties={this.state.bounties} product={this.props.product} />
+
+          <PaginationLinks page={this.state.page} pages={this.state.pages} onPageChanged={this.handlePageChange} />
         </div>
       )
     },
@@ -55,9 +72,14 @@
       return ['/', this.props.product.slug, '/', 'bounties', '.', 'json'].join('')
     },
 
-    filtersAsParams: function(filters) {
+    params: function(filters, page) {
       var params = _.reduce(filters, function(memo, filter) {
-        memo[filter.type] = filter.value
+        if(filter.type == 'order') {
+          memo[filter.type] = filter.value
+        } else {
+          memo[filter.type] = _.compact(_.flatten([memo[filter.type], filter.value]))
+        }
+
         return memo
       }, {})
 
@@ -65,6 +87,8 @@
         params.sort = params.order
         delete params.order
       }
+
+      params.page = page
 
       return params
     }
