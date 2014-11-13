@@ -172,7 +172,7 @@ module.exports = React.createClass({
       var aDate = new Date(a.timestamp);
       var bDate = new Date(b.timestamp);
 
-      return aDate < bDate ? 1 : bDate < aDate ? -1 : 0;
+      return aDate > bDate ? 1 : bDate > aDate ? -1 : 0;
     })
 
     return _.map(events, function(event, i) {
