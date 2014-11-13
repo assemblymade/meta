@@ -8,15 +8,20 @@ json.stories @stories do |story|
     json.extract! story, :id, :verb, :subject_type
 
     json.actor_ids story.activities.map(&:actor_id)
+    json.key "Story_#{story.id}"
     json.product_name story.activities.first.try(:target).try(:product).try(:name)
     json.url story_url(story)
 
-    json.subjects do
-      json.array! story.subjects, :number, :title
+    if subject = story.activities.first.try(:subject)
+      if subject.try(:title)
+        json.subjects do
+          json.array! story.activities.map(&:subject), :number, :title
+        end
+      end
     end
 
     if target = story.activities.first.try(:target)
-      if target.try(:number)
+      if target.try(:title)
         json.target do
           json.extract! target, :number, :title
         end

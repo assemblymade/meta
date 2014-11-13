@@ -54,10 +54,6 @@
 
     handlePurchaseHide: function() {
       this.refs.purchase.hide()
-    },
-
-    handleDoingNothing: function() {
-      console.log("Remember I said I'd do nothing? ...I lied!", 'danger')
     }
   })
 
@@ -154,4 +150,3 @@
 
   window.AddDomain = AddDomain
 })()
-
