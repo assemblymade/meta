@@ -31,7 +31,7 @@ var ReadTimesMixin = require('../mixins/read_times');
         return console.error(e);
       }
 
-      var users = data.users;
+      var users = _.reduce(data.users, function(memo, user){ memo[user.id] = user; return memo}, {})
       var stories = data.stories;
 
       if (!_.isEmpty(users)) {
