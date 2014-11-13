@@ -24,7 +24,7 @@
 
     renderBountyOffer: function() {
       return this.transferPropsTo(
-        <CreateBountyOffer /> 
+        <CreateBountyOffer />
       )
     },
 
@@ -39,7 +39,14 @@
 
             <div className="form-group">
               <label className="form-label">Title</label>
-              <input autofocus="autofocus" defaultValue={this.props.title} className="form-control" data-validate-length="2" id="task_title" name="task[title]" type="text" onChange={this.handleChange} />
+              <TypeaheadUserInput autofocus="autofocus"
+                     defaultValue={this.props.title}
+                     className="form-control"
+                     data-validate-length="2"
+                     id="task_title"
+                     name="task[title]"
+                     type="text"
+                     onTextChange={this.handleChange} />
             </div>
 
             <div className="form-group">
