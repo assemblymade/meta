@@ -87,7 +87,7 @@ class TasksController < WipsController
         expires_now
         render 'bounties/index'
       end
-      format.json { render json: @wips.map{|w| WipSearchSerializer.new(w) } }
+      format.json { render json: @wips.map{|w| BountySerializer.new(w) } }
     end
   end
 

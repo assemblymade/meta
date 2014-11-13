@@ -16,6 +16,25 @@
       }
     },
 
+    setFilters: function(filters) {
+      filters = _.chain(filters).uniq(function(f) {
+        return JSON.stringify(f)
+      }).reduce(function(memo, filter) {
+        if(filter.type == 'order') {
+          memo = _.reject(memo, function(f) { return f.type == 'order' })
+        }
+
+        memo.push(filter)
+        return memo
+      }, []).value()
+
+      this.setState({
+        filters: filters
+      })
+
+      this.props.onChange(filters)
+    },
+
     addFilter: function(filter) {
       var filters = this.state.filters
 
@@ -28,11 +47,7 @@
 
     handleFilterClick: function(filter) {
       return function(event) {
-        var filters = this.addFilter(filter)
-
-        this.setState({
-          filters: filters
-        })
+        this.setFilters(this.state.filters.concat(filter))
       }.bind(this)
     },
 
