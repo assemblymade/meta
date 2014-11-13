@@ -6,13 +6,12 @@
   var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx')
   var Thumbnail = require('../thumbnail.js.jsx')
 
+  var URGENCIES = ['Urgent', 'Now', 'Someday'];
+
   module.exports = React.createClass({
     displayName: 'NewsFeedItemBounty',
 
     propTypes: {
-      coins: React.PropTypes.number.isRequired,
-      title: React.PropTypes.string.isRequired,
-      bounty: React.PropTypes.object.isRequired,
       item: React.PropTypes.object.isRequired
     },
 
@@ -24,7 +23,7 @@
 
     modal: function() {
       if (this.state.modalShown) {
-        return NewsFeedItemBountyModal(_.extend({}, this.props, { onHidden: this.onModalHidden }));
+        return <NewsFeedItemBountyModal {...this.props} onHidden={this.onModalHidden} />
       }
 
       return null;
@@ -41,8 +40,6 @@
       var product = this.props.product;
       var user = this.props.user;
 
-      var urgencies = ['Urgent', 'Now', 'Someday'];
-
       return (
         <div className="p3"
               style={{ cursor: 'pointer', backgroundColor: '#fcfcfc' }}
@@ -56,11 +53,11 @@
           </a>
           <div className="yellow mb3" key={"bounty-value-" + bounty.id}>
             <span className="mr2" key={'mr2' + bounty.id}>
-              <AppCoins n={bounty.value} />
+              <AppCoins n={bounty.contracts.earnable} />
             </span>
             <Urgency
               initialLabel={bounty.urgency.label}
-              urgencies={urgencies}
+              urgencies={URGENCIES}
               state={bounty.state}
               url={bounty.urgency_url} />
           </div>

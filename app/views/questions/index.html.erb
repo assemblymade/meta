@@ -1,4 +1,6 @@
 <% title @faq_group.name, 'FAQ' %>
+<% provide(:description, "Frequently asked questions about #{@faq_group.name.downcase} on Assembly.") %>
+
 <% activate_nav! :platform_faq %>
 <%= render 'shared/navbar' %>
 

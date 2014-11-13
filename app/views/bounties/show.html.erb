@@ -1,4 +1,5 @@
 <% title @bounty.title, "##{@bounty.number}", @bounty.product.name %>
+<% provide(:description, @bounty.title) %>
 <% activate_nav! :bounties %>
 <%= track 'product.wip.viewed', WipAnalyticsSerializer.new(@wip, scope: current_user) %>
 

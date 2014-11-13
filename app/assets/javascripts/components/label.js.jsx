@@ -19,7 +19,7 @@
 
       return (
         <span className={cs}
-              style={{'background-color': this.color()}}>
+              style={{ backgroundColor: this.color() }}>
           #{this.props.name}
         </span>
       )

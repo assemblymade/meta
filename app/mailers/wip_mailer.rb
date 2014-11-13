@@ -24,6 +24,11 @@ class WipMailer < BaseMailer
       subject: "[#{@wip.product.slug}] #{@wip.title} (##{@wip.number})"
     )
 
+    if ENV['STOP_EMAILS']
+      mail.perform_deliveries = false
+      Rails.logger.info "prevent_mail=wip_created to=#{@user.username} wip=#{@wip.id}"
+    end
+
     mail options
   end
 
@@ -50,6 +55,11 @@ class WipMailer < BaseMailer
     mail(options) do |format|
       begin
         format.html { render event_template }
+      end
+    end.tap do |mail|
+      if ENV['STOP_EMAILS']
+        mail.perform_deliveries = false
+        Rails.logger.info "prevent_mail=wip_event_added to=#{@user.username} wip=#{@event.id}"
       end
     end
   end

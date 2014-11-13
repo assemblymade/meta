@@ -57,8 +57,6 @@ class TasksController < WipsController
 
     finished('long_user_survey_on_signup')
 
-    @json =
-
     respond_to do |format|
       format.html { render 'bounties/show' }
       format.json { render json: {

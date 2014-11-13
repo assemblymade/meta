@@ -8,9 +8,9 @@ class FaqGroup
     ['revenue',   'Revenue and App Coins'],
     ['privacy',   'Privacy and Security'],
     ['community', 'Community'],
-    ['launching', 'Start a new Product'],
-    ['migrating', 'Migrate an existing Product'],
-    ['platform',  'Using the Assembly Platform'],
+    ['launching', 'Starting a new Product'],
+    ['migrating', 'Migrating an Existing Product'],
+    ['platform',  'Platform Features'],
     ['terms',     'Terminology']    
   ]
 

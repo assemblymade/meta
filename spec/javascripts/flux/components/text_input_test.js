@@ -36,7 +36,7 @@ describe('TextInput', function() {
         hide: false
       });
 
-      var submitButton = TestUtils.findRenderedDOMComponentWithTag(input, 'button');
+      var submitButton = TestUtils.findRenderedDOMComponentWithTag(input, 'a');
 
       input.setState({
         inputValue: 'tag'

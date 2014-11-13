@@ -1,13 +1,21 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
-var TagListStore = require('../stores/tag_list_store');
-
 (function() {
+  var CONSTANTS = require('../constants');
+  var TagListStore = require('../stores/tag_list_store');
+  var TAG_STYLES = require('../lib/github_colors');
+
   var TC = CONSTANTS.TYPEAHEAD;
   var TAG_LIST = CONSTANTS.TAG_LIST;
 
   var TagList = React.createClass({
+    propTypes: {
+      destination: React.PropTypes.bool,
+      hideAddButton: React.PropTypes.bool,
+      newBounty: React.PropTypes.bool,
+      tags: React.PropTypes.array
+    },
+
     componentWillMount: function() {
       if (this.props.destination) {
         TagListStore.setTags(this.props.tags);
@@ -106,7 +114,7 @@ var TagListStore = require('../stores/tag_list_store');
               <a
                   href="javascript:"
                   onClick={this.togglePopover}
-                  className="btn btn-default btn-sm">
+                  className="btn btn-link btn-sm">
                 {this.tagPopoverText()}
               </a>
             </BsPopover>
@@ -116,7 +124,7 @@ var TagListStore = require('../stores/tag_list_store');
     },
 
     removeButton: function(tag) {
-      if (this.props.destination) {
+      if (this.props.destination && !this.props.hideAddButton) {
         return (
           <span className="remove" onClick={this.removeTag(tag)}>
             &times;
@@ -155,7 +163,7 @@ var TagListStore = require('../stores/tag_list_store');
 
     suggestedTags: function() {
       return (
-        <div style={{ 'text-align': 'center' }}>
+        <div style={{ textAlign: 'center' }}>
           <TagList
               destination={false}
               url={this.props.url}
@@ -164,7 +172,7 @@ var TagListStore = require('../stores/tag_list_store');
           <TextInput
               url={this.props.url}
               label="Custom tag"
-              width="80px"
+              width="120px"
               prompt="+"
               size="small" />
         </div>
@@ -172,7 +180,7 @@ var TagListStore = require('../stores/tag_list_store');
     },
 
     tagPopoverText: function() {
-      if (this.props.newBounty) {
+      if (this.props.newBounty || this.props.hideAddButton) {
         return null;
       }
 
@@ -194,8 +202,14 @@ var TagListStore = require('../stores/tag_list_store');
           style.cursor = 'default';
         }
 
+        var backgroundColor = TAG_STYLES[tag.toLowerCase()];
+
+        if (backgroundColor) {
+          style.borderLeft = '4px solid ' + backgroundColor;
+        }
+
         return (
-          <li key={tag} style={{'margin': '10px 0 0 0'}}>
+          <li key={tag} style={{ margin: '10px 0 0 0' }}>
             <a style={style}
                 className="tag"
                 href={self.props.filterUrl && self.props.destination ?
@@ -216,7 +230,7 @@ var TagListStore = require('../stores/tag_list_store');
             (mappedTags[0] == undefined &&
              mappedTags[1] == undefined))) {
         return (
-          <li style={{color: '#d3d3d3', 'font-size': '13px'}}>
+          <li style={{ color: '#333', fontSize: '13px' }}>
             <BsPopover
                 content={this.suggestedTags()}
                 placement="bottom"

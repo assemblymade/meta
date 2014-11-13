@@ -29,7 +29,11 @@
 
     render: function() {
       return <div className="markdown-editor-control dropzone">
-        <textarea name={this.props.name} className="form-control" rows="4" id={this.props.id || 'markdown-editor'} style={{'height': '176px'}} required={this.props.required || "false"}></textarea>
+        <TypeaheadUserTextArea name={this.props.name}
+                  className="form-control"
+                  rows="4"
+                  id={this.props.id || 'markdown-editor'}
+                  style={{'height': '176px'}} required={this.props.required || "false"}/>
         <div className="dropzone-inner">
           To attach files drag &amp; drop here or&nbsp;
           <a className="clickable" ref="file">select files from your computer</a>...

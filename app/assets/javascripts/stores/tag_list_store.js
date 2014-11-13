@@ -58,6 +58,9 @@ var Store = require('../stores/store');
         data: {
           task: {
             tag_list: tags
+          },
+          product: {
+            tags: tags
           }
         },
 

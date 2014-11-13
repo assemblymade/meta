@@ -31,6 +31,8 @@ gem 'globalid'
 gem 'hogan_assets'
 gem 'html-pipeline'
 gem 'htmlentities'
+gem 'jbuilder'
+gem 'jbuilder_cache_multi'
 gem 'jquery-rails'
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
@@ -107,6 +109,8 @@ group :development, :test do
 end
 
 group :development do
+  gem 'guard'
+  gem 'guard-rspec', require: false
   # gem 'rack-mini-profiler'
   # gem 'sql-logging'
   # gem 'ruby-prof'

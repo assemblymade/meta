@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 
+var AppIcon = require('../app_icon.js.jsx');
 var Avatar = require('../avatar.js.jsx');
 var Bounty = require('../bounty.js.jsx');
 var MarkdownEditor = require('../markdown_editor.js.jsx');
@@ -44,16 +45,6 @@ module.exports = React.createClass({
 
     var url = target.url + '.json';
 
-    window.history.pushState({ url: target.url }, target.title, target.url);
-
-    $(window).bind('popstate', function(e) {
-      var state = window.history.state;
-
-      if (!state) {
-        $('.modal').modal('hide');
-      }
-    }.bind(this));
-
     $.get(url, function(response) {
       this.setState({
         bounty: response.bounty,
@@ -79,7 +70,8 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      ready: false
+      ready: false,
+      events: []
     };
   },
 
@@ -93,9 +85,17 @@ module.exports = React.createClass({
     bounty.product = product;
     bounty.user = this.props.user;
 
-    // (pletcher) TODO: Don't render the bounty in a modal
+    // TODO: (pletcher) Don't render the bounty in a modal
+
+    var title = <div className="clearfix">
+      <div className="left mr2">
+        <AppIcon app={product} />
+      </div>
+      <a href={bounty.url}>{product.name}</a>
+    </div>;
+
     return (
-      <Lightbox size="modal-lg" title={product.name + ' - ' + bounty.title}>
+      <Lightbox size="modal-lg" title={title}>
         {this.state.ready ?
           [<Bounty
               key={bounty.id}
@@ -163,8 +163,8 @@ module.exports = React.createClass({
       var aDate = new Date(a.timestamp);
       var bDate = new Date(b.timestamp);
 
-      return aDate < bDate ? 1 : bDate < aDate ? -1 : 0;
-    })
+      return aDate > bDate ? 1 : bDate > aDate ? -1 : 0;
+    });
 
     return _.map(events, function(event, i) {
       var type = event.type;
