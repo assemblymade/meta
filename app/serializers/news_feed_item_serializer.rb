@@ -6,7 +6,7 @@ class NewsFeedItemSerializer < ApplicationSerializer
   has_one :user
 
   def last_comment
-    NewsFeedItemCommentSerializer.new(object.news_feed_item_comments.order(created_at: :asc).last)
+    NewsFeedItemCommentSerializer.new(object.news_feed_item_comments.order(created_at: :asc).first)
   end
 
   def layout
