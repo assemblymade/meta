@@ -10,7 +10,6 @@
   var NewsFeedItemBounty = require('./news_feed_item_bounty.js.jsx');
   var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
   var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
-  var NewsFeedItemComments = require('./news_feed_item_comments.js.jsx');
   var Tile = require('../tile.js.jsx')
   var moment = require('moment');
   var ONE_DAY = 24 * 60 * 60 * 1000;
@@ -99,10 +98,9 @@
     },
 
     renderLastComment: function() {
-      var comments = this.props.news_feed_item_comments;
+      var comment = this.props.last_comment;
 
-      if (comments && comments.length) {
-        var comment = comments[comments.length - 1];
+      if (comment) {
         var user = comment.user;
 
         return (

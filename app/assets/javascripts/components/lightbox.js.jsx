@@ -29,11 +29,11 @@
 
     header: function() {
       if (this.props.title) {
-        return <div className="modal-header">
+        return <div className="px3 py2 clearfix">
           <a className="close" data-dismiss="modal">
             <span aria-hidden="true">&times;</span><span className="sr-only">Close</span>
           </a>
-          <h4 className="modal-title" id={this.props.title}>{this.props.title}</h4>
+          <h4 className="mt0 mb0" id={this.props.title}>{this.props.title}</h4>
         </div>
       }
       return null

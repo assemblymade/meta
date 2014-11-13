@@ -77,7 +77,7 @@ class DiscoverController < ApplicationController
   end
 
   def updates
-    limit = 40
+    limit = 10
     offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
 
     # (pletcher) This is so ugly -- maybe we should move tags to

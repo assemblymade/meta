@@ -33,7 +33,12 @@
     },
 
     getReadReceipts: function() {
-      var currentUser = window.app.currentUser().attributes;
+      var currentUser = window.app.currentUser() && window.app.currentUser().attributes;
+
+      if (!currentUser) {
+        return;
+      }
+      
       xhr.noCsrfGet(this.props.url, function(err, body) {
         if (err) {
           return console.error(err)
@@ -60,4 +65,3 @@
 
   window.ReadReceipts = ReadReceipts
 })()
-

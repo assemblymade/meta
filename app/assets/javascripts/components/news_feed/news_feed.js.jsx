@@ -2,7 +2,8 @@
 
 (function() {
   var NewsFeedItem = require('./news_feed_item.js.jsx');
-  var MasonryMixin = require('../../mixins/masonry_mixin.js')
+  var MasonryMixin = require('../../mixins/masonry_mixin.js');
+  var Spinner = require('../spinner.js.jsx');
 
   var NewsFeed = React.createClass({
     mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0})],
@@ -62,7 +63,8 @@
 
     fetchMoreNewsFeedItems: function(e) {
       this.setState({
-        page: this.state.page + 1
+        page: this.state.page + 1,
+        loading: true
       }, function() {
         var url = window.location.pathname + '?page=' + this.state.page;
 
@@ -121,8 +123,8 @@
     render: function() {
       return (
         <div>
-
           {this.filters()}
+          {this.spinner()}
 
           <div className="container">
             <div className="py1 text-center">
@@ -148,7 +150,7 @@
       return _.map(this.state.news_feed_items, function(item) {
         return (
           <div className="sm-col sm-col-6 p2" key={item.id}>
-            {NewsFeedItem(item)}
+            <NewsFeedItem {...item} />
           </div>
         )
       });
@@ -185,6 +187,19 @@
       );
     },
 
+    spinner: function() {
+      if (this.state.loading) {
+        return (
+          <div className="fixed top-0 left-0 z4 full-width" style={{ height: '100%' }}>
+            <div className="absolute bg-darken-4 full-width" style={{ opacity: '0.4', height: '100%' }} />
+            <div className="relative" style={{ top: '40%' }}>
+              <Spinner />
+            </div>
+          </div>
+        );
+      }
+    },
+
     _handleFilteredNewsFeedItems: function(err, results) {
       if (err) {
         return console.log(err);
@@ -216,7 +231,8 @@
 
       this.setState(React.addons.update(
         this.state, {
-          news_feed_items: { $push: newItems }
+          news_feed_items: { $push: newItems },
+          loading: { $set: false }
         }
       ));
     }
