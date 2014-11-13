@@ -3,7 +3,7 @@
 (function() {
   var Lightbox = React.createClass({
     propTypes: {
-      title: React.PropTypes.string
+      title: React.PropTypes.any
     },
 
     getDefaultProps: function() {

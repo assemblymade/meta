@@ -7,6 +7,10 @@
 
   var NewsFeed = React.createClass({
     mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0})],
+    propTypes: {
+      filter_counts: React.PropTypes.object.isRequired,
+      url: React.PropTypes.string.isRequired
+    },
 
     componentDidMount: function() {
       window.analytics.track(
@@ -14,6 +18,8 @@
           product: (window.app.currentAnalyticsProduct())
         }
       );
+
+      window.xhr.get(this.props.url, this._handleMoreNewsFeedItems);
     },
 
     countFor: function(filter) {
@@ -38,27 +44,6 @@
       }
 
       return <span className="text-large">&nbsp;</span>
-    },
-
-    getDefaultProps: function() {
-      var filters = lowerCaseAndReflect([
-        'Frontend',
-        'Backend',
-        'Design',
-        'Marketing',
-        'Writing',
-        'Mobile'
-      ]);
-
-      // if (window.app.featureEnabled('hot-updates')) {
-      //   filters['Hot'] = 'hot';
-      // } else {
-      //   filters['Mobile'] = 'mobile';
-      // }
-
-      return {
-        filters: filters
-      };
     },
 
     fetchMoreNewsFeedItems: function(e) {
@@ -92,10 +77,31 @@
 
     filters: function() {
       return (
-        <ul className="nav nav-skills bg-white mb2">
+        <ul className="nav nav-skills bg-white mb2" key="news-feed-filter-list">
           {_.map(_.keys(this.props.filters), this.renderFilterListItem)}
         </ul>
       );
+    },
+
+    getDefaultProps: function() {
+      var filters = lowerCaseAndReflect([
+        'Frontend',
+        'Backend',
+        'Design',
+        'Marketing',
+        'Writing',
+        'Mobile'
+      ]);
+
+      // if (window.app.featureEnabled('hot-updates')) {
+      //   filters['Hot'] = 'hot';
+      // } else {
+      //   filters['Mobile'] = 'mobile';
+      // }
+
+      return {
+        filters: filters
+      };
     },
 
     getInitialState: function() {
@@ -103,7 +109,8 @@
 
       return {
         filter: (queryKey.filter || ''),
-        news_feed_items: this.props.news_feed_items,
+        items: [],
+        loading: true,
         page: (queryKey.page || 1)
       };
     },
@@ -126,15 +133,15 @@
           {this.filters()}
           {this.spinner()}
 
-          <div className="container">
-            <div className="py1 text-center">
+          <div className="container" key="news-feed-container">
+            <div className="py1 text-center" key="news-feed-filter-count">
               {this.displayCount()}
             </div>
-            <div className="clearfix mxn2" ref="masonryContainer">
+            <div className="clearfix mxn2" ref="masonryContainer" key="news-feed-items">
               {this.renderItems()}
             </div>
 
-            <div className="mb4">
+            <div className="mb4" key="news-feed-load-more">
               <a href="javascript:void(0);"
                   onClick={this.fetchMoreNewsFeedItems}
                   className="btn btn-default btn-block">
@@ -144,16 +151,6 @@
           </div>
         </div>
       )
-    },
-
-    renderItems: function() {
-      return _.map(this.state.news_feed_items, function(item) {
-        return (
-          <div className="sm-col sm-col-6 p2" key={item.id}>
-            <NewsFeedItem {...item} />
-          </div>
-        )
-      });
     },
 
     renderEmpty: function() {
@@ -187,6 +184,16 @@
       );
     },
 
+    renderItems: function() {
+      return _.map(this.state.items, function(item) {
+        return (
+          <div className="sm-col sm-col-6 p2" key={item.id}>
+            <NewsFeedItem {...item} />
+          </div>
+        )
+      });
+    },
+
     spinner: function() {
       if (this.state.loading) {
         return (
@@ -213,13 +220,13 @@
       }
 
       this.setState({
-        news_feed_items: items
+        items: items
       });
     },
 
     _handleMoreNewsFeedItems: function(err, results) {
       if (err) {
-        return console.log(error);
+        return console.log(err);
       }
 
       var newItems;
@@ -231,7 +238,7 @@
 
       this.setState(React.addons.update(
         this.state, {
-          news_feed_items: { $push: newItems },
+          items: { $push: newItems },
           loading: { $set: false }
         }
       ));

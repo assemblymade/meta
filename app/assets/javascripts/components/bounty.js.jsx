@@ -96,6 +96,17 @@ module.exports = React.createClass({
     )
   },
 
+  renderDescription: function() {
+    var bounty = this.state.bounty;
+
+    if (bounty.markdown_description) {
+      return <div className="markdown markdown-content text-large"
+          dangerouslySetInnerHTML={{__html: bounty.markdown_description}} />;
+    } else {
+      return <p className="large text-muted">(No description)</p>;
+    }
+  },
+
   renderDiscussWorkBanner: function() {
     var bounty = this.state.bounty;
     var closed = bounty.state === 'resolved' || bounty.state === 'closed';
@@ -141,17 +152,6 @@ module.exports = React.createClass({
         </p>
       </div>
     );
-  },
-
-  renderDescription: function() {
-    var bounty = this.state.bounty;
-
-    if (bounty.markdown_description) {
-      return <div className="markdown markdown-content text-large"
-          dangerouslySetInnerHTML={{__html: bounty.markdown_description}} />;
-    } else {
-      return <p className="large text-muted">(No description)</p>;
-    }
   },
 
   renderEditButton: function() {

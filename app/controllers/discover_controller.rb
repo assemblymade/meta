@@ -77,7 +77,7 @@ class DiscoverController < ApplicationController
   end
 
   def updates
-    limit = 10
+    limit = 40
     offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
 
     # (pletcher) This is so ugly -- maybe we should move tags to
@@ -103,15 +103,8 @@ class DiscoverController < ApplicationController
       query = query.where.not(popular_at: nil)
     end
 
-    posts = query.to_a.reject{ |q| q.try(:target).try(:flagged?) }
-    cache_key = "/discover/updates/filter=#{params[:filter] || 'all'}&page=#{params[:page] || '1'}-#{query.first.try(:updated_at).try(:to_i) || '0'}"
-
-    @posts = Rails.cache.fetch("#{cache_key}", expires_in: 10.minutes) do
-      ActiveModel::ArraySerializer.new(
-        posts,
-        each_serializer: NewsFeedItemSerializer
-      ).as_json
-    end
+    @posts = query.to_a.reject{ |q| q.try(:target).try(:flagged?) }
+    @cache_key = "/discover/updates/filter=#{params[:filter] || 'all'}&page=#{params[:page] || '1'}"
 
     @counts = Rails.cache.fetch("/discover/updates/counts", expires_in: 12.hours) do
       COUNTABLE_FILTERS.reduce({}) do |memo, filter|
@@ -119,11 +112,6 @@ class DiscoverController < ApplicationController
         memo[filter] = Wip.tagged_with(filter).count
         memo
       end
-    end
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @posts }
     end
   end
 

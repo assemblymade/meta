@@ -70,7 +70,7 @@
 
       var tagItems = null
       var baseUrl = this.props.target.url;
-      if (typeof tags !== "undefined" && tags !== null) {
+      if (baseUrl && tags && tags.length) {
         tagItems = _.map(tags, function(tag) {
           var url = baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
           return (
@@ -150,8 +150,9 @@
     },
 
     renderTarget: function() {
-      var product = this.props.product
-      var target = this.props.target
+      var product = this.props.product;
+      var target = this.props.target;
+      var user = this.props.user;
 
       if (target) {
         switch (target.type) {
@@ -167,12 +168,12 @@
 
         case 'team_membership':
           return <NewsFeedItemIntroduction
-            user={target.user}
+            user={user}
             intro={target.bio} />;
 
         case 'discussion':
           return <NewsFeedItemPost
-            body={target.description_html}
+            body={target.markdown_body}
             url={target.url}
             title={target.title} />;
 
