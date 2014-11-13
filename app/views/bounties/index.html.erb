@@ -2,51 +2,9 @@
 <% activate_nav! :bounties %>
 <%= track 'product.wips.viewed', ProductAnalyticsSerializer.new(@product) %>
 
-<%= react_component 'BountyFilter', {
-  tags: Wip::Tag.suggested_tags,
+<%= react_component 'BountyIndex', {
+  bounties: @product.tasks.limit(10).map { |t| BountySerializer.new(t) },
+  tag: Wip::Tag.suggested_tags,
   creators: User.joins(:wips).where(wips: { type: 'Task', product_id: @product }).uniq.order('username ASC').map { |u| UserSerializer.new(u) },
   workers: User.joins(wip_workers: :wip).where(wips: { type: 'Task', product_id: @product }).uniq.order('username ASC').map { |u| UserSerializer.new(u) }
 } %>
-
-<div class="border-top mt2 mb2"></div>
-
-<div class="row">
-  <% if @product.tasks.any? %>
-    <div class="col-xs-12">
-      <% if @wips.any? %>
-
-        <% @wips.each do |task| %>
-          <%= render 'bounties/chip', bounty: task %>
-        <% end %>
-
-        <% if @wips.total_pages > 1 %>
-          <hr>
-
-          <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
-        <% end %>
-      <% end %>
-    </div>
-  <% else %>
-
-    <div class="col-md-6 col-md-offset-3">
-      <div class="well well-lg omega">
-        <h3 class="alpha"><strong>Create the first bounty</strong></h3>
-        <p class="text-muted">
-          Get started by breaking down a new idea into bite-sized chunks
-          that can valued and prioritized. Writing a great description will
-          make it super easy for anyone to jump in and get to work.
-        </p>
-
-        <div data-react-class="CreateBountyButton" data-react-props="<%= {
-          product: { name: @product.name },
-          url: product_wips_path(@product),
-          maxOffer: (6 * @product.average_bounty).round(-4),
-          averageBounty: @product.average_bounty,
-          coinsMinted: @product.coins_minted,
-          profitLastMonth: @product.profit_last_month,
-          steps: BountyGuidance::Valuations.suggestions(@product)
-        }.to_json %>" class="omega text-center"></div>
-      </div>
-    </div>
-  <% end %>
-</div>

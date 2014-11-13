@@ -25,6 +25,8 @@ class BountySerializer < ApplicationSerializer
 
   has_many :workers
 
+  has_many :winners
+
   def can_update
     Ability.new(current_user).can?(:update, bounty)
   end
