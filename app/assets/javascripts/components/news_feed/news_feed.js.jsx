@@ -134,17 +134,20 @@
       this.farthestTraveled = 0;
 
       var self = this;
+      var body = $(document);
 
-      $(document).scroll(function(e) {
-        var distanceFromTop = document.body.scrollTop;
+      if (body) {
+        body.scroll(function(e) {
+          var distanceFromTop = document.body.scrollTop;
 
-        if (distanceFromTop > self.farthestTraveled &&
-            distanceFromTop - self.previousDistance > 3000) {
-          self.eagerlyFetchMoreNewsFeedItems();
-          self.previousDistance = distanceFromTop;
-          self.farthestTraveled = distanceFromTop;
-        }
-      });
+          if (distanceFromTop > self.farthestTraveled &&
+              distanceFromTop - self.previousDistance > 3000) {
+            self.eagerlyFetchMoreNewsFeedItems();
+            self.previousDistance = distanceFromTop;
+            self.farthestTraveled = distanceFromTop;
+          }
+        });
+      }
     },
 
     render: function() {
