@@ -6,21 +6,21 @@ module Karma
       if deed.karma_event_type == "Wip"
         awarded = Award.find_by(wip_id: deed.karma_event_id)
         if not awarded.nil?
-          answer = awarded.created_at
+          answer = awarded.created_at.to_date
         end
       elsif deed.karma_event_type == "Product"
         product = Product.find_by(id: deed.karma_event_id)
         if not product.nil?
-          answer = product.created_at
+          answer = product.created_at.to_date
         end
       elsif deed.karma_event_type == "Tip"
         tip = Tip.find_by(id: deed.karma_event_id)
         if not tip.nil?
-          answer = tip.created_at
+          answer = tip.created_at.to_date
         end
       end
       if answer.nil?
-        answer = DateTime.now
+        answer = DateTime.now.to_date
       end
       return answer
     end
@@ -39,11 +39,10 @@ module Karma
       deeds = deeds_by_user(user_id)
       #wips, tips, invites, products
       sums = [[DateTime.now.to_s,0,0,0,0]]
-      n=0
       deeds.each do |d|
         temp = sums.last.dup
-        temp[0] = n
-        n=n+1
+        #temp[0] = (deed_date(d[0]) - Date.new(1970,1,1)).to_i
+        temp[0] = deed_date(d[0])
         if d[0].karma_event_type=="Wip"
           temp[1]=temp[1]+d[0].karma_value
         elsif d[0].karma_event_type=="Tip"
@@ -99,7 +98,8 @@ module Karma
           end
         end
         tempentry.append(d.karma_value)
-        tempentry.append(d.created_at.to_i)
+        #tempentry.append( (deed_date(d)-Date.new(1970,1,1)).to_i )
+        tempentry.append(deed_date(d))
         history.append(tempentry)
       end
       return history

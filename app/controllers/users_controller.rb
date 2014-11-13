@@ -51,8 +51,13 @@ class UsersController < ApplicationController
       @pi_chart_data.append([@productlist[i], @karma_product_history[0].last[i+1]])
     end
 
-    @karma_product_data 
+    @karma_product_data = [["Date"]+@karma_product_history[1]]
+    @karma_product_history[0].each do |k|
+      @karma_product_data.append(k)
+    end
 
+    @karma_total_history = [['Date' ,'Bounties', 'Tips', 'Invites', 'Products']]
+    @karma_total_history = @karma_total_history + @karma_history 
 
   end
 

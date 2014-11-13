@@ -8,17 +8,15 @@
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Date' ,'Bounties', 'Tips', 'Invites', 'Products'],
-          <% @karma_history.each do |k| %>
-          <%= k %>
-          <%= "," %>
-          <% end %>
-        ]);
+          var data = google.visualization.arrayToDataTable(
+          <%= @karma_total_history.to_json.html_safe %>
+          );
+
+        var showEvery = parseInt(data.getNumberOfRows() / 4);
         var options = {
           title: 'Karma History',
           isStacked: true,
-          hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}},
+          hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}, showTextEvery: showEvery},
           vAxis: {minValue: 0}
         };
         var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
@@ -30,21 +28,17 @@
 
 
  <script type="text/javascript">
+
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          <%= columns.to_json.html_safe %>
-          <% @karma_product_history[0].each do |k| %>
-          <%= "," %>
-          <%= k.to_json.html_safe %>
-          <% end %>
-          ]);
-
+        var data = google.visualization.arrayToDataTable(
+          <%= @karma_product_data.to_json.html_safe %>);
+        var showEvery = parseInt(data.getNumberOfRows() / 4);
         var options = {
           title: 'Karma Product History',
           isStacked: true,
-          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}, showTextEvery: showEvery},
           vAxis: {minValue: 0}
         };
 
