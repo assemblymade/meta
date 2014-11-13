@@ -20,7 +20,7 @@ module Karma
     end
 
     def karma_from_product_founding(product)
-      if product.name != "Assembly"
+      if product.name != "Assembly" and product.name != "Assembly Meta"
         kumulative_karma = 1.0  #starting karma
         product_bounties_n = product.tasks.won.count
         kumulative_karma = kumulative_karma + FOUNDER_BOUNTY_MULTIPLER * product_bounties_n
@@ -31,13 +31,23 @@ module Karma
     end
 
     def karma_from_invite(invite)
-      recipient_id = invite.invitor_id
-      chronicle_id = get_chronicle_id(recipient_id)
-      Deed.create!({karma_value: KARMA_FROM_INVITE, karma_event: invite, user_id: recipient_id, chronicle_id: chronicle_id})
+
+      if invite.via_type == "Product"
+        productname = Product.find(invite.via_id).name
+      elsif invite.via_type == "Wip"
+        productname = Product.find(Wip.find(invite.via_id).product_id).name
+      end
+
+      if productname !="Assembly" and productname != "Assembly Meta"
+        recipient_id = invite.invitor_id
+        chronicle_id = get_chronicle_id(recipient_id)
+        Deed.create!({karma_value: KARMA_FROM_INVITE, karma_event: invite, user_id: recipient_id, chronicle_id: chronicle_id})
+      end
     end
 
     def karma_from_bounty_creation_after_completion(the_wip)
-      if Product.find_by(id: the_wip.product_id).name != "Assembly"
+      product_name = Product.find_by(id: the_wip.product_id).name
+      if product_name != "Assembly" and product_name != "Assembly Meta"
         user_id = the_wip.user_id   #The author is always the user_id on the WIP
         chronicle_id = get_chronicle_id(user_id)
         Deed.create!({karma_value: BOUNTY_KARMA_VALUE*BOUNTY_CREATOR_KARMA_SHARE, karma_event: the_wip, user_id: user_id, chronicle_id: chronicle_id})
@@ -46,7 +56,8 @@ module Karma
 
 
     def wip_done_by_invitee(the_wip, rewarded_user_id)
-      if Product.find_by(id: the_wip.product_id).name != "Assembly"
+      product_name =  Product.find_by(id: the_wip.product_id).name
+      if product_name != "Assembly" and product_name != "Assembly Meta"
 
         relevant_invite = Invite.where(via_id: the_wip.id).where(invitee_id: rewarded_user_id)
 
@@ -62,7 +73,8 @@ module Karma
 
 
     def karma_from_bounty_completion(the_wip, user_id)
-      if Product.find_by(id: the_wip.product_id).name != "Assembly"
+      product_name = Product.find_by(id: the_wip.product_id).name
+      if product_name != "Assembly" and product_name != "Assembly Meta"
         chronicle_id = get_chronicle_id(user_id)
         Deed.create!({karma_value: BOUNTY_KARMA_VALUE, karma_event: the_wip, user_id: user_id, chronicle_id: chronicle_id})
 
@@ -72,7 +84,7 @@ module Karma
     end
 
     def award_for_product_to_stealth(product)
-      if product.name != "Assembly"
+      if product.name != "Assembly" and product.name != "Assembly Meta"
         karma_value = 1.0
         user_id = product.user_id
 
@@ -109,9 +121,12 @@ module Karma
     end
 
     def karma_from_tip(tip)
-      to_id = tip.to_id
-      chronicle_id = get_chronicle_id(to_id)
-      Deed.create!({karma_value: TIP_RECIPIENT_KARMA, karma_event: tip, user_id: to_id, chronicle_id: chronicle_id})
+      productname = Product.find(tip.product_id).name
+      if productname != "Assembly" and productname != "Assembly Meta"
+        to_id = tip.to_id
+        chronicle_id = get_chronicle_id(to_id)
+        Deed.create!({karma_value: TIP_RECIPIENT_KARMA, karma_event: tip, user_id: to_id, chronicle_id: chronicle_id})
+      end
     end
 
 

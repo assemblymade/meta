@@ -21,12 +21,6 @@ class UsersController < ApplicationController
 
     set_empty_state if @wips.empty?
 
-    if signed_in?
-      @show_karma = current_user.is_staff?
-    else
-      @show_karma = false
-    end
-
     @show_karma = current_user && current_user.staff?
 
     respond_with @user
@@ -39,8 +33,27 @@ class UsersController < ApplicationController
 
   def assets
     authenticate_user!
+    @show_karma = current_user && current_user.staff?
     @user = User.find_by(username: params[:id]).decorate
     @assets = @user.assembly_assets.group_by { |asset| asset.product }
+  end
+
+  def karma
+    @show_karma = current_user && current_user.staff?
+    @user = User.find_by(username: params[:id]).decorate
+    @deeds = Karma::Kronikler.new.deeds_by_user(@user.id)
+    @karma_history = Karma::Kronikler.new.karma_history_by_user(@user.id)
+    @karma_product_history = Karma::Kronikler.new.karma_product_history_by_user(@user.id)
+
+    @pi_chart_data = [["Product", "Karma"]]
+    @productlist = @karma_product_history[1]
+    (0..@productlist.count-1).each do |i|
+      @pi_chart_data.append([@productlist[i], @karma_product_history[0].last[i+1]])
+    end
+
+    @karma_product_data 
+
+
   end
 
   def update
