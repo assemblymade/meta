@@ -19,6 +19,12 @@
       </InPlaceUserSearch>
     },
 
+    componentDidUpdate: function(prevProps, prevState) {
+      if (prevState.text != this.state.text) {
+        this.props.onTextChange(this.state.text)
+      }
+    },
+
     handleChange: function(e) {
       var username = null
       var matches = e.target.value.match(USER_SEARCH_REGEX)
@@ -29,7 +35,7 @@
       this.setState({
         text: e.target.value,
         usernameSearch: username
-      });
+      })
     },
 
     handleUserChanged: function(user) {
