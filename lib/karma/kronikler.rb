@@ -41,8 +41,8 @@ module Karma
       sums = [[DateTime.now.to_s,0,0,0,0]]
       deeds.each do |d|
         temp = sums.last.dup
-        #temp[0] = (deed_date(d[0]) - Date.new(1970,1,1)).to_i
-        temp[0] = deed_date(d[0])
+        temp[0] = (deed_date(d[0]) - Date.new(1970,1,1)).to_i
+        #temp[0] = deed_date(d[0])
         if d[0].karma_event_type=="Wip"
           temp[1]=temp[1]+d[0].karma_value
         elsif d[0].karma_event_type=="Tip"

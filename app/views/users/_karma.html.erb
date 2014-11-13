@@ -16,8 +16,8 @@
         var options = {
           title: 'Karma History',
           isStacked: true,
-          hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}, showTextEvery: showEvery},
-          vAxis: {minValue: 0}
+          hAxis: {title: 'Time',  titleTextStyle: {color: '#333'}, showTextEvery: showEvery,  textPosition: 'none'},
+          vAxis: {title: 'Karma', minValue: 0}
         };
         var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
         chart.draw(data, options);
@@ -38,7 +38,7 @@
         var options = {
           title: 'Karma Product History',
           isStacked: true,
-          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}, showTextEvery: showEvery},
+          hAxis: {titleTextStyle: {color: '#333'}, showTextEvery: showEvery, textPosition: 'none'},
           vAxis: {minValue: 0}
         };
 
@@ -78,13 +78,13 @@
       <th>Date</th>
       <th>Type</th>
       <th>Subject</th>
-      <th>Karma Kollekted</th>
+      <th>Karma Collected</th>
     </thead>
     <tbody>
       <% @deeds.each do |d| %>
         <tr>
           <td>
-            <%= d[0].created_at %>
+            <%= Karma::Kronikler.new.deed_date(d[0]) %>
           </td>
           <td>
             <% if d[0].karma_event_type.to_s == "Wip" %>

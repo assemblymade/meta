@@ -4,9 +4,9 @@ module Karma
     FOUNDER_BOUNTY_MULTIPLER = 0.05
     BOUNTY_KARMA_VALUE = 10.0
     BOUNTY_CREATOR_KARMA_SHARE = 0.3 #30%
-    KARMA_FROM_INVITE = 2.0
+    KARMA_FROM_INVITE = 3.0
     KARMA_FROM_COMPLETED_INVITE = 8.0
-    TIP_RECIPIENT_KARMA = 1.0
+    TIP_RECIPIENT_KARMA = 3.0
 
     def get_chronicle_id(user_id)
       chronicle = Chronicle.find_by(user_id: user_id)

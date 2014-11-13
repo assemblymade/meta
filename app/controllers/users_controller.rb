@@ -41,7 +41,7 @@ class UsersController < ApplicationController
   def karma
     @show_karma = current_user && current_user.staff?
     @user = User.find_by(username: params[:id]).decorate
-    @deeds = Karma::Kronikler.new.deeds_by_user(@user.id)
+    @deeds = Karma::Kronikler.new.deeds_by_user(@user.id).reverse
     @karma_history = Karma::Kronikler.new.karma_history_by_user(@user.id)
     @karma_product_history = Karma::Kronikler.new.karma_product_history_by_user(@user.id)
 
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
     end
 
     @karma_total_history = [['Date' ,'Bounties', 'Tips', 'Invites', 'Products']]
-    @karma_total_history = @karma_total_history + @karma_history 
+    @karma_total_history = @karma_total_history + @karma_history
 
   end
 
