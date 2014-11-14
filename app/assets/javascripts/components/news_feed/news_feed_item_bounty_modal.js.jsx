@@ -17,11 +17,8 @@ module.exports = React.createClass({
   displayName: 'NewsFeedItemBountyModal',
   // (pletcher) TODO: Infer bounty, product, user, etc. from this.props.item
   propTypes: {
-    bounty: React.PropTypes.object,
     item: React.PropTypes.object.isRequired,
-    onHidden: React.PropTypes.func.isRequired,
-    product: React.PropTypes.object,
-    user: React.PropTypes.object
+    onHidden: React.PropTypes.func.isRequired
   },
 
   componentDidMount: function() {
@@ -29,9 +26,9 @@ module.exports = React.createClass({
 
     modal.on('hidden.bs.modal', this.props.onHidden);
 
-    window.app.setCurrentAnalyticsProduct(this.props.product);
+    window.app.setCurrentAnalyticsProduct(this.props.item.product);
 
-    analytics.track('product.wip.viewed', { bounty: this.props.bounty, news_feed: true });
+    analytics.track('product.wip.viewed', { bounty: this.props.item.target, news_feed: true });
 
     this.fetchBounty();
   },
@@ -79,11 +76,13 @@ module.exports = React.createClass({
     // (pletcher) This is bad, but the WipSerializer needs to stay relatively
     // lightweight, and the TaskSerializer breaks on weird things (e.g.,
     // #contracts)
-    var bounty = _.extend((this.state.bounty || {}), this.props.bounty);
-    var product = this.props.product;
+
+    var item = this.props.item;
+    var bounty = _.extend((this.state.bounty || {}), item.target);
+    var product = item.product;
 
     bounty.product = product;
-    bounty.user = this.props.user;
+    bounty.user = item.user;
 
     // TODO: (pletcher) Don't render the bounty in a modal
 
@@ -192,8 +191,10 @@ module.exports = React.createClass({
       }
 
       if (i + 1 === events.length ) {
+        var bounty = this.props.item.target;
+
         var timestamp = (
-          <div className="timeline-insert js-timestamp" key={'timestamp-' + this.props.bounty.id}>
+          <div className="timeline-insert js-timestamp" key={'timestamp-' + bounty.id}>
             <time className="timestamp" dateTime={event.timestamp}>{$.timeago(event.timestamp)}</time>
             <ReadReceipts url={'/_rr/articles/' + this.props.bounty.id} track_url={event.readraptor_track_id} />
           </div>
@@ -208,6 +209,9 @@ module.exports = React.createClass({
 
   renderNewEventForm: function() {
     var currentUser = window.app.currentUser();
+    var item = this.props.item;
+    var bounty = item.target;
+    var product = item.product;
 
     if (currentUser) {
       return (
@@ -218,7 +222,7 @@ module.exports = React.createClass({
           </div>
 
           <div className="media-body" id="comment">
-            <form action={'/' + this.props.product + '/bounties/' + this.props.bounty.number + '/comments'} method="post" className="form" />
+            <form action={'/' + product + '/bounties/' + bounty.number + '/comments'} method="post" className="form" />
               <input name="authenticity_token" type="hidden" value={this.props.csrf} />
                 <MarkdownEditor id="event_comment_body" name="event_comment[body]" required={true} />
 

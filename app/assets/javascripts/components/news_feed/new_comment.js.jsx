@@ -75,7 +75,7 @@
 
         window.analytics.track(
           'news_feed_item.commented', {
-            product: (window.app.currentAnalyticsProduct()) 
+            product: (window.app.currentAnalyticsProduct())
           }
         );
       }

@@ -45,6 +45,6 @@ module.exports = React.createClass({
   },
 
   isOptimistic: function() {
-    return this.props.optimistic != null;
+    return !!this.props.optimistic;
   }
 })

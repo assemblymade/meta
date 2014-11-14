@@ -36,9 +36,10 @@
     },
 
     render: function() {
-      var bounty = this.props.bounty;
-      var product = this.props.product;
-      var user = this.props.user;
+      var item = this.props.item;
+      var bounty = item.target;
+      var product = item.product;
+      var user = item.user;
 
       return (
         <div className="p3"
@@ -75,6 +76,7 @@
     showBounty: function(e) {
       e.stopPropagation();
 
+      var bounty = this.props.item.target;
       var width = window.innerWidth;
 
       if (width > 480) {
@@ -82,13 +84,14 @@
           modalShown: true
         });
       } else {
-        window.location = this.props.bounty.url;
+        window.location = bounty.url;
       }
     },
 
     tags: function() {
-      var bounty = this.props.bounty;
-      var product = this.props.product;
+      var item = this.props.item;
+      var bounty = item.target;
+      var product = item.product;
 
       return _.map(bounty.tags, function(tag) {
         var name = tag.name;
@@ -104,7 +107,9 @@
     },
 
     thumbnails: function() {
-      var thumbnails = this.props.bounty.thumbnails;
+      var item = this.props.item;
+      var bounty = item.target;
+      var thumbnails = bounty.thumbnails;
 
       if (thumbnails.length) {
         var thumbs = _.map(thumbnails, function(thumb, i) {
@@ -116,7 +121,7 @@
         });
 
         return (
-          <div className="clearfix" key={'thumbs-container-' + this.props.bounty.id}>
+          <div className="clearfix" key={'thumbs-container-' + bounty.id}>
             <div className="gray py1">Images</div>
             {thumbs}
           </div>

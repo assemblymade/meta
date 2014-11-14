@@ -165,7 +165,7 @@
         <td className="text-right">{this.props.open_tasks_count}</td>
         <td><ProductState state={this.state.state} url={'/admin/products/' + this.props.id} /></td>
         <td className="text-right">
-          <input type="text" className="form-control" value={this.state.dirty ? this.state.pendingQualityScore : this.props.quality} style={{'background-color': bgColor}}
+          <input type="text" className="form-control" value={this.state.dirty ? this.state.pendingQualityScore : this.props.quality} style={{ backgroundColor: bgColor }}
             onChange={this.handleChange}
             onBlur={this.persistChange}
           />
