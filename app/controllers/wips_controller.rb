@@ -196,7 +196,7 @@ class WipsController < ProductController
     else
       @wip = @product.wips.find_by!(number: number).decorate
     end
-    @events = @wip.events.includes(:events).order(:number)
+    @events = @wip.events.includes(:tips).order(:number)
   end
 
   def set_stories
