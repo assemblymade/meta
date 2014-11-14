@@ -198,7 +198,7 @@
 
     render: function() {
       var productsPath = '/users/' + this.props.username;
-      console.log(this.state);
+
       var desktopNotifications = null;
       if (!this.state.desktopNotificationsEnabled) {
         desktopNotifications = <li>

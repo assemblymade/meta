@@ -6,7 +6,6 @@ jest.dontMock(pathToFile('mixins/local_storage.js'));
 describe('ChatNotifications', function() {
   global.localStorage = {};
   global.moment = require.requireActual('moment');
-  global.Spinner = require.requireActual('spin.js');
   global.Dispatcher = require(pathToFile('dispatcher.js'));
   global.ChatNotificationsStore = require(pathToFile('stores/chat_notifications_store.js'));
 
