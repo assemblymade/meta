@@ -1,5 +1,9 @@
 json.users do
-  json.array! @users, :id, :username, :avatar_url
+  json.array! @users do |user|
+    json.id user.id
+    json.username user.username
+    json.avatar_url Avatar.new(User.find(user.id)).url.to_s
+  end
 end
 
 # json.cache_collection! @stories do |story|

@@ -181,11 +181,6 @@
           }) }
         </div>
       );
-    },
-
-    spinnerOptions: {
-      lines: 11,
-      top: '20%'
     }
   });
 
