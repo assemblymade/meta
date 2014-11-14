@@ -7,7 +7,7 @@ html {
 
 body {
   font-family: $font-family-sans-serif;
-  line-height: 2rem;
+  line-height: $line-height-base;
   font-size: 1.3333333333rem;
 }
 
@@ -17,7 +17,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p, dl, ol, ul {
-  font-size: 1.3333333333rem;
+  font-size: 1.33333rem;
 }
 
 p.lead,

@@ -166,6 +166,45 @@ namespace :emails do
     end
   end
 
+  desc "Alert users to upcoming bounty holding"
+  task :bounty_holding_incoming => :environment do
+    workers = {}
+
+    Task.includes(:wip_workers).where('wips.closed_at is null').each do |task|
+      if task.workers.count > 0
+        task.workers.each do |worker|
+          if workers[worker.id]
+            workers[worker.id] << task.id
+          else
+            workers[worker.id] = [task.id]
+          end
+        end
+      end
+    end
+
+    workers.each do |worker_id, tasks|
+      if tasks.count > 1
+        products = []
+        tasks.map do |task|
+          t = Task.find(task)
+          products << t.product.slug
+        end
+
+        if products.uniq.count > 1
+          puts "#{worker_id} #{tasks.count}"
+          EmailLog.send_once(worker_id, :bounty_holding_incoming_take2) do
+            UserMailer.delay.bounty_holding_incoming_take2(worker_id, tasks)
+          end
+        end
+      end
+
+      next
+      EmailLog.send_once(worker_id, :bounty_holding_incoming) do
+        UserMailer.delay.bounty_holding_incoming(worker_id, tasks)
+      end
+    end
+  end
+
   desc "Greenlight and reject team building products"
   task team_building: :environment do
     expired = Product.team_building.where('started_team_building_at < ?', 30.days.ago)

@@ -61,11 +61,11 @@ input[type=radio], input[type=checkbox] {
     margin: 1px 0 1px 1px;
     padding: 6px 20px;
     position: absolute;
-    width: 122px;
+    width: 125px;
     z-index: 3;
 
     & + .form-control {
-      padding-left: 142px;
+      padding-left: 145px;
     }
   }
 

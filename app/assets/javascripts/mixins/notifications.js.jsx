@@ -11,16 +11,6 @@
 
   var NotificationsMixin = {
     componentDidMount: function() {
-      var target = this.refs.spinner && this.refs.spinner.getDOMNode();
-      var opts = this.spinnerOptions || {
-        lines: 10,
-        length: 8,
-        radius: 10
-      };
-
-      var spinner = this.spinner = new Spinner(opts).spin();
-
-      target.appendChild(spinner.el);
       NotificationsStore.addChangeListener(this.getStories);
     },
 
@@ -83,8 +73,6 @@
 
   function reconcileStoriesAndSpinner() {
     if (this.state.stories) {
-      this.spinner.stop();
-
       if (!this.state.stories.length && !this.props.fullPage) {
         this._render = this.render;
 
@@ -106,7 +94,6 @@
         }
       }
 
-      // force a re-render
       this.forceUpdate();
     }
   }

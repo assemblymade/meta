@@ -38,6 +38,22 @@ describe Task do
     end
   end
 
+  describe "#lock_bounty!" do
+    it "holds the bounty for the given user" do
+      task.lock_bounty!(worker)
+      expect(task.locked_at).to be_within(2).of(Time.now)
+    end
+  end
+
+  describe "#unlock_bounty!" do
+    it "releases the bounty for other workers" do
+      task.lock_bounty!(worker)
+      expect(task.locked_at).to be_within(2).of(Time.now)
+      task.unlock_bounty!
+      expect(task.locked_at).to be_nil
+    end
+  end
+
   describe "award and close" do
     it "transitions to resolved" do
       expect { task.award!(core_member, comment) }.to change(Activity, :count).by(1)

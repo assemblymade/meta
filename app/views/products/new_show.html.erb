@@ -1,154 +1,67 @@
-<% title @product.name %>
+<% activate_nav! :product %>
 
-<style>
-  body { background-color: #F5F6F5 }
-</style>
+<div class="clearfix mxn2">
+  <div class="sm-col sm-col-8 px2">
 
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-<%= render 'shared/navbar' %>
-
-
-<div class="container mt3">
-  <div class="clearfix mnx3">
-
-    <div class="sm-col sm-col-8 px2">
-
-
-      <div class="bg-white rounded p3 mb2">
-
-        <div class="table p0 mb0" style="table-layout:fixed">
-
-          <a class="table-cell center" href="<%= new_product_post_path(@product) %>">
-            <div class="h1 blue mt0 mb0">
-              <span class="fa fa-font"></span>
-            </div>
-            <div>Text</div>
-          </a>
-
-          <a class="table-cell center" href="<%= new_product_wip_path(@product) %>">
-            <div class="h1 yellow mt0 mb0">
-              <span class="fa fa-trophy"></span>
-            </div>
-            <div>Bounty</div>
-          </a>
-
-          <a class="table-cell center" href="<%= new_product_asset_path(@product) %>">
-            <div class="h1 green mt0 mb0">
-              <span class="fa fa-image"></span>
-            </div>
-            <div class="">Image</div>
-          </a>
-
-          <a class="table-cell center" href="#">
-            <div class="h1 red mt0 mb0">
-              <span class="fa fa-film"></span>
-            </div>
-            <div class="">Video</div>
-          </a>
-
-        </div>
+    <div class="bg-white p3 rounded shadow mb3">
+      <div class="clearfix">
+        <h6 class="mt0 mb2">Good afternoon <%= current_user.username %>!</h6>
+        <div class="right"></div>
       </div>
+      <p>Ready to pitch in on <%= @product.name %>? Introduce yourself.</p>
 
-      <div class="py2">
-        <ul class="list-reset clearfix h6 mxn2 mt0 mb0 bold gray">
-          <li class="left px2">Search</li>
-          <li class="left px2">
-            Filter
-            <span class="fa fa-chevron-down"></span>
-          </li>
-          <li class="left px2">
-            Sort
-            <span class="fa fa-chevron-down"></span>
-          </li>
-        </ul>
-      </div>
-
-      <%= react_component 'NewsFeedList', news_feed_items: ActiveModel::ArraySerializer.new(
-        @product.news_feed_items.order(updated_at: :desc)
-      ).as_json %>
+      <textarea class="form-control mb2" placeholder="What do you like to do? What is your favorite sandwich?"></textarea>
+      <a class="btn btn-primary btn-block" href="#">Introduce yourself!</a>
     </div>
 
-    <div class="sm-col sm-col-4 px3">
-      <div class="bg-white rounded mb3">
+    <%= react_component 'NewsFeedList', news_feed_items: ActiveModel::ArraySerializer.new(
+      @product.news_feed_items.order(updated_at: :desc)
+    ).as_json %>
+  </div>
 
-        <div class="p3">
-          <div class="mb2">
-            <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 48 %>
-          </div>
-          <div class="h2 mt0 mb0"><%= @product.name %></div>
-          <div class="h4 mt0 mb0 gray"><%= @product.pitch %></div>
+  <div class="sm-col sm-col-4 px2">
 
-          <% if @product.homepage_url? %>
-            <a class="block mt2 mb2" href="<%= @product.homepage_url %>">
-              <span class="fa fa-globe"></span>
-              <%= URI(@product.homepage_url.downcase).host %>
-            </a>
-          <% end %>
+    <div class="bg-gray-light p2 rounded">
+      <h6 class="mt0 py2 mb0 black">The Big Idea</h6>
+      <%= react_component 'Markdown', content: @product.lead, normalized: true %>
+      <a class="block mb3" href="#">Read more</a>
 
-          <%= react_component('NotificationPreferencesDropdown',
-            productWatchersPath: product_people_path(@product),
-            productWatchersCount: @product.watchings_count,
-            productFollowPath: product_follow_path(@product),
-            productAnnouncementsPath: product_announcements_path(@product),
-            productUnfollowPath: product_unfollow_path(@product),
-            watchingState: @product.watching_state(current_user),
-            afterFollowPath: product_people_path(@product)
-          ) %>
-        </div>
-
-        <hr class="mt0 mb0 border-bottom">
-
-        <% if @product.chat_rooms.any? %>
-          <% chat_room = @product.chat_rooms.first %>
-          <a class="block p2 px3 border-bottom" href="<%= chat_room_path(chat_room) %>">
-            <span class="fa fa-comments gray icon-left"></span>
-            Chat
+      <div class="stat-group mb0">
+        <div class="stat">
+          <a class="block" href="<%= product_people_path(@product) %>">
+            <div class="h4 mt0 mb0"><%= @product.partners.count %></div>
+            <div class="gray-dark">Partners</div>
           </a>
-        <% end %>
-
-        <a class="block p2 px3 border-bottom" href="<%= product_posts_path(@product) %>">
-          <span class="fa fa-font blue mr1"></span>
-          Posts
-        </a>
-
-        <a class="block p2 px3 border-bottom" href="<%= product_tasks_path(@product) %>">
-          <span class="fa fa-trophy yellow mr1"></span>
-          Bounties
-        </a>
-
-        <a class="block p2 px3 border-bottom" href="<%= product_people_path(@product) %>">
-          <span class="fa fa-users gray mr1"></span>
-          People
-        </a>
-
-        <a class="block p2 px3 border-bottom" href="<%= product_discussions_path(@product) %>">
-          <span class="fa fa-font blue mr1"></span>
-          Discussions
-        </a>
-
-        <a class="block p2 px3 border-bottom" href="<%= product_assets_path(@product) %>">
-          <span class="fa fa-image green mr1"></span>
-          Assets
-        </a>
-
-        <a class="block p2 px3 border-bottom" href="<%= product_projects_path(@product) %>">
-          <span class="fa fa-tasks gray mr1"></span>
-          Projects
-        </a>
-
-        <a class="block p2 px3 border-bottom" href="<%= product_repos_path(@product) %>">
-          <span class="fa fa-github gray mr1"></span>
-          Repositories
-        </a>
-
-        <a class="block p2 px3" href="<%= product_financials_path(@product) %>">
-          <span class="fa fa-money gray mr1"></span>
-          Financials
-        </a>
+        </div>
+        <div class="stat">
+          <a class="block" href="<%= product_repos_path(@product) %>">
+            <div class="h4 mt0 mb0"><%= @product.repos.count %></div>
+            <div class="gray-dark">Repos</div>
+          </a>
+        </div>
+        <div class="stat">
+          <a class="block" href="<%= product_financials_path(@product) %>">
+            <div class="h4 mt0 mb0">$32,000</div>
+            <div class="gray-dark">Royalties</div>
+          </a>
+        </div>
       </div>
-
     </div>
+
+    <h6 class="mt0 py2 mb0 gray-dark">Skills</h6>
+
+    <ul class="list-reset">
+      <li><a href="#">Design</a></li>
+      <li><a href="#">Development</a></li>
+    </ul>
+
+    <h6 class="mt0 py2 mb0 gray-dark">Tags</h6>
+
+    <ul class="list-reset">
+      <li><a href="#">TODO</a></li>
+      <li><a href="#">Recent</a></li>
+    </ul>
 
   </div>
+
 </div>

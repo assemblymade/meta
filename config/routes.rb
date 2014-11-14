@@ -312,6 +312,8 @@ ASM::Application.routes.draw do
     resources :wips, only: [:index, :show, :new, :edit, :create, :update], controller: 'tasks', path: 'bounties' do
       get 'search', :on => :collection
 
+      # FIXME: (pletcher) these routes aren't particularly RESTful -- should
+      #         they be handled in query params instead?
       get   'checkin'
       patch 'start_work'
       patch 'stop_work'
@@ -331,6 +333,8 @@ ASM::Application.routes.draw do
       patch 'unflag'
       patch 'close'
       patch 'reopen'
+      patch 'lock'
+      patch 'unlock'
 
       resources :comments, only: [:show, :create, :edit, :update]
     end

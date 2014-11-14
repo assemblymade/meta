@@ -6,7 +6,7 @@
 <div class="card mb0">
   <%= react_component 'Bounty', {
       bounty: BountySerializer.new(@bounty, scope: current_user),
-      news_feed_item: (NewsFeedItemSerializer.new(@bounty.news_feed_item) if @bounty.news_feed_item),
+      item: (NewsFeedItemSerializer.new(@bounty.news_feed_item) if @bounty.news_feed_item),
       valuation: {
         product: { name: @product.name },
         url: product_wips_path(@product),
@@ -16,7 +16,7 @@
         profitLastMonth: @product.profit_last_month,
         steps: BountyGuidance::Valuations.suggestions(@product)
       },
-      show_coins: !@product.meta?
+      showCoins: !@product.meta?
     } %>
 </div>
 
@@ -38,8 +38,8 @@
     });
 
     <% if signed_in? %>
-      <% story = Story.associated_with(@bounty).first.try(:id) %>
-      app.wip.readRaptorUrl = '<%== ReadraptorTracker.new(story, current_user.id).url if story %>';
+      <% story_id = Story.associated_with_ids(@bounty).first %>
+      app.wip.readRaptorUrl = '<%== ReadraptorTracker.new(story_id, current_user.id).url if story_id %>';
     <% end %>
 
     $(document).ready(function() {

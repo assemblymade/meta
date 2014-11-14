@@ -18,12 +18,6 @@ describe Users::RegistrationsController do
         }
       end
 
-      it "emails a new user a welcome package" do
-        Sidekiq::Testing.inline!
-        post(:create, user: user_attributes)
-        expect(last_email.subject).to eq("Your Assembly welcome package")
-      end
-
       it "redirects to the discover products page by default" do
         post(:create, user: user_attributes)
         expect(response).to redirect_to(new_survey_path)

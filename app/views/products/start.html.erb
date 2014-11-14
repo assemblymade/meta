@@ -198,14 +198,14 @@
           <div class="col-xs-12 col-sm-10 col-sm-offset-1">
             <div>
               <div style="margin: 35px 0 20px 0">
-                <div class="avatar-comment" style="background: linear-gradient(160deg, rgba(254, 234, 115, .5), rgba(30, 89, 129, .5)), url('<%= Avatar.url_from_email(User.find_by(username: 'ianpatrickhines').email.downcase, 170) %>')"></div>
+                <div class="avatar-comment" style="background: linear-gradient(160deg, rgba(254, 234, 115, .5), rgba(30, 89, 129, .5)), url('<%= Avatar.url_from_email(User.find_by(username: 'davidkaneda').email.downcase, 170) %>')"></div>
               </div>
-              <em class="text-serif text-muted" style="font-size: 18px; line-height: 1.2">One of the things I love about Assembly is that it‘s a great place to work on a side project where you have some external accountability. When you're on your own, it’s so easy to start things, but never finish them. On Assembly, you’ve made a commitment to other people to get it done, and that helps keep you motivated to work on it.</em>
+              <em class="text-serif text-muted" style="font-size: 18px; line-height: 1.2">Assembly has been fantastic for providing a new venue to collaborate on <a href="<%= product_path(Product.find_by(slug: 'buckets')) %>">Buckets</a>. I love the variety of contributions we receive and overall being able to share our product’s development so openly!</em>
               <br>
               <div style="margin-top: 10px">
-                <strong>Ian Patrick Hines - Community Builder</strong>
+                <strong>David Kaneda - UX Designer</strong>
                 <br>
-                <span class="text-muted">@ianpatrickhines</span>
+                <span class="text-muted">@davidkaneda</span>
               </div>
             </div>
 

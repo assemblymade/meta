@@ -8,7 +8,7 @@ class Users::BalancesController < ApplicationController
   end
 
   def withdraw
-    if current_user.tax_info.nil? || !current_user.tax_info.valid?
+    if current_user.tax_info.nil?
       flash[:info] = "Please finalize your tax information"
       redirect_to users_tax_info_path
       return

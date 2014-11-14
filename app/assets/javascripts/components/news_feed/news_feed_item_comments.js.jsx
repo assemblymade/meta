@@ -32,34 +32,31 @@ module.exports = React.createClass({
     $.get(url, function(response) {
       this.setState({
         comments: response,
-        numberOfCommentsToShow: response.length
+        showCommentsAfter: 0
       });
     }.bind(this));
   },
 
   getComments: function(e) {
     var comments = NewsFeedItemStore.getComments(this.props.item.id);
-    // debugger;
+
     this.setState({
       comment: '',
       comments: this.state.comments.concat(comments.confirmed),
       numberOfComments: this.state.numberOfComments + comments.confirmed.length,
-      // This is pretty hacky (chrislloyd)
-      numberOfCommentsToShow: (comments.optimistic.length ?
-          this.state.numberOfCommentsToShow :
-          this.state.numberOfCommentsToShow + 1),
-      optimisticComments: comments.optimistic,
+      optimisticComments: comments.optimistic
     });
   },
 
   getInitialState: function() {
     var item = this.props.item;
+    var lastComment = item.last_comment;
 
     return {
-      comments: item.last_comment ? [item.last_comment] : [],
-      numberOfComments: this.props.item.target.comments_count,
-      numberOfCommentsToShow: 1,
+      comments: lastComment ? [lastComment] : [],
+      numberOfComments: item.target.comments_count || item.comments_count,
       optimisticComments: [],
+      showCommentsAfter: lastComment ? +new Date(lastComment.created_at) : +Date.now(),
       url: item.url + '/comments'
     };
   },
@@ -82,31 +79,32 @@ module.exports = React.createClass({
     var optimisticComments = this.renderOptimisticComments();
     var comments = confirmedComments.concat(optimisticComments);
     var numberOfComments = this.state.numberOfComments;
-    var numberOfCommentsToShow = this.state.numberOfCommentsToShow;
 
-    if (numberOfComments >= numberOfCommentsToShow) {
-      return (
-        <div>
-          {this.renderLoadMoreButton(numberOfComments)}
-          {_.last(confirmedComments, numberOfCommentsToShow)}
-          {optimisticComments}
-        </div>
-      );
-    }
+    return (
+      <div>
+        {this.renderLoadMoreButton(numberOfComments)}
+        {confirmedComments}
+        {optimisticComments}
+      </div>
+    );
   },
 
   renderConfirmedComments: function() {
+    var renderIfAfter = this.state.showCommentsAfter;
+
     return this.state.comments.map(function(comment) {
-      return (
-        <div className="px3 py2" key={comment.id}>
-          <Comment author={comment.user} body={comment.markdown_body} />
-        </div>
-      )
-    })
+      if (new Date(comment.created_at) >= renderIfAfter) {
+        return (
+          <div className="px3 py2" key={comment.id}>
+            <Comment author={comment.user} body={comment.markdown_body} />
+          </div>
+        );
+      }
+    });
   },
 
   renderLoadMoreButton: function(numberOfComments) {
-    if (numberOfComments !== this.state.numberOfCommentsToShow) {
+    if (numberOfComments > this.state.comments.length) {
       return (
         <a className="block h6 blue clearfix mt0 mb0 px3 py2" href="javascript:void(0);" onClick={this.fetchCommentsFromServer}>
           &nbsp;View all {numberOfComments} comments
@@ -125,10 +123,10 @@ module.exports = React.createClass({
     });
   },
 
-  showMoreComments: function(total) {
+  showMoreComments: function() {
     return function(e) {
       this.setState({
-        numberOfCommentsToShow: total
+        showCommentsAfter: 0
       });
     }.bind(this);
   }

@@ -6,26 +6,89 @@ var formatShortTime = require('../lib/format_short_time.js')
 
 module.exports = React.createClass({
   propTypes: {
-    bounty: React.PropTypes.object.isRequired
+    bounty: React.PropTypes.object.isRequired,
+    item: React.PropTypes.object,
+    noInvites: React.PropTypes.bool,
+    showCoins: React.PropTypes.bool
+  },
+
+  abandonWork: function(e) {
+    e.preventDefault();
+
+    var user = window.app.currentUser();
+
+    window.analytics.track('bounty.extended', {
+      user: user,
+      product: window.app.currentAnalyticsProduct()
+    });
+
+    this.setState({
+      worker: null,
+      lockUntil: null
+    }, function() {
+      $.ajax({
+        url: this.props.bounty.stop_work_url,
+        method: 'PATCH',
+        headers: {
+          'accept': 'application/json'
+        },
+        success: function(data) {},
+        error: function(jqXhr, status, error) {
+          console.error(error);
+        }
+      });
+    });
+  },
+
+  extendWork: function(hours) {
+    return function(e) {
+      e.preventDefault();
+
+      var user = window.app.currentUser();
+
+      window.analytics.track('bounty.extended', {
+        user: user,
+        product: window.app.currentAnalyticsProduct()
+      });
+
+      this.setState({
+        lockUntil: this.state.lockUntil.add(hours, 'hours')
+      }, function() {
+        console.log(this.props.bounty.lock_url)
+        $.ajax({
+          url: this.props.bounty.lock_url,
+          method: 'PATCH',
+          headers: {
+            'accept': 'application/json'
+          },
+          success: function(data) {},
+          error: function(jqXhr, status, error) {
+            console.error(error);
+          }
+        });
+      }.bind(this));
+    }.bind(this)
   },
 
   getInitialState: function() {
+    var bounty = this.props.bounty;
+    console.log(bounty);
     return {
+      // :<
       bounty: this.props.bounty,
-      worker: { username: 'chrislloyd' },
-      lockUntil: moment().add(1, 'hour')
-
+      worker: this.props.bounty.workers[0],
+      lockUntil: moment(bounty.locked_at).add(60, 'hours')
     };
   },
 
   render: function() {
-    var bounty = this.props.bounty
+    var bounty = this.state.bounty;
 
     return (
       <div>
         <div className="p3 border-bottom">
-          <ul className="list-inline mb2" style={{ 'margin-bottom': '6px' }}>
-            {this.props.show_coins ? <li className="text-large">
+          <ul className="list-inline mb2" style={{ marginBottom: '6px' }}>
+            {this.props.showCoins ? <li className="text-large">
               {this.renderBountyValuation()}
             </li> : null}
             <li>
@@ -34,7 +97,7 @@ module.exports = React.createClass({
             <li>
               {this.renderTagList()}
             </li>
-            <li className="text-muted" style={{ 'font-size': '14px', 'color': '#a5a5a5' }}>
+            <li className="text-muted" style={{ fontSize: '14px', color: '#a5a5a5' }}>
               Created by
               {' '}
               <a className="text-stealth-link" href={bounty.user.url}>@{bounty.user.username}</a>
@@ -103,6 +166,10 @@ module.exports = React.createClass({
     }
   },
 
+  /**
+   * This function is never used :(
+   */
+
   renderDiscussWorkBanner: function() {
     var bounty = this.state.bounty;
     var closed = bounty.state === 'resolved' || bounty.state === 'closed';
@@ -114,15 +181,15 @@ module.exports = React.createClass({
 
     var currentUserId = currentUser && currentUser.get('id');
     var mostRecentWorkerId = bounty.most_recent_other_wip_worker && bounty.most_recent_other_wip_worker.user_id;
-
     var working = _.any(bounty.workers, function(worker) { return worker.id == currentUserId });
     var otherWorker = _.find(bounty.workers, function(worker) { return worker.id == mostRecentWorkerId });
 
-    if (!working || !otherWorker) { return; }
+    if (!working || !otherWorker) {
+      return;
+    }
 
     var otherWorkersCount = bounty.workers.length - 1;
     var workersPhrase = otherWorkersCount == 1 ? '1 other person' : otherWorkersCount + ' other people';
-
     var message = "Hey @" + otherWorker.username + ". Mind if I help out with #" + bounty.number + "?";
     var discussUrl = bounty.chat_room_url + '?message=' + encodeURIComponent(message);
 
@@ -167,7 +234,7 @@ module.exports = React.createClass({
     var currentUser = window.app.currentUser();
     var isStaff = currentUser && currentUser.get('staff');
 
-    if(isStaff) {
+    if (isStaff) {
       return (
         <li className="alpha">
           <ToggleButton
@@ -185,7 +252,7 @@ module.exports = React.createClass({
     var currentUser = window.app.currentUser();
     var bounty = this.state.bounty;
 
-    if(currentUser) {
+    if (currentUser) {
       return (
         <li>
           <ToggleButton
@@ -238,32 +305,32 @@ module.exports = React.createClass({
   },
 
   renderPopularizeButton: function() {
-    var news_item = this.props.news_feed_item;
+    var item = this.props.item;
 
-    if (news_item && window.app.staff()) {
+    if (item && window.app.staff()) {
       return (
         <li className="alpha">
           <ToggleButton
-            bool={news_item.popular_at !== null}
+            bool={item.popular_at !== null}
             text={{ true: 'Depopularize', false: 'Popularize' }}
             classes={{ true: 'btn btn-label', false: 'btn btn-label' }}
             icon={{ true: 'thumbs-down', false: 'fire' }}
-            href={{ true: news_item.url + '/depopularize', false: news_item.url + '/popularize' }} />
+            href={{ true: item.url + '/depopularize', false: item.url + '/popularize' }} />
         </li>
       );
     }
   },
 
   renderStartWorkButton: function() {
-    var currentUser = window.app.currentUser()
-    var bounty = this.props.bounty
+    var currentUser = window.app.currentUser();
+    var bounty = this.props.bounty;
 
     if (this.state.closed) {
       return (
         <a className="btn btn-default disabled">
           {bounty.state === 'resolved' ? 'Completed & Closed' : 'Closed'}
         </a>
-      )
+      );
     }
 
     if (!this.state.worker) {
@@ -271,23 +338,24 @@ module.exports = React.createClass({
         <button className="btn btn-success mr2" type="button" onClick={this.startWork}>
           Work on this bounty
         </button>
-      )
+      );
     }
 
-    var worker = this.state.worker
+    var worker = this.state.worker;
 
     if (worker.id === currentUser.id) {
       return (
         <div className="clearfix">
-          <button className="btn btn-success left mr2" type="button" data-scroll="true" data-target="#event_comment_body">
+          <a className="btn btn-default left mr2" style={{ color: '#5CB85C !important', border: '1px solid #d3d3d3' }} type="button" data-scroll="true" data-target="#event_comment_body">
+            <span className="icon icon-document icon-left"></span>
             Submit work for review
-          </button>
+          </a>
           <div className="left h6 mt0 mb0 gray">
             <Icon icon="lock" />
             {' '}
-            YHeld for {formatShortTime(this.state.lockUntil)} more
+            Held for {formatShortTime(this.state.lockUntil)} more
             <br />
-            <a href="javascript:void(0)" onClick={this.extendWork(24)}>Extend for a day</a>
+            <a href="javascript:void(0)" onClick={this.extendWork(60)}>Extend for 2.5 days</a>
             {' '}
             or
             {' '}
@@ -298,11 +366,16 @@ module.exports = React.createClass({
     }
 
     return (
-      <div className="btn btn-default disabled">
-        <span className="mr1"><Icon icon="lock"/></span>
-        Held for {formatShortTime(this.state.lockUntil)} by
+      <div className="py1 gray">
+        <span className="mr1"><Icon icon="lock" /></span>
         {' '}
-        <a className="gray" href={worker.url}>@{worker.username}</a>
+        <a className="gray" href={worker.url}>
+          <span style={{ opacity: '0.7' }}>
+            <Avatar user={worker} style={{ display: 'inline' }} />
+          </span>
+          {' '} @{worker.username}
+        </a>
+        {' '} has {formatShortTime(this.state.lockUntil)} to work on this
       </div>
     )
   },
@@ -335,26 +408,27 @@ module.exports = React.createClass({
   },
 
   startWork: function(e) {
-    e.preventDefault()
-    var currentUser = window.app.currentUser()
+    e.preventDefault();
+
+    var currentUser = window.app.currentUser();
+    var bounty = this.props.bounty;
+
     this.setState({
       worker: currentUser.attributes,
-      lockUntil: moment().add(1, 'day').add(1, 'second')
-    })
-  },
-
-  extendWork: function(hours) {
-    return function(e) {
-      e.preventDefault()
-      // alert('extending by ', hours)
-      this.setState({ lockUnti: this.state.lockUntil.add(hours, 'hours') })
-    }.bind(this)
-  },
-
-  abandonWork: function(e) {
-    e.preventDefault()
-    // alert('abandoning')
-    this.setState({ worker: null, lockUntil: null })
+      lockUntil: moment().add(60, 'hours').add(1, 'second')
+    }, function() {
+      $.ajax({
+        url: this.props.bounty.start_work_url,
+        method: 'PATCH',
+        headers: {
+          'accept': 'application/json'
+        },
+        success: function(data) {},
+        error: function(jqXhr, status, error) {
+          console.error(error);
+        }
+      });
+    });
   }
 })
 

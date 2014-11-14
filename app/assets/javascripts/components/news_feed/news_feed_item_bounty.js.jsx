@@ -43,11 +43,10 @@
 
       return (
         <div className="p3"
-              style={{ cursor: 'pointer', backgroundColor: '#fcfcfc' }}
               onClick={this.showBounty}
               key={'nfbi-' + bounty.id}>
           <a className="h3 bold mt0 mb2 blue"
-              href="javascript:void(0);"
+              href={bounty.url}
               onClick={this.showBounty}
               key={"bounty-link-" + bounty.id}>
             {bounty.title}

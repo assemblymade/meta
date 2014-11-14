@@ -1,26 +1,24 @@
 /** @jsx React.DOM */
 
-(function() {
+var Markdown = React.createClass({
+  displayName: 'Markdown',
 
-  module.exports = React.createClass({
-    displayName: 'Markdown',
+  propTypes: {
+    content: React.PropTypes.string.isRequired
+  },
 
-    propTypes: {
-      content: React.PropTypes.string.isRequired
-    },
+  render: function() {
+    var normalized = this.props.normalized
 
-    render: function() {
-      var normalized = this.props.normalized
+    var cs = React.addons.classSet({
+      'markdown': true,
+      'markdown-normalized': (typeof normalized !== "undefined" && normalized !== null)
+    })
 
-      var cs = React.addons.classSet({
-        'markdown': true,
-        'markdown-normalized': (typeof normalized !== "undefined" && normalized !== null)
-      })
+    return (
+      <div className={cs} dangerouslySetInnerHTML={{__html: this.props.content}} />
+    )
+  }
+})
 
-      return (
-        <div className={cs} dangerouslySetInnerHTML={{__html: this.props.content}} />
-      )
-    }
-  })
-
-})()
+window.Markdown = module.exports = Markdown

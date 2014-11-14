@@ -58,7 +58,7 @@ module.exports = React.createClass({
                 <li>
                   <div className="dropdown">
                     <a href="#" className="dropdown-toggle" id={"dropdown-" + id} data-toggle="dropdown">
-                      <i className="icon icon-ellipsis" style={{ "font-size": "18px" }}></i>
+                      <i className="icon icon-ellipsis" style={{ fontSize: "18px" }}></i>
                     </a>
                     <ul className="dropdown-menu pull-right text-small" role="menu" aria-labelledby={"dropdown-" + id}>
 

@@ -2,6 +2,11 @@
   var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 
   var TypeaheadUserInput = React.createClass({
+    propTypes: {
+      defaultValue: React.PropTypes.string,
+      onTextChange: React.PropTypes.func.isRequired
+    },
+
     getInitialState: function() {
       return {
         text: this.props.defaultValue,
@@ -20,7 +25,7 @@
     },
 
     componentDidUpdate: function(prevProps, prevState) {
-      if (prevState.text != this.state.text) {
+      if (prevState.text !== this.state.text) {
         this.props.onTextChange(this.state.text)
       }
     },
@@ -60,8 +65,8 @@
   })
 
   if (typeof module !== 'undefined') {
-    module.exports = TypeaheadUserInput
+    module.exports = TypeaheadUserInput;
   }
 
-  window.TypeaheadUserInput = TypeaheadUserInput
+  window.TypeaheadUserInput = TypeaheadUserInput;
 })()
