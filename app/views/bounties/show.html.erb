@@ -31,7 +31,7 @@
   <script>
     app.product = new Product(<%= json @bounty.product, scope: current_user %>);
     app.wip = new Wip(<%== WipSerializer.new(@bounty, scope: current_user).to_json %>);
-    app.wipEvents = new WipEvents(<%== @bounty.events.includes(:tips).map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
+    app.wipEvents = new WipEvents(<%== @bounty.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
       url: '<%= product_wip_comments_path(@bounty.product, @bounty) %>'
     });
 
