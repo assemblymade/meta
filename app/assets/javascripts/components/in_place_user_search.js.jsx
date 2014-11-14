@@ -9,9 +9,14 @@
     down: 40
   }
 
-  var TypeaheadUserSearch = React.createClass({
+  var InPlaceUserSearch = React.createClass({
     propTypes: {
-      username: React.PropTypes.string
+      username: React.PropTypes.string,
+      searchPosition: React.PropTypes.string
+    },
+
+    getDefaultProps: function() {
+      return { url: "/_es" }
     },
 
     getInitialState: function() {
@@ -30,6 +35,7 @@
     render: function() {
       return <div id="comment" style={{"position":"relative"}} onKeyDown={this.handleKeyDown}>
         {this.shouldShowUserList() ? <UserPicker
+          position={this.props.searchPosition}
           users={this.state.users}
           highlightIndex={this.state.highlightIndex}
           onUserSelected={this.handleUserSelected} /> : null}
@@ -122,8 +128,8 @@
   })
 
   if (typeof module !== 'undefined') {
-    module.exports = TypeaheadUserSearch
+    module.exports = InPlaceUserSearch
   }
 
-  window.TypeaheadUserSearch = TypeaheadUserSearch
+  window.InPlaceUserSearch = InPlaceUserSearch
 })()

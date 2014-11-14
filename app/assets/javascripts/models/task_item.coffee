@@ -24,3 +24,6 @@ class window.TaskItem extends Backbone.Model
 
   toJSON: ->
     task: _.clone(@attributes)
+
+  isNew: ->
+    this.number == null

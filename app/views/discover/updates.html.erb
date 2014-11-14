@@ -1,4 +1,6 @@
-<% title 'Updates' %>
+<% title "What&#39;s happening in #{params[:filter] || 'the community'}" %>
+<% provide(:description, "All recent #{params[:filter]} activity across the community built Assembly products.") %>
+
 <% activate_nav! :platform_updates %>
 
 <%= render 'shared/navbar' %>
@@ -9,4 +11,7 @@
   }
 </style>
 
-<%= react_component 'NewsFeed', news_feed_items: @posts, filter_counts: @counts %>
+ <%= react_component 'NewsFeed', url: discover_path(action: 'updates', format: 'json'), items: @posts, filter_counts: @counts %>
+
+<%= render 'shared/footer' %>
+

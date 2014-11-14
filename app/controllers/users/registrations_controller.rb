@@ -5,7 +5,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   skip_before_action :validate_confirmed!, only: [:signup, :edit, :edit_email, :update]
 
   after_action :track_signup,          only: [:create]
-  after_action :email_welcome_package, only: [:create]
   after_action :claim_invite,          only: [:create]
 
   def create
@@ -49,9 +48,5 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def track_signup
     flash[:signed_up] = true if signed_in?
-  end
-
-  def email_welcome_package
-    UserMailer.delay_for(10.minutes).welcome(current_user.id) if signed_in?
   end
 end

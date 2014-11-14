@@ -1,0 +1,107 @@
+<div class="page-header sheet-header">
+  <% if @user %>
+    <%= render 'users/overview' %>
+  <% end %>
+</div>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+          var data = google.visualization.arrayToDataTable(
+          <%= @karma_total_history.to_json.html_safe %>
+          );
+
+        var showEvery = parseInt(data.getNumberOfRows() / 4);
+        var options = {
+          title: 'Karma History',
+          isStacked: true,
+          hAxis: {title: 'Time',  titleTextStyle: {color: '#333'}, showTextEvery: showEvery,  textPosition: 'none'},
+          vAxis: {title: 'Karma', minValue: 0}
+        };
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+
+    </script>
+<% columns = ["Date"]+@karma_product_history[1] %>
+
+
+ <script type="text/javascript">
+
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(
+          <%= @karma_product_data.to_json.html_safe %>);
+        var showEvery = parseInt(data.getNumberOfRows() / 4);
+        var options = {
+          title: 'Karma Product History',
+          isStacked: true,
+          hAxis: {titleTextStyle: {color: '#333'}, showTextEvery: showEvery, textPosition: 'none'},
+          vAxis: {minValue: 0}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div2'));
+        chart.draw(data, options);
+      }
+    </script>
+
+<script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(
+        <%= @pi_chart_data.to_json.html_safe %>
+        );
+
+        var options = {
+          title: 'Product Karma Origins',
+          pieHole: 0.5,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+
+
+
+<div class="sheet-body">
+  <div id="chart_div2" style="width: 700px; height: 500px;"></div>
+  <div id="chart_div" style="width: 700px; height: 500px;"></div>
+  <div id="donutchart" style="width: 900px; height: 500px;"></div>
+
+  <table class="table table-hover table-responsive">
+    <thead>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Subject</th>
+      <th>Karma Collected</th>
+    </thead>
+    <tbody>
+      <% @deeds.each do |d| %>
+        <tr>
+          <td>
+            <%= Karma::Kronikler.new.deed_date(d[0]) %>
+          </td>
+          <td>
+            <% if d[0].karma_event_type.to_s == "Wip" %>
+            <%= "Bounty" %>
+            <% else %>
+            <%= d[0].karma_event_type.to_s %>
+            <% end %>
+          </td>
+          <td>
+            <%= Karma::Kronikler.new.convert_deed_to_text(d[0])  %>
+          </td>
+          <td>
+            <%= d[0].karma_value.to_s  %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>

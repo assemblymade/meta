@@ -50,7 +50,9 @@ class window.TaskListView extends Backbone.View
     if matches
       model.set('number': matches[1])
       model.fetch
-        success: => model.save()
+        success: =>
+          model.save()
+          model.set('title', model.attributes.bounty.title)
         error: =>
           model.set('number': null)
           model.save()

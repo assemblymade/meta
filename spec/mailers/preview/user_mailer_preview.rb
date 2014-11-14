@@ -1,9 +1,5 @@
 class UserMailerPreview < ActionMailer::Preview
 
-  def welcome
-    UserMailer.welcome(User.sample.id)
-  end
-
   def reset_password_instructions
     UserMailer.reset_password_instructions(User.where('reset_password_token is not null').random.first)
   end

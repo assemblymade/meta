@@ -8,29 +8,25 @@ var InviteBountyForm = require('./invite_bounty_form.js.jsx');
   var InviteFriendBounty = React.createClass({
     getInitialState: function() {
       return {
-        popoverShown: false,
         invites: this.props.invites
       }
     },
 
     render: function() {
       return (
-        <BsPopover
-          content={InviteBountyForm({
-            url: this.props.url,
-            via_type: this.props.via_type,
-            via_id: this.props.via_id,
-            onSubmit: this.onSubmit,
-            notePlaceholder: "Hey! This bounty seems right up your alley"})}
-          placement="bottom"
-          visible={this.state.popoverShown}
-          onHide={this.handleHide}>
-            <a href="javascript:void(0);" onClick={this.togglePopover}>Recruit help</a>
-        </BsPopover>
+        <div>
+          <a href="javascript:void(0);" onClick={this.handleClick} className="btn btn-label">Recruit help</a>
+          <InviteFriendModal {...this.props}
+            onCancel={this.handleHide}
+            show={false}
+            onSubmit={this.handleFormSubmit}
+            ref="modal" />
+        </div>
       )
     },
 
-    onSubmit: function(invite) {
+    handleFormSubmit: function(invite) {
+      // window.location.reload()
       // this.setState(
       //   React.addons.update(this.state, {
       //     invites: {$push: [invite] },
@@ -39,20 +35,32 @@ var InviteBountyForm = require('./invite_bounty_form.js.jsx');
       // )
     },
 
-    togglePopover: function(e) {
-      e.preventDefault();
-
-      this.setState({
-        popoverShown: !this.state.popoverShown
-      });
+    handleClick: function() {
+      this.refs.modal.show()
     },
 
     handleHide: function() {
-      this.setState({
-        popoverShown: false
-      });
+      this.refs.modal.hide()
     }
   });
+
+
+  var InviteFriendModal = React.createClass({
+    mixins: [BsModalMixin],
+
+    render: function() {
+      return (
+        <Lightbox>
+          <InviteBountyForm show={false}
+                            url={this.props.url}
+                            via_type={this.props.via_type}
+                            via_id={this.props.via_id}
+                            onSubmit={this.props.onSubmit}
+                            notePlaceholder="Hey! This bounty seems right up your alley" />
+        </Lightbox>
+      )
+    }
+  })
 
   if (typeof module !== 'undefined') {
     module.exports = InviteFriendBounty;

@@ -73,7 +73,7 @@
       };
 
       return <div id="comment">
-        <TypeaheadUserSearch
+        <InPlaceUserSearch
             url={this.props.searchUrl}
             username={this.state.usernameSearch}
             onUserChanged={this.handleUserChanged}
@@ -87,7 +87,7 @@
 
           <ChatTypingLabel usernames={this.state.typingUsernames} />
 
-        </TypeaheadUserSearch>
+        </InPlaceUserSearch>
       </div>
     },
 

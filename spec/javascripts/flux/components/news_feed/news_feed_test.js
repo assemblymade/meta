@@ -3,6 +3,14 @@
 jest.dontMock('outlayer');
 
 describe('NewsFeed', function() {
+  global.xhr = require(
+    path.resolve(
+      __dirname,
+      '../../../../../',
+      'app/assets/javascripts/xhr.js'
+    )
+  );
+
   var NewsFeed = require.requireActual(
     path.resolve(
       __dirname,
@@ -12,6 +20,8 @@ describe('NewsFeed', function() {
   );
 
   it('renders', function() {
+    global.xhr.get.mockReturnValue([]);
+
     var newsFeed = TestUtils.renderIntoDocument(
       <NewsFeed />
     );

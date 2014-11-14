@@ -6,13 +6,12 @@
   var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx')
   var Thumbnail = require('../thumbnail.js.jsx')
 
+  var URGENCIES = ['Urgent', 'Now', 'Someday'];
+
   module.exports = React.createClass({
     displayName: 'NewsFeedItemBounty',
 
     propTypes: {
-      coins: React.PropTypes.number.isRequired,
-      title: React.PropTypes.string.isRequired,
-      bounty: React.PropTypes.object.isRequired,
       item: React.PropTypes.object.isRequired
     },
 
@@ -24,7 +23,7 @@
 
     modal: function() {
       if (this.state.modalShown) {
-        return NewsFeedItemBountyModal(_.extend({}, this.props, { onHidden: this.onModalHidden }));
+        return <NewsFeedItemBountyModal {...this.props} onHidden={this.onModalHidden} />
       }
 
       return null;
@@ -37,11 +36,10 @@
     },
 
     render: function() {
-      var bounty = this.props.bounty;
-      var product = this.props.product;
-      var user = this.props.user;
-
-      var urgencies = ['Urgent', 'Now', 'Someday'];
+      var item = this.props.item;
+      var bounty = item.target;
+      var product = item.product;
+      var user = item.user;
 
       return (
         <div className="p3"
@@ -56,11 +54,11 @@
           </a>
           <div className="yellow mb3" key={"bounty-value-" + bounty.id}>
             <span className="mr2" key={'mr2' + bounty.id}>
-              <AppCoins n={bounty.value} />
+              <AppCoins n={bounty.contracts.earnable} />
             </span>
             <Urgency
               initialLabel={bounty.urgency.label}
-              urgencies={urgencies}
+              urgencies={URGENCIES}
               state={bounty.state}
               url={bounty.urgency_url} />
           </div>
@@ -78,6 +76,7 @@
     showBounty: function(e) {
       e.stopPropagation();
 
+      var bounty = this.props.item.target;
       var width = window.innerWidth;
 
       if (width > 480) {
@@ -85,13 +84,14 @@
           modalShown: true
         });
       } else {
-        window.location = this.props.bounty.url;
+        window.location = bounty.url;
       }
     },
 
     tags: function() {
-      var bounty = this.props.bounty;
-      var product = this.props.product;
+      var item = this.props.item;
+      var bounty = item.target;
+      var product = item.product;
 
       return _.map(bounty.tags, function(tag) {
         var name = tag.name;
@@ -107,7 +107,9 @@
     },
 
     thumbnails: function() {
-      var thumbnails = this.props.bounty.thumbnails;
+      var item = this.props.item;
+      var bounty = item.target;
+      var thumbnails = bounty.thumbnails;
 
       if (thumbnails.length) {
         var thumbs = _.map(thumbnails, function(thumb, i) {
@@ -119,7 +121,7 @@
         });
 
         return (
-          <div className="clearfix" key={'thumbs-container-' + this.props.bounty.id}>
+          <div className="clearfix" key={'thumbs-container-' + bounty.id}>
             <div className="gray py1">Images</div>
             {thumbs}
           </div>

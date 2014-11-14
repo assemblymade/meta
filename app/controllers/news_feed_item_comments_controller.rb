@@ -20,6 +20,15 @@ class NewsFeedItemCommentsController < ProductController
     respond_with @item, location: product_updates_url(@product)
   end
 
+  def index
+    comments = ActiveModel::ArraySerializer.new(
+      @news_feed_item.news_feed_item_comments,
+      each_serializer: NewsFeedItemCommentSerializer
+    )
+
+    respond_with comments, location: product_url(@product)
+  end
+
   def forward_comment
     if target = @news_feed_item.target
       if DO_NOT_FORWARD_TO.include?(target.class)

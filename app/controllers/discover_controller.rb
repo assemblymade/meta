@@ -15,11 +15,10 @@ class DiscoverController < ApplicationController
     @greenlit = greenlit_products.limit(20)
     @team_building = team_building_products.limit(20)
     # --
-    @products = Product.joins(wips: { taggings: :tag })
+    @products = Product.includes(:logo)
                        .where.not(slug: 'meta')
                        .where(flagged_at: nil)
                        .where(state: %w(greenlit profitable team_building))
-                       .distinct
                        .limit(100)
 
     if params[:tag].present?
@@ -32,10 +31,11 @@ class DiscoverController < ApplicationController
         params[:tag]
       end
 
-      @products = @products.where(
-        wip_tags: { name: tag },
-        wips: { state: 'open' }
-      )
+      @products = @products.joins(wips: { taggings: :tag })
+                            .where(
+                              wip_tags: { name: tag },
+                              wips: { state: 'open' }
+                            )
     end
 
     @products = case params[:sort]
@@ -46,7 +46,7 @@ class DiscoverController < ApplicationController
       when 'teambuilding'
         @products.sort_by {|p| p.bio_memberships_count }
       else # popular
-        @products.sort_by {|p| -p.partners.size }
+        @products.sort_by {|p| -p.partners_count }
       end
 
   end
@@ -77,36 +77,36 @@ class DiscoverController < ApplicationController
   end
 
   def updates
-    limit = 40
+    limit = 20
     offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
 
     # (pletcher) This is so ugly -- maybe we should move tags to
     #            NewsFeedItems?
+    @cache_key = "/discover/updates/filter=#{params[:filter] || 'all'}&page=#{params[:page] || '1'}"
 
-    if params[:filter] && params[:filter] != 'hot'
-      query = Wip.tagged_with(params[:filter]).
-        limit(limit).
-        offset(offset).
-        includes(:news_feed_item).
-        where.not('news_feed_items.product_id = ?', META.id).
-        order(updated_at: :desc).
-        map(&:news_feed_item)
-    else
-      query = NewsFeedItem.public_items.
-                limit(limit).
-                offset(offset).
-                where.not(product: META).
-                order(updated_at: :desc)
-    end
+    @posts = Rails.cache.fetch(@cache_key, expires_in: 10.minutes) do
+      if params[:filter] && params[:filter] != 'hot'
+        query = Wip.tagged_with(params[:filter]).
+          limit(limit).
+          offset(offset).
+          includes(:news_feed_item).
+          where.not('news_feed_items.product_id = ?', META.id).
+          order(updated_at: :desc).
+          map(&:news_feed_item)
+      else
+        query = NewsFeedItem.public_items.
+                  limit(limit).
+                  offset(offset).
+                  where.not(product: META).
+                  order(updated_at: :desc)
+      end
 
-    if params[:filter] == 'hot'
-      query = query.where.not(popular_at: nil)
-    end
+      if params[:filter] == 'hot'
+        query = query.where.not(popular_at: nil)
+      end
 
-    posts = query.to_a.reject{ |q| q.try(:target).try(:flagged?) }
-    cache_key = "/discover/updates/filter=#{params[:filter] || 'all'}&page=#{params[:page] || '1'}-#{query.first.try(:updated_at).try(:to_i) || '0'}"
+      posts = query.to_a.reject{ |q| q.try(:target).try(:flagged?) }
 
-    @posts = Rails.cache.fetch("#{cache_key}", expires_in: 10.minutes) do
       ActiveModel::ArraySerializer.new(
         posts,
         each_serializer: NewsFeedItemSerializer

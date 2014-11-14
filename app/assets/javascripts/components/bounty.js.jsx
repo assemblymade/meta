@@ -76,6 +76,23 @@ module.exports = React.createClass({
     return BountyValuation(_.extend(this.state.bounty, this.props.valuation))
   },
 
+  renderClosedNotice: function() {
+    var bounty = this.state.bounty;
+    var closed = bounty.state == 'resolved' || bounty.state == 'closed'
+
+    if (!closed) {
+      return
+    }
+
+    return (
+      <li className="omega">
+        <a href="#" className="btn btn-default disabled">
+          {bounty.state === 'resolved' ? 'Completed & Closed' : 'Closed'}
+        </a>
+      </li>
+    )
+  },
+
   renderDescription: function() {
     var bounty = this.state.bounty;
 
@@ -84,6 +101,53 @@ module.exports = React.createClass({
     } else {
       return <div className="gray">No description yet</div>
     }
+  },
+
+  renderDiscussWorkBanner: function() {
+    var bounty = this.state.bounty;
+    var closed = bounty.state === 'resolved' || bounty.state === 'closed';
+    var currentUser = window.app.currentUser();
+
+    if (closed) {
+      return;
+    }
+
+    var currentUserId = currentUser && currentUser.get('id');
+    var mostRecentWorkerId = bounty.most_recent_other_wip_worker && bounty.most_recent_other_wip_worker.user_id;
+
+    var working = _.any(bounty.workers, function(worker) { return worker.id == currentUserId });
+    var otherWorker = _.find(bounty.workers, function(worker) { return worker.id == mostRecentWorkerId });
+
+    if (!working || !otherWorker) { return; }
+
+    var otherWorkersCount = bounty.workers.length - 1;
+    var workersPhrase = otherWorkersCount == 1 ? '1 other person' : otherWorkersCount + ' other people';
+
+    var message = "Hey @" + otherWorker.username + ". Mind if I help out with #" + bounty.number + "?";
+    var discussUrl = bounty.chat_room_url + '?message=' + encodeURIComponent(message);
+
+    return (
+      <div style={{
+          'padding': '15px',
+          backgroundColor: '#EBF8CA',
+          'border': '1px solid #E6F3C6',
+          borderRadius: '3px',
+          fontSize: '16px',
+          lineHeight: '38px',
+          marginBottom: '30px'
+      }}>
+        <a href={discussUrl} className="btn btn-default pull-right">
+          <span className="icon icon-bubble icon-left"></span>
+          Discuss the work
+        </a>
+
+        <p className="omega gray-darker" style={{ marginLeft: '6px' }}>
+          <strong className="black">Right on!</strong>
+          {' '}
+          {workersPhrase} started working on this bounty {moment(bounty.most_recent_other_wip_worker.created_at).fromNow()}.
+        </p>
+      </div>
+    );
   },
 
   renderEditButton: function() {

@@ -205,9 +205,7 @@
         var backgroundColor = TAG_STYLES[tag.toLowerCase()];
 
         if (backgroundColor) {
-          style.color = '#fff';
-          style.backgroundColor = backgroundColor;
-          style.fontWeight = 'bold';
+          style.borderLeft = '4px solid ' + backgroundColor;
         }
 
         return (

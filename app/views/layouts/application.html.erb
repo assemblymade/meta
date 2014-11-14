@@ -6,8 +6,21 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%= yield(:title) %></title>
-
+    
+    <title><%= "#{yield(:title).presence || 'Built together'} • Assembly" %></title>
+    <meta name="description" content="<%= yield(:description) %>">
+    
+    <!-- Twitter Card Open -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@asm">
+    <meta name="twitter:title" content='<%= "#{yield(:title).presence || 'Built together'} • Assembly" %>'>
+    <meta name="twitter:description" content="<%= yield(:description) %>">
+    
+    <!-- Open Graph Optimizations -->
+    <meta property="og:title" content='<%= "#{yield(:title).presence || 'Built together'} • Assembly" %>' />
+    <meta property="og:description" content="<%= yield(:description) %>">
+    
+    
     <%= csrf_meta_tags %>
     <meta name="pusher-key" content="<%= Pusher.key %>" >
     <meta name="attachment-upload-url" content="<%= ATTACHMENT_UPLOAD_URL %>" >

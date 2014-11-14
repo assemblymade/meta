@@ -114,6 +114,7 @@ ASM::Application.routes.draw do
 
     resources :users, only: [:show, :update]
 
+    get '/users/:id/karma' => 'users#karma', :as => :user_karma
     get '/users/:id/assets' => 'users#assets', :as => :user_assets
     post '/users/:id/dismiss_welcome_banner' => 'users#dismiss_welcome_banner', :as => :dismiss_welcome_banner
 
@@ -301,8 +302,9 @@ ASM::Application.routes.draw do
     resources :news_feed_items, only: [:index, :show], path: 'updates', as: :updates do
       patch 'popularize'
       patch 'depopularize'
+
+      resources :news_feed_item_comments, only: [:index, :create], as: :comments, path: 'comments'
     end
-    post '/updates/:update_id' => 'news_feed_item_comments#create', as: :activity
 
     resources :repositories, only: [:index, :create, :destroy], as: :repos
 

@@ -3,7 +3,7 @@
 (function() {
   var Lightbox = React.createClass({
     propTypes: {
-      title: React.PropTypes.string
+      title: React.PropTypes.any
     },
 
     getDefaultProps: function() {
@@ -17,7 +17,6 @@
         <div className="modal fade" id={this.props.id} role="dialog" tabIndex="-1" aria-labelledby={this.props.title || "lightbox"} aria-hidden="true">
           <div className={"modal-dialog " + this.props.size}>
             <div className="modal-content">
-
               {this.header()}
               {this.props.children}
             </div>
@@ -29,11 +28,11 @@
 
     header: function() {
       if (this.props.title) {
-        return <div className="modal-header">
+        return <div className="px3 py2 clearfix">
           <a className="close" data-dismiss="modal">
             <span aria-hidden="true">&times;</span><span className="sr-only">Close</span>
           </a>
-          <h4 className="modal-title" id={this.props.title}>{this.props.title}</h4>
+          <h4 className="mt0 mb0" id={this.props.title}>{this.props.title}</h4>
         </div>
       }
       return null

@@ -3,17 +3,6 @@ class UserMailer < BaseMailer
 
   layout 'email', only: [:welcome, :joined_team_no_work_yet, :joined_team_no_introduction_yet, :featured_wips]
 
-  def welcome(user_id)
-    mailgun_tag 'user#welcome'
-    mailgun_campaign 'community'
-
-    @user = User.find(user_id)
-
-    mail from: "matt@assembly.com",
-           to:  @user.email,
-      subject: "Your Assembly welcome package"
-  end
-
   def follow_up(user_id)
     mailgun_tag 'user#follow_up'
     mailgun_campaign 'community'

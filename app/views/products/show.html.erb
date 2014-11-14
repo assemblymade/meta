@@ -1,4 +1,5 @@
 <% title @product.name, @product.pitch %>
+<% provide(:description, @product.pitch) %>
 <% activate_nav! :idea %>
 <%= track 'product.viewed', ProductAnalyticsSerializer.new(@product, scope: current_user) %>
 
@@ -28,6 +29,7 @@
 
         <%== @product.description_html %>
 
+        <!-- FIXME: (pletcher) Why is @product.info a string and not a hash? -->
         <% (@product.info || {}).each do |field, value| %>
           <% if value.present? %>
             <h2><%= field.titlecase %></h2>
@@ -176,6 +178,16 @@
       <% end %>
     </div>
 
+    <h6 class="gray caps">Tags</h6>
+
+    <div data-react-class="TagList" data-react-props="<%= {
+      hideAddButton: !(current_user && @product.core_team?(current_user)),
+      destination: true,
+      tags: @product.tags,
+      url: product_path(@product)
+    }.to_json %>">
+    </div>
+
     <% if current_user && @product.core_team?(current_user) %>
       <h6 class="text-muted">Product Authentication Token</h6>
 
@@ -189,6 +201,4 @@
     <% end %>
 
   </div>
-
-
 </div>

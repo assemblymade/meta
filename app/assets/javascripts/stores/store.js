@@ -16,6 +16,9 @@ var CHANGE_EVENT = require('../constants').CHANGE_EVENT;
     }
   });
 
+  // suppress warnings about memory leaks that don't exist
+  Store.setMaxListeners(0);
+
   if (typeof module !== 'undefined') {
     module.exports = Store;
   }

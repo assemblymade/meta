@@ -4,7 +4,14 @@
 
   var UserPicker = React.createClass({
     propTypes: {
-      style: React.PropTypes.object
+      style: React.PropTypes.object,
+      position: React.PropTypes.string
+    },
+
+    getDefaultProps: function() {
+      return {
+        position: 'top'
+      }
     },
 
     componentWillUpdate: function() {
@@ -40,7 +47,9 @@
 
     updatePositionRelativeToHeight: function() {
       var node = this.getDOMNode()
-      node.style.top = -node.offsetHeight + 'px'
+      if (this.props.position == 'top') {
+        node.style.top = -node.offsetHeight + 'px'
+      }
     }
   })
 

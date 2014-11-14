@@ -33,24 +33,38 @@ module.exports = React.createClass({
   },
 
   renderTarget: function() {
-    var product = this.props.product
-    var target = this.props.target
+    var product = this.props.product;
+    var target = this.props.target;
+    var user = this.props.user;
 
     switch (target.type) {
     case 'task':
-      return <NewsFeedItemBounty product={product} bounty={target} user={this.props.user} title={target.title} coins={target.value} />;
+      return <NewsFeedItemBounty item={this.props} />;
 
     case 'team_membership':
-      return <NewsFeedItemIntroduction user={target.user} intro={target.bio} />;
+      return <NewsFeedItemIntroduction
+          user={target.user}
+          intro={target.bio} />;
 
     case 'discussion':
-      return <NewsFeedItemPost body={target.description_html} url={target.url} title={target.title} />;
+      return <NewsFeedItemPost
+          body={target.description_html}
+          url={target.url}
+          title={target.title} />;
 
     case 'post':
-      return <NewsFeedItemPost body={target.markdown_body} url={target.url} title={target.title} />;
+      return <NewsFeedItemPost
+          body={target.markdown_body}
+          url={target.url}
+          title={target.title} />;
 
     default:
-      return <NewsFeedItemPost title={target.name || target.title} body={this.props.description_html} url={target.url} />;
+      return <NewsFeedItemPost
+          title={target.name || target.title}
+          body={target.description ||
+            target.markdown_body ||
+            target.description_html}
+          url={target.url} />;
     }
   },
 
@@ -118,7 +132,7 @@ module.exports = React.createClass({
             {tagItems}
           </ul>
         </div>
-        <div className="border-top" style={{'background-color': 'rgba(0,0,0,0.01)'}}>
+        <div className="border-top" style={{ backgroundColor: 'rgba(0,0,0,0.01)'}}>
           <NewsFeedItemComments item={this.props} />
         </div>
       </div>
