@@ -79,6 +79,9 @@ class ProductsController < ProductController
     end
 
     if signed_in? && current_user.staff?
+      @news_feed_items = ActiveModel::ArraySerializer.new(
+        @product.news_feed_items.limit(20).order(updated_at: :desc)
+      )
       render 'products/new_show', layout: 'application'
       return
     end

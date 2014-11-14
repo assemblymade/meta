@@ -112,7 +112,7 @@ group :development do
   gem 'guard'
   gem 'guard-rspec', require: false
   # gem 'rack-mini-profiler'
-  gem 'sql-logging'
+  # gem 'sql-logging'
   # gem 'ruby-prof'
   # gem 'stackprof'
 end

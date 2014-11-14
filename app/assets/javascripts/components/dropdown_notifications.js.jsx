@@ -2,11 +2,12 @@
 
 (function() {
   var CONSTANTS = require('../constants');
+  var Avatar = require('./avatar.js.jsx');
   var Dispatcher = require('../dispatcher');
   var EventMixin = require('../mixins/event.js.jsx');
   var NotificationsMixin = require('../mixins/notifications.js.jsx');
   var NotificationsStore = require('../stores/notifications_store');
-  var Avatar = require('./avatar.js.jsx');
+  var Spinner = require('./spinner.js.jsx');
   var NF = CONSTANTS.NOTIFICATIONS;
 
   var DropdownNotifications = React.createClass({
@@ -140,8 +141,8 @@
     render: function() {
       return (
         <ul className="dropdown-menu" style={{ minWidth: '380px', width: '380px' }}>
-          <li style={{ overflowY: 'scroll', minHeight: '60px' }} ref="spinner">
-            {this.state.stories ? this.rows(this.state.stories) : null}
+          <li style={{ overflowY: 'scroll', minHeight: '60px' }}>
+            {this.state.stories ? this.rows(this.state.stories) : <Spinner />}
           </li>
 
           <li className="divider" style={{ marginTop: '0px' }} />

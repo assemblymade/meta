@@ -409,8 +409,6 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    sql-logging (3.0.8)
-      rails (> 3.0.0)
     stripe (1.8.8)
       multi_json (>= 1.0.4, < 2)
       rest-client (~> 1.4)
@@ -546,7 +544,6 @@ DEPENDENCIES
   sparkr
   split
   spring-commands-rspec
-  sql-logging
   stripe
   syntax
   teaspoon
