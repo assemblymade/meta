@@ -66,7 +66,7 @@ class EventSerializer < ActiveModel::Serializer
   end
 
   def story_id
-    Story.associated_with(object).try(:first).try(:id)
+    Story.associated_with_ids(object).try(:first)
   end
 
   def timestamp
