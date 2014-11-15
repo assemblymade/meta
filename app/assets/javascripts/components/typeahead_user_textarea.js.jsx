@@ -53,5 +53,9 @@
     },
   })
 
-  module.exports = TypeaheadUserTextArea;
+  if (typeof module !== 'undefined') {
+    module.exports = TypeaheadUserTextArea;
+  }
+
+  window.TypeaheadUserTextArea = TypeaheadUserTextArea;
 })()
