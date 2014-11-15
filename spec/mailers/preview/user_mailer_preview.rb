@@ -4,6 +4,11 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.reset_password_instructions(User.where('reset_password_token is not null').random.first)
   end
 
+  def bounty_holding_incoming
+    tasks = Task.where('closed_at is null').limit(10)
+
+    UserMailer.bounty_holding_incoming(User.sample.id, tasks.map(&:id))
+  end
 
   def featured_wips
     user = User.random.first
