@@ -10,6 +10,12 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.bounty_holding_incoming(User.sample.id, tasks.map(&:id))
   end
 
+  def bounty_holding_incoming_take2
+    tasks = Task.where('closed_at is null').limit(10)
+
+    UserMailer.bounty_holding_incoming_take2(User.sample.id, tasks.map(&:id))
+  end
+
   def featured_wips
     user = User.random.first
 
