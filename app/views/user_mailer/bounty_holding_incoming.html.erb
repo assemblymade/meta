@@ -17,7 +17,7 @@
               <tr>
                 <td>
                   <h5>
-                    TL;DR: Bounties are changing; finish <a href="<%= product_wip_url(@product, @wips.first) %>">yours</a> or be ready to claim <%= @wips.length > 1 ? "them" : "it" %> again on Monday.
+                    TL;DR: Bounties are changing; finish <a href="<%= product_wip_url(@wips.first.product, @wips.first) %>">yours</a> or be ready to claim <%= @wips.length > 1 ? "them" : "it" %> again on Monday.
                   </h5>
                 </td>
               </tr>
@@ -40,7 +40,7 @@
                       <ul>
                         <% @wips.each do |wip| %>
                           <li>
-                            <a href="<%= product_url(@product) %>"><%= @product.name %></a> #<%= wip.number %>: <a href="<%= product_wip_url(@product, wip) %>"><%= wip.title %></a>.
+                            <a href="<%= product_url(wip.product) %>"><%= wip.product.name %></a> #<%= wip.number %>: <a href="<%= product_wip_url(wip.product, wip) %>"><%= wip.title %></a>.
                           </li>
                         <% end %>
                       </ul>
