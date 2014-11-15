@@ -2,14 +2,16 @@
 
 (function() {
   var CONSTANTS = require('../../constants').NEWS_FEED_ITEM;
+  var TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
   var xhr = require('../../xhr');
   var ENTER = 13;
+  var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 
   var NewsFeedItemNewComment = React.createClass({
     getInitialState: function() {
       return {
         comment: ''
-      }
+      };
     },
 
     onChange: function(e) {
@@ -41,11 +43,10 @@
             <textarea type="text"
                 className="form-control"
                 rows="1"
-                value={this.state.comment}
-                onKeyPress={this.onKeyPress}
                 onChange={this.onChange}
-                placeholder="Press <enter> to comment"
-                />
+                onKeyPress={this.onKeyPress}
+                value={this.state.comment}
+                placeholder="Press <enter> to comment" />
           </div>
         </div>
       );
@@ -82,9 +83,7 @@
     }
   });
 
-  if (typeof module !== 'undefined') {
-    module.exports = NewsFeedItemNewComment;
-  }
+  module.exports = NewsFeedItemNewComment;
 
   function _confirmComment(thread, timestamp) {
     return function (err, data) {

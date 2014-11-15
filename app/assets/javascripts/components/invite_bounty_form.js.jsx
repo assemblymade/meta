@@ -90,6 +90,11 @@ var FormGroup = require('./form_group.js.jsx');
           this.setState({
             alertDisplay: 'inline-block'
           });
+
+          // FIXME: (pletcher) this is super gross
+          setTimeout(function() {
+            $('.modal').modal('hide');
+          }, 1000);
         }.bind(this),
         error: function(xhr, status, err) {
           if (xhr.responseJSON && xhr.responseJSON.errors) {

@@ -5,9 +5,10 @@
 
 var Avatar = require('../avatar.js.jsx')
 var NewsFeedItemBounty = require('./news_feed_item_bounty.js.jsx')
+var NewsFeedItemComments = require('./news_feed_item_comments.js.jsx')
 var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx')
 var NewsFeedItemPost = require('./news_feed_item_post.js.jsx')
-var NewsFeedItemComments = require('./news_feed_item_comments.js.jsx')
+var NewsFeedItemStore = require('../../stores/news_feed_item_store')
 
 var Tile = require('../tile.js.jsx')
 var moment = require('moment');
@@ -20,6 +21,25 @@ module.exports = React.createClass({
     product: React.PropTypes.object.isRequired,
     target: React.PropTypes.object,
     user: React.PropTypes.object.isRequired
+  },
+
+  componentDidMount: function() {
+    NewsFeedItemStore.addChangeListener(this.getCommentsCount);
+  },
+
+  getCommentsCount: function() {
+    var comments = NewsFeedItemStore.getComments(this.props.id);
+    var count = comments.confirmed.length;
+
+    this.setState({
+      commentsCount: this.state.commentsCount + count
+    });
+  },
+
+  getInitialState: function() {
+    return {
+      commentsCount: this.props.comments_count
+    };
   },
 
   render: function() {
@@ -87,27 +107,19 @@ module.exports = React.createClass({
     var product = this.props.product
     var target = this.props.target
 
-    var commentCount = this.props.target.comments_count
+    var commentsCount = this.state.commentsCount;
     var tags = this.props.target.tags
 
-    // Don't show any footer if there's no comments or tags
-    // This isn't great, we should always have something for people to do
-    if ((typeof commentCount === "undefined" || commentCount === null || commentCount < 1) && (typeof tags === "undefined" || tags === null)) {
-      return
-    }
-
     // TODO This stuff should really be common across all the items
-    var commentItem = null
-
-    if ((typeof commentCount !== "undefined" && commentCount !== null) &&  commentCount > 0) {
-
-      var commentsUrl = this.props.target.url + "#comments"
+    var commentItem;
+    if (commentsCount) {
+      var commentsUrl = this.props.url + "/comments"
 
       commentItem = (
         <li className="left px1">
           <a className="gray" href={commentsUrl}>
             <span className="fa fa-comment mr1"></span>
-            {commentCount}
+            {commentsCount}
           </a>
         </li>
       )
@@ -116,12 +128,17 @@ module.exports = React.createClass({
     var tagItems = null
     if (typeof tags !== "undefined" && tags !== null) {
       tagItems = _.map(tags, function(tag) {
+        var baseUrl = target.url || this.props.url;
+        var url = baseUrl && baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
+
         return (
           <li className="left px1" key={tag.id}>
-            <span className="h6 mt0 mb0 gray">#{tag.name}</span>
+            <a className="gray bold" href={url}>
+              <span className="h6 mt0 mb0 gray">{tag.name.toUpperCase()}</span>
+            </a>
           </li>
         )
-      })
+      }.bind(this));
     }
 
     return (
@@ -136,8 +153,8 @@ module.exports = React.createClass({
           <NewsFeedItemComments item={this.props} />
         </div>
       </div>
-    )
+    );
   }
-})
+});
 
 window.NewsFeedItem = module.exports;

@@ -53,9 +53,5 @@
     },
   })
 
-  if (typeof module !== 'undefined') {
-    module.exports = TypeaheadUserInput
-  }
-
-  window.TypeaheadUserTextArea = TypeaheadUserTextArea
+  module.exports = TypeaheadUserTextArea;
 })()

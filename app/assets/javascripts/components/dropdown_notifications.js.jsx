@@ -57,7 +57,7 @@
       return (
         <a className={'list-group-item list-group-item-condensed ' + classes}
             href={story.url}
-            style={{ 'font-size': '14px', 'border': 'none' }}
+            style={{ fontSize: '14px', border: 'none' }}
             onClick={this.markAsRead.bind(this, story)}
             key={options.key}>
 
