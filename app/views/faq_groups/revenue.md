@@ -34,13 +34,6 @@ Your App Coins remain with you in perpetuity, even after you stop working on the
 Contributions by other community members will continue to earn them new App Coins which would dilute your stake over time. However, these contributions increase the value of the product, so you end up with a smaller slice of a larger pie.
 
 
-# Are App Coins legal?
-
-Yes. Assembly App Coins are legally structured as a partnership – like many law firms have. App Coins can’t be bought, sold or transferred, they only determine royalty payouts. As partners, owners of Assembly App Coins have access to information, voting rights, and potential royalty payouts.
-
-In an organization like this, partners must remain active to keep their rights and royalties. On Assembly, remaining active means (at a minimum) exercising your voting rights on work once per year.
-
-
 # Who pays the operating costs before there is any revenue?
 
 Assembly will often help cover a great deal of these costs. We can’t promise to cover all costs in all cases, but if we see momentum and vision around an idea, we’re prepared to support you financially until the product ships and starts making money. In some cases, we may recoup some or all of that money when the product starts earning revenue.
