@@ -9,6 +9,10 @@ end
 # json.cache_collection! @stories do |story|
 json.stories @stories do |story|
   json.cache! story do
+    json.type story.class.name.underscore
+    json.created story.created_at.try(:iso8601)
+    json.updated story.try(:updated_at).try(:to_i)
+
     json.extract! story, :id, :verb, :subject_type
 
     json.actor_ids story.activities.map(&:actor_id)
