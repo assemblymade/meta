@@ -106,7 +106,6 @@ module Karma
     end
 
     def karma_product_history_by_user(user_id)
-
       product_history = karma_product_associations_by_user(user_id)
       product_names = product_history.map{|row| row[0]}.uniq
 
@@ -137,9 +136,22 @@ module Karma
         end
         newhistory.append(r)
       end
-
-
       return newhistory[1, newhistory.count], product_names
+    end
+
+    def aggregate_karma_info_per_user(user_id)
+      deeds = Deed.where(user_id: user_id)
+
+      aggregate = {}
+      aggregate['Bounties'] = deeds.where(karma_event_type: "Wip").sum(:karma_value)
+      aggregate['Tips'] = deeds.where(karma_event_type: "Tip").sum(:karma_value)
+      aggregate['Invites'] = deeds.where(karma_event_type: "Invite").sum(:karma_value)
+      aggregate['Products'] = deeds.where(karma_event_type: "Product").sum(:karma_value)
+
+      return aggregate
+    end
+
+    def karma_rankings()
 
     end
 
@@ -149,7 +161,6 @@ module Karma
       product_name = Product.find_by(id: deed.karma_event_id).name
       date = Date.parse(deed_date(deed).to_s).strftime("%m-%d-%Y")
       text = "#{product_name} was founded on #{date} by the visionary, #{username}."
-
     end
 
     def tip_text(deed)
@@ -160,11 +171,9 @@ module Karma
       product_name = Product.find_by(id: tip.product_id).name
       date = Date.parse(deed_date(deed).to_s).strftime("%m-%d-%Y")
       text = "#{recipient} was tipped #{amount} #{product_name} coins on #{date} by #{giver}."
-
     end
 
     def invite_text(deed)
-
       invite = Invite.find_by(id: deed.karma_event_id)
       if not invite.nil?
         invitor = User.find_by(id: invite.invitor_id).username
@@ -196,7 +205,6 @@ module Karma
           end
         end
         return work_message
-
       end
 
 
@@ -210,9 +218,7 @@ module Karma
 
       date = Date.parse(deed_date(deed).to_s).strftime("%m-%d-%Y")
       message = "#{worker} completed #{bounty_title} on #{date} for #{productname}."
-
     end
-
 
     def convert_deed_to_text(deed)
       if deed.karma_event_type == "Product"
@@ -226,14 +232,53 @@ module Karma
       end
     end
 
-  def make_kronikle(user_id)
-    deeds = deeds_by_user(user_id)
-    kronikle = ""
-    deeds.each do |d|
-      kronikle = kronikle + convert_deed_to_text(d[0])
+    def make_kronikle(user_id)
+      deeds = deeds_by_user(user_id)
+      kronikle = ""
+      deeds.each do |d|
+        kronikle = kronikle + convert_deed_to_text(d[0])
+      end
+      return kronikle
     end
-    return kronikle
-  end
+
+    def meta_karma_history(bin_average)
+      history = {}  # [[date1, newkarma1], [date2, newkarma2]]
+      Deed.all.each do |d|
+        date = deed_date(d)
+        if history.include?(date)
+          history[date] = history[date] + d.karma_value
+        else
+          history[date] = d.karma_value
+        end
+      end
+
+      range = (history.keys[0]..history.keys.last)
+      range.each do |r|
+        if not history.include?(r)
+          history[r] = 0
+        end
+      end
+
+
+      history = history.sort.to_h
+
+      #bin into smoother averages
+      n=0
+      temp = 0
+      smooth_history = []
+      history.each do |h|
+
+        temp =  temp + h[1]
+        if n%bin_average == 0
+          smooth_history.append([ h[0], temp.to_f / bin_average.to_f])
+          temp = 0
+        end
+        n=n+1
+      end
+      smooth_history
+
+    end
+
 
   end
 end

@@ -53,6 +53,8 @@ class Product < ActiveRecord::Base
   has_many :status_messages
   has_many :stream_events
   has_many :subscribers
+  #has_many :taggings                   #THESE NEED TO BE cHANGED AFTER MIGRATION
+  #has_many :tags, through: :taggings
   has_many :tasks
   has_many :team_memberships
   has_many :transaction_log_entries
@@ -578,6 +580,10 @@ class Product < ActiveRecord::Base
 
   def unvested_coins
     [10_000_000, transaction_log_entries.sum(:cents)].max
+  end
+
+  def tag_me(tag)
+    Tags::TagBasics.new.tag_it(self, tag)
   end
 
   protected

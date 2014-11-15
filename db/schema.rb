@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112233831) do
+ActiveRecord::Schema.define(version: 20141114193656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -327,6 +327,14 @@ ActiveRecord::Schema.define(version: 20141112233831) do
     t.hstore   "extra"
   end
 
+  create_table "kwests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "title"
+    t.uuid     "user_id"
+    t.uuid     "deed_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "measurements", id: false, force: true do |t|
     t.uuid     "id",         null: false
     t.uuid     "metric_id",  null: false
@@ -631,6 +639,22 @@ ActiveRecord::Schema.define(version: 20141112233831) do
   end
 
   add_index "subscribers", ["email", "product_id"], name: "index_subscribers_on_email_and_product_id", unique: true, using: :btree
+
+  create_table "taggings", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "taggable_type"
+    t.uuid     "taggable_id"
+    t.uuid     "tag_id"
+    t.float    "weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tags", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+  end
+
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "team_membership_interests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "team_membership_id", null: false

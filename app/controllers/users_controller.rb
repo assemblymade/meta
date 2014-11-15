@@ -59,6 +59,8 @@ class UsersController < ApplicationController
     @karma_total_history = [['Date' ,'Bounties', 'Tips', 'Invites', 'Products']]
     @karma_total_history = @karma_total_history + @karma_history
 
+    @karma_aggregate_data = Karma::Kronikler.new.aggregate_karma_info_per_user(@user.id)
+
   end
 
   def update

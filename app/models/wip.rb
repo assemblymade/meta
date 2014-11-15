@@ -25,8 +25,8 @@ class Wip < ActiveRecord::Base
   has_many :mutings
   has_one  :news_feed_item, foreign_key: 'target_id'
   has_many :postings, class_name: 'BountyPosting', foreign_key: 'bounty_id'
-  has_many :taggings, class_name: 'Wip::Tagging'
-  has_many :tags, through: :taggings, class_name: 'Wip::Tag'
+  has_many :taggings
+  has_many :tags, through: :taggings
   has_many :awards
 
   has_one :milestone
@@ -180,8 +180,11 @@ class Wip < ActiveRecord::Base
   end
 
   def add_tag!(tag_name)
-    self.tag_names = ((tag_names || []) | [tag_name])
-    save!
+    tag = Tag.find_by(name: tag_name)
+    t= nil
+    if not tag.nil?
+      t = Tags::TagBasics.new.tag_it(self, tag)
+    end
   end
 
   def tag_names
