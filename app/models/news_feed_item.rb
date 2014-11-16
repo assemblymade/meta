@@ -6,6 +6,8 @@ class NewsFeedItem < ActiveRecord::Base
   belongs_to :source, class: User
   has_many :news_feed_item_comments
 
+  has_many :hearts, as: :heartable
+
   scope :public_items, -> { joins(:product).where('products.state not in (?)', ['stealth', 'reviewing']) }
 
   def self.create_with_target(target)

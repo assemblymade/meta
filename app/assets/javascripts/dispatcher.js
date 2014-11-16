@@ -1,7 +1,13 @@
+//= require constants
+
 // This dispatcher modifies some of the ideas in Facebook's template:
 // https://github.com/facebook/flux/blob/master/src/Dispatcher.js
 
 (function() {
+  // Sprockets. Booooo.
+  // var PayloadSources = require('./constants').PayloadSources
+  var PayloadSources = window.CONSTANTS.PayloadSources
+
   /** Private variables */
 
   var _prefix = 'asm_';
@@ -40,6 +46,22 @@
   /** Dispatcher */
 
   var Dispatcher = _.extend(Function.prototype, {
+    handleServerAction: function(action) {
+      var payload = {
+        source: PayloadSources.SERVER_ACTION,
+        action: action
+      };
+      this.dispatch(payload);
+    },
+
+    handleViewAction: function(action) {
+      var payload = {
+        source: PayloadSources.VIEW_ACTION,
+        action: action
+      };
+      this.dispatch(payload);
+    },
+
     dispatch: function(payload) {
       if (_.isEmpty(_callbacks)) {
         return;

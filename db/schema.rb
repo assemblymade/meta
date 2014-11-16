@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141117043016) do
+ActiveRecord::Schema.define(version: 20141114232124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -295,6 +295,15 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "updated_at"
   end
 
+  create_table "hearts", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "user_id",        null: false
+    t.uuid     "heartable_id",   null: false
+    t.string   "heartable_type", null: false
+    t.datetime "created_at",     null: false
+  end
+
+  add_index "hearts", ["user_id", "heartable_id"], name: "index_hearts_on_user_id_and_heartable_id", unique: true, using: :btree
+
   create_table "integrations", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "product_id",    null: false
     t.string   "access_token",  null: false
@@ -413,6 +422,8 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.integer  "hearts_count",      default: 0, null: false
+    t.uuid     "target_id"
   end
 
   create_table "news_feed_item_posts", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -433,6 +444,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.datetime "popular_at"
+    t.integer  "hearts_count", default: 0, null: false
   end
 
   create_table "newsletters", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

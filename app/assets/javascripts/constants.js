@@ -1,4 +1,7 @@
 (function() {
+  // When sprockets doesn't require this file:
+  // var keymirror = require('keymirror')
+
   var CONSTANTS = {
     CHANGE_EVENT: 'change',
     CHAT_NOTIFICATIONS: {
@@ -31,6 +34,13 @@
         REMOVE_INTEREST: 'removeInterest',
         POP: 'pop'
       }
+    },
+
+    Love: {
+      ActionTypes: keyMirror({
+        CLICK_LOVE: null,
+        CLICK_UNLOVE: null
+      })
     },
 
     NEWS_FEED_ITEM: {
@@ -96,7 +106,12 @@
       ACTIONS: {
         WELCOME_BANNER_DISMISSED: 'welcomeBannerDismissed'
       }
-    }
+    },
+
+    PayloadSources: keyMirror({
+      SERVER_ACTION: null,
+      VIEW_ACTION: null
+    })
   };
 
   if (typeof module !== 'undefined') {

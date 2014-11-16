@@ -1,6 +1,4 @@
 #= require jquery.inview
-#= require constants
-#= require dispatcher
 
 do ($ = jQuery, window, document) ->
 	class Plugin
