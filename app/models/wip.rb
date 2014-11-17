@@ -25,8 +25,8 @@ class Wip < ActiveRecord::Base
   has_many :mutings
   has_one  :news_feed_item, foreign_key: 'target_id'
   has_many :postings, class_name: 'BountyPosting', foreign_key: 'bounty_id'
-  has_many :taggings
-  has_many :tags, through: :taggings
+  has_many :taggings , class_name: 'Wip::Tagging'
+  has_many :tags , through: :taggings, class_name: 'Wip::Tag'
   has_many :awards
 
   has_one :milestone
@@ -47,10 +47,9 @@ class Wip < ActiveRecord::Base
   scope :opened_by,   ->(user) { where(user: user) }
   scope :promoted,    -> { where('promoted_at is not null') }
   scope :stale_by,    ->(age) { joins(:events).group('wips.id').having('max(events.created_at) < ?', age).order('max(events.created_at)') }
-
-  #scope :tagged_with, ->(name) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name = ?', name) }
-  #scope :tagged_with_any, ->(names) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name' => names) }
-  #scope :tagged_with_all, ->(names) { joins(:taggings => :tag).where('wip_tags.name' => names).group('wips.id').having('count(distinct wip_taggings.wip_tag_id) = ?', names.size) }
+  scope :tagged_with, ->(name) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name = ?', name) }
+  scope :tagged_with_any, ->(names) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name' => names) }
+  scope :tagged_with_all, ->(names) { joins(:taggings => :tag).where('wip_tags.name' => names).group('wips.id').having('count(distinct wip_taggings.wip_tag_id) = ?', names.size) }
 
   scope :unflagged, -> { where(flagged_at: nil) }
   scope :ordered_by_activity, -> { joins(:events).group('wips.id').order('max(events.created_at)') }
@@ -182,11 +181,8 @@ class Wip < ActiveRecord::Base
   end
 
   def add_tag!(tag_name)
-    tag = Tag.find_by(name: tag_name)
-    t= nil
-    if not tag.nil?
-      t = Tags::TagBasics.new.tag_it(self, tag)
-    end
+    self.tag_names = ((tag_names || []) | [tag_name])
+    save!
   end
 
   def tag_names

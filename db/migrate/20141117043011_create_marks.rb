@@ -1,6 +1,6 @@
-class CreateTags < ActiveRecord::Migration
+class CreateMarks < ActiveRecord::Migration
   def change
-    create_table :tags, id: :uuid do |t|
+    create_table :marks do |t|
       t.string :name, null: false
       t.index :name, unique: true
       t.datetime :created_at

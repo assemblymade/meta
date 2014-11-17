@@ -1,4 +1,4 @@
-class Tag < ActiveRecord::Base
+class Mark < ActiveRecord::Base
   include ActiveRecord::UUID
 
   has_many :taggings
