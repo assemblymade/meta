@@ -86,38 +86,44 @@
 
   <div class="bg-white mb3">
     <div class="container">
-      <div class="clearfix mxn2">
-        <div class="sm-col-8 px2">
+      <div class="clearfix">
 
-          <ul class="nav nav-tabs left">
-            <li class="<%= nav_active_class(:product) %>">
-              <a class="px2 py2" href="<%= product_path(@product) %>">All</a>
-            </li>
-            <li class="<%= nav_active_class(:bounties) %>">
-              <a class="px2 py2" href="<%= product_tasks_path(@product) %>">Bounties</a>
-            </li>
-            <li class="<%= nav_active_class(:posts) %>">
-              <a class="px2 py2" href="<%= product_posts_path(@product) %>">Posts</a>
-            </li>
-            <li class="<%= nav_active_class(:discussions) %>">
-              <a class="px2 py2" href="<%= product_discussions_path(@product) %>">Discussions</a>
-            </li>
-            <li class="<%= nav_active_class(:projects) %>">
-              <a class="px2 py2" href="<%= product_projects_path(@product) %>">Projects</a>
-            </li>
+        <ul class="nav nav-tabs left">
+          <li class="<%= nav_active_class(:product) %>">
+            <a class="px2 py2" href="<%= product_path(@product) %>">All</a>
+          </li>
+          <li class="<%= nav_active_class(:bounties) %>">
+            <a class="px2 py2" href="<%= product_tasks_path(@product) %>">Bounties</a>
+          </li>
+          <li class="<%= nav_active_class(:posts) %>">
+            <a class="px2 py2" href="<%= product_posts_path(@product) %>">Posts</a>
+          </li>
+          <li class="<%= nav_active_class(:discussions) %>">
+            <a class="px2 py2" href="<%= product_discussions_path(@product) %>">Discussions</a>
+          </li>
+          <li class="<%= nav_active_class(:projects) %>">
+            <a class="px2 py2" href="<%= product_projects_path(@product) %>">Projects</a>
+          </li>
+          <li class="<%= nav_active_class(:assets) %>">
+            <a class="px2 py2" href="<%= product_assets_path(@product) %>">Assets</a>
+          </li>
+
+          <% if @product.chat_rooms.any? %>
+            <% chat_room = @product.chat_rooms.first %>
             <li class="<%= nav_active_class(:assets) %>">
-              <a class="px2 py2" href="<%= product_assets_path(@product) %>">Assets</a>
+              <a class="px2 py2" href="<%= chat_room_path(chat_room) %>">Chat</a>
             </li>
-          </ul>
+          <% end %>
+        </ul>
 
-          <div class="right py1">
-            <a class="btn btn-primary bg-blue" href="#">
-              <%= inline_react_component 'Icon', icon: 'pencil' %>
-              <span class="sr-only">Add</span>
-              <%= inline_react_component 'Icon', icon: 'chevron-down' %>
-            </a>
-          </div>
+        <div class="right py1">
+          <a class="btn btn-primary bg-blue" href="#">
+            <%= inline_react_component 'Icon', icon: 'pencil' %>
+            <span class="sr-only">Add</span>
+            <%= inline_react_component 'Icon', icon: 'chevron-down' %>
+          </a>
         </div>
+        
       </div>
     </div>
   </div>
