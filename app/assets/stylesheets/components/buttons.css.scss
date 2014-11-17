@@ -1,5 +1,6 @@
 .btn {
-  @include button-size(6px, 18px, $font-size-base, $line-height-base, $border-radius-base);
+  @include button-size(0.5rem, 2rem, $font-size-base, $line-height-base, $border-radius-base);
+  border: none;
 }
 
 .btn-sm {

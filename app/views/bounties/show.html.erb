@@ -3,22 +3,24 @@
 <% activate_nav! :bounties %>
 <%= track 'product.wip.viewed', WipAnalyticsSerializer.new(@wip, scope: current_user) %>
 
-<%= react_component 'Bounty', {
-    bounty: BountySerializer.new(@bounty, scope: current_user),
-    news_feed_item: (NewsFeedItemSerializer.new(@bounty.news_feed_item) if @bounty.news_feed_item),
-    valuation: {
-      product: { name: @product.name },
-      url: product_wips_path(@product),
-      maxOffer: (6 * @product.average_bounty).round(-4),
-      averageBounty: @product.average_bounty,
-      coinsMinted: @product.coins_minted,
-      profitLastMonth: @product.profit_last_month,
-      steps: BountyGuidance::Valuations.suggestions(@product)
-    },
-    show_coins: !@product.meta?
-  } %>
+<div class="card mb0">
+  <%= react_component 'Bounty', {
+      bounty: BountySerializer.new(@bounty, scope: current_user),
+      item: (NewsFeedItemSerializer.new(@bounty.news_feed_item) if @bounty.news_feed_item),
+      valuation: {
+        product: { name: @product.name },
+        url: product_wips_path(@product),
+        maxOffer: (6 * @product.average_bounty).round(-4),
+        averageBounty: @product.average_bounty,
+        coinsMinted: @product.coins_minted,
+        profitLastMonth: @product.profit_last_month,
+        steps: BountyGuidance::Valuations.suggestions(@product)
+      },
+      showCoins: !@product.meta?
+    } %>
+</div>
 
-<div class="discussion" id="discussion-view-el">
+<div class="px3" id="discussion-view-el">
   <%= render 'wips/discussion', events: @events %>
   <%= render 'new_event_form' %>
 </div>

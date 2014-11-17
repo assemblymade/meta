@@ -81,7 +81,7 @@ $font-size-h5: $font-size-base;
 $font-size-h6: 13px;
 
 $line-height-base:     1.6;
-$line-height-computed: floor(($font-size-base * $line-height-base)); // 24px
+$line-height-computed: 24px; // 24px
 
 $headings-font-family: inherit;
 $headings-font-weight: normal;

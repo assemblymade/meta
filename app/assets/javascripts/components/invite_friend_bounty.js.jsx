@@ -15,7 +15,7 @@ var InviteBountyForm = require('./invite_bounty_form.js.jsx');
     render: function() {
       return (
         <div>
-          <a href="javascript:void(0);" onClick={this.handleClick} className="btn btn-label">Recruit help</a>
+          <a href="javascript:void(0);" onClick={this.handleClick}>Recruit help</a>
           <InviteFriendModal {...this.props}
             onCancel={this.handleHide}
             show={false}

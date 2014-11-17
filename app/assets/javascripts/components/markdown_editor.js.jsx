@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
 (function(){
+  var TypeaheadUserTextArea = require('./typeahead_user_textarea.js.jsx');
+
   var MarkdownEditor = React.createClass({
     propTypes: {
       id: React.PropTypes.string,
