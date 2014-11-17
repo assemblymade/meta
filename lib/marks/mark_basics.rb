@@ -21,6 +21,13 @@ module Marks
       markings = Marking.where(markable_id: object.id)
     end
 
+    def objects_with_mark(mark_name, markable_type)
+      allmarkings = Marking.where(markable_type: markable_type)
+      results = []
+      allmarkings.each do |a|
+        
+      end
+    end
 
 
     #RUN ONCE
