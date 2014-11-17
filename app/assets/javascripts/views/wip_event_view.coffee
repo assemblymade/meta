@@ -46,18 +46,19 @@ class window.WipEventView extends Backbone.View
       model = @model
 
       $('.js-insert-tips', @$el).each ->
-        React.render(TipsUi({
+        React.render(React.createFactory(TipsUi)({
           viaType: 'Event',
           viaId: model.id,
           recipient: model.get('actor'),
           tips: model.get('tips')
         }), @)
 
-      $('.js-insert-love', @$el).each ->
-        React.render(Love({
-          heartable_type: 'Event',
-          heartable_id: model.id
-        }), @)
+      if nfi_comment_id = @model.get('news_feed_item_comment_id')
+        $('.js-insert-love', @$el).each ->
+          React.render(React.createFactory(Love)({
+            heartable_type: 'NewsFeedItemComment',
+            heartable_id: nfi_comment_id
+          }), @)
 
     @$('time').timeago() # display new timestamp
     window.app.mountReactComponents(@$el[0])

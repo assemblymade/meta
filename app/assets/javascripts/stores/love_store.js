@@ -32,7 +32,13 @@ var LoveStore = _.extend(Object.create(Store), {
             break
 
           case ActionTypes.WIP_EVENT_CREATED:
-            console.log('store got', action.event)
+            var event = action.event
+            _heartables[event.news_feed_item_comment_id] = {
+              heartable_type: 'Event',
+              heartable_id: event.news_feed_item_comment_id,
+              hearts: 0
+            }
+            this.emitChange()
             break
         }
 
