@@ -1,4 +1,4 @@
 .app-icon {
   @extend .img-responsive;
-  border-radius: floor(percentage(($border-radius-large * 2) / 48px));
+  border-radius: floor(percentage(2px / 24px));
 }
