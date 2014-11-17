@@ -53,7 +53,7 @@
         </div>
         <div class="stat">
           <a class="block" href="<%= product_financials_path(@product) %>">
-            <div class="h4 mt0 mb0">$32,000</div>
+            <div class="h4 mt0 mb0"><%= short_currency(@product.profit_reports.map(&:profit).reduce(:+)) %></div>
             <div class="gray-dark">Royalties</div>
           </a>
         </div>
