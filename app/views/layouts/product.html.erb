@@ -73,12 +73,15 @@
             </li>
           <% end %>
 
-          <li class="left px1">
-            <a href="#">
-              <%= inline_react_component 'Icon', icon: 'comment' %>
-              Chat
-            </a>
-          </li>
+          <% if @product.chat_rooms.any? %>
+            <% chat_room = @product.chat_rooms.first %>
+            <li class="left px1">
+              <a href="<%= chat_room_path(chat_room) %>">
+                <%= inline_react_component 'Icon', icon: 'comment' %>
+                Chat
+              </a>
+            </li>
+          <% end %>
         </ul>
 
       </div>
@@ -134,14 +137,7 @@
           <a href="<%= product_repos_path(@product) %>">Code</a>
         </li>
 
-        <% if @product.chat_rooms.any? %>
-          <% chat_room = @product.chat_rooms.first %>
-          <li>
-            <a href="<%= chat_room_path(chat_room) %>">
-              Chat
-            </a>
-          </li>
-        <% end %>
+
       </ul> -->
 
     </div>
