@@ -28,9 +28,38 @@ module Marks
       Product.joins(:marks).where('marks.name = ?', mark_name)
     end
 
+    def leading_marks_on_product(product)
+      product_marks =
+      wips = Wip.where(product_id: product.id)
+      rmarks = []
+      wips.each do |w|
+        rmarks = rmarks + w.marks
+      end
+
+      marks = {}
+      rmarks.each do |r|
+        if marks.include?(r.name)
+          marks[r.name] = marks[r.name]+1
+        else
+          marks[r.name] = 1
+        end
+      end
+
+      return Hash[marks.sort_by{|k, v| v}.reverse]
+    end
+
+
+
+
+
+
+
+
+
+
+
 
     #RUN ONCE
-
  def retroactively_convert_old_tags_to_new()
       tag_names = Wip::Tag.all.pluck(:name)
       unique_tag_sets = Product.all.uniq.pluck(:tags)
@@ -44,7 +73,6 @@ module Marks
         end
       end
     end
-
 
     def retroactively_convert_old_wip_taggings_to_new()  #ALL OLD markingS ARE FOR WIPS
       taggings = Wip::Tagging.all
