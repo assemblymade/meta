@@ -15,7 +15,7 @@
       <a class="btn btn-primary btn-block" href="#">Introduce yourself!</a>
     </div>
 
-    <%= react_component 'NewsFeedList', news_feed_items: ActiveModel::ArraySerializer.new(
+    <%= react_component 'NewsFeedList', items: ActiveModel::ArraySerializer.new(
       @product.news_feed_items.order(updated_at: :desc)
     ).as_json %>
   </div>
