@@ -171,6 +171,7 @@ ASM::Application.routes.draw do
   namespace :admin do
     resources :bitcoin, only: [:index]
     resources :karma, only: [:index]
+    resources :karmahistory, only: [:index]
     resources :leaderboard, only: [:index]
     resources :bounties, only: [:index]
     namespace :bounties do

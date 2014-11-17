@@ -34,6 +34,9 @@
       <li class="<%= "active" if controller_active?(:karma) %>">
         <%= link_to 'Karma', '/admin/karma' %>
       </li>
+      <li class="<%= "active" if controller_active?(:karmahistory) %>">
+        <%= link_to 'Karma History', '/admin/karmahistory' %>
+      </li>
       <li>
         <%= link_to 'Sidekiq', '/admin/sidekiq' %>
       </li>

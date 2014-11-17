@@ -11,7 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141114033449) do
+
+ActiveRecord::Schema.define(version: 20141117043016) do
+s
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -326,6 +328,30 @@ ActiveRecord::Schema.define(version: 20141114033449) do
     t.datetime "claimed_at"
     t.hstore   "extra"
   end
+
+  create_table "kwests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "title"
+    t.uuid     "user_id"
+    t.uuid     "deed_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "markings", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "markable_type"
+    t.uuid     "markable_id"
+    t.uuid     "mark_id"
+    t.float    "weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "marks", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+  end
+
+  add_index "marks", ["name"], name: "index_marks_on_name", unique: true, using: :btree
 
   create_table "measurements", id: false, force: true do |t|
     t.uuid     "id",         null: false

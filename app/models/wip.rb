@@ -20,6 +20,9 @@ class Wip < ActiveRecord::Base
   has_many :followings, class_name: 'Watching', as: :watchable
   has_many :followers, through: :followings, source: :user
   has_many :offers, inverse_of: :bounty
+  has_many :markings
+  has_many :markings, as: :markable
+  has_many :marks, through: :markings
   has_many :milestones, through: :milestone_tasks
   has_many :milestone_tasks, foreign_key: 'task_id'
   has_many :mutings

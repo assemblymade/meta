@@ -3,6 +3,24 @@
     <%= render 'users/overview' %>
   <% end %>
 </div>
+
+<h3>Where Does My Karma Come From?</h3>
+<table class="table table-hover table-responsive">
+  <tbody>
+    <% @karma_aggregate_data.each do |k,v| %>
+      <tr>
+        <td>
+          <%= k %>
+        </td>
+        <td>
+          <%= v %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
