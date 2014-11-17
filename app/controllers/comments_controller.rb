@@ -33,7 +33,8 @@ class CommentsController < ProductController
         )
 
         # FIXME: (pletcher) There's gotta be a better way to do this
-        nfi_comment_id = NewsFeedItemComment.publish_to_news_feed(@wip, @event, body)
+        NewsFeedItemComment.publish_to_news_feed(@wip, @event, body)
+        @event.reload
 
         # update @wip.locked_at if the commenting user was working on it
         if @wip.locked_by == @event.user.id
