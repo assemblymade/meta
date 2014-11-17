@@ -4,7 +4,7 @@ var _userHearts = {}
 
 var Dispatcher = require('../dispatcher')
 var Store = require('../stores/store')
-var ActionTypes = require('../constants').Love.ActionTypes
+var ActionTypes = require('../constants').ActionTypes
 
 // This should be the thing that holds comments
 // Most likely the newsfeed item or
@@ -19,16 +19,20 @@ var LoveStore = _.extend(Object.create(Store), {
 
       if (typeof action.type !== 'undefined') {
         switch(action.type) {
-          case ActionTypes.CLICK_LOVE:
+          case ActionTypes.LOVE_CLICKED:
             _heartables[action.heartable_id].hearts += 1
             _userHearts[action.heartable_id] = {} // optimistic heart
             this.emitChange()
             break
 
-          case ActionTypes.CLICK_UNLOVE:
+          case ActionTypes.LOVE_UNCLICKED:
             _heartables[action.heartable_id].hearts -= 1
             delete _userHearts[action.heartable_id]
             this.emitChange()
+            break
+
+          case ActionTypes.WIP_EVENT_CREATED:
+            console.log('store got', action.event)
             break
         }
 

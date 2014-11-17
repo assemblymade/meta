@@ -1,12 +1,12 @@
 var Dispatcher = require('../dispatcher')
 var xhr = require('../xhr')
-var ActionTypes = require('../constants').Love.ActionTypes
+var ActionTypes = require('../constants').ActionTypes
 
 module.exports = {
 
   clickLove: function(heartable_type, heartable_id) {
     Dispatcher.handleViewAction({
-      type: ActionTypes.CLICK_LOVE,
+      type: ActionTypes.LOVE_CLICKED,
       heartable_type: heartable_type,
       heartable_id: heartable_id
     })
@@ -21,7 +21,7 @@ module.exports = {
 
   clickUnlove: function(heartable_type, heartable_id) {
     Dispatcher.handleViewAction({
-      type: ActionTypes.CLICK_UNLOVE,
+      type: ActionTypes.LOVE_UNCLICKED,
       heartable_type: heartable_type,
       heartable_id: heartable_id
     })

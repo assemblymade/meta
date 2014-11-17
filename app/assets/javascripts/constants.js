@@ -36,13 +36,6 @@
       }
     },
 
-    Love: {
-      ActionTypes: keyMirror({
-        CLICK_LOVE: null,
-        CLICK_UNLOVE: null
-      })
-    },
-
     NEWS_FEED_ITEM: {
       ACTIONS: {
         CONFIRM_COMMENT: 'confirmComment',
@@ -107,6 +100,16 @@
         WELCOME_BANNER_DISMISSED: 'welcomeBannerDismissed'
       }
     },
+
+
+    // TODO: move constants into here. 1 Flat namespace will ensure constants don't collide
+    ActionTypes: keyMirror({
+      LOVE_CLICKED: null,
+      LOVE_UNCLICKED: null,
+
+      WIP_EVENT_CREATING: null,
+      WIP_EVENT_CREATED: null
+    }),
 
     PayloadSources: keyMirror({
       SERVER_ACTION: null,

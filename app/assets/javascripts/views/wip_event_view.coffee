@@ -55,10 +55,8 @@ class window.WipEventView extends Backbone.View
 
       $('.js-insert-love', @$el).each ->
         React.render(Love({
-          viaType: 'Event',
-          viaId: model.id,
-          recipient: model.get('actor'),
-          tips: model.get('tips')
+          heartable_type: 'Event',
+          heartable_id: model.id
         }), @)
 
     @$('time').timeago() # display new timestamp
