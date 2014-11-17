@@ -216,6 +216,8 @@ namespace :bounties do
 
   task check_locked_bounties: :environment do
     Task.where('locked_at is not null').each do |task|
+      next if Event::ReviewReady.where(wip_id: task.id)
+
       now = Time.now
       task_expiration = Task.locked_at + 60.hours
 
