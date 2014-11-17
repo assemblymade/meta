@@ -24,18 +24,21 @@ module Marks
       Wip.joins(:marks).where('marks.name = ?', mark_name)
     end
 
+    def wips_with_mark_under_product(mark_name, Product)
+      Wip.joins(:marks).where('marks.name = ?', mark_name).where(product_id: Product.id)
+    end
+
     def products_with_mark(mark_name)
       Product.joins(:marks).where('marks.name = ?', mark_name)
     end
 
-    def leading_marks_on_product(product)
+    def leading_marks_on_product(product, limit_n)
       product_marks =
       wips = Wip.where(product_id: product.id)
       rmarks = []
       wips.each do |w|
         rmarks = rmarks + w.marks
       end
-
       marks = {}
       rmarks.each do |r|
         if marks.include?(r.name)
@@ -44,19 +47,14 @@ module Marks
           marks[r.name] = 1
         end
       end
+      sorted_results = Hash[marks.sort_by{|k, v| v}.reverse]
 
-      return Hash[marks.sort_by{|k, v| v}.reverse]
+      if limit_n>sorted_results.count
+        limit_n = sorted_results.count
+      end
+      return sorted_results[0, limit_n]
+
     end
-
-
-
-
-
-
-
-
-
-
 
 
     #RUN ONCE
