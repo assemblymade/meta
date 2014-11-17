@@ -3,7 +3,7 @@
 }
 
 .btn-sm {
-  @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $border-radius-small);
+  @include button-size(3px, 12px, $font-size-small, $line-height-small, $border-radius-small);
 }
 .btn-xs {
   @include button-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-small, $line-height-small, $border-radius-small);
@@ -30,6 +30,10 @@
     color: $btn-default-border;
     box-shadow: none;
   }
+}
+
+.btn-primary {
+  border: none;
 }
 
 .btn-xl {

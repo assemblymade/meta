@@ -82,7 +82,7 @@ class ProductsController < ProductController
       @news_feed_items = ActiveModel::ArraySerializer.new(
         @product.news_feed_items.limit(20).order(updated_at: :desc)
       )
-      render 'products/new_show', layout: 'application'
+      render 'products/new_show', layout: 'product'
       return
     end
 

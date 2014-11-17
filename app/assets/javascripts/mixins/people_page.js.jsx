@@ -6,13 +6,10 @@
         return;
       }
 
-      // Use <Avatar></Avatar> below; otherwise
-      // React will nest the tags incorrectly
-      // and throw an invariant violation
       return (
-        <div className="col col-1">
+        <div className="left mr1">
           <a href={user.url} title={'@' + user.username}>
-            <Avatar size="30" user={user}></Avatar>
+            <Avatar size="30" user={user} />
           </a>
         </div>
       );
