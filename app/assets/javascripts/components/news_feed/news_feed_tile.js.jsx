@@ -45,9 +45,9 @@ module.exports = React.createClass({
   render: function() {
     return (
       <Tile>
-        {this.renderSource()}
         {this.renderTarget()}
-        {this.renderComments()}
+        {this.renderSource()}
+        
       </Tile>
     );
   },
@@ -92,7 +92,7 @@ module.exports = React.createClass({
     var user = this.props.user
 
     return (
-      <a className="block px3 py2 clearfix border-bottom" href={user.url}>
+      <a className="block px3 py2 clearfix border-top" href={user.url}>
         <div className="left mr2">
           <Avatar user={user} size={24} />
         </div>

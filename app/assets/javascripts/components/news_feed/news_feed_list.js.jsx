@@ -12,7 +12,7 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div className="mxn2" ref="masonryContainer">
+      <div className="mxn2" style={{marginTop: '-1rem'}} ref="masonryContainer">
         {this.renderItems()}
       </div>
     )
