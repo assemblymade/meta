@@ -85,37 +85,40 @@
   </div>
 
   <div class="bg-white mb3">
-    <div class="container clearfix">
+    <div class="container">
+      <div class="clearfix mxn2">
+        <div class="sm-col-8 px2">
 
-      <ul class="nav nav-tabs left">
-        <li class="<%= nav_active_class(:product) %>">
-          <a class="px2 py2" href="<%= product_path(@product) %>">All activity</a>
-        </li>
-        <li class="<%= nav_active_class(:bounties) %>">
-          <a class="px2 py2" href="<%= product_tasks_path(@product) %>">Bounties</a>
-        </li>
-        <li class="<%= nav_active_class(:posts) %>">
-          <a class="px2 py2" href="<%= product_posts_path(@product) %>">Posts</a>
-        </li>
-        <li class="<%= nav_active_class(:discussions) %>">
-          <a class="px2 py2" href="<%= product_discussions_path(@product) %>">Discussions</a>
-        </li>
-        <li class="<%= nav_active_class(:projects) %>">
-          <a class="px2 py2" href="<%= product_projects_path(@product) %>">Projects</a>
-        </li>
-        <li class="<%= nav_active_class(:assets) %>">
-          <a class="px2 py2" href="<%= product_assets_path(@product) %>">Assets</a>
-        </li>
-      </ul>
+          <ul class="nav nav-tabs left">
+            <li class="<%= nav_active_class(:product) %>">
+              <a class="px2 py2" href="<%= product_path(@product) %>">All</a>
+            </li>
+            <li class="<%= nav_active_class(:bounties) %>">
+              <a class="px2 py2" href="<%= product_tasks_path(@product) %>">Bounties</a>
+            </li>
+            <li class="<%= nav_active_class(:posts) %>">
+              <a class="px2 py2" href="<%= product_posts_path(@product) %>">Posts</a>
+            </li>
+            <li class="<%= nav_active_class(:discussions) %>">
+              <a class="px2 py2" href="<%= product_discussions_path(@product) %>">Discussions</a>
+            </li>
+            <li class="<%= nav_active_class(:projects) %>">
+              <a class="px2 py2" href="<%= product_projects_path(@product) %>">Projects</a>
+            </li>
+            <li class="<%= nav_active_class(:assets) %>">
+              <a class="px2 py2" href="<%= product_assets_path(@product) %>">Assets</a>
+            </li>
+          </ul>
 
-      <div class="right py1">
-        <a class="btn btn-primary bg-blue" href="#">
-          <%= inline_react_component 'Icon', icon: 'pencil' %>
-          <span class="sr-only">Add</span>
-          <%= inline_react_component 'Icon', icon: 'chevron-down' %>
-        </a>
+          <div class="right py1">
+            <a class="btn btn-primary bg-blue" href="#">
+              <%= inline_react_component 'Icon', icon: 'pencil' %>
+              <span class="sr-only">Add</span>
+              <%= inline_react_component 'Icon', icon: 'chevron-down' %>
+            </a>
+          </div>
+        </div>
       </div>
-
     </div>
   </div>
 
