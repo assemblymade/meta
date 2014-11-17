@@ -6,12 +6,12 @@ describe Event do
   let(:zoolander) { User.make!(username: 'Zoolander') }
   let(:comment) { wip.comments.make!(body: 'hello @Asterix and @Zoolander!', user: asterix) }
 
-  describe '#notify_users!' do
-    it 'notifies mentioned users but not the issuing user' do
-      expect(comment).to receive(:notify_by_email).with(zoolander)
-      expect(comment).not_to receive(:notify_by_email).with(asterix)
+  describe '#update_pusher' do
+    it 'sends updated event to pusher' do
+      expect{
+        comment.update_pusher
+      }.to change(PusherWorker.jobs, :size).by(1)
 
-      comment.notify_users!([])
     end
   end
 end
