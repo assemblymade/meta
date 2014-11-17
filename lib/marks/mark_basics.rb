@@ -14,7 +14,9 @@ module Marks
     end
 
     def find_mark_from_name(name)
-      Mark.where(name: name).first
+      the_mark = Mark.where(name: name)
+      if the_mark.present?
+        return the_mark.first  #There should only ever be one mark per name
     end
 
     def marks_on_object(object)
@@ -22,10 +24,10 @@ module Marks
     end
 
     def objects_with_mark(mark_name, markable_type)
-      allmarkings = Marking.where(markable_type: markable_type)
+      allmarkings = Marking.where(markable_type: markable_type).wher
       results = []
       allmarkings.each do |a|
-        
+
       end
     end
 
