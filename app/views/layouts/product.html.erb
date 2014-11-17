@@ -39,11 +39,15 @@
   <div class="bg-white">
     <div class="container py3">
       <div class="left mr3">
-        <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 120, shadow: true %>
+        <a href="<%= product_path(@product) %>">
+          <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 120, shadow: true %>
+        </a>
       </div>
 
       <div class="overflow-hidden py2">
-        <h1 class="mt0 mb0"><%= @product.name %></h1>
+        <h1 class="mt0 mb0">
+          <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
+        </h1>
         <div class="clearfix">
           <div class="h3 mt0 mb0 gray-dark left"><%= @product.pitch %></div>
           <div class="right">
