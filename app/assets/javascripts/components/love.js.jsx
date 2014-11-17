@@ -31,7 +31,7 @@
       }
 
       return <span>
-        <a href="javascript:;" onClick={this.handleClick}>
+        <a className="text-muted" href="javascript:;" onClick={this.handleClick}>
           <span className="glyphicon glyphicon-heart" style={style}></span>
           <span> {numeral(this.state.hearts).format('0,0')}</span>
         </a>
