@@ -39,11 +39,15 @@
   <div class="bg-white">
     <div class="container py3">
       <div class="left mr3">
-        <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 120, shadow: true %>
+        <a href="<%= product_path(@product) %>">
+          <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 120, shadow: true %>
+        </a>
       </div>
 
       <div class="overflow-hidden py2">
-        <h1 class="mt0 mb0"><%= @product.name %></h1>
+        <h1 class="mt0 mb0">
+          <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
+        </h1>
         <div class="clearfix">
           <div class="h3 mt0 mb0 gray-dark left"><%= @product.pitch %></div>
           <div class="right">
@@ -69,12 +73,15 @@
             </li>
           <% end %>
 
-          <li class="left px1">
-            <a href="#">
-              <%= inline_react_component 'Icon', icon: 'comment' %>
-              Chat
-            </a>
-          </li>
+          <% if @product.chat_rooms.any? %>
+            <% chat_room = @product.chat_rooms.first %>
+            <li class="left px1">
+              <a href="<%= chat_room_path(chat_room) %>">
+                <%= inline_react_component 'Icon', icon: 'comment' %>
+                Chat
+              </a>
+            </li>
+          <% end %>
         </ul>
 
       </div>
@@ -112,33 +119,6 @@
           <%= inline_react_component 'Icon', icon: 'chevron-down' %>
         </a>
       </div>
-
-      <!-- <ul class="nav nav-tabs mb0 left">
-        <li class="active">
-          <a href="<%= product_path(@product) %>">Home</a>
-        </li>
-
-        <li>
-          <a href="<%= product_people_path(@product) %>">Team</a>
-        </li>
-
-        <li>
-          <a href="<%= product_financials_path(@product) %>">Financials</a>
-        </li>
-
-        <li>
-          <a href="<%= product_repos_path(@product) %>">Code</a>
-        </li>
-
-        <% if @product.chat_rooms.any? %>
-          <% chat_room = @product.chat_rooms.first %>
-          <li>
-            <a href="<%= chat_room_path(chat_room) %>">
-              Chat
-            </a>
-          </li>
-        <% end %>
-      </ul> -->
 
     </div>
   </div>
@@ -191,9 +171,7 @@
 
     <div id="public-address-prompt"></div>
   <% end %>
-
   <%= render 'shared/footer' %>
-
   <% parent_layout 'application' %>
 
   <% content_for :javascript do %>

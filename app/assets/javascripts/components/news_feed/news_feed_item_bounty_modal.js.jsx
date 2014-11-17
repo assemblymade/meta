@@ -200,7 +200,6 @@ module.exports = React.createClass({
               <ReadReceipts url={'/_rr/articles/' + bounty.id} track_url={event.readraptor_track_id} />
             </div>
           );
-
           return [timestamp, renderedEvent];
         }
       }
