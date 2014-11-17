@@ -47,9 +47,11 @@ class Wip < ActiveRecord::Base
   scope :opened_by,   ->(user) { where(user: user) }
   scope :promoted,    -> { where('promoted_at is not null') }
   scope :stale_by,    ->(age) { joins(:events).group('wips.id').having('max(events.created_at) < ?', age).order('max(events.created_at)') }
-  scope :tagged_with, ->(name) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name = ?', name) }
-  scope :tagged_with_any, ->(names) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name' => names) }
-  scope :tagged_with_all, ->(names) { joins(:taggings => :tag).where('wip_tags.name' => names).group('wips.id').having('count(distinct wip_taggings.wip_tag_id) = ?', names.size) }
+
+  #scope :tagged_with, ->(name) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name = ?', name) }
+  #scope :tagged_with_any, ->(names) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name' => names) }
+  #scope :tagged_with_all, ->(names) { joins(:taggings => :tag).where('wip_tags.name' => names).group('wips.id').having('count(distinct wip_taggings.wip_tag_id) = ?', names.size) }
+
   scope :unflagged, -> { where(flagged_at: nil) }
   scope :ordered_by_activity, -> { joins(:events).group('wips.id').order('max(events.created_at)') }
 
@@ -207,6 +209,18 @@ class Wip < ActiveRecord::Base
 
   def tag_list=(names)
     self.tag_names = names.split(',')
+  end
+
+  def self.tagged_with(name)
+    tags = Tag.where(name: name)
+    found = []
+    tags.each do |t|
+      taggings =  Tagging.where(tag_id: t.id).where(taggable_type: "Wip")
+      taggings.each do |ta|
+        found = found + Wip.find_by(id: ta.taggable_id)
+      end
+    end
+    found
   end
 
   # flagging
