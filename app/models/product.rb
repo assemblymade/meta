@@ -55,8 +55,6 @@ class Product < ActiveRecord::Base
   has_many :status_messages
   has_many :stream_events
   has_many :subscribers
-  has_many :markings
-  has_many :marks, through: :markings
   has_many :tasks
   has_many :team_memberships
   has_many :transaction_log_entries
