@@ -33,7 +33,7 @@
 
   <div class="sm-col sm-col-4 px2">
 
-    <div class="bg-gray-light p2 rounded">
+    <div class="bg-gray-5 p2 rounded">
       <h6 class="mt0 py2 mb0 black">The Big Idea</h6>
       <%= react_component 'Markdown', content: @product.lead, normalized: true %>
       <a class="block mb3" href="#">Read more</a>
@@ -42,19 +42,19 @@
         <div class="stat">
           <a class="block" href="<%= product_people_path(@product) %>">
             <div class="h4 mt0 mb0"><%= @product.partners.count %></div>
-            <div class="gray-dark">Partners</div>
+            <div class="gray-2">Partners</div>
           </a>
         </div>
         <div class="stat">
           <a class="block" href="<%= product_repos_path(@product) %>">
             <div class="h4 mt0 mb0"><%= @product.repos.count %></div>
-            <div class="gray-dark">Repos</div>
+            <div class="gray-2">Repos</div>
           </a>
         </div>
         <div class="stat">
           <a class="block" href="<%= product_financials_path(@product) %>">
             <div class="h4 mt0 mb0"><%= short_currency(@product.profit_reports.map(&:profit).reduce(:+)) %></div>
-            <div class="gray-dark">Royalties</div>
+            <div class="gray-2">Royalties</div>
           </a>
         </div>
       </div>

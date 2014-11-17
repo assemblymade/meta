@@ -1,9 +1,5 @@
 <% if signed_in? && current_user.staff? %>
 
-  <style>
-    body { background-color: #F5F6F5 }
-  </style>
-
   <% content_for :javascript do %>
     <script>
       window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);

@@ -1,34 +1,46 @@
-$white:        #FFF;
-$gray-lighter: #F4F4F5;
-$gray-light:   #ECEDEF;
-$gray:         #C2C7D0;
-$gray-dark:    #9A9FAA;
-$gray-darker:  #666D78;
-$black:        #353941;
+$white:  #FFF;
+$gray-6: #F4F4F5;
+$gray-5: #ECEDEF;
+$gray-4: #DBDEE3;
+$gray-3: #C2C7D0;
+$gray-2: #8B909A;
+$gray-1: #666D78;
+$black:  #353941;
+
+$gray-lighter: $gray-6;
+$gray-light:   $gray-5;
+$gray:         $gray-3;
+$gray-dark:    $gray-2;
+$gray-darker:  $gray-1;
+
 $green:        #33D6A6;
 $blue:         #338EDA;
 $red:          #EC3750;
 $yellow:       #F2D930;
 
-.white        { color: $white }
-.gray-lighter { color: $gray-lighter }
-.gray-light   { color: $gray-light }
-.gray         { color: $gray }
-.gray-dark    { color: $gray-dark }
-.gray-darker  { color: $gray-darker }
-.black        { color: $black }
+.white                 { color: $white }
+.gray-6, .gray-lighter { color: $gray-6 }
+.gray-5, .gray-light   { color: $gray-5 }
+.gray-4                { color: $gray-4 }
+.gray-3, .gray         { color: $gray-3 }
+.gray-2, .gray-dark    { color: $gray-2 }
+.gray-1, .gray-darker  { color: $gray-1 }
+.black                 { color: $black }
+
 .green        { color: $green }
 .blue         { color: $blue }
 .red          { color: $red }
 .yellow       { color: $yellow }
 
-.bg-white        { background-color: $white }
-.bg-gray-lighter { background-color: $gray-lighter }
-.bg-gray-light   { background-color: $gray-light }
-.bg-gray         { background-color: $gray }
-.bg-gray-dark    { background-color: $gray-dark }
-.bg-gray-darker  { background-color: $gray-darker }
-.bg-black        { background-color: $black }
+.bg-white                    { background-color: $white }
+.bg-gray-6, .bg-gray-lighter { background-color: $gray-6 }
+.bg-gray-5, .bg-gray-light   { background-color: $gray-5 }
+.bg-gray-4                   { background-color: $gray-4 }
+.bg-gray-3, .bg-gray         { background-color: $gray-3 }
+.bg-gray-2, .bg-gray-light   { background-color: $gray-2 }
+.bg-gray-1, .bg-gray-lighter { background-color: $gray-1 }
+.bg-black                    { background-color: $black }
+
 .bg-green        { background-color: $green }
 .bg-blue         { background-color: $blue }
 .bg-red          { background-color: $red }
