@@ -17,6 +17,7 @@ module Marks
       the_mark = Mark.where(name: name)
       if the_mark.present?
         return the_mark.first  #There should only ever be one mark per name
+      end
     end
 
     def marks_on_object(object)
@@ -42,7 +43,9 @@ module Marks
       end
       tag_names.uniq!
       tag_names.each do |t|
-        Mark.create!({name: t})
+        if Mark.find_by(name: t).nil?
+          Mark.create!({name: t})
+        end
       end
     end
 
@@ -52,7 +55,9 @@ module Marks
       taggings.each do |t|
         the_wip = t.wip
         mark_id = t.tag.id
-        Marking.create!({markable: the_wip, mark_id: mark_id, weight: DEFAULT_MARKING_WEIGHT})
+        if not Marking.where(mark_id: mark_id).where(markable_id: the_wip.id).present?
+          Marking.create!({markable: the_wip, mark_id: mark_id, weight: DEFAULT_MARKING_WEIGHT})
+        end
       end
     end
 
@@ -62,7 +67,12 @@ module Marks
         if the_tags.count > 0
           the_tags.each do |t|
             the_mark = find_mark_from_name(t)
-            Marking.create!({markable: p, mark_id: the_mark.id, weight: DEFAULT_MARKING_WEIGHT})
+            if not the_mark.nil?
+              if not Marking.where(mark_id: the_mark.id).where(markable_id: p.id).present?
+                Marking.create!({markable: p, mark_id: the_mark.id, weight: DEFAULT_MARKING_WEIGHT})
+              end
+            end
+
           end
         end
       end
