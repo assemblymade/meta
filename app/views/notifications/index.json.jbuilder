@@ -1,10 +1,18 @@
 json.users do
-  json.array! @users, :id, :username, :avatar_url
+  json.array! @users do |user|
+    json.id user.id
+    json.username user.username
+    json.avatar_url Avatar.new(User.find(user.id)).url.to_s
+  end
 end
 
 # json.cache_collection! @stories do |story|
 json.stories @stories do |story|
   json.cache! story do
+    json.type story.class.name.underscore
+    json.created story.created_at.try(:iso8601)
+    json.updated story.try(:updated_at).try(:to_i)
+
     json.extract! story, :id, :verb, :subject_type
 
     json.actor_ids story.activities.map(&:actor_id)

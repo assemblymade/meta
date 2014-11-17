@@ -18,7 +18,6 @@ module.exports = function MasonryMixin(ref, options) {
 
       try {
         var el = this.refs[ref].getDOMNode()
-
         this.masonry = new Masonry(el, options)
         el.focus()
         this.imagesLoaded()

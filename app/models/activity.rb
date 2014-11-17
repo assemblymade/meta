@@ -28,7 +28,9 @@ class Activity < ActiveRecord::Base
 
         if room
           a.publish_to_chat(room.id)
-          room.touch if a.is_a? Activities::Chat # only touch updated_at for chat messages. We don't want the room to be marked as unread for events other than people chatting
+
+          # only touch updated_at for chat messages. We don't want the room to be marked as unread for events other than people chatting
+          room.touch if a.is_a? Activities::Chat
         end
 
       end

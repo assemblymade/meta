@@ -20,7 +20,7 @@ module.exports = React.createClass({
       <div>
         <div className="card">
           <div className="p3 border-bottom">
-            <ul className="list-inline mb2" style={{ 'margin-bottom': '6px' }}>
+            <ul className="list-inline mb2">
               {this.props.show_coins ? <li className="text-large">
                 {this.renderBountyValuation()}
               </li> : null}
@@ -30,7 +30,7 @@ module.exports = React.createClass({
               <li>
                 {this.renderTagList()}
               </li>
-              <li className="text-muted" style={{ 'font-size': '14px', 'color': '#a5a5a5' }}>
+              <li className="text-muted" style={{ fontSize: '14px', color: '#a5a5a5' }}>
                 Created by
                 {' '}
                 <a className="text-stealth-link" href={bounty.user.url}>@{bounty.user.username}</a>

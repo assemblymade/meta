@@ -3,6 +3,12 @@
 <% if @search %>
 
   <div class="page-header sheet-header">
+    <% if @product %>
+      <div class="right">
+        <%= render 'bounties/create_button' %>
+      </div>
+    <% end %>
+
     <h2 class="page-header-title">
       <i class="icon-magnifier text-muted" style="margin-right: 6px;  font-size: 22px; top: -2px; position: relative;"></i>
       <%= @filter_description %> matching

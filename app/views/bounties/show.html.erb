@@ -36,8 +36,8 @@
     });
 
     <% if signed_in? %>
-      <% story = Story.associated_with(@bounty).first.try(:id) %>
-      app.wip.readRaptorUrl = '<%== ReadraptorTracker.new(story, current_user.id).url if story %>';
+      <% story_id = Story.associated_with_ids(@bounty).first %>
+      app.wip.readRaptorUrl = '<%== ReadraptorTracker.new(story_id, current_user.id).url if story_id %>';
     <% end %>
 
     $(document).ready(function() {

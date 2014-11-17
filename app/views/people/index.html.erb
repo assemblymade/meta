@@ -11,7 +11,7 @@
 
 <%= render 'people/nav' %>
 
-<% if signed_in? %>
+<% if signed_in? && !current_user.staff? %>
   <% product_membership = current_user.team_memberships.find_by(product: @product) %>
 
   <% if product_membership.nil? || product_membership.bio.nil? %>

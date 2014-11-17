@@ -1,9 +1,7 @@
 <% if !signed_in? %>
-  <div class="educational-modal">
-    <p>
-      <strong><a href="<%= new_user_registration_path %>">Sign up</a> to join the discussion.</strong>
+  <div class="border p3 center rounded">
+    <strong><a href="<%= new_user_registration_path %>">Sign up</a> to join the discussion.</strong>
       Already have an account? <a href="<%= new_user_session_path %>">Sign in</a>
-    </p>
   </div>
 
 <% else %>

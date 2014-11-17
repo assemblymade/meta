@@ -15,7 +15,6 @@ App Coins are primarily earned through your contributions (e.g. code, design, co
 
 Here is a common example of how Mary might earn App Coins in the Helpful product.
 
-
 1. Patrick suggests a new bounty for building a feature for Helpful.
 
 2. Community members value the bounty because they think it’s valuable to Helpful’s progress.
@@ -34,18 +33,11 @@ Your App Coins remain with you in perpetuity, even after you stop working on the
 Contributions by other community members will continue to earn them new App Coins which would dilute your stake over time. However, these contributions increase the value of the product, so you end up with a smaller slice of a larger pie.
 
 
-# Are App Coins legal?
-
-Yes. Assembly App Coins are legally structured as a partnership – like many law firms have. App Coins can’t be bought, sold or transferred, they only determine royalty payouts. As partners, owners of Assembly App Coins have access to information, voting rights, and potential royalty payouts.
-
-In an organization like this, partners must remain active to keep their rights and royalties. On Assembly, remaining active means (at a minimum) exercising your voting rights on work once per year.
-
-
 # Who pays the operating costs before there is any revenue?
 
-Assembly will often help cover a great deal of these costs. We can’t promise to cover all costs in all cases, but if we see momentum and vision around an idea, we’re prepared to support you financially until the product ships and starts making money. In some cases, we may recoup some or all of that money when the product starts earning revenue.
+Assembly will often help cover a great deal of these costs. We can’t promise to cover all costs in all cases, but if we see momentum and vision around an idea, we’re prepared to support you financially until the product ships and starts making money. We do ask to recoup those expenses paid when the product starts earning revenue.
 
 
 # Can an Assembly project be acquired by another company?
 
-Yes. If offers are made to acquire an Assembly product, it will be up to the Core Team and Assembly to decide whether or not to take them. In the case of an acquisition, all funds will be distributed among those who own the product’s App Coins after the acquisition expenses are paid.
+If an offer was made to acquire an Assembly product the decision would be up to a 2/3 majority vote based on ownership.  Assembly would also be required to be involved to facilitate an acquisition. Any acquisition revenue would be distributed among those who own the product’s App Coins after the acquisition expenses are paid.

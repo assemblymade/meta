@@ -1,0 +1,74 @@
+<table class="row">
+  <tr>
+    <td class="wrapper">
+      <table class="twelve columns">
+        <tr>
+          <td class="panel wrapper">
+            <table>
+              <tr>
+                <td>
+                  <h1>
+                    Hey <%= @user.username %>,
+                  </h1>
+                </td>
+              </tr>
+            </table>
+            <table>
+              <tr>
+                <td>
+                  <h5>
+                    TL;DR: Bounties are changing; finish <a href="<%= product_wip_url(@wips.first.product, @wips.first) %>">yours</a> or be ready to claim <%= @wips.length > 1 ? "them" : "it" %> again on Monday.
+                  </h5>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    We're rolling out a new, highly requested change to the "Work on this bounty" feature, and need to let you know how it impacts you.
+                  </p>
+
+                  <p>
+                    From now on, only one person will be allowed to work on a bounty at a time, but their claim to it will expire in 24 hours (with the option to extend it if the work is still being done). This should reduce confusion over who is working on what, and should also prevent "bounty-squatting" – where someone claims a bounty and never finishes it.
+                  </p>
+
+                  <p>
+                    What this change means for you:
+                  </p>
+
+                  <p>
+                    You've claimed:
+                      <ul>
+                        <% @wips.each do |wip| %>
+                          <li>
+                            <a href="<%= product_url(wip.product) %>"><%= wip.product.name %></a> #<%= wip.number %>: <a href="<%= product_wip_url(wip.product, wip) %>"><%= wip.title %></a>.
+                          </li>
+                        <% end %>
+                      </ul>
+                  </p>
+
+                  <p>
+                    To roll out this new change, we need to set expiration for all bounties that are currently claimed and open. So, you'll have this weekend to work on this bounty and then it will expire Monday morning.
+                  </p>
+                </td>
+
+              </tr>
+            </table>
+
+
+            <table class="button success radius">
+              <tr>
+                <td>
+                  <a href="<%= product_wip_url(@product, @wips.first) %>">Finish your bounties!</a>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+
+

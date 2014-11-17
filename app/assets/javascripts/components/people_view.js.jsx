@@ -101,23 +101,17 @@
           return;
         }
 
-        var style = {
-          'padding-bottom': '10px',
-          'border-bottom': '1px solid #ebebeb'
-        };
-
-        if (i !== 0) {
-          style['padding-top'] = '15px';
-        }
-
         var user = member.user;
 
         var row = (
-          <div className="row"
-            key={'row-' + user.id + i}
-            style={style}>
-            {this.avatar(user)}
-            {this.member(member)}
+          <div className="clearfix py2 border-bottom"
+            key={'row-' + user.id + i}>
+            <div className="left mr2">
+              <Avatar user={user} size={24} />
+            </div>
+            <div className="overflow-hidden">
+              {this.member(member)}
+            </div>
           </div>
         )
 
@@ -135,7 +129,7 @@
       var user = member.user;
 
       return (
-        <div className="col-sm-11 col-xs-11">
+        <div>
           <p className="omega">
             <ul className="list-inline omega pull-right">
               {this.skills(member)}

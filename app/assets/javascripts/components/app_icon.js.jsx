@@ -1,34 +1,29 @@
 /** @jsx React.DOM */
 
-(function() {
-  var AppIcon = React.createClass({
-    propTypes: {
-      app: React.PropTypes.object.isRequired,
-      size: React.PropTypes.number,
-      style: React.PropTypes.object
-    },
+var AppIcon = React.createClass({
 
-    getDefaultProps: function() {
-      return {
-        size: 24,
-        style: {}
-      };
-    },
+  propTypes: {
+    app: React.PropTypes.object.isRequired,
+    size: React.PropTypes.number,
+    style: React.PropTypes.object
+  },
 
-    render: function() {
-      var size = this.props.size.toString();
-
-      return <img className="app-icon"
-          src={this.props.app.logo_url}
-          height={size}
-          width={size}
-          style={this.props.style} />;
+  getDefaultProps: function() {
+    return {
+      size: 24,
+      style: {}
     }
-  });
+  },
 
-  if (typeof module !== 'undefined') {
-    module.exports = AppIcon;
+  render: function() {
+    var size = this.props.size.toString()
+
+    return <img className="app-icon"
+        src={this.props.app.logo_url}
+        height={size}
+        width={size} />
   }
 
-  window.AppIcon = AppIcon;
-})();
+})
+
+window.AppIcon = module.exports = AppIcon

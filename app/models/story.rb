@@ -48,15 +48,21 @@ class Story < ActiveRecord::Base
     STREAM_MAPPINGS[[activity.verb, activity.verb_subject]]
   end
 
-  def self.associated_with(entity)
-    activities = Activity.where(target_id: entity.id)
+  def self.associated_with_ids(entity)
+    Rails.cache.fetch(['story_ids', entity.id]) do
+      activities = Activity.where(target_id: entity.id)
 
-    if activities.empty?
-      activities = Activity.where(subject_id: entity.id)
+      if activities.empty?
+        activities = Activity.where(subject_id: entity.id)
+      end
+
+      activities.map(&:story_id).uniq
     end
+  end
 
-    story_ids = activities.map(&:story_id).uniq
-    Story.where(id: story_ids)
+
+  def self.associated_with(entity)
+    Story.where(id: associated_with_ids(entity))
   end
 
   def self.subject_serializer(subject)

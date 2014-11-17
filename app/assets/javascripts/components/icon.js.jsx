@@ -2,7 +2,7 @@
 
 // TODO For webpack, requires font-awesome
 
-module.exports = React.createClass({
+var Icon = React.createClass({
   displayName: 'Icon',
 
   render: function() {
@@ -11,3 +11,5 @@ module.exports = React.createClass({
     return <span className={cs}></span>
   }
 })
+
+window.Icon = module.exports = Icon

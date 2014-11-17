@@ -1,18 +1,9 @@
-<% title 'Discussions', @product.name %>
-<% activate_nav! :discussions %>
-<%= track 'product.wips.viewed',  ProductAnalyticsSerializer.new(@product) %>
+<% if signed_in? && current_user.staff? %>
 
-<div class="page-header sheet-header">
-  <a class="btn btn-success pull-right" href="<%= new_product_discussion_path(@product) %>">
-    Start a discussion
-  </a>
-  <h2 class="page-header-title">
-    <i class="icon-book-open text-muted" style="margin-right: 4px;"></i>
-    Discussions
-  </h2>
-</div>
+  <% title 'Discussions', @product.name %>
+  <% activate_nav! :discussions %>
+  <%= track 'product.wips.viewed',  ProductAnalyticsSerializer.new(@product) %>
 
-<div class="sheet-body">
   <% if @wips.empty? %>
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
@@ -65,4 +56,76 @@
 
     </div>
   <% end %>
-</div>
+
+<% else %>
+
+  <% title 'Discussions', @product.name %>
+  <% activate_nav! :discussions %>
+  <%= track 'product.wips.viewed',  ProductAnalyticsSerializer.new(@product) %>
+
+  <div class="page-header sheet-header">
+    <a class="btn btn-success pull-right" href="<%= new_product_discussion_path(@product) %>">
+      Start a discussion
+    </a>
+    <h2 class="page-header-title">
+      <i class="icon-book-open text-muted" style="margin-right: 4px;"></i>
+      Discussions
+    </h2>
+  </div>
+
+  <div class="sheet-body">
+    <% if @wips.empty? %>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="well well-lg omega">
+            <h3 class="alpha"><strong>Start the first discussion</strong></h3>
+            <p class="text-muted omega">
+              Speak your mind and start a conversation with the team. Discussions
+              are a great place to ask questions and give feedback.
+            </p>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div class="row">
+
+        <div class="col-md-9">
+          <ol class="list-group list-group-breakout list-group-padded" id="wips-view-el">
+            <% @wips.each do |discussion| %>
+              <li class="list-group-item">
+                <%= render 'discussions/summary', discussion: discussion %>
+              </li>
+            <% end %>
+          </ol>
+        </div>
+
+        <div class="col-md-3">
+          <div class="panel panel-default">
+            <ul class="nav nav-pills nav-stacked">
+              <li class="<%= 'active' if params[:state] == 'open' || params[:state].empty? %>">
+                <a href="<%= product_discussions_path(@product, state: 'open') %>">
+                  <span class="badge pull-right">
+                    <%= @product.discussions.where(state: 'open').count %>
+                  </span>
+                  Open Discussions
+                </a>
+              </li>
+
+              <li class="<%= 'active' if params[:state] == 'resolved' %>">
+                <a href="<%= product_discussions_path(@product, state: 'resolved') %>">
+                  <span class="badge pull-right">
+                    <%= @product.discussions.where(state: 'resolved').count %>
+                  </span>
+                  Closed Discussions
+                </a>
+              </li>
+
+            </ul>
+          </div>
+        </div><!-- .col-md-3 -->
+
+      </div>
+    <% end %>
+  </div>
+
+<% end %>

@@ -1,28 +1,8 @@
-<% title 'Projects', @product.name %>
-<% activate_nav! :assets %>
+<% if signed_in? && current_user.staff? %>
 
-<div class="page-header sheet-header">
-  <% if can?(:update, Product) %>
-    <div class="pull-right">
-      <%= form_for :asset, url: product_assets_path(@product), html: {class: 'js-dropzone-form'} do |f| %>
-        <%= f.hidden_field :attachment_id %>
-        <%= f.hidden_field :name %>
-      <% end %>
-      <div class="js-dropzone" data-target-form=".js-dropzone-form">
-        <span class="btn btn-success js-dropzone-select" data-disable-with="Uploading...">
-          Upload an asset
-        </span>
-      </div>
-    </div>
-  <% end %>
+  <% title 'Projects', @product.name %>
+  <% activate_nav! :assets %>
 
-  <h2 class="page-header-title">
-    <i class="icon-layers text-muted" style="margin-right: 4px;"></i>
-    Assets
-  </h2>
-</div>
-
-<div class="sheet-body">
   <div class="row">
     <% if @assets.empty? %>
       <div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
@@ -43,4 +23,54 @@
   </div>
 
   <%= paginate @assets, theme: 'twitter-bootstrap-3' %>
-</div>
+
+<% else %>
+
+
+  <% title 'Projects', @product.name %>
+  <% activate_nav! :assets %>
+
+  <div class="page-header sheet-header">
+    <% if can?(:update, Product) %>
+      <div class="pull-right">
+        <%= form_for :asset, url: product_assets_path(@product), html: {class: 'js-dropzone-form'} do |f| %>
+          <%= f.hidden_field :attachment_id %>
+          <%= f.hidden_field :name %>
+        <% end %>
+        <div class="js-dropzone" data-target-form=".js-dropzone-form">
+          <span class="btn btn-success js-dropzone-select" data-disable-with="Uploading...">
+            Upload an asset
+          </span>
+        </div>
+      </div>
+    <% end %>
+
+    <h2 class="page-header-title">
+      <i class="icon-layers text-muted" style="margin-right: 4px;"></i>
+      Assets
+    </h2>
+  </div>
+
+  <div class="sheet-body">
+    <div class="row">
+      <% if @assets.empty? %>
+        <div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
+          <div class="well well-lg omega">
+            <h3 class="alpha"><strong>Share Assets</strong></h3>
+            <p class="text-muted omega">
+              Upload images, zip files, PSDs with the rest of the team building <%= @product.name %>.
+            </p>
+          </div>
+        </div>
+      <% else %>
+        <% @assets.each do |asset| %>
+          <div class="col-sm-6 col-md-3">
+            <%= render 'assets/asset', asset: asset %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= paginate @assets, theme: 'twitter-bootstrap-3' %>
+  </div>
+<% end %>

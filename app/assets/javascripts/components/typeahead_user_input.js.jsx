@@ -2,6 +2,11 @@
   var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 
   var TypeaheadUserInput = React.createClass({
+    propTypes: {
+      defaultValue: React.PropTypes.string,
+      onTextChange: React.PropTypes.func.isRequired
+    },
+
     getInitialState: function() {
       return {
         text: this.props.defaultValue,
@@ -19,6 +24,12 @@
       </InPlaceUserSearch>
     },
 
+    componentDidUpdate: function(prevProps, prevState) {
+      if (prevState.text !== this.state.text) {
+        this.props.onTextChange(this.state.text)
+      }
+    },
+
     handleChange: function(e) {
       var username = null
       var matches = e.target.value.match(USER_SEARCH_REGEX)
@@ -29,7 +40,7 @@
       this.setState({
         text: e.target.value,
         usernameSearch: username
-      });
+      })
     },
 
     handleUserChanged: function(user) {
@@ -54,8 +65,8 @@
   })
 
   if (typeof module !== 'undefined') {
-    module.exports = TypeaheadUserInput
+    module.exports = TypeaheadUserInput;
   }
 
-  window.TypeaheadUserInput = TypeaheadUserInput
+  window.TypeaheadUserInput = TypeaheadUserInput;
 })()

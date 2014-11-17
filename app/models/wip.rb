@@ -25,12 +25,12 @@ class Wip < ActiveRecord::Base
   has_many :milestones, through: :milestone_tasks
   has_many :milestone_tasks, foreign_key: 'task_id'
   has_many :mutings
-  has_one  :news_feed_item, foreign_key: 'target_id'
   has_many :postings, class_name: 'BountyPosting', foreign_key: 'bounty_id'
   has_many :taggings, class_name: 'Wip::Tagging'
   has_many :tags, through: :taggings, class_name: 'Wip::Tag'
   has_many :awards
 
+  has_one  :news_feed_item, foreign_key: 'target_id'
   has_one :milestone
   accepts_nested_attributes_for :milestone
 

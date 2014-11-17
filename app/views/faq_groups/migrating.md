@@ -18,9 +18,9 @@ No. You will be the only member of the Core Team to start. This means you make a
 
 Assembly provides a free public GitHub repo for every product. If you already have source code elsewhere, push it up to the GitHub repo Assembly has provisioned for your product. You'll also need to update the license to AGPL.
 
-# Can I "fire" somoene from my product team?
+# Can I "fire" someone from the product team?
 
-Not exactly. A person's contributions can be rejected, and they can be booted off of the Core Team by 3/4 majority vote. Since you won't be "hiring" the people you are working with per se, you can't really "fire" them either.
+Not exactly. A person's contributions can be rejected, and they can be booted off of the Core Team by 2/3 majority vote. Since you won't be "hiring" the people you are working with per se, you can't really "fire" them either.
 
 # How do I prepare my existing closed source code base for open sourcing?
 

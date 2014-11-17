@@ -1,17 +1,30 @@
 class UserMailer < BaseMailer
   helper :avatar, :markdown, :wip
 
-  layout 'email', only: [:welcome, :joined_team_no_work_yet, :joined_team_no_introduction_yet, :featured_wips]
+  layout 'email', only: [:welcome,
+                         :joined_team_no_work_yet,
+                         :joined_team_no_introduction_yet,
+                         :featured_wips,
+                         :bounty_holding_incoming,
+                         :bounty_holding_incoming_take2]
 
-  def welcome(user_id)
-    mailgun_tag 'user#welcome'
-    mailgun_campaign 'community'
-
+  def bounty_holding_incoming(user_id, task_ids)
     @user = User.find(user_id)
+    @wips = Task.find(task_ids)
+    @product = @wips.first.product
 
-    mail from: "matt@assembly.com",
-           to:  @user.email,
-      subject: "Your Assembly welcome package"
+    mail from: "Austin from Assembly <austin.smith@assembly.com>",
+           to: @user.email,
+      subject: "Bounty Expiration"
+  end
+
+  def bounty_holding_incoming_take2(user_id, task_ids)
+    @user = User.find(user_id)
+    @wips = Task.find(task_ids)
+
+    mail from: "Chuck from Assembly <chuck@assembly.com>",
+           to: @user.email,
+      subject: "Bounty Expiration -- Take 2 (and apologies)"
   end
 
   def follow_up(user_id)

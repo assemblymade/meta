@@ -39,7 +39,7 @@ var Avatar = require('./avatar.js.jsx');
             <li
                 role="presentation"
                 className="dropdown-header"
-                style={{ color: '#a6a6a6', 'background-color': '#f3f3f3' }}>
+                style={{ color: '#a6a6a6', backgroundColor: '#f3f3f3' }}>
               <strong>Following Preferences</strong>
             </li>
 

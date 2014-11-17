@@ -1,11 +1,12 @@
 /** @jsx React.DOM */
 
 var CONSTANTS = require('../constants');
+var Avatar = require('./avatar.js.jsx');
 var Dispatcher = require('../dispatcher');
 var EventMixin = require('../mixins/event.js.jsx');
 var NotificationsMixin = require('../mixins/notifications.js.jsx');
 var NotificationsStore = require('../stores/notifications_store');
-var Avatar = require('./avatar.js.jsx');
+var Spinner = require('./spinner.js.jsx');
 
 (function() {
   var NF = CONSTANTS.NOTIFICATIONS;
@@ -30,7 +31,7 @@ var Avatar = require('./avatar.js.jsx');
     render: function() {
       return (
         <div>
-          <div className="list-group list-group-breakout" ref="spinner">
+          <div className="list-group list-group-breakout">
             {this.renderStories()}
           </div>
 
@@ -41,7 +42,7 @@ var Avatar = require('./avatar.js.jsx');
 
     renderStories: function() {
       if (!this.state.stories) {
-        return null;
+        return <Spinner />;
       }
 
       if (this.state.stories.length > 0) {

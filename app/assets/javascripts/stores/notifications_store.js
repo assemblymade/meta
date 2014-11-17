@@ -117,6 +117,14 @@ var ReadTimesMixin = require('../mixins/read_times');
         _stories,
         function(entry) {
           if (timestamp) {
+            // console.info(
+            //   entry.key,
+            //   'updated', moment.unix(entry.updated).format('h:mm:ss a'),
+            //   'last_read_at', moment.unix(entry.last_read_at).format('h:mm:ss a'),
+            //   'timestamp', moment.unix(timestamp).format('h:mm:ss a'),
+            //   'updated > last_read_at', entry.updated > entry.last_read_at,
+            //   'updated > timestamp', entry.updated > timestamp)
+
             return entry.updated > entry.last_read_at && entry.updated > timestamp;
           }
         }

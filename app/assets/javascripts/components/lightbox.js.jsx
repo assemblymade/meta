@@ -17,7 +17,6 @@
         <div className="modal fade" id={this.props.id} role="dialog" tabIndex="-1" aria-labelledby={this.props.title || "lightbox"} aria-hidden="true">
           <div className={"modal-dialog " + this.props.size}>
             <div className="modal-content">
-
               {this.header()}
               {this.props.children}
             </div>
