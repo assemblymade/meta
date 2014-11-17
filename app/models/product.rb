@@ -42,7 +42,7 @@ class Product < ActiveRecord::Base
   has_many :financial_transactions, class_name: 'Financial::Transaction'
   has_many :integrations
   has_many :invites, as: :via
-  has_many :markings
+  has_many :markings, as: :markable
   has_many :marks, through: :markings
   has_many :metrics
   has_many :milestones

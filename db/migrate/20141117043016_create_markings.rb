@@ -8,7 +8,6 @@ class CreateMarkings < ActiveRecord::Migration
       t.timestamps
     end
 
-
     Marks::MarkBasics.new.retroactively_convert_old_system
   end
 end

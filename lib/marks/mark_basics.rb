@@ -20,16 +20,12 @@ module Marks
       end
     end
 
-    def marks_on_object(object)
-      markings = Marking.where(markable_id: object.id)
+    def wips_with_mark(mark_name)
+      Wip.joins(:marks).where('marks.name = ?', mark_name)
     end
 
-    def objects_with_mark(mark_name, markable_type)
-      allmarkings = Marking.where(markable_type: markable_type).wher
-      results = []
-      allmarkings.each do |a|
-
-      end
+    def products_with_mark(mark_name)
+      Product.joins(:marks).where('marks.name = ?', mark_name)
     end
 
 
