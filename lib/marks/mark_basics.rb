@@ -54,7 +54,8 @@ module Marks
       taggings = Wip::Tagging.all
       taggings.each do |t|
         the_wip = t.wip
-        mark_id = t.tag.id
+        name = t.tag.name
+        mark_id = Mark.find_by(name: name).id
         if not Marking.where(mark_id: mark_id).where(markable_id: the_wip.id).present?
           Marking.create!({markable: the_wip, mark_id: mark_id, weight: DEFAULT_MARKING_WEIGHT})
         end
