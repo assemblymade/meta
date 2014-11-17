@@ -100,7 +100,7 @@
 
           <% if @product.chat_rooms.any? %>
             <% chat_room = @product.chat_rooms.first %>
-            <li class="<%= nav_active_class(:assets) %>">
+            <li class="<%= nav_active_class(:chat) %>">
               <a class="px2 py2" href="<%= chat_room_path(chat_room) %>">Chat</a>
             </li>
           <% end %>
