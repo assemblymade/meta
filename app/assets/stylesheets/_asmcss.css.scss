@@ -8,16 +8,16 @@ html {
 body {
   font-family: $font-family-sans-serif;
   line-height: $line-height-base;
-  font-size: (15 / 12) + rem;
+  font-size: 1.3333333333rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $headings-font-family;
+  font-family: $font-family-sans-serif;
   line-height: $headings-line-height;
 }
 
 p, dl, ol, ul {
-  font-size: 1.25rem;
+  font-size: 1.33333rem;
 }
 
 p.lead,
