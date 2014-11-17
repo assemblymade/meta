@@ -57,14 +57,6 @@ class Event < ActiveRecord::Base
     MAILABLE.include? self.class
   end
 
-  def notify_users!(followers)
-    (self.mentioned_users - [self.user]).each do |mentioned_user|
-      notify_by_email(mentioned_user)
-    end
-
-    update_pusher(followers, mentioned_users)
-  end
-
   def auto_watch!(user)
     wip.auto_watch!(user)
   end
@@ -82,15 +74,13 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def update_pusher(users, mentioned_users)
+  def update_pusher
     event_hash = EventSerializer.for(self, nil).as_json.merge(socket_id: self.socket_id)
     event_hash[:mentions] = mentioned_users.map(&:username)
     event_hash.delete :body
     event_hash[:body_html] = truncate(event_hash[:body_html], length: 200)
 
-    # pushes a 'chat' event to the user's channel to trigger
-    # it to call for updates. This is part of notifications
-    channels = users.map{|u| "@#{u.username}"} + [wip.push_channel]
+    channels = self.wip.followers.map{|u| "@#{u.username}"} + [wip.push_channel]
     PusherWorker.perform_async channels, 'event.added', event_hash.to_json
   end
 

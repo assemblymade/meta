@@ -11,9 +11,6 @@ module Api
         end
 
         if @event.valid?
-          if product = @chat_room.product
-            @event.notify_users!(product.followers)
-          end
           email_mentioned_users(@event)
 
           @activity = Activities::Chat.publish!(

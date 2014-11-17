@@ -23,6 +23,7 @@ class CommentsController < ProductController
         RegisterEventInReadraptor.perform_async(@event.to_global_id.to_s)
 
         @event.auto_watch!(current_user)
+        @event.update_pusher
 
         Activities::Comment.publish!(
           actor: @event.user,
