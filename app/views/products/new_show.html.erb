@@ -4,16 +4,27 @@
 <div class="clearfix mxn2">
   <div class="sm-col sm-col-8 px2">
 
-    <div class="bg-white p3 rounded shadow mb3">
-      <div class="clearfix">
-        <h6 class="mt0 mb2">Good afternoon <%= current_user.username %>!</h6>
-        <div class="right"></div>
-      </div>
-      <p>Ready to pitch in on <%= @product.name %>? Introduce yourself.</p>
+    <% product_membership = current_user.team_memberships.find_by(product: @product) %>
 
-      <textarea class="form-control mb2" placeholder="What do you like to do? What is your favorite sandwich?"></textarea>
-      <a class="btn btn-primary btn-block" href="#">Introduce yourself!</a>
-    </div>
+    <% if product_membership.nil? || product_membership.bio.nil? %>
+
+      <div class="bg-white p3 rounded shadow mb3">
+        <div class="clearfix">
+          <h6 class="mt0 mb2">Good afternoon <%= current_user.username %>!</h6>
+          <div class="right"></div>
+        </div>
+        <p>Ready to pitch in on <%= @product.name %>? Introduce yourself.</p>
+
+        <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
+          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+          <input name="_method" value="patch" type="hidden">
+
+          <textarea class="form-control mb2" name="membership[bio]" rows="2" placeholder="What do you like to do? What is your favorite sandwich?"></textarea>
+
+          <button type="submit" class="btn btn-primary btn-block">Introduce yourself!</button>
+        </form>
+      </div>
+    <% end %>
 
     <%= react_component 'NewsFeedList', items: ActiveModel::ArraySerializer.new(
       @product.news_feed_items.order(updated_at: :desc)
@@ -22,7 +33,7 @@
 
   <div class="sm-col sm-col-4 px2">
 
-    <div class="bg-gray-light p2 rounded">
+    <div class="bg-gray-5 p2 rounded">
       <h6 class="mt0 py2 mb0 black">The Big Idea</h6>
       <%= react_component 'Markdown', content: @product.lead, normalized: true %>
       <a class="block mb3" href="#">Read more</a>
@@ -31,19 +42,19 @@
         <div class="stat">
           <a class="block" href="<%= product_people_path(@product) %>">
             <div class="h4 mt0 mb0"><%= @product.partners.count %></div>
-            <div class="gray-dark">Partners</div>
+            <div class="gray-2">Partners</div>
           </a>
         </div>
         <div class="stat">
           <a class="block" href="<%= product_repos_path(@product) %>">
             <div class="h4 mt0 mb0"><%= @product.repos.count %></div>
-            <div class="gray-dark">Repos</div>
+            <div class="gray-2">Repos</div>
           </a>
         </div>
         <div class="stat">
           <a class="block" href="<%= product_financials_path(@product) %>">
-            <div class="h4 mt0 mb0">$32,000</div>
-            <div class="gray-dark">Royalties</div>
+            <div class="h4 mt0 mb0"><%= short_currency(@product.profit_reports.map(&:profit).reduce(:+)) %></div>
+            <div class="gray-2">Royalties</div>
           </a>
         </div>
       </div>

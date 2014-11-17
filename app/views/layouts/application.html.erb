@@ -55,7 +55,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="<%= yield(:body_class) %>">
+  <body class="<%= yield(:body_class) %> <%= 'bg-gray-6' if signed_in? && current_user.staff? %>">
 
     <%= yield %>
 

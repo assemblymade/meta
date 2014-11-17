@@ -22,6 +22,13 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.featured_wips(user)
   end
 
+  def twelve_hour_reminder
+    user = User.find_by(username: 'pletcher')
+    wip = Task.where(workers: [user], state: 'open').first
+
+    UserMailer.twelve_hour_reminder(user.id, wip.id)
+  end
+
   def follow_up
     UserMailer.follow_up(User.sample)
   end

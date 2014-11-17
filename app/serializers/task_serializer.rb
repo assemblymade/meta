@@ -17,7 +17,7 @@ class TaskSerializer < ApplicationSerializer
   has_many :workers
 
   def url
-    product_wip_path product, (number || id)
+    product_wip_path(product, number || id)
   end
 
   def contracts

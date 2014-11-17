@@ -5,6 +5,7 @@ class UserMailer < BaseMailer
                          :joined_team_no_work_yet,
                          :joined_team_no_introduction_yet,
                          :featured_wips,
+                         :twelve_hour_reminder,
                          :bounty_holding_incoming,
                          :bounty_holding_incoming_take2]
 
@@ -37,6 +38,24 @@ class UserMailer < BaseMailer
     mail from: "austin.smith@assembly.com",
            to:  @user.email,
       subject: "Assembly"
+  end
+
+  def twelve_hour_reminder(user_id, wip_id)
+    mailgun_tag 'user#twelve_hour_bounty_reminder'
+
+    @user = User.find(user_id)
+    @wip = Task.find(wip_id)
+    @product = @wip.product
+
+    Analytics.track(
+      user_id: @user.id,
+      event: 'product.wip.send_twelve_hour_reminder',
+      properties: WipAnalyticsSerializer.new(@wip, scope: @user).as_json
+    )
+
+    mail from: "austin.smith@assembly.com",
+           to: @user.email,
+      subject: "Just 12 hours left for #{@wip.title} on #{@product.name}"
   end
 
   def featured_wips(user)

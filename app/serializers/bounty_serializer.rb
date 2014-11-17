@@ -3,11 +3,11 @@ class BountySerializer < ApplicationSerializer
 
   attributes :can_update, :contracts, :flagged, :following,
     :markdown_description, :most_recent_other_wip_worker, :number, :offers,
-    :open, :state, :title, :value
+    :open, :state, :title, :value, :locked_at
 
   attributes :chat_room_url, :close_url, :edit_url, :flag_url, :follow_url,
     :offers_url, :mute_url, :start_work_url, :stop_work_url, :tag_url,
-    :unflag_url, :urgency_url, :reopen_url, :url
+    :unflag_url, :urgency_url, :reopen_url, :url, :lock_url
 
   has_one :product
 
@@ -71,6 +71,10 @@ class BountySerializer < ApplicationSerializer
 
   def unflag_url
     product_wip_unflag_path(product, bounty)
+  end
+
+  def lock_url
+    product_wip_lock_path(product, bounty)
   end
 
   def flag_url

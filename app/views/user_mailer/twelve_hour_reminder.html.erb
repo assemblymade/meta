@@ -1,0 +1,57 @@
+<table class="row">
+  <tr>
+    <td class="wrapper">
+      <table class="twelve columns">
+        <tr>
+          <td class="panel wrapper">
+            <table>
+              <tr>
+                <td>
+                  <h1>
+                    Hey <%= @user.username %>,
+                  </h1>
+                </td>
+              </tr>
+            </table>
+            <table>
+              <tr>
+                <td>
+                  <p>
+                    Are you still working on <a href="<%= product_wip_url(@product, @wip) %>"><%= @wip.title %></a> on <a href="<%= product_url(@product) %>"><%= @product.name %></a>?
+                  </p>
+                  <p>
+                    Just to let you know, in about 12 hours we'll reopen the task for other people to work on it. If you're still working, keep truckin'! Just leave a comment letting everyone know how it's going and we won't bug you until the timer ticks down to 12 hours again.
+                  </p>
+                </td>
+              </tr>
+            </table>
+
+            <table>
+              <tr>
+                <td>
+                  <p>You've got this!</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="center" align="center">
+                  <center>
+                    <img class="center" src="http://media4.giphy.com/media/vnnoqBjIrJ73y/200.gif" height="100" width="100">
+                  </center>
+                </td>
+              </tr>
+            </table>
+
+            <table class="button success radius">
+              <tr>
+                <td>
+                  <a href="<%= product_wip_url(@product, @wip) %>">Finish your bounty!</a>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

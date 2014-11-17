@@ -165,14 +165,24 @@ class Task < Wip
     workers.include?(worker)
   end
 
+  def lock_bounty!(worker)
+    update(locked_at: Time.now, locked_by: worker.id)
+  end
+
+  def unlock_bounty!
+    update(locked_at: nil, locked_by: nil)
+  end
+
   def start_work!(worker)
     self.workers << worker unless self.workers.include?(worker)
     Analytics.track(user_id: worker.id, event: 'product.wip.start_work', properties: WipAnalyticsSerializer.new(self, scope: worker).as_json)
     allocate!(worker) unless self.workers.count > 1
+    lock_bounty!(worker)
   end
 
   def stop_work!(worker)
     self.workers -= [worker]
+    unlock_bounty!
     update(state: 'open') if workers.size == 0
   end
 

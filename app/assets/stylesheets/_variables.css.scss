@@ -6,7 +6,7 @@ $blue:          #338EDA;
 $green:         #5cb85c;
 $cyan:          #5bc0de;
 $yellow:        #f0ad4e;
-$red:           desaturate(#FF4400, 30%);
+$red:           #EC3750;
 
 $facebook:      #3B5998;
 $twitter:       #55ACEE;
@@ -81,7 +81,7 @@ $font-size-h5: $font-size-base;
 $font-size-h6: 13px;
 
 $line-height-base:     1.6;
-$line-height-computed: floor(($font-size-base * $line-height-base)); // 24px
+$line-height-computed: 24px; // 24px
 
 $headings-font-family: inherit;
 $headings-font-weight: normal;

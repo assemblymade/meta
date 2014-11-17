@@ -202,5 +202,34 @@ namespace :bounties do
       end
     end
   end
+
+  task switch_to_bounty_holding: :environment do
+    Task.where('closed_at is null').each do |task|
+      if worker = task.workers.order(:created_at).first
+        task.update(
+          locked_at: Time.now,
+          locked_by: worker.id
+        )
+      end
+    end
+  end
+
+  task check_locked_bounties: :environment do
+    Task.where('locked_at is not null').each do |task|
+      next if Event::ReviewReady.where(wip_id: task.id)
+      next if Event::CopyAdded.where(wip_id: task.id)
+      next if Event::CodeAdded.where(wip_id: task.id)
+      next if Event::PullRequestReference.where(wip_id: task.id)
+
+      now = Time.now
+      task_expiration = Task.locked_at + 60.hours
+
+      if task_expiration - now < 12.hours
+        UserMailer.twelve_hour_reminder(task.locked_by, task.id)
+      elsif now > task_expiration
+        task.stop_work!(User.find(task.locked_by))
+      end
+    end
+  end
 end
 

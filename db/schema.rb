@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20141117043016) do
+=======
+ActiveRecord::Schema.define(version: 20141114033449) do
+>>>>>>> 08b1075f493728738df93ed50440749b242c73f1
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -957,6 +961,8 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.integer  "earnable_coins_cache"
     t.integer  "total_coins_cache"
     t.integer  "watchings_count"
+    t.datetime "locked_at"
+    t.uuid     "locked_by"
   end
 
   add_index "wips", ["flagged_at"], name: "index_wips_on_flagged_at", using: :btree

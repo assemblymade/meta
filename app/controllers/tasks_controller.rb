@@ -101,7 +101,16 @@ class TasksController < WipsController
       AsmMetrics.product_enhancement
       AsmMetrics.active_user(assignee)
     end
+
     respond_with @wip, location: product_wip_path(@product, @wip)
+  end
+
+  def lock
+    @wip.lock_bounty!(current_user) if can? :update, @wip
+
+    respond_to do |format|
+      format.json { render json: @wip }
+    end
   end
 
   def deliverables

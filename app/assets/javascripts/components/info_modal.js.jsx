@@ -48,7 +48,7 @@
     },
 
     logo: function() {
-      return <img src={this.props.product.poster} className='alpha' style={{ width: '100px', 'margin-bottom': '10px', 'padding-top': '0px' }} />;
+      return <img src={this.props.product.poster} className='alpha mb2' style={{ width: '100px', paddingTop: '0px' }} />;
     },
 
     render: function() {
