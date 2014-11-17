@@ -12,4 +12,8 @@ var Icon = React.createClass({
   }
 })
 
-window.Icon = module.exports = Icon
+if (typeof module !== 'undefined') {
+  module.exports = Icon;
+}
+
+window.Icon = Icon;
