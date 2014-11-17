@@ -24,40 +24,31 @@
 }
 
 .nav-tabs {
+  border-bottom: none;
+  
   > li {
     margin-bottom: 0;
   }
 
   > li > a {
-    border-top: none;
-    border-right: none;
-    border-left: none;
+    border: none;
 
     margin-right: 0;
 
-    padding-top: 14px;
-    padding-bottom: 11px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 
     &:hover {
-      border-bottom-color: $nav-tabs-link-hover-border-color;
+      box-shadow: inset 0 -3px 0 $nav-tabs-link-hover-border-color;
       color: $blue;
       background: transparent;
     }
   }
 
-  > li > a,
-  > li > a:hover,
   > li.active > a,
   > li.active > a:hover, {
-    border-bottom-width: 3px;
-  }
-
-  > li.active > a,
-  > li.active > a:hover, {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom-color: $nav-tabs-active-link-hover-border-color;
+    border: none;
+    box-shadow: inset 0 -3px 0 $nav-tabs-active-link-hover-border-color;
   }
 
   > li.active > a,

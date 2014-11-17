@@ -10,7 +10,7 @@
       <%= filters[@filter] %>
     </h2>
 
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs border-bottom">
       <% filters.keys.each do |filter| %>
         <li class="<%= 'active' if @filter == filter %>">
           <a href="<%= discover_path(:bounties, filter: filter) %>">
