@@ -20,13 +20,15 @@ class Wip < ActiveRecord::Base
   has_many :followings, class_name: 'Watching', as: :watchable
   has_many :followers, through: :followings, source: :user
   has_many :offers, inverse_of: :bounty
+  has_many :markings
+  has_many :marks, through: :markings
   has_many :milestones, through: :milestone_tasks
   has_many :milestone_tasks, foreign_key: 'task_id'
   has_many :mutings
   has_one  :news_feed_item, foreign_key: 'target_id'
   has_many :postings, class_name: 'BountyPosting', foreign_key: 'bounty_id'
-  has_many :taggings , class_name: 'Wip::Tagging'
-  has_many :tags , through: :taggings, class_name: 'Wip::Tag'
+  has_many :taggings, class_name: 'Wip::Tagging'
+  has_many :tags, through: :taggings, class_name: 'Wip::Tag'
   has_many :awards
 
   has_one :milestone
@@ -50,7 +52,6 @@ class Wip < ActiveRecord::Base
   scope :tagged_with, ->(name) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name = ?', name) }
   scope :tagged_with_any, ->(names) { joins(:taggings => :tag).includes(:taggings => :tag).where('wip_tags.name' => names) }
   scope :tagged_with_all, ->(names) { joins(:taggings => :tag).where('wip_tags.name' => names).group('wips.id').having('count(distinct wip_taggings.wip_tag_id) = ?', names.size) }
-
   scope :unflagged, -> { where(flagged_at: nil) }
   scope :ordered_by_activity, -> { joins(:events).group('wips.id').order('max(events.created_at)') }
 
@@ -205,18 +206,6 @@ class Wip < ActiveRecord::Base
 
   def tag_list=(names)
     self.tag_names = names.split(',')
-  end
-
-  def self.tagged_with(name)
-    tags = Tag.where(name: name)
-    found = []
-    tags.each do |t|
-      taggings =  Tagging.where(tag_id: t.id).where(taggable_type: "Wip")
-      taggings.each do |ta|
-        found = found + Wip.find_by(id: ta.taggable_id)
-      end
-    end
-    found
   end
 
   # flagging

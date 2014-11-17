@@ -24,17 +24,19 @@ module Marks
 
 
     #RUN ONCE
-    def retroactively_convert_old_tags_to_new()
-      mark_names = Wip::Tag.all.pluck(:name)
-      unique_mark_sets = Product.all.uniq.pluck(:tags)
-      unique_mark_sets.each do |u|
-        mark_names = mark_names + u
+
+ def retroactively_convert_old_tags_to_new()
+      tag_names = Wip::Tag.all.pluck(:name)
+      unique_tag_sets = Product.all.uniq.pluck(:tags)
+      unique_tag_sets.each do |u|
+        tag_names = tag_names + u
       end
-      mark_names.uniq!
-      mark_names.each do |t|
-        mark.create!({name: t})
+      tag_names.uniq!
+      tag_names.each do |t|
+        Mark.create!({name: t})
       end
     end
+
 
     def retroactively_convert_old_wip_taggings_to_new()  #ALL OLD markingS ARE FOR WIPS
       taggings = Wip::Tagging.all
@@ -51,16 +53,16 @@ module Marks
         if the_tags.count > 0
           the_tags.each do |t|
             the_mark = find_mark_from_name(t)
-            Marking.create!({markable: p, mark_id: mark.id, weight: DEFAULT_MARKING_WEIGHT})
+            Marking.create!({markable: p, mark_id: the_mark.id, weight: DEFAULT_MARKING_WEIGHT})
           end
         end
       end
     end
 
     def retroactively_convert_old_system()
-      retroactively_convert_old_marks_to_new()
-      retroactively_convert_old_wip_markings_to_new
-      retroactively_convert_old_product_markings_to_new()
+      retroactively_convert_old_tags_to_new()
+      retroactively_convert_old_wip_taggings_to_new
+      retroactively_convert_old_product_taggings_to_new()
     end
 
 
