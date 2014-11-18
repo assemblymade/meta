@@ -25,7 +25,7 @@ module Marks
     end
 
     def wips_with_mark_under_product(mark_name, product)
-      Wip.joins(:marks).where('marks.name = ?', mark_name).where(product_id: Product.id)
+      Wip.joins(:marks).where('marks.name = ?', mark_name).where(product_id: product.id)
     end
 
     def products_with_mark(mark_name)
