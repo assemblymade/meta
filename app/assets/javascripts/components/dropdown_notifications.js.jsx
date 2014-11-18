@@ -51,7 +51,7 @@
 
       var classes = React.addons.classSet({
         'entry-read': this.isRead(story),
-        'entry-unread': !this.isRead(story)
+        'bg-gray-6': !this.isRead(story)
       });
 
       return (
