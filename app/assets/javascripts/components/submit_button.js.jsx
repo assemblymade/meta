@@ -3,7 +3,7 @@
 (function() {
   var SubmitButton = React.createClass({
     render: function() {
-      return this.transferPropsTo(<button type="submit">{this.props.children}</button>)
+      return <button {...this.props} type="submit">{this.props.children}</button>
     },
   })
 

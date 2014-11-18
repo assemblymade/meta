@@ -106,19 +106,72 @@
           <% end %>
         </ul>
 
-        <div class="right py1">
-          <a class="btn btn-primary bg-blue" href="#">
+        <script>
+          var showCreateBounty = function() {
+            try {
+              $('#create-bounty-modal').modal('show');
+            } catch (e) {
+            }
+
+            React.render(
+              CreateBounty({
+                id: 'create-bounty-modal',
+                product: { name: "<%= @product.name %>" },
+                url: "<%= product_wips_path(@product) %>",
+                maxOffer: "<%= (6 * @product.average_bounty).round(-4) %>",
+                averageBounty: "<%= @product.average_bounty %>",
+                coinsMinted: "<%= @product.coins_minted %>",
+                profitLastMonth: "<%= @product.profit_last_month %>",
+                steps: "<%= BountyGuidance::Valuations.suggestions(@product) %>",
+              }),
+              document.getElementById('create-bounty')
+            );
+          }
+        </script>
+
+        <div class="right py1 dropdown">
+          <a class="btn btn-primary bg-blue dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown" id="product-actions">
             <%= inline_react_component 'Icon', icon: 'pencil' %>
             <span class="sr-only">Add</span>
             <%= inline_react_component 'Icon', icon: 'chevron-down' %>
           </a>
-        </div>
 
+          <ul class="dropdown-menu" role="menu" aria-labelledby="product-actions">
+            <li role="presentation">
+              <a href="javacript:void(0);" onclick="javascript:showCreateBounty();">
+                <%= inline_react_component 'Icon', icon: 'trophy' %>
+                Create a bounty
+              </a>
+            </li>
+
+            <li role="presentation">
+              <a href="<%= new_product_post_path(@product) %>">
+                <%= inline_react_component 'Icon', icon: 'newspaper-o' %>
+                Write a post
+              </a>
+            </li>
+
+            <li role="presentation">
+              <a href="<%= new_product_discussion_path(@product) %>">
+                <%= inline_react_component 'Icon', icon: 'quote-right' %>
+                Start a discussion
+              </a>
+            </li>
+
+            <li role="presentation">
+              <a href="<%= new_product_asset_path(@product) %>">
+                <%= inline_react_component 'Icon', icon: 'picture-o' %>
+                Upload an asset
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="container">
+    <div id='create-bounty'></div>
     <%= yield %>
   </div>
 
