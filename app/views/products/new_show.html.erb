@@ -65,9 +65,7 @@
       <ul class="list-reset">
         <% @product_marks.each do |p| %>
         <li>
-          <a href="#">
             <%= p %>
-          </a>
         </li>
         <% end %>
       </ul>
@@ -78,7 +76,7 @@
     <ul class="list-reset">
       <% @top_wip_tags.each do |k, v| %>
       <li>
-        <a href= "<%= product_wips_path(@product, tag: k) %>"> <%= "#{k} (#{v.to_s})" %> </a>
+        <a href= "<%= product_wips_path(@product, mark: k) %>"> <%= "#{k} (#{v.to_s})" %> </a>
       </li>
       <% end %>
     </ul>
