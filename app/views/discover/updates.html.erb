@@ -6,6 +6,21 @@
 
 <%= render 'shared/navbar' %>
 
- <%= react_component 'NewsFeed', url: discover_path(action: 'updates', format: 'json'), items: @posts, filter_counts: @counts %>
+<script id="heartables" type="application/json">
+  <%== (@posts + @posts.map{|p| p[:last_comment]}).
+    map{|h| h.as_json.stringify_keys.slice('heartable_id', 'heartable_type', 'hearts_count')}.to_json %>
+</script>
+
+<% if false # signed_in? %>
+  <script id="user_hearts" type="application/json">
+    <%== @user_hearts.map{|h| {
+        id: h.id,
+        heartable_id: h.heartable_id,
+      }}.to_json
+    %>
+  </script>
+<% end %>
+
+<%= react_component 'NewsFeed', url: discover_path(action: 'updates', format: 'json'), items: @posts, filter_counts: @counts %>
 
 <%= render 'shared/footer' %>

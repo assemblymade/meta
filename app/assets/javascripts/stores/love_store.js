@@ -20,13 +20,13 @@ var LoveStore = _.extend(Object.create(Store), {
       if (typeof action.type !== 'undefined') {
         switch(action.type) {
           case ActionTypes.LOVE_CLICKED:
-            _heartables[action.heartable_id].hearts += 1
+            _heartables[action.heartable_id].hearts_count += 1
             _userHearts[action.heartable_id] = {} // optimistic heart
             this.emitChange()
             break
 
           case ActionTypes.LOVE_UNCLICKED:
-            _heartables[action.heartable_id].hearts -= 1
+            _heartables[action.heartable_id].hearts_count -= 1
             delete _userHearts[action.heartable_id]
             this.emitChange()
             break
@@ -36,7 +36,7 @@ var LoveStore = _.extend(Object.create(Store), {
             _heartables[event.news_feed_item_comment_id] = {
               heartable_type: 'Event',
               heartable_id: event.news_feed_item_comment_id,
-              hearts: 0
+              hearts_count: 0
             }
             this.emitChange()
             break

@@ -24,6 +24,10 @@
     },
 
     render: function() {
+      if (this.state.hearts_count == null) {
+        return <span/>
+      }
+
       var style = {}
 
       if (this.state.user_heart) {
@@ -31,15 +35,14 @@
       }
 
       return <span>
-        <a className="text-muted" href="javascript:;" onClick={this.handleClick}>
+        <a className="gray" href="javascript:;" onClick={this.handleClick}>
           <span className="glyphicon glyphicon-heart" style={style}></span>
-          <span> {numeral(this.state.hearts).format('0,0')}</span>
+          <span> {numeral(this.state.hearts_count).format('0,0')}</span>
         </a>
       </span>
     },
 
     handleClick: function() {
-      var hearts = this.state.hearts
       if (this.state.user_heart) {
         LoveActionCreators.clickUnlove(this.props.heartable_type, this.props.heartable_id)
       } else {

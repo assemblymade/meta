@@ -1,6 +1,10 @@
 class HeartablesController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+
+  end
+
   def love
     p = heart_params
     @heart = Heart.create(
@@ -12,7 +16,7 @@ class HeartablesController < ApplicationController
       render json: {
         heartable_id: @heart.heartable_id,
         heartable_type: @heart.heartable_type,
-        hearts: @heart.heartable.hearts_count
+        hearts_count: @heart.heartable.hearts_count
       }
     else
       render status: :unprocessable_entity, json: @heart.errors
@@ -26,7 +30,7 @@ class HeartablesController < ApplicationController
       render json: {
         heartable_id: @heart.heartable_id,
         heartable_type: @heart.heartable_type,
-        hearts: @heart.heartable.hearts_count
+        hearts_count: @heart.heartable.hearts_count
       }
     else
       render status: 404, json: {"error" => "not found"}

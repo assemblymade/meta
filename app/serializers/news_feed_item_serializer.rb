@@ -1,6 +1,8 @@
 class NewsFeedItemSerializer < ApplicationSerializer
   attributes :url, :popular_at, :layout, :last_comment, :comments_count
 
+  attributes :heartable_id, :heartable_type, :hearts_count
+
   has_one :product
   has_one :target
   has_one :user
@@ -31,5 +33,13 @@ class NewsFeedItemSerializer < ApplicationSerializer
 
   def user
     User.find(object.source_id)
+  end
+
+  def heartable_id
+    object.id
+  end
+
+  def heartable_type
+    'NewsFeedItem'
   end
 end
