@@ -123,6 +123,8 @@
 
         <script>
           var showCreateBounty = function() {
+            window.analytics.track('product.wip.showed_bounty_modal', { product: "<%= @product.slug %>" });
+            
             try {
               $('#create-bounty-modal').modal('show');
             } catch (e) {
@@ -153,7 +155,7 @@
 
           <ul class="dropdown-menu" role="menu" aria-labelledby="product-actions">
             <li role="presentation">
-              <a href="javacript:void(0);" onclick="javascript:showCreateBounty();">
+              <a href="javascript:void(0);" onclick="javascript:showCreateBounty();">
                 <%= inline_react_component 'Icon', icon: 'trophy' %>
                 Create a bounty
               </a>
