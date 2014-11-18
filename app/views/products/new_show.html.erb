@@ -70,8 +70,11 @@
     <h6 class="mt0 py2 mb0 gray-dark">Tags</h6>
 
     <ul class="list-reset">
-      <li><a href="#">TODO</a></li>
-      <li><a href="#">Recent</a></li>
+      <% @top_wip_tags.each do |k, v| %>
+      <li>
+        <a href= "<%= product_wips_path(@product, tag: k) %>"> <%= "#{k} (#{v.to_s})" %> </a>
+      </li>
+      <% end %>
     </ul>
 
   </div>

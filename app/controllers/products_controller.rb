@@ -7,7 +7,7 @@ class ProductsController < ProductController
   before_action :set_product,
     only: [:show, :old, :edit, :update, :follow, :announcements, :unfollow, :metrics, :flag, :feature, :launch]
 
-  MARK_DISPLAY_LIMIT =  7 #maximum number of marks to display on product page
+  MARK_DISPLAY_LIMIT =  20 #maximum number of marks to display on product page
 
   def new
     @product = Product.new
@@ -82,11 +82,11 @@ class ProductsController < ProductController
 
     if signed_in? && current_user.staff?
 
-      @top_wip_tags = Marks::MarkBasics.new.leading_marks_on_product(product, MARK_DISPLAY_LIMIT)
+      @top_wip_tags = Marks::MarkBasics.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
 
-      if params[:tag].present?
-        @mark_name = params[:mark]
-        @news_feed_to_show = Marks::MarkBasics.new.newsfeed_items_per_product_per_mark(@product, @mark_name).order(updated_at: :desc)
+      if params[:filter].present?
+        @mark_name = params[:filter]
+        @news_feed_to_show = Marks::MarkBasics.new.news_feed_items_per_product_per_mark(@product, @mark_name).order(updated_at: :desc)
       else
         @news_feed_to_show = @product.news_feed_items.limit(20).order(updated_at: :desc)
       end

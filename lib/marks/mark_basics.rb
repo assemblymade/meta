@@ -56,8 +56,20 @@ module Marks
     end
 
 
-    def newsfeed_items_per_product_per_mark(product, mark_name)
-      product.wips.where(state: 'open').joins(:marks).where('marks.name = ?', mark_name)
+    def news_feed_items_per_product_per_mark(product, mark_name)
+      news_feed_items = product.news_feed_items
+      results = []
+
+      news_feed_items.each do |n|
+        if not n.target.nil?
+          if n.target.has_attribute?('marks')
+            if n.target.marks.includes?(mark_name)
+              results = results + n
+            end
+          end
+        end
+      end
+      return results
     end
 
 
