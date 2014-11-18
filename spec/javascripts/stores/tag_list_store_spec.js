@@ -9,19 +9,19 @@ describe('TagListStore', function() {
   });
 
   afterEach(function() {
-    TagListStore.removeAllTags();
+    TagListStore.removeAllTags('bar');
   });
 
   it('adds a tag', function() {
-    TagListStore.addTag({ tag: 'foo' });
-    expect(TagListStore.getTags()).to.include('foo');
+    TagListStore.addTag({ tag: 'foo', scope: 'bar' });
+    expect(TagListStore.getTags('bar')).to.include('foo');
   });
 
   it('removes a tag', function() {
-    TagListStore.addTag({ tag: 'foo' });
-    expect(TagListStore.getTags()).to.include('foo');
+    TagListStore.addTag({ tag: 'foo', scope: 'bar' });
+    expect(TagListStore.getTags('bar')).to.include('foo');
 
-    TagListStore.removeTag({ tag: 'foo' });
-    expect(TagListStore.getTags()).to.eql([]);
+    TagListStore.removeTag({ tag: 'foo', scope: 'bar' });
+    expect(TagListStore.getTags('bar')).to.eql([]);
   });
 });

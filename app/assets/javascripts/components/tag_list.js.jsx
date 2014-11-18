@@ -13,12 +13,13 @@
       destination: React.PropTypes.bool,
       hideAddButton: React.PropTypes.bool,
       newBounty: React.PropTypes.bool,
-      tags: React.PropTypes.array
+      tags: React.PropTypes.array,
+      url: React.PropTypes.string.isRequired
     },
 
     componentWillMount: function() {
       if (this.props.destination) {
-        TagListStore.setTags(this.props.tags);
+        TagListStore.setTags(this.props.url, this.props.tags);
       }
 
       TagListStore.addChangeListener(this.onChange);
@@ -31,15 +32,18 @@
     getDefaultProps: function() {
       return {
         tags: []
-      }
+      };
     },
 
     getInitialState: function() {
       return {
         adding: false,
         popoverShown: false,
+        // a bit of a hack, but it should
+        // allow multiple tag lists on one page
+        scope: this.props.url,
         tags: this.props.tags
-      }
+      };
     },
 
     handleClick: function(tag) {
@@ -51,6 +55,7 @@
         Dispatcher.dispatch({
           action: TAG_LIST.ACTIONS.ADD_TAG,
           data: {
+            scope: self.state.scope,
             tag: tag,
             url: self.props.url
           },
@@ -69,7 +74,7 @@
     },
 
     onChange: function() {
-      var tags = TagListStore.getTags();
+      var tags = TagListStore.getTags(this.state.scope);
 
       if (this.props.destination) {
         this.setState({
@@ -145,6 +150,7 @@
         Dispatcher.dispatch({
           action: TAG_LIST.ACTIONS.REMOVE_TAG,
           data: {
+            scope: self.state.scope,
             tag: tag,
             url: self.props.url
           },
@@ -189,7 +195,7 @@
 
     tags: function(tags) {
       var self = this;
-      var addedTags = TagListStore.getTags();
+      var addedTags = TagListStore.getTags(self.state.scope);
 
       var mappedTags = _.map(tags, function(tag) {
         if (!tag) {

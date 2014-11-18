@@ -10,7 +10,7 @@
 
       <div class="bg-white p3 rounded shadow mb3">
         <div class="clearfix">
-          <h6 class="mt0 mb2">Good afternoon <%= current_user.username %>!</h6>
+          <h6 class="mt0 mb2">Hey there, <%= current_user.username %>!</h6>
           <div class="right"></div>
         </div>
         <p>Ready to pitch in on <%= @product.name %>? Introduce yourself.</p>
@@ -62,21 +62,22 @@
 
     <% if @product_marks.count > 0 %>
       <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
-      <ul class="list-reset">
-        <% @product_marks.each do |p| %>
-        <li>
-            <%= p %>
-        </li>
-        <% end %>
-      </ul>
+
+      <div data-react-class="TagList" data-react-props="<%= {
+          hideAddButton: !(current_user && @product.core_team?(current_user)),
+          destination: true,
+          tags: @product_marks,
+          url: product_path(@product)
+        }.to_json %>">
+      </div>
     <% end %>
 
     <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
 
     <ul class="list-reset">
-      <% @top_wip_tags.each do |k, v| %>
+      <% @top_wip_tags.each do |tag, count| %>
       <li>
-        <a href= "<%= product_wips_path(@product, mark: k) %>"> <%= "#{k} (#{v.to_s})" %> </a>
+        <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
       </li>
       <% end %>
     </ul>

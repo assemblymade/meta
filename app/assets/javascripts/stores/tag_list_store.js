@@ -1,51 +1,57 @@
-var Dispatcher = require('../dispatcher');
-var Store = require('../stores/store');
-
 (function() {
-  var _tags = [];
+  var Dispatcher = require('../dispatcher');
+  var Store = require('../stores/store');
+
+  var _tags = {};
 
   var _store = Object.create(Store);
   var _tagListStore = _.extend(_store, {
     addTag: function(data) {
+      var scope = data.scope;
       var tag = data.tag;
       var url = data.url;
 
+      if (!_tags.hasOwnProperty(scope)) {
+        _tags[scope] = [];
+      }
+
       // We don't want duplicate tags
-      if (_searchTags(tag) !== -1) {
+      if (_searchTags(scope, tag) !== -1) {
         return;
       }
 
-      _tags.push(tag);
+      _tags[scope].push(tag);
 
-      this.persist(url);
+      this.persist(scope, url);
     },
 
-    setTags: function(tags) {
-      _tags = tags;
+    setTags: function(scope, tags) {
+      _tags[scope] = tags;
     },
 
-    getTags: function() {
-      return _tags
+    getTags: function(scope) {
+      return _tags[scope] || [];
     },
 
     removeTag: function(data) {
+      var scope = data.scope;
       var tag = data.tag;
       var url = data.url;
-      var index = _searchTags(tag);
+      var index = _searchTags(scope, tag);
 
       if (index >= 0) {
-        _tags.splice(index, 1);
+        _tags[scope].splice(index, 1);
       }
 
       if (url) {
-        this.persist(url);
+        this.persist(scope, url);
       }
     },
 
-    persist: function(url) {
+    persist: function(scope, url) {
       if (!url) return;
 
-      var tags = this.getTags();
+      var tags = this.getTags(scope);
 
       if (_.isEmpty(tags)) {
         tags = [''];
@@ -73,8 +79,8 @@ var Store = require('../stores/store');
       });
     },
 
-    removeAllTags: function() {
-      _tags = [];
+    removeAllTags: function(scope) {
+      _tags[scope] = [];
     }
   });
 
@@ -86,9 +92,9 @@ var Store = require('../stores/store');
     _store.emitChange();
   });
 
-  function _searchTags(tag) {
-    for (var i = 0, l = _tags.length; i < l; i++) {
-      if (_tags[i] === tag) {
+  function _searchTags(scope, tag) {
+    for (var i = 0, l = _tags[scope].length; i < l; i++) {
+      if (_tags[scope][i] === tag) {
         return i;
       }
     }

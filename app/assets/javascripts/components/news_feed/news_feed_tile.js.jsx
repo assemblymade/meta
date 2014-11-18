@@ -63,7 +63,7 @@ module.exports = React.createClass({
     // TODO This stuff should really be common across all the items
     var commentItem;
     if (commentsCount) {
-      var commentsUrl = this.props.url + "/comments"
+      var commentsUrl = target.url + "#comments"
 
       commentItem = (
         <li className="left px1">

@@ -75,7 +75,7 @@
             {this.modal()}
           </div>
         </div>
-      )
+      );
     },
 
     showBounty: function(e) {
