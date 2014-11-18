@@ -2,6 +2,7 @@ class ErrorsController < ApplicationController
   layout 'static'
 
   def not_found
+    @background = rand(1..5)
     respond_to do |format|
       format.html
       format.json do
