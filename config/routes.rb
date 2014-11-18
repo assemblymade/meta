@@ -32,7 +32,6 @@ ASM::Application.routes.draw do
   # Legacy
   get '/discover/blog', to: redirect('/discover/updates')
   get '/explore', to: redirect('/discover')
-  get '/ideas',   to: redirect('/discover')
   get '/blog',    to: redirect('http://blog.assembly.com')
 
   # Pages
@@ -48,12 +47,15 @@ ASM::Application.routes.draw do
   # Readraptor proxy. Remove this when javascript clients can talk directly to RR
   get '/_rr/articles/:id' => 'readraptor#show', as: :readraptor_article
 
-  get '/create'        => 'products#new',    :as => :new_idea
+  get '/create'        => 'products#new',    :as => :new_product
   get '/start'         => 'products#start',  :as => :start_idea
 
   get '/styleguide' => 'pages#styleguide'
 
-  resources :ideas, :only => [:index]
+  resources :ideas do
+    resources :idea_comments, only: [:index, :create], as: :comments, path: 'comments'
+    patch :mark
+  end
 
   get '/discover(/:action)', controller: 'discover',
                              as: :discover,

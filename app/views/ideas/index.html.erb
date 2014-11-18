@@ -1,0 +1,41 @@
+<h2 class="text-center mid-gray">Vote on ideas and find collaborators</h2>
+<div class="text-center">
+  <span>
+    <%= link_to "Submit an idea", new_idea_path, class: "btn btn-success" %>
+  </span>
+</div>
+<div class="idea-feed mt3">
+  <% @nfis.each do |nfi| %>
+  <% idea = nfi.target %>
+    <div class="idea-feed-item card p3">
+      <div class="mt0 mb2">
+        <%= react_component 'Love', heartable_id: idea.news_feed_item.id, heartable_type: 'NewsFeedItem' %>
+        <strong>
+          <span class="icon icon-speech icon-left"></span>
+          5
+          <span class="sr-only">comments</span>
+        </strong> </div>
+      <h4 class="mt0 mb3">
+        <%= link_to idea.name, idea %>
+      </h4>
+      <div class="mb4 mt2">
+        <div class="left">
+          <% unless idea.marks.empty? %>
+            <ul class="list-inline mb0">
+              <% idea.marks.each do |mark| %>
+                <li><a class="tag"><%= mark.name %></a></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+        <div class="text-muted right">
+          Submitted by <%= link_to "@#{idea.creator_username}", idea.user, class: 'text-stealth-link' %>
+        </div> 
+      </div>
+    </div>
+  <% end %>
+  <%= paginate @nfis, theme: 'twitter-bootstrap-3' %>
+</div>
+<%= render 'wips/heartables' %>
+
+

@@ -11,7 +11,11 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |e|
     store_location
-    redirect_to new_user_session_path
+    if user_signed_in?
+      redirect_to root_path
+    else
+      redirect_to new_user_session_path
+    end
   end
 
   rescue_from ActionController::UnknownFormat, with: :raise_not_found

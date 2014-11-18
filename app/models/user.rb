@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
   has_many :transaction_log_entries, foreign_key: 'wallet_id'
   has_many :watchings
   has_many :withdrawals
+  has_many :ideas
 
   has_one :payment_option
   has_one :chronicle
