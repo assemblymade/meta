@@ -44,7 +44,8 @@
       return (
         <div className="p3"
               onClick={this.showBounty}
-              key={'nfbi-' + bounty.id}>
+              key={'nfbi-' + bounty.id}
+              style={{ cursor: 'pointer' }}>
           <a className="h3 bold mt0 mb2 blue"
               href={bounty.url}
               onClick={this.showBounty}
@@ -73,6 +74,7 @@
     },
 
     showBounty: function(e) {
+      e.preventDefault();
       e.stopPropagation();
 
       var bounty = this.props.item.target;
