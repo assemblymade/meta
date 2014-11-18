@@ -8,6 +8,7 @@ class ProductsController < ProductController
     only: [:show, :old, :edit, :update, :follow, :announcements, :unfollow, :metrics, :flag, :feature, :launch]
 
   MARK_DISPLAY_LIMIT =  14 #maximum number of marks to display on product page
+  PRODUCT_MARK_DISPLAY_LIMIT = 6
 
   def new
     @product = Product.new
@@ -83,6 +84,10 @@ class ProductsController < ProductController
     if signed_in? && current_user.staff?
 
       @top_wip_tags = Marks::MarkBasics.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
+      @product_marks = @product.marks.pluck(:name).uniq
+      if @product_marks.count > PRODUCT_MARK_DISPLAY_LIMIT
+        @product_marks = @product_marks[0, PRODUCT_MARK_DISPLAY_LIMIT]
+      end
 
       if params[:filter].present?
         @mark_name = params[:filter]

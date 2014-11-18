@@ -60,14 +60,19 @@
       </div>
     </div>
 
-    <h6 class="mt0 py2 mb0 gray-dark">Skills</h6>
+    <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
 
     <ul class="list-reset">
-      <li><a href="#">Design</a></li>
-      <li><a href="#">Development</a></li>
+      <% @product_marks.each do |p| %>
+      <li>
+        <a href="#">
+          <%= p %>
+        </a>
+      </li>
+      <% end %>
     </ul>
 
-    <h6 class="mt0 py2 mb0 gray-dark">Tags</h6>
+    <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
 
     <ul class="list-reset">
       <% @top_wip_tags.each do |k, v| %>
