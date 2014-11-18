@@ -46,12 +46,17 @@
               onClick={this.showBounty}
               key={'nfbi-' + bounty.id}
               style={{ cursor: 'pointer' }}>
-          <a className="h3 bold mt0 mb2 blue"
-              href={bounty.url}
-              onClick={this.showBounty}
-              key={"bounty-link-" + bounty.id}>
-            {bounty.title}
-          </a>
+          <div>
+            <a className="h3 bold mt0 mb2 blue"
+                href="javascript:void(0);"
+                onClick={this.showBounty}
+                key={"bounty-link-" + bounty.id}>
+              {bounty.title}
+            </a>
+            <a className="h3 bold mt0 mb2 blue" href={bounty.url} title="Permalink">
+              {' '} #{bounty.number}
+            </a>
+          </div>
           <div className="yellow mb3" key={"bounty-value-" + bounty.id}>
             <span className="mr2" key={'mr2' + bounty.id}>
               <AppCoins n={bounty.contracts.earnable} />

@@ -109,8 +109,8 @@ module.exports = React.createClass({
           <h1 className="mt0 mb0">
             {this.state.bounty.title}
             {' '}
-            <small className="gray" style={{ fontSize: '85%' }}>
-              #{bounty.number}
+            <small style={{ fontSize: '85%' }}>
+              <a href={bounty.url} className="gray">#{bounty.number}</a>
             </small>
           </h1>
         </div>
