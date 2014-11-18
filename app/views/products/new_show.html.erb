@@ -60,17 +60,18 @@
       </div>
     </div>
 
-    <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
-
-    <ul class="list-reset">
-      <% @product_marks.each do |p| %>
-      <li>
-        <a href="#">
-          <%= p %>
-        </a>
-      </li>
-      <% end %>
-    </ul>
+    <% if @product_marks.count > 0 %>
+      <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
+      <ul class="list-reset">
+        <% @product_marks.each do |p| %>
+        <li>
+          <a href="#">
+            <%= p %>
+          </a>
+        </li>
+        <% end %>
+      </ul>
+    <% end %>
 
     <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
 
