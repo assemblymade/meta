@@ -1,10 +1,10 @@
 class Mark < ActiveRecord::Base
   include ActiveRecord::UUID
 
-  has_many :taggings
-  has_many :tasks, :through => :taggings
-  has_many :discussions, :through => :taggings
-  has_many :products, :through => :taggings
+  has_many :markings
+  has_many :tasks, :through => :markings, source: :markable, source_type: 'Wip'
+  has_many :discussions, :through => :markings
+  has_many :products, :through => :markings
   has_many :watchings, :as => :watchable
   has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
 

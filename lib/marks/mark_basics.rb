@@ -32,43 +32,16 @@ module Marks
       Product.joins(:marks).where('marks.name = ?', mark_name)
     end
 
-    def leading_marks_on_product(product, limit_n)
-      wips = Wip.where(product_id: product.id).where(state: ['open', 'allocated'])
-      rmarks = []
-      wips.each do |w|
-        rmarks = rmarks + w.marks
-      end
-      marks = {}
-      rmarks.each do |r|
-        if marks.include?(r.name)
-          marks[r.name] = marks[r.name]+1
-        else
-          marks[r.name] = 1
-        end
-      end
-      sorted_results = Hash[marks.sort_by{|k, v| v}.reverse]
-
-      if limit_n>sorted_results.count
-        limit_n = sorted_results.count
-      end
-      return sorted_results.to_a[0, limit_n].to_h
+    def leading_marks_on_product(product, limit)
+      Mark.joins(:tasks).where(wips: { closed_at: nil }).where(wips: { product_id: product.id }).group(:name).order('count_all DESC').limit(limit).count
     end
 
 
     def news_feed_items_per_product_per_mark(product, mark_name)
-      news_feed_items = product.news_feed_items
-      results = []
-
-      news_feed_items.each do |n|
-        if not n.target.nil?
-          if n.target.has_attribute?('marks')
-            if n.target.marks.includes?(mark_name)
-              results = results + n
-            end
-          end
-        end
+      product.news_feed_items.select do |news_feed_item|
+        news_feed_item.target && news_feed_item.target.has_attribute?('marks') &&
+          news_feed_item.target.marks.includes?(mark_name)
       end
-      return results
     end
 
 
@@ -110,7 +83,6 @@ module Marks
                 Marking.create!({markable: p, mark_id: the_mark.id, weight: DEFAULT_MARKING_WEIGHT})
               end
             end
-
           end
         end
       end
