@@ -47,12 +47,6 @@ class TasksController < WipsController
 
   def show
     @bounty = @wip # fixme: legacy
-    @heartables = ([@bounty.news_feed_item] + @bounty.news_feed_item.news_feed_item_comments).to_a
-    @user_hearts = if signed_in?
-      Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
-    else
-      []
-    end
 
     @milestone = MilestoneTask.where('task_id = ?', @bounty.id).first.try(:milestone)
     if signed_in?
