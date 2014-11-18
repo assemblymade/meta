@@ -23,14 +23,24 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     render: function() {
-      return (
-        <div className="dropdown hidden-sm hidden-xs">
-          <button className={this.togglerClasses()} type="button" data-toggle="dropdown">
-            {this.buttonState()}
+      var buttonLabel = null
+      switch (this.state.selected) {
+      case 'following':
+        buttonLabel = 'Following'
+      case 'announcements':
+        buttonLabel = 'Updates only'
+      case 'not watching':
+        buttonLabel = 'Follow'
+      }
 
-            <span className="toggler-badge">
+      return (
+        <div className="dropdown">
+          <button className={this.togglerClasses()} type="button" data-toggle="dropdown">
+            <div className="toggler-label">{buttonLabel}</div>
+
+            <div className="toggler-badge">
               {this.state.productWatchersCount}
-            </span>
+            </div>
           </button>
 
           <ul
@@ -92,21 +102,12 @@ var Avatar = require('./avatar.js.jsx');
       });
     },
 
-    buttonState: function() {
-      switch (this.state.selected) {
-      case 'following':
-        return 'Following';
-      case 'announcements':
-        return 'Updates only';
-      case 'not watching':
-        return 'Follow';
-      }
-    },
-
     togglerClasses: function() {
       return React.addons.classSet({
         'dropdown-toggle': true,
         'toggler': true,
+        'block': true,
+        'full-width': true,
         'toggler-primary': (this.state.selected === 'not watching')
       })
     },

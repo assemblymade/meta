@@ -45,9 +45,18 @@ pre, code, samp {
 
 h1, h2, h3, h4, h5, h6 { font-weight: 600 }
 
-h1, .h1 { font-size: $font-size-h1 } // 64px
-h2, .h2 { font-size: $font-size-h2 } // 32px
-h3, .h3 { font-size: $font-size-h3 } // 24px
+h1, .h1 {
+  font-size: $font-size-h1;
+  line-height: 4rem; // 48px
+}
+h2, .h2 {
+  font-size: $font-size-h2; // 32px
+  line-height: 3rem; // 36px
+}
+h3, .h3 {
+  font-size: $font-size-h3; // 24px
+  line-height: 2.5rem; // 30px
+}
 h4, .h4 {
   font-size: 1.5rem;
   line-height: 2rem;
@@ -125,8 +134,14 @@ input[type=week] {
   text-overflow: ellipsis;
 }
 
+button,
 .button {
-  padding-left: 2em;
-  padding-right: 2em;
-  border-radius: 2em;
+  padding: 0;
 }
+
+// button,
+// .button {
+//   padding-left: 2em;
+//   padding-right: 2em;
+//   border-radius: 2em;
+// }

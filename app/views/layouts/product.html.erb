@@ -33,75 +33,90 @@
   <!-- Back to our scheduled programming -->
 
   <div class="bg-white">
-    <div class="container py3">
-      <div class="left mr3">
-        <a href="<%= product_path(@product) %>">
-          <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 120, shadow: true %>
-        </a>
-      </div>
+    <div class="container mb3">
 
-      <div class="overflow-hidden py2">
-        <h1 class="mt0 mb0">
-          <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
-        </h1>
-        <div class="clearfix">
-          <div class="h3 mt0 mb0 gray-dark left"><%= @product.pitch %></div>
-          <div class="right">
-            <%= react_component('NotificationPreferencesDropdown',
-              productWatchersPath: product_people_path(@product),
-              productWatchersCount: @product.watchings_count,
-              productFollowPath: product_follow_path(@product),
-              productAnnouncementsPath: product_announcements_path(@product),
-              productUnfollowPath: product_unfollow_path(@product),
-              watchingState: @product.watching_state(current_user),
-              afterFollowPath: product_people_path(@product)
-            ) %>
-          </div>
+      <div class="clearfix mxn2 py3">
+        <div class="sm-col sm-col-2 px2">
+          <a href="<%= product_path(@product) %>">
+            <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 120 %>
+          </a>
         </div>
 
-        <ul class="list-reset mxn1 mb0">
-          <% if @product.homepage_url? %>
-            <li class="left px1">
-              <a href="<%= @product.homepage_url %>">
-                <%= inline_react_component 'Icon', icon: 'globe' %>
-                <%= URI(@product.homepage_url.downcase).host %>
-              </a>
-            </li>
-          <% end %>
-        </ul>
+        <div class="sm-col sm-col-7 px2">
+
+          <h1 class="mt1 mb0">
+            <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
+          </h1>
+
+          <div class="h3 mt0 mb1 gray-3"><%= truncate(@product.pitch, length: 60, separator: ' ') %></div>
+
+          <ul class="list-reset clearfix mxn1 mb0">
+            <% if @product.homepage_url? %>
+              <li class="left px1">
+                <a href="<%= @product.homepage_url %>">
+                  <%= inline_react_component 'Icon', icon: 'globe' %>
+                  <%= URI(@product.homepage_url.downcase).host %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+
+        </div>
+
+        <div class="sm-col sm-col-3 mt1 p2">
+          <%= react_component('NotificationPreferencesDropdown',
+            productWatchersPath: product_people_path(@product),
+            productWatchersCount: @product.watchings_count,
+            productFollowPath: product_follow_path(@product),
+            productAnnouncementsPath: product_announcements_path(@product),
+            productUnfollowPath: product_unfollow_path(@product),
+            watchingState: @product.watching_state(current_user),
+            afterFollowPath: product_people_path(@product)
+          ) %>
+        </div>
 
       </div>
-    </div>
-  </div>
 
-  <div class="bg-white mb3">
-    <div class="container">
       <div class="clearfix">
 
         <ul class="nav nav-tabs left">
           <li class="<%= nav_active_class(:product) %>">
-            <a class="px2 py2" href="<%= product_path(@product) %>">All</a>
+            <a class="px2 py2" href="<%= product_path(@product) %>">
+              All
+            </a>
           </li>
           <li class="<%= nav_active_class(:bounties) %>">
-            <a class="px2 py2" href="<%= product_tasks_path(@product) %>">Bounties</a>
+            <a class="px2 py2" href="<%= product_tasks_path(@product) %>">
+              Bounties
+            </a>
           </li>
           <li class="<%= nav_active_class(:posts) %>">
-            <a class="px2 py2" href="<%= product_posts_path(@product) %>">Posts</a>
+            <a class="px2 py2" href="<%= product_posts_path(@product) %>">
+              Posts
+            </a>
           </li>
-          <li class="<%= nav_active_class(:discussions) %>">
-            <a class="px2 py2" href="<%= product_discussions_path(@product) %>">Discussions</a>
+          <li class="<%= nav_active_class(:discussions) %> sm-show">
+            <a class="px2 py2" href="<%= product_discussions_path(@product) %>">
+              Discussions
+            </a>
           </li>
-          <li class="<%= nav_active_class(:projects) %>">
-            <a class="px2 py2" href="<%= product_projects_path(@product) %>">Projects</a>
+          <li class="<%= nav_active_class(:projects) %> sm-show">
+            <a class="px2 py2" href="<%= product_projects_path(@product) %>">
+              Projects
+            </a>
           </li>
-          <li class="<%= nav_active_class(:assets) %>">
-            <a class="px2 py2" href="<%= product_assets_path(@product) %>">Assets</a>
+          <li class="<%= nav_active_class(:assets) %> sm-show">
+            <a class="px2 py2" href="<%= product_assets_path(@product) %>">
+              Assets
+            </a>
           </li>
 
           <% if @product.chat_rooms.any? %>
             <% chat_room = @product.chat_rooms.first %>
             <li class="<%= nav_active_class(:chat) %>">
-              <a class="px2 py2" href="<%= chat_room_path(chat_room) %>">Chat</a>
+              <a class="px2 py2" href="<%= chat_room_path(chat_room) %>">
+                Chat
+              </a>
             </li>
           <% end %>
         </ul>
