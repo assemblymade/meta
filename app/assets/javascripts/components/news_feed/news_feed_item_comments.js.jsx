@@ -18,9 +18,6 @@ module.exports = React.createClass({
   },
 
   componentWillMount: function() {
-    // If there are a lot of NewsFeedItems, `addChangeListener()`
-    // will throw a warning. It seems safe to ignore: it's a bug
-    // in Node's EventEmitter implementation. :(
     NewsFeedItemStore.addChangeListener(this.getComments);
   },
 
@@ -65,7 +62,7 @@ module.exports = React.createClass({
     var url = this.state.url;
 
     return (
-      <div>
+      <div key={this.props.item.id}>
         {this.renderComments()}
         <div className="border-top px3 py2">
           <NewComment url={url} thread={this.props.item.id} />
@@ -107,7 +104,7 @@ module.exports = React.createClass({
     if (numberOfComments > this.state.comments.length) {
       return (
         <a className="block h6 blue clearfix mt0 mb0 px3 py2" href="javascript:void(0);" onClick={this.fetchCommentsFromServer}>
-          &nbsp;View all {numberOfComments} comments
+          {' '} View all {numberOfComments} comments
         </a>
       );
     }

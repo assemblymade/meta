@@ -72,7 +72,7 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     var bounty = this.props.bounty;
-    console.log(bounty);
+
     return {
       // :<
       bounty: this.props.bounty,
