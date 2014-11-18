@@ -55,7 +55,7 @@
 
       return (
         <div>
-          <BountyFilter {...bountyFilterProps} onChange={this.handleFiltersChange} />
+          <BountyFilter {...bountyFilterProps} filters={this.state.filters} onChange={this.handleFiltersChange} />
 
           <div className="border-top mt2 mb2"></div>
 

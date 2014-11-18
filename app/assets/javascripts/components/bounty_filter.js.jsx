@@ -2,62 +2,48 @@
 
 (function() {
   var BountyFilterButton = require('./bounty_filter_button.js.jsx')
+  var TaggedInput = require('./tagged_input.js.jsx')
 
   var BountyFilter = React.createClass({
     getDefaultProps: function() {
       return {
-        tags: []
-      }
-    },
-
-    getInitialState: function() {
-      return {
+        tags: [],
         filters: []
       }
     },
 
-    setFilters: function(filters) {
-      filters = _.chain(filters).uniq(function(f) {
-        return JSON.stringify(f)
-      }).reduce(function(memo, filter) {
-        if(filter.type == 'order') {
-          memo = _.reject(memo, function(f) { return f.type == 'order' })
-        }
+    addFilter: function(filter) {
+      var filters = this.props.filters
 
-        memo.push(filter)
-        return memo
-      }, []).value()
+      if(filter.type == 'order') {
+        filters = _.reject(filters, function(f) {
+          return f.type == 'order'
+        })
+      }
 
-      this.setState({
-        filters: filters
+      filters = filters.concat(filter)
+
+      filters = _.uniq(filters, function(f) {
+        return JSON.stringify([f.type, f.value])
       })
 
       this.props.onChange(filters)
     },
 
-    addFilter: function(filter) {
-      var filters = this.state.filters
-
-      if(filter.type == 'order') {
-        filters = _.reject(filters, function(f) { return f.type == 'order' })
-      }
-
-      return filters.concat(filter)
-    },
-
     handleFilterClick: function(filter) {
       return function(event) {
         event.preventDefault()
-        this.setFilters(this.state.filters.concat(filter))
+        this.addFilter(filter)
       }.bind(this)
     },
 
     filterText: function() {
-      return this.state.filters.map(function(filter) {
+      return this.props.filters.map(function(filter) {
         return [filter.type, filter.value].join(':')
       }).join(' ')
     },
 
+    // TODO: Add a better way to generate these filter options
     renderStateFilter: function() {
       var options = [
         { name: 'Open',      value: 'open' },
@@ -122,7 +108,7 @@
         <div>
           <div className="row mb2">
             <div className="col-xs-8">
-              <input type="search" className="form-control" placeholder="Filter" value={this.filterText()} />
+              <TaggedInput placeholder="form-control" tags={this.props.filters} onAddTag={this.addFilter} onRemoveTag={this.removeFilter} />
             </div>
 
             <div className="col-xs-4">

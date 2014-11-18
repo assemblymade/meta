@@ -1,0 +1,17 @@
+.form-control-tagged {
+  > ul > li > input {
+    margin: 0;
+    padding: 2px 7px;
+    border: none;
+    font-size: 14px;
+    line-height: 14px;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+}
