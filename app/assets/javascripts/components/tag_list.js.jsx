@@ -19,7 +19,7 @@
 
     componentWillMount: function() {
       if (this.props.destination) {
-        TagListStore.setTags(this.props.url, this.props.tags);
+        TagListStore.setTags(this.state.scope, this.props.tags);
       }
 
       TagListStore.addChangeListener(this.onChange);
@@ -41,7 +41,9 @@
         popoverShown: false,
         // a bit of a hack, but it should
         // allow multiple tag lists on one page
-        scope: this.props.url,
+        scope: this.props.url + Date.now().toString(),
+
+        // :<
         tags: this.props.tags
       };
     },
