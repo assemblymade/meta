@@ -60,18 +60,25 @@
       </div>
     </div>
 
-    <h6 class="mt0 py2 mb0 gray-dark">Skills</h6>
+    <% if @product_marks.count > 0 %>
+      <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
+      <ul class="list-reset">
+        <% @product_marks.each do |p| %>
+        <li>
+            <%= p %>
+        </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
 
     <ul class="list-reset">
-      <li><a href="#">Design</a></li>
-      <li><a href="#">Development</a></li>
-    </ul>
-
-    <h6 class="mt0 py2 mb0 gray-dark">Tags</h6>
-
-    <ul class="list-reset">
-      <li><a href="#">TODO</a></li>
-      <li><a href="#">Recent</a></li>
+      <% @top_wip_tags.each do |k, v| %>
+      <li>
+        <a href= "<%= product_wips_path(@product, mark: k) %>"> <%= "#{k} (#{v.to_s})" %> </a>
+      </li>
+      <% end %>
     </ul>
 
   </div>
