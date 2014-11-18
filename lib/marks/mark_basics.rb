@@ -24,8 +24,8 @@ module Marks
       Wip.joins(:marks).where('marks.name = ?', mark_name)
     end
 
-    def wips_with_mark_under_product(mark_name, Product)
-      Wip.joins(:marks).where('marks.name = ?', mark_name).where(product_id: Product.id)
+    def wips_with_mark_under_product(mark_name, product)
+      Wip.joins(:marks).where('marks.name = ?', mark_name).where(product_id: product.id)
     end
 
     def products_with_mark(mark_name)
@@ -52,13 +52,17 @@ module Marks
       if limit_n>sorted_results.count
         limit_n = sorted_results.count
       end
-      return sorted_results[0, limit_n]
+      return sorted_results.to_a[0, limit_n].to_h
+    end
 
+
+    def newsfeed_items_per_product_per_mark(product, mark_name)
+      product.wips.where(state: 'open').joins(:marks).where('marks.name = ?', mark_name)
     end
 
 
     #RUN ONCE
- def retroactively_convert_old_tags_to_new()
+    def retroactively_convert_old_tags_to_new()
       tag_names = Wip::Tag.all.pluck(:name)
       unique_tag_sets = Product.all.uniq.pluck(:tags)
       unique_tag_sets.each do |u|

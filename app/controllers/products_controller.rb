@@ -79,9 +79,18 @@ class ProductsController < ProductController
     end
 
     if signed_in? && current_user.staff?
+
+      if params[:tag].present?
+        @mark_name = params[:mark]
+        @news_feed_to_show = Marks::MarkBasics.new.newsfeed_items_per_product_per_mark(@product, @mark_name).order(updated_at: :desc)
+      else
+        @news_feed_to_show = @product.news_feed_items.limit(20).order(updated_at: :desc)
+      end
+
       @news_feed_items = ActiveModel::ArraySerializer.new(
-        @product.news_feed_items.limit(20).order(updated_at: :desc)
+        @news_feed_to_show
       )
+      
       render 'products/new_show', layout: 'product'
       return
     end
