@@ -7,6 +7,8 @@ class ProductsController < ProductController
   before_action :set_product,
     only: [:show, :old, :edit, :update, :follow, :announcements, :unfollow, :metrics, :flag, :feature, :launch]
 
+  MARK_DISPLAY_LIMIT =  7 #maximum number of marks to display on product page
+
   def new
     @product = Product.new
     @product.user = current_user
@@ -80,6 +82,8 @@ class ProductsController < ProductController
 
     if signed_in? && current_user.staff?
 
+      @top_wip_tags = Marks::MarkBasics.new.leading_marks_on_product(product, MARK_DISPLAY_LIMIT)
+
       if params[:tag].present?
         @mark_name = params[:mark]
         @news_feed_to_show = Marks::MarkBasics.new.newsfeed_items_per_product_per_mark(@product, @mark_name).order(updated_at: :desc)
@@ -90,7 +94,7 @@ class ProductsController < ProductController
       @news_feed_items = ActiveModel::ArraySerializer.new(
         @news_feed_to_show
       )
-      
+
       render 'products/new_show', layout: 'product'
       return
     end
