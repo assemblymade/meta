@@ -33,8 +33,7 @@ module Marks
     end
 
     def leading_marks_on_product(product, limit_n)
-      product_marks =
-      wips = Wip.where(product_id: product.id)
+      wips = Wip.where(product_id: product.id).where(state: ['open', 'allocated'])
       rmarks = []
       wips.each do |w|
         rmarks = rmarks + w.marks
