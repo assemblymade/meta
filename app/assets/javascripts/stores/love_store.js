@@ -40,6 +40,21 @@ var LoveStore = _.extend(Object.create(Store), {
             }
             this.emitChange()
             break
+
+          case ActionTypes.NEWS_FEED_RECEIVE_RAW_ITEMS:
+            var items = action.items
+            _(items).each(function(item){
+              var heartables = [item].concat(item.last_comment)
+              _(heartables).each(function(h){
+                _heartables[h.heartable_id] = {
+                  heartable_type: h.heartable_type,
+                  heartable_id: h.heartable_id,
+                  hearts_count: h.hearts_count
+                }
+              })
+            })
+            this.emitChange()
+            break
         }
 
       }

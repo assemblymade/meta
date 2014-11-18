@@ -4,6 +4,7 @@
   var MasonryMixin = require('../../mixins/masonry_mixin.js');
   var NewsFeedItem = require('./news_feed_item.js.jsx');
   var Spinner = require('../spinner.js.jsx');
+  var ActionTypes = require('../../constants').ActionTypes
 
   var NewsFeed = React.createClass({
     mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0})],
@@ -56,6 +57,8 @@
         if (this.state.filter) {
           url += '&filter=' + this.state.filter;
         }
+
+        // TODO: This business should move to action creators and stores
 
         window.xhr.get(
           url,
@@ -264,6 +267,12 @@
       } catch (e) {
         return console.log(e);
       }
+
+      // TODO: this should happen in an action creator
+      Dispatcher.handleServerAction({
+        type: ActionTypes.NEWS_FEED_RECEIVE_RAW_ITEMS,
+        items: newItems
+      })
 
       this.setState(React.addons.update(
         this.state, {

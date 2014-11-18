@@ -107,6 +107,8 @@
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,
 
+      NEWS_FEED_RECEIVE_RAW_ITEMS: null,
+
       WIP_EVENT_CREATING: null,
       WIP_EVENT_CREATED: null
     }),
