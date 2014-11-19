@@ -92,8 +92,10 @@
           </ul>
           <ul className="list-reset clearfix mxn1">
             {commentItem}
-            <li>
-              <Love heartable_id={this.props.id} heartable_type="NewsFeedItem" />
+            <li className="px1">
+              <span className="h6 mt0 mb0">
+                <Love heartable_id={this.props.id} heartable_type="NewsFeedItem" />
+              </span>
             </li>
           </ul>
         </div>

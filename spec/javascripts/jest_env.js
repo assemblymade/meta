@@ -22,6 +22,8 @@ global.parseUri = function() {
   return {};
 };
 
+global.keyMirror = function() {};
+
 global.visibility = function() {};
 global.Notify = function() {};
 global.Notify.isSupported = function() { return true; };

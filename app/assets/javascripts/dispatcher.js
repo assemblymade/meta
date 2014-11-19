@@ -5,8 +5,13 @@
 
 (function() {
   // Sprockets. Booooo.
-  // var PayloadSources = require('./constants').PayloadSources
-  var PayloadSources = window.CONSTANTS.PayloadSources
+
+  var PayloadSources;
+  if (typeof require !== 'undefined') {
+    PayloadSources = require('./constants').PayloadSources
+  } else {
+    PayloadSources = window.CONSTANTS.PayloadSources
+  }
 
   /** Private variables */
 
