@@ -45,7 +45,7 @@ module.exports = React.createClass({
           <Avatar user={author} size={24} />
         </div>
         <div className="overflow-hidden">
-          <div className="gray-3">
+          <div className="gray-2">
             <a className="bold black" href={author.url}>{author.username}</a>
             {timestamp}
           </div>
