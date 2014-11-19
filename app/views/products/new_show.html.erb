@@ -82,7 +82,6 @@
           <div class="left"><%= pluralize(@product.bio_memberships_count, 'team member') %></div>
           <div class="right"><%= pluralize(@product.team_building_days_left, 'day') %> left</div>
         </div>
-
       </div>
     <% end %>
 
@@ -92,27 +91,27 @@
       </div>
     <% end %>
 
-    <% if @product_marks.count > 0 %>
-      <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
+    <div class="px2">
+      <% if @product_marks.count > 0 %>
+        <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
+        <ul class="list-reset">
+          <% @product_marks.each do |mark| %>
+            <li>
+              <%= mark %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
 
+      <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
       <ul class="list-reset">
-        <% @product_marks.each do |mark| %>
+        <% @top_wip_tags.each do |tag, count| %>
           <li>
-            <%= mark %>
+            <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
           </li>
         <% end %>
       </ul>
-    <% end %>
-
-    <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
-
-    <ul class="list-reset">
-      <% @top_wip_tags.each do |tag, count| %>
-        <li>
-          <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
-        </li>
-      <% end %>
-    </ul>
+    </div>
 
   </div>
 
