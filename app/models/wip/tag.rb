@@ -24,22 +24,7 @@ class Wip::Tag < ActiveRecord::Base
   end
 
   def self.suggested_tags
-    %w(
-      simple
-      challenging
-      frontend
-      backend
-      development
-      android
-      ios
-      mobile
-      design
-      logo
-      product
-      copy
-      bug
-      api
-    )
+    leading_marks = Marks::MarkBasics.new.leading_marks_systemwide(13).keys
   end
 
 end

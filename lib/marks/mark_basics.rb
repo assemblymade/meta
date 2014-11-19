@@ -8,8 +8,18 @@ module Marks
     end
 
     def mark_it(object, mark)
-      if not Marking.where(markable: object, mark_id: mark.id).nil?
-        Markign.create!({markable: object, mark_id: mark.id, weight: DEFAULT_MARKING_WEIGHT})
+      if not Marking.where(markable_id: object.id).where(mark_id: mark.id).present?
+        Marking.create!({markable: object, mark_id: mark.id, weight: DEFAULT_MARKING_WEIGHT})
+      end
+    end
+
+    def mark_with_name(object, mark_name)
+      themark = Mark.find_by(name: mark_name)
+      if themark.nil?
+        newmark = new_mark(mark_name)
+        mark_it(object, newmark)
+      else
+        mark_it(object, themark)
       end
     end
 
@@ -44,6 +54,9 @@ module Marks
       end
     end
 
+    def leading_marks_systemwide(limit)
+      Mark.joins(:tasks).where(wips: { closed_at: nil }).group(:name).order('count_all DESC').limit(limit).count
+    end
 
     #RUN ONCE
     def retroactively_convert_old_tags_to_new()
