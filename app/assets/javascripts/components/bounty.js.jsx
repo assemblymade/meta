@@ -332,7 +332,7 @@ module.exports = React.createClass({
       );
     }
 
-    if (!this.state.worker) {
+    if (!this.state.worker || !currentUser) {
       return (
         <button className="btn btn-success mr2" type="button" onClick={this.startWork}>
           Work on this bounty
