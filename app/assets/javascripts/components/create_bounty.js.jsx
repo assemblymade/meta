@@ -70,7 +70,7 @@
               </div>
 
               <h6>Tags</h6>
-              <TagList destination={true} newBounty={true}  />
+              <TagList destination={true} newBounty={true} />
 
               <TextInput width="125px" size="small" label="Add tag" prepend="#" prompt="Add" />
 

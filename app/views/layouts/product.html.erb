@@ -42,7 +42,7 @@
 
       <div class="sm-col sm-col-7 px2">
 
-        <h1 class="mt1 mb0">
+        <h1 class="mt0 mb0">
           <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
         </h1>
 
@@ -57,11 +57,20 @@
               </a>
             </li>
           <% end %>
+
+          <% if can?(:edit, @product) %>
+            <li class="left px1">
+              <a href="<%= edit_product_path(@product) %>">
+                <%= inline_react_component 'Icon', icon: 'gear' %>
+                Edit product
+              </a>
+            </li>
+          <% end %>
         </ul>
 
       </div>
 
-      <div class="sm-col sm-col-3 mt1 p2">
+      <div class="sm-col sm-col-3 p1">
         <%= react_component('NotificationPreferencesDropdown',
           productWatchersPath: product_people_path(@product),
           productWatchersCount: @product.watchings_count,

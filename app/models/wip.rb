@@ -20,7 +20,6 @@ class Wip < ActiveRecord::Base
   has_many :followings, class_name: 'Watching', as: :watchable
   has_many :followers, through: :followings, source: :user
   has_many :offers, inverse_of: :bounty
-  has_many :markings
   has_many :markings, as: :markable
   has_many :marks, through: :markings
   has_many :milestones, through: :milestone_tasks
@@ -45,6 +44,7 @@ class Wip < ActiveRecord::Base
   scope :available,   ->{ where(state: 'open') }
   scope :by_product,  ->(product){ where(product_id: product.id) }
   scope :closed,      -> { where('closed_at is not null') }
+  scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
   scope :not_posted,  -> { joins('left outer join bounty_postings on bounty_postings.bounty_id = wips.id').where('bounty_postings.id is null') }
   scope :open,        -> { where('closed_at is null') }
   scope :opened_by,   ->(user) { where(user: user) }

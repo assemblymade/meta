@@ -27,7 +27,7 @@ class FilterWipsQuery
 
   def filter_clauses
     [state_filter, deliverable_filter, project_filter, tag_filter, sort_order,
-     page_selection, user_filter, user_id_filter].compact
+     page_selection, user_filter, user_id_filter, mark_filter].compact
   end
 
   def state_filter
@@ -67,7 +67,7 @@ class FilterWipsQuery
   end
 
   def user_id_filter
-    if user_id_params.present? 
+    if user_id_params.present?
       Wip.joins(:events).
         where(events: { user_id: user_id_params }).
         uniq
@@ -91,6 +91,12 @@ class FilterWipsQuery
     return unless tag
 
     Wip.open.joins(:tags).where('wip_tags.name ilike ?', tag)
+  end
+
+  def mark_filter
+    return unless mark
+    
+    Wip.open.joins(:marks).where('marks.name = ?', mark)
   end
 
   def bounty_postings_filter
@@ -152,6 +158,10 @@ class FilterWipsQuery
 
   def tag
     filters[:tag]
+  end
+
+  def mark
+    filters[:mark]
   end
 
   def user_params

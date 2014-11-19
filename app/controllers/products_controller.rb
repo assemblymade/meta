@@ -7,6 +7,9 @@ class ProductsController < ProductController
   before_action :set_product,
     only: [:show, :old, :edit, :update, :follow, :announcements, :unfollow, :metrics, :flag, :feature, :launch]
 
+  MARK_DISPLAY_LIMIT =  14 #maximum number of marks to display on product page
+  PRODUCT_MARK_DISPLAY_LIMIT = 6
+
   def new
     @product = Product.new
     @product.user = current_user
@@ -79,9 +82,24 @@ class ProductsController < ProductController
     end
 
     if signed_in? && current_user.staff?
+
+      @top_wip_tags = Marks::MarkBasics.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
+      @product_marks = @product.marks.pluck(:name).uniq
+      if @product_marks.count > PRODUCT_MARK_DISPLAY_LIMIT
+        @product_marks = @product_marks[0, PRODUCT_MARK_DISPLAY_LIMIT]
+      end
+
+      if params[:filter].present?
+        @mark_name = params[:filter]
+        @news_feed_to_show = Marks::MarkBasics.new.news_feed_items_per_product_per_mark(@product, @mark_name).order(updated_at: :desc)
+      else
+        @news_feed_to_show = @product.news_feed_items.limit(20).order(updated_at: :desc)
+      end
+
       @news_feed_items = ActiveModel::ArraySerializer.new(
-        @product.news_feed_items.limit(20).order(updated_at: :desc)
+        @news_feed_to_show
       )
+
       render 'products/new_show', layout: 'product'
       return
     end
@@ -90,6 +108,10 @@ class ProductsController < ProductController
       format.html { render }
       format.json { render json: @product }
     end
+  end
+
+  def plan
+    set_product
   end
 
   # The old show page

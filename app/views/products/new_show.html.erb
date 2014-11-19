@@ -4,26 +4,28 @@
 <div class="clearfix mxn2">
   <div class="sm-col sm-col-8 px2">
 
-    <% product_membership = current_user.team_memberships.find_by(product: @product) %>
+    <% if signed_in? %>
+      <% product_membership = current_user.team_memberships.find_by(product: @product) %>
 
-    <% if product_membership.nil? || product_membership.bio.nil? %>
+      <% if product_membership.nil? || product_membership.bio.nil? %>
 
-      <div class="bg-white p3 rounded shadow mb3">
-        <div class="clearfix">
-          <h6 class="mt0 mb2">Good afternoon <%= current_user.username %>!</h6>
-          <div class="right"></div>
+        <div class="bg-white p3 rounded shadow mb3">
+          <div class="clearfix">
+            <h6 class="mt0 mb2">G'day <%= current_user.username %>!</h6>
+            <div class="right"></div>
+          </div>
+          <p>Ready to pitch in on <%= @product.name %>? Introduce yourself.</p>
+
+          <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
+            <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+            <input name="_method" value="patch" type="hidden">
+
+            <textarea class="form-control mb2" name="membership[bio]" rows="2" placeholder="What do you like to do? What is your favorite sandwich?"></textarea>
+
+            <button type="submit" class="btn btn-primary btn-block">Introduce yourself!</button>
+          </form>
         </div>
-        <p>Ready to pitch in on <%= @product.name %>? Introduce yourself.</p>
-
-        <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
-          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-          <input name="_method" value="patch" type="hidden">
-
-          <textarea class="form-control mb2" name="membership[bio]" rows="2" placeholder="What do you like to do? What is your favorite sandwich?"></textarea>
-
-          <button type="submit" class="btn btn-primary btn-block">Introduce yourself!</button>
-        </form>
-      </div>
+      <% end %>
     <% end %>
 
     <%= react_component 'NewsFeedList', items: ActiveModel::ArraySerializer.new(
@@ -31,12 +33,14 @@
     ).as_json %>
   </div>
 
-  <div class="sm-col sm-col-4 px2">
+  <div class="sm-col sm-col-4">
 
-    <div class="bg-gray-5 p2 rounded">
-      <h6 class="mt0 py2 mb0 black">The Big Idea</h6>
-      <%= react_component 'Markdown', content: @product.lead, normalized: true %>
-      <a class="block mb3" href="#">Read more</a>
+    <div class="bg-gray-5 p2 rounded mb2">
+      <% if @product.lead.present? %>
+        <h6 class="gray-2 mt0 mb0 py1">The Big Idea</h6>
+        <%= react_component 'Markdown', content: @product.lead, normalized: true %>
+        <a class="block mb3" href="<%= product_plan_path(@product) %>">Read more</a>
+      <% end %>
 
       <div class="stat-group mb0">
         <div class="stat">
@@ -60,18 +64,52 @@
       </div>
     </div>
 
-    <h6 class="mt0 py2 mb0 gray-dark">Skills</h6>
+    <% if @product.team_building? %>
+      <div class="bg-gray-5 p2 mb2">
+        <h6 class="gray-2 mt0 mb0 py1">Team Building</h6>
+        <p>
+          This product is growing a team. It needs to reach <strong>10 team members</strong> in
+          <strong>30 days</strong> before it is Greenlit. You can become a team member by
+          <a href="<%= product_people_path(@product) %>">introducing yourself</a>.</p>
+
+        <div class="progress progress-sm" style="margin-bottom:6px">
+          <div class="progress-bar progress-bar-success" style="width:<%= (((@product.bio_memberships_count || 0) / 10.0) * 100).round %>%"></div>
+        </div>
+
+        <div class="clearfix">
+          <div class="left"><%= pluralize(@product.bio_memberships_count, 'team member') %></div>
+          <div class="right"><%= pluralize(@product.team_building_days_left, 'day') %> left</div>
+        </div>
+
+      </div>
+    <% end %>
+
+    <% if can?(:edit, @product) %>
+      <div class="mb2">
+        <a class="btn btn-default btn-block" href="<%= edit_product_path(@product) %>">Edit product</a>
+      </div>
+    <% end %>
+
+    <% if @product_marks.count > 0 %>
+      <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
+
+      <ul class="list-reset">
+        <% @product_marks.each do |mark| %>
+          <li>
+            <%= mark %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
 
     <ul class="list-reset">
-      <li><a href="#">Design</a></li>
-      <li><a href="#">Development</a></li>
-    </ul>
-
-    <h6 class="mt0 py2 mb0 gray-dark">Tags</h6>
-
-    <ul class="list-reset">
-      <li><a href="#">TODO</a></li>
-      <li><a href="#">Recent</a></li>
+      <% @top_wip_tags.each do |tag, count| %>
+        <li>
+          <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
+        </li>
+      <% end %>
     </ul>
 
   </div>

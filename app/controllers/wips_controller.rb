@@ -51,7 +51,7 @@ class WipsController < ProductController
 
     apply_tags
 
-    @wip.update_attributes(update_wip_params)
+    @wip.update(update_wip_params)
 
     respond_with @wip, location: wip_path(@wip)
   end

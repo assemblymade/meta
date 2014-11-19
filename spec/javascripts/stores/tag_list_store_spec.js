@@ -14,14 +14,14 @@ describe('TagListStore', function() {
 
   it('adds a tag', function() {
     TagListStore.addTag({ tag: 'foo' });
-    expect(TagListStore.getTags()).to.include('foo');
+    expect(TagListStore.getTags('bar')).to.include('foo');
   });
 
   it('removes a tag', function() {
     TagListStore.addTag({ tag: 'foo' });
-    expect(TagListStore.getTags()).to.include('foo');
+    expect(TagListStore.getTags('bar')).to.include('foo');
 
     TagListStore.removeTag({ tag: 'foo' });
-    expect(TagListStore.getTags()).to.eql([]);
+    expect(TagListStore.getTags('bar')).to.eql([]);
   });
 });

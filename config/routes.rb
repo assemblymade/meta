@@ -277,6 +277,7 @@ ASM::Application.routes.draw do
     patch :launch
 
     get :old
+    get :plan
 
     resources :assets
     resources :watchers

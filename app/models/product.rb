@@ -89,7 +89,6 @@ class Product < ActiveRecord::Base
   scope :waiting_approval, -> { where('submitted_at is not null and evaluated_at is null') }
   scope :with_repo,        ->(repo) { where('? = ANY(repos)', repo) }
   scope :with_logo,        ->{ where.not(poster: nil).where.not(poster: '') }
-
   scope :stealth,      -> { where(state: 'stealth') }
   scope :team_building, -> { public_products.where(state: 'team_building') }
   scope :greenlit,     -> { public_products.where(state: 'greenlit') }
