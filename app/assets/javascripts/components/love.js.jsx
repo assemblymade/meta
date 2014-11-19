@@ -39,7 +39,7 @@
 
       return <span>
         <a className="gray" href="javascript:;" onClick={this.handleClick}>
-          <span className="glyphicon glyphicon-heart" style={style}></span>
+          <span className="fa fa-heart" style={style}></span>
           <span> {numeral(this.state.hearts_count).format('0,0')}</span>
         </a>
       </span>
