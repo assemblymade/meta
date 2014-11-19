@@ -9,21 +9,12 @@
 
       <% if product_membership.nil? || product_membership.bio.nil? %>
 
-<<<<<<< HEAD
-      <div class="bg-white p3 rounded shadow mb3">
-        <div class="clearfix">
-          <h6 class="mt0 mb2">Hey there, <%= current_user.username %>!</h6>
-          <div class="right"></div>
-        </div>
-        <p>Ready to pitch in on <%= @product.name %>? Introduce yourself.</p>
-=======
         <div class="bg-white p3 rounded shadow mb3">
           <div class="clearfix">
             <h6 class="mt0 mb2">G'day <%= current_user.username %>!</h6>
             <div class="right"></div>
           </div>
           <p>Ready to pitch in on <%= @product.name %>? Introduce yourself.</p>
->>>>>>> Only show intro box to signed in users.
 
           <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
             <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
