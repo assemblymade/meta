@@ -42,7 +42,7 @@ module.exports = React.createClass({
     return (
       <div className="clearfix">
         <div className="left mr2">
-          <Avatar user={author} size={24} />
+          <Avatar user={author} size={18} />
         </div>
         <div className="overflow-hidden">
           <div className="gray-2">
