@@ -182,7 +182,8 @@
     },
 
     renderUserSource: function() {
-      var user = this.props.user
+      var user = this.props.user;
+      var target = this.props.target;
 
       return (
         <div className="px3 py2 clearfix border-top h6 mb0">
@@ -193,7 +194,7 @@
             <span className="black bold">
               {user.username}
             </span>
-            {' '} created this {this.targetNoun(this.props.target.type)} <time>{$.timeago(new Date(this.props.created))}</time>
+            {' '} created this {this.targetNoun(target && target.type)} <time>{$.timeago(new Date(this.props.created))}</time>
           </div>
         </div>
       );
