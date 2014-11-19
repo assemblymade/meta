@@ -1,6 +1,9 @@
 <% title @faq_group.name, 'FAQ' %>
 <% provide(:description, "Frequently asked questions about #{@faq_group.name.downcase} on Assembly.") %>
 
+<!-- TODO Deprecate. Pages now use gray bg. (chrislloyd) -->
+<style>body { background-color: white !important; }</style>
+
 <% activate_nav! :platform_faq %>
 <%= render 'shared/navbar' %>
 

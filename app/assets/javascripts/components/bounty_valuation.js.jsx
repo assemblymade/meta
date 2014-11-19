@@ -14,14 +14,9 @@
     },
 
     renderLightbox: function() {
-      if(!this.state.shown) {
-        return
+      if (this.state.shown) {
+        return <BountyBreakdown {...this.props} onHidden={this.handleHide} steps={this.props.steps} />
       }
-
-      // (pletcher) TODO: this.transferPropsTo is deprecated
-      return this.transferPropsTo(
-        <BountyBreakdown onHidden={this.handleHide} steps={this.props.steps} />
-      )
     },
 
     render: function() {

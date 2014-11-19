@@ -94,6 +94,8 @@ class FilterWipsQuery
   end
 
   def mark_filter
+    return unless mark
+    
     Wip.open.joins(:marks).where('marks.name = ?', mark)
   end
 

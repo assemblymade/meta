@@ -11,6 +11,9 @@
       if (total > 0) {
         badgeTotal = this.badge && this.badge();
         badgeClasses.push('active');
+        badgeClasses.push('bg-red');
+        badgeClasses.push('white');
+
 
         if (window.fluid) {
           window.fluid.dockBadge = total;

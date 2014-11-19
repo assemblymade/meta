@@ -1,7 +1,7 @@
-var Dispatcher = require('../dispatcher');
-var Store = require('../stores/store');
-
 (function() {
+  var Dispatcher = require('../dispatcher');
+  var Store = require('../stores/store');
+
   var _tags = [];
 
   var _store = Object.create(Store);
@@ -25,7 +25,7 @@ var Store = require('../stores/store');
     },
 
     getTags: function() {
-      return _tags
+      return _tags;
     },
 
     removeTag: function(data) {
@@ -64,8 +64,7 @@ var Store = require('../stores/store');
           }
         },
 
-        success: function(data) {
-        },
+        success: function(data) {},
 
         error: function(jqxhr, status) {
           console.dir(status);

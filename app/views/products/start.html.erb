@@ -2,6 +2,9 @@
 <% title "Create a new product" %>
 <% provide(:description, "It starts with ideas. Ideas become products. Products come to life and success is shared. Start your idea here.") %>
 
+<!-- TODO Deprecate. Pages now use gray bg. (chrislloyd) -->
+<style>body { background-color: white !important; }</style>
+
 <div class="masthead" style="background: linear-gradient(160deg, rgba(255, 232, 80, .8), rgba(26, 88, 131, .85) 70%), url(<%= image_url 'faces.jpg' %>); min-height: 787px; padding-top: 0">
   <%= render 'shared/navbar' %>
 

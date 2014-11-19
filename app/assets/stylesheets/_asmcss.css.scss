@@ -30,6 +30,10 @@ strong,
   font-weight: 600;
 }
 
+.caps {
+  letter-spacing: .05em;
+}
+
 a {
   color: $link-color;
 
@@ -45,19 +49,28 @@ pre, code, samp {
 
 h1, h2, h3, h4, h5, h6 { font-weight: 600 }
 
-h1, .h1 { font-size: $font-size-h1 } // 64px
-h2, .h2 { font-size: $font-size-h2 } // 32px
-h3, .h3 { font-size: $font-size-h3 } // 24px
+h1, .h1 {
+  font-size: $font-size-h1; // 42px
+  line-height: 4rem; // 48px
+}
+h2, .h2 {
+  font-size: $font-size-h2; // 30px
+  line-height: 3rem; // 36px
+}
+h3, .h3 {
+  font-size: $font-size-h3; // 24px
+  line-height: 2.5rem; // 30px
+}
 h4, .h4 {
-  font-size: 1.5rem;
+  font-size: $font-size-h4;
   line-height: 2rem;
 } // 18px/24px
 h5, .h5 {
-  font-size: 1.33333333333333rem;
+  font-size: $font-size-h5;
   line-height: 2rem;
 } // 16px/24px
 h6, .h6 {
-  font-size: 1.1666666667rem;
+  font-size: $font-size-h6;
   line-height: 1.5rem;
 } // 14px/18px
 
@@ -125,8 +138,14 @@ input[type=week] {
   text-overflow: ellipsis;
 }
 
+button,
 .button {
-  padding-left: 2em;
-  padding-right: 2em;
-  border-radius: 2em;
+  padding: 0;
 }
+
+// button,
+// .button {
+//   padding-left: 2em;
+//   padding-right: 2em;
+//   border-radius: 2em;
+// }

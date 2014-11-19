@@ -1,0 +1,54 @@
+<% title 'Plan', @product.name %>
+
+<div class="clearfix">
+  <div class="sm-col-8 mx-auto">
+    <h6 class="caps gray-3 center">The plan</h6>
+    <div class=" p3 bg-white rounded">
+      <% if @product.you_tube_video_url? %>
+        <div class="embed-responsive embed-responsive-16by9 mb3">
+          <iframe
+            class="embed-responsive-item"
+            width="853"
+            height="480"
+            src="<%= @product.video_embed_url %>"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+        </div>
+      <% end %>
+
+      <% if @product.lead.present? || @product.description.present? || (@product.info || {}).any? %>
+        <% if @product.lead.present? %>
+          <div class="lead">
+            <%= product_markdown(@product, @product.lead) %>
+          </div>
+        <% end %>
+
+        <%= react_component 'Markdown', content: @product.description_html, normalized: true %>
+
+        <!-- FIXME: (pletcher) Why is @product.info a string and not a hash? -->
+        <% (@product.info || {}).each do |field, value| %>
+          <% if value.present? %>
+            <h4><%= field.titlecase %></h4>
+            <%= react_component 'Markdown', content: markdown(value) %>
+          <% end %>
+        <% end %>
+
+      <% else %>
+
+        <% if @product.user == current_user %>
+          <p class="lead text-center">
+            This space reserved for a kick ass description.
+          </p>
+          <p class="text-center">
+            <a href="<%= edit_product_path(@product) %>">Update your idea</a>
+          </p>
+        <% else %>
+          <p class="lead text-center">
+            Looks like <%= @product.name %> is just getting started! Check back later and there should be some more details
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

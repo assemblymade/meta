@@ -6,11 +6,14 @@
 (function() {
   var AppIcon = require('../app_icon.js.jsx');
   var Avatar = require('../avatar.js.jsx');
+  var Comment = require('../comment.js.jsx');
+  var Icon = require('../icon.js.jsx');
   var Markdown = require('../markdown.js.jsx');
   var NewsFeedItemBounty = require('./news_feed_item_bounty.js.jsx');
   var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
   var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
-  var Tile = require('../tile.js.jsx')
+  var Tag = require('../tag.js.jsx');
+  var Tile = require('../tile.js.jsx');
   var moment = require('moment');
   var ONE_DAY = 24 * 60 * 60 * 1000;
 
@@ -32,67 +35,39 @@
         <Tile>
           {this.renderSource()}
           {this.renderTarget()}
+          {this.renderTags()}
+          {this.renderUserSource()}
           {this.renderComments()}
-          {this.renderLastComment()}
         </Tile>
       );
     },
 
     renderComments: function() {
-      var product = this.props.product
-      var target = this.props.target
+      var product = this.props.product;
+      var target = this.props.target;
 
-      var commentCount = target && target.comments_count
-      var tags = target && target.tags
+      var commentCount = target && target.comments_count;
+
 
       // Don't show any footer if there's no comments or tags
       // This isn't great, we should always have something for people to do
-      if ((typeof commentCount === "undefined" || commentCount === null || commentCount < 1) && (typeof tags === "undefined" || tags === null)) {
-        return
+      if (!commentCount) {
+        return;
       }
 
       // TODO This stuff should really be common across all the items
-      var commentItem = null
-
-      if ((typeof commentCount !== "undefined" && commentCount !== null) &&  commentCount > 0) {
-
-        var commentsUrl = this.props.target.url + "#comments"
-
-        commentItem = (
-          <li className="left px1">
-            <a className="gray" href={commentsUrl}>
-              <span className="fa fa-comment mr1"></span>
-              {commentCount}
-            </a>
-          </li>
-        )
-      }
-
-      var tagItems = null
-      var baseUrl = this.props.target.url;
-      if (baseUrl && tags && tags.length) {
-        tagItems = _.map(tags, function(tag) {
-          var url = baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
-          return (
-            <li className="left px1" key={tag.id}>
-              <span className="h6 mt0 mb0">
-                <a className="gray bold" href={url}>
-                  {tag.name.toUpperCase()}
-                </a>
-              </span>
-            </li>
-          )
-        })
-      }
+      var commentsUrl = this.props.target.url + "#comments";
 
       return (
-        <div className="px3 py2 h6 mt0 mb0">
-          <ul className="list-reset clearfix mxn1">
-            {tagItems}
-          </ul>
-          <ul className="list-reset clearfix mxn1">
-            {commentItem}
-          </ul>
+        <div className="px3 py2 h6 mt0 mb0 border-top">
+          {this.renderLastComment()}
+
+          <a className="gray-3" href={commentsUrl} style={{ textDecoration: 'underline' }}>
+            <span className="mr1">
+              <Icon icon="comment" />
+            </span>
+            View {commentCount > 1 ? 'all' : ''} {commentCount} {commentCount > 1 ? 'comments' : 'comment'}
+          </a>
         </div>
       );
     },
@@ -104,23 +79,8 @@
         var user = comment.user;
 
         return (
-          <div className="border-top">
-            <div className="block px3 py1 gray">
-              <a className="gray" href={this.props.target.url + '#comments'}>
-                Last comment
-              </a>
-            </div>
-            <div className="clearfix px3" key={comment.id} style={{ paddingBottom: '12px' }}>
-              <div className="left mr2">
-                <Avatar user={user} size={24} />
-              </div>
-              <div className="overflow-hidden">
-                <a className="block bold black" style={{ lineHeight: '18px' }} href={user.url}>{user.username}</a>
-                <div className='gray-darker'>
-                  <Markdown content={comment.markdown_body || window.marked(comment.body)} normalize={true} />
-                </div>
-              </div>
-            </div>
+          <div className="mb2" key={comment.id}>
+            <Comment author={user} body={comment.markdown_body} timestamp={comment.created_at} />
           </div>
         );
       }
@@ -135,18 +95,45 @@
       }
 
       return (
-        <div>
-          <a className="block px3 py2 clearfix border-bottom" href={product.url}>
-            <div className="left mr1">
-              <AppIcon app={product} size={32} />
-            </div>
-            <div className="overflow-hidden" style={{ lineHeight: '16px' }}>
-              <div className="black">{product.name}</div>
-              <div className="gray-dark text-small">{product.pitch}</div>
-            </div>
-          </a>
-        </div>
+        <a className="block px3 py2 clearfix border-bottom" href={product.url}>
+          <div className="left mr1">
+            <AppIcon app={product} size={36} />
+          </div>
+          <div className="overflow-hidden" style={{ lineHeight: '16px' }}>
+            <div className="h6 mt0 mb0 black">{product.name}</div>
+            <div className="h6 mt0 mb0 gray-dark">{product.pitch}</div>
+          </div>
+        </a>
       );
+    },
+
+    renderTags: function() {
+      var target = this.props.target
+      var tags = target && target.tags;
+
+      if (tags) {
+        var tagItems = null;
+        var baseUrl = target.url;
+
+        if (baseUrl && tags.length) {
+          tagItems = _.map(tags, function(tag) {
+            var url = baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
+            return (
+              <li className="left px1" key={tag.id}>
+                <a className="h6 mt0 mb0" href={url}><Tag tag={tag} /></a>
+              </li>
+            )
+          })
+        }
+
+        return (
+          <div className="px3 py1 h6 mt0 mb0">
+            <ul className="list-reset clearfix mxn1 mb0">
+              {tagItems}
+            </ul>
+          </div>
+        );
+      }
     },
 
     renderTarget: function() {
@@ -189,6 +176,25 @@
             url={target.url} />;
         }
       }
+    },
+
+    renderUserSource: function() {
+      var user = this.props.user;
+      var target = this.props.target;
+
+      return (
+        <div className="px3 py2 clearfix border-top h6 mb0">
+          <div className="left mr2">
+            <Avatar user={user} size={18} />
+          </div>
+          <div className="overflow-hidden gray-2">
+            <span className="black bold">
+              {user.username}
+            </span>
+            {' '} created this {this.targetNoun(target && target.type)} <time>{$.timeago(new Date(this.props.created))}</time>
+          </div>
+        </div>
+      );
     },
 
     targetNoun: function(type) {

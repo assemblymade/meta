@@ -1,13 +1,37 @@
-<div class="modal modal-success equator">
+<style>
+  html { 
+  background: url(<%= image_path("404/#{@background}.jpg") %>) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  }
+  .navbar{
+    z-index:2000;
+  }
+</style>
+
+<%= render 'shared/navbar' %>
+
+<div class="modal equator">
   <div class="equator-container">
     <div class="modal-dialog">
-      <div class="modal-content text-center">
-
+      <div class="text-center">
         <div class="modal-body">
-          <h3>We couldn't find what you were looking for.</h3>
-          <a href="<%= root_url %>">Assembly home</a>
+          <h3 <% if [3,5].include?(@background) %>style="color:#eee;"<% end %>>We still haven't found what you're looking for</h3>
+          <form action="<%= scoped_search_path %>">
+            <div class="form-group has-feedback">
+              <div class="input-group-search">
+                <input type="search" name="q" value="<%= params[:q] %>" placeholder="Search" class="form-control" autocomplete="off">
+                <span class="icon icon-magnifier form-control-feedback"></span>
+              </div>
+              <input type="hidden" name="type" value="">
+            </div>
+            <button type="submit" class="btn btn-default sr-only">Search</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+

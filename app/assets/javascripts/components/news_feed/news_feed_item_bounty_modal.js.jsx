@@ -15,7 +15,7 @@ var Spinner = require('../spinner.js.jsx');
 
 module.exports = React.createClass({
   displayName: 'NewsFeedItemBountyModal',
-  // (pletcher) TODO: Infer bounty, product, user, etc. from this.props.item
+
   propTypes: {
     item: React.PropTypes.object.isRequired,
     onHidden: React.PropTypes.func.isRequired
@@ -100,7 +100,7 @@ module.exports = React.createClass({
               key={bounty.id}
               bounty={bounty}
               noInvites={true}
-              news_feed_item={this.props.item}
+              item={this.props.item}
               valuation={{
                 product: { name: product.name },
                 url: '/' + product.slug + '/bounties',
@@ -109,7 +109,7 @@ module.exports = React.createClass({
                 coinsMinted: product.coins_minted,
                 profitLastMonth: product.profit_last_month
               }}
-              show_coins={product.slug !== 'meta'} />,
+              showCoins={product.slug !== 'meta'} />,
 
           <div className="discussion" id="discussion-view-el" key={'discussion-' + bounty.id}>
             <div className="timeline omega">
@@ -223,9 +223,10 @@ module.exports = React.createClass({
           </div>
 
           <div className="media-body" id="comment">
-            <form action={'/' + product + '/bounties/' + bounty.number + '/comments'} method="post" className="form" />
+            <form action={'/' + product + '/bounties/' + bounty.number + '/comments'} method="post" className="form">
               <input name="authenticity_token" type="hidden" value={this.props.csrf} />
-                <MarkdownEditor id="event_comment_body" name="event_comment[body]" required={true} />
+              <MarkdownEditor id="event_comment_body" name="event_comment[body]" required={true} />
+            </form>
 
             <div className="form-actions mb3">
               <div className="btn-group disabled">

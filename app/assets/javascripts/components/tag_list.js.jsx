@@ -13,7 +13,8 @@
       destination: React.PropTypes.bool,
       hideAddButton: React.PropTypes.bool,
       newBounty: React.PropTypes.bool,
-      tags: React.PropTypes.array
+      tags: React.PropTypes.array,
+      url: React.PropTypes.string
     },
 
     componentWillMount: function() {
@@ -31,15 +32,16 @@
     getDefaultProps: function() {
       return {
         tags: []
-      }
+      };
     },
 
     getInitialState: function() {
       return {
         adding: false,
         popoverShown: false,
+        // :<
         tags: this.props.tags
-      }
+      };
     },
 
     handleClick: function(tag) {

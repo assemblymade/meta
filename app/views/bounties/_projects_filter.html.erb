@@ -1,39 +1,38 @@
-<div class="panel">
-  <div class="panel-heading" style="padding-top: 0;">
-    <h6 class="panel-title">
-      Projects
-      <% if partner?(@product) %>
-        <span class="pull-right"><a href="<%= new_product_project_path(@product) %>"><span class="glyphicon glyphicon-plus-sign"></span></a></span>
-      <% end %>
-    </h6>
-  </div>
-  <ul class="nav nav-pills nav-stacked text-small">
-    <% if (feature_flag=true) # partner?(@product) %>
-      <% projects.sort_by{|m| -m.multiplier }.first(3).each do |m| %>
-        <li class="<%= 'active' if params[:project].to_i == m.number %>">
-          <a href="<%= product_project_path(@product, m) %>">
-            <% if m.urgency %>
-              <span class="pull-right label label-<%= m.urgency.slug %>"><%= m.urgency.label %></span>
-            <% end %>
-            <span class="pull-right label label-primary" style="margin-right: 3px;"><%= m.tasks.count %></span>
-            <%= m.title %>
-          </a>
-        </li>
-      <% end %>
-      <% if projects.size > 3 %>
-        <li>
-          <a href="<%= product_projects_path(@product) %>"><u>+ <%= projects.size - 3 %> more...</u></a>
-        </li>
-      <% end %>
-      <% if projects.empty? %>
-        <li class="text-muted" style="padding: 6px 15px">
-          There aren't any projects yet.
-        </li>
-      <% end %>
-    <% else %>
-      <div class="well">
-        Become a partner to see the larger projects that <%= @product.name %> is working on
-      </div>
+
+<div class="panel-heading" style="padding-top: 0;">
+  <h6 class="panel-title">
+    Projects
+    <% if partner?(@product) %>
+      <span class="pull-right"><a href="<%= new_product_project_path(@product) %>"><span class="glyphicon glyphicon-plus-sign"></span></a></span>
     <% end %>
-  </ul>
+  </h6>
 </div>
+<ul class="nav nav-pills nav-stacked text-small">
+  <% if (feature_flag=true) # partner?(@product) %>
+    <% projects.sort_by{|m| -m.multiplier }.first(3).each do |m| %>
+      <li class="<%= 'active' if params[:project].to_i == m.number %>">
+        <a href="<%= product_project_path(@product, m) %>">
+          <% if m.urgency %>
+            <span class="pull-right label label-<%= m.urgency.slug %>"><%= m.urgency.label %></span>
+          <% end %>
+          <span class="pull-right label label-primary" style="margin-right: 3px;"><%= m.tasks.count %></span>
+          <%= m.title %>
+        </a>
+      </li>
+    <% end %>
+    <% if projects.size > 3 %>
+      <li>
+        <a href="<%= product_projects_path(@product) %>"><u>+ <%= projects.size - 3 %> more...</u></a>
+      </li>
+    <% end %>
+    <% if projects.empty? %>
+      <li class="text-muted" style="padding: 6px 15px">
+        There aren't any projects yet.
+      </li>
+    <% end %>
+  <% else %>
+    <div class="well">
+      Become a partner to see the larger projects that <%= @product.name %> is working on
+    </div>
+  <% end %>
+</ul>

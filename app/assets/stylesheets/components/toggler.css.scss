@@ -1,15 +1,14 @@
 .toggler {
-  border: 1px solid $brand-divider;
+  display: table;
   border-radius: $border-radius-base;
   background-color: $brand-bg;
 
+  border: none;
   outline: none;
 
   color: $brand-border;
   font-weight: 600;
   line-height: $line-height-computed;
-
-  padding: 2px 10px;
 
   &:hover {
     border-color: $brand-border;
@@ -25,10 +24,16 @@
   }
 }
 
+.toggler-label {
+  display: table-cell;
+  padding: .5rem 2rem;
+  width: 100%;
+}
+
 .toggler-badge {
-  display: inline-block;
-  padding: 2px 10px;
-  margin: -2px -11px -2px 10px;
+  display: table-cell;
+
+  padding: .5rem 1rem;
 
   color: white;
   background-color: $brand-divider;

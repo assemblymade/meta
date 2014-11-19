@@ -47,8 +47,62 @@ module.exports = React.createClass({
       <Tile>
         {this.renderTarget()}
         {this.renderSource()}
-        
+        {this.renderComments()}
       </Tile>
+    );
+  },
+
+
+  renderComments: function() {
+    var product = this.props.product
+    var target = this.props.target
+
+    var commentsCount = this.state.commentsCount;
+    var tags = this.props.target.tags
+
+    // TODO This stuff should really be common across all the items
+    var commentItem;
+    if (commentsCount) {
+      var commentsUrl = target.url + "#comments"
+
+      commentItem = (
+        <li className="left px1">
+          <a className="gray" href={commentsUrl}>
+            <span className="fa fa-comment mr1"></span>
+            {commentsCount}
+          </a>
+        </li>
+      )
+    }
+
+    var tagItems = null
+    if (typeof tags !== "undefined" && tags !== null) {
+      tagItems = _.map(tags, function(tag) {
+        var baseUrl = target.url || this.props.url;
+        var url = baseUrl && baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
+
+        return (
+          <li className="left px1" key={tag.id}>
+            <a className="gray bold" href={url}>
+              <span className="h6 mt0 mb0 gray">{tag.name.toUpperCase()}</span>
+            </a>
+          </li>
+        )
+      }.bind(this));
+    }
+
+    return (
+      <div>
+        <div className="px3">
+          <ul className="list-reset clearfix mxn1">
+            {commentItem}
+            {tagItems}
+          </ul>
+        </div>
+        <div className="border-top" style={{ backgroundColor: 'rgba(0,0,0,0.01)'}}>
+          <NewsFeedItemComments item={this.props} />
+        </div>
+      </div>
     );
   },
 
@@ -102,59 +156,6 @@ module.exports = React.createClass({
       </a>
     );
   },
-
-  renderComments: function() {
-    var product = this.props.product
-    var target = this.props.target
-
-    var commentsCount = this.state.commentsCount;
-    var tags = this.props.target.tags
-
-    // TODO This stuff should really be common across all the items
-    var commentItem;
-    if (commentsCount) {
-      var commentsUrl = this.props.url + "/comments"
-
-      commentItem = (
-        <li className="left px1">
-          <a className="gray" href={commentsUrl}>
-            <span className="fa fa-comment mr1"></span>
-            {commentsCount}
-          </a>
-        </li>
-      )
-    }
-
-    var tagItems = null
-    if (typeof tags !== "undefined" && tags !== null) {
-      tagItems = _.map(tags, function(tag) {
-        var baseUrl = target.url || this.props.url;
-        var url = baseUrl && baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
-
-        return (
-          <li className="left px1" key={tag.id}>
-            <a className="gray bold" href={url}>
-              <span className="h6 mt0 mb0 gray">{tag.name.toUpperCase()}</span>
-            </a>
-          </li>
-        )
-      }.bind(this));
-    }
-
-    return (
-      <div>
-        <div className="px3">
-          <ul className="list-reset clearfix mxn1">
-            {commentItem}
-            {tagItems}
-          </ul>
-        </div>
-        <div className="border-top" style={{ backgroundColor: 'rgba(0,0,0,0.01)'}}>
-          <NewsFeedItemComments item={this.props} />
-        </div>
-      </div>
-    );
-  }
 });
 
 window.NewsFeedItem = module.exports;

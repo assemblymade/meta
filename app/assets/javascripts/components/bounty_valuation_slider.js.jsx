@@ -14,7 +14,7 @@
     },
 
     componentDidUpdate: function (props, state) {
-      if(this.state.dragging && !state.dragging) {
+      if (this.state.dragging && !state.dragging) {
         document.addEventListener('mousemove', this.handleMouseMove)
         document.addEventListener('mouseup', this.handleMouseUp)
       } else if (!this.state.dragging && state.dragging) {
@@ -22,7 +22,7 @@
         document.removeEventListener('mouseup', this.handleMouseUp)
       }
 
-      if(this.state.selectedStep != state.selectedStep) {
+      if (this.state.selectedStep !== state.selectedStep) {
         this.props.onChange({ target: { value: this.props.steps[this.state.selectedStep] }})
       }
     },
@@ -101,7 +101,7 @@
             <ul className="slider-steps list-unstyled" style={{ width: 100 + this.stepPosition() + '%', marginLeft: -this.stepPosition()/2 + '%', padding: '0 17px' }}>
               {this.props.steps.map(function(step) {
                 return (
-                  <li style={{ width: this.stepWidth() + '%' }}>
+                  <li style={{ width: this.stepWidth() + '%' }} key={step}>
                     {step}
                   </li>
                 )
