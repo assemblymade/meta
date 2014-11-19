@@ -12,7 +12,8 @@
   var NewsFeedItemBounty = require('./news_feed_item_bounty.js.jsx');
   var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
   var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
-  var Tile = require('../tile.js.jsx')
+  var Tag = require('../tag.js.jsx');
+  var Tile = require('../tile.js.jsx');
   var moment = require('moment');
   var ONE_DAY = 24 * 60 * 60 * 1000;
 
@@ -119,11 +120,7 @@
             var url = baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
             return (
               <li className="left px1" key={tag.id}>
-                <span className="h6 mt0 mb0">
-                  <a className="gray-2 bold" href={url}>
-                    {tag.name.toUpperCase()}
-                  </a>
-                </span>
+                <a className="h6 mt0 mb0" href={url}><Tag tag={tag} /></a>
               </li>
             )
           })
