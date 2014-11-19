@@ -32,64 +32,44 @@
         <Tile>
           {this.renderSource()}
           {this.renderTarget()}
-          {this.renderComments()}
-          {this.renderLastComment()}
+          {this.renderTags()}
+          {this.renderUserSource()}
+          <div className="py2 border-top">
+            {this.renderLastComment()}
+            {this.renderComments()}
+          </div>
         </Tile>
       );
     },
 
     renderComments: function() {
-      var product = this.props.product
-      var target = this.props.target
+      var product = this.props.product;
+      var target = this.props.target;
 
-      var commentCount = target && target.comments_count
-      var tags = target && target.tags
+      var commentCount = target && target.comments_count;
+
 
       // Don't show any footer if there's no comments or tags
       // This isn't great, we should always have something for people to do
-      if ((typeof commentCount === "undefined" || commentCount === null || commentCount < 1) && (typeof tags === "undefined" || tags === null)) {
-        return
+      if (!commentCount) {
+        return;
       }
 
       // TODO This stuff should really be common across all the items
-      var commentItem = null
+      var commentItem = null;
+      var commentsUrl = this.props.target.url + "#comments";
 
-      if ((typeof commentCount !== "undefined" && commentCount !== null) &&  commentCount > 0) {
-
-        var commentsUrl = this.props.target.url + "#comments"
-
-        commentItem = (
-          <li className="left px1">
-            <a className="gray" href={commentsUrl}>
-              <span className="fa fa-comment mr1"></span>
-              {commentCount}
-            </a>
-          </li>
-        )
-      }
-
-      var tagItems = null
-      var baseUrl = this.props.target.url;
-      if (baseUrl && tags && tags.length) {
-        tagItems = _.map(tags, function(tag) {
-          var url = baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
-          return (
-            <li className="left px1" key={tag.id}>
-              <span className="h6 mt0 mb0">
-                <a className="gray bold" href={url}>
-                  {tag.name.toUpperCase()}
-                </a>
-              </span>
-            </li>
-          )
-        })
-      }
+      commentItem = (
+        <li className="left px1">
+          <a className="gray-3" href={commentsUrl} style={{ textDecoration: 'underline' }}>
+            <span className="fa fa-comment mr1"></span>
+            View {commentCount > 1 ? 'all' : ''} {commentCount} {commentCount > 1 ? 'comments' : 'comment'}
+          </a>
+        </li>
+      )
 
       return (
-        <div className="px3 py2 h6 mt0 mb0">
-          <ul className="list-reset clearfix mxn1">
-            {tagItems}
-          </ul>
+        <div className="px3 h6">
           <ul className="list-reset clearfix mxn1">
             {commentItem}
           </ul>
@@ -104,21 +84,15 @@
         var user = comment.user;
 
         return (
-          <div className="border-top">
-            <div className="block px3 py1 gray">
-              <a className="gray" href={this.props.target.url + '#comments'}>
-                Last comment
-              </a>
+          <div className="clearfix px3" key={comment.id}>
+            <div className="left mr2">
+              <Avatar user={user} size={24} />
             </div>
-            <div className="clearfix px3" key={comment.id} style={{ paddingBottom: '12px' }}>
-              <div className="left mr2">
-                <Avatar user={user} size={24} />
-              </div>
-              <div className="overflow-hidden">
-                <a className="block bold black" style={{ lineHeight: '18px' }} href={user.url}>{user.username}</a>
-                <div className='gray-darker'>
-                  <Markdown content={comment.markdown_body || window.marked(comment.body)} normalize={true} />
-                </div>
+            <div className="overflow-hidden gray-2">
+              <a className="bold black" style={{ lineHeight: '18px' }} href={user.url}>{user.username}</a>
+              {' '} commented <time>{$.timeago(comment.created_at)}</time>
+              <div className='gray-darker'>
+                <Markdown content={comment.markdown_body || window.marked(comment.body)} normalize={true} />
               </div>
             </div>
           </div>
@@ -147,6 +121,39 @@
           </a>
         </div>
       );
+    },
+
+    renderTags: function() {
+      var target = this.props.target
+      var tags = target && target.tags;
+
+      if (tags) {
+        var tagItems = null;
+        var baseUrl = target.url;
+
+        if (baseUrl && tags.length) {
+          tagItems = _.map(tags, function(tag) {
+            var url = baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
+            return (
+              <li className="left px1" key={tag.id}>
+                <span className="h6 mt0 mb0">
+                  <a className="gray-2 bold" href={url}>
+                    {tag.name.toUpperCase()}
+                  </a>
+                </span>
+              </li>
+            )
+          })
+        }
+
+        return (
+          <div className="px3 py1 h6 mt0 mb0">
+            <ul className="list-reset clearfix mxn1 mb0">
+              {tagItems}
+            </ul>
+          </div>
+        );
+      }
     },
 
     renderTarget: function() {
@@ -189,6 +196,24 @@
             url={target.url} />;
         }
       }
+    },
+
+    renderUserSource: function() {
+      var user = this.props.user
+
+      return (
+        <div className="px3 py2 clearfix border-top h6 mb0">
+          <div className="left mr2">
+            <Avatar user={user} size={18} />
+          </div>
+          <div className="overflow-hidden gray-2">
+            <span className="black bold">
+              {user.username}
+            </span>
+            {' '} created this {this.targetNoun(this.props.target.type)} <time>{$.timeago(new Date(this.props.created))}</time>
+          </div>
+        </div>
+      );
     },
 
     targetNoun: function(type) {
