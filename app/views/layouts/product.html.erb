@@ -46,7 +46,7 @@
           <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
         </h1>
 
-        <div class="h3 mt0 mb1 gray-3"><%= truncate(@product.pitch, length: 60, separator: ' ') %></div>
+        <div class="h3 mt0 mb1 gray-1"><%= truncate(@product.pitch, length: 60, separator: ' ') %></div>
 
         <ul class="list-reset clearfix mxn1 mb0">
           <% if @product.homepage_url? %>
