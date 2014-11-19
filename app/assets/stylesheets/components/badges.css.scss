@@ -14,15 +14,6 @@
   &:hover {
     background-color: darken($gray-lighter, 10%);
   }
-
-  &.active {
-    background-color: #ff4f38;
-    color: white;
-
-    &:hover {
-      background-color: darken(#ff4f38, 10%);
-    }
-  }
 }
 
 .badge-notification {
