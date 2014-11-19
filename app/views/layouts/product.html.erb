@@ -57,6 +57,15 @@
               </a>
             </li>
           <% end %>
+
+          <% if can?(:edit, @product) %>
+            <li class="left px1">
+              <a href="<%= edit_product_path(@product) %>">
+                <%= inline_react_component 'Icon', icon: 'gear' %>
+                Edit product
+              </a>
+            </li>
+          <% end %>
         </ul>
 
       </div>
