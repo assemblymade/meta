@@ -65,7 +65,9 @@
       <ul class="list-reset">
         <% @product_marks.each do |p| %>
         <li>
-            <%= p %>
+            <a href = "<%= discover_path(mark: p) %>"> 
+              <%= p %>
+            </a>
         </li>
         <% end %>
       </ul>

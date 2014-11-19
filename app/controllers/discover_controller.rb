@@ -36,6 +36,9 @@ class DiscoverController < ApplicationController
                               wip_tags: { name: tag },
                               wips: { state: 'open' }
                             )
+
+    elsif params[:mark].present?
+       @products = @products.with_mark(params[:mark])
     end
 
     @products = case params[:sort]

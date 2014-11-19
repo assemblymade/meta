@@ -94,6 +94,8 @@ class Product < ActiveRecord::Base
   scope :greenlit,     -> { public_products.where(state: 'greenlit') }
   scope :profitable,   -> { public_products.where(state: 'profitable') }
 
+  scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
+
   validates :slug, uniqueness: { allow_nil: true }
   validates :name, presence: true,
                    length: { minimum: 2, maximum: 255 }
