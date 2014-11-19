@@ -10,7 +10,6 @@
 #= require jquery-cookie
 #= require jquery-autosize
 #= require jquery-timeago
-#= require spin.js
 #= require es5-shim
 #= require react
 #= require notify.js

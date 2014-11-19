@@ -323,7 +323,6 @@ GEM
     rails-assets-notify.js (1.2.0)
     rails-assets-nprogress (0.1.6)
     rails-assets-numeral (1.5.3)
-    rails-assets-spin.js (2.0.1)
     rails-assets-underscore (1.7.0)
     rails_12factor (0.0.2)
       rails_serve_static_assets
@@ -544,7 +543,6 @@ DEPENDENCIES
   rails-assets-notify.js (= 1.2.0)
   rails-assets-nprogress (= 0.1.6)
   rails-assets-numeral (= 1.5.3)
-  rails-assets-spin.js (= 2.0.1)
   rails-assets-underscore (= 1.7.0)
   rails_12factor
   rails_stdout_logging
