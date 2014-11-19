@@ -11,7 +11,7 @@
             <span className="caret"></span>
           </a>
 
-          <ul className="dropdown-menu" role="menu">
+          <ul className="dropdown-menu pull-right" role="menu">
             {this.listItems()}
           </ul>
         </li>

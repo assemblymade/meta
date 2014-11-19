@@ -4,7 +4,7 @@
       <a href="<%= scoped_product_bounties_path(@product, state: 'open') %>">
         Todo
 
-        <span class="badge badge-subtle">
+        <span class="badge badge-subtle hidden-xs">
           <%= @product.tasks.open.count %>
         </span>
       </a>
@@ -14,7 +14,7 @@
       <a href="<%= scoped_product_bounties_path(@product, state: 'progress') %>">
         Doing
 
-        <span class="badge badge-subtle">
+        <span class="badge badge-subtle hidden-xs">
           <%= @product.tasks.allocated.count %>
         </span>
       </a>
@@ -24,7 +24,7 @@
       <a href="<%= scoped_product_bounties_path(@product, state: 'reviewing') %>">
         Reviewing
 
-        <span class="badge badge-subtle">
+        <span class="badge badge-subtle hidden-xs">
           <%= @product.tasks.reviewing.count %>
         </span>
       </a>
@@ -34,7 +34,7 @@
       <a href="<%= scoped_product_bounties_path(@product, state: 'closed') %>">
         Resolved
 
-        <span class="badge badge-subtle">
+        <span class="badge badge-subtle hidden-xs">
           <%= @product.tasks.closed.count %>
         </span>
       </a>
