@@ -6,6 +6,8 @@
 (function() {
   var AppIcon = require('../app_icon.js.jsx');
   var Avatar = require('../avatar.js.jsx');
+  var Comment = require('../comment.js.jsx');
+  var Icon = require('../icon.js.jsx');
   var Markdown = require('../markdown.js.jsx');
   var NewsFeedItemBounty = require('./news_feed_item_bounty.js.jsx');
   var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
@@ -34,10 +36,7 @@
           {this.renderTarget()}
           {this.renderTags()}
           {this.renderUserSource()}
-          <div className="py2 border-top">
-            {this.renderLastComment()}
-            {this.renderComments()}
-          </div>
+          {this.renderComments()}
         </Tile>
       );
     },
@@ -56,23 +55,18 @@
       }
 
       // TODO This stuff should really be common across all the items
-      var commentItem = null;
       var commentsUrl = this.props.target.url + "#comments";
 
-      commentItem = (
-        <li className="left px1">
+      return (
+        <div className="px3 py2 h6 mt0 mb0 border-top">
+          {this.renderLastComment()}
+
           <a className="gray-3" href={commentsUrl} style={{ textDecoration: 'underline' }}>
-            <span className="fa fa-comment mr1"></span>
+            <span className="mr1">
+              <Icon icon="comment" />
+            </span>
             View {commentCount > 1 ? 'all' : ''} {commentCount} {commentCount > 1 ? 'comments' : 'comment'}
           </a>
-        </li>
-      )
-
-      return (
-        <div className="px3 h6">
-          <ul className="list-reset clearfix mxn1">
-            {commentItem}
-          </ul>
         </div>
       );
     },
@@ -84,17 +78,8 @@
         var user = comment.user;
 
         return (
-          <div className="clearfix px3" key={comment.id}>
-            <div className="left mr2">
-              <Avatar user={user} size={24} />
-            </div>
-            <div className="overflow-hidden gray-2">
-              <a className="bold black" style={{ lineHeight: '18px' }} href={user.url}>{user.username}</a>
-              {' '} commented <time>{$.timeago(comment.created_at)}</time>
-              <div className='gray-darker'>
-                <Markdown content={comment.markdown_body || window.marked(comment.body)} normalize={true} />
-              </div>
-            </div>
+          <div className="mb2" key={comment.id}>
+            <Comment author={user} body={comment.markdown_body} timestamp={comment.created_at} />
           </div>
         );
       }
@@ -109,17 +94,15 @@
       }
 
       return (
-        <div>
-          <a className="block px3 py2 clearfix border-bottom" href={product.url}>
-            <div className="left mr1">
-              <AppIcon app={product} size={32} />
-            </div>
-            <div className="overflow-hidden" style={{ lineHeight: '16px' }}>
-              <div className="black">{product.name}</div>
-              <div className="gray-dark text-small">{product.pitch}</div>
-            </div>
-          </a>
-        </div>
+        <a className="block px3 py2 clearfix border-bottom" href={product.url}>
+          <div className="left mr1">
+            <AppIcon app={product} size={36} />
+          </div>
+          <div className="overflow-hidden" style={{ lineHeight: '16px' }}>
+            <div className="h6 mt0 mb0 black">{product.name}</div>
+            <div className="h6 mt0 mb0 gray-dark">{product.pitch}</div>
+          </div>
+        </a>
       );
     },
 

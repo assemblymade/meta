@@ -5,7 +5,8 @@
     max-width: 100%;
   }
 
-  p, ul, ol {
+  p, dl, ul, ol {
+    font-size: inherit;
     color: inherit;
   }
 
