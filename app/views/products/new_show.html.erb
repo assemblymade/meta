@@ -74,7 +74,7 @@
           <strong>30 days</strong> before it is Greenlit. You can become a team member by
           <a href="<%= product_people_path(@product) %>">introducing yourself</a>.</p>
 
-        <div class="progress progress-sm" style="margin-bottom:6px">
+        <div class="progress progress-sm bg-white mb1">
           <div class="progress-bar progress-bar-success" style="width:<%= (((@product.bio_memberships_count || 0) / 10.0) * 100).round %>%"></div>
         </div>
 
