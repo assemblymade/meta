@@ -110,6 +110,10 @@ class ProductsController < ProductController
     end
   end
 
+  def plan
+    set_product
+  end
+
   # The old show page
   def old
     return redirect_to(about_url) if @product.meta?

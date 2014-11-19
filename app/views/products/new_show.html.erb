@@ -42,11 +42,11 @@
     ).as_json %>
   </div>
 
-  <div class="sm-col sm-col-4 px2">
+  <div class="sm-col sm-col-4">
 
     <div class="bg-gray-5 p2 rounded mb2">
       <% if @product.lead.present? %>
-        <h6 class="mt0 py2 mb0 black">The Big Idea</h6>
+        <h6 class="gray-2 mt0 mb0 py1">The Big Idea</h6>
         <%= react_component 'Markdown', content: @product.lead, normalized: true %>
         <a class="block mb3" href="<%= product_plan_path(@product) %>">Read more</a>
       <% end %>
