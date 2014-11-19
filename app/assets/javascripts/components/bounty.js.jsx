@@ -54,7 +54,6 @@ module.exports = React.createClass({
       this.setState({
         lockUntil: this.state.lockUntil.add(hours, 'hours')
       }, function() {
-        console.log(this.props.bounty.lock_url)
         $.ajax({
           url: this.props.bounty.lock_url,
           method: 'PATCH',
@@ -136,7 +135,7 @@ module.exports = React.createClass({
   },
 
   renderBountyValuation: function() {
-    return BountyValuation(_.extend(this.state.bounty, this.props.valuation))
+    return <BountyValuation {...this.state.bounty} {...this.props.valuation} />;
   },
 
   renderClosedNotice: function() {
