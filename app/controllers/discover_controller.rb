@@ -38,7 +38,12 @@ class DiscoverController < ApplicationController
                             )
 
     elsif params[:mark].present?
-       @products = @products.with_mark(params[:mark])
+       @products = @products.includes(:logo)
+                            .with_mark(params[:mark])
+                            .where.not(slug: 'meta')
+                            .where(flagged_at: nil)
+                            .where(state: %w(greenlit profitable team_building))
+                            .limit(100)
     end
 
     @products = case params[:sort]
