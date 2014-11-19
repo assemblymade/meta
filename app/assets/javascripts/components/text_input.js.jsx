@@ -15,6 +15,7 @@
     getInitialState: function() {
       return {
         inputValue: '',
+        scope: this.props.url,
         transform: (this.props.transform || this.transform)
       };
     },
@@ -23,6 +24,7 @@
       Dispatcher.dispatch({
         action: TC.ACTIONS.ADD_TAG,
         data: {
+          scope: this.state.scope,
           tag: this.state.transform(this.state.inputValue),
           url: this.props.url
         },

@@ -63,22 +63,22 @@
     <% if @product_marks.count > 0 %>
       <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
 
-      <div data-react-class="TagList" data-react-props="<%= {
-          hideAddButton: !(current_user && @product.core_team?(current_user)),
-          destination: true,
-          tags: @product_marks,
-          url: product_path(@product)
-        }.to_json %>">
-      </div>
+      <ul class="list-reset">
+        <% @product_marks.each do |mark| %>
+          <li>
+            <%= mark %>
+          </li>
+        <% end %>
+      </ul>
     <% end %>
 
     <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
 
     <ul class="list-reset">
       <% @top_wip_tags.each do |tag, count| %>
-      <li>
-        <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
-      </li>
+        <li>
+          <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
+        </li>
       <% end %>
     </ul>
 

@@ -14,12 +14,12 @@
       hideAddButton: React.PropTypes.bool,
       newBounty: React.PropTypes.bool,
       tags: React.PropTypes.array,
-      url: React.PropTypes.string.isRequired
+      url: React.PropTypes.string
     },
 
     componentWillMount: function() {
       if (this.props.destination) {
-        TagListStore.setTags(this.state.scope, this.props.tags);
+        TagListStore.setTags(this.props.tags);
       }
 
       TagListStore.addChangeListener(this.onChange);
@@ -39,10 +39,6 @@
       return {
         adding: false,
         popoverShown: false,
-        // a bit of a hack, but it should
-        // allow multiple tag lists on one page
-        scope: this.props.url + Date.now().toString(),
-
         // :<
         tags: this.props.tags
       };
@@ -57,7 +53,6 @@
         Dispatcher.dispatch({
           action: TAG_LIST.ACTIONS.ADD_TAG,
           data: {
-            scope: self.state.scope,
             tag: tag,
             url: self.props.url
           },
@@ -76,7 +71,7 @@
     },
 
     onChange: function() {
-      var tags = TagListStore.getTags(this.state.scope);
+      var tags = TagListStore.getTags();
 
       if (this.props.destination) {
         this.setState({
@@ -152,7 +147,6 @@
         Dispatcher.dispatch({
           action: TAG_LIST.ACTIONS.REMOVE_TAG,
           data: {
-            scope: self.state.scope,
             tag: tag,
             url: self.props.url
           },
@@ -197,7 +191,7 @@
 
     tags: function(tags) {
       var self = this;
-      var addedTags = TagListStore.getTags(self.state.scope);
+      var addedTags = TagListStore.getTags();
 
       var mappedTags = _.map(tags, function(tag) {
         if (!tag) {
