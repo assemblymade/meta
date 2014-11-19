@@ -7,12 +7,8 @@
 <% else %>
   <div id="new-comment" class="media js-new-event alpha">
 
-    <div class="pull-left">
-      <% if signed_in? %>
-        <img class="media-object avatar" src="<%= current_user.avatar.url(60) %>" width="30" height="30">
-      <% else %>
-        <img class="media-object avatar" src="<%= image_path('avatars/default.png') %>" width="30" height="30">
-      <% end %>
+    <div class="pull-left sm-show">
+      <%= react_component 'Avatar', user: UserSerializer.new(current_user), size: 30 %>
     </div>
 
     <div class="media-body ">
@@ -23,7 +19,7 @@
           <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
             <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Add to the discussion', rows: 3, "data-product-id" => @wip.product.id %>
 
-            <div class="dropzone-inner js-dropzone-select">
+            <div class="dropzone-inner js-dropzone-select sm-show">
               To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...
             </div>
           </div>
