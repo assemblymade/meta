@@ -24,6 +24,9 @@
     },
 
     render: function() {
+      if (!window.app.featureEnabled('much-love')) {
+        return <span/>
+      }
       if (this.state.hearts_count == null) {
         return <span/>
       }
