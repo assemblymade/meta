@@ -67,7 +67,7 @@ class DiscoverController < ApplicationController
     @products = team_building_products.page(params[:page])
   end
 
-  def bounties
+   def bounties
     default_filter = cookies[:discover_bounties_filter] || 'design'
     @filter = cookies[:discover_bounties_filter] = params.fetch(:filter, default_filter)
 
