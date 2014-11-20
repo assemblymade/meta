@@ -94,14 +94,21 @@ module.exports = React.createClass({
       }.bind(this));
     }
 
+    var itemList = null
+    if(tagItems && tagItems.length || commentItem) {
+      itemList = (
+        <ul className="list-reset clearfix mxn1">
+          {loveItem}
+          {commentItem}
+          {tagItems}
+        </ul>
+      )
+    }
+
     return (
       <div>
         <div className="px3">
-          <ul className="list-reset clearfix mxn1">
-            {loveItem}
-            {commentItem}
-            {tagItems}
-          </ul>
+          {itemList}
         </div>
         <div className="border-top" style={{ backgroundColor: 'rgba(0,0,0,0.01)'}}>
           <NewsFeedItemComments item={this.props} />
