@@ -118,7 +118,8 @@ module.exports = React.createClass({
     case 'team_membership':
       return <NewsFeedItemIntroduction
           user={target.user}
-          intro={target.bio} />;
+          intro={target.bio}
+          product={product} />;
 
     case 'discussion':
       return <NewsFeedItemPost

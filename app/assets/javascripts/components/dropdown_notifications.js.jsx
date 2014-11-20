@@ -49,24 +49,25 @@
 
       var actors = _.map(this.actors(story, options.actors), func.dot('username')).join(', @')
 
-      var classes = React.addons.classSet({
+      var cs = React.addons.classSet({
+        'list-group-item': true,
+        'p2': true,
+        'block': true,
         'entry-read': this.isRead(story),
         'bg-gray-6': !this.isRead(story)
       });
 
       return (
-        <a className={'list-group-item list-group-item-condensed ' + classes}
+        <a className={cs}
             href={story.url}
-            style={{ fontSize: '14px', border: 'none' }}
             onClick={this.markAsRead.bind(this, story)}
             key={options.key}>
 
-          <div className="row" style={{ margin: '0px', maxWidth: '365px' }}>
-            <div className="col-md-2">
-              <Avatar user={this.actors(story, options.actors)[0]} size={18} />&nbsp;
+          <div className="clearfix">
+            <div className="left mr2">
+              <Avatar user={this.actors(story, options.actors)[0]} size={18} />
             </div>
-
-            <div className="col-md-10">
+            <div className="overflow-hidden h6 mt0 mb0">
               <strong>{actors}</strong> {this.body(story)}<br/>
               {this.preview(story)}
             </div>

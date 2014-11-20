@@ -81,48 +81,39 @@ class ProductsController < ProductController
       page_views.drop_older_than(5.minutes)
     end
 
-    if signed_in? && current_user.staff?
-      limit = 10
-      offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
+    limit = 10
+    offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
 
-      @top_wip_tags = Marks::MarkBasics.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
-      @product_marks = @product.marks.pluck(:name).uniq
+    @top_wip_tags = Marks::MarkBasics.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
+    @product_marks = @product.marks.pluck(:name).uniq
 
-      if @product_marks.count > PRODUCT_MARK_DISPLAY_LIMIT
-        @product_marks = @product_marks[0..PRODUCT_MARK_DISPLAY_LIMIT]
+    if @product_marks.count > PRODUCT_MARK_DISPLAY_LIMIT
+      @product_marks = @product_marks[0..PRODUCT_MARK_DISPLAY_LIMIT]
+    end
+
+    query = if params[:filter].present?
+      @mark_name = params[:filter]
+      Marks::MarkBasics.new.
+          news_feed_items_per_product_per_mark(@product, @mark_name).
+          limit(limit).
+          offset(offset).
+          order(updated_at: :desc)
+    else
+      @product.news_feed_items.
+          limit(limit).
+          offset(offset).
+          order(updated_at: :desc)
+    end
+
+    @news_feed_items = query.map do |nfi|
+      Rails.cache.fetch([nfi, :json]) do
+        NewsFeedItemSerializer.new(nfi).as_json
       end
-
-
-      @cache_key = "/#{params[:id]}filter=#{params[:filter] || 'all'}&page=#{params[:page] || '1'}"
-
-      @posts = Rails.cache.fetch(@cache_key, expires_in: 10.minutes) do
-        if params[:filter].present?
-          @mark_name = params[:filter]
-          @news_feed_to_show = Marks::MarkBasics.new.
-              news_feed_items_per_product_per_mark(@product, @mark_name).
-              limit(limit).
-              offset(offset).
-              order(updated_at: :desc)
-        else
-          @news_feed_to_show = @product.news_feed_items.limit(20).order(updated_at: :desc)
-        end
-
-        @news_feed_items = ActiveModel::ArraySerializer.new(
-          @news_feed_to_show
-        )
-      end
-
-      respond_to do |format|
-        format.html { render 'products/new_show', layout: 'product' }
-        format.json { render json: @news_feed_items }
-      end
-
-      return
     end
 
     respond_to do |format|
-      format.html { render }
-      format.json { render json: @product }
+      format.html { render 'products/new_show', layout: 'product' }
+      format.json { render json: @news_feed_items }
     end
   end
 

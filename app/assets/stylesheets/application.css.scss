@@ -100,3 +100,25 @@
     margin-top: 0;
   }
 }
+
+// TODO This was @chrislloyd's hack. To be replaced when more time is spent on the welcome banner.
+
+.welcome-banner-left {
+  background-image: url(image-path('asm-flatsidebars-left-2x.png'));
+  background-repeat: none;
+  background-size: 813px 166px;
+  width: 813px;
+  height: 166px;
+  left: -813px - 48px;
+  top: -0.5rem;
+}
+
+.welcome-banner-right {
+  background-image: url(image-path('asm-flatsidebars-right-2x.png'));
+  background-repeat: none;
+  background-size: 813px 166px;
+  width: 813px;
+  height: 166px;
+  right: -813px - 48px;
+  top: -0.5rem;
+}

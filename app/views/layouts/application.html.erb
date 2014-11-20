@@ -18,23 +18,7 @@
     <% end %>
 
     <%= stylesheet_link_tag 'application' %>
-    <%= render 'shared/google_fonts' %>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <% if signed_in? && current_user.staff? %>
-      <style>
-        body {
-          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-          font-size: 1.25rem;
-        }
-        h1, h2, h3, h4, h5, h6 {
-          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        }
-        p, dl, ol, ul {
-          font-size: 1.25rem;
-        }
-      </style>
-    <% end %>
 
     <%= render 'shared/social_media_meta_tags' %>
     <%= render 'shared/fancy_icons'%>
@@ -44,7 +28,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="<%= yield(:body_class) %> <%= 'bg-gray-6' if signed_in? && current_user.staff? %>">
+  <body class="<%= yield(:body_class) %> bg-gray-6">
 
     <%= yield %>
 

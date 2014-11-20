@@ -155,27 +155,17 @@
 
       <div class="right py1 dropdown">
         <a class="btn btn-primary bg-blue dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown" id="product-actions">
-          New
-          <span class="sr-only">New</span>
+          <span class="mr1">New</span>
           <%= inline_react_component 'Icon', icon: 'chevron-down' %>
         </a>
 
-        <ul class="dropdown-menu" role="menu" aria-labelledby="product-actions">
+        <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="product-actions">
           <li role="presentation">
             <a href="javascript:void(0);" onclick="javascript:showCreateBounty();">
               <span class="mr1">
                 <%= inline_react_component 'Icon', icon: 'trophy' %>
               </span>
               Bounty
-            </a>
-          </li>
-
-          <li role="presentation">
-            <a href="<%= new_product_post_path(@product) %>">
-              <span class="mr1">
-                <%= inline_react_component 'Icon', icon: 'newspaper-o' %>
-              </span>
-              Post
             </a>
           </li>
 
@@ -187,6 +177,19 @@
               Discussion
             </a>
           </li>
+
+          <% if @product.core_team?(current_user) %>
+            <li role="presentation">
+              <a href="<%= new_product_post_path(@product) %>">
+                <span class="mr1">
+                  <%= inline_react_component 'Icon', icon: 'newspaper-o' %>
+                </span>
+                Post
+              </a>
+            </li>
+          <% end %>
+
+
           <!-- FIXME: There should be a new asset page -->
 <!--
           <li role="presentation">

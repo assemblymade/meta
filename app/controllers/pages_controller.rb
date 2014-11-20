@@ -10,10 +10,7 @@ class PagesController < ApplicationController
   end
 
   def home
-    if signed_in? && current_user.staff?
-      render 'focus_home', layout: nil
-      return
-    end
+    render 'focus_home', layout: nil
   end
 
 end

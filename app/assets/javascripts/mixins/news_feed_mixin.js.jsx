@@ -4,7 +4,7 @@ var NewsFeedMixin = {
   eagerlyFetchMoreNewsFeedItems: function(e) {
     this.setState({
       disableLoadMoreButton: true,
-      page: this.state.page + 1
+      page: (this.state.page || 1) + 1
     }, function() {
       var url = window.location.pathname + '?page=' + this.state.page;
 

@@ -3,8 +3,8 @@
 }
 
 .badge-navbar {
-  background-color: #F4F4F5; // $gray-6
-  color: #C2C7D0; // $gray-3
+  background-color: #DBDEE3; // $gray-5
+  color: white;
   font-size: 14px;
   height: 24px;
   line-height: 14px;
@@ -12,13 +12,16 @@
   vertical-align: middle;
 
   &:hover {
-    color: #8B909A; // $gray-2
-    background-color: #ECEDEF; // $gray-5
+    color: white;
+    background-color: #C2C7D0; // $gray-4
   }
 
-  &.active,
-  &.active:hover {
+  &.active {
     background-color: #EC3750;
+  }
+
+  &.active:hover {
+    background-color: darken(#EC3750, 10%);
   }
 }
 

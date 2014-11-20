@@ -166,7 +166,6 @@
       return (
         <li className={buttonClass} key={filter}>
           <a href={"?filter=" + filter}
-              onClick={onClick}
               onMouseOver={this.handleFilterMouseOver.bind(this, filter)}
               onMouseOut={this.handleFilterMouseOut.bind(this, filter)}>
             {label}
