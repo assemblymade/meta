@@ -16,6 +16,8 @@ class Partner
   end
 
   def ownership
+    return 0 if total_coins.zero?
+
     coins.to_f / total_coins.to_f
   end
 

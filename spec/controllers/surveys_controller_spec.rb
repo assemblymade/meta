@@ -23,7 +23,7 @@ describe SurveysController do
     end
 
     it "doesn't require any answers" do
-      post :create, user: {previous_experience: "", platforms: [""]}
+      post :create
       expect(response).to redirect_to('/discover')
     end
 
@@ -35,12 +35,10 @@ describe SurveysController do
         previous_experience: "I like pies.",
         platforms: ["web", "ios", ""]
       }
+
+      # we now ignore everything up interested_tags
       user.reload
       expect(user.interested_tags).to eq(["strategy", "marketing"])
-      expect(user.most_important_quality).to eq("interesting work")
-      expect(user.how_much_time).to eq("lots")
-      expect(user.previous_experience).to eq("I like pies.")
-      expect(user.platforms).to eq(["web", "ios"])
     end
   end
 

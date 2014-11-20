@@ -4,7 +4,13 @@
   var BountyBreakdown = require('./bounty_breakdown.js.jsx');
   var BountyValuation = React.createClass({
     propTypes: {
-      contracts: React.PropTypes.object.isRequired
+      contracts: React.PropTypes.object.isRequired,
+      product: React.PropTypes.object.isRequired,
+      url: React.PropTypes.string,
+      maxOffer: React.PropTypes.number,
+      averageBounty: React.PropTypes.number,
+      coinsMinted: React.PropTypes.number,
+      profitLastMonth: React.PropTypes.number
     },
 
     getInitialState: function() {

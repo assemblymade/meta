@@ -19,249 +19,78 @@
 
         <p class="text-muted">or maybe you want to <a class="bold" href="<%= start_idea_path %>" onclick="javascript:window.analytics.track('surveys.show.exit.clicked');" style="font-weight:bold;text-decoration:underline">start a product</a> or you're all <a href="<%= discover_path %>" style="font-weight:bold;text-decoration:underline" onclick="javascript:window.analytics.track('surveys.show.exit.clicked');">&ldquo;Geez man! Just let me dive in!!&rdquo;</a></p>
 
-
-      <% ab_test('long_user_survey_on_signup', 'long', 'nope') do |test| %>
-        <% if test == 'long' %>
-        <h3 style="font-weight:normal;margin-bottom:4rem">There are 5 questions. None of them are required. The more you fill out, the more helpful we can be, yo.</h3>
-        <% end %>
-      <% end %>
-
       </div>
 
       <hr style="margin-bottom:4rem">
 
       <%= form_for current_user, url: '/welcome', html: {class: 'form'} do |f| %>
+        <div class="form-group">
+          <h2>
+            What kinds of stuff do you like to do?
+          </h2>
 
-        <% ab_test('long_user_survey_on_signup', 'long', 'nope') do |test| %>
-          <% if test == 'long' %>
+          <div class="checkbox">
+            <label>
+              <%= check_box_tag 'user[interested_tags][]', 'design',  current_user.interested_tags.include?('design') %>
+              <strong>Design</strong>
+              <span class="text-muted">Interfaces, Information/Architecture, Brand, Logos, Icons</span>
+            </label>
+          </div>
 
-            <div class="form-group">
-              <h2>
-                1. What kinds of stuff do you like to do?
-              </h2>
+          <div class="checkbox">
+            <label>
+              <%= check_box_tag 'user[interested_tags][]', 'strategy',  current_user.interested_tags.include?('strategy') %>
+              <strong>Strategy</strong>
+              <span class="text-muted">Planning, Metrics, Partnerships</span>
+            </label>
+          </div>
 
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'design',  current_user.interested_tags.include?('design') %>
-                  <strong>Design</strong>
-                  <span class="text-muted">Interfaces, Information/Architecture, Brand, Logos, Icons</span>
-                </label>
-              </div>
+          <div class="checkbox">
+            <label>
+              <%= check_box_tag 'user[interested_tags][]', 'frontend', current_user.interested_tags.include?('frontend') %>
+              <strong>Frontend Dev</strong>
+              <span class="text-muted">HTML, CSS, SCSS, Javascript</span>
+            </label>
+          </div>
 
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'strategy',  current_user.interested_tags.include?('strategy') %>
-                  <strong>Strategy</strong>
-                  <span class="text-muted">Planning, Metrics, Partnerships</span>
-                </label>
-              </div>
+          <div class="checkbox">
+            <label>
+              <%= check_box_tag 'user[interested_tags][]', 'backend',  current_user.interested_tags.include?('backend') %>
+              <strong>Backend Dev</strong>
+              <span class="text-muted">Ruby on Rails, Python, PHP, Go</span>
+            </label>
+          </div>
 
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'frontend', current_user.interested_tags.include?('frontend') %>
-                  <strong>Frontend Dev</strong>
-                  <span class="text-muted">HTML, CSS, SCSS, Javascript</span>
-                </label>
-              </div>
+          <div class="checkbox">
+            <label>
+              <%= check_box_tag 'user[interested_tags][]', 'marketing',  current_user.interested_tags.include?('marketing') %>
+              <strong>Marketing</strong>
+              <span class="text-muted">Social, Growth, Emails</span>
+            </label>
+          </div>
 
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'backend',  current_user.interested_tags.include?('backend') %>
-                  <strong>Backend Dev</strong>
-                  <span class="text-muted">Ruby on Rails, Python, PHP, Go</span>
-                </label>
-              </div>
+          <div class="checkbox">
+            <label>
+              <%= check_box_tag 'user[interested_tags][]', 'writing', current_user.interested_tags.include?('writing') %>
+              <strong>Writing</strong>
+              <span class="text-muted">Blogging, Copywriting, Content Strategy</span>
+            </label>
+          </div>
 
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'marketing',  current_user.interested_tags.include?('marketing') %>
-                  <strong>Marketing</strong>
-                  <span class="text-muted">Social, Growth, Emails</span>
-                </label>
-              </div>
-
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'writing', current_user.interested_tags.include?('writing') %>
-                  <strong>Writing</strong>
-                  <span class="text-muted">Blogging, Copywriting, Content Strategy</span>
-                </label>
-              </div>
-
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'airguitar',  current_user.interested_tags.include?('airguitar') %>
-                  <strong>Air Guitar</strong>
-                  <span class="text-muted">and other Air Instruments</span>
-                </label>
-              </div>
-            </div><!-- 1. What kinds of stuff do you like to do? -->
-
-            <br style="line-height:60px">
-
-            <div class="form-group">
-              <h2>2. What's more important to you?</h2>
-              <p>If you had to choose.</p>
-
-              <div class="radio">
-                <label>
-                  <%= f.radio_button :most_important_quality, 'recurring income' %>
-                  Potential recurring income
-                </label>
-              </div>
-
-              <div class="radio">
-                <label>
-                  <%= f.radio_button :most_important_quality, 'interesting work' %>
-                  Doing interesting work
-                </label>
-              </div>
-
-            </div><!-- 2. What's more important to you? -->
-
-            <br style="line-height:60px">
-
-            <div class="form-group">
-              <h2>3. How much time do you have to spend?</h2>
-              <p>If you had to choose.</p>
-
-              <div class="radio">
-                <label>
-                  <%= f.radio_button :how_much_time, 'little' %>
-                  I'm looking for short burst work
-                </label>
-              </div>
-
-              <div class="radio">
-                <label>
-                  <%= f.radio_button :how_much_time, 'lots' %>
-                  I like big challenging tasks
-                </label>
-              </div>
-            </div><!-- 3. How much time do you have to spend? -->
-
-            <br style="line-height:60px">
-
-            <div class="form-group">
-              <h2>4. What's your experience?</h2>
-              <p>Everyone has an interesting background of work and experience. What's the simplest version of yours? Ever been a part of a start? Ever worked on other products? Ever been a Mexican Lucha Libre wrestling champion?</p>
-
-              <%= react_component 'LimitedCharacterTextarea', limit: 500, name: 'user[previous_experience]' %>
-
-            </div><!-- 4. What's your experience? -->
-
-            <br style="line-height:60px">
-
-            <div class="form-group">
-              <h2>
-                5. What platforms do you enjoy working on?
-              </h2>
-              <p>Assembly doesn't replace your tools, but it helps to know what our community is using.</p>
-
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[platforms][]', 'web' %>
-                  Web
-                </label>
-              </div>
-
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[platforms][]', 'ios' %>
-                  iOS
-                </label>
-              </div>
-
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[platforms][]', 'android' %>
-                  Android
-                </label>
-              </div>
-
-              <div class="checkbox">
-                <label>
-                  Other
-                  <%= text_field_tag 'user[platforms][]', nil, class: 'form-control input-sm' %>
-                </label>
-              </div>
-            </div><!-- 5. What platforms do you enjoy working on? -->
-
-
-          <% else %>
-
-
-            <div class="form-group">
-              <h2>
-                What kinds of stuff do you like to do?
-              </h2>
-
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'design',  current_user.interested_tags.include?('design') %>
-                  <strong>Design</strong>
-                  <span class="text-muted">Interfaces, Information/Architecture, Brand, Logos, Icons</span>
-                </label>
-              </div>
-
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'strategy',  current_user.interested_tags.include?('strategy') %>
-                  <strong>Strategy</strong>
-                  <span class="text-muted">Planning, Metrics, Partnerships</span>
-                </label>
-              </div>
-
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'frontend', current_user.interested_tags.include?('frontend') %>
-                  <strong>Frontend Dev</strong>
-                  <span class="text-muted">HTML, CSS, SCSS, Javascript</span>
-                </label>
-              </div>
-
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'backend',  current_user.interested_tags.include?('backend') %>
-                  <strong>Backend Dev</strong>
-                  <span class="text-muted">Ruby on Rails, Python, PHP, Go</span>
-                </label>
-              </div>
-
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'marketing',  current_user.interested_tags.include?('marketing') %>
-                  <strong>Marketing</strong>
-                  <span class="text-muted">Social, Growth, Emails</span>
-                </label>
-              </div>
-
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'writing', current_user.interested_tags.include?('writing') %>
-                  <strong>Writing</strong>
-                  <span class="text-muted">Blogging, Copywriting, Content Strategy</span>
-                </label>
-              </div>
-
-              <div class="checkbox">
-                <label>
-                  <%= check_box_tag 'user[interested_tags][]', 'airguitar',  current_user.interested_tags.include?('airguitar') %>
-                  <strong>Air Guitar</strong>
-                  <span class="text-muted">and other Air Instruments</span>
-                </label>
-              </div>
-            </div><!-- 1. What kinds of stuff do you like to do? -->
-
-          <% end %>
-        <% end %>
+          <div class="checkbox">
+            <label>
+              <%= check_box_tag 'user[interested_tags][]', 'airguitar',  current_user.interested_tags.include?('airguitar') %>
+              <strong>Air Guitar</strong>
+              <span class="text-muted">and other Air Instruments</span>
+            </label>
+          </div>
+        </div><!-- 1. What kinds of stuff do you like to do? -->
 
         <br style="line-height:60px">
 
         <div class="form-actions">
           <button class="btn btn-primary" type="submit">Send me the goods!</button>
         </div>
-
       <% end %>
 
     </div>

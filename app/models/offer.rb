@@ -17,15 +17,10 @@ class Offer < ActiveRecord::Base
 
   def influence
     partner = Partner.new(self.product, self.user)
-    [partner.coins, partner.ownership, partner.total_coins]
 
-    inf = if partner.coins.zero?
-      1
-    else
-      partner.coins
-    end
+    return 0 if partner.total_coins.zero?
 
-    inf / partner.total_coins.to_f
+    [partner.coins, 1].max / partner.total_coins.to_f
   end
 
   def earnable

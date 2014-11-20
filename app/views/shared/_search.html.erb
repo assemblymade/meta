@@ -1,11 +1,13 @@
-<form action="<%= scoped_search_path %>" class="navbar-form navbar-left" style="margin: 7px 12px 7px 0; padding-left: 3px;">
+<form action="<%= scoped_search_path %>" class="navbar-form navbar-left py1 mt0 mb0">
   <div class="form-group has-feedback">
     <div class="input-group input-group-search">
       <% if @product && @product.persisted? %>
         <label class="control-label">This product</label>
       <% end %>
       <input type="search" name="q" value="<%= params[:q] %>" placeholder="Search" class="form-control" autocomplete="off" />
-      <span class="icon icon-magnifier form-control-feedback"></span>
+      <span class="form-control-feedback">
+        <%= inline_react_component 'Icon', icon: 'search' %>
+      </span>
     </div>
     <input type="hidden" name="type" value="<%= @type %>">
   </div>

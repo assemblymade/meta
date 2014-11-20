@@ -19,14 +19,14 @@
       var user = this.props.currentUser;
 
       return (
-        <ul className='nav navbar-nav'>
-          <li>
+        <ul className="list-reset mxn1">
+          <li className="hidden">
             <TitleNotificationsCount />
           </li>
 
-          <li className="navbar-item-muted">
+          <li className="left navbar-item-muted sm-show">
             <ChatNotificationsToggler
-              iconClass='icon-bubble'
+              icon="comment"
               href='#notifications'
               label='Chat' />
 
@@ -35,9 +35,9 @@
                 username={appUser.username} />
           </li>
 
-          <li className="navbar-item-muted">
+          <li className="left navbar-item-muted sm-show">
             <DropdownNotificationsToggler
-                iconClass='icon-bell'
+                icon="bell"
                 href='#stories'
                 label='Notifications' />
 
@@ -47,12 +47,10 @@
                 editUserPath={this.props.editUserPath} />
           </li>
 
-          <li className='dropdown'>
-            <a href='javascript:void(0);' className='dropdown-toggle' data-toggle='dropdown' key={'navbar dropdown'} style={{ padding: '15px 6px 13px' }}>
+          <li className="left dropdown">
+            <a href='javascript:void(0);' className="block dropdown-toggle px1 py2" data-toggle='dropdown' key={'navbar dropdown'}>
               <Avatar user={appUser} size="24" />
-              <span className='visible-xs-inline' style={{ marginLeft: '5px' }}>
-                {appUser.username}
-              </span>
+              <span className="visible-xs-inline ml1">{appUser.username}</span>
             </a>
 
             <UserNavbarDropdown {...this.props} />

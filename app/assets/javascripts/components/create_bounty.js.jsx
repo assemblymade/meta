@@ -9,9 +9,13 @@
     },
 
     getDefaultProps: function() {
-      return {
-        csrf: document.getElementsByName('csrf-token')[0].content
-      };
+      var csrfTokenElement = document.getElementsByName('csrf-token')[0];
+
+      if (csrfTokenElement) {
+        return {
+          csrf: csrfTokenElement.content
+        };
+      }
     },
 
     getInitialState: function() {

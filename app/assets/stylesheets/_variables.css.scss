@@ -3,7 +3,7 @@
 $black:         #333;
 
 $blue:          #338EDA;
-$green:         #5cb85c;
+$green:         #33D6A6;
 $cyan:          #5bc0de;
 $yellow:        #f0ad4e;
 $red:           #EC3750;
@@ -249,11 +249,11 @@ $container-lg:            $container-large-desktop;
 // Navbar
 
 // Basics of a navbar
-$navbar-height:              $line-height-computed * 2;
+$navbar-height:              48px;
 $navbar-margin-bottom:       $line-height-computed;
 $navbar-border-radius:       $border-radius-base;
 $navbar-padding-horizontal:  floor(($grid-gutter-width / 2));
-$navbar-padding-vertical:    14px;
+$navbar-padding-vertical:    12px;
 $navbar-collapse-max-height: 340px;
 
 $navbar-default-color:  $gray-dark;

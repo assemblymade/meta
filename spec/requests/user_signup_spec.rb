@@ -18,4 +18,3 @@ describe 'User signup' do
     expect(response).to redirect_to('/welcome')
   end
 end
-

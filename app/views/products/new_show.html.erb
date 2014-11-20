@@ -38,7 +38,7 @@
     <div class="bg-gray-5 p2 rounded mb2">
       <% if @product.lead.present? %>
         <h6 class="gray-2 mt0 mb0 py1">The Big Idea</h6>
-        <%= react_component 'Markdown', content: @product.lead, normalized: true %>
+        <%= react_component 'Markdown', content: product_markdown(@product, @product.lead), normalized: true %>
         <a class="block mb3" href="<%= product_plan_path(@product) %>">Read more</a>
       <% end %>
 
@@ -55,12 +55,14 @@
             <div class="gray-2">Repos</div>
           </a>
         </div>
-        <div class="stat">
-          <a class="block" href="<%= product_financials_path(@product) %>">
-            <div class="h4 mt0 mb0"><%= short_currency(@product.profit_reports.map(&:profit).reduce(:+)) %></div>
-            <div class="gray-2">Royalties</div>
-          </a>
-        </div>
+        <% if @product.profit_reports.any? %>
+          <div class="stat">
+            <a class="block" href="<%= product_financials_path(@product) %>">
+              <div class="h4 mt0 mb0"><%= short_currency(@product.profit_reports.map(&:profit).reduce(:+)) %></div>
+              <div class="gray-2">Royalties</div>
+            </a>
+          </div>
+        <% end %>
       </div>
     </div>
 
@@ -72,7 +74,7 @@
           <strong>30 days</strong> before it is Greenlit. You can become a team member by
           <a href="<%= product_people_path(@product) %>">introducing yourself</a>.</p>
 
-        <div class="progress progress-sm" style="margin-bottom:6px">
+        <div class="progress progress-sm bg-white mb1">
           <div class="progress-bar progress-bar-success" style="width:<%= (((@product.bio_memberships_count || 0) / 10.0) * 100).round %>%"></div>
         </div>
 
@@ -80,7 +82,6 @@
           <div class="left"><%= pluralize(@product.bio_memberships_count, 'team member') %></div>
           <div class="right"><%= pluralize(@product.team_building_days_left, 'day') %> left</div>
         </div>
-
       </div>
     <% end %>
 
@@ -90,29 +91,28 @@
       </div>
     <% end %>
 
-    <% if @product_marks.count > 0 %>
-      <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
+    <div class="px2">
+      <% if @product_marks.count > 0 %>
+        <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
+        <ul class="list-reset">
+          <% @product_marks.each do |mark| %>
+            <li>
+              <%= mark %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
 
+      <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
       <ul class="list-reset">
-        <% @product_marks.each do |p| %>
-        <li>
-            <!-- <a href ="<%= discover_path(mark: p) %>">   -->
-            <%= p %>
-            <!-- </a> -->
-        </li>
+
+        <% @top_wip_tags.each do |tag, count| %>
+          <li>
+            <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
+          </li>
         <% end %>
       </ul>
-    <% end %>
-
-    <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
-
-    <ul class="list-reset">
-      <% @top_wip_tags.each do |tag, count| %>
-        <li>
-          <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
-        </li>
-      <% end %>
-    </ul>
+    </div>
 
   </div>
 

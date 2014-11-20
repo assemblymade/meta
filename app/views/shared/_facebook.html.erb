@@ -1,17 +1,19 @@
 <div id='fb-root' class='div-with-id-required-for-fb-sdk'></div>
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId  : <%= ENV['FACEBOOK_APP_ID'] %>,
-      cookie : true, // enable cookies to allow the server to access the session
-      xfbml  : true  // parse XFBML
-    });
-  };
+<% if ENV['FACEBOOK_APP_ID'].present? %>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId  : <%= ENV['FACEBOOK_APP_ID'] %>,
+        cookie : true, // enable cookies to allow the server to access the session
+        xfbml  : true  // parse XFBML
+      });
+    };
 
-  (function(d) {
-    var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
-    js = d.createElement('script'); js.id = id; js.async = true;
-    js.src = "//connect.facebook.net/en_US/all.js";
-    d.getElementsByTagName('head')[0].appendChild(js);
-  }(document));
-</script>
+    (function(d) {
+      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      d.getElementsByTagName('head')[0].appendChild(js);
+    }(document));
+  </script>
+<% end %>

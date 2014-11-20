@@ -2,6 +2,10 @@
 
 (function() {
   var Urgency = React.createClass({
+    propTypes: {
+      initialLabel: React.PropTypes.string
+    },
+
     getInitialState: function() {
       return { label: this.props.initialLabel }
     },
@@ -10,7 +14,7 @@
       var state = this.props.state;
       var openStates = ['open', 'allocated', 'awarded'];
 
-      if(openStates.indexOf(state) > -1) {
+      if (openStates.indexOf(state) > -1) {
         return this.renderOpen();
       } else {
         return this.renderNotOpen();
@@ -20,7 +24,7 @@
     renderOpen: function() {
       return (
         <div className="dropdown" style={{"display":"inline-block"}}>
-          <a data-toggle="dropdown" style={{"cursor":"pointer"}}>
+          <a data-toggle="dropdown" style={{ cursor: "pointer" }}>
             <span className={this.labelClass(this.state.label)}>{this.state.label}</span>
           </a>
           <ul className="dropdown-menu">
@@ -55,7 +59,8 @@
 
     updateUrgency: function(label) {
       return function() {
-        this.setState({label: label})
+        this.setState({ label: label });
+
         $.ajax({
           url: this.props.url,
           dataType: 'json',
