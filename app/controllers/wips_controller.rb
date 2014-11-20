@@ -59,14 +59,11 @@ class WipsController < ProductController
   def apply_tags
     if tag_list = wip_params[:tag_list]
       tag_list.each do |t|
-        Marks::MarkBasics.new.mark_with_name(@wip, t.to_s)
+        Marks::MarkBasics.new.mark_with_name(@wip, t)
       end
       @wip.update_tag_names! current_user, tag_list
     end
   end
-
-
-
 
   def tag
     apply_tags

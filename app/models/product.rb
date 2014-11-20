@@ -160,6 +160,10 @@ class Product < ActiveRecord::Base
     pluck('distinct unnest(tags)').sort_by{|t| t.downcase }
   end
 
+  def news_feed_items_with_mark(mark_name)
+    Marks::MarkBasics.new.news_feed_items_per_product_per_mark(self, mark_name)
+  end
+
   def on_stealth_entry(prev_state, event, *args)
     update!(
       started_team_building_at: nil,

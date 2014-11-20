@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Mark do
-
   before do
     @mark = Mark.new({name: "test"})
   end

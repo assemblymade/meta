@@ -16,11 +16,9 @@ module Marks
     def mark_with_name(object, mark_name)
       themark = Mark.find_by(name: mark_name)
       if themark.nil?
-        newmark = new_mark(mark_name)
-        mark_it(object, newmark)
-      else
-        mark_it(object, themark)
+        themark = new_mark(mark_name)
       end
+      mark_it(object, themark)
     end
 
     def find_mark_from_name(name)
@@ -46,11 +44,10 @@ module Marks
       Mark.joins(:tasks).where(wips: { closed_at: nil }).where(wips: { product_id: product.id }).group(:name).order('count_all DESC').limit(limit).count
     end
 
-
-    def news_feed_items_per_product_per_mark(product, mark_name)
+    def news_feed_items_per_product_per_mark(product, mark)
       product.news_feed_items.select do |news_feed_item|
         news_feed_item.target && news_feed_item.target.has_attribute?('marks') &&
-          news_feed_item.target.marks.includes?(mark_name)
+          news_feed_item.target.marks.includes?(mark)
       end
     end
 

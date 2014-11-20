@@ -24,7 +24,7 @@ class Wip::Tag < ActiveRecord::Base
   end
 
   def self.suggested_tags
-    leading_marks = Marks::MarkBasics.new.leading_marks_systemwide(13).keys
+    Marks::MarkBasics.new.leading_marks_systemwide(13).keys
   end
 
 end
