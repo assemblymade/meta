@@ -24,7 +24,7 @@
       <% if @product.lead.present? %>
         <h6 class="gray-2 mt0 mb0 py1">The Big Idea</h6>
         <%= react_component 'Markdown', content: product_markdown(@product, @product.lead), normalized: true %>
-        <a class="block mb3" href="<%= product_plan_path(@product) %>">Read more</a>
+        <a class="block mb3" href="<%= product_plan_path(@product) %>">Read more</a>
       <% end %>
 
       <div class="stat-group mb0">
@@ -90,6 +90,9 @@
 
       <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
       <ul class="list-reset">
+          <!-- <li>
+            <a href = "<% product_path(@product) %>">All (<%= @total_wip_tags.to_s %>)</a>
+          </li> -->
         <% @top_wip_tags.each do |tag, count| %>
           <li>
             <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
@@ -125,6 +128,14 @@
           </form>
         </div>
       <% end %>
+    <% end %>
+
+
+    <% if @mark_name %>
+      <div class="btn btn-default btn-block sm-col-3">
+    <%= @mark_name %>
+      </div>
+      <br>
     <% end %>
 
     <%= react_component 'NewsFeedList', items: @news_feed_items.as_json %>

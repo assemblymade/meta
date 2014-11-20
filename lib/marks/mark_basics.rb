@@ -1,49 +1,15 @@
 module Marks
   class MarkBasics
 
-    DEFAULT_MARKING_WEIGHT = 1.0  #for future use
+
 
     def new_mark(new_mark_name)
       Mark.create!({name: new_mark_name})
     end
 
-    def mark_it(object, mark)
-      if not Marking.where(markable: object, mark_id: mark.id).nil?
-        Markign.create!({markable: object, mark_id: mark.id, weight: DEFAULT_MARKING_WEIGHT})
-      end
-    end
-
-    def find_mark_from_name(name)
-      the_mark = Mark.where(name: name)
-      if the_mark.present?
-        return the_mark.first  #There should only ever be one mark per name
-      end
-    end
-
     def wips_with_mark(mark_name)
       Wip.joins(:marks).where('marks.name = ?', mark_name)
     end
-
-    def wips_with_mark_under_product(mark_name, product)
-      Wip.joins(:marks).where('marks.name = ?', mark_name).where(product_id: product.id)
-    end
-
-    def products_with_mark(mark_name)
-      Product.joins(:marks).where('marks.name = ?', mark_name)
-    end
-
-    def leading_marks_on_product(product, limit)
-      Mark.joins(:tasks).where(wips: { closed_at: nil }).where(wips: { product_id: product.id }).group(:name).order('count_all DESC').limit(limit).count
-    end
-
-
-    def news_feed_items_per_product_per_mark(product, mark_name)
-      product.news_feed_items.select do |news_feed_item|
-        news_feed_item.target && news_feed_item.target.has_attribute?('marks') &&
-          news_feed_item.target.marks.includes?(mark_name)
-      end
-    end
-
 
     #RUN ONCE
     def retroactively_convert_old_tags_to_new()
@@ -67,7 +33,7 @@ module Marks
         name = t.tag.name
         mark_id = Mark.find_by(name: name).id
         if not Marking.where(mark_id: mark_id).where(markable_id: the_wip.id).present?
-          Marking.create!({markable: the_wip, mark_id: mark_id, weight: DEFAULT_MARKING_WEIGHT})
+          Marking.create!({markable: the_wip, mark_id: mark_id, weight: 1.0})
         end
       end
     end
@@ -80,7 +46,7 @@ module Marks
             the_mark = find_mark_from_name(t)
             if not the_mark.nil?
               if not Marking.where(mark_id: the_mark.id).where(markable_id: p.id).present?
-                Marking.create!({markable: p, mark_id: the_mark.id, weight: DEFAULT_MARKING_WEIGHT})
+                Marking.create!({markable: p, mark_id: the_mark.id, weight: 1.0})
               end
             end
           end

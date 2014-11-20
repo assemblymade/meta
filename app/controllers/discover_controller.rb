@@ -38,6 +38,10 @@ class DiscoverController < ApplicationController
                             )
     end
 
+    if params[:mark].present?
+       @products = @products.with_mark(params[:mark])
+    end
+
     @products = case params[:sort]
       when 'trending'
         @products.ordered_by_trend
