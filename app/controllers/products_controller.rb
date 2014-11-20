@@ -81,7 +81,7 @@ class ProductsController < ProductController
       page_views.drop_older_than(5.minutes)
     end
 
- @top_wip_tags = Marks::MarkBasics.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
+    @top_wip_tags = QueryMarks.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
     @product_marks = @product.marks.pluck(:name).uniq
 
     if @product_marks.count > PRODUCT_MARK_DISPLAY_LIMIT
@@ -90,7 +90,7 @@ class ProductsController < ProductController
 
     query = if params[:filter].present?
       @mark_name = params[:filter]
-      Marks::MarkBasics.new.
+      MakeMarks.new.
           news_feed_items_per_product_per_mark(@product, @mark_name)
     else
       @product.news_feed_items
