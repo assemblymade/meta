@@ -249,6 +249,11 @@ ASM::Application.routes.draw do
 
   get '/interests/:interest' => 'global_interests#toggle', as: :global_interests
 
+  # Startup Weekend
+
+  get '/sw', to: redirect(path: '/startup-weekend')
+  get '/startup-weekend' => 'startup_weekend#index', as: :startup_weekend
+
   # custom oauth :(
   get '/integrations/:provider/token' => 'integrations#token'
   get '/integrations/:provider/callback' => 'integrations#callback'

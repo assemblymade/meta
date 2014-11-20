@@ -23,8 +23,13 @@ var NewsFeedList = React.createClass({
   },
 
   render: function() {
+    var style = null
+    if(this.props.items.length) {
+      style = { marginTop: '-1rem' }
+    }
+
     return (
-      <div className="mxn2" style={{marginTop: '-1rem'}} ref="masonryContainer">
+      <div className="mxn2" style={style} ref="masonryContainer">
         {this.renderItems()}
       </div>
     )

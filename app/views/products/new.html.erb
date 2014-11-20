@@ -55,6 +55,7 @@
           <h6 class="text-muted">Story</h6>
 
           <%= form_for @product, html: {class: 'form'} do |f| %>
+            <%= f.hidden_field :startup_weekend, value: params[:sw].present? %>
             <%= form_group @product, :name do %>
               <%= f.label :name, class: 'control-label' %>
               <div class="row">
