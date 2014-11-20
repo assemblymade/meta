@@ -82,35 +82,32 @@ class DiscoverController < ApplicationController
 
     # (pletcher) This is so ugly -- maybe we should move tags to
     #            NewsFeedItems?
-    @cache_key = "/discover/updates/filter=#{params[:filter] || 'all'}&page=#{params[:page] || '1'}"
+    query = if params[:filter] && params[:filter] != 'hot'
+      Wip.tagged_with(params[:filter]).
+                limit(limit).
+                offset(offset).
+                includes(:news_feed_item).
+                where.not('news_feed_items.product_id = ?', META.id).
+                order(updated_at: :desc).
+                map(&:news_feed_item)
+    else
+      NewsFeedItem.public_items.
+                limit(limit).
+                offset(offset).
+                where.not(product: META).
+                order(updated_at: :desc)
+    end
 
-    @posts = Rails.cache.fetch(@cache_key, expires_in: 10.minutes) do
-      if params[:filter] && params[:filter] != 'hot'
-        query = Wip.tagged_with(params[:filter]).
-          limit(limit).
-          offset(offset).
-          includes(:news_feed_item).
-          where.not('news_feed_items.product_id = ?', META.id).
-          order(updated_at: :desc).
-          map(&:news_feed_item)
-      else
-        query = NewsFeedItem.public_items.
-                  limit(limit).
-                  offset(offset).
-                  where.not(product: META).
-                  order(updated_at: :desc)
+    if params[:filter] == 'hot'
+      query = query.where.not(popular_at: nil)
+    end
+
+    posts = query.to_a.reject{ |q| q.try(:target).try(:flagged?) }
+
+    @posts = posts.map do |post|
+      Rails.cache.fetch([post, :json]) do
+        NewsFeedItemSerializer.new(post).as_json
       end
-
-      if params[:filter] == 'hot'
-        query = query.where.not(popular_at: nil)
-      end
-
-      posts = query.to_a.reject{ |q| q.try(:target).try(:flagged?) }
-
-      ActiveModel::ArraySerializer.new(
-        posts,
-        each_serializer: NewsFeedItemSerializer
-      ).as_json
     end
 
     @counts = Rails.cache.fetch("/discover/updates/counts", expires_in: 12.hours) do
@@ -119,6 +116,13 @@ class DiscoverController < ApplicationController
         memo[filter] = Wip.tagged_with(filter).count
         memo
       end
+    end
+
+    @heartables = (@posts + @posts.map{|p| p[:last_comment]}).
+            map{|h| h.as_json.stringify_keys.slice('heartable_id', 'heartable_type', 'hearts_count') }
+
+    if signed_in?
+      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['heartable_id']})
     end
 
     respond_to do |format|
