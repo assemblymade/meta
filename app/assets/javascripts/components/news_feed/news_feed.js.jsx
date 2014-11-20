@@ -177,6 +177,12 @@
 
     renderItems: function() {
       return _.map(this.state.items, function(item) {
+        var target = item.target;
+
+        if (target.type === 'team_membership') {
+          return null;
+        }
+
         return (
           <div className="sm-col sm-col-6 p2" key={item.id}>
             <NewsFeedItem {...item} />
