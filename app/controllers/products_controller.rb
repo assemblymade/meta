@@ -108,7 +108,7 @@ class ProductsController < ProductController
             map(&:as_json).
             compact.
             map(&:stringify_keys).
-            map{|h| h.slice('heartable_id', 'heartable_type', 'hearts_count') }
+            map{|h| h.slice('heartable_id', 'heartable_type', 'hearts_count') }.to_a
 
     if signed_in?
       @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['heartable_id']})
