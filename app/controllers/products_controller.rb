@@ -91,24 +91,21 @@ class ProductsController < ProductController
       @product_marks = @product_marks[0..PRODUCT_MARK_DISPLAY_LIMIT]
     end
 
+    query = if params[:filter].present?
+      @mark_name = params[:filter]
+      Marks::MarkBasics.new.
+          news_feed_items_per_product_per_mark(@product, @mark_name).
+          limit(limit).
+          offset(offset).
+          order(updated_at: :desc)
+    else
+      @product.news_feed_items.limit(limit).order(updated_at: :desc)
+    end
 
-    @cache_key = "/#{params[:id]}filter=#{params[:filter] || 'all'}&page=#{params[:page] || '1'}"
-
-    @posts = Rails.cache.fetch(@cache_key, expires_in: 10.minutes) do
-      if params[:filter].present?
-        @mark_name = params[:filter]
-        @news_feed_to_show = Marks::MarkBasics.new.
-            news_feed_items_per_product_per_mark(@product, @mark_name).
-            limit(limit).
-            offset(offset).
-            order(updated_at: :desc)
-      else
-        @news_feed_to_show = @product.news_feed_items.limit(20).order(updated_at: :desc)
+    @news_feed_items = query.map do |nfi|
+      Rails.cache.fetch([nfi, :json]) do
+        NewsFeedItemSerializer.new(nfi).as_json
       end
-
-      @news_feed_items = ActiveModel::ArraySerializer.new(
-        @news_feed_to_show
-      )
     end
 
     respond_to do |format|
