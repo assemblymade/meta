@@ -21,17 +21,19 @@
             <div className="welcome-banner-right absolute"></div>
 
             <div className="clearfix">
-              <div className="sm-col sm-col-8">
-            <button type="button" className="close js-dismiss mr2" onClick={this.onClick}>
-              <span>&times;</span>
-            </button>
+              <div className="sm-col sm-col-12">
+                <button type="button" className="h2 close js-dismiss mr2 mt0 mb0" onClick={this.onClick}>
+                  <span>&times;</span>
+                </button>
 
                 <h2 className="mt0 mb2">Welcome to Assembly</h2>
-                <p className="h4 mt0 mb2 light">
+
+                <p className="h3 mt0 mb2 light">
                   We are a community of people who have ideas and build them. Everything here is a collaborative effort including the vision, development, design and marketing.
                 </p>
+
                 <p className="mb0">
-                  <a href="/discover">Find products to work on</a>. Earn ownership when you <a href="/discover/bounties">complete bounties</a>.
+                  <a className="bold" href="/discover">Find products</a> to work on. Earn ownership when you complete <a className="bold" href="/discover/bounties">bounties</a>.
                 </p>
               </div>
             </div>
