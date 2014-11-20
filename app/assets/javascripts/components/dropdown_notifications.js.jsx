@@ -49,13 +49,16 @@
 
       var actors = _.map(this.actors(story, options.actors), func.dot('username')).join(', @')
 
-      var cs = React.addons.classSet({
-        'list-group-item': true,
-        'p2': true,
-        'block': true,
-        'entry-read': this.isRead(story),
-        'bg-gray-6': !this.isRead(story)
-      });
+      var classes = ['px2', 'py1', 'block', 'clearfix'];
+
+      if (this.isRead(story)) {
+        classes.push('bg-white');
+        classes.push('gray');
+      } else {
+        classes.push('bg-gray-6');
+      }
+
+      var cs = React.addons.classSet.apply(this, classes);
 
       return (
         <a className={cs}
@@ -63,14 +66,12 @@
             onClick={this.markAsRead.bind(this, story)}
             key={options.key}>
 
-          <div className="clearfix">
-            <div className="left mr2">
-              <Avatar user={this.actors(story, options.actors)[0]} size={18} />
-            </div>
-            <div className="overflow-hidden h6 mt0 mb0">
-              <strong>{actors}</strong> {this.body(story)}<br/>
-              {this.preview(story)}
-            </div>
+          <div className="left mr2">
+            <Avatar user={this.actors(story, options.actors)[0]} size={18} />
+          </div>
+          <div className="overflow-hidden h6 mt0 mb0">
+            <strong>{actors}</strong> {this.body(story)}<br/>
+            {this.preview(story)}
           </div>
         </a>
       );
@@ -170,7 +171,7 @@
       var firstTen = _.first(stories, 10);
 
       return (
-        <div className="list-group" style={{ maxHeight: '400px', minHeight: '50px' }}>
+        <div style={{ maxHeight: '400px', minHeight: '50px' }}>
           { _.map(firstTen, function(story) {
             var opts = {
               key: story.id,
