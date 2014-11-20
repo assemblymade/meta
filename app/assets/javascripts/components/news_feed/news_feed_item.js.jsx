@@ -58,9 +58,14 @@
       // TODO This stuff should really be common across all the items
       var commentsUrl = this.props.target.url + "#comments";
 
+      var lastComment = this.props.last_comment;
+
       return (
         <div className="px3 py2 h6 mt0 mb0 border-top">
-          {this.renderLastComment()}
+
+          <div className="mb2">
+            <Comment author={lastComment.user} body={lastComment.markdown_body} timestamp={lastComment.created_at} />
+          </div>
 
           <a className="gray-3" href={commentsUrl} style={{ textDecoration: 'underline' }}>
             <span className="mr1">
@@ -70,20 +75,6 @@
           </a>
         </div>
       );
-    },
-
-    renderLastComment: function() {
-      var comment = this.props.last_comment;
-
-      if (comment) {
-        var user = comment.user;
-
-        return (
-          <div className="mb2" key={comment.id}>
-            <Comment author={user} body={comment.markdown_body} timestamp={comment.created_at} />
-          </div>
-        );
-      }
     },
 
     renderSource: function() {
