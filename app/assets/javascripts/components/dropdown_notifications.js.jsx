@@ -141,7 +141,7 @@
 
     render: function() {
       return (
-        <ul className="dropdown-menu" style={{ minWidth: '380px', width: '380px' }}>
+        <ul className="dropdown-menu" style={{ paddingTop: '0px', minWidth: '380px', width: '380px' }}>
           <li style={{ overflowY: 'scroll', minHeight: '60px' }}>
             {this.state.stories ? this.rows(this.state.stories) : <Spinner />}
           </li>
