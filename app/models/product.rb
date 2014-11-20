@@ -161,7 +161,7 @@ class Product < ActiveRecord::Base
   end
 
   def news_feed_items_with_mark(mark_name)
-    Marks::MarkBasics.new.news_feed_items_per_product_per_mark(self, mark_name)
+    QueryMarks.new.news_feed_items_per_product_per_mark(self, mark_name)
   end
 
   def on_stealth_entry(prev_state, event, *args)

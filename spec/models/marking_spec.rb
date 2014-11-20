@@ -10,8 +10,4 @@ describe Marking do
     @marking[:weight].should == 1.0
   end
 
-  it 'product should have marking' do
-    Product.first.marks.include?(@marking).should == true
-  end
-
 end

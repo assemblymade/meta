@@ -7,52 +7,8 @@ module Marks
       Mark.create!({name: new_mark_name})
     end
 
-    def mark_it(object, mark)
-      if not Marking.where(markable_id: object.id).where(mark_id: mark.id).present?
-        Marking.create!({markable: object, mark_id: mark.id, weight: DEFAULT_MARKING_WEIGHT})
-      end
-    end
-
-    def mark_with_name(object, mark_name)
-      themark = Mark.find_by(name: mark_name)
-      if themark.nil?
-        themark = new_mark(mark_name)
-      end
-      mark_it(object, themark)
-    end
-
-    def find_mark_from_name(name)
-      the_mark = Mark.where(name: name)
-      if the_mark.present?
-        return the_mark.first  #There should only ever be one mark per name
-      end
-    end
-
     def wips_with_mark(mark_name)
       Wip.joins(:marks).where('marks.name = ?', mark_name)
-    end
-
-    def wips_with_mark_under_product(mark_name, product)
-      Wip.joins(:marks).where('marks.name = ?', mark_name).where(product_id: product.id)
-    end
-
-    def products_with_mark(mark_name)
-      Product.joins(:marks).where('marks.name = ?', mark_name)
-    end
-
-    def leading_marks_on_product(product, limit)
-      Mark.joins(:tasks).where(wips: { closed_at: nil }).where(wips: { product_id: product.id }).group(:name).order('count_all DESC').limit(limit).count
-    end
-
-    def news_feed_items_per_product_per_mark(product, mark)
-      product.news_feed_items.select do |news_feed_item|
-        news_feed_item.target && news_feed_item.target.has_attribute?('marks') &&
-          news_feed_item.target.marks.includes?(mark)
-      end
-    end
-
-    def leading_marks_systemwide(limit)
-      Mark.joins(:tasks).where(wips: { closed_at: nil }).group(:name).order('count_all DESC').limit(limit).count
     end
 
     #RUN ONCE

@@ -140,6 +140,10 @@ class User < ActiveRecord::Base
     Deed.where(user_id: self.id).sum(:karma_value)
   end
 
+  def marks
+    
+  end
+
   def staff?
     is_staff?
   end
