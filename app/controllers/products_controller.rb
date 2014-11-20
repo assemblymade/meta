@@ -99,7 +99,10 @@ class ProductsController < ProductController
           offset(offset).
           order(updated_at: :desc)
     else
-      @product.news_feed_items.limit(limit).order(updated_at: :desc)
+      @product.news_feed_items.
+          limit(limit).
+          offset(offset).
+          order(updated_at: :desc)
     end
 
     @news_feed_items = query.map do |nfi|
