@@ -1,7 +1,7 @@
 module Marks
   class MarkBasics
 
-    DEFAULT_MARKING_WEIGHT = 1.0  #for future use
+
 
     def new_mark(new_mark_name)
       Mark.create!({name: new_mark_name})
@@ -33,7 +33,7 @@ module Marks
         name = t.tag.name
         mark_id = Mark.find_by(name: name).id
         if not Marking.where(mark_id: mark_id).where(markable_id: the_wip.id).present?
-          Marking.create!({markable: the_wip, mark_id: mark_id, weight: DEFAULT_MARKING_WEIGHT})
+          Marking.create!({markable: the_wip, mark_id: mark_id, weight: 1.0})
         end
       end
     end
@@ -46,7 +46,7 @@ module Marks
             the_mark = find_mark_from_name(t)
             if not the_mark.nil?
               if not Marking.where(mark_id: the_mark.id).where(markable_id: p.id).present?
-                Marking.create!({markable: p, mark_id: the_mark.id, weight: DEFAULT_MARKING_WEIGHT})
+                Marking.create!({markable: p, mark_id: the_mark.id, weight: 1.0})
               end
             end
           end
