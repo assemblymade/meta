@@ -14,6 +14,8 @@ class Event < ActiveRecord::Base
   has_many :tips, foreign_key: 'via_id'
   has_many :tippers, through: :tips, source: :from
 
+  has_one :news_feed_item_comment, foreign_key: 'target_id'
+
   after_commit -> { self.wip.event_added(self); }, on: :create
   after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.wip.id) }
 

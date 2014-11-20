@@ -49,6 +49,7 @@
                   </UserLink>
                 </li>
                 {this.tips()}
+                {this.love()}
               </ul>
             </div>
 
@@ -77,7 +78,13 @@
         </li>
       }
       return null
-    }
+    },
+
+    love: function() {
+      return <li>
+          <Love />
+        </li>
+      }
   });
 
   if (typeof module !== 'undefined') {

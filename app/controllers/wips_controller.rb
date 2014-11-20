@@ -200,6 +200,13 @@ class WipsController < ProductController
       @wip = @product.wips.find_by!(number: number).decorate
     end
     @events = @wip.events.includes(:tips).order(:number)
+
+    if nfi = @wip.news_feed_item
+      @heartables = ([nfi] + nfi.news_feed_item_comments).to_a
+      @user_hearts = if signed_in?
+        Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
+      end
+    end
   end
 
   def set_stories

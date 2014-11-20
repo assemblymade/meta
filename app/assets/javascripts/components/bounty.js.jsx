@@ -3,6 +3,7 @@
 var Markdown = require('./markdown.js.jsx')
 var Icon = require('./icon.js.jsx')
 var formatShortTime = require('../lib/format_short_time.js')
+var Love = require('./love.js.jsx')
 
 module.exports = React.createClass({
   propTypes: {
@@ -86,6 +87,10 @@ module.exports = React.createClass({
     return (
       <div>
         <div className="p3 border-bottom">
+          <div className="right">
+            <Love heartable_id={this.props.item.id} heartable_type="NewsFeedItem" />
+          </div>
+
           <ul className="list-inline mb2" style={{ marginBottom: '6px' }}>
             {this.props.showCoins ? <li className="text-large">
               {this.renderBountyValuation()}

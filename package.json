@@ -7,8 +7,8 @@
     "test": "npm run jest",
     "lint": "node_modules/.bin/jsxhint app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx",
     "postinstall": "npm run bundle",
-    "bundle": "node_modules/.bin/browserify -r underscore -t reactify app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js",
-    "watch": "node_modules/.bin/watchify -r underscore -t reactify app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js -v"
+    "bundle": "node_modules/.bin/browserify -r underscore -t [ reactify --es6 ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js",
+    "watch": "node_modules/.bin/watchify -r underscore -t [ reactify --es6 ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js -v"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
     "browserify": "^5.9.1",
     "imagesloaded": "^3.1.8",
     "jquery": "^2.1.1",
+    "keymirror": "^0.1.0",
     "marked": "^0.3.2",
     "masonry": "braznaavtrav/masonry",
     "moment": "^2.8.1",

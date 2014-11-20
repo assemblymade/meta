@@ -6,6 +6,7 @@ class NewsFeedItemComment < ActiveRecord::Base
     if news_feed_item = NewsFeedItem.find_by(target: target)
       create!(
         body: body,
+        target_id: event.id,
         news_feed_item: news_feed_item,
         user: event.user
       )

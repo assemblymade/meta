@@ -1,5 +1,8 @@
 /** @jsx React.DOM */
 
+var Dispatcher = require('../dispatcher')
+var ActionTypes = require('../constants').ActionTypes
+
 var NewsFeedMixin = {
   eagerlyFetchMoreNewsFeedItems: function(e) {
     this.setState({
@@ -29,9 +32,9 @@ var NewsFeedMixin = {
     if (body) {
       body.scroll(function(e) {
         var distanceFromTop = document.body.scrollTop;
-
+      
         if (distanceFromTop > self.farthestTraveled &&
-            distanceFromTop - self.previousDistance > 3000) {
+            distanceFromTop - self.previousDistance > 1500) {
           self.eagerlyFetchMoreNewsFeedItems();
           self.previousDistance = distanceFromTop;
           self.farthestTraveled = distanceFromTop;
@@ -45,17 +48,23 @@ var NewsFeedMixin = {
       return console.log(err);
     }
 
-    var newItems;
+    var data;
     try {
-      newItems = JSON.parse(results);
+      data = JSON.parse(results);
     } catch (e) {
       return console.log(e);
     }
 
-    if (newItems && newItems.length) {
+    if (data && data.items.length) {
+      // TODO: this should happen in an action creator
+      Dispatcher.handleServerAction({
+        type: ActionTypes.NEWS_FEED_RECEIVE_RAW_ITEMS,
+        data: data
+      })
+
       this.setState(React.addons.update(
         this.state, {
-          items: { $push: newItems },
+          items: { $push: data.items },
           loading: { $set: false }
         }
       ));

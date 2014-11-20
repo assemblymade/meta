@@ -1,4 +1,7 @@
 (function() {
+  // When sprockets doesn't require this file:
+  // var keymirror = require('keymirror')
+
   var CONSTANTS = {
     CHANGE_EVENT: 'change',
     CHAT_NOTIFICATIONS: {
@@ -96,7 +99,24 @@
       ACTIONS: {
         WELCOME_BANNER_DISMISSED: 'welcomeBannerDismissed'
       }
-    }
+    },
+
+
+    // TODO: move constants into here. 1 Flat namespace will ensure constants don't collide
+    ActionTypes: keyMirror({
+      LOVE_CLICKED: null,
+      LOVE_UNCLICKED: null,
+
+      NEWS_FEED_RECEIVE_RAW_ITEMS: null,
+
+      WIP_EVENT_CREATING: null,
+      WIP_EVENT_CREATED: null
+    }),
+
+    PayloadSources: keyMirror({
+      SERVER_ACTION: null,
+      VIEW_ACTION: null
+    })
   };
 
   if (typeof module !== 'undefined') {

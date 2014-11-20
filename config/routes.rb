@@ -131,6 +131,9 @@ ASM::Application.routes.draw do
     end
   end
 
+  post 'heartables/love', as: :love
+  post 'heartables/unlove', as: :unlove
+
   resources :stories, only: [:show]
 
   # Webhooks

@@ -81,27 +81,22 @@ class ProductsController < ProductController
       page_views.drop_older_than(5.minutes)
     end
 
-    limit = 10
-    offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
-
-    @top_wip_tags = QueryMarks.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
-    @total_wip_tags = @top_wip_tags.values.sum
+ @top_wip_tags = Marks::MarkBasics.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
     @product_marks = @product.marks.pluck(:name).uniq
 
     if @product_marks.count > PRODUCT_MARK_DISPLAY_LIMIT
       @product_marks = @product_marks[0..PRODUCT_MARK_DISPLAY_LIMIT]
     end
 
-    query = if params[:mark].present?
-      @mark_name = params[:mark]
-      QueryMarks.new.
+    query = if params[:filter].present?
+      @mark_name = params[:filter]
+      Marks::MarkBasics.new.
           news_feed_items_per_product_per_mark(@product, @mark_name)
     else
-      @product.news_feed_items.
-          limit(limit).
-          offset(offset).
-          order(updated_at: :desc)
+      @product.news_feed_items
     end
+
+    query = query.page(params[:page]).per(10).order(updated_at: :desc)
 
     @news_feed_items = query.map do |nfi|
       Rails.cache.fetch([nfi, :json]) do
@@ -109,9 +104,25 @@ class ProductsController < ProductController
       end
     end
 
+    @heartables = (@news_feed_items + @news_feed_items.map{|p| p[:last_comment]}).
+            map(&:as_json).
+            compact.
+            map(&:stringify_keys).
+            map{|h| h.slice('heartable_id', 'heartable_type', 'hearts_count') }.to_a
+
+    if signed_in?
+      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['heartable_id']})
+    end
+
+
     respond_to do |format|
       format.html { render 'products/new_show', layout: 'product' }
-      format.json { render json: @news_feed_items }
+      format.json {
+        render json: {
+          user_hearts: @user_hearts,
+          items: @news_feed_items
+        }
+      }
     end
   end
 

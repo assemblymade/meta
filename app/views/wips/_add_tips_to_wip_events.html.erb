@@ -3,7 +3,7 @@ var comments = app.wipEvents.filter(function(e) { return e.get('type') == 'Event
 
 _.each(comments, function(e){
   $('.js-insert-tips', $('#' + e.get('anchor'))).each(function() {
-    React.render(TipsUi({
+    React.render(React.createFactory(TipsUi)({
       viaType: 'Event',
       viaId: e.id,
       recipient: e.get('actor'),
@@ -11,3 +11,20 @@ _.each(comments, function(e){
     }), this)
   })
 })
+
+var heartablesTag = document.getElementById('heartables')
+if (heartablesTag) {
+  var heartables = _.reduce(JSON.parse(heartablesTag.innerHTML), function(memo, h){ memo[h.target_id] = h; return memo }, {})
+
+  _.each(comments, function(e){
+    $('.js-insert-love', $('#' + e.get('anchor'))).each(function() {
+      var heartable = heartables[e.id]
+      if (heartable) {
+        React.render(React.createFactory(Love)({
+          heartable_id: heartables[e.id].heartable_id,
+          heartable_type: heartables[e.id].heartable_type
+        }), this)
+      }
+    })
+  })
+}

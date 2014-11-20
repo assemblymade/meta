@@ -6,6 +6,20 @@
 
 <%= render 'shared/navbar' %>
 
- <%= react_component 'NewsFeed', url: discover_path(action: 'updates', format: 'json'), items: @posts, filter_counts: @counts %>
+<script id="heartables" type="application/json">
+  <%== @heartables.to_json %>
+</script>
+
+<% if signed_in? %>
+  <script id="user_hearts" type="application/json">
+    <%== @user_hearts.map{|h| {
+        id: h.id,
+        heartable_id: h.heartable_id,
+      }}.to_json
+    %>
+  </script>
+<% end %>
+
+<%= react_component 'NewsFeed', url: discover_path(action: 'updates', format: 'json'), items: @posts, filter_counts: @counts %>
 
 <%= render 'shared/footer' %>

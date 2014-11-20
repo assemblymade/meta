@@ -30,6 +30,8 @@
   <img class="hidden" data-src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@bounty).first, current_user.id).url %>" />
 <% end %>
 
+<%= render partial: 'wips/heartables' %>
+
 <% content_for :javascript do %>
   <script>
     app.product = new Product(<%= json @bounty.product, scope: current_user %>);

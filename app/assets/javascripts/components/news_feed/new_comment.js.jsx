@@ -37,7 +37,7 @@
       return (
         <div className="clearfix">
           <div className="left mr2">
-            <Avatar user={window.app.currentUser().attributes} size={24} />
+            <Avatar user={window.app.currentUser().attributes} size={18} />
           </div>
           <div className="overflow-hidden">
             <textarea type="text"

@@ -7,6 +7,7 @@ var MarkdownEditor = require('../markdown_editor.js.jsx');
 var NewsFeedItemBountyClose = require('./news_feed_item_bounty_close.js.jsx');
 var NewsFeedItemBountyCommentReference = require('./news_feed_item_bounty_comment_reference.js.jsx');
 var NewsFeedItemBountyReviewReady = require('./news_feed_item_bounty_review_ready.js.jsx');
+var NewsFeedItemBountyTagChange = require('./news_feed_item_bounty_tag_change.js.jsx');
 var NewsFeedItemBountyTimelineItem = require('./news_feed_item_bounty_timeline_item.js.jsx');
 var NewsFeedItemBountyWin = require('./news_feed_item_bounty_win.js.jsx');
 var NewsFeedItemComments = require('./news_feed_item_comments.js.jsx');
@@ -174,19 +175,25 @@ module.exports = React.createClass({
         renderedEvent = null;
         break;
       case 'Event::Close':
-        renderedEvent = NewsFeedItemBountyClose(event);
+        renderedEvent = <NewsFeedItemBountyClose {...event} />;
         break;
       case 'Event::CommentReference':
-        renderedEvent = NewsFeedItemBountyCommentReference(event);
+        renderedEvent = <NewsFeedItemBountyCommentReference {...event} />;
         break;
       case 'Event::ReviewReady':
-        renderedEvent = NewsFeedItemBountyReviewReady(event);
+        renderedEvent = <NewsFeedItemBountyReviewReady {...event} />;
         break;
       case 'Event::Win':
-        renderedEvent = NewsFeedItemBountyWin(event);
+        renderedEvent = <NewsFeedItemBountyWin {...event} />;
+        break;
+      case 'Event::TagChange':
+        // don't render tag change events
+        // renderedEvent = <NewsFeedItemBountyTagChange {...event} />;
+        // See TODO in NewsFeedItemBountyTagChange
+        renderedEvent = <span />;
         break;
       default:
-        renderedEvent = NewsFeedItemBountyTimelineItem(event);
+        renderedEvent = <NewsFeedItemBountyTimelineItem {...event} />;
         break;
       }
 
@@ -223,17 +230,17 @@ module.exports = React.createClass({
           </div>
 
           <div className="media-body" id="comment">
-            <form action={'/' + product + '/bounties/' + bounty.number + '/comments'} method="post" className="form">
+            <form action={'/' + product.slug + '/bounties/' + bounty.number + '/comments'} method="post" className="form">
               <input name="authenticity_token" type="hidden" value={this.props.csrf} />
               <MarkdownEditor id="event_comment_body" name="event_comment[body]" required={true} />
-            </form>
 
-            <div className="form-actions mb3">
-              <div className="btn-group disabled">
-                <a name="event_comment[type]" value="Event::Comment" type="submit" className="btn btn-primary">Comment</a>
-                {this.renderCloseActions()}
+              <div className="form-actions mb3">
+                <div className="btn-group">
+                  <button name="event_comment[type]" value="Event::Comment" type="submit" className="btn btn-primary">Comment</button>
+                  {this.renderCloseActions()}
+                </div>
               </div>
-            </div>
+            </form>
           </div>
 
         </div>

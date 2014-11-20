@@ -1,4 +1,5 @@
 #= require notify.js
+#= require ../dispatcher
 
 # this is the bounty/discussions view
 
@@ -27,6 +28,7 @@ class window.DiscussionView extends Backbone.View
     @listenTo(@model, 'change:state', @wipStateChanged)
     @listenTo(@model, 'change:own_comments', @ownCommentsChanged)
     @listenTo(app.wipEvents, 'add', @wipEventAdded)
+    @listenTo(app.wipEvents, 'sync', @wipEventServerCreated)
 
     @wipStateChanged()
     @ownCommentsChanged()
@@ -87,7 +89,13 @@ class window.DiscussionView extends Backbone.View
     @model.set('state', 'reviewing')
 
   createEvent: (type, body)->
-    app.wipEvents.create _(@eventDefaults).extend(type: type, body: body)
+    attributes = { type: type, body: body }
+    Dispatcher.handleViewAction(_.extend({}, {
+      type: 'WIP_EVENT_CREATING',
+      event: attributes
+    }))
+
+    app.wipEvents.create _(@eventDefaults).extend(attributes)
     @resetCommentForm()
 
   wipEventAdded: (wipEvent)->
@@ -99,6 +107,12 @@ class window.DiscussionView extends Backbone.View
     )
     el = view.render().el
     @$('.timeline,.discussion').append el
+
+  wipEventServerCreated: (model)->
+    Dispatcher.handleViewAction(_.extend({}, {
+      type: 'WIP_EVENT_CREATED',
+      event: model.attributes
+    }))
 
   eventPushed: (msg) =>
     return if msg.socket_id == pusher.connection.socket_id
