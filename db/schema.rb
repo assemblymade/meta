@@ -34,8 +34,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
   add_index "activities", ["story_id"], name: "index_activities_on_story_id", using: :btree
   add_index "activities", ["target_id"], name: "index_activities_on_target_id", using: :btree
 
-  create_table "allocation_events", id: false, force: true do |t|
-    t.uuid     "id",                                        null: false
+  create_table "allocation_events", id: :uuid, force: true do |t|
     t.uuid     "allocation_run_id",                         null: false
     t.uuid     "user_id",                                   null: false
     t.integer  "score",                                     null: false
@@ -43,8 +42,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "created_at",                                null: false
   end
 
-  create_table "allocation_runs", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "allocation_runs", id: :uuid, force: true do |t|
     t.uuid     "product_id", null: false
     t.datetime "created_at", null: false
     t.hstore   "parameters"
@@ -68,8 +66,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "created_at",    null: false
   end
 
-  create_table "attachments", id: false, force: true do |t|
-    t.uuid     "id",           null: false
+  create_table "attachments", id: :uuid, force: true do |t|
     t.uuid     "user_id"
     t.string   "asset_path"
     t.string   "name"
@@ -133,16 +130,14 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "updated_at"
   end
 
-  create_table "code_deliverables", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "code_deliverables", id: :uuid, force: true do |t|
     t.uuid     "wip_id",     null: false
     t.uuid     "user_id",    null: false
     t.string   "url",        null: false
     t.datetime "created_at"
   end
 
-  create_table "completed_missions", id: false, force: true do |t|
-    t.uuid     "id",           null: false
+  create_table "completed_missions", id: :uuid, force: true do |t|
     t.uuid     "product_id",   null: false
     t.string   "mission_id",   null: false
     t.datetime "created_at",   null: false
@@ -157,16 +152,14 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "updated_at"
   end
 
-  create_table "copy_deliverables", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "copy_deliverables", id: :uuid, force: true do |t|
     t.uuid     "wip_id",     null: false
     t.uuid     "user_id",    null: false
     t.text     "body",       null: false
     t.datetime "created_at"
   end
 
-  create_table "core_team_memberships", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "core_team_memberships", id: :uuid, force: true do |t|
     t.uuid     "product_id", null: false
     t.uuid     "user_id",    null: false
     t.datetime "created_at"
@@ -188,8 +181,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.integer  "chronicle_id"
   end
 
-  create_table "deliverables", id: false, force: true do |t|
-    t.uuid     "id",            null: false
+  create_table "deliverables", id: :uuid, force: true do |t|
     t.uuid     "wip_id",        null: false
     t.uuid     "attachment_id", null: false
     t.datetime "created_at"
@@ -215,8 +207,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "created_at", null: false
   end
 
-  create_table "events", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "events", id: :uuid, force: true do |t|
     t.integer  "number",     null: false
     t.uuid     "wip_id",     null: false
     t.uuid     "user_id",    null: false
@@ -249,8 +240,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "updated_at"
   end
 
-  create_table "features", id: false, force: true do |t|
-    t.uuid     "id",                      null: false
+  create_table "features", id: :uuid, force: true do |t|
     t.uuid     "user_id"
     t.uuid     "product_id"
     t.text     "title"
@@ -260,8 +250,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.integer  "votes_count", default: 0, null: false
   end
 
-  create_table "financial_accounts", id: false, force: true do |t|
-    t.uuid     "id",                         null: false
+  create_table "financial_accounts", id: :uuid, force: true do |t|
     t.uuid     "product_id",                 null: false
     t.string   "name",                       null: false
     t.string   "type",                       null: false
@@ -269,16 +258,14 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "created_at",                 null: false
   end
 
-  create_table "financial_amounts", id: false, force: true do |t|
-    t.uuid    "id",             null: false
+  create_table "financial_amounts", id: :uuid, force: true do |t|
     t.string  "type",           null: false
     t.uuid    "account_id",     null: false
     t.uuid    "transaction_id", null: false
     t.integer "amount",         null: false
   end
 
-  create_table "financial_transactions", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "financial_transactions", id: :uuid, force: true do |t|
     t.uuid     "product_id", null: false
     t.hstore   "details",    null: false
     t.datetime "created_at"
@@ -351,8 +338,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
 
   add_index "marks", ["name"], name: "index_marks_on_name", unique: true, using: :btree
 
-  create_table "measurements", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "measurements", id: :uuid, force: true do |t|
     t.uuid     "metric_id",  null: false
     t.decimal  "value",      null: false
     t.datetime "created_at", null: false
@@ -365,8 +351,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "updated_at"
   end
 
-  create_table "metrics", id: false, force: true do |t|
-    t.uuid   "id",         null: false
+  create_table "metrics", id: :uuid, force: true do |t|
     t.uuid   "product_id", null: false
     t.string "name",       null: false
   end
@@ -452,8 +437,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "created_at", null: false
   end
 
-  create_table "perks", id: false, force: true do |t|
-    t.uuid     "id",          null: false
+  create_table "perks", id: :uuid, force: true do |t|
     t.uuid     "product_id"
     t.integer  "amount"
     t.text     "description"
@@ -472,8 +456,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "updated_at"
   end
 
-  create_table "posts", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "posts", id: :uuid, force: true do |t|
     t.uuid     "product_id", null: false
     t.uuid     "author_id",  null: false
     t.text     "body",       null: false
@@ -489,8 +472,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
   add_index "posts", ["product_id", "flagged_at"], name: "index_posts_on_product_id_and_flagged_at", using: :btree
   add_index "posts", ["product_id", "slug"], name: "index_posts_on_product_id_and_slug", unique: true, using: :btree
 
-  create_table "preorders", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "preorders", id: :uuid, force: true do |t|
     t.uuid     "vote_id"
     t.integer  "amount",     null: false
     t.string   "charge_id"
@@ -504,8 +486,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.text     "variation"
   end
 
-  create_table "product_subscriptions", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "product_subscriptions", id: :uuid, force: true do |t|
     t.uuid     "product_id", null: false
     t.uuid     "user_id",    null: false
     t.datetime "created_at"
@@ -522,8 +503,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
 
   add_index "product_trends", ["product_id"], name: "index_product_trends_on_product_id", unique: true, using: :btree
 
-  create_table "products", id: false, force: true do |t|
-    t.uuid     "id",                                               null: false
+  create_table "products", id: :uuid, force: true do |t|
     t.string   "slug",                                             null: false
     t.string   "name",                                             null: false
     t.string   "pitch"
@@ -606,8 +586,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "updated_at"
   end
 
-  create_table "showcases", id: false, force: true do |t|
-    t.uuid     "id",                     null: false
+  create_table "showcases", id: :uuid, force: true do |t|
     t.uuid     "product_id"
     t.uuid     "wip_id"
     t.datetime "showcased_at"
@@ -617,8 +596,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "email_public_sent_at"
   end
 
-  create_table "status_messages", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "status_messages", id: :uuid, force: true do |t|
     t.uuid     "product_id", null: false
     t.uuid     "user_id",    null: false
     t.string   "body",       null: false
@@ -709,8 +687,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
   add_index "transaction_log_entries", ["wallet_id", "product_id"], name: "index_transaction_log_entries_on_wallet_id_and_product_id", using: :btree
   add_index "transaction_log_entries", ["wallet_id"], name: "index_transaction_log_entries_on_wallet_id", using: :btree
 
-  create_table "uniques", id: false, force: true do |t|
-    t.uuid     "id",          null: false
+  create_table "uniques", id: :uuid, force: true do |t|
     t.uuid     "metric_id",   null: false
     t.string   "distinct_id", null: false
     t.datetime "created_at",  null: false
@@ -778,8 +755,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "updated_at"
   end
 
-  create_table "users", id: false, force: true do |t|
-    t.uuid     "id",                                                  null: false
+  create_table "users", id: :uuid, force: true do |t|
     t.string   "name"
     t.string   "customer_id"
     t.boolean  "is_staff",                          default: false,   null: false
@@ -851,8 +827,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
-  create_table "versions", id: false, force: true do |t|
-    t.uuid     "id",             null: false
+  create_table "versions", id: :uuid, force: true do |t|
     t.uuid     "versioned_id",   null: false
     t.string   "versioned_type", null: false
     t.uuid     "user_id",        null: false
@@ -862,8 +837,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.datetime "updated_at"
   end
 
-  create_table "votes", id: false, force: true do |t|
-    t.uuid     "id",                             null: false
+  create_table "votes", id: :uuid, force: true do |t|
     t.uuid     "voteable_id",                    null: false
     t.uuid     "user_id",                        null: false
     t.inet     "ip",                             null: false
@@ -873,8 +847,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
 
   add_index "votes", ["user_id", "voteable_id"], name: "index_votes_on_user_id_and_voteable_id", unique: true, using: :btree
 
-  create_table "watchings", id: false, force: true do |t|
-    t.uuid     "id",                 null: false
+  create_table "watchings", id: :uuid, force: true do |t|
     t.uuid     "user_id",            null: false
     t.uuid     "watchable_id",       null: false
     t.string   "watchable_type",     null: false
@@ -888,8 +861,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
   add_index "watchings", ["user_id", "watchable_id"], name: "index_watchings_on_user_id_and_watchable_id", unique: true, using: :btree
   add_index "watchings", ["watchable_id", "watchable_type"], name: "index_watchings_on_watchable_id_and_watchable_type", using: :btree
 
-  create_table "whiteboard_assets", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "whiteboard_assets", id: :uuid, force: true do |t|
     t.uuid     "event_id",   null: false
     t.string   "image_url",  null: false
     t.string   "format",     null: false
@@ -901,15 +873,13 @@ ActiveRecord::Schema.define(version: 20141117043016) do
 
   add_index "whiteboard_assets", ["event_id", "image_url"], name: "index_whiteboard_assets_on_event_id_and_image_url", unique: true, using: :btree
 
-  create_table "wip_taggings", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "wip_taggings", id: :uuid, force: true do |t|
     t.uuid     "wip_tag_id", null: false
     t.uuid     "wip_id",     null: false
     t.datetime "created_at"
   end
 
-  create_table "wip_tags", id: false, force: true do |t|
-    t.uuid     "id",                          null: false
+  create_table "wip_tags", id: :uuid, force: true do |t|
     t.string   "name",                        null: false
     t.datetime "created_at"
     t.integer  "watchings_count", default: 0, null: false
@@ -917,8 +887,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
 
   add_index "wip_tags", ["name"], name: "index_wip_tags_on_name", unique: true, using: :btree
 
-  create_table "wip_workers", id: false, force: true do |t|
-    t.uuid     "id",                           null: false
+  create_table "wip_workers", id: :uuid, force: true do |t|
     t.uuid     "wip_id",                       null: false
     t.uuid     "user_id",                      null: false
     t.datetime "created_at"
@@ -929,8 +898,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
 
   add_index "wip_workers", ["wip_id", "user_id"], name: "index_wip_workers_on_wip_id_and_user_id", unique: true, using: :btree
 
-  create_table "wips", id: false, force: true do |t|
-    t.uuid     "id",                                               null: false
+  create_table "wips", id: :uuid, force: true do |t|
     t.uuid     "user_id",                                          null: false
     t.uuid     "product_id",                                       null: false
     t.text     "title",                                            null: false
@@ -976,8 +944,7 @@ ActiveRecord::Schema.define(version: 20141117043016) do
     t.integer  "votes_count", default: 0, null: false
   end
 
-  create_table "work_applications", id: false, force: true do |t|
-    t.uuid     "id",         null: false
+  create_table "work_applications", id: :uuid, force: true do |t|
     t.uuid     "user_id",    null: false
     t.uuid     "product_id", null: false
     t.datetime "created_at"

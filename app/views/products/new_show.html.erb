@@ -2,44 +2,14 @@
 <% activate_nav! :product %>
 
 <div class="clearfix mxn2">
-  <div class="sm-col sm-col-8 px2">
 
-    <% if signed_in? %>
-      <% product_membership = current_user.team_memberships.find_by(product: @product) %>
-
-      <% if product_membership.nil? || product_membership.bio.nil? %>
-
-        <div class="bg-white p3 rounded shadow mb3">
-          <div class="clearfix">
-            <h6 class="mt0 mb2">G'day <%= current_user.username %>!</h6>
-            <div class="right"></div>
-          </div>
-          <p>Ready to pitch in on <%= @product.name %>? Introduce yourself.</p>
-
-          <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
-            <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-            <input name="_method" value="patch" type="hidden">
-
-            <textarea class="form-control mb2" name="membership[bio]" rows="2" placeholder="What do you like to do? What is your favorite sandwich?"></textarea>
-
-            <button type="submit" class="btn btn-primary btn-block">Introduce yourself!</button>
-          </form>
-        </div>
-      <% end %>
-    <% end %>
-
-    <%= react_component 'NewsFeedList', items: ActiveModel::ArraySerializer.new(
-      @product.news_feed_items.order(updated_at: :desc)
-    ).as_json %>
-  </div>
-
-  <div class="sm-col sm-col-4">
+  <div class="sm-col sm-col-4 px2" style="float:right !important">
 
     <div class="bg-gray-5 p2 rounded mb2">
       <% if @product.lead.present? %>
         <h6 class="gray-2 mt0 mb0 py1">The Big Idea</h6>
         <%= react_component 'Markdown', content: product_markdown(@product, @product.lead), normalized: true %>
-        <a class="block mb3" href="<%= product_plan_path(@product) %>">Read more</a>
+        <a class="block mb3" href="<%= product_plan_path(@product) %>">Read more</a>
       <% end %>
 
       <div class="stat-group mb0">
@@ -105,7 +75,6 @@
 
       <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
       <ul class="list-reset">
-
         <% @top_wip_tags.each do |tag, count| %>
           <li>
             <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
@@ -114,6 +83,36 @@
       </ul>
     </div>
 
+  </div>
+
+
+  <div class="sm-col sm-col-8 px2">
+
+    <% if signed_in? %>
+      <% product_membership = current_user.team_memberships.find_by(product: @product) %>
+
+      <% if product_membership.nil? || product_membership.bio.nil? %>
+
+        <div class="bg-white p3 rounded shadow mb3">
+          <div class="clearfix">
+            <h6 class="mt0 mb2">G'day <%= current_user.username %>!</h6>
+            <div class="right"></div>
+          </div>
+          <p>Ready to pitch in on <%= @product.name %>? Introduce yourself.</p>
+
+          <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
+            <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+            <input name="_method" value="patch" type="hidden">
+
+            <textarea class="form-control mb2" name="membership[bio]" rows="2" placeholder="What do you like to do? What is your favorite sandwich?"></textarea>
+
+            <button type="submit" class="btn btn-primary btn-block">Introduce yourself!</button>
+          </form>
+        </div>
+      <% end %>
+    <% end %>
+
+    <%= react_component 'NewsFeedList', items: @news_feed_items.as_json %>
   </div>
 
 </div>
