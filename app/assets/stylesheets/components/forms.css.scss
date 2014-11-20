@@ -51,38 +51,38 @@ input[type=radio], input[type=checkbox] {
 
 .input-group-search {
   > .control-label {
-    background-color: #e7e7e7;
-    border-bottom-left-radius: 18px;
-    border-top-left-radius: 18px;
+    background-color: #ECEDEF; // gray-5
+    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 2rem;
     color: $gray-dark;
     font-size: 15px;
     font-weight: normal;
     left: 0;
-    margin: 1px 0 1px 1px;
-    padding: 6px 20px;
+    padding: .5rem 1rem .5rem 2rem;
     position: absolute;
-    width: 125px;
+    width: 122px;
     z-index: 3;
 
     & + .form-control {
-      padding-left: 145px;
+      padding-left: 122px + 12px;
     }
   }
 
   > .form-control {
-    background-color: #f5f5f5;
+    background-color: #F4F4F5; // gray-6
     border: 1px solid white;
-    border-radius: 18px !important;
+    border: none;
+    border-radius: 2rem !important;
     box-shadow: none;
-    padding-left: 20px;
-    padding-right: 10px;
+    padding-left: 2rem;
+    padding-right: 1rem;
 
     &:focus {
-      border: 1px solid $blue;
+      box-shadow: 0 0 0 1px $blue;
     }
 
     & + .form-control-feedback {
-      color: #648990;
+      color: #C2C7D0; // gray-3
     }
 
     &:focus + .form-control-feedback {
@@ -91,9 +91,12 @@ input[type=radio], input[type=checkbox] {
   }
 
   > .form-control-feedback {
+    line-height: 3rem;
+    height: 3rem;
+    width: 3rem;
     position: absolute;
-    top: 10px !important;
-    right: 10px !important;
+    top: 0 !important; // needs to be here for responsive styling
+    right: 1rem !important;
     z-index: 2;
   }
 }

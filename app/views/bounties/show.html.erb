@@ -1,6 +1,7 @@
 <% title @bounty.title, "##{@bounty.number}", @bounty.product.name %>
-<% provide(:description, @bounty.title) %>
+<% description Nokogiri::HTML(product_markdown(@bounty.product, @bounty.description)).text %>
 <% activate_nav! :bounties %>
+
 <%= track 'product.wip.viewed', WipAnalyticsSerializer.new(@wip, scope: current_user) %>
 
 <div class="card mb0">

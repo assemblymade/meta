@@ -10,6 +10,7 @@ class PagesController < ApplicationController
   end
 
   def home
+    render 'focus_home', layout: nil
   end
 
 end

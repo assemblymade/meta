@@ -23,7 +23,7 @@
       var totalCents = this.totalCents(),
           opacity = 1.0,
           tooltip = null,
-          currentUser = window.app.currentUser().attributes,
+          currentUser = window.app.currentUser() && window.app.currentUser().attributes,
           url = app.product && app.product.get('url') + '/tips'
 
       if (!currentUser) {

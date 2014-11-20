@@ -52,7 +52,6 @@ module.exports = React.createClass({
     );
   },
 
-
   renderComments: function() {
     var product = this.props.product
     var target = this.props.target
@@ -61,6 +60,10 @@ module.exports = React.createClass({
     var tags = this.props.target.tags
 
     // TODO This stuff should really be common across all the items
+    var loveItem = <li className="left px1">
+      <Love heartable_id={this.props.heartable_id} heartable_type="NewsFeedItem" />
+    </li>
+
     var commentItem;
     if (commentsCount) {
       var commentsUrl = target.url + "#comments"
@@ -95,6 +98,7 @@ module.exports = React.createClass({
       <div>
         <div className="px3">
           <ul className="list-reset clearfix mxn1">
+            {loveItem}
             {commentItem}
             {tagItems}
           </ul>
@@ -118,7 +122,8 @@ module.exports = React.createClass({
     case 'team_membership':
       return <NewsFeedItemIntroduction
           user={target.user}
-          intro={target.bio} />;
+          intro={target.bio}
+          product={product} />;
 
     case 'discussion':
       return <NewsFeedItemPost

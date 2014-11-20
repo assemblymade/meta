@@ -101,9 +101,12 @@ module.exports = React.createClass({
   },
 
   renderLoadMoreButton: function(numberOfComments) {
+    var target = this.props.item.target;
+
     if (numberOfComments > this.state.comments.length) {
+      // TODO: Call onClick={this.fetchCommentsFromServer} when comments are working
       return (
-        <a className="block h6 blue clearfix mt0 mb0 px3 py2" href="javascript:void(0);" onClick={this.fetchCommentsFromServer}>
+        <a className="block h6 blue clearfix mt0 mb0 px3 py2" href={target.url}>
           {' '} View all {numberOfComments} comments
         </a>
       );

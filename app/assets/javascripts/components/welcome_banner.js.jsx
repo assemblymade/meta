@@ -15,28 +15,24 @@
 
     render: function() {
       return (
-        <div className="bg-primary hidden-xs" style={{ padding: '15px 0' }} data-dismissable="welcome">
-          <button type="button" className="close js-dismiss pull-right" style={{ 'margin-right': '25px' }} onClick={this.onClick}>
-            <span>&times;</span>
-          </button>
+        <div className="bg-white py4 border-bottom overflow-hidden hidden-xs" data-dismissable="welcome">
+          <div className="container relative">
+            <div className="welcome-banner-left absolute"></div>
+            <div className="welcome-banner-right absolute"></div>
 
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6 lead omega">
-                <strong>Welcome to Assembly,</strong> a community of people who have ideas and build them. Everything here is a collaborative effort including the vision, development, design and marketing.
-              </div>
-              <div className="col-md-2">
-                <span className="lead"><strong>Collaborate</strong><br/></span> Jump into any
+            <div className="clearfix">
+              <div className="sm-col sm-col-8">
+            <button type="button" className="close js-dismiss mr2" onClick={this.onClick}>
+              <span>&times;</span>
+            </button>
 
-                <a href={this.props.discoverBountiesPath} style={{ color: 'white', 'text-decoration': 'underline' }}> open bounties </a>
-
-                on products that interest you.
-              </div>
-              <div className="col-md-2">
-                <span className="lead"><strong>Earn</strong><br/></span> Your contributions to products are rewarded with its App Coins.
-              </div>
-              <div className="col-md-2">
-                <span className="lead"><strong>Share</strong><br/></span>Each month the products revenue is split with those that have App Coins.
+                <h2 className="mt0 mb2">Welcome to Assembly</h2>
+                <p className="h4 mt0 mb2 light">
+                  We are a community of people who have ideas and build them. Everything here is a collaborative effort including the vision, development, design and marketing.
+                </p>
+                <p className="mb0">
+                  <a href="/discover">Find products to work on</a>. Earn ownership when you <a href="/discover/bounties">complete bounties</a>.
+                </p>
               </div>
             </div>
           </div>

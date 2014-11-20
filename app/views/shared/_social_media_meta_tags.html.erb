@@ -1,3 +1,13 @@
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@asm">
+<meta name="twitter:title" content='<%= yield(:title) %>'>
+<meta name="twitter:description" content="<%= yield(:description) %>">
+
+<!-- Facebook Open Graph -->
+<meta property="og:title" content="<%= yield(:title) %>" />
+<meta property="og:description" content="<%= yield(:description) %>">
+
 <% if product_show_route? %>
   <meta name="description" content="<%= @product.social_media_title %>" />
 
@@ -5,8 +15,6 @@
   <meta itemprop="description" content="<%= @product.lead %>">
   <meta itemprop="image" content="">
 
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:site" content="@asm">
   <meta name="twitter:creator" content="@asm">
   <meta name="twitter:title" content="<%= @product.social_media_title %>">
   <meta name="twitter:description" content="<%= @product.lead %>">
@@ -18,3 +26,4 @@
   <meta property="og:image" content="<%= @product.hero_image_url %>" />
   <meta property="og:description" content="<%= @product.lead %>" />
 <% end %>
+

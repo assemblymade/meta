@@ -11,16 +11,26 @@ module.exports = React.createClass({
 
   propTypes: {
     author: React.PropTypes.object.isRequired,
-    body:   React.PropTypes.string.isRequired
+    body:   React.PropTypes.string.isRequired,
+    timestamp: React.PropTypes.string
   },
 
   render: function() {
     var author = this.props.author
+    var timestamp = null
     var body = null
 
     var cs = React.addons.classSet({
       'gray-dark': this.isOptimistic(),
     })
+
+    if (this.props.timestamp) {
+      timestamp = (
+        <span>
+          {' '} <time>{$.timeago(this.props.timestamp)}</time>
+        </span>
+      )
+    }
 
     if (this.isOptimistic()) {
       body = window.marked(this.props.body)
@@ -28,13 +38,17 @@ module.exports = React.createClass({
       body = this.props.body
     }
 
+
     return (
       <div className="clearfix">
         <div className="left mr2">
-          <Avatar user={author} size={24} />
+          <Avatar user={author} size={18} />
         </div>
         <div className="overflow-hidden">
-          <a className="block bold black" style={{ lineHeight: '1.5rem' }} href={author.url}>{author.username}</a>
+          <div className="gray-2">
+            <a className="bold black" href={author.url}>{author.username}</a>
+            {timestamp}
+          </div>
 
           <div className={cs}>
             <Markdown content={body} normalized="true" />

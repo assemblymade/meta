@@ -3,6 +3,7 @@ global.TestUtils = React.addons.TestUtils;
 global.path = require.requireActual('path');
 global._ = require('underscore');
 global.$ = require('jquery');
+global.$.timeago = function() {};
 global.app = {};
 global.analytics = {};
 

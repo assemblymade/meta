@@ -13,7 +13,7 @@
             <span className="caret"></span>
           </a>
 
-          <ul className="dropdown-menu" role="menu">
+          <ul className="dropdown-menu pull-right" role="menu">
             {this.currentUserList()}
             <li role="presentation" className="dropdown-header">Core Team</li>
             {this.listItems(this.props.core_team)}
@@ -39,8 +39,9 @@
         return (
           <li className={selected ? 'active' : ''} key={user.id}>
             <a href={this.props.buildUrl({ user: user })} role="menuitem" tabIndex="-1">
-              <Avatar user={user} />
-              {' '}
+              <div className="left mr2">
+                <Avatar user={user} />
+              </div>
               <span>@{user.username}</span>
               {' '}
               <span className="text-muted">{user.name}</span>

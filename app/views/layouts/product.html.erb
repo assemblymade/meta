@@ -46,7 +46,7 @@
           <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
         </h1>
 
-        <div class="h3 mt0 mb1 gray-3"><%= truncate(@product.pitch, length: 60, separator: ' ') %></div>
+        <div class="h3 mt0 mb1 gray-1"><%= truncate(@product.pitch, length: 60, separator: ' ') %></div>
 
         <ul class="list-reset clearfix mxn1 mb0">
           <% if @product.homepage_url? %>
@@ -155,32 +155,41 @@
 
       <div class="right py1 dropdown">
         <a class="btn btn-primary bg-blue dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown" id="product-actions">
-          <%= inline_react_component 'Icon', icon: 'pencil' %>
-          <span class="sr-only">Add</span>
+          <span class="mr1">New</span>
           <%= inline_react_component 'Icon', icon: 'chevron-down' %>
         </a>
 
-        <ul class="dropdown-menu" role="menu" aria-labelledby="product-actions">
+        <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="product-actions">
           <li role="presentation">
             <a href="javascript:void(0);" onclick="javascript:showCreateBounty();">
-              <%= inline_react_component 'Icon', icon: 'trophy' %>
-              Create a bounty
-            </a>
-          </li>
-
-          <li role="presentation">
-            <a href="<%= new_product_post_path(@product) %>">
-              <%= inline_react_component 'Icon', icon: 'newspaper-o' %>
-              Write a post
+              <span class="mr1">
+                <%= inline_react_component 'Icon', icon: 'trophy' %>
+              </span>
+              Bounty
             </a>
           </li>
 
           <li role="presentation">
             <a href="<%= new_product_discussion_path(@product) %>">
-              <%= inline_react_component 'Icon', icon: 'quote-right' %>
-              Start a discussion
+              <span class="mr1">
+                <%= inline_react_component 'Icon', icon: 'quote-right' %>
+              </span>
+              Discussion
             </a>
           </li>
+
+          <% if @product.core_team?(current_user) %>
+            <li role="presentation">
+              <a href="<%= new_product_post_path(@product) %>">
+                <span class="mr1">
+                  <%= inline_react_component 'Icon', icon: 'newspaper-o' %>
+                </span>
+                Post
+              </a>
+            </li>
+          <% end %>
+
+
           <!-- FIXME: There should be a new asset page -->
 <!--
           <li role="presentation">

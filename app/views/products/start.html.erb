@@ -11,7 +11,10 @@
   <div class="container text-center" style="margin-top: 100px">
     <div class="masthead-title">
       <h1 style="font-size: 64px; line-height: 1.1">Build your idea into a product with our community.</h1>
-      <p style="font-size: 32px; line-height: 1.1; padding: 30px 0">World-class product designers, engineers, writers, <br> others building product &dash; together.</p>
+      <p style="font-size: 32px; line-height: 1.1; padding: 30px 0">
+        World-class designers, engineers, writers, <br>
+        and more building products &mdash; together.
+      </p>
       <a class="btn btn-success btn-xl" href="<%= new_product_path %>" style="margin: 30px 0; box-shadow: 0 0 0 3px rgba(0, 0, 0, .1)">
         Start Your Product
       </a>
@@ -531,7 +534,12 @@
       <h1 style="font-size: 48px">An entirely new way to create the next great software product</h1>
     </div>
 
-    <hr>
+    <div class="row">
+      <div class="col-xs-2 col-xs-offset-5">
+        <hr>
+      </div>
+    </div>
+
 
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2 text-center">
@@ -746,11 +754,12 @@
     </div>
 
 
-    <div class="text-large" style="padding: 60px 30px 60px 0px; font-size: 20px">
-      <a href="<%= new_product_path %>" class="btn btn-success pull-left btn-lg mb3">Start your product on Assembly</a>
-      <br>
-      <br>
-      <div class='pull-left'>
+    <div class="text-large" style="padding: 60px 30px; font-size: 20px">
+      <a href="<%= new_product_path %>" class="btn btn-success btn-lg">Start your product</a>
+
+      <div class="visible-xs mt3"></div>
+
+      <div class="pull-right mb3">
         Already have a product and want to migrate it to Assembly?
         <a href="<%= help_path(:migrating) %>">Learn more.
       </div>

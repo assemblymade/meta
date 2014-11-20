@@ -15,6 +15,17 @@
       item: React.PropTypes.object.isRequired
     },
 
+    clickedBountyLink: function(e) {
+      var item = this.props.item;
+      var bounty = item.target;
+
+      if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        e.preventDefault();
+
+        this.showBounty(e);
+      }
+    },
+
     getInitialState: function() {
       return {
         modalShown: false
@@ -43,31 +54,35 @@
 
       return (
         <div className="p3"
-              onClick={this.showBounty}
               key={'nfbi-' + bounty.id}
               style={{ cursor: 'pointer' }}>
           <div>
             <a className="h3 bold mt0 mb2 blue"
-                href="javascript:void(0);"
-                onClick={this.showBounty}
+                href={bounty.url}
+                onClick={this.clickedBountyLink}
                 key={"bounty-link-" + bounty.id}>
               {bounty.title}
             </a>
-            <a className="h3 bold mt0 mb2 blue" href={bounty.url} title="Permalink">
+            <a className="h3 bold mt0 mb2 blue"
+              onClick={this.clickedBountyLink}
+              href={bounty.url}
+              title="Permalink">
               {' '} #{bounty.number}
             </a>
+            <div className="yellow mb3" key={"bounty-value-" + bounty.id}>
+              <span className="mr2" key={'mr2' + bounty.id}>
+                <AppCoins n={bounty.contracts.earnable} />
+              </span>
+              <Urgency
+                 initialLabel={bounty.urgency.label}
+                 urgencies={URGENCIES}
+                 state={bounty.state}
+                 url={bounty.urgency_url} />
+            </div>
           </div>
-          <div className="yellow mb3" key={"bounty-value-" + bounty.id}>
-            <span className="mr2" key={'mr2' + bounty.id}>
-              <AppCoins n={bounty.contracts.earnable} />
-            </span>
-            <Urgency
-              initialLabel={bounty.urgency.label}
-              urgencies={URGENCIES}
-              state={bounty.state}
-              url={bounty.urgency_url} />
-          </div>
-          <div className="gray-darker" key={'nfbi-body-' + bounty.id}>
+          <div className="gray-darker"
+                key={'nfbi-body-' + bounty.id}
+                onClick={this.showBounty}>
             <Markdown content={bounty.short_description} normalized={true} />
             {this.thumbnails()}
           </div>
@@ -79,10 +94,16 @@
     },
 
     showBounty: function(e) {
+      var item = this.props.item;
+      var bounty = item.target;
+
+      if (e.ctrlKey || e.metaKey || e.shiftKey) {
+        return window.open(bounty.url, '_blank');
+      }
+
       e.preventDefault();
       e.stopPropagation();
 
-      var bounty = this.props.item.target;
       var width = window.innerWidth;
 
       if (width > 480) {
@@ -134,6 +155,6 @@
         );
       }
     }
-  })
+  });
 
 })()

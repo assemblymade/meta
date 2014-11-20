@@ -3,11 +3,12 @@
 (function() {
   var MasonryMixin = require('../../mixins/masonry_mixin.js');
   var NewsFeedItem = require('./news_feed_item.js.jsx');
+  var NewsFeedMixin = require('../../mixins/news_feed_mixin.js.jsx');
   var Spinner = require('../spinner.js.jsx');
   var ActionTypes = require('../../constants').ActionTypes
 
   var NewsFeed = React.createClass({
-    mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0})],
+    mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0}), NewsFeedMixin],
     propTypes: {
       filter_counts: React.PropTypes.object.isRequired,
       url: React.PropTypes.string.isRequired
@@ -45,26 +46,6 @@
       }
 
       return <span className="text-large">&nbsp;</span>
-    },
-
-    eagerlyFetchMoreNewsFeedItems: function(e) {
-      this.setState({
-        disableLoadMoreButton: true,
-        page: this.state.page + 1
-      }, function() {
-        var url = window.location.pathname + '?page=' + this.state.page;
-
-        if (this.state.filter) {
-          url += '&filter=' + this.state.filter;
-        }
-
-        // TODO: This business should move to action creators and stores
-
-        window.xhr.get(
-          url,
-          this._handleMoreNewsFeedItems
-        );
-      }.bind(this));
     },
 
     fetchMoreNewsFeedItems: _.debounce(this.eagerlyFetchMoreNewsFeedItems, 200),
@@ -132,27 +113,6 @@
       });
     },
 
-    initializeEagerFetching: function() {
-      this.previousDistance = 0;
-      this.farthestTraveled = 0;
-
-      var self = this;
-      var body = $(document);
-
-      if (body) {
-        body.scroll(function(e) {
-          var distanceFromTop = document.body.scrollTop;
-
-          if (distanceFromTop > self.farthestTraveled &&
-              distanceFromTop - self.previousDistance > 3000) {
-            self.eagerlyFetchMoreNewsFeedItems();
-            self.previousDistance = distanceFromTop;
-            self.farthestTraveled = distanceFromTop;
-          }
-        });
-      }
-    },
-
     render: function() {
       var disabled = false;
 
@@ -207,7 +167,6 @@
       return (
         <li className={buttonClass} key={filter}>
           <a href={"?filter=" + filter}
-              onClick={onClick}
               onMouseOver={this.handleFilterMouseOver.bind(this, filter)}
               onMouseOut={this.handleFilterMouseOut.bind(this, filter)}>
             {label}
@@ -254,32 +213,6 @@
       this.setState({
         items: items
       });
-    },
-
-    _handleMoreNewsFeedItems: function(err, results) {
-      if (err) {
-        return console.log(err);
-      }
-
-      var newItems;
-      try {
-        newItems = JSON.parse(results);
-      } catch (e) {
-        return console.log(e);
-      }
-
-      // TODO: this should happen in an action creator
-      Dispatcher.handleServerAction({
-        type: ActionTypes.NEWS_FEED_RECEIVE_RAW_ITEMS,
-        items: newItems
-      })
-
-      this.setState(React.addons.update(
-        this.state, {
-          items: { $push: newItems },
-          loading: { $set: false }
-        }
-      ));
     }
   });
 

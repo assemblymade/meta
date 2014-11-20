@@ -42,17 +42,24 @@ var LoveStore = _.extend(Object.create(Store), {
             break
 
           case ActionTypes.NEWS_FEED_RECEIVE_RAW_ITEMS:
-            var items = action.items
+            var items = action.data.items
             _(items).each(function(item){
               var heartables = [item].concat(item.last_comment)
               _(heartables).each(function(h){
-                _heartables[h.heartable_id] = {
-                  heartable_type: h.heartable_type,
-                  heartable_id: h.heartable_id,
-                  hearts_count: h.hearts_count
+                if (h) {
+                  _heartables[h.heartable_id] = {
+                    heartable_type: h.heartable_type,
+                    heartable_id: h.heartable_id,
+                    hearts_count: h.hearts_count
+                  }
                 }
               })
             })
+            var userHearts = action.data.user_hearts
+            _(userHearts || []).each(function(h){
+              _userHearts[h.heartable_id] = h
+            })
+
             this.emitChange()
             break
         }

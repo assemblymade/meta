@@ -52,10 +52,11 @@ gem 'puma'
 gem 'pusher'
 gem 'premailer-rails'
 gem 'rack-streaming-proxy'
-gem 'rails', '4.1.5'
+gem 'rails', '4.1.8'
 gem 'rails-assets-backbone',            '1.0.0'
 gem 'rails-assets-basscss',             '4.1.2'
 gem 'rails-assets-dropzone',            '3.9.0'
+gem 'rails-assets-es5-shim',            '4.0.3'
 gem 'rails-assets-ink',                 '1.0.5'
 gem 'rails-assets-jquery-autosize',     '1.18.9'
 gem 'rails-assets-jquery-cookie',       '1.4.0'
@@ -68,7 +69,6 @@ gem 'rails-assets-nprogress',           '0.1.6'
 gem 'rails-assets-numeral',             '1.5.3'
 gem 'rails-assets-jquery-timeago'
 gem 'rails-assets-jquery.inview',       '1.0.0'
-gem 'rails-assets-spin.js',             '2.0.1'
 gem 'rails-assets-underscore',          '1.7.0'
 gem 'rails_stdout_logging', group: [:development, :production]
 gem 'react-rails', '~> 0.12.0.0'
@@ -89,6 +89,8 @@ gem 'zeroclipboard-rails'
 
 group :development, :test do
   gem 'active_record_query_trace'
+  gem 'capybara'
+  gem 'database_cleaner'
   # gem 'debugger' # enable once ruby 2.1.1 is supported
   gem 'email_spec'
   gem 'fakeweb'
@@ -96,16 +98,17 @@ group :development, :test do
   # gem "letter_opener"
   # gem 'i18n-debug'
   gem 'machinist', '~> 2'
+  gem 'poltergeist'
   gem 'pry'
   gem 'pry-rails'
   gem 'quiet_assets'
   gem 'rest_client'
   gem 'rspec-rails'
   gem 'spring-commands-rspec'
+  gem 'syntax'
   gem 'teaspoon'
   gem 'terminal-table'
   gem 'timecop'
-  gem 'syntax'
 end
 
 group :development do

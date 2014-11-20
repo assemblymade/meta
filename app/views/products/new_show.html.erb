@@ -1,7 +1,106 @@
 <% title @product.name %>
 <% activate_nav! :product %>
 
+<script id="heartables" type="application/json">
+  <%== @heartables.to_json %>
+</script>
+
+<% if signed_in? %>
+  <script id="user_hearts" type="application/json">
+    <%== @user_hearts.map{|h| {
+        id: h.id,
+        heartable_id: h.heartable_id,
+      }}.to_json
+    %>
+  </script>
+<% end %>
+
+
 <div class="clearfix mxn2">
+
+  <div class="sm-col sm-col-4 px2" style="float:right !important">
+
+    <div class="bg-gray-5 p2 rounded mb2">
+      <% if @product.lead.present? %>
+        <h6 class="gray-2 mt0 mb0 py1">The Big Idea</h6>
+        <%= react_component 'Markdown', content: product_markdown(@product, @product.lead), normalized: true %>
+        <a class="block mb3" href="<%= product_plan_path(@product) %>">Read more</a>
+      <% end %>
+
+      <div class="stat-group mb0">
+        <div class="stat">
+          <a class="block" href="<%= product_people_path(@product) %>">
+            <div class="h4 mt0 mb0"><%= @product.partners.count %></div>
+            <div class="gray-2">Partners</div>
+          </a>
+        </div>
+        <div class="stat">
+          <a class="block" href="<%= product_repos_path(@product) %>">
+            <div class="h4 mt0 mb0"><%= @product.repos.count %></div>
+            <div class="gray-2">Repos</div>
+          </a>
+        </div>
+        <% if @product.profit_reports.any? %>
+          <div class="stat">
+            <a class="block" href="<%= product_financials_path(@product) %>">
+              <div class="h4 mt0 mb0"><%= short_currency(@product.profit_reports.map(&:profit).reduce(:+)) %></div>
+              <div class="gray-2">Royalties</div>
+            </a>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <% if @product.team_building? %>
+      <div class="bg-gray-5 p2 mb2">
+        <h6 class="gray-2 mt0 mb0 py1">Team Building</h6>
+        <p>
+          This product is growing a team. It needs to reach <strong>10 team members</strong> in
+          <strong>30 days</strong> before it is Greenlit. You can become a team member by
+          <a href="<%= product_people_path(@product) %>">introducing yourself</a>.</p>
+
+        <div class="progress progress-sm bg-white mb1">
+          <div class="progress-bar progress-bar-success" style="width:<%= (((@product.bio_memberships_count || 0) / 10.0) * 100).round %>%"></div>
+        </div>
+
+        <div class="clearfix">
+          <div class="left"><%= pluralize(@product.bio_memberships_count, 'team member') %></div>
+          <div class="right"><%= pluralize(@product.team_building_days_left, 'day') %> left</div>
+        </div>
+      </div>
+    <% end %>
+
+    <% if can?(:edit, @product) %>
+      <div class="mb2">
+        <a class="btn btn-default btn-block" href="<%= edit_product_path(@product) %>">Edit product</a>
+      </div>
+    <% end %>
+
+    <div class="px2">
+      <% if @product_marks.count > 0 %>
+        <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
+        <ul class="list-reset">
+          <% @product_marks.each do |mark| %>
+            <li>
+              <%= mark %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
+      <ul class="list-reset">
+        <% @top_wip_tags.each do |tag, count| %>
+          <li>
+            <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+  </div>
+
+
   <div class="sm-col sm-col-8 px2">
 
     <% if signed_in? %>
@@ -28,90 +127,7 @@
       <% end %>
     <% end %>
 
-    <%= react_component 'NewsFeedList', items: ActiveModel::ArraySerializer.new(
-      @product.news_feed_items.order(updated_at: :desc)
-    ).as_json %>
-  </div>
-
-  <div class="sm-col sm-col-4">
-
-    <div class="bg-gray-5 p2 rounded mb2">
-      <% if @product.lead.present? %>
-        <h6 class="gray-2 mt0 mb0 py1">The Big Idea</h6>
-        <%= react_component 'Markdown', content: @product.lead, normalized: true %>
-        <a class="block mb3" href="<%= product_plan_path(@product) %>">Read more</a>
-      <% end %>
-
-      <div class="stat-group mb0">
-        <div class="stat">
-          <a class="block" href="<%= product_people_path(@product) %>">
-            <div class="h4 mt0 mb0"><%= @product.partners.count %></div>
-            <div class="gray-2">Partners</div>
-          </a>
-        </div>
-        <div class="stat">
-          <a class="block" href="<%= product_repos_path(@product) %>">
-            <div class="h4 mt0 mb0"><%= @product.repos.count %></div>
-            <div class="gray-2">Repos</div>
-          </a>
-        </div>
-        <div class="stat">
-          <a class="block" href="<%= product_financials_path(@product) %>">
-            <div class="h4 mt0 mb0"><%= short_currency(@product.profit_reports.map(&:profit).reduce(:+)) %></div>
-            <div class="gray-2">Royalties</div>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <% if @product.team_building? %>
-      <div class="bg-gray-5 p2 mb2">
-        <h6 class="gray-2 mt0 mb0 py1">Team Building</h6>
-        <p>
-          This product is growing a team. It needs to reach <strong>10 team members</strong> in
-          <strong>30 days</strong> before it is Greenlit. You can become a team member by
-          <a href="<%= product_people_path(@product) %>">introducing yourself</a>.</p>
-
-        <div class="progress progress-sm" style="margin-bottom:6px">
-          <div class="progress-bar progress-bar-success" style="width:<%= (((@product.bio_memberships_count || 0) / 10.0) * 100).round %>%"></div>
-        </div>
-
-        <div class="clearfix">
-          <div class="left"><%= pluralize(@product.bio_memberships_count, 'team member') %></div>
-          <div class="right"><%= pluralize(@product.team_building_days_left, 'day') %> left</div>
-        </div>
-
-      </div>
-    <% end %>
-
-    <% if can?(:edit, @product) %>
-      <div class="mb2">
-        <a class="btn btn-default btn-block" href="<%= edit_product_path(@product) %>">Edit product</a>
-      </div>
-    <% end %>
-
-    <% if @product_marks.count > 0 %>
-      <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
-
-      <ul class="list-reset">
-        <% @product_marks.each do |mark| %>
-          <li>
-            <%= mark %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
-
-    <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
-
-    <ul class="list-reset">
-      <% @top_wip_tags.each do |tag, count| %>
-        <li>
-          <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
-        </li>
-      <% end %>
-    </ul>
-
+    <%= react_component 'NewsFeedList', items: @news_feed_items.as_json %>
   </div>
 
 </div>

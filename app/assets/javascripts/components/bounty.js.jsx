@@ -55,7 +55,6 @@ module.exports = React.createClass({
       this.setState({
         lockUntil: this.state.lockUntil.add(hours, 'hours')
       }, function() {
-        console.log(this.props.bounty.lock_url)
         $.ajax({
           url: this.props.bounty.lock_url,
           method: 'PATCH',
@@ -123,25 +122,25 @@ module.exports = React.createClass({
         <div className="p3">
           {this.renderDescription()}
         </div>
+        {window.app.currentUser() ?
+          <div className="card-footer p3 clearfix">
+            <div className="left">
+              {this.renderStartWorkButton()}
+            </div>
 
-        <div className="card-footer p3 clearfix">
-          <div className="left">
-            {this.renderStartWorkButton()}
-          </div>
-
-          <ul className="list-inline mt0 mb0 py1 right">
-            {this.renderEditButton()}
-            {this.renderOpenButton()}
-            {this.renderFollowButton()}
-            {this.renderInviteFriendButton()}
-          </ul>
-        </div>
+            <ul className="list-inline mt0 mb0 py1 right">
+              {this.renderEditButton()}
+              {this.renderOpenButton()}
+              {this.renderFollowButton()}
+              {this.renderInviteFriendButton()}
+            </ul>
+          </div> : <div className="border-bottom" />}
       </div>
     );
   },
 
   renderBountyValuation: function() {
-    return BountyValuation(_.extend(this.state.bounty, this.props.valuation))
+    return <BountyValuation {...this.state.bounty} {...this.props.valuation} />;
   },
 
   renderClosedNotice: function() {
@@ -166,60 +165,9 @@ module.exports = React.createClass({
 
     if (bounty.markdown_description) {
       return <Markdown content={bounty.markdown_description} normalized="true" />;
-    } else {
-      return <div className="gray">No description yet</div>
-    }
-  },
-
-  /**
-   * This function is never used :(
-   */
-
-  renderDiscussWorkBanner: function() {
-    var bounty = this.state.bounty;
-    var closed = bounty.state === 'resolved' || bounty.state === 'closed';
-    var currentUser = window.app.currentUser();
-
-    if (closed) {
-      return;
     }
 
-    var currentUserId = currentUser && currentUser.get('id');
-    var mostRecentWorkerId = bounty.most_recent_other_wip_worker && bounty.most_recent_other_wip_worker.user_id;
-    var working = _.any(bounty.workers, function(worker) { return worker.id == currentUserId });
-    var otherWorker = _.find(bounty.workers, function(worker) { return worker.id == mostRecentWorkerId });
-
-    if (!working || !otherWorker) {
-      return;
-    }
-
-    var otherWorkersCount = bounty.workers.length - 1;
-    var workersPhrase = otherWorkersCount == 1 ? '1 other person' : otherWorkersCount + ' other people';
-    var message = "Hey @" + otherWorker.username + ". Mind if I help out with #" + bounty.number + "?";
-    var discussUrl = bounty.chat_room_url + '?message=' + encodeURIComponent(message);
-
-    return (
-      <div style={{
-          'padding': '15px',
-          backgroundColor: '#EBF8CA',
-          'border': '1px solid #E6F3C6',
-          borderRadius: '3px',
-          fontSize: '16px',
-          lineHeight: '38px',
-          marginBottom: '30px'
-      }}>
-        <a href={discussUrl} className="btn btn-default pull-right">
-          <span className="icon icon-bubble icon-left"></span>
-          Discuss the work
-        </a>
-
-        <p className="omega gray-darker" style={{ marginLeft: '6px' }}>
-          <strong className="black">Right on!</strong>
-          {' '}
-          {workersPhrase} started working on this bounty {moment(bounty.most_recent_other_wip_worker.created_at).fromNow()}.
-        </p>
-      </div>
-    );
+    return <div className="gray">No description yet</div>;
   },
 
   renderEditButton: function() {
@@ -336,6 +284,10 @@ module.exports = React.createClass({
           {bounty.state === 'resolved' ? 'Completed & Closed' : 'Closed'}
         </a>
       );
+    }
+
+    if (!currentUser) {
+      return;
     }
 
     if (!this.state.worker) {
