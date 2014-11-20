@@ -1,56 +1,57 @@
-<div class="panel panel-default">
-  <div class="panel-body">
+<div class="bg-white border rounded mb2">
+  <div class="center p3">
 
-    <center>
-      <br>
+    <div class="mx-auto mb2" style="width:120px">
       <%= avatar_tag(user, 120) %>
+    </div>
 
-      <h3 class="text-success"><strong><%= user.username %></strong></h3>
+    <h3 class="black mt0 mb0"><strong><%= user.username %></strong></h3>
 
-      <% if user.name? %>
-        <h6 class="text-muted alpha"><%= user.location %></h6>
-      <% end %>
-    </center>
-  </div>
-  <hr class="alpha omega">
-  <div class="panel-body">
-    <% if user.bio? %>
-      <center class="markdown-normalized text-small">
-        <%= markdown(user.bio) %>
-      </center>
+    <% if user.location? %>
+      <div class="h6 gray-dark mt0 mb0"><%= user.location %></div>
     <% end %>
   </div>
-  <div class="list-group small">
 
+  <% if user.bio? %>
+    <div class="p3 center gray-darker border-top">
+      <%= react_component 'Markdown', content: markdown(user.bio), normalized: true %>
+    </div>
+  <% end %>
+
+  <div class="h6 mt0 mb0 center">
+
+    <!-- Staff -->
     <% if user.staff? %>
-      <a class="list-group-item" href="<%= product_people_path(product_id: 'meta', filter: 'core') %>" title="Assembly Staff">
-        <span class="icon icon-cup"></span>
-        <strong>Assembly Staff</strong>
+      <a class="block px3 py2 border-top gray-dark" href="<%= product_people_path(product_id: 'meta', filter: 'core') %>" title="Assembly Staff">
+        <%= inline_react_component 'Icon', icon: 'coffee' %>
+        Assembly Staff
       </a>
     <% end %>
 
+    <!-- Twitter -->
     <% if user.twitter_connected? %>
-      <a class="list-group-item" href="<%= user.twitter_url %>" title="@<%= @user.twitter_nickname %>">
-        <span class="icon icon-twitter"></span>
-        <strong><%= user.twitter_nickname %></strong>
+      <a class="block px3 py2 border-top gray-dark" href="<%= user.twitter_url %>" title="@<%= @user.twitter_nickname %>">
+        <%= inline_react_component 'Icon', icon: 'twitter' %>
+        <%= user.twitter_nickname %>
       </a>
     <% elsif signed_in? && @user == current_user %>
-      <a class="list-group-item" href="<%= user_omniauth_authorize_path(:twitter) %>">
-        <span class="icon icon-twitter"></span>
-        <strong>Connect Twitter account</strong>
+      <a class="block px3 py2 border-top gray-dark" href="<%= user_omniauth_authorize_path(:twitter) %>">
+        <%= inline_react_component 'Icon', icon: 'twitter' %>
+        Connect Twitter account
       </a>
     <% end %>
 
+    <!-- Github -->
     <% if user.github_connected? %>
-      <a class="list-group-item" href="<%= user.github_url %>" title="<%= @user.github_login %>">
-        <span class="icon icon-github"></span>
-        <strong><%= @user.github_login %></strong>
+      <a class="block px3 py2 border-top gray-dark" href="<%= user.github_url %>" title="<%= @user.github_login %>">
+        <%= inline_react_component 'Icon', icon: 'github' %>
+        <%= @user.github_login %>
       </a>
     <% elsif signed_in? && @user == current_user %>
-      <a class="list-group-item" href="<%= user_omniauth_authorize_path(:github) %>">
-        <span class="icon icon-github"></span>
-        <strong>Connect GitHub account</strong>
+      <a class="block px3 py2 border-top gray-dark" href="<%= user_omniauth_authorize_path(:github) %>">
+        <%= inline_react_component 'Icon', icon: 'github' %>
+        Connect GitHub account
       </a>
     <% end %>
-  </div><!-- .list-group -->
+  </div>
 </div>
