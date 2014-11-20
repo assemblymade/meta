@@ -31,7 +31,7 @@
                   We are a community of people who have ideas and build them. Everything here is a collaborative effort including the vision, development, design and marketing.
                 </p>
                 <p className="mb0">
-                  <a href="/discover">Find products to work on</a>. Earn ownership of when when you <a href="/discover/bounties">complete bounties</a>.
+                  <a href="/discover">Find products to work on</a>. Earn ownership when you <a href="/discover/bounties">complete bounties</a>.
                 </p>
               </div>
             </div>
