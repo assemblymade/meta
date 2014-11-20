@@ -85,6 +85,7 @@ class ProductsController < ProductController
     offset = params[:page] ? (params[:page].to_i - 1) * limit : 0
 
     @top_wip_tags = QueryMarks.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
+    @total_wip_tags = @top_wip_tags.values.sum
     @product_marks = @product.marks.pluck(:name).uniq
 
     if @product_marks.count > PRODUCT_MARK_DISPLAY_LIMIT

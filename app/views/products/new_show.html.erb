@@ -75,9 +75,12 @@
 
       <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
       <ul class="list-reset">
+          <li>
+            <a href = "<% product_path(@product) %>">All (<%= @total_wip_tags.to_s %>)</a>
+          </li>
         <% @top_wip_tags.each do |tag, count| %>
           <li>
-            <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
+            <a href= "<%= product_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
           </li>
         <% end %>
       </ul>
@@ -110,6 +113,14 @@
           </form>
         </div>
       <% end %>
+    <% end %>
+
+
+    <% if @mark_name %>
+      <div class="btn btn-default btn-block sm-col-3">
+    <%= @mark_name %>
+      </div>
+      <br>
     <% end %>
 
     <%= react_component 'NewsFeedList', items: @news_feed_items.as_json %>

@@ -12,4 +12,5 @@ class MakeMarks
     end
     mark_it(object, themark)
   end
+  
 end
