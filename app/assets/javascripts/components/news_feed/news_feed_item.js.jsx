@@ -155,7 +155,8 @@
         case 'team_membership':
           return <NewsFeedItemIntroduction
             user={user}
-            intro={target.bio} />;
+            intro={target.bio}
+            product={product} />;
 
         case 'discussion':
           return <NewsFeedItemPost
