@@ -127,7 +127,12 @@ class DiscoverController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @posts }
+      format.json {
+        render json: {
+          user_hearts: @user_hearts,
+          items: @posts
+        }
+      }
     end
   end
 

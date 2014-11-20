@@ -35,7 +35,7 @@
         <Tile>
           {this.renderSource()}
           {this.renderTarget()}
-          {this.renderTags()}
+          {this.renderMeta()}
           {this.renderUserSource()}
           {this.renderComments()}
         </Tile>
@@ -61,10 +61,6 @@
       return (
         <div className="px3 py2 h6 mt0 mb0 border-top">
           {this.renderLastComment()}
-
-          <span className="gray-3">
-            <Love heartable_id={this.props.id} heartable_type="NewsFeedItem" />
-          </span>
 
           <a className="gray-3" href={commentsUrl} style={{ textDecoration: 'underline' }}>
             <span className="mr1">
@@ -111,7 +107,7 @@
       );
     },
 
-    renderTags: function() {
+    renderMeta: function() {
       var target = this.props.target
       var tags = target && target.tags;
 
@@ -133,6 +129,10 @@
         return (
           <div className="px3 py1 h6 mt0 mb0">
             <ul className="list-reset clearfix mxn1 mb0">
+              <li className="left px1" key={this.props.heartable_id}>
+                <Love heartable_id={this.props.heartable_id} heartable_type="NewsFeedItem" />
+              </li>
+
               {tagItems}
             </ul>
           </div>

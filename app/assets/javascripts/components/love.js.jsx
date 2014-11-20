@@ -11,22 +11,11 @@
       heartable_type: React.PropTypes.string.isRequired
     },
 
-    getInitialState: function() {
-      return this.getStateFromStore()
-    },
-
-    componentDidMount: function() {
-      LoveStore.addChangeListener(this._onChange)
-    },
-
-    componentWillUnmount: function() {
-      LoveStore.removeChangeListener(this._onChange)
-    },
-
     render: function() {
       if (!window.app.featureEnabled('much-love')) {
         return <span/>
       }
+
       if (this.state.hearts_count == null) {
         return <span/>
       }
@@ -43,6 +32,18 @@
           <span> {numeral(this.state.hearts_count).format('0,0')}</span>
         </a>
       </span>
+    },
+
+    getInitialState: function() {
+      return this.getStateFromStore()
+    },
+
+    componentDidMount: function() {
+      LoveStore.addChangeListener(this._onChange)
+    },
+
+    componentWillUnmount: function() {
+      LoveStore.removeChangeListener(this._onChange)
     },
 
     handleClick: function() {

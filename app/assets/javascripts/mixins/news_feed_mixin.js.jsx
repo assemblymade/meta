@@ -32,9 +32,9 @@ var NewsFeedMixin = {
     if (body) {
       body.scroll(function(e) {
         var distanceFromTop = document.body.scrollTop;
-
+      
         if (distanceFromTop > self.farthestTraveled &&
-            distanceFromTop - self.previousDistance > 3000) {
+            distanceFromTop - self.previousDistance > 1500) {
           self.eagerlyFetchMoreNewsFeedItems();
           self.previousDistance = distanceFromTop;
           self.farthestTraveled = distanceFromTop;
