@@ -75,12 +75,12 @@
 
       <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
       <ul class="list-reset">
-          <li>
+          <!-- <li>
             <a href = "<% product_path(@product) %>">All (<%= @total_wip_tags.to_s %>)</a>
-          </li>
+          </li> -->
         <% @top_wip_tags.each do |tag, count| %>
           <li>
-            <a href= "<%= product_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
+            <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
           </li>
         <% end %>
       </ul>
