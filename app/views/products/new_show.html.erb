@@ -70,12 +70,6 @@
       </div>
     <% end %>
 
-    <% if can?(:edit, @product) %>
-      <div class="mb2">
-        <a class="btn btn-default btn-block" href="<%= edit_product_path(@product) %>">Edit product</a>
-      </div>
-    <% end %>
-
     <div class="px2">
       <% if @product_marks.count > 0 %>
         <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
