@@ -23,14 +23,18 @@ var Avatar = require('./avatar.js.jsx');
     },
 
     render: function() {
-      var buttonLabel = null
+      var buttonLabel = null;
+
       switch (this.state.selected) {
       case 'following':
-        buttonLabel = 'Following'
+        buttonLabel = 'Following';
+        break;
       case 'announcements':
-        buttonLabel = 'Updates only'
+        buttonLabel = 'Following';
+        break;
       case 'not watching':
-        buttonLabel = 'Follow'
+        buttonLabel = 'Follow';
+        break;
       }
 
       return (
