@@ -87,8 +87,7 @@ module.exports = React.createClass({
     return (
       <div>
         <div className="p3 border-bottom">
-          {this.renderLove}
-          {this.props.item ? love : null}
+          {this.renderLove()}
           <ul className="list-inline mb2" style={{ marginBottom: '6px' }}>
             {this.props.showCoins ? <li className="text-large">
               {this.renderBountyValuation()}
