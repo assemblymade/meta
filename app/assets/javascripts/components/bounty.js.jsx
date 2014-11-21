@@ -87,10 +87,8 @@ module.exports = React.createClass({
     return (
       <div>
         <div className="p3 border-bottom">
-          <div className="right">
-            <Love heartable_id={this.props.item.id} heartable_type="NewsFeedItem" />
-          </div>
-
+          {this.renderLove}
+          {this.props.item ? love : null}
           <ul className="list-inline mb2" style={{ marginBottom: '6px' }}>
             {this.props.showCoins ? <li className="text-large">
               {this.renderBountyValuation()}
@@ -137,6 +135,14 @@ module.exports = React.createClass({
           </div> : <div className="border-bottom" />}
       </div>
     );
+  },
+
+  renderLove: function() {
+    if (this.props.item) {
+      return <div className="right">
+        <Love heartable_id={this.props.item.id} heartable_type="NewsFeedItem" />
+      </div>
+    }
   },
 
   renderBountyValuation: function() {
