@@ -9,6 +9,7 @@ class MakeMarks
   end
 
   def mark_with_name(object, mark_name)
+    mark_name = mark_name.downcase
     themark = Mark.find_by(name: mark_name)
     if themark.nil?
       themark = Mark.create!({name: mark_name})
