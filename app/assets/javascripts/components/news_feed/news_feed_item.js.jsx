@@ -187,7 +187,7 @@
             <span className="black bold">
               {user.username}
             </span>
-            {' '} created this {this.targetNoun(target && target.type)} <time>{$.timeago(new Date(this.props.created))}</time>
+              {' '} created this {this.targetNoun(target && target.type)}
           </div>
         </div>
       );
