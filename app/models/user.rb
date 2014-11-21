@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
 
   has_one :payment_option
   has_one :chronicle
+  has_one :user_identity
 
   devise :confirmable,
          :database_authenticatable,
@@ -76,6 +77,8 @@ class User < ActiveRecord::Base
   validates :mail_preference, inclusion: { in: [MAIL_DAILY, MAIL_HOURLY, MAIL_IMMEDIATE, MAIL_NEVER] }
 
   after_save :username_renamed, :if => :username_changed?
+
+  after_initialize :create_identity
 
   validates :username,
     presence: true,
@@ -142,7 +145,7 @@ class User < ActiveRecord::Base
 
   def marks
     wips_won = self.wips_won
-    
+
     results = {}
     wips_won.each do |w|
       marks = w.marks
@@ -171,6 +174,10 @@ class User < ActiveRecord::Base
       answer[k] = (v.to_f / sum_marks).round(3)
     end
     return answer
+  end
+
+  def create_identity
+    UserIdentity.create!({user_id: self.id})
   end
 
   def staff?

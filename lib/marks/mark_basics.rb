@@ -43,7 +43,7 @@ module Marks
         the_tags = p.tags
         if the_tags.count > 0
           the_tags.each do |t|
-            the_mark = find_mark_from_name(t)
+            the_mark = QueryMarks.new.find_mark_from_name(t)
             if not the_mark.nil?
               if not Marking.where(mark_id: the_mark.id).where(markable_id: p.id).present?
                 Marking.create!({markable: p, mark_id: the_mark.id, weight: 1.0})
@@ -59,6 +59,42 @@ module Marks
       retroactively_convert_old_wip_taggings_to_new
       retroactively_convert_old_product_taggings_to_new()
     end
+
+    def build_user_identity_from_wip_marks(user)
+      if not identity = user.user_identity
+        identity = UserIdentity.create!({user: user})
+      end
+
+      wips = user.wips_won
+      user_results = {}
+      wips.each do |w|
+        marks = w.marks
+        marks.each do |m|
+          if user_results.has_key?(m.name)
+            user_results[m.name] = user_results[m.name] +1
+          else
+            user_results[m.name] = 1
+          end
+        end
+      end
+        user_results.each do |k, v|
+          if mark = Mark.find_by(name: k)
+            Marking.create!({markable: identity, mark_id: mark.id, weight: v.to_f})
+          else
+            mark = Mark.create!({name: k})
+            Marking.create!({markable: identity, mark_id: mark.id, weight: v.to_f})
+          end
+        end
+      return user_results
+    end
+
+
+    def retroactively_describe_users_by_wip_marks()
+      User.all.each do |u|
+        build_user_identity_from_wip_marks(u)
+      end
+    end
+
 
 
   end
