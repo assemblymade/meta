@@ -67,6 +67,8 @@ class TasksController < WipsController
   end
 
   def index
+    reject_blacklisted_users!
+
     if params[:state].blank? && params[:project].blank?
       params[:state] = 'open'
     end

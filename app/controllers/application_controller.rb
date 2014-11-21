@@ -134,4 +134,12 @@ class ApplicationController < ActionController::Base
     [ trial.experiment.name, trial.alternative, current_user.try(:id) ]
   end
 
+  def reject_blacklisted_users!
+    if signed_in?
+      if (ENV['BLACKLISTED_USERS'] || '').split(',').include?(current_user.username)
+        raise 'Unauthorized'
+      end
+    end
+  end
+
 end

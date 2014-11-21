@@ -30,6 +30,8 @@ class PeopleController < ProductController
   end
 
   def create
+    reject_blacklisted_users!
+
     unless @membership = @product.team_memberships.find_by(user: current_user)
       @membership = @product.team_memberships.create!(user: current_user, is_core: false)
     end
