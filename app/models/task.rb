@@ -181,7 +181,7 @@ class Task < Wip
   end
 
   def stop_work!(worker)
-    self.workers -= [worker]
+    self.update(workers: [])
     unlock_bounty!
     update(state: 'open') if workers.size == 0
   end
