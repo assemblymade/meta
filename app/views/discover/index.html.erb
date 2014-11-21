@@ -39,6 +39,14 @@
         <li class="<%= 'active' if params[:sort] == 'teambuilding' %>">
           <a href="?sort=teambuilding&amp;tag=<%= params[:tag] %>">Needs Teammates</a>
         </li>
+        <% if Product.startup_weekend.count >= 5 %>
+          <li class="<%= 'active' if params[:sort] == 'teambuilding' %>">
+            <a href="?sort=startup-weekend&amp;tag=<%= params[:tag] %>">
+              <span class="label label-now">New</span>
+              Startup Weekend
+            </a>
+          </li>
+        <% end %>
       </ul>
     </div>
 

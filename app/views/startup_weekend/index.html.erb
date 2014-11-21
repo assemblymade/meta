@@ -53,6 +53,15 @@
         </a>
       </div>
 
+      <% if Product.startup_weekend.count >= 5 %>
+        <div class="py3 ml2 mr2" style="border-bottom: 1px solid #ddd">
+          <a href="<%= discover_path(sort: 'startup-weekend') %>" class="bold">
+            <span class="icon icon-list mr1"></span>
+            Startup Weekend Products
+          </a>
+        </div>
+      <% end %>
+
       <div class="py3 ml2 mr2" style="border-bottom: 1px solid #ddd">
         <h4 class="mt0">Why build on Assembly?</h4>
         <p>
