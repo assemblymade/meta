@@ -20,14 +20,34 @@
 
   <div class="sm-col sm-col-4 px2" style="float:right !important">
 
-    <div class="bg-gray-5 p2 rounded mb2">
-      <% if @product.lead.present? %>
-        <h6 class="gray-2 mt0 mb0 py1">The Big Idea</h6>
-        <%= react_component 'Markdown', content: product_markdown(@product, @product.lead), normalized: true %>
-        <a class="block mb3" href="<%= product_plan_path(@product) %>">Read more</a>
-      <% end %>
+    <div class="bg-white shadow rounded mb2">
 
-      <div class="stat-group mb0">
+      <div class="p3">
+
+        <div class="clearfix">
+          <div class="h1 mt0 mb0 yellow left mr3">
+            <%= inline_react_component 'Icon', icon: 'lightbulb-o' %>
+          </div>
+          <h4 class="mt0 mb2 py2">The Big Idea</h6>
+        </div>
+
+          <% if @product.lead.present? %>
+            <div class="mb2">
+              <%= react_component 'Markdown', content: product_markdown(@product, @product.lead), normalized: true %>
+            </div>
+            <a href="<%= product_plan_path(@product) %>">Read more</a>
+          <% else %>
+            <p class="gray-dark">Uh, there's nothing here yet. Grab a coffee, because this product is still percolating!</p>
+            <% if can?(:update, @product) %>
+              <a class="btn btn-primary btn-block" href="<%= edit_product_path(@product) %>">Brew your idea</a>
+            <% end %>
+          <% end %>
+
+      </div>
+
+      <hr class="border-bottom mt0 mb0">
+
+      <div class="stat-group p3 mb0">
         <div class="stat">
           <a class="block" href="<%= product_people_path(@product) %>">
             <div class="h4 mt0 mb0"><%= @product.partners.count %></div>
@@ -52,7 +72,7 @@
     </div>
 
     <% if @product.team_building? %>
-      <div class="bg-gray-5 p2 mb2">
+      <div class="bg-gray-5 p3 mb2">
         <h6 class="gray-2 mt0 mb0 py1">Team Building</h6>
         <p>
           This product is growing a team. It needs to reach <strong>10 team members</strong> in
@@ -70,7 +90,7 @@
       </div>
     <% end %>
 
-    <div class="px2">
+    <div class="px3">
       <% if @product_marks.count > 0 %>
         <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
         <ul class="list-reset">
@@ -84,9 +104,6 @@
 
       <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
       <ul class="list-reset">
-          <!-- <li>
-            <a href = "<% product_path(@product) %>">All (<%= @total_wip_tags.to_s %>)</a>
-          </li> -->
         <% @top_wip_tags.each do |tag, count| %>
           <li>
             <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
@@ -120,6 +137,30 @@
 
             <button type="submit" class="btn btn-primary btn-block">Introduce yourself!</button>
           </form>
+
+          <hr class="border-bottom">
+
+          <h4>The Pitch</h4>
+
+          <% if @product.you_tube_video_url? %>
+            <div class="embed-responsive embed-responsive-16by9 mb3">
+              <iframe
+                class="embed-responsive-item"
+                width="853"
+                height="480"
+                src="<%= @product.video_embed_url %>"
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
+            </div>
+          <% end %>
+
+          <div class="h4 mt0 mb2">
+            <%= react_component 'Markdown', content: product_markdown(@product, @product.lead), normalized: true %>
+          </div>
+
+          <a href="<%= product_plan_path(@product) %>">Check out the full plan</a>
+
         </div>
       <% end %>
     <% end %>
@@ -127,7 +168,7 @@
 
     <% if @mark_name %>
       <div class="btn btn-default btn-block sm-col-3">
-    <%= @mark_name %>
+        <%= @mark_name %>
       </div>
       <br>
     <% end %>
