@@ -80,7 +80,7 @@ var Spinner = require('./spinner.js.jsx');
                 </p>
 
                 <div className="text-center">
-                  <a className="btn btn-primary text-center" href="/discover" style={{ 'margin-top': 12 }}>
+                  <a className="btn btn-primary text-center" href="/discover" style={{ marginTop: 12 }}>
                     Find products to follow
                   </a>
                 </div>
@@ -105,7 +105,7 @@ var Spinner = require('./spinner.js.jsx');
             </p>
 
             <div className="text-center">
-              <a className="btn btn-primary text-center" href="/discover" style={{ 'margin-top': 12 }}>
+              <a className="btn btn-primary text-center" href="/discover" style={{ marginTop: 12 }}>
                 Find products to follow
               </a>
             </div>
