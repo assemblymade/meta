@@ -53,9 +53,10 @@
 
       if (this.isRead(story)) {
         classes.push('bg-white');
-        classes.push('gray');
+        classes.push('gray-2');
       } else {
         classes.push('bg-gray-6');
+        classes.push('gray-1');
       }
 
       var cs = React.addons.classSet.apply(this, classes);
@@ -143,7 +144,7 @@
     render: function() {
       return (
         <ul className="dropdown-menu" style={{ paddingTop: '0px', minWidth: '380px', width: '380px' }}>
-          <li style={{ overflowY: 'scroll', minHeight: '60px' }}>
+          <li style={{ overflowY: 'scroll', minHeight: '60px', maxHeight: '400px' }}>
             {this.state.stories ? this.rows(this.state.stories) : <Spinner />}
           </li>
 
