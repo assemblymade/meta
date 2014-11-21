@@ -141,7 +141,36 @@ class User < ActiveRecord::Base
   end
 
   def marks
+    wips_won = self.wips_won
     
+    results = {}
+    wips_won.each do |w|
+      marks = w.marks
+      marks.each do |m|
+        mark_name = m.name
+        if results.has_key?(mark_name)
+          results[mark_name] = results[mark_name] + 1
+        else
+          results[mark_name] = 1
+        end
+      end
+    end
+    results = Hash[results.sort_by{|k, v| v}.reverse]
+  end
+
+  def mark_fractions
+    marks = self.marks
+    answer = {}
+    sum_marks = marks.values.sum.to_f
+
+    if sum_marks == 0
+      sum_marks = 1
+    end
+
+    marks.each do |k, v|
+      answer[k] = (v.to_f / sum_marks).round(3)
+    end
+    return answer
   end
 
   def staff?
