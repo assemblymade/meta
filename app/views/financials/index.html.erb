@@ -42,11 +42,6 @@
       <div class="stat-value"><%= short_currency @product.profit_reports.map(&:profit).reduce(:+) %></div>
     </div>
 
-    <div class="stat">
-      <div class="stat-title">Total Royalties</div>
-      <div class="stat-value"><%= short_currency @product.profit_reports.map(&:profit).reduce(:+) %></div>
-    </div>
-
   </div>
 
   <hr>
