@@ -193,7 +193,7 @@
       %>);
       activityStream.url = '<%= api_chat_room_comments_path(@chat_room) %>';
       activityStream.id = '<%= @chat_room.id %>'
-      activityStream.product = new Product(<%= json @product, scope: current_user %>);
+      activityStream.product = app.product
 
       pusher.connection.bind('connected', function() {
         activityStream.listenForRemote(pusher, pusher.connection);
