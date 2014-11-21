@@ -145,29 +145,6 @@
             <button type="submit" class="btn btn-primary btn-block">Introduce yourself!</button>
           </form>
 
-          <hr class="border-bottom">
-
-          <h4>The Pitch</h4>
-
-          <% if @product.you_tube_video_url? %>
-            <div class="embed-responsive embed-responsive-16by9 mb3">
-              <iframe
-                class="embed-responsive-item"
-                width="853"
-                height="480"
-                src="<%= @product.video_embed_url %>"
-                frameborder="0"
-                allowfullscreen
-              ></iframe>
-            </div>
-          <% end %>
-
-          <div class="h4 mt0 mb2">
-            <%= react_component 'Markdown', content: product_markdown(@product, @product.lead), normalized: true %>
-          </div>
-
-          <a href="<%= product_plan_path(@product) %>">Check out the full plan</a>
-
         </div>
       <% end %>
     <% end %>
