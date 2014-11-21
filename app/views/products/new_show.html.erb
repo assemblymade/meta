@@ -1,5 +1,8 @@
 <% title @product.name %>
+<% description @product.pitch %>
 <% activate_nav! :product %>
+
+<%= track 'product.viewed', ProductAnalyticsSerializer.new(@product, scope: current_user) %>
 
 <script id="heartables" type="application/json">
   <%== @heartables.to_json %>
