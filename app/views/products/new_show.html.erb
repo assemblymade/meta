@@ -20,7 +20,7 @@
 
   <div class="sm-col sm-col-4 px2" style="float:right !important">
 
-    <div class="bg-white shadow rounded mb2">
+    <div class="bg-white shadow rounded mb3">
 
       <div class="p3">
 
@@ -31,17 +31,17 @@
           <h4 class="mt0 mb2 py2">The Big Idea</h6>
         </div>
 
-          <% if @product.lead.present? %>
-            <div class="mb2">
-              <%= react_component 'Markdown', content: product_markdown(@product, @product.lead), normalized: true %>
-            </div>
-            <a href="<%= product_plan_path(@product) %>">Read more</a>
-          <% else %>
-            <p class="gray-dark">Uh, there's nothing here yet. Grab a coffee, because this product is still percolating!</p>
-            <% if can?(:update, @product) %>
-              <a class="btn btn-primary btn-block" href="<%= edit_product_path(@product) %>">Brew your idea</a>
-            <% end %>
+        <% if @product.lead.present? %>
+          <div class="mb2">
+            <%= react_component 'Markdown', content: product_markdown(@product, @product.lead), normalized: true %>
+          </div>
+          <a href="<%= product_plan_path(@product) %>">Read more</a>
+        <% else %>
+          <p class="gray-dark">Uh, there's nothing here yet. Grab a coffee, because this product is still percolating!</p>
+          <% if can?(:update, @product) %>
+            <a class="btn btn-primary btn-block" href="<%= edit_product_path(@product) %>">Brew your idea</a>
           <% end %>
+        <% end %>
 
       </div>
 
@@ -72,9 +72,16 @@
     </div>
 
     <% if @product.team_building? %>
-      <div class="bg-gray-5 p3 mb2">
-        <h6 class="gray-2 mt0 mb0 py1">Team Building</h6>
-        <p>
+      <div class="bg-gray-5 p3 mb2 rounded">
+
+        <div class="clearfix">
+          <div class="h2 mt0 mb0 green left mr3">
+            <%= inline_react_component 'Icon', icon: 'users' %>
+          </div>
+          <h4 class="gray-darker mt0 mb2 py1">Team Building</h6>
+        </div>
+
+        <p class="gray-dark mb3">
           This product is growing a team. It needs to reach <strong>10 team members</strong> in
           <strong>30 days</strong> before it is Greenlit. You can become a team member by
           <a href="<%= product_people_path(@product) %>">introducing yourself</a>.</p>

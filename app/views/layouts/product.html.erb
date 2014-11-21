@@ -36,13 +36,13 @@
     <div class="clearfix mxn2 py3">
       <div class="sm-col sm-col-2 px2">
         <a href="<%= product_path(@product) %>">
-          <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 120 %>
+          <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 135 %>
         </a>
       </div>
 
       <div class="sm-col sm-col-7 px2">
 
-        <h1 class="mt0 mb0">
+        <h1 class="mt1 mb0">
           <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
         </h1>
 
