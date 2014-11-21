@@ -10,11 +10,11 @@ class SurveysController < ApplicationController
 
     current_user.update(permitted_params) if permitted_params
 
-    if current_user.interested_tags.any?
-      redirect_to(action: :show)
-    else
-      redirect_to(discover_path)
-    end
+    # if current_user.interested_tags.any?
+    #   redirect_to(action: :show)
+    # else
+    redirect_to(discover_path)
+    # end
   end
 
   def show
