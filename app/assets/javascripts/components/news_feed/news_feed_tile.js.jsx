@@ -164,7 +164,7 @@ module.exports = React.createClass({
           <Avatar user={user} size={18} />
         </div>
         <div className="overflow-hidden h6 mb0 mt0">
-          <div className="black">{user.username}</div>
+          <div className="black bold">{user.username}</div>
         </div>
       </a>
     );

@@ -8,6 +8,11 @@
   var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 
   var NewsFeedItemNewComment = React.createClass({
+
+    propTypes: {
+      user: React.PropTypes.object
+    },
+
     getInitialState: function() {
       return {
         comment: ''
@@ -30,7 +35,7 @@
     },
 
     render: function() {
-      if (!window.app.currentUser()) {
+      if (!this.props.user) {
         return <span />;
       }
 

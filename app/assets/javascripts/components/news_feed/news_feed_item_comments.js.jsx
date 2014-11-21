@@ -62,12 +62,19 @@ module.exports = React.createClass({
   render: function() {
     var url = this.state.url;
 
+    var newComments = null;
+    if (window.app.currentUser()) {
+      newComments = (
+        <div className="border-top px3 py2">
+          <NewComment url={url} thread={this.props.item.id} user={window.app.currentUser()} />
+        </div>
+      );
+    }
+
     return (
       <div>
         {this.renderComments()}
-        <div className="border-top px3 py2">
-          <NewComment url={url} thread={this.props.item.id} />
-        </div>
+        {newComments}
       </div>
     );
   },
@@ -83,7 +90,7 @@ module.exports = React.createClass({
     }
 
     return (
-      <div className="px3 border-top">
+      <div className="px3 py2 border-top">
         {this.renderLoadMoreButton(numberOfComments)}
         <div className="mt2 mb2">
           {confirmedComments}
@@ -113,7 +120,7 @@ module.exports = React.createClass({
     if (numberOfComments > this.state.comments.length) {
       // TODO: Call onClick={this.fetchCommentsFromServer} when comments are working
       return (
-        <a className="block h6 clearfix mt2 mb2 gray-3" href={target.url} style={{'textDecoration': 'underline'}}>
+        <a className="block h6 clearfix mt0 mb2 gray-3" href={target.url} style={{'textDecoration': 'underline'}}>
           <span className="mr1">
             <Icon icon="comment" />
           </span>
