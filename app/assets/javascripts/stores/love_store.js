@@ -6,9 +6,6 @@ var Dispatcher = require('../dispatcher')
 var Store = require('../stores/store')
 var ActionTypes = require('../constants').ActionTypes
 
-// This should be the thing that holds comments
-// Most likely the newsfeed item or
-
 var LoveStore = _.extend(Object.create(Store), {
   init: function(rawHeartables, rawUserHearts) {
     _heartables = _.reduce(rawHeartables, function(memo, h){ memo[h.heartable_id] = h; return memo }, {})

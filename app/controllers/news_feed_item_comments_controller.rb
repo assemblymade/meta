@@ -7,8 +7,6 @@ class NewsFeedItemCommentsController < ProductController
 
   respond_to :json
 
-  DO_NOT_FORWARD_TO = [TeamMembership, Post]
-
   def create
     @item = @news_feed_item.news_feed_item_comments.create(
       user: current_user,
@@ -31,7 +29,7 @@ class NewsFeedItemCommentsController < ProductController
 
   def forward_comment
     if target = @news_feed_item.target
-      if DO_NOT_FORWARD_TO.include?(target.class)
+      if !target.is_a? Wip
         Activities::NewsFeedItemComment.publish!(
           actor: @item.user,
           subject: @item,

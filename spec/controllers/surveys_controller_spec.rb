@@ -17,9 +17,9 @@ describe SurveysController do
       sign_in(user)
     end
 
-    it "redirects to #show" do
+    it "redirects to discover" do
       post :create, user: {interested_tags: ['design']}
-      expect(response).to redirect_to('/welcome/thanks')
+      expect(response).to redirect_to(discover_path)
     end
 
     it "doesn't require any answers" do
