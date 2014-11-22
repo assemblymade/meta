@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
 
   has_one :payment_option
   has_one :chronicle
+  has_one :requester, :class_name => "User", :foreign_key => "requester_id"
   has_one :user_identity
 
   devise :confirmable,
