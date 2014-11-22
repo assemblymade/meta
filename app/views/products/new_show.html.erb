@@ -42,7 +42,7 @@
         <% else %>
           <p class="gray-dark">Uh, there's nothing here yet. Grab a coffee, because this product is still percolating!</p>
           <% if can?(:update, @product) %>
-            <a class="btn btn-primary btn-block" href="<%= edit_product_path(@product) %>">Brew your idea</a>
+            <a class="btn btn-primary btn-block" href="<%= edit_product_path(@product) %>">Add the plan</a>
           <% end %>
         <% end %>
 
@@ -54,7 +54,7 @@
         <div class="stat">
           <a class="block" href="<%= product_people_path(@product) %>">
             <div class="h4 mt0 mb0"><%= @product.partners.count %></div>
-            <div class="gray-2">Partners</div>
+            <div class="gray-2">Contributors</div>
           </a>
         </div>
         <div class="stat">
