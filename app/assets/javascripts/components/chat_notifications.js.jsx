@@ -209,11 +209,7 @@
       return (
         <ul className="dropdown-menu" style={{ minWidth: '380px' }}>
           <li style={{ minHeight: '120px' }}>
-            {
-              this.state.spin ?
-                <Spinner /> :
-                <NotificationsList data={_.first(this.sortByLastReadAt(this.state.data), 7)} />
-            }
+            {this.renderList()}
           </li>
 
           <li className="divider"></li>
@@ -227,6 +223,14 @@
           {desktopNotifications}
         </ul>
       );
+    },
+
+    renderList: function() {
+      if (this.state.spin) {
+        return <Spinner />;
+      }
+
+      return <NotificationsList data={_.first(this.sortByLastReadAt(this.state.data), 7)} />;
     },
 
     storedAckChanged: function() {
