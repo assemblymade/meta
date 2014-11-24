@@ -33,8 +33,18 @@ var LocalStorageMixin = require('../mixins/local_storage');
 
     componentDidMount: function() {
       if (_.isEmpty(this.state.data)) {
+        this._render = this.render;
         this.render = this.renderWithoutChatRooms;
         this.forceUpdate()
+      }
+    },
+
+    componentDidUpdate: function() {
+      if (!_.isEmpty(this.state.data)) {
+        if (typeof this._render === 'function') {
+          this.render = this._render;
+          this._render = null;
+        }
       }
     },
 
