@@ -8,7 +8,11 @@
               <td class="panel panel-default">
 
                 <h1>
-                  <a class="text-stealth-link" href="<%= product_url(@product) %>"><%= @product.name %></a> just picked up a new member!
+                  Welcome
+                  @<%=@new_member.username %>
+                  to the
+                  <a href="<%= product_url(@product) %>"><%= @product.name %></a>
+                  team
                 </h1>
 
                 <table>
@@ -17,6 +21,11 @@
                       <%= image_tag(@new_member.avatar.url(120), width: 60, height: 60, class: 'img-circle', style: 'max-width: 60px;margin: 0 15px 15px 0') %>
 
                       <%= @membership.bio %> <span style="color:#999"> – <a href="<%= user_url(@new_member) %>">@<%=@new_member.username %></a></span>
+                      <% if @membership.team_membership_interests.any? %>
+                        <% @membership.team_membership_interests.each do |i| %>
+                          <span class="text-muted">#<%= i.interest.slug %></span>
+                        <% end %>
+                      <% end %>
                     </td>
                   </tr>
                 </table>
@@ -24,15 +33,7 @@
                 <br/>
                 <hr/>
 
-                <p><strong>Help <a href="<%= user_url(@new_member) %>">@<%=@new_member.username %></a> get up and running.</strong> Jump into chat and tell them about the current plan for <%= @product.name %> and work with them to get started on the right track</p>
-                <% if @membership.team_membership_interests.any? %>
-                  <p>
-                    <% @membership.team_membership_interests.each do |i| %>
-                      <span class="text-muted">#<%= i.interest.slug %></span>
-                    <% end %>
-                  </p>
-                <% end %>
-
+                <p><strong>Help @<%=@new_member.username %> get up and running.</strong> Jump into chat and tell them about the current plan for <%= @product.name %> and work with them to get started on the right track</p>
                 <% if room = @product.chat_rooms.first %>
                   <table class="button success radius">
                     <tr>

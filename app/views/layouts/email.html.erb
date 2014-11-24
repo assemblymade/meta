@@ -59,42 +59,27 @@
                   <table class="row footer">
                     <tr>
                       <td class="wrapper">
-                        <table class="six columns">
-                          <tr>
-                            <td class="left-text-pad">
-                              <p>
-                                You've received this email because you signed up for Assembly or an Assembly product.
-                                <% if @mailgun_tag %>
-                                  <!-- FIXME: Add notification type name here -->
-                                  Unsubscribe from
-                                  <a href="%tag_unsubscribe_url%">emails like this</a>
-                                  or
-                                  <a href="%unsubscribe_url%" target="_blank">all emails</a>.
-                                <% else %>
-                                  <a href="%unsubscribe_url%" target="_blank">Unsubscribe</a>.
-                                <% end %>
-                              </p>
-                            </td>
-                            <td class="expander"></td>
-                          </tr>
-                        </table>
-                      </td>
-
-                      <td class="wrapper last">
-                        <table class="six columns">
-                          <tr>
-                            <td class="right-text-pad text-right">
-                              <strong class="text-muted">Assembly Made, Inc.</strong><br />
-                              3030A 16th Street<br />
-                              San Francisco, 94103<br />
-                              California, USA
-                            </td>
-                          </tr>
-                        </table>
+                        <p>
+                          You've received this email because you signed up for Assembly or an Assembly product.
+                          <% if @mailgun_tag %>
+                            <!-- FIXME: Add notification type name here -->
+                            Unsubscribe from
+                            <a href="%tag_unsubscribe_url%">emails like this</a>
+                            or
+                            <a href="%unsubscribe_url%" target="_blank">all emails</a>.
+                          <% else %>
+                            <a href="%unsubscribe_url%" target="_blank">Unsubscribe</a>.
+                          <% end %>
+                        </p>
+                        <p>
+                          <strong class="text-muted">Assembly Made, Inc.</strong>,
+                          3030A 16th Street,
+                          San Francisco, 94103,
+                          California, USA
+                        </p>
                       </td>
                     </tr>
                   </table>
-
                 </td>
               </tr>
             </table>
