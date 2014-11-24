@@ -31,15 +31,14 @@
     },
 
     render: function() {
+      var target
       return (
         <Tile>
           {this.props.productPage ? null : this.renderSource()}
           {this.renderTarget()}
           {this.renderMeta()}
           {this.renderUserSource()}
-          {this.props.productPage ?
-            <NewsFeedItemComments item={this.props} /> :
-            this.renderComments()}
+          {this.renderComments()}
         </Tile>
       );
     },
@@ -47,6 +46,14 @@
     renderComments: function() {
       var product = this.props.product;
       var target = this.props.target;
+
+      if (target && target.type === 'team_membership') {
+        return null;
+      }
+
+      if (this.props.productPage) {
+        return <NewsFeedItemComments item={this.props} />;
+      }
 
       var commentCount = target && target.comments_count;
 
@@ -177,6 +184,10 @@
     renderUserSource: function() {
       var user = this.props.user;
       var target = this.props.target;
+
+      if (target && target.type === 'team_membership') {
+        return null;
+      }
 
       return (
         <div className="px3 py2 clearfix border-top h6 mb0">
