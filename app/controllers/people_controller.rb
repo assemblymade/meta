@@ -111,7 +111,7 @@ class PeopleController < ProductController
   end
 
   def process_introduction
-    @product.partner_ids.each do |user_id|
+    @product.follower_ids.each do |user_id|
       ProductMailer.delay(queue: 'mailer').new_introduction(user_id, @membership.id)
     end
 

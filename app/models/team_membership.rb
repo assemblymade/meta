@@ -6,7 +6,8 @@ class TeamMembership < ActiveRecord::Base
 
   scope :active, -> { where('deleted_at is null') }
   scope :core_team, -> { where('is_core is true') }
-  scope :with_bios, -> { where('bio is not null') }
+  scope :with_bios, -> { where.not(bio: [nil, '']) }
+  scope :with_interests, -> { where('exists(select 1 from team_membership_interests tmi where tmi.team_membership_id = team_memberships.id)') }
 
   after_commit :update_counter_caches
 
