@@ -20,7 +20,7 @@
       },
       Wip: function(wip) {
         if (wip) {
-          return "#" + task.number + " " + task.title;
+          return "#" + wip.number + " " + wip.title;
         }
       }
     },
