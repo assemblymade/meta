@@ -230,6 +230,15 @@
         return <Spinner />;
       }
 
+      if (true || _.isEmpty(this.state.data)) {
+        console.log('hello')
+        return (
+          <a href="/chat/general" className="list-group-item" style={{ border: 'none' }}>
+            Community chat
+          </a>
+        );
+      }
+
       return <NotificationsList data={_.first(this.sortByLastReadAt(this.state.data), 7)} />;
     },
 

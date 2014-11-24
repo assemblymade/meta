@@ -31,23 +31,6 @@ var LocalStorageMixin = require('../mixins/local_storage');
       return this.shouldRead() ? ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt) : 0;
     },
 
-    componentDidMount: function() {
-      if (_.isEmpty(this.state.data)) {
-        this._render = this.render;
-        this.render = this.renderWithoutChatRooms;
-        this.forceUpdate()
-      }
-    },
-
-    componentDidUpdate: function() {
-      if (!_.isEmpty(this.state.data)) {
-        if (typeof this._render === 'function') {
-          this.render = this._render;
-          this._render = null;
-        }
-      }
-    },
-
     componentWillMount: function() {
       ChatNotificationsStore.addChangeListener(this.getNotifications);
     },
@@ -69,21 +52,6 @@ var LocalStorageMixin = require('../mixins/local_storage');
       this.setState({
         chatRooms: ChatNotificationsStore.getChatRooms()
       });
-    },
-
-    renderWithoutChatRooms: function() {
-      var badgeClasses = ['badge', 'badge-navbar', 'block'];
-
-      return (
-        <a className="block dropdown-toggle py2 px1" href="/general/chat">
-          <span className={badgeClasses.join(' ')}>
-            <Icon icon={this.props.icon} />
-          </span>
-          <span className='visible-xs-inline ml2'>
-            'Chat notifications'
-          </span>
-        </a>
-      );
     },
 
     shouldRead: function() {
