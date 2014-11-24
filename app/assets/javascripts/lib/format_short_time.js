@@ -21,7 +21,7 @@
     var unit = null
     var num = null
 
-    if(diff <= second) {
+    if (diff <= second) {
       unit = 'seconds'
       num = 1
     } else if (diff < minute) {
