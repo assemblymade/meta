@@ -18,6 +18,11 @@
           return "#" + task.number + " " + task.title;
         }
       },
+      Wip: function(wip) {
+        if (wip) {
+          return "#" + task.number + " " + task.title;
+        }
+      }
     },
 
     verbMap: {
