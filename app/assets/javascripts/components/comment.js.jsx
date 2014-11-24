@@ -15,6 +15,19 @@ module.exports = React.createClass({
     timestamp: React.PropTypes.string
   },
 
+  getInitialState: function() {
+    var body = this.props.body;
+    var shownBody = body && body.length > 200 ? this.truncate(body) : body
+
+    return {
+      shownBody: shownBody
+    };
+  },
+
+  isOptimistic: function() {
+    return !!this.props.optimistic;
+  },
+
   render: function() {
     var author = this.props.author
     var timestamp = null
@@ -33,11 +46,17 @@ module.exports = React.createClass({
     }
 
     if (this.isOptimistic()) {
-      body = window.marked(this.props.body)
+      body = window.marked(this.state.shownBody)
     } else {
-      body = this.props.body
+      body = this.state.shownBody
     }
 
+    // because we're asking the Markdown component to safely render
+    // the `content` prop that we pass it, we need to handle the danger
+    // here in case the body is a string
+    if (typeof body === 'string') {
+      body = <span dangerouslySetInnerHTML={{ __html: body }} />;
+    }
 
     return (
       <div className="clearfix">
@@ -51,14 +70,28 @@ module.exports = React.createClass({
           </div>
 
           <div className={cs}>
-            <Markdown content={body} normalized="true" />
+            <Markdown content={body} normalized={true} safelySetHtml={true} />
           </div>
         </div>
       </div>
     )
   },
 
-  isOptimistic: function() {
-    return !!this.props.optimistic;
+  showEntireBody: function() {
+    this.setState({
+      shownBody: this.props.body
+    });
+  },
+
+  truncate: function(body) {
+    body = body.substring(0, 200);
+    body = body.substring(0, body.lastIndexOf(' '));
+
+    return (
+      <span>
+        <span dangerouslySetInnerHTML={{ __html: body }} />
+        {' '}<a href="javascript:void(0);" className="bold" onClick={this.showEntireBody}>&hellip;</a>
+      </span>
+    );
   }
 })
