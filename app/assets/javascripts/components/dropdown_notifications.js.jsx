@@ -29,7 +29,7 @@
         <span>
           {this.verbMap[story.verb]}
           <strong>
-            {this.subjectMap[story.subject_type].call(this, task)}
+            {this.subjectMap[story.subject_type] && this.subjectMap[story.subject_type].call(this, task)}
           </strong>
           {this.product(story)}
         </span>
