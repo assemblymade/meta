@@ -25,6 +25,13 @@
                 <hr/>
 
                 <p><strong>Help <a href="<%= user_url(@new_member) %>">@<%=@new_member.username %></a> get up and running.</strong> Jump into chat and tell them about the current plan for <%= @product.name %> and work with them to get started on the right track</p>
+                <% if @membership.team_membership_interests.any? %>
+                  <p>
+                    <% @membership.team_membership_interests.each do |i| %>
+                      <span class="text-muted">#<%= i.interest.slug %></span>
+                    <% end %>
+                  </p>
+                <% end %>
 
                 <% if room = @product.chat_rooms.first %>
                   <table class="button success radius">
