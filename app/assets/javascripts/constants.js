@@ -109,6 +109,8 @@
 
       NEWS_FEED_RECEIVE_RAW_ITEMS: null,
 
+      USER_SIGNED_IN: null,
+
       WIP_EVENT_CREATING: null,
       WIP_EVENT_CREATED: null
     }),

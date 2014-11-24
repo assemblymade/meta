@@ -2,9 +2,25 @@ var Dispatcher = require('../dispatcher')
 var Store = require('../stores/store')
 var ActionTypes = require('../constants').ActionTypes
 
-var _currentUser = window.app.currentUser() || null;
+var _dispatchToken;
+var _currentUser = null;
 
 var UserStore = _.extend(Object.create(Store), {
+  init: function() {
+    _dispatchToken = Dispatcher.register(function(payload) {
+      var action = payload.action
+
+      if (typeof action.type !== 'undefined') {
+        switch(action.type) {
+          case ActionTypes.USER_SIGNED_IN:
+            console.log('sup')
+            _currentUser = action.user
+            this.emitChange()
+        }
+      }
+    }.bind(this))
+  },
+
   get: function() {
     return _currentUser
   },
@@ -19,5 +35,7 @@ var UserStore = _.extend(Object.create(Store), {
     return _currentUser !== null
   }
 })
+
+UserStore.init()
 
 module.exports = UserStore
