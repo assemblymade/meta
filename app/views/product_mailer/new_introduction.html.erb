@@ -21,10 +21,8 @@
                       <%= image_tag(@new_member.avatar.url(120), width: 60, height: 60, class: 'img-circle', style: 'max-width: 60px;margin: 0 15px 15px 0') %>
 
                       <%= @membership.bio %> <span style="color:#999"> – <a href="<%= user_url(@new_member) %>">@<%=@new_member.username %></a></span>
-                      <% if @membership.team_membership_interests.any? %>
-                        <% @membership.team_membership_interests.each do |i| %>
-                          <span class="text-muted">#<%= i.interest.slug %></span>
-                        <% end %>
+                      <% @membership.team_membership_interests.each do |i| %>
+                        <span class="text-muted">#<%= i.interest.slug %></span>
                       <% end %>
                     </td>
                   </tr>
