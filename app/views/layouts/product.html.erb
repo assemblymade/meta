@@ -189,15 +189,15 @@
             </li>
           <% end %>
 
+          <% if signed_in? && current_user.staff? %>
+            <li role="presentation">
+              <a href="<%= new_product_asset_path(@product) %>">
+                <%= inline_react_component 'Icon', icon: 'picture-o' %>
+                Upload an asset
+              </a>
+            </li>
+          <% end %>
 
-          <!-- FIXME: There should be a new asset page -->
-<!--
-          <li role="presentation">
-            <a href="<%= new_product_asset_path(@product) %>">
-              <%= inline_react_component 'Icon', icon: 'picture-o' %>
-              Upload an asset
-            </a>
-          </li> -->
         </ul>
       </div>
     </div>

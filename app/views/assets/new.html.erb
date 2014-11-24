@@ -1,0 +1,16 @@
+<% title 'Upload an Asset', @product.name %>
+
+<div class="container">
+  <div class="sm-col-6 mx-auto">
+    <%= form_for([@asset.product, @asset], class: 'form') do |f| %>
+      <%= react_component 'FormUploader', inputName: 'asset[attachment_id]' %>
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Upload asset</button>
+      </div>
+    <% end %>
+  </div>
+</div>
