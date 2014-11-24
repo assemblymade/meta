@@ -8,7 +8,7 @@
               <td class="panel panel-default">
 
                 <h1>
-                  <%= @product.name %> just picked up a new member!
+                  <a class="text-stealth-link" href="<%= product_url(@product) %>"><%= @product.name %></a> just picked up a new member!
                 </h1>
 
                 <table>
@@ -26,13 +26,15 @@
 
                 <p><strong>Help @<%= @new_member.username %> get up and running.</strong> Jump into chat and tell them about the current plan for <%= @product.name %> and work with them to get started on the right track</p>
 
-                <table class="button success radius">
-                  <tr>
-                    <td>
-                      <a href="<%= chat_room_url(@product.chat_rooms.first, message: "Welcome @#{@new_member.username}! Can I help you get started with #{@product.name}?") %>">Say hi to @<%= @new_member.username %></a>
-                    </td>
-                  </tr>
-                </table>
+                <% if room = @product.chat_rooms.first %>
+                  <table class="button success radius">
+                    <tr>
+                      <td>
+                        <a href="<%= chat_room_url(@product.chat_rooms.first, message: "Welcome @#{@new_member.username}! Can I help you get started with #{@product.name}?") %>">Say hi to @<%= @new_member.username %></a>
+                      </td>
+                    </tr>
+                  </table>
+                <% end %>
 
               </td>
             </tr>
