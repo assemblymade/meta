@@ -230,7 +230,7 @@
         return <Spinner />;
       }
 
-      if (true || _.isEmpty(this.state.data)) {
+      if (_.isEmpty(this.state.data)) {
         return (
           <a href="/chat/general" className="list-group-item" style={{ border: 'none' }}>
             Community chat
