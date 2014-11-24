@@ -11,7 +11,7 @@ module.exports = React.createClass({
 
   propTypes: {
     author: React.PropTypes.object.isRequired,
-    body:   React.PropTypes.string.isRequired,
+    body: React.PropTypes.string.isRequired,
     timestamp: React.PropTypes.string
   },
 

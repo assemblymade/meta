@@ -33,11 +33,13 @@
     render: function() {
       return (
         <Tile>
-          {this.renderSource()}
+          {this.props.productPage ? null : this.renderSource()}
           {this.renderTarget()}
           {this.renderMeta()}
           {this.renderUserSource()}
-          {this.renderComments()}
+          {this.props.productPage ?
+            <NewsFeedItemComments item={this.props} /> :
+            this.renderComments()}
         </Tile>
       );
     },
@@ -62,24 +64,24 @@
 
       return (
         <div className="px3 py2 h6 mt0 mb0 border-top">
-
-          <div className="mb2">
-            <Comment author={lastComment.user} body={lastComment.markdown_body} timestamp={lastComment.created_at} />
-          </div>
-
           <a className="gray-3" href={commentsUrl} style={{ textDecoration: 'underline' }}>
             <span className="mr1">
               <Icon icon="comment" />
             </span>
             View {commentCount > 1 ? 'all' : ''} {commentCount} {commentCount > 1 ? 'comments' : 'comment'}
           </a>
+
+          <div className="py2">
+            <Comment author={lastComment.user}
+                body={lastComment.markdown_body}
+                timestamp={lastComment.created_at} />
+          </div>
         </div>
       );
     },
 
     renderSource: function() {
       var product = this.props.product
-      var user = this.props.user
 
       if (typeof product === "undefined" || product === null) {
         return null;
@@ -109,6 +111,7 @@
         if (baseUrl && tags.length) {
           tagItems = _.map(tags, function(tag) {
             var url = baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
+
             return (
               <li className="left px1" key={tag.id}>
                 <a className="h6 mt0 mb0" href={url}><Tag tag={tag} /></a>
@@ -139,13 +142,7 @@
       if (target) {
         switch (target.type) {
         case 'task':
-          return <NewsFeedItemBounty
-            product={product}
-            bounty={target}
-            user={this.props.user}
-            title={target.title}
-            coins={target.value}
-            item={this.props} />;
+          return <NewsFeedItemBounty item={this.props} />;
 
         case 'team_membership':
           return <NewsFeedItemIntroduction
@@ -168,7 +165,10 @@
         default:
           return <NewsFeedItemPost
             title={target.name || target.title}
-            body={target.description || target.body}
+            body={target.description ||
+                  target.markdown_body ||
+                  target.description_html ||
+                  target.body}
             url={target.url} />;
         }
       }

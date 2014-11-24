@@ -160,7 +160,10 @@
       <br>
     <% end %>
 
-    <%= react_component 'NewsFeedList', items: @news_feed_items.as_json %>
+    <%= react_component 'NewsFeed',
+        items: @news_feed_items.as_json,
+        productPage: true,
+        url: product_path(@product) %>
   </div>
 
 </div>

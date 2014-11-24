@@ -10,7 +10,13 @@
   var NewsFeed = React.createClass({
     mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0}), NewsFeedMixin],
     propTypes: {
-      filter_counts: React.PropTypes.object.isRequired,
+      filterCounts: function(props, propName, componentName) {
+        if (!props.productPage && !props.filterCounts) {
+          return new Error('Required prop `filterCounts` was not found.');
+        }
+      },
+
+      productPage: React.PropTypes.bool,
       url: React.PropTypes.string.isRequired
     },
 
@@ -25,7 +31,7 @@
     },
 
     countFor: function(filter) {
-      return this.props.filter_counts[filter];
+      return this.props.filterCounts[filter];
     },
 
     displayCount: function() {
@@ -120,6 +126,20 @@
         disabled = true;
       }
 
+      if (this.props.productPage) {
+        var style = null
+
+        if (this.props.items.length) {
+          style = { marginTop: '-1rem' }
+        }
+
+        return (
+          <div className="mxn2" style={style}>
+            {this.renderItems()}
+          </div>
+        );
+      }
+
       return (
         <div>
           {this.filters()}
@@ -176,6 +196,8 @@
     },
 
     renderItems: function() {
+      var productPage = this.props.productPage;
+
       return _.map(this.state.items, function(item) {
         var target = item.target;
 
@@ -183,9 +205,16 @@
           return null;
         }
 
+
+        var classes = React.addons.classSet({
+          'sm-col': !productPage,
+          'sm-col-6': !productPage,
+          'p2': true
+        });
+
         return (
-          <div className="sm-col sm-col-6 p2" key={item.id}>
-            <NewsFeedItem {...item} />
+          <div className={classes} key={item.id}>
+            <NewsFeedItem {...item} productPage={productPage} />
           </div>
         )
       });
