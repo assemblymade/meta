@@ -201,7 +201,7 @@
       return _.map(this.state.items, function(item) {
         var target = item.target;
 
-        if (target.type === 'team_membership') {
+        if (target.type === 'team_membership' && !productPage) {
           return null;
         }
 
