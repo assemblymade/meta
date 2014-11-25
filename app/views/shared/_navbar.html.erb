@@ -34,6 +34,37 @@
           <a href="<%= discover_path(:bounties) %>">Hot Bounties</a>
         </li>
 
+
+        <% if user_signed_in? %>
+          <hr class="py0 m0 xs-show sm-hide md-hide lg-hide" />
+
+          <li class="xs-show sm-hide md-hide lg-hide">
+            <a href="<%= user_path(current_user) %>">
+              Profile
+            </a>
+          </li>
+
+          <li class="xs-show sm-hide md-hide lg-hide">
+            <a href="<%= users_balance_path %>">
+              Balance
+            </a>
+          </li>
+
+          <li class="xs-show sm-hide md-hide lg-hide">
+            <a href="<%= edit_user_path %>">
+              Settings
+            </a>
+          </li>
+
+          <hr class="py0 m0 xs-show sm-hide md-hide lg-hide" />
+
+          <li class="xs-show sm-hide md-hide lg-hide">
+            <a href="<%= destroy_user_session_path %>" data-method='delete'>
+              Log out
+            </a>
+          </li>
+        <% end %>
+
       </ul>
 
       <% if user_signed_in? %>

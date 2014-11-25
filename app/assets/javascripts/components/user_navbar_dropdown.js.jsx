@@ -4,7 +4,7 @@
   var UserNavbarDropdown = React.createClass({
     render: function() {
       return (
-        <ul className='dropdown-menu'>
+        <ul className="dropdown-menu">
           <li>
             <a href={this.props.userPath}>
               <span className="icon icon-user dropdown-glyph"></span>
@@ -42,6 +42,4 @@
   if (typeof module !== 'undefined') {
     module.exports = UserNavbarDropdown;
   }
-
-  window.UserNavbarDropdown = UserNavbarDropdown;
 })();
