@@ -177,7 +177,11 @@
 <% content_for :javascript do %>
   <script>
     <% if @chat_room.product %>
+      // FIXME: It seems weird to set a product directly on app; there's a method
+      // that we've been using for that: window.app.setCurrentAnalyticsProduct()
       app.product = new Product(<%= json @chat_room.product, scope: current_user %>);
+    <% elsif @product %>
+      app.product = new Product(<%= json @product, scope: current_user %>);
     <% end %>
     app.chatRoom = <%== ChatRoomSerializer.new(@chat_room).to_json %>;
 
