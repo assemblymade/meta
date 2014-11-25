@@ -17,7 +17,7 @@ class Post < ActiveRecord::Base
   validates :summary, length: { minimum: 2, maximum: 140 }, allow_blank: true
 
   after_commit :push_to_news_feed, on: :create
-  after_commit :update_news_feed_item, on: :update
+  after_commit :update_news_feed_item
 
   friendly_id :title, use: :slugged
 
@@ -42,7 +42,7 @@ class Post < ActiveRecord::Base
   end
 
   def update_news_feed_item
-    news_feed_item.update(updated_at: Time.now)
+    self.news_feed_item.update(updated_at: Time.now)
   end
 
 end

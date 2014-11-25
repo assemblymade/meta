@@ -39,7 +39,7 @@ class Wip < ActiveRecord::Base
   before_validation :set_author_tip, on: :create
   after_commit :set_number, on: :create
   after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.id) }, on: :create
-  after_commit :update_news_feed_item, on: :update
+  after_commit :update_news_feed_item
   after_update :update_elasticsearch
 
   scope :available,   ->{ where(state: 'open') }
@@ -184,7 +184,7 @@ class Wip < ActiveRecord::Base
   end
 
   def update_news_feed_item
-    news_feed_item.update(updated_at: Time.now)
+    self.news_feed_item.update(updated_at: Time.now)
   end
 
   def add_tag!(tag_name)
