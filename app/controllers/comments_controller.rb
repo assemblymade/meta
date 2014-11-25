@@ -15,7 +15,13 @@ class CommentsController < ProductController
 
     authorize! type.slug.to_sym, @wip
     @wip.with_lock do
-      @event = Event.create_from_comment(@wip, type, body, current_user, comment_params[:socket_id])
+      @event = Event.create_from_comment(
+        @wip,
+        type,
+        body,
+        current_user,
+        comment_params[:socket_id]
+      )
     end
 
     if @event.valid?

@@ -42,7 +42,9 @@ class TasksController < WipsController
       end
     end
 
-    respond_with @bounty, location: wip_path(@bounty)
+    # Now that bounties are exclusively created in modals, we don't
+    # necessarily want to take users out of that flow
+    respond_with @bounty, location: request.referrer || wip_path(@bounty)
   end
 
   def show
@@ -67,6 +69,8 @@ class TasksController < WipsController
   end
 
   def index
+    reject_blacklisted_users!
+
     if params[:state].blank? && params[:project].blank?
       params[:state] = 'open'
     end

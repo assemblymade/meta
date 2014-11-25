@@ -17,8 +17,12 @@
         <div class="form-group <%= 'has-error' if @post.errors[:summary].any? %>">
           <%= f.text_field :summary, class: 'form-control', placeholder: 'Tweet sized summary' %>
         </div>
-        <div class="form-group <%= 'has-error' if @post.errors[:title].any? %>">
-          <%= f.text_area :body, class: 'form-control', rows: 8, placeholder: 'Post body' %>
+
+        <div class="form-group" style="min-height: 176px; background-color: #fff;">
+          <%= react_component 'MarkdownEditor', {
+            name: 'post[body]',
+            id: 'post_body'
+          } %>
         </div>
 
         <%= render 'shared/error_messages', target: @post %>

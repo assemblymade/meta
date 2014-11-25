@@ -1,6 +1,6 @@
-var Dispatcher = require('../dispatcher')
+// var Dispatcher = require('../dispatcher')
 var xhr = require('../xhr')
-var ActionTypes = require('../constants').ActionTypes
+var ActionTypes = window.CONSTANTS.ActionTypes
 
 module.exports = {
 

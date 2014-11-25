@@ -1,11 +1,11 @@
 /** @jsx React.DOM */
 
 (function() {
-  var CONSTANTS = require('../constants');
+  var CONSTANTS = window.CONSTANTS;
 
   var ChatNotificationStore = require('../stores/chat_notifications_store');
   var DesktopNotifications = require('./desktop_notifications.js.jsx');
-  var Dispatcher = require('../dispatcher');
+  // var Dispatcher = require('../dispatcher');
   var LocalStorageMixin = require('../mixins/local_storage.js');
   var Spinner = require('./spinner.js.jsx');
 
@@ -209,11 +209,7 @@
       return (
         <ul className="dropdown-menu" style={{ minWidth: '380px' }}>
           <li style={{ minHeight: '120px' }}>
-            {
-              this.state.spin ?
-                <Spinner /> :
-                <NotificationsList data={_.first(this.sortByLastReadAt(this.state.data), 7)} />
-            }
+            {this.renderList()}
           </li>
 
           <li className="divider"></li>
@@ -227,6 +223,22 @@
           {desktopNotifications}
         </ul>
       );
+    },
+
+    renderList: function() {
+      if (this.state.spin) {
+        return <Spinner />;
+      }
+
+      if (_.isEmpty(this.state.data)) {
+        return (
+          <a href="/chat/general" className="list-group-item" style={{ border: 'none' }}>
+            Community chat
+          </a>
+        );
+      }
+
+      return <NotificationsList data={_.first(this.sortByLastReadAt(this.state.data), 7)} />;
     },
 
     storedAckChanged: function() {

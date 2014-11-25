@@ -57,17 +57,13 @@
               key={'nfbi-' + bounty.id}
               style={{ cursor: 'pointer' }}>
           <div>
-            <a className="h3 bold mt0 mb2 blue"
+            <a className="h3 block mt0 mb1 black"
                 href={bounty.url}
                 onClick={this.clickedBountyLink}
                 key={"bounty-link-" + bounty.id}>
               {bounty.title}
-            </a>
-            <a className="h3 bold mt0 mb2 blue"
-              onClick={this.clickedBountyLink}
-              href={bounty.url}
-              title="Permalink">
-              {' '} #{bounty.number}
+              {' '}
+              <span className="gray">#{bounty.number}</span>
             </a>
             <div className="yellow mb3" key={"bounty-value-" + bounty.id}>
               <span className="mr2" key={'mr2' + bounty.id}>

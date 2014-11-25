@@ -13,7 +13,11 @@ module.exports = function MasonryMixin(ref, options) {
 
     componentDidMount: function() {
       if (this.masonry) {
-        return
+        return;
+      }
+
+      if (this.props.productPage) {
+        return;
       }
 
       try {
@@ -27,6 +31,10 @@ module.exports = function MasonryMixin(ref, options) {
     },
 
     componentDidUpdate: function() {
+      if (this.props.productPage) {
+        return;
+      }
+
       this.masonry.reloadItems()
       this.imagesLoaded()
 

@@ -18,6 +18,7 @@ json.stories @stories do |story|
     json.actor_ids story.activities.map(&:actor_id)
     json.key "Story_#{story.id}"
     json.product_name story.activities.first.try(:target).try(:product).try(:name)
+    json.product_slug story.activities.first.try(:target).try(:product).try(:slug)
     json.url story_url(story)
 
     if first_subject = story.activities.first.try(:subject)

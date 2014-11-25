@@ -7,56 +7,46 @@
 <% activate_nav! :platform_faq %>
 <%= render 'shared/navbar' %>
 
-<% cache FaqGroup.cache_key(@faq_group) do %>
-  <div class="page page-flat">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+<%# cache FaqGroup.cache_key(@faq_group) do %>
+  <div class="container">
 
-          <div class="page-header">
-            <ol class="breadcrumb omega">
-              <li class="active">FAQ</li>
-              <li></li>
-            </ol>
-            <h1 class="alpha"><%= @faq_group.name %></h1>
-          </div>
+    <div class="border-bottom py3 mb4">
+      <ol class="breadcrumb mb2">
+        <li class="active">FAQ</li>
+        <li></li>
+      </ol>
+      <h1 class="mt2 mb0"><%= @faq_group.name %></h1>
+    </div>
 
-          <div class="row">
+    <div class="clearfix mxn4">
+      <div class="md-col md-col-8 px4">
 
-            <div class="col-md-4 col-md-push-8">
-              <div class="panel panel-default">
-                <!-- <div class="panel-heading">
-                  <h6 class="panel-title">Areas</h6>
-                </div> -->
-                <ul class="nav nav-pills nav-stacked">
-                  <% @faq_groups.each do |faq_group| %>
-                    <li class="<%= ('active' if @faq_group.slug == faq_group.slug) %>">
-                      <%= link_to faq_group.name, help_path(faq_group) %>
-                    </li>
-                  <% end %>
-                </ul>
-              </div>
-            </div>
+            <ul class="list-unstyled">
+              <% @faq_group.questions.each do |question| %>
+                <li class="question">
+                  <%= link_to question[:name], anchor: question[:anchor] %>
+                </li>
+              <% end %>
+            </ul>
 
-            <div class="col-md-8 col-md-pull-4">
-              <ul class="list-unstyled">
-                <% @faq_group.questions.each do |question| %>
-                  <li class="question">
-                    <%= link_to question[:name], anchor: question[:anchor] %>
-                  </li>
-                <% end %>
-              </ul>
+            <hr class="border-bottom mt4 mb4">
 
-              <hr style="margin-bottom: 48px">
+            <%= @faq_group.body.html_safe %>
 
-              <%= @faq_group.body.html_safe %>
-            </div>
-          </div>
-
-        </div>
       </div>
+
+      <div class="md-col md-col-4 px4">
+        <ul class="list-reset">
+          <% @faq_groups.each do |faq_group| %>
+            <li>
+              <a class="block gray-darker py1 <%= 'bold blue' if @faq_group.slug == faq_group.slug %>" href="<%= help_path(faq_group) %>"><%= faq_group.name %></a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
     </div>
   </div>
-<% end %>
+<%# end %>
 
 <%= render 'shared/footer' %>

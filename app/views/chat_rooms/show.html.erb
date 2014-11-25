@@ -141,7 +141,7 @@
 
       <div class="p3">
         <h5 class="mt0 mb2" style="color:rgba(255,255,255,.6)">People</h5>
-        <div class="js-members"></div>
+        <%= react_component 'MembersView', url:  api_chat_room_users_path(@chat_room) %>
       </div>
     </div>
 
@@ -177,7 +177,11 @@
 <% content_for :javascript do %>
   <script>
     <% if @chat_room.product %>
+      // FIXME: It seems weird to set a product directly on app; there's a method
+      // that we've been using for that: window.app.setCurrentAnalyticsProduct()
       app.product = new Product(<%= json @chat_room.product, scope: current_user %>);
+    <% elsif @product %>
+      app.product = new Product(<%= json @product, scope: current_user %>);
     <% end %>
     app.chatRoom = <%== ChatRoomSerializer.new(@chat_room).to_json %>;
 
@@ -193,48 +197,9 @@
       %>);
       activityStream.url = '<%= api_chat_room_comments_path(@chat_room) %>';
       activityStream.id = '<%= @chat_room.id %>'
-      activityStream.product = new Product(<%= json @product, scope: current_user %>);
+      activityStream.product = app.product
 
-      pusher.connection.bind('connected', function() {
-        activityStream.listenForRemote(pusher, pusher.connection);
-
-        window.presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
-
-        $('.js-members').each(function() {
-          var component = React.render(
-            MembersView({
-              channel: presenceChannel,
-              url: '<%= api_chat_room_users_path(@chat_room) %>'
-            }),
-            this
-          );
-        });
-
-        var alreadyJoined = {};
-
-        presenceChannel.bind(
-          'pusher:member_added',
-          function memberJoined(member) {
-            // Slight hack to prevent multiple join messages
-            // for one person
-            if (alreadyJoined[member.id] === 1) {
-              return;
-            }
-
-            alreadyJoined[member.id] = 1;
-
-            var activity = new Activity({
-              id: member.id + rand(10000),
-              actor: member.info,
-              // TODO: change 'type' to 'verb'
-              type: 'activities/join',
-              created: moment().toISOString()
-            });
-
-            activityStream.add(activity);
-          }
-        );
-      });
+      ChatActionCreators.connectToChat(activityStream)
 
       var chatView = new ChatView({
         el: $('.js-chat'),

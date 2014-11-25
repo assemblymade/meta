@@ -36,7 +36,10 @@
     padding-top: 1rem;
     padding-bottom: 1rem;
 
-    &:hover {
+    &:hover,
+    &:active,
+    &:focus {
+      border: none;
       box-shadow: inset 0 -3px 0 $nav-tabs-link-hover-border-color;
       color: $blue;
       background: transparent;
@@ -44,7 +47,9 @@
   }
 
   > li.active > a,
-  > li.active > a:hover, {
+  > li.active > a:hover,
+  > li.active > a:active,
+  > li.active > a:focus, {
     color: #353941;
     border: none;
     box-shadow: inset 0 -3px 0 $nav-tabs-active-link-hover-border-color;

@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
-var Dispatcher = require('../dispatcher');
+var CONSTANTS = window.CONSTANTS;
+// var Dispatcher = require('../dispatcher');
 var InterestStore = require('../stores/interest_store');
 
 (function() {

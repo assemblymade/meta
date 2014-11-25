@@ -1,8 +1,8 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
+var CONSTANTS = window.CONSTANTS;
 var Avatar = require('./avatar.js.jsx');
-var Dispatcher = require('../dispatcher');
+// var Dispatcher = require('../dispatcher');
 var EventMixin = require('../mixins/event.js.jsx');
 var NotificationsMixin = require('../mixins/notifications.js.jsx');
 var NotificationsStore = require('../stores/notifications_store');
@@ -80,7 +80,7 @@ var Spinner = require('./spinner.js.jsx');
                 </p>
 
                 <div className="text-center">
-                  <a className="btn btn-primary text-center" href="/discover" style={{ 'margin-top': 12 }}>
+                  <a className="btn btn-primary text-center" href="/discover" style={{ marginTop: 12 }}>
                     Find products to follow
                   </a>
                 </div>
@@ -105,7 +105,7 @@ var Spinner = require('./spinner.js.jsx');
             </p>
 
             <div className="text-center">
-              <a className="btn btn-primary text-center" href="/discover" style={{ 'margin-top': 12 }}>
+              <a className="btn btn-primary text-center" href="/discover" style={{ marginTop: 12 }}>
                 Find products to follow
               </a>
             </div>
@@ -135,7 +135,7 @@ var Spinner = require('./spinner.js.jsx');
         <span>
           {this.verbMap[story.verb]}
           <strong>
-            {this.subjectMap[story.subject_type].call(this, task)}
+            {this.subjectMap[story.subject_type] && this.subjectMap[story.subject_type].call(this, task)}
           </strong>
         </span>
       );

@@ -65,4 +65,33 @@ namespace :news_feed_items do
       end
     end
   end
+
+  task retroactively_push_intros_to_chat: :environment do
+    include MarkdownHelper
+    NewsFeedItem.where(target_type: 'TeamMembership').each do |item|
+      if item.news_feed_item_comments.any?
+        target = item.target
+        wip = target.product.main_thread
+
+        comments = item.news_feed_item_comments
+
+        comments.each do |comment|
+          event = Event.create_from_comment(
+            wip,
+            Event::Comment,
+            product_markdown(target.product,
+              "_" + comment.body + "_"
+            ),
+            comment.user
+          )
+
+          Activities::Chat.publish!(
+            actor: event.user,
+            subject: event,
+            target: wip
+          )
+        end
+      end
+    end
+  end
 end

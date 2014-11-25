@@ -1,9 +1,11 @@
 /** @jsx React.DOM */
 
-var Markdown = require('./markdown.js.jsx')
-var Icon = require('./icon.js.jsx')
-var formatShortTime = require('../lib/format_short_time.js')
-var Love = require('./love.js.jsx')
+var Markdown = require('./markdown.js.jsx');
+var Icon = require('./icon.js.jsx');
+var formatShortTime = require('../lib/format_short_time.js');
+var Love = require('./love.js.jsx');
+
+var ONE_HOUR = 60 * 60 * 1000;
 
 module.exports = React.createClass({
   propTypes: {
@@ -41,6 +43,13 @@ module.exports = React.createClass({
     });
   },
 
+  extendUntil: function() {
+    var bounty = this.props.bounty;
+    var lockUntil = moment().add(60 * ONE_HOUR, 'hours');
+
+    return 'Hold until ' + moment(lockUntil).format('dddd [at] h:mm');
+  },
+
   extendWork: function(hours) {
     return function(e) {
       e.preventDefault();
@@ -52,8 +61,10 @@ module.exports = React.createClass({
         product: window.app.currentAnalyticsProduct()
       });
 
+      var bounty = this.props.bounty;
+
       this.setState({
-        lockUntil: this.state.lockUntil.add(hours, 'hours')
+        lockUntil: moment(bounty.locked_at).add(hours, 'hours')
       }, function() {
         $.ajax({
           url: this.props.bounty.lock_url,
@@ -87,10 +98,7 @@ module.exports = React.createClass({
     return (
       <div>
         <div className="p3 border-bottom">
-          <div className="right">
-            <Love heartable_id={this.props.item.id} heartable_type="NewsFeedItem" />
-          </div>
-
+          {this.renderLove()}
           <ul className="list-inline mb2" style={{ marginBottom: '6px' }}>
             {this.props.showCoins ? <li className="text-large">
               {this.renderBountyValuation()}
@@ -137,6 +145,14 @@ module.exports = React.createClass({
           </div> : <div className="border-bottom" />}
       </div>
     );
+  },
+
+  renderLove: function() {
+    if (this.props.item) {
+      return <div className="right">
+        <Love heartable_id={this.props.item.id} heartable_type="NewsFeedItem" />
+      </div>
+    }
   },
 
   renderBountyValuation: function() {
@@ -303,7 +319,11 @@ module.exports = React.createClass({
     if (worker.id === currentUser.id) {
       return (
         <div className="clearfix">
-          <a className="btn btn-default left mr2" style={{ color: '#5CB85C !important', border: '1px solid #d3d3d3' }} type="button" data-scroll="true" data-target="#event_comment_body">
+          <a className="btn btn-default left mr2"
+              style={{ color: '#5CB85C !important', border: '1px solid #d3d3d3' }}
+              type="button"
+              data-scroll="true"
+              data-target="#event_comment_body">
             <span className="icon icon-document icon-left"></span>
             Submit work for review
           </a>
@@ -312,7 +332,7 @@ module.exports = React.createClass({
             {' '}
             Held for {formatShortTime(this.state.lockUntil)} more
             <br />
-            <a href="javascript:void(0)" onClick={this.extendWork(60)}>Extend for 2.5 days</a>
+            <a href="javascript:void(0)" onClick={this.extendWork(60)}>{this.extendUntil()}</a>
             {' '}
             or
             {' '}

@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
+var CONSTANTS = window.CONSTANTS;
 var ChatNotificationsStore = require('../stores/chat_notifications_store');
 var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
 var LocalStorageMixin = require('../mixins/local_storage');

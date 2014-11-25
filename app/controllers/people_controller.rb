@@ -30,6 +30,8 @@ class PeopleController < ProductController
   end
 
   def create
+    reject_blacklisted_users!
+
     unless @membership = @product.team_memberships.find_by(user: current_user)
       @membership = @product.team_memberships.create!(user: current_user, is_core: false)
     end
@@ -109,7 +111,7 @@ class PeopleController < ProductController
   end
 
   def process_introduction
-    @product.partner_ids.each do |user_id|
+    @product.follower_ids.each do |user_id|
       ProductMailer.delay(queue: 'mailer').new_introduction(user_id, @membership.id)
     end
 

@@ -4,7 +4,12 @@ var Markdown = React.createClass({
   displayName: 'Markdown',
 
   propTypes: {
-    content: React.PropTypes.string.isRequired
+    content: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.object
+    ]).isRequired,
+    normalized: React.PropTypes.bool,
+    safelySetHtml: React.PropTypes.bool
   },
 
   render: function() {
@@ -12,8 +17,16 @@ var Markdown = React.createClass({
 
     var cs = React.addons.classSet({
       'markdown': true,
-      'markdown-normalized': (typeof normalized !== "undefined" && normalized !== null)
-    })
+      'markdown-normalized': !!normalized
+    });
+
+    if (this.props.safelySetHtml) {
+      return (
+        <div className={cs}>
+          {this.props.content}
+        </div>
+      );
+    }
 
     return (
       <div className={cs} dangerouslySetInnerHTML={{__html: this.props.content}} />

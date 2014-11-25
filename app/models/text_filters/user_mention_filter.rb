@@ -16,7 +16,7 @@ module TextFilters
 
     def self.mentioned_usernames_in(text, product = nil)
       text.gsub MentionPattern do |match|
-        mention = $1.downcase
+        mention = $1.try(:downcase)
 
         if mention == 'core'
           if product

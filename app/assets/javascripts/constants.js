@@ -104,10 +104,16 @@
 
     // TODO: move constants into here. 1 Flat namespace will ensure constants don't collide
     ActionTypes: keyMirror({
+      CHAT_USER_ONLINE: null,
+
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,
 
       NEWS_FEED_RECEIVE_RAW_ITEMS: null,
+
+      PUSHER_PRESENCE_CONNECTED: null,
+
+      USER_SIGNED_IN: null,
 
       WIP_EVENT_CREATING: null,
       WIP_EVENT_CREATED: null

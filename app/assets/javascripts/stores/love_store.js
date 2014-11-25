@@ -2,12 +2,9 @@ var _dispatchToken
 var _heartables = {}
 var _userHearts = {}
 
-var Dispatcher = require('../dispatcher')
+// var Dispatcher = require('../dispatcher')
 var Store = require('../stores/store')
-var ActionTypes = require('../constants').ActionTypes
-
-// This should be the thing that holds comments
-// Most likely the newsfeed item or
+var ActionTypes = window.CONSTANTS.ActionTypes
 
 var LoveStore = _.extend(Object.create(Store), {
   init: function(rawHeartables, rawUserHearts) {

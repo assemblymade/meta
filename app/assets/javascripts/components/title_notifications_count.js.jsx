@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  var CONSTANTS = require('../constants');
+  var CONSTANTS = window.CONSTANTS;
   var ChatNotificationsStore = require('../stores/chat_notifications_store');
   var NotificationsStore = require('../stores/notifications_store');
 

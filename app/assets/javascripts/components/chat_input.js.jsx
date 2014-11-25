@@ -3,6 +3,7 @@
 (function(){
   var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
   var subscribing;
+  var OnlineUsersStore = require('../stores/online_users_store')
 
   var Set = require('Set');
 
@@ -16,25 +17,21 @@
     getInitialState: function() {
       return {
         message: this.props.message || '',
-        typingUsernames: []
+        typingUsernames: [],
+        presenceChannel: null
       }
     },
 
     componentDidMount: function() {
-      // grabbing a pusher channel outside of react. We can fix this when chat is all reactified
-      subscribing = setInterval(this.subscribeToPresenceChannel, 50)
+      OnlineUsersStore.addChangeListener(this._onChange)
       $(this.refs.textarea.getDOMNode()).on('change', this.handleChange)
     },
 
-    subscribeToPresenceChannel: function() {
-      if (window.presenceChannel) {
-        this.channel = window.presenceChannel
-        this.channel.bind('client-typing', this.handleSomeoneTyping, this)
-        clearInterval(subscribing)
-      }
-    },
-
     componentDidUpdate: function(prevProps, prevState) {
+      if (this.state.presenceChannel != prevState.presenceChannel) {
+        this.state.presenceChannel.bind('client-typing', this.handleSomeoneTyping, this)
+      }
+
       if (prevState.message === '' && this.state.message !== '') {
         this.addTyping(this.props.username)
       } else if (prevState.message !== '' && this.state.message === '') {
@@ -51,7 +48,9 @@
     }, 3000),
 
     updateTyping: function(op) {
-      this.channel.trigger('client-typing', op)
+      if (this.state.presenceChannel) {
+        this.state.presenceChannel.trigger('client-typing', op)
+      }
     },
 
     handleSomeoneTyping: function(msg) {
@@ -153,6 +152,10 @@
 
       window.app.trigger('comment:scheduled', comment)
       this.setState({message: ''})
+    },
+
+    _onChange: function() {
+      this.setState({presenceChannel: OnlineUsersStore.getPresenceChannel()})
     }
   })
 

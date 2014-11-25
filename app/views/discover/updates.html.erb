@@ -20,6 +20,6 @@
   </script>
 <% end %>
 
-<%= react_component 'NewsFeed', url: discover_path(action: 'updates', format: 'json'), items: @posts, filter_counts: @counts %>
+<%= react_component 'NewsFeed', url: discover_path(action: 'updates', format: 'json'), items: @posts, filterCounts: @counts %>
 
 <%= render 'shared/footer' %>

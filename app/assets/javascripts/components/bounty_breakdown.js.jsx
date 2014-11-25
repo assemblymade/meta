@@ -3,6 +3,7 @@
 (function() {
   var Lightbox = require('./lightbox.js.jsx')
   var SimpleBountyOffer = require('./simple_bounty_offer.js.jsx')
+  var UserStore = require('../stores/user_store')
 
   var BountyBreakdown = React.createClass({
     mixins: [React.addons.LinkedStateMixin],
@@ -11,8 +12,55 @@
       return {
         offers: this.props.offers,
         offer: this.props.steps[2],
-        showingDetails: false
+        showingDetails: !UserStore.isSignedIn(),
+        currentUser: UserStore.get()
       };
+    },
+
+    render: function() {
+      return (
+        <Lightbox>
+          <div className="p3 border-bottom">
+            <a className="close" data-dismiss="modal">
+              <span className="h3" aria-hidden="true">&times;</span>
+              <span className="sr-only">Close</span>
+            </a>
+
+            <div className="h3 mt0 mb0">
+              How many coins is this bounty worth?
+            </div>
+
+            <div className="gray-dark h6 mt1 mb0">
+              {this.renderSubHeading()}
+            </div>
+          </div>
+
+          <div style={{ minWidth: '300px' }}>
+            <div className="border-bottom px3 py2">
+              <a onClick={this.handleShowDetailsClicked} className="h6 mt0 mb0 gray-dark bg-white right" href="#">
+                {this.state.showingDetails ? 'Hide' : 'Show'} details
+              </a>
+
+              <div className="bold h6 mt0 mb0">
+                <span className="mr1">
+                  Current value
+                </span>
+                <span className="text-coins">
+                  <span className="icon icon-app-coin"></span>
+                  {' '}
+                  {numeral(this.props.contracts.earnable).format('0,0')}
+                </span>
+              </div>
+
+              {this.renderDetails()}
+            </div>
+
+            {this.state.currentUser ? this.renderNewOffer() : null}
+          </div>
+
+          {this.state.currentUser ? this.renderActions() : null}
+        </Lightbox>
+      )
     },
 
     componentDidMount: function() {
@@ -25,6 +73,14 @@
         analytics.track('bounty.valuation.view', { product: app.currentAnalyticsProduct().get('product_slug') });
       } else {
         analytics.track('bounty.valuation.view');
+      }
+    },
+
+    renderSubHeading: function() {
+      if (this.state.currentUser) {
+        return <span>Your vote will be weighted according to your ownership in {this.props.product.name}.</span>
+      } else {
+        return <span>All votes are weighted according to each person's ownership in {this.props.product.name}.</span>
       }
     },
 
@@ -92,71 +148,29 @@
       )
     },
 
-    render: function() {
-      return (
-        <Lightbox>
-          <div className="p3 border-bottom">
-            <a className="close" data-dismiss="modal">
-              <span className="h3" aria-hidden="true">&times;</span>
-              <span className="sr-only">Close</span>
-            </a>
-
-            <div className="h3 mt0 mb0">
-              How many coins is this bounty worth?
-            </div>
-
-            <div className="gray-dark h6 mt1 mb0">
-              Your vote will be weighted according to your ownership in {this.props.product.name}.
-            </div>
-          </div>
-
-          <div style={{ minWidth: '300px' }}>
-            <div className="border-bottom px3 py2">
-              <a onClick={this.handleShowDetailsClicked} className="h6 mt0 mb0 gray-dark bg-white right" href="#">
-                {this.state.showingDetails ? 'Hide' : 'Show'} details
-              </a>
-
-              <div className="bold h6 mt0 mb0">
-                <span className="mr1">
-                  Current value
-                </span>
-                <span className="text-coins">
-                  <span className="icon icon-app-coin"></span>
-                  {' '}
-                  {numeral(this.props.contracts.earnable).format('0,0')}
-                </span>
-              </div>
-
-              {this.renderDetails()}
-            </div>
-
-            {this.renderNewOffer()}
-          </div>
-
-          <div className="p3 border-top clearfix">
-            <div className="bold mt0 mb1 h6">
-              Your vote
-            </div>
-
-            <div className="left text-coins bold mt0 mb0 h1" style={{ lineHeight: '38px' }}>
-              <span className="icon icon-app-coin"></span>
-              {' '}
-              {numeral(this.state.offer).format('0,0')}
-            </div>
-
-            <button className="btn btn-primary right px4" name="button" type="submit" onClick={this.handleOfferClicked}>Vote</button>
-          </div>
-        </Lightbox>
-      )
-    },
-
     renderNewOffer: function() {
       return VoteBountyOffer(
         _.extend({}, this.props, {
           onChange: this.handleOfferChanged,
-          user: window.app.currentUser()
+          user: this.state.currentUser
         })
       );
+    },
+
+    renderActions: function() {
+      return <div className="p3 border-top clearfix">
+        <div className="bold mt0 mb1 h6">
+          Your vote
+        </div>
+
+        <div className="left text-coins bold mt0 mb0 h1" style={{ lineHeight: '38px' }}>
+          <span className="icon icon-app-coin"></span>
+          {' '}
+          {numeral(this.state.offer).format('0,0')}
+        </div>
+
+        <button className="btn btn-primary right px4" name="button" type="submit" onClick={this.handleOfferClicked}>Vote</button>
+      </div>
     },
 
     handleOfferChanged: function(event) {

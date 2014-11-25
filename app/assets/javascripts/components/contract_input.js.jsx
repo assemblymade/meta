@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var ContractStore = require('../stores/contract_store');
-var C = require('../constants').CONTRACT;
+var C = window.CONSTANTS.CONTRACT;
 
 // FIXME: (pletcher) This component is a victim of its surroundings;
 // the layout needs to be refactored, and then this component

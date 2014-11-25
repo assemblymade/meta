@@ -1,12 +1,12 @@
 /** @jsx React.DOM */
 
 (function() {
-  var CONSTANTS = require('../constants');
+  var CONSTANTS = window.CONSTANTS;
 
   var Avatar = require('./avatar.js.jsx');
   var ChatNotifications = require('./chat_notifications.js.jsx');
   var ChatNotificationsToggler = require('./chat_notifications_toggler.js.jsx');
-  var Dispatcher = require('../dispatcher');
+  // var Dispatcher = require('../dispatcher');
   var DropdownNotifications = require('./dropdown_notifications.js.jsx');
   var DropdownNotificationsToggler = require('./dropdown_notifications_toggler.js.jsx');
   var TitleNotificationsCount = require('./title_notifications_count.js.jsx');

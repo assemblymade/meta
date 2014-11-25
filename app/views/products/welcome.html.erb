@@ -25,9 +25,17 @@
     </p>
 
     <% if @product.tasks.count < 3 %>
-      <a class="btn btn-success btn-block" href="<%= product_wips_path(@product, modal: true) %>">
-        Create <%= pluralize(3 - @product.tasks.count, 'more bounty', 'more bounties') %>
-      </a>
+      <div data-react-class="CreateBountyButton" data-react-props="<%= {
+        classes: 'btn btn-success btn-block',
+        product: { name: @product.name },
+        url: product_wips_path(@product),
+        maxOffer: (6 * @product.average_bounty).round(-4),
+        averageBounty: @product.average_bounty,
+        coinsMinted: @product.coins_minted,
+        profitLastMonth: @product.profit_last_month,
+        steps: BountyGuidance::Valuations.suggestions(@product),
+        label: 'Create ' + pluralize(3 - @product.tasks.count, 'more bounty', 'more bounties')
+      }.to_json %>"></div>
     <% else %>
       <div class="btn btn-default btn-block disabled">
         <span class="text-success">

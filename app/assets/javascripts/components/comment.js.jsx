@@ -11,8 +11,12 @@ module.exports = React.createClass({
 
   propTypes: {
     author: React.PropTypes.object.isRequired,
-    body:   React.PropTypes.string.isRequired,
+    body: React.PropTypes.string.isRequired,
     timestamp: React.PropTypes.string
+  },
+
+  isOptimistic: function() {
+    return !!this.props.optimistic;
   },
 
   render: function() {
@@ -33,11 +37,10 @@ module.exports = React.createClass({
     }
 
     if (this.isOptimistic()) {
-      body = window.marked(this.props.body)
+      body = window.marked(this.props.body);
     } else {
-      body = this.props.body
+      body = this.props.body;
     }
-
 
     return (
       <div className="clearfix">
@@ -51,14 +54,10 @@ module.exports = React.createClass({
           </div>
 
           <div className={cs}>
-            <Markdown content={body} normalized="true" />
+            <Markdown content={body} normalized={true} />
           </div>
         </div>
       </div>
     )
-  },
-
-  isOptimistic: function() {
-    return !!this.props.optimistic;
   }
 })

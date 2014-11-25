@@ -36,13 +36,13 @@
     <div class="clearfix mxn2 py3">
       <div class="sm-col sm-col-2 px2">
         <a href="<%= product_path(@product) %>">
-          <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 120 %>
+          <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 135 %>
         </a>
       </div>
 
       <div class="sm-col sm-col-7 px2">
 
-        <h1 class="mt0 mb0">
+        <h1 class="mt1 mb0">
           <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
         </h1>
 
@@ -189,15 +189,17 @@
             </li>
           <% end %>
 
+          <% if signed_in? && current_user.staff? %>
+            <li role="presentation">
+              <a href="<%= new_product_asset_path(@product) %>">
+                <span class="mr1">
+                  <%= inline_react_component 'Icon', icon: 'picture-o' %>
+                </span>
+                Asset
+              </a>
+            </li>
+          <% end %>
 
-          <!-- FIXME: There should be a new asset page -->
-<!--
-          <li role="presentation">
-            <a href="<%= new_product_asset_path(@product) %>">
-              <%= inline_react_component 'Icon', icon: 'picture-o' %>
-              Upload an asset
-            </a>
-          </li> -->
         </ul>
       </div>
     </div>

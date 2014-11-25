@@ -13,11 +13,7 @@
       <div class="text-center">
         <h1 style="font-size:48px">This is happening!</h1>
 
-        <p class="large text-muted">We currently have 56 products being built in different stages from idea to launched product. There's a lot to sort through to find a product you're stoked to work on. Take 231 seconds to fill out some cool info below and we'll be able to better connect you to products that are a good fit.</p>
-
-        <br>
-
-        <p class="text-muted">or maybe you want to <a class="bold" href="<%= start_idea_path %>" onclick="javascript:window.analytics.track('surveys.show.exit.clicked');" style="font-weight:bold;text-decoration:underline">start a product</a> or you're all <a href="<%= discover_path %>" style="font-weight:bold;text-decoration:underline" onclick="javascript:window.analytics.track('surveys.show.exit.clicked');">&ldquo;Geez man! Just let me dive in!!&rdquo;</a></p>
+        <p class="large text-muted">We currently have heaps of products being built in different stages from idea to launched product. There's a lot to sort through to find a product you're stoked to work on. If you take 3.14 seconds to answer a quick question below we'll be able to better fit you with the right products.</p>
 
       </div>
 
@@ -86,12 +82,16 @@
           </div>
         </div><!-- 1. What kinds of stuff do you like to do? -->
 
-        <br style="line-height:60px">
-
         <div class="form-actions">
-          <button class="btn btn-primary" type="submit">Send me the goods!</button>
+          <button class="btn btn-primary pull-left margin-bottom:4rem" type="submit">Let's do this!</button>
         </div>
       <% end %>
+        
+      <br>
+      <hr style="">
+            
+      <p class="text-muted">or maybe you just want to <a class="bold" href="<%= start_idea_path %>" onclick="javascript:window.analytics.track('surveys.show.exit.clicked');" style="font-weight:bold;text-decoration:underline">start a product</a> or you're all <a href="<%= discover_path %>" style="font-weight:bold;text-decoration:underline" onclick="javascript:window.analytics.track('surveys.show.exit.clicked');">&ldquo;Geez man! Just let me dive in!!&rdquo;</a></p>
+      
 
     </div>
   </div><!-- .row -->

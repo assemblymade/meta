@@ -216,18 +216,23 @@ namespace :bounties do
 
   task check_locked_bounties: :environment do
     Task.where('locked_at is not null').each do |task|
-      next if Event::ReviewReady.where(wip_id: task.id)
-      next if Event::CopyAdded.where(wip_id: task.id)
-      next if Event::CodeAdded.where(wip_id: task.id)
-      next if Event::PullRequestReference.where(wip_id: task.id)
-
       now = Time.now
-      task_expiration = Task.locked_at + 60.hours
+      task_expiration = task.locked_at + 60.hours
 
-      if task_expiration - now < 12.hours
-        UserMailer.twelve_hour_reminder(task.locked_by, task.id)
-      elsif now > task_expiration
+      if now > task_expiration
         task.stop_work!(User.find(task.locked_by))
+      elsif task_expiration - now < 12.hours
+        unless task.state == 'reviewing'
+
+          Analytics.track(
+            user_id: task.locked_by,
+            event: 'bounty.expiration.remined'
+          )
+
+          EmailLog.send_once task.locked_by, "#{task.id}-#{task.locked_at}" do
+            UserMailer.twelve_hour_reminder(task.locked_by, task.id)
+          end
+        end
       end
     end
   end

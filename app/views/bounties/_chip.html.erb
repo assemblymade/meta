@@ -2,13 +2,13 @@
 
     <ul class="list-inline text-muted small">
       <% if bounty.winners.any? %>
-        <% bounty.winners.each do |winner| %>
+        <% bounty.winners.first(3).each do |winner| %>
           <li data-toggle="tooltip" title="Awarded to @<%= winner.username %>">
             <%= avatar_tag(winner, 18, style: 'display:inline-block') %>
           </li>
         <% end %>
       <% elsif bounty.state != 'resolved' %>
-        <% bounty.workers.each do |user| %>
+        <% bounty.workers.first(3).each do |user| %>
           <li data-toggle="tooltip" title="Assigned to @<%= user.username %>">
             <%= avatar_tag(user, 18, style: 'display:inline-block') %>
           </li>

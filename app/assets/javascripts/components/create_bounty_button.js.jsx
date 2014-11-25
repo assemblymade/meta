@@ -8,7 +8,13 @@
     propTypes: {
       classes: React.PropTypes.string,
       label: React.PropTypes.string,
-      renderInto: React.PropTypes.string
+      product: React.PropTypes.object,
+      url: React.PropTypes.string,
+      maxOffer: React.PropTypes.number,
+      averageBounty: React.PropTypes.number,
+      coinsMinted: React.PropTypes.number,
+      profitLastMonth: React.PropTypes.number,
+      steps: React.PropTypes.array
     },
 
     componentDidUpdate: function() {

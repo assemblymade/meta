@@ -25,6 +25,8 @@
 #= require_tree ./views
 #= require ./textcomplete
 #= require ./polyfills
+#= require ./constants
+#= require ./dispatcher
 #= require ./components
 
 class window.Application
@@ -33,6 +35,11 @@ class window.Application
   setCurrentUser: (user) ->
     @_currentUser = new User(user)
     @trigger 'change:currentUser', @_currentUser
+
+    Dispatcher.handleServerAction
+      type: 'USER_SIGNED_IN'
+      user: @_currentUser
+
     @_currentUser
 
   currentUser: ->

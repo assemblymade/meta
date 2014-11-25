@@ -1,5 +1,5 @@
 var xhr = require('../xhr');
-var Dispatcher = require('../dispatcher');
+// var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
 var NotificationsUsersStore = require('../stores/notifications_users_store');
 var ReadTimesMixin = require('../mixins/read_times');

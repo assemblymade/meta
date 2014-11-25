@@ -7,8 +7,6 @@ class NewsFeedItemCommentsController < ProductController
 
   respond_to :json
 
-  DO_NOT_FORWARD_TO = [TeamMembership, Post]
-
   def create
     @item = @news_feed_item.news_feed_item_comments.create(
       user: current_user,
@@ -31,11 +29,28 @@ class NewsFeedItemCommentsController < ProductController
 
   def forward_comment
     if target = @news_feed_item.target
-      if DO_NOT_FORWARD_TO.include?(target.class)
+      if target.is_a? TeamMembership
+        wip = target.product.main_thread
+
+        event = Event.create_from_comment(
+          wip,
+          Event::Comment,
+          product_markdown(target.product,
+            "_@#{target.user.username}: " + @item.body + "_"
+          ),
+          current_user
+        )
+
+        Activities::Chat.publish!(
+          actor: event.user,
+          subject: event,
+          target: wip
+        )
+      elsif !target.is_a? Wip
         Activities::NewsFeedItemComment.publish!(
           actor: @item.user,
           subject: @item,
-          target: @item
+          target: target
         )
       else
         event = Event.create_from_comment(

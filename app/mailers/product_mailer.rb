@@ -193,8 +193,4 @@ class ProductMailer < BaseMailer
       subject: "@#{@new_member.username} just joined the #{@product.name} team!"
   end
 
-  def mailgun_tag(name)
-    headers 'X-Mailgun-Tag' => name.to_s
-  end
-
 end

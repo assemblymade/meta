@@ -1,5 +1,8 @@
 <% title @product.name %>
+<% description @product.pitch %>
 <% activate_nav! :product %>
+
+<%= track 'product.viewed', ProductAnalyticsSerializer.new(@product, scope: current_user) %>
 
 <script id="heartables" type="application/json">
   <%== @heartables.to_json %>
@@ -20,18 +23,38 @@
 
   <div class="sm-col sm-col-4 px2" style="float:right !important">
 
-    <div class="bg-gray-5 p2 rounded mb2">
-      <% if @product.lead.present? %>
-        <h6 class="gray-2 mt0 mb0 py1">The Big Idea</h6>
-        <%= react_component 'Markdown', content: product_markdown(@product, @product.lead), normalized: true %>
-        <a class="block mb3" href="<%= product_plan_path(@product) %>">Read more</a>
-      <% end %>
+    <div class="bg-white shadow rounded mb3">
 
-      <div class="stat-group mb0">
+      <div class="p3">
+
+        <div class="clearfix">
+          <div class="h1 mt0 mb0 yellow left mr3">
+            <%= inline_react_component 'Icon', icon: 'lightbulb-o' %>
+          </div>
+          <h4 class="mt0 mb2 py2">The Big Idea</h6>
+        </div>
+
+        <% if @product.lead.present? %>
+          <div class="mb2">
+            <%= react_component 'Markdown', content: product_markdown(@product, @product.lead), normalized: true %>
+          </div>
+          <a href="<%= product_plan_path(@product) %>">Read more</a>
+        <% else %>
+          <p class="gray-dark">Uh, there's nothing here yet. Grab a coffee, because this product is still percolating!</p>
+          <% if can?(:update, @product) %>
+            <a class="btn btn-primary btn-block" href="<%= edit_product_path(@product) %>">Add the plan</a>
+          <% end %>
+        <% end %>
+
+      </div>
+
+      <hr class="border-bottom mt0 mb0">
+
+      <div class="stat-group p3 mb0">
         <div class="stat">
           <a class="block" href="<%= product_people_path(@product) %>">
             <div class="h4 mt0 mb0"><%= @product.partners.count %></div>
-            <div class="gray-2">Partners</div>
+            <div class="gray-2">Contributors</div>
           </a>
         </div>
         <div class="stat">
@@ -52,9 +75,16 @@
     </div>
 
     <% if @product.team_building? %>
-      <div class="bg-gray-5 p2 mb2">
-        <h6 class="gray-2 mt0 mb0 py1">Team Building</h6>
-        <p>
+      <div class="bg-gray-5 p3 mb2 rounded">
+
+        <div class="clearfix">
+          <div class="h2 mt0 mb0 green left mr3">
+            <%= inline_react_component 'Icon', icon: 'users' %>
+          </div>
+          <h4 class="gray-darker mt0 mb2 py1">Team Building</h6>
+        </div>
+
+        <p class="gray-dark mb3">
           This product is growing a team. It needs to reach <strong>10 team members</strong> in
           <strong>30 days</strong> before it is Greenlit. You can become a team member by
           <a href="<%= product_people_path(@product) %>">introducing yourself</a>.</p>
@@ -70,13 +100,7 @@
       </div>
     <% end %>
 
-    <% if can?(:edit, @product) %>
-      <div class="mb2">
-        <a class="btn btn-default btn-block" href="<%= edit_product_path(@product) %>">Edit product</a>
-      </div>
-    <% end %>
-
-    <div class="px2">
+    <div class="px3">
       <% if @product_marks.count > 0 %>
         <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
         <ul class="list-reset">
@@ -90,9 +114,6 @@
 
       <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
       <ul class="list-reset">
-          <!-- <li>
-            <a href = "<% product_path(@product) %>">All (<%= @total_wip_tags.to_s %>)</a>
-          </li> -->
         <% @top_wip_tags.each do |tag, count| %>
           <li>
             <a href= "<%= product_wips_path(@product, mark: tag) %>"> <%= "#{tag} (#{count.to_s})" %> </a>
@@ -113,7 +134,7 @@
 
         <div class="bg-white p3 rounded shadow mb3">
           <div class="clearfix">
-            <h6 class="mt0 mb2">G'day <%= current_user.username %>!</h6>
+            <h4 class="mt0 mb2">Hey <%= current_user.username %>!</h4>
             <div class="right"></div>
           </div>
           <p>Ready to pitch in on <%= @product.name %>? Introduce yourself.</p>
@@ -126,6 +147,7 @@
 
             <button type="submit" class="btn btn-primary btn-block">Introduce yourself!</button>
           </form>
+
         </div>
       <% end %>
     <% end %>
@@ -133,12 +155,15 @@
 
     <% if @mark_name %>
       <div class="btn btn-default btn-block sm-col-3">
-    <%= @mark_name %>
+        <%= @mark_name %>
       </div>
       <br>
     <% end %>
 
-    <%= react_component 'NewsFeedList', items: @news_feed_items.as_json %>
+    <%= react_component 'NewsFeed',
+        items: @news_feed_items.as_json,
+        productPage: true,
+        url: product_path(@product) %>
   </div>
 
 </div>

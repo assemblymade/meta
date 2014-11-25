@@ -1,13 +1,18 @@
 /** @jsx React.DOM */
 
 (function() {
-  var CONSTANTS = require('../../constants').NEWS_FEED_ITEM;
+  var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
   var TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
   var xhr = require('../../xhr');
   var ENTER = 13;
   var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 
   var NewsFeedItemNewComment = React.createClass({
+
+    propTypes: {
+      user: React.PropTypes.object
+    },
+
     getInitialState: function() {
       return {
         comment: ''
@@ -30,7 +35,7 @@
     },
 
     render: function() {
-      if (!window.app.currentUser()) {
+      if (!this.props.user) {
         return <span />;
       }
 

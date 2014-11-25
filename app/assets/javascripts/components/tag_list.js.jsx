@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  var CONSTANTS = require('../constants');
+  var CONSTANTS = window.CONSTANTS;
   var TagListStore = require('../stores/tag_list_store');
   var TAG_STYLES = require('../lib/github_colors');
 

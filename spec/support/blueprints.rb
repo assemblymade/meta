@@ -60,14 +60,17 @@ Milestone.blueprint do
   wip
 end
 
+Interest.blueprint do
+  slug { "interest_#{sn}"}
+end
+
 NewsFeedItem.blueprint do
   source
   product
   target { product }
 end
 
-Interest.blueprint do
-  slug { "interest_#{sn}"}
+NewsFeedItemPost.blueprint do
 end
 
 Product.blueprint do

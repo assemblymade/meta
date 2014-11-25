@@ -8,6 +8,10 @@ class AssetsController < ProductController
     @assets = @product.assets.order('created_at desc').page(params[:page]).per(4*4)
   end
 
+  def new
+    @asset = @product.assets.new
+  end
+
   def create
     @asset = @product.assets.create(asset_params.merge(user: current_user))
     @room = Room.create_for!(@asset.product, @asset)
