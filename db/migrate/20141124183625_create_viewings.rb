@@ -6,8 +6,9 @@ class CreateViewings < ActiveRecord::Migration
       t.uuid :viewable_id
       t.datetime :created_at
     end
+
+    QueryMarks.new.retroactively_generate_all_user_markings
+
+    add_index :markings, [:mark_id, :object_id, :object_type], unique: true
   end
 end
-
-
-QueryMarks.new.retroactively_generate_all_user_markings

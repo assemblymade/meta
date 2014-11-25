@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   has_one  :tax_info
   has_many :team_memberships
   has_many :transaction_log_entries, foreign_key: 'wallet_id'
+  has_many :viewings
   has_many :watchings
   has_many :withdrawals
 
@@ -355,7 +356,7 @@ class User < ActiveRecord::Base
   end
 
   def sum_viewings
-    Viewing.where(viewable: self).count
+    self.viewings.count
   end
 
   private

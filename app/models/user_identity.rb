@@ -5,8 +5,8 @@ class UserIdentity < ActiveRecord::Base
   DO_WIP_MARKING_WEIGHT = 1.0
   VIEW_PRODUCT_MARKING_WEIGHT = 0.01
 
-  has_many :markings, as: :markable  #not working for some reason
-  has_many :marks, through: :markings  #not working for some reason
+  has_many :markings, as: :markable
+  has_many :marks, through: :markings
 
   def assign_markings_from_wips
     my_wips = self.user.wips_won
@@ -18,7 +18,7 @@ class UserIdentity < ActiveRecord::Base
   end
 
   def assign_markings_from_viewings
-    my_views = Viewing.where(user: self.user)
+    my_views = self.user.viewings
     my_views.each do |v|
       #get mark set of viewable
       mark_vector = QueryMarks.new.mark_vector_for_object(v.viewable)
