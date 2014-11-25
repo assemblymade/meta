@@ -624,7 +624,7 @@ class Product < ActiveRecord::Base
     [10_000_000, transaction_log_entries.sum(:cents)].max
   end
 
-  def mark_vector()
+  def mark_vector
     #get unnormalized mark vector of product itself
     my_mark_vector = QueryMarks.new.mark_vector_for_object(self)
 
