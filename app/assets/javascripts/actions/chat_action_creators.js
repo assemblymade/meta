@@ -37,7 +37,6 @@ var chatActionCreators = {
             created: moment().toISOString()
           });
 
-          console.log('adding activity', activity)
           activityStream.add(activity);
         }
       );
