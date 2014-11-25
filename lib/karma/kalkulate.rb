@@ -129,6 +129,18 @@ module Karma
       end
     end
 
+    def karma_from_heart(heart)
+      if heart.heartable.product
+        productname = heart.heartable.product.name
+        user_id = heart.heartable.product.user.id
+
+        if productname != "Assembly" and productname != "Assembly Meta"
+          chronicle_id = get_chronicle_id(user_id_id)
+          Deed.create!({karma_value: TIP_RECIPIENT_KARMA, karma_event: heart, user_id: user_id, chronicle_id: chronicle_id})
+        end
+      end
+    end
+
 
     #ONE TIME RETROACTIVE INITIALIZATIONS
     def retroactively_add_bounty_karma()
