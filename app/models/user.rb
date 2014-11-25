@@ -356,6 +356,10 @@ class User < ActiveRecord::Base
     )
   end
 
+  def sum_viewings
+    Viewing.where(viewable: self).count
+  end
+
   private
 
   def generate_authentication_token

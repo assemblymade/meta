@@ -1,8 +1,6 @@
 module Marks
   class MarkBasics
 
-
-
     def new_mark(new_mark_name)
       Mark.create!({name: new_mark_name})
     end
@@ -60,41 +58,11 @@ module Marks
       retroactively_convert_old_product_taggings_to_new()
     end
 
-    def build_user_identity_from_wip_marks(user)
-      if not identity = user.user_identity
-        identity = UserIdentity.create!({user: user})
-      end
-
-      wips = user.wips_won
-      user_results = {}
-      wips.each do |w|
-        marks = w.marks
-        marks.each do |m|
-          if user_results.has_key?(m.name)
-            user_results[m.name] = user_results[m.name] +1
-          else
-            user_results[m.name] = 1
-          end
-        end
-      end
-        user_results.each do |k, v|
-          if mark = Mark.find_by(name: k)
-            Marking.create!({markable: identity, mark_id: mark.id, weight: v.to_f})
-          else
-            mark = Mark.create!({name: k})
-            Marking.create!({markable: identity, mark_id: mark.id, weight: v.to_f})
-          end
-        end
-      return user_results
+  def give_all_users_identities()
+    User.all.each do |a|
+      UserIdentity.create!({user_id: a.id})
     end
-
-
-    def retroactively_describe_users_by_wip_marks()
-      User.all.each do |u|
-        build_user_identity_from_wip_marks(u)
-      end
-    end
-
+  end
 
 
   end

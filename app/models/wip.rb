@@ -28,6 +28,7 @@ class Wip < ActiveRecord::Base
   has_many :postings, class_name: 'BountyPosting', foreign_key: 'bounty_id'
   has_many :taggings, class_name: 'Wip::Tagging'
   has_many :tags, through: :taggings, class_name: 'Wip::Tag'
+  has_many :viewings, as: :viewable
   has_many :awards
 
   has_one  :news_feed_item, foreign_key: 'target_id'
@@ -209,6 +210,23 @@ class Wip < ActiveRecord::Base
     self.tag_names = names.split(',')
   end
 
+  def mark_vector()
+    #get unnormalized mark vector of wip itself
+    my_mark_vector = QueryMarks.new.mark_vector_for_object(self)
+
+    #get unnoramlized mark vector of product
+    my_parent_mark_vector = QueryMarks.new.mark_vector_for_object(self.product)
+
+    #scale parent vector by constant
+    my_parent_mark_vector = QueryMarks.new.scale_mark_vector(my_parent_mark_vector, 0.2)
+
+    final_mark_vector = QueryMarks.new.add_mark_vectors(my_parent_mark_vector, my_mark_vector)
+  end
+
+  def normalized_mark_vector()
+    QueryMarks.new.normalize_mark_vector(self.mark_vector())
+  end
+
   # flagging
 
   def flag!(flagger)
@@ -360,4 +378,9 @@ class Wip < ActiveRecord::Base
   def update_watchings_count!
     update! watchings_count: followings.count
   end
+
+  def sum_viewings
+    Viewing.where(viewable: self).count
+  end
+
 end

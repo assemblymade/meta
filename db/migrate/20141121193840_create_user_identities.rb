@@ -4,5 +4,8 @@ class CreateUserIdentities < ActiveRecord::Migration
       t.uuid :user_id
       t.timestamps
     end
+
+    Marks::MarkBasics.new.give_all_users_identities()
+
   end
 end
