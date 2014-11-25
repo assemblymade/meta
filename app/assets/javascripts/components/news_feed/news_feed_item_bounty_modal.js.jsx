@@ -9,6 +9,7 @@ var NewsFeedItemBountyCommentReference = require('./news_feed_item_bounty_commen
 var NewsFeedItemBountyReviewReady = require('./news_feed_item_bounty_review_ready.js.jsx');
 var NewsFeedItemBountyTagChange = require('./news_feed_item_bounty_tag_change.js.jsx');
 var NewsFeedItemBountyTimelineItem = require('./news_feed_item_bounty_timeline_item.js.jsx');
+var NewsFeedItemBountyTitleChange = require('./news_feed_item_bounty_title_change.js.jsx');
 var NewsFeedItemBountyWin = require('./news_feed_item_bounty_win.js.jsx');
 var NewsFeedItemComments = require('./news_feed_item_comments.js.jsx');
 var ReadReceipts = require('../read_receipts.js.jsx');
@@ -191,6 +192,9 @@ module.exports = React.createClass({
         // renderedEvent = <NewsFeedItemBountyTagChange {...event} />;
         // See TODO in NewsFeedItemBountyTagChange
         renderedEvent = <span />;
+        break;
+      case 'Event::TitleChange':
+        renderedEvent = <NewsFeedItemBountyTitleChange {...event} />;
         break;
       default:
         renderedEvent = <NewsFeedItemBountyTimelineItem {...event} />;
