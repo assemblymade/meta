@@ -93,7 +93,6 @@ class Product < ActiveRecord::Base
   scope :team_building, -> { public_products.where(state: 'team_building') }
   scope :greenlit,     -> { public_products.where(state: 'greenlit') }
   scope :profitable,   -> { public_products.where(state: 'profitable') }
-  scope :startup_weekend, -> { where(startup_weekend: true) }
 
   scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
 

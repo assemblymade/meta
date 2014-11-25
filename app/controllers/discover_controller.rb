@@ -49,8 +49,6 @@ class DiscoverController < ApplicationController
         @products.order('products.started_team_building_at DESC')
       when 'teambuilding'
         @products.sort_by {|p| p.bio_memberships_count }
-      when 'startup-weekend'
-        @products.startup_weekend.unscope(where: :state).order(created_at: :asc)
       else # popular
         @products.sort_by {|p| -p.partners_count }
       end
