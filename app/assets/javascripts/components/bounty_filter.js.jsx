@@ -30,6 +30,16 @@
       this.props.onChange(filters)
     },
 
+    removeFilter: function(filter) {
+      var filters = this.props.filters
+
+      filters = filters.filter(function(f) {
+        return f.name != filter.name || f.value != filter.value
+      })
+
+      this.props.onChange(filters)
+    },
+
     handleFilterClick: function(filter) {
       return function(event) {
         event.preventDefault()

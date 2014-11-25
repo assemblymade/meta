@@ -15,16 +15,16 @@
 
       return this.props.tags.map(function(tag) {
         return ( 
-          <li>
-            <a className="tag inline">
+          <div className="table-cell">
+            <a className="tag mr1 inline">
               {tag.type}:{tag.value}
-              <span className="remove">
+              <span className="remove" onClick={this.handleRemoveClick(tag)} style={{ display: 'inline' }}>
                 &times;
               </span>
             </a>
-          </li>
+          </div>
         )
-      })
+      }.bind(this))
     },
 
     renderSuggestion: function() {
@@ -36,11 +36,15 @@
       var lastChar = value[value.length - 1]
 
       if(lastChar === ' ') {
-        tag = this.parseTag(value)
+        parseData = this.parseTags(value)
 
-        if(tag) {
-          value = ''
-          this.props.onAddTag(tag)
+        if(parseData.tags.length) {
+          value = parseData.value
+
+          for (i in parseData.tags) {
+            debugger
+            this.props.onAddTag(parseData.tags[i])
+          }
         }
       }
 
@@ -49,24 +53,41 @@
       })
     },
 
-    parseTag: function(unparsedTag) {
-      var values = unparsedTag.split(':')
+    handleRemoveClick: function(tag) {
+      return function(event) {
+        event.preventDefault()
+        this.props.onRemoveTag(tag)
+      }.bind(this)
+    },
 
-      if(values.length > 1) {
-        return { type: values[0], value: values[1] }
-      }
+    parseTags: function(unparsedTag) {
+      var words = unparsedTag.split(/(\s*,?\s*)+/)
+      var parts = _.partition(words, function(word) {
+        return word.indexOf(':') == -1
+      })
+
+      var text = parts[0].join(' ')
+      var tags = parts[1].map(function(tag) {
+        var values = tag.split(':')
+
+        if(values.length > 1) {
+          return { type: values[0], value: values[1] }
+        }
+      })
+
+      return { text: text, tags: tags }
     },
 
     render: function() {
       return (
         <div className="form-control form-control-tagged">
-          <ul className="list-inline">
+          <div className="table mb0">
             {this.renderTags()}
 
-            <li>
+            <div className="table-cell full-width">
               <input type="text" value={this.state.unparsedTag} onChange={this.handleChange} />
-            </li>
-          </ul>
+            </div>
+          </div>
           {this.renderSuggestion()}
         </div>
       )
