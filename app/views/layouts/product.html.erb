@@ -265,3 +265,13 @@
     });
   </script>
 <% end %>
+
+<script>
+  $(document).ready(function() {
+    var queryKey = window.parseUri(window.location).queryKey;
+
+    if (queryKey && queryKey.modal) {
+      showCreateBounty();
+    }
+  });
+</script>

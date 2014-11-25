@@ -2,7 +2,7 @@ class TasksController < WipsController
   wrap_parameters format: [:json]
 
   def new
-    @bounty = Task.new(product: @product)
+    redirect_to product_wips_path(@product, modal: true)
   end
 
   def create
