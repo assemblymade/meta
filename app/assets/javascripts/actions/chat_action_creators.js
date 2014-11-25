@@ -1,5 +1,6 @@
 // var Dispatcher = require('../dispatcher')
 var ActionTypes = window.CONSTANTS.ActionTypes
+var alreadyJoined = {};
 
 var chatActionCreators = {
   connectToChat: function(activityStream) {
@@ -13,7 +14,6 @@ var chatActionCreators = {
         presenceChannel: presenceChannel
       })
 
-      var alreadyJoined = {};
       presenceChannel.bind('pusher:member_added',
         function memberJoined(rawMember) {
           Dispatcher.handleServerAction({
