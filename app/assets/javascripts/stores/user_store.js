@@ -13,7 +13,6 @@ var UserStore = _.extend(Object.create(Store), {
       if (typeof action.type !== 'undefined') {
         switch(action.type) {
           case ActionTypes.USER_SIGNED_IN:
-            console.log('sup')
             _currentUser = action.user
             this.emitChange()
         }

@@ -12,12 +12,12 @@ describe CommentsController do
 
       wip.save!
       wip.watch! watcher
-
-      post :create, product_id: product.slug, wip_id: wip.number, event_comment: { body: 'oh hai!', type: Event::Comment.to_s }
     end
 
     it "assigns event" do
-      expect(assigns(:event)).to be
+      post :create, product_id: product.slug, wip_id: wip.number, event_comment: { body: 'oh hai!', type: Event::Comment.to_s }
+
+      expect(assigns(:event)).to be_a(Event)
     end
   end
 end
