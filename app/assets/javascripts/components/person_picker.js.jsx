@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
+var CONSTANTS = window.CONSTANTS;
 var PersonPickerStore = require('../stores/person_picker_store');
 var Avatar = require('./avatar.js.jsx');
 

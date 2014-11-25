@@ -1,8 +1,8 @@
 /** @jsx React.DOM */
 
 (function() {
-  var CONSTANTS = require('../constants');
-  var Dispatcher = require('../dispatcher');
+  var CONSTANTS = window.CONSTANTS;
+  // var Dispatcher = require('../dispatcher');
   var TC = CONSTANTS.TEXT_COMPLETE;
 
   var TextInput = React.createClass({

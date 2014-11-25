@@ -33,3 +33,7 @@ global.Notify.needsPermission = function() { return true; };
 global.pathToFile = function(name) {
   return '../../../../app/assets/javascripts/' + name;
 };
+
+// these are currently pulled in via sprockets, so we'll auto require them here
+global.Constants = require('../../app/assets/javascripts/constants')
+global.Dispatcher = require('../../app/assets/javascripts/dispatcher')

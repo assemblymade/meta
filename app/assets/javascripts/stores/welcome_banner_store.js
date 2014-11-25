@@ -1,7 +1,7 @@
 (function() {
   var xhr = require('../xhr');
-  var WB = require('../constants').WELCOME_BANNER;
-  var Dispatcher = require('../dispatcher');
+  var WB = window.CONSTANTS.WELCOME_BANNER;
+  // var Dispatcher = require('../dispatcher');
   var Store = require('../stores/store');
   var _store = Object.create(Store);
 

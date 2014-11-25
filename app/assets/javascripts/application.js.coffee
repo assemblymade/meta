@@ -25,6 +25,7 @@
 #= require_tree ./views
 #= require ./textcomplete
 #= require ./polyfills
+#= require ./constants
 #= require ./dispatcher
 #= require ./components
 

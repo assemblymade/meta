@@ -2,6 +2,9 @@
  * @jsx React.DOM
  */
 
+var ChatActionCreators = require('../actions/chat_action_creators');
+var OnlineUsersStore = require('../stores/online_users_store');
+
 (function() {
   var isMemberOnline = function(member) {
     return moment(member.last_online).isAfter(moment().subtract('hour', 1))
@@ -14,6 +17,47 @@
   var MEMBER_VIEW_REFRESH_PERIOD = 60 * 1000; // 1 minute
 
   var MembersView = React.createClass({
+    render: function() {
+      return <div>
+        { _.map(this.members(), this.renderMember) }
+      </div>
+    },
+
+    getInitialState: function() {
+      return {
+        hasRecentlyActiveMembers: false,
+        members: {},
+        presenceChannel: null
+      }
+    },
+
+    componentDidMount: function() {
+      OnlineUsersStore.addChangeListener(this._onChange)
+    },
+
+    componentWillUnmount: function() {
+      OnlineUsersStore.removeChangeListener(this._onChange)
+    },
+
+    componentDidUpdate: function(prevProps, prevState) {
+      if (this.state.presenceChannel != prevState.presenceChannel) {
+        this.loadMembersFromChannel()
+        this.loadMembersFromServer()
+
+        this.state.presenceChannel.bind(
+          'pusher:member_added',
+          _.bind(this.addMemberFromPusher, this)
+        )
+
+        this.state.presenceChannel.bind(
+          'pusher:member_removed',
+          _.bind(this.removeMemberFromPusher, this)
+        )
+
+        every(MEMBER_VIEW_REFRESH_PERIOD, _.bind(this.loadMembersFromServer, this))
+      }
+    },
+
     loadMembersFromServer: function() {
       $.ajax({
         url: this.props.url,
@@ -33,7 +77,7 @@
     },
 
     loadMembersFromChannel: function() {
-      this.props.channel.bind('pusher:subscription_succeeded',
+      this.state.presenceChannel.bind('pusher:subscription_succeeded',
         _.bind(
           function(members) {
             members.each(_.bind(function(member) {
@@ -43,30 +87,6 @@
           this
         )
       )
-    },
-
-    getInitialState: function() {
-      return {
-        hasRecentlyActiveMembers: false,
-        members: {}
-      }
-    },
-
-    componentDidMount: function() {
-      this.loadMembersFromChannel()
-      this.loadMembersFromServer()
-
-      this.props.channel.bind(
-        'pusher:member_added',
-        _.bind(this.addMemberFromPusher, this)
-      )
-
-      this.props.channel.bind(
-        'pusher:member_removed',
-        _.bind(this.removeMemberFromPusher, this)
-      )
-
-      every(MEMBER_VIEW_REFRESH_PERIOD, _.bind(this.loadMembersFromServer, this))
     },
 
     renderMember: function(member) {
@@ -84,12 +104,6 @@
           {indicator}
         </a>
       )
-    },
-
-    render: function() {
-      return <div>
-        { _.map(this.members(), this.renderMember) }
-      </div>
     },
 
     addMembers: function(members) {
@@ -133,6 +147,12 @@
       }).sortBy(function(member) {
         return (isMemberOnline(member) ? '0' : '1') + member.username.toLowerCase()
       }).value()
+    },
+
+    _onChange: function() {
+      this.setState({
+        presenceChannel: OnlineUsersStore.getPresenceChannel()
+      })
     }
   });
 

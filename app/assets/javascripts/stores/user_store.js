@@ -1,6 +1,6 @@
-var Dispatcher = require('../dispatcher')
+// var Dispatcher = require('../dispatcher')
 var Store = require('../stores/store')
-var ActionTypes = require('../constants').ActionTypes
+var ActionTypes = window.CONSTANTS.ActionTypes
 
 var _dispatchToken;
 var _currentUser = null;

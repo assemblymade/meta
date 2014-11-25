@@ -1,5 +1,5 @@
 (function() {
-  var Dispatcher = require('../dispatcher');
+  // var Dispatcher = require('../dispatcher');
   var Store = require('../stores/store');
 
   var _tags = [];

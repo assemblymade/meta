@@ -5,7 +5,7 @@
   var NewsFeedItem = require('./news_feed_item.js.jsx');
   var NewsFeedMixin = require('../../mixins/news_feed_mixin.js.jsx');
   var Spinner = require('../spinner.js.jsx');
-  var ActionTypes = require('../../constants').ActionTypes
+  var ActionTypes = window.CONSTANTS.ActionTypes
 
   var NewsFeed = React.createClass({
     mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0}), NewsFeedMixin],

@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var Dispatcher = require('../dispatcher');
+// var Dispatcher = require('../dispatcher');
 
 (function() {
   var DragAndDrop = React.createClass({

@@ -1,8 +1,8 @@
 /** @jsx React.DOM */
 
 (function() {
-  var WB = require('../constants').WELCOME_BANNER;
-  var Dispatcher = require('../dispatcher');
+  var WB = window.CONSTANTS.WELCOME_BANNER;
+  // var Dispatcher = require('../dispatcher');
   var WelcomeBannerStore = require('../stores/welcome_banner_store');
 
   var WelcomeBanner = React.createClass({

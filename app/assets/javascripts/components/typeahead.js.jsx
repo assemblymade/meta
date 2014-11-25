@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
+var CONSTANTS = window.CONSTANTS;
 
 (function() {
   var TC = CONSTANTS.TYPEAHEAD;

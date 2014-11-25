@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 
 (function() {
-  var CONSTANTS = require('../constants');
+  var CONSTANTS = window.CONSTANTS;
   var Avatar = require('./avatar.js.jsx');
-  var Dispatcher = require('../dispatcher');
+  // var Dispatcher = require('../dispatcher');
   var EventMixin = require('../mixins/event.js.jsx');
   var NotificationsMixin = require('../mixins/notifications.js.jsx');
   var NotificationsStore = require('../stores/notifications_store');

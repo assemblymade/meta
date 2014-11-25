@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
-var Dispatcher = require('../dispatcher')
-var ActionTypes = require('../constants').ActionTypes
+// var Dispatcher = require('../dispatcher')
+var ActionTypes = window.CONSTANTS.ActionTypes
 
 var NewsFeedMixin = {
   eagerlyFetchMoreNewsFeedItems: function(e) {

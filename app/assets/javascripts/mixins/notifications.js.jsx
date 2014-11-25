@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  var CONSTANTS = require('../constants');
+  var CONSTANTS = window.CONSTANTS;
   var NotificationsStore = require('../stores/notifications_store');
   var NotificationsUsersStore = require('../stores/notifications_users_store');
   var update = require('react/lib/update');

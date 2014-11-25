@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
-var Dispatcher = require('../dispatcher');
+var CONSTANTS = window.CONSTANTS;
+// var Dispatcher = require('../dispatcher');
 var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
 var LocalStorageMixin = require('../mixins/local_storage');
 var NotificationsStore = require('../stores/notifications_store');

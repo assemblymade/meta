@@ -1,6 +1,6 @@
 (function() {
-  var CONSTANTS = require('../constants').NEWS_FEED_ITEM;
-  var Dispatcher = require('../dispatcher');
+  var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
+  // var Dispatcher = require('../dispatcher');
   var Store = require('../stores/store');
   var _store = Object.create(Store);
 

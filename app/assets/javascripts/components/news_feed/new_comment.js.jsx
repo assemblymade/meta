@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  var CONSTANTS = require('../../constants').NEWS_FEED_ITEM;
+  var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
   var TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
   var xhr = require('../../xhr');
   var ENTER = 13;

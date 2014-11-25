@@ -2,9 +2,9 @@ var _dispatchToken
 var _heartables = {}
 var _userHearts = {}
 
-var Dispatcher = require('../dispatcher')
+// var Dispatcher = require('../dispatcher')
 var Store = require('../stores/store')
-var ActionTypes = require('../constants').ActionTypes
+var ActionTypes = window.CONSTANTS.ActionTypes
 
 var LoveStore = _.extend(Object.create(Store), {
   init: function(rawHeartables, rawUserHearts) {

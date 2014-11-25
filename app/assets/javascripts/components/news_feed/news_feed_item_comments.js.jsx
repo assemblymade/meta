@@ -3,9 +3,9 @@
 // TODO This lib is in application.js (chrislloyd)
 // var marked = require('marked')
 
-var CONSTANTS = require('../../constants').NEWS_FEED_ITEM;
+var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
 var Comment = require('../comment.js.jsx')
-var Dispatcher = require('../../dispatcher.js');
+var Dispatcher = window.Dispatcher;
 var Icon = require('../icon.js.jsx');
 var NewComment = require('./new_comment.js.jsx');
 var NewsFeedItemStore = require('../../stores/news_feed_item_store');

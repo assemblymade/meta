@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
-var Dispatcher = require('../dispatcher');
+var CONSTANTS = window.CONSTANTS;
+// var Dispatcher = require('../dispatcher');
 var NotificationPreferencesDropdownStore = require('../stores/notification_preferences_dropdown_store');
 var Avatar = require('./avatar.js.jsx');
 

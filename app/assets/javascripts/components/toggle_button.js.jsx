@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var CONSTANTS = require('../constants');
+var CONSTANTS = window.CONSTANTS;
 var ButtonStore = require('../stores/toggle_button_store');
 
 (function() {
