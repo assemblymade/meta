@@ -8,7 +8,7 @@ class Post < ActiveRecord::Base
   belongs_to :product
   belongs_to :author, class_name: 'User'
 
-  has_many :news_feed_items, as: :target
+  has_one :news_feed_item, foreign_key: 'target_id'
 
   validates :product, presence: true
   validates :author,  presence: true
@@ -17,6 +17,7 @@ class Post < ActiveRecord::Base
   validates :summary, length: { minimum: 2, maximum: 140 }, allow_blank: true
 
   after_commit :push_to_news_feed, on: :create
+  after_commit :update_news_feed_item, on: :update
 
   friendly_id :title, use: :slugged
 
@@ -38,6 +39,10 @@ class Post < ActiveRecord::Base
 
   def user
     author
+  end
+
+  def update_news_feed_item
+    news_feed_item.update(updated_at: Time.now)
   end
 
 end

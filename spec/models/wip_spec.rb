@@ -8,6 +8,7 @@ describe Wip do
   let(:winner) { User.make! }
   let(:closer) { User.make! }
   let(:winning_event) { Event::Comment.make!(wip: wip, user: winner) }
+  let(:nfi) { NewsFeedItem.make!(target: wip, source: owner) }
 
   let(:joe_random) { User.make!(is_staff: false) }
   let(:core_member) { user = User.make!; product.team_memberships.create(user: user, is_core: true); user }
@@ -130,6 +131,15 @@ describe Wip do
       tag_change = wip.events.last
       tag_change.from.should =~ %w(code design)
       tag_change.to.should =~ %w(ui testing)
+    end
+  end
+
+  describe '#update_news_feed_item' do
+    it 'calls #update_news_feed_item' do
+      Wip.any_instance.stub(:update_news_feed_item)
+      expect(wip).to receive(:update_news_feed_item)
+
+      wip.update(title: 'A History of the World')
     end
   end
 end

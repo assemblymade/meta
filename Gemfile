@@ -125,6 +125,7 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'rspec-sidekiq'
   gem 'simplecov'
+  gem 'test_after_commit'
   gem 'vcr'
   gem 'webmock'
 end
