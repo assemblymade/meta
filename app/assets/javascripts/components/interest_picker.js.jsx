@@ -219,7 +219,7 @@ var InterestStore = require('../stores/interest_store');
     render: function() {
       var style = {
         position: 'absolute',
-        'z-index': 100,
+        zIndex: 100,
         top: 45,
         left: 0,
         width: '100%',
