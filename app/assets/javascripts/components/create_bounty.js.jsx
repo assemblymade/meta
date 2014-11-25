@@ -4,10 +4,6 @@
   var Lightbox = require('./lightbox.js.jsx')
 
   var CreateBounty = React.createClass({
-    propTypes: {
-      renderInto: React.PropTypes.string
-    },
-
     getDefaultProps: function() {
       var csrfTokenElement = document.getElementsByName('csrf-token')[0];
 

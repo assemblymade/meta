@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :strip_invite_token
   before_action :strip_promo_token
   after_action  :set_request_info!,   if: :signed_in?
+  after_action  :claim_invite,        if: :signed_in?
 
   rescue_from CanCan::AccessDenied do |e|
     store_location
@@ -59,6 +60,15 @@ class ApplicationController < ActionController::Base
         end
       end
       redirect_to(url_for(params.except(:i)))
+    end
+  end
+
+  def claim_invite
+    if cookies[:invite]
+      if invite = Invite.find_by(id: cookies[:invite])
+        invite.claim!(current_user)
+        cookies.delete(:invite)
+      end
     end
   end
 

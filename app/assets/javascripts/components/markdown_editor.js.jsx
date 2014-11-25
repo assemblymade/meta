@@ -25,7 +25,7 @@
 
     componentDidMount: function() {
       // TODO: move this garbage to React
-      dzView = new DropzoneView({el: this.getDOMNode(), url: this.props.url, selectEl: this.refs.file.getDOMNode() })
+      var dzView = new DropzoneView({el: this.getDOMNode(), url: this.props.url, selectEl: this.refs.file.getDOMNode() })
       new MarkdownEditorView({el: this.getDOMNode(), dropzone: dzView.dz})
     },
 

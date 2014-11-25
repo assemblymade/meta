@@ -7,7 +7,7 @@ class ProductsController < ProductController
   before_action :set_product,
     only: [:show, :old, :edit, :update, :follow, :announcements, :unfollow, :metrics, :flag, :feature, :launch]
 
-  MARK_DISPLAY_LIMIT =  14 #maximum number of marks to display on product page
+  MARK_DISPLAY_LIMIT = 14
   PRODUCT_MARK_DISPLAY_LIMIT = 6
 
   def new
