@@ -47,10 +47,6 @@
       var product = this.props.product;
       var target = this.props.target;
 
-      if (target && target.type === 'team_membership') {
-        return null;
-      }
-
       if (this.props.productPage) {
         return <NewsFeedItemComments item={this.props} />;
       }
