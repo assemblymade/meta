@@ -15,15 +15,6 @@ module.exports = React.createClass({
     timestamp: React.PropTypes.string
   },
 
-  getInitialState: function() {
-    var body = this.props.body;
-    var shownBody = body && body.length > 200 ? this.truncate(body) : body
-
-    return {
-      shownBody: shownBody
-    };
-  },
-
   isOptimistic: function() {
     return !!this.props.optimistic;
   },
@@ -46,16 +37,9 @@ module.exports = React.createClass({
     }
 
     if (this.isOptimistic()) {
-      body = window.marked(this.state.shownBody)
+      body = window.marked(this.props.body);
     } else {
-      body = this.state.shownBody
-    }
-
-    // because we're asking the Markdown component to safely render
-    // the `content` prop that we pass it, we need to handle the danger
-    // here in case the body is a string
-    if (typeof body === 'string') {
-      body = <span dangerouslySetInnerHTML={{ __html: body }} />;
+      body = this.props.body;
     }
 
     return (
@@ -70,28 +54,10 @@ module.exports = React.createClass({
           </div>
 
           <div className={cs}>
-            <Markdown content={body} normalized={true} safelySetHtml={true} />
+            <Markdown content={body} normalized={true} />
           </div>
         </div>
       </div>
     )
-  },
-
-  showEntireBody: function() {
-    this.setState({
-      shownBody: this.props.body
-    });
-  },
-
-  truncate: function(body) {
-    body = body.substring(0, 200);
-    body = body.substring(0, body.lastIndexOf(' '));
-
-    return (
-      <span>
-        <span dangerouslySetInnerHTML={{ __html: body }} />
-        {' '}<a href="javascript:void(0);" className="bold" onClick={this.showEntireBody}>&hellip;</a>
-      </span>
-    );
   }
 })

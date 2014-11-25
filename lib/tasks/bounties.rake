@@ -222,7 +222,17 @@ namespace :bounties do
       if now > task_expiration
         task.stop_work!(User.find(task.locked_by))
       elsif task_expiration - now < 12.hours
-        UserMailer.twelve_hour_reminder(task.locked_by, task.id)
+        unless task.state == 'reviewing'
+
+          Analytics.track(
+            user_id: task.locked_by,
+            event: 'bounty.expiration.remined'
+          )
+
+          EmailLog.send_once task.locked_by, "#{task.id}-#{task.locked_at}" do
+            UserMailer.twelve_hour_reminder(task.locked_by, task.id)
+          end
+        end
       end
     end
   end
