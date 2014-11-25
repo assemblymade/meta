@@ -65,6 +65,7 @@ class User < ActiveRecord::Base
 
   after_commit -> { Indexer.perform_async(:index, User.to_s, self.id) }, on: :create
   after_commit :retrieve_key_pair, on: :create
+  after_commit :create_identity, on: :create
 
   # default users to immediate email
   MAIL_DAILY = 'daily'
@@ -78,8 +79,6 @@ class User < ActiveRecord::Base
   validates :mail_preference, inclusion: { in: [MAIL_DAILY, MAIL_HOURLY, MAIL_IMMEDIATE, MAIL_NEVER] }
 
   after_save :username_renamed, :if => :username_changed?
-
-  after_initialize :create_identity
 
   validates :username,
     presence: true,
@@ -146,7 +145,6 @@ class User < ActiveRecord::Base
 
   def marks
     wips_won = self.wips_won
-
     results = {}
     wips_won.each do |w|
       marks = w.marks

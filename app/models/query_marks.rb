@@ -34,50 +34,21 @@ class QueryMarks
 
 
   def mark_vector_for_object(object)  #directly gets markings, don't use for products & wips where inherited marks are also desired
-    markings = Marking.where(markable: object)
-    vector = []
-    if markings
-      markings.each do |m|
-        weight = m.weight
-        mark = m.mark
-        if mark && weight
-          vector.append([mark, weight])
-        end
-      end
+    markings = Marking.where(markable: object).includes(:marks)
+    markings.map do |m|
+      [marking.mark, marking.weight]
     end
-    vector
   end
 
   def scale_mark_vector(vector, scalar)
-    result = []
-    if vector.count > 0
-      vector.each do |a|
-        if a[1]
-          result.append([a[0], a[1]*scalar])
-        end
-      end
-    end
-    return result
+    vector.map{ |mark, weight| [mark, weight * scalar] }
   end
 
   def normalize_mark_vector(vector)
-    #normalize vector to 1.0
-    magnitude = 0
-    vector.each do |v|
-      if v[1]
-        magnitude = magnitude + v[1]*v[1]
-      end
-    end
-    if magnitude == 0
-      magnitude = 1
-    end
-    magnitude = Math.sqrt(magnitude)
-
-    normalized_vector = []
-    vector.each do |v|
-      normalized_vector.append([v[0], v[1].to_f/magnitude])
-    end
-    return normalized_vector.sort{|a,b| b[1] <=> a[1]}
+    magnitude = vector.sum{ |_, weight| weight ** 2}
+    magnitude = Math.sqrt([1, magnitude].max)
+    normalized_vector = vector.map{ |mark, weight| [mark, weight / magnitude] }
+    normalized_vector.sort_by{ |_, weight| weight}.reverse
   end
 
   def normalized_mark_vector_for_object(object)

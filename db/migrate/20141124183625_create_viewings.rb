@@ -8,3 +8,6 @@ class CreateViewings < ActiveRecord::Migration
     end
   end
 end
+
+
+QueryMarks.new.retroactively_generate_all_user_markings
