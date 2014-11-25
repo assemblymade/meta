@@ -42,7 +42,9 @@ class Post < ActiveRecord::Base
   end
 
   def update_news_feed_item
-    self.news_feed_item.update(updated_at: Time.now)
+    if self.news_feed_item
+      self.news_feed_item.update(updated_at: Time.now)
+    end
   end
 
 end
