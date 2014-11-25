@@ -27,7 +27,7 @@ class CommentsController < ProductController
     if @event.valid?
       if type == Event::Comment
         RegisterEventInReadraptor.perform_async(@event.to_global_id.to_s)
-        raise @event.inspect
+
         @event.auto_watch!(current_user)
         @event.update_pusher
 
