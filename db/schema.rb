@@ -11,6 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+ActiveRecord::Schema.define(version: 20141125183748) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
@@ -514,33 +516,33 @@
   add_index "product_trends", ["product_id"], name: "index_product_trends_on_product_id", unique: true, using: :btree
 
   create_table "products", id: :uuid, force: true do |t|
-    t.string   "slug",                                              null: false
-    t.string   "name",                                              null: false
+    t.string   "slug",                                             null: false
+    t.string   "name",                                             null: false
     t.string   "pitch"
     t.text     "description"
-    t.integer  "assembly_contribution",             default: 0,     null: false
+    t.integer  "assembly_contribution",             default: 0,    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.uuid     "user_id",                                           null: false
+    t.uuid     "user_id",                                          null: false
     t.text     "lead"
     t.integer  "view_count",                        default: 0
     t.text     "suggested_perks"
     t.string   "poster"
-    t.integer  "votes_count",                       default: 0,     null: false
+    t.integer  "votes_count",                       default: 0,    null: false
     t.uuid     "evaluator_id"
     t.datetime "greenlit_at"
     t.text     "free_perk"
-    t.integer  "watchings_count",                   default: 0,     null: false
-    t.text     "repos",                                                          array: true
-    t.string   "authentication_token",                              null: false
+    t.integer  "watchings_count",                   default: 0,    null: false
+    t.text     "repos",                                                         array: true
+    t.string   "authentication_token",                             null: false
     t.datetime "featured_on"
-    t.string   "tags",                              default: [],                 array: true
+    t.string   "tags",                              default: [],                array: true
     t.boolean  "can_advertise",                     default: true
     t.datetime "flagged_at"
     t.text     "flagged_reason"
     t.string   "homepage_url"
     t.string   "you_tube_video_url"
-    t.integer  "commit_count",                      default: 0,     null: false
+    t.integer  "commit_count",                      default: 0,    null: false
     t.datetime "founded_at"
     t.datetime "public_at"
     t.uuid     "main_thread_id"
@@ -549,7 +551,7 @@
     t.hstore   "info"
     t.integer  "quality"
     t.datetime "last_activity_at"
-    t.integer  "bio_memberships_count",             default: 0,     null: false
+    t.integer  "bio_memberships_count",             default: 0,    null: false
     t.datetime "started_building_at"
     t.datetime "live_at"
     t.integer  "partners_count"
@@ -562,7 +564,6 @@
     t.string   "state"
     t.datetime "last_checked_btc"
     t.datetime "issued_coins"
-    t.boolean  "startup_weekend",                   default: false, null: false
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
@@ -570,7 +571,6 @@
   add_index "products", ["repos"], name: "index_products_on_repos", using: :btree
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true, using: :btree
   add_index "products", ["started_team_building_at"], name: "index_products_on_started_team_building_at", using: :btree
-  add_index "products", ["startup_weekend"], name: "index_products_on_startup_weekend", using: :btree
   add_index "products", ["state"], name: "index_products_on_state", using: :btree
 
   create_table "profit_reports", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
