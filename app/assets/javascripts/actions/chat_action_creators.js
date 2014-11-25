@@ -23,7 +23,6 @@ var chatActionCreators = {
 
           // Slight hack to prevent multiple join messages
           // for one person
-          console.log(alreadyJoined, rawMember)
           if (alreadyJoined[rawMember.id] === 1) {
             return;
           }

@@ -20,8 +20,6 @@ var OnlineUsersStore = _.extend(Object.create(Store), {
 _dispatchToken = Dispatcher.register(function(payload){
   var action = payload.action
 
-  console.log(payload)
-
   if (typeof action.type !== 'undefined') {
 
     switch(action.type) {

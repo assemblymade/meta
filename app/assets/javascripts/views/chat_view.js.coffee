@@ -133,7 +133,6 @@ class window.ChatView extends Backbone.View
     e.preventDefault()
     id = $(e.currentTarget).attr('href')
     body = $(id + ' .activity-content').text().trim()
-    console.log @collection
     productAttributes = @collection.product.attributes
     renderedModal = React.render(
       CreateBounty({
