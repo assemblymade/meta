@@ -34,8 +34,14 @@
           <a href="<%= discover_path(:bounties) %>">Hot Bounties</a>
         </li>
 
+        <% if current_user.try(:staff?) %>
+          <li class="<%= nav_active_class(:ideas) %>">
+            <a href="<%= ideas_path %>">Ideas</a>
+          </li>
+        <% end %>
 
         <% if user_signed_in? %>
+
           <hr class="py0 m0 xs-show sm-hide md-hide lg-hide" />
 
           <li class="xs-show sm-hide md-hide lg-hide">

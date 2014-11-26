@@ -12,7 +12,8 @@ module.exports = React.createClass({
   propTypes: {
     author: React.PropTypes.object.isRequired,
     body: React.PropTypes.string.isRequired,
-    timestamp: React.PropTypes.string
+    timestamp: React.PropTypes.string,
+    heartable: React.PropTypes.bool
   },
 
   isOptimistic: function() {
@@ -23,6 +24,7 @@ module.exports = React.createClass({
     var author = this.props.author
     var timestamp = null
     var body = null
+    var hearts = null
 
     var cs = React.addons.classSet({
       'gray-dark': this.isOptimistic(),

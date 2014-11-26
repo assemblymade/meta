@@ -35,7 +35,7 @@
       };
     },
 
-    getInitialState: function() {
+    getInitialState: function() { 
       return {
         adding: false,
         popoverShown: false,
@@ -190,6 +190,7 @@
     },
 
     tags: function(tags) {
+
       var self = this;
       var addedTags = TagListStore.getTags();
 

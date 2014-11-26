@@ -61,6 +61,9 @@
           },
           product: {
             tags: tags
+          },
+          idea: {
+            tag_list: tags
           }
         },
 
