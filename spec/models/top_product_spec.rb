@@ -1,5 +1,5 @@
 require 'spec_helper'
 
 describe TopProduct do
-  pending "add some examples to (or delete) #{__FILE__}"
+  TopProduct.new #there's nothing to do here yet
 end

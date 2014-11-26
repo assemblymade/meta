@@ -8,8 +8,7 @@ class UserIdentity < ActiveRecord::Base
   has_many :markings, as: :markable
   has_many :marks, through: :markings
 
-  def assign_markings_from_wips
-    my_wips = self.user.wips_won
+  def assign_markings_from_wips(my_wips)
     cumulative_vector = []
     my_wips.each do |w|
       cumulative_vector = QueryMarks.new.add_mark_vectors(w.normalized_mark_vector, cumulative_vector)
@@ -36,7 +35,8 @@ class UserIdentity < ActiveRecord::Base
   end
 
   def assign_markings_from_scratch
-    assign_markings_from_wips
+    wips_won = self.user.wips_won
+    assign_markings_from_wips(wips_won)
     assign_markings_from_viewings
   end
 
