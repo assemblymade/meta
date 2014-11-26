@@ -222,6 +222,7 @@ class Product < ActiveRecord::Base
     update!(
       greenlit_at: Time.now,
       profitable_at: nil
+      AssemblyCoin::GreenlightProduct.new.(self.id)
     )
   end
 

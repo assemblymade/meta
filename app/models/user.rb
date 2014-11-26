@@ -148,10 +148,6 @@ class User < ActiveRecord::Base
 
   def marks
     wips_won = self.wips_won
-<<<<<<< HEAD
-=======
-
->>>>>>> c1edb96723e9e0a410902f6008ff6ee3d4e60413
     results = {}
     wips_won.each do |w|
       marks = w.marks
