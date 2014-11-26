@@ -9,12 +9,20 @@
   <% idea = nfi.target %>
     <div class="idea-feed-item card p3">
       <div class="mt0 mb2">
-        <%= react_component 'Love', heartable_id: idea.news_feed_item.id, heartable_type: 'NewsFeedItem' %>
-        <strong>
-          <span class="icon icon-speech icon-left"></span>
-          5
-          <span class="sr-only">comments</span>
-        </strong> </div>
+        <div class="left">
+          <%= react_component 'Love', heartable_id: idea.news_feed_item.id, heartable_type: 'NewsFeedItem' %>
+        </div>
+        <div class="right text-muted">
+          <%= link_to idea, class: "text-stealth-link" do %>
+          <strong>
+            <span class="icon icon-speech icon-left"></span>
+              <%= idea.comments.count %>
+            <span class="sr-only">comments</span>
+          </strong>
+          <% end %>
+        </div>
+        <span class="clearfix"></span>
+      </div>
       <h4 class="mt0 mb3">
         <%= link_to idea.name, idea %>
       </h4>

@@ -28,8 +28,8 @@ class Idea < ActiveRecord::Base
     ]
   end
 
-  def comments_count
-    news_feed_item_comments.count
+  def comments
+    news_feed_item_comments
   end
 
   def creator_username
