@@ -4,19 +4,22 @@
 
 <%= render 'bounties/header'  %>
 
-<div class="row">
+<div class="clearfix mxn2">
 
   <% if @product.tasks.any? %>
 
-    <div class="col-md-9">
+    <div class="sm-col sm-col-4 px2" style="float: right !important">
+      <%= render 'bounties/projects_filter', projects: @milestones %>
+    </div>
+
+    <div class="sm-col sm-col-8 px2">
       <% if @wips.any? %>
-        <ol class="list-group list-group-breakout list-group-padded" id="wips-view-el">
-          <% @wips.each do |task| %>
-            <li class="list-group-item">
-              <%= render 'bounties/chip', bounty: task %>
-            </li>
-          <% end %>
-        </ol>
+
+        <% @wips.each do |task| %>
+          <div class="bg-white p3 rounded shadow mb3">
+            <%= render 'bounties/chip', bounty: task %>
+          </div>
+        <% end %>
 
         <% if @wips.total_pages > 1 %>
           <hr>
@@ -24,10 +27,6 @@
           <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
         <% end %>
       <% end %>
-    </div>
-
-    <div class="col-md-3">
-      <%= render 'bounties/projects_filter', projects: @milestones %>
     </div>
 
   <% else %>
