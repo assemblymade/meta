@@ -76,7 +76,6 @@ class TasksController < WipsController
     end
 
     @wips = find_wips
-    @project = @product.milestones.find_by(number: params[:project]) if params[:project]
     @milestones = @product.milestones.open
     @auto_tip_contracts = @product.auto_tip_contracts.active
     @featured_bounties = @product.bounty_postings

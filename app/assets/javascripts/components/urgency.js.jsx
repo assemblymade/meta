@@ -25,7 +25,11 @@
       return (
         <div className="dropdown" style={{"display":"inline-block"}}>
           <a data-toggle="dropdown" style={{ cursor: "pointer" }}>
-            <span className={this.labelClass(this.state.label)}>{this.state.label}</span>
+            <span className={this.labelClass(this.state.label)}>
+              {this.state.label}
+              {' '}
+              <span className="icon icon-chevron-down"></span>
+            </span>
           </a>
           <ul className="dropdown-menu">
             {this.listItems()}
