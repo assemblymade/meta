@@ -13,7 +13,6 @@ describe UserIdentity do
     mark_vector = user_identity.get_mark_vector
 
     expect(mark_vector).to eq([[sample_mark, 1.0]])
-
   end
 
   it 'should be able to assign markings from wips and viewings' do
