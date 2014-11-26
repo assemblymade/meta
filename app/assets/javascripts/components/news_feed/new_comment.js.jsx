@@ -99,7 +99,7 @@
       try {
         data = JSON.parse(data);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
 
       Dispatcher.dispatch({

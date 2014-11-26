@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :awards, foreign_key: 'winner_id'
   has_many :deeds
   has_many :events
+  has_many :hearts
   has_many :products
   has_many :product_logos
   has_many :followed_products, through: :watchings, source: :watchable, source_type: Product
@@ -142,7 +143,7 @@ class User < ActiveRecord::Base
 
   def marks
     wips_won = self.wips_won
-    
+
     results = {}
     wips_won.each do |w|
       marks = w.marks

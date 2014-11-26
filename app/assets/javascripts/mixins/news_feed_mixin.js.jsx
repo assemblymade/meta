@@ -32,7 +32,7 @@ var NewsFeedMixin = {
     if (body) {
       body.scroll(function(e) {
         var distanceFromTop = document.body.scrollTop;
-      
+
         if (distanceFromTop > self.farthestTraveled &&
             distanceFromTop - self.previousDistance > 1500) {
           self.eagerlyFetchMoreNewsFeedItems();
@@ -45,14 +45,14 @@ var NewsFeedMixin = {
 
   _handleMoreNewsFeedItems: function(err, results) {
     if (err) {
-      return console.log(err);
+      return console.error(err);
     }
 
     var data;
     try {
       data = JSON.parse(results);
     } catch (e) {
-      return console.log(e);
+      return console.error(e);
     }
 
     if (data && data.items.length) {

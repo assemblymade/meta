@@ -37,6 +37,19 @@ class HeartablesController < ApplicationController
     end
   end
 
+  def hearts
+    @hearts = Heart.includes(:user).
+                     where(heartable_id: params[:heartable_ids]).
+                     order(created_at: :desc).
+                     limit(params[:limit] || 3)
+
+    if signed_in?
+      @hearts = @hearts.where.not(user_id: current_user.id)
+    end
+
+    render json: CachedArraySerializer.new(@hearts).as_json
+  end
+
   # private
 
   def heart_params

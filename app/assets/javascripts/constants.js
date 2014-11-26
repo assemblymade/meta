@@ -108,6 +108,7 @@
 
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,
+      LOVE_RECEIVE_RECENT_HEARTS: null,
 
       NEWS_FEED_RECEIVE_RAW_ITEMS: null,
 

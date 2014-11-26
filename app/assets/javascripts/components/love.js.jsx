@@ -4,6 +4,7 @@
   var LoveStore = require('../stores/love_store')
   var LoveActionCreators = require('../actions/love_action_creators')
   var xhr = require('../xhr')
+  var Lovers = require('./lovers.jsx')
 
   var Love = React.createClass({
     propTypes: {
@@ -31,6 +32,7 @@
           <span className="fa fa-heart" style={style}></span>
           <span> {numeral(this.state.hearts_count).format('0,0')}</span>
         </a>
+        <Lovers heartable_id={this.props.heartable_id} />
       </span>
     },
 

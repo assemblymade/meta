@@ -3,6 +3,7 @@ require 'spec_helper'
 describe HeartablesController do
   let(:news_feed_item) { NewsFeedItem.make! }
   let(:user) { User.make! }
+  let(:user2) { User.make! }
 
   before do
     sign_in user
@@ -36,5 +37,17 @@ describe HeartablesController do
       id: news_feed_item.id
 
     expect(response.status).to eq(200)
+  end
+
+  it 'returns hearts without current user' do
+    news_feed_item.hearts.create!(user_id: user.id)
+    heart = news_feed_item.hearts.create!(user_id: user2.id)
+
+    get :hearts,
+      heartable_ids: [news_feed_item.id]
+
+    expect(JSON.parse(response.body)).to eq(
+      [JSON.parse(HeartSerializer.new(heart).to_json)]
+    )
   end
 end
