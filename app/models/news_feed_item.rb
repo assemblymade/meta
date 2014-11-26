@@ -13,12 +13,12 @@ class NewsFeedItem < ActiveRecord::Base
   def self.create_with_target(target)
     # Prevent @kernel from appearing in the News Feed
     # (gross)
-    unless target.user.username == 'kernel'
-      create!(
-        product: target.product,
-        source: target.user,
-        target: target
-      )
-    end
+
+    return if target.user.username == 'kernel'
+    create!(
+      product: target.try(:product),
+      source: target.user,
+      target: target
+    )
   end
 end
