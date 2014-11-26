@@ -20,7 +20,7 @@ describe ContractsController do
 
       post :create, product_id: product.slug, contract: { user: staff_user.username, amount: 0.1 }
 
-      expect(response).to redirect_to(new_user_session_path)
+      expect(response).to redirect_to(root_path)
     end
   end
 
@@ -42,7 +42,7 @@ describe ContractsController do
 
       patch :update, format: :json, product_id: product.slug, id: contract.id, contract: { user: staff_user.id, amount: 0.1 }
 
-      expect(response).to redirect_to(new_user_session_path)
+      expect(response).to redirect_to(root_path)
     end
   end
 
@@ -62,7 +62,7 @@ describe ContractsController do
 
       delete :destroy, format: :json, product_id: product.slug, id: contract.id
 
-      expect(response).to redirect_to(new_user_session_path)
+      expect(response).to redirect_to(root_path)
     end
   end
 
