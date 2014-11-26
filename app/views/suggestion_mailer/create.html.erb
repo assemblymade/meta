@@ -1,4 +1,4 @@
-<h2>Hi <@%= "#{@username}" %> </h2>
+<h2>Hi <%= "#{@username}" %> </h2>
 
 
 <p>We've got a lot going on at Assembly these days.  We've noticed that you haven't been
@@ -12,13 +12,19 @@
 
 <ul>
   <li>
-    <a href = "#">1)  <%= "#{@bounties[0][0].title}  --  #{@bounties[0][0].product.name}"  %></a>
+    <a href = <%= "https://assembly.com/#{@bounties[0][0].product.slug}/#{@bounties[0][0].number}" %> >
+      1)  <%= "#{@bounties[0][0].title}  --  #{@bounties[0][0].product.name}"  %>
+    </a>
   </li>
   <li>
-    <a href = "#">2)  <%= "#{@bounties[1][0].title}  --  #{@bounties[1][0].product.name}"  %></a>
+    <a href = <%= "https://assembly.com/#{@bounties[1][0].product.slug}/#{@bounties[1][0].number}" %> >
+      2)  <%= "#{@bounties[1][0].title}  --  #{@bounties[1][0].product.name}"  %>
+    </a>
   </li>
   <li>
-    <a href = "#">3)   <%= "#{@bounties[2][0].title}  --  #{@bounties[2][0].product.name}" %></a>
+    <a href = <%= "https://assembly.com/#{@bounties[2][0].product.slug}/#{@bounties[2][0].number}" %> >
+      3)   <%= "#{@bounties[2][0].title}  --  #{@bounties[2][0].product.name}" %>
+    </a>
   </li>
 </ul>
 <p>These are just a few of the many open Bounties available.  </p>
@@ -42,7 +48,7 @@
   </li>
 </ul>
 
-<% if @tags.count > 0 %>
+<% if @tags.count > 4 %>
   <h4>Categories we think you like</h4>
   <ul>
     <li>

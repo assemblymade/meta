@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
   has_many :watchings
   has_many :withdrawals
   has_many :ideas
+  has_many :top_bountys
+  has_many :top_products
 
   has_one :payment_option
   has_one :chronicle
