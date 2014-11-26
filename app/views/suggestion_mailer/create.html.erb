@@ -1,4 +1,4 @@
-<h2>Hi <@%= "#{@user.username}" %> </h2>
+<h2>Hi <@%= "#{@username}" %> </h2>
 
 
 <p>We've got a lot going on at Assembly these days.  We've noticed that you haven't been
@@ -26,17 +26,17 @@
 <h4>Products we think you might like</h4>
 <ul>
   <li>
-    <a href = <%= "#{@products[0][0].homepage_url}" %> >
+    <a href = <%= "https://assembly.com/#{@products[0][0].slug}" %> >
       <%= @products[0][0].name %>
     </a>
   </li>
   <li>
-    <a href = <%= "#{@products[1][0].homepage_url}" %> >
+    <a href = <%= "https://assembly.com/#{@products[1][0].slug}" %> >
       <%= @products[1][0].name %>
     </a>
   </li>
   <li>
-    <a href = <%= "#{@products[2][0].homepage_url}" %> >
+    <a href = <%= "https://assembly.com/#{@products[2][0].slug}" %> >
       <%= @products[2][0].name %>
     </a>
   </li>

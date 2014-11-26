@@ -222,8 +222,8 @@ class Product < ActiveRecord::Base
     update!(
       greenlit_at: Time.now,
       profitable_at: nil
-      AssemblyCoin::GreenlightProduct.new.(self.id)
     )
+    AssemblyCoin::GreenlightProduct.new.perform(self.id)
   end
 
   def on_profitable_entry(prev_state, event, *args)

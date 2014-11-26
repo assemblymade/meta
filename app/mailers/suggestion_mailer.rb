@@ -5,7 +5,7 @@ class SuggestionMailer < ActionMailer::Base
     #mailgun_campaign 'bounty_suggestions'
 
     if @user = User.find(user_id)
-
+      @username = @user.username
       @products = @user.user_identity.find_best_products(4)
       @bounties = []
       @products.each do |bp|
