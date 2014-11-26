@@ -58,6 +58,7 @@ class Product < ActiveRecord::Base
   has_many :tasks
   has_many :team_memberships
   has_many :transaction_log_entries
+  has_many :viewings, as: :viewable
   has_many :votes, as: :voteable
   has_many :watchers, through: :watchings, source: :user
   has_many :watchings, as: :watchable
@@ -93,7 +94,6 @@ class Product < ActiveRecord::Base
   scope :team_building, -> { public_products.where(state: 'team_building') }
   scope :greenlit,     -> { public_products.where(state: 'greenlit') }
   scope :profitable,   -> { public_products.where(state: 'profitable') }
-
   scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
 
   validates :slug, uniqueness: { allow_nil: true }
@@ -164,6 +164,10 @@ class Product < ActiveRecord::Base
     QueryMarks.new.news_feed_items_per_product_per_mark(self, mark_name)
   end
 
+  def sum_viewings
+    Viewing.where(viewable: self).count
+  end
+
   def wip_marks
     wips_won = self.wips
 
@@ -219,6 +223,7 @@ class Product < ActiveRecord::Base
       greenlit_at: Time.now,
       profitable_at: nil
     )
+    AssemblyCoin::GreenlightProduct.new.perform(self.id)
   end
 
   def on_profitable_entry(prev_state, event, *args)
@@ -618,6 +623,27 @@ class Product < ActiveRecord::Base
 
   def unvested_coins
     [10_000_000, transaction_log_entries.sum(:cents)].max
+  end
+
+  def mark_vector
+    #get unnormalized mark vector of product itself
+    my_mark_vector = QueryMarks.new.mark_vector_for_object(self)
+
+    #get unnormalized mark vector of wips
+    self.wips.each do |w|
+      my_child_mark_vector = QueryMarks.new.mark_vector_for_object(w)
+
+      #scale parent vector by constant
+      my_child_mark_vector = QueryMarks.new.scale_mark_vector(my_child_mark_vector, 0.2)
+
+      my_mark_vector = QueryMarks.new.add_mark_vectors(my_child_mark_vector, my_mark_vector)
+    end
+    my_mark_vector
+    #return QueryMarks.new.normalize_mark_vector(my_mark_vector)
+  end
+
+  def normalized_mark_vector()
+    QueryMarks.new.normalize_mark_vector(self.mark_vector())
   end
 
   protected

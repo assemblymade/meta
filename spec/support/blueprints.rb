@@ -111,6 +111,10 @@ User.blueprint do
   last_sign_in_ip       { '1.1.1.1'}
 end
 
+UserIdentity.blueprint do
+  user
+end
+
 Wip.blueprint do
   user
   product
