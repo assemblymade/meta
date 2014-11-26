@@ -1,87 +1,60 @@
-  <div class="pull-right">
-
-    <ul class="list-inline text-muted small">
-      <% if bounty.winners.any? %>
-        <% bounty.winners.first(3).each do |winner| %>
-          <li data-toggle="tooltip" title="Awarded to @<%= winner.username %>">
-            <%= avatar_tag(winner, 18, style: 'display:inline-block') %>
-          </li>
-        <% end %>
-      <% elsif bounty.state != 'resolved' %>
-        <% bounty.workers.first(3).each do |user| %>
-          <li data-toggle="tooltip" title="Assigned to @<%= user.username %>">
-            <%= avatar_tag(user, 18, style: 'display:inline-block') %>
-          </li>
-        <% end %>
-      <% end %>
-
-      <li>
-        <strong>
-          <span class="icon icon-speech icon-left"></span>
-          <%= bounty.comments_count %>
-          <span class="sr-only">comments</span>
-        </strong>
-      </li>
-    </ul>
-
-  </div>
-
-  <div>
-    <a href="<%= product_wip_path(bounty.product, bounty) %>">
-      <strong><%= bounty.title %></strong>
-    </a>
-
-    <% bounty.tags.map do |tag| %>
-      &nbsp;
-      <a class="small text-info" href="<%= product_wips_path(bounty.product, tag: tag.name) %>">
-        #<%= tag.name.downcase %>
+<div class="bg-white rounded shadow mb2">
+  <div class="p3">
+    <div class="mb1 h4 mt0">
+      <a href="<%= product_wip_path(bounty.product, bounty) %>">
+        <%= bounty.title %>
+        <span class="gray-dark ml1">#<%= bounty.number %></span>
       </a>
-    <% end %>
-  </div>
-
-<div class="clearfix small text-muted">
-  <% if bounty.open? %>
-    <div class="pull-right">
-      <%= render partial: 'bounties/urgency', locals: { task: bounty } %>
     </div>
-  <% end %>
 
-  <!-- coins -->
-  <div>
-    <% if !bounty.product.meta? %>
-      <% case %>
-      <% when bounty.state == 'open' || (bounty.state == 'reviewing' && bounty.workers.empty?) %>
-        <span class="text-warning" data-toggle="tooltip" title="Available">
-      <% when bounty.workers.any? && (bounty.state != 'resolved') %>
-        <span class="text-warning" data-toggle="tooltip" title="<%= pluralize(bounty.workers.count, 'person') %> working">
-      <% when bounty.state == 'resolved' %>
-        <% if bounty.winners.any? %>
-            <% bounty.winners.each do |winner| %>
-              <span class="text-muted" data-toggle="tooltip" title="Awarded to @<%= winner.username %>">
-            <% end %>
-        <% else %>
-          <span class="text-muted" data-toggle="tooltip" title="Closed">
-        <% end %>
+    <div>
+      <% if bounty.open? %>
+        <div class="pull-right ml2">
+          <%= render partial: 'bounties/urgency', locals: { task: bounty } %>
+        </div>
       <% end %>
 
-        <% if bounty.state == 'resolved' && !bounty.winner.present? %>
-            <span class="icon icon-app-coin"></span>
-            <span><%= number_with_delimiter(WipContracts.new(bounty, @auto_tip_contracts).earnable_cents.floor) %></span>
-        <% else %>
-          <span class="icon icon-app-coin"></span>
-          <span class="js-coins"><%= number_with_delimiter(WipContracts.new(bounty, @auto_tip_contracts).earnable_cents.floor) %></span>
-        <% end %>
+      <span class="mr2">
+        <%= inline_react_component 'BountyValuation', {
+          product: { name: @product.name },
+          url: product_wips_path(@product),
+          maxOffer: (6 * @product.average_bounty).round(-4),
+          averageBounty: @product.average_bounty,
+          coinsMinted: @product.coins_minted,
+          profitLastMonth: @product.profit_last_month,
+          steps: BountyGuidance::Valuations.suggestions(@product)
+        }.merge(BountySerializer.new(bounty, scope: current_user).as_json) %>
       </span>
 
-      &middot;
-    <% end %>
+      <span class="gray mr2">
+        <span class="sr-only">comments</span>
+        <span class="fa fa-comment"></span>
+        <%= bounty.comments_count %>
+      </span>
 
-    #<%= bounty.number %> &middot;
-    <a class="text-muted" href="<%= user_path(bounty.user) %>">@<%= bounty.user.username %></a> &middot;
-    last update <%= time_ago_in_words(bounty.updated_at) %> ago
-
-    <% unless @product %>
-      in <a class="text-muted" href="<%= product_path(bounty.product) %>"><%= bounty.product.name %></a>
-    <% end %>
+      <span class="h6">
+        <% bounty.tags.each do |tag| %>
+          <a class="caps gray-dark mr1" href="<%= product_wips_path(bounty.product, tag: tag.name) %>">
+            #<%= tag.name.downcase %>
+          </a>
+        <% end %>
+      </span>
+    </div>
   </div>
+
+  <% locker = User.find_by(id: bounty.locked_by) %>
+
+  <% if locker %>
+    <div class="px3 py2 border-top h6 mb0 mt0">
+      <%= avatar_tag(locker, 18, class: 'avatar img-circle inline mr1') %>
+
+      <a href="<%= user_path(locker) %>" class="bold black">
+        <%= locker.username %>
+      </a>
+
+      <span class="gray-dark">
+        has <%= time_ago_in_words(bounty.locked_at + 60.hours) %> to work on this
+      </span>
+    </div>
+  <% end %>
 </div>

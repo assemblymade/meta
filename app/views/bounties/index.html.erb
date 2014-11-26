@@ -2,27 +2,22 @@
 <% activate_nav! :bounties %>
 <%= track 'product.wips.viewed', ProductAnalyticsSerializer.new(@product) %>
 
-<% if @project.nil? %>
-  <%= render 'bounties/header'  %>
-<% else %>
-  <%= render 'bounties/project_header' %>
-<% end %>
+<%= render 'bounties/header'  %>
 
-<% if @product.tasks.any? %>
-  <div class="row">
-    <div class="col-md-9">
-      <% if @project %>
-        <div class="markdown markdown-normalized large" style="margin-bottom: 48px">
-          <%== product_markdown(@project.product, @project.description) %>
-        </div>
-      <% end %>
+<div class="clearfix mxn2">
 
+  <% if @product.tasks.any? %>
+
+    <div class="sm-col sm-col-4 px2" style="float: right !important">
+      <%= render 'bounties/projects_filter', projects: @milestones %>
+    </div>
+
+    <div class="sm-col sm-col-8 px2">
       <% if @wips.any? %>
-        <ol class="list-group list-group-breakout list-group-padded" id="wips-view-el">
-          <% @wips.each do |task| %>
-            <li class="list-group-item"><%= render 'bounties/chip', bounty: task %></li>
-          <% end %>
-        </ol>
+
+        <% @wips.each do |task| %>
+          <%= render 'bounties/chip', bounty: task %>
+        <% end %>
 
         <% if @wips.total_pages > 1 %>
           <hr>
@@ -32,11 +27,8 @@
       <% end %>
     </div>
 
-  <div class="col-md-3">
-    <%= render 'bounties/projects_filter', projects: @milestones %>
-  </div>
-
   <% else %>
+
     <div class="col-md-6 col-md-offset-3">
       <div class="well well-lg omega">
         <h3 class="alpha"><strong>Create the first bounty</strong></h3>
@@ -57,5 +49,7 @@
         }.to_json %>" class="omega text-center"></div>
       </div>
     </div>
-  </div><!-- .row -->
-<% end %>
+
+  <% end %>
+
+</div>
