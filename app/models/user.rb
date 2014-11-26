@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :awards, foreign_key: 'winner_id'
   has_many :deeds
   has_many :events
+  has_many :hearts
   has_many :products
   has_many :product_logos
   has_many :followed_products, through: :watchings, source: :watchable, source_type: Product
@@ -37,6 +38,7 @@ class User < ActiveRecord::Base
   has_many :viewings
   has_many :watchings
   has_many :withdrawals
+  has_many :ideas
 
   has_one :payment_option
   has_one :chronicle
@@ -146,6 +148,10 @@ class User < ActiveRecord::Base
 
   def marks
     wips_won = self.wips_won
+<<<<<<< HEAD
+=======
+
+>>>>>>> c1edb96723e9e0a410902f6008ff6ee3d4e60413
     results = {}
     wips_won.each do |w|
       marks = w.marks

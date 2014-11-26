@@ -2,6 +2,8 @@ class NewsFeedItemComment < ActiveRecord::Base
   belongs_to :news_feed_item, touch: true
   belongs_to :user
 
+  has_many :hearts, as: :heartable
+
   def self.publish_to_news_feed(target, event, body)
     if news_feed_item = NewsFeedItem.find_by(target: target)
       create!(

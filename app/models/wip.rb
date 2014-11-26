@@ -40,6 +40,7 @@ class Wip < ActiveRecord::Base
   before_validation :set_author_tip, on: :create
   after_commit :set_number, on: :create
   after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.id) }, on: :create
+  after_commit :update_news_feed_item
   after_update :update_elasticsearch
 
   scope :available,   ->{ where(state: 'open') }
@@ -180,6 +181,12 @@ class Wip < ActiveRecord::Base
 
     add_event ::Event::TagChange.new(user: author, from: self.tag_names.sort.join(','), to: new_tag_names.sort.join(',')) do
       self.tag_names = new_tag_names
+    end
+  end
+
+  def update_news_feed_item
+    if self.news_feed_item
+      self.news_feed_item.update(updated_at: Time.now)
     end
   end
 

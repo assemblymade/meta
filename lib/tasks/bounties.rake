@@ -226,7 +226,7 @@ namespace :bounties do
 
           Analytics.track(
             user_id: task.locked_by,
-            event: 'bounty.expiration.remined'
+            event: 'bounty.expiration.reminded'
           )
 
           EmailLog.send_once task.locked_by, "#{task.id}-#{task.locked_at}" do

@@ -235,14 +235,14 @@
 
     _handleFilteredNewsFeedItems: function(err, results) {
       if (err) {
-        return console.log(err);
+        return console.error(err);
       }
 
       var items;
       try {
         items = JSON.parse(results);
       } catch (e) {
-        return console.log(e);
+        return console.error(e);
       }
 
       this.setState({

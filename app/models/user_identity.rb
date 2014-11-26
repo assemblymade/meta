@@ -47,7 +47,7 @@ class UserIdentity < ActiveRecord::Base
   def find_best_wips(limit, wips)
     wips_with_score = wips.map{|w| [w, QueryMarks.new.compare_mark_vectors(self, w)]}
     wips_with_score.sort_by{|w, s| s}.reverse.take(limit)
-    wips_with_score.map{|w, s| [w.title, w.product.name, s]}
+    wips_with_score.map{|w, s| [w, w.product, s]}.sort_by{|w, p, s| s}.reverse.take(limit)
   end
 
   def find_best_products(limit)   #GREENLIT AND PROFITABLE
@@ -63,8 +63,6 @@ class UserIdentity < ActiveRecord::Base
     end
 
     best_found_wips = best_found_wips.sort_by{|w, s| s}.reverse.take(limit_wips)
-    best_found_wips.map{|w,s| [w.title, w.product.name,s] }
+    best_found_wips.map{|w, p, s| [w.title, p, s] }
   end
-
-
 end

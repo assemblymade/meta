@@ -1,0 +1,70 @@
+<% activate_nav! :ideas %>
+<div class="row">
+  <div class="col-md-9 col-xs-9">
+    <%= form_for idea do |f| %>
+      <div class="form-group <%= 'has-error' if idea.errors[:name].any? %>">
+        <%= f.label :name, 'Five word pitch', class: 'form-label' %>
+        <%= f.text_field :name, class: 'form-control', placeholder: 'Keep it short and sweet' %>
+      </div>
+      <div class="form-group <%= 'has-error' if idea.errors[:body].any? %>">
+        <%= f.label :body, 'Extended description', class: 'form-label' %>
+        <%= f.text_area :body, class: 'form-control', rows: 8, placeholder: 'Anything other information that you want to share' %>
+      </div>
+      <%= render 'shared/error_messages', target: idea %>
+
+      <h6 style="margin-bottom: 0;">Tags</h6>
+      <div style="display:none;">
+        <select type="hidden" id="tag-list-hack" name="idea[tag_list][]" multiple="true"></select>
+      </div>
+      <div style="margin-bottom: 10px"
+           data-react-class="TagList"
+           data-react-props="<%= {
+              tags: (@idea.id.present? ? @idea.marks.map(&:name) : []).as_json,
+              destination: true,
+              newBounty: !@idea.id.present?,
+              allowRemoval: true,
+              url: (@idea.id.present? ? idea_mark_path(@idea) : 'null')
+            }.to_json %>">
+      </div>
+
+      <div data-react-class="<%= @idea.id.present? ? 'TypeAhead' : 'TextInput' %>"
+           data-react-props="<%= {
+             width: "125px",
+             size: "small",
+             label: "Add tag",
+             prepend: "#",
+             prompt: "Add"
+           }.to_json %>">
+      </div>
+
+      <% if @idea.id.blank? %>
+        <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested tags</h6>
+        <div data-react-class="TagList"
+              data-react-props="<%= {
+                tags: %(social mobile game marketplace SaaS iOS android utility).split.as_json,
+                destination: false,
+                url: (@idea.id.present? ? idea_mark_path(@idea) : 'null')
+              }.to_json %>">
+        </div>
+      <% end %>
+
+      <div class="form-actions">
+        <div class="pull-left">
+          <%= link_to "Cancel", :back, class: "btn btn-default" %>
+        </div>
+        <%= f.submit 'Save', class: %w(btn btn-primary) %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-3 col-xs-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h6 class="panel-title">Friendly Tips</h6>
+      </div>
+      <div class="panel-body">
+        Ideas that are well-described and concise have the best chance of being understood and gaining constructive feedback.
+        Don't be afraid to pursue big ideas or seemingly <%= link_to 'small ones', 'http://cdixon.org/2010/01/03/the-next-big-thing-will-start-out-looking-like-a-toy/' %>.
+      </div>
+    </div>
+  </div>
+</div>
