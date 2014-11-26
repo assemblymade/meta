@@ -210,7 +210,7 @@ class Wip < ActiveRecord::Base
     self.tag_names = names.split(',')
   end
 
-  def mark_vector()
+  def mark_vector
     #get unnormalized mark vector of wip itself
     my_mark_vector = QueryMarks.new.mark_vector_for_object(self)
 

@@ -32,7 +32,6 @@ class UserIdentity < ActiveRecord::Base
 
       #update identity markings with new mark vector
       QueryMarks.new.update_markings_to_vector_for_object(self, new_mark_vector)
-
     end
   end
 
@@ -45,53 +44,27 @@ class UserIdentity < ActiveRecord::Base
     QueryMarks.new.normalized_mark_vector_for_object(self).sort{|a,b| b[1] <=> a[1]}
   end
 
-  def find_best_wips(topn)
-    top_wips = []
-    lowest_wip_score = 0
-    lowest_index = -1
-
-    Wip.where(state: 'open').each do |w|
-      correlation = QueryMarks.new.compare_mark_vectors(self, w)
-      if correlation > lowest_wip_score
-        if lowest_index == -1
-          top_wips.append(w)
-          if top_wips.count >=topn
-            lowest_index = top_wips.index(w)
-            lowest_wip_score = correlation
-          end
-        else
-          #remove lowest from list
-          top_wips.delete_at(lowest_index)
-          top_wips.append(w)
-          lowest_index = top_wips.index(w)
-          lowest_wip_score = correlation
-        end
-      end
-    end
-    top_wips
+  def find_best_wips(limit, wips)
+    wips_with_score = wips.map{|w| [w, QueryMarks.new.compare_mark_vectors(self, w)]}
+    wips_with_score.sort_by{|w, s| s}.reverse.take(limit)
+    wips_with_score.map{|w, s| [w.title, w.product.name, s]}
   end
 
-  def find_best_products(topn)   #GREENLIT AND PROFITABLE
-    top_products = []
-    lowest_product_score = 0
-    lowest_index = -1
-
-    Product.where(state: ['greenlit', 'profitable']).each do |p|
-      product_vector = QueryMarks.new.normalize_mark_vector(p.mark_vector)
-      correlation = QueryMarks.new.dot_product_vectors(product_vector, self.get_mark_vector)
-      if correlation > lowest_product_score
-        if lowest_index == -1
-          top_products.append(p)
-          if top_products.count >= topn
-            lowest_index = top_products.index(p)
-            lowest_product_score = correlation
-          end
-        end
-      end
-    end
-    top_products
+  def find_best_products(limit)   #GREENLIT AND PROFITABLE
+    products_with_score = Product.where(state: ['greenlit', 'profitable']).map{|p| [p, QueryMarks.new.compare_mark_vectors(self, p)] }
+    products_with_score.sort_by{|p, s| s}.reverse.take(limit)
   end
 
+  def find_best_wips_among_best_products(limit_wips, limit_products)
+    best_products = find_best_products(limit_products)
+    best_found_wips = []
+    best_products.each do |bp|
+      best_found_wips = best_found_wips + find_best_wips(limit_wips, bp[0].wips.where(state: 'open'))
+    end
+
+    best_found_wips = best_found_wips.sort_by{|w, s| s}.reverse.take(limit_wips)
+    best_found_wips.map{|w,s| [w.title, w.product.name,s] }
+  end
 
 
 end

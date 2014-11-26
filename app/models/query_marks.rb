@@ -34,10 +34,10 @@ class QueryMarks
 
 
   def mark_vector_for_object(object)  #directly gets markings, don't use for products & wips where inherited marks are also desired
-    markings = Marking.where(markable: object).includes(:marks)
-    markings.map do |m|
-      [marking.mark, marking.weight]
-    end
+      markings = Marking.where(markable: object)
+      markings.map do |m|
+        [m.mark, m.weight]
+      end
   end
 
   def scale_mark_vector(vector, scalar)
@@ -52,8 +52,13 @@ class QueryMarks
   end
 
   def normalized_mark_vector_for_object(object)
-    vector = mark_vector_for_object(object)
-    normalize_mark_vector(vector)
+
+    if object.class.to_s == "Task" || object.class.to_s == "Product"
+      object.normalized_mark_vector()
+    else
+      vector = mark_vector_for_object(object)
+      normalize_mark_vector(vector)
+    end
   end
 
   def add_mark_vectors(vector1, vector2)

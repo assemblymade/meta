@@ -637,7 +637,12 @@ class Product < ActiveRecord::Base
 
       my_mark_vector = QueryMarks.new.add_mark_vectors(my_child_mark_vector, my_mark_vector)
     end
-    return QueryMarks.new.normalize_mark_vector(my_mark_vector)
+    my_mark_vector
+    #return QueryMarks.new.normalize_mark_vector(my_mark_vector)
+  end
+
+  def normalized_mark_vector()
+    QueryMarks.new.normalize_mark_vector(self.mark_vector())
   end
 
   protected
