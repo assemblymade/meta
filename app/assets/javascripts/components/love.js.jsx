@@ -32,7 +32,7 @@
           <span className="fa fa-heart" style={style}></span>
           <span> {numeral(this.state.hearts_count).format('0,0')}</span>
         </a>
-        <Lovers heartable_id={this.props.heartable_id} />
+        <Lovers heartable_id={this.props.heartable_id} hearts_count={this.props.hearts_count} />
       </span>
     },
 

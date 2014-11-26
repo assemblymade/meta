@@ -21,10 +21,16 @@ var Lovers = React.createClass({
     if (this.state.recentLovers.length < 1) {
       return null
     }
+
+    var plus = null
+    if (this.state.hearts_count > this.state.recentLovers.length) {
+      plus = <span> +</span>
+    }
+
     return <span> &mdash;
       <ul className="list-inline-media">
         {_.map(this.state.recentLovers, this.renderAvatar)}
-      </ul>
+      </ul>{plus}
     </span>
   },
 
@@ -44,14 +50,16 @@ var Lovers = React.createClass({
   },
 
   getStateFromStore: function() {
-    var hearts = (LoveStore.get(this.props.heartable_id).hearts || [])
+    var heartable = LoveStore.get(this.props.heartable_id)
+    var hearts = (heartable.hearts || [])
     var lovers = _(hearts).reduce(function(memo, h) {
       memo.push(h.user)
       return memo
     }, [])
 
     return {
-      recentLovers: lovers
+      recentLovers: lovers,
+      hearts_count: heartable.hearts_count
     }
   },
 
