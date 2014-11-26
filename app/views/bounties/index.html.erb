@@ -16,9 +16,7 @@
       <% if @wips.any? %>
 
         <% @wips.each do |task| %>
-          <div class="bg-white p3 rounded shadow mb3">
-            <%= render 'bounties/chip', bounty: task %>
-          </div>
+          <%= render 'bounties/chip', bounty: task %>
         <% end %>
 
         <% if @wips.total_pages > 1 %>

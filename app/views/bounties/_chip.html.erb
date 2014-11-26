@@ -1,59 +1,60 @@
-<div>
-  <div class="mb2">
-    <a href="<%= product_wip_path(bounty.product, bounty) %>">
-      <strong>
+<div class="bg-white rounded shadow mb2">
+  <div class="p3">
+    <div class="mb1 h4 mt0">
+      <a href="<%= product_wip_path(bounty.product, bounty) %>">
         <%= bounty.title %>
         <span class="gray-dark ml1">#<%= bounty.number %></span>
-      </strong>
-    </a>
-  </div>
+      </a>
+    </div>
 
-  <div>
-    <% if bounty.open? %>
-      <div class="pull-right">
-        <%= render partial: 'bounties/urgency', locals: { task: bounty } %>
-      </div>
-    <% end %>
+    <div>
+      <% if bounty.open? %>
+        <div class="pull-right ml2">
+          <%= render partial: 'bounties/urgency', locals: { task: bounty } %>
+        </div>
+      <% end %>
 
-    <span class="mr2">
-      <% if !bounty.product.meta? %>
-        <% case %>
-        <% when bounty.state == 'open' || (bounty.state == 'reviewing' && bounty.workers.empty?) %>
-          <span class="text-warning" data-toggle="tooltip" title="Available">
-        <% when bounty.workers.any? && (bounty.state != 'resolved') %>
-          <span class="text-warning" data-toggle="tooltip" title="<%= pluralize(bounty.workers.count, 'person') %> working">
-        <% when bounty.state == 'resolved' %>
-          <% if bounty.winners.any? %>
-              <% bounty.winners.each do |winner| %>
-                <span class="text-muted" data-toggle="tooltip" title="Awarded to @<%= winner.username %>">
-              <% end %>
-          <% else %>
-            <span class="text-muted" data-toggle="tooltip" title="Closed">
-          <% end %>
+      <span class="mr2">
+        <%= inline_react_component 'BountyValuation', {
+          product: { name: @product.name },
+          url: product_wips_path(@product),
+          maxOffer: (6 * @product.average_bounty).round(-4),
+          averageBounty: @product.average_bounty,
+          coinsMinted: @product.coins_minted,
+          profitLastMonth: @product.profit_last_month,
+          steps: BountyGuidance::Valuations.suggestions(@product)
+        }.merge(BountySerializer.new(bounty, scope: current_user).as_json) %>
+      </span>
+
+      <span class="gray mr2">
+        <span class="sr-only">comments</span>
+        <span class="fa fa-comment"></span>
+        <%= bounty.comments_count %>
+      </span>
+
+      <span class="h6">
+        <% bounty.tags.each do |tag| %>
+          <a class="caps gray-dark mr1" href="<%= product_wips_path(bounty.product, tag: tag.name) %>">
+            #<%= tag.name.downcase %>
+          </a>
         <% end %>
-          <% if bounty.state == 'resolved' && !bounty.winner.present? %>
-            <span class="icon icon-app-coin"></span>
-            <span><%= number_with_delimiter(WipContracts.new(bounty, @auto_tip_contracts).earnable_cents.floor) %></span>
-          <% else %>
-            <span class="icon icon-app-coin"></span>
-            <span class="js-coins"><%= number_with_delimiter(WipContracts.new(bounty, @auto_tip_contracts).earnable_cents.floor) %></span>
-          <% end %>
-        </span>
-      <% end %>
-    </span>
-
-    <span class="gray-dark bold mr2">
-      <span class="icon icon-speech icon-left"></span>
-      <%= bounty.comments_count %>
-      <span class="sr-only">comments</span>
-    </span>
-
-    <span>
-      <% bounty.tags.each do |tag| %>
-        <a class="caps gray bold mr1" href="<%= product_wips_path(bounty.product, tag: tag.name) %>">
-          #<%= tag.name.downcase %>
-        </a>
-      <% end %>
-    </span>
+      </span>
+    </div>
   </div>
+
+  <% locker = User.find_by(id: bounty.locked_by) %>
+
+  <% if locker %>
+    <div class="px3 py2 border-top h6 mb0 mt0">
+      <%= avatar_tag(locker, 18, class: 'avatar img-circle inline mr1') %>
+
+      <a href="<%= user_path(locker) %>" class="bold black">
+        <%= locker.username %>
+      </a>
+
+      <span class="gray-dark">
+        has <%= time_ago_in_words(bounty.locked_at + 60.hours) %> to work on this
+      </span>
+    </div>
+  <% end %>
 </div>
