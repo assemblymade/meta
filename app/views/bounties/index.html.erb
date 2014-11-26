@@ -4,13 +4,17 @@
 
 <%= render 'bounties/header'  %>
 
-<% if @product.tasks.any? %>
-  <div class="row">
+<div class="row">
+
+  <% if @product.tasks.any? %>
+
     <div class="col-md-9">
       <% if @wips.any? %>
         <ol class="list-group list-group-breakout list-group-padded" id="wips-view-el">
           <% @wips.each do |task| %>
-            <li class="list-group-item"><%= render 'bounties/chip', bounty: task %></li>
+            <li class="list-group-item">
+              <%= render 'bounties/chip', bounty: task %>
+            </li>
           <% end %>
         </ol>
 
@@ -22,11 +26,12 @@
       <% end %>
     </div>
 
-  <div class="col-md-3">
-    <%= render 'bounties/projects_filter', projects: @milestones %>
-  </div>
+    <div class="col-md-3">
+      <%= render 'bounties/projects_filter', projects: @milestones %>
+    </div>
 
   <% else %>
+
     <div class="col-md-6 col-md-offset-3">
       <div class="well well-lg omega">
         <h3 class="alpha"><strong>Create the first bounty</strong></h3>
@@ -47,5 +52,7 @@
         }.to_json %>" class="omega text-center"></div>
       </div>
     </div>
-  </div><!-- .row -->
-<% end %>
+
+  <% end %>
+
+</div>
