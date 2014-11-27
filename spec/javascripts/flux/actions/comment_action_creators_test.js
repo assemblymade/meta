@@ -2,6 +2,11 @@ describe('CommentActionCreators', function() {
   jest.dontMock('keymirror');
   jest.dontMock(pathToFile('constants'));
 
+  global.CONSTANTS.ActionTypes = {
+    COMMENT_ATTACHMENT_UPLOADED: 'COMMENT_ATTACHMENT_UPLOADED',
+    COMMENT_ATTACHMENT_FAILED: 'COMMENT_ATTACHMENT_FAILED'
+  };
+
   var CommentActionCreators = require.requireActual(pathToFile('actions/comment_action_creators'));
 
   describe('uploadAssets()', function() {

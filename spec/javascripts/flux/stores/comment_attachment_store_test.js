@@ -2,7 +2,13 @@ describe('CommentAttachmentStore', function() {
   jest.dontMock('keymirror');
   jest.dontMock(pathToFile('constants'));
 
-  var CONSTANTS = require.requireActual(pathToFile('constants'))
+  global.CONSTANTS.ActionTypes = {
+    COMMENT_ATTACHMENT_UPLOADED: 'COMMENT_ATTACHMENT_UPLOADED',
+    COMMENT_ATTACHMENT_FAILED: 'COMMENT_ATTACHMENT_FAILED',
+    COMMENT_ATTACHMENT_ADDED: 'COMMENT_ATTACHMENT_ADDED',
+    WIP_EVENT_CREATING: 'WIP_EVENT_CREATING'
+  };
+
   var ActionTypes = CONSTANTS.ActionTypes;
   var PayloadSources = CONSTANTS.PayloadSources;
   var CommentAttachmentStore = require.requireActual(pathToFile('stores/comment_attachment_store'));

@@ -2,11 +2,6 @@
   // When sprockets doesn't require this file:
   // var keymirror = require('keymirror')
 
-  // Don't let Sprockets interfere with tests
-  if (typeof require !== 'undefined') {
-    var keyMirror = require('keymirror');
-  }
-
   var CONSTANTS = {
     CHANGE_EVENT: 'change',
     CHAT_NOTIFICATIONS: {

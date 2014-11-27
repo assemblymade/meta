@@ -1,9 +1,6 @@
 // var Dispatcher = require('../dispatcher')
 
-if (typeof require !== 'undefined') {
-  var CONSTANTS = require('../constants');
-}
-
+var CONSTANTS = window.CONSTANTS;
 var ActionTypes = CONSTANTS.ActionTypes
 
 var CommentActionCreators = {
