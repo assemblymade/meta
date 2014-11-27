@@ -59,12 +59,6 @@ Discussion.blueprint do
   title { "Title #{sn}"}
 end
 
-Event.blueprint do
-  type
-  user
-  wip
-end
-
 Milestone.blueprint do
   user
   product
