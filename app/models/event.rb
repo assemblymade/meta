@@ -133,7 +133,7 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def self.create_from_comment(wip, type, body, user, socket_id = nil)
+  def self.create_from_comment(wip, type, body, user, socket_id = nil, attachments = nil)
     case type.to_s
     when Event::Close.to_s
       wip.close!(user, body)
@@ -145,7 +145,12 @@ class Event < ActiveRecord::Base
       wip.reopen!(user, body)
 
     when Event::Comment.to_s
-      wip.comments.create(user_id: user.id, body: body, socket_id: socket_id)
+      wip.comments.create(
+        user_id: user.id,
+        body: body,
+        socket_id: socket_id,
+        attachments: attachments
+      )
 
     else
       raise 'Unknown event'

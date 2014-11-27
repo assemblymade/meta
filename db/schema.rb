@@ -208,15 +208,16 @@ ActiveRecord::Schema.define(version: 20141126235932) do
   end
 
   create_table "events", id: :uuid, force: true do |t|
-    t.integer  "number",     null: false
-    t.uuid     "wip_id",     null: false
-    t.uuid     "user_id",    null: false
-    t.string   "type",       null: false
+    t.integer  "number",                   null: false
+    t.uuid     "wip_id",                   null: false
+    t.uuid     "user_id",                  null: false
+    t.string   "type",                     null: false
     t.text     "body"
     t.text     "url"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.uuid     "event_id"
+    t.uuid     "attachments", default: [],              array: true
   end
 
   add_index "events", ["type", "wip_id"], name: "index_events_on_type_and_wip_id", using: :btree

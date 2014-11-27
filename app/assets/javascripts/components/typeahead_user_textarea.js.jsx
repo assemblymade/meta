@@ -2,6 +2,15 @@
   var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 
   var TypeaheadUserTextArea = React.createClass({
+    propTypes: {
+      id: React.PropTypes.string,
+      name: React.PropTypes.string,
+      required: React.PropTypes.oneOfType([
+        React.PropTypes.bool,
+        React.PropTypes.string
+      ])
+    },
+
     getInitialState: function() {
       return {
         text: this.props.defaultValue,

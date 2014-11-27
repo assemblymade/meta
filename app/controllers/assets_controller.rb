@@ -13,8 +13,25 @@ class AssetsController < ProductController
   end
 
   def create
-    @asset = @product.assets.create(asset_params.merge(user: current_user))
-    @room = Room.create_for!(@asset.product, @asset)
+    if params[:event_id]
+      event = Event.find(params[:event_id])
+
+      event.attachments.map do |attachment_id|
+        attachment = Attachment.find(attachment_id)
+
+        asset_to_create = {
+          attachment_id: attachment.id,
+          name: attachment.name
+        }
+
+        asset = @product.assets.create(asset_to_create.merge(user: current_user))
+        Room.create_for!(asset.product, asset)
+      end
+    else
+      @asset = @product.assets.create(asset_params.merge(user: current_user))
+      @room = Room.create_for!(@asset.product, @asset)
+    end
+
     respond_with @asset, location: product_assets_path(@product)
   end
 

@@ -1,6 +1,9 @@
 /** @jsx React.DOM */
 
 (function(){
+  var CommentActionCreators = require('../actions/comment_action_creators');
+  var CommentAttachmentStore = require('../stores/comment_attachment_store')
+
   var AssetThumbnail = React.createClass({
     propTypes: {
       preview: React.PropTypes.string.isRequired,
@@ -8,41 +11,112 @@
       name: React.PropTypes.string.isRequired
     },
 
+    checkForErrors: function() {
+      var errors = CommentAttachmentStore.getErrors(this.state.eventId);
+
+      if (errors.length) {
+        return this.setState({
+          error: errors[0]
+        });
+      }
+
+      this.setState({
+        error: null
+      });
+    },
+
+    componentDidMount: function() {
+      var activity = $(this.getDOMNode()).parents('.activity');
+
+      this.setState({
+        eventId: $(activity).data('event-id')
+      });
+
+      CommentAttachmentStore.addChangeListener(this.checkForErrors);
+    },
+
     getInitialState: function() {
       return {
-        showLightbox: false
+        error: null,
+        showLightbox: false,
+        uploaded: false
       }
+    },
+
+    handleClick: function() {
+      this.setState({ showLightbox: true });
+    },
+
+    handleHidden: function() {
+      this.setState({ showLightbox: false });
+    },
+
+    handleUpload: _.debounce(function() {
+      var productSlug = window.app.currentAnalyticsProduct().attributes.product_slug;
+
+      if (productSlug) {
+        CommentActionCreators.uploadAssets(productSlug, this.state.eventId);
+
+        this.setState({
+          uploaded: true
+        });
+      }
+    }, 500),
+
+    imageAsset: function() {
+      var ext = this.props.url.split('.').pop();
+
+      return ['pdf', 'psd'].indexOf(ext) === -1;
     },
 
     render: function() {
       var lightbox = null
+
       if (this.imageAsset() && this.state.showLightbox) {
         lightbox = <ImageLightbox src={this.props.url} name={this.props.name} onHidden={this.handleHidden} />
       }
-      return <div onClick={this.handleClick} className="clickable">
+
+      return <div className="clickable">
         <img src={this.props.preview} alt={this.props.name} className="img-rounded" />
         <div>
-          <a href={this.props.url} target="_blank" className="text-small">
+          <a onClick={this.handleClick} href={this.props.url} target="_blank" className="text-small">
             {this.props.name} <span className="glyphicon glyphicon-new-window text-muted" />
           </a>
+          {this.imageAsset() ? this.renderUploadButton() : null}
         </div>
         {lightbox}
       </div>
     },
 
-    imageAsset: function() {
-      var ext = this.props.url.split('.').pop()
-      return ['pdf', 'psd'].indexOf(ext) == -1
-    },
+    renderUploadButton: function() {
+      var classes = React.addons.classSet({
+        bold: true,
+        small: true,
+        ml2: true,
+        'text-success': this.state.uploaded,
+        'text-danger': this.state.error
+      });
 
-    handleClick: function() {
-      this.setState({showLightbox: true})
-    },
+      if (this.state.error) {
+        return (
+          <a className={classes} href="javascript:void(0);" alt="Upload as asset" onClick={this.handleUpload}>
+            Asset failed to upload &mdash; try again?
+          </a>
+        );
+      }
 
-    handleHidden: function() {
-      this.setState({showLightbox: false})
+
+      if (this.state.uploaded) {
+        return <span className={classes}>Saved to assets</span>;
+      }
+
+      return (
+        <a className={classes} href="javascript:void(0);" alt="Upload as asset" onClick={this.handleUpload}>
+          Save to product assets
+        </a>
+      );
     }
-  })
+  });
 
   var ImageLightbox = React.createClass({
     componentDidMount: function() {

@@ -2,6 +2,11 @@
   // When sprockets doesn't require this file:
   // var keymirror = require('keymirror')
 
+  // Don't let Sprockets interfere with tests
+  if (typeof require !== 'undefined') {
+    var keyMirror = require('keymirror');
+  }
+
   var CONSTANTS = {
     CHANGE_EVENT: 'change',
     CHAT_NOTIFICATIONS: {
@@ -105,6 +110,10 @@
     // TODO: move constants into here. 1 Flat namespace will ensure constants don't collide
     ActionTypes: keyMirror({
       CHAT_USER_ONLINE: null,
+
+      COMMENT_ATTACHMENT_ADDED: null,
+      COMMENT_ATTACHMENT_FAILED: null,
+      COMMENT_ATTACHMENT_UPLOADED: null,
 
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,

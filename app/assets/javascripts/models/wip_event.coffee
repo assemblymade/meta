@@ -6,3 +6,5 @@ class window.WipEvent extends Backbone.Model
     "comment-#{@get('number')}"
 
   body: ->
+
+  attachments: ->
