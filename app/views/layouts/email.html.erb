@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width"/>
     <%= stylesheet_link_tag 'email' %>
   </head>
-  <body>
+  <body style="<%= @body_style %>">
     <table class="body">
       <tr>
         <td class="center" align="center" valign="top">
@@ -23,7 +23,7 @@
                           <tr>
                             <td class="left-text-pad">
                               <a href="<%= root_url %>" target="_blank" title="Assembly">
-                                <img alt="Assembly Logo" src="<%= image_url('logo-wordmark-dark@2x.png') %>" width="36" height="32" />
+                                <img alt="Assembly Logo" src="<%= image_url('asm-logo-flag-2x.png') %>" width="36" height="32" />
                               </a>
                             </td>
                             <td class="expander"></td>

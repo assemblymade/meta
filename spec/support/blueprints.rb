@@ -59,6 +59,11 @@ Discussion.blueprint do
   title { "Title #{sn}"}
 end
 
+Heart.blueprint do
+  user
+  heartable { NewsFeedItem.make! }
+end
+
 Milestone.blueprint do
   user
   product
