@@ -9,7 +9,7 @@ describe('CommentActionCreators', function() {
 
   var CommentActionCreators = require.requireActual(pathToFile('actions/comment_action_creators'));
 
-  describe('uploadAssets()', function() {
+  describe('uploadAttachment()', function() {
     beforeEach(function() {
       $.ajax = jest.genMockFunction();
 
@@ -17,7 +17,7 @@ describe('CommentActionCreators', function() {
     });
 
     it('makes a call to upload assets', function() {
-      CommentActionCreators.uploadAssets('productSlug', 'eventId');
+      CommentActionCreators.uploadAttachment('productSlug', 'eventId');
 
       expect($.ajax).toBeCalled();
     });
@@ -27,7 +27,7 @@ describe('CommentActionCreators', function() {
         options.success();
       });
 
-      CommentActionCreators.uploadAssets('productSlug', 'eventId');
+      CommentActionCreators.uploadAttachment('productSlug', 'eventId');
 
       // Dispatcher.handleServerAction is alread mocked
       expect(Dispatcher.handleServerAction).toBeCalled();
@@ -39,7 +39,7 @@ describe('CommentActionCreators', function() {
         options.error();
       });
 
-      CommentActionCreators.uploadAssets('productSlug', 'eventId');
+      CommentActionCreators.uploadAttachment('productSlug', 'eventId');
 
       // Dispatcher.handleServerAction is alread mocked
       expect(Dispatcher.handleServerAction).toBeCalled();

@@ -49,15 +49,8 @@ class window.DropzoneView extends Backbone.View
     @targetForm.submit()
     @hideProgress()
 
-    if $(@el).data('reactid')
-      Dispatcher.handleViewAction({
-        type: 'COMMENT_ATTACHMENT_ADDED',
-        event: {
-          attachmentId: file.attachment.id,
-          # FIXME: (pletcher) This feels very dirty;
-          reactId: $(@el).data('reactid')
-        }
-      })
+    attachmentInput = "<input class=\"comment_attachments\" name=\"event_comment[attachments][]\" type=\"hidden\" value=\"" + file.attachment.id + "\" />"
+    $(@el).append(attachmentInput)
 
   showProgress: (progress) =>
     $('.progress', @el).show()

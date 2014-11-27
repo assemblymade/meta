@@ -8,7 +8,10 @@ var Markdown = React.createClass({
       React.PropTypes.string,
       React.PropTypes.object
     ]).isRequired,
-    normalized: React.PropTypes.bool,
+    normalized: React.PropTypes.oneOfType([
+      React.PropTypes.bool,
+      React.PropTypes.string
+    ]),
     safelySetHtml: React.PropTypes.bool
   },
 

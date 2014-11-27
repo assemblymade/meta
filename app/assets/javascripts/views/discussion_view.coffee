@@ -95,14 +95,9 @@ class window.DiscussionView extends Backbone.View
     #         to React (it's no worse than the above call
     #         for #event_comment_body, really)
     if type == 'Event::Comment'
-      attachments = $(@el).find('input#comment_attachments')
+      attachments = $(@el).find('input.comment_attachments')
       attributes.attachments = _.map attachments, (a) ->
         return a.value
-
-    Dispatcher.handleViewAction({
-      type: 'WIP_EVENT_CREATING',
-      event: attributes
-    })
 
     app.wipEvents.create _(@eventDefaults).extend(attributes)
     @resetCommentForm()

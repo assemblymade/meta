@@ -44,7 +44,10 @@
 
       new MarkdownEditorView({el: this.getDOMNode(), dropzone: dzView.dz});
 
-      CommentAttachmentStore.addChangeListener(this.updateAttachments);
+      // FIXME: Because DropzoneView updates the DOM directly, it conflicts
+      // with React's shadow DOM and causes strange bugs to surface. Attach
+      // this listener once we've refactored DropzoneView
+      // CommentAttachmentStore.addChangeListener(this.updateAttachments);
     },
 
     render: function() {
@@ -68,11 +71,19 @@
 
     renderAttachmentInputs: function() {
       return this.state.attachments.map(function(attachmentId) {
-        return <input id={this.props.inputId} name={this.props.inputName} type="hidden" value={attachmentId} />
+        return <input
+            id={this.props.inputId}
+            name={this.props.inputName}
+            type="hidden"
+            value={attachmentId}
+            key={attachmentId} />
       }.bind(this))
     },
 
     updateAttachments: function() {
+      // FIXME: Right now, this method should never be called, because the
+      // listener isn't added. When we've refactored those Backbone views not to
+      // manipulate the DOM directly, we can use this method again
       this.setState({
         attachments: CommentAttachmentStore.getAttachments($(this.getDOMNode()).data('reactid'))
       });

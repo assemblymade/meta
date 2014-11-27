@@ -12,7 +12,7 @@
     },
 
     checkForErrors: function() {
-      var errors = CommentAttachmentStore.getErrors(this.state.eventId);
+      var errors = CommentAttachmentStore.getErrors(this.props.url);
 
       if (errors.length) {
         return this.setState({
@@ -26,12 +26,6 @@
     },
 
     componentDidMount: function() {
-      var activity = $(this.getDOMNode()).parents('.activity');
-
-      this.setState({
-        eventId: $(activity).data('event-id')
-      });
-
       CommentAttachmentStore.addChangeListener(this.checkForErrors);
     },
 
@@ -55,7 +49,7 @@
       var productSlug = window.app.currentAnalyticsProduct().attributes.product_slug;
 
       if (productSlug) {
-        CommentActionCreators.uploadAssets(productSlug, this.state.eventId);
+        CommentActionCreators.uploadAttachment(productSlug, this.props.url);
 
         this.setState({
           uploaded: true
@@ -104,7 +98,6 @@
           </a>
         );
       }
-
 
       if (this.state.uploaded) {
         return <span className={classes}>Saved to assets</span>;

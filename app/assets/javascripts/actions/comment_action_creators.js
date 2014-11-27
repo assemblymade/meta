@@ -4,7 +4,34 @@ var CONSTANTS = window.CONSTANTS;
 var ActionTypes = CONSTANTS.ActionTypes
 
 var CommentActionCreators = {
-  uploadAssets: function(productSlug, eventId) {
+  uploadAttachment: function(productSlug, attachmentUrl) {
+    $.ajax({
+      method: 'POST',
+      url: '/' + productSlug + '/assets',
+      data: {
+        attachment_url: attachmentUrl
+      },
+      success: function() {
+        Dispatcher.handleServerAction({
+          type: ActionTypes.COMMENT_ATTACHMENT_UPLOADED,
+          event: {
+            eventId: attachmentUrl
+          }
+        });
+      },
+      error: function(jqXhr, textStatus, err) {
+        Dispatcher.handleServerAction({
+          type: ActionTypes.COMMENT_ATTACHMENT_FAILED,
+          event: {
+            error: err,
+            eventId: attachmentUrl
+          }
+        });
+      }
+    });
+  },
+
+  uploadAllEventAssets: function(productSlug, eventId) {
     $.ajax({
       method: 'POST',
       url: '/' + productSlug + '/assets',
