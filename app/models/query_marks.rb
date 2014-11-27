@@ -122,6 +122,40 @@ class QueryMarks
     dot_product_vectors(vector1, vector2)
   end
 
+  #GENERATE TOP_BOUNTIES, TOP_PRODUCTS
+
+  def get_all_wip_vectors
+    wips = Wip.where(state: 'open')
+    wip_vectors = wips.map{|w| [w.mark_vector, w] }
+    wip_vectors.delete([])
+    return wip_vectors
+  end
+
+  def assign_top_bounties_for_user(limit, user, wip_vectors)
+    user_vector = normalize_mark_vector(user.user_identity.get_mark_vector)
+
+
+
+    if user_vector.count > 0
+      wip_vectors = wip_vectors.map{ |vector, wip| [dot_product_vectors(user_vector, vector), wip]  }
+    # else
+    #   [[]]
+    # end
+    #
+    # if wip_vectors
+    #   TopBounty.where(user_id: user.id).delete_all
+    #   n=0
+    #   wip_vectors.sort_by{|a, b| a}.reverse.take(limit).each do |w|
+    #     n=n+1
+    #     TopBounty.create!({user_id: user.id, score: w[0], rank: n, wip: w[1]})
+    #   end
+    end
+  end
+
+
+  def assign_top_products_for_user(limit, user)
+  end
+
   #RUN ONCE
   def retroactively_generate_all_user_markings
     User.all.each do |a|

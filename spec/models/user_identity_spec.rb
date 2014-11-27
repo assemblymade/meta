@@ -21,7 +21,7 @@ describe UserIdentity do
 
     user_identity.assign_markings_from_wips([wip1, wip2])
 
-    viewing = Viewing.create!({user_id: user_identity.user.id, viewable_id: product.id, viewable_type: "Product"})
+    viewing = Viewing.create!({user_id: user_identity.user.id, viewable_id: product.id, viewable_type: "Product", weight: 1.0})
     user_identity.assign_markings_from_viewings
   end
 
