@@ -232,7 +232,7 @@ ASM::Application.routes.draw do
         resources :offers, only: [:create, :show]
       end
 
-      resources :news_feed_items, only: [:create], path: 'updates', as: :updates
+      resources :news_feed_items, only: [:show, :create], path: 'updates', as: :updates
       resources :projects, only: [:create]
       resources :subscribers, only: [:create, :destroy]
       resources :bounty_postings, only: [:create, :destroy]
@@ -318,6 +318,7 @@ ASM::Application.routes.draw do
     resources :repositories, only: [:index, :create, :destroy], as: :repos
 
     resources :work
+    resources :tasks, only: [:show], path: 'bounties'
     resources :wips, only: [:index, :show, :new, :edit, :create, :update], controller: 'tasks', path: 'bounties' do
       get 'search', :on => :collection
 

@@ -52,4 +52,10 @@ en:
               username:
                 invalid: "use only alphanumeric characters"
 
-
+  models:
+    task:
+      description:
+        owner: '%{title}'
+    comment:
+      description:
+        owner: 'a comment you made'
