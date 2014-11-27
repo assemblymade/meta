@@ -51,12 +51,12 @@ class AssetsController < ProductController
     # prevent duplicates
     return if @product.assets.where(attachment_id: attachment.id).any?
 
-    asset_to_create = {
-      attachment_id: attachment.id,
-      name: attachment.name
-    }
+    validate_user
 
-    @asset = @product.assets.create(asset_to_create.merge(user: current_user))
-    Room.create_for!(@asset.product, @asset)
+    @asset = attachment.assign_to_product!(@product, current_user)
+  end
+
+  def validate_user
+    head(:forbidden) unless can? :update, @product
   end
 end

@@ -33,7 +33,7 @@
       return {
         error: null,
         showLightbox: false,
-        uploaded: false
+        uploaded: CommentAttachmentStore.attachmentBelongsToProduct(this.props.url)
       }
     },
 

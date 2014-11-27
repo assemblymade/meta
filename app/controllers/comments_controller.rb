@@ -67,7 +67,7 @@ class CommentsController < ProductController
     authenticate_user!
     authorize! :update, @comment
 
-    @comment.update_attributes(comment_params.merge(updated_by: current_user))
+    @comment.update(comment_params.merge(updated_by: current_user))
 
     respond_with @comment, location: url_for([@product, @wip]), serializer: EventSerializer
   end

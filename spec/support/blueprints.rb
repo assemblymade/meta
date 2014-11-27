@@ -18,6 +18,12 @@ AssemblyAsset.blueprint do
   amount { 10 }
 end
 
+Asset.blueprint do
+  product { Product.make! }
+  user { User.make! }
+  attachment { Attachment.make!(user: user) }
+end
+
 Attachment.blueprint do
   user
   name { Faker::Name.name }
@@ -46,12 +52,17 @@ ChatRoom.blueprint do
   slug { "room_#{sn}" }
 end
 
-
 Discussion.blueprint do
   user
   product
   number      { (sn.to_i * 10) + 1 }
   title { "Title #{sn}"}
+end
+
+Event.blueprint do
+  type
+  user
+  wip
 end
 
 Milestone.blueprint do

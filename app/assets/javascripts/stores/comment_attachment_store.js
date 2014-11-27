@@ -3,6 +3,7 @@ var Store = require('../stores/store');
 var ActionTypes = window.CONSTANTS.ActionTypes;
 
 var _dispatchToken;
+var _initialAttachments = _parseInitialAttachments();
 var _attachments = {};
 var _errors = {};
 
@@ -18,6 +19,16 @@ var CommentAttachmentStore = _.extend(Object.create(Store), {
 
   getErrors: function(eventId) {
     return _errors[eventId] || [];
+  },
+
+  attachmentBelongsToProduct: function(attachmentUrl) {
+    attachmentPath = parseUri(attachmentUrl).path;
+
+    if (attachmentPath) {
+      return !!_initialAttachments[decodeURI(attachmentPath.slice(1))];
+    }
+
+    return false;
   }
 });
 
@@ -88,6 +99,22 @@ function removeAttachments() {
   // there's an expectation of one #event_comment_body element, so
   // for now, this reset will work harmoniously with that implementation
   _attachments = {};
+}
+
+function _parseInitialAttachments() {
+  var productAssetsTag = document.getElementById('product_assets');
+
+  if (productAssetsTag) {
+    var productAssets;
+
+    try {
+      productAssets = JSON.parse(productAssetsTag.innerHTML);
+    } catch (e) {
+      return {};
+    }
+
+    return productAssets;
+  }
 }
 
 module.exports = CommentAttachmentStore;
