@@ -23,7 +23,7 @@ class UserIdentity < ActiveRecord::Base
       mark_vector = QueryMarks.new.mark_vector_for_object(v.viewable)
 
       #scale according to significance of product view/ bounty view/ etc
-      mark_vector = QueryMarks.new.scale_mark_vector(mark_vector, VIEW_PRODUCT_MARKING_WEIGHT)
+      mark_vector = QueryMarks.new.scale_mark_vector(mark_vector, VIEW_PRODUCT_MARKING_WEIGHT * v.weight)
 
       #add pre-existing mark vector to new mark vector
       old_mark_vector = QueryMarks.new.mark_vector_for_object(self)

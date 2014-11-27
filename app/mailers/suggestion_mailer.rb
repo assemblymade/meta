@@ -1,5 +1,5 @@
 class SuggestionMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "barisser@assembly.com"
 
   def create(user_id, bounty_limit)
     #mailgun_campaign 'bounty_suggestions'

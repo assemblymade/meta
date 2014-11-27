@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126210828) do
+ActiveRecord::Schema.define(version: 20141126235932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -694,6 +694,7 @@ ActiveRecord::Schema.define(version: 20141126210828) do
     t.integer  "rank"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.uuid     "wip_id"
   end
 
   create_table "top_products", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -702,6 +703,7 @@ ActiveRecord::Schema.define(version: 20141126210828) do
     t.integer  "rank"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.uuid     "product_id"
   end
 
   create_table "transaction_log_entries", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -887,6 +889,7 @@ ActiveRecord::Schema.define(version: 20141126210828) do
     t.string   "viewable_type"
     t.uuid     "viewable_id"
     t.datetime "created_at"
+    t.float    "weight"
   end
 
   create_table "votes", id: :uuid, force: true do |t|
