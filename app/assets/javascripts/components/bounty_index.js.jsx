@@ -12,10 +12,9 @@
     getInitialState: function() {
       return {
         bounties: this.props.initialBounties,
-        filters: this.props.initialFilters,
         loading: false,
         page: 1,
-        pages: 1,
+        pages: this.props.pages,
         value: 'state:open',
         sort: 'priority'
       }
@@ -71,7 +70,7 @@
         page: page
       })
 
-      this.getBounties(this.state.filters, this.state.sort, page)
+      this.getBounties(this.state.value, this.state.sort, page)
     },
 
     addTag: function(tag) {

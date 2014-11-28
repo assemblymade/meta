@@ -151,9 +151,8 @@ class TasksController < WipsController
   # private
 
   def find_wips
-    options = params.merge(partner: @product.partner?(current_user))
-    query = FilterWipsQuery.call(product_wips, current_user, options)
-    PaginatingDecorator.new(query)
+    options = { state: 'open', sort: 'priority' }
+    FilterWipsQuery.call(product_wips, current_user, options)
   end
 
   def wip_class
