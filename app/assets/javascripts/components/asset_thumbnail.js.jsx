@@ -60,7 +60,7 @@
     imageAsset: function() {
       var ext = this.props.url.split('.').pop();
 
-      return ['pdf', 'psd'].indexOf(ext) === -1;
+      return ext !== 'pdf';
     },
 
     render: function() {
@@ -71,7 +71,7 @@
       }
 
       return <div className="clickable">
-        <img src={this.props.preview} alt={this.props.name} className="img-rounded" />
+        <img src={this.props.preview} alt={this.props.name} className="img-rounded" onClick={this.handleClick} />
         <div>
           <a onClick={this.handleClick} href={this.props.url} target="_blank" className="text-small">
             {this.props.name} <span className="glyphicon glyphicon-new-window text-muted" />
