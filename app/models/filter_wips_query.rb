@@ -26,23 +26,44 @@ class FilterWipsQuery
   end
 
   def filter_clauses
-    [state_filter, deliverable_filter, project_filter, tag_filter, sort_order,
-     page_selection, user_filter, user_id_filter, mark_filter].compact
+    [state_filter, tag_filter, mark_filter, query_filter, user_filter, sort_order, page_selection].compact
   end
 
   def state_filter
-    case state
-    when nil, 'open'
-      Wip.open
-    when 'progress'
-      Wip.where(state: ['allocated', 'reviewing'])
-    when 'reviewing'
-      Wip.where(state: 'reviewing')
-    when 'closed', 'resolved'
-      Wip.closed
-    else
-      Wip.all
+    return unless states.present?
+
+    expanded_states = states.flat_map do |state|
+      case state
+      when 'open' 
+        'open'
+      when 'doing'
+        ['allocated', 'awarding']
+      when 'reviewing'
+        'reviewing'
+      when 'done'
+        ['closed', 'resolved']
+      end
     end
+
+    Wip.where(state: expanded_states)
+  end
+
+  def tag_filter
+    return unless tags.present?
+
+    Wip.joins(:tags).where(wip_tags: { name: tags })
+  end
+
+  def mark_filter
+    return unless marks.present?
+
+    Wip.joins(:marks).where(marks: { name: marks })
+  end
+
+  def query_filter
+    return unless query.present?
+
+    Wip.where('title ILIKE ?', "%#{query}%")
   end
 
   def user_filter
@@ -64,49 +85,6 @@ class FilterWipsQuery
     else # all
       Wip.all
     end
-  end
-
-  def user_id_filter
-    if user_id_params.present?
-      Wip.joins(:events).
-        where(events: { user_id: user_id_params }).
-        uniq
-    end
-  end
-
-  def deliverable_filter
-    return unless deliverable
-
-    Wip.where(deliverable: deliverable)
-  end
-
-  def project_filter
-    return unless project
-
-    Wip.open.joins(milestone_tasks: :milestone).
-      where('milestones.number' => project)
-  end
-
-  def tag_filter
-    return unless tag
-
-    Wip.open.joins(:tags).where('wip_tags.name ilike ?', tag)
-  end
-
-  def mark_filter
-    return unless mark
-    
-    Wip.open.joins(:marks).where('marks.name = ?', mark)
-  end
-
-  def bounty_postings_filter
-    Wip.not_posted
-  end
-
-  def partners_filter
-    return unless filters[:partner] == false
-
-    Wip.where('wips.user_id = ?', user.id)
   end
 
   def sort_order
@@ -136,32 +114,20 @@ class FilterWipsQuery
     Wip.page(page)
   end
 
-  def state
-    filters[:state]
+  def states
+    Array.wrap(filters[:state])
   end
 
-  def deliverable
-    filters[:deliverable]
+  def tags
+    Array.wrap(filters[:tag])
   end
 
-  def project
-    filters[:project]
+  def marks
+    Array.wrap(filters[:mark])
   end
 
-  def sort
-    filters[:sort]
-  end
-
-  def page
-    filters[:page]
-  end
-
-  def tag
-    filters[:tag]
-  end
-
-  def mark
-    filters[:mark]
+  def query
+    filters[:query]
   end
 
   def user_params
@@ -170,5 +136,13 @@ class FilterWipsQuery
 
   def user_id_params
     filters[:user_id]
+  end
+
+  def sort
+    filters[:sort]
+  end
+
+  def page
+    filters[:page]
   end
 end

@@ -9,6 +9,8 @@ class BountySerializer < ApplicationSerializer
     :offers_url, :mute_url, :start_work_url, :stop_work_url, :tag_url,
     :unflag_url, :urgency_url, :reopen_url, :url, :lock_url
 
+  has_one :locker
+
   has_one :product
 
   has_one :urgency
@@ -121,6 +123,10 @@ class BountySerializer < ApplicationSerializer
 
   def url
     product_wip_path(product, bounty)
+  end
+
+  def locker
+    User.find_by(id: bounty.locked_by)
   end
 
   def product

@@ -1,6 +1,27 @@
 class TasksController < WipsController
   wrap_parameters format: [:json]
 
+  def index
+    reject_blacklisted_users!
+
+    @wips = find_wips
+    @auto_tip_contracts = @product.auto_tip_contracts.active
+
+    respond_to do |format|
+      format.html do
+        expires_now
+        render 'bounties/index'
+      end
+
+      format.json do
+        render json: @wips,
+          serializer: PaginationSerializer,
+          each_serializer: BountySerializer,
+          root: :bounties
+      end
+    end
+  end
+
   def new
     redirect_to product_wips_path(@product, modal: true)
   end
@@ -68,33 +89,6 @@ class TasksController < WipsController
     end
   end
 
-  def index
-    reject_blacklisted_users!
-
-    if params[:state].blank? && params[:project].blank?
-      params[:state] = 'open'
-    end
-
-    @wips = find_wips
-    @auto_tip_contracts = @product.auto_tip_contracts.active
-    @selected_user = User.find_by(id: params[:user_id]) if params[:user_id].present?
-    @core_team = @product.core_team.reject { |u| u.id == current_user && current_user.id }
-
-    respond_to do |format|
-      format.html do
-        expires_now
-        render 'bounties/index'
-      end
-
-      format.json do
-        render json: @wips,
-          serializer: PaginationSerializer,
-          each_serializer: BountySerializer,
-          root: :bounties
-      end
-    end
-  end
-
   def start_work
     if username = params[:assign_to]
       assignee = User.find_by(username: username.gsub('@', '').strip())
@@ -157,8 +151,6 @@ class TasksController < WipsController
   # private
 
   def find_wips
-    # return [] unless signed_in?
-
     options = params.merge(partner: @product.partner?(current_user))
     query = FilterWipsQuery.call(product_wips, current_user, options)
     PaginatingDecorator.new(query)
@@ -170,14 +162,6 @@ class TasksController < WipsController
 
   def product_wips
     @product.tasks.includes(:workers, :product, :tags)
-  end
-
-  def copy_params
-    params.require(:copy_deliverable).permit(:body)
-  end
-
-  def code_params
-    params.require(:code_deliverable).permit(:url)
   end
 
   def wip_params

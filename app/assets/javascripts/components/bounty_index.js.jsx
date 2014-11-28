@@ -6,6 +6,8 @@
   var PaginationLinks = require('./pagination_links.js.jsx')
   var Spinner = require('./spinner.js.jsx')
 
+  var timeout = null
+
   var BountyIndex = React.createClass({
     getInitialState: function() {
       return {
@@ -19,17 +21,23 @@
     },
 
     getBounties: function(value, page) {
-      var path = this.getBountiesPath()
-      var params = this.params(value, page)
+      if(timeout) {
+        clearTimeout(timeout)
+      }
 
-      $.getJSON(path, params, function(response) {
-        this.setState({
-          bounties: response.bounties,
-          loading: false,
-          page: response.meta.pagination.page,
-          pages: response.meta.pagination.pages,
-        });
-      }.bind(this));
+      timeout = setTimeout(function() {
+        var path = this.getBountiesPath()
+        var params = this.params(value, page)
+
+        $.getJSON(path, params, function(response) {
+          this.setState({
+            bounties: response.bounties,
+            loading: false,
+            page: response.meta.pagination.page,
+            pages: response.meta.pagination.pages,
+          });
+        }.bind(this));
+      }.bind(this), 200)
     },
 
     handleInputChange: function(event) {
