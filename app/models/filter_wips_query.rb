@@ -66,7 +66,7 @@ class FilterWipsQuery
     return unless doing.present?
 
     doing_ids = User.where(username: doing).pluck(:id)
-    Task.joins(:wip_workers).where(user_id: doing_ids).uniq
+    Task.joins(:wip_workers).where(wip_workers: { user_id: doing_ids }).uniq
   end
 
   def created_filter
