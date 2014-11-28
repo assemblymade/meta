@@ -16,11 +16,12 @@
         loading: false,
         page: 1,
         pages: 1,
-        value: ''
+        value: '',
+        sort: 'priority'
       }
     },
 
-    getBounties: function(value, page) {
+    getBounties: function(value, sort, page) {
       if(timeout) {
         clearTimeout(timeout)
       }
@@ -37,10 +38,10 @@
             pages: response.meta.pagination.pages,
           });
         }.bind(this));
-      }.bind(this), 200)
+      }.bind(this), 300)
     },
 
-    handleInputChange: function(event) {
+    handleValueChange: function(event) {
       var value = event.target.value
 
       this.setState({
@@ -49,7 +50,19 @@
         page: 1
       })
 
-      this.getBounties(value, 1)
+      this.getBounties(value, this.state.sort, 1)
+    },
+
+    handleSortChange: function(event) {
+      var sort = event.target.value
+
+      this.setState({
+        loading: true,
+        page: 1,
+        sort: sort
+      })
+
+      this.getBounties(this.state.value, sort, 1)
     },
 
     handlePageChange: function(page) {
@@ -86,18 +99,29 @@
       }.bind(this))
     },
 
+    renderBounties: function() {
+      if(this.state.loading) {
+        return <Spinner />
+      } else {
+        return (
+          <div>
+            <BountyList bounties={this.state.bounties} product={this.props.product} />
+            <PaginationLinks page={this.state.page} pages={this.state.pages} onPageChanged={this.handlePageChange} />
+          </div>
+        )
+      }
+    },
+
     render: function() {
       var bountyFilterProps = _.pick(this.props, 'tags', 'creators', 'workers')
 
-      var tags = ['design', 'code', 'frontend', 'backend']
-
       return (
         <div>
-          <div className="sm-col sm-col-4 px2" style={{float: 'right !important'}}>
-            <CreateBountyButton {...this.props} classes={['btn btn-primary btn-block']} />
+          <div className="sm-col sm-col-3 px2" style={{float: 'right !important'}}>
+            <CreateBountyButton {...this.props} classes={['btn btn-primary btn-block py2']} />
 
-            <div className="py2">
-              <strong>Tags</strong>
+            <div className="px3 py2 mt2">
+              <div className="h5 bold">Tags</div>
 
               <ul className="mt1 list-unstyled">
                 {this.renderTags()}
@@ -106,16 +130,12 @@
 
           </div>
 
-          <div className="sm-col sm-col-8 px2">
-            <BountyFilter {...bountyFilterProps} filters={this.state.filters} value={this.state.value} onChange={this.handleInputChange} />
+          <div className="sm-col sm-col-9 px2">
+            <BountyFilter {...bountyFilterProps} value={this.state.value} onValueChange={this.handleValueChange} sort={this.state.sort} onSortChange={this.handleSortChange} />
 
             <div className="border-top mt2 mb2"></div>
 
-            {this.state.loading ? <Spinner /> : null}
-            
-            <BountyList bounties={this.state.bounties} product={this.props.product} />
-
-            <PaginationLinks page={this.state.page} pages={this.state.pages} onPageChanged={this.handlePageChange} />
+            {this.renderBounties()}
           </div>
         </div>
       )
@@ -125,7 +145,7 @@
       return ['/', this.props.product.slug, '/', 'bounties', '.', 'json'].join('')
     },
 
-    params: function(value, page) {
+    params: function(value, sort, page) {
       var terms = value.split(' ')
 
       var params = _.reduce(terms, function(memo, value) {
@@ -140,6 +160,7 @@
         return memo
       }, {})
 
+      params.sort = sort
       params.page = page
 
       return params
