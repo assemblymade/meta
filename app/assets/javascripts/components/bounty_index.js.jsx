@@ -16,7 +16,7 @@
         loading: false,
         page: 1,
         pages: 1,
-        value: '',
+        value: 'state:open',
         sort: 'priority'
       }
     },
@@ -28,7 +28,7 @@
 
       timeout = setTimeout(function() {
         var path = this.getBountiesPath()
-        var params = this.params(value, page)
+        var params = this.params(value, sort, page)
 
         $.getJSON(path, params, function(response) {
           this.setState({
@@ -71,7 +71,7 @@
         page: page
       })
 
-      this.getBounties(this.state.filters, page)
+      this.getBounties(this.state.filters, this.state.sort, page)
     },
 
     addTag: function(tag) {

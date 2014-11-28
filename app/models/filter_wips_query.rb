@@ -113,7 +113,7 @@ class FilterWipsQuery
   def sort_order
     case sort
     when 'most_valuable'
-      Wip.order('total_coins_cache DESC')
+      Wip.order('total_coins_cache DESC NULLS LAST')
     when 'least_valuable'
       Wip.order('total_coins_cache ASC')
     when 'newest'
