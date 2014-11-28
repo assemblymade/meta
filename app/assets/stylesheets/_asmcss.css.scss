@@ -122,6 +122,7 @@ input[type=week] {
   height: auto;
   padding: 6px 12px;
   line-height: $line-height-base;
+  outline: none;
 }
 
 .blue { color: $blue }
@@ -133,9 +134,14 @@ input[type=week] {
 // --
 
 .no-border { border: none }
+
 .ellipsis {
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.no-wrap {
+  white-space: nowrap;
 }
 
 button,

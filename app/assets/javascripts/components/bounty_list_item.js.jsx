@@ -55,7 +55,11 @@
 
       return (
         <a href={bounty.url}>
-          <strong>{bounty.title}</strong>
+          {bounty.title}
+          {' '}
+          <span className="gray-dark ml1">
+            #{bounty.number}
+          </span>
         </a>
       )
     },
@@ -63,12 +67,9 @@
     renderTags: function() {
       return this.props.bounty.tags.map(function(tag) {
         return (
-          <span>
-            {' '}
-            <a className="small text-info" href={tag.url}>
-              #{tag.name.toLowerCase()}
-            </a>
-          </span>
+          <a className="caps gray-dark mr1" href={tag.url}>
+            #{tag.name.toLowerCase()}
+          </a>
         )
       })
     },
@@ -76,9 +77,11 @@
     renderUrgency: function() {
       var bounty = this.props.bounty
 
+      var urgencies = ['Urgent', 'Now', 'Someday']
+
       return (
-        <div className="pull-right">
-          <Urgency initialLabel={bounty.urgency.label} />
+        <div className="right">
+          <Urgency initialLabel={bounty.urgency.label} state={bounty.state} url={bounty.url} urgencies={urgencies} />
         </div>
       )
     },
@@ -122,6 +125,8 @@
             <span className="icon icon-app-coin"></span>
             {' '}
             <span>{bounty.earnable}</span>
+            {' '}
+            <span className="icon icon-chevron-down"></span>
           </span>
         )
       })
@@ -145,41 +150,60 @@
       )
     },
 
+    renderLocker: function() {
+      if(!this.props.locker) {
+        return
+      }
+
+      var user = this.props.locker
+
+      return (
+        <div className="px3 py2 border-top h6 mb0 mt0">
+          <Avatar user={user} size={18} className="avatar img-circle inline mr1" />
+
+          <a href={user.url} className="bold black">
+            {user.username}
+          </a>
+
+          <span className="gray-dark">
+            has {moment(this.props.locked_at)} to work on this
+          </span>
+        </div>
+      )
+    },
+
     render: function() {
       var bounty = this.props.bounty
 
       return (
-        <div>
-          <div>
-            {this.renderWinners()}
+        <div className="bg-white rounded shadow mb2">
+          <div className="p3">
+            <div className="h4 mt0 mb1">
+              {this.renderTitle()}
+            </div>
+
+            <div>
+              <div className="right ml2">
+                {this.renderUrgency()}
+              </div>
+
+              <span className="mr2">
+                {this.renderAward()}
+              </span>
+
+              <span className="gray mr2">
+                <span className="fa fa-comment"></span>
+                {' '}
+                {bounty.comments_count}
+              </span>
+
+              <span className="h6 mt0 mb0">
+                {this.renderTags()}
+              </span>
+            </div>
           </div>
 
-          <div>
-            {this.renderTitle()}
-            {this.renderTags()}
-          </div>
-
-          <div className="clearfix small text-muted">
-            {this.renderUrgency()}
-
-            {this.renderAward()}
-            {' '}
-            &middot;
-            {' '}
-            #{bounty.number}
-            {' '}
-            &middot;
-            {' '}
-            <a className="text-muted" href={bounty.user.url}>
-              @{bounty.user.username}
-            </a>
-            {' '}
-            &middot;
-            {' '}
-            last update {moment(bounty.updated).fromNow()}
-            {' '}
-            {this.renderProductLabel()}
-          </div>
+          {this.renderLocker()}
         </div>
       )
     }

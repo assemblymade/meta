@@ -13,13 +13,14 @@
         filters: this.props.initialFilters,
         loading: false,
         page: 1,
-        pages: 1
+        pages: 1,
+        value: ''
       }
     },
 
-    getBounties: function(filters, page) {
+    getBounties: function(value, page) {
       var path = this.getBountiesPath()
-      var params = this.params(filters, page)
+      var params = this.params(value, page)
 
       $.getJSON(path, params, function(response) {
         this.setState({
@@ -31,14 +32,16 @@
       }.bind(this));
     },
 
-    handleFiltersChange: function(filters) {
+    handleInputChange: function(event) {
+      var value = event.target.value
+
       this.setState({
-        filters: filters,
+        value: value,
         loading: true,
         page: 1
       })
 
-      this.getBounties(filters, 1)
+      this.getBounties(value, 1)
     },
 
     handlePageChange: function(page) {
@@ -55,15 +58,21 @@
 
       return (
         <div>
-          <BountyFilter {...bountyFilterProps} filters={this.state.filters} onChange={this.handleFiltersChange} />
+          <div className="sm-col sm-col-4 px2" style={{float: 'right !important'}}>
+            <CreateBountyButton {...this.props} classes={['btn btn-primary btn-block']} />
+          </div>
 
-          <div className="border-top mt2 mb2"></div>
+          <div className="sm-col sm-col-8 px2">
+            <BountyFilter {...bountyFilterProps} filters={this.state.filters} value={this.state.value} onChange={this.handleInputChange} />
 
-          {this.state.loading ? <Spinner /> : null}
-          
-          <BountyList bounties={this.state.bounties} product={this.props.product} />
+            <div className="border-top mt2 mb2"></div>
 
-          <PaginationLinks page={this.state.page} pages={this.state.pages} onPageChanged={this.handlePageChange} />
+            {this.state.loading ? <Spinner /> : null}
+            
+            <BountyList bounties={this.state.bounties} product={this.props.product} />
+
+            <PaginationLinks page={this.state.page} pages={this.state.pages} onPageChanged={this.handlePageChange} />
+          </div>
         </div>
       )
     },
@@ -72,21 +81,20 @@
       return ['/', this.props.product.slug, '/', 'bounties', '.', 'json'].join('')
     },
 
-    params: function(filters, page) {
-      var params = _.reduce(filters, function(memo, filter) {
-        if(filter.type == 'order') {
-          memo[filter.type] = filter.value
+    params: function(value, page) {
+      var terms = value.split(' ')
+
+      var params = _.reduce(terms, function(memo, value) {
+        var filter = value.split(':')
+
+        if(filter.length == 2) {
+          memo[filter[0]] = _.compact(_.flatten([memo[filter[0]], filter[1]]))
         } else {
-          memo[filter.type] = _.compact(_.flatten([memo[filter.type], filter.value]))
+          memo.query = _.compact([memo.query, value]).join(' ')
         }
 
         return memo
       }, {})
-
-      if(params.order) {
-        params.sort = params.order
-        delete params.order
-      }
 
       params.page = page
 

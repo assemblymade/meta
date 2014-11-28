@@ -2,27 +2,16 @@
 
 (function() {
   var BountyList = React.createClass({
-    // TODO: Pagination
     renderBounties: function() {
       if(!this.props.bounties.length) {
         return
       }
 
-      return (
-        <ol className="list-group list-group-breakout list-group-padded" id="wips-view-el">
-          {this.renderBountyListItems()}
-        </ol>
-      )
-    },
-
-    renderBountyListItems: function() {
       var product = this.props.product
 
       return this.props.bounties.map(function(bounty) {
         return (
-          <li className="list-group-item">
-            <BountyListItem bounty={bounty} product={product} />
-          </li>
+          <BountyListItem bounty={bounty} product={product} />
         )
       })
     },

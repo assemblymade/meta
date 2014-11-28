@@ -114,27 +114,24 @@
     },
 
     render: function() {
+      options = [
+        { name: "I'm working on", value: 'working_on' },
+        { name: "I created", value: 'created_by' },
+        { name: "I commented on", value: 'commented_on' },
+        { name: 'Open',      value: 'open' },
+        { name: 'Doing',     value: 'doing' },
+        { name: 'Reviewing', value: 'reviewing' },
+        { name: 'Done',      value: 'done' }
+      ]
+
       return (
         <div>
-          <div className="row mb2">
-            <div className="col-xs-8">
-              <TaggedInput placeholder="form-control" tags={this.props.filters} onAddTag={this.addFilter} onRemoveTag={this.removeFilter} />
+          <div className="bg-white rounded shadow mb2 table">
+            <div className="px3 py2 table-cell border-right">
+              <BountyFilterButton name={'Filter'} options={options} onFilterClick={this.handleFilterClick} />
             </div>
-
-            <div className="col-xs-4">
-              <button className="btn btn-primary px2 right">Create a bounty</button>
-            </div>
-          </div>
-
-          <div className="row"> 
-            <div className="col-xs-12">
-              <ul className="nav nav-pills">
-                {this.renderStateFilter()}
-                {this.renderTagFilter()}
-                {this.renderCreatorFilter()}
-                {this.renderWorkerFilter()}
-                {this.renderOrderFilter()}
-              </ul>
+            <div className="px3 py2 left table-cell">
+              <TaggedInput placeholder="form-control" tags={this.props.filters} onAddTag={this.addFilter} onRemoveTag={this.removeFilter} value={this.props.value} onChange={this.props.onChange} />
             </div>
           </div>
         </div>

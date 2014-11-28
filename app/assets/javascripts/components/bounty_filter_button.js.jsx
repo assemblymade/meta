@@ -26,15 +26,17 @@
 
     render: function() {
       return (
-        <li className="dropdown">
-          <a className="dropdown-toggle" data-toggle="dropdown" href="#">
-            {this.props.name} <span className="caret"></span>
+        <div className="dropdown">
+          <a className="dropdown-toggle black bold no-wrap" data-toggle="dropdown" href="#">
+            {this.props.name}
+            {' '}
+            <span className="icon icon-chevron-down"></span>
           </a>
 
           <ul className="dropdown-menu">
             {this.renderOptions()}
           </ul>
-        </li>
+        </div>
       )
     }
   })

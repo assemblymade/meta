@@ -2,12 +2,6 @@
 
 (function() {
   var TaggedInput = React.createClass({
-    getInitialState: function() {
-      return {
-        unparsedTag: ''
-      }
-    },
-
     renderTags: function() {
       if(!this.props.tags.length) {
         return
@@ -32,24 +26,24 @@
     },
 
     handleChange: function(event) {
-      var value = event.target.value
-      var lastChar = value[value.length - 1]
+      // var value = event.target.value
+      // var lastChar = value[value.length - 1]
 
-      if(lastChar === ' ') {
-        parseData = this.parseTags(value)
+      // if(lastChar === ' ') {
+      //   parseData = this.parseTags(value)
 
-        if(parseData.tags.length) {
-          value = parseData.value
+      //   if(parseData.tags.length) {
+      //     value = parseData.value
 
-          for (i in parseData.tags) {
-            debugger
-            this.props.onAddTag(parseData.tags[i])
-          }
-        }
-      }
+      //     for (i in parseData.tags) {
+      //       debugger
+      //       this.props.onAddTag(parseData.tags[i])
+      //     }
+      //   }
+      // }
 
       this.setState({
-        unparsedTag: value
+        value: event.target.value
       })
     },
 
@@ -80,12 +74,10 @@
 
     render: function() {
       return (
-        <div className="form-control form-control-tagged">
+        <div>
           <div className="table mb0">
-            {this.renderTags()}
-
             <div className="table-cell full-width">
-              <input type="text" value={this.state.unparsedTag} onChange={this.handleChange} />
+              <input type="text" value={this.props.value} onChange={this.props.onChange} className="no-border full-width" style={{ padding: 0 }} />
             </div>
           </div>
           {this.renderSuggestion()}
