@@ -15,7 +15,7 @@ var LoveStore = _.extend(Object.create(Store), {
     _dispatchToken = Dispatcher.register(function(payload) {
       var action = payload.action
 
-      if (typeof action.type !== 'undefined') {
+      if (typeof action !== 'undefined' && typeof action.type !== 'undefined') {
         switch(action.type) {
           case ActionTypes.LOVE_CLICKED:
             _heartables[action.heartable_id].hearts_count += 1

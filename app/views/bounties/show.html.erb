@@ -33,6 +33,8 @@
 <%= render partial: 'wips/heartables' %>
 <%= render partial: 'bounties/product_assets' %>
 
+<%= initial_store_data('PeopleStore', CachedArraySerializer.new([@bounty.user] + @bounty.events.map(&:user)).as_json) %>
+
 <% content_for :javascript do %>
   <script>
     app.product = new Product(<%= json @bounty.product, scope: current_user %>);

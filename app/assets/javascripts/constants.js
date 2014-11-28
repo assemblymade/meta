@@ -116,6 +116,8 @@
 
       NEWS_FEED_RECEIVE_RAW_ITEMS: null,
 
+      PEOPLE_RECEIVE: null,
+
       PUSHER_PRESENCE_CONNECTED: null,
 
       USER_SIGNED_IN: null,

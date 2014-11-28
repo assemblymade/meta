@@ -34,7 +34,7 @@ var CommentAttachmentStore = _.extend(Object.create(Store), {
 
 _dispatchToken = Dispatcher.register(function(payload) {
   var action = payload.action;
-  if (typeof action.type !== 'undefined') {
+  if (typeof action !== 'undefined' && typeof action.type !== 'undefined') {
     switch(action.type) {
     // COMMENT_ATTACHMENT_ADDED can't be used while we're manipulating the DOM
     // directly in dropzone_view.js.coffee -- it causes really strange conflicts

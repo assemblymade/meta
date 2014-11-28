@@ -1,6 +1,8 @@
 (function(){
   var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 
+  var InPlaceUserSearch = require('./in_place_user_search.js.jsx')
+
   var TypeaheadUserTextArea = React.createClass({
     propTypes: {
       id: React.PropTypes.string,
