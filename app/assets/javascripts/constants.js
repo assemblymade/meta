@@ -106,6 +106,10 @@
     ActionTypes: keyMirror({
       CHAT_USER_ONLINE: null,
 
+      COMMENT_ATTACHMENT_ADDED: null,
+      COMMENT_ATTACHMENT_FAILED: null,
+      COMMENT_ATTACHMENT_UPLOADED: null,
+
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,
       LOVE_RECEIVE_RECENT_HEARTS: null,

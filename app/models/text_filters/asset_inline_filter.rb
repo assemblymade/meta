@@ -13,7 +13,7 @@ module TextFilters
       return if el['href'] =~ /^https?:\/\/github.com/
       return if el['href'] =~ /^mailto:/
 
-      if el['href'] =~ /\.(gif|jpg|jpeg|png)$/
+      if el['href'] =~ /\.(gif|jpg|jpeg|png|psd)$/
         result[:assets][:images] |= [el['href']]
 
         img = Nokogiri::XML::Node.new('img',doc)

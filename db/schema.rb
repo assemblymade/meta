@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141125183748) do
+ActiveRecord::Schema.define(version: 20141127015748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,15 +208,16 @@ ActiveRecord::Schema.define(version: 20141125183748) do
   end
 
   create_table "events", id: :uuid, force: true do |t|
-    t.integer  "number",     null: false
-    t.uuid     "wip_id",     null: false
-    t.uuid     "user_id",    null: false
-    t.string   "type",       null: false
+    t.integer  "number",                   null: false
+    t.uuid     "wip_id",                   null: false
+    t.uuid     "user_id",                  null: false
+    t.string   "type",                     null: false
     t.text     "body"
     t.text     "url"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.uuid     "event_id"
+    t.uuid     "attachments", default: [],              array: true
   end
 
   add_index "events", ["type", "wip_id"], name: "index_events_on_type_and_wip_id", using: :btree
@@ -287,8 +288,10 @@ ActiveRecord::Schema.define(version: 20141125183748) do
     t.uuid     "heartable_id",   null: false
     t.string   "heartable_type", null: false
     t.datetime "created_at",     null: false
+    t.datetime "sent_at"
   end
 
+  add_index "hearts", ["sent_at"], name: "index_hearts_on_sent_at", using: :btree
   add_index "hearts", ["user_id", "heartable_id"], name: "index_hearts_on_user_id_and_heartable_id", unique: true, using: :btree
 
   create_table "ideas", id: :uuid, force: true do |t|
@@ -688,6 +691,24 @@ ActiveRecord::Schema.define(version: 20141125183748) do
 
   add_index "tips", ["product_id", "from_id", "to_id", "via_id"], name: "index_tips_on_product_id_and_from_id_and_to_id_and_via_id", unique: true, using: :btree
 
+  create_table "top_bounties", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "user_id"
+    t.float    "score"
+    t.integer  "rank"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.uuid     "wip_id"
+  end
+
+  create_table "top_products", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "user_id"
+    t.float    "score"
+    t.integer  "rank"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.uuid     "product_id"
+  end
+
   create_table "transaction_log_entries", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "product_id",       null: false
     t.uuid     "work_id"
@@ -727,6 +748,12 @@ ActiveRecord::Schema.define(version: 20141125183748) do
   end
 
   add_index "user_balance_entries", ["profit_report_id", "user_id"], name: "index_user_balance_entries_on_profit_report_id_and_user_id", unique: true, using: :btree
+
+  create_table "user_identities", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "user_payment_options", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid   "user_id",         null: false
@@ -858,6 +885,14 @@ ActiveRecord::Schema.define(version: 20141125183748) do
     t.integer  "number",         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "viewings", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "user_id"
+    t.string   "viewable_type"
+    t.uuid     "viewable_id"
+    t.datetime "created_at"
+    t.float    "weight"
   end
 
   create_table "votes", id: :uuid, force: true do |t|

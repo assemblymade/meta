@@ -20,4 +20,8 @@ class NewsFeedItem < ActiveRecord::Base
       target: target
     )
   end
+
+  def author_id
+    self.source_id # currently this is always a user, might be polymorphic in the future
+  end
 end

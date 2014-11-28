@@ -1,0 +1,73 @@
+<h2>Hi <%= "#{@username}" %> </h2>
+
+
+<p>We've got a lot going on at Assembly these days.  We've noticed that you haven't been
+ awarded a bounty in a while.  If you are looking to contribute and earn ownership of products,
+ jump into a bounty!
+ </p>
+
+<p>Here are some bounties we thought might interest you based on your past choices.</p>
+
+<h4>Bounty Suggestions</h4>
+
+<ul>
+  <li>
+    <a href = <%= "https://assembly.com/#{@bounties[0][0].product.slug}/#{@bounties[0][0].number}" %> >
+      1)  <%= "#{@bounties[0][0].title}  --  #{@bounties[0][0].product.name}"  %>
+    </a>
+  </li>
+  <li>
+    <a href = <%= "https://assembly.com/#{@bounties[1][0].product.slug}/#{@bounties[1][0].number}" %> >
+      2)  <%= "#{@bounties[1][0].title}  --  #{@bounties[1][0].product.name}"  %>
+    </a>
+  </li>
+  <li>
+    <a href = <%= "https://assembly.com/#{@bounties[2][0].product.slug}/#{@bounties[2][0].number}" %> >
+      3)   <%= "#{@bounties[2][0].title}  --  #{@bounties[2][0].product.name}" %>
+    </a>
+  </li>
+</ul>
+<p>These are just a few of the many open Bounties available.  </p>
+
+<h4>Products we think you might like</h4>
+<ul>
+  <li>
+    <a href = <%= "https://assembly.com/#{@products[0][0].slug}" %> >
+      <%= @products[0][0].name %>
+    </a>
+  </li>
+  <li>
+    <a href = <%= "https://assembly.com/#{@products[1][0].slug}" %> >
+      <%= @products[1][0].name %>
+    </a>
+  </li>
+  <li>
+    <a href = <%= "https://assembly.com/#{@products[2][0].slug}" %> >
+      <%= @products[2][0].name %>
+    </a>
+  </li>
+</ul>
+
+<% if @tags.count > 4 %>
+  <h4>Tags we think you like</h4>
+  <ul>
+    <li>
+      <%= @tags[0][0].name %>
+    </li>
+    <li>
+      <%= @tags[1][0].name %>
+    </li>
+    <li>
+      <%= @tags[2][0].name %>
+    </li>
+    <li>
+      <%= @tags[3][0].name %>
+    </li>
+    <li>
+      <%= @tags[4][0].name %>
+    </li>
+  </ul>
+<% end %>
+
+We're trying to get to know you!  If you think we're way off, <a href = "#">let us know</a>!
+If you don't need any recommendations, <a href = "#">we can disable them</a>.

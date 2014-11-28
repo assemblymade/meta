@@ -225,4 +225,11 @@ namespace :emails do
       TeamBuildingMailer.failure(product.id).deliver
     end
   end
+
+  desc "Send heart emails"
+  task hearts_received: :environment do
+    EmailCampaigns::HeartsReceived.new.process!.each do |user_id, heart_ids|
+      HeartMailer.hearts_received(user_id, heart_ids).deliver
+    end
+  end
 end

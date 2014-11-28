@@ -90,10 +90,14 @@ class window.DiscussionView extends Backbone.View
 
   createEvent: (type, body)->
     attributes = { type: type, body: body }
-    Dispatcher.handleViewAction(_.extend({}, {
-      type: 'WIP_EVENT_CREATING',
-      event: attributes
-    }))
+
+    # FIXME: (pletcher) More incentive to move everything
+    #         to React (it's no worse than the above call
+    #         for #event_comment_body, really)
+    if type == 'Event::Comment'
+      attachments = $(@el).find('input.comment_attachments')
+      attributes.attachments = _.map attachments, (a) ->
+        return a.value
 
     app.wipEvents.create _(@eventDefaults).extend(attributes)
     @resetCommentForm()
@@ -109,10 +113,10 @@ class window.DiscussionView extends Backbone.View
     @$('.timeline,.discussion').append el
 
   wipEventServerCreated: (model)->
-    Dispatcher.handleViewAction(_.extend({}, {
+    Dispatcher.handleViewAction({
       type: 'WIP_EVENT_CREATED',
       event: model.attributes
-    }))
+    })
 
   eventPushed: (msg) =>
     return if msg.socket_id == pusher.connection.socket_id

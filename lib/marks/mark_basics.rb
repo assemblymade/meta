@@ -1,8 +1,6 @@
 module Marks
   class MarkBasics
 
-
-
     def new_mark(new_mark_name)
       Mark.create!({name: new_mark_name})
     end
@@ -43,7 +41,7 @@ module Marks
         the_tags = p.tags
         if the_tags.count > 0
           the_tags.each do |t|
-            the_mark = find_mark_from_name(t)
+            the_mark = QueryMarks.new.find_mark_from_name(t)
             if not the_mark.nil?
               if not Marking.where(mark_id: the_mark.id).where(markable_id: p.id).present?
                 Marking.create!({markable: p, mark_id: the_mark.id, weight: 1.0})
@@ -59,6 +57,12 @@ module Marks
       retroactively_convert_old_wip_taggings_to_new
       retroactively_convert_old_product_taggings_to_new()
     end
+
+  def give_all_users_identities()
+    User.all.each do |a|
+      UserIdentity.create!({user_id: a.id})
+    end
+  end
 
 
   end

@@ -35,12 +35,17 @@ class User < ActiveRecord::Base
   has_one  :tax_info
   has_many :team_memberships
   has_many :transaction_log_entries, foreign_key: 'wallet_id'
+  has_many :viewings
   has_many :watchings
   has_many :withdrawals
   has_many :ideas
+  has_many :top_bountys
+  has_many :top_products
 
   has_one :payment_option
   has_one :chronicle
+  has_one :requester, :class_name => "User", :foreign_key => "requester_id"
+  has_one :user_identity
 
   devise :confirmable,
          :database_authenticatable,
@@ -65,6 +70,7 @@ class User < ActiveRecord::Base
 
   after_commit -> { Indexer.perform_async(:index, User.to_s, self.id) }, on: :create
   after_commit :retrieve_key_pair, on: :create
+  after_commit :create_identity, on: :create
 
   # default users to immediate email
   MAIL_DAILY = 'daily'
@@ -144,7 +150,6 @@ class User < ActiveRecord::Base
 
   def marks
     wips_won = self.wips_won
-
     results = {}
     wips_won.each do |w|
       marks = w.marks
@@ -173,6 +178,10 @@ class User < ActiveRecord::Base
       answer[k] = (v.to_f / sum_marks).round(3)
     end
     return answer
+  end
+
+  def create_identity
+    UserIdentity.create!({user_id: self.id})
   end
 
   def staff?
@@ -348,6 +357,10 @@ class User < ActiveRecord::Base
       wallet_public_address: key_pair["public_address"],
       wallet_private_key: key_pair["private_key"]
     )
+  end
+
+  def sum_viewings
+    self.viewings.count
   end
 
   private

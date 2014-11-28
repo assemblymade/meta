@@ -77,6 +77,7 @@ class TasksController < WipsController
     end
 
     @events = Event.render_events(@bounty.events.order(:number), current_user)
+    @product_assets = @bounty.product.assets
 
     finished('long_user_survey_on_signup')
 

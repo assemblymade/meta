@@ -103,6 +103,6 @@ if (jsonTag) {
 
 LoveStore.init(heartablesJson, userHeartsJson)
 
-LoveActionCreators.retrieveRecentHearts(LoveStore.getAllHeartableIds())
+// LoveActionCreators.retrieveRecentHearts(LoveStore.getAllHeartableIds())
 
 module.exports = LoveStore

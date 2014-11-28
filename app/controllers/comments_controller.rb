@@ -14,13 +14,15 @@ class CommentsController < ProductController
     body = comment_params[:body]
 
     authorize! type.slug.to_sym, @wip
+
     @wip.with_lock do
       @event = Event.create_from_comment(
         @wip,
         type,
         body,
         current_user,
-        comment_params[:socket_id]
+        comment_params[:socket_id],
+        comment_params[:attachments]
       )
     end
 
@@ -65,7 +67,7 @@ class CommentsController < ProductController
     authenticate_user!
     authorize! :update, @comment
 
-    @comment.update_attributes(comment_params.merge(updated_by: current_user))
+    @comment.update(comment_params.merge(updated_by: current_user))
 
     respond_with @comment, location: url_for([@product, @wip]), serializer: EventSerializer
   end
@@ -87,7 +89,7 @@ class CommentsController < ProductController
   end
 
   def comment_params
-    params.require(:event_comment).permit(:body, :type, :socket_id)
+    params.require(:event_comment).permit(:body, :type, :socket_id, :attachments => [])
   end
 
   def track_analytics(event)

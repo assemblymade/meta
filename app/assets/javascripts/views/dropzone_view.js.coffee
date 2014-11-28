@@ -49,6 +49,9 @@ class window.DropzoneView extends Backbone.View
     @targetForm.submit()
     @hideProgress()
 
+    attachmentInput = "<input class=\"comment_attachments\" name=\"event_comment[attachments][]\" type=\"hidden\" value=\"" + file.attachment.id + "\" />"
+    $(@el).append(attachmentInput)
+
   showProgress: (progress) =>
     $('.progress', @el).show()
     $('.progress-bar', @el).css(width: "#{progress.upload.progress}%")
@@ -66,11 +69,3 @@ $(document).ready ->
   $('.js-dropzone').each ->
     view = new DropzoneView(el: @, url: url, targetForm: $(@).data('target-form'))
     $(@).data('dz', view.dz)
-
-  # listen for modal creation and attach a dropzone
-  # TODO: Consolidate this code and markdown_editor_view's code
-  # $('#create-task').on('show.bs.modal', (e) ->
-  #   modalDropzone = $('.modal-body .js-dropzone')
-  #   view = new DropzoneView(el: modalDropzone, url: url, targetForm: $(modalDropzone).data('target-form'))
-  #   $(modalDropzone).data('dz', view.dz)
-  # )
