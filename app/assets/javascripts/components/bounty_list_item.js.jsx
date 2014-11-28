@@ -151,22 +151,24 @@
     },
 
     renderLocker: function() {
-      if(!this.props.locker) {
+      var bounty = this.props.bounty
+
+      if(!bounty.locker) {
         return
       }
 
-      var user = this.props.locker
+      var user = bounty.locker
 
       return (
         <div className="px3 py2 border-top h6 mb0 mt0">
-          <Avatar user={user} size={18} className="avatar img-circle inline mr1" />
-
+          <Avatar user={user} size={18} style={{ display: 'inline-block' }} />
+          {' '}
           <a href={user.url} className="bold black">
             {user.username}
           </a>
-
+          {' '}
           <span className="gray-dark">
-            has {moment(this.props.locked_at)} to work on this
+            has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
           </span>
         </div>
       )
