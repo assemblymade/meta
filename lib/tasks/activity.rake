@@ -14,7 +14,7 @@ namespace :activity do
     end
 
     general = ChatRoom.find_by(slug: 'general')
-    Activity.where(target: general).each do |activity|
+    Activity.where(target: general)_find_each do |activity|
       ActivityStream.new(general.id).redis_push(activity)
     end
   end
