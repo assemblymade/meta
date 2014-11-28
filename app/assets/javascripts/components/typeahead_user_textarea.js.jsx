@@ -23,7 +23,7 @@
           username={this.state.usernameSearch}
           onUserChanged={this.handleUserChanged}
           onUserSelected={this.handleUserSelected}
-          searchPosition="bottom">
+          searchPosition="top">
         <textarea {...this.props} onChange={this.handleChange} value={this.state.text} />
       </InPlaceUserSearch>
     },
