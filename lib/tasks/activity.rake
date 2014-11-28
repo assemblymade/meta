@@ -4,7 +4,7 @@ namespace :activity do
   task :build => :environment do
     rooms = Hash[Product.all.map{|p| [p.id, p.chat_rooms.first.try(:id)] }]
 
-    Activity.all.includes(:actor, :subject, :target).each do |activity|
+    Activity.includes(:actor, :subject, :target).find_each do |activity|
       if product_id = activity.subject.try(:product_id) || activity.target.try(:product_id)
         if room = rooms[product_id]
           puts "redis: #{activity.inspect}"
