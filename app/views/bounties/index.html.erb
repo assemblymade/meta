@@ -8,5 +8,5 @@
   tags: Wip::Tag.suggested_tags,
   creators: User.joins(:wips).where(wips: { type: 'Task', product_id: @product }).uniq.order('username ASC').map { |u| UserSerializer.new(u) },
   workers: User.joins(wip_workers: :wip).where(wips: { type: 'Task', product_id: @product }).uniq.order('username ASC').map { |u| UserSerializer.new(u) },
-  product: ProductSerializer.new(@product)
+  product: ProductSerializer.new(@product),
 } %>

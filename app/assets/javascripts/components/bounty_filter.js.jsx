@@ -113,22 +113,54 @@
       return <BountyFilterButton name={'Order'} options={options} onFilterClick={this.handleFilterClick} />
     },
 
-    render: function() {
-      options = [
-        { name: "I'm working on", value: 'working_on' },
-        { name: "I created", value: 'created_by' },
-        { name: "I commented on", value: 'commented_on' },
-        { name: 'Open',      value: 'open' },
-        { name: 'Doing',     value: 'doing' },
-        { name: 'Reviewing', value: 'reviewing' },
-        { name: 'Done',      value: 'done' }
+    renderFilterDropdown: function() {
+      var filters = [
+        { name: "You're working on", query: 'state:doing state:reviewing doing:vanstee' },
+        { name: "You created",       query: 'created:vanstee' },
+        { name: "You commented on",  query: 'commented:vanstee' },
+        { name: 'Open',              query: 'state:open' },
+        { name: 'Doing',             query: 'state:doing' },
+        { name: 'Reviewing',         query: 'state:reviewing' },
+        { name: 'Done',              query: 'state:done' }
       ]
 
+      return (
+        <div className="dropdown">
+          <a className="dropdown-toggle black bold no-wrap" data-toggle="dropdown" href="#">
+            Filter
+            {' '}
+            <span className="icon icon-chevron-down"></span>
+          </a>
+
+          <ul className="dropdown-menu">
+            {filters.map(function(filter) {
+              var onChange = function(event) {
+                this.props.onChange({
+                  target: {
+                    value: filter.query
+                  }
+                })
+              }.bind(this)
+
+              return (
+                <li>
+                  <a href="#" onClick={onChange}>
+                    {filter.name}
+                  </a>
+                </li>
+              )
+            }.bind(this))}
+          </ul>
+        </div>
+      )
+    },
+
+    render: function() {
       return (
         <div>
           <div className="bg-white rounded shadow mb2 table">
             <div className="px3 py2 table-cell border-right">
-              <BountyFilterButton name={'Filter'} options={options} onFilterClick={this.handleFilterClick} />
+              {this.renderFilterDropdown()}
             </div>
             <div className="px3 py2 left table-cell">
               <TaggedInput placeholder="form-control" tags={this.props.filters} onAddTag={this.addFilter} onRemoveTag={this.removeFilter} value={this.props.value} onChange={this.props.onChange} />

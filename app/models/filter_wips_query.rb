@@ -26,7 +26,9 @@ class FilterWipsQuery
   end
 
   def filter_clauses
-    [state_filter, tag_filter, mark_filter, query_filter, user_filter, sort_order, page_selection].compact
+    [state_filter, tag_filter, mark_filter, doing_filter, created_filter,
+     commented_filter, query_filter, user_filter, sort_order,
+     page_selection].compact
   end
 
   def state_filter
@@ -51,13 +53,34 @@ class FilterWipsQuery
   def tag_filter
     return unless tags.present?
 
-    Wip.joins(:tags).where(wip_tags: { name: tags })
+    Wip.joins(:tags).where(wip_tags: { name: tags }).uniq
   end
 
   def mark_filter
     return unless marks.present?
 
-    Wip.joins(:marks).where(marks: { name: marks })
+    Wip.joins(:marks).where(marks: { name: marks }).uniq
+  end
+
+  def doing_filter
+    return unless doing.present?
+
+    doing_ids = User.where(username: doing).pluck(:id)
+    Task.joins(:wip_workers).where(user_id: doing_ids).uniq
+  end
+
+  def created_filter
+    return unless created.present?
+
+    created_ids = User.where(username: created).pluck(:id)
+    Wip.where(user_id: created_ids)
+  end
+
+  def commented_filter
+    return unless commented.present?
+
+    commented_ids = User.where(username: commented).pluck(:id)
+    Wip.joins(:comments).where(user_id: commented_ids).uniq
   end
 
   def query_filter
@@ -124,6 +147,18 @@ class FilterWipsQuery
 
   def marks
     Array.wrap(filters[:mark])
+  end
+
+  def doing
+    Array.wrap(filters[:doing])
+  end
+
+  def created
+    Array.wrap(filters[:created])
+  end
+
+  def commented
+    Array.wrap(filters[:commented])
   end
 
   def query

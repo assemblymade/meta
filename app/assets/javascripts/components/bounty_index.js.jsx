@@ -61,13 +61,49 @@
       this.getBounties(this.state.filters, page)
     },
 
+    addTag: function(tag) {
+      return function(event) {
+        var value = this.state.value + ' ' + 'tag:' + tag
+
+        this.setState({
+          loading: true,
+          value: value
+        })
+
+        this.getBounties(value, 1)
+      }.bind(this)
+    },
+
+    renderTags: function() {
+      return this.props.tags.map(function(tag) {
+        return (
+          <li>
+            <a href="#" onClick={this.addTag(tag)}>
+              <span className="caps">{tag}</span>
+            </a>
+          </li>
+        )
+      }.bind(this))
+    },
+
     render: function() {
-      bountyFilterProps = _.pick(this.props, 'tags', 'creators', 'workers')
+      var bountyFilterProps = _.pick(this.props, 'tags', 'creators', 'workers')
+
+      var tags = ['design', 'code', 'frontend', 'backend']
 
       return (
         <div>
           <div className="sm-col sm-col-4 px2" style={{float: 'right !important'}}>
             <CreateBountyButton {...this.props} classes={['btn btn-primary btn-block']} />
+
+            <div className="py2">
+              <strong>Tags</strong>
+
+              <ul className="mt1 list-unstyled">
+                {this.renderTags()}
+              </ul>
+            </div>
+
           </div>
 
           <div className="sm-col sm-col-8 px2">
