@@ -60,7 +60,7 @@
     imageAsset: function() {
       var ext = this.props.url.split('.').pop();
 
-      return ext !== 'pdf';
+      return ['pdf', 'psd'].indexOf(ext) === -1;
     },
 
     render: function() {
@@ -76,7 +76,7 @@
           <a onClick={this.handleClick} href={this.props.url} target="_blank" className="text-small">
             {this.props.name} <span className="glyphicon glyphicon-new-window text-muted" />
           </a>
-          {this.imageAsset() ? this.renderUploadButton() : null}
+          {this.renderUploadButton()}
         </div>
         {lightbox}
       </div>
