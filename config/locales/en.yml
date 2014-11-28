@@ -53,9 +53,18 @@ en:
                 invalid: "use only alphanumeric characters"
 
   models:
-    task:
-      description:
-        owner: '%{title}'
     comment:
       description:
         owner: 'a comment you made'
+    discussion:
+      description:
+        owner: '%{title}'
+    idea:
+      description:
+        owner: 'an idea you left'
+    team_membership:
+      description:
+        owner: 'a team you joined'
+    task:
+      description:
+        owner: '%{title}'

@@ -27,17 +27,18 @@
 </table>
 
 <% @heartables.each do |heartable| %>
-  <% product = heartable.product %>
   <table class="row">
     <tr style="">
       <td class="wrapper">
         <table class="three columns hide-for-small">
           <tr>
             <td>
-              <%= app_icon(product, size: 30) %>
-              <span style="padding-left: 10px">
-                <%= product.name %>
-              </span>
+              <% if !heartable.product.nil? %>
+                <%= app_icon(heartable.product, size: 30) %>
+                <span style="padding-left: 10px">
+                  <%= heartable.product.name %>
+                </span>
+              <% end %>
             </td>
           </tr>
         </table>
