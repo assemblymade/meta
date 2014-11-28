@@ -5,12 +5,15 @@
 <%= react_component 'BountyIndex', {
   initialBounties: @wips.page(1).map { |t| BountySerializer.new(t) },
   tags: Wip::Tag.suggested_tags,
-  product: ProductSerializer.new(@product),
   pages: @wips.page(1).total_pages,
-  url: product_wips_path(@product),
-  maxOffer: (6 * @product.average_bounty).round(-4),
-  averageBounty: @product.average_bounty,
-  coinsMinted: @product.coins_minted,
-  profitLastMonth: @product.profit_last_month,
-  steps: BountyGuidance::Valuations.suggestions(@product),
+  product: ProductSerializer.new(@product),
+  valuation: {
+    product: ProductSerializer.new(@product),
+    url: product_wips_path(@product),
+    maxOffer: (6 * @product.average_bounty).round(-4),
+    averageBounty: @product.average_bounty,
+    coinsMinted: @product.coins_minted,
+    profitLastMonth: @product.profit_last_month,
+    steps: BountyGuidance::Valuations.suggestions(@product),
+  }
 } %>

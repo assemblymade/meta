@@ -81,7 +81,7 @@
 
       return (
         <div className="right">
-          <Urgency initialLabel={bounty.urgency.label} state={bounty.state} url={bounty.url} urgencies={urgencies} />
+          <Urgency initialLabel={bounty.urgency.label} state={bounty.state} url={bounty.urgency_url} urgencies={urgencies} />
         </div>
       )
     },
@@ -188,7 +188,7 @@
               </div>
 
               <span className="mr2">
-                {this.renderAward()}
+                <BountyValuation {...this.props.bounty} {...this.props.valuation} />
               </span>
 
               <span className="gray mr2">

@@ -151,7 +151,7 @@ class TasksController < WipsController
   # private
 
   def find_wips
-    options = { state: 'open', sort: 'priority' }
+    options = { state: 'open', sort: 'priority' }.merge(params.symbolize_keys)
     FilterWipsQuery.call(product_wips, current_user, options)
   end
 

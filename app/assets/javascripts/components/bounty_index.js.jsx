@@ -104,7 +104,7 @@
       } else {
         return (
           <div>
-            <BountyList bounties={this.state.bounties} product={this.props.product} />
+            <BountyList bounties={this.state.bounties} product={this.props.product} valuation={this.props.valuation} />
             <PaginationLinks page={this.state.page} pages={this.state.pages} onPageChanged={this.handlePageChange} />
           </div>
         )
@@ -117,7 +117,7 @@
       return (
         <div>
           <div className="sm-col sm-col-3 px2" style={{float: 'right !important'}}>
-            <CreateBountyButton {...this.props} classes={['btn btn-primary btn-block py2']} />
+            <CreateBountyButton {...this.props} {...this.props.valuation} classes={['btn btn-primary btn-block py2']} />
 
             <div className="px3 py2 mt2">
               <div className="h5 bold">Tags</div>
