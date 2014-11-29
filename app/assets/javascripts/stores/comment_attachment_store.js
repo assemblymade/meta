@@ -3,7 +3,7 @@ var Store = require('../stores/store');
 var ActionTypes = window.CONSTANTS.ActionTypes;
 
 var _dispatchToken;
-var _initialAttachments = _parseInitialAttachments();
+var _initialAttachments = _parseInitialAttachments() || {};
 var _attachments = {};
 var _errors = {};
 
