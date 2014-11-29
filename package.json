@@ -7,8 +7,8 @@
     "test": "npm run jest",
     "lint": "node_modules/.bin/jsxhint app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx",
     "postinstall": "npm run bundle",
-    "bundle": "node_modules/.bin/browserify -x app/assets/javascripts/dispatcher.js -x app/assets/javascripts/constants.js -r underscore -t [ reactify ] app/assets/javascripts/components/**.js.jsx -o app/assets/javascripts/components.js",
-    "watch": "node_modules/.bin/watchify -x app/assets/javascripts/dispatcher.js -x app/assets/javascripts/constants.js -r underscore -t [ reactify ] app/assets/javascripts/components/**.js.jsx -o app/assets/javascripts/components.js -v"
+    "bundle": "node_modules/.bin/browserify -x app/assets/javascripts/dispatcher.js -x app/assets/javascripts/constants.js -r underscore -t [ reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js",
+       "watch": "node_modules/.bin/watchify -x app/assets/javascripts/dispatcher.js -x app/assets/javascripts/constants.js -r underscore -t [ reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js -v"
   },
   "repository": {
     "type": "git",

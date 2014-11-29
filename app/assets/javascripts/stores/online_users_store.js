@@ -1,4 +1,4 @@
-givar ActionTypes = window.CONSTANTS.ActionTypes
+var ActionTypes = window.CONSTANTS.ActionTypes
 
 var _dispatchToken
 var _currentChatRoomId
