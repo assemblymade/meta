@@ -1,5 +1,3 @@
-// var Dispatcher = require('../dispatcher')
-var Store = require('../stores/store')
 var ActionTypes = window.CONSTANTS.ActionTypes
 
 var _dispatchToken
@@ -7,34 +5,28 @@ var _currentChatRoomId
 var _presenceChannel
 var _usersOnline = {};
 
-var OnlineUsersStore = _.extend(Object.create(Store), {
-  getCurrentChatRoomId: function() {
-    return _currentChatRoomId
-  },
+class OnlineUsersStore extends EventEmitter {
+  constructor() {
+    super()
 
-  getPresenceChannel: function() {
+    _dispatchToken = Dispatcher.register((action) => {
+      switch(action.type) {
+        case ActionTypes.PUSHER_PRESENCE_CONNECTED:
+          _presenceChannel = action.presenceChannel
+          this.emit('change')
+          break
+
+        case ActionTypes.CHAT_USER_ONLINE:
+          _usersOnline[action.rawMember.id] = 1
+          this.emit('change')
+          break
+      }
+    })
+  }
+
+  getPresenceChannel() {
     return _presenceChannel
   }
-})
+}
 
-_dispatchToken = Dispatcher.register(function(payload){
-  var action = payload.action
-
-  if (typeof action !== 'undefined' && typeof action.type !== 'undefined') {
-
-    switch(action.type) {
-      case ActionTypes.PUSHER_PRESENCE_CONNECTED:
-        _presenceChannel = action.presenceChannel
-        OnlineUsersStore.emitChange()
-        break
-
-      case ActionTypes.CHAT_USER_ONLINE:
-        _usersOnline[action.rawMember.id] = 1
-        OnlineUsersStore.emitChange()
-        break
-
-    }
-  }
-})
-
-module.exports = OnlineUsersStore
+module.exports = new OnlineUsersStore();

@@ -25,7 +25,7 @@
     },
 
     componentDidMount: function() {
-      OnlineUsersStore.addChangeListener(this._onChange)
+      OnlineUsersStore.on('change', this._onChange)
       $(this.refs.textarea.getDOMNode()).on('change', this.handleChange)
     },
 
