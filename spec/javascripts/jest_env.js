@@ -23,8 +23,6 @@ global.parseUri = function() {
   return {};
 };
 
-global.keyMirror = function() {};
-
 global.visibility = function() {};
 global.Notify = function() {};
 global.Notify.isSupported = function() { return true; };
@@ -35,5 +33,7 @@ global.pathToFile = function(name) {
 };
 
 // these are currently pulled in via sprockets, so we'll auto require them here
+require('../../app/assets/javascripts/lib/keymirror')
 global.CONSTANTS = require('../../app/assets/javascripts/constants')
 global.Dispatcher = require('../../app/assets/javascripts/dispatcher')
+global.EventEmitter = require('events').EventEmitter

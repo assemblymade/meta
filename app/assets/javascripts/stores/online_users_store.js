@@ -1,4 +1,4 @@
-var ActionTypes = window.CONSTANTS.ActionTypes
+givar ActionTypes = window.CONSTANTS.ActionTypes
 
 var _dispatchToken
 var _currentChatRoomId
@@ -26,6 +26,10 @@ class OnlineUsersStore extends EventEmitter {
 
   getPresenceChannel() {
     return _presenceChannel
+  }
+
+  getUsersOnline() {
+    return _usersOnline
   }
 }
 
