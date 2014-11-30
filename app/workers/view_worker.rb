@@ -9,12 +9,11 @@ class ViewWorker
 
     if previous_views == 0
       Viewing.create!({user_id: user_id, viewable_id: viewable_id, viewable_type: viewable_type, weight: view_weight})
+      
     else
       new_weight = applicable_viewings.first.weight + view_weight
       applicable_viewings.first.update(weight: new_weight)
     end
-
-
 
   end
 end

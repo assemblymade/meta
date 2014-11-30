@@ -1,46 +1,25 @@
 class SuggestionMailer < ActionMailer::Base
   default from: "barisser@assembly.com"
 
-  def create(user_id, bounty_limit)
+  def create(user_id)
     #mailgun_campaign 'bounty_suggestions'
 
     if @user = User.find(user_id)
       @username = @user.username
-      @products = @user.user_identity.find_best_products(4)
-      @bounties = []
-      @products.each do |bp|
-        @bounties = @bounties + @user.user_identity.find_best_wips(bounty_limit, bp[0].wips.where(state: 'open'))
-      end
-
-      @tags = @user.user_identity.get_mark_vector
+      @products = @user.top_products.pluck(:product_id).map{|a| Product.find(a) }
+      @bounties = @user.top_bountys.pluck(:wip_id).map{|a| Wip.find(a) }
+      @tags = @user.user_identity.get_mark_vector.take(5)
 
       #mailgun_tag "bounty_suggestions"
 
       #prevent_delivery(@user)
 
-      mail to: @user.email_address,
-           subject: "Bounty Suggestions"
-         end
-
-    end
-
-
-  def preview(product_id, params, author_id)
-    mailgun_campaign 'notifications'
-
-    @product = Product.find(product_id)
-    @post = Post.new(params)
-    @user = User.find(author_id)
-
-    @post.product = @product
-    @post.author = @user
-    @post.id = SecureRandom.uuid
-
-    mail(to: @user.email_address, subject: @post.title) do |format|
-      format.html { render template: 'post_mailer/created' }
+      if @products.count >0 and @bounties.count >0 and @tags.count >0
+        mail to: @user.email_address,
+        subject: "Bounty Suggestions"
+      end
     end
   end
-
 
 
 end
