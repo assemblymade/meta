@@ -1,28 +1,22 @@
 describe('CommentAttachmentStore', function() {
-  jest.dontMock('keymirror');
-  jest.dontMock(pathToFile('constants'));
+  var ActionTypes = global.CONSTANTS.ActionTypes;
 
-  global.CONSTANTS.ActionTypes = {
-    COMMENT_ATTACHMENT_UPLOADED: 'COMMENT_ATTACHMENT_UPLOADED',
-    COMMENT_ATTACHMENT_FAILED: 'COMMENT_ATTACHMENT_FAILED',
-    COMMENT_ATTACHMENT_ADDED: 'COMMENT_ATTACHMENT_ADDED',
-    WIP_EVENT_CREATING: 'WIP_EVENT_CREATING'
-  };
+  var dispatcherCallback;
+  var CommentAttachmentStore;
 
-  var ActionTypes = CONSTANTS.ActionTypes;
-  var PayloadSources = CONSTANTS.PayloadSources;
-  var CommentAttachmentStore = require.requireActual(pathToFile('stores/comment_attachment_store'));
-  var dispatcherCallback = Dispatcher.register.mock.calls[0][0];
+  beforeEach(function() {
+    Dispatcher = require(appFile('dispatcher'))
+    CommentAttachmentStore = require.requireActual(pathToFile('stores/comment_attachment_store'));
+    dispatcherCallback = Dispatcher.register.mock.calls[0][0];
+  })
 
   describe('addAttachment()', function() {
     it('responds to COMMENT_ATTACHMENT_ADDED and assigns the attachment', function() {
       dispatcherCallback({
-        action: {
-          type: ActionTypes.COMMENT_ATTACHMENT_ADDED,
-          event: {
-            attachmentId: 'attachmentId',
-            reactId: '.i'
-          }
+        type: ActionTypes.COMMENT_ATTACHMENT_ADDED,
+        event: {
+          attachmentId: 'attachmentId',
+          reactId: '.i'
         }
       });
 
@@ -33,13 +27,11 @@ describe('CommentAttachmentStore', function() {
   describe('addError()', function() {
     it('responds to COMMENT_ATTACHMENT_FAILED and assigns an error', function() {
       dispatcherCallback({
-        action: {
-          type: ActionTypes.COMMENT_ATTACHMENT_FAILED,
-          event: {
-            attachmentId: 'attachmentId',
-            eventId: 'eventId',
-            error: 'blergh'
-          }
+        type: ActionTypes.COMMENT_ATTACHMENT_FAILED,
+        event: {
+          attachmentId: 'attachmentId',
+          eventId: 'eventId',
+          error: 'blergh'
         }
       });
 
@@ -50,13 +42,11 @@ describe('CommentAttachmentStore', function() {
   describe('clearErrors()', function() {
     it('responds to COMMENT_ATTACHMENT_UPLOADED and clears errors', function() {
       dispatcherCallback({
-        action: {
-          type: ActionTypes.COMMENT_ATTACHMENT_FAILED,
-          event: {
-            attachmentId: 'attachmentId',
-            eventId: 'eventId',
-            error: 'blergh'
-          }
+        type: ActionTypes.COMMENT_ATTACHMENT_FAILED,
+        event: {
+          attachmentId: 'attachmentId',
+          eventId: 'eventId',
+          error: 'blergh'
         }
       });
 
@@ -65,12 +55,10 @@ describe('CommentAttachmentStore', function() {
       // expect(CommentAttachmentStore.getErrors('eventId')).toEqual(['blergh']);
 
       dispatcherCallback({
-        action: {
-          type: ActionTypes.COMMENT_ATTACHMENT_UPLOADED,
-          event: {
-            attachmentId: 'attachmentId',
-            eventId: 'eventId'
-          }
+        type: ActionTypes.COMMENT_ATTACHMENT_UPLOADED,
+        event: {
+          attachmentId: 'attachmentId',
+          eventId: 'eventId'
         }
       });
 
@@ -81,12 +69,10 @@ describe('CommentAttachmentStore', function() {
   describe('removeAttachments()', function() {
     it('responds to WIP_EVENT_CREATING and clears attachments', function() {
       dispatcherCallback({
-        action: {
-          type: ActionTypes.COMMENT_ATTACHMENT_ADDED,
-          event: {
-            attachmentId: 'attachmentId',
-            reactId: '.i'
-          }
+        type: ActionTypes.COMMENT_ATTACHMENT_ADDED,
+        event: {
+          attachmentId: 'attachmentId',
+          reactId: '.i'
         }
       });
 
@@ -95,10 +81,8 @@ describe('CommentAttachmentStore', function() {
       // expect(CommentAttachmentStore.getAttachments('.i')).toEqual(['attachmentId']);
 
       dispatcherCallback({
-        action: {
-          type: ActionTypes.WIP_EVENT_CREATING,
-          event: {}
-        }
+        type: ActionTypes.WIP_EVENT_CREATING,
+        event: {}
       });
 
       expect(CommentAttachmentStore.getAttachments('.i')).toEqual([]);

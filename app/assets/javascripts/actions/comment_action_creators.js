@@ -12,7 +12,7 @@ var CommentActionCreators = {
         attachment_url: attachmentUrl
       },
       success: function() {
-        Dispatcher.handleServerAction({
+        Dispatcher.dispatch({
           type: ActionTypes.COMMENT_ATTACHMENT_UPLOADED,
           event: {
             eventId: attachmentUrl
@@ -20,7 +20,7 @@ var CommentActionCreators = {
         });
       },
       error: function(jqXhr, textStatus, err) {
-        Dispatcher.handleServerAction({
+        Dispatcher.dispatch({
           type: ActionTypes.COMMENT_ATTACHMENT_FAILED,
           event: {
             error: err,
@@ -39,7 +39,7 @@ var CommentActionCreators = {
         event_id: eventId
       },
       success: function() {
-        Dispatcher.handleServerAction({
+        Dispatcher.dispatch({
           type: ActionTypes.COMMENT_ATTACHMENT_UPLOADED,
           event: {
             eventId: eventId
@@ -47,7 +47,7 @@ var CommentActionCreators = {
         });
       },
       error: function(jqXhr, textStatus, err) {
-        Dispatcher.handleServerAction({
+        Dispatcher.dispatch({
           type: ActionTypes.COMMENT_ATTACHMENT_FAILED,
           event: {
             error: err,

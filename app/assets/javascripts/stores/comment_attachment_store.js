@@ -32,36 +32,34 @@ var CommentAttachmentStore = _.extend(Object.create(Store), {
   }
 });
 
-_dispatchToken = Dispatcher.register(function(payload) {
-  var action = payload.action;
-  if (typeof action !== 'undefined' && typeof action.type !== 'undefined') {
-    switch(action.type) {
-    // COMMENT_ATTACHMENT_ADDED can't be used while we're manipulating the DOM
-    // directly in dropzone_view.js.coffee -- it causes really strange conflicts
-    // between the browser DOM and React's shadow DOM
-    case ActionTypes.COMMENT_ATTACHMENT_ADDED:
-      addAttachment(action.event);
+_dispatchToken = Dispatcher.register(function(action) {
+  switch(action.type) {
+  // COMMENT_ATTACHMENT_ADDED can't be used while we're manipulating the DOM
+  // directly in dropzone_view.js.coffee -- it causes really strange conflicts
+  // between the browser DOM and React's shadow DOM
+  case ActionTypes.COMMENT_ATTACHMENT_ADDED:
+    addAttachment(action.event);
 
-      this.emitChange();
-      break;
-    case ActionTypes.COMMENT_ATTACHMENT_FAILED:
-      addError(action.event);
+    this.emitChange();
+    break;
+  case ActionTypes.COMMENT_ATTACHMENT_FAILED:
+    addError(action.event);
 
-      this.emitChange();
-      break;
-    case ActionTypes.COMMENT_ATTACHMENT_UPLOADED:
-      clearErrors(action.event);
+    this.emitChange();
+    break;
+  case ActionTypes.COMMENT_ATTACHMENT_UPLOADED:
+    clearErrors(action.event);
 
-      this.emitChange();
-      break;
-    // since we aren'te using COMMENT_ATTACHMENT_ADDED we don't need
-    // to respond to WIP_EVENT_CREATING; this won't be called
-    case ActionTypes.WIP_EVENT_CREATING:
-      removeAttachments();
+    this.emitChange();
+    break;
+  // since we aren'te using COMMENT_ATTACHMENT_ADDED we don't need
+  // to respond to WIP_EVENT_CREATING; this won't be called
+  case ActionTypes.WIP_EVENT_CREATING:
+    removeAttachments();
 
-      this.emitChange();
-      break;
-    }
+    this.emitChange();
+    break;
+
   }
 }.bind(CommentAttachmentStore));
 
@@ -88,9 +86,7 @@ function addError(event) {
 }
 
 function clearErrors(event) {
-  var eventId = event.eventId;
-
-  _errors[eventId] = [];
+  _errors[event.eventId] = [];
 }
 
 function removeAttachments() {

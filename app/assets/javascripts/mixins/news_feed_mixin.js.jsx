@@ -57,7 +57,7 @@ var NewsFeedMixin = {
 
     if (data && data.items.length) {
       // TODO: this should happen in an action creator
-      Dispatcher.handleServerAction({
+      Dispatcher.dispatch({
         type: ActionTypes.NEWS_FEED_RECEIVE_RAW_ITEMS,
         data: data
       })

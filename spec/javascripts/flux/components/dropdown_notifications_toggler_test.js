@@ -8,15 +8,17 @@ describe('DropdownNotificationsToggler', function() {
   global.moment = require.requireActual('moment');
   global.document.title = 'testing123';
 
-  var Dispatcher = require(pathToFile('dispatcher'));
-  var NotificationsStore = require(pathToFile('stores/notifications_store'));
-  var CONSTANTS = require.requireActual(pathToFile('constants'));
-  var Toggler = require(pathToFile('components/dropdown_notifications_toggler.js.jsx'));
+  var NotificationsStore;
+  var Toggler;
 
   var NF = CONSTANTS.NOTIFICATIONS;
   var toggler;
 
   beforeEach(function() {
+    Dispatcher = require(pathToFile('dispatcher'));
+    NotificationsStore = require(pathToFile('stores/notifications_store'));
+    Toggler = require(pathToFile('components/dropdown_notifications_toggler.js.jsx'));
+
     global.localStorage = {};
 
     toggler = TestUtils.renderIntoDocument(

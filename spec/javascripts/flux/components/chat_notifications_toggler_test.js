@@ -1,17 +1,18 @@
-/** @jsx React.DOM */
-
 jest.dontMock(pathToFile('components/chat_notifications_toggler.js.jsx'));
 jest.dontMock(pathToFile('mixins/local_storage.js'));
 
 describe('ChatNotificationsToggler', function() {
-  var Toggler = require(pathToFile('components/chat_notifications_toggler.js.jsx'));
-  var ChatNotificationsStore = require(pathToFile('stores/chat_notifications_store.js'));
   var chatRooms;
+  var Toggler;
+  var ChatNotificationsStore;
 
   beforeEach(function() {
     global.localStorage = {};
     global.moment = require.requireActual('moment');
     global.Dispatcher = require(pathToFile('dispatcher.js'));
+
+    Toggler = require(pathToFile('components/chat_notifications_toggler.js.jsx'));
+    ChatNotificationsStore = require(pathToFile('stores/chat_notifications_store.js'));
 
     chatRooms = {
       foo: {

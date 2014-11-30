@@ -1,19 +1,15 @@
+jest.dontMock(appFile('actions/comment_action_creators'))
+
 describe('CommentActionCreators', function() {
-  jest.dontMock('keymirror');
-  jest.dontMock(pathToFile('constants'));
-
-  global.CONSTANTS.ActionTypes = {
-    COMMENT_ATTACHMENT_UPLOADED: 'COMMENT_ATTACHMENT_UPLOADED',
-    COMMENT_ATTACHMENT_FAILED: 'COMMENT_ATTACHMENT_FAILED'
-  };
-
-  var CommentActionCreators = require.requireActual(pathToFile('actions/comment_action_creators'));
+  var CommentActionCreators
 
   describe('uploadAttachment()', function() {
     beforeEach(function() {
       $.ajax = jest.genMockFunction();
 
-      Dispatcher.handleServerAction.mockClear();
+      Dispatcher = require(appFile('dispatcher'))
+      CommentActionCreators = require(appFile('actions/comment_action_creators'))
+      Dispatcher.dispatch.mockClear();
     });
 
     it('makes a call to upload assets', function() {
@@ -30,8 +26,8 @@ describe('CommentActionCreators', function() {
       CommentActionCreators.uploadAttachment('productSlug', 'eventId');
 
       // Dispatcher.handleServerAction is alread mocked
-      expect(Dispatcher.handleServerAction).toBeCalled();
-      expect(Dispatcher.handleServerAction.mock.calls[0][0].type).toEqual('COMMENT_ATTACHMENT_UPLOADED');
+      expect(Dispatcher.dispatch).toBeCalled();
+      expect(Dispatcher.dispatch.mock.calls[0][0].type).toEqual('COMMENT_ATTACHMENT_UPLOADED');
     });
 
     it('dispatches a failure event on error', function() {
@@ -42,8 +38,8 @@ describe('CommentActionCreators', function() {
       CommentActionCreators.uploadAttachment('productSlug', 'eventId');
 
       // Dispatcher.handleServerAction is alread mocked
-      expect(Dispatcher.handleServerAction).toBeCalled();
-      expect(Dispatcher.handleServerAction.mock.calls[0][0].type).toEqual('COMMENT_ATTACHMENT_FAILED');
+      expect(Dispatcher.dispatch).toBeCalled();
+      expect(Dispatcher.dispatch.mock.calls[0][0].type).toEqual('COMMENT_ATTACHMENT_FAILED');
     });
   });
 });

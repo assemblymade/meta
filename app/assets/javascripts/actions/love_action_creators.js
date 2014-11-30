@@ -3,7 +3,7 @@ var ActionTypes = window.CONSTANTS.ActionTypes
 
 module.exports = {
   clickLove: function(heartable_type, heartable_id) {
-    Dispatcher.handleViewAction({
+    Dispatcher.dispatch({
       type: ActionTypes.LOVE_CLICKED,
       heartable_type: heartable_type,
       heartable_id: heartable_id
@@ -18,7 +18,7 @@ module.exports = {
   },
 
   clickUnlove: function(heartable_type, heartable_id) {
-    Dispatcher.handleViewAction({
+    Dispatcher.dispatch({
       type: ActionTypes.LOVE_UNCLICKED,
       heartable_type: heartable_type,
       heartable_id: heartable_id
@@ -41,7 +41,7 @@ module.exports = {
         heartable_ids: heartable_ids
       },
       success: function(data) {
-        Dispatcher.handleServerAction({
+        Dispatcher.dispatch({
           type: ActionTypes.LOVE_RECEIVE_RECENT_HEARTS,
           hearts: data
         })

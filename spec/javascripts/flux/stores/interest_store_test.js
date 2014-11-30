@@ -1,9 +1,11 @@
 jest.dontMock(pathToFile('stores/interest_store'));
 
 describe('InterestStore', function() {
-  var InterestStore = require(pathToFile('stores/interest_store'));
+  var InterestStore;
 
   beforeEach(function() {
+    Dispatcher = require(appFile('dispatcher'))
+    InterestStore = require(pathToFile('stores/interest_store'));
     InterestStore.removeAllInterests();
   });
 

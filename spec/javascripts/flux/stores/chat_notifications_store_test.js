@@ -1,10 +1,10 @@
+jest.dontMock('moment')
 jest.dontMock(pathToFile('stores/chat_notifications_store'));
 
 describe('ChatNotificationsStore', function() {
-  var xhr = require(pathToFile('xhr.js'));
-  var ChatNotificationsStore = require(pathToFile('stores/chat_notifications_store'));
+  var xhr, ChatNotificationsStore;
+  var moment = require('moment')
 
-  global.moment = require.requireActual('moment');
   global.app = {
     currentUser: function() {
       return {
@@ -16,6 +16,9 @@ describe('ChatNotificationsStore', function() {
   };
 
   beforeEach(function() {
+    Dispatcher = require(appFile('dispatcher'))
+    xhr = require(pathToFile('xhr'))
+    ChatNotificationsStore = require(pathToFile('stores/chat_notifications_store'));
     var chatRooms = {
       123: {
         id: 123,
@@ -52,7 +55,6 @@ describe('ChatNotificationsStore', function() {
       ChatNotificationsStore['chat:fetchChatRooms']('/chat');
 
       expect(xhr.get).toBeCalled();
-      expect(xhr.noCsrfGet).toBeCalled();
     });
   });
 
