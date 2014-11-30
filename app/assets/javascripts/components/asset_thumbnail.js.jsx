@@ -30,8 +30,11 @@
     },
 
     getInitialState: function() {
+      var product = window.app.currentAnalyticsProduct();
+
       return {
         error: null,
+        productSlug: product && product.attributes.product_slug,
         showLightbox: false,
         uploaded: CommentAttachmentStore.attachmentBelongsToProduct(this.props.url)
       }
@@ -46,7 +49,7 @@
     },
 
     handleUpload: _.debounce(function() {
-      var productSlug = window.app.currentAnalyticsProduct().attributes.product_slug;
+      var productSlug = this.state.productSlug;
 
       if (productSlug) {
         CommentActionCreators.uploadAttachment(productSlug, this.props.url);
@@ -64,7 +67,7 @@
     },
 
     render: function() {
-      var lightbox = null
+      var lightbox = null;
 
       if (this.imageAsset() && this.state.showLightbox) {
         lightbox = <ImageLightbox src={this.props.url} name={this.props.name} onHidden={this.handleHidden} />
@@ -83,6 +86,10 @@
     },
 
     renderUploadButton: function() {
+      if (!this.state.productSlug) {
+        return null;
+      }
+
       var classes = React.addons.classSet({
         bold: true,
         small: true,
