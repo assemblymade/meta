@@ -1,3 +1,4 @@
+var EventEmitter = require('events').EventEmitter
 var ActionTypes = window.CONSTANTS.ActionTypes
 
 var _dispatchToken

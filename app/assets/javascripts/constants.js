@@ -1,3 +1,5 @@
+//= require ./lib/keymirror
+
 (function() {
   // When sprockets doesn't require this file:
   // var keymirror = require('keymirror')
