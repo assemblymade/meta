@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 
+var BountyActionCreators = require('../actions/bounty_action_creators');
 var Markdown = require('./markdown.js.jsx');
 var Icon = require('./icon.js.jsx');
 var formatShortTime = require('../lib/format_short_time.js');
@@ -16,69 +17,26 @@ module.exports = React.createClass({
   },
 
   abandonWork: function(e) {
-    e.preventDefault();
+    var stopWorkUrl = this.props.bounty.stop_work_url;
 
-    var user = window.app.currentUser();
-
-    window.analytics.track('bounty.extended', {
-      user: user,
-      product: window.app.currentAnalyticsProduct()
-    });
+    BountyActionCreators.call(e, 'bounty.abandoned', stopWorkUrl);
 
     this.setState({
       worker: null,
       lockUntil: null
-    }, function() {
-      $.ajax({
-        url: this.props.bounty.stop_work_url,
-        method: 'PATCH',
-        headers: {
-          'accept': 'application/json'
-        },
-        success: function(data) {},
-        error: function(jqXhr, status, error) {
-          console.error(error);
-        }
-      });
     });
   },
 
-  extendUntil: function() {
-    var bounty = this.props.bounty;
-    var lockUntil = moment().add(60 * ONE_HOUR, 'hours');
+  extendWork: function(e) {
+    var lockUrl = this.props.bounty.lock_url;
 
-    return 'Hold until ' + moment(lockUntil).format('dddd [at] h:mm');
-  },
+    BountyActionCreators.call(e, 'bounty.extended', lockUrl);
 
-  extendWork: function(hours) {
-    return function(e) {
-      e.preventDefault();
+    var extendUntil = moment().add(60 * ONE_HOUR);
 
-      var user = window.app.currentUser();
-
-      window.analytics.track('bounty.extended', {
-        user: user,
-        product: window.app.currentAnalyticsProduct()
-      });
-
-      var bounty = this.props.bounty;
-
-      this.setState({
-        lockUntil: moment(bounty.locked_at).add(hours, 'hours')
-      }, function() {
-        $.ajax({
-          url: this.props.bounty.lock_url,
-          method: 'PATCH',
-          headers: {
-            'accept': 'application/json'
-          },
-          success: function(data) {},
-          error: function(jqXhr, status, error) {
-            console.error(error);
-          }
-        });
-      }.bind(this));
-    }.bind(this)
+    this.setState({
+      lockUntil: extendUntil
+    });
   },
 
   getInitialState: function() {
@@ -88,7 +46,7 @@ module.exports = React.createClass({
       // :<
       bounty: this.props.bounty,
       worker: this.props.bounty.workers[0],
-      lockUntil: moment(bounty.locked_at).add(60, 'hours')
+      lockUntil: moment(bounty.locked_at).add(60 * ONE_HOUR)
     };
   },
 
@@ -243,7 +201,7 @@ module.exports = React.createClass({
     var bounty = this.state.bounty;
     var closed = bounty.state == 'resolved' || bounty.state == 'closed'
 
-    if(!closed) {
+    if (!closed) {
       return (
         <li>
           <InviteFriendBounty
@@ -330,9 +288,9 @@ module.exports = React.createClass({
           <div className="left h6 mt0 mb0 gray">
             <Icon icon="lock" />
             {' '}
-            Held for {formatShortTime(this.state.lockUntil)} more
+            Held until {this.state.lockUntil.format('dddd [at] h:mm a')}
             <br />
-            <a href="javascript:void(0)" onClick={this.extendWork(60)}>{this.extendUntil()}</a>
+            <a href="javascript:void(0)" onClick={this.extendWork}>Hold for another two days</a>
             {' '}
             or
             {' '}
@@ -385,26 +343,13 @@ module.exports = React.createClass({
   },
 
   startWork: function(e) {
-    e.preventDefault();
+    var startWorkUrl = this.props.bounty.start_work_url;
 
-    var currentUser = window.app.currentUser();
-    var bounty = this.props.bounty;
+    BountyActionCreators.call(e, 'bounty.started', startWorkUrl);
 
     this.setState({
-      worker: currentUser.attributes,
+      worker: currentUser && currentUser.attributes,
       lockUntil: moment().add(60, 'hours').add(1, 'second')
-    }, function() {
-      $.ajax({
-        url: this.props.bounty.start_work_url,
-        method: 'PATCH',
-        headers: {
-          'accept': 'application/json'
-        },
-        success: function(data) {},
-        error: function(jqXhr, status, error) {
-          console.error(error);
-        }
-      });
     });
   }
 })

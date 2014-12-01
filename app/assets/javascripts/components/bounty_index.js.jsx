@@ -21,7 +21,7 @@
     },
 
     getBounties: function(value, sort, page) {
-      if(timeout) {
+      if (timeout) {
         clearTimeout(timeout)
       }
 
