@@ -115,7 +115,7 @@
       var bountyFilterProps = _.pick(this.props, 'tags', 'creators', 'workers')
 
       return (
-        <div>
+        <div className="mxn2">
           <div className="sm-col sm-col-3 px2" style={{float: 'right !important'}}>
             <CreateBountyButton {...this.props} {...this.props.valuation} classes={['btn btn-primary btn-block py2']} />
 
