@@ -125,17 +125,9 @@ class QueryMarks
   #GENERATE TOP_BOUNTIES, TOP_PRODUCTS
 
   def get_all_wip_vectors
-    wip_vectors = []
-    Wip.where(state: 'open').find_each do |wip|
-      normalized = normalize_mark_vector(w.mark_vector)
-      if normalized.count > 0
-        wip_vectors << [normalized, w]
-      end
-    end
-    wips
-    # wips = Wip.where(state: 'open')
-    # wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
-    # wip_vectors.select{ |a, b| a.count > 0}
+    wips = Wip.where(state: 'open')
+    wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
+    wip_vectors.select{ |a, b| a.count > 0}
   end
 
   def get_all_product_vectors
