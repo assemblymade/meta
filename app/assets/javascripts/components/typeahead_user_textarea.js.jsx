@@ -1,7 +1,18 @@
 (function(){
   var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 
+  var InPlaceUserSearch = require('./in_place_user_search.js.jsx')
+
   var TypeaheadUserTextArea = React.createClass({
+    propTypes: {
+      id: React.PropTypes.string,
+      name: React.PropTypes.string,
+      required: React.PropTypes.oneOfType([
+        React.PropTypes.bool,
+        React.PropTypes.string
+      ])
+    },
+
     getInitialState: function() {
       return {
         text: this.props.defaultValue,
@@ -14,7 +25,7 @@
           username={this.state.usernameSearch}
           onUserChanged={this.handleUserChanged}
           onUserSelected={this.handleUserSelected}
-          searchPosition="bottom">
+          searchPosition="top">
         <textarea {...this.props} onChange={this.handleChange} value={this.state.text} />
       </InPlaceUserSearch>
     },

@@ -1,8 +1,8 @@
 /** @jsx React.DOM */
 
 describe('TagList', function() {
-  var TagList = require.requireActual(pathToFile('components/tag_list.js.jsx'));
   var Dispatcher = require(pathToFile('dispatcher'));
+  var TagList = require.requireActual(pathToFile('components/tag_list.js.jsx'));
 
   it('renders a default TagList', function() {
     var tagList = TestUtils.renderIntoDocument(

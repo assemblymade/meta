@@ -1,8 +1,12 @@
 /** @jsx React.DOM */
 
 describe('TextInput', function() {
-  var TextInput = require.requireActual(pathToFile('components/text_input.js.jsx'));
-  var Dispatcher = require(pathToFile('dispatcher'));
+  var TextInput;
+
+  beforeEach(function(){
+    Dispatcher = require(pathToFile('dispatcher'));
+    TextInput = require.requireActual(pathToFile('components/text_input.js.jsx'));
+  })
 
   it('renders a default TextInput', function() {
     var transform = function() {};

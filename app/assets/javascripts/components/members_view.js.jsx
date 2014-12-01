@@ -32,11 +32,11 @@ var OnlineUsersStore = require('../stores/online_users_store');
     },
 
     componentDidMount: function() {
-      OnlineUsersStore.addChangeListener(this._onChange)
+      OnlineUsersStore.on('change', this._onChange)
     },
 
     componentWillUnmount: function() {
-      OnlineUsersStore.removeChangeListener(this._onChange)
+      OnlineUsersStore.removeListener(this._onChange)
     },
 
     componentDidUpdate: function(prevProps, prevState) {

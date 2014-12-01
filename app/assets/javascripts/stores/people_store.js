@@ -1,65 +1,78 @@
 // var Dispatcher = require('../dispatcher');
 var Store = require('../stores/store');
+var ActionTypes = window.CONSTANTS.ActionTypes;
 
-(function() {
-  var _people = [];
+var _people = {};
 
-  var _store = Object.create(Store);
-  var _peopleStore = _.extend(_store, {
-    destroy: function() {
-      Dispatcher.remove(dispatchIndex);
-    },
+var _store = Object.create(Store);
+var _peopleStore = _.extend(_store, {
+  destroy: function() {
+    Dispatcher.remove(dispatchIndex);
+  },
 
-    setPeople: function(people) {
-      _people = people;
-    },
+  // TODO: remove this, stores shouldn't have setters
+  setPeople: function(people) {
+    _people = _(people).reduce(function(memo, user){ memo[user.id] = user; return memo}, {})
+  },
 
-    getPeople: function() {
-      return _people;
-    },
+  filterByUsername: function(partial) {
+    return _(_people).filter(function(user){
+      return user.username.toLowerCase().indexOf(partial) != -1
+    })
+  },
 
-    getPerson: function(username) {
-      var index = _searchPeople(username);
+  getPeople: function() {
+    return _.values(_people);
+  },
 
-      return _people[index];
-    },
+  getPerson: function(username) {
+    return _searchPeople(username);
+  },
 
-    addPerson: function(data) {
-      _people.push(data.user);
+  addPerson: function(data) {
+    _people[data.user.id] = data.user;
 
-      return this.getPeople();
-    },
+    return this.getPeople();
+  },
 
-    removePerson: function(username) {
-      var index = _searchPeople(username);
+  removePerson: function(username) {
+    var user = _searchPeople(username);
 
-      _people.splice(index, 1);
+    delete _people[user.id]
 
-      return this.getPeople();
-    }
-  });
-
-  _store.dispatchIndex = Dispatcher.register(function(payload) {
-    var action = payload.action;
-    var data = payload.data;
-
-    _store[action] && _store[action](data);
-    _store.emitChange();
-  });
-
-  function _searchPeople(username) {
-    for (var i = 0, l = _people.length; i < l; i++) {
-      if (_people[i].user.username === username) {
-        return i;
-      }
-    }
-
-    return -1;
+    return this.getPeople();
   }
+});
 
-  if (typeof module !== 'undefined') {
-    module.exports = _peopleStore;
+_store.dispatchIndex = Dispatcher.register(function(payload) {
+  var action = payload.action;
+  var data = payload.data;
+
+  _store[action] && _store[action](data);
+  _store.emitChange();
+
+  switch(payload.type) {
+    case ActionTypes.PEOPLE_RECEIVE:
+      _(payload.people).each(function(user){
+        _people[user.id] = user
+      })
+      _peopleStore.emitChange();
+      break;
   }
+});
 
-  window.PeopleStore = _peopleStore;
-})();
+function _searchPeople(username) {
+  return _(_people).find(function(user) { return user.username == username })
+}
+
+var dataTag = document.getElementById('PeopleStore')
+if (dataTag) {
+  Dispatcher.dispatch({
+    type: ActionTypes.PEOPLE_RECEIVE,
+    people: JSON.parse(dataTag.innerHTML)
+  })
+}
+
+
+module.exports = _peopleStore;
+window.PeopleStore = _peopleStore;

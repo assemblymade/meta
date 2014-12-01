@@ -6,3 +6,7 @@
 //= require react
 //= require underscore
 //= require nprogress
+
+//= require ./constants
+//= require ./dispatcher
+//= require ./components

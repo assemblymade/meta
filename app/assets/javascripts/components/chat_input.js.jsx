@@ -3,7 +3,9 @@
 (function(){
   var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
   var subscribing;
+
   var OnlineUsersStore = require('../stores/online_users_store')
+  var InPlaceUserSearch = require('./in_place_user_search.js.jsx')
 
   var Set = require('Set');
 
@@ -23,7 +25,7 @@
     },
 
     componentDidMount: function() {
-      OnlineUsersStore.addChangeListener(this._onChange)
+      OnlineUsersStore.on('change', this._onChange)
       $(this.refs.textarea.getDOMNode()).on('change', this.handleChange)
     },
 

@@ -1,0 +1,59 @@
+<table class="row">
+  <tr>
+    <td class="wrapper last">
+      <table class="twelve columns">
+        <tr>
+          <td>
+            <center>
+              <% @lovers.each do |lover| %>
+                <%= image_tag(lover.avatar.url(120), width: 60, height: 60, class: 'img-circle', style: 'display:inline-block;clear:none;float:none') %>
+              <% end %>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h1 class="text-center">
+              You got the love!
+            </h1>
+            <p class="text-center">
+              You've received some hearts on your recent Activity around Assembly. Check it out:
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<% @heartables.each do |heartable| %>
+  <table class="row">
+    <tr style="">
+      <td class="wrapper">
+        <table class="three columns hide-for-small">
+          <tr>
+            <td>
+              <% if !heartable.product.nil? %>
+                <%= app_icon(heartable.product, size: 30) %>
+                <span style="padding-left: 10px">
+                  <%= heartable.product.name %>
+                </span>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td class="wrapper">
+        <table class="nine columns">
+          <tr>
+            <td>
+              <%= image_tag('emails/heart_ec3750_64.png', size: '16x16', style: 'padding-top: 4px;height:16px !important') %>
+              &nbsp;x&nbsp;<%= heartable.hearts_count %>
+              – <%= render partial: "shared/mail/#{heartable.class.model_name.plural}/description", object: heartable %>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+<% end %>

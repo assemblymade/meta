@@ -25,13 +25,15 @@
     },
 
     render: function() {
-      return <div className="dropzone-standalone">
-        {this.attachmentInputs()}
-        <div className="dropzone-inner" ref="select">
-          To attach files drag &amp; drop here or <a href="javascript:;">select files
-          from your computer</a>...
+      return (
+        <div className="dropzone-standalone">
+          <div className="dropzone-inner" ref="select">
+            {this.attachmentInputs()}
+            To attach files drag &amp; drop here or <a href="javascript:;">select files
+            from your computer</a>...
+          </div>
         </div>
-      </div>
+      );
     },
 
     attachmentInputs: function() {
@@ -61,9 +63,9 @@
 
     handleSending: function(file, xhr, formData) {
       for (var key in file.form) {
-         if (file.form.hasOwnProperty(key)) {
-            formData.append(key, file.form[key])
-         }
+        if (file.form.hasOwnProperty(key)) {
+          formData.append(key, file.form[key])
+        }
       }
     }
   })

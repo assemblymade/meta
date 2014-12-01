@@ -22,6 +22,11 @@ class ChatRoomsController < ApplicationController
   def show
     @chat_room = ChatRoom.find_by!(slug: params[:id])
 
+    @default_users = []
+    if @product
+      @default_users << {id: 'core', username: 'core', name: "#{@product.name} Core Team"}
+    end
+
     @rooms = (
       [ChatRoom.general] +
       ChatRoom.where(product_id: current_user.followed_product_ids).includes(:product).order(updated_at: :desc)

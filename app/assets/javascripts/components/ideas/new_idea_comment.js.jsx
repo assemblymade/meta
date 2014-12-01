@@ -57,7 +57,7 @@
             <form action={this.props.url} className="form" onSubmit={this.submitForm}>
               <div className="markdown-editor-control js-markdown-editor js-dropzone">
                 <textarea type="text"
-                  className="form-control" 
+                  className="form-control"
                   onChange={this.onChange}
                   placeholder="Add to the discussion"
                   value={this.state.comment}
@@ -124,7 +124,7 @@
       try {
         data = JSON.parse(data);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
 
       Dispatcher.dispatch({
@@ -134,5 +134,3 @@
     };
   }
 })();
-
-

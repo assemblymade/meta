@@ -56,6 +56,7 @@ class TasksController < WipsController
     end
 
     @events = Event.render_events(@bounty.events.order(:number), current_user)
+    @product_assets = @bounty.product.assets
 
     finished('long_user_survey_on_signup')
 
@@ -87,7 +88,15 @@ class TasksController < WipsController
         expires_now
         render 'bounties/index'
       end
-      format.json { render json: @wips.map{|w| WipSearchSerializer.new(w) } }
+      format.json do
+        if params[:count]
+          tasks_count = { total: @product.tasks.where(state: 'open').count }
+          render json: tasks_count
+          return
+        end
+
+        render json: @wips.map{ |w| WipSearchSerializer.new(w) }
+      end
     end
   end
 

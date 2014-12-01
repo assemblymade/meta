@@ -1,8 +1,28 @@
-global.React = require('react/addons');
-global.TestUtils = React.addons.TestUtils;
-global.path = require.requireActual('path');
+// path helpers to make it easier to require files in app/assets
+global.appPath = require.requireActual('path').resolve(__dirname, '../../app/assets/javascripts')
+global.pathToFile = function(name) {
+  return appPath + '/' + name;
+};
+global.appFile = pathToFile;
+
+// global requires, assumed present for a lot of javascript files
 global._ = require('underscore');
 global.$ = require('jquery');
+
+require('../../app/assets/javascripts/lib/keymirror')
+global.CONSTANTS = require('../../app/assets/javascripts/constants')
+
+global.EventEmitter = require('events').EventEmitter
+
+global.React = require('react/addons');
+global.TestUtils = React.addons.TestUtils;
+
+// stub out other methods relied on
+// TODO: these should probably be moved into individual test cases
+global.parseUri = function() {
+  return {};
+};
+
 global.$.timeago = function() {};
 global.app = {};
 global.analytics = {};
@@ -14,26 +34,9 @@ global.app.currentUser = function() {
 global.app.currentAnalyticsProduct = function() {
   return {};
 };
-
-global.analytics.track = function() {
-
-};
-
-global.parseUri = function() {
-  return {};
-};
-
-global.keyMirror = function() {};
+global.analytics.track = function() {};
 
 global.visibility = function() {};
 global.Notify = function() {};
 global.Notify.isSupported = function() { return true; };
 global.Notify.needsPermission = function() { return true; };
-
-global.pathToFile = function(name) {
-  return '../../../../app/assets/javascripts/' + name;
-};
-
-// these are currently pulled in via sprockets, so we'll auto require them here
-global.Constants = require('../../app/assets/javascripts/constants')
-global.Dispatcher = require('../../app/assets/javascripts/dispatcher')

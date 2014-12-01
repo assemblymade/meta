@@ -1,7 +1,12 @@
 /** @jsx React.DOM */
 
 describe('ToggleButton', function() {
-  var ToggleButton = require.requireActual(pathToFile('components/toggle_button.js.jsx'));
+  var ToggleButton;
+
+  beforeEach(function() {
+    Dispatcher = require(appFile('dispatcher'))
+    ToggleButton = require.requireActual(pathToFile('components/toggle_button.js.jsx'));
+  })
 
   it('renders a default button', function() {
     var button = TestUtils.renderIntoDocument(

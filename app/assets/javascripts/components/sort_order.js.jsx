@@ -22,7 +22,7 @@
       var options = {
         priority: 'Priority',
         most_valuable: 'Most valuable',
-        least_valuable: 'Lease valuable',
+        least_valuable: 'Least valuable',
         newest: 'Newest',
         oldest: 'Oldest',
         recently_updated: 'Recently updated',

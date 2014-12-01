@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 (function(){
   var keyMirror = function(obj) {
     var ret = {};
@@ -17,7 +15,7 @@
   };
 
   if (typeof module !== 'undefined') {
-    module.keyMirror = keyMirror
+    module.exports = keyMirror
   }
 
   window.keyMirror = keyMirror

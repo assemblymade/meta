@@ -36,7 +36,7 @@ class window.Application
     @_currentUser = new User(user)
     @trigger 'change:currentUser', @_currentUser
 
-    Dispatcher.handleServerAction
+    Dispatcher.dispatch
       type: 'USER_SIGNED_IN'
       user: @_currentUser
 

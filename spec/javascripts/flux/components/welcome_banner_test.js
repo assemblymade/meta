@@ -1,8 +1,8 @@
 /** @jsx React.DOM */
 
 describe('WelcomeBanner', function() {
+  Dispatcher = require(pathToFile('dispatcher'));
   var WB = require.requireActual(pathToFile('constants')).WELCOME_BANNER;
-  var Dispatcher = require(pathToFile('dispatcher'));
   var WelcomeBanner = require.requireActual(pathToFile('components/welcome_banner.js.jsx'));
   var WelcomeBannerStore = require(pathToFile('stores/welcome_banner_store'));
 

@@ -16,13 +16,13 @@
 
       <span class="mr2">
         <%= inline_react_component 'BountyValuation', {
-          product: { name: @product.name },
-          url: product_wips_path(@product),
-          maxOffer: (6 * @product.average_bounty).round(-4),
-          averageBounty: @product.average_bounty,
-          coinsMinted: @product.coins_minted,
-          profitLastMonth: @product.profit_last_month,
-          steps: BountyGuidance::Valuations.suggestions(@product)
+          product: { name: bounty.product.name },
+          url: product_wips_path(bounty.product),
+          maxOffer: (6 * bounty.product.average_bounty).round(-4),
+          averageBounty: bounty.product.average_bounty,
+          coinsMinted: bounty.product.coins_minted,
+          profitLastMonth: bounty.product.profit_last_month,
+          steps: BountyGuidance::Valuations.suggestions(bounty.product)
         }.merge(BountySerializer.new(bounty, scope: current_user).as_json) %>
       </span>
 

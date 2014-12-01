@@ -86,4 +86,6 @@ ASM::Application.configure do
 
   config.react.variant = :production
   config.font_assets.origin = 'https://assembly.com'
+
+  config.skylight.probes = %w(net_http excon redis)
 end

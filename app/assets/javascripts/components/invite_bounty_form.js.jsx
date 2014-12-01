@@ -71,7 +71,7 @@ var FormGroup = require('./form_group.js.jsx');
           <div className="p3">
             <input type="hidden" name="invite[via_type]" value={this.props.via_type} />
             <input type="hidden" name="invite[via_id]" value={this.props.via_id} />
-            <button className="btn btn-primary btn-block" style={{ "margin-bottom": 20 }}>Send message</button>
+            <button className="btn btn-primary btn-block" style={{ marginBottom: 20 }}>Send message</button>
           </div>
         </form>
       )

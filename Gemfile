@@ -78,7 +78,6 @@ gem 'sanitize'
 gem 'sass-rails'
 gem 'sequenced', '~> 1.5.0'
 gem 'sidekiq'
-gem 'skylight', '~> 0.3.19'
 gem 'sparkr'
 gem 'split', :require => 'split/dashboard'
 gem 'stripe'
@@ -136,4 +135,5 @@ group :production do
   gem 'memcachier'
   gem 'newrelic_rpm'
   gem 'rails_12factor'
+  gem 'skylight', '~> 0.4.2'
 end

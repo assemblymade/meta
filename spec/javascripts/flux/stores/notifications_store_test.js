@@ -1,6 +1,6 @@
 describe('NotificationsStore', function() {
-  var NotificationsStore = require.requireActual(pathToFile('stores/notifications_store'));
-  var xhr = require(pathToFile('xhr'));
+  var NotificationsStore;
+  var xhr;
   var app = {
     currentUser: function() {
       return {
@@ -10,6 +10,12 @@ describe('NotificationsStore', function() {
       }
     }
   };
+
+  beforeEach(function(){
+    Dispatcher = require(appFile('dispatcher'))
+    NotificationsStore = require.requireActual(pathToFile('stores/notifications_store'));
+    xhr = require(pathToFile('xhr'));
+  })
 
   describe('notifications:fetchStories()', function() {
     it('fetches stories', function() {

@@ -11,18 +11,14 @@
       <%= react_component 'Avatar', user: UserSerializer.new(current_user), size: 30 %>
     </div>
 
-    <div class="media-body ">
+    <div style="padding-left: 60px">
 
       <div id="comment">
+
+        </form>
         <%= form_tag product_wip_comments_path(@wip.product, @wip), method: :post, class: %w(form new_event_comment) do %>
 
-          <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
-            <%= text_area_tag 'event_comment[body]', nil, class: 'form-control', placeholder: 'Add to the discussion', rows: 3, "data-product-id" => @wip.product.id %>
-
-            <div class="dropzone-inner js-dropzone-select sm-show">
-              To attach files drag &amp; drop here or <a href="#">select files from your computer</a>...
-            </div>
-          </div>
+          <%= react_component 'MarkdownEditor', { name: 'event_comment[body]', id: 'event_comment_body', inputName: 'event_comment[attachments][]' } %>
 
           <div class="form-actions">
             <ul class="list-inline pull-right">

@@ -18,4 +18,8 @@ class NewsFeedItemComment < ActiveRecord::Base
   def product
     news_feed_item.product
   end
+
+  def author_id
+    user_id
+  end
 end

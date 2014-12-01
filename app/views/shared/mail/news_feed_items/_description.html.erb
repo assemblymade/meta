@@ -1,0 +1,9 @@
+<%  url = if description.product
+      url_for([description.product, description.target])
+    else
+      url_for([description.target])
+    end
+%>
+<a href="<%= url %>">
+  <%= t "models.#{description.target.class.model_name.singular}.description.owner", description.target.attributes.symbolize_keys %>
+</a>

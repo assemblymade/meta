@@ -1,3 +1,5 @@
+//= require ./lib/keymirror
+
 (function() {
   // When sprockets doesn't require this file:
   // var keymirror = require('keymirror')
@@ -106,11 +108,17 @@
     ActionTypes: keyMirror({
       CHAT_USER_ONLINE: null,
 
+      COMMENT_ATTACHMENT_ADDED: null,
+      COMMENT_ATTACHMENT_FAILED: null,
+      COMMENT_ATTACHMENT_UPLOADED: null,
+
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,
       LOVE_RECEIVE_RECENT_HEARTS: null,
 
       NEWS_FEED_RECEIVE_RAW_ITEMS: null,
+
+      PEOPLE_RECEIVE: null,
 
       PUSHER_PRESENCE_CONNECTED: null,
 

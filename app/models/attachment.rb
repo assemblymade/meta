@@ -11,6 +11,16 @@ class Attachment < ActiveRecord::Base
 
   validates :name, presence: true
 
+  def assign_to_product!(product, user)
+    asset_to_create = {
+      attachment_id: self.id,
+      name: self.name
+    }
+
+    asset = product.assets.create(asset_to_create.merge(user: user))
+    Room.create_for!(asset.product, asset)
+  end
+
   def key
     # TODO: (whatupdave) rename the files in S3 to the actual file names so they download properly
     asset_path || File.join("attachments", user_id, "#{id}#{Rack::Mime::MIME_TYPES.invert[content_type]}")

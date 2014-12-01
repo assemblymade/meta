@@ -4,7 +4,7 @@ module FiresizeHelper
       args << ['frame_0']
     end
 
-    File.join(firesize_url || '', args, URI.escape(url))
+    File.join(ENV['FIRESIZE_URL'] || '', args, URI.escape(url))
   end
 
   def firesize_img(url, width, height, *args)
