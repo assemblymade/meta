@@ -190,7 +190,7 @@ class QueryMarks
   def assign_all(limit)
     all_wip_vectors = get_all_wip_vectors
     all_product_vectors = get_all_product_vectors
-    User.all.each do |user|
+    User.all.find_each do |user|
       assign_top_bounties_for_user(limit, user, all_wip_vectors)
       assign_top_products_for_user(limit, user, all_product_vectors)
     end
