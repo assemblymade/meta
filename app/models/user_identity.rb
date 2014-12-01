@@ -20,17 +20,19 @@ class UserIdentity < ActiveRecord::Base
     my_views = self.user.viewings
     my_views.each do |v|
       #get mark set of viewable
-      mark_vector = QueryMarks.new.mark_vector_for_object(v.viewable)
+      if v.weight
+        mark_vector = QueryMarks.new.mark_vector_for_object(v.viewable)
 
-      #scale according to significance of product view/ bounty view/ etc
-      mark_vector = QueryMarks.new.scale_mark_vector(mark_vector, VIEW_PRODUCT_MARKING_WEIGHT * v.weight)
+        #scale according to significance of product view/ bounty view/ etc
+        mark_vector = QueryMarks.new.scale_mark_vector(mark_vector, VIEW_PRODUCT_MARKING_WEIGHT * Math.sqrt(v.weight))
 
-      #add pre-existing mark vector to new mark vector
-      old_mark_vector = QueryMarks.new.mark_vector_for_object(self)
-      new_mark_vector = QueryMarks.new.add_mark_vectors(old_mark_vector, mark_vector)
+        #add pre-existing mark vector to new mark vector
+        old_mark_vector = QueryMarks.new.mark_vector_for_object(self)
+        new_mark_vector = QueryMarks.new.add_mark_vectors(old_mark_vector, mark_vector)
 
-      #update identity markings with new mark vector
-      QueryMarks.new.update_markings_to_vector_for_object(self, new_mark_vector)
+        #update identity markings with new mark vector
+        QueryMarks.new.update_markings_to_vector_for_object(self, new_mark_vector)
+      end
     end
   end
 

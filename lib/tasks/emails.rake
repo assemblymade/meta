@@ -232,4 +232,5 @@ namespace :emails do
       HeartMailer.hearts_received(user_id, heart_ids).deliver
     end
   end
+
 end
