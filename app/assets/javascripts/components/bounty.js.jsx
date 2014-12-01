@@ -305,7 +305,7 @@ module.exports = React.createClass({
             {' '}
             Held until {this.state.lockUntil.format('dddd [at] h:mm a')}
             <br />
-            <a href="javascript:void(0)" onClick={this.extendWork}>Hold for another two days</a>
+            <a href="javascript:void(0)" onClick={this.extendWork}>Hold until two days from now</a>
             {' '}
             or
             {' '}
@@ -358,6 +358,7 @@ module.exports = React.createClass({
   },
 
   startWork: function(e) {
+    var currentUser = window.app.currentUser();
     var startWorkUrl = this.props.bounty.start_work_url;
 
     BountyActionCreators.call(e, 'bounty.started', startWorkUrl);
