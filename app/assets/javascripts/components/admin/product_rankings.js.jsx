@@ -2,7 +2,7 @@
 
 (function() {
   var xhr = require('../../xhr')
-  var PaginationLinks = require('./pagination_links.js.jsx')
+  var PaginationLinks = require('../pagination_links.js.jsx')
   var parseUri = require('../../lib/parseuri')
   var Timestamp = require('../timestamp.js.jsx')
   var ProductState = require('./product_state.js.jsx')

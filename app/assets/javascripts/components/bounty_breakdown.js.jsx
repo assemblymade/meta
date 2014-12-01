@@ -123,7 +123,7 @@
               {this.state.offers.map(function(offer) {
                 return (
                   <li>
-                    <span className="text-coins mt0 mb0" style={{ display: 'inline-block', width: '65px' }}>
+                    <span className="text-coins mt0 mb0 bold no-wrap" style={{ display: 'inline-block', width: '65px' }}>
                       <span className="icon icon-app-coin"></span>
                       {' '}
                       {numeral(offer.earnable).format('0,0')}

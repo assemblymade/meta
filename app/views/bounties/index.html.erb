@@ -2,54 +2,18 @@
 <% activate_nav! :bounties %>
 <%= track 'product.wips.viewed', ProductAnalyticsSerializer.new(@product) %>
 
-<%= render 'bounties/header'  %>
-
-<div class="clearfix mxn2">
-
-  <% if @product.tasks.any? %>
-
-    <div class="sm-col sm-col-4 px2" style="float: right !important">
-      <%= render 'bounties/projects_filter', projects: @milestones %>
-    </div>
-
-    <div class="sm-col sm-col-8 px2">
-      <% if @wips.any? %>
-
-        <% @wips.each do |task| %>
-          <%= render 'bounties/chip', bounty: task %>
-        <% end %>
-
-        <% if @wips.total_pages > 1 %>
-          <hr>
-
-          <%= paginate @wips, theme: 'twitter-bootstrap-3' %>
-        <% end %>
-      <% end %>
-    </div>
-
-  <% else %>
-
-    <div class="col-md-6 col-md-offset-3">
-      <div class="well well-lg omega">
-        <h3 class="alpha"><strong>Create the first bounty</strong></h3>
-        <p class="text-muted">
-          Get started by breaking down a new idea into bite-sized chunks
-          that can valued and prioritized. Writing a great description will
-          make it super easy for anyone to jump in and get to work.
-        </p>
-
-        <div data-react-class="CreateBountyButton" data-react-props="<%= {
-          product: { name: @product.name },
-          url: product_wips_path(@product),
-          maxOffer: (6 * @product.average_bounty).round(-4),
-          averageBounty: @product.average_bounty,
-          coinsMinted: @product.coins_minted,
-          profitLastMonth: @product.profit_last_month,
-          steps: BountyGuidance::Valuations.suggestions(@product)
-        }.to_json %>" class="omega text-center"></div>
-      </div>
-    </div>
-
-  <% end %>
-
-</div>
+<%= react_component 'BountyIndex', {
+  initialBounties: @wips.page(1).map { |t| BountySerializer.new(t) },
+  tags: Wip::Tag.suggested_tags,
+  pages: @wips.page(1).total_pages,
+  product: ProductSerializer.new(@product),
+  valuation: {
+    product: ProductSerializer.new(@product),
+    url: product_wips_path(@product),
+    maxOffer: (6 * @product.average_bounty).round(-4),
+    averageBounty: @product.average_bounty,
+    coinsMinted: @product.coins_minted,
+    profitLastMonth: @product.profit_last_month,
+    steps: BountyGuidance::Valuations.suggestions(@product),
+  }
+} %>

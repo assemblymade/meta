@@ -14,18 +14,17 @@ describe FilterWipsQuery do
     query.filter_wips
   end
 
-  it 'filters by deliverable' do
-    query = FilterWipsQuery.new(product_wips, user, { deliverable: 'code' })
+  it 'filters by state' do
+    query = FilterWipsQuery.new(product_wips, user, { state: 'open' })
 
-    expect(query.deliverable_filter).to eq(Wip.where(deliverable: 'code'))
+    expect(query.state_filter).to eq(Wip.where(state: ['open']))
   end
 
-  it 'does not filter if deliverable is empty' do
-    query = FilterWipsQuery.new(product_wips, user, {})
+  it 'filters by multiple states' do
+    query = FilterWipsQuery.new(product_wips, user, { state: ['open', 'doing'] })
 
-    expect(query.deliverable_filter).to be_nil
+    expect(query.state_filter).to eq(Wip.where(state: ['open','allocated', 'awarding']))
   end
-
 
   it 'selects a page' do
     query = FilterWipsQuery.new(product_wips, user, { page: 2 })
