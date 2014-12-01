@@ -13,7 +13,8 @@
     },
 
     render: function() {
-      if (!window.app.featureEnabled('much-love')) {
+
+      if (!window.app.featureEnabled('much-love') && !this.props.public) {
         return <span/>
       }
 
