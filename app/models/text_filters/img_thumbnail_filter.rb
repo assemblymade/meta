@@ -17,7 +17,7 @@ module TextFilters
           lightbox['data-react-class'] = 'AssetThumbnail'
           lightbox['data-react-props'] = {
             url: el['src'],
-            name: el['alt'] ,
+            name: el['alt'],
             preview: preview_url
           }.to_json
           el.add_child(lightbox)

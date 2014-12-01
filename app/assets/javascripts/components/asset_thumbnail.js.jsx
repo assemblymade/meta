@@ -8,7 +8,7 @@
     propTypes: {
       preview: React.PropTypes.string.isRequired,
       url: React.PropTypes.string.isRequired,
-      name: React.PropTypes.string.isRequired
+      name: React.PropTypes.string
     },
 
     checkForErrors: function() {
@@ -86,6 +86,14 @@
     },
 
     renderUploadButton: function() {
+      // if there is no name, the image hasn't been uploaded
+      // as an attachment yet. We'll need to find a robust workaround
+      // for this case -- simply trying to pull the attachment down
+      // from the provided URL could fail if that image no longer exists
+      if (!this.props.name) {
+        return null;
+      }
+
       if (!this.state.productSlug) {
         return null;
       }
