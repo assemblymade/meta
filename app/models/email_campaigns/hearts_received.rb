@@ -18,7 +18,7 @@ module EmailCampaigns
           unsent_hearts = hearts.select{|h| h.sent_at.nil? }
           oldest_unsent_heart = unsent_hearts.map(&:created_at).sort.first
 
-          if oldest_unsent_heart < 30.minutes.ago
+          if oldest_unsent_heart.nil? || oldest_unsent_heart < 30.minutes.ago
 
             # TODO: remove feature flag
             if User.find(user_id).staff?

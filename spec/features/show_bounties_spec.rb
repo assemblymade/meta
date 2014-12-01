@@ -19,7 +19,7 @@ describe 'showing all bounties' do
 
   it 'shows all bounties in a specific state', js: true do
     Task.make!(title: 'Design a new logo', product: product)
-    Task.make!(title: 'Add some tests', product: product, closed_at: 1.hour.ago)
+    Task.make!(title: 'Add some tests', product: product, state: 'closed')
 
     visit product_wips_path(product)
 

@@ -5,7 +5,8 @@
     propTypes: {
       avatar_url: React.PropTypes.string,
       size: React.PropTypes.oneOfType([ React.PropTypes.number, React.PropTypes.string ]),
-      user: React.PropTypes.object
+      user: React.PropTypes.object,
+      style: React.PropTypes.object
     },
 
     getDefaultProps: function() {
