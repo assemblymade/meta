@@ -58,6 +58,13 @@
             </li>
           <% end %>
 
+          <li class="left px1">
+            <a href="<%= product_repos_path(@product) %>">
+              <%= inline_react_component 'Icon', icon: 'github' %>
+              Code
+            </a>
+          </li>
+
           <% if can?(:edit, @product) %>
             <li class="left px1">
               <a href="<%= edit_product_path(@product) %>">

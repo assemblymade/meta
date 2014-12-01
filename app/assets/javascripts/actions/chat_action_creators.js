@@ -9,14 +9,14 @@ var chatActionCreators = {
 
       var presenceChannel = pusher.subscribe('presence-' + activityStream.channelName())
 
-      Dispatcher.handleServerAction({
+      Dispatcher.dispatch({
         type: ActionTypes.PUSHER_PRESENCE_CONNECTED,
         presenceChannel: presenceChannel
       })
 
       presenceChannel.bind('pusher:member_added',
         function memberJoined(rawMember) {
-          Dispatcher.handleServerAction({
+          Dispatcher.dispatch({
             type: ActionTypes.CHAT_USER_ONLINE,
             rawMember: rawMember
           })

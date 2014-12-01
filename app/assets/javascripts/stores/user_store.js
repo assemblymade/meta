@@ -7,15 +7,11 @@ var _currentUser = null;
 
 var UserStore = _.extend(Object.create(Store), {
   init: function() {
-    _dispatchToken = Dispatcher.register(function(payload) {
-      var action = payload.action
-
-      if (typeof action.type !== 'undefined') {
-        switch(action.type) {
-          case ActionTypes.USER_SIGNED_IN:
-            _currentUser = action.user
-            this.emitChange()
-        }
+    _dispatchToken = Dispatcher.register(function(action) {
+      switch(action.type) {
+        case ActionTypes.USER_SIGNED_IN:
+          _currentUser = action.user
+          this.emitChange()
       }
     }.bind(this))
   },

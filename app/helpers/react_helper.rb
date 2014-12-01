@@ -14,4 +14,8 @@ module ReactHelper
     })
   end
 
+  def initial_store_data(class_name, data)
+    content_tag(:script, data.to_json.html_safe, id: class_name, type: 'application/json')
+  end
+
 end

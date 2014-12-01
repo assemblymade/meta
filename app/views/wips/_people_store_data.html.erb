@@ -1,0 +1,3 @@
+<%= initial_store_data('PeopleStore',
+  [{id: 'core', username: 'core', name: "#{@product.name} Core Team"}] +
+  CachedArraySerializer.new([@wip.user] + @wip.events.map(&:user)).as_json) %>

@@ -1,3 +1,5 @@
+//= require ./lib/keymirror
+
 (function() {
   // When sprockets doesn't require this file:
   // var keymirror = require('keymirror')
@@ -115,6 +117,8 @@
       LOVE_RECEIVE_RECENT_HEARTS: null,
 
       NEWS_FEED_RECEIVE_RAW_ITEMS: null,
+
+      PEOPLE_RECEIVE: null,
 
       PUSHER_PRESENCE_CONNECTED: null,
 

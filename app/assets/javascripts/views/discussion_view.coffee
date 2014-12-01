@@ -113,7 +113,7 @@ class window.DiscussionView extends Backbone.View
     @$('.timeline,.discussion').append el
 
   wipEventServerCreated: (model)->
-    Dispatcher.handleViewAction({
+    Dispatcher.dispatch({
       type: 'WIP_EVENT_CREATED',
       event: model.attributes
     })

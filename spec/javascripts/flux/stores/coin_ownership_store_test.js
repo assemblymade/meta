@@ -1,8 +1,7 @@
 jest.dontMock(pathToFile('stores/coin_ownership_store'));
 
 describe('CoinOwnershipStore', function() {
-  var _ = require('underscore');
-  var CoinOwnershipStore = require(pathToFile('stores/coin_ownership_store'));
+  var CoinOwnershipStore
 
   var usersAndOwnerships = [
     {
@@ -24,6 +23,9 @@ describe('CoinOwnershipStore', function() {
   ];
 
   beforeEach(function() {
+    Dispatcher = require(appFile('dispatcher'))
+    CoinOwnershipStore = require(pathToFile('stores/coin_ownership_store'));
+
     CoinOwnershipStore.removeAllUsers();
   });
 

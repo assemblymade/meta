@@ -14,6 +14,12 @@ class TasksController < WipsController
       end
 
       format.json do
+        if params[:count]
+          tasks_count = { total: @product.tasks.where(state: 'open').count }
+          render json: tasks_count
+          return
+        end
+
         render json: @wips,
           serializer: PaginationSerializer,
           each_serializer: BountySerializer,
