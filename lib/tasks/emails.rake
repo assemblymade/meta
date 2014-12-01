@@ -232,4 +232,13 @@ namespace :emails do
       HeartMailer.hearts_received(user_id, heart_ids).deliver
     end
   end
+
+  desc "Suggest Bounties to Recently Inactive"
+  task inactive_suggestions: :environment do
+    recently_inactive_users = User.recently_inactive
+    recently_inactive_users.each do |user|
+      SuggestionMailer.create(user.id)
+    end
+  end
+
 end

@@ -1,9 +1,10 @@
 class SuggestionMailerPreview < ActionMailer::Preview
 
-  def suggestion
-    user = User.where(username: "barisser").sample
-    bounty_limit = 3
-    SuggestionMailer.create(user.id, bounty_limit)
+  def create
+    user = User.find_by(username: "chrislloyd")
+    if user
+      SuggestionMailer.create(user.id)
+    end
   end
 
 end

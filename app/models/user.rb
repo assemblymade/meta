@@ -98,6 +98,7 @@ class User < ActiveRecord::Base
   scope :wip_creators, -> { joins(:wips) }
   scope :event_creators, -> { joins(:events) }
   scope :awaiting_personal_email, -> { where(personal_email_sent_on: nil).where("created_at > ? AND last_request_at < ?", 14.days.ago, 3.days.ago) }
+  scope :recently_inactive, -> { where("last_sign_in_at < ?", 7.days.ago).where("last_sign_in_at > ?", 30.days.ago) }
 
   class << self
     def find_first_by_auth_conditions(tainted_conditions)

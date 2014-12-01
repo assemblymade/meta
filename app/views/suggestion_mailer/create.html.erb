@@ -11,63 +11,38 @@
 <h4>Bounty Suggestions</h4>
 
 <ul>
+  <% @bounties.each do |bounty| %>
   <li>
-    <a href = <%= "https://assembly.com/#{@bounties[0][0].product.slug}/#{@bounties[0][0].number}" %> >
-      1)  <%= "#{@bounties[0][0].title}  --  #{@bounties[0][0].product.name}"  %>
+    <a href=<%= product_wip_url(bounty.product, bounty) %> >
+      <%= "#{bounty.title}  --  #{bounty.product.name}"  %>
     </a>
   </li>
-  <li>
-    <a href = <%= "https://assembly.com/#{@bounties[1][0].product.slug}/#{@bounties[1][0].number}" %> >
-      2)  <%= "#{@bounties[1][0].title}  --  #{@bounties[1][0].product.name}"  %>
-    </a>
-  </li>
-  <li>
-    <a href = <%= "https://assembly.com/#{@bounties[2][0].product.slug}/#{@bounties[2][0].number}" %> >
-      3)   <%= "#{@bounties[2][0].title}  --  #{@bounties[2][0].product.name}" %>
-    </a>
-  </li>
+  <% end %>
 </ul>
 <p>These are just a few of the many open Bounties available.  </p>
 
 <h4>Products we think you might like</h4>
 <ul>
+  <% @products.each do |product| %>
   <li>
-    <a href = <%= "https://assembly.com/#{@products[0][0].slug}" %> >
-      <%= @products[0][0].name %>
+    <a href=<%= product_url(product) %> >
+      <%= product.name %>
     </a>
   </li>
-  <li>
-    <a href = <%= "https://assembly.com/#{@products[1][0].slug}" %> >
-      <%= @products[1][0].name %>
-    </a>
-  </li>
-  <li>
-    <a href = <%= "https://assembly.com/#{@products[2][0].slug}" %> >
-      <%= @products[2][0].name %>
-    </a>
-  </li>
+  <% end %>
 </ul>
 
-<% if @tags.count > 4 %>
+<% if @tags %>
   <h4>Tags we think you like</h4>
   <ul>
+  <% @tags.each do |tag| %>
     <li>
-      <%= @tags[0][0].name %>
+      <%= tag[0].name %>
     </li>
-    <li>
-      <%= @tags[1][0].name %>
-    </li>
-    <li>
-      <%= @tags[2][0].name %>
-    </li>
-    <li>
-      <%= @tags[3][0].name %>
-    </li>
-    <li>
-      <%= @tags[4][0].name %>
-    </li>
+  <% end %>
   </ul>
 <% end %>
 
-We're trying to get to know you!  If you think we're way off, <a href = "#">let us know</a>!
-If you don't need any recommendations, <a href = "#">we can disable them</a>.
+
+
+We're trying to get to know you!  If you think we're way off, <a href = "mailto:barisser@assembly.com">let us know</a>!

@@ -46,7 +46,7 @@ class QueryMarks
 
   def normalize_mark_vector(vector)
     magnitude = vector.sum{ |_, weight| weight ** 2}
-    magnitude = Math.sqrt([1, magnitude].max)
+    magnitude = Math.sqrt([0.000001, magnitude].max)
     normalized_vector = vector.map{ |mark, weight| [mark, weight / magnitude] }
     normalized_vector.sort_by{ |_, weight| weight}.reverse
   end
@@ -126,34 +126,74 @@ class QueryMarks
 
   def get_all_wip_vectors
     wips = Wip.where(state: 'open')
-    wip_vectors = wips.map{|w| [w.mark_vector, w] }
-    wip_vectors.delete([])
-    return wip_vectors
+    wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
+    wip_vectors.select{ |a, b| a.count > 0}
+  end
+
+  def get_all_product_vectors
+    products = Product.where(state: ['greenlit', 'profitable'])
+    product_vectors = products.map{ |p| [ normalize_mark_vector(p.mark_vector) , p] }
+    product_vectors.select{ |a, b| a.count >0 }
   end
 
   def assign_top_bounties_for_user(limit, user, wip_vectors)
     user_vector = normalize_mark_vector(user.user_identity.get_mark_vector)
-
-
+    result = []
 
     if user_vector.count > 0
-      wip_vectors = wip_vectors.map{ |vector, wip| [dot_product_vectors(user_vector, vector), wip]  }
-    # else
-    #   [[]]
-    # end
-    #
-    # if wip_vectors
-    #   TopBounty.where(user_id: user.id).delete_all
-    #   n=0
-    #   wip_vectors.sort_by{|a, b| a}.reverse.take(limit).each do |w|
-    #     n=n+1
-    #     TopBounty.create!({user_id: user.id, score: w[0], rank: n, wip: w[1]})
-    #   end
+      wip_vectors.each do |data|
+        vector = data[0]
+        wip = data[1]
+        correlation = dot_product_vectors(user_vector, vector)
+        if correlation > 0
+          result.append([correlation.to_f, wip])
+        end
+      end
+
+      TopBounty.where(user_id: user.id).delete_all
+      n=0
+      result.sort_by{|a, b| a}.reverse.take(limit).each do |w|
+        n=n+1
+        TopBounty.create!({user_id: user.id, score: w[0], rank: n, wip_id: w[1].id})
+      end
+      result.sort_by{|a,b| a}.reverse
     end
+    result.sort_by{|a, b| a}.reverse
   end
 
 
-  def assign_top_products_for_user(limit, user)
+  def assign_top_products_for_user(limit, user, product_vectors)
+    user_vector = normalize_mark_vector(user.user_identity.get_mark_vector)
+    result = []
+
+    if user_vector.count > 0
+      product_vectors.each do |data|
+        vector = data[0]
+        product = data[1]
+        correlation = dot_product_vectors(user_vector, vector)
+        result.append([correlation, product])
+      end
+
+      TopProduct.where(user_id: user.id).delete_all
+      n=0
+      result.sort_by{|a, b| a}.reverse.take(limit).each do |w|
+        n=n+1
+        TopProduct.create!({user_id: user.id, score: w[0], rank: n, product_id: w[1].id})
+      end
+      result.sort_by{|a,b| a}.reverse
+    end
+    result.sort_by{|a,b| a}.reverse
+  end
+
+  #RUN DAILY
+
+  def assign_all(limit)
+    all_wip_vectors = get_all_wip_vectors
+    all_product_vectors = get_all_product_vectors
+    User.all.each do |user|
+      assign_top_bounties_for_user(limit, user, all_wip_vectors)
+      assign_top_products_for_user(limit, user, all_product_vectors)
+    end
   end
 
   #RUN ONCE
