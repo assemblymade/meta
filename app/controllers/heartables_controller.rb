@@ -47,7 +47,7 @@ class HeartablesController < ApplicationController
       @hearts = @hearts.where.not(user_id: current_user.id)
     end
 
-    render json: CachedArraySerializer.new(@hearts).as_json
+    render json: @hearts
   end
 
   # private
