@@ -2,6 +2,8 @@
 <% activate_nav! :bounties %>
 <%= track 'product.wips.viewed', ProductAnalyticsSerializer.new(@product) %>
 
+<%= render 'wips/heartables' %>
+
 <%= react_component 'BountyIndex', {
   initialBounties: @wips.page(1).map { |t| BountySerializer.new(t) },
   tags: Wip::Tag.suggested_tags,

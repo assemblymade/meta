@@ -7,6 +7,12 @@ class TasksController < WipsController
     @wips = find_wips
     @auto_tip_contracts = @product.auto_tip_contracts.active
 
+    @heartables = NewsFeedItem.where(target_id: @wips.map(&:id))
+
+    if signed_in?
+      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map(&:id))
+    end
+
     respond_to do |format|
       format.html do
         expires_now
