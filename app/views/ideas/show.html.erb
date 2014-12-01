@@ -23,7 +23,7 @@
       <% end %>
       <li class="text-muted">Submitted by <%= link_to "@#{@idea.creator_username}", @idea.user, class: 'text-stealth-link' %></li>
       <div class="right">
-        <%= react_component 'Love', heartable_id: @idea.news_feed_item.id, heartable_type: 'NewsFeedItem' %>
+        <%= react_component 'Love', heartable_id: @idea.news_feed_item.id, heartable_type: 'NewsFeedItem', public: true %>
       </div>
     </ul>
     <h3 class="mt0 mb0">
