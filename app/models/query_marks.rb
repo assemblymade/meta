@@ -185,6 +185,8 @@ class QueryMarks
     result.sort_by{|a,b| a}.reverse
   end
 
+  #RUN DAILY
+
   def assign_all(limit)
     all_wip_vectors = get_all_wip_vectors
     all_product_vectors = get_all_product_vectors
