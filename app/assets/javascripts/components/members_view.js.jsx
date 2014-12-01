@@ -36,7 +36,7 @@ var OnlineUsersStore = require('../stores/online_users_store');
     },
 
     componentWillUnmount: function() {
-      OnlineUsersStore.removeListener(this._onChange)
+      OnlineUsersStore.removeListener('change', this._onChange)
     },
 
     componentDidUpdate: function(prevProps, prevState) {
