@@ -20,7 +20,6 @@ class NewsFeedItemComment < ActiveRecord::Base
   end
 
   def author_id
-    # TODO: this feels brittle, looking for the comment author
-    target.user_id
+    user_id
   end
 end
