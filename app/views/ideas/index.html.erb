@@ -13,7 +13,7 @@
     <div class="idea-feed-item card p3">
       <div class="mt0 mb2">
         <div class="left">
-          <%= react_component 'Love', heartable_id: idea.news_feed_item.id, heartable_type: 'NewsFeedItem' %>
+          <%= react_component 'Love', heartable_id: idea.news_feed_item.id, heartable_type: 'NewsFeedItem', public: true %>
         </div>
         <div class="right text-muted">
           <%= link_to idea, class: "text-stealth-link" do %>
