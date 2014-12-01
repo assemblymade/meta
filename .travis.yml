@@ -14,7 +14,6 @@ before_script:
 - psql -c 'create database asm_test;' -U postgres
 - cp config/database.yml.travis config/database.yml
 - bin/rake db:schema:load
-script: npm test
 cache:
   directories:
   - vendor/bundle
@@ -35,7 +34,7 @@ deploy:
     secure: V8u9b4ILMBW4EMofqRlm3XBgQIBM0P5Ewa4ETeKiESb0PwkGVw7KXIWW571pzXpw0+Z7aDNQlmAbF4OQljXasg4B+V0h69AvoEaXfOVhZPbdLn//zXdcbh71vV3bIhyOhXrWzbrhsVLuEgc5w1Wgq5bx4um5DVkPrIid0m0nyRk=
 notifications:
   slack:
-    secure: fp5IhEInJ2Dk385R1Rs7oAl6aynlPi+1G9QYKSND6slSuFHL3Bg09fuLtWJW4HKQjd/ec0ecCorEdHh2JT74oy8/allziIb0114JoCXU6QbJ4CJVT/BcF0eAfMfonl1xp+E6mDr9ImfHIm7GpStFRVQkJS//fLkM9SRmY1YHYqs=
+    secure: h95nBI0PTGK/rUpx5Jig71L2TPEh0JRh15oxdY27SV8fsHlENozydvfEKgpk5CR6hyc0LsJMBVhEubiN3G5Ob/G1A8skngCIIs8VVCKdUbUXd+PGTcx52XldjRkmVAKXAXeDOv3jajC2h0872YfgjTVtCpIcv8oXTVANU+aoX28=
     on_success: change
     on_failure: always
 env:
