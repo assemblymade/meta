@@ -58,9 +58,7 @@ module.exports = React.createClass({
         <div className="p3 border-bottom">
           {this.renderLove()}
           <ul className="list-inline mb2" style={{ marginBottom: '6px' }}>
-            {this.props.showCoins ? <li className="text-large">
-              {this.renderBountyValuation()}
-            </li> : null}
+            {this.renderBountyValuation()}
             <li>
               {this.renderUrgency()}
             </li>
@@ -88,33 +86,19 @@ module.exports = React.createClass({
         <div className="p3">
           {this.renderDescription()}
         </div>
-        {window.app.currentUser() ?
-          <div className="card-footer p3 clearfix">
-            <div className="left">
-              {this.renderStartWorkButton()}
-            </div>
-
-            <ul className="list-inline mt0 mb0 py1 right">
-              {this.renderEditButton()}
-              {this.renderOpenButton()}
-              {this.renderFollowButton()}
-              {this.renderInviteFriendButton()}
-            </ul>
-          </div> : <div className="border-bottom" />}
+        {this.renderFooter()}
       </div>
     );
   },
 
-  renderLove: function() {
-    if (this.props.item) {
-      return <div className="right">
-        <Love heartable_id={this.props.item.id} heartable_type="NewsFeedItem" />
-      </div>
-    }
-  },
-
   renderBountyValuation: function() {
-    return <BountyValuation {...this.state.bounty} {...this.props.valuation} />;
+    if (this.props.showCoins) {
+      return (
+        <li className="text-large">
+          <BountyValuation {...this.state.bounty} {...this.props.valuation} />
+        </li>
+      );
+    }
   },
 
   renderClosedNotice: function() {
@@ -193,6 +177,27 @@ module.exports = React.createClass({
     }
   },
 
+  renderFooter: function() {
+    if (window.app.currentUser()) {
+      return (
+        <div className="card-footer p3 clearfix">
+          <div className="left">
+            {this.renderStartWorkButton()}
+          </div>
+
+          <ul className="list-inline mt0 mb0 py1 right">
+            {this.renderEditButton()}
+            {this.renderOpenButton()}
+            {this.renderFollowButton()}
+            {this.renderInviteFriendButton()}
+          </ul>
+        </div>
+      );
+    }
+
+    return <div className="border-bottom" />;
+  },
+
   renderInviteFriendButton: function() {
     if (this.props.noInvites) {
       return null;
@@ -210,6 +215,16 @@ module.exports = React.createClass({
             via_type={'Wip'}
             via_id={bounty.id} />
         </li>
+      );
+    }
+  },
+
+  renderLove: function() {
+    if (this.props.item) {
+      return (
+        <div className="right">
+          <Love heartable_id={this.props.item.id} heartable_type="NewsFeedItem" />
+        </div>
       );
     }
   },

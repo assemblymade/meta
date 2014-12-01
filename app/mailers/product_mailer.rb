@@ -28,28 +28,6 @@ class ProductMailer < BaseMailer
       subject: "Thanks for signing up for #{@product.name}"
   end
 
-  def new_promo_subscriber(product, email_address)
-    mailgun_campaign 'notifications'
-
-    @product = product
-    @email_address = email_address
-
-    mail from: "#{@product.name} <notifications@assemblymail.com>",
-           to: @email_address,
-      subject: "You're one click away from claiming your first Assembly Coins!"
-  end
-
-  def new_promo_subscriber_with_account(product, user)
-    mailgun_campaign 'notifications'
-
-    @product = product
-    @user = user
-
-    mail from: "#{@product.name} <notifications@assemblymail.com>",
-           to: @user.email,
-      subject: "You're one click away from claiming your first Assembly Coins!"
-  end
-
   def new_subscriber_with_account(product, user)
     mailgun_campaign 'notifications'
 
