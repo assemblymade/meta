@@ -5,16 +5,26 @@
 
   var BountyFilter = React.createClass({
     renderFilterDropdown: function() {
-      var filters = [
-        { name: "You're working on", query: 'state:doing state:reviewing doing:vanstee' },
-        { name: "You created",       query: 'created:vanstee' },
-        { name: "You commented on",  query: 'commented:vanstee' },
-        { divider: true },
+      var user = window.app.currentUser()
+      var username = user && user.get('username')
+
+      var filters = []
+
+      if(username) {
+        filters = filters.concat([
+          { name: "You're working on", query: 'state:doing state:reviewing doing:' + username },
+          { name: "You created",       query: 'created:' + username },
+          { name: "You commented on",  query: 'commented:' + username },
+          { divider: true }
+        ])
+      }
+
+      filters = filters.concat([
         { name: 'Open',              query: 'state:open' },
         { name: 'Doing',             query: 'state:doing' },
         { name: 'Reviewing',         query: 'state:reviewing' },
         { name: 'Done',              query: 'state:done' }
-      ]
+      ])
 
       return (
         <div className="dropdown">
