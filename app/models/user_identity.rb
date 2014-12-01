@@ -46,25 +46,4 @@ class UserIdentity < ActiveRecord::Base
     QueryMarks.new.normalized_mark_vector_for_object(self).sort{|a,b| b[1] <=> a[1]}
   end
 
-  def find_best_wips(limit, wips)
-    wips_with_score = wips.map{|w| [w, QueryMarks.new.compare_mark_vectors(self, w)]}
-    wips_with_score.sort_by{|w, s| s}.reverse.take(limit)
-    wips_with_score.map{|w, s| [w, w.product, s]}.sort_by{|w, p, s| s}.reverse.take(limit)
-  end
-
-  def find_best_products(limit)   #GREENLIT AND PROFITABLE
-    products_with_score = Product.where(state: ['greenlit', 'profitable']).map{|p| [p, QueryMarks.new.compare_mark_vectors(self, p)] }
-    products_with_score.sort_by{|p, s| s}.reverse.take(limit)
-  end
-
-  def find_best_wips_among_best_products(limit_wips, limit_products)
-    best_products = find_best_products(limit_products)
-    best_found_wips = []
-    best_products.each do |bp|
-      best_found_wips = best_found_wips + find_best_wips(limit_wips, bp[0].wips.where(state: 'open'))
-    end
-
-    best_found_wips = best_found_wips.sort_by{|w, s| s}.reverse.take(limit_wips)
-    best_found_wips.map{|w, p, s| [w.title, p, s] }
-  end
 end
