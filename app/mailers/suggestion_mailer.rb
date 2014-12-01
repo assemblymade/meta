@@ -16,7 +16,7 @@ class SuggestionMailer < ActionMailer::Base
 
       if @products.count >0 and @bounties.count >0 and @tags.count >0
         mail to: @user.email_address,
-        subject: "Bounty Suggestions"
+        subject: "Bounty Suggestions on Assembly"
       end
     end
   end

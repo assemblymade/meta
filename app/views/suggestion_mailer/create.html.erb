@@ -13,7 +13,7 @@
 <ul>
   <% @bounties.each do |bounty| %>
   <li>
-    <a href = <%= "https://assembly.com/#{bounty.product.slug}/#{bounty.number}" %> >
+    <a href=<%= product_wip_url(bounty.product, bounty) %> >
       <%= "#{bounty.title}  --  #{bounty.product.name}"  %>
     </a>
   </li>
@@ -25,7 +25,7 @@
 <ul>
   <% @products.each do |product| %>
   <li>
-    <a href= <%= "https://assembly.com/#{product.slug}" %> >
+    <a href=<%= product_url(product) %> >
       <%= product.name %>
     </a>
   </li>
@@ -45,4 +45,4 @@
 
 
 
-We're trying to get to know you!  If you think we're way off, <a href = "barisser@assembly.com">let us know</a>!
+We're trying to get to know you!  If you think we're way off, <a href = "mailto:barisser@assembly.com">let us know</a>!
