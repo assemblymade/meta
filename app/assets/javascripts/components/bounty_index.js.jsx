@@ -11,6 +11,13 @@
   var timeout = null
 
   var BountyIndex = React.createClass({
+    propTypes: {
+      tags: React.PropTypes.object,
+      pages: React.PropTypes.number,
+      product: React.PropTypes.object,
+      valuation: React.PropTypes.object
+    },
+
     getInitialState: function() {
       return _.extend({
         value: 'state:open',
