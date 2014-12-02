@@ -303,10 +303,10 @@ module.exports = React.createClass({
             <span className="icon icon-document icon-left"></span>
             Submit work for review
           </a>
-          <div className="left h6 mt0 mb0 gray">
+          <div className="left h6 mt0 mb0 gray-darker">
             <Icon icon="lock" />
             {' '}
-            Held until {this.state.lockUntil.format('dddd [at] h:mm a')}
+            We'll hold this task for you till {this.state.lockUntil.format('dddd [at] h a')}
             <br />
             <a href="javascript:void(0)" onClick={this.extendWork}>Hold until two days from now</a>
             {' '}
@@ -322,7 +322,7 @@ module.exports = React.createClass({
       <div className="py1 gray">
         <span className="mr1"><Icon icon="lock" /></span>
         {' '}
-        <a className="gray" href={worker.url}>
+        <a className="gray-darker" href={worker.url}>
           <span style={{ opacity: '0.7' }}>
             <Avatar user={worker} style={{ display: 'inline' }} />
           </span>
