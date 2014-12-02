@@ -18,7 +18,7 @@
         <%= f.label :body, 'Extended description', class: 'control-label' %>
         <div class="row">
           <div class="col-md-8">
-            <% if @idea.try(:body).empty? %>
+            <% if @idea.try(:body).blank? %>
               <%= react_component "MarkdownEditor", name: "idea[body]", required: "false" %>
             <% else %>
               <%= f.text_area :body, class: 'form-control', autofocus: true, rows: 5 %>
