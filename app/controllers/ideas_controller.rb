@@ -18,7 +18,7 @@ class IdeasController < ProductController
     find_idea!
 
     @comments = ActiveModel::ArraySerializer.new(
-      @idea.news_feed_item.news_feed_item_comments,
+      @idea.news_feed_item.news_feed_item_comments.order('created_at asc'),
       each_serializer: IdeaCommentSerializer
     ).as_json
 
