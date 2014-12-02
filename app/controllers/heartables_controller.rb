@@ -42,7 +42,7 @@ class HeartablesController < ApplicationController
                     where(heartable_id: params[:heartable_ids]).
                     select('distinct on (heartable_id) *')
 
-    render json: CachedArraySerializer.new(@hearts).as_json
+    render json: @hearts
   end
 
   # private
