@@ -27,7 +27,7 @@
     },
 
     getBounties: function(value, sort, page) {
-      BountiesActionCreators.requestBountiesThrottled(this.props.product.slug, this.params(value, sort, page))
+      BountiesActionCreators.requestBountiesDebounced(this.props.product.slug, this.params(value, sort, page))
     },
 
     handleValueChange: function(event) {

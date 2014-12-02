@@ -1,18 +1,6 @@
 var ActionTypes = window.CONSTANTS.ActionTypes
 
-var _timeout = null
-
 BountiesActionCreators = {
-  requestBountiesThrottled: function(product, params) {
-    if(_timeout) {
-      clearTimeout(_timeout)
-    }
-
-    _timeout = setTimeout(function() {
-      this.requestBounties(product, params)
-    }.bind(this), 300)
-  },
-
   requestBounties: function(productSlug, params) {
     Dispatcher.dispatch({
       type: ActionTypes.BOUNTIES_REQUEST,
@@ -35,7 +23,8 @@ BountiesActionCreators = {
         })
       }
     })
-  }
+  },
+  requestBountiesDebounced: _.debounce(this.requestBounties, 300),
 }
 
 module.exports = BountiesActionCreators
