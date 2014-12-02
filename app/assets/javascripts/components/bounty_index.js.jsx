@@ -5,6 +5,8 @@
   var BountyList = require('./bounty_list.js.jsx')
   var PaginationLinks = require('./pagination_links.js.jsx')
   var Spinner = require('./spinner.js.jsx')
+  var BountiesActionCreators = require('../actions/bounties_action_creators.js')
+  var BountiesStore = require('../stores/bounties_store.js')
 
   var timeout = null
 
@@ -20,24 +22,25 @@
       }
     },
 
+    componentDidMount: function() {
+      BountiesStore.addListener('change', this._onChange)
+    },
+
+    componentWillUnmount: function() {
+      BountiesStore.removeListener('change', this._onChange)
+    },
+
+    _onChange: function() {
+      this.setState({
+        bounties: BountiesStore.getBounties(),
+        page: BountiesStore.getPage(),
+        pages: BountiesStore.getPages(),
+        loading: BountiesStore.getLoading()
+      })
+    },
+
     getBounties: function(value, sort, page) {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-
-      timeout = setTimeout(function() {
-        var path = this.getBountiesPath()
-        var params = this.params(value, sort, page)
-
-        $.getJSON(path, params, function(response) {
-          this.setState({
-            bounties: response.bounties,
-            loading: false,
-            page: response.meta.pagination.page,
-            pages: response.meta.pagination.pages,
-          });
-        }.bind(this));
-      }.bind(this), 300)
+      BountiesActionCreators.requestBountiesThrottled(this.props.product.slug, this.params(value, sort, page))
     },
 
     handleValueChange: function(event) {
@@ -138,10 +141,6 @@
           </div>
         </div>
       )
-    },
-
-    getBountiesPath: function() {
-      return ['/', this.props.product.slug, '/', 'bounties', '.', 'json'].join('')
     },
 
     params: function(value, sort, page) {
