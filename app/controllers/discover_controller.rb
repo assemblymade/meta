@@ -49,6 +49,8 @@ class DiscoverController < ApplicationController
         @products.order('products.started_team_building_at DESC')
       when 'teambuilding'
         @products.sort_by {|p| p.bio_memberships_count }
+      when 'suggested'
+        @products = current_user.top_products.pluck(:product_id).map{|a| Product.find(a) }
       else # popular
         @products.sort_by {|p| -p.partners_count }
       end
@@ -78,6 +80,11 @@ class DiscoverController < ApplicationController
       page(params[:page]).per(25)
 
     @postings = @postings.where(products: { slug: params[:product] }) if params[:product]
+
+    if params[:filter] == 'suggested'
+      @postings = current_user.top_bountys.map{|a| Task.find(a.wip_id)}
+    end
+
   end
 
   def updates
