@@ -22,7 +22,7 @@ module EmailCampaigns
 
             # TODO: remove feature flag
             if User.find(user_id).staff?
-              send[user_id] = unsent_hearts.map(&:id)
+              send[user_id] = unsent_hearts.map(&:id) if unsent_hearts.any?
             end
 
             unsent_hearts.each{|h| h.update! sent_at: Time.now }
