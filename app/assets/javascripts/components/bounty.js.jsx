@@ -59,7 +59,6 @@ module.exports = React.createClass({
     return (
       <div>
         <div className="p3 border-bottom">
-          {this.renderLove()}
           <ul className="list-inline mb2" style={{ marginBottom: '6px' }}>
             {this.renderBountyValuation()}
             <li>
@@ -85,6 +84,8 @@ module.exports = React.createClass({
             </small>
           </h1>
         </div>
+
+        {this.renderLove()}
 
         <div className="p3">
           {this.renderDescription()}
@@ -223,9 +224,13 @@ module.exports = React.createClass({
   },
 
   renderLove: function() {
+    if (!window.app.featureEnabled('much-love') && !this.props.public) {
+      return null
+    }
+
     if (this.props.item) {
       return (
-        <div className="right">
+        <div className="px3 py2 mb0 mt0 border-bottom">
           <Love heartable_id={this.props.item.id} heartable_type="NewsFeedItem" />
         </div>
       );

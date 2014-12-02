@@ -193,7 +193,7 @@
     },
 
     renderLove: function() {
-      return <div className="px3 py2 clearfix border-top h6 mb0">
+      return <div className="px3 py2 border-top mb0">
         <Love heartable_id={this.props.heartable_id} heartable_type="NewsFeedItem" />
       </div>
     },

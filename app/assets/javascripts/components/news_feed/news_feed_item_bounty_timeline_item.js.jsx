@@ -84,14 +84,18 @@ module.exports = React.createClass({
                 </li>
               </ul>
 
-              <ul className="list-inline omega" key={'list-inline-' + id}>
-                <li>
+              <ul className="list-reset clearfix mb0" key={'list-inline-' + id}>
+                <li className="left mr1">
                   <a href={actor.url} title={'@' + actor.username} className="chat-actor">
                     {actor.username}
                   </a>
                 </li>
 
-                <li className="js-insert-tips">
+                <li className="left mr1 js-insert-tips">
+                </li>
+
+                <li className="left mr1">
+                  <Love heartable_type='NewsFeedItemComment' heartable_id={this.props.news_feed_item_comment_id} />
                 </li>
               </ul>
 

@@ -35,10 +35,10 @@
         tooltip = "You can't tip yourself"
       }
 
-      var tippers = null
-      if (totalCents > 0) {
-        tippers = <Tippers tips={this.tips()} />
-      }
+      // var tippers = null
+      // if (totalCents > 0) {
+      //   tippers = <Tippers tips={this.tips()} />
+      // }
 
       return (
         <div className="js-tips" style={{opacity: opacity}}>
@@ -47,7 +47,6 @@
               <span className="icon icon-app-coin"></span>
               <span> {numeral(this.totalCents()).format('0,0')}</span>
             </a>
-            {tippers}
           </div>
         </div>
       )

@@ -14,11 +14,11 @@
 
     render: function() {
       if (!window.app.featureEnabled('much-love') && !this.props.public) {
-        return <span/>
+        return <div/>
       }
 
       if (this.state.hearts_count == null) {
-        return <span/>
+        return <div/>
       }
 
       var style = {
@@ -28,12 +28,12 @@
         style['color'] = 'rgba(236,55,79,1)'
       }
 
-      return <span>
-        <a className="gray left mr1" href="javascript:;" onClick={this.handleClick}>
-          <span className="fa fa-heart" style={style}></span>
+      return <div className="clearfix">
+        <a className="gray left mr1" href="javascript:;" onClick={this.handleClick} style={{paddingTop:2}}>
+          <div className="fa fa-heart" style={style}></div>
         </a>
         <Lovers heartable_id={this.props.heartable_id} hearts_count={this.state.hearts_count} />
-      </span>
+      </div>
     },
 
     getInitialState: function() {

@@ -186,36 +186,44 @@ namespace :bounties do
   end
 
   task :push_to_news_feed => :environment do
-    Task.find_each do |task|
-      if NewsFeedItem.find_by(product_id: task.product_id, target_id: task.id).nil?
-        puts "adding #{task.id}"
-        item = NewsFeedItem.create(
-          created_at: task.created_at,
-          updated_at: task.updated_at,
-          product: task.product,
-          source_id: task.user.id,
-          target: task
-        )
-        item.update_columns updated_at: task.updated_at
-      else
-        puts "skipping #{task.id}"
-      end
-    end
+    # remove bounty nfi comments and hearts
+    # Heart.joins('inner join news_feed_item_comments nfic on hearts.heartable_id = nfic.id').delete_all
+    # NewsFeedItemComment.joins('inner join events on events.id = news_feed_item_comments.target_id').delete_all
 
-    Event::Comment.find_each do |comment|
-      if NewsFeedItemComment.find_by(target_id: comment.id)
-        puts "adding #{comment.id}"
-        nfi = NewsFeedItem.find_by!(target_id: comment.wip_id)
-        item = nfi.news_feed_item_comments.create!(
-          created_at: comment.created_at,
-          updated_at: comment.updated_at,
-          body: comment.body,
-          target_id: comment.id,
-          user: comment.user
+    wips = 0
+    Wip.includes(:comments).find_each do |wip|
+      wips += 1
+      if NewsFeedItem.find_by(product_id: wip.product_id, target_id: wip.id).nil?
+        puts "#{wip.id} #{wips} - adding"
+        item = NewsFeedItem.create(
+          created_at: wip.created_at,
+          updated_at: wip.updated_at,
+          product: wip.product,
+          source_id: wip.user.id,
+          target: wip
         )
-        item.update_columns updated_at: comment.updated_at
+        item.update_columns updated_at: wip.updated_at
       else
-        puts "skipping #{comment.id}"
+        puts "#{wip.id} #{wips} - skipping"
+      end
+
+      comments = 0
+      wip.comments.each do |comment|
+        comments += 1
+        if NewsFeedItemComment.find_by(target_id: comment.id).nil?
+          puts "#{wip.id} #{wips} - adding #{comment.id} #{comments}"
+          nfi = NewsFeedItem.find_by!(target_id: comment.wip_id)
+          item = nfi.news_feed_item_comments.create!(
+            created_at: comment.created_at,
+            updated_at: comment.updated_at,
+            body: comment.body,
+            target_id: comment.id,
+            user: comment.user
+          )
+          item.update_columns updated_at: comment.updated_at
+        else
+          puts "#{wip.id} #{wips} - skipping #{comment.id} #{comments}"
+        end
       end
     end
   end
