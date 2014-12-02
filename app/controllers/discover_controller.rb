@@ -188,7 +188,8 @@ class DiscoverController < ApplicationController
       design:   'Featured Design Bounties',
       frontend: 'Featured Front-End Development Bounties',
       backend:  'Featured Back-End Development Bounties',
-      product:  'Featured Product Bounties'
+      product:  'Featured Product Bounties',
+      suggested: 'Suggested Bounties for You'
     }.with_indifferent_access
   end
 
