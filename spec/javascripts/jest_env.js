@@ -34,6 +34,9 @@ global.app.currentUser = function() {
 global.app.currentAnalyticsProduct = function() {
   return {};
 };
+global.app.featureEnabled = function() {
+  return true
+}
 global.analytics.track = function() {};
 
 global.visibility = function() {};

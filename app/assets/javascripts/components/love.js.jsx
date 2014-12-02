@@ -57,11 +57,11 @@
     },
 
     getStateFromStore: function() {
-      return LoveStore.get(this.props.heartable_id)
+      return LoveStore.get(this.props.heartable_id) || {}
     },
 
     _onChange: function() {
-      this.replaceState(this.getStateFromStore() || {})
+      this.replaceState(this.getStateFromStore())
     }
   })
 
