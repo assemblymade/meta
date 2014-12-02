@@ -9,6 +9,6 @@ class IdeaCommentSerializer < ApplicationSerializer
   end
 
   def markdown_body
-    markdown(body)
+    idea_markdown(body)
   end
 end
