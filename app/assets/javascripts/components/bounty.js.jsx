@@ -309,7 +309,7 @@ module.exports = React.createClass({
             {' '}
             or
             {' '}
-            <a href="javascript:void(0)" onClick={this.abandonWork}>abandon</a>
+            <a href="javascript:void(0)" onClick={this.abandonWork}>Release task</a>
           </div>
         </div>
       );
