@@ -21,7 +21,7 @@ describe UsersController do
     end
 
     it 'filters wips' do
-      expected_filters = { user: 'assigned', state: true, sort: 'newest' }.with_indifferent_access
+      expected_filters = { user: 'assigned', sort: 'newest' }.with_indifferent_access
 
       expect(FilterWipsQuery).to receive(:call).with(Task.all, user, expected_filters).and_call_original
 

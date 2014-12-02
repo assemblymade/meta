@@ -7,19 +7,19 @@
 
   var BountyFilters = React.createClass({
     userFilter: function() {
-      return UserFilter(_.extend({}, this.props, { buildUrl: this.buildUrl }))
+      return <UserFilter {...this.props} buildUrl={this.buildUrl} />;
     },
 
     tagFilter: function() {
-      return TagFilter(_.extend({}, this.props, { buildUrl: this.buildUrl }))
+      return <TagFilter {...this.props} buildUrl={this.buildUrl} />;
     },
 
     sortOrder: function() {
-      return SortOrder(_.extend({}, this.props, { buildUrl: this.buildUrl }))
+      return <SortOrder {...this.props} buildUrl={this.buildUrl} />;
     },
 
     clearFilters: function() {
-      if(this.props.selected_user_id || this.props.selected_tag || this.props.selected_sort) {
+      if (this.props.selected_user_id || this.props.selected_tag || this.props.selected_sort) {
         return (
           <li>
             <a href={this.props.url} className="btn btn-default">
@@ -34,13 +34,14 @@
       var url = this.props.url;
 
       var query = _.compact(_.map(['state', 'tag', 'sort', 'user_id'], function(query) {
-        if(query == 'user_id') {
-          var value = options['user'] && options['user'].id || this.props['selected_user_id']
+        var value;
+        if (query == 'user_id') {
+          value = options['user'] && options['user'].id || this.props['selected_user_id']
         } else {
-          var value = options[query] || this.props['selected_' + query]
+          value = options[query] || this.props['selected_' + query]
         }
 
-        if(value) {
+        if (value) {
           return [query, value].join('=')
         }
       }.bind(this)))

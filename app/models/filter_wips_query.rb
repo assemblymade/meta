@@ -36,7 +36,7 @@ class FilterWipsQuery
 
     expanded_states = states.flat_map do |state|
       case state
-      when 'open' 
+      when 'open'
         'open'
       when 'doing'
         ['allocated', 'awarding']
@@ -126,9 +126,7 @@ class FilterWipsQuery
       Wip.order('wips.updated_at ASC')
     when 'priority'
       Wip.order('wips.multiplier DESC')
-    when false
-      Wip.all
-    else #  (default)
+    else
       Wip.order('updated_at desc')
     end
   end

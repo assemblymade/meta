@@ -150,7 +150,7 @@
       var params = _.reduce(terms, function(memo, value) {
         var filter = value.split(':')
 
-        if(filter.length == 2) {
+        if (filter.length == 2) {
           memo[filter[0]] = _.compact(_.flatten([memo[filter[0]], filter[1]]))
         } else {
           memo.query = _.compact([memo.query, value]).join(' ')

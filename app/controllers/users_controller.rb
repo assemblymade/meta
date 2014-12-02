@@ -11,7 +11,6 @@ class UsersController < ApplicationController
 
     default_filters = {
       user: 'assigned',
-      state: true,
       sort: ['commented', 'awarded'].exclude?(params[:user]) && 'newest'
     }.with_indifferent_access
 

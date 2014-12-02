@@ -6,7 +6,10 @@
 
   var CreateBountyButton = React.createClass({
     propTypes: {
-      classes: React.PropTypes.string,
+      classes: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.array
+      ]),
       label: React.PropTypes.string,
       product: React.PropTypes.object,
       url: React.PropTypes.string,
