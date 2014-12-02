@@ -6,6 +6,8 @@ var Icon = require('./icon.js.jsx');
 var formatShortTime = require('../lib/format_short_time.js');
 var Love = require('./love.js.jsx');
 
+var CLOSED_STATES = ['awarded', 'closed', 'resolved'];
+
 var ONE_HOUR = 60 * 60 * 1000;
 
 module.exports = React.createClass({
@@ -44,8 +46,9 @@ module.exports = React.createClass({
 
     return {
       // :<
-      bounty: this.props.bounty,
-      worker: this.props.bounty.workers[0],
+      bounty: bounty,
+      closed: (CLOSED_STATES.indexOf(bounty.state) !== -1 ? true : false),
+      worker: bounty.workers[0],
       lockUntil: moment(bounty.locked_at).add(60 * ONE_HOUR)
     };
   },
