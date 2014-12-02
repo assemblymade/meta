@@ -186,7 +186,7 @@ namespace :bounties do
   end
 
   task :push_to_news_feed => :environment do
-    Task.where(created_at: 2.months.ago..Time.now).each do |task|
+    Task.find_each do |task|
       if NewsFeedItem.find_by(product_id: task.product_id, target_id: task.id).nil?
         puts "adding #{task.id}"
         item = NewsFeedItem.create(
@@ -199,6 +199,23 @@ namespace :bounties do
         item.update_columns updated_at: task.updated_at
       else
         puts "skipping #{task.id}"
+      end
+    end
+
+    Event::Comment.find_each do |comment|
+      if NewsFeedItemComment.find_by(target_id: comment.id)
+        puts "adding #{comment.id}"
+        nfi = NewsFeedItem.find_by!(target_id: comment.wip_id)
+        item = nfi.news_feed_item_comments.create!(
+          created_at: comment.created_at,
+          updated_at: comment.updated_at,
+          body: comment.body,
+          target_id: comment.id,
+          user: comment.user
+        )
+        item.update_columns updated_at: comment.updated_at
+      else
+        puts "skipping #{comment.id}"
       end
     end
   end
@@ -237,4 +254,3 @@ namespace :bounties do
     end
   end
 end
-
