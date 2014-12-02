@@ -125,9 +125,9 @@ class QueryMarks
   #GENERATE TOP_BOUNTIES, TOP_PRODUCTS
 
   def get_all_wip_vectors
-    wips = Wip.where(state: 'open').where(type: "Task")
+    wips = Wip.where(state: 'open').where(type: "Task").where('created_at > ?', 60.days.ago)
     wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
-    wip_vectors.select{ |a, b| a.count > 0}
+    wip_vectors.select{ |a, b| a.count > 0 && ['team_building', 'greenlit', 'profitable'].include?(b.product.state) }
   end
 
   def get_all_product_vectors
