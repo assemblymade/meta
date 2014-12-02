@@ -1,14 +1,14 @@
-jest.dontMock(appFile('actions/comment_action_creators'))
+jest.dontMock(appFile('actions/comment_action_creators'));
 
 describe('CommentActionCreators', function() {
-  var CommentActionCreators
+  var CommentActionCreators;
 
   describe('uploadAttachment()', function() {
     beforeEach(function() {
       $.ajax = jest.genMockFunction();
 
-      Dispatcher = require(appFile('dispatcher'))
-      CommentActionCreators = require(appFile('actions/comment_action_creators'))
+      Dispatcher = require(appFile('dispatcher'));
+      CommentActionCreators = require(appFile('actions/comment_action_creators'));
       Dispatcher.dispatch.mockClear();
     });
 
