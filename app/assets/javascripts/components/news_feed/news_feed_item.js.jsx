@@ -1,8 +1,3 @@
-/** @jsx React.DOM */
-
-// TODO This is in application.js (chrislloyd)
-// var _ = require('underscore')
-
 (function() {
   var AppIcon = require('../app_icon.js.jsx');
   var Avatar = require('../avatar.js.jsx');
@@ -38,6 +33,7 @@
           {this.renderTarget()}
           {this.renderMeta()}
           {this.renderUserSource()}
+          {this.renderLove()}
           {this.renderComments()}
         </Tile>
       );
@@ -126,10 +122,6 @@
         return (
           <div className="px3 py1 h6 mt0 mb0">
             <ul className="list-reset clearfix mxn1 mb0">
-              <li className="left px1" key={this.props.heartable_id}>
-                <Love heartable_id={this.props.heartable_id} heartable_type="NewsFeedItem" />
-              </li>
-
               {tagItems}
             </ul>
           </div>
@@ -199,6 +191,13 @@
         </div>
       );
     },
+
+    renderLove: function() {
+      return <div className="px3 py2 clearfix border-top h6 mb0">
+        <Love heartable_id={this.props.heartable_id} heartable_type="NewsFeedItem" />
+      </div>
+    },
+
 
     targetNoun: function(type) {
       var typeMap = this.typeMap;

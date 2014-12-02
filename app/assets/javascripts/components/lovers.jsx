@@ -14,7 +14,11 @@ var Lovers = React.createClass({
   },
 
   componentDidMount: function() {
-    LoveStore.addChangeListener(this._onChange)
+    LoveStore.addListener('change', this._onChange)
+  },
+
+  componentWillUnmount: function() {
+    LoveStore.removeListener('change', this._onChange)
   },
 
   renderAvatars: function() {
@@ -22,31 +26,24 @@ var Lovers = React.createClass({
       return null
     }
 
-    var plus = null
-    if (this.state.hearts_count > this.state.recentLovers.length) {
-      plus = <span> +</span>
+    var message = "likes this"
+    var count = this.state.hearts_count.length
+
+    if (count == 2) {
+      message = "and 1 other like this"
+    } else if (count > 2) {
+      message = "and " + (count - 1) + " others like this"
     }
 
-    return <span> &mdash;
-      <ul className="list-inline-media">
-        {_.map(this.state.recentLovers, this.renderAvatar)}
-      </ul>{plus}
+    return <span className="gray-2">
+      {this.renderAvatar(this.state.recentLovers[0])}
+      <span className="black bold"> {this.state.recentLovers[0].username} </span>
+      <span> {message} </span>
     </span>
   },
 
   renderAvatar: function(user) {
-    return (
-      <li key={user.id}>
-        <img
-          className="img-circle"
-          src={user.avatar_url}
-          alt={'@' + user.username}
-          data-toggle="tooltip"
-          data-placement="top"
-          title={'@' + user.username}
-          width="16" height="16" />
-      </li>
-    )
+    return <span className="left mr1"><Avatar user={user} size={18} /></span>
   },
 
   getStateFromStore: function() {

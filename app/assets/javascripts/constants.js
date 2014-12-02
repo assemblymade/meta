@@ -114,7 +114,9 @@
 
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,
+      LOVE_RECEIVE_HEARTABLES: null,
       LOVE_RECEIVE_RECENT_HEARTS: null,
+      LOVE_RECEIVE_USER_HEARTS: null,
 
       NEWS_FEED_RECEIVE_RAW_ITEMS: null,
 
@@ -126,11 +128,6 @@
 
       WIP_EVENT_CREATING: null,
       WIP_EVENT_CREATED: null
-    }),
-
-    PayloadSources: keyMirror({
-      SERVER_ACTION: null,
-      VIEW_ACTION: null
     })
   };
 

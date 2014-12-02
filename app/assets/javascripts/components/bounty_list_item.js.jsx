@@ -44,7 +44,7 @@
       }
 
       return (
-        <div className="px3 py2 border-top h6 mb0 mt0">
+        <div className="px3 py2 border-top h6 mb0 mt0 clearfix">
           <Love heartable_type='NewsFeedItem' heartable_id={this.props.bounty.news_feed_item_id} />
         </div>
       )

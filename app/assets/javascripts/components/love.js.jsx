@@ -13,7 +13,6 @@
     },
 
     render: function() {
-
       if (!window.app.featureEnabled('much-love') && !this.props.public) {
         return <span/>
       }
@@ -22,17 +21,18 @@
         return <span/>
       }
 
-      var style = {}
-
+      var style = {
+        fontSize: 18,
+      }
       if (this.state.user_heart) {
-        style['color'] = 'red'
+        style['color'] = 'rgba(236,55,79,1)'
       }
 
       return <span>
-        <a className="gray" href="javascript:;" onClick={this.handleClick}>
+        <a className="gray left mr1" href="javascript:;" onClick={this.handleClick}>
           <span className="fa fa-heart" style={style}></span>
-          <span> {numeral(this.state.hearts_count).format('0,0')}</span>
         </a>
+        <Lovers heartable_id={this.props.heartable_id} hearts_count={this.state.hearts_count} />
       </span>
     },
 
@@ -41,11 +41,11 @@
     },
 
     componentDidMount: function() {
-      LoveStore.addChangeListener(this._onChange)
+      LoveStore.addListener('change', this._onChange)
     },
 
     componentWillUnmount: function() {
-      LoveStore.removeChangeListener(this._onChange)
+      LoveStore.removeListener('change', this._onChange)
     },
 
     handleClick: function() {

@@ -39,13 +39,8 @@ class HeartablesController < ApplicationController
 
   def hearts
     @hearts = Heart.includes(:user).
-                     where(heartable_id: params[:heartable_ids]).
-                     order(created_at: :desc).
-                     limit(params[:limit] || 3)
-
-    if signed_in?
-      @hearts = @hearts.where.not(user_id: current_user.id)
-    end
+                    where(heartable_id: params[:heartable_ids]).
+                    select('distinct on (heartable_id) *')
 
     render json: CachedArraySerializer.new(@hearts).as_json
   end

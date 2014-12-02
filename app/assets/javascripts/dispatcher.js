@@ -4,15 +4,6 @@
 // https://github.com/facebook/flux/blob/master/src/Dispatcher.js
 
 (function() {
-  // Sprockets. Booooo.
-
-  var PayloadSources;
-  if (typeof require !== 'undefined') {
-    PayloadSources = require('./constants').PayloadSources
-  } else {
-    PayloadSources = window.CONSTANTS.PayloadSources
-  }
-
   /** Private variables */
 
   var _prefix = 'asm_';

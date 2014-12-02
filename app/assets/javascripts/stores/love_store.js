@@ -1,29 +1,41 @@
+var EventEmitter = require('events').EventEmitter
+
 var _dispatchToken
 var _heartables = {}
 var _userHearts = {}
 
 // var Dispatcher = require('../dispatcher')
-var Store = require('../stores/store')
-var ActionTypes = window.CONSTANTS.ActionTypes
-var LoveActionCreators = require('../actions/love_action_creators')
+var ActionTypes = window.CONSTANTS.ActionTypes;
+var LoveActionCreators = require('../actions/love_action_creators');
 
-var LoveStore = _.extend(Object.create(Store), {
-  init: function(rawHeartables, rawUserHearts) {
-    _heartables = _.reduce(rawHeartables, function(memo, h){ memo[h.heartable_id] = h; return memo }, {})
-    _userHearts = _.reduce(rawUserHearts, function(memo, h){ memo[h.heartable_id] = h; return memo }, {})
+class LoveStore extends EventEmitter {
+  constructor() {
+    super()
+    this.setMaxListeners(20)
 
-    _dispatchToken = Dispatcher.register(function(action) {
+    _dispatchToken = Dispatcher.register((action) => {
       switch(action.type) {
+        case ActionTypes.LOVE_RECEIVE_HEARTABLES:
+          _heartables = _.reduce(action.heartables, function(memo, h){ memo[h.heartable_id] = h; return memo }, {})
+          LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
+          this.emit('change')
+          break
+
+        case ActionTypes.LOVE_RECEIVE_USER_HEARTS:
+          _userHearts = _.reduce(action.userHearts, function(memo, h){ memo[h.heartable_id] = h; return memo }, {})
+          this.emit('change')
+          break
+
         case ActionTypes.LOVE_CLICKED:
           _heartables[action.heartable_id].hearts_count += 1
           _userHearts[action.heartable_id] = {} // optimistic heart
-          this.emitChange()
+          this.emit('change')
           break
 
         case ActionTypes.LOVE_UNCLICKED:
           _heartables[action.heartable_id].hearts_count -= 1
           delete _userHearts[action.heartable_id]
-          this.emitChange()
+          this.emit('change')
           break
 
         case ActionTypes.LOVE_RECEIVE_RECENT_HEARTS:
@@ -33,7 +45,7 @@ var LoveStore = _.extend(Object.create(Store), {
             }
             _heartables[heart.heartable_id].hearts.push(heart)
           })
-          this.emitChange()
+          this.emit('change')
           break
 
         case ActionTypes.WIP_EVENT_CREATED:
@@ -43,7 +55,7 @@ var LoveStore = _.extend(Object.create(Store), {
             heartable_id: event.news_feed_item_comment_id,
             hearts_count: 0
           }
-          this.emitChange()
+          this.emit('change')
           break
 
         case ActionTypes.NEWS_FEED_RECEIVE_RAW_ITEMS:
@@ -65,41 +77,45 @@ var LoveStore = _.extend(Object.create(Store), {
             _userHearts[h.heartable_id] = h
           })
 
-          this.emitChange()
+          this.emit('change')
           break
 
+      } // switch
+    }) // register
+  }
 
-      }
-    }.bind(this))
-  },
-  get: function(heartable_id) {
+  get(heartable_id) {
     var heartable = _.extend({}, _heartables[heartable_id])
     if (_userHearts[heartable_id]) {
       heartable.user_heart = _userHearts[heartable_id]
     }
     return heartable
-  },
+  }
 
-  getAllHeartableIds: function() {
+  getAllHeartableIds() {
     return _.keys(_heartables)
   }
-})
+}
+
+var store = new LoveStore();
 
 // Load initial data from script tags on the page (if they're present)
 var heartablesJson = {},
     userHeartsJson = {};
 
-var jsonTag = document.getElementById('heartables')
-if (jsonTag) {
-  heartablesJson = JSON.parse(jsonTag.innerHTML)
+var dataTag = document.getElementById('heartables')
+if (dataTag) {
+  Dispatcher.dispatch({
+    type: ActionTypes.LOVE_RECEIVE_HEARTABLES,
+    heartables: JSON.parse(dataTag.innerHTML)
+  })
 }
-var jsonTag = document.getElementById('user_hearts')
-if (jsonTag) {
-  userHeartsJson = JSON.parse(jsonTag.innerHTML)
+var dataTag = document.getElementById('user_hearts')
+if (dataTag) {
+  Dispatcher.dispatch({
+    type: ActionTypes.LOVE_RECEIVE_USER_HEARTS,
+    userHearts: JSON.parse(dataTag.innerHTML)
+  })
 }
 
-LoveStore.init(heartablesJson, userHeartsJson)
-
-// LoveActionCreators.retrieveRecentHearts(LoveStore.getAllHeartableIds())
-
-module.exports = LoveStore
+module.exports = store;
