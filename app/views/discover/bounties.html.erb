@@ -46,8 +46,8 @@
     </div>
   <% end %>
 
-  <% if @filter == 'suggested' %>
-    <% Kaminari.paginate_array(@postings).page(params[:page]).per(25) %>
+  <% if params[:filter] == 'suggested' %>
+    <% @postings %>
   <% else %>
     <%= paginate @postings, theme: 'twitter-bootstrap-3' %>
   <% end %>
