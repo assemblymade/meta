@@ -218,7 +218,7 @@
   <div class="modal fade" id="edit-membership-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="overflow: visible;">
           <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
           <input name="_method" value="patch" type="hidden">
           <div class="modal-header">

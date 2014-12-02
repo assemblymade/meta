@@ -13,11 +13,15 @@ var BountyActionCreators = {
 };
 
 function _patch(url) {
+  _request('PATCH', url);
+}
+
+function _request(method, url) {
   // TODO: Dispatch success or error
 
   $.ajax({
     url: url,
-    method: 'PATCH',
+    method: method,
     headers: {
       'accept': 'application/json'
     },

@@ -223,7 +223,9 @@ var InterestStore = require('../stores/interest_store');
         top: 45,
         left: 0,
         width: '100%',
-        display: 'block'
+        display: 'block',
+        overflowY: 'scroll',
+        maxHeight: '300px'
       };
 
       return (

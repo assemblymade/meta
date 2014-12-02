@@ -20,6 +20,8 @@ config/database.yml
 
 /.ruby-version
 
+logfile
+
 # Dragonfly
 public/system
 
