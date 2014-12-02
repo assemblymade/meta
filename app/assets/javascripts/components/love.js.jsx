@@ -61,7 +61,7 @@
     },
 
     _onChange: function() {
-      this.replaceState(this.getStateFromStore())
+      this.replaceState(this.getStateFromStore() || {})
     }
   })
 
