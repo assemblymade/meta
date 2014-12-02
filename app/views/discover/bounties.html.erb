@@ -46,7 +46,12 @@
     </div>
   <% end %>
 
-  <%= paginate @postings, theme: 'twitter-bootstrap-3' %>
+  <% if @filter == 'suggested' %>
+    <% Kaminari.paginate_array(@postings).page(params[:page]).per(25) %>
+  <% else %>
+    <%= paginate @postings, theme: 'twitter-bootstrap-3' %>
+  <% end %>
+
 </div>
 
 <%= render 'shared/footer' %>
