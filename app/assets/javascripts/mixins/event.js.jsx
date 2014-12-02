@@ -26,7 +26,7 @@
     },
 
     verbMap: {
-      'Award': 'awarded',
+      'Award': 'awarded ',
       'Close': 'closed ',
       'Comment': 'commented on ',
       'Post': 'published ',
