@@ -437,6 +437,7 @@ GEM
     tilt (1.4.1)
     timecop (0.6.3)
     timers (1.1.0)
+    truncate_html (0.9.3)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.3.0)
@@ -569,6 +570,7 @@ DEPENDENCIES
   terminal-table
   test_after_commit
   timecop
+  truncate_html
   uglifier
   vcr
   warden (~> 1.2.3)

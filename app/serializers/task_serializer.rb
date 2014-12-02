@@ -2,6 +2,7 @@ class TaskSerializer < ApplicationSerializer
   include ReadraptorTrackable
   include MarkdownHelper
   include Nokogiri
+  include TruncateHtmlHelper
 
   attributes :number, :title, :url, :value, :markdown_description,
     :state, :short_description, :comments_count, :thumbnails, :push_channel,
@@ -41,7 +42,7 @@ class TaskSerializer < ApplicationSerializer
   end
 
   def short_description
-    product_markdown(product, object.description.try(:truncate, 200, separator: /\s/))
+    truncate_html(product_markdown(product, object.description), length: 200)
   end
 
   def steps

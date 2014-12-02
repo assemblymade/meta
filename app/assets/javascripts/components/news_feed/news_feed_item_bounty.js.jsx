@@ -122,7 +122,8 @@
         return (
           <a className="mr1"
               href={product.url + '/bounties?state=open&tag=' + name}
-              style={{ color: '#6e6e6e' }}>
+              style={{ color: '#6e6e6e' }}
+              key={bounty.id + '-' + key}>
             {name}
           </a>
         );
@@ -152,5 +153,4 @@
       }
     }
   });
-
-})()
+})();

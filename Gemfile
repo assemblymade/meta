@@ -81,6 +81,7 @@ gem 'sidekiq'
 gem 'sparkr'
 gem 'split', :require => 'split/dashboard'
 gem 'stripe'
+gem 'truncate_html'
 gem 'uglifier'
 gem 'warden', "~> 1.2.3"
 gem 'workflow'

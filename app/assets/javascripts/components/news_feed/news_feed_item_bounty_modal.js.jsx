@@ -97,30 +97,46 @@ module.exports = React.createClass({
 
     return (
       <Lightbox size="modal-lg" title={title}>
-        {this.state.ready ?
-          [<Bounty
-              key={bounty.id}
-              bounty={bounty}
-              noInvites={true}
-              item={this.props.item}
-              valuation={{
-                product: { name: product.name },
-                url: '/' + product.slug + '/bounties',
-                maxOffer: (6 * product.average_bounty),
-                averageBounty: product.average_bounty,
-                coinsMinted: product.coins_minted,
-                profitLastMonth: product.profit_last_month
-              }}
-              showCoins={product.slug !== 'meta'} />,
-
-          <div className="discussion" id="discussion-view-el" key={'discussion-' + bounty.id}>
-            <div className="timeline omega">
-              {this.renderDiscussion()}
-            </div>
-            {this.renderNewEventForm()}
-          </div>] : <Spinner />}
+        {this.renderBounty()}
       </Lightbox>
     );
+  },
+
+  renderBounty: function() {
+    var item = this.props.item;
+    var bounty = _.extend((this.state.bounty || {}), item.target);
+    var product = item.product;
+
+    bounty.product = product;
+    bounty.user = item.user;
+
+    if (this.state.ready) {
+      return [
+        <Bounty
+            key={bounty.id}
+            bounty={bounty}
+            noInvites={true}
+            item={this.props.item}
+            valuation={{
+              product: { name: product.name },
+              url: '/' + product.slug + '/bounties',
+              maxOffer: (6 * product.average_bounty),
+              averageBounty: product.average_bounty,
+              coinsMinted: product.coins_minted,
+              profitLastMonth: product.profit_last_month
+            }}
+            showCoins={product.slug !== 'meta'} />,
+
+        <div className="discussion" id="discussion-view-el" key={'discussion-' + bounty.id}>
+          <div className="timeline omega">
+            {this.renderDiscussion()}
+          </div>
+          {this.renderNewEventForm()}
+        </div>
+      ];
+    }
+
+    return <Spinner />;
   },
 
   renderCloseActions: function() {

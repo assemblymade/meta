@@ -32,9 +32,9 @@ var Markdown = React.createClass({
     }
 
     return (
-      <div className={cs} dangerouslySetInnerHTML={{__html: this.props.content}} />
+      <div className={cs} dangerouslySetInnerHTML={{ __html: this.props.content }} />
     )
   }
-})
+});
 
 window.Markdown = module.exports = Markdown
