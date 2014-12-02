@@ -20,11 +20,11 @@
       if(this.state.toggle === 'simple') {
         return (
           <div className="p3">
-            <SimpleBountyOffer {...this.props} user={currentuser} />
+            <SimpleBountyOffer {...this.props} user={currentUser} />
           </div>
         )
       } else {
-        return <CustomBountyOffer {...this.props} user={currentuser} />
+        return <CustomBountyOffer {...this.props} user={currentUser} />
       }
     },
 

@@ -35,7 +35,7 @@ class TasksController < WipsController
   end
 
   def new
-    redirect_to product_wips_path(@product, modal: true)
+    @bounty = wip_class.new(product: @product)
   end
 
   def create

@@ -5,95 +5,15 @@
   <h2 class="page-header-title">Create a Bounty</h2>
 </div>
 
-<div class="sheet-body">
-  <div class="row">
-    <%= form_for [@bounty.product, @bounty] do |f| %>
-      <div class="col-md-9 col-xs-9">
-        <div class="form-group">
-          <%= f.label :title, class: 'form-label' %>
-          <%= f.text_field :title, value: params[:title], class: %W(form-control input-lg), 'data-validate-length' => '2', autofocus: true %>
-        </div>
+<div data-react-class="CreateBounty" data-react-props="<%= {
+  classes: 'btn btn-default btn-block',
+  product: { name: @product.name },
+  url: product_wips_path(@product),
+  maxOffer: (6 * @product.average_bounty).round(-4),
+  averageBounty: @product.average_bounty,
+  coinsMinted: @product.coins_minted,
+  profitLastMonth: @product.profit_last_month,
+  steps: BountyGuidance::Valuations.suggestions(@product),
+  createBountyShown: params['modal'] == 'true'
+}.to_json %>"></div>
 
-        <div class="form-group">
-          <%= f.label :description, 'Description', class: 'control-label' %>
-
-          <div class="markdown-editor-control js-markdown-editor dropzone js-dropzone">
-            <%= f.text_area :description, class: 'form-control', rows: 4, value: params[:description], required: true %>
-            <div class="dropzone-inner js-dropzone-select">
-              To attach files drag &amp; drop here or <a href="#">select files
-              from your computer</a>...
-            </div>
-          </div>
-        </div>
-
-        <div class="clearfix">
-          <%= f.button 'Create bounty', class: %w(btn btn-primary pull-right), 'data-disable-with' => 'Creating...' %>
-        </div>
-
-      </div>
-
-      <div class="col-md-3">
-
-        <div style="display:none;">
-          <select type="hidden" id="tag-list-hack" name="task[tag_list][]" multiple="true"></select>
-        </div>
-
-        <div class="form-group">
-          <label class="control-label">Initial Offer</label>
-          <div id="js-initial-offer" class="well"></div>
-        </div>
-
-      </div>
-
-      <div class="col-md-3">
-
-        <div style="display:none;">
-          <select type="hidden" id="tag-list-hack" name="task[tag_list][]" multiple="true"></select>
-        </div>
-
-        <h6 style="margin-bottom: 0;">Tags</h6>
-        <div style="margin-bottom: 10px"
-             data-react-class="TagList"
-             data-react-props="<%= {
-                tags: (tags = @bounty.tags ? @bounty.tags.map do |tag|
-                  tag.name
-                end.as_json : []),
-                filterUrl: product_wips_path(@bounty.product),
-                destination: true,
-                newBounty: true
-              }.to_json %>">
-        </div>
-
-        <div data-react-class="TextInput"
-             data-react-props="<%= {
-               width: "125px",
-               size: "small",
-               label: "Add tag",
-               prepend: "#",
-               prompt: "Add",
-               filterUrl: product_wips_path(@bounty.product)
-             }.to_json %>">
-        </div>
-
-        <h6 style="margin-bottom: 0; margin-top: 20px;">Suggested Tags</h6>
-        <div data-react-class="TagList"
-              data-react-props="<%= {
-                tags: Wip::Tag.suggested_tags.as_json,
-                destination: false
-              }.to_json %>">
-        </div>
-
-      </div>
-    <% end %>
-  </div>
-</div>
-
-<% content_for :javascript do %>
-  <script>
-    React.render(BountyOffer(<%== {
-      product: { name: @product.name },
-      maxOffer: (6 * @product.average_bounty).round(-4),
-      averageBounty: @product.average_bounty
-    }.to_json %>), document.getElementById('js-initial-offer'));
-  </script>
-<% end %>
