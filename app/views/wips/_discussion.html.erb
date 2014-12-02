@@ -1,8 +1,10 @@
 <div class="timeline">
   <% events.each.with_index do |(event, html), i| %>
     <% if i == events.size - 1 %>
-      <div class="timeline-insert js-timestamp">
-        <%= react_component 'Timestamp', time: event.created_at.iso8601 %>
+      <div class="timeline-insert js-timestamp clearfix">
+        <div class="left">
+          <%= react_component 'Timestamp', time: event.created_at.iso8601 %>
+        </div>
         <span data-react-class="ReadReceipts" data-react-props="<%= {
           url: readraptor_article_path(ReadRaptorSerializer.serialize_entities(events.last[0]).first),
           track_url: (ReadraptorTracker.new(

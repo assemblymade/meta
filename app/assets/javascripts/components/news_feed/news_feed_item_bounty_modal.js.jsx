@@ -223,7 +223,7 @@ module.exports = React.createClass({
         if (bounty) {
           var timestamp = (
             <div className="timeline-insert js-timestamp" key={'timestamp-' + bounty.id}>
-              <time className="timestamp" dateTime={event.timestamp}>{$.timeago(event.timestamp)}</time>
+              <time className="timestamp left" dateTime={event.timestamp}>{$.timeago(event.timestamp)}</time>
               <ReadReceipts url={'/_rr/articles/' + bounty.id} track_url={event.readraptor_track_id} />
             </div>
           );
