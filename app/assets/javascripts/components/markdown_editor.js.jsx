@@ -44,13 +44,6 @@
       });
 
       this.dropzone.on('complete', this.onComplete);
-
-      // FIXME: Because DropzoneView updates the DOM directly, it conflicts
-      // with React's shadow DOM and causes strange bugs to surface. Attach
-      // this listener once we've refactored DropzoneView
-
-      // new MarkdownEditorView({el: this.getDOMNode(), dropzone: dzView.dz});
-      // CommentAttachmentStore.addChangeListener(this.updateAttachments);
     },
 
     onAccept: function(file, done) {
