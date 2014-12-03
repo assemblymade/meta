@@ -3,16 +3,16 @@ jest.dontMock(appFile('actions/bounty_action_creators'));
 describe('BountyActionCreators', function() {
   var BountyActionCreators, Dispatcher;
 
+  beforeEach(function() {
+    $.ajax = jest.genMockFunction();
+    analytics.track = jest.genMockFunction();
+
+    Dispatcher = require(appFile('dispatcher'));
+    BountyActionCreators = require(appFile('actions/bounty_action_creators'));
+    Dispatcher.dispatch.mockClear();
+  });
+
   describe('call()', function() {
-    beforeEach(function() {
-      $.ajax = jest.genMockFunction();
-      analytics.track = jest.genMockFunction();
-
-      Dispatcher = require(appFile('dispatcher'));
-      BountyActionCreators = require(appFile('actions/bounty_action_creators'));
-      Dispatcher.dispatch.mockClear();
-    });
-
     it('prevents the default action, tracks the event, and makes an AJAX request to the supplied url', function(){
       var e = {
         preventDefault: jest.genMockFunction()
@@ -25,4 +25,15 @@ describe('BountyActionCreators', function() {
       expect($.ajax.mock.calls[0][0].url).toEqual('/path/to/resource');
     });
   });
+
+  describe('requestBounties()', function() {
+    it('grabs a list of filtered bounties for a product', function() {
+      BountyActionCreators.requestBounties('helpful', { tags: ['design'], sort: 'priority', page: 1 })
+
+      request = $.ajax.mock.calls[0][0]
+
+      expect(request.url).toEqual('/helpful/bounties.json')
+      expect(request.data).toEqual({ tags: ['design'], sort: 'priority', page: 1 })
+    })
+  })
 });

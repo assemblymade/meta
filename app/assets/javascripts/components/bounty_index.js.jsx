@@ -5,49 +5,42 @@
   var BountyList = require('./bounty_list.js.jsx')
   var PaginationLinks = require('./pagination_links.js.jsx')
   var Spinner = require('./spinner.js.jsx')
+  var BountyActionCreators = require('../actions/bounties_action_creators.js')
+  var BountiesStore = require('../stores/bounties_store.js')
 
   var timeout = null
 
   var BountyIndex = React.createClass({
+    propTypes: {
+      tags: React.PropTypes.object,
+      pages: React.PropTypes.number,
+      product: React.PropTypes.object,
+      valuation: React.PropTypes.object
+    },
+
     getInitialState: function() {
-      return {
-        bounties: this.props.initialBounties,
-        loading: false,
-        page: 1,
-        pages: this.props.pages,
+      return _.extend({
         value: 'state:open',
         sort: 'priority'
-      }
+      }, this.getStateFromStore())
+    },
+
+    componentDidMount: function() {
+      BountiesStore.addListener('change', this._onChange)
+    },
+
+    componentWillUnmount: function() {
+      BountiesStore.removeListener('change', this._onChange)
     },
 
     getBounties: function(value, sort, page) {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-
-      timeout = setTimeout(function() {
-        var path = this.getBountiesPath()
-        var params = this.params(value, sort, page)
-
-        $.getJSON(path, params, function(response) {
-          this.setState({
-            bounties: response.bounties,
-            loading: false,
-            page: response.meta.pagination.page,
-            pages: response.meta.pagination.pages,
-          });
-        }.bind(this));
-      }.bind(this), 300)
+      BountyActionCreators.requestBountiesDebounced(this.props.product.slug, this.params(value, sort, page))
     },
 
     handleValueChange: function(event) {
       var value = event.target.value
 
-      this.setState({
-        value: value,
-        loading: true,
-        page: 1
-      })
+      this.setState({ value: value })
 
       this.getBounties(value, this.state.sort, 1)
     },
@@ -55,21 +48,12 @@
     handleSortChange: function(event) {
       var sort = event.target.value
 
-      this.setState({
-        loading: true,
-        page: 1,
-        sort: sort
-      })
+      this.setState({ sort: sort })
 
       this.getBounties(this.state.value, sort, 1)
     },
 
     handlePageChange: function(page) {
-      this.setState({
-        loading: true,
-        page: page
-      })
-
       this.getBounties(this.state.value, this.state.sort, page)
     },
 
@@ -77,12 +61,9 @@
       return function(event) {
         var value = this.state.value + ' ' + 'tag:' + tag
 
-        this.setState({
-          loading: true,
-          value: value
-        })
+        this.setState({ value: value })
 
-        this.getBounties(value, 1)
+        this.getBounties(value, this.state.sort, 1)
       }.bind(this)
     },
 
@@ -140,10 +121,6 @@
       )
     },
 
-    getBountiesPath: function() {
-      return ['/', this.props.product.slug, '/', 'bounties', '.', 'json'].join('')
-    },
-
     params: function(value, sort, page) {
       var terms = value.split(' ')
 
@@ -163,7 +140,21 @@
       params.page = page
 
       return params
-    }
+    },
+
+    getStateFromStore: function() {
+      return {
+        bounties: BountiesStore.getBounties(),
+        page: BountiesStore.getPage(),
+        pages: BountiesStore.getPages(),
+        loading: BountiesStore.getLoading()
+      }
+    },
+
+    _onChange: function() {
+      this.setState(this.getStateFromStore())
+    },
+
   });
 
   if (typeof module !== 'undefined') {
