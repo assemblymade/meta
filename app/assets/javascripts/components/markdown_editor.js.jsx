@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 (function(){
+  var AttachmentActionCreators = require('../actions/attachment_action_creators');
   var CommentAttachmentStore = require('../stores/comment_attachment_store');
   var TypeaheadUserTextArea = require('./typeahead_user_textarea.js.jsx');
 
@@ -35,19 +36,23 @@
     },
 
     componentDidMount: function() {
-      // TODO: move this garbage to React
-      var dzView = new DropzoneView({
-        el: this.getDOMNode(),
-        url: this.props.url,
-        selectEl: this.refs.file.getDOMNode()
+      this.dropzone = new Dropzone(this.getDOMNode(), {
+        accept: this.onAccept,
+        sending: this.onSending,
+        clickable: this.refs.file.getDOMNode(),
+        url: this.props.url
       });
 
       // FIXME: Because DropzoneView updates the DOM directly, it conflicts
       // with React's shadow DOM and causes strange bugs to surface. Attach
       // this listener once we've refactored DropzoneView
 
-      new MarkdownEditorView({el: this.getDOMNode(), dropzone: dzView.dz});
+      // new MarkdownEditorView({el: this.getDOMNode(), dropzone: dzView.dz});
       // CommentAttachmentStore.addChangeListener(this.updateAttachments);
+    },
+
+    onAccept: function(file, done) {
+      AttachmentActionCreators.uploadAttachment(file);
     },
 
     render: function() {

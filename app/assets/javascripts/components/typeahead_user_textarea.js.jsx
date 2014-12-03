@@ -1,7 +1,9 @@
 (function(){
   var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 
-  var InPlaceUserSearch = require('./in_place_user_search.js.jsx')
+  var AttachmentsStore = require('../stores/attachments_store');
+  var InPlaceUserSearch = require('./in_place_user_search.js.jsx');
+  var UploadingAttachmentsStore = require('../stores/uploading_attachments_store');
 
   var TypeaheadUserTextArea = React.createClass({
     propTypes: {
@@ -11,6 +13,45 @@
         React.PropTypes.bool,
         React.PropTypes.string
       ])
+    },
+
+    componentDidMount: function() {
+      AttachmentsStore.on('change', this.getAttachment);
+      AttachmentsStore.on('change', this.getError);
+      UploadingAttachmentsStore.on('change', this.getUploadingAttachments);
+    },
+
+    getAttachment: function() {
+      var attachment = AttachmentsStore.getAttachment();
+
+      if (attachment) {
+        var currentText = this.state.text || '';
+        var newText = '![' + attachment.name + '](' + attachment.href + ')';
+        var replaceText = '![Uploading... ' + attachment.name + ']()';
+
+        var text = currentText.replace(replaceText, newText);
+
+        this.setState({
+          text: text
+        });
+      }
+    },
+
+    getError: function() {
+
+    },
+
+    getUploadingAttachments: function() {
+      var attachments = UploadingAttachmentsStore.getUploadingAttachments();
+
+      if (attachments.length) {
+        var newText = attachments.join(' ');
+        var currentText = this.state.text || '';
+
+        this.setState({
+          text: currentText + newText
+        });
+      }
     },
 
     getInitialState: function() {
