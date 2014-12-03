@@ -37,11 +37,12 @@ class Watching < ActiveRecord::Base
   end
 
   def self.watched?(user, watchable)
+    return false if user.nil?
     where(user: user, watchable: watchable, unwatched_at: nil).any?
   end
 
   def self.following?(user, watchable)
-    where(user: user, watchable: watchable, unwatched_at: nil).any?
+    watched?(user, watchable)
   end
 
   # private
