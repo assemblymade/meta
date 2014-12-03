@@ -12,9 +12,10 @@
 
       if(username) {
         filters = filters.concat([
-          { name: "You're working on", query: 'state:doing state:reviewing doing:' + username },
-          { name: "You created",       query: 'created:' + username },
-          { name: "You commented on",  query: 'commented:' + username },
+          { name: "You're working on",    query: 'state:doing state:reviewing doing:' + username },
+          { name: "You created",          query: 'created:' + username },
+          { name: "You commented on",     query: 'commented:' + username },
+          { name: "You're mentioned in",  query: 'mentioned:' + username },
           { divider: true }
         ])
       }
