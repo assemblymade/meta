@@ -26,11 +26,14 @@
 
       if (attachment) {
         var currentText = this.state.text || '';
-        var newText = '![' + attachment.name + '](' + attachment.href + ')';
+        var newText = '![' + attachment.name + '](' + attachment.href + ')\n';
         var replaceText = '![Uploading... ' + attachment.name + ']()';
 
         var text = currentText.replace(replaceText, newText);
 
+        // FIXME: Double uploads are happening because of
+        // the DiscussionView :( We need to clear this component's
+        // state in React, not wipe the DOM
         this.setState({
           text: text
         });

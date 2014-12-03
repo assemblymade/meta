@@ -4,6 +4,8 @@
   </script>
 <% end %>
 
+<%= initial_store_data('ProductStore', { id: @product.id, slug: @product.slug, name: @product.name }) %>
+
 <%= render 'shared/navbar' %>
 
 <!-- Flashes! -->

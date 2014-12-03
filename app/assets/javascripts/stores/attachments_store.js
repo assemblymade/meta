@@ -12,7 +12,7 @@ class AttachmentsStore extends EventEmitter {
     _dispatchToken = Dispatcher.register((action) => {
       switch(action.type) {
         case ActionTypes.ATTACHMENT_UPLOADED:
-          latestAttachment = action.data
+          latestAttachment = action.attachment
           this.emit('change')
           break
 

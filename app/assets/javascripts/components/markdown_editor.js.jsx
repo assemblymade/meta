@@ -43,6 +43,8 @@
         url: this.props.url
       });
 
+      this.dropzone.on('complete', this.onComplete);
+
       // FIXME: Because DropzoneView updates the DOM directly, it conflicts
       // with React's shadow DOM and causes strange bugs to surface. Attach
       // this listener once we've refactored DropzoneView
@@ -52,7 +54,17 @@
     },
 
     onAccept: function(file, done) {
-      AttachmentActionCreators.uploadAttachment(file);
+      AttachmentActionCreators.uploadAttachment(file, done);
+    },
+
+    onComplete: function(file) {
+      AttachmentActionCreators.completeAttachmentUpload(file);
+    },
+
+    onSending: function(file, xhr, formData) {
+      _.each(file.form, function(v, k) {
+        formData.append(k, v);
+      });
     },
 
     render: function() {

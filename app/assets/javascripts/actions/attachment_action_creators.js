@@ -1,23 +1,45 @@
 // var Dispatcher = require('../dispatcher')
 
-var CONSTANTS = window.CONSTANTS;
-var ActionTypes = CONSTANTS.ActionTypes;
-var url = '/upload/attachments';
+var CONSTANTS = window.CONSTANTS
+var ActionTypes = CONSTANTS.ActionTypes
+var ProductStore = require('../stores/product_store')
+var uploadUrl = '/upload/attachments'
 
 class AttachmentActionCreators {
-  uploadAttachment(file) {
-    _upload(file)
+  completeAttachmentUpload(file) {
+    _complete(file)
+  }
+
+  uploadAttachment(file, done) {
+    _upload(file, done)
   }
 }
 
-function _upload(file) {
+function _complete(file) {
+  var product = ProductStore.getSlug()
+  var completeUrl = '/' + (product || 'meta') + '/assets'
+
+  $.ajax({
+    url: completeUrl,
+    method: 'POST',
+    dataType: 'json',
+    data: {
+      asset: {
+        attachment_id: file.attachment.id,
+        name: file.name
+      }
+    }
+  })
+}
+
+function _upload(file, done) {
   Dispatcher.dispatch({
     type: ActionTypes.ATTACHMENT_UPLOADING,
     text: '![Uploading... ' + file.name + ']()'
   })
 
   $.ajax({
-    url: url,
+    url: uploadUrl,
     method: 'POST',
     dataType: 'json',
     data: {
@@ -25,17 +47,24 @@ function _upload(file) {
       content_type: file.type,
       size: file.size
     },
-    success: function(data) {
+    success: function(attachment) {
+      file.attachment = attachment
+      file.form = attachment.form
+
       Dispatcher.dispatch({
         type: ActionTypes.ATTACHMENT_UPLOADED,
-        data: data
-      });
+        attachment: attachment
+      })
+
+      done()
     },
     error: function(jqXhr, textStatus, err) {
       Dispatcher.dispatch({
         type: ActionTypes.ATTACHMENT_FAILED,
         error: err
-      });
+      })
+
+      done()
     }
   });
 }
