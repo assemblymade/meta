@@ -90,6 +90,10 @@ class window.ChatView extends Backbone.View
     @collection.push(activity)
     comment.save({socket_id: @collection.socketId},
       success: (comment, data) ->
+        Dispatcher.dispatch(
+          type: 'CHAT_MESSAGE_RECEIVE_ACTIVITIES'
+          activities: [comment.attributes]
+        )
         activity.set(data)
     )
     activity

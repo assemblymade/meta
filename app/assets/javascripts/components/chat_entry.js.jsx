@@ -6,6 +6,8 @@
   var UserLink = require('./user_link.js.jsx')
   var marked = require('marked')
 
+  var ChatMessageStore = require('../stores/chat_message_store')
+
   var ChatEntry = React.createClass({
     componentDidMount: function() {
       window.app.mountReactComponents(this.getDOMNode())
@@ -42,8 +44,8 @@
                   </div>
                 </li>
               </ul>
-              <ul className="list-inline omega">
-                <li>
+              <ul className="list-reset clearfix mb0">
+                <li className="left mr1">
                   <UserLink url={this.props.user.url} username={this.props.user.username} className="chat-actor">
                     {this.props.user.username}
                   </UserLink>
@@ -73,7 +75,7 @@
 
     tips: function() {
       if (this.props.tips) {
-        return <li>
+        return <li className="left mr1">
           <TipsUi {...this.props.tips} />
         </li>
       }
@@ -81,9 +83,11 @@
     },
 
     love: function() {
-      return <li>
-          <Love />
-        </li>
+      if (this.props.id) {
+        return <li className="left mr1">
+            <Love heartable_type='Activity' heartable_id={this.props.id} />
+          </li>
+        }
       }
   });
 

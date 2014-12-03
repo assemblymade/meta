@@ -39,11 +39,14 @@ class LoveStore extends EventEmitter {
           break
 
         case ActionTypes.LOVE_RECEIVE_RECENT_HEARTS:
-          _(action.hearts).each(function(heart) {
+          _(action.recent_hearts).each(function(heart) {
             if (!_heartables[heart.heartable_id].hearts) {
               _heartables[heart.heartable_id].hearts = []
             }
             _heartables[heart.heartable_id].hearts.push(heart)
+          })
+          _(action.user_hearts).each(function(heart){
+            _userHearts[heart.heartable_id] = heart
           })
           this.emit('change')
           break
@@ -77,6 +80,18 @@ class LoveStore extends EventEmitter {
             _userHearts[h.heartable_id] = h
           })
 
+          this.emit('change')
+          break
+
+        case ActionTypes.CHAT_MESSAGE_RECEIVE_ACTIVITIES:
+          _(action.activities).each(function(activity){
+            _heartables[activity.id] = {
+              heartable_type: 'Activity',
+              heartable_id: activity.id,
+              hearts_count: activity.hearts_count
+            }
+          })
+          LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
           this.emit('change')
           break
 

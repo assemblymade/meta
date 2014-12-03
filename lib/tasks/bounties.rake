@@ -192,6 +192,8 @@ namespace :bounties do
 
     wips = 0
     Wip.includes(:comments).find_each do |wip|
+      next if ChatRoom.find_by(wip_id: wip.id)
+      
       wips += 1
       if NewsFeedItem.find_by(product_id: wip.product_id, target_id: wip.id).nil?
         puts "#{wip.id} #{wips} - adding"

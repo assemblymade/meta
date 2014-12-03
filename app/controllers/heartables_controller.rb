@@ -38,11 +38,20 @@ class HeartablesController < ApplicationController
   end
 
   def hearts
+    @user_hearts = []
+    if signed_in?
+      @user_hearts = Heart.where(heartable_id: params[:heartable_ids]).
+                           where(user_id: current_user.id)
+    end
+
     @hearts = Heart.includes(:user).
                     where(heartable_id: params[:heartable_ids]).
                     select('distinct on (heartable_id) *')
 
-    render json: @hearts
+    render json: {
+      user_hearts: ActiveModel::ArraySerializer.new(@user_hearts),
+      recent_hearts: ActiveModel::ArraySerializer.new(@hearts)
+    }
   end
 
   # private

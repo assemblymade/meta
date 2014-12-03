@@ -43,7 +43,8 @@ module.exports = {
       success: function(data) {
         Dispatcher.dispatch({
           type: ActionTypes.LOVE_RECEIVE_RECENT_HEARTS,
-          hearts: data
+          recent_hearts: data.recent_hearts,
+          user_hearts: data.user_hearts
         })
       }
     })

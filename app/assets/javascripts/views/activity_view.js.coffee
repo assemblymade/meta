@@ -26,12 +26,13 @@ class window.ActivityView extends Backbone.View
 
       React.render(
         ChatEntry({
+          id: @model.id,
           user: @model.attributes.actor,
           tips: tipsProps,
           entry: {
             number: subject.number,
             message: subject.body,
-            message_html: subject.body_html
+            message_html: subject.body_html,
           }
         }), @$el[0])
 
