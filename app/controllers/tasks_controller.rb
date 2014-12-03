@@ -5,7 +5,6 @@ class TasksController < WipsController
     reject_blacklisted_users!
 
     @wips = find_wips
-    @auto_tip_contracts = @product.auto_tip_contracts.active
 
     @heartables = NewsFeedItem.where(target_id: @wips.map(&:id))
 

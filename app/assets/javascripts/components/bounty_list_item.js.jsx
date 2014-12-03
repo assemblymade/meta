@@ -1,7 +1,61 @@
-/** @jsx React.DOM */
-
 (function() {
   var BountyListItem = React.createClass({
+    getInitialState: function() {
+      return {
+        position: null
+      }
+    },
+
+    componentDidUpdate: function(props, state) {
+      if (this.state.position && !state.position) {
+        document.addEventListener('mousemove', this.handleMouseMove)
+        document.addEventListener('mouseup', this.handleMouseUp)
+      } else if (!this.state.position && state.position) {
+        document.removeEventListener('mousemove', this.handleMouseMove)
+        document.removeEventListener('mouseup', this.handleMouseUp)
+      }
+    },
+
+    handleMouseDown: function(event) {
+      var bountyDiv = event.target.parentElement.parentElement
+      var position = $(bountyDiv).position()
+      var width = $(bountyDiv).outerWidth()
+      var height = $(bountyDiv).outerHeight()
+
+      this.setState({
+        position: {
+          top: position.top,
+          left: position.left,
+          width: width,
+          height: height,
+          mouseX: event.pageX,
+          mouseY: event.pageY
+        }
+      })
+
+      this.props.handleMouseDown(this.props.bounty, event)
+    },
+
+    handleMouseMove: function(event) {
+      var position = this.state.position
+
+      position.top = position.top + (event.pageY - position.mouseY)
+      position.left = position.left + (event.pageX - position.mouseX)
+
+      position.mouseY = event.pageY
+      position.mouseX = event.pageX
+
+      this.setState({
+        position: position
+      })
+    },
+
+    handleMouseUp: function(event) {
+      this.setState({
+        position: null
+      })
+    },
+
     renderTitle: function() {
       var bounty = this.props.bounty
 
@@ -76,36 +130,52 @@
 
     render: function() {
       var bounty = this.props.bounty
+      var style = {}
+
+      if(this.state.position) {
+        var style = {
+          position: 'absolute',
+          top: this.state.position.top,
+          left: this.state.position.left,
+          width: this.state.position.width
+        }
+      }
 
       return (
-        <div className="bg-white rounded shadow mb2">
-          <div className="p3">
-            <div className="h4 mt0 mb1">
-              {this.renderTitle()}
-            </div>
+        <div className="bg-white rounded shadow mb3" style={style}>
+          <div className="table mb0">
+            <div className="table-cell">
+              <div className="p3">
+                <div className="h4 mt0 mb1">
+                  {this.renderTitle()}
+                </div>
 
-            <div>
-              <div className="right ml2">
-                {this.renderUrgency()}
+                <div>
+                  <div className="right ml2">
+                    {this.renderUrgency()}
+                  </div>
+
+                  <span className="mr2">
+                    <BountyValuation {...this.props.bounty} {...this.props.valuation} />
+                  </span>
+
+                  <span className="gray mr2">
+                    <span className="fa fa-comment"></span>
+                    {' '}
+                    {bounty.comments_count}
+                  </span>
+
+                  <span className="h6 mt0 mb0">
+                    {this.renderTags()}
+                  </span>
+                </div>
               </div>
-
-              <span className="mr2">
-                <BountyValuation {...this.props.bounty} {...this.props.valuation} />
-              </span>
-
-              <span className="gray mr2">
-                <span className="fa fa-comment"></span>
-                {' '}
-                {bounty.comments_count}
-              </span>
-
-              <span className="h6 mt0 mb0">
-                {this.renderTags()}
-              </span>
+              {this.renderLove()}
+              {this.renderLocker()}
+            </div>
+            <div className="table-cell bg-blue" style={{ width: 20 }} onMouseDown={this.handleMouseDown}>
             </div>
           </div>
-          {this.renderLove()}
-          {this.renderLocker()}
         </div>
       )
     }

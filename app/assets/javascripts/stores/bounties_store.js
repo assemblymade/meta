@@ -26,6 +26,11 @@ class BountiesStore extends EventEmitter {
           _pages = action.pages
           this.emit('change')
           break
+
+        case ActionTypes.BOUNTIES_REORDER:
+          _bounties = action.bounties
+          this.emit('change')
+          break
       }
     })
   }
