@@ -35,7 +35,9 @@ var BountyActionCreators = {
     })
   },
 
-  requestBountiesDebounced: _.debounce(this.requestBounties, 300),
+  requestBountiesDebounced: _.debounce(function(productSlug, params) {
+    this.requestBounties(productSlug, params)
+  }, 300),
 };
 
 function _patch(url) {
