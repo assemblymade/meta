@@ -205,7 +205,7 @@ class Wip < ActiveRecord::Base
     end
 
     self.tags = names.map do |n|
-      Wip::Tag.find_or_create_by!(name: n.strip)   # SEE HERE BARISSER
+      Wip::Tag.find_or_create_by!(name: n.strip)  
     end
   end
 
