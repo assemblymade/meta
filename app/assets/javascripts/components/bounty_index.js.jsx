@@ -5,7 +5,7 @@
   var BountyList = require('./bounty_list.js.jsx')
   var PaginationLinks = require('./pagination_links.js.jsx')
   var Spinner = require('./spinner.js.jsx')
-  var BountiesActionCreators = require('../actions/bounties_action_creators.js')
+  var BountyActionCreators = require('../actions/bounties_action_creators.js')
   var BountiesStore = require('../stores/bounties_store.js')
 
   var timeout = null
@@ -34,7 +34,7 @@
     },
 
     getBounties: function(value, sort, page) {
-      BountiesActionCreators.requestBountiesDebounced(this.props.product.slug, this.params(value, sort, page))
+      BountyActionCreators.requestBountiesDebounced(this.props.product.slug, this.params(value, sort, page))
     },
 
     handleValueChange: function(event) {
