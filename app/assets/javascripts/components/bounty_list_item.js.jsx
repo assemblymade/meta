@@ -40,20 +40,24 @@
       var position = this.state.position
 
       position.top = position.top + (event.pageY - position.mouseY)
-      position.left = position.left + (event.pageX - position.mouseX)
 
       position.mouseY = event.pageY
       position.mouseX = event.pageX
 
+
       this.setState({
         position: position
       })
+
+      this.props.handleMouseMove(this.props.bounty, position)
     },
 
     handleMouseUp: function(event) {
       this.setState({
         position: null
       })
+
+      this.props.handleMouseUp(this.props.bounty)
     },
 
     renderTitle: function() {
@@ -142,7 +146,7 @@
       }
 
       return (
-        <div className="bg-white rounded shadow mb3" style={style}>
+        <div className="bg-white rounded shadow mb3" style={style} data={{ bountyId: bounty.id }}>
           <div className="table mb0">
             <div className="table-cell">
               <div className="p3">

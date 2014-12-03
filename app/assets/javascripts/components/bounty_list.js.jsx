@@ -11,8 +11,8 @@
     },
 
     handleMouseDown: function(bounty, event) {
-      var bountyDiv = event.target.parentElement.parentElement
-      var height = $(bountyDiv).outerHeight()
+      var listItem = event.target.parentNode.parentNode
+      var height = $(listItem).outerHeight()
 
       var bounties = this.state.bounties;
       var index = bounties.indexOf(bounty);
@@ -20,6 +20,45 @@
       placeholder = { placeholder: true, height: height }
 
       bounties.splice(index, 0, placeholder);
+
+      this.setState({
+        bounties: bounties
+      })
+    },
+
+    handleMouseMove: function(bounty, position) {
+      var offset = $(this.getDOMNode()).offset()
+
+      var title = document.elementFromPoint(position.left + offset.left, position.top + offset.top - 1)
+      var listItem = title.parentNode.parentNode.parentNode
+
+      if(!listItem.data || !listItem.data.bountyId) {
+        return
+      }
+
+      var bountyId = listItem.data.bountyId
+      var bounties = this.state.bounties
+      var oldIndex = _.pluck(bounties, 'placeholder').indexOf(true)
+      var newIndex = _.pluck(bounties, 'id').indexOf(bountyId)
+
+      var placeholder = bounties[oldIndex]
+
+      bounties.splice(oldIndex, 1)
+      bounties.splice(newIndex, 0, placeholder)
+
+      this.setState({
+        bounties: bounties
+      })
+    },
+
+    handleMouseUp: function(bounty) {
+      var bounties = this.state.bounties
+
+      var bountyIndex = bounties.indexOf(bounty)
+      bounties.splice(bountyIndex, 1)
+
+      var placeholderIndex = _.pluck(bounties, 'placeholder').indexOf(true)
+      bounties.splice(placeholderIndex, 1, bounty)
 
       this.setState({
         bounties: bounties
