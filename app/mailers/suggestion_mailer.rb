@@ -1,8 +1,9 @@
-class SuggestionMailer < ActionMailer::Base
+class SuggestionMailer < BaseMailer
   default from: "barisser@assembly.com"
+  layout 'email'
 
   def create(user_id)
-    #mailgun_campaign 'bounty_suggestions'
+    mailgun_campaign 'suggestions'
 
     if @user = User.find(user_id)
       @username = @user.username
@@ -10,7 +11,7 @@ class SuggestionMailer < ActionMailer::Base
       @bounties = @user.top_bountys.pluck(:wip_id).map{|a| Wip.find(a) }.take(3)
       @tags = @user.user_identity.get_mark_vector.take(5)
 
-      #mailgun_tag "bounty_suggestions"
+      mailgun_tag "suggestions"
 
       #prevent_delivery(@user)
 
