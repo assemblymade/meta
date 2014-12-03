@@ -4,8 +4,12 @@ class TasksController < WipsController
   def index
     reject_blacklisted_users!
 
+    # TODO Figure out a better way to do this by manually setting params to FilterWipsQuery
+    if params.fetch(:format, 'html') == 'html'
+      params.merge!(sort: 'priority', state: 'open')
+    end
+
     @wips = find_wips
-    @auto_tip_contracts = @product.auto_tip_contracts.active
 
     @heartables = NewsFeedItem.where(target_id: @wips.map(&:id))
 
@@ -164,8 +168,7 @@ class TasksController < WipsController
   # private
 
   def find_wips
-    options = { state: 'open', sort: 'priority' }.merge(params.symbolize_keys)
-    FilterWipsQuery.call(product_wips, current_user, options)
+    FilterWipsQuery.call(product_wips, current_user, params.symbolize_keys)
   end
 
   def wip_class
