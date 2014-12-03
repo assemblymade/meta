@@ -14,7 +14,7 @@ require 'codeclimate-test-reporter'
 require 'capybara/poltergeist'
 
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, js_errors: false, phantomjs_logger: Logger.new('/dev/null'))
+  Capybara::Poltergeist::Driver.new(app, js_errors: false, timeout: 60, phantomjs_options: ['--load-images=no'], phantomjs_logger: Logger.new('/dev/null'))
 end
 
 Capybara.javascript_driver = :poltergeist
