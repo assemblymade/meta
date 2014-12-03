@@ -8,7 +8,9 @@ protected
     id = params[:product_id] || params[:id]
     if id.uuid?
       @product = Product.find(id).decorate
-      redirect_to product_path(@product.slug) if @product.slug?
+      if !request.xhr?
+        redirect_to product_path(@product.slug) if @product.slug?
+      end
     else
       @product = Product.find_by_slug!(id).decorate
     end
