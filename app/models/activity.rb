@@ -75,4 +75,8 @@ class Activity < ActiveRecord::Base
   def author_id
     actor_id
   end
+
+  def product
+    find_product
+  end
 end
