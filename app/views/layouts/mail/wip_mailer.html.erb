@@ -9,6 +9,6 @@
     Reply to this email or <a href="<%= product_wip_url(@wip.product, @wip) %>">view WIP on Assembly</a>
     <br>
     <br>
-    Too many emails? <a href="<%= settings_notifications_url(preference: User::MAIL_DAILY) %>">Switch to a daily digest</a>
+    Too many emails? <a href="<%= settings_notifications_url(preference: User::MAIL_DAILY, auth_token: @user.authentication_token) %>">Switch to a daily digest</a>
   </p>
 <% end %>
