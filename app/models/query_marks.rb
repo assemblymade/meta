@@ -190,7 +190,11 @@ class QueryMarks
   def assign_all(limit)
     all_wip_vectors = get_all_wip_vectors
     all_product_vectors = get_all_product_vectors
+    total = User.count
+    n=1
     User.all.find_each do |user|
+      puts "#{n.to_s} / #{total.to_s}  assigning user's top products & bounties -- #{(100*n.to_f/total.to_f).round(2)} -- #{user.username}"
+      n=n+1
       assign_top_bounties_for_user(limit, user, all_wip_vectors)
       assign_top_products_for_user(limit, user, all_product_vectors)
     end
@@ -198,7 +202,11 @@ class QueryMarks
 
   #RUN ONCE
   def retroactively_generate_all_user_markings
+    total = User.count
+    n=1
     User.all.each do |a|
+      puts "#{n.to_s} / #{total.to_s} generating user markings -- #{(100*n.to_f/total.to_f).round(2)}%"
+      n = n + 1
       a.user_identity.markings.delete_all
       a.user_identity.assign_markings_from_scratch
     end
