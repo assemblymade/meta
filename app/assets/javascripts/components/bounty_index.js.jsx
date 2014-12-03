@@ -5,7 +5,7 @@
   var BountyList = require('./bounty_list.js.jsx')
   var PaginationLinks = require('./pagination_links.js.jsx')
   var Spinner = require('./spinner.js.jsx')
-  var BountyActionCreators = require('../actions/bounties_action_creators.js')
+  var BountyActionCreators = require('../actions/bounty_action_creators.js')
   var BountiesStore = require('../stores/bounties_store.js')
 
   var timeout = null
