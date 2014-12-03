@@ -42,6 +42,12 @@ class DiscoverController < ApplicationController
        @products = @products.with_mark(params[:mark])
     end
 
+    if current_user.top_products.count > 2 and current_user.top_bountys.count > 2
+      @show_suggested = true
+    else
+      @show_suggested = false
+    end
+
     @products = case params[:sort]
       when 'trending'
         @products.ordered_by_trend
@@ -80,6 +86,12 @@ class DiscoverController < ApplicationController
       page(params[:page]).per(25)
 
     @postings = @postings.where(products: { slug: params[:product] }) if params[:product]
+
+    if current_user.top_products.count > 2 and current_user.top_bountys.count > 2
+      @show_suggested = true
+    else
+      @show_suggested = false
+    end
 
     if params[:filter] == 'suggested'
       @postings = Kaminari.paginate_array(current_user.top_bountys.order(:rank).includes(:wip).map(&:wip))
