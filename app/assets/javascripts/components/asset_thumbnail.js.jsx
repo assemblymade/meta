@@ -34,6 +34,7 @@
 
       return {
         error: null,
+        ext: this.props.url.split('.').pop(),
         productSlug: product && product.attributes.product_slug,
         showLightbox: false,
         uploaded: CommentAttachmentStore.attachmentBelongsToProduct(this.props.url)
@@ -61,7 +62,7 @@
     }, 500),
 
     imageAsset: function() {
-      var ext = this.props.url.split('.').pop();
+      var ext = this.state.ext;
 
       return ['pdf', 'psd'].indexOf(ext) === -1;
     },
@@ -90,7 +91,7 @@
       // as an attachment yet. We'll need to find a robust workaround
       // for this case -- simply trying to pull the attachment down
       // from the provided URL could fail if that image no longer exists
-      if (!this.props.name) {
+      if (!this.props.name && this.imageAsset()) {
         return null;
       }
 
