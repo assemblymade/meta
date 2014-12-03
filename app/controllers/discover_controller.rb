@@ -57,7 +57,9 @@ class DiscoverController < ApplicationController
       when 'teambuilding'
         @products.sort_by {|p| p.bio_memberships_count }
       when 'suggested'
-        @products = current_user.top_products.pluck(:product_id).map{|a| Product.find(a) }
+        if current_user
+          @products = current_user.top_products.pluck(:product_id).map{|a| Product.find(a) }
+        end
       else # popular
         @products.sort_by {|p| -p.partners_count }
       end
