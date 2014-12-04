@@ -38,7 +38,12 @@
     handleMouseMove: function(bounty, position) {
       var offset = $(this.getDOMNode()).offset()
 
-      var title = document.elementFromPoint(position.left + offset.left, position.top + offset.top - 1)
+      var pagePosition = {
+        top: position.top + offset.top + (position.height / 2) - $(window).scrollTop(),
+        left: position.left - 10 + offset.left,
+      }
+
+      var title = document.elementFromPoint(pagePosition.left, pagePosition.top)
       var listItem = title.parentNode.parentNode.parentNode
 
       if(!listItem.data || !listItem.data.bountyId) {
@@ -84,7 +89,7 @@
       return this.state.bounties.map(function(bounty) {
         if(bounty.placeholder) {
           return (
-            <div className="bg-black mb3" style={{ height: bounty.height }}></div>
+            <div className="bg-gray-light mb3" style={{ height: bounty.height }}></div>
           )
         } else {
           return (

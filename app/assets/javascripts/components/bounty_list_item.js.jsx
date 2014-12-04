@@ -25,7 +25,7 @@
       this.setState({
         position: {
           top: position.top,
-          left: position.left,
+          left: position.left + 10,
           width: width,
           height: height,
           mouseX: event.pageX,
@@ -34,6 +34,9 @@
       })
 
       this.props.handleMouseDown(this.props.bounty, event)
+
+      event.preventDefault()
+      return false
     },
 
     handleMouseMove: function(event) {
@@ -44,12 +47,14 @@
       position.mouseY = event.pageY
       position.mouseX = event.pageX
 
-
       this.setState({
         position: position
       })
 
       this.props.handleMouseMove(this.props.bounty, position)
+
+      event.preventDefault()
+      return false
     },
 
     handleMouseUp: function(event) {
@@ -141,7 +146,9 @@
           position: 'absolute',
           top: this.state.position.top,
           left: this.state.position.left,
-          width: this.state.position.width
+          width: this.state.position.width,
+          'transition-property': 'left',
+          'transition-duration': '0.5s'
         }
       }
 
