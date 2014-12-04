@@ -1,102 +1,84 @@
 <% title '<productTitle> - Tasks' %>
 <% provide(:description, '<productDesc>') %>
 
-<header role="banner">
-  <div class="header-primary">
-    <a class="brand_" href="/">
-      <!-- <%= image_tag 'flag.svg', width: 44, height: 27, class: 'logo' %> -->
-      <img alt="Assembly - " class="logo" height="27" width="44" src="https://treasure.assembly.com/assets/flag-9807ce21435d8a19ab7fafb51caa226a.svg">
-      <span class="sr-only">Assembly</span>
-    </a>
-    <div class="mobile-menu-button">
-      <div class="button-primary active">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+<%= render 'shared/navbar' %>
+
+<main role="main">
+
+  <section class="product-header">
+
+  </section>
+  <section class="product-core">
+    <aside class="secondary-column">
+      <nav role="navigation">
+        <ul class="primary-nav">
+          <li>
+            <a href="">lorem <span class="ping"></span></a>
+          </li>
+        </ul>
+        <ul class="secondary-nav">
+          <li>
+            <a href="">lorem <span class="ping"></span></a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="primary-column">
+      <div class="primary-column-header">
+        <div class="filter-module">filter module</div>
+      </div>
+      <div class="primary-column-core">
+        card
+        <br><br>
+        card
+        <br><br>
+        card
+        <br><br>
+        etc
       </div>
     </div>
+    <aside class="tertiary-column">
 
-    <% if user_signed_in? %>
-    <%= render 'shared/search' %>
-    <% end %>
-
-    <nav role="navigation">
-      <div class="nav-primary">
-        <a class="brand" href="/">
-          <img alt="Flag" class="logo" height="27" width="44" src="https://treasure.assembly.com/assets/flag-9807ce21435d8a19ab7fafb51caa226a.svg">
-          <span class="sr-only">Assembly</span>
-        </a>
-        <ul>
-          <li class="<%= nav_active_class(:discover) %>">
-            <a href="<%= discover_path %>">Products</a>
+        button
+        <br><br>
+        info card
+      <nav class="tag-module" role="navigation">
+        <div class="tag-module-header">
+          <h4>Tags</h4>
+          <a href="#">^</a>
+        </div>
+        <ul class="tag-module-core">
+          <li>
+            <href="#">#Backend</a>
           </li>
-          <li class="<%= nav_active_class(:platform_updates) %>">
-            <a href="<%= discover_path(:updates) %>">What’s Happening</a>
+        </ul>
+      </nav>
+      <div class="assets-module">
+        <div class="assets-module-header">
+          <h4>Assets</h4>
+          <a href="#">^</a>
+        </div>
+        <ul class="assets-module-core">
+          <li>
+            image
           </li>
-          <li class="<%= nav_active_class(:discover_bounties) %>">
-            <a href="<%= discover_path(:bounties) %>">Hot Bounties</a>
+          <li>
+            image
           </li>
-          <% if current_user.try(:staff?) %>
-          <li class="<%= nav_active_class(:ideas) %>">
-            <a href="<%= ideas_path %>">Ideas</a>
+          <li>
+            image
           </li>
-          <% end %>
         </ul>
       </div>
-    </nav>
-    <% if user_signed_in? %>
-      <div
-      class="navbar-right"
-      data-react-class="Navbar"
-      data-react-props="<%= {
-      notificationsPath: notifications_path(format: :json),
-      chatPath: chat_rooms_path,
-      userPath: user_path(current_user),
-      editUserPath: edit_user_path,
-      balancePath: users_balance_path,
-      destroyUserSessionPath: destroy_user_session_path
-    }.to_json %>"></div>
-    <% else %>
-    <div class="navbar-right">
-      <a class="btn btn-success navbar-btn" href="<%= new_user_registration_path %>">
-        Sign up
-      </a>
-    </div>
-
-    <div class="navbar-right">
-      <ul class="nav nav-tabs navbar-nav">
-        <li>
-          <a href="<%= new_user_session_path %>">
-            Log in
-          </a>
-        </li>
-      </ul>
-    </div>
-    <% end %>
-  </div>
-
-
-
-
-  <nav class="global-nav">
-      <a class="brand" href="/">
-        <img alt="Flag" class="logo" height="27" src="https://treasure.assembly.com/assets/flag-9807ce21435d8a19ab7fafb51caa226a.svg" width="44">
-        <span class="sr-only">Assembly</span>
-      </a>
-      <button type="button">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-  </nav>
-</header>
-
-<main>
+    </aside>
+  </section>
 
 </main>
 
-<footer>
+<%= render 'shared/footer' %>
 
-</footer>
+<% content_for :javascript do %>
+<script>
+  var $body = $(document.body);
+</script>
+<% end %>
