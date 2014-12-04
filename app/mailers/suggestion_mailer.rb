@@ -18,7 +18,7 @@ class SuggestionMailer < BaseMailer
     end
 
     mail to: @user.email_address,
-    subject: "Bounty Suggestions on Assembly"
+    subject: "hi"
   end
 
 end
