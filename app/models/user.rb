@@ -93,12 +93,13 @@ class User < ActiveRecord::Base
 
   default_scope -> { where('users.deleted_at is null') }
 
-  scope :mailable, -> { where.not(mail_preference: MAIL_NEVER) }
-  scope :staff, -> { where(is_staff: true) }
-  scope :wip_creators, -> { joins(:wips) }
-  scope :event_creators, -> { joins(:events) }
   scope :awaiting_personal_email, -> { where(personal_email_sent_on: nil).where("created_at > ? AND last_request_at < ?", 14.days.ago, 3.days.ago) }
+  scope :event_creators, -> { joins(:events) }
+  scope :mailable, -> { where.not(mail_preference: MAIL_NEVER) }
   scope :recently_inactive, -> { where("last_sign_in_at < ?", 7.days.ago).where("last_sign_in_at > ?", 30.days.ago) }
+  scope :staff, -> { where(is_staff: true) }
+  scope :with_avatars, -> { where.not(gravatar_verified_at: nil) }
+  scope :wip_creators, -> { joins(:wips) }
 
   class << self
     def find_first_by_auth_conditions(tainted_conditions)
@@ -184,7 +185,7 @@ class User < ActiveRecord::Base
   def create_identity
     UserIdentity.create!({user_id: self.id})
   end
-  
+
   def staff?
     is_staff?
   end
