@@ -126,8 +126,8 @@
 
       PEOPLE_RECEIVE: null,
 
-      POSTS_SET: null,
-      PRODUCT_SET: null,
+      POSTS_RECEIVE: null,
+      PRODUCT_RECEIVE: null,
 
       PRODUCT_FOLLOW_CLICKED: null,
       PRODUCT_FOLLOW_SUCCEEDED: null,

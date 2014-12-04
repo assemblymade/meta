@@ -11,7 +11,7 @@ class PostsStore extends Store {
 
     _dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
-        case ActionTypes.POSTS_SET:
+        case ActionTypes.POSTS_RECEIVE:
           _posts[ProductStore.getSlug()] = action.posts
           break
       }
@@ -30,7 +30,7 @@ if (dataTag) {
   console.log(JSON.parse(dataTag.innerHTML).posts)
 
   Dispatcher.dispatch({
-    type: ActionTypes.POSTS_SET,
+    type: ActionTypes.POSTS_RECEIVE,
     posts: JSON.parse(dataTag.innerHTML).posts
   })
 }

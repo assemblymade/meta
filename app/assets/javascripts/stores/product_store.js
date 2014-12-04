@@ -10,7 +10,7 @@ class ProductStore extends Store {
 
     _dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
-        case ActionTypes.PRODUCT_SET:
+        case ActionTypes.PRODUCT_RECEIVE:
           _product = action.product
           break
       }
@@ -31,7 +31,7 @@ var store = new ProductStore()
 var dataTag = document.getElementById('ProductStore')
 if (dataTag) {
   Dispatcher.dispatch({
-    type: ActionTypes.PRODUCT_SET,
+    type: ActionTypes.PRODUCT_RECEIVE,
     product: JSON.parse(dataTag.innerHTML)
   })
 }
