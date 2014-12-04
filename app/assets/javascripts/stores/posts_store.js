@@ -27,8 +27,6 @@ var store = new PostsStore()
 
 var dataTag = document.getElementById('PostsStore')
 if (dataTag) {
-  console.log(JSON.parse(dataTag.innerHTML).posts)
-
   Dispatcher.dispatch({
     type: ActionTypes.POSTS_RECEIVE,
     posts: JSON.parse(dataTag.innerHTML).posts
