@@ -5,4 +5,5 @@ class Heart < ActiveRecord::Base
   scope :unsent, -> { where(sent_at: nil) }
 
   validates :heartable_id, uniqueness: { scope: :user }
+  validates :user, presence: true
 end

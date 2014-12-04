@@ -50,8 +50,6 @@
                     {this.props.user.username}
                   </UserLink>
                 </li>
-                {this.tips()}
-                {this.love()}
               </ul>
             </div>
 
@@ -67,29 +65,11 @@
         "text-muted": (typeof this.props.entry.message_html === 'undefined')
       })
 
-      var message = this.props.entry.message_html || marked(this.props.entry.message)
+      var message = this.props.entry.message_html
 
       return <div className={classes} style={{padding: 0}}
         dangerouslySetInnerHTML={{__html: message}} />
-    },
-
-    tips: function() {
-      if (this.props.tips) {
-        return <li className="left mr1">
-          <TipsUi {...this.props.tips} />
-        </li>
-      }
-      return null
-    },
-
-    love: function() {
-      if (this.props.id) {
-        return <li className="left mr1">
-            <Love heartable_type='Activity' heartable_id={this.props.id} />
-          </li>
-        }
-      }
-  });
+    }});
 
   if (typeof module !== 'undefined') {
     module.exports = ChatEntry

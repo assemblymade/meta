@@ -1,9 +1,10 @@
 <%  url = if description.product
-      url_for([description.product, description.target])
+      polymorphic_url([description.product, description.target], only_path: false)
     else
-      url_for([description.target])
+      polymorphic_url([description.target], only_path: false)
     end
 %>
 <a href="<%= url %>">
+  <%= [description.product.try(:slug), description.target.class] %>
   <%= t "models.#{description.target.class.model_name.singular}.description.owner", description.target.attributes.symbolize_keys %>
 </a>
