@@ -1,5 +1,5 @@
 class NewsFeedItemComment < ActiveRecord::Base
-  belongs_to :news_feed_item, touch: true
+  belongs_to :news_feed_item, touch: :last_commented_at
   belongs_to :user
 
   has_many :hearts, as: :heartable
