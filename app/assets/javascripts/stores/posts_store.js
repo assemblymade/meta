@@ -1,5 +1,4 @@
 var Store = require('./es6_store')
-var ProductStore = require('./product_store')
 var ActionTypes = window.CONSTANTS.ActionTypes
 
 var _dispatchToken
@@ -12,7 +11,7 @@ class PostsStore extends Store {
     _dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
         case ActionTypes.POSTS_RECEIVE:
-          _posts[ProductStore.getSlug()] = action.posts
+          _posts[action.product] = action.posts
           break
       }
     })
@@ -27,9 +26,12 @@ var store = new PostsStore()
 
 var dataTag = document.getElementById('PostsStore')
 if (dataTag) {
+  var data = JSON.parse(dataTag.innerHTML)
+
   Dispatcher.dispatch({
     type: ActionTypes.POSTS_RECEIVE,
-    posts: JSON.parse(dataTag.innerHTML).posts
+    posts: data.posts,
+    product: data.product
   })
 }
 
