@@ -20,7 +20,7 @@
 
     getInitialState: function() {
       return _.extend({
-        value: 'state:open',
+        value: 'is:open',
         sort: 'priority'
       }, this.getStateFromStore())
     },
@@ -133,6 +133,14 @@
 
         return memo
       }, {})
+
+      var renames = { is: 'state', by: 'created' }
+
+      params = _.reduce(params, function(result, value, key) {
+        key = renames[key] || key
+        result[key] = value
+        return result
+      }, {});
 
       params.sort = sort
       params.page = page

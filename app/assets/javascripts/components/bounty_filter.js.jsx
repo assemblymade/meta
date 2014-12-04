@@ -12,8 +12,8 @@
 
       if(username) {
         filters = filters.concat([
-          { name: "You're working on",    query: 'state:doing state:reviewing doing:' + username },
-          { name: "You created",          query: 'created:' + username },
+          { name: "You're working on",    query: 'is:doing is:reviewing doing:' + username },
+          { name: "You created",          query: 'by:' + username },
           { name: "You commented on",     query: 'commented:' + username },
           { name: "You're mentioned in",  query: 'mentioned:' + username },
           { divider: true }
@@ -21,10 +21,10 @@
       }
 
       filters = filters.concat([
-        { name: 'Open',              query: 'state:open' },
-        { name: 'Doing',             query: 'state:doing' },
-        { name: 'Reviewing',         query: 'state:reviewing' },
-        { name: 'Done',              query: 'state:done' }
+        { name: 'Open',              query: 'is:open' },
+        { name: 'Doing',             query: 'is:doing' },
+        { name: 'Reviewing',         query: 'is:reviewing' },
+        { name: 'Done',              query: 'is:done' }
       ])
 
       return (
