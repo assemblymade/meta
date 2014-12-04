@@ -131,7 +131,7 @@ class QueryMarks
   end
 
   def get_all_product_vectors
-    products = Product.where(state: ['greenlit', 'profitable'])
+    products = Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagg_at: nil).where.not(slug: 'meta')
     product_vectors = products.map{ |p| [ normalize_mark_vector(p.mark_vector) , p] }
     product_vectors.select{ |a, b| a.count >0 }
   end
