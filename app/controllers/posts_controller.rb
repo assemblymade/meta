@@ -3,10 +3,12 @@ class PostsController < ProductController
 
   def index
     find_product!
-    @post = @product.posts.order(created_at: :desc).first
+    posts = @product.posts.order(created_at: :desc)
 
-    if @post
-      redirect_to product_post_path(@post.product, @post)
+    @posts = posts.map do |post|
+      # Rails.cache.fetch([post, :json]) do
+        PostSerializer.new(post).as_json
+      # end
     end
   end
 

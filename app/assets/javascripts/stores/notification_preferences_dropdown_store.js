@@ -1,7 +1,7 @@
 (function() {
   var xhr = require('../xhr');
   // var Dispatcher = require('../dispatcher');
-  var Store = require('../stores/store');
+  var Store = require('./store');
   var _selected;
 
   var _store = Object.create(Store);

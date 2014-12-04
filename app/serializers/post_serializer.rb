@@ -1,7 +1,9 @@
 class PostSerializer < ApplicationSerializer
   include MarkdownHelper
 
-  attributes :user, :markdown_body, :url, :summary, :title
+  attributes :markdown_body, :url, :summary, :title, :news_feed_item_id, :created_at
+
+  has_one :user
 
   def product
     object.product
@@ -11,7 +13,11 @@ class PostSerializer < ApplicationSerializer
     product_markdown(product, object.body)
   end
 
+  def news_feed_item_id
+    NewsFeedItem.select(:id).find_by(target_id: object.id).try(:id)
+  end
+
   def url
-    product_posts_path(product, object)
+    product_post_path(product, object)
   end
 end

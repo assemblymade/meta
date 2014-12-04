@@ -33,12 +33,28 @@
   <div class="row">
     <div class="col-md-9">
 
-      <div class="markdown markdown-normalized">
+      <div class="markdown markdown-normalized bg-white px3 py3">
         <%= product_markdown(@post.product, @post.body) %>
+      </div>
+
+      <hr />
+
+      <div class="bg-white">
+        <div data-react-class="NewsFeedItemComments" data-react-props="<%= {
+          item: NewsFeedItemSerializer.new(@post.news_feed_item),
+          showAllComments: true
+        }.to_json %>">
+        </div>
       </div>
     </div>
 
     <div class="col-md-3">
+      <div class="mb3">
+        <% if can?(:create, @product.posts.new(author: current_user)) %>
+          <%= link_to 'Write a new post', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
+        <% end %>
+      </div>
+
       <div class="panel panel-default">
         <div class="panel-heading">
           <h6 class="panel-title">Recent Posts</h6>
@@ -52,10 +68,6 @@
           <% end %>
         </div>
       </div>
-
-      <% if can?(:create, @product.posts.new(author: current_user)) %>
-        <%= link_to 'Write a new post', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
-      <% end %>
 
     </div>
   </div>

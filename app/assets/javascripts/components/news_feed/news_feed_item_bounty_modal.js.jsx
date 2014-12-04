@@ -262,7 +262,6 @@ module.exports = React.createClass({
               </div>
             </form>
           </div>
-
         </div>
       );
     }

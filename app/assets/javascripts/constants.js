@@ -126,6 +126,9 @@
 
       PEOPLE_RECEIVE: null,
 
+      POSTS_SET: null,
+      PRODUCT_SET: null,
+
       PUSHER_PRESENCE_CONNECTED: null,
 
       USER_SIGNED_IN: null,

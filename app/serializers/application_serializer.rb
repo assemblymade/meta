@@ -11,6 +11,10 @@ class ApplicationSerializer < ActiveModel::Serializer
     object.created_at.try(:iso8601)
   end
 
+  def created_at
+    object.created_at.try(:iso8601)
+  end
+
   def updated
     object.updated_at.try(:iso8601) if object.respond_to?(:updated_at)
   end

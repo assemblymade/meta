@@ -17,7 +17,7 @@ module.exports = React.createClass({
     var size = this.props.size;
 
     return (
-      <img src={'https://firesize.com/' + size + 'x' + size + '/g_center/' + this.props.src} />
+      <img src={'https://firesize.com/' + size + 'x' + size + '/g_center/' + this.props.src} style={{ maxHeight: size + 'px' }} />
     );
   }
 });
