@@ -17,7 +17,7 @@
 
     getInitialState: function() {
       return {
-        value: 'state:open',
+        value: 'is:open',
         sort: 'priority'
       }
     },
@@ -74,10 +74,8 @@
       return (
         <div className="mxn2">
           <div className="sm-col sm-col-3 px2" style={{float: 'right !important'}}>
-            <CreateBountyButton {...this.props} {...this.props.valuation} classes={['btn btn-primary btn-block py2']} />
-
-            <div className="px3 py2 mt2">
-              <div className="h5 bold">Tags</div>
+            <div className="px3">
+              <div className="h5 mt0 bold">Tags</div>
 
               <ul className="mt1 list-unstyled">
                 {this.renderTags()}
@@ -111,6 +109,14 @@
 
         return memo
       }, {})
+
+      var renames = { is: 'state', by: 'created' }
+
+      params = _.reduce(params, function(result, value, key) {
+        key = renames[key] || key
+        result[key] = value
+        return result
+      }, {});
 
       params.sort = sort
       params.page = page

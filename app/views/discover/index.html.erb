@@ -39,9 +39,11 @@
         <li class="<%= 'active' if params[:sort] == 'teambuilding' %>">
           <a href="?sort=teambuilding&amp;tag=<%= params[:tag] %>">Needs Teammates</a>
         </li>
+        <% if @show_suggested %>
         <li class="<%= 'active' if params[:sort] == 'suggested' %>">
           <a href="?sort=suggested&amp;tag=<%= params[:tag] %>">Suggested for You</a>
         </li>
+        <% end %>
       </ul>
     </div>
 

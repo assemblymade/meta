@@ -1,48 +1,29 @@
-<h2>Hi <%= "#{@username}" %> </h2>
+<p>Hi, I'm Andrew, a software engineer at Assembly.  I've been juggling vectors and
+  madly shuffling mounds of paper, trying to find a way to match people with products.
+  I've come up with a beast of an algorithm which, I hope, can help you find the tasks
+  you'll most enjoy doing.  Take a look at the ways you can help build compelling, new products.
+</p>
 
-
-<p>We've got a lot going on at Assembly these days.  We've noticed that you haven't been
- awarded a bounty in a while.  If you are looking to contribute and earn ownership of products,
- jump into a bounty!
- </p>
-
-<p>Here are some bounties we thought might interest you based on your past choices.</p>
-
-<h4>Bounty Suggestions</h4>
+<h4>Bounties that have a crush on you</h4>
 
 <ul>
+  <br>
   <% @bounties.each do |bounty| %>
   <li>
-    <a href="<%= product_wip_url(bounty.product, bounty) %>">
+    <h4><a href="<%= product_wip_url(bounty.product, bounty) %>">
       <%= "#{bounty.title}  --  #{bounty.product.name}"  %>
-    </a>
+    </a></h4>
   </li>
+  <% if bounty.description %>
+    <%= bounty.description[0, 150]%>
+    <% if bounty.description.length > 150 %>
+      <%= "..." %>
+    <% end %>
   <% end %>
+  <br><br>
+  <% end %>
+
 </ul>
-<p>These are just a few of the many open Bounties available.  </p>
+<p>These are just a few of the many open bounties available.  </p>
 
-<h4>Products we think you might like</h4>
-<ul>
-  <% @products.each do |product| %>
-  <li>
-    <a href="<%= product_url(product) %>" >
-      <%= product.name %>
-    </a>
-  </li>
-  <% end %>
-</ul>
-
-<% if @tags %>
-  <h4>Tags we think you like</h4>
-  <ul>
-  <% @tags.each do |tag| %>
-    <li>
-      <%= tag[0].name %>
-    </li>
-  <% end %>
-  </ul>
-<% end %>
-
-
-
-We're trying to get to know you!  If you think we're way off, <a href = "mailto:barisser@assembly.com">let us know</a>!
+We're trying to get to know you!  If you think we're way off, reply to this email and let us know!

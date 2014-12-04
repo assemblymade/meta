@@ -127,11 +127,11 @@ class QueryMarks
   def get_all_wip_vectors
     wips = Wip.where(state: 'open').where(type: "Task").where('created_at > ?', 60.days.ago)
     wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
-    wip_vectors.select{ |a, b| a.count > 0 && ['team_building', 'greenlit', 'profitable'].include?(b.product.state) }
+    wip_vectors.select{ |a, b| a.count > 0 && ['team_building', 'greenlit', 'profitable'].include?(b.product.state) && b.product.flagged_at == nil && b.product.slug != "meta"}
   end
 
   def get_all_product_vectors
-    products = Product.where(state: ['greenlit', 'profitable'])
+    products = Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagged_at: nil).where.not(slug: 'meta')
     product_vectors = products.map{ |p| [ normalize_mark_vector(p.mark_vector) , p] }
     product_vectors.select{ |a, b| a.count >0 }
   end
@@ -190,7 +190,11 @@ class QueryMarks
   def assign_all(limit)
     all_wip_vectors = get_all_wip_vectors
     all_product_vectors = get_all_product_vectors
+    total = User.count
+    n=1
     User.all.find_each do |user|
+      puts "#{n.to_s} / #{total.to_s}  assigning user's top products & bounties -- #{(100*n.to_f/total.to_f).round(2)} -- #{user.username}"
+      n=n+1
       assign_top_bounties_for_user(limit, user, all_wip_vectors)
       assign_top_products_for_user(limit, user, all_product_vectors)
     end
@@ -198,7 +202,11 @@ class QueryMarks
 
   #RUN ONCE
   def retroactively_generate_all_user_markings
+    total = User.count
+    n=1
     User.all.each do |a|
+      puts "#{n.to_s} / #{total.to_s} generating user markings -- #{(100*n.to_f/total.to_f).round(2)}%"
+      n = n + 1
       a.user_identity.markings.delete_all
       a.user_identity.assign_markings_from_scratch
     end

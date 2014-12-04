@@ -102,7 +102,7 @@ class ProductsController < ProductController
       @product.news_feed_items
     end
 
-    query = query.page(params[:page]).per(10).order(updated_at: :desc)
+    query = query.page(params[:page]).per(10).order(last_commented_at: :desc)
 
     @news_feed_items = query.map do |nfi|
       Rails.cache.fetch([nfi, :json]) do

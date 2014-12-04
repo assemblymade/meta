@@ -39,7 +39,7 @@ class FilterWipsQuery
       when 'open'
         'open'
       when 'doing'
-        ['allocated', 'awarding']
+        ['allocated', 'awarded']
       when 'reviewing'
         'reviewing'
       when 'done'
@@ -87,7 +87,7 @@ class FilterWipsQuery
     return unless mentioned.present?
 
     mentioned_wildcards = mentioned.map { |m| "%@#{m}%" }
-    Wip.joins(:comments).where('body ILIKE ANY (ARRAY[?])', mentioned_wildcards)
+    Wip.joins(:comments).where('body ILIKE ANY (ARRAY[?])', mentioned_wildcards).uniq
   end
 
   def query_filter
