@@ -237,7 +237,9 @@ namespace :emails do
   task inactive_suggestions: :environment do
     recently_inactive_users = User.recently_inactive
     recently_inactive_users.each do |user|
-      SuggestionMailer.delay(queue: 'mailer').create(user.id)
+      if user.top_bountys.count > 0 and user.top_products.count > 0
+        SuggestionMailer.delay(queue: 'mailer').create(user.id)
+      end
     end
   end
 
