@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var Avatar = require('../avatar.js.jsx');
-var Love = require('../love.js.jsx');
+var Icon = require('../icon.js.jsx');
 
 var PostListIem = React.createClass({
   displayName: 'PostListItem',
@@ -17,31 +17,35 @@ var PostListIem = React.createClass({
           {this.renderTitle()}
           {this.renderSummary()}
         </div>
-        {this.renderTags()}
+
+        <div className="p3 py2 mb0 mt0 gray-dark">
+          {this.renderComments()}
+          {this.renderHearts()}
+          {this.renderTags()}
+        </div>
+
         {this.renderUser()}
       </div>
     );
   },
 
-  renderTags: function() {
-    var post = this.props.post;
+  renderComments: function() {
+    return [
+      <Icon icon="comment" />,
+      <span className="px1">
+        {this.props.post.comments_count}
+      </span>
+    ];
+  },
 
-    if (post.tags && post.tags.length) {
-      var tags = _.map(post.tags, function(tag) {
-        return (
-          <a className="caps gray-dark mr1" href={tag.url}>
-            #{tag.name.toLowerCase()}
-          </a>
-        );
-      });
+  renderHearts: function() {
+    return [
+      <Icon icon="heart" />,
 
-
-      return (
-        <div className="px3 py2 border-top mb0 mt0">
-          {tags}
-        </div>
-      );
-    }
+      <span className="px1">
+        {this.props.post.hearts_count}
+      </span>
+    ];
   },
 
   renderSummary: function() {
@@ -52,6 +56,20 @@ var PostListIem = React.createClass({
         {post.summary}
       </div>
     );
+  },
+
+  renderTags: function() {
+    var post = this.props.post;
+
+    if (post.tags && post.tags.length) {
+      return _.map(post.tags, function(tag) {
+        return (
+          <a className="caps gray-dark mr1" href={tag.url}>
+            #{tag.name.toLowerCase()}
+          </a>
+        );
+      });
+    }
   },
 
   renderTitle: function() {
