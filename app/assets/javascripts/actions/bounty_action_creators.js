@@ -40,14 +40,14 @@ var BountyActionCreators = {
     this.requestBounties(productSlug, params);
   }, 300),
 
-  detachBounty: function(bounty, options) {
-    var bounties = BountiesStore.getBounties();
-    var index = bounties.indexOf(bounty);
+  insertPlaceholder: function(index, height) {
+    var bounties = BountiesStore.getBounties()
+    var placeholder = {
+      placeholder: true,
+      height: height
+    }
 
-    placeholder = { placeholder: true, height: options.height }
-    bounty.detached = options;
-
-    bounties.splice(index, 1, placeholder, bounty);
+    bounties.splice(index, 0, placeholder)
 
     Dispatcher.dispatch({
       type: ActionTypes.BOUNTIES_REORDER,
@@ -55,20 +55,17 @@ var BountyActionCreators = {
     })
   },
 
-  moveBounty: function(bounty, options) {
-    var bounties = BountiesStore.getBounties();
-    var index = bounties.indexOf(bounty);
+  movePlaceholder: function(bountyId) {
+    var bounties = BountiesStore.getBounties()
 
-    console.log(bounty.detached.top)
-    console.log(bounty.detached.left)
+    var oldIndex = _.pluck(bounties, 'placeholder').indexOf(true)
+    var placeholder = bounties[oldIndex]
 
-    bounty.detached.top = bounty.detached.top + (bounty.detached.mouseY - options.mouseY)
-    bounty.detached.left = bounty.detached.left + (bounty.detached.mouseX - options.mouseX)
+    var newIndex = _.pluck(bounties, 'id').indexOf(bountyId)
+    var bounty = bounties[newIndex]
 
-    console.log(bounty.detached.top)
-    console.log(bounty.detached.left)
-
-    bounties.splice(index, 1, bounty);
+    bounties[newIndex] = placeholder
+    bounties[oldIndex] = bounty
 
     Dispatcher.dispatch({
       type: ActionTypes.BOUNTIES_REORDER,
@@ -78,11 +75,12 @@ var BountyActionCreators = {
 
   placeBounty: function(bounty) {
     var bounties = BountiesStore.getBounties();
-    var index = bounties.indexOf(bounty);
 
-    bounty.detached = null
+    var oldIndex = bounties.indexOf(bounty);
+    bounties.splice(oldIndex, 1)
 
-    bounties.splice(index, 1, bounty);
+    var newIndex = _.pluck(bounties, 'placeholder').indexOf(true)
+    bounties.splice(newIndex, 1, bounty)
 
     Dispatcher.dispatch({
       type: ActionTypes.BOUNTIES_REORDER,

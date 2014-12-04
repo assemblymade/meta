@@ -19,66 +19,6 @@
       BountiesStore.removeListener('change', this._onChange)
     },
 
-    handleMouseDown: function(bounty, event) {
-      var listItem = event.target.parentNode.parentNode
-      var height = $(listItem).outerHeight()
-
-      var bounties = this.state.bounties;
-      var index = bounties.indexOf(bounty);
-
-      placeholder = { placeholder: true, height: height }
-
-      bounties.splice(index, 0, placeholder);
-
-      this.setState({
-        bounties: bounties
-      })
-    },
-
-    handleMouseMove: function(bounty, position) {
-      var offset = $(this.getDOMNode()).offset()
-
-      var pagePosition = {
-        top: position.top + offset.top + (position.height / 2) - $(window).scrollTop(),
-        left: position.left - 10 + offset.left,
-      }
-
-      var title = document.elementFromPoint(pagePosition.left, pagePosition.top)
-      var listItem = title.parentNode.parentNode.parentNode
-
-      if(!listItem.data || !listItem.data.bountyId) {
-        return
-      }
-
-      var bountyId = listItem.data.bountyId
-      var bounties = this.state.bounties
-      var oldIndex = _.pluck(bounties, 'placeholder').indexOf(true)
-      var newIndex = _.pluck(bounties, 'id').indexOf(bountyId)
-
-      var placeholder = bounties[oldIndex]
-
-      bounties.splice(oldIndex, 1)
-      bounties.splice(newIndex, 0, placeholder)
-
-      this.setState({
-        bounties: bounties
-      })
-    },
-
-    handleMouseUp: function(bounty) {
-      var bounties = this.state.bounties
-
-      var bountyIndex = bounties.indexOf(bounty)
-      bounties.splice(bountyIndex, 1)
-
-      var placeholderIndex = _.pluck(bounties, 'placeholder').indexOf(true)
-      bounties.splice(placeholderIndex, 1, bounty)
-
-      this.setState({
-        bounties: bounties
-      })
-    },
-
     renderBounties: function() {
       if(!this.state.bounties.length) {
         return
@@ -93,7 +33,7 @@
           )
         } else {
           return (
-            <BountyListItem bounty={bounty} product={product} valuation={this.props.valuation} handleMouseDown={this.handleMouseDown} handleMouseMove={this.handleMouseMove} handleMouseUp={this.handleMouseUp} key={bounty.id} />
+            <BountyListItem bounty={bounty} product={product} valuation={this.props.valuation} handleMouseDown={this.handleMouseDown} handleMouseMove={this.handleMouseMove} handleMouseUp={this.handleMouseUp} key={bounty.id} index={this.state.bounties.indexOf(bounty)} />
           )
         }
       }.bind(this))

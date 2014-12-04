@@ -1,4 +1,6 @@
 (function() {
+  var BountyActionCreators = require('../actions/bounty_action_creators.js')
+
   var BountyListItem = React.createClass({
     getInitialState: function() {
       return {
@@ -33,7 +35,7 @@
         }
       })
 
-      this.props.handleMouseDown(this.props.bounty, event)
+      BountyActionCreators.insertPlaceholder(this.props.index, height)
 
       event.preventDefault()
       return false
@@ -41,28 +43,34 @@
 
     handleMouseMove: function(event) {
       var position = this.state.position
-
-      position.top = position.top + (event.pageY - position.mouseY)
-
+      position.top = position.top + (event.pageY - position.mouseY),
       position.mouseY = event.pageY
       position.mouseX = event.pageX
 
-      this.setState({
-        position: position
-      })
+      this.setState({ position: position })
 
-      this.props.handleMouseMove(this.props.bounty, position)
+      var offset = $(this.getDOMNode()).closest('.row').offset()
+      var scrollTop = $(window).scrollTop()
+
+      var left = position.left - 10 + offset.left
+      var top = position.top + offset.top + (position.height / 2) - scrollTop
+
+      var listItem = $(document.elementFromPoint(left, top)).closest('.js-bounty-list-item')[0]
+      if (listItem && listItem.data && listItem.data.bountyId) {
+        BountyActionCreators.movePlaceholder(listItem.data.bountyId)
+      }
 
       event.preventDefault()
       return false
     },
 
     handleMouseUp: function(event) {
-      this.setState({
-        position: null
-      })
+      this.setState({ position: null })
 
-      this.props.handleMouseUp(this.props.bounty)
+      BountyActionCreators.placeBounty(this.props.bounty)
+
+      event.preventDefault()
+      return false
     },
 
     renderTitle: function() {
@@ -87,18 +95,6 @@
           </a>
         )
       })
-    },
-
-    renderUrgency: function() {
-      var bounty = this.props.bounty
-
-      var urgencies = ['Urgent', 'Now', 'Someday']
-
-      return (
-        <div className="right">
-          <Urgency initialLabel={bounty.urgency.label} state={bounty.state} url={bounty.urgency_url} urgencies={urgencies} />
-        </div>
-      )
     },
 
     renderLove: function() {
@@ -146,14 +142,12 @@
           position: 'absolute',
           top: this.state.position.top,
           left: this.state.position.left,
-          width: this.state.position.width,
-          'transition-property': 'left',
-          'transition-duration': '0.5s'
+          width: this.state.position.width
         }
       }
 
       return (
-        <div className="bg-white rounded shadow mb3" style={style} data={{ bountyId: bounty.id }}>
+        <div className="bg-white rounded shadow mb3 js-bounty-list-item" style={style} data={{ bountyId: bounty.id }}>
           <div className="table mb0">
             <div className="table-cell">
               <div className="p3">
@@ -162,10 +156,6 @@
                 </div>
 
                 <div>
-                  <div className="right ml2">
-                    {this.renderUrgency()}
-                  </div>
-
                   <span className="mr2">
                     <BountyValuation {...this.props.bounty} {...this.props.valuation} />
                   </span>
