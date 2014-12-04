@@ -4,6 +4,29 @@
 
 <%= track 'product.wip.viewed', WipAnalyticsSerializer.new(@wip, scope: current_user) %>
 
+<!-- https://assembly.com/meta/bounties/818 -->
+<div class="card status complete mt0 mb3"> <!-- append status type as class name | ex complete | options: complete, pending, problem -->
+  <div class="status-primary">
+    <div class="status-symbol">
+      <%= image_tag 'check-new.svg' %>
+    </div>
+    <div class="status-detail">
+      <div class="mr1 status-title">
+        Task %taskstate%. <!-- ex: Complete -->
+      </div><!--
+   --><div class="status-text">
+        %taskstate%ed by <a href="/users/%username%">@%username%</a> %timestamp%. <!-- ex: Completed by @whale three weeks ago -->
+      </div>
+    </div>
+  </div>
+  <div class="status-secondary">
+    <div class="status-nav">
+      <a href="">Duplicate</a>
+      <a href="">Reopen</a>
+    </div>
+  </div>
+</div>
+
 <div class="card mb0">
   <%= react_component 'Bounty', {
       bounty: BountySerializer.new(@bounty, scope: current_user),

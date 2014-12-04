@@ -28,3 +28,95 @@
   padding: 15px 13px;
   background-color: $brand-bg;
 }
+
+.card-border-adjust {
+  margin-bottom:-2px;
+}
+
+.card.status {
+  display:table;
+  table-layout: fixed;
+  width:100%;
+  border:none;
+  border-radius: $border-radius-large;
+  //
+  >:first-child, >:last-child {
+    border-radius: 0;
+  }
+  &.complete {
+    //
+    .status-symbol {
+      background-color: $green;
+    }
+  }
+  &.pending {
+    //
+    .status-symbol {
+      background-color: $yellow;
+    }
+  }
+  &.problem {
+    //
+    .status-symbol {
+      background-color: $red;
+    }
+  }
+  .status-primary {
+    display:table-cell;
+    vertical-align: middle;
+  }
+  .status-symbol {
+    display:table-cell;
+    width:55px;
+    height:100%;
+    border-top-left-radius: $border-radius-large;
+    border-bottom-left-radius: $border-radius-large;
+    text-align:center;
+    vertical-align:middle;
+    //
+    img {
+      width:15px;
+    }
+  }
+  .status-detail {
+    display: table-cell;
+    padding: 20px 15px;
+    @media screen and (min-width: 480px) {
+      padding: 13px 15px 14px;
+    }
+  }
+  .status-title {
+    display:inline-block;
+    font-weight:bold;
+  }
+  .status-text {
+    display:none;
+    @media screen and (min-width: 768px) {
+      display:inline-block;
+    }
+  }
+  .status-secondary {
+    display:table-cell;
+    width:110px;
+    text-align:right;
+    vertical-align: middle;
+    @media screen and (min-width: 480px) {
+      width:165px;
+    }
+  }
+  .status-nav {
+    padding:0 20px 0 0;
+    //
+    a {
+      display: block;
+      font-weight:bold;
+      @media screen and (min-width: 480px) {
+        display:inline-block;
+        //
+        &:first-child {
+          margin-right:15px;
+        }
+      }
+    }
+  }
+}
