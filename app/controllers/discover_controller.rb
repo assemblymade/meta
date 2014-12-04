@@ -91,7 +91,9 @@ class DiscoverController < ApplicationController
     @postings = @postings.where(products: { slug: params[:product] }) if params[:product]
 
     if params[:filter] == 'suggested'
-      @postings = Kaminari.paginate_array(current_user.top_bountys.order(:rank).includes(:wip).map(&:wip))
+      if current_user
+        @postings = Kaminari.paginate_array(current_user.top_bountys.order(:rank).includes(:wip).map(&:wip))
+      end
     end
 
   end
