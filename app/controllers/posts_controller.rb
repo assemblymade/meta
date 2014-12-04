@@ -5,11 +5,7 @@ class PostsController < ProductController
     find_product!
     posts = @product.posts.order(created_at: :desc)
 
-    @posts = posts.map do |post|
-      # Rails.cache.fetch([post, :json]) do
-        PostSerializer.new(post).as_json
-      # end
-    end
+    @posts = ActiveModel::ArraySerializer.new(posts)
   end
 
   def new

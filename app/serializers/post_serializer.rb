@@ -20,4 +20,10 @@ class PostSerializer < ApplicationSerializer
   def url
     product_post_path(product, object)
   end
+
+  cached
+
+  def cache_key
+    [object]
+  end
 end
