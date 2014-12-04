@@ -51,11 +51,18 @@ var NewsFeedItemComments = React.createClass({
     var showAllComments = this.props.showAllComments;
     var lastComment = item.last_comment;
 
+    var showCommentsAfter;
+    if (!showAllComments) {
+      showCommentsAfter = +(lastComment ? new Date(lastComment.created_at) : Date.now());
+    } else {
+      showCommentsAfter = 0;
+    }
+
     return {
       comments: lastComment ? [lastComment] : [],
       numberOfComments: item.target.comments_count || item.comments_count,
       optimisticComments: [],
-      showCommentsAfter: showAllComments ? 0 : +(lastComment ? new Date(lastComment.created_at) : Date.now()),
+      showCommentsAfter: showCommentsAfter,
       url: item.url + '/comments'
     };
   },
