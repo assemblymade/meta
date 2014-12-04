@@ -73,10 +73,12 @@
         { name: 'Least recently updated', value: 'least_recently_updated' }
       ]
 
+      var selectedSort = _.find(sorts, function(s) { return s.value == this.props.sort }.bind(this))
+
       return (
         <div className="dropdown">
           <a className="dropdown-toggle black bold no-wrap" data-toggle="dropdown" href="#">
-            Sort
+            Sort ({selectedSort.name})
             {' '}
             <span className="icon icon-chevron-down"></span>
           </a>
@@ -119,7 +121,7 @@
           </div>
 
           <div className="table-cell">
-            <div className="px3 py2" style={{ width: 50 }}>
+            <div className="px3 py2" style={{ 'margin-right': -70 }}>
               {this.renderSortDropdown()}
             </div>
           </div>
