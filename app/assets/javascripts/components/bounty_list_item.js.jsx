@@ -1,39 +1,40 @@
 /** @jsx React.DOM */
 
 (function() {
+  var ListItemMixin = require('../mixins/list_item_mixin.js.jsx');
+
   var BountyListItem = React.createClass({
-    renderTitle: function() {
+    mixins: [ListItemMixin],
+
+    render: function() {
       var bounty = this.props.bounty
 
       return (
-        <a href={bounty.url}>
-          {bounty.title}
-          {' '}
-          <span className="gray-dark ml1">
-            #{bounty.number}
-          </span>
-        </a>
-      )
-    },
+        <div className="bg-white rounded shadow mb2">
+          <div className="p3">
+            <div className="h4 mt0 mb1">
+              {this.renderTitle()}
+            </div>
 
-    renderTags: function() {
-      return this.props.bounty.tags.map(function(tag) {
-        return (
-          <a className="caps gray-dark mr1" href={tag.url}>
-            #{tag.name.toLowerCase()}
-          </a>
-        )
-      })
-    },
+            <div>
+              <div className="right ml2">
+                {this.renderUrgency()}
+              </div>
 
-    renderUrgency: function() {
-      var bounty = this.props.bounty
+              <span className="mr2">
+                <BountyValuation {...this.props.bounty} {...this.props.valuation} />
+              </span>
 
-      var urgencies = ['Urgent', 'Now', 'Someday']
+              <span className="gray mr2">
+                {this.renderComments(bounty.comments_count)}
+              </span>
 
-      return (
-        <div className="right">
-          <Urgency initialLabel={bounty.urgency.label} state={bounty.state} url={bounty.urgency_url} urgencies={urgencies} />
+              <span className="h6 mt0 mb0">
+                {this.renderTags(bounty.tags)}
+              </span>
+            </div>
+          </div>
+          {this.renderLocker()}
         </div>
       )
     },
@@ -62,37 +63,28 @@
       )
     },
 
-    render: function() {
+    renderTitle: function() {
       var bounty = this.props.bounty
 
       return (
-        <div className="bg-white rounded shadow mb2">
-          <div className="p3">
-            <div className="h4 mt0 mb1">
-              {this.renderTitle()}
-            </div>
+        <a href={bounty.url}>
+          {bounty.title}
+          {' '}
+          <span className="gray-dark ml1">
+            #{bounty.number}
+          </span>
+        </a>
+      )
+    },
 
-            <div>
-              <div className="right ml2">
-                {this.renderUrgency()}
-              </div>
+    renderUrgency: function() {
+      var bounty = this.props.bounty
 
-              <span className="mr2">
-                <BountyValuation {...this.props.bounty} {...this.props.valuation} />
-              </span>
+      var urgencies = ['Urgent', 'Now', 'Someday']
 
-              <span className="gray mr2">
-                <span className="fa fa-comment"></span>
-                {' '}
-                {bounty.comments_count}
-              </span>
-
-              <span className="h6 mt0 mb0">
-                {this.renderTags()}
-              </span>
-            </div>
-          </div>
-          {this.renderLocker()}
+      return (
+        <div className="right">
+          <Urgency initialLabel={bounty.urgency.label} state={bounty.state} url={bounty.urgency_url} urgencies={urgencies} />
         </div>
       )
     }

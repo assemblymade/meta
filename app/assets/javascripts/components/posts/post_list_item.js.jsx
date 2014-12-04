@@ -2,6 +2,7 @@
 
 var Avatar = require('../avatar.js.jsx');
 var Icon = require('../icon.js.jsx');
+var ListItemMixin = require('../../mixins/list_item_mixin.js.jsx');
 
 var PostListIem = React.createClass({
   displayName: 'PostListItem',
@@ -10,7 +11,11 @@ var PostListIem = React.createClass({
     post: React.PropTypes.object.isRequired
   },
 
+  mixins: [ListItemMixin],
+
   render: function() {
+    var post = this.props.post;
+
     return (
       <div className="bg-white rounded shadow mb2">
         <div className="p3">
@@ -19,23 +24,14 @@ var PostListIem = React.createClass({
         </div>
 
         <div className="p3 py2 mb0 mt0 gray-dark">
-          {this.renderComments()}
+          {this.renderComments(post.comments_count)}
           {this.renderHearts()}
-          {this.renderTags()}
+          {this.renderTags(post.tags)}
         </div>
 
         {this.renderUser()}
       </div>
     );
-  },
-
-  renderComments: function() {
-    return [
-      <Icon icon="comment" />,
-      <span className="px1">
-        {this.props.post.comments_count}
-      </span>
-    ];
   },
 
   renderHearts: function() {
@@ -56,20 +52,6 @@ var PostListIem = React.createClass({
         {post.summary}
       </div>
     );
-  },
-
-  renderTags: function() {
-    var post = this.props.post;
-
-    if (post.tags && post.tags.length) {
-      return _.map(post.tags, function(tag) {
-        return (
-          <a className="caps gray-dark mr1" href={tag.url}>
-            #{tag.name.toLowerCase()}
-          </a>
-        );
-      });
-    }
   },
 
   renderTitle: function() {

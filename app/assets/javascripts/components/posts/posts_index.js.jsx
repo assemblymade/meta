@@ -54,11 +54,11 @@
 
       if (!posts.length) {
         return [
-          <h4 className="text-muted">
+          <h4 className="text-muted" key="heading">
             There don't seem to be any posts here
           </h4>,
 
-          <p>
+          <p key="explanation">
             {"Blog posts by " + product.name + "'s partners will appear here just as soon as they're written."}
           </p>
         ];

@@ -2,8 +2,19 @@
 
 (function() {
   var BountyList = React.createClass({
+    render: function() {
+      return (
+        <div className="row">
+          <div className="col-xs-12">
+            {this.renderBounties()}
+            {this.renderEmptyState()}
+          </div>
+        </div>
+      )
+    },
+
     renderBounties: function() {
-      if(!this.props.bounties.length) {
+      if (!this.props.bounties.length) {
         return
       }
 
@@ -18,17 +29,6 @@
 
     // TODO
     renderEmptyState: function() {
-    },
-
-    render: function() {
-      return (
-        <div className="row">
-          <div className="col-xs-12">
-            {this.renderBounties()}
-            {this.renderEmptyState()}
-          </div>
-        </div>
-      )
     }
   });
 

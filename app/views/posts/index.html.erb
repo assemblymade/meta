@@ -1,6 +1,6 @@
 <% title 'Posts', @product.name %>
 <% activate_nav! :posts %>
-<%= initial_store_data('PostsStore', { posts: @posts, product: @product }) %>
+<%= initial_store_data('PostsStore', { posts: @posts, product: @product.slug }) %>
 
 <div class="sheet-body">
   <div class="row">
