@@ -184,7 +184,7 @@ class User < ActiveRecord::Base
   def create_identity
     UserIdentity.create!({user_id: self.id})
   end
-
+  
   def staff?
     is_staff?
   end

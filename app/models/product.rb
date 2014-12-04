@@ -471,18 +471,6 @@ class Product < ActiveRecord::Base
     Watching.watched?(user, self)
   end
 
-  def watching_state(user)
-    if user
-      if Watching.following?(user, self)
-        return 'following'
-      elsif subscribers.find_by(user_id: user.id)
-        return 'announcements'
-      end
-    end
-
-    'not watching'
-  end
-
   def poster_image
     self.logo || PosterImage.new(self)
   end

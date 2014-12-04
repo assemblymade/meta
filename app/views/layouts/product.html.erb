@@ -1,3 +1,8 @@
+<%= initial_store_data('ProductFollowersStore',
+        products: [{ id: @product.id, followers_count: @product.watchings_count }],
+        userFollowings: (@product.watching?(current_user) ? [@product.id] : [])
+) %>
+
 <% content_for :javascript do %>
   <script>
     window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);
@@ -80,15 +85,7 @@
       </div>
 
       <div class="sm-col sm-col-3 p1">
-        <%= react_component('NotificationPreferencesDropdown',
-          productWatchersPath: product_people_path(@product),
-          productWatchersCount: @product.watchings_count,
-          productFollowPath: product_follow_path(@product),
-          productAnnouncementsPath: product_announcements_path(@product),
-          productUnfollowPath: product_unfollow_path(@product),
-          watchingState: @product.watching_state(current_user),
-          afterFollowPath: product_people_path(@product)
-        ) %>
+        <%= react_component('ProductFollowers', product_id: @product.id) %>
       </div>
 
     </div>

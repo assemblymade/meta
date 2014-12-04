@@ -39,7 +39,7 @@ class FilterWipsQuery
       when 'open'
         'open'
       when 'doing'
-        ['allocated', 'awarding']
+        ['allocated', 'awarded']
       when 'reviewing'
         'reviewing'
       when 'done'
