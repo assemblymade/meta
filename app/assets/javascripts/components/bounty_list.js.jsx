@@ -2,12 +2,21 @@
 
 (function() {
   var BountyActionCreators = require('../actions/bounty_action_creators.js')
+  var BountiesStore = require('../stores/bounties_store.js')
+  var PaginationLinks = require('./pagination_links.js.jsx')
+  var Spinner = require('./spinner.js.jsx')
 
   var BountyList = React.createClass({
     getInitialState: function() {
-      return {
-        bounties: this.props.bounties
-      }
+      return this.getStateFromStore()
+    },
+
+    componentDidMount: function() {
+      BountiesStore.addListener('change', this._onChange)
+    },
+
+    componentWillUnmount: function() {
+      BountiesStore.removeListener('change', this._onChange)
     },
 
     handleMouseDown: function(bounty, event) {
@@ -66,13 +75,13 @@
     },
 
     renderBounties: function() {
-      if(!this.props.bounties.length) {
+      if(!this.state.bounties.length) {
         return
       }
 
       var product = this.props.product
 
-      return this.props.bounties.map(function(bounty) {
+      return this.state.bounties.map(function(bounty) {
         if(bounty.placeholder) {
           return (
             <div className="bg-black mb3" style={{ height: bounty.height }}></div>
@@ -90,15 +99,34 @@
     },
 
     render: function() {
-      return (
-        <div className="row">
-          <div className="col-xs-12">
-            {this.renderBounties()}
-            {this.renderEmptyState()}
+      if (this.state.loading) {
+        return <Spinner />
+      } else {
+        return (
+          <div className="row">
+            <div className="col-xs-12">
+              {this.renderBounties()}
+              {this.renderEmptyState()}
+
+              <PaginationLinks page={this.state.page} pages={this.state.pages} onPageChanged={this.props.onPageChange} />
+            </div>
           </div>
-        </div>
-      )
-    }
+        )
+      }
+    },
+
+    getStateFromStore: function() {
+      return {
+        bounties: BountiesStore.getBounties(),
+        page: BountiesStore.getPage(),
+        pages: BountiesStore.getPages(),
+        loading: BountiesStore.getLoading()
+      }
+    },
+
+    _onChange: function() {
+      this.setState(this.getStateFromStore())
+    },
   });
 
   if (typeof module !== 'undefined') {

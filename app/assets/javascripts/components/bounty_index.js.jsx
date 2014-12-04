@@ -1,14 +1,11 @@
 /** @jsx React.DOM */
 
 (function() {
+  var BountyActionCreators = require('../actions/bounty_action_creators.js')
   var BountyFilter = require('./bounty_filter.js.jsx')
   var BountyList = require('./bounty_list.js.jsx')
   var PaginationLinks = require('./pagination_links.js.jsx')
   var Spinner = require('./spinner.js.jsx')
-  var BountyActionCreators = require('../actions/bounty_action_creators.js')
-  var BountiesStore = require('../stores/bounties_store.js')
-
-  var timeout = null
 
   var BountyIndex = React.createClass({
     propTypes: {
@@ -19,18 +16,10 @@
     },
 
     getInitialState: function() {
-      return _.extend({
+      return {
         value: 'state:open',
         sort: 'priority'
-      }, this.getStateFromStore())
-    },
-
-    componentDidMount: function() {
-      BountiesStore.addListener('change', this._onChange)
-    },
-
-    componentWillUnmount: function() {
-      BountiesStore.removeListener('change', this._onChange)
+      }
     },
 
     getBounties: function(value, sort, page) {
@@ -79,19 +68,6 @@
       }.bind(this))
     },
 
-    renderBounties: function() {
-      if(this.state.loading) {
-        return <Spinner />
-      } else {
-        return (
-          <div>
-            <BountyList bounties={this.state.bounties} product={this.props.product} valuation={this.props.valuation} />
-            <PaginationLinks page={this.state.page} pages={this.state.pages} onPageChanged={this.handlePageChange} />
-          </div>
-        )
-      }
-    },
-
     render: function() {
       var bountyFilterProps = _.pick(this.props, 'tags', 'creators', 'workers')
 
@@ -115,7 +91,7 @@
 
             <div className="border-top mt2 mb2"></div>
 
-            {this.renderBounties()}
+            <BountyList product={this.props.product} valuation={this.props.valuation} onPageChange={this.handlePageChange} />
           </div>
         </div>
       )
@@ -140,21 +116,7 @@
       params.page = page
 
       return params
-    },
-
-    getStateFromStore: function() {
-      return {
-        bounties: BountiesStore.getBounties(),
-        page: BountiesStore.getPage(),
-        pages: BountiesStore.getPages(),
-        loading: BountiesStore.getLoading()
-      }
-    },
-
-    _onChange: function() {
-      this.setState(this.getStateFromStore())
-    },
-
+    }
   });
 
   if (typeof module !== 'undefined') {
