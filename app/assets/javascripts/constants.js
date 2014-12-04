@@ -106,6 +106,9 @@
 
     // TODO: move constants into here. 1 Flat namespace will ensure constants don't collide
     ActionTypes: keyMirror({
+      BOUNTIES_REQUEST: null,
+      BOUNTIES_RECEIVE: null,
+
       CHAT_USER_ONLINE: null,
       CHAT_MESSAGE_RECEIVE_ACTIVITIES: null,
 
@@ -122,6 +125,14 @@
       NEWS_FEED_RECEIVE_RAW_ITEMS: null,
 
       PEOPLE_RECEIVE: null,
+
+      PRODUCT_FOLLOW_CLICKED: null,
+      PRODUCT_FOLLOW_SUCCEEDED: null,
+      PRODUCT_FOLLOW_FAILED: null,
+      PRODUCT_RECEIVE_FOLLOWER_COUNTS: null,
+      PRODUCT_UNFOLLOW_CLICKED: null,
+      PRODUCT_UNFOLLOW_SUCCEEDED: null,
+      PRODUCT_UNFOLLOW_FAILED: null,
 
       PUSHER_PRESENCE_CONNECTED: null,
 

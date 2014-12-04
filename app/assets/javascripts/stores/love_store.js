@@ -11,7 +11,7 @@ var LoveActionCreators = require('../actions/love_action_creators');
 class LoveStore extends EventEmitter {
   constructor() {
     super()
-    this.setMaxListeners(20)
+    this.setMaxListeners(30)
 
     _dispatchToken = Dispatcher.register((action) => {
       switch(action.type) {

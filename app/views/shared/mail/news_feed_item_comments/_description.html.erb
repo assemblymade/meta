@@ -1,3 +1,10 @@
-<a href="<%= product_update_url(description.product, description.news_feed_item) %>">
+<%  url = if description.product
+      polymorphic_url([description.product, description.news_feed_item.target], only_path: false)
+    else
+      polymorphic_url([description.news_feed_item.target], only_path: false)
+    end
+%>
+
+<a href="<%= url %>">
   <%= t "models.comment.description.owner" %>
 </a>

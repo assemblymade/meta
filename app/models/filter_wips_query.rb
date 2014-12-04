@@ -27,7 +27,7 @@ class FilterWipsQuery
 
   def filter_clauses
     [state_filter, tag_filter, mark_filter, doing_filter, created_filter,
-     commented_filter, query_filter, user_filter, sort_order,
+     commented_filter, mentioned_filter, query_filter, user_filter, sort_order,
      page_selection].compact
   end
 
@@ -39,7 +39,7 @@ class FilterWipsQuery
       when 'open'
         'open'
       when 'doing'
-        ['allocated', 'awarding']
+        ['allocated', 'awarded']
       when 'reviewing'
         'reviewing'
       when 'done'
@@ -81,6 +81,13 @@ class FilterWipsQuery
 
     commented_ids = User.where(username: commented).pluck(:id)
     Wip.joins(:comments).where(user_id: commented_ids).uniq
+  end
+
+  def mentioned_filter
+    return unless mentioned.present?
+
+    mentioned_wildcards = mentioned.map { |m| "%@#{m}%" }
+    Wip.joins(:comments).where('body ILIKE ANY (ARRAY[?])', mentioned_wildcards).uniq
   end
 
   def query_filter
@@ -157,6 +164,10 @@ class FilterWipsQuery
 
   def commented
     Array.wrap(filters[:commented])
+  end
+
+  def mentioned
+    Array.wrap(filters[:mentioned])
   end
 
   def query

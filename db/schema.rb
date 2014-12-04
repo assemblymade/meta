@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141202230722) do
+ActiveRecord::Schema.define(version: 20141204200102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -444,7 +444,8 @@ ActiveRecord::Schema.define(version: 20141202230722) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.datetime "popular_at"
-    t.integer  "hearts_count", default: 0, null: false
+    t.integer  "hearts_count",      default: 0, null: false
+    t.datetime "last_commented_at"
   end
 
   create_table "newsletters", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -866,6 +867,8 @@ ActiveRecord::Schema.define(version: 20141202230722) do
     t.string   "how_much_time"
     t.text     "previous_experience"
     t.string   "platforms",                         default: [],                   array: true
+    t.datetime "gravatar_checked_at"
+    t.datetime "gravatar_verified_at"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
@@ -873,6 +876,8 @@ ActiveRecord::Schema.define(version: 20141202230722) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["facebook_uid"], name: "index_users_on_facebook_uid", unique: true, using: :btree
   add_index "users", ["github_uid"], name: "index_users_on_github_uid", unique: true, using: :btree
+  add_index "users", ["gravatar_checked_at"], name: "index_users_on_gravatar_checked_at", using: :btree
+  add_index "users", ["gravatar_verified_at"], name: "index_users_on_gravatar_verified_at", using: :btree
   add_index "users", ["last_request_at"], name: "index_users_on_last_request_at", using: :btree
   add_index "users", ["name"], name: "index_users_on_name", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree

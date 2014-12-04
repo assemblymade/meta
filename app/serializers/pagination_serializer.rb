@@ -1,5 +1,5 @@
 class PaginationSerializer < ActiveModel::ArraySerializer
-  def initialize(object, options={})
+  def initialize(object, options = {})
     options[:meta] ||= {}
     options[:meta].merge!(pagination: pagination(object))
     super(object, options)

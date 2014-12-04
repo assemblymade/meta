@@ -11,7 +11,8 @@ module TextFilters
             firesize_args =['500x', 'frame_0']
           end
 
-          preview_url = File.join(context[:firesize_url], firesize_args, el['src'])
+          firesize_url = File.join(context[:firesize_url], firesize_args, el['src'])
+          preview_url = '.gif' == File.extname(el['src']) ? el['src'] : firesize_url
 
           lightbox = Nokogiri::XML::Node.new('div', doc)
           lightbox['data-react-class'] = 'AssetThumbnail'
@@ -31,6 +32,7 @@ module TextFilters
           el.delete 'alt'
         end
       end
+
       doc
     end
 

@@ -32,4 +32,12 @@ describe EmailCampaigns::HeartsReceived do
       EmailCampaigns::HeartsReceived.new.process!
     ).to eq({})
   end
+
+  it "doesn't send you your own hearts" do
+    heart = Heart.make!(created_at: 60.minutes.ago, heartable: heartable, user: author)
+
+    expect(
+      EmailCampaigns::HeartsReceived.new.process!
+    ).to eq({})
+  end
 end

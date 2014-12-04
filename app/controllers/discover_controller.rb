@@ -42,6 +42,13 @@ class DiscoverController < ApplicationController
        @products = @products.with_mark(params[:mark])
     end
 
+    @show_suggested = false
+    if current_user
+      if current_user.top_products.count > 2 and current_user.top_bountys.count > 2
+        @show_suggested = true
+      end
+    end
+
     @products = case params[:sort]
       when 'trending'
         @products.ordered_by_trend
@@ -50,7 +57,9 @@ class DiscoverController < ApplicationController
       when 'teambuilding'
         @products.sort_by {|p| p.bio_memberships_count }
       when 'suggested'
-        @products = current_user.top_products.pluck(:product_id).map{|a| Product.find(a) }
+        if current_user
+          @products = current_user.top_products.pluck(:product_id).map{|a| Product.find(a) }
+        end
       else # popular
         @products.sort_by {|p| -p.partners_count }
       end
@@ -82,7 +91,9 @@ class DiscoverController < ApplicationController
     @postings = @postings.where(products: { slug: params[:product] }) if params[:product]
 
     if params[:filter] == 'suggested'
-      @postings = Kaminari.paginate_array(current_user.top_bountys.order(:rank).includes(:wip).map(&:wip))
+      if current_user
+        @postings = Kaminari.paginate_array(current_user.top_bountys.order(:rank).includes(:wip).map(&:wip))
+      end
     end
 
   end
@@ -106,7 +117,7 @@ class DiscoverController < ApplicationController
                 limit(limit).
                 offset(offset).
                 where.not(product: META).
-                order(updated_at: :desc)
+                order(last_commented_at: :desc)
     end
 
     if params[:filter] == 'hot'
