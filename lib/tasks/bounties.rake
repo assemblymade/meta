@@ -193,7 +193,7 @@ namespace :bounties do
     wips = 0
     Wip.includes(:comments).find_each do |wip|
       next if ChatRoom.find_by(wip_id: wip.id)
-      
+
       wips += 1
       if NewsFeedItem.find_by(product_id: wip.product_id, target_id: wip.id).nil?
         puts "#{wip.id} #{wips} - adding"
@@ -250,12 +250,6 @@ namespace :bounties do
         task.stop_work!(User.find(task.locked_by))
       elsif task_expiration - now < 12.hours
         unless task.state == 'reviewing'
-
-          Analytics.track(
-            user_id: task.locked_by,
-            event: 'bounty.expiration.reminded'
-          )
-
           EmailLog.send_once task.locked_by, "#{task.id}-#{task.locked_at}" do
             UserMailer.twelve_hour_reminder(task.locked_by, task.id)
           end
