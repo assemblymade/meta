@@ -24,7 +24,7 @@
 
     body: function(story) {
       var task = story.verb === 'Start' ? story.subjects[0] : story.target;
-      console.log(story);
+
       return (
         <span>
           {this.verbMap[story.verb]}
