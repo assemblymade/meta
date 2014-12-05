@@ -31,7 +31,7 @@
           <a className="text-coins bold" href="#" id="bounty-amount-link" onClick={this.toggle}>
             <span className="icon icon-app-coin"></span>
             {' '}
-            {numeral(this.props.contracts.earnable).format('0,0')}
+            {numeral(this.props.earnable_coins_cache).format('0,0')}
             {' '}
             <span className="icon icon-chevron-down"></span>
           </a>
