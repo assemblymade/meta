@@ -45,21 +45,25 @@ class UpdatesWip
 
     old_priority = wip.priority
 
-    if old_priority > priority_above.priority
-      operation = '+'
-      new_priority = priority_above.priority
-      priority_range = Range.new(new_priority, old_priority - 1)
+    if old_priority > priority_above
+      new_priority = priority_above
+      update_affected_tasks('+', Range.new(new_priority, old_priority - 1))
     else
-      operation = '-'
-      new_priority = priority_above.priority - 1
-      priority_range = Range.new(old_priority + 1, new_priority)
+      new_priority = priority_above - 1
+      update_affected_tasks('-', Range.new(old_priority + 1, new_priority))
     end
 
-    product.tasks.
-      where(priority: priority_range).
-      update_all("priority = priority #{operation} 1")
-
     wip.priority = new_priority
+  end
+
+  def update_affected_tasks(operation, priority_range)
+    affected_tasks(priority_range).
+      update_all("priority = priority #{operation} 1")
+  end
+
+  def affected_tasks(priority_range)
+    product.tasks.
+      where(priority: priority_range)
   end
 
   def title
@@ -73,7 +77,7 @@ class UpdatesWip
   def priority_above
     return unless priority_above_id
 
-    product.tasks.find_by(id: priority_above_id)
+    product.tasks.find_by(id: priority_above_id).priority
   end
 
   def product

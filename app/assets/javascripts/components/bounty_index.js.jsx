@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
+  var BountiesStore = require('../stores/bounties_store.js')
   var BountyActionCreators = require('../actions/bounty_action_creators.js')
   var BountyFilter = require('./bounty_filter.js.jsx')
   var BountyList = require('./bounty_list.js.jsx')
@@ -19,6 +20,22 @@
       return {
         value: 'is:open',
         sort: 'priority'
+      }
+    },
+
+    componentDidMount: function() {
+      window.addEventListener('scroll', this.onScroll);
+    },
+
+    componentWillUnmount: function() {
+      window.removeEventListener('scroll', this.onScroll);
+    },
+
+    onScroll: function() {
+      var atBottom = $(window).scrollTop() + $(window).height() > $(document).height() - 200
+
+      if (atBottom) {
+        BountyActionCreators.requestNextPage(this.props.product.slug, this.params(this.state.value, this.state.sort))
       }
     },
 

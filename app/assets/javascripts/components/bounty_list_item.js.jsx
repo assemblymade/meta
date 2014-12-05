@@ -56,8 +56,8 @@
       var top = position.top + offset.top + (position.height / 2) - scrollTop
 
       var listItem = $(document.elementFromPoint(left, top)).closest('.js-bounty-list-item')[0]
-      if (listItem && listItem.data && listItem.data.bountyId) {
-        BountyActionCreators.movePlaceholder(listItem.data.bountyId)
+      if (listItem && listItem.dataset && listItem.dataset.bountyId) {
+        BountyActionCreators.movePlaceholder(listItem.dataset.bountyId)
       }
 
       event.preventDefault()
@@ -147,13 +147,10 @@
       }
 
       return (
-        <div className="bg-white rounded shadow mb3 js-bounty-list-item" style={style} data={{ bountyId: bounty.id }}>
+        <div className="bg-white rounded shadow mb3 js-bounty-list-item" style={style} data-bounty-id={bounty.id}>
           <div className="table mb0">
             <div className="table-cell">
               <div className="p3">
-                <div className="h1 gray" style={{ position: 'absolute', left: '-50px'}}>
-                  {bounty.priority}
-                </div>
                 <div className="h4 mt0 mb1">
                   {this.renderTitle()}
                 </div>

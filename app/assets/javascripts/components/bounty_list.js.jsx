@@ -43,21 +43,22 @@
     renderEmptyState: function() {
     },
 
-    render: function() {
+    renderSpinner: function() {
       if (this.state.loading) {
         return <Spinner />
-      } else {
-        return (
-          <div className="row">
-            <div className="col-xs-12">
-              {this.renderBounties()}
-              {this.renderEmptyState()}
-
-              <PaginationLinks page={this.state.page} pages={this.state.pages} onPageChanged={this.props.onPageChange} />
-            </div>
-          </div>
-        )
       }
+    },
+
+    render: function() {
+      return (
+        <div className="row">
+          <div className="col-xs-12">
+            {this.renderBounties()}
+            {this.renderEmptyState()}
+            {this.renderSpinner()}
+          </div>
+        </div>
+      )
     },
 
     getStateFromStore: function() {
@@ -71,7 +72,7 @@
 
     _onChange: function() {
       this.setState(this.getStateFromStore())
-    },
+    }
   });
 
   if (typeof module !== 'undefined') {

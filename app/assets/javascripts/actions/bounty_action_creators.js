@@ -36,6 +36,41 @@ var BountyActionCreators = {
     });
   },
 
+  requestNextPage: function(productSlug, params) {
+    var loading = BountiesStore.getLoading()
+    var page = BountiesStore.getPage()
+    var pages = BountiesStore.getPages()
+
+    if (loading || page == pages) {
+      return
+    }
+
+    var bounties = BountiesStore.getBounties()
+
+    Dispatcher.dispatch({
+      type: ActionTypes.BOUNTIES_REQUEST,
+      bounties: bounties
+    });
+
+    var path = ['/', productSlug, '/', 'bounties', '.', 'json'].join('');
+    params['page'] = page + 1
+
+    $.ajax({
+      url: path,
+      type: 'GET',
+      dataType: 'json',
+      data: params,
+      success: function(response) {
+        Dispatcher.dispatch({
+          type: ActionTypes.BOUNTIES_RECEIVE,
+          bounties: bounties.concat(response.bounties),
+          page: response.meta.pagination.page,
+          pages: response.meta.pagination.pages
+        });
+      }
+    });
+  },
+
   requestBountiesDebounced: _.debounce(function(productSlug, params) {
     this.requestBounties(productSlug, params);
   }, 300),
