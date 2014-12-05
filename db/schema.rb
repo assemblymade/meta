@@ -444,7 +444,8 @@ ActiveRecord::Schema.define(version: 20141205010241) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.datetime "popular_at"
-    t.integer  "hearts_count", default: 0, null: false
+    t.integer  "hearts_count",      default: 0, null: false
+    t.datetime "last_commented_at"
   end
 
   create_table "newsletters", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
