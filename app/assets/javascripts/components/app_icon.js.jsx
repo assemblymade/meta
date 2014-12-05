@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var AppIcon = React.createClass({
 
   propTypes: {

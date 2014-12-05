@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var Avatar = require('../avatar.js.jsx');
 var Icon = require('../icon.js.jsx');
 var ListItemMixin = require('../../mixins/list_item_mixin.js.jsx');

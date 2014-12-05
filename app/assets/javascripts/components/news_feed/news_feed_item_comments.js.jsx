@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 // TODO This lib is in application.js (chrislloyd)
 // var marked = require('marked')
 
@@ -18,8 +16,18 @@ var NewsFeedItemComments = React.createClass({
     showAllComments: React.PropTypes.bool
   },
 
+  componentDidMount: function() {
+    if (this.props.showAllComments) {
+      this.fetchCommentsFromServer({ stopPropagation: function() {} });
+    }
+  },
+
   componentWillMount: function() {
     NewsFeedItemStore.addChangeListener(this.getComments);
+  },
+
+  componentWillUnmount: function() {
+    NewsFeedItemStore.removeChangeListener(this.getComments);
   },
 
   fetchCommentsFromServer: function(e) {
