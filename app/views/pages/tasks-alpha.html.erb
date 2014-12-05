@@ -2,7 +2,7 @@
 <% provide(:description, '<productDesc>') %>
 
 <div class="temp-closed">
-  <span>header update rolled into task #907</span>
+  <span>new header update rolled into task #907... coming&nbsp;soon!</span>
 <%= render 'shared/navbar' %>
 </div>
 
@@ -46,10 +46,12 @@
         </div>
       </div>
       <div class="secondary">
-        <button class="" type="button" data-reactid=".5.0">                 <!-- this will prob be a reskin -->
-          <div class="toggler-label" data-reactid=".5.0.0">Following</div>
-          <div class="toggler-badge" data-reactid=".5.0.1">357</div>
-        </button>
+        <div class="follow-button">
+          <button type="button" data-reactid=".5.0">
+            <div class="count" data-reactid=".5.0.1">0</div>
+            <div class="title" data-reactid=".5.0.0">Follow</div>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -189,34 +191,106 @@
       </div>
     </div>
     <aside class="secondary">
-        button
-        <br><br>
-        info card
+        <div class="create-task">
+          <a href="">
+            Create A New Task
+          </a>
+        </div>
+        <div class="info-card card">
+          <div class="info-card-title">
+            Getting Started
+          </div>
+          What content should go here to get a
+          new member focused on what they
+          should do?
+        </div>
       <nav class="tag-module" role="navigation">
         <div class="tag-module-header">
-          <h4>Tags</h4>
-          <a href="#">^</a>
+          <div class="title">
+            Tags
+          </div><!--
+       --><div class="title-nav">
+            <a href="#">
+              <span class="icon icon-chevron-down" data-reactid=".9.1.0.0.0.0.0.0.2"></span>
+            </a>
+          </div>
         </div>
         <ul class="tag-module-core">
           <li>
-            <href="#">#Backend</a>
+            <a href="#">
+              <span>#Design</span><!--
+           --><span>30</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span>#Frontend</span><!--
+           --><span>23</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+               <span>#Backend</span><!--
+            --><span>12</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span>#CSS</span><!--
+           --><span>11</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span>#Ruby</span><!--
+           --><span>54</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span>#December</span><!--
+           --><span>11</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span>#January</span><!--
+           --><span>13</span>
+            </a>
           </li>
         </ul>
       </nav>
       <div class="assets-module">
-        <div class="assets-module-header">
-          <h4>Assets</h4>
-          <a href="#">^</a>
+        <div class="assests-module-header">
+          <div class="title">
+            Assets
+          </div><!--
+          --><div class="title-nav">
+          <a href="#">
+            <span class="icon icon-chevron-down" data-reactid=".9.1.0.0.0.0.0.0.2"></span>
+          </a>
         </div>
+      </div>
         <ul class="assets-module-core">
           <li>
-            image
-          </li>
-          <li>
-            image
-          </li>
-          <li>
-            image
+            <a href="#">
+              <img src="http://placehold.it/200x180/dbdee3/aaa&text=250x180">
+            </a>
+          </li><!--
+       --><li>
+            <a href="#">
+              <img src="http://placehold.it/200x180/dbdee3/aaa&text=250x180">
+            </a>
+          </li><!--
+        --><li>
+            <a href="#">
+              <img src="http://placehold.it/200x180/dbdee3/aaa&text=250x180">
+            </a>
+          </li><!--
+       --><li>
+            <a href="#">
+              <img src="http://placehold.it/200x180/dbdee3/aaa&text=250x180">
+            </a>
           </li>
         </ul>
       </div>
