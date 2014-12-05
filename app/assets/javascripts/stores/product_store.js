@@ -12,6 +12,7 @@ class ProductStore extends Store {
       switch (action.type) {
         case ActionTypes.PRODUCT_RECEIVE:
           _product = action.product
+          this.emitChange()
           break
       }
     })

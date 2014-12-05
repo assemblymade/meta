@@ -12,6 +12,7 @@ class PostsStore extends Store {
       switch (action.type) {
         case ActionTypes.POSTS_RECEIVE:
           _posts[action.product] = action.posts
+          this.emitChange()
           break
       }
     })
