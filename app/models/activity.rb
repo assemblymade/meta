@@ -53,7 +53,7 @@ class Activity < ActiveRecord::Base
   end
 
   def verb_subject
-    s = subject_type == 'Event' ? target : subject
+    s = (subject_type == 'Event' || 'NewsFeedItemComment') ? target : subject
     raise "Bad Subject #{self.inspect}" if s.nil?
 
     s.class.name.split('::').last
