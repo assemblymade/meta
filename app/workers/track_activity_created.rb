@@ -6,7 +6,7 @@ class TrackActivityCreated
     activity = Activity.find(activity_id)
     Analytics.track(
       user_id: activity.actor_id,
-      event: TrackEngagement.EVENT_NAME,
+      event: TrackEngagement::EVENT_NAME,
       timestamp: activity.created_at,
       properties: ActivityAnalyticsSerializer.new(activity).as_json
     )
