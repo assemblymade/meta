@@ -87,20 +87,14 @@ var BountyActionCreators = {
       bounties: bounties
     })
 
+    var higher = bounties[newIndex + 1]
     var path = ['/', bounty.product.slug, '/', 'bounties', '/', bounty.number, '.', 'json'].join('');
-
-    var params = {
-      priority: newIndex
-    }
 
     $.ajax({
       url: path,
       type: 'PATCH',
       dataType: 'json',
-      data: { task: { priority: newIndex } },
-      success: function(response) {
-        console.log(response)
-      }
+      data: { task: { priority_above_id: (higher && higher.id) || '' } }
     });
   }
 };
