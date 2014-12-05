@@ -10,7 +10,8 @@
 
     getDefaultProps: function() {
       return {
-        position: 'top'
+        position: 'top',
+        offset: [0,0]
       }
     },
 
@@ -27,7 +28,7 @@
         position: 'absolute',
         zIndex: 100,
         display: 'block',
-        left: 0
+        left: (this.props.offset[0])
       }, this.props.style)
 
       return (
@@ -48,7 +49,9 @@
     updatePositionRelativeToHeight: function() {
       var node = this.getDOMNode()
       if (this.props.position == 'top') {
-        node.style.top = -node.offsetHeight + 'px'
+        node.style.top = -node.offsetHeight + (this.props.offset[1]) + 'px'
+      } else {
+        node.style.top = (this.props.offset[1]) + 'px'
       }
     }
   })

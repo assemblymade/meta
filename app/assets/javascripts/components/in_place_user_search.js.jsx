@@ -19,6 +19,7 @@ module.exports = React.createClass({
     return <div id="comment" style={{"position":"relative"}} onKeyDown={this.handleKeyDown}>
       {this.shouldShowUserList() ? <UserPicker
         position={this.props.searchPosition}
+        offset={this.props.coords}
         users={this.state.users}
         highlightIndex={this.state.highlightIndex}
         onUserSelected={this.handleUserSelected} /> : null}
@@ -33,10 +34,6 @@ module.exports = React.createClass({
 
   componentWillUnmount: function() {
     PeopleStore.removeChangeListener(this._onChange)
-  },
-
-  getDefaultProps: function() {
-    return { url: "/_es" }
   },
 
   getInitialState: function() {
