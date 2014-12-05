@@ -1,5 +1,5 @@
 class UpdatesWip
-  attr_accessor :wip, :params, :user, :priority_above_id
+  attr_accessor :wip, :params, :user, :priority_above_id, :priority_below_id
 
   def self.update(wip, params, user)
     new(wip, params, user).update
@@ -8,7 +8,8 @@ class UpdatesWip
   def initialize(wip, params, user)
     self.wip = wip
     self.priority_above_id = params[:priority_above_id]
-    self.params = params.except(:priority_above_id)
+    self.priority_above_id = params[:priority_below_id]
+    self.params = params.except(:priority_above_id, :priority_below_id)
     self.user = user
   end
 
@@ -41,8 +42,14 @@ class UpdatesWip
   end
 
   def update_priority
-    return unless priority_above
+    if priority_above
+      update_with_priority_above
+    elsif priority_below
+      update_with_priority_below
+    end
+  end
 
+  def update_with_priority_above
     old_priority = wip.priority
 
     if old_priority > priority_above
@@ -56,14 +63,27 @@ class UpdatesWip
     wip.priority = new_priority
   end
 
+  def update_with_priority_below
+    old_priority = wip.priority
+
+    if old_priority > priority_below
+      new_priority = priority_below + 1
+      update_affected_tasks('+', Range.new(new_priority, old_priority - 1))
+    else
+      new_priority = priority_below
+      update_affected_tasks('-', Range.new(old_priority + 1, new_priority))
+    end
+
+    wip.priority = new_priority
+  end
+
   def update_affected_tasks(operation, priority_range)
     affected_tasks(priority_range).
       update_all("priority = priority #{operation} 1")
   end
 
   def affected_tasks(priority_range)
-    product.tasks.
-      where(priority: priority_range)
+    product.tasks.where(priority: priority_range)
   end
 
   def title
@@ -78,6 +98,12 @@ class UpdatesWip
     return unless priority_above_id
 
     product.tasks.find_by(id: priority_above_id).priority
+  end
+
+  def priority_below
+    return unless priority_below_id
+
+    product.tasks.find_by(id: priority_below_id).priority
   end
 
   def product

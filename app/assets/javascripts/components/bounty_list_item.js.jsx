@@ -151,6 +151,8 @@
           <div className="table mb0">
             <div className="table-cell">
               <div className="p3">
+                <div className="h4 mt0 mb0 gray" style={{ 'left': '-20', position: 'absolute' }}>{bounty.priority}</div>
+
                 <div className="h4 mt0 mb1">
                   {this.renderTitle()}
                 </div>

@@ -122,14 +122,23 @@ var BountyActionCreators = {
       bounties: bounties
     })
 
-    var higher = bounties[newIndex + 1]
+    var above = bounties[newIndex + 1]
+    var below = bounties[newIndex - 1]
+    var data = { task: null }
+
+    if(above) {
+      data.task = { priority_above_id: above.id }
+    } else {
+      data.task = { priority_below_id: below.id }
+    }
+
     var path = ['/', bounty.product.slug, '/', 'bounties', '/', bounty.number, '.', 'json'].join('');
 
     $.ajax({
       url: path,
       type: 'PATCH',
       dataType: 'json',
-      data: { task: { priority_above_id: (higher && higher.id) || '' } }
+      data: data
     });
   }
 };
