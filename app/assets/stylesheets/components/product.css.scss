@@ -1,0 +1,263 @@
+.temp-closed {
+  padding:12px 0;
+  display: inline-block;
+  width:100%;
+  vertical-align: middle;
+  text-align:center;
+  color:#ccc;
+  background-color: #fff;
+  border-bottom:1px solid #ecedef;
+  // position:relative;
+  // // -webkit-filter: blur(10px);
+  // // background: rgba(0,0,0,0.5);
+  // // overflow: hidden;
+  // &:after {
+  //   content: '';
+  //   width:100%;
+  //   height:100%;
+  //   background-color: rgba(255,255,255, 0.75);
+  // }
+  div {
+    display: none;
+  }
+}
+
+.product {
+  //
+  a {
+    transition: color 0.15s ease-in-out;
+    //
+    &:hover {
+      transition: color 0.15s ease-in-out;
+    }
+  }
+}
+
+// product header
+
+.product-header {
+  background:#fff;
+  padding:24px 0;
+  margin: 0 0 36px 0;
+  border-bottom: 1px solid rgba(100, 100, 100, 0.15);
+  box-shadow: 0px 0px 1px 0px rgba(100, 100, 100, 0.2);
+  //
+  .inner-wrap {
+    display: table;
+    table-layout:fixed;
+    width:100%;
+    max-width:1060px;
+    margin:0 auto;
+    // padding:0 85px;
+    //
+    .primary {
+      display:table-cell;
+    }
+    .secondary {
+      display:table-cell;
+      text-align: right;
+      vertical-align:middle;
+      //
+      button {
+        width:175px;
+      }
+    }
+  }
+}
+
+.product-header-icon {
+  display:inline-block;
+  margin:0 20px 0 0;
+  vertical-align: top;
+  //
+  a {
+    position:relative;
+    display:block;
+    max-width:95px;
+    &:before {
+      content:'';
+      position:absolute;
+      width:100%;
+      height:100%;
+      border:1px solid rgba(100,100,100,0.1);
+      border-radius: 5px;
+      transition: background 0.15s ease-in-out;
+    }
+    &:hover {
+      //
+      &:before {
+        background: rgba(51,142,218,0.25);
+        transition: background 0.15s ease-in-out;
+      }
+    }
+    img {
+      padding:10px;
+      border-radius: 5px;
+    }
+  }
+}
+
+.product-header-content {
+  display:inline-block;
+  vertical-align:top;
+  //
+  h1 {
+    font-size:30px;
+    padding:0;
+    margin:0;
+    line-height:3.6rem;
+    //
+    a {
+      color: $black;
+      //
+      &:hover {
+        color: #1e66a3;
+      }
+    }
+  }
+  .subhead {
+    margin: -6px 0 3px;
+    font-size:18px;
+    color:#666D78;
+  }
+  .product-header-links {
+    margin:0;
+    padding:0;
+    //
+    li {
+      display:inline-block;
+      list-style:none;
+      margin:0 15px 0 0;
+      padding:0;
+    }
+    a {
+      font-size:13px;
+      color:#666D78;
+      //
+      &:hover {
+        color: #1e66a3;
+      }
+    }
+  }
+}
+
+// product core
+
+.product-core {
+  display: table;
+  table-layout:fixed;
+  width:100%;
+  max-width:1060px;
+  margin:0 auto;
+  //
+  .primary {
+    display:table-cell;
+    vertical-align: top;
+    padding-right:24px;
+  }
+  .secondary {
+    display:table-cell;
+    width:265px;
+    vertical-align: top;
+  }
+}
+
+.product-navigation {
+  display:table-cell;
+  padding:0 24px 0 0;
+  vertical-align: top;
+  //
+  ul {
+    margin:0 0 6px 0;
+    padding:0;
+  }
+  li {
+    list-style:none;
+    margin:0;
+    padding:0;
+    //
+    a {
+      display:block;
+      line-height: 30px;
+      padding:3px 12px 4px;
+      font-size:15px;
+      color:#666D78;
+      transition: background 0.15s ease-in-out;
+      //
+      &:hover {
+        background:#dbdee3;
+        transition: background 0.15s ease-in-out;
+      }
+    }
+    &.active {
+      //
+      a {
+        color: #353941;
+        font-weight:bold;
+        background:#dbdee3;
+      }
+    }
+  }
+  .nav-two {
+    padding-top:10px;
+    border-top: 1px solid #dbdee3;
+    //
+    a {
+      line-height:25px;
+      font-size:13px;
+    }
+  }
+}
+
+.product-core-content {
+  display:table-cell;
+  width:84%;
+}
+
+.product-filter {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  margin:0 0 12px 0;
+  font-size:13px;
+  //
+  .pf-primary {
+    display: table-cell;
+    vertical-align: top;
+    width: 100%;
+  }
+  .pf-secondary {
+    display: table-cell;
+    vertical-align: top;
+    width: 130px;
+    padding: 0 0 0 24px;
+    vertical-align: middle;
+  }
+  .pf-drop {
+    display:table-cell;
+    padding:8px 18px;
+    border-right:1px solid #ecedef;
+  }
+  .pf-input {
+    display:table-cell;
+    padding:8px 18px;
+    color:#8b909a;
+  }
+  a {
+    &:hover {
+      text-decoration:none;
+    }
+  }
+}
+
+.product-data {
+  //
+  .temp-card {
+    vertical-align:middle;
+    padding:96px 24px;
+    margin:0 0 12px 0;
+    text-align:center;
+    color:#ccc;
+    border:none;
+  }
+}

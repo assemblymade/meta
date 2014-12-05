@@ -1,44 +1,194 @@
 <% title '<productTitle> - Tasks' %>
 <% provide(:description, '<productDesc>') %>
 
+<div class="temp-closed">
+  <span>header update rolled into task #907</span>
 <%= render 'shared/navbar' %>
+</div>
 
-<main role="main">
+<main class="product" role="main">
 
   <section class="product-header">
-
-  </section>
-  <section class="product-core">
-    <aside class="secondary-column">
-      <nav role="navigation">
-        <ul class="primary-nav">
-          <li>
-            <a href="">lorem <span class="ping"></span></a>
-          </li>
-        </ul>
-        <ul class="secondary-nav">
-          <li>
-            <a href="">lorem <span class="ping"></span></a>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-    <div class="primary-column">
-      <div class="primary-column-header">
-        <div class="filter-module">filter module</div>
+    <div class="inner-wrap">
+      <div class="primary">
+        <div class="product-header-icon">
+          <a href="">
+            <!-- <img src="http://placehold.it/200/fff/999&text=200x200"> -->
+            <img src="https://d1015h9unskp4y.cloudfront.net/attachments/bcc65bca-5531-4914-8c03-08c47e2fd601/boxysquare.png">
+          </a>
+        </div>
+        <div class="product-header-content">
+          <h1>
+            <a href="">BoxyChat</a>
+          </h1>
+          <div class="subhead">
+            Real time communications for companies
+          </div>
+          <ul class="product-header-links">
+            <li>
+              <a href="">
+                BoxyChat.com
+              </a>
+            </li>
+            <li class="">
+              <a href="">
+                <%= inline_react_component 'Icon', icon: 'github' %>
+                Code
+              </a>
+            </li>
+            <li class="">
+              <a href="">
+                <%= inline_react_component 'Icon', icon: 'gear' %>
+                Edit product
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="primary-column-core">
-        card
-        <br><br>
-        card
-        <br><br>
-        card
-        <br><br>
-        etc
+      <div class="secondary">
+        <button class="" type="button" data-reactid=".5.0">                 <!-- this will prob be a reskin -->
+          <div class="toggler-label" data-reactid=".5.0.0">Following</div>
+          <div class="toggler-badge" data-reactid=".5.0.1">357</div>
+        </button>
       </div>
     </div>
-    <aside class="tertiary-column">
+  </section>
 
+  <section class="product-core">
+    <div class="primary">
+      <nav class="product-navigation" role="navigation">
+        <ul class="nav-one">
+          <li>
+            <a href="">All Activity <span class="ping"></span></a>
+          </li>
+          <li class="active">
+            <a href="">Tasks</a>
+          </li>
+          <li>
+            <a href="">Posts <span class="ping"></span></a>
+          </li>
+          <li>
+            <a href="">Assets</a>
+          </li>
+          <li>
+            <a href="">Code <span class="ping"></span></a>
+          </li>
+        </ul>
+        <ul class="nav-two">
+          <li>
+            <a href="">Pitch</a>
+          </li>
+          <li>
+            <a href="">Chat</a>
+          </li>
+          <li>
+            <a href="">Team</a>
+          </li>
+          <li>
+            <a href="">Ownership</a>
+          </li>
+        </ul>
+      </nav><!--
+   --><div class="product-core-content">
+        <div class="product-filter" data-reactid=".9.1.0">
+          <div class="pf-primary" data-reactid=".9.1.0.0">
+            <div class="bg-white rounded shadow table mb0" data-reactid=".9.1.0.0.0">
+              <div class="pf-drop" style="width:55px;" data-reactid=".9.1.0.0.0.0">
+                <div class="dropdown" data-reactid=".9.1.0.0.0.0.0">
+                  <a class="dropdown-toggle black bold no-wrap" data-toggle="dropdown" href="#" data-reactid=".9.1.0.0.0.0.0.0">
+                    <span data-reactid=".9.1.0.0.0.0.0.0.0">Filter</span>
+                    <span data-reactid=".9.1.0.0.0.0.0.0.1"> </span>
+                    <span class="icon icon-chevron-down" data-reactid=".9.1.0.0.0.0.0.0.2"></span>
+                  </a>
+                  <ul class="dropdown-menu" style="margin-top:14px;margin-left:-24px;" data-reactid=".9.1.0.0.0.0.0.1">
+                    <li data-reactid=".9.1.0.0.0.0.0.1.0"><a href="#" data-reactid=".9.1.0.0.0.0.0.1.0.0">You're working on</a>
+                    </li>
+                    <li data-reactid=".9.1.0.0.0.0.0.1.1"><a href="#" data-reactid=".9.1.0.0.0.0.0.1.1.0">You created</a>
+                    </li>
+                    <li data-reactid=".9.1.0.0.0.0.0.1.2"><a href="#" data-reactid=".9.1.0.0.0.0.0.1.2.0">You commented on</a>
+                    </li>
+                    <li data-reactid=".9.1.0.0.0.0.0.1.3"><a href="#" data-reactid=".9.1.0.0.0.0.0.1.3.0">You're mentioned in</a>
+                    </li>
+                    <li class="divider" data-reactid=".9.1.0.0.0.0.0.1.4"></li>
+                    <li data-reactid=".9.1.0.0.0.0.0.1.5"><a href="#" data-reactid=".9.1.0.0.0.0.0.1.5.0">Open</a>
+                    </li>
+                    <li data-reactid=".9.1.0.0.0.0.0.1.6"><a href="#" data-reactid=".9.1.0.0.0.0.0.1.6.0">Doing</a>
+                    </li>
+                    <li data-reactid=".9.1.0.0.0.0.0.1.7"><a href="#" data-reactid=".9.1.0.0.0.0.0.1.7.0">Reviewing</a>
+                    </li>
+                    <li data-reactid=".9.1.0.0.0.0.0.1.8"><a href="#" data-reactid=".9.1.0.0.0.0.0.1.8.0">Done</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="pf-input" data-reactid=".9.1.0.0.0.1">
+                <input type="text" value="is:open" class="no-border full-width" style="padding:0;" data-reactid=".9.1.0.0.0.1.0">
+              </div>
+            </div>
+          </div><!--
+          --><div class="pf-secondary" data-reactid=".9.1.0.1">
+            <div class="" data-reactid=".9.1.0.1.0">
+              <div class="dropdown" data-reactid=".9.1.0.1.0.0">
+                <a class="dropdown-toggle black bold no-wrap" data-toggle="dropdown" href="#" data-reactid=".9.1.0.1.0.0.0">
+                  <span data-reactid=".9.1.0.1.0.0.0.0">Sort (</span>
+                  <span data-reactid=".9.1.0.1.0.0.0.1">Priority</span>
+                  <span data-reactid=".9.1.0.1.0.0.0.2">)</span>
+                  <span data-reactid=".9.1.0.1.0.0.0.3"> </span>
+                  <span class="icon icon-chevron-down" data-reactid=".9.1.0.1.0.0.0.4"></span>
+                </a>
+                <ul class="dropdown-menu" data-reactid=".9.1.0.1.0.0.1">
+                  <li class="active" data-reactid=".9.1.0.1.0.0.1.0">
+                    <a href="#" data-reactid=".9.1.0.1.0.0.1.0.0">Priority</a>
+                  </li>
+                  <li class="" data-reactid=".9.1.0.1.0.0.1.1">
+                    <a href="#" data-reactid=".9.1.0.1.0.0.1.1.0">Most valuable</a>
+                  </li>
+                  <li class="" data-reactid=".9.1.0.1.0.0.1.2">
+                    <a href="#" data-reactid=".9.1.0.1.0.0.1.2.0">Least valuable</a>
+                  </li>
+                  <li class="" data-reactid=".9.1.0.1.0.0.1.3">
+                    <a href="#" data-reactid=".9.1.0.1.0.0.1.3.0">Newest</a>
+                  </li>
+                  <li class="" data-reactid=".9.1.0.1.0.0.1.4">
+                    <a href="#" data-reactid=".9.1.0.1.0.0.1.4.0">Oldest</a>
+                  </li>
+                  <li class="" data-reactid=".9.1.0.1.0.0.1.5">
+                    <a href="#" data-reactid=".9.1.0.1.0.0.1.5.0">Recently updated</a>
+                  </li>
+                  <li class="" data-reactid=".9.1.0.1.0.0.1.6">
+                    <a href="#" data-reactid=".9.1.0.1.0.0.1.6.0">Least recently updated</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="product-data">
+          <div class="temp-card card">
+            temp card
+          </div>
+          <div class="temp-card card">
+            temp card
+          </div>
+          <div class="temp-card card">
+            temp card
+          </div>
+          <div class="temp-card card">
+            temp card
+          </div>
+          <div class="temp-card card">
+            temp card
+          </div>
+          <div class="temp-card card">
+            temp card
+          </div>
+          <div class="temp-card card">
+            temp card
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="secondary">
         button
         <br><br>
         info card
