@@ -29,12 +29,18 @@ class Activity < ActiveRecord::Base
         if room
           a.publish_to_chat(room.id)
 
-          # only touch updated_at for chat messages. We don't want the room to be marked as unread for events other than people chatting
+          # only touch updated_at for chat messages.
+          # We don't want the room to be marked as unread for events
+          # other than people chatting
           room.touch if a.is_a? Activities::Chat
         end
 
       end
     end
+  end
+
+  def target_entity
+    (subject_type == 'Event' || 'NewsFeedItemComment') ? target : subject
   end
 
   def track_in_segment
@@ -53,7 +59,7 @@ class Activity < ActiveRecord::Base
   end
 
   def verb_subject
-    s = (subject_type == 'Event' || 'NewsFeedItemComment') ? target : subject
+    s = target_entity
     raise "Bad Subject #{self.inspect}" if s.nil?
 
     s.class.name.split('::').last

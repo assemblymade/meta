@@ -9,7 +9,6 @@ class StorySerializer < ApplicationSerializer
   end
 
   def url
-    raise object.inspect
     story_path(object)
   end
 
