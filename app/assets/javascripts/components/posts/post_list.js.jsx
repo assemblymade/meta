@@ -22,8 +22,8 @@ var PostList = React.createClass({
   renderPosts: function() {
     var posts = this.props.posts;
 
-    return _.map(posts, function(post, i) {
-      return <PostListItem post={post} key={'post-list-item-' + i} />;
+    return _.map(posts, function(post) {
+      return <PostListItem post={post} key={'post-list-item-' + post.id} />;
     });
   }
 });
