@@ -3,7 +3,7 @@
 [![Code Climate](https://codeclimate.com/repos/53614e94e30ba048560038af/badges/2bfece8bd323b313770e/gpa.png)](https://codeclimate.com/repos/53614e94e30ba048560038af/feed)
 <br />
 
-<a href="https://assembly.com/meta/bounties"><img src="https://asm-badger.herokuapp.com/meta/badges/tasks.svg?" height="24px" alt="Open Tasks" /></a>
+<a href="https://assembly.com/meta/bounties"><img src="https://asm-badger.herokuapp.com/meta/badges/tasks.svg" height="24px" alt="Open Tasks" /></a>
 
 
 ## Dependencies
