@@ -7,8 +7,8 @@ class UserCluster < ActiveRecord::Base
       user_vector = user.user_identity.get_mark_vector
       scalar = 1.0 / self.users.count.to_f
       scaled_user_vector = QueryMarks.new.scale_mark_vector(user_vector, scalar)
-      QueryMarks.new.add_mark_vectors(my_mark_vector, scaled_user_vector)
-    end
+      my_mark_vector = QueryMarks.new.add_mark_vectors(my_mark_vector, scaled_user_vector)
+    end 
   end
 
 end
