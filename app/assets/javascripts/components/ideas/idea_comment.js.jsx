@@ -43,7 +43,7 @@ module.exports = React.createClass({
                   </a>
                 </li>
                 <li>
-                  <Love heartable_id={this.props.id} heartable_type="NewsFeedItemComment" public={true} />
+                  <Love heartable_id={this.props.id} heartable_type="NewsFeedItemComment" />
                 </li>
               </ul>
             </div>
