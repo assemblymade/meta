@@ -60,6 +60,15 @@
       var commentsUrl = this.props.target.url + "#comments";
 
       var lastComment = this.props.last_comment;
+      var comment = null
+      if (lastComment) {
+        comment = <div className="py2">
+          <Comment author={lastComment.user}
+          body={lastComment.markdown_body}
+          timestamp={lastComment.created_at} />
+        </div>
+      }
+
 
       return (
         <div className="px3 py2 h6 mt0 mb0 border-top">
@@ -70,11 +79,7 @@
             View {commentCount > 1 ? 'all' : ''} {commentCount} {commentCount > 1 ? 'comments' : 'comment'}
           </a>
 
-          <div className="py2">
-            <Comment author={lastComment.user}
-                body={lastComment.markdown_body}
-                timestamp={lastComment.created_at} />
-          </div>
+          {comment}
         </div>
       );
     },
