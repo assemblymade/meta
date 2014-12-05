@@ -7,6 +7,7 @@ class IdeasController < ProductController
   def index
     # Only NFIs associated with Ideas have a nil associated product
     @nfis = NewsFeedItem.where(product: nil).order('hearts_count desc').order('created_at desc').page params[:page]
+    @nfis.to_a.reject!{|n| n.target.class.name != "Idea"}
 
     @heartables = @nfis
     @user_hearts = if signed_in?

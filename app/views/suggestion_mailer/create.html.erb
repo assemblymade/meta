@@ -1,20 +1,28 @@
-<h3>We're trying to get to know you.</h3>
+<h4>Hi <%= @user.username %>,</h4>
 
-<p>Hi, I'm Andrew, a physicist-slash-bitcoiner-slash-engineer at Assembly.  I've been juggling vectors and
-   shuffling mounds of paper, trying to find a way to better match people with products.
-  I've come up with a beast of an algorithm which, I hope, can show you ways to help
-  the products you care about.
-</p>
+<p>Over the last few weeks Andrew has been going super nerd on crunching data and brewing a handcrafted
+  algorithm all in a hearty effort to match you with products on Assembly that have stuff we think you would
+  enjoy doing.</p>
 
-<h4>Bounties that have a crush on you</h4>
+<h4>Here is what we found for you.</h4>
 
 <ul>
   <br>
   <% @bounties.each do |bounty| %>
   <li>
+    <h4>
+      <a href= "<%= product_url(bounty.product)%>">
+        <%= "#{bounty.product.name}" %>
+      </a>
+    </h4>
     <h4><a href="<%= product_wip_url(bounty.product, bounty) %>">
-      <%= "#{bounty.title}  --  #{bounty.product.name}"  %>
+      <%= "#{bounty.title}" %>
     </a></h4>
+    <h5>
+    <% bounty.marks.pluck(:name).each do |m| %>
+      <%= "##{m}" %>
+    <% end %>
+  </h5>
   </li>
   <% if bounty.description %>
     <%= bounty.description[0, 150]%>
@@ -26,5 +34,9 @@
   <% end %>
 
 </ul>
-<p>  If you think we're way off, reply to this email and let us know!
+<p>
+  <h4>Don't see what you're looking for?
+    <br>
+    <a href="mailto:notifications@assembly.com">Let us know.</a>
+  </h4>
 </p>
