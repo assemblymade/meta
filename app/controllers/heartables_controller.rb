@@ -13,6 +13,14 @@ class HeartablesController < ApplicationController
       user: current_user
     )
     if @heart.valid?
+      TrackEngagement.perform_async(
+        current_user.id,
+        @heart.created_at.to_i,
+        'Heart',
+        @heart.heartable.try(:target).try(:class).try(:name) || @heart.heartable_type,
+        @heart.product.try(:id)
+      )
+
       render json: {
         heartable_id: @heart.heartable_id,
         heartable_type: @heart.heartable_type,
