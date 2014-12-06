@@ -27,7 +27,7 @@ describe TasksController do
       expect(assigns(:bounty).followers).not_to include(follower)
 
     end
-        
+
   end
 
   describe '#index' do

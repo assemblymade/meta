@@ -23,11 +23,9 @@ class WipFactory
 
       users = @product.followers
 
-      if @params
-        if mark_names = @params[:tag_list]
-          mark_names.each do |mark_name|
-            MakeMarks.new.mark_with_name(wip, mark_name)
-          end
+      if mark_names = @params[:tag_list]
+        mark_names.each do |mark_name|
+          MakeMarks.new.mark_with_name(wip, mark_name)
         end
       end
 
