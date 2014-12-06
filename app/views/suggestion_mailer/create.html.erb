@@ -49,11 +49,12 @@
           <tr>
             <td colspan="2" style="padding:0px 15px 15px;color:#8b909a;font-size:14px;">
             <span>
-              <%= image_tag 'icon-comments.png', height: "14px;", class: "fixed-size-icon", style: "float:none;clear:none;display:inline-block;" %>&nbsp;<%= bounty.comments.count %>
+              <%#= firesize_img image_url('icon-comments.png'), 14, 14 %>
+              <%= image_tag 'icon-comments.png', height: "14", width: "14", class: "fixed-size-icon", style: "float:none;clear:none;display:inline-block;" %>&nbsp;<%= bounty.comments.count %>
             </span>
               &nbsp;
               <span>
-                <%= image_tag 'icon-hearts.png', height: "14px;", class: "fixed-size-icon", style: "float:none;clear:none;display:inline-block;" %>&nbsp;<%= bounty.news_feed_item.hearts_count %>
+                <%= image_tag 'icon-hearts.png', height: "14", width: "14", class: "fixed-size-icon", style: "float:none;clear:none;display:inline-block;" %>&nbsp;<%= bounty.news_feed_item.hearts_count %>
               </span>
               <span style="margin-left:10px;">
                 <% bounty.marks.limit(4).pluck(:name).each do |m| %>
@@ -73,7 +74,7 @@
     <td>
       <center>
         <span class="button success radius" style="border-radius: 20px;-moz-border-radius: 20px;-webkit-border-radius: 20px;padding:10px 60px;color:white;font-weight:bold;">
-          View All Suggested Bounties
+          <%= link_to "View All Suggested Bounties", discover_url(action: "bounties", filter: "suggested"), style: "color:white !important;" %>
         </span>
       </center>
     </td>
