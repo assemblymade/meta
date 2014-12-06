@@ -209,7 +209,7 @@ class Wip < ActiveRecord::Base
     end
 
     names.each do |a|
-      MakeMarks.new.mark_with_name(self, a.strip.downcase)
+      MakeMarks.new.mark_with_name(self, a.strip.downcase) if persisted?
     end
 
   end
