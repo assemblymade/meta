@@ -1,3 +1,7 @@
+html, body {
+  overflow-x:hidden;
+}
+
 .temp-closed {
   padding: 24px;
   display: inline-block;
@@ -35,6 +39,7 @@
 // product header
 
 .product-header {
+  position:relative;
   background:#fff;
   padding:24px 0;
   margin: 0 0 36px 0;
@@ -116,6 +121,7 @@
 
 .product-header-icon {
   text-align: center;
+  margin: 0 0 5px 0;
   @media screen and (min-width: 768px) {
     display:table-cell;
     padding:0 20px 0 0;
@@ -148,7 +154,7 @@
     img {
       padding:10px;
       border-radius: 5px;
-      max-width:85px;
+      max-width:82px;
       min-width:64px;
       @media screen and (min-width: 768px) {
         max-width:100%;
@@ -167,7 +173,7 @@
     font-size:30px;
     padding:0;
     margin:0;
-    line-height:3.6rem;
+    line-height:3.55rem;
     //
     a {
       color: $black;
@@ -178,17 +184,20 @@
     }
   }
   .subhead {
-    margin: -6px 0 3px;
+    margin: -6px 0 5px;
     font-size:18px;
     // line-height:24px;
     color:#666D78;
     @media screen and (min-width: 768px) {
-
+      margin: -6px 0 10px;
     }
   }
   .product-header-links {
-    margin:0;
+    margin:0 0 5px 0;
     padding:0;
+    @media screen and (min-width: 768px) {
+      margin:0;
+    }
     //
     li {
       display:inline-block;
@@ -207,6 +216,47 @@
   }
 }
 
+.product-nav-mobile-button, .product-side-mobile-button {
+  cursor:pointer;
+  z-index:5;
+  position:absolute;
+  bottom:-78px;
+  padding: 15px 20px;
+  color: #353941;
+  background:#fff;
+  transform: translate3d(0px, 0, 0);
+  transition: transform 0.15s ease-in-out, background 0.15s ease-in-out;
+  //
+  &:hover {
+    background-color: #dbdee3;
+    transition: background 0.15s ease-in-out;
+  }
+  span {
+    display: block;
+    width:20px;
+    height:4px;
+    margin:2px 0 0 0;
+    background-color: #7f7f7f;
+  }
+}
+
+.product-nav-mobile-button {
+  left:0px;
+  @media screen and (min-width: 900px) {
+    transition: transform 0.15s ease-in-out;
+    transform: translate3d(-75px, 0, 0);
+  }
+}
+
+.product-side-mobile-button {
+  right:0px;
+  @media screen and (min-width: 768px) {
+    transition: transform 0.15s ease-in-out;
+    transform: translate3d(75px, 0, 0);
+  }
+}
+
+
 // product core
 
 .product-core {
@@ -216,30 +266,55 @@
   max-width:1060px;
   margin:0 auto;
   padding:0 24px;
+  transform: translate3d(-60px, 0, 0);
+  transition: width 0.15s ease-in-out, transform 0.15s ease-in-out;
+  @media screen and (min-width: 768px) {
+    width:108%;
+    transform: translate3d(-60px, 0, 0);
+    transition: width 0.15s ease-in-out, transform 0.15s ease-in-out;
+  }
+  @media screen and (min-width: 900px) {
+    width:100%;
+    transform: translate3d(0px, 0, 0);
+    transition: width 0.15s ease-in-out, transform 0.15s ease-in-out;
+  }
   //
   .primary {
     display:table-cell;
     vertical-align: top;
   }
   .secondary {
-    display:none;
-    width:300px;
+    display:table-cell;
+    width:0;
     padding-left:40px;
-    // width:0px;
     vertical-align: top;
-    // transition: width 0.15s ease-in-out;
+    transform: translate3d(250px, 0, 0);
+    transition: width 0.15s ease-in-out, transform 0.15s ease-in-out;
     @media screen and (min-width: 768px) {
-      display:table-cell;
-      // width:265px;
-      // transition: width 0.15s ease-in-out;
+      width:250px;
+      transform: translate3d(0, 0, 0);
+      transition: width 0.15s ease-in-out, transform 0.15s ease-in-out;
+    }
+    @media screen and (min-width: 1024px) {
+      width:300px;
+      transition: width 0.15s ease-in-out;
     }
   }
 }
 
 .product-navigation {
+  // position: relative;
   display:table-cell;
   padding:0 24px 0 0;
   vertical-align: top;
+  min-width: 122px;
+  transform: translate3d(-150px, 0, 0);
+  transition: transform 0.15s ease-in-out;
+  @media screen and (min-width: 900px) {
+    // width:100%;
+    transform: translate3d(0px, 0, 0);
+    transition: transform 0.15s ease-in-out;
+  }
   //
   ul {
     margin:0 0 6px 0;
@@ -400,8 +475,13 @@
 }
 
 .tag-module-header, .assests-module-header {
-  padding:0 18px;
+  padding:0 5px;
   margin:0 0 5px 0;
+  transition: padding 0.15s ease-in-out;
+  @media screen and (min-width: 1024px) {
+    padding:0 18px;
+    transition: padding 0.15s ease-in-out;
+  }
   //
   .title {
     display:inline-block;
@@ -427,10 +507,15 @@
     //
     a {
       display:block;
-      padding: 5px 18px;
+      padding: 5px;
       text-transform:uppercase;
       font-size:11px;
       font-weight:bold;
+      transition: padding 0.15s ease-in-out;
+      @media screen and (min-width: 1024px) {
+        padding: 5px 18px;
+        transition: padding 0.15s ease-in-out;
+      }
       //
       &:hover {
         color:#353941;
@@ -452,7 +537,6 @@
 }
 
 .assests-module-header {
-  padding:0 18px;
   margin:0 0 10px 0;
 }
 
