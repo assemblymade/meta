@@ -6,7 +6,12 @@ describe AdjustMarkings do
 
   describe '#perform' do
     it 'adjusts markings for test user' do
-      subject.perform(user.id, product.id, "Product", 0.0)
+      Mark.create!({name: 'DENMARK'})
+      Marking.create!({mark: mark, markable: product})
+
+      expect {
+        AdjustMarkings.new.perform(user.id, product.id, "Product", 0.0)
+      }.to change(Marking, :count).by(1)
     end
   end
 end

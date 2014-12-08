@@ -125,7 +125,6 @@ class QueryMarks
 
   def get_all_wip_vectors
     wips = Wip.where(closed_at: nil).where(type: "Task").where('created_at > ?', 90.days.ago)
-    product
     wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
     wip_vectors.select{ |a, b| a.count > 0 && ['team_building', 'greenlit', 'profitable'].include?(b.product.state) && b.product.flagged_at == nil && b.product.slug != "meta"}
   end
