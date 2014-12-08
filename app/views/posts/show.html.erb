@@ -72,9 +72,7 @@
 
     <div class="col-md-3">
       <div class="mb3">
-        <% if can?(:create, @product.posts.new(author: current_user)) %>
-          <%= link_to 'Write a new post', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
-        <% end %>
+        <%= link_to 'Write a new post', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
       </div>
 
       <div class="panel panel-default">
