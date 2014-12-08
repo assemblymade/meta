@@ -6,6 +6,7 @@ class Event::Comment < Event
   after_save :post_process
   after_save :consider_comment_a_check_in
   after_commit -> { track_activity }, on: :create
+  after_commit -> { create_nfi_comment }, on: :create
 
   def self.analytics_name
     'wip.commented'
@@ -59,5 +60,12 @@ class Event::Comment < Event
 
   def sanitized_body
     Search::Sanitizer.new.sanitize(body)
+  end
+
+  # private
+
+  def create_nfi_comment
+    # currently we're duplicating all comments to nfi comments
+    NewsFeedItemComment.publish_to_news_feed(wip, self, body)
   end
 end

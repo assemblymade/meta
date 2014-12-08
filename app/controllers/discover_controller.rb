@@ -117,7 +117,8 @@ class DiscoverController < ApplicationController
                 limit(limit).
                 offset(offset).
                 where.not(product: META).
-                order(last_commented_at: :desc)
+                order('last_commented_at desc nulls last').
+                order(updated_at: :desc)
     end
 
     if params[:filter] == 'hot'
