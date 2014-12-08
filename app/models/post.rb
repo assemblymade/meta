@@ -19,9 +19,9 @@ class Post < ActiveRecord::Base
   validates :slug,    presence: true
   validates :summary, length: { minimum: 2, maximum: 140 }, allow_blank: true
 
-  after_commit :push_to_news_feed, on: :create
   after_commit :mark_as_announcement, on: :create
   after_commit :mark_as_discussion, on: :create
+  after_commit :push_to_news_feed, on: :create
   after_commit :update_news_feed_item
 
   friendly_id :title, use: :slugged
@@ -42,13 +42,13 @@ class Post < ActiveRecord::Base
   end
 
   def mark_as_announcement
-    if post.product.core_team?(post.user)
-      Marking.create!(markable: self, mark: ANNOUNCEMENT_MARK)
+    if self.product.core_team?(self.user)
+      Marking.create!(markable: self, mark: ANNOUNCEMENT_MARK, weight: 1.0)
     end
   end
 
   def mark_as_discussion
-    Marking.create!(markable: self, mark: DISCUSSION_MARK)
+    Marking.create!(markable: self, mark: DISCUSSION_MARK, weight: 1.0)
   end
 
   def push_to_news_feed

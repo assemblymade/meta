@@ -179,16 +179,14 @@
             </a>
           </li>
 
-          <% if @product.core_team?(current_user) %>
-            <li role="presentation">
-              <a href="<%= new_product_post_path(@product) %>">
-                <span class="mr1">
-                  <%= inline_react_component 'Icon', icon: 'newspaper-o' %>
-                </span>
-                Post
-              </a>
-            </li>
-          <% end %>
+          <li role="presentation">
+            <a href="<%= new_product_post_path(@product) %>">
+              <span class="mr1">
+                <%= inline_react_component 'Icon', icon: 'newspaper-o' %>
+              </span>
+              Post
+            </a>
+          </li>
 
           <% if signed_in? && current_user.staff? %>
             <li role="presentation">
