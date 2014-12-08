@@ -18,10 +18,4 @@ class UserSerializer < ApplicationSerializer
   def last_online
     object.last_request_at.iso8601 if object.last_request_at?
   end
-
-  cached
-
-  def cache_key
-    [object]
-  end
 end
