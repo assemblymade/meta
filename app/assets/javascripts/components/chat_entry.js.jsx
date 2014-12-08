@@ -65,7 +65,7 @@
         "text-muted": (typeof this.props.entry.message_html === 'undefined')
       })
 
-      var message = this.props.entry.message_html
+      var message = this.props.entry.message_html || this.props.entry.message
 
       return <div className={classes} style={{padding: 0}}
         dangerouslySetInnerHTML={{__html: message}} />

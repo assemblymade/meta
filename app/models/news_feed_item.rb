@@ -24,4 +24,8 @@ class NewsFeedItem < ActiveRecord::Base
   def author_id
     self.source_id # currently this is always a user, might be polymorphic in the future
   end
+
+  def comments
+    self.news_feed_item_comments
+  end
 end

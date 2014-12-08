@@ -1,29 +1,84 @@
-<p>Hi, I'm Andrew, a software engineer at Assembly.  I've been juggling vectors and
-  madly shuffling mounds of paper, trying to find a way to match people with products.
-  I've come up with a beast of an algorithm which, I hope, can help you find the tasks
-  you'll most enjoy doing.  Take a look at the ways you can help build compelling, new products.
+<span style="font-size:18px;font-weight:bold;color:#444">Hi @<%= @user.username %>,</span style="font-size:18px;">
+
+<p style="font-size:18px;line-height:24px;margin-top:15px;color:#8b909a;">
+  Over the last few weeks Andrew has been going super nerd on crunching data and brewing a handcrafted
+  algorithm all in a hearty effort to match you with products on Assembly that have stuff we think you would
+  enjoy doing.
 </p>
 
-<h4>Bounties that have a crush on you</h4>
+<h4 style="margin-top:30px;margin-bottom:30px;color:#444">Here is what we found for you.</h4>
 
-<ul>
-  <br>
-  <% @bounties.each do |bounty| %>
-  <li>
-    <h4><a href="<%= product_wip_url(bounty.product, bounty) %>">
-      <%= "#{bounty.title}  --  #{bounty.product.name}"  %>
-    </a></h4>
-  </li>
-  <% if bounty.description %>
-    <%= bounty.description[0, 150]%>
-    <% if bounty.description.length > 150 %>
-      <%= "..." %>
-    <% end %>
-  <% end %>
-  <br><br>
-  <% end %>
+<style>
+  img.app-icon{
+    width:30px !important;
+    height:30px !important;
+  }
+  img.fixed-size-icon{
+    height:14px !important;
+  }
+</style>
 
-</ul>
-<p>These are just a few of the many open bounties available.  </p>
+<table style="width:100%;">
+  <tr>
+    <td>
+      <% @bounties.each do |bounty| %>
+        <table style="margin-bottom:25px;background:white;height:100px;width:100%;">
+          <tr style="height:30px;border-bottom:solid thin #eee;">
+            <td style="padding:10px 15px;vertical-align:top;width:30px;">
+              <%= app_icon(bounty.product, size: 30) %>
+            </td>
+            <td style="padding-top:12px; height:30px;vertical-align:top;text-align:left;" valign="top">
+              <%= link_to bounty.product.name, product_url(bounty.product), style: "font-size:14px;font-weight:bold;color:#333 !important;" %>
+              <span style="font-size:14px;padding-left:10px;color:#8b909a;">
+                <%= bounty.product.pitch %>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="padding:15px 15px 0px;">
+              <%= link_to bounty.title, product_wip_url(bounty.product, bounty), style: "font-size:16px;" %>
+            </td>
+          </tr>
+          <% if bounty.description %>
+            <tr>
+              <td colspan="2" style="padding:0px 15px 15px;color:#8b909a;font-size:14px;">
+                <%= truncate(bounty.description, length: 150) %>
+              </td>
+            </tr>
+          <% end %>
+          <tr>
+            <td colspan="2" style="padding:0px 10px 15px;color:#8b909a;font-size:14px;">
+              <span>
+                <% bounty.marks.limit(4).pluck(:name).each do |m| %>
+                  <span style="text-transform: uppercase;margin-left:5px;font-size:12px;font-weight:600;"><%= "##{m}" %></span>
+                <% end %>
+              </span>
+            </td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+  </tr>
+</table>
 
-We're trying to get to know you!  If you think we're way off, reply to this email and let us know!
+<table style="margin-top:30px;">
+  <tr>
+    <td>
+      <center>
+        <span class="button success radius" style="border-radius: 20px;-moz-border-radius: 20px;-webkit-border-radius: 20px;padding:10px 60px;color:white;font-weight:bold;">
+          <%= link_to "View All Suggested Bounties", discover_url(action: "bounties", filter: "suggested"), style: "color:white !important;" %>
+        </span>
+      </center>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding-top:40px;">
+      <h4 style="text-align:center !important;">
+      Don't see what you're looking for?
+      <br />
+      <a href="mailto:notifications@assembly.com">Let us know.</a>
+      </h4>
+    </td>
+  </tr>
+</table>
+

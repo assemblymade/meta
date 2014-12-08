@@ -32,7 +32,7 @@ class TasksController < WipsController
 
         render json: @wips,
           serializer: PaginationSerializer,
-          each_serializer: BountySerializer,
+          each_serializer: BountyListSerializer,
           root: :bounties
       end
     end

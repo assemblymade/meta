@@ -1,7 +1,7 @@
 <%  url = if description.product
       polymorphic_url([description.product, description.news_feed_item.target], only_path: false)
     else
-      polymorphic_url([description.target], only_path: false)
+      polymorphic_url([description.news_feed_item.target], only_path: false)
     end
 %>
 

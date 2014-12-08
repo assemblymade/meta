@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204021928) do
+ActiveRecord::Schema.define(version: 20141205010241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -444,7 +444,8 @@ ActiveRecord::Schema.define(version: 20141204021928) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.datetime "popular_at"
-    t.integer  "hearts_count", default: 0, null: false
+    t.integer  "hearts_count",      default: 0, null: false
+    t.datetime "last_commented_at"
   end
 
   create_table "newsletters", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -749,6 +750,11 @@ ActiveRecord::Schema.define(version: 20141204021928) do
   end
 
   add_index "user_balance_entries", ["profit_report_id", "user_id"], name: "index_user_balance_entries_on_profit_report_id_and_user_id", unique: true, using: :btree
+
+  create_table "user_clusters", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "user_identities", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id"

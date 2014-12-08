@@ -1,16 +1,16 @@
 /*
- * Box-sizing for all!!!
- */
+* Box-sizing for all!!!
+*/
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 /**
- * 1. Set default font family to sans-serif.
- * 2. Prevent iOS text size adjust after orientation change, without disabling
- *    user zoom.
- */
+* 1. Set default font family to sans-serif.
+* 2. Prevent iOS text size adjust after orientation change, without disabling
+*    user zoom.
+*/
 html {
   font-family: sans-serif;
   /* 1 */
@@ -21,19 +21,19 @@ html {
 }
 
 /**
- * Remove default margin.
- */
+* Remove default margin.
+*/
 body {
   margin: 0;
 }
 
 /* HTML5 display definitions
-   ========================================================================== */
+========================================================================== */
 /**
- * Correct `block` display not defined for any HTML5 element in IE 8/9.
- * Correct `block` display not defined for `details` or `summary` in IE 10/11 and Firefox.
- * Correct `block` display not defined for `main` in IE 11.
- */
+* Correct `block` display not defined for any HTML5 element in IE 8/9.
+* Correct `block` display not defined for `details` or `summary` in IE 10/11 and Firefox.
+* Correct `block` display not defined for `main` in IE 11.
+*/
 article,
 aside,
 details,
@@ -50,9 +50,9 @@ summary {
 }
 
 /**
- * 1. Correct `inline-block` display not defined in IE 8/9.
- * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
- */
+* 1. Correct `inline-block` display not defined in IE 8/9.
+* 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+*/
 audio,
 canvas,
 progress,
@@ -64,91 +64,91 @@ video {
 }
 
 /**
- * Prevent modern browsers from displaying `audio` without controls.
- * Remove excess height in iOS 5 devices.
- */
+* Prevent modern browsers from displaying `audio` without controls.
+* Remove excess height in iOS 5 devices.
+*/
 audio:not([controls]) {
   display: none;
   height: 0;
 }
 
 /**
- * Address `[hidden]` styling not present in IE 8/9/10.
- * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
- */
+* Address `[hidden]` styling not present in IE 8/9/10.
+* Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
+*/
 [hidden],
 template {
   display: none;
 }
 
 /* Links
-   ========================================================================== */
+========================================================================== */
 /**
- * Remove the gray background color from active links in IE 10.
- */
+* Remove the gray background color from active links in IE 10.
+*/
 a {
   background: transparent;
 }
 
 /**
- * Improve readability when focused and also mouse hovered in all browsers.
- */
+* Improve readability when focused and also mouse hovered in all browsers.
+*/
 a:active,
 a:hover {
   outline: 0;
 }
 
 /* Text-level semantics
-   ========================================================================== */
+========================================================================== */
 /**
- * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
- */
+* Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+*/
 abbr[title] {
   border-bottom: 1px dotted;
 }
 
 /**
- * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
- */
+* Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+*/
 b,
 strong {
   font-weight: bold;
 }
 
 /**
- * Address styling not present in Safari and Chrome.
- */
+* Address styling not present in Safari and Chrome.
+*/
 dfn {
   font-style: italic;
 }
 
 /**
- * Address variable `h1` font-size and margin within `section` and `article`
- * contexts in Firefox 4+, Safari, and Chrome.
- */
+* Address variable `h1` font-size and margin within `section` and `article`
+* contexts in Firefox 4+, Safari, and Chrome.
+*/
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
 
 /**
- * Address styling not present in IE 8/9.
- */
+* Address styling not present in IE 8/9.
+*/
 mark {
   background: #ff0;
   color: #000;
 }
 
 /**
- * Address inconsistent and variable font size in all browsers.
- */
+* Address inconsistent and variable font size in all browsers.
+*/
 small {
   font-size: 80%;
 }
 
 /**
- * Prevent `sub` and `sup` affecting `line-height` in all browsers.
- */
+* Prevent `sub` and `sup` affecting `line-height` in all browsers.
+*/
 sub,
 sup {
   font-size: 75%;
@@ -166,48 +166,48 @@ sub {
 }
 
 /* Embedded content
-   ========================================================================== */
+========================================================================== */
 /**
- * Remove border when inside `a` element in IE 8/9/10.
- */
+* Remove border when inside `a` element in IE 8/9/10.
+*/
 img {
   border: 0;
 }
 
 /**
- * Correct overflow not hidden in IE 9/10/11.
- */
+* Correct overflow not hidden in IE 9/10/11.
+*/
 svg:not(:root) {
   overflow: hidden;
 }
 
 /* Grouping content
-   ========================================================================== */
+========================================================================== */
 /**
- * Address margin not present in IE 8/9 and Safari.
- */
+* Address margin not present in IE 8/9 and Safari.
+*/
 figure {
   margin: 1em 40px;
 }
 
 /**
- * Address differences between Firefox and other browsers.
- */
+* Address differences between Firefox and other browsers.
+*/
 hr {
   box-sizing: content-box;
   height: 0;
 }
 
 /**
- * Contain overflow in all browsers.
- */
+* Contain overflow in all browsers.
+*/
 pre {
   overflow: auto;
 }
 
 /**
- * Address odd `em`-unit font size rendering in all browsers.
- */
+* Address odd `em`-unit font size rendering in all browsers.
+*/
 code,
 kbd,
 pre,
@@ -217,17 +217,17 @@ samp {
 }
 
 /* Forms
-   ========================================================================== */
+========================================================================== */
 /**
- * Known limitation: by default, Chrome and Safari on OS X allow very limited
- * styling of `select`, unless a `border` property is set.
- */
+* Known limitation: by default, Chrome and Safari on OS X allow very limited
+* styling of `select`, unless a `border` property is set.
+*/
 /**
- * 1. Correct color not being inherited.
- *    Known issue: affects color of disabled elements.
- * 2. Correct font properties not being inherited.
- * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
- */
+* 1. Correct color not being inherited.
+*    Known issue: affects color of disabled elements.
+* 2. Correct font properties not being inherited.
+* 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+*/
 button,
 input,
 optgroup,
@@ -242,30 +242,30 @@ textarea {
 }
 
 /**
- * Address `overflow` set to `hidden` in IE 8/9/10/11.
- */
+* Address `overflow` set to `hidden` in IE 8/9/10/11.
+*/
 button {
   overflow: visible;
 }
 
 /**
- * Address inconsistent `text-transform` inheritance for `button` and `select`.
- * All other form control elements do not inherit `text-transform` values.
- * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
- * Correct `select` style inheritance in Firefox.
- */
+* Address inconsistent `text-transform` inheritance for `button` and `select`.
+* All other form control elements do not inherit `text-transform` values.
+* Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+* Correct `select` style inheritance in Firefox.
+*/
 button,
 select {
   text-transform: none;
 }
 
 /**
- * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
- *    and `video` controls.
- * 2. Correct inability to style clickable `input` types in iOS.
- * 3. Improve usability and consistency of cursor style between image-type
- *    `input` and others.
- */
+* 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+*    and `video` controls.
+* 2. Correct inability to style clickable `input` types in iOS.
+* 3. Improve usability and consistency of cursor style between image-type
+*    `input` and others.
+*/
 button,
 html input[type="button"],
 input[type="reset"],
@@ -277,16 +277,16 @@ input[type="submit"] {
 }
 
 /**
- * Re-set default cursor for disabled elements.
- */
+* Re-set default cursor for disabled elements.
+*/
 button[disabled],
 html input[disabled] {
   cursor: default;
 }
 
 /**
- * Remove inner padding and border in Firefox 4+.
- */
+* Remove inner padding and border in Firefox 4+.
+*/
 button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
@@ -294,20 +294,20 @@ input::-moz-focus-inner {
 }
 
 /**
- * Address Firefox 4+ setting `line-height` on `input` using `!important` in
- * the UA stylesheet.
- */
+* Address Firefox 4+ setting `line-height` on `input` using `!important` in
+* the UA stylesheet.
+*/
 input {
   line-height: normal;
 }
 
 /**
- * It's recommended that you don't attempt to style these elements.
- * Firefox's implementation doesn't respect box-sizing, padding, or width.
- *
- * 1. Address box sizing set to `content-box` in IE 8/9/10.
- * 2. Remove excess padding in IE 8/9/10.
- */
+* It's recommended that you don't attempt to style these elements.
+* Firefox's implementation doesn't respect box-sizing, padding, or width.
+*
+* 1. Address box sizing set to `content-box` in IE 8/9/10.
+* 2. Remove excess padding in IE 8/9/10.
+*/
 input[type="checkbox"],
 input[type="radio"] {
   box-sizing: border-box;
@@ -317,20 +317,20 @@ input[type="radio"] {
 }
 
 /**
- * Fix the cursor style for Chrome's increment/decrement buttons. For certain
- * `font-size` values of the `input`, it causes the cursor style of the
- * decrement button to change from `default` to `text`.
- */
+* Fix the cursor style for Chrome's increment/decrement buttons. For certain
+* `font-size` values of the `input`, it causes the cursor style of the
+* decrement button to change from `default` to `text`.
+*/
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
 
 /**
- * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
- * 2. Address `box-sizing` set to `border-box` in Safari and Chrome
- *    (include `-moz` to future-proof).
- */
+* 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+* 2. Address `box-sizing` set to `border-box` in Safari and Chrome
+*    (include `-moz` to future-proof).
+*/
 input[type="search"] {
   -webkit-appearance: textfield;
   /* 1 */
@@ -339,18 +339,18 @@ input[type="search"] {
 }
 
 /**
- * Remove inner padding and search cancel button in Safari and Chrome on OS X.
- * Safari (but not Chrome) clips the cancel button when the search input has
- * padding (and `textfield` appearance).
- */
+* Remove inner padding and search cancel button in Safari and Chrome on OS X.
+* Safari (but not Chrome) clips the cancel button when the search input has
+* padding (and `textfield` appearance).
+*/
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
 /**
- * Define consistent border, margin, and padding.
- */
+* Define consistent border, margin, and padding.
+*/
 fieldset {
   border: 1px solid #c0c0c0;
   margin: 0 2px;
@@ -358,9 +358,9 @@ fieldset {
 }
 
 /**
- * 1. Correct `color` not being inherited in IE 8/9/10/11.
- * 2. Remove padding so people aren't caught out if they zero out fieldsets.
- */
+* 1. Correct `color` not being inherited in IE 8/9/10/11.
+* 2. Remove padding so people aren't caught out if they zero out fieldsets.
+*/
 legend {
   border: 0;
   /* 1 */
@@ -369,25 +369,25 @@ legend {
 }
 
 /**
- * Remove default vertical scrollbar in IE 8/9/10/11.
- */
+* Remove default vertical scrollbar in IE 8/9/10/11.
+*/
 textarea {
   overflow: auto;
 }
 
 /**
- * Don't inherit the `font-weight` (applied by a rule above).
- * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
- */
+* Don't inherit the `font-weight` (applied by a rule above).
+* NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+*/
 optgroup {
   font-weight: bold;
 }
 
 /* Tables
-   ========================================================================== */
+========================================================================== */
 /**
- * Remove most spacing between table cells.
- */
+* Remove most spacing between table cells.
+*/
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -441,10 +441,15 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote {
 }
 
 h1 {
-  font-size: 2.25em;
+  font-size: 1.75em;
   font-weight: 300;
   margin-bottom: .35em;
-  color: #314244;
+  color: #444951;
+}
+@media (min-width: 25em) {
+  h1 {
+    font-size: 2.25em;
+  }
 }
 @media (min-width: 40em) {
   h1 {
@@ -453,9 +458,14 @@ h1 {
 }
 
 h2 {
-  font-size: 2em;
+  font-size: 1.25em;
   font-weight: 300;
   color: #10a2b8;
+}
+@media (min-width: 25em) {
+  h2 {
+    font-size: 2em;
+  }
 }
 @media (min-width: 40em) {
   h2 {
@@ -467,7 +477,7 @@ h3 {
   font-size: 2.25em;
   font-weight: 400;
   margin-bottom: .25em;
-  color: #314244;
+  color: #444951;
 }
 
 h4 {
@@ -479,7 +489,7 @@ h4 {
 h5 {
   font-size: 1em;
   font-weight: 400;
-  color: #314244;
+  color: #444951;
 }
 
 header.global {
@@ -551,12 +561,12 @@ header.global ul.the_nav li {
 header.global ul.the_nav li a {
   display: block;
   padding: .5em 1em;
-  color: #314244;
+  color: #444951;
   text-decoration: none;
   transition: color .3s ease;
 }
 header.global ul.the_nav li a:hover {
-  color: #1c2526;
+  color: #2d3035;
 }
 header.global ul.the_nav li.cta a {
   display: block;
@@ -673,8 +683,8 @@ header.global ul.the_nav li.video:hover .play_icon {
 }
 .hero .play_icon {
   display: block;
-  width: 3.75em;
-  height: 3.75em;
+  width: 3.1875em;
+  height: 3.1875em;
   margin: 0 auto 2.5em;
   transition: -webkit-transform .3s ease;
   transition: transform .3s ease;
@@ -715,6 +725,7 @@ header.global ul.the_nav li.video:hover .play_icon {
 }
 .the_story .sticky_idea {
   position: absolute;
+  opacity: 0;
   overflow: hidden;
   top: 50%;
   left: 50%;
@@ -725,6 +736,15 @@ header.global ul.the_nav li.video:hover .play_icon {
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  transition: opacity .8s ease;
+}
+.the_story.stick_it .sticky_idea {
+  position: fixed;
+  opacity: 1;
+}
+.the_story.stick_it.too_far .sticky_idea {
+  position: absolute;
+  opacity: 0;
 }
 
 .story_block {
@@ -782,6 +802,8 @@ header.global ul.the_nav li.video:hover .play_icon {
 .idea .story_graphic {
   display: inline-block;
   position: relative;
+  opacity: 0;
+  transition: opacity .3s ease;
 }
 .idea img {
   vertical-align: middle;
@@ -791,30 +813,66 @@ header.global ul.the_nav li.video:hover .play_icon {
   width: 2.1875em;
   height: 2.1875em;
   position: absolute;
+  z-index: 101;
   top: .125em;
   left: -1em;
 }
-.idea .the_idea::before, .idea .the_idea::after {
-  content: "";
+.idea .the_idea img, .idea .the_idea .bubble_1, .idea .the_idea .bubble_2 {
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  -webkit-transform-origin: bottom left;
+  -ms-transform-origin: bottom left;
+  transform-origin: bottom left;
+  transition: -webkit-transform .3s ease-in;
+  transition: transform .3s ease-in;
+  transition-delay: .7s;
+}
+.idea .the_idea .bubble_1, .idea .the_idea .bubble_2 {
   position: absolute;
   background: #f5ce47;
   border-radius: 50%;
 }
-.idea .the_idea::before {
+.idea .the_idea .bubble_1 {
   bottom: -.25em;
   left: -1.125em;
   width: .625em;
   height: .625em;
+  transition-delay: .5s;
 }
-.idea .the_idea::after {
+.idea .the_idea .bubble_2 {
   bottom: -.6em;
   left: -2.125em;
   width: .375em;
   height: .375em;
+  transition-delay: .2s;
 }
 .idea .single_avatar {
+  position: relative;
+  z-index: 100;
   width: 5.625em;
   height: 5.625em;
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  -webkit-transform-origin: center;
+  -ms-transform-origin: center;
+  transform-origin: center;
+  transition: -webkit-transform .3s ease-in;
+  transition: transform .3s ease-in;
+}
+.idea .go {
+  opacity: 1;
+}
+.idea .go .the_idea img, .idea .go .the_idea .bubble_1, .idea .go .the_idea .bubble_2 {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+.idea .go .single_avatar {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
 }
 
 .rally .contain::before {
@@ -824,8 +882,147 @@ header.global ul.the_nav li.video:hover .play_icon {
   max-width: 31.875em;
   margin: 0 auto 3.5em;
 }
-.rally .avatars {
-  width: 28.625em;
+.rally .story_graphic {
+  position: relative;
+  max-width: 27.8125em;
+  width: 100%;
+  margin: 0 auto;
+  opacity: 0;
+  -webkit-transform-origin: bottom center;
+  -ms-transform-origin: bottom center;
+  transform-origin: bottom center;
+  transition: opacity .6s ease;
+}
+.rally .story_graphic img {
+  position: relative;
+  z-index: 100;
+  float: left;
+  width: 16%;
+  margin: 0 5% 5% 0;
+  opacity: 0;
+  transition: -webkit-transform .6s ease-in, opacity .3s ease;
+  transition: transform .6s ease-in, opacity .3s ease;
+}
+.rally .story_graphic img.rally_1 {
+  -webkit-transform: translateX(-5em);
+  -ms-transform: translateX(-5em);
+  transform: translateX(-5em);
+  transition: -webkit-transform .5s .3s ease-in, opacity .7s .3s ease;
+  transition: transform .5s .3s ease-in, opacity .7s .3s ease;
+}
+.rally .story_graphic img.rally_2 {
+  -webkit-transform: translateX(-3em);
+  -ms-transform: translateX(-3em);
+  transform: translateX(-3em);
+  transition: -webkit-transform .7s .1s ease-in, opacity .9s .1s ease;
+  transition: transform .7s .1s ease-in, opacity .9s .1s ease;
+}
+.rally .story_graphic img.rally_3 {
+  -webkit-transform: translateX(-1em);
+  -ms-transform: translateX(-1em);
+  transform: translateX(-1em);
+  transition: -webkit-transform .8s ease-in, opacity 1s ease;
+  transition: transform .8s ease-in, opacity 1s ease;
+}
+.rally .story_graphic img.rally_4 {
+  -webkit-transform: translateX(3em);
+  -ms-transform: translateX(3em);
+  transform: translateX(3em);
+  transition-delay: .2s;
+  transition: -webkit-transform .7s .1s ease-in, opacity .9s .1s ease;
+  transition: transform .7s .1s ease-in, opacity .9s .1s ease;
+}
+.rally .story_graphic img.rally_5 {
+  margin-right: 0;
+  -webkit-transform: translateX(5em);
+  -ms-transform: translateX(5em);
+  transform: translateX(5em);
+  transition: -webkit-transform .5s .3s ease-in, opacity .7s .3s ease;
+  transition: transform .5s .3s ease-in, opacity .7s .3s ease;
+}
+.rally .story_graphic img.rally_6 {
+  -webkit-transform: translateX(-5em);
+  -ms-transform: translateX(-5em);
+  transform: translateX(-5em);
+  transition: -webkit-transform .5s .4s ease-in, opacity .7s .4s ease;
+  transition: transform .5s .4s ease-in, opacity .7s .4s ease;
+}
+.rally .story_graphic img.rally_7 {
+  -webkit-transform: translateX(-3em);
+  -ms-transform: translateX(-3em);
+  transform: translateX(-3em);
+  transition: -webkit-transform .7s .2s ease-in, opacity .9s .2s ease;
+  transition: transform .7s .2s ease-in, opacity .9s .2s ease;
+}
+.rally .story_graphic img.rally_8 {
+  -webkit-transform: translateX(1em);
+  -ms-transform: translateX(1em);
+  transform: translateX(1em);
+  transition: -webkit-transform .8s .1s ease-in, opacity 1s .1s ease;
+  transition: transform .8s .1s ease-in, opacity 1s .1s ease;
+}
+.rally .story_graphic img.rally_9 {
+  -webkit-transform: translateX(3em);
+  -ms-transform: translateX(3em);
+  transform: translateX(3em);
+  transition: -webkit-transform .7s .2s ease-in, opacity .7s .2s ease;
+  transition: transform .7s .2s ease-in, opacity .7s .2s ease;
+}
+.rally .story_graphic img.rally_10 {
+  margin-right: 0;
+  -webkit-transform: translateX(5em);
+  -ms-transform: translateX(5em);
+  transform: translateX(5em);
+  transition: -webkit-transform .5s .4s ease-in, opacity .7s .4s ease;
+  transition: transform .5s .4s ease-in, opacity .7s .4s ease;
+}
+.rally .story_graphic img.rally_6, .rally .story_graphic img.rally_7, .rally .story_graphic img.rally_8, .rally .story_graphic img.rally_9, .rally .story_graphic img.rally_10 {
+  margin-bottom: 0;
+}
+.rally .story_graphic::before, .rally .story_graphic::after {
+  content: "";
+  position: absolute;
+  z-index: 101;
+  border-radius: 5em;
+  opacity: 0;
+  padding-top: 19.5%;
+}
+.rally .story_graphic::before {
+  top: -5%;
+  left: -2.5%;
+  width: 84%;
+  background: #93ba2c;
+  -webkit-transform: translateX(-5em);
+  -ms-transform: translateX(-5em);
+  transform: translateX(-5em);
+  transition: -webkit-transform .5s .3s ease-in, opacity 1s .3s ease;
+  transition: transform .5s .3s ease-in, opacity 1s .3s ease;
+}
+.rally .story_graphic::after {
+  bottom: -5%;
+  right: -2.5%;
+  width: 42%;
+  background: #16c0d9;
+  -webkit-transform: translateX(5em);
+  -ms-transform: translateX(5em);
+  transform: translateX(5em);
+  transition: -webkit-transform .5s .4s ease-in, opacity 1s .4s ease;
+  transition: transform .5s .4s ease-in, opacity 1s .4s ease;
+}
+.rally .story_graphic.go {
+  opacity: 1;
+}
+.rally .story_graphic.go::before, .rally .story_graphic.go::after {
+  opacity: .5;
+  -webkit-transform: translateX(0);
+  -ms-transform: translateX(0);
+  transform: translateX(0);
+}
+.rally .story_graphic.go img {
+  opacity: 1;
+  -webkit-transform: translateX(0) !important;
+  -ms-transform: translateX(0) !important;
+  transform: translateX(0) !important;
 }
 
 .ship .contain::before {
@@ -852,21 +1049,45 @@ header.global ul.the_nav li.video:hover .play_icon {
   margin: -1em 0 0;
   border-radius: 50%;
   overflow: hidden;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%) scale(0.25);
+  -ms-transform: translate(-50%, -50%) scale(0.25);
+  transform: translate(-50%, -50%) scale(0.25);
   -webkit-transform-origin: center;
   -ms-transform-origin: center;
   transform-origin: center;
+  transition: -webkit-transform .8s ease-in-out;
+  transition: transform .8s ease-in-out;
 }
 .ship .the_product img {
   margin-bottom: 0;
   height: auto;
   vertical-align: middle;
 }
+.ship .the_product.go {
+  -webkit-transform: translate(-50%, -50%) scale(1);
+  -ms-transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(1);
+}
 .ship h1 {
   max-width: 14em;
   margin: 0 auto .35em;
+}
+.ship .success {
+  opacity: 0;
+  -webkit-transform: translateY(-0.5em);
+  -ms-transform: translateY(-0.5em);
+  transform: translateY(-0.5em);
+  -webkit-transform-origin: top center;
+  -ms-transform-origin: top center;
+  transform-origin: top center;
+  transition: -webkit-transform .6s .4s ease-in, opacity .4s .6s ease;
+  transition: transform .6s .4s ease-in, opacity .4s .6s ease;
+}
+.ship .success.go {
+  opacity: 1;
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
 }
 .ship h4 {
   max-width: 40em;
@@ -950,7 +1171,7 @@ header.global ul.the_nav li.video:hover .play_icon {
   bottom: 0;
   left: 50%;
   width: 2.875em;
-  border-bottom: 1px solid #314244;
+  border-bottom: 1px solid #444951;
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);
@@ -983,6 +1204,12 @@ header.global ul.the_nav li.video:hover .play_icon {
     font-size: 1.625em;
   }
 }
+@media (min-width: 96.25em) {
+  .community {
+    background-size: cover;
+    background-position: center;
+  }
+}
 
 .community_item {
   width: 100%;
@@ -991,23 +1218,30 @@ header.global ul.the_nav li.video:hover .play_icon {
   margin-bottom: 1em;
   overflow: hidden;
 }
+.community_item.image img {
+  min-width: 100%;
+}
+.community_item.maker img {
+  min-width: 100%;
+}
 .community_item header {
   border-bottom: 1px solid #efefef;
 }
 .community_item header img {
   float: left;
   margin-right: .5em;
+  max-width: 3.125em;
 }
 .community_item header h3 {
   text-align: left;
   font-size: 1em;
-  color: #314244;
+  color: #444951;
   line-height: 3.125em;
   margin: 0;
   padding: 0 1em;
 }
 .community_item .content {
-  padding: 1em 1em 0;
+  padding: 1em;
 }
 .community_item .content h2 {
   font-size: 1.125em;
@@ -1091,12 +1325,31 @@ header.global ul.the_nav li.video:hover .play_icon {
   right: 1em;
 }
 .community_item .info .details li {
+  position: relative;
   display: inline-block;
   font-size: .75em;
   line-height: 4.166666667em;
   color: #c2c7d0;
-  padding-left: .5em;
+  padding-left: 1.5em;
   margin-left: .5em;
+}
+.community_item .info .details li::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 1.25em;
+  height: 1.25em;
+  opacity: .125;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.community_item .info .details li.comments::before {
+  background: url(image-path('focus-home/icon_comment.min.svg')) no-repeat center;
+}
+.community_item .info .details li.views::before {
+  background: url(image-path('focus-home/icon_view.min.svg')) no-repeat center;
 }
 @media (min-width: 31.25em) {
   .community_item {
@@ -1124,9 +1377,8 @@ header.global ul.the_nav li.video:hover .play_icon {
   margin-bottom: 1.75em;
 }
 .last_hurrah h2 {
-  font-size: 2em;
   font-weight: 400;
-  color: #314244;
+  color: #444951;
   max-width: 25em;
   margin: 0 auto 2.5em;
 }
@@ -1144,13 +1396,13 @@ header.global ul.the_nav li.video:hover .play_icon {
   margin-bottom: 3.5em;
 }
 .last_hurrah ul li h3 {
-  font-size: 1.5625em;
-  font-weight: 300;
+  font-size: 1.25em;
+  font-weight: 400;
   margin-bottom: .75em;
   color: #10a2b8;
 }
 .last_hurrah ul li p {
-  color: #314244;
+  color: #444951;
   line-height: 1.5em;
 }
 .last_hurrah .cta_btn {
@@ -1170,12 +1422,25 @@ header.global ul.the_nav li.video:hover .play_icon {
 .last_hurrah .contact {
   display: block;
   margin-top: 2em;
-  color: #314244;
+  color: #444951;
   text-decoration: none;
   transition: color .3s ease;
 }
 .last_hurrah .contact:hover {
-  color: #1c2526;
+  color: #2d3035;
+}
+@media (min-width: 25em) {
+  .last_hurrah h2 {
+    font-size: 1.5em;
+  }
+}
+@media (min-width: 40em) {
+  .last_hurrah h2 {
+    font-size: 2em;
+  }
+  .last_hurrah ul li h3 {
+    font-size: 1.5625em;
+  }
 }
 @media (min-width: 52em) {
   .last_hurrah ul li {
@@ -1214,12 +1479,12 @@ footer .footer_nav li a {
   display: block;
   font-size: 1.125em;
   text-decoration: none;
-  color: #314244;
+  color: #444951;
   padding: .5em 1em;
   transition: color .3s ease;
 }
 footer .footer_nav li a:hover {
-  color: #1c2526;
+  color: #2d3035;
 }
 footer .social li {
   display: inline-block;
@@ -1643,8 +1908,8 @@ img.mfp-img {
 
 @media screen and (max-width: 800px) and (orientation: landscape), screen and (max-height: 300px) {
   /**
-   * Remove all paddings around the image on small screen
-   */
+  * Remove all paddings around the image on small screen
+  */
   .mfp-img-mobile .mfp-image-holder {
     padding-left: 0;
     padding-right: 0;
