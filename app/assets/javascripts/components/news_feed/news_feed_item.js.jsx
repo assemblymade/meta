@@ -56,6 +56,10 @@
         return;
       }
 
+      if (!this.props.last_comment) {
+        return;
+      }
+
       // TODO This stuff should really be common across all the items
       var commentsUrl = this.props.target.url + "#comments";
 
@@ -71,9 +75,9 @@
           </a>
 
           <div className="py2">
-            <Comment author={lastComment.user}
-                body={lastComment.markdown_body}
-                timestamp={lastComment.created_at} />
+          <Comment author={lastComment.user}
+                  body={lastComment.markdown_body}
+                  timestamp={lastComment.created_at} />
           </div>
         </div>
       );

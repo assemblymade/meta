@@ -224,10 +224,6 @@ module.exports = React.createClass({
   },
 
   renderLove: function() {
-    if (!window.app.featureEnabled('much-love') && !this.props.public) {
-      return null
-    }
-
     if (this.props.item) {
       return (
         <div className="px3 py2 mb0 mt0 border-bottom">

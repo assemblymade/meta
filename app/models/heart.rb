@@ -6,4 +6,8 @@ class Heart < ActiveRecord::Base
 
   validates :heartable_id, uniqueness: { scope: :user }
   validates :user, presence: true
+
+  def product
+    heartable.try(:product)
+  end
 end

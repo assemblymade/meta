@@ -85,7 +85,7 @@
       } else {
         return (
           <div>
-            <BountyList bounties={this.state.bounties} product={this.props.product} valuation={this.props.valuation} />
+            <BountyList bounties={this.state.bounties} product={this.props.product} />
             <PaginationLinks page={this.state.page} pages={this.state.pages} onPageChanged={this.handlePageChange} />
           </div>
         )

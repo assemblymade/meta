@@ -207,6 +207,11 @@ class Wip < ActiveRecord::Base
     self.tags = names.map do |n|
       Wip::Tag.find_or_create_by!(name: n.strip)
     end
+
+    names.each do |a|
+      MakeMarks.new.mark_with_name(self, a.strip.downcase) if persisted?
+    end
+
   end
 
   def tag_list

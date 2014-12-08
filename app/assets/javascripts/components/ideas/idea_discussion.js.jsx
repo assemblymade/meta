@@ -35,8 +35,8 @@ module.exports = React.createClass({
   },
   renderNewCommentForm: function(){
     return (
-      <NewComment url={this.state.url} 
-                  key="new-comment-form" 
+      <NewComment url={this.state.url}
+                  key="new-comment-form"
                   signup_path={this.props.signup_path}
                   login_path={this.props.login_path} />
     )
@@ -56,6 +56,3 @@ module.exports = React.createClass({
 })
 
 window.IdeaDiscussion = module.exports
-
-
-

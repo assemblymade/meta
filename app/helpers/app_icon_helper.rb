@@ -21,4 +21,14 @@ module AppIconHelper
     )
   end
 
+  def raw_app_icon_url(product)
+    image_url = if product.logo.present?
+      product.logo.url
+    elsif product.poster.present?
+      product.poster_image.url
+    else
+      image_url('app_icon.png')
+    end
+  end
+
 end
