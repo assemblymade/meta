@@ -47,15 +47,8 @@
             </tr>
           <% end %>
           <tr>
-            <td colspan="2" style="padding:0px 15px 15px;color:#8b909a;font-size:14px;">
-            <span>
-              <%= image_tag 'icon-comments.png', height: "14", width: "14", class: "fixed-size-icon", style: "float:none;clear:none;display:inline-block;" %>&nbsp;<%= bounty.comments.count %>
-            </span>
-              &nbsp;
+            <td colspan="2" style="padding:0px 10px 15px;color:#8b909a;font-size:14px;">
               <span>
-                <%= image_tag 'icon-hearts.png', height: "14", width: "14", class: "fixed-size-icon", style: "float:none;clear:none;display:inline-block;" %>&nbsp;<%= bounty.news_feed_item.hearts_count %>
-              </span>
-              <span style="margin-left:10px;">
                 <% bounty.marks.limit(4).pluck(:name).each do |m| %>
                   <span style="text-transform: uppercase;margin-left:5px;font-size:12px;font-weight:600;"><%= "##{m}" %></span>
                 <% end %>
