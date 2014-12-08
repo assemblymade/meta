@@ -1,6 +1,6 @@
 /**
  * Prefer this Es6Store superclass for new stores. Eventually migrate existing
- * stores to this model and change its name to simple Store.
+ * stores to this model and change its name to Store.
  */
 
 var EventEmitter = require('events').EventEmitter
