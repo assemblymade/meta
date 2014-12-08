@@ -8,7 +8,7 @@ class NewsFeedItem < ActiveRecord::Base
 
   has_many :hearts, as: :heartable
 
-  after_commit :ensure_last_commented_at, on: :create
+  before_validation :ensure_last_commented_at, on: :create
 
   scope :public_items, -> { joins(:product).where('products.state not in (?)', ['stealth', 'reviewing']) }
 
