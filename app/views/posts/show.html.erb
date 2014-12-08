@@ -39,6 +39,12 @@
       <li>
         <%= time_ago_in_words(@post.created_at) %> ago
       </li>
+      <li data-react-class="TagList" data-react-props="<%= {
+        destination: false,
+        tags: @post.marks.map(&:name),
+        url: product_post_path(@product, @post)
+      }.to_json %>">
+      </li>
     </ul>
   </div>
 </div>

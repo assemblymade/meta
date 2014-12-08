@@ -6,6 +6,8 @@ class PostSerializer < ApplicationSerializer
 
   has_one :user
 
+  has_many :marks
+
   def comments_count
     news_feed_item.news_feed_item_comments.count
   end
@@ -37,9 +39,9 @@ class PostSerializer < ApplicationSerializer
     product_post_path(product, object)
   end
 
-  # cached
+  cached
 
-  # def cache_key
-  #   [object]
-  # end
+  def cache_key
+    [object]
+  end
 end

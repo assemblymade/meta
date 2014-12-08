@@ -5,6 +5,7 @@ class Mark < ActiveRecord::Base
   has_many :tasks, :through => :markings, source: :markable, source_type: 'Wip'
   has_many :discussions, :through => :markings
   has_many :products, :through => :markings
+  has_many :posts, :through => :markings
   has_many :watchings, :as => :watchable
   has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
 

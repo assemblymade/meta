@@ -11,4 +11,12 @@ namespace :posts do
       )
     end
   end
+
+  task mark_as_discussion: :environment do
+    mark = Mark.find_or_create_by!(name: 'discussion')
+
+    Post.all.each do |post|
+      Marking.create!(markable: post, mark: mark, weight: 1.0)
+    end
+  end
 end
