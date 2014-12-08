@@ -7,8 +7,6 @@ class AdjustMarkings
       marked_object = Product.find(marked_object_id)
     end
 
-    puts "ADJUSTING MARKS FOR #{user.username} on #{marked_object.class.name}"
-
     user_identity = user.user_identity
 
     old_mark_vector = QueryMarks.new.mark_vector_for_object(user_identity)
