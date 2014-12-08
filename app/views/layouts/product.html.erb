@@ -98,21 +98,19 @@
             Activity
           </a>
         </li>
+
         <li class="<%= nav_active_class(:bounties) %>">
           <a class="px2 py2" href="<%= product_tasks_path(@product) %>">
             Bounties
           </a>
         </li>
+
         <li class="<%= nav_active_class(:posts) %>">
           <a class="px2 py2" href="<%= product_posts_path(@product) %>">
             Posts
           </a>
         </li>
-        <li class="<%= nav_active_class(:discussions) %> sm-show">
-          <a class="px2 py2" href="<%= product_discussions_path(@product) %>">
-            Discussions
-          </a>
-        </li>
+
         <li class="<%= nav_active_class(:assets) %> sm-show">
           <a class="px2 py2" href="<%= product_assets_path(@product) %>">
             Assets
@@ -167,15 +165,6 @@
                 <%= inline_react_component 'Icon', icon: 'trophy' %>
               </span>
               Bounty
-            </a>
-          </li>
-
-          <li role="presentation">
-            <a href="<%= new_product_discussion_path(@product) %>">
-              <span class="mr1">
-                <%= inline_react_component 'Icon', icon: 'quote-right' %>
-              </span>
-              Discussion
             </a>
           </li>
 
