@@ -23,6 +23,12 @@ class WipFactory
 
       users = @product.followers
 
+      if mark_names = @params[:tag_list]
+        mark_names.each do |mark_name|
+          MakeMarks.new.mark_with_name(wip, mark_name)
+        end
+      end
+
       register_with_readraptor(wip, users)
       push(wip, users)
     end
