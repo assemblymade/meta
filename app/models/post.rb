@@ -20,11 +20,13 @@ class Post < ActiveRecord::Base
   validates :summary, length: { minimum: 2, maximum: 140 }, allow_blank: true
 
   after_commit :push_to_news_feed, on: :create
+  after_commit :mark_as_announcement, on: :create
   after_commit :mark_as_discussion, on: :create
   after_commit :update_news_feed_item
 
   friendly_id :title, use: :slugged
 
+  ANNOUNCEMENT_MARK = Mark.find_or_create_by!(name: 'announcement')
   DISCUSSION_MARK = Mark.find_or_create_by!(name: 'discussion')
 
   def summary
@@ -37,6 +39,12 @@ class Post < ActiveRecord::Base
 
   def flagged?
     flagged_at.present?
+  end
+
+  def mark_as_announcement
+    if post.product.core_team?(post.user)
+      Marking.create!(markable: self, mark: ANNOUNCEMENT_MARK)
+    end
   end
 
   def mark_as_discussion
