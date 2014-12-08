@@ -1,0 +1,36 @@
+namespace :discussions do
+  task convert_to_posts: :environment do
+    Discussion.all.each do |discussion|
+      next if discussion.product.nil?
+      next if Post.where(title: discussion.title, product: discussion.product).any?
+      next if Post.where(slug: discussion.title.parameterize, product: discussion.product).any?
+
+      post = Post.create!(
+        author: discussion.user,
+        body: "",
+        created_at: discussion.created_at,
+        flagged_at: discussion.flagged_at,
+        product: discussion.product,
+        slug: discussion.title.parameterize,
+        title: discussion.title,
+        updated_at: discussion.updated_at
+      )
+
+      nfi = NewsFeedItem.create!(
+        product: discussion.product,
+        source: discussion.user,
+        target: post,
+        updated_at: discussion.updated_at
+      )
+
+      discussion.comments.each do |comment|
+        NewsFeedItemComment.create(
+          body: comment.body,
+          news_feed_item: nfi,
+          target_id:  post.id,
+          user: comment.user
+        )
+      end
+    end
+  end
+end

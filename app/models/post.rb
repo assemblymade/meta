@@ -15,7 +15,7 @@ class Post < ActiveRecord::Base
 
   validates :product, presence: true
   validates :author,  presence: true
-  validates :title,   uniqueness: true, presence: true
+  validates :title,   uniqueness: { scope: :product_id }, presence: true
   validates :slug,    presence: true
   validates :summary, length: { minimum: 2, maximum: 140 }, allow_blank: true
 

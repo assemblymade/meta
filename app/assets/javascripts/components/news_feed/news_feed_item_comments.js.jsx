@@ -110,7 +110,7 @@ var NewsFeedItemComments = React.createClass({
     return this.state.comments.map(function(comment) {
       if (new Date(comment.created_at) >= renderIfAfter) {
         return (
-          <div className="h6 mt0 mb2" key={comment.id}>
+          <div className="h6 mt0 mb2 px3" key={comment.id}>
             <Comment author={comment.user} body={comment.markdown_body} timestamp={comment.created_at} />
           </div>
         );
@@ -140,7 +140,7 @@ var NewsFeedItemComments = React.createClass({
 
     if (window.app.currentUser()) {
       return (
-        <div className="border-top py2">
+        <div className="border-top px3 py2">
           <NewComment {...this.props} url={url} thread={this.props.item.id} user={window.app.currentUser()} />
         </div>
       );
@@ -150,7 +150,7 @@ var NewsFeedItemComments = React.createClass({
   renderOptimisticComments: function() {
     return this.state.optimisticComments.map(function(comment) {
       return (
-        <div className="h6 mt0 mb2" key={comment.id}>
+        <div className="h6 mt0 mb2 px3" key={comment.id}>
           <Comment author={comment.user} body={marked(comment.body)} optimistic={true} />
         </div>
       )

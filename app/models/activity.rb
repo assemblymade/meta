@@ -40,7 +40,7 @@ class Activity < ActiveRecord::Base
   end
 
   def target_entity
-    (subject_type == 'Event' || 'NewsFeedItemComment') ? target : subject
+    (subject_type == 'Event' || subject_type == 'NewsFeedItemComment') ? target : subject
   end
 
   def track_in_segment
