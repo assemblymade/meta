@@ -24,13 +24,11 @@ var BountyListItem = React.createClass({
             </span>
 
             <span className="gray mr2">
-              <span className="fa fa-comment"></span>
-              {' '}
-              {bounty.comments_count}
+              {this.renderComments(bounty.comments_count)}
             </span>
 
             <span className="h6 mt0 mb0">
-              {this.renderTags()}
+              {this.renderTags(bounty.tags)}
             </span>
           </div>
         </div>
