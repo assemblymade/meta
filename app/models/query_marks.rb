@@ -52,7 +52,6 @@ class QueryMarks
   end
 
   def normalized_mark_vector_for_object(object)
-
     if object.class.to_s == "Task" || object.class.to_s == "Product"
       object.normalized_mark_vector()
     else
@@ -125,7 +124,7 @@ class QueryMarks
   #GENERATE TOP_BOUNTIES, TOP_PRODUCTS
 
   def get_all_wip_vectors
-    wips = Wip.where(closed_at: nil).where(type: "Task")#.where('created_at > ?', 60.days.ago)
+    wips = Wip.where(closed_at: nil).where(type: "Task").where('created_at > ?', 120.days.ago)
     wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
     wip_vectors.select{ |a, b| a.count > 0 && ['team_building', 'greenlit', 'profitable'].include?(b.product.state) && b.product.flagged_at == nil && b.product.slug != "meta"}
   end
@@ -183,6 +182,10 @@ class QueryMarks
       result.sort_by{|a,b| a}.reverse
     end
     result.sort_by{|a,b| a}.reverse
+  end
+
+  def get_date_of_last_marking(object)
+    object.markings.sort_by{|hash| hash.updated_at}.reverse.first.updated_at
   end
 
   #RUN DAILY

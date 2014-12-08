@@ -13,13 +13,14 @@ class Task < Wip
   validate :multiplier_not_changed
 
   before_save :update_trending_score
-
+  
   scope :allocated,   -> { where(state: :allocated) }
   scope :hot,         -> { order(:trending_score => :desc) }
   scope :reviewing,   -> { where(state: :reviewing) }
   scope :won,         -> { joins(:awards) }
-  scope :won_after,   -> (time) { won.where('closed_at >= ?', time) }
+  scope :won_after,   -> (time) { won.where('awards.created_at >= ?', time) }
   scope :won_by,      -> (user) { won.where('awards.winner_id = ?', user.id) }
+  scope :won_by_after, -> (user, time) { won.where('awards.winner_id = ?', user.id).where('awards.created_at >= ?', time) }
 
   AUTHOR_TIP = 0.05
   IN_PROGRESS = 'allocated'
