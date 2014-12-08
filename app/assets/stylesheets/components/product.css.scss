@@ -361,7 +361,6 @@ html, body {
 }
 
 .drawer-open {
-  transform: translate3d(0, 0, 0);
   position: fixed;
   display: block;
   z-index: 10;
@@ -420,7 +419,7 @@ html, body {
   left:0;
   //
   &.active {
-    left: 40%;
+    left: 250px;
   }
   @media screen and (min-width: 900px) {
     -webkit-transform: translate3d(-225px, 0px, 0);
@@ -438,7 +437,7 @@ html, body {
   right:0;
   //
   &.active {
-    right: 40%;
+    right: 250px;
   }
   @media screen and (min-width: 768px) {
     -webkit-transform: translate3d(225px, 0, 0);
@@ -456,7 +455,6 @@ html, body {
   position:fixed;
   top:75px;
 }
-
 
 .product-core-content {
   display:table-cell;

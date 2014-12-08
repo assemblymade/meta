@@ -317,28 +317,44 @@
         $productNavigation = $productCore.find('.product-navigation'),
         $productSecondary = $productCore.find('.product-secondary');
 
+    var clickHandler = ('ontouchstart' in document.documentElement ? "touchstart" : "click");
+
     // nav
 
-    $productNavMobileButton.on('touchstart, click', function(){
+    $productNavMobileButton.on(clickHandler, function(e){
+      e.preventDefault();
       $(this).toggleClass('active');
       $productNavigation.toggleClass('drawer-open');
     });
 
-    $productSideMobileButton.on('touchstart, click', function(){
+    $productSideMobileButton.on(clickHandler, function(e){
+      e.preventDefault();
       $(this).toggleClass('active');
       $productSecondary.toggleClass('drawer-open');
+    });
+
+    //
+    $productNavigation.on(clickHandler, 'a', function(e){
+      e.preventDefault();
+      $productNavMobileButton.removeClass('active');
+      $productNavigation.removeClass('drawer-open');
     });
 
     // -- on click, add active to button & drawer-open to coresponding drawer
       // -- on click of one, remove classes of the other
     // -- on resize, remove classes
     // -- on a click of anything else remove classes
+    // on click of one, retract other
 
     // scroll
 
-    // on scroll, when nav button is greater than 75px from the top or bottom of the window, remove class pos-abs-/btm & add class - pos-fixed
+    // on scroll, when nav button is greater than 75px from the top or bottom of the window, remove class pos-abs-top/btm & add class - pos-fixed
     // when less than 75px from the top, remove pos-fixed, add pos-abs-top
     // when less than 75px from the bottom, remove pos-fixed, add pos-abs-btm
+    // --
+    // do the same thing to the nav windows
+
+    // toggle column padding on .prduct-core-content on click to compensate for column kickout
 
 
   })(jQuery);
