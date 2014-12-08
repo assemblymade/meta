@@ -57,6 +57,7 @@ class PostsController < ProductController
   def show
     find_product!
     find_post!
+    find_heartables!
   end
 
   def edit
@@ -78,6 +79,16 @@ class PostsController < ProductController
   end
 
 private
+
+  def find_heartables!
+    nfi = @post.news_feed_item
+
+    heartables = ([nfi] + nfi.news_feed_item_comments).to_a
+    @heartables = ActiveModel::ArraySerializer.new(heartables)
+    @user_hearts = if signed_in?
+      Heart.where(user_id: current_user.id).where(heartable_id: heartables.map(&:id))
+    end
+  end
 
   def find_post!
     if (params[:id] || '').uuid?

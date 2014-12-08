@@ -16,10 +16,31 @@ var NewsFeedItemNewComment = React.createClass({
 
   componentDidMount: function() {
     this.initializeDropzone();
+
+    // based on Ben Alpert's (@spicyj) work at
+    // https://github.com/Khan/react-components/blob/master/js/window-drag.jsx
+
+    // `this._dragCollection` looks weird, but there's a bug in React that
+    // causes 'dragenter' to fire twice. By keeping track of elements where the
+    // event has fired (instead of the event itself -- see l. 60), we can
+    // correctly determine drag behavior.
+    this._dragCollection = [];
+
+    window.addEventListener("dragenter", this.onDragEnter);
+    window.addEventListener("dragleave", this.onDragLeave);
+    window.addEventListener("drop",      this.onDragLeave);
+  },
+
+  componentWillUnmount: function() {
+    window.removeEventListener("dragenter", this.onDragEnter);
+    window.removeEventListener("dragleave", this.onDragLeave);
+    window.removeEventListener("drop",      this.onDragLeave);
   },
 
   getInitialState: function() {
     return {
+      dragging: false,
+      rows: this.props.rows || 1,
       text: ''
     };
   },
@@ -28,6 +49,26 @@ var NewsFeedItemNewComment = React.createClass({
     this.setState({
       text: e.target.value
     });
+  },
+
+  onDragEnter: function(e) {
+    if (this._dragCollection.length === 0) {
+      this.setState({
+        dragging: true
+      });
+    }
+
+    this._dragCollection = _(this._dragCollection).union([e.target]);
+  },
+
+  onDragLeave: function(e) {
+    this._dragCollection = _(this._dragCollection).without(e.target);
+
+    if (this._dragCollection.length === 0) {
+      this.setState({
+        dragging: false
+      });
+    }
   },
 
   onKeyPress: function(e) {
@@ -44,6 +85,15 @@ var NewsFeedItemNewComment = React.createClass({
       return <span />;
     }
 
+    var textareaClasses = React.addons.classSet({
+      'form-control': true,
+      'bg-gray-lighter': this.state.dragging
+    });
+
+    var placeholder = this.state.dragging ?
+      'Drag and drop here to upload' :
+      'Press <enter> to comment';
+
     return (
       <div className="clearfix">
         <div className="left mr2">
@@ -51,12 +101,12 @@ var NewsFeedItemNewComment = React.createClass({
         </div>
         <div className="overflow-hidden dropzone">
           <textarea type="text"
-              className="form-control"
-              rows="1"
+              className={textareaClasses}
+              rows={this.state.rows}
               onChange={this.onChange}
               onKeyPress={this.onKeyPress}
               value={this.state.text}
-              placeholder="Press <enter> to comment" />
+              placeholder={placeholder} />
         </div>
       </div>
     );

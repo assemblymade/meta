@@ -13,10 +13,7 @@
     },
 
     render: function() {
-      if (!window.app.featureEnabled('much-love') && !this.props.public) {
-        return <div/>
-      }
-
+      // Dammit, JavaScript
       if (this.state.hearts_count == null) {
         return <div/>
       }

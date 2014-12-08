@@ -1,7 +1,21 @@
 <% title @post.title, @post.product.name %>
 <% activate_nav! :posts %>
 
-<div class="page-header sheet-header">
+<script id="heartables" type="application/json">
+  <%== @heartables.to_json %>
+</script>
+
+<% if @user_hearts %>
+  <script id="user_hearts" type="application/json">
+    <%== @user_hearts.map{|h| {
+        id: h.id,
+        heartable_id: h.heartable_id,
+      }}.to_json
+    %>
+  </script>
+<% end %>
+
+<div class="page-header sheet-header mb0">
   <h2 class="page-header-title"><%= @post.title %></h2>
 
   <div class="page-header-meta">
@@ -37,14 +51,16 @@
         <%= product_markdown(@post.product, @post.body) %>
       </div>
 
-      <hr />
+      <div class="py1 border-top" data-react-class="Love" data-react-props="<%= {
+        heartable_id: @post.news_feed_item.id,
+        heartable_type: 'NewsFeedItem'
+      }.to_json %>"></div>
 
-      <div class="bg-white">
-        <div data-react-class="NewsFeedItemComments" data-react-props="<%= {
-          item: NewsFeedItemSerializer.new(@post.news_feed_item),
-          showAllComments: true
-        }.to_json %>">
-        </div>
+      <div data-react-class="NewsFeedItemComments" data-react-props="<%= {
+        item: NewsFeedItemSerializer.new(@post.news_feed_item),
+        rows: 2,
+        showAllComments: true
+      }.to_json %>">
       </div>
     </div>
 

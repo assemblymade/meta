@@ -27,6 +27,9 @@ class PostSerializer < ApplicationSerializer
   end
 
   def news_feed_item_id
+    unless news_feed_item.try(:id)
+      raise object.inspect
+    end
     news_feed_item.id
   end
 

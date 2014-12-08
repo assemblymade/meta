@@ -146,7 +146,10 @@ class DiscoverController < ApplicationController
 
 
     if signed_in?
-      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['heartable_id']})
+      @user_hearts = Heart.where(
+        user: current_user,
+        heartable_id: @heartables.map{ |h| h['heartable_id'] }
+      )
     end
 
     respond_to do |format|

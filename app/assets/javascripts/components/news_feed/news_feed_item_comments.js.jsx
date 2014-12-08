@@ -88,15 +88,14 @@ var NewsFeedItemComments = React.createClass({
     var confirmedComments = this.renderConfirmedComments();
     var optimisticComments = this.renderOptimisticComments();
     var comments = confirmedComments.concat(optimisticComments);
-    var numberOfComments = this.state.numberOfComments;
 
     if (!comments.length) {
       return;
     }
 
     return (
-      <div className="px3 py2 border-top">
-        {this.renderLoadMoreButton(numberOfComments)}
+      <div className="py2 border-top">
+        {this.renderLoadMoreButton()}
         <div className="mt2 mb2">
           {confirmedComments}
         </div>
@@ -119,7 +118,8 @@ var NewsFeedItemComments = React.createClass({
     });
   },
 
-  renderLoadMoreButton: function(numberOfComments) {
+  renderLoadMoreButton: function() {
+    var numberOfComments = this.state.numberOfComments;
     var target = this.props.item.target;
 
     if (numberOfComments > this.state.comments.length) {
@@ -140,8 +140,8 @@ var NewsFeedItemComments = React.createClass({
 
     if (window.app.currentUser()) {
       return (
-        <div className="border-top px3 py2">
-          <NewComment url={url} thread={this.props.item.id} user={window.app.currentUser()} />
+        <div className="border-top py2">
+          <NewComment {...this.props} url={url} thread={this.props.item.id} user={window.app.currentUser()} />
         </div>
       );
     }

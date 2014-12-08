@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var PostListItem = require('./post_list_item.js.jsx');
 
 var PostList = React.createClass({
