@@ -1,7 +1,7 @@
 (function() {
   var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
   // var Dispatcher = require('../dispatcher');
-  var Store = require('../stores/store');
+  var Store = require('./store');
   var _store = Object.create(Store);
 
   var comments = {

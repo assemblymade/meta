@@ -4,7 +4,7 @@ describe('Store', function() {
   var EventEmitter = require('events').EventEmitter;
   var Store = require(pathToFile('stores/store'));
 
-  it('returns instantiates a new store that has EventEmitter\'s prototype', function() {
+  it('instantiates a new store that has EventEmitter\'s prototype', function() {
     expect(Store.emitChange).toBeDefined();
     expect(Store.addChangeListener).toBeDefined();
     expect(Store.removeChangeListener).toBeDefined();

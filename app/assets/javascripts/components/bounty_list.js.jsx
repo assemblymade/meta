@@ -1,6 +1,8 @@
 var BountyListItem = require('./bounty_list_item.js.jsx')
 
-module.exports = React.createClass({
+var BountyList = React.createClass({
+  displayName: 'BountyList',
+
   renderBounties: function() {
     if(!this.props.bounties.length) {
       return
@@ -30,3 +32,5 @@ module.exports = React.createClass({
     )
   }
 });
+
+module.exports = BountyList;

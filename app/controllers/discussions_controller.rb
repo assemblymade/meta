@@ -1,6 +1,8 @@
 class DiscussionsController < WipsController
 
   def index
+    redirect_to product_posts_path(@product)
+
     params[:sort] ||= 'created'
 
     super

@@ -1,4 +1,4 @@
-var EventEmitter = require('events').EventEmitter
+var Store = require('./es6_store')
 
 var _dispatchToken
 var _heartables = {}
@@ -8,10 +8,9 @@ var _userHearts = {}
 var ActionTypes = window.CONSTANTS.ActionTypes;
 var LoveActionCreators = require('../actions/love_action_creators');
 
-class LoveStore extends EventEmitter {
+class LoveStore extends Store {
   constructor() {
     super()
-    this.setMaxListeners(30)
 
     _dispatchToken = Dispatcher.register((action) => {
       switch(action.type) {

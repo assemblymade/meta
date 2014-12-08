@@ -46,13 +46,7 @@ class NewsFeedItemCommentsController < ProductController
           subject: event,
           target: wip
         )
-      elsif !target.is_a? Wip
-        Activities::NewsFeedItemComment.publish!(
-          actor: @item.user,
-          subject: @item,
-          target: target
-        )
-      else
+      elsif target.is_a? Wip
         event = Event.create_from_comment(
           target,
           Event::Comment,
@@ -63,6 +57,12 @@ class NewsFeedItemCommentsController < ProductController
         Activities::Comment.publish!(
           actor: event.user,
           subject: event,
+          target: target
+        )
+      else
+        Activities::Comment.publish!(
+          actor: @item.user,
+          subject: @item,
           target: target
         )
       end

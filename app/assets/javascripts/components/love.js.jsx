@@ -13,6 +13,7 @@
     },
 
     render: function() {
+      // Dammit, JavaScript
       if (this.state.hearts_count == null) {
         return <div/>
       }

@@ -11,6 +11,7 @@ class Story < ActiveRecord::Base
     ["Close", "Task"]                       => :wip_subscribers,
     ["Close", "Wip"]                        => :wip_subscribers,
     ["Comment", "Discussion"]               => :wip_subscribers,
+    ["Comment", "Post"]                     => :product_subscribers,
     ["Comment", "Task"]                     => :wip_subscribers,
     ["Comment", "Wip"]                      => :wip_subscribers,
     # ["CreateCoreTeamMembership", "Product"] => :product_subscribers,

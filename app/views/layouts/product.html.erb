@@ -9,6 +9,8 @@
   </script>
 <% end %>
 
+<%= initial_store_data('ProductStore', { slug: @product.slug, name: @product.name }) %>
+
 <%= render 'shared/navbar' %>
 
 <!-- Flashes! -->
@@ -96,21 +98,19 @@
             Activity
           </a>
         </li>
+
         <li class="<%= nav_active_class(:bounties) %>">
           <a class="px2 py2" href="<%= product_tasks_path(@product) %>">
             Bounties
           </a>
         </li>
+
         <li class="<%= nav_active_class(:posts) %>">
           <a class="px2 py2" href="<%= product_posts_path(@product) %>">
             Posts
           </a>
         </li>
-        <li class="<%= nav_active_class(:discussions) %> sm-show">
-          <a class="px2 py2" href="<%= product_discussions_path(@product) %>">
-            Discussions
-          </a>
-        </li>
+
         <li class="<%= nav_active_class(:assets) %> sm-show">
           <a class="px2 py2" href="<%= product_assets_path(@product) %>">
             Assets
@@ -169,24 +169,13 @@
           </li>
 
           <li role="presentation">
-            <a href="<%= new_product_discussion_path(@product) %>">
+            <a href="<%= new_product_post_path(@product) %>">
               <span class="mr1">
-                <%= inline_react_component 'Icon', icon: 'quote-right' %>
+                <%= inline_react_component 'Icon', icon: 'newspaper-o' %>
               </span>
-              Discussion
+              Post
             </a>
           </li>
-
-          <% if @product.core_team?(current_user) %>
-            <li role="presentation">
-              <a href="<%= new_product_post_path(@product) %>">
-                <span class="mr1">
-                  <%= inline_react_component 'Icon', icon: 'newspaper-o' %>
-                </span>
-                Post
-              </a>
-            </li>
-          <% end %>
 
           <% if signed_in? && current_user.staff? %>
             <li role="presentation">
