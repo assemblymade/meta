@@ -37,58 +37,114 @@
 
 <!-- Back to our scheduled programming -->
 
-<div class="bg-white">
+<div class="bg-white product">
   <div class="container mb3">
 
-    <div class="clearfix mxn2 py3">
-      <div class="sm-col sm-col-2 px2">
-        <a href="<%= product_path(@product) %>">
-          <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 135 %>
-        </a>
-      </div>
+    <!-- <div class="clearfix mxn2 py3">
+              <div class="sm-col sm-col-2 px2">
+              <a href="<%= product_path(@product) %>">
+              <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 135 %>
+            </a>
+          </div>
 
-      <div class="sm-col sm-col-7 px2">
+          <div class="sm-col sm-col-7 px2">
 
-        <h1 class="mt1 mb0">
+          <h1 class="mt1 mb0">
           <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
-        </h1>
+          </h1>
 
-        <div class="h3 mt0 mb1 gray-1"><%= truncate(@product.pitch, length: 60, separator: ' ') %></div>
+          <div class="h3 mt0 mb1 gray-1"><%= truncate(@product.pitch, length: 60, separator: ' ') %></div>
 
-        <ul class="list-reset clearfix mxn1 mb0">
+          <ul class="list-reset clearfix mxn1 mb0">
           <% if @product.homepage_url? %>
-            <li class="left px1">
-              <a href="<%= @product.homepage_url %>">
-                <%= inline_react_component 'Icon', icon: 'globe' %>
-                <%= URI(@product.homepage_url.downcase).host %>
-              </a>
-            </li>
+          <li class="left px1">
+          <a href="<%= @product.homepage_url %>">
+          <%= inline_react_component 'Icon', icon: 'globe' %>
+          <%= URI(@product.homepage_url.downcase).host %>
+          </a>
+          </li>
           <% end %>
 
           <li class="left px1">
-            <a href="<%= product_repos_path(@product) %>">
-              <%= inline_react_component 'Icon', icon: 'github' %>
-              Code
-            </a>
+          <a href="<%= product_repos_path(@product) %>">
+          <%= inline_react_component 'Icon', icon: 'github' %>
+          Code
+          </a>
           </li>
 
           <% if can?(:edit, @product) %>
-            <li class="left px1">
-              <a href="<%= edit_product_path(@product) %>">
-                <%= inline_react_component 'Icon', icon: 'gear' %>
-                Edit product
-              </a>
-            </li>
+          <li class="left px1">
+          <a href="<%= edit_product_path(@product) %>">
+          <%= inline_react_component 'Icon', icon: 'gear' %>
+          Edit product
+          </a>
+          </li>
           <% end %>
-        </ul>
+          </ul>
 
+          </div>
+
+          <div class="sm-col sm-col-3 p1">
+          <%= react_component('ProductFollowers', product_id: @product.id) %>
+          </div>
+
+          </div> -->
+
+    <section class="product-header">
+      <div class="inner-wrap">
+        <div class="primary">
+          <div class="product-header-icon">
+            <a href="<%= product_path(@product) %>">
+              <!-- maybe change this size | 200 -->
+              <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 135 %>
+              <!-- <img src="https://d1015h9unskp4y.cloudfront.net/attachments/bcc65bca-5531-4914-8c03-08c47e2fd601/boxysquare.png"> -->
+            </a>
+          </div>
+          <div class="product-header-content">
+            <h1>
+              <a href="<%= product_path(@product) %>"><%= @product.name %></a>
+            </h1>
+            <div class="subhead">
+              <%= truncate(@product.pitch, length: 60, separator: ' ') %>
+            </div>
+            <ul class="product-header-links">
+              <% if @product.homepage_url? %>
+              <li class="">
+                <a href="<%= @product.homepage_url %>">
+                  <%= inline_react_component 'Icon', icon: 'globe' %>
+                  <%= URI(@product.homepage_url.downcase).host %>
+                </a>
+              </li>
+              <% end %>
+              <li class="">
+                <a href="<%= product_repos_path(@product) %>">
+                  <%= inline_react_component 'Icon', icon: 'github' %>
+                  Code
+                </a>
+              </li>
+              <% if can?(:edit, @product) %>
+              <li class="">
+                <a href="<%= edit_product_path(@product) %>">
+                  <%= inline_react_component 'Icon', icon: 'gear' %>
+                  Edit product
+                </a>
+              </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="secondary">
+          <div class="follow-button">
+            <button type="button" data-reactid=".5.0">
+              <div class="count" data-reactid=".5.0.1">0</div>
+              <div class="title" data-reactid=".5.0.0">Follow</div>
+            </button>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="sm-col sm-col-3 p1">
-        <%= react_component('ProductFollowers', product_id: @product.id) %>
-      </div>
-
-    </div>
+<!--  -->
 
     <div class="clearfix">
 
