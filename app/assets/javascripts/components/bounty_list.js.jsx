@@ -29,7 +29,7 @@
       return this.state.bounties.map(function(bounty) {
         if(bounty.placeholder) {
           return (
-            <div className="bg-gray-light mb3" style={{ height: bounty.height }}></div>
+            <div className="bg-gray-light mb3 rounded" style={{ height: bounty.height }}></div>
           )
         } else {
           return (

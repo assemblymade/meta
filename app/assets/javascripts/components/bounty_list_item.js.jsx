@@ -136,14 +136,19 @@
     render: function() {
       var bounty = this.props.bounty
       var style = {}
+      var handleClasses = ["table-cell", "rounded-right", "border-left"]
+      var handleClasses = ["handle", "table-cell"]
 
       if(this.state.position) {
         var style = {
           position: 'absolute',
           top: this.state.position.top,
           left: this.state.position.left,
-          width: this.state.position.width
+          width: this.state.position.width,
+          'border': '2px solid #C2C7D0'
         }
+
+        handleClasses.push("active")
       }
 
       return (
@@ -176,7 +181,7 @@
               {this.renderLove()}
               {this.renderLocker()}
             </div>
-            <div className="table-cell bg-blue" style={{ width: 20 }} onMouseDown={this.handleMouseDown}>
+            <div className={handleClasses.join(' ')} onMouseDown={this.handleMouseDown}>
             </div>
           </div>
         </div>

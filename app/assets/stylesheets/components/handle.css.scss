@@ -1,0 +1,24 @@
+.handle {
+  background: white image-url('handle.png') no-repeat 50% 50%;
+  border-left: 1px solid $gray-lighter;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: grab;
+  width: 30px;
+
+  &.active,
+  &:active,
+  &.hover,
+  &:hover {
+    background-image: image-url('handle-active.png');
+    background-color: $gray-lighter;
+  }
+
+  &.active,
+  &:active {
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: grabbing;
+    background-color: $gray-lighter
+  }
+}
