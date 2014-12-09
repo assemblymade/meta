@@ -32,7 +32,6 @@ class QueryMarks
     Mark.joins(:tasks).where(wips: { closed_at: nil }).group(:name).order('count_all DESC').limit(limit).count
   end
 
-
   def mark_vector_for_object(object)  #directly gets markings, don't use for products & wips where inherited marks are also desired
       markings = Marking.where(markable: object)
       markings.map do |m|
@@ -125,12 +124,18 @@ class QueryMarks
 
   def get_all_wip_vectors
     wips = Wip.where(closed_at: nil).where(type: "Task").where('created_at > ?', 90.days.ago)
+    #magnitude_query = Marking.where('markings.markable_id = wips.id AND markings.mark_id = marks.id').select('SQRT(SUM(markings.weight ^ 2))').to_sql
+    #wips.joins(:marks).pluck("wips.id, marks.id, markings.weight / (#{magnitude_query})")
+
     wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
     wip_vectors.select{ |a, b| a.count > 0 && ['team_building', 'greenlit', 'profitable'].include?(b.product.state) && b.product.flagged_at == nil && b.product.slug != "meta"}
   end
 
   def get_all_product_vectors
     products = Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagged_at: nil).where.not(slug: 'meta')
+    #magnitude_query = Marking.where('markings.markable_id = products.id AND markings.mark_id = marks.id').select('SQRT(SUM(markings.weight ^ 2))').to_sql
+    #products.joins(:marks).pluck("products.id, marks.id, markings.weight / (#{magnitude_query})")
+
     product_vectors = products.map{ |p| [ normalize_mark_vector(p.mark_vector) , p] }
     product_vectors.select{ |a, b| a.count >0 }
   end
@@ -214,6 +219,4 @@ class QueryMarks
       a.user_identity.assign_markings_from_scratch
     end
   end
-
-
 end

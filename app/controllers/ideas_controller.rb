@@ -69,13 +69,10 @@ class IdeasController < ProductController
   private
 
     def find_idea!
-      @idea = Idea.friendly.find(params[:id])
+      @idea = Idea.friendly.find(params[:id]).sort_by(&:score)
     end
 
     def idea_params
       params.require(:idea).permit([:name, :body])
     end
 end
-
-
-
