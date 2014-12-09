@@ -16,21 +16,34 @@ namespace :discussions do
         updated_at: discussion.updated_at
       )
 
-      nfi = NewsFeedItem.create!(
-        product: discussion.product,
-        source: discussion.user,
-        target: post,
-        updated_at: discussion.updated_at
-      )
+      nfi = post.news_feed_item
 
       discussion.comments.each do |comment|
         NewsFeedItemComment.create(
           body: comment.body,
+          created_at: comment.created_at,
           news_feed_item: nfi,
           target_id:  post.id,
           user: comment.user
         )
       end
+    end
+  end
+
+  task dedupe: :environment do
+    NewsFeedItem.group(:target_id).having('count(*) > 1').count.keys.each do |key|
+      nfi_deleted = false
+
+      NewsFeedItem.where(target_id: key).each do |nfi|
+        next if nfi_deleted
+
+        if nfi.news_feed_item_comments.count == 0
+          nfi.delete
+          nfi_deleted = true
+        end
+      end
+
+      nfi_deleted = false
     end
   end
 end
