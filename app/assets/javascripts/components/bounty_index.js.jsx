@@ -40,7 +40,10 @@
     },
 
     getBounties: function(value, sort, page) {
-      BountyActionCreators.requestBountiesDebounced(this.props.product.slug, this.params(value, sort, page))
+      BountyActionCreators.requestBountiesDebounced(
+        this.props.product.slug,
+        this.params(value, sort, page)
+      )
     },
 
     handleValueChange: function(event) {

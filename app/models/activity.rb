@@ -12,6 +12,7 @@ class Activity < ActiveRecord::Base
   validates :target,  presence: true
 
   after_commit :track_in_segment, on: :create
+  after_commit :notify_staff, on: :create
 
   attr_accessor :socket_id
 
@@ -29,7 +30,9 @@ class Activity < ActiveRecord::Base
         if room
           a.publish_to_chat(room.id)
 
-          # only touch updated_at for chat messages. We don't want the room to be marked as unread for events other than people chatting
+          # only touch updated_at for chat messages.
+          # We don't want the room to be marked as unread for events
+          # other than people chatting
           room.touch if a.is_a? Activities::Chat
         end
 
@@ -37,10 +40,34 @@ class Activity < ActiveRecord::Base
     end
   end
 
+  def target_entity
+    (subject_type == 'Event' || subject_type == 'NewsFeedItemComment') ? target : subject
+  end
+
   def track_in_segment
     return if actor.try(:staff?)
 
     TrackActivityCreated.perform_async(self.id)
+  end
+
+  def notify_staff
+    case verb
+    when "Comment"
+      SlackNotifier.first_story(
+        actor,
+        self
+        ) unless actor.activities.where(type: "Activities::Comment").count > 1
+    when "Post"
+      SlackNotifier.first_story(
+        actor,
+        self
+        ) unless actor.activities.where(type: "Activities::Post").count > 1
+    when "Chat"
+      SlackNotifier.first_chat_message(
+        actor,
+        target.slug
+        ) unless actor.activities.where(type: "Activities::Chat").count > 1
+    end
   end
 
   # make this object tippable
@@ -53,7 +80,7 @@ class Activity < ActiveRecord::Base
   end
 
   def verb_subject
-    s = subject_type == 'Event' ? target : subject
+    s = target_entity
     raise "Bad Subject #{self.inspect}" if s.nil?
 
     s.class.name.split('::').last

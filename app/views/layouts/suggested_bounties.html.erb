@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width"/>
+    <%= stylesheet_link_tag 'email' %>
+  </head>
+  <body style="<%= @body_style %>">
+    <table class="body">
+    <tr style="background:white;border-bottom:solid thin #ddd;">
+      <td class="center" align="center" valign="top" style="padding:5px 0px 12px;">
+        <center>
+          <table class="container">
+            <tr>
+              <td>
+                <!-- Header -->
+                  <table class="row header hide-for-small">
+                    <tr style="padding:200px 0px 5px 0px;">
+                      <td class="wrapper">
+                        <table class="six columns">
+                          <tr>
+                            <td>
+                              <a href="<%= root_url %>" target="_blank" title="Assembly">
+                                <img alt="Assembly Logo" src="<%= image_url('logo.min.png') %>" width="179" height="17" />
+                              </a>
+                            </td>
+                            <td class="expander"></td>
+                          </tr>
+                        </table>
+                      </td>
+                      <td class="wrapper last" style="padding: 5px 4px 0px;">
+                        <table class="six columns hide-for-small">
+                          <tr>
+                            <td class="text-right">
+                              <%# TODO Remove when everything is BaseMailer %>
+                              <% @date ||= Date.today %>
+                              <span class="header-date-day" style="color:#999;">
+                                <%= "#{@date.strftime('%A')}s are so good." %>
+                              </span>
+                            </td>
+                            <td class="expander"></td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+              </td>
+            </tr>
+          </table>
+        </center>
+      </td>
+    </tr> 
+      <tr>
+        <td class="center" align="center" valign="top">
+          <center>
+            <table class="container">
+              <tr style="height:40px;">
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  <!-- Body -->
+
+                  <%= yield %>
+
+                  <!-- Footer -->
+
+                  <table class="row" style="margin-top:30px;">
+                    <tr>
+                      <td>
+                        <p style="text-align:center;color:#8b909a;">
+                          You've received this email because you signed up for Assembly.
+                          <br />
+                          <% if @mailgun_tag %>
+                            You can
+                            <a href="%tag_unsubscribe_url%" style="color:#8b909a !important;text-decoration:underline;">unsubscribe from emails like this</a>
+                            or
+                            <a href="%unsubscribe_url%" style="color:#8b909a !important;text-decoration:underline;" target="_blank">unsubscribe from all emails</a>.
+                          <% else %>
+                            <a href="%unsubscribe_url%" style="color:#8b909a !important;text-decoration:underline;" target="_blank">Unsubscribe</a>.
+                          <% end %>
+                        </p>
+                        <p style="text-align:center;" class="text-muted">
+                          <strong>Assembly Made, Inc.</strong>,
+                          3030A 16th Street,
+                          San Francisco, 94103,
+                          California, USA
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </center>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

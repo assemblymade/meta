@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 (function(){
   var BsModalMixin = require('../mixins/bs_modal_mixin.js.jsx')
   var FormMixin = require('../mixins/form_mixin.js.jsx')

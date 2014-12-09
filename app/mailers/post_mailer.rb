@@ -9,6 +9,8 @@ class PostMailer < BaseMailer
 
     @post = Post.find(post_id)
     @user = User.find(user_id)
+    @product = @post.product
+    @recent = @product.posts.where('created_at < ?', @post.created_at).order("created_at desc").limit(3)
 
     mailgun_tag "post##{@post.product.slug}"
 
@@ -22,6 +24,8 @@ class PostMailer < BaseMailer
     mailgun_campaign 'notifications'
 
     @post = Post.find(post_id)
+    @product = @post.product
+    @recent = @product.posts.where('created_at < ?', @post.created_at).order("created_at desc").limit(3)
 
     mailgun_tag "post##{@post.product.slug}"
 

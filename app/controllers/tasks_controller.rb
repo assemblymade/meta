@@ -32,7 +32,7 @@ class TasksController < WipsController
 
         render json: @wips,
           serializer: PaginationSerializer,
-          each_serializer: BountySerializer,
+          each_serializer: BountyListSerializer,
           root: :bounties
       end
     end
@@ -94,8 +94,6 @@ class TasksController < WipsController
 
     @events = Event.render_events(@bounty.events.order(:number), current_user)
     @product_assets = @bounty.product.assets
-
-    finished('long_user_survey_on_signup')
 
     respond_to do |format|
       format.html { render 'bounties/show' }

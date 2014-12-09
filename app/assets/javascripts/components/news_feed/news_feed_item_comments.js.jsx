@@ -1,25 +1,33 @@
-/** @jsx React.DOM */
-
 // TODO This lib is in application.js (chrislloyd)
 // var marked = require('marked')
 
 var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
-var Comment = require('../comment.js.jsx')
-// var Dispatcher = window.Dispatcher;
+var Comment = require('../comment.js.jsx');
+var Dispatcher = window.Dispatcher;
 var Icon = require('../icon.js.jsx');
 var NewComment = require('./new_comment.js.jsx');
 var NewsFeedItemStore = require('../../stores/news_feed_item_store');
 
-
-module.exports = React.createClass({
+var NewsFeedItemComments = React.createClass({
   displayName: 'NewsFeedItemComments',
 
   propTypes: {
-    item: React.PropTypes.object.isRequired
+    item: React.PropTypes.object.isRequired,
+    showAllComments: React.PropTypes.bool
+  },
+
+  componentDidMount: function() {
+    if (this.props.showAllComments) {
+      this.fetchCommentsFromServer({ stopPropagation: function() {} });
+    }
   },
 
   componentWillMount: function() {
     NewsFeedItemStore.addChangeListener(this.getComments);
+  },
+
+  componentWillUnmount: function() {
+    NewsFeedItemStore.removeChangeListener(this.getComments);
   },
 
   fetchCommentsFromServer: function(e) {
@@ -48,33 +56,30 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     var item = this.props.item;
+    var showAllComments = this.props.showAllComments;
     var lastComment = item.last_comment;
+
+    var showCommentsAfter;
+    if (!showAllComments) {
+      showCommentsAfter = +(lastComment ? new Date(lastComment.created_at) : Date.now());
+    } else {
+      showCommentsAfter = 0;
+    }
 
     return {
       comments: lastComment ? [lastComment] : [],
       numberOfComments: item.target.comments_count || item.comments_count,
       optimisticComments: [],
-      showCommentsAfter: lastComment ? +new Date(lastComment.created_at) : +Date.now(),
+      showCommentsAfter: showCommentsAfter,
       url: item.url + '/comments'
     };
   },
 
   render: function() {
-    var url = this.state.url;
-
-    var newComments = null;
-    if (window.app.currentUser()) {
-      newComments = (
-        <div className="border-top px3 py2">
-          <NewComment url={url} thread={this.props.item.id} user={window.app.currentUser()} />
-        </div>
-      );
-    }
-
     return (
       <div>
         {this.renderComments()}
-        {newComments}
+        {this.renderNewCommentForm()}
       </div>
     );
   },
@@ -83,15 +88,14 @@ module.exports = React.createClass({
     var confirmedComments = this.renderConfirmedComments();
     var optimisticComments = this.renderOptimisticComments();
     var comments = confirmedComments.concat(optimisticComments);
-    var numberOfComments = this.state.numberOfComments;
 
     if (!comments.length) {
       return;
     }
 
     return (
-      <div className="px3 py2 border-top">
-        {this.renderLoadMoreButton(numberOfComments)}
+      <div className="py2 border-top">
+        {this.renderLoadMoreButton()}
         <div className="mt2 mb2">
           {confirmedComments}
         </div>
@@ -106,7 +110,7 @@ module.exports = React.createClass({
     return this.state.comments.map(function(comment) {
       if (new Date(comment.created_at) >= renderIfAfter) {
         return (
-          <div className="h6 mt0 mb2" key={comment.id}>
+          <div className="h6 mt0 mb2 px3" key={comment.id}>
             <Comment author={comment.user} body={comment.markdown_body} timestamp={comment.created_at} />
           </div>
         );
@@ -114,13 +118,14 @@ module.exports = React.createClass({
     });
   },
 
-  renderLoadMoreButton: function(numberOfComments) {
+  renderLoadMoreButton: function() {
+    var numberOfComments = this.state.numberOfComments;
     var target = this.props.item.target;
 
     if (numberOfComments > this.state.comments.length) {
       // TODO: Call onClick={this.fetchCommentsFromServer} when comments are working
       return (
-        <a className="block h6 clearfix mt0 mb2 gray-3" href={target.url} style={{'textDecoration': 'underline'}}>
+        <a className="block h6 clearfix mt0 mb2 px3 gray-dark clickable" onClick={this.fetchCommentsFromServer} style={{'textDecoration': 'underline'}}>
           <span className="mr1">
             <Icon icon="comment" />
           </span>
@@ -130,10 +135,22 @@ module.exports = React.createClass({
     }
   },
 
+  renderNewCommentForm: function() {
+    var url = this.state.url;
+
+    if (window.app.currentUser()) {
+      return (
+        <div className="border-top px3 py2">
+          <NewComment {...this.props} url={url} thread={this.props.item.id} user={window.app.currentUser()} />
+        </div>
+      );
+    }
+  },
+
   renderOptimisticComments: function() {
     return this.state.optimisticComments.map(function(comment) {
       return (
-        <div className="h6 mt0 mb2" key={comment.id}>
+        <div className="h6 mt0 mb2 px3" key={comment.id}>
           <Comment author={comment.user} body={marked(comment.body)} optimistic={true} />
         </div>
       )
@@ -148,5 +165,9 @@ module.exports = React.createClass({
     }.bind(this);
   }
 })
+
+if (typeof module !== 'undefined') {
+  module.exports = NewsFeedItemComments;
+}
 
 window.NewsFeedItemComments = module.exports

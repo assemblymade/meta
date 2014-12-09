@@ -1,9 +1,9 @@
 class UserIdentity < ActiveRecord::Base
   belongs_to :user
 
+  VIEW_PRODUCT_MARKING_WEIGHT = 1.0
   VIEW_WIP_MARKING_WEIGHT = 0.02
   DO_WIP_MARKING_WEIGHT = 1.0
-  VIEW_PRODUCT_MARKING_WEIGHT = 0.01
   FOLLOW_PRODUCT_MARKING_WEIGHT = 1.0
 
   has_many :markings, as: :markable
@@ -61,6 +61,10 @@ class UserIdentity < ActiveRecord::Base
     assign_markings_from_viewings
     assign_markings_from_following
   end
+
+  # def update_user_markings
+  #   last_date_marking =
+  # end
 
   def get_mark_vector()
     QueryMarks.new.normalized_mark_vector_for_object(self).sort{|a,b| b[1] <=> a[1]}

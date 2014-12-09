@@ -1,6 +1,6 @@
 var xhr = require('../xhr');
 // var Dispatcher = require('../dispatcher');
-var Store = require('../stores/store');
+var Store = require('./store');
 
 (function() {
   var _contracts = {};

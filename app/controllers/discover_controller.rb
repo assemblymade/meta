@@ -117,7 +117,8 @@ class DiscoverController < ApplicationController
                 limit(limit).
                 offset(offset).
                 where.not(product: META).
-                order(last_commented_at: :desc)
+                order('last_commented_at desc nulls last').
+                order(updated_at: :desc)
     end
 
     if params[:filter] == 'hot'
@@ -148,7 +149,10 @@ class DiscoverController < ApplicationController
 
 
     if signed_in?
-      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['heartable_id']})
+      @user_hearts = Heart.where(
+        user: current_user,
+        heartable_id: @heartables.map{ |h| h['heartable_id'] }
+      )
     end
 
     respond_to do |format|

@@ -1,7 +1,3 @@
-/**
- * @jsx React.DOM
- */
-
 var ChatActionCreators = require('../actions/chat_action_creators');
 var OnlineUsersStore = require('../stores/online_users_store');
 

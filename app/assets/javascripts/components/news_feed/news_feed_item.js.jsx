@@ -49,10 +49,13 @@
 
       var commentCount = target && target.comments_count;
 
-
       // Don't show any footer if there's no comments or tags
       // This isn't great, we should always have something for people to do
       if (!commentCount) {
+        return;
+      }
+
+      if (!this.props.last_comment) {
         return;
       }
 
@@ -71,9 +74,9 @@
           </a>
 
           <div className="py2">
-            <Comment author={lastComment.user}
-                body={lastComment.markdown_body}
-                timestamp={lastComment.created_at} />
+          <Comment author={lastComment.user}
+                  body={lastComment.markdown_body}
+                  timestamp={lastComment.created_at} />
           </div>
         </div>
       );

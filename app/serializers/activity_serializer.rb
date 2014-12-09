@@ -11,5 +11,4 @@ class ActivitySerializer < ApplicationSerializer
   def verb
     object.type
   end
-
 end

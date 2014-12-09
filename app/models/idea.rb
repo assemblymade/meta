@@ -51,7 +51,7 @@ class Idea < ActiveRecord::Base
     if mark_names.reject(&:blank?).empty?
       return self.markings.destroy_all
     else
-      mark_names.each do |mark_name| 
+      mark_names.each do |mark_name|
         self.add_mark(mark_name)
       end
     end
@@ -61,5 +61,19 @@ class Idea < ActiveRecord::Base
     MakeMarks.new.mark_with_name(self, mark_name)
   end
 
-end
+  def love
+    self.news_feed_item.hearts.count
+  end
 
+  def score
+    lovescore = 0
+    heartburn = 2592000
+    self.news_feed_item.hearts.each do |h|
+      time_since = DateTime.now.to_i - h.created_at.to_i
+      multiplier = 2 ** (time_since.to_f / heartburn.to_f)
+      lovescore = lovescore + multiplier
+    end
+    lovescore
+  end
+
+end
