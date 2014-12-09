@@ -1,7 +1,7 @@
 class BountyListSerializer < ApplicationSerializer
   include MarkdownHelper
 
-  attributes :earnable_coins_cache, :title, :number
+  attributes :earnable_coins_cache, :title, :number, :comments_count
   attributes :url
 
   has_one :locker

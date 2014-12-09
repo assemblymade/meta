@@ -47,7 +47,7 @@ describe PostsController do
   end
 
   describe "#show" do
-    let(:post) { Post.make!(product: product) }
+    let(:post) { Post.make!(product: product, news_feed_item: NewsFeedItem.make!) }
 
     it "is successful" do
       get :show, product_id: product.slug, id: post.slug

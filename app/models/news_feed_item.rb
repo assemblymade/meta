@@ -8,6 +8,8 @@ class NewsFeedItem < ActiveRecord::Base
 
   has_many :hearts, as: :heartable
 
+  before_validation :ensure_last_commented_at, on: :create
+
   scope :public_items, -> { joins(:product).where('products.state not in (?)', ['stealth', 'reviewing']) }
 
   def self.create_with_target(target)
@@ -27,5 +29,11 @@ class NewsFeedItem < ActiveRecord::Base
 
   def comments
     self.news_feed_item_comments
+  end
+
+  def ensure_last_commented_at
+    unless self.last_commented_at
+      self.update!(last_commented_at: Time.now)
+    end
   end
 end

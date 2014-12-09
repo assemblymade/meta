@@ -1,6 +1,6 @@
 var xhr = require('../xhr');
 // var Dispatcher = require('../dispatcher');
-var Store = require('../stores/store');
+var Store = require('./store');
 var ReadTimesMixin = require('../mixins/read_times');
 var moment = require('moment');
 

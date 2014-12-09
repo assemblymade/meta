@@ -12,7 +12,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="p3">
-        <a className="h3 block bold mt0 mb3 blue" href={this.props.url}>
+        <a className="h3 block mt0 mb3" href={this.props.url}>
           {this.props.title}
         </a>
         <div className="gray-darker">

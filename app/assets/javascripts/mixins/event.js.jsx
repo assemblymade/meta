@@ -10,7 +10,7 @@
       },
 
       Post: function(post) {
-        return 'a new blog post'
+        return 'a post'
       },
 
       Task: function(task) {
@@ -18,6 +18,7 @@
           return "#" + task.number + " " + task.title;
         }
       },
+
       Wip: function(wip) {
         if (wip) {
           return "#" + wip.number + " " + wip.title;

@@ -2,7 +2,7 @@
   var xhr = require('../xhr');
   var WB = window.CONSTANTS.WELCOME_BANNER;
   // var Dispatcher = require('../dispatcher');
-  var Store = require('../stores/store');
+  var Store = require('./store');
   var _store = Object.create(Store);
 
   var WelcomeBannerStore = _.extend(_store, {

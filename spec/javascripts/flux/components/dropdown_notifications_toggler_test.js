@@ -30,7 +30,7 @@ describe('DropdownNotificationsToggler', function() {
     it('stores and dispatches an acknowledgment', function() {
       toggler.acknowledge();
 
-      expect(localStorage.notificationsAck).toBeCloseTo(moment().unix(), 2);
+      expect(localStorage.notificationsAck).toBeCloseTo(moment().unix(), 3);
       expect(Dispatcher.dispatch).toBeCalledWith({
         action: NF.ACTIONS.ACKNOWLEDGE,
         data: localStorage.notificationsAck,

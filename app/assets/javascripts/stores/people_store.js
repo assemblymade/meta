@@ -1,5 +1,5 @@
 // var Dispatcher = require('../dispatcher');
-var Store = require('../stores/store');
+var Store = require('./store');
 var ActionTypes = window.CONSTANTS.ActionTypes;
 
 var _people = {};
