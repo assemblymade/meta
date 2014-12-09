@@ -54,9 +54,11 @@
   <div class="row">
     <div class="col-md-9">
 
-      <div class="markdown markdown-normalized bg-white px3 py3">
-        <%= product_markdown(@post.product, @post.body) %>
-      </div>
+      <% unless @post.body.empty? %>
+        <div class="markdown markdown-normalized bg-white px3 py3">
+          <%= product_markdown(@post.product, @post.body) %>
+        </div>
+      <% end %>
 
       <div class="py1 border-top" data-react-class="Love" data-react-props="<%= {
         heartable_id: @post.news_feed_item.id,

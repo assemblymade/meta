@@ -42,8 +42,24 @@ namespace :discussions do
           nfi_deleted = true
         end
       end
+    end
+  end
 
-      nfi_deleted = false
+  task reset_comment_created_at: :environment do
+    Discussion.all.each do |discussion|
+      next if discussion.product.nil?
+      next if Post.where(title: discussion.title, product: discussion.product).any?
+      next if Post.where(slug: discussion.title.parameterize, product: discussion.product).any?
+
+      post = Post.find_by(slug: discussion.title.parameterize, product: discussion.product)
+
+      next unless post
+
+      discussion.comments.each do |comment|
+        if nfic = NewsFeedItemComment.find_by(body: comment.body, user: comment.user, target_id: post.id)
+          nfic.update(created_at: comment.created_at)
+        end
+      end
     end
   end
 end
