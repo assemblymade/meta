@@ -1,0 +1,96 @@
+$space-1: 6px;
+$space-2: 12px;
+$space-3: 24px;
+$space-4: 36px;
+$space-5: 48px;
+
+// ### general
+
+.none {display:none !important}
+
+.valign-top { vertical-align:top }
+.valign-mid { vertical-align:middle }
+.valign-btm { vertical-align:bottom }
+
+.quarter-width { width: 25% }
+
+.pt1  { padding-top: $space-1 }
+.pt2  { padding-top: $space-2 }
+.pt3  { padding-top: $space-3 }
+.pt4  { padding-top: $space-4 }
+
+.mt_neg1 { margin-top:-$space-1 }
+
+// ### transitions
+
+.tranx_fx {
+  -webkit-transition-duration: $transition-duration;
+  -webkit-transition-timing-function: $transition-function;
+  transition-duration: $transition-duration;
+  transition-timing-function: $transition-function;
+}
+
+.tranx_m {
+  -webkit-transition-property: margin;
+  transition-property: margin;
+  @extend .tranx_fx;
+}
+
+.tranx_p {
+  -webkit-transition-property: padding;
+  transition-property: padding;
+  @extend .tranx_fx;
+}
+
+// ### responsive
+// natively basscss has "sm, med, lg" prefixes for this, but we need more granular options
+// I propose the folowing standard .r###_selector
+
+@media screen and (min-width: 600px) {
+  .r600_width-auto {
+    width:auto !important;
+  }
+  .r600_right {
+    text-align:right !important;
+  }
+  .r600_block {
+    display:block !important;
+  }
+  .r600_m {
+    margin:0 !important;
+  }
+  .r600_mb4 {
+    margin-bottom: $space-4 !important;
+  }
+  .r600_table {
+    display: table !important;
+    table-layout:fixed !important;
+  }
+  .r600_table-cell {
+    display:table-cell !important;
+  }
+  .r600_left-align {
+    text-align: left !important;
+  }
+}
+@media screen and (min-width: 768px) {
+  .r768_m0 {
+    margin: 0 !important;
+  }
+  .r768_table {
+    display: table !important;
+    table-layout:fixed !important;
+  }
+  .r768_table-cell {
+    display:table-cell !important;
+  }
+  .r768_left-align {
+    text-align: left !important;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .r1024_block {
+    display: block !important;
+  }
+}

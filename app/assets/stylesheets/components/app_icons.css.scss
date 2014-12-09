@@ -1,4 +1,39 @@
+.app-icon-container {
+  //
+  a {
+    max-width:95px;
+    &:before {
+      content:'';
+      display: block;
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      border:1px solid rgba(100,100,100,0.1);
+      border-radius: 5px;
+      -webkit-transition: background 0.15s ease-in-out;
+      transition: background 0.15s ease-in-out;
+    }
+    &:hover {
+      //
+      &:before {
+        background: rgba(51,142,218,0.25);
+        -webkit-transition: background 0.15s ease-in-out;
+        transition: background 0.15s ease-in-out;
+      }
+    }
+  }
+}
 .app-icon {
   @extend .img-responsive;
-  border-radius: floor(percentage(2px / 24px));
+  padding:10px;
+  border-radius: 5px;
+  max-width:82px;
+  min-width:64px;
+  @media screen and (min-width: 768px) {
+    max-width:100%;
+  }
+  // --- depricated
+  // border-radius: floor(percentage(2px / 24px));
 }
