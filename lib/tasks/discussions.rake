@@ -66,4 +66,14 @@ namespace :discussions do
       end
     end
   end
+
+  task remove_main_threads: :environment do
+    NewsFeedItem.where(target_type: 'Post').each do |nfi|
+      if nfi.target.try(:title) == 'Main thread'
+        post = nfi.target
+        post.delete
+        nfi.delete
+      end
+    end
+  end
 end
