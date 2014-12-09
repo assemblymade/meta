@@ -33,5 +33,13 @@
   <% end %>
   <% end %>
 
+  <tr>
+    <td><b>Totals</b></td>
+    <td><b><%= @paid_users.sum(&:total_earned) %></b></td>
+    <td><b><%= @paid_users.sum(&:total_received) %></b></td>
+    <td><b><%= @paid_users.sum(&:total_withheld) %></b></td>
+    <td><b><%= @paid_users.sum(&:total_owed) %></b></td>
+  </tr>
+
 </tbody>
 </table>
