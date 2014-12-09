@@ -8,7 +8,7 @@ class UpdatesWip
   def initialize(wip, params, user)
     self.wip = wip
     self.priority_above_id = params[:priority_above_id]
-    self.priority_above_id = params[:priority_below_id]
+    self.priority_below_id = params[:priority_below_id]
     self.params = params.except(:priority_above_id, :priority_below_id)
     self.user = user
   end
