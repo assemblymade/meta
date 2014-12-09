@@ -132,7 +132,7 @@ var BountyActionCreators = {
       data.task = { priority_below_id: below.id }
     }
 
-    var path = ['/', bounty.product.slug, '/', 'bounties', '/', bounty.number, '.', 'json'].join('');
+    var path = ['/', bounty.product_slug, '/', 'bounties', '/', bounty.number, '.', 'json'].join('');
 
     $.ajax({
       url: path,
