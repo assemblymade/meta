@@ -133,13 +133,26 @@
       )
     },
 
+    renderHandle: function() {
+      if (this.props.draggable) {
+        var handleClasses = ["handle", "table-cell"]
+
+        if (this.state.position) {
+          handleClasses.push("active")
+        }
+
+        return (
+          <div className={handleClasses.join(' ')} onMouseDown={this.handleMouseDown}>
+          </div>
+        )
+      }
+    },
+
     render: function() {
       var bounty = this.props.bounty
       var style = {}
-      var handleClasses = ["table-cell", "rounded-right", "border-left"]
-      var handleClasses = ["handle", "table-cell"]
 
-      if(this.state.position) {
+      if (this.state.position) {
         var style = {
           position: 'absolute',
           top: this.state.position.top,
@@ -147,8 +160,6 @@
           width: this.state.position.width,
           'border': '2px solid #C2C7D0'
         }
-
-        handleClasses.push("active")
       }
 
       return (
@@ -156,8 +167,6 @@
           <div className="table mb0">
             <div className="table-cell">
               <div className="p3">
-                <div className="h4 mt0 mb0 gray" style={{ 'left': '-20', position: 'absolute' }}>{bounty.priority}</div>
-
                 <div className="h4 mt0 mb1">
                   {this.renderTitle()}
                 </div>
@@ -181,8 +190,7 @@
               {this.renderLove()}
               {this.renderLocker()}
             </div>
-            <div className={handleClasses.join(' ')} onMouseDown={this.handleMouseDown}>
-            </div>
+            {this.renderHandle()}
           </div>
         </div>
       )

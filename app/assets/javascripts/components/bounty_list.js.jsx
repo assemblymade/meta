@@ -33,7 +33,7 @@
           )
         } else {
           return (
-            <BountyListItem bounty={bounty} product={product} valuation={this.props.valuation} handleMouseDown={this.handleMouseDown} handleMouseMove={this.handleMouseMove} handleMouseUp={this.handleMouseUp} key={bounty.id} index={this.state.bounties.indexOf(bounty)} />
+            <BountyListItem bounty={bounty} product={product} valuation={this.props.valuation} handleMouseDown={this.handleMouseDown} handleMouseMove={this.handleMouseMove} handleMouseUp={this.handleMouseUp} key={bounty.id} index={this.state.bounties.indexOf(bounty)} draggable={this.props.draggable} />
           )
         }
       }.bind(this))

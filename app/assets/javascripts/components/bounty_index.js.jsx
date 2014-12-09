@@ -106,7 +106,7 @@
 
             <div className="border-top mt2 mb2"></div>
 
-            <BountyList product={this.props.product} valuation={this.props.valuation} onPageChange={this.handlePageChange} />
+            <BountyList product={this.props.product} valuation={this.props.valuation} onPageChange={this.handlePageChange} draggable={this.draggable()} />
           </div>
         </div>
       )
@@ -139,6 +139,11 @@
       params.page = page
 
       return params
+    },
+
+    draggable: function() {
+      var params = this.params(this.state.value, this.state.sort)
+      return params.sort == 'priority' && params.state == 'open'
     }
   });
 
