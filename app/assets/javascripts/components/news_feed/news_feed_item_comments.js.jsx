@@ -125,7 +125,7 @@ var NewsFeedItemComments = React.createClass({
     if (numberOfComments > this.state.comments.length) {
       // TODO: Call onClick={this.fetchCommentsFromServer} when comments are working
       return (
-        <a className="block h6 clearfix mt0 mb2 gray-dark clickable" onClick={this.fetchCommentsFromServer} style={{'textDecoration': 'underline'}}>
+        <a className="block h6 clearfix mt0 mb2 px3 gray-dark clickable" onClick={this.fetchCommentsFromServer} style={{'textDecoration': 'underline'}}>
           <span className="mr1">
             <Icon icon="comment" />
           </span>

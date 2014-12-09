@@ -49,7 +49,6 @@
 
       var commentCount = target && target.comments_count;
 
-
       // Don't show any footer if there's no comments or tags
       // This isn't great, we should always have something for people to do
       if (!commentCount) {
