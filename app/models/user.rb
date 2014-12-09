@@ -326,19 +326,19 @@ class User < ActiveRecord::Base
   #accounting
 
   def total_received
-    self.withdrawals.where.not(payment_sent_at: nil).sum(:total_amount) - self.withdrawals.where.not(payment_sent_at: nil).sum(:amount_withheld)
+    ((self.withdrawals.where.not(payment_sent_at: nil).sum(:total_amount) - self.withdrawals.where.not(payment_sent_at: nil).sum(:amount_withheld))/100).round(2)
   end
 
   def total_earned
-    self.withdrawals.sum(:total_amount)
+    (self.withdrawals.sum(:total_amount).to_f/100.to_f).round(2)
   end
 
   def total_owed
-    self.total_earned - self.total_received
+    (self.total_earned - self.total_received).round(2)
   end
 
   def total_withheld
-    self.withdrawals.where.not(payment_sent_at: nil).sum(:amount_withheld)
+    (self.withdrawals.where.not(payment_sent_at: nil).sum(:amount_withheld)/100).round(2)
   end
 
   # elasticsearch
