@@ -1,3 +1,8 @@
+<style>
+  h2, h3, h4, h5 {
+    font-size:18px;
+  }
+</style>
 <table class="row">
   <tbody>
     <tr>
@@ -12,22 +17,33 @@
                     <%= @post.author.username %>
                   </a>
                   wrote a new post for
-                  <a href="<%= product_url(@post.product) %>"><%= @post.product.name %></a>:
+                  <a href="<%= product_url(@product) %>"><%= @post.product.name %></a>:
                 </div>
                 <br />
                 <blockquote>
-                  <h5 class="alpha" style="margin-top:0"><%= @post.title %></h5>
-                  <%= product_markdown(@post.product, @post.summary) %>
+                  <h1 class="alpha" style="margin-top:0"><%= @post.title %></h1>
+                  <hr />
+                  <%= product_markdown(@post.product, @post.body) %>
                 </blockquote>
-
-                <table class="button radius">
+                <table class="button success radius" style="margin-bottom:35px;">
                   <tr>
                     <td>
-                      <a href="<%= product_post_url(@post.product, @post) %>">Read more</a>
+                      <a href="<%= product_post_url(@post.product, @post) %>">Comment on this post</a>
                     </td>
                   </tr>
                 </table>
-
+                <% if @recent.present? %>
+                  <h4 style="font-size:18px;color:#8b909a;font-weight:normal;">Previous Posts</h4>
+                  <% @recent.each do |r| %>
+                    <a href="<%= product_post_url(@post.product, r) %>" style="font-size:18px;"><strong><%= r.title %></strong></a>
+                    <br />
+                    <p style="color:#999;margin-top:-5px;">Posted by <%= r.author.username %> on <%= r.created_at.strftime("%b %e") %></p>
+                    <hr />
+                  <% end %>
+                  <% if @product.posts.count > 4 %>
+                    <a href="<%= product_posts_url(@product) %>" style="color:#8b909a !important;">View all <%= @product.posts.count %> posts</a>
+                  <% end %>
+                <% end %>
               </td>
               <td class="expander"></td>
             </tr>
