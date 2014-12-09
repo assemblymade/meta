@@ -1,0 +1,37 @@
+<h2>Cumulative State of Users</h2>
+
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Total Earned</th>
+      <th>Total Received</th>
+      <th>Total Withheld</th>
+      <th>Total Owed</th>
+      <th>Payment Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @paid_users%>
+    <% @paid_users.each do |p| %>
+
+    <td><%= p.username %></td>
+    <td><%= p.total_earned %></td>
+    <td><%= p.total_received %></td>
+    <td><%= p.total_withheld %></td>
+    <td><%= p.total_owed %></td>
+
+    <% if p.payment_option.type == "User::DebitPaymentOption" %>
+    <td><%= "Dollars" %></td>
+    <% else %>
+    <td><%= "Bitcoin" %></td>
+    <% end %>
+
+  </tr>
+  <% end %>
+  <% end %>
+
+</tbody>
+</table>

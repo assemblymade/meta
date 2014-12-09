@@ -17,12 +17,12 @@ class User::Withdrawal < ActiveRecord::Base
     total_amount - withholding
   end
 
-  def type   #inelegant work-around for now, no user has ever changed payment types
-    if self.user.payment_option.type == "User::BitcoinPaymentOption"
-      return "bitcoin"
-    else
-      return "usd"
-    end
-  end
+  # def type   #inelegant work-around for now, no user has ever changed payment types
+  #   if self.user.payment_option.type == "User::BitcoinPaymentOption"
+  #     return "bitcoin"
+  #   else
+  #     return "usd"
+  #   end
+  # end
 
 end
