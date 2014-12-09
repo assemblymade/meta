@@ -56,17 +56,17 @@ class Activity < ActiveRecord::Base
       SlackNotifier.first_story(
         actor,
         self
-        ) unless actor.activities.where(type: "Activities::Comment").count > 0
+        ) unless actor.activities.where(type: "Activities::Comment").count > 1
     when "Post"
       SlackNotifier.first_story(
         actor,
         self
-        ) unless actor.activities.where(type: "Activities::Post").count > 0
+        ) unless actor.activities.where(type: "Activities::Post").count > 1
     when "Chat"
       SlackNotifier.first_chat_message(
         actor,
         target.slug
-        ) unless actor.activities.where(type: "Activities::Chat").count > 0
+        ) unless actor.activities.where(type: "Activities::Chat").count > 1
     end
   end
 
