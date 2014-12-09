@@ -133,11 +133,16 @@ class QueryMarks
 
   def get_all_product_vectors
     products = Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagged_at: nil).where.not(slug: 'meta')
-    #magnitude_query = Marking.where('markings.markable_id = products.id AND markings.mark_id = marks.id').select('SQRT(SUM(markings.weight ^ 2))').to_sql
-    #products.joins(:marks).pluck("products.id, marks.id, markings.weight / (#{magnitude_query})")
+    magnitude_query = Marking.where('markings.markable_id = products.id AND markings.mark_id = marks.id').select('SQRT(SUM(markings.weight ^ 2))').to_sql
+    product_vector = products.joins(:marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)")
+    task_vector = products.joins(tasks: :marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)")
+    return product_vector, task_vector
+    #products.joins(:marks, tasks: :marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight) / (#{magnitude_query})")
 
-    product_vectors = products.map{ |p| [ normalize_mark_vector(p.mark_vector) , p] }
-    product_vectors.select{ |a, b| a.count >0 }
+    # products.joins(:marks).pluck("products.id, marks.id, markings.weight / (#{magnitude_query})")
+    #
+    # product_vectors = products.map{ |p| [ normalize_mark_vector(p.mark_vector) , p] }
+    # product_vectors.select{ |a, b| a.count >0 }
   end
 
   def assign_top_bounties_for_user(limit, user, wip_vectors)

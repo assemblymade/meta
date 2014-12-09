@@ -96,8 +96,10 @@ class User < ActiveRecord::Base
   default_scope -> { where('users.deleted_at is null') }
 
   scope :awaiting_personal_email, -> { where(personal_email_sent_on: nil).where("created_at > ? AND last_request_at < ?", 14.days.ago, 3.days.ago) }
+  scope :bitcoiners, -> { joins(:payment_option).where(user_payment_options: {type: "User::BitcoinPaymentOption"})  }
   scope :event_creators, -> { joins(:events) }
   scope :mailable, -> { where.not(mail_preference: MAIL_NEVER) }
+  scope :owed_money, -> { joins(:withdrawals).where(user_withdrawals: {payment_sent_at: nil}) }
   scope :recently_inactive, -> { where("last_sign_in_at < ?", 7.days.ago).where("last_sign_in_at > ?", 30.days.ago) }
   scope :staff, -> { where(is_staff: true) }
   scope :with_avatars, -> { where.not(gravatar_verified_at: nil) }
@@ -319,6 +321,36 @@ class User < ActiveRecord::Base
       addr.address = email
       addr.display_name = username
     end
+  end
+
+  #accounting
+
+  def total_received
+    sum = 0
+    self.withdrawals.each do |w|
+      if w.payment_sent_at
+        sum = sum + w.total_amount.to_f / 100.to_f
+      end
+    end
+    sum
+  end
+
+  def total_owed
+    sum = 0
+    self.withdrawals.where(payment_sent_at: nil).each do |w|
+      sum = sum + w.total_amount.to_f / 100.to_f
+    end
+    sum
+  end
+
+  def total_withheld
+    sum = 0
+    self.withdrawals.each do |w|
+      if w.payment_sent_at
+        sum = sum + w.amount_withheld.to_f /  100.to_f
+      end
+    end
+    sum
   end
 
   # elasticsearch

@@ -6,4 +6,8 @@ class Admin::BitcoinController < AdminController
     @payments = BtcPayment.last(50)
   end
 
+  def liabilities
+    @owed_users = Users.owed_money
+  end
+
 end

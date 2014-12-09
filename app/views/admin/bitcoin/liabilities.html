@@ -1,0 +1,38 @@
+<h2>Liabilities to Users</h2>
+
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Owed</th>
+      <th>Dollar Value</th>
+      <th>Sender Address</th>
+      <th>Recipient</th>
+      <th>Recipient Address</th>
+      <th>BTC Change</th>
+      <th>BTC Price at that Moment</th>
+      <th>USD Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @payments.each do |p| %>
+    <% if not p.btcusdprice_at_moment.nil? %>
+    <tr>
+      <td><%= p.created_at %></td>
+      <td><%= p.action %></td>
+      <td><%= p.sender %></td>
+      <td><%= p.recipient %></td>
+      <td><%= p.sender_address %></td>
+      <td><%= p.recipient_address %></td>
+      <td><%= p.btc_change.to_f/100000000 %></td>
+      <td><%= p.btcusdprice_at_moment.to_f/100 %></td>
+      <td><%= p.btcusdprice_at_moment.to_f/100*p.btc_change.to_f / 100000000 %></td>
+    </tr>
+    <% end %>
+
+    <% end %>
+
+  </tbody>
+</table>
