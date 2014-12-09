@@ -1,12 +1,9 @@
 class StorySerializer < ApplicationSerializer
   include ActionView::Helpers::TextHelper
 
-  attributes :actor_ids, :verb, :subject_type, :body_preview, :url, :product_name, :product_slug, :key
-  attributes :subjects, :target
-
-  def actor_ids
-    object.activities.map(&:actor_id)
-  end
+  has_many :actors
+  has_one :product
+  attributes :key, :sentences, :url, :updated
 
   def url
     story_path(object)
@@ -18,35 +15,24 @@ class StorySerializer < ApplicationSerializer
     end
   end
 
-  def product_name
-    object.activities.first.try(:target).try(:product).try(:name)
+  def product
+    if product = object.subject.try(:product)
+      ProductShallowSerializer.new(product)
+    end
   end
 
-  def product_slug
-    object.activities.first.try(:target).try(:product).try(:slug)
-  end
-
+  # unix timestamp to match readraptor
   def updated
     object.updated_at.try(:to_i)
   end
 
-  def subjects
-    if subject = object.activities.first.try(:subject)
-      if serializer = Story.subject_serializer(subject)
-        object.activities.map(&:subject).map{|s| serializer.new(subject) }
-      end
-    end || []
-  end
-
-  def target
-    if target = object.activities.first.try(:target)
-      if serializer = Story.subject_serializer(target)
-        serializer.new(target)
-      end
-    end
-  end
-
   def key
     "Story_#{object.id}"
+  end
+
+  cached
+
+  def cache_key
+    [Time.now.to_i, object]
   end
 end

@@ -13,7 +13,7 @@ class Task < Wip
   validate :multiplier_not_changed
 
   before_save :update_trending_score
-  
+
   scope :allocated,   -> { where(state: :allocated) }
   scope :hot,         -> { order(:trending_score => :desc) }
   scope :reviewing,   -> { where(state: :reviewing) }

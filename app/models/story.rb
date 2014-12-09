@@ -1,23 +1,33 @@
+# This class is the list of notifications that appear in the bell.
+# It needs a new name as NewsFeedItems will soon be renamed to Stories.
+# Perhaps it could be called StoryUpdate, as it stores updates to a story like
+# Chuck and 3 others like your comment
+
 class Story < ActiveRecord::Base
-  has_many :activities
+  belongs_to :subject, polymorphic: true
+  has_many :story_actors
+  has_many :actors, through: :story_actors, source: :user
+
+  validates :subject, presence: true
+
+  has_many :activities # TODO: deprecated
+
 
   attr_accessor :socket_id
 
   STREAM_MAPPINGS = {
     # ["Assign", "Discussion"]                => :wip_subscribers,
     # ["Assign", "Task"]                      => :wip_subscribers,
-    ["Award", "Task"]                       => :wip_subscribers,
-    ["Close", "Discussion"]                 => :wip_subscribers,
-    ["Close", "Task"]                       => :wip_subscribers,
+    ["Award", "Wip"]                       => :wip_subscribers,
     ["Close", "Wip"]                        => :wip_subscribers,
     ["Comment", "Discussion"]               => :wip_subscribers,
     ["Comment", "Post"]                     => :product_subscribers,
-    ["Comment", "Task"]                     => :wip_subscribers,
+    ["Comment", "TeamMembership"]           => :product_subscribers,
     ["Comment", "Wip"]                      => :wip_subscribers,
     # ["CreateCoreTeamMembership", "Product"] => :product_subscribers,
     # ["Found", "Product"]             => :product_subscribers,
     # ["GitPush", "Work"]                     => :product_subscribers,
-    # ["Introduce", "TeamMembership"]         => :product_subscribers,
+    ["Introduce", "Product"]                => :product_subscribers,
     # ["Launch", "Product"]                   => :product_subscribers,
     # ["Open", "Discussion"]                  => :wip_subscribers,
     # ["Open", "Task"]                        => :wip_subscribers,
@@ -27,7 +37,7 @@ class Story < ActiveRecord::Base
     # ["Reference", "Discussion"]             => :wip_subscribers,
     # ["Reference", "Task"]                   => :wip_subscribers,
     # ["Reference", "Wip"]                    => :wip_subscribers,
-    ["Start", "Task"]                       => :product_subscribers,
+    ["Start", "Wip"]                       => :product_subscribers,
     # ["Unassign", "Discussion"]              => :wip_subscribers,
     # ["Unassign", "Task"]                    => :wip_subscribers,
     # ["Update", "Discussion"]                => :wip_subscribers,
@@ -46,6 +56,7 @@ class Story < ActiveRecord::Base
   }
 
   def self.should_publish?(activity)
+    puts "should publish? #{[activity.verb, activity.verb_subject]}"
     STREAM_MAPPINGS[[activity.verb, activity.verb_subject]]
   end
 
@@ -84,25 +95,25 @@ class Story < ActiveRecord::Base
     # don't send emails for every story created
   end
 
+  def sentences
+    StorySentences.new(self).as_json
+  end
+
   # private
 
   def product_subscribers
-    subjects.first.product.follower_ids
+    subject.follower_ids
   end
 
   def wip_subscribers
-    subjects.first.wip.follower_ids
+    subject.follower_ids
   end
 
   def description
-    subjects.first.description
+    subject.description
   end
 
   def subject_body
-    activities.first.try(:subject).try(:sanitized_body)
-  end
-
-  def subjects
-    activities.map(&:subject)
+    subject.try(:sanitized_body)
   end
 end

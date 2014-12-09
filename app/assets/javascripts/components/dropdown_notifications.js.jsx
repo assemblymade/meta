@@ -10,8 +10,11 @@
   var Spinner = require('./spinner.js.jsx');
   var NF = CONSTANTS.NOTIFICATIONS;
 
+  var UserStore = require('../stores/user_store')
+  var StoryStore = require('../stores/story_store')
+
   var DropdownNotifications = React.createClass({
-    mixins: [EventMixin, NotificationsMixin],
+    mixins: [EventMixin],
 
     actors: function(story, actors) {
       return _.map(
@@ -23,15 +26,11 @@
     },
 
     body: function(story) {
-      var task = story.verb === 'Start' ? story.subjects[0] : story.target;
+      console.log(UserStore.getId(), story)
 
       return (
         <span>
-          {this.verbMap[story.verb]}
-          <strong>
-            {this.subjectMap[story.subject_type] && this.subjectMap[story.subject_type].call(this, task)}
-          </strong>
-          {this.product(story)}
+          {story.sentences.singular}
         </span>
       );
     },

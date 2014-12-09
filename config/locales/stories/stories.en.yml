@@ -1,0 +1,20 @@
+en:
+  stories:
+    verbs:
+      award:
+        singular: awarded
+      close:
+        singular: closed
+      comment:
+        singular: commented on
+      introduce:
+        singular: introduced themselves
+      post:
+        singular: published
+      start:
+        singular: started
+
+    subjects:
+      task:
+        other: "#%{number} %{title}"
+        owner: "#%{number} %{title}"
