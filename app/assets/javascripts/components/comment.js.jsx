@@ -27,7 +27,8 @@ module.exports = React.createClass({
     var hearts = null
 
     var cs = React.addons.classSet({
-      'gray-dark': this.isOptimistic(),
+      'activity-body': true,
+      'gray-dark': this.isOptimistic()
     })
 
     if (this.props.timestamp) {
@@ -49,7 +50,7 @@ module.exports = React.createClass({
         <div className="left mr2">
           <Avatar user={author} size={18} />
         </div>
-        <div className="overflow-hidden">
+        <div className="overflow-hidden px3">
           <div className="gray-2">
             <a className="bold black" href={author.url}>{author.username}</a>
             {timestamp}

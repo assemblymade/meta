@@ -1,7 +1,6 @@
 <% title @post.title, @post.product.name %>
 <% activate_nav! :posts %>
 
-
 <script id="heartables" type="application/json">
   <%== @heartables.to_json %>
 </script>
@@ -16,82 +15,52 @@
   </script>
 <% end %>
 
-<div class="page-header sheet-header mb0">
-  <h2 class="page-header-title"><%= @post.title %></h2>
+<div class="card mb0">
+  <div class="p3 border-bottom">
+    <ul class="list-inline mb2">
 
-  <div class="page-header-meta">
-
-    <% if can?(:update, @post) %>
-      <ul class="list-piped pull-right">
-        <li>
-          <a class="link-hover-warning" href="<%= edit_product_post_path(@post.product, @post) %>" data-toggle="tooltip" data-placement="top" title="Edit Post">
-            <i class="icon-pencil" style="margin-right: 2px;"></i> Edit
-          </a>
-        </li>
-      </ul>
-    <% end %>
-
-    <ul class="list-piped omega">
-      <li>
-        <a href="<%= user_path(@post.author) %>" title="@<%= @post.author.username %>">
-          <%= image_tag @post.author.avatar.url(40), width: 20, height: 20, class: 'img-circle', style: 'margin-right:0.5em', alt: "@#{@post.author.username}" %><%= @post.author.username %>
-        </a>
-      </li>
-      <li>
-        <%= time_ago_in_words(@post.created_at) %> ago
-      </li>
       <li data-react-class="TagList" data-react-props="<%= {
         destination: false,
         tags: @post.marks.map(&:name),
         url: product_post_path(@product, @post)
       }.to_json %>">
       </li>
+
+      <li class="gray-dark">
+        Created by <a href="<%= user_path(@post.author) %>" title="@<%= @post.author.username %>">@<%= @post.author.username %></a> <%= time_ago_in_words(@post.created_at) %> ago
+      </li>
+    </ul>
+
+    <h1 class="mt0 mb0">
+      <%= @post.title %>
+    </h1>
+  </div>
+
+  <div class="px3 py2 mb0 mt0 border-bottom" data-react-class="Love" data-react-props="<%= {
+    heartable_id: @post.news_feed_item.id,
+    heartable_type: 'NewsFeedItem'
+  }.to_json %>"></div>
+
+  <% unless @post.body.empty? %>
+    <div class="p3">
+      <%= product_markdown(@post.product, @post.body) %>
+    </div>
+  <% end %>
+
+  <div class="card-footer clearfix">
+    <ul class="list-inline mt0 mb0 py1 right">
+      <li>
+        <a class="link-hover-warning" href="<%= edit_product_post_path(@post.product, @post) %>" data-toggle="tooltip" data-placement="top" title="Edit Post">
+          <i class="icon-pencil" style="margin-right: 2px;"></i> Edit
+        </a>
+      </li>
     </ul>
   </div>
 </div>
 
-<div class="sheet-body">
-  <div class="row">
-    <div class="col-md-9">
-
-      <% unless @post.body.empty? %>
-        <div class="markdown markdown-normalized bg-white px3 py3">
-          <%= product_markdown(@post.product, @post.body) %>
-        </div>
-      <% end %>
-
-      <div class="py1 border-top" data-react-class="Love" data-react-props="<%= {
-        heartable_id: @post.news_feed_item.id,
-        heartable_type: 'NewsFeedItem'
-      }.to_json %>"></div>
-
-      <div data-react-class="NewsFeedItemComments" data-react-props="<%= {
-        item: NewsFeedItemSerializer.new(@post.news_feed_item),
-        rows: 2,
-        showAllComments: true
-      }.to_json %>">
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="mb3">
-        <%= link_to 'Write a new post', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
-      </div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h6 class="panel-title">Recent Posts</h6>
-        </div>
-
-        <div class="list-group">
-          <% @product.posts.order(created_at: :desc).limit(10).each do |post| %>
-            <a class="list-group-item small" href="<%= product_post_path(post.product, post) %>">
-              <strong class="text-primary"><%= post.title %></strong>
-            </a>
-          <% end %>
-        </div>
-      </div>
-
-    </div>
-  </div>
+<div data-react-class="NewsFeedItemComments" data-react-props="<%= {
+  item: NewsFeedItemSerializer.new(@post.news_feed_item),
+  rows: 2,
+  showAllComments: true
+}.to_json %>">
 </div>

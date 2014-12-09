@@ -96,6 +96,9 @@ var NewsFeedItemComments = React.createClass({
     return (
       <div className="py2 border-top">
         {this.renderLoadMoreButton()}
+        {/**
+          * replace class with "timeline"
+          */}
         <div className="mt2 mb2">
           {confirmedComments}
         </div>
@@ -110,6 +113,9 @@ var NewsFeedItemComments = React.createClass({
     return this.state.comments.map(function(comment) {
       if (new Date(comment.created_at) >= renderIfAfter) {
         return (
+          /*
+            replace class with timeline-item
+           */
           <div className="h6 mt0 mb2 px3" key={comment.id}>
             <Comment author={comment.user} body={comment.markdown_body} timestamp={comment.created_at} />
           </div>
@@ -123,9 +129,10 @@ var NewsFeedItemComments = React.createClass({
     var target = this.props.item.target;
 
     if (numberOfComments > this.state.comments.length) {
-      // TODO: Call onClick={this.fetchCommentsFromServer} when comments are working
       return (
-        <a className="block h6 clearfix mt0 mb2 px3 gray-dark clickable" onClick={this.fetchCommentsFromServer} style={{'textDecoration': 'underline'}}>
+        <a className="block h6 clearfix mt0 mb2 px3 gray-dark clickable"
+            onClick={this.fetchCommentsFromServer}
+            style={{textDecoration: 'underline'}}>
           <span className="mr1">
             <Icon icon="comment" />
           </span>

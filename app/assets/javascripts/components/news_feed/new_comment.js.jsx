@@ -8,6 +8,7 @@ var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 var NewsFeedItemNewComment = React.createClass({
 
   propTypes: {
+    thread: React.PropTypes.string.isRequired,
     url: React.PropTypes.string.isRequired,
     user: React.PropTypes.object
   },
@@ -37,10 +38,15 @@ var NewsFeedItemNewComment = React.createClass({
     window.removeEventListener("drop",      this.onDragLeave);
   },
 
+  getDefaultProps: function() {
+    return {
+      rows: 1
+    };
+  },
+
   getInitialState: function() {
     return {
       dragging: false,
-      rows: this.props.rows || 1,
       text: ''
     };
   },
@@ -85,6 +91,12 @@ var NewsFeedItemNewComment = React.createClass({
       return <span />;
     }
 
+    var dropzoneClasses = React.addons.classSet({
+      'dropzone': true,
+      'markdown-editor-control': this.props.rows > 1,
+      'ml1': true
+    });
+
     var textareaClasses = React.addons.classSet({
       'form-control': true,
       'bg-gray-lighter': this.state.dragging
@@ -92,24 +104,40 @@ var NewsFeedItemNewComment = React.createClass({
 
     var placeholder = this.state.dragging ?
       'Drag and drop here to upload' :
-      'Press <enter> to comment';
+      '';
 
     return (
       <div className="clearfix">
-        <div className="left mr2">
+        <div className="left">
           <Avatar user={window.app.currentUser().attributes} size={18} />
         </div>
-        <div className="overflow-hidden dropzone">
-          <textarea type="text"
-              className={textareaClasses}
-              rows={this.state.rows}
-              onChange={this.onChange}
-              onKeyPress={this.onKeyPress}
-              value={this.state.text}
-              placeholder={placeholder} />
+        <div className="px4">
+          <div className={dropzoneClasses}>
+            <div style={{ position: 'relative' }}>
+              <textarea type="text"
+                  className={textareaClasses}
+                  rows={this.props.rows}
+                  onChange={this.onChange}
+                  onKeyPress={this.onKeyPress}
+                  value={this.state.text}
+                  placeholder={placeholder} />
+            </div>
+            {this.renderDropzoneInner()}
+          </div>
         </div>
       </div>
     );
+  },
+
+  renderDropzoneInner: function() {
+    if (this.props.rows > 1) {
+      return (
+        <div className="dropzone-inner">
+          To attach files, drag & drop here or
+          {' '}<a href="javascript:void(0);" ref="clickable">select files form your computer</a>&hellip;
+        </div>
+      );
+    }
   },
 
   submitComment: function() {
