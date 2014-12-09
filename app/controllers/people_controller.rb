@@ -59,7 +59,7 @@ class PeopleController < ProductController
     bio_was = @membership.bio
     @membership.update(bio: membership_params[:bio])
 
-    if @membership.bio.present? && bio_was.nil?
+    if @membership.bio.present? && bio_was.blank?
       process_introduction
     end
 

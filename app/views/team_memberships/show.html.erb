@@ -1,0 +1,31 @@
+<% title 'Introduction', '@'+@membership.user.username %>
+<% heartables = [@membership.news_feed_item] + @membership.news_feed_item.news_feed_item_comments %>
+<% if heartables %>
+  <script id="heartables" type="application/json">
+    <%== heartables.map{|h| {
+      target_id: h.target_id,
+      heartable_id: h.id,
+      heartable_type: h.class.name,
+      hearts_count: h.hearts_count
+      }}.to_json
+    %>
+  </script>
+
+  <% if signed_in? %>
+    <script id="user_hearts" type="application/json">
+      <%== Heart.where(user: current_user, heartable_id: heartables.map(&:id)).map{|h| {
+        id: h.id,
+        heartable_id: h.heartable_id,
+        }}.to_json
+      %>
+    </script>
+  <% end %>
+<% end %>
+
+<div class="sm-col sm-col-8 px2">
+  <%= react_component 'NewsFeedItem',
+        NewsFeedItemSerializer.new(@membership.news_feed_item).as_json.merge(
+          productPage: true,
+          showAllComments: true
+  ) %>
+</div>
