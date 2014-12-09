@@ -148,94 +148,99 @@
 					</section>
 				</section>
 
-				<section class="community">
-					<div class="contain">
-						<h3>Featured Products + Makers</h3>
-						<h5>Redefining the way things get made.</h5>
-						<div class="community_grid">
-							<div class="community_item maker">
-								<a href="<%= new_user_registration_path %>"><img src="<%= asset_path('focus-home/community/aaronrelph.png') %>" alt="aaronrelph"></a>
-								<div class="content">
-									<h2><a href="<%= new_user_registration_path %>">Meet aaronrelph</a></h2>
-									<p>Product Designer, Front-end Developer.</p>
-								</div>
-							</div>
+        <% ab_test('community_section_converts_best', 'yes', 'no') do |does_it| %>
+          
+          <% if does_it == 'yes' %>
+    				<section class="community">
+    					<div class="contain">
+    						<h3>Featured Products + Makers</h3>
+    						<h5>Redefining the way things get made.</h5>
+    						<div class="community_grid">
+    							<div class="community_item maker">
+    								<a href="<%= new_user_registration_path %>"><img src="<%= asset_path('focus-home/community/aaronrelph.png') %>" alt="aaronrelph"></a>
+    								<div class="content">
+    									<h2><a href="<%= new_user_registration_path %>">Meet aaronrelph</a></h2>
+    									<p>Product Designer, Front-end Developer.</p>
+    								</div>
+    							</div>
 
-							<div class="community_item product">
-								<a href="<%= new_user_registration_path %>"><img src="<%= asset_path('focus-home/community/runbook.png') %>" alt="Runbook"></a>
-								<div class="content">
-									<h2><a href="<%= new_user_registration_path %>">Runbook</a></h2>
-									<p>DevOps, Automated.</p>
-								</div>
-							</div>
+    							<div class="community_item product">
+    								<a href="<%= new_user_registration_path %>"><img src="<%= asset_path('focus-home/community/runbook.png') %>" alt="Runbook"></a>
+    								<div class="content">
+    									<h2><a href="<%= new_user_registration_path %>">Runbook</a></h2>
+    									<p>DevOps, Automated.</p>
+    								</div>
+    							</div>
 
-	ß						<div class="community_item maker">
-								<a href="<%= new_user_registration_path %>"><img src="<%= asset_path('focus-home/community/iwasrobbed.jpeg') %>" alt="iwasrobbed"></a>
-								<div class="content">
-									<h2><a href="<%= new_user_registration_path %>">Meet iwasrobbed</a></h2>
-									<p>Former iOS Lead at Everest. Created and sold a hunting app company. Created Brevidy, an open source video social network.</p>
-								</div>
-							</div>
-
-
-							<div class="community_item default">
-								<header>
-									<h3>Some of our new Members</h3>
-								</header>
-								<div class="content">
-									<h2><a href="<%= new_user_registration_path %>">Become a member!</a></h2>
-									<ul class="members">
-										<% User.order(created_at: :desc).with_avatars.limit(17).each do |user| %>
-											<li>
-												<%= avatar_tag(user, size: 38) %>
-											</li>
-										<% end %>
-									</ul>
-								</div>
-							</div>
-
-							<div class="community_item maker">
-								<a href="<%= new_user_registration_path %>"><img src="<%= asset_path('focus-home/community/line.jpeg') %>" alt="Line"></a>
-								<div class="content">
-									<h2><a href="<%= new_user_registration_path %>">Meet Line</a></h2>
-									<p>I'm Line, a Scandinavian Graphic Designer. I design with purpose and believe that beautiful design should also mean useful design. I work with everything from art direction and branding to web design and UX/UCD.</p>
-								</div>
-							</div>
-
-							<div class="community_item product">
-								<a href="<%= new_user_registration_path %>"><img src="<%= asset_path('focus-home/community/prettyshots.png') %>" alt="Pretty Shots"></a>
-								<div class="content">
-									<h2><a href="<%= new_user_registration_path %>">Introducing Pretty Shots</a></h2>
-									<p>We are building the easiest way to hire professional video editors (think of us as "Uber for video editors"). Our editors create amazing videos from the footage you shoot on your GoPro, iPhone, or video camera.</p>
-								</div>
-							</div>
-
-							<div class="community_item product">
-								<a href="<%= new_user_registration_path %>"><img src="<%= asset_path('focus-home/community/voices.jpg') %>" alt="Voices"></a>
-								<div class="content">
-									<h2><a href="<%= new_user_registration_path %>">Voices</a></h2>
-									<p>Voicemail reimagined.</p>
-									<p>Its simple. Receive and send voice recordings in a intuitive way. Cross platform.</p>
-								</div>
-							</div>
-
-							<div class="community_item default">
-								<header>
-									<img src="<%= asset_path('focus-home/community/pif.jpg') %>" alt="Pay it Forward">
-									<h3>Pay it Forward</h3>
-								</header>
-								<div class="content">
-									<h2><a href="<%= new_user_registration_path %>">@zsiec joined the Pay it Forward team</a></h2>
-									<p>“Hello, I'm an iOS dev! This idea would be great on a native mobile platform. I'm interested in learning more.”</p>
-								</div>
-							</div>
+    	ß						<div class="community_item maker">
+    								<a href="<%= new_user_registration_path %>"><img src="<%= asset_path('focus-home/community/iwasrobbed.jpeg') %>" alt="iwasrobbed"></a>
+    								<div class="content">
+    									<h2><a href="<%= new_user_registration_path %>">Meet iwasrobbed</a></h2>
+    									<p>Former iOS Lead at Everest. Created and sold a hunting app company. Created Brevidy, an open source video social network.</p>
+    								</div>
+    							</div>
 
 
-						</div>
+    							<div class="community_item default">
+    								<header>
+    									<h3>Some of our new Members</h3>
+    								</header>
+    								<div class="content">
+    									<h2><a href="<%= new_user_registration_path %>">Become a member!</a></h2>
+    									<ul class="members">
+    										<% User.order(created_at: :desc).with_avatars.limit(17).each do |user| %>
+    											<li>
+    												<%= avatar_tag(user, size: 38) %>
+    											</li>
+    										<% end %>
+    									</ul>
+    								</div>
+    							</div>
 
-						<a href="<%= new_user_registration_path %>" class="community_cta">Get Started</a>
-					</div>
-				</section>
+    							<div class="community_item maker">
+    								<a href="<%= new_user_registration_path %>"><img src="<%= asset_path('focus-home/community/line.jpeg') %>" alt="Line"></a>
+    								<div class="content">
+    									<h2><a href="<%= new_user_registration_path %>">Meet Line</a></h2>
+    									<p>I'm Line, a Scandinavian Graphic Designer. I design with purpose and believe that beautiful design should also mean useful design. I work with everything from art direction and branding to web design and UX/UCD.</p>
+    								</div>
+    							</div>
+
+    							<div class="community_item product">
+    								<a href="<%= new_user_registration_path %>"><img src="<%= asset_path('focus-home/community/prettyshots.png') %>" alt="Pretty Shots"></a>
+    								<div class="content">
+    									<h2><a href="<%= new_user_registration_path %>">Introducing Pretty Shots</a></h2>
+    									<p>We are building the easiest way to hire professional video editors (think of us as "Uber for video editors"). Our editors create amazing videos from the footage you shoot on your GoPro, iPhone, or video camera.</p>
+    								</div>
+    							</div>
+
+    							<div class="community_item product">
+    								<a href="<%= new_user_registration_path %>"><img src="<%= asset_path('focus-home/community/voices.jpg') %>" alt="Voices"></a>
+    								<div class="content">
+    									<h2><a href="<%= new_user_registration_path %>">Voices</a></h2>
+    									<p>Voicemail reimagined.</p>
+    									<p>Its simple. Receive and send voice recordings in a intuitive way. Cross platform.</p>
+    								</div>
+    							</div>
+
+    							<div class="community_item default">
+    								<header>
+    									<img src="<%= asset_path('focus-home/community/pif.jpg') %>" alt="Pay it Forward">
+    									<h3>Pay it Forward</h3>
+    								</header>
+    								<div class="content">
+    									<h2><a href="<%= new_user_registration_path %>">@zsiec joined the Pay it Forward team</a></h2>
+    									<p>“Hello, I'm an iOS dev! This idea would be great on a native mobile platform. I'm interested in learning more.”</p>
+    								</div>
+    							</div>
+
+
+    						</div>
+
+    						<a href="<%= new_user_registration_path %>" class="community_cta">Get Started</a>
+    					</div>
+    				</section>
+          <% end %>
+        <% end %>
 
 				<section class="last_hurrah">
 					<div class="contain">
