@@ -37,168 +37,165 @@
 
 <!-- Back to our scheduled programming -->
 
-<div class="bg-white">
-  <div class="container mb3">
+<div id="product">
+    <section id="product-header" class="pt2 mb3 bg-white shadow-light border-bottom tranx_m r600_mb4">
+      <div class="container">
+        <div class="block full-width r768_table">
+          <div data-label="primary" class="block full-width center py2 valign-mid r768_table-cell r768_left-align">
+            <div class="app-icon-container center valign-top r768_table-cell r768_pr3">
+              <a class="relative inline-block" href="<%= product_path(@product) %>">
+                <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 200 %>
+              </a>
+            </div>
+            <div class="block valign-top r768_table-cell">
+              <h1 class="p0 m0">
+                <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
+              </h1>
+              <h4 class="p0 m0 regular gray-1">
+                <%= truncate(@product.pitch, length: 60, separator: ' ') %>
+              </h4>
+              <ul class="list-reset tranx_m r768_m0" style="margin-bottom:5px;">
+                <% if @product.homepage_url? %>
+                <li class="inline-block">
+                  <a href="<%= @product.homepage_url %>">
+                    <%= inline_react_component 'Icon', icon: 'globe' %>
+                    <%= URI(@product.homepage_url.downcase).host %>
+                  </a>
+                </li>
+                <% end %>
+                <li class="inline-block ml1">
+                  <a href="<%= product_repos_path(@product) %>">
+                    <%= inline_react_component 'Icon', icon: 'github' %>
+                    Code
+                  </a>
+                </li>
+                <% if can?(:edit, @product) %>
+                <li class="inline-block ml1">
+                  <a href="<%= edit_product_path(@product) %>">
+                    <%= inline_react_component 'Icon', icon: 'gear' %>
+                    Edit product
+                  </a>
+                </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+          <div data-label="secondary" class="mx-auto center valign-mid r768_table-cell r768_right-align" style="width:200px">
+            <%= react_component('ProductFollowers', product_id: @product.id) %>
+          </div>
+        </div>
+        <!--  -->
 
-    <div class="clearfix mxn2 py3">
-      <div class="sm-col sm-col-2 px2">
-        <a href="<%= product_path(@product) %>">
-          <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 135 %>
-        </a>
-      </div>
+        <div data-label="tertiary" class="clearfix">
 
-      <div class="sm-col sm-col-7 px2">
-
-        <h1 class="mt1 mb0">
-          <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
-        </h1>
-
-        <div class="h3 mt0 mb1 gray-1"><%= truncate(@product.pitch, length: 60, separator: ' ') %></div>
-
-        <ul class="list-reset clearfix mxn1 mb0">
-          <% if @product.homepage_url? %>
-            <li class="left px1">
-              <a href="<%= @product.homepage_url %>">
-                <%= inline_react_component 'Icon', icon: 'globe' %>
-                <%= URI(@product.homepage_url.downcase).host %>
+          <ul class="nav nav-tabs left">
+            <li class="<%= nav_active_class(:product) %>">
+              <a class="px2 py2" href="<%= product_path(@product) %>">
+                Activity
               </a>
             </li>
-          <% end %>
 
-          <li class="left px1">
-            <a href="<%= product_repos_path(@product) %>">
-              <%= inline_react_component 'Icon', icon: 'github' %>
-              Code
-            </a>
-          </li>
-
-          <% if can?(:edit, @product) %>
-            <li class="left px1">
-              <a href="<%= edit_product_path(@product) %>">
-                <%= inline_react_component 'Icon', icon: 'gear' %>
-                Edit product
+            <li class="<%= nav_active_class(:bounties) %>">
+              <a class="px2 py2" href="<%= product_tasks_path(@product) %>">
+                Bounties
               </a>
             </li>
-          <% end %>
-        </ul>
 
-      </div>
-
-      <div class="sm-col sm-col-3 p1">
-        <%= react_component('ProductFollowers', product_id: @product.id) %>
-      </div>
-
-    </div>
-
-    <div class="clearfix">
-
-      <ul class="nav nav-tabs left">
-        <li class="<%= nav_active_class(:product) %>">
-          <a class="px2 py2" href="<%= product_path(@product) %>">
-            Activity
-          </a>
-        </li>
-
-        <li class="<%= nav_active_class(:bounties) %>">
-          <a class="px2 py2" href="<%= product_tasks_path(@product) %>">
-            Bounties
-          </a>
-        </li>
-
-        <li class="<%= nav_active_class(:posts) %>">
-          <a class="px2 py2" href="<%= product_posts_path(@product) %>">
-            Posts
-          </a>
-        </li>
-
-        <li class="<%= nav_active_class(:assets) %> sm-show">
-          <a class="px2 py2" href="<%= product_assets_path(@product) %>">
-            Assets
-          </a>
-        </li>
-
-        <% if @product.chat_rooms.any? %>
-          <% chat_room = @product.chat_rooms.first %>
-          <li class="<%= nav_active_class(:chat) %>">
-            <a class="px2 py2" href="<%= chat_room_path(chat_room) %>">
-              Chat
-            </a>
-          </li>
-        <% end %>
-      </ul>
-
-      <script>
-        var showCreateBounty = function() {
-          window.analytics.track('product.wip.showed_bounty_modal', { product: "<%= @product.slug %>" });
-
-          try {
-            $('#create-bounty-modal').modal('show');
-          } catch (e) {
-          }
-
-          React.render(
-            CreateBounty({
-              id: 'create-bounty-modal',
-              product: { name: "<%= @product.name %>" },
-              url: "<%= product_wips_path(@product) %>",
-              maxOffer: "<%= (6 * @product.average_bounty).round(-4) %>",
-              averageBounty: "<%= @product.average_bounty %>",
-              coinsMinted: "<%= @product.coins_minted %>",
-              profitLastMonth: "<%= @product.profit_last_month %>",
-              steps: "<%= BountyGuidance::Valuations.suggestions(@product) %>",
-            }),
-            document.getElementById('create-bounty')
-          );
-        }
-      </script>
-
-      <div class="right py1 dropdown">
-        <a class="btn btn-primary bg-blue dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown" id="product-actions">
-          <span class="mr1">New</span>
-          <%= inline_react_component 'Icon', icon: 'chevron-down' %>
-        </a>
-
-        <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="product-actions">
-          <li role="presentation">
-            <a href="javascript:void(0);" onclick="javascript:showCreateBounty();">
-              <span class="mr1">
-                <%= inline_react_component 'Icon', icon: 'trophy' %>
-              </span>
-              Bounty
-            </a>
-          </li>
-
-          <li role="presentation">
-            <a href="<%= new_product_post_path(@product) %>">
-              <span class="mr1">
-                <%= inline_react_component 'Icon', icon: 'newspaper-o' %>
-              </span>
-              Post
-            </a>
-          </li>
-
-          <% if signed_in? && current_user.staff? %>
-            <li role="presentation">
-              <a href="<%= new_product_asset_path(@product) %>">
-                <span class="mr1">
-                  <%= inline_react_component 'Icon', icon: 'picture-o' %>
-                </span>
-                Asset
+            <li class="<%= nav_active_class(:posts) %>">
+              <a class="px2 py2" href="<%= product_posts_path(@product) %>">
+                Posts
               </a>
             </li>
-          <% end %>
 
-        </ul>
+            <li class="<%= nav_active_class(:assets) %> none r600_block">
+              <a class="px2 py2" href="<%= product_assets_path(@product) %>">
+                Assets
+              </a>
+            </li>
+
+            <% if @product.chat_rooms.any? %>
+            <% chat_room = @product.chat_rooms.first %>
+            <li class="<%= nav_active_class(:chat) %>">
+              <a class="px2 py2" href="<%= chat_room_path(chat_room) %>">
+                Chat
+              </a>
+            </li>
+            <% end %>
+          </ul>
+
+          <script>
+          var showCreateBounty = function() {
+            window.analytics.track('product.wip.showed_bounty_modal', { product: "<%= @product.slug %>" });
+
+            try {
+              $('#create-bounty-modal').modal('show');
+            } catch (e) {
+            }
+
+            React.render(
+              CreateBounty({
+                id: 'create-bounty-modal',
+                product: { name: "<%= @product.name %>" },
+                url: "<%= product_wips_path(@product) %>",
+                maxOffer: "<%= (6 * @product.average_bounty).round(-4) %>",
+                averageBounty: "<%= @product.average_bounty %>",
+                coinsMinted: "<%= @product.coins_minted %>",
+                profitLastMonth: "<%= @product.profit_last_month %>",
+                steps: "<%= BountyGuidance::Valuations.suggestions(@product) %>",
+              }),
+              document.getElementById('create-bounty')
+              );
+            }
+          </script>
+
+          <div class="center dropdown">
+            <a class="btn btn-primary bg-blue dropdown-toggle mt1 mb2 r600_m" href="javascript:void(0);" data-toggle="dropdown" id="product-actions">
+              <span class="mr1">New</span>
+              <%= inline_react_component 'Icon', icon: 'chevron-down' %>
+            </a>
+
+            <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="product-actions">
+              <li role="presentation">
+                <a href="javascript:void(0);" onclick="javascript:showCreateBounty();">
+                  <span class="mr1">
+                    <%= inline_react_component 'Icon', icon: 'trophy' %>
+                  </span>
+                  Bounty
+                </a>
+              </li>
+
+              <li role="presentation">
+                <a href="<%= new_product_post_path(@product) %>">
+                  <span class="mr1">
+                    <%= inline_react_component 'Icon', icon: 'newspaper-o' %>
+                  </span>
+                  Post
+                </a>
+              </li>
+
+              <% if signed_in? && current_user.staff? %>
+              <li role="presentation">
+                <a href="<%= new_product_asset_path(@product) %>">
+                  <span class="mr1">
+                    <%= inline_react_component 'Icon', icon: 'picture-o' %>
+                  </span>
+                  Asset
+                </a>
+              </li>
+              <% end %>
+
+            </ul>
+          </div>
+        </div>
+
       </div>
-    </div>
-  </div>
+    </section>
 </div>
 
 <div class="container">
   <div id='create-bounty'></div>
   <%= yield %>
 </div>
-
 
 <% unless current_user.nil? %>
   <div class="modal fade" id="edit-membership-modal" tabindex="-1" role="dialog" aria-hidden="true">
