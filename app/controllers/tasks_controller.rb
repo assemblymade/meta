@@ -81,7 +81,7 @@ class TasksController < WipsController
 
     # FIXME: Insert the bounty at the top of the current list (bounties or
     # activity) instead of redirecting
-    respond_with [@bounty.product, @bounty]
+    respond_with @bounty, location: wip_path(@bounty)
   end
 
   def show
