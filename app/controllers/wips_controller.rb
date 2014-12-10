@@ -61,7 +61,7 @@ class WipsController < ProductController
   def tag
     apply_tags
 
-    respond_with @wip, location: wip_path(@wip)
+    respond_with [@wip.product, @wip]
   end
 
   def checkin
@@ -73,22 +73,22 @@ class WipsController < ProductController
   def stop_work
     user = User.find_by(username: params[:user])
     @wip.stop_work!(user || current_user)
-    respond_with @wip, location: product_wip_path(@product, @wip)
+    respond_with [@wip.product, @wip]
   end
 
   def review
     @wip.review_me!(current_user)
-    respond_with @wip, location: product_wip_path(@product, @wip)
+    respond_with [@wip.product, @wip]
   end
 
   def reject
     @wip.reject!(current_user)
-    respond_with @wip, location: product_wip_path(@product, @wip)
+    respond_with [@wip.product, @wip]
   end
 
   def unallocate
     @wip.unallocate!(current_user)
-    respond_with @wip, location: product_wip_path(@product, @wip)
+    respond_with [@wip.product, @wip]
   end
 
   def award
@@ -107,7 +107,7 @@ class WipsController < ProductController
       end
       TrackBountyAwarded.perform_async(@wip.id, @event.user.id)
     end
-    redirect_to product_wip_path(@wip.product, @wip)
+    respond_with [@wip.product, @wip]
 
     Karma::Kalkulate.new.karma_from_bounty_completion(@wip, current_user.id)
     Karma::Kalkulate.new.karma_from_bounty_creation_after_completion(@wip)
@@ -142,13 +142,13 @@ class WipsController < ProductController
   def flag
     set_wip
     @wip.flag!(current_user)
-    respond_with @wip, location: product_wip_path(@product, @wip)
+    respond_with [@wip.product, @wip]
   end
 
   def unflag
     set_wip
     @wip.unflag!
-    respond_with @wip, location: product_wip_path(@product, @wip)
+    respond_with [@wip.product, @wip]
   end
 
   def close
