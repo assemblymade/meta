@@ -15,53 +15,13 @@
   </script>
 <% end %>
 
-<div class="card mb0">
-  <div class="p3 border-bottom">
-    <ul class="list-inline mb2">
-
-      <li data-react-class="TagList" data-react-props="<%= {
-        destination: false,
-        tags: @post.marks.map(&:name),
-        url: product_post_path(@product, @post)
-      }.to_json %>">
-      </li>
-
-      <li class="gray-dark">
-        Created by <a href="<%= user_path(@post.author) %>" title="@<%= @post.author.username %>">@<%= @post.author.username %></a> <%= time_ago_in_words(@post.created_at) %> ago
-      </li>
-    </ul>
-
-    <h1 class="mt0 mb0">
-      <%= @post.title %>
-    </h1>
-  </div>
-
-  <div class="px3 py2 mb0 mt0 border-bottom" data-react-class="Love" data-react-props="<%= {
-    heartable_id: @post.news_feed_item.id,
-    heartable_type: 'NewsFeedItem'
-  }.to_json %>"></div>
-
-  <% unless @post.body.empty? %>
-    <div class="p3">
-      <%= product_markdown(@post.product, @post.body) %>
-    </div>
-  <% end %>
-
-  <div class="card-footer clearfix">
-    <ul class="list-inline mt0 mb0 py1 right">
-      <li>
-        <a class="link-hover-warning" href="<%= edit_product_post_path(@post.product, @post) %>" data-toggle="tooltip" data-placement="top" title="Edit Post">
-          <i class="icon-pencil" style="margin-right: 2px;"></i> Edit
-        </a>
-      </li>
-    </ul>
-  </div>
-</div>
-
-<div data-react-class="NewsFeedItemComments" data-react-props="<%= {
+<% nfi = NewsFeedItemSerializer.new(@post.news_feed_item) %>
+<div data-react-class="NewsFeedItem" data-react-props="<%= nfi.as_json.merge({
   commentable: true,
-  item: NewsFeedItemSerializer.new(@post.news_feed_item),
+  enableModal: false,
+  productPage: true,
   rows: 2,
   showAllComments: true
-}.to_json %>">
-</div>
+}).to_json %>"></div>
+
+

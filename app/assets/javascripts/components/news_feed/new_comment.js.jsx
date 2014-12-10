@@ -60,6 +60,10 @@ var NewsFeedItemNewComment = React.createClass({
     window.addEventListener("dragleave", this.onDragLeave);
     window.addEventListener("drop",      this.onDragLeave);
 
+    this.getDOMNode().addEventListener('dragend', this.onDragEnd, false);
+    this.getDOMNode().addEventListener('dragenter', this.onDragEnter, false);
+    this.getDOMNode().addEventListener('dragleave', this.onDragLeave, false);
+
     // autoresize
     this.previousScrollHeight = this.refs.textarea.getDOMNode().scrollHeight;
     this.textLength = 0;
@@ -69,6 +73,10 @@ var NewsFeedItemNewComment = React.createClass({
     window.removeEventListener("dragenter", this.onDragEnter);
     window.removeEventListener("dragleave", this.onDragLeave);
     window.removeEventListener("drop",      this.onDragLeave);
+
+    this.getDOMNode().removeEventListener('dragend', this.onDragEnd, false);
+    this.getDOMNode().removeEventListener('dragenter', this.onDragEnter, false);
+    this.getDOMNode().removeEventListener('dragleave', this.onDragLeave, false);
   },
 
   getDefaultProps: function() {
@@ -140,12 +148,8 @@ var NewsFeedItemNewComment = React.createClass({
       'bg-gray-lighter': this.state.dragging
     });
 
-    var placeholder = this.state.dragging ?
-      'Drag and drop here to upload' :
-      '';
-
     return (
-      <div className="clearfix">
+      <div className="clearfix" style={{ paddingBottom: '2.5rem' }}>
         <div className="left">
           <Avatar user={window.app.currentUser().attributes} size={30} />
         </div>
@@ -159,8 +163,7 @@ var NewsFeedItemNewComment = React.createClass({
                   rows={this.state.rows}
                   onChange={this.onChange}
                   onKeyPress={this.onKeyPress}
-                  value={this.state.text}
-                  placeholder={placeholder} />
+                  value={this.state.text} />
             </div>
             {this.renderDropzoneInner()}
           </div>

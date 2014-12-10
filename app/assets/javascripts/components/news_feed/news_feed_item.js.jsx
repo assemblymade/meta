@@ -218,6 +218,7 @@
 
         case 'discussion':
           return <NewsFeedItemPost
+              {...this.props}
               body={target.markdown_body || target.description_html}
               url={target.url}
               title={target.title}
@@ -225,6 +226,7 @@
 
         case 'post':
           return <NewsFeedItemPost
+              {...this.props}
               body={target.markdown_body}
               url={target.url}
               title={target.title}
@@ -232,6 +234,7 @@
 
         default:
           return <NewsFeedItemPost
+              {...this.props}
               title={target.name || target.title}
               body={target.description ||
                     target.markdown_body ||

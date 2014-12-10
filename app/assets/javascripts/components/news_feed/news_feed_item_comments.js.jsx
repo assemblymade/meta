@@ -85,7 +85,7 @@ var NewsFeedItemComments = React.createClass({
 
   render: function() {
     return (
-      <div>
+      <div className="px3">
         {this.renderComments()}
         {this.renderNewCommentForm()}
       </div>
