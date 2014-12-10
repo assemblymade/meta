@@ -60,9 +60,11 @@ var NewsFeedItemNewComment = React.createClass({
     window.addEventListener("dragleave", this.onDragLeave);
     window.addEventListener("drop",      this.onDragLeave);
 
-    this.getDOMNode().addEventListener('dragenter', this.onDragEnter, false);
-    this.getDOMNode().addEventListener('dragleave', this.onDragLeave, false);
-    this.getDOMNode().addEventListener('drop', this.onDragLeave, false);
+    var domNode = this.getDOMNode();
+
+    domNode.addEventListener('dragenter', this.onDragEnter, false);
+    domNode.addEventListener('dragleave', this.onDragLeave, false);
+    domNode.addEventListener('drop', this.onDragLeave, false);
 
     // autoresize
     this.previousScrollHeight = this.refs.textarea.getDOMNode().scrollHeight;
@@ -74,9 +76,11 @@ var NewsFeedItemNewComment = React.createClass({
     window.removeEventListener("dragleave", this.onDragLeave);
     window.removeEventListener("drop",      this.onDragLeave);
 
-    this.getDOMNode().removeEventListener('dragenter', this.onDragEnter, false);
-    this.getDOMNode().removeEventListener('dragleave', this.onDragLeave, false);
-    this.getDOMNode().removeEventListener('drop', this.onDragLeave, false);
+    var domNode = this.getDOMNode();
+
+    domNode.removeEventListener('dragenter', this.onDragEnter, false);
+    domNode.removeEventListener('dragleave', this.onDragLeave, false);
+    domNode.removeEventListener('drop', this.onDragLeave, false);
   },
 
   getDefaultProps: function() {
