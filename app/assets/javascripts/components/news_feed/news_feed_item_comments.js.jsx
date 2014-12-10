@@ -101,10 +101,14 @@ var NewsFeedItemComments = React.createClass({
       return;
     }
 
+    var classes = React.addons.classSet({
+      timeline: this.props.showAllComments
+    });
+
     return (
       <div>
         {this.renderLoadMoreButton()}
-        <div className={this.props.showAllComments ? "timeline" : ""}>
+        <div className={classes}>
           {confirmedComments}
         </div>
         {optimisticComments}
@@ -118,7 +122,7 @@ var NewsFeedItemComments = React.createClass({
     return this.state.comments.map(function(comment) {
       if (new Date(comment.created_at) >= renderIfAfter) {
         return (
-          <div className="timeline-item" key={comment.id}>
+          <div className="py3" key={comment.id}>
             <Comment author={comment.user} body={comment.markdown_body} timestamp={comment.created_at} />
           </div>
         );
@@ -132,7 +136,7 @@ var NewsFeedItemComments = React.createClass({
 
     if (numberOfComments > this.state.comments.length) {
       return (
-        <a className="block text-small py2 gray-dark clickable"
+        <a className="block text-small mt2 gray-dark clickable"
             onClick={this.triggerModal}
             style={{textDecoration: 'underline'}}>
           <span className="mr1">
@@ -157,7 +161,7 @@ var NewsFeedItemComments = React.createClass({
   renderOptimisticComments: function() {
     return this.state.optimisticComments.map(function(comment) {
       return (
-        <div className="h6 mt0 mb2 px3" key={comment.id}>
+        <div className="py3" key={comment.id}>
           <Comment author={comment.user} body={marked(comment.body)} optimistic={true} />
         </div>
       )

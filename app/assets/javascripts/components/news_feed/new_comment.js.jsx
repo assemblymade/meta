@@ -60,9 +60,9 @@ var NewsFeedItemNewComment = React.createClass({
     window.addEventListener("dragleave", this.onDragLeave);
     window.addEventListener("drop",      this.onDragLeave);
 
-    this.getDOMNode().addEventListener('dragend', this.onDragEnd, false);
     this.getDOMNode().addEventListener('dragenter', this.onDragEnter, false);
     this.getDOMNode().addEventListener('dragleave', this.onDragLeave, false);
+    this.getDOMNode().addEventListener('drop', this.onDragLeave, false);
 
     // autoresize
     this.previousScrollHeight = this.refs.textarea.getDOMNode().scrollHeight;
@@ -74,9 +74,9 @@ var NewsFeedItemNewComment = React.createClass({
     window.removeEventListener("dragleave", this.onDragLeave);
     window.removeEventListener("drop",      this.onDragLeave);
 
-    this.getDOMNode().removeEventListener('dragend', this.onDragEnd, false);
     this.getDOMNode().removeEventListener('dragenter', this.onDragEnter, false);
     this.getDOMNode().removeEventListener('dragleave', this.onDragLeave, false);
+    this.getDOMNode().removeEventListener('drop', this.onDragLeave, false);
   },
 
   getDefaultProps: function() {
@@ -173,7 +173,7 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   renderDropzoneInner: function() {
-    if (this.props.rows > 1) {
+    if (this.state.rows > 1) {
       return (
         <div className="dropzone-inner">
           To attach files, drag & drop here or

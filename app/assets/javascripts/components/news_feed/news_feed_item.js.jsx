@@ -99,7 +99,7 @@
       var lastComment = this.props.last_comment;
 
       return (
-        <div className="mt3">
+        <div>
           <a className="gray-3"
               href={commentsUrl}
               style={{ textDecoration: 'underline' }}>
@@ -110,10 +110,10 @@
           </a>
 
           <div className="py2">
-          <Comment
-              author={lastComment.user}
-              body={lastComment.markdown_body}
-              timestamp={lastComment.created_at} />
+            <Comment
+                author={lastComment.user}
+                body={lastComment.markdown_body}
+                timestamp={lastComment.created_at} />
           </div>
         </div>
       );
