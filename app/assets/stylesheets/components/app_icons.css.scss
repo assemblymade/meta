@@ -27,10 +27,9 @@
 }
 .app-icon {
   @extend .img-responsive;
-  padding:10px;
+  // padding:10px;
   border-radius: 5px;
   max-width:82px;
-  min-width:64px;
   @media screen and (min-width: 768px) {
     max-width:100%;
   }
