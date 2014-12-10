@@ -6,6 +6,13 @@ var Comment = require('../comment.js.jsx');
 var Dispatcher = window.Dispatcher;
 var Icon = require('../icon.js.jsx');
 var NewComment = require('./new_comment.js.jsx');
+var NewsFeedItemBountyClose = require('./news_feed_item_bounty_close.js.jsx');
+var NewsFeedItemBountyCommentReference = require('./news_feed_item_bounty_comment_reference.js.jsx');
+var NewsFeedItemBountyReviewReady = require('./news_feed_item_bounty_review_ready.js.jsx');
+var NewsFeedItemBountyTagChange = require('./news_feed_item_bounty_tag_change.js.jsx');
+var NewsFeedItemBountyTimelineItem = require('./news_feed_item_bounty_timeline_item.js.jsx');
+var NewsFeedItemBountyTitleChange = require('./news_feed_item_bounty_title_change.js.jsx');
+var NewsFeedItemBountyWin = require('./news_feed_item_bounty_win.js.jsx');
 var NewsFeedItemStore = require('../../stores/news_feed_item_store');
 
 var NewsFeedItemComments = React.createClass({
@@ -31,7 +38,6 @@ var NewsFeedItemComments = React.createClass({
     NewsFeedItemStore.removeChangeListener(this.getComments);
   },
 
-  // unused for now
   fetchCommentsFromServer: function(e) {
     e.stopPropagation();
 
@@ -39,7 +45,8 @@ var NewsFeedItemComments = React.createClass({
 
     $.get(url, function(response) {
       this.setState({
-        comments: response,
+        comments: response.comments,
+        events: response.events,
         showCommentsAfter: 0
       });
     }.bind(this));
@@ -76,6 +83,7 @@ var NewsFeedItemComments = React.createClass({
 
     return {
       comments: lastComment ? [lastComment] : [],
+      events: [],
       numberOfComments: item.comments_count,
       optimisticComments: [],
       showCommentsAfter: showCommentsAfter,
@@ -118,13 +126,12 @@ var NewsFeedItemComments = React.createClass({
 
   renderConfirmedComments: function() {
     var renderIfAfter = this.state.showCommentsAfter;
+    var comments = this.state.comments.concat(this.state.events).sort(_sort);
 
-    return this.state.comments.map(function(comment) {
+    return comments.map(function(comment) {
       if (new Date(comment.created_at) >= renderIfAfter) {
         return (
-          <div className="py3" key={comment.id}>
-            <Comment author={comment.user} body={comment.markdown_body} timestamp={comment.created_at} />
-          </div>
+          parseEvent(comment)
         );
       }
     });
@@ -179,4 +186,56 @@ if (typeof module !== 'undefined') {
   module.exports = NewsFeedItemComments;
 }
 
-window.NewsFeedItemComments = module.exports
+window.NewsFeedItemComments = module.exports;
+
+function parseEvent(event) {
+  var renderedEvent;
+
+  switch(event.type) {
+  case 'Event::Allocation':
+    renderedEvent = null;
+    break;
+  case 'Event::Close':
+    renderedEvent = <NewsFeedItemBountyClose {...event} />;
+    break;
+  case 'Event::CommentReference':
+    renderedEvent = <NewsFeedItemBountyCommentReference {...event} />;
+    break;
+  case 'Event::ReviewReady':
+    renderedEvent = <NewsFeedItemBountyReviewReady {...event} />;
+    break;
+  case 'Event::Win':
+    renderedEvent = <NewsFeedItemBountyWin {...event} />;
+    break;
+  case 'Event::TagChange':
+    // don't render tag change events
+    // renderedEvent = <NewsFeedItemBountyTagChange {...event} />;
+    // See TODO in NewsFeedItemBountyTagChange
+    break;
+  case 'Event::TitleChange':
+    renderedEvent = <NewsFeedItemBountyTitleChange {...event} />;
+    break;
+  case 'news_feed_item_comment':
+    renderedEvent = <Comment author={event.user} body={event.markdown_body} timestamp={event.created_at} />;
+    break;
+  default:
+    renderedEvent = <NewsFeedItemBountyTimelineItem {...event} />;
+    break;
+  }
+
+  if (renderedEvent) {
+    return (
+      <div className="py2" key={event.id}>
+        {renderedEvent}
+      </div>
+    );
+  }
+}
+
+function _sort(a, b) {
+  var aDate = +new Date(a.created_at);
+  var bDate = +new Date(b.created_at);
+
+  return aDate > bDate ? 1 : bDate > aDate ? -1 : 0;
+}
+

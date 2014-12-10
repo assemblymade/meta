@@ -20,11 +20,21 @@ class NewsFeedItemCommentsController < ProductController
 
   def index
     comments = ActiveModel::ArraySerializer.new(
-      @news_feed_item.news_feed_item_comments.order(created_at: :asc),
+      @news_feed_item.comments.order(created_at: :asc),
       each_serializer: NewsFeedItemCommentSerializer
     )
 
-    respond_with comments, location: product_url(@product)
+    events = ActiveModel::ArraySerializer.new(
+      @news_feed_item.events.order(created_at: :asc),
+      each_serializer: EventSerializer
+    )
+
+    feed = {
+      comments: comments,
+      events: events
+    }
+
+    respond_with feed, location: product_url(@product)
   end
 
   def forward_comment

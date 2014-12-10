@@ -16,7 +16,7 @@ class EventSerializer < ActiveModel::Serializer
 
   attributes :id #, :url
   attributes :anchor
-  attributes :body, :body_html, :body_sanitized, :number, :timestamp, :type
+  attributes :body, :body_html, :body_sanitized, :number, :timestamp, :type, :created_at
   attributes :edit_url
   attributes :award_url, :can_award
   attributes :product_id
@@ -36,6 +36,7 @@ class EventSerializer < ActiveModel::Serializer
   end
 
   def award_url
+    raise (award_product_wip_url(product, wip)).inspect if wip.open? && can_award
     award_product_wip_url(product, wip) if wip.open? && can_award
   end
 
