@@ -5,8 +5,6 @@ var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx')
 var NewsFeedItemModalMixin = require('../../mixins/news_feed_item_modal_mixin');
 var Thumbnail = require('../thumbnail.js.jsx')
 
-var URGENCIES = ['Urgent', 'Now', 'Someday'];
-
 module.exports = React.createClass({
   displayName: 'NewsFeedItemBounty',
 
@@ -39,11 +37,6 @@ module.exports = React.createClass({
             <span className="mr2" key={'mr2' + bounty.id}>
               <AppCoins n={bounty.contracts.earnable} />
             </span>
-            <Urgency
-               initialLabel={bounty.urgency.label}
-               urgencies={URGENCIES}
-               state={bounty.state}
-               url={bounty.urgency_url} />
           </div>
         </div>
         <div className="gray-darker"

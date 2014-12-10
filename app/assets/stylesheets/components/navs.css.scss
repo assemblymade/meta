@@ -8,7 +8,6 @@
   }
 }
 
-
 .nav-pills {
   > li > a {
     color: $gray-light;
@@ -21,9 +20,24 @@
 
 .nav-tabs {
   border-bottom: none;
+  display:table;
+  width:100%;
+  text-align:center;
+  //
+  @media screen and (min-width: 600px) {
+    display:block;
+    width:auto;
+  }
 
   > li {
     margin-bottom: 0;
+    float: none;
+    display: table-cell;
+    width:25%;
+    @media screen and (min-width: 600px) {
+      display: inline-block !important;
+      width:auto;
+    }
   }
 
   > li > a {

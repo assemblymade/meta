@@ -8,16 +8,11 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    return (
-      <div className="dropdown">
-        <button className={this.togglerClasses()} type="button" onClick={this.handleClick}>
-          <div className="toggler-label">{this.state.following ? 'Following' : 'Follow' }</div>
 
-          <div className="toggler-badge">
-            {this.state.count}
-          </div>
-        </button>
-      </div>
+    return (
+      <button className={this.togglerClasses()} type="button" onClick={this.handleClick}>
+        <div className="title">{this.state.following ? 'Following' : 'Follow' }</div>
+      </button>
     );
   },
 
@@ -31,10 +26,10 @@ module.exports = React.createClass({
 
   togglerClasses: function() {
     return React.addons.classSet({
+      'button-2': true,
       'dropdown-toggle': true,
       'toggler': true,
       'block': true,
-      'full-width': true,
       'toggler-primary': (!this.state.following)
     })
   },

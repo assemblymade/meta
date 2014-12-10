@@ -62,6 +62,7 @@
                        id="task_title"
                        name="task[title]"
                        type="text"
+                       required="true"
                        onTextChange={this.handleChange} />
               </div>
 

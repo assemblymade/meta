@@ -62,6 +62,12 @@ class Event::Comment < Event
     Search::Sanitizer.new.sanitize(body)
   end
 
+  # stories
+  def url_params
+    [product, wip, anchor: "comment-#{self.number}"]
+  end
+
+
   # private
 
   def create_nfi_comment

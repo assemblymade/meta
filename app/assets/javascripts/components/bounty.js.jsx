@@ -62,9 +62,6 @@ module.exports = React.createClass({
           <ul className="list-inline mb2" style={{ marginBottom: '6px' }}>
             {this.renderBountyValuation()}
             <li>
-              {this.renderUrgency()}
-            </li>
-            <li>
               {this.renderTagList()}
             </li>
             <li className="text-muted" style={{ fontSize: '14px', color: '#a5a5a5' }}>
@@ -344,19 +341,6 @@ module.exports = React.createClass({
         tags={tags}
         newBounty={true}
         url={bounty.tag_url} />
-    );
-  },
-
-  renderUrgency: function() {
-    var bounty = this.state.bounty;
-    var urgencies = ['Urgent', 'Now', 'Someday'];
-
-    return (
-      <Urgency
-        initialLabel={bounty.urgency.label}
-        urgencies={urgencies}
-        state={bounty.state}
-        url={bounty.urgency_url} />
     );
   },
 

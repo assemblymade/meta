@@ -12,6 +12,7 @@ class Activity < ActiveRecord::Base
   validates :target,  presence: true
 
   after_commit :track_in_segment, on: :create
+  after_commit :notify_staff, on: :create
 
   attr_accessor :socket_id
 
@@ -49,6 +50,26 @@ class Activity < ActiveRecord::Base
     TrackActivityCreated.perform_async(self.id)
   end
 
+  def notify_staff
+    case verb
+    when "Comment"
+      SlackNotifier.first_story(
+        actor,
+        self
+        ) unless actor.activities.where(type: "Activities::Comment").count > 1
+    when "Post"
+      SlackNotifier.first_story(
+        actor,
+        self
+        ) unless actor.activities.where(type: "Activities::Post").count > 1
+    when "Chat"
+      SlackNotifier.first_chat_message(
+        actor,
+        target.slug
+        ) unless actor.activities.where(type: "Activities::Chat").count > 1
+    end
+  end
+
   # make this object tippable
   def tip_receiver
     actor
@@ -62,7 +83,7 @@ class Activity < ActiveRecord::Base
     s = target_entity
     raise "Bad Subject #{self.inspect}" if s.nil?
 
-    s.class.name.split('::').last
+    s.class.name.split('::').last.gsub(/Decorator$/,'')
   end
 
   def find_product

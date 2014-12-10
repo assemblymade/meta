@@ -45,22 +45,15 @@ class WipsController < ProductController
   end
 
   def update
-    if title = wip_params[:title]
-      @wip.update_title! current_user, title unless title == @wip.title
-    end
-
-    apply_tags
-
-    @wip.update(update_wip_params)
-
-    respond_with @wip, location: wip_path(@wip)
+    UpdatesWip.update(@wip, update_wip_params, current_user)
+    respond_with [@wip.product, @wip]
   end
 
   def apply_tags
     if tag_list = wip_params[:tag_list]
       tag_list.each do |t|
         MakeMarks.new.mark_with_name(@wip, t)
-      end
+        end
       @wip.update_tag_names! current_user, tag_list
     end
   end

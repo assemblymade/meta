@@ -81,7 +81,7 @@ class TasksController < WipsController
 
     # FIXME: Insert the bounty at the top of the current list (bounties or
     # activity) instead of redirecting
-    respond_with @bounty, location: wip_path(@bounty)
+    respond_with @bounty, location: @bounty.errors.blank? ? wip_path(@bounty) : nil
   end
 
   def show
@@ -94,8 +94,6 @@ class TasksController < WipsController
 
     @events = Event.render_events(@bounty.events.order(:number), current_user)
     @product_assets = @bounty.product.assets
-
-    finished('long_user_survey_on_signup')
 
     respond_to do |format|
       format.html { render 'bounties/show' }
@@ -159,12 +157,6 @@ class TasksController < WipsController
     render nothing: true, status: 200
   end
 
-  def urgency
-    authorize! :multiply, @wip
-    @urgency = Urgency.find_by_slug!(params[:urgency])
-    @wip.multiply!(current_user, @urgency.multiplier)
-  end
-
   # private
 
   def find_wips
@@ -184,6 +176,6 @@ class TasksController < WipsController
   end
 
   def update_wip_params
-    params.require(:task).permit(:title, :description)
+    params.require(:task).permit(:title, :description, :priority, :priority_above_id, :priority_below_id)
   end
 end

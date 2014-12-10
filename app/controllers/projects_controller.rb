@@ -10,7 +10,7 @@ class ProjectsController < ProductController
         @product.milestones.closed
       else
         @product.milestones.open
-      end.sort_by{|m| -m.multiplier }
+      end
   end
 
   def new

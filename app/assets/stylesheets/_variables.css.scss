@@ -35,7 +35,7 @@ $brand-muted:   $gray-light;
 $brand-bg:       #FAFAFA;
 $brand-border:   darken($gray-lighter, 10%);
 $brand-divider:  darken($brand-bg, 5%);
-$brand-shadow:   rgba(black, 0.05);
+$brand-shadow:   rgba(100, 100, 100, 0.2);
 
 $brand-coins:    $yellow;
 
@@ -46,10 +46,9 @@ $text-color:    $black;
 // Transition Timing
 
 $transition-function: ease-in-out;
-$transition-in-duration: 50ms;
-$transition-out-duration: 300ms;
-
-
+$transition-duration: 0.15s;
+$transition-in-duration: 0.15s;
+$transition-out-duration: 0.15s;
 
 
 $link-color:       $brand-primary;
@@ -73,10 +72,12 @@ $font-size-base:  15px;
 $font-size-large: 18px;
 $font-size-small: 13px;
 
-$font-size-h1: 42px;
+$font-size-h1: 30px;
+// $font-size-h1: 42px;
 $font-size-h2: 30px;
 $font-size-h3: 24px;
-$font-size-h4: 20px;
+$font-size-h4: 18px;
+// $font-size-h4: 20px;
 $font-size-h5: $font-size-base;
 $font-size-h6: 13px;
 

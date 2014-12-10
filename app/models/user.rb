@@ -96,8 +96,10 @@ class User < ActiveRecord::Base
   default_scope -> { where('users.deleted_at is null') }
 
   scope :awaiting_personal_email, -> { where(personal_email_sent_on: nil).where("created_at > ? AND last_request_at < ?", 14.days.ago, 3.days.ago) }
+  scope :bitcoiners, -> { joins(:payment_option).where(user_payment_options: {type: "User::BitcoinPaymentOption"})  }
   scope :event_creators, -> { joins(:events) }
   scope :mailable, -> { where.not(mail_preference: MAIL_NEVER) }
+  scope :owed_money, -> { joins(:withdrawals).where(user_withdrawals: {payment_sent_at: nil}) }
   scope :recently_inactive, -> { where("last_sign_in_at < ?", 7.days.ago).where("last_sign_in_at > ?", 30.days.ago) }
   scope :staff, -> { where(is_staff: true) }
   scope :with_avatars, -> { where.not(gravatar_verified_at: nil) }
@@ -262,10 +264,6 @@ class User < ActiveRecord::Base
     Watching.watch!(self, Product.find_by!(slug: slug)) unless slug.blank?
   end
 
-  def sum_month_points(time)
-    Task.won_by(self).inject(0) {|sum, wip| sum + wip.score }
-  end
-
   def sum_assembly_assets
     assembly_assets.reduce(0) { |col, asset| asset.amount + col }
   end
@@ -319,6 +317,24 @@ class User < ActiveRecord::Base
       addr.address = email
       addr.display_name = username
     end
+  end
+
+  #accounting
+
+  def total_received
+    ((self.withdrawals.where.not(payment_sent_at: nil).sum(:total_amount) - self.withdrawals.where.not(payment_sent_at: nil).sum(:amount_withheld))/100).round(2)
+  end
+
+  def total_earned
+    (self.withdrawals.sum(:total_amount).to_f/100.to_f).round(2)
+  end
+
+  def total_owed
+    (self.total_earned - self.total_received - self.total_withheld).round(2)
+  end
+
+  def total_withheld
+    (self.withdrawals.where.not(payment_sent_at: nil).sum(:amount_withheld)/100).round(2)
   end
 
   # elasticsearch

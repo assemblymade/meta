@@ -16,4 +16,29 @@ describe NewsFeedItem do
       expect(NewsFeedItem.create_with_target(kernel_task)).to be_nil
     end
   end
+
+  describe 'followings' do
+    it 'adds source on create' do
+      nfi = NewsFeedItem.make!
+      expect(nfi.followers).to eq([nfi.source])
+    end
+
+    it 'adds hearter on heart' do
+      hearter = User.make!
+
+      nfi = NewsFeedItem.make!
+      nfi.hearts.create!(user: hearter)
+
+      expect(nfi.followers).to match_array([nfi.source, hearter])
+    end
+
+    it 'adds commentor on comment' do
+      commenter = User.make!
+
+      nfi = NewsFeedItem.make!
+      nfi.comments.create!(user: commenter)
+
+      expect(nfi.followers).to match_array([nfi.source, commenter])
+    end
+  end
 end

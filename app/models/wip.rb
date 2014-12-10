@@ -134,14 +134,6 @@ class Wip < ActiveRecord::Base
     nil
   end
 
-  def score
-    nil
-  end
-
-  def score_multiplier
-    nil
-  end
-
   def awardable?
     false
   end
@@ -388,6 +380,11 @@ class Wip < ActiveRecord::Base
 
   def sum_viewings
     Viewing.where(viewable: self).count
+  end
+
+  # stories
+  def url_params
+    [product, self]
   end
 
 end

@@ -112,6 +112,7 @@
 
       BOUNTIES_REQUEST: null,
       BOUNTIES_RECEIVE: null,
+      BOUNTIES_REORDER: null,
 
       CHAT_USER_ONLINE: null,
       CHAT_MESSAGE_RECEIVE_ACTIVITIES: null,
@@ -144,6 +145,10 @@
       PRODUCT_UNFOLLOW_FAILED: null,
 
       PUSHER_PRESENCE_CONNECTED: null,
+
+      RR_RECEIVE_READ_RECEIPTS: null,
+
+      STORY_RECEIVE_STORIES: null,
 
       USER_SIGNED_IN: null,
 

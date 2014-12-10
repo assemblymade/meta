@@ -25,4 +25,16 @@ class TeamMembership < ActiveRecord::Base
     )
   end
 
+  # stories
+  def preview
+    bio
+  end
+
+  def url_params
+    [product, self]
+  end
+
+  def follower_ids
+    news_feed_item.try(:follower_ids) || []
+  end
 end

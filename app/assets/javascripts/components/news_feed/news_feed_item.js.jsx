@@ -22,6 +22,7 @@
       enableModal: React.PropTypes.bool,
       productPage: React.PropTypes.bool,
       product: React.PropTypes.object.isRequired,
+      showAllComments: React.PropTypes.bool,
       target: React.PropTypes.object,
       user: React.PropTypes.object.isRequired
     },

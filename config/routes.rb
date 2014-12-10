@@ -177,6 +177,8 @@ ASM::Application.routes.draw do
   # Admin
   namespace :admin do
     resources :bitcoin, only: [:index]
+    resources :asset_history, only: [:index]
+    resources :user_books, only: [:index]
     resources :karma, only: [:index]
     resources :karmahistory, only: [:index]
     resources :leaderboard, only: [:index]
@@ -316,10 +318,7 @@ ASM::Application.routes.draw do
     end
 
     resources :repositories, only: [:index, :create, :destroy], as: :repos
-
     resources :team_memberships, path: 'memberships', only: [:show]
-
-    resources :work
     resources :tasks, only: [:show, :new], path: 'bounties'
     resources :wips, only: [:index, :show, :new, :edit, :create, :update], controller: 'tasks', path: 'bounties' do
       get 'search', :on => :collection
@@ -351,10 +350,6 @@ ASM::Application.routes.draw do
       resources :comments, only: [:show, :create, :edit, :update]
     end
 
-    resources :tasks, only: [] do
-      patch 'urgency', action: :urgency, as: :urgency
-    end
-
     resources :resources, only: [:index]
     resources :domains, only: [:create]
 
@@ -374,6 +369,8 @@ ASM::Application.routes.draw do
       resources :accounts, only: [:index, :show]
       resources :transactions, only: [:index, :show, :new, :create]
     end
+
+    resources :work
 
     # legacy
     get :chat, to: redirect('/chat/%{product_id}')
