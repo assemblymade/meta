@@ -20,7 +20,7 @@ class NewsFeedItemCommentsController < ProductController
 
   def index
     comments = ActiveModel::ArraySerializer.new(
-      @news_feed_item.news_feed_item_comments,
+      @news_feed_item.news_feed_item_comments.order(created_at: :asc),
       each_serializer: NewsFeedItemCommentSerializer
     )
 
