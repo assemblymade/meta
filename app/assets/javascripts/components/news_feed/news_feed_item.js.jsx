@@ -99,7 +99,7 @@
       var lastComment = this.props.last_comment;
 
       return (
-        <div className="px3 py2 h6 mt0 mb0 border-top">
+        <div className="mt3">
           <a className="gray-3"
               href={commentsUrl}
               style={{ textDecoration: 'underline' }}>
@@ -120,7 +120,7 @@
     },
 
     renderLove: function() {
-      return <div className="px3 py2 border-top mb0">
+      return <div className="px3 py2 border-top border-bottom">
         <Love heartable_id={this.props.heartable_id} heartable_type="NewsFeedItem" />
       </div>
     },

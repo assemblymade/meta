@@ -104,7 +104,7 @@ var NewsFeedItemComments = React.createClass({
     return (
       <div>
         {this.renderLoadMoreButton()}
-        <div className="timeline">
+        <div className={this.props.showAllComments ? "timeline" : ""}>
           {confirmedComments}
         </div>
         {optimisticComments}
@@ -132,7 +132,7 @@ var NewsFeedItemComments = React.createClass({
 
     if (numberOfComments > this.state.comments.length) {
       return (
-        <a className="block h6 clearfix mt0 mb2 px3 gray-dark clickable"
+        <a className="block h6 px2 mt3 gray-dark clickable"
             onClick={this.triggerModal}
             style={{textDecoration: 'underline'}}>
           <span className="mr1">
