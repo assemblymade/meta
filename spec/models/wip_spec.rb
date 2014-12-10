@@ -96,29 +96,6 @@ describe Wip do
     wip.votes.count == 1
   end
 
-  describe 'promoting' do
-    let(:start) { Time.local(1990) }
-    before(:each) { Timecop.freeze(start) }
-    after(:each) { Timecop.return }
-
-    context 'non core member multiplies' do
-      it 'raises' do
-        expect { wip.multiply!(joe_random, 2.0) }.to raise_error(ActiveRecord::RecordNotSaved)
-      end
-    end
-
-    context 'core member multiplies' do
-      context 'with no previously promoted wips' do
-        before {
-          wip.multiply! core_member, 2.0
-        }
-        subject { wip }
-
-        its(:multiplier) { should == 2.0 }
-      end
-    end
-  end
-
   describe '#update_tag_list' do
     before {
       wip.tag_list = 'code,design'

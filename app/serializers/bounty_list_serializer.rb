@@ -5,7 +5,6 @@ class BountyListSerializer < ApplicationSerializer
   attributes :url
 
   has_one :locker
-  has_one :urgency
   has_one :user
 
   has_many :tags
