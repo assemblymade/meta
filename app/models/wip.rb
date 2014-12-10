@@ -382,4 +382,9 @@ class Wip < ActiveRecord::Base
     Viewing.where(viewable: self).count
   end
 
+  # stories
+  def url_params
+    [product, self]
+  end
+
 end

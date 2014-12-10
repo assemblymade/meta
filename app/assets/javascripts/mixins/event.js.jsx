@@ -19,6 +19,10 @@
         }
       },
 
+      TeamMembership: function() {
+        return 'your introduction'
+      },
+
       Wip: function(wip) {
         if (wip) {
           return "#" + wip.number + " " + wip.title;
@@ -30,6 +34,7 @@
       'Award': 'awarded ',
       'Close': 'closed ',
       'Comment': 'commented on ',
+      'Introduce': 'introduced themselves ',
       'Post': 'published ',
       'Start': 'started '
     }

@@ -1,52 +1,32 @@
+# This class is the list of notifications that appear in the bell.
+# It needs a new name as NewsFeedItems will soon be renamed to Stories.
+# Perhaps it could be called StoryUpdate, as it stores updates to a story like
+# Chuck and 3 others like your comment
+
 class Story < ActiveRecord::Base
+  has_many :actors, through: :activities, source: :actor, source_type: 'User'
   has_many :activities
 
   attr_accessor :socket_id
 
-  STREAM_MAPPINGS = {
-    # ["Assign", "Discussion"]                => :wip_subscribers,
-    # ["Assign", "Task"]                      => :wip_subscribers,
-    ["Award", "Task"]                       => :wip_subscribers,
-    ["Close", "Discussion"]                 => :wip_subscribers,
-    ["Close", "Task"]                       => :wip_subscribers,
-    ["Close", "Wip"]                        => :wip_subscribers,
-    ["Comment", "Discussion"]               => :wip_subscribers,
-    ["Comment", "Post"]                     => :product_subscribers,
-    ["Comment", "Task"]                     => :wip_subscribers,
-    ["Comment", "Wip"]                      => :wip_subscribers,
-    # ["CreateCoreTeamMembership", "Product"] => :product_subscribers,
-    # ["Found", "Product"]             => :product_subscribers,
-    # ["GitPush", "Work"]                     => :product_subscribers,
-    # ["Introduce", "TeamMembership"]         => :product_subscribers,
-    # ["Launch", "Product"]                   => :product_subscribers,
-    # ["Open", "Discussion"]                  => :wip_subscribers,
-    # ["Open", "Task"]                        => :wip_subscribers,
-    ["Post", "Post"]                        => :product_subscribers,
-    # ["Post", "Discussion"]                  => :wip_subscribers,
-    # ["Post", "Task"]                        => :wip_subscribers,
-    # ["Reference", "Discussion"]             => :wip_subscribers,
-    # ["Reference", "Task"]                   => :wip_subscribers,
-    # ["Reference", "Wip"]                    => :wip_subscribers,
-    ["Start", "Task"]                       => :product_subscribers,
-    # ["Unassign", "Discussion"]              => :wip_subscribers,
-    # ["Unassign", "Task"]                    => :wip_subscribers,
-    # ["Update", "Discussion"]                => :wip_subscribers,
-    # ["Update", "Task"]                      => :wip_subscribers,
-  }
+  PUBLISHABLE_ACTIVITIES = [
+    ["Comment", "Discussion"],
+    ["Comment", "Post"],
+    ["Comment", "Task"],
+    ["Comment", "TeamMembership"],
+    ["Introduce", "Product"],
+    ["Post", "Post"],
+    ["Start", "Wip"],
+  ].each_with_object({}) {|keys, h| h[keys] = true }
 
-  BODY_MAPPINGS = {
-    ["Close", "Discussion"]                 => :subject_body,
-    ["Close", "Task"]                       => :subject_body,
-    ["Close", "Wip"]                        => :subject_body,
-    ["Comment", "Discussion"]               => :subject_body,
-    ["Comment", "Task"]                     => :subject_body,
-    ["Comment", "Wip"]                      => :subject_body,
-    ["Post", "Post"]                        => :subject_body,
-    ["Start", "Task"]                       => :description
-  }
+  def self.to_noun(o)
+    o.class.name.split('::').last.gsub(/Decorator$/,'')
+  end
 
   def self.should_publish?(activity)
-    STREAM_MAPPINGS[[activity.verb, activity.verb_subject]]
+    PUBLISHABLE_ACTIVITIES[[activity.verb, to_noun(activity.target)]].tap do |o|
+      puts "should publish? #{[activity.verb, to_noun(activity.target)]} #{o}"
+    end
   end
 
   def self.associated_with_ids(entity)
@@ -61,48 +41,27 @@ class Story < ActiveRecord::Base
     end
   end
 
-
   def self.associated_with(entity)
     Story.where(id: associated_with_ids(entity))
   end
 
-  def self.subject_serializer(subject)
-    "Story::#{subject.class.model_name.name}Serializer".constantize rescue nil
+  def subject
+    activities.first.subject
+  end
+
+  def target
+    activities.first.target
   end
 
   def reader_ids
-    send STREAM_MAPPINGS.fetch([verb, subject_type])
-  end
-
-  def body_preview
-    if mapping = BODY_MAPPINGS[[verb, subject_type]]
-      send mapping
-    end
+    target.follower_ids - actor_ids
   end
 
   def notify_by_email(user)
     # don't send emails for every story created
   end
 
-  # private
-
-  def product_subscribers
-    subjects.first.product.follower_ids
-  end
-
-  def wip_subscribers
-    subjects.first.wip.follower_ids
-  end
-
-  def description
-    subjects.first.description
-  end
-
-  def subject_body
-    activities.first.try(:subject).try(:sanitized_body)
-  end
-
-  def subjects
-    activities.map(&:subject)
+  def sentences
+    StorySentences.new(self).as_json
   end
 end

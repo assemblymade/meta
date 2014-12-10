@@ -13,7 +13,7 @@ class NewsFeedItemCommentsController < ProductController
       body: params[:body]
     )
 
-    forward_comment
+    publish_comment
 
     respond_with @item, location: product_updates_url(@product)
   end
@@ -27,26 +27,12 @@ class NewsFeedItemCommentsController < ProductController
     respond_with comments, location: product_url(@product)
   end
 
-  def forward_comment
+  def publish_comment
     if target = @news_feed_item.target
-      if target.is_a? TeamMembership
-        wip = target.product.main_thread
 
-        event = Event.create_from_comment(
-          wip,
-          Event::Comment,
-          product_markdown(target.product,
-            "_@#{target.user.username}: " + @item.body + "_"
-          ),
-          current_user
-        )
-
-        Activities::Chat.publish!(
-          actor: event.user,
-          subject: event,
-          target: wip
-        )
-      elsif target.is_a? Wip
+      # we're currently duplicating comments to wip comments. This will be fixed
+      # we can remove this if block then
+      if target.is_a? Wip
         event = Event.create_from_comment(
           target,
           Event::Comment,

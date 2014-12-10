@@ -23,7 +23,7 @@ class PublishActivity
   end
 
   def push_to_feeds!(story)
-    (story.reader_ids - [activity.actor_id]).each do |user_id|
+    story.reader_ids.each do |user_id|
       NewsFeed.new(User, user_id).push(story)
     end
   end

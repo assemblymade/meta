@@ -1,0 +1,36 @@
+en:
+  stories:
+    verbs:
+      award:
+        singular: awarded
+      close:
+        singular: closed
+      comment:
+        singular: commented on
+      introduce:
+        singular: introduced themselves
+      post:
+        singular: published
+      start:
+        singular: started
+
+    subjects:
+      discussion:
+        other: "#%{number} %{title}"
+        owner: "#%{number} %{title}"
+
+      post:
+        other: 'a post'
+        owner: 'a post you wrote'
+
+      product:
+        other: ''
+        owner: ''
+
+      task:
+        other: "#%{number} %{title}"
+        owner: "#%{number} %{title}"
+
+      team_membership:
+        other: "an introduction"
+        owner: "your introduction"

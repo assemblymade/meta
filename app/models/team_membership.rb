@@ -3,6 +3,7 @@ class TeamMembership < ActiveRecord::Base
   belongs_to :user
 
   has_many :team_membership_interests
+  has_one :news_feed_item, foreign_key: 'target_id'
 
   scope :active, -> { where('deleted_at is null') }
   scope :core_team, -> { where('is_core is true') }
@@ -24,4 +25,16 @@ class TeamMembership < ActiveRecord::Base
     )
   end
 
+  # stories
+  def preview
+    bio
+  end
+
+  def url_params
+    [product, self]
+  end
+
+  def follower_ids
+    news_feed_item.try(:follower_ids) || []
+  end
 end

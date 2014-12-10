@@ -15,6 +15,7 @@
   var NewsFeedItem = React.createClass({
     propTypes: {
       product: React.PropTypes.object.isRequired,
+      showAllComments: React.PropTypes.bool,
       target: React.PropTypes.object,
       user: React.PropTypes.object.isRequired
     },
@@ -44,7 +45,7 @@
       var target = this.props.target;
 
       if (this.props.productPage) {
-        return <NewsFeedItemComments item={this.props} />;
+        return <NewsFeedItemComments showAllComments={this.props.showAllComments} item={this.props}  />;
       }
 
       var commentCount = target && target.comments_count;

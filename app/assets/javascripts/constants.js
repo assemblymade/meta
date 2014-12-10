@@ -146,6 +146,10 @@
 
       PUSHER_PRESENCE_CONNECTED: null,
 
+      RR_RECEIVE_READ_RECEIPTS: null,
+
+      STORY_RECEIVE_STORIES: null,
+
       USER_SIGNED_IN: null,
 
       WIP_EVENT_CREATING: null,
