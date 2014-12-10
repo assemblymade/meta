@@ -21,10 +21,12 @@
 .nav-tabs {
   border-bottom: none;
   display:table;
+  width:100%;
   text-align:center;
   //
   @media screen and (min-width: 600px) {
     display:block;
+    width:auto;
   }
 
   > li {

@@ -39,60 +39,9 @@
 
 <div id="product">
 
-
-    <!-- <div class="clearfix mxn2 py3">
-              <div class="sm-col sm-col-2 px2">
-              <a href="<%= product_path(@product) %>">
-              <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 135 %>
-            </a>
-          </div>
-
-          <div class="sm-col sm-col-7 px2">
-
-          <h1 class="mt1 mb0">
-          <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
-          </h1>
-
-          <div class="h3 mt0 mb1 gray-1"><%= truncate(@product.pitch, length: 60, separator: ' ') %></div>
-
-          <ul class="list-reset clearfix mxn1 mb0">
-          <% if @product.homepage_url? %>
-          <li class="left px1">
-          <a href="<%= @product.homepage_url %>">
-          <%= inline_react_component 'Icon', icon: 'globe' %>
-          <%= URI(@product.homepage_url.downcase).host %>
-          </a>
-          </li>
-          <% end %>
-
-          <li class="left px1">
-          <a href="<%= product_repos_path(@product) %>">
-          <%= inline_react_component 'Icon', icon: 'github' %>
-          Code
-          </a>
-          </li>
-
-          <% if can?(:edit, @product) %>
-          <li class="left px1">
-          <a href="<%= edit_product_path(@product) %>">
-          <%= inline_react_component 'Icon', icon: 'gear' %>
-          Edit product
-          </a>
-          </li>
-          <% end %>
-          </ul>
-
-          </div>
-
-          <div class="sm-col sm-col-3 p1">
-          <%= react_component('ProductFollowers', product_id: @product.id) %>
-          </div>
-
-          </div> -->
-
     <section id="product-header" class="pt2 mb3 bg-white shadow-light border-bottom tranx_m r600_mb4">
       <div class="container">
-        <div class="block r768_table r1024_block">
+        <div class="block full-width r768_table">
           <div data-label="primary" class="block full-width center py2 valign-mid r768_table-cell r768_left-align">
             <div class="app-icon-container center valign-top r768_table-cell">
               <a class="relative inline-block" href="<%= product_path(@product) %>">
@@ -144,7 +93,7 @@
         </div>
         <!--  -->
 
-        <div data-label="tertiary">
+        <div data-label="tertiary" class="clearfix">
 
           <ul class="nav nav-tabs left">
             <li class="<%= nav_active_class(:product) %>">
@@ -206,7 +155,7 @@
             }
           </script>
 
-          <div class="center dropdown r600_right">
+          <div class="center dropdown">
             <a class="btn btn-primary bg-blue dropdown-toggle mt1 mb2 r600_m" href="javascript:void(0);" data-toggle="dropdown" id="product-actions">
               <span class="mr1">New</span>
               <%= inline_react_component 'Icon', icon: 'chevron-down' %>

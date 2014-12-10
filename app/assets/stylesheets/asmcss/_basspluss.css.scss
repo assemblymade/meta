@@ -50,6 +50,9 @@ $space-5: 48px;
   .r600_width-auto {
     width:auto !important;
   }
+  .r600_float-right {
+    float:right !important;
+  }
   .r600_right {
     text-align:right !important;
   }
@@ -58,6 +61,9 @@ $space-5: 48px;
   }
   .r600_m {
     margin:0 !important;
+  }
+  .r600_mr1 {
+    margin-right: $space-1 !important;
   }
   .r600_mb4 {
     margin-bottom: $space-4 !important;
