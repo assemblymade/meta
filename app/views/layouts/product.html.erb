@@ -38,12 +38,11 @@
 <!-- Back to our scheduled programming -->
 
 <div id="product">
-
     <section id="product-header" class="pt2 mb3 bg-white shadow-light border-bottom tranx_m r600_mb4">
       <div class="container">
         <div class="block full-width r768_table">
           <div data-label="primary" class="block full-width center py2 valign-mid r768_table-cell r768_left-align">
-            <div class="app-icon-container center valign-top r768_table-cell">
+            <div class="app-icon-container center valign-top r768_table-cell r768_pr3">
               <a class="relative inline-block" href="<%= product_path(@product) %>">
                 <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 200 %>
               </a>
@@ -82,12 +81,6 @@
             </div>
           </div>
           <div data-label="secondary" class="mx-auto center valign-mid r768_table-cell r768_right-align" style="width:200px">
-            <!-- <div class="button">
-              <button type="button" data-reactid=".5.0">
-                <div class="count" data-reactid=".5.0.1">0</div>
-                <div class="title" data-reactid=".5.0.0">Follow</div>
-              </button>
-            </div> -->
             <%= react_component('ProductFollowers', product_id: @product.id) %>
           </div>
         </div>
@@ -203,7 +196,6 @@
   <div id='create-bounty'></div>
   <%= yield %>
 </div>
-
 
 <% unless current_user.nil? %>
   <div class="modal fade" id="edit-membership-modal" tabindex="-1" role="dialog" aria-hidden="true">

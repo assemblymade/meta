@@ -83,6 +83,9 @@ $space-5: 48px;
   .r768_m0 {
     margin: 0 !important;
   }
+  .r768_pr3 {
+    padding-right:$space-3;
+  }
   .r768_table {
     display: table !important;
     table-layout:fixed !important;
@@ -92,6 +95,9 @@ $space-5: 48px;
   }
   .r768_left-align {
     text-align: left !important;
+  }
+  .r768_right-align {
+    text-align: right !important;
   }
 }
 

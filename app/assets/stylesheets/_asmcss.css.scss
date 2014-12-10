@@ -55,7 +55,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 600 }
 
 h1, .h1 {
   font-size: $font-size-h1; // 30px
-  line-height: 3.55rem; // 42px
+  line-height: 4rem; // 48px
 }
 h2, .h2 {
   font-size: $font-size-h2; // 30px
@@ -158,10 +158,15 @@ button, .button {
 }
 
 .button-2 {
-  //
-  cursor:pointer;
   position:relative;
   display: inline-block;
+  padding:7px 30px;
+  border-radius: 50px;
+  color: $gray-3;
+  font-size:13px;
+  background:$gray-light;
+  box-shadow: none;
+  //
   &:before {
     content:'';
     display: block;
@@ -170,37 +175,27 @@ button, .button {
     left:0;
     width:100%;
     height:100%;
-    border:1px solid rgba(100,100,100,0.15);
+    border:none;
     border-radius: 50px;
     -webkit-transition: background 0.15s ease-in-out;
     transition: background 0.15s ease-in-out;
   }
-  &:hover {
+  &.toggler-primary {
+    background:$white;
+    color: $blue;
+    box-shadow: 0px 3px 5px -4px rgba(50, 50, 50, 0.3);
     //
     &:before {
-      background: rgba(51,142,218,0.25);
-      -webkit-transition: background 0.15s ease-in-out;
-      transition: background 0.15s ease-in-out;
+      border:1px solid rgba(100,100,100,0.15);
     }
-  }
-  button {
-    padding:10px 30px 11px;
-    border-radius: 50px;
-    width:100%;
-    color: #338EDA;
-    font-size:13px;
-    background:#fff;
-    box-shadow: 0px 3px 5px -4px rgba(50, 50, 50, 0.3);
-  }
-  .count {
-    display:none;
-    padding:0 2px 0 0;
-    &.active {
-      display:inline-block;
+    &:hover {
+      //
+      &:before {
+        background: rgba(51,142,218,0.25);
+        -webkit-transition: background 0.15s ease-in-out;
+        transition: background 0.15s ease-in-out;
+      }
     }
-  }
-  .title {
-    display:inline-block;
   }
 }
 
