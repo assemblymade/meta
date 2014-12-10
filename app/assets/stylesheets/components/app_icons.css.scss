@@ -28,10 +28,6 @@
 .app-icon {
   @extend .img-responsive;
   border-radius: 5px;
-  max-width:82px;
-  @media screen and (min-width: 768px) {
-    max-width:100%;
-  }
   // --- depricated
   // border-radius: floor(percentage(2px / 24px));
 }

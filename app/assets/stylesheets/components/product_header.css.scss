@@ -12,6 +12,12 @@
       margin: -7px 0 5px;
     }
   }
+  .app-icon {
+    @media screen and (min-width: 768px) {
+      max-width:100%;
+    }
+  }
+
   div[data-label="primary"] {
     li{
       a {
