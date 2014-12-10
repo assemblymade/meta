@@ -145,6 +145,10 @@
     },
 
     draggable: function() {
+      if(!this.props.product.can_update) {
+        return false
+      }
+
       var params = this.params(this.state.value, this.state.sort)
       return params.sort == 'priority' && params.state == 'open'
     }

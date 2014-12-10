@@ -11,7 +11,7 @@
   &.hover,
   &:hover {
     background-image: image-url('handle-active.png');
-    background-color: $gray-lighter;
+    background-color: darken(white, 1%);
   }
 
   &.active,

@@ -46,7 +46,16 @@ class WipsController < ProductController
 
   def update
     UpdatesWip.update(@wip, update_wip_params, current_user)
-    respond_with @wip
+    respond_with [@wip.product, @wip]
+  end
+
+  def apply_tags
+    if tag_list = wip_params[:tag_list]
+      tag_list.each do |t|
+        MakeMarks.new.mark_with_name(@wip, t)
+        end
+      @wip.update_tag_names! current_user, tag_list
+    end
   end
 
   def tag

@@ -28,7 +28,7 @@ class UpdatesWip
   def update_title
     return if title.blank? || title == wip.title
 
-    wip.update_title!(current_user, title)
+    wip.update_title!(user, title)
   end
 
   def update_tags
@@ -38,7 +38,7 @@ class UpdatesWip
       MakeMarks.new.mark_with_name(wip, t)
     end
 
-    wip.update_tag_names!(current_user, tag_list)
+    wip.update_tag_names!(user, tag_list)
   end
 
   def update_priority
