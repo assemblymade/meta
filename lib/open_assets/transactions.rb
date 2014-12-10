@@ -36,13 +36,10 @@ module OpenAssets
       recipient_address = destination
       BtcPayment.create!({btcusdprice_at_moment: current_price, created_at: DateTime.now, action: "Sent BTC", sender: sender, recipient: recipient, sender_address: sender_address, recipient_address: recipient_address, btc_change: amount*-100000000})
 
-
       remote = OpenAssets::Remote.new("https://coins.assembly.com")
       end_url="v1/btc"
       remote.post end_url, params.to_json
-
     end
-
 
     def forge_coins(product_id, total_coins)
       product = Product.find(product_id)
@@ -123,6 +120,17 @@ module OpenAssets
       price = price['amount'].to_f
     end
 
+    def historical_price(date)
+      date.strftime('%a %b %d %H:%M:%S %Z %Y')
+      datestring = date.strftime("%Y-%m-%d")
+      url = "https://api.coindesk.com"
+      remote = OpenAssets::Remote.new(url)
+      end_url = "/v1/bpi/historical/close.json?start=#{datestring}"
+      puts end_url
+      price = remote.get end_url
+      price = JSON.parse(price)['bpi'].first[1]
+    end
+
     def btc_pay_user(username, user_public_address, amount)
       send_btc(destination, amount)
       current_price = get_btc_spot_price_coinbase()*100
@@ -137,6 +145,55 @@ module OpenAssets
     def record_outflow(amount, action, destination_address, datetime, who_received)
       current_price = get_btc_spot_price_coinbase()*100
       BtcPayment.create!({btcusdprice_at_moment: current_price, created_at: datetime, action: action, recipient: who_received, recipient_address: destination_address, btc_change: -100000000*amount, sender: "Assembly Central", sender_address: ENV.fetch("CENTRAL_ADDRESS_PUBLIC_ADDRESS")})
+    end
+
+    def btc_assets_as_of_date(date)
+      BtcPayment.where('created_at < ?', date).sum(:btc_change).to_f/100000000
+    end
+
+    def dollars_spent_on_btc(date)
+      BtcPayment.where('created_at < ?', date).where('btc_change > 0').sum('btc_change*btcusdprice_at_moment').to_f / 10000000000
+    end
+
+    def dollars_spent_on_btc_per_month(date)
+      BtcPayment.where('created_at < ?', date).where('created_at > ?', date-1.month).where('btc_change > 0').sum('btc_change*btcusdprice_at_moment').to_f / 10000000000
+    end
+
+    def btc_dollar_value(date)
+      btc_assets_as_of_date(date).to_f*historical_price(date) / 100000000
+    end
+
+    def dollar_outflows_as_btc(date)
+      BtcPayment.where('created_at < ?', date).where('btc_change < 0').sum('btc_change*-1*btcusdprice_at_moment').to_f/10000000000
+    end
+
+    def dollar_outflows_as_btc_per_month(date)
+      BtcPayment.where('created_at < ?', date).where('created_at > ?', date-1.month).where('btc_change < 0').sum('btc_change*-1*btcusdprice_at_moment').to_f/10000000000
+    end
+
+    def average_bought_price_as_of_date(date)
+      sum = 0
+      btcsum = 0
+      BtcPayment.where('created_at < ?', date).each do |b|
+        if b.action == "Bought BTC"
+          sum = sum + b.btc_change * b.btcusdprice_at_moment.to_f / 100
+          btcsum = btcsum + b.btc_change
+        end
+      end
+      if btcsum != 0
+        return sum.to_f / btcsum.to_f
+      else
+        return 0
+      end
+    end
+
+    def gainloss(date)
+      btc_dollar_value(date) + dollar_outflows_as_btc(date) - dollars_spent_on_btc(date)
+    end
+
+    def gainloss_for_month(date)
+      lastdate = date - 1.month
+      gainloss(date) - gainloss(lastdate)
     end
 
   end

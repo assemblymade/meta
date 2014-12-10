@@ -296,14 +296,16 @@ ActiveRecord::Schema.define(version: 20141210195533) do
   add_index "hearts", ["user_id", "heartable_id"], name: "index_hearts_on_user_id_and_heartable_id", unique: true, using: :btree
 
   create_table "ideas", id: :uuid, force: true do |t|
-    t.string   "slug",                       null: false
-    t.string   "name",                       null: false
+    t.string   "slug",                                              null: false
+    t.string   "name",                                              null: false
     t.text     "body"
-    t.uuid     "user_id",                    null: false
-    t.boolean  "claimed",    default: false
+    t.uuid     "user_id",                                           null: false
+    t.boolean  "claimed",           default: false
     t.uuid     "product_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "score",             default: 0.0
+    t.datetime "last_score_update", default: '2013-06-06 00:00:00'
   end
 
   create_table "integrations", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

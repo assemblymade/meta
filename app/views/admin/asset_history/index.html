@@ -1,0 +1,41 @@
+<h2>Bitcoin Asset History</h2>
+
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Total BTC Assets</th>
+      <th>USD Equivalent Change</th>
+      <th>Dollars Spent Buying Bitcoin</th>
+      <th>Dollars sent to Users as BTC</th>
+      <th>USD Average Price Bought For</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @asset_data.each do |k, v| %>
+    <tr>
+      <td>
+        <%= k.strftime("%m-%d-%y") %>
+      </td>
+      <td>
+        <%= v['btc_assets'] %>
+      </td>
+      <td>
+        <%= v['USD_change'] %>
+      </td>
+      <td>
+        <%= v['dollars_spent']  %>
+      </td>
+      <td>
+        <%= v['USD_outflows'] %>
+      </td>
+      <td>
+        <%= v['USD_average'] %>
+      </td>
+    </tr>
+    <% end %>
+
+</tbody>
+</table>

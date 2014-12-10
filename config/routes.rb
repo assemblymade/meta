@@ -177,6 +177,7 @@ ASM::Application.routes.draw do
   # Admin
   namespace :admin do
     resources :bitcoin, only: [:index]
+    resources :asset_history, only: [:index]
     resources :user_books, only: [:index]
     resources :karma, only: [:index]
     resources :karmahistory, only: [:index]

@@ -330,7 +330,7 @@ class User < ActiveRecord::Base
   end
 
   def total_owed
-    (self.total_earned - self.total_received).round(2)
+    (self.total_earned - self.total_received - self.total_withheld).round(2)
   end
 
   def total_withheld

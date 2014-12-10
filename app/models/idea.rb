@@ -65,15 +65,26 @@ class Idea < ActiveRecord::Base
     self.news_feed_item.hearts.count
   end
 
-  def score
-    lovescore = 0
-    heartburn = 2592000
-    self.news_feed_item.hearts.each do |h|
-      time_since = DateTime.now.to_i - h.created_at.to_i
+  def save_score
+    lovescore = self.score
+    heartburn = 60.days.to_i  #period for 100% inflation, equivalent to half-life
+    epoch_start = DateTime.new(2013,6,6).to_i
+
+    self.news_feed_item.hearts.where('created_at > ?',self.last_score_update).each do |h|
+      time_since = h.created_at.to_i - epoch_start
       multiplier = 2 ** (time_since.to_f / heartburn.to_f)
       lovescore = lovescore + multiplier
     end
+    self.update!({last_score_update: DateTime.now, score: lovescore})
     lovescore
+  end
+
+  def historical_rank_contemporary
+    Idea.order(score: :desc).find_index(self)
+  end
+
+  def percentile
+    self.historical_rank.to_f / Idea.count*100.round(2)
   end
 
 end

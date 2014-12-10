@@ -1,6 +1,6 @@
 class ViewWorker
 
-  VIEW_PRODUCT_MARKING_WEIGHT = 0.01
+  VIEW_PRODUCT_MARKING_WEIGHT = 0.002
 
   include Sidekiq::Worker
   def perform(user_id, viewable_id, viewable_type)
