@@ -132,6 +132,30 @@ class Task < Wip
   end
   alias_method :calculate_current_value, :value
 
+  def on_open_entry(prev_state, event, *args)
+    assign_top_priority
+  end
+
+  def on_open_exit(prev_state, event, *args)
+    remove_priority
+  end
+
+  def assign_top_priority
+    update(priority: 0)
+    recalculate_sibling_priorities
+  end
+
+  def remove_priority
+    update(priority: nil)
+    recalculate_sibling_priorities
+  end
+
+  def recalculate_sibling_priorities
+    tasks = self.product.tasks.where(state: 'open').where.not(priority: nil)
+    rankings_query = tasks.select('id, row_number() OVER (ORDER BY priority ASC) AS priority').to_sql
+    tasks.where('wips.id = rankings.id').update_all("priority = rankings.priority FROM (#{rankings_query}) rankings")
+  end
+
   def active_offers
     offers.group_by(&:user).flat_map { |u, o| o.sort_by(&:created_at).last }
   end

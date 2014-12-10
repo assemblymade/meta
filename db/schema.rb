@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141205010241) do
+ActiveRecord::Schema.define(version: 20141205010242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -996,10 +996,12 @@ ActiveRecord::Schema.define(version: 20141205010241) do
     t.integer  "watchings_count"
     t.datetime "locked_at"
     t.uuid     "locked_by"
+    t.integer  "priority"
   end
 
   add_index "wips", ["flagged_at"], name: "index_wips_on_flagged_at", using: :btree
   add_index "wips", ["product_id", "number"], name: "index_wips_on_product_id_and_number", unique: true, using: :btree
+  add_index "wips", ["product_id", "priority"], name: "index_wips_on_product_id_and_priority", using: :btree
   add_index "wips", ["product_id", "promoted_at"], name: "index_wips_on_product_id_and_promoted_at", using: :btree
   add_index "wips", ["product_id"], name: "index_wips_on_product_id", using: :btree
 
