@@ -18,6 +18,7 @@ class WipFactory
     if wip.valid?
       add_description(wip)
       watch_product
+      prioritize(wip)
 
       NewsFeedItem.create_with_target(wip)
 
@@ -47,6 +48,10 @@ class WipFactory
 
   def watch_product
     @product.auto_watch!(@creator)
+  end
+
+  def prioritize(wip)
+    wip.assign_top_priority
   end
 
   def register_with_readraptor(wip, users)

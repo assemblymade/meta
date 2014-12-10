@@ -3,7 +3,8 @@ class BountySerializer < ApplicationSerializer
 
   attributes :can_update, :comments_count, :contracts, :earnable, :flagged,
     :following, :markdown_description, :most_recent_other_wip_worker,
-    :news_feed_item_id, :number, :offers, :open, :state, :title, :value, :locked_at
+    :news_feed_item_id, :number, :offers, :open, :state, :title, :value,
+    :locked_at, :priority
 
   attributes :chat_room_url, :close_url, :edit_url, :flag_url, :follow_url,
     :offers_url, :mute_url, :start_work_url, :stop_work_url, :tag_url,

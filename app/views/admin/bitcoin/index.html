@@ -6,6 +6,9 @@
 <% sum = 0 %>
 <% sumin = 0 %>
 <% sumout = 0 %>
+
+
+
 <% @payments.each do |p| %>
 <% sum = sum + p.btc_change/100000000.0 %>
 <% end %>
@@ -13,6 +16,13 @@
 Current USD Value:
 </h4>
 <br>
+
+<h4>Total BTC Paid to Users
+  <br>
+<%= "#{@total_btc_paid_to_users} BTC" %>
+<br>
+<%= "$ #{@total_cash_value_of_btc_to_users.round(2)}  --  cash equivalent at time of payment" %> 
+</h4>
 
 <table class="table table-striped">
   <thead>

@@ -1,14 +1,12 @@
 /** @jsx React.DOM */
 
 (function() {
+  var BountiesStore = require('../stores/bounties_store.js')
+  var BountyActionCreators = require('../actions/bounty_action_creators.js')
   var BountyFilter = require('./bounty_filter.js.jsx')
   var BountyList = require('./bounty_list.js.jsx')
   var PaginationLinks = require('./pagination_links.js.jsx')
   var Spinner = require('./spinner.js.jsx')
-  var BountyActionCreators = require('../actions/bounty_action_creators.js')
-  var BountiesStore = require('../stores/bounties_store.js')
-
-  var timeout = null
 
   var BountyIndex = React.createClass({
     propTypes: {
@@ -19,18 +17,26 @@
     },
 
     getInitialState: function() {
-      return _.extend({
+      return {
         value: 'is:open',
         sort: 'priority'
-      }, this.getStateFromStore())
+      }
     },
 
     componentDidMount: function() {
-      BountiesStore.addListener('change', this._onChange)
+      window.addEventListener('scroll', this.onScroll);
     },
 
     componentWillUnmount: function() {
-      BountiesStore.removeListener('change', this._onChange)
+      window.removeEventListener('scroll', this.onScroll);
+    },
+
+    onScroll: function() {
+      var atBottom = $(window).scrollTop() + $(window).height() > $(document).height() - 200
+
+      if (atBottom) {
+        BountyActionCreators.requestNextPage(this.props.product.slug, this.params(this.state.value, this.state.sort))
+      }
     },
 
     getBounties: function(value, sort, page) {
@@ -82,19 +88,6 @@
       }.bind(this))
     },
 
-    renderBounties: function() {
-      if(this.state.loading) {
-        return <Spinner />
-      } else {
-        return (
-          <div>
-            <BountyList bounties={this.state.bounties} product={this.props.product} />
-            <PaginationLinks page={this.state.page} pages={this.state.pages} onPageChanged={this.handlePageChange} />
-          </div>
-        )
-      }
-    },
-
     render: function() {
       var bountyFilterProps = _.pick(this.props, 'tags', 'creators', 'workers')
 
@@ -116,7 +109,7 @@
 
             <div className="border-top mt2 mb2"></div>
 
-            {this.renderBounties()}
+            <BountyList product={this.props.product} valuation={this.props.valuation} onPageChange={this.handlePageChange} draggable={this.draggable()} />
           </div>
         </div>
       )
@@ -151,19 +144,14 @@
       return params
     },
 
-    getStateFromStore: function() {
-      return {
-        bounties: BountiesStore.getBounties(),
-        page: BountiesStore.getPage(),
-        pages: BountiesStore.getPages(),
-        loading: BountiesStore.getLoading()
+    draggable: function() {
+      if(!this.props.product.can_update) {
+        return false
       }
-    },
 
-    _onChange: function() {
-      this.setState(this.getStateFromStore())
+      var params = this.params(this.state.value, this.state.sort)
+      return params.sort == 'priority' && params.state == 'open'
     }
-
   });
 
   if (typeof module !== 'undefined') {

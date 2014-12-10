@@ -182,6 +182,6 @@ class TasksController < WipsController
   end
 
   def update_wip_params
-    params.require(:task).permit(:title, :description)
+    params.require(:task).permit(:title, :description, :priority, :priority_above_id, :priority_below_id)
   end
 end
