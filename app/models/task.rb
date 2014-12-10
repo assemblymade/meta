@@ -9,13 +9,8 @@ class Task < Wip
   has_many :votes, :as => :voteable, :after_add => :vote_added
   has_many :workers, :through => :wip_workers, :source => :user
   has_many :news_feed_items, as: :target
-
-  validate :multiplier_not_changed
-
-  before_save :update_trending_score
   
   scope :allocated,   -> { where(state: :allocated) }
-  scope :hot,         -> { order(:trending_score => :desc) }
   scope :reviewing,   -> { where(state: :reviewing) }
   scope :won,         -> { joins(:awards) }
   scope :won_after,   -> (time) { won.where('awards.created_at >= ?', time) }
@@ -74,14 +69,6 @@ class Task < Wip
     def deliverable_types
       %w(design code copy other)
     end
-  end
-
-  def urgency
-    Urgency.find(multiplier)
-  end
-
-  def urgency=(urgency)
-    self.multiplier = urgency.multiplier
   end
 
   def awardable?
@@ -164,25 +151,8 @@ class Task < Wip
     offers.group_by(&:user).flat_map { |u, o| o.sort_by(&:created_at).last }
   end
 
-  def score
-    votes_count * score_multiplier
-  end
-
-  def score_multiplier
-    multiplier
-  end
-
   def promoted?
     !promoted_at.nil?
-  end
-
-  def multiply!(actor, multiplier)
-    raise ActiveRecord::RecordNotSaved unless actor.can? :multiply, self
-
-    self.promoted_at = Time.current
-    self.urgency = Urgency.find(multiplier)
-    self.save!
-    milestones.each(&:touch)
   end
 
   def can_vote?(user)
@@ -328,49 +298,8 @@ class Task < Wip
   # trending
   EPOCH = 1134028003 # first WIP
 
-  def update_trending_score
-    self.trending_score = calculate_trending_score
-  end
-
-  def trending_half_life
-    3.days
-  end
-
-  def trending_value
-    score
-  end
-
-  def trending_value_bump
-    Math.log10([trending_value, 1].max) * 2
-  end
-
-  def trending_time_bump
-    created_time_value = created_at || Time.now
-    comment_time_value = events.average("extract ('epoch' from created_at)") || created_time_value
-
-    (((created_time_value.to_i + comment_time_value.to_i).to_f / 2) - EPOCH) / trending_half_life
-  end
-
-  def calculate_trending_score
-    value_bump = trending_value_bump
-    time_bump = trending_time_bump
-
-    order = (value_bump + time_bump)
-
-    val = (order.round(7) * (10**7)).to_i
-    # puts "##{number} trending_value:#{trending_value} value_bump:#{"%.02f" % value_bump} + time_bump:#{"%.02f" % time_bump} = #{"%.04f" % order}"
-
-    val
-  end
-
   def contracts
     WipContracts.new(self)
-  end
-
-  def multiplier_not_changed
-    if multiplier_changed? && !open?
-      errors.add(:multiplier, "cannot be changed on closed Bounty")
-    end
   end
 
   def update_coins_cache!

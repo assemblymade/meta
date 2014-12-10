@@ -81,7 +81,7 @@ class TasksController < WipsController
 
     # FIXME: Insert the bounty at the top of the current list (bounties or
     # activity) instead of redirecting
-    respond_with @bounty, location: wip_path(@bounty)
+    respond_with @bounty, location: @bounty.errors.blank? ? wip_path(@bounty) : nil
   end
 
   def show
@@ -155,12 +155,6 @@ class TasksController < WipsController
     @milestone.tasks -= [@task]
 
     render nothing: true, status: 200
-  end
-
-  def urgency
-    authorize! :multiply, @wip
-    @urgency = Urgency.find_by_slug!(params[:urgency])
-    @wip.multiply!(current_user, @urgency.multiplier)
   end
 
   # private

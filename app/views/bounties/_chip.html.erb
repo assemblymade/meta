@@ -8,12 +8,6 @@
     </div>
 
     <div>
-      <% if bounty.open? %>
-        <div class="pull-right ml2">
-          <%= render partial: 'bounties/urgency', locals: { task: bounty } %>
-        </div>
-      <% end %>
-
       <span class="mr2">
         <%= inline_react_component 'BountyValuation', {
           product: { name: bounty.product.name },

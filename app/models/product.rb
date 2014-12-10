@@ -475,6 +475,16 @@ class Product < ActiveRecord::Base
     self.logo || PosterImage.new(self)
   end
 
+  def logo_url
+    if logo
+      logo.url
+    elsif poster
+      poster_image.url
+    else
+      '/assets/app_icon.png'
+    end
+  end
+
   def generate_authentication_token
     loop do
       self.authentication_token = Devise.friendly_token

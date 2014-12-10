@@ -3,7 +3,7 @@
     <% case %>
     <% when product.profitable? || product.greenlit? %>
       <div class="md-show">
-        <%= firesize_img product.poster_image_url, 340, 340, 'g_center' %>
+        <%= firesize_img product.logo_url, 340, 340, 'g_center' %>
       </div>
     <% when product.team_building? %>
       <div class="square bg-white">
