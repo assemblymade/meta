@@ -1,4 +1,4 @@
-#product-header {
+.product-header {
   border-bottom: 1px solid rgba(100, 100, 100, 0.15);
   //
   h1 {
@@ -12,6 +12,13 @@
       margin: -7px 0 5px;
     }
   }
+  .app-icon {
+    max-width:82px;
+    @media screen and (min-width: 768px) {
+      max-width:100%;
+    }
+  }
+
   div[data-label="primary"] {
     li{
       a {

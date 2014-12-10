@@ -8,7 +8,6 @@ module.exports = React.createClass({
   },
 
   render: function() {
-
     return (
       <button className={this.togglerClasses()} type="button" onClick={this.handleClick}>
         <div className="title">{this.state.following ? 'Following' : 'Follow' }</div>
@@ -26,11 +25,11 @@ module.exports = React.createClass({
 
   togglerClasses: function() {
     return React.addons.classSet({
-      'button-2': true,
+      'pill-button': true,
       'dropdown-toggle': true,
       'toggler': true,
       'block': true,
-      'toggler-primary': (!this.state.following)
+      'lesser': (this.state.following)
     })
   },
 
