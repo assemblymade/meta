@@ -26,7 +26,8 @@ class NewsFeedItemCommentsController < ProductController
 
     events = ActiveModel::ArraySerializer.new(
       @news_feed_item.events.order(created_at: :asc),
-      each_serializer: EventSerializer
+      each_serializer: EventSerializer,
+      scope: current_user
     )
 
     feed = {

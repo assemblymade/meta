@@ -362,6 +362,8 @@ ActiveRecord::Schema.define(version: 20141210195533) do
     t.datetime "created_at"
   end
 
+  add_index "marks", ["name"], name: "index_marks_on_name", unique: true, using: :btree
+
   create_table "measurements", id: :uuid, force: true do |t|
     t.uuid     "metric_id",  null: false
     t.decimal  "value",      null: false

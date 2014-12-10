@@ -36,7 +36,6 @@ class EventSerializer < ActiveModel::Serializer
   end
 
   def award_url
-    raise (award_product_wip_url(product, wip)).inspect if wip.open? && can_award
     award_product_wip_url(product, wip) if wip.open? && can_award
   end
 
