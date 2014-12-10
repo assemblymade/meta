@@ -38,7 +38,7 @@ class SlackNotifier
 
   def self.first_chat_message(user, chat_room_slug)
     url = Rails.application.routes.url_helpers.chat_room_url(
-            ChatRoom.find_by(slug: 'general'), 
+            ChatRoom.find_by(slug: chat_room_slug), 
             message: "Hey @#{user.username}!"
           )
     cta_link = "<#{url}|Greet me in #{chat_room_slug.titleize} chat.>"
