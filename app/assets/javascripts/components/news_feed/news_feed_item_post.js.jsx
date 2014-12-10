@@ -17,12 +17,22 @@ module.exports = React.createClass({
       <a className="h3 block mt0 mb3" href={this.props.url} onClick={this.handleClick}>
         <div className="p3">
           {this.props.title}
-
-          <div className="gray-darker">
+          {this.renderSummary()}
+          <div className="mt3 gray-darker">
             <Markdown content={this.props.body} normalized={true} />
           </div>
         </div>
       </a>
     );
+  },
+
+  renderSummary: function() {
+    if (this.props.target && this.props.target.summary) {
+      return (
+        <div className="gray">
+          <Markdown content={this.props.target.summary} normalized={true} />
+        </div>
+      );
+    }
   }
 });
