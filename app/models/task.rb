@@ -141,13 +141,17 @@ class Task < Wip
   end
 
   def assign_top_priority
-    update(priority: 0)
-    recalculate_sibling_priorities
+    ActiveRecord::Base.transaction do
+      update(priority: 0)
+      recalculate_sibling_priorities
+    end
   end
 
   def remove_priority
-    update(priority: nil)
-    recalculate_sibling_priorities
+    ActiveRecord::Base.transaction do
+      update(priority: nil)
+      recalculate_sibling_priorities
+    end
   end
 
   def recalculate_sibling_priorities
