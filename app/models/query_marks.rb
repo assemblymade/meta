@@ -134,9 +134,12 @@ class QueryMarks
   def get_all_product_vectors
     products = Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagged_at: nil).where.not(slug: 'meta')
     magnitude_query = Marking.where('markings.markable_id = products.id AND markings.mark_id = marks.id').select('SQRT(SUM(markings.weight ^ 2))').to_sql
-    product_vector = products.joins(:marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)")
-    task_vector = products.joins(tasks: :marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)")
-    return product_vector, task_vector
+    product_vector = products.joins(:marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)").group_by{ |product, mark, weight| product }
+    task_vector = products.joins(tasks: :marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)").group_by{|product, mark, weight| product}
+
+    product_vector.merge(task_vector) { |_, v1, v2| v1 + v2 }
+
+    #Hash[v1].merge(Hash[v2]) { |_, v1, v2| v1 + v2 }
     #products.joins(:marks, tasks: :marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight) / (#{magnitude_query})")
 
     # products.joins(:marks).pluck("products.id, marks.id, markings.weight / (#{magnitude_query})")

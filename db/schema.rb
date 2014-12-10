@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141205010241) do
+ActiveRecord::Schema.define(version: 20141210182734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -296,14 +296,16 @@ ActiveRecord::Schema.define(version: 20141205010241) do
   add_index "hearts", ["user_id", "heartable_id"], name: "index_hearts_on_user_id_and_heartable_id", unique: true, using: :btree
 
   create_table "ideas", id: :uuid, force: true do |t|
-    t.string   "slug",                       null: false
-    t.string   "name",                       null: false
+    t.string   "slug",                                              null: false
+    t.string   "name",                                              null: false
     t.text     "body"
-    t.uuid     "user_id",                    null: false
-    t.boolean  "claimed",    default: false
+    t.uuid     "user_id",                                           null: false
+    t.boolean  "claimed",           default: false
     t.uuid     "product_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "score",             default: 0.0
+    t.datetime "last_score_update", default: '2013-06-06 00:00:00'
   end
 
   create_table "integrations", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -996,10 +998,12 @@ ActiveRecord::Schema.define(version: 20141205010241) do
     t.integer  "watchings_count"
     t.datetime "locked_at"
     t.uuid     "locked_by"
+    t.integer  "priority"
   end
 
   add_index "wips", ["flagged_at"], name: "index_wips_on_flagged_at", using: :btree
   add_index "wips", ["product_id", "number"], name: "index_wips_on_product_id_and_number", unique: true, using: :btree
+  add_index "wips", ["product_id", "priority"], name: "index_wips_on_product_id_and_priority", using: :btree
   add_index "wips", ["product_id", "promoted_at"], name: "index_wips_on_product_id_and_promoted_at", using: :btree
   add_index "wips", ["product_id"], name: "index_wips_on_product_id", using: :btree
 
