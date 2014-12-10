@@ -8,8 +8,7 @@
   </span>
 </div>
 <div class="idea-feed mt3">
-  <% @nfis.each do |nfi| %>
-  <% idea = nfi.target %>
+  <% @ideas.each do |idea| %>
     <div class="idea-feed-item card p3">
       <div class="mt0 mb2">
         <div class="left">
@@ -45,7 +44,7 @@
       </div>
     </div>
   <% end %>
-  <%= paginate @nfis, theme: 'twitter-bootstrap-3' %>
+  <%= paginate @ideas, theme: 'twitter-bootstrap-3' %>
 </div>
 <%= render 'wips/heartables' %>
 

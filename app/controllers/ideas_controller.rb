@@ -6,13 +6,14 @@ class IdeasController < ProductController
 
   def index
     # Only NFIs associated with Ideas have a nil associated product
-    @nfis = NewsFeedItem.where(product: nil).order('hearts_count desc').order('created_at desc').page params[:page]
-    @nfis.to_a.reject!{|n| n.target.class.name != "Idea"}
+    ideas = Idea.includes(:news_feed_item).all
 
-    @heartables = @nfis
+    @heartables = ideas.map(&:news_feed_item)
     @user_hearts = if signed_in?
       Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
     end
+
+    @ideas = Kaminari.paginate_array(ideas.sort_by{|a,b| b <=> a}).page(params[:page]).per(20)
   end
 
   def show
