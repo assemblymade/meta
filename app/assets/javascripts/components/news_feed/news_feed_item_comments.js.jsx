@@ -132,7 +132,7 @@ var NewsFeedItemComments = React.createClass({
 
     if (numberOfComments > this.state.comments.length) {
       return (
-        <a className="block h6 px2 mt3 gray-dark clickable"
+        <a className="block text-small py2 gray-dark clickable"
             onClick={this.triggerModal}
             style={{textDecoration: 'underline'}}>
           <span className="mr1">
