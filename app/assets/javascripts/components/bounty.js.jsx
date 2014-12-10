@@ -85,11 +85,10 @@ module.exports = React.createClass({
           </h1>
         </div>
 
-        {this.renderLove()}
-
         <div className="p3">
           {this.renderDescription()}
         </div>
+        {this.renderLove()}
         {this.renderFooter()}
       </div>
     );
@@ -226,7 +225,7 @@ module.exports = React.createClass({
   renderLove: function() {
     if (this.props.item) {
       return (
-        <div className="px3 py2 mb0 mt0 border-bottom">
+        <div className="px3 py2 mb0 mt0 border-top">
           <Love heartable_id={this.props.item.id} heartable_type="NewsFeedItem" />
         </div>
       );

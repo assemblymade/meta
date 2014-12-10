@@ -15,6 +15,35 @@ var NewsFeedItemNewComment = React.createClass({
 
   mixins: [DropzoneMixin],
 
+  calculateRows: function(value) {
+    var rows = this.state.rows;
+    var scrollHeight = this.refs.textarea.getDOMNode().scrollHeight;
+
+    if (scrollHeight > this.previousScrollHeight) {
+      this.previousScrollHeight = scrollHeight;
+      this.textLength = value.length;
+
+      rows++;
+    }
+
+    if (rows - this.props.initialRows === 1) {
+      this.rowTextLength = value.length;
+    }
+
+    // FIXME: this.rowTextLength can be off if, e.g., the user has copypasted
+    //        text in. We should find a more robust way of figuring out the row
+    //        height.
+    if (value.length < this.textLength) {
+      if (value.length === 0) {
+        rows = this.props.initialRows;
+      } else {
+        rows = this.props.initialRows + Math.ceil(value.length / this.rowTextLength);
+      }
+    }
+
+    return rows;
+  },
+
   componentDidMount: function() {
     this.initializeDropzone();
 
@@ -30,6 +59,10 @@ var NewsFeedItemNewComment = React.createClass({
     window.addEventListener("dragenter", this.onDragEnter);
     window.addEventListener("dragleave", this.onDragLeave);
     window.addEventListener("drop",      this.onDragLeave);
+
+    // autoresize
+    this.previousScrollHeight = this.refs.textarea.getDOMNode().scrollHeight;
+    this.textLength = 0;
   },
 
   componentWillUnmount: function() {
@@ -40,20 +73,25 @@ var NewsFeedItemNewComment = React.createClass({
 
   getDefaultProps: function() {
     return {
-      rows: 1
+      initialRows: 2
     };
   },
 
   getInitialState: function() {
     return {
       dragging: false,
+      rows: this.props.initialRows,
       text: ''
     };
   },
 
   onChange: function(e) {
+    var value = e.target.value;
+    var rows = this.calculateRows(value);
+
     this.setState({
-      text: e.target.value
+      rows: rows,
+      text: value
     });
   },
 
@@ -93,7 +131,7 @@ var NewsFeedItemNewComment = React.createClass({
 
     var dropzoneClasses = React.addons.classSet({
       'dropzone': true,
-      'markdown-editor-control': this.props.rows > 1,
+      'markdown-editor-control': this.state.rows > 1,
       'ml1': true
     });
 
@@ -109,14 +147,16 @@ var NewsFeedItemNewComment = React.createClass({
     return (
       <div className="clearfix">
         <div className="left">
-          <Avatar user={window.app.currentUser().attributes} size={18} />
+          <Avatar user={window.app.currentUser().attributes} size={30} />
         </div>
         <div className="px4">
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
-              <textarea type="text"
+              <textarea
+                  ref="textarea"
+                  type="text"
                   className={textareaClasses}
-                  rows={this.props.rows}
+                  rows={this.state.rows}
                   onChange={this.onChange}
                   onKeyPress={this.onKeyPress}
                   value={this.state.text}
@@ -159,6 +199,7 @@ var NewsFeedItemNewComment = React.createClass({
       });
 
       this.setState({
+        rows: this.props.initialRows,
         text: ''
       });
 

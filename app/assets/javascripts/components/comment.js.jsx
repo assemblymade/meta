@@ -44,11 +44,11 @@ module.exports = React.createClass({
     }
 
     return (
-      <div className="clearfix px3">
+      <div className="timeline-item">
         <div className="left activity-avatar">
           <Avatar user={author} size={30} />
         </div>
-        <div className="overflow-hidden activity-body px2">
+        <div className="overflow-hidden activity-body px3">
           <div className="gray-2">
             <a className="bold black" href={author.url}>{author.username}</a>
             {timestamp}

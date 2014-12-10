@@ -56,7 +56,7 @@ var NewsFeedItemComments = React.createClass({
     });
   },
 
-  getDefaultComments: function() {
+  getDefaultProps: function() {
     return {
       commentable: false
     };
@@ -102,12 +102,9 @@ var NewsFeedItemComments = React.createClass({
     }
 
     return (
-      <div className="py2 border-top">
+      <div>
         {this.renderLoadMoreButton()}
-        {/**
-          * replace class with "timeline"
-          */}
-        <div className="mt2 mb2">
+        <div className="timeline">
           {confirmedComments}
         </div>
         {optimisticComments}
@@ -152,11 +149,7 @@ var NewsFeedItemComments = React.createClass({
       var url = this.state.url;
 
       if (window.app.currentUser()) {
-        return (
-          <div className="border-top px3 py2">
-            <NewComment {...this.props} url={url} thread={this.props.item.id} user={window.app.currentUser()} />
-          </div>
-        );
+        return <NewComment {...this.props} url={url} thread={this.props.item.id} user={window.app.currentUser()} />
       }
     }
   },

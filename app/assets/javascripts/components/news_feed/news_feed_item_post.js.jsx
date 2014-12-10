@@ -14,14 +14,15 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div className="p3">
-        <a className="h3 block mt0 mb3" href={this.props.url} onClick={this.handleClick}>
+      <a className="h3 block mt0 mb3" href={this.props.url} onClick={this.handleClick}>
+        <div className="p3">
           {this.props.title}
-        </a>
-        <div className="gray-darker">
-          <Markdown content={this.props.body} normalized={true} />
+
+          <div className="gray-darker">
+            <Markdown content={this.props.body} normalized={true} />
+          </div>
         </div>
-      </div>
-    )
+      </a>
+    );
   }
 });
