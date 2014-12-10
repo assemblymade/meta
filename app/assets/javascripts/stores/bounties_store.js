@@ -14,7 +14,7 @@ class BountiesStore extends EventEmitter {
     _dispatchToken = Dispatcher.register((action) => {
       switch(action.type) {
         case ActionTypes.BOUNTIES_REQUEST:
-          _bounties = []
+          _bounties = action.bounties || []
           _loading = true
           this.emit('change')
           break
@@ -24,6 +24,11 @@ class BountiesStore extends EventEmitter {
           _loading = false
           _page = action.page
           _pages = action.pages
+          this.emit('change')
+          break
+
+        case ActionTypes.BOUNTIES_REORDER:
+          _bounties = action.bounties
           this.emit('change')
           break
       }

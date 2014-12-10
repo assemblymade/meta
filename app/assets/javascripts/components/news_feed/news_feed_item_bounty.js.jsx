@@ -69,11 +69,6 @@
               <span className="mr2" key={'mr2' + bounty.id}>
                 <AppCoins n={bounty.contracts.earnable} />
               </span>
-              <Urgency
-                 initialLabel={bounty.urgency.label}
-                 urgencies={URGENCIES}
-                 state={bounty.state}
-                 url={bounty.urgency_url} />
             </div>
           </div>
           <div className="gray-darker"

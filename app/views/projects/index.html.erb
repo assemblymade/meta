@@ -17,7 +17,6 @@
   <table class="table table-hover">
     <!-- <thead>
       <tr>
-        <th></th>
         <th>Project Name</th>
         <th class="text-right" style="padding-right: 30px;">Bounties</th>
         <th>Completion</th>
@@ -26,11 +25,6 @@
     <% @milestones.each do |milestone| %>
       <% cache [milestone, milestone.wip] do %>
         <tr>
-          <td>
-            <% if urgency = milestone.urgency %>
-              <span class="label label-<%= urgency.slug %>"><%= urgency.label %></span>
-            <% end %>
-          </td>
           <td>
             <a href="<%= product_project_path(milestone.product, milestone.wip) %>"><strong><%= milestone.wip.title %></strong></a>
           </td>

@@ -8,8 +8,6 @@ class TaskSerializer < ApplicationSerializer
     :state, :short_description, :comments_count, :thumbnails, :push_channel,
     :steps, :offers_url, :contracts
 
-  has_one :urgency
-
   has_many :tags
   has_many :invites
   has_many :offers

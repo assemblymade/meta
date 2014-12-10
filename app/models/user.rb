@@ -264,10 +264,6 @@ class User < ActiveRecord::Base
     Watching.watch!(self, Product.find_by!(slug: slug)) unless slug.blank?
   end
 
-  def sum_month_points(time)
-    Task.won_by(self).inject(0) {|sum, wip| sum + wip.score }
-  end
-
   def sum_assembly_assets
     assembly_assets.reduce(0) { |col, asset| asset.amount + col }
   end

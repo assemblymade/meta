@@ -132,7 +132,7 @@ class FilterWipsQuery
     when 'least_recently_updated'
       Wip.order('wips.updated_at ASC')
     when 'priority'
-      Wip.order('wips.multiplier DESC')
+      Wip.order('priority ASC NULLS LAST')
     else
       Wip.order('updated_at desc')
     end
