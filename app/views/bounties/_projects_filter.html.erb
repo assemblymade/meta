@@ -9,12 +9,9 @@
 </div>
 <ul class="nav nav-pills nav-stacked text-small">
   <% if (feature_flag=true) # partner?(@product) %>
-    <% projects.sort_by{|m| -m.multiplier }.first(3).each do |m| %>
+    <% projects.first(3).each do |m| %>
       <li class="<%= 'active' if params[:project].to_i == m.number %>">
         <a href="<%= product_project_path(@product, m) %>">
-          <% if m.urgency %>
-            <span class="pull-right label label-<%= m.urgency.slug %>"><%= m.urgency.label %></span>
-          <% end %>
           <span class="pull-right label label-primary" style="margin-right: 3px;"><%= m.tasks.count %></span>
           <%= m.title %>
         </a>

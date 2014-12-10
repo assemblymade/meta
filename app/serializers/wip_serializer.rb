@@ -1,19 +1,10 @@
 # This shouldn't load too much stuff, only stuff that will be displayed on the index page. Counts etc.
 class WipSerializer < ActiveModel::Serializer
   attributes :id, :url
-  attributes :product_slug,
-             :product_name,
-             :title,
-             :number,
-             :state,
-             :winner,
-             :promoted,
-             :push_channel,
-             :comments_count,
-             :score,
-             :score_multiplier,
-             :deliverable,
-             :can_close
+
+  attributes :product_slug, :product_name, :title, :number, :state,
+    :winner, :promoted, :push_channel, :comments_count, :deliverable,
+    :can_close
 
   # personalized
   attributes :own_comments

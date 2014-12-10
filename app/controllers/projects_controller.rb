@@ -7,10 +7,10 @@ class ProjectsController < ProductController
     @upgrade_stylesheet = true
     @milestones = case params[:filter]
       when 'closed'
-        @product.milestones.closed
+        @product.milestones.closed.order(priority: :asc)
       else
-        @product.milestones.open
-      end.sort_by{|m| -m.multiplier }
+        @product.milestones.open.order(priority: :asc)
+      end
   end
 
   def new

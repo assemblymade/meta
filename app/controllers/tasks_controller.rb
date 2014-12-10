@@ -157,12 +157,6 @@ class TasksController < WipsController
     render nothing: true, status: 200
   end
 
-  def urgency
-    authorize! :multiply, @wip
-    @urgency = Urgency.find_by_slug!(params[:urgency])
-    @wip.multiply!(current_user, @urgency.multiplier)
-  end
-
   # private
 
   def find_wips

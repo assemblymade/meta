@@ -12,14 +12,6 @@ class Work < ActiveRecord::Base
     true
   end
 
-  def score
-    votes_count
-  end
-
-  def score_multiplier
-    1
-  end
-
   def contracts
     WorkContracts.new(self)
   end

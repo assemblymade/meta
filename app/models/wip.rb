@@ -134,14 +134,6 @@ class Wip < ActiveRecord::Base
     nil
   end
 
-  def score
-    nil
-  end
-
-  def score_multiplier
-    nil
-  end
-
   def awardable?
     false
   end
