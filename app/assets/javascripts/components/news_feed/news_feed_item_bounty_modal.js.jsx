@@ -1,8 +1,7 @@
-/** @jsx React.DOM */
-
 var AppIcon = require('../app_icon.js.jsx');
 var Avatar = require('../avatar.js.jsx');
 var Bounty = require('../bounty.js.jsx');
+var Lightbox = require('../lightbox.js.jsx');
 var MarkdownEditor = require('../markdown_editor.js.jsx');
 var NewsFeedItemBountyClose = require('./news_feed_item_bounty_close.js.jsx');
 var NewsFeedItemBountyCommentReference = require('./news_feed_item_bounty_comment_reference.js.jsx');

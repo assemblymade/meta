@@ -317,6 +317,8 @@ ASM::Application.routes.draw do
 
     resources :repositories, only: [:index, :create, :destroy], as: :repos
 
+    resources :team_memberships, path: 'memberships', only: [:show]
+
     resources :work
     resources :tasks, only: [:show, :new], path: 'bounties'
     resources :wips, only: [:index, :show, :new, :edit, :create, :update], controller: 'tasks', path: 'bounties' do

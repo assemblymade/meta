@@ -66,6 +66,6 @@ class Event::Comment < Event
 
   def create_nfi_comment
     # currently we're duplicating all comments to nfi comments
-    NewsFeedItemComment.publish_to_news_feed(wip, self, body)
+    # NewsFeedItemComment.publish_to_news_feed(wip, self, body)
   end
 end

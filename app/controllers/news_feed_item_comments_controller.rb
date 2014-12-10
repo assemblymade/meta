@@ -8,7 +8,7 @@ class NewsFeedItemCommentsController < ProductController
   respond_to :json
 
   def create
-    @item = @news_feed_item.news_feed_item_comments.create(
+    @item = @news_feed_item.news_feed_item_comments.create!(
       user: current_user,
       body: params[:body]
     )
@@ -20,7 +20,7 @@ class NewsFeedItemCommentsController < ProductController
 
   def index
     comments = ActiveModel::ArraySerializer.new(
-      @news_feed_item.news_feed_item_comments,
+      @news_feed_item.news_feed_item_comments.order(created_at: :asc),
       each_serializer: NewsFeedItemCommentSerializer
     )
 
@@ -36,7 +36,7 @@ class NewsFeedItemCommentsController < ProductController
           wip,
           Event::Comment,
           product_markdown(target.product,
-            "_@#{target.user.username}: " + @item.body + "_"
+            "@#{target.user.username}: " + @item.body
           ),
           current_user
         )

@@ -5,15 +5,22 @@
   var Icon = require('../icon.js.jsx');
   var Markdown = require('../markdown.js.jsx');
   var NewsFeedItemBounty = require('./news_feed_item_bounty.js.jsx');
+  var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx');
   var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
   var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
+  var NewsFeedItemModal = require('./news_feed_item_modal.js.jsx');
   var Tag = require('../tag.js.jsx');
   var Tile = require('../tile.js.jsx');
   var moment = require('moment');
   var ONE_DAY = 24 * 60 * 60 * 1000;
 
   var NewsFeedItem = React.createClass({
+    displayName: 'NewsFeedItem',
+
     propTypes: {
+      commentable: React.PropTypes.bool,
+      enableModal: React.PropTypes.bool,
+      productPage: React.PropTypes.bool,
       product: React.PropTypes.object.isRequired,
       target: React.PropTypes.object,
       user: React.PropTypes.object.isRequired
@@ -25,12 +32,31 @@
       news_feed_item_post: 'update'
     },
 
+    getDefaultProps: function() {
+      return {
+        enableModal: true,
+        productPage: false
+      };
+    },
+
+    getInitialState: function() {
+      return {
+        modalShown: false
+      };
+    },
+
+    onModalHidden: function() {
+      this.setState({
+        modalShown: false
+      });
+    },
+
     render: function() {
-      var target
       return (
         <Tile>
           {this.props.productPage ? null : this.renderSource()}
           {this.renderTarget()}
+          {this.props.enableModal && this.state.modalShown ? this.renderModal() : null}
           {this.renderMeta()}
           {this.renderUserSource()}
           {this.renderLove()}
@@ -44,12 +70,21 @@
       var target = this.props.target;
 
       if (this.props.productPage) {
-        return <NewsFeedItemComments item={this.props} />;
+        return <NewsFeedItemComments
+            {...this.props}
+            item={this.props}
+            triggerModal={this.triggerModal} />;
       }
 
+      this.renderLastComment();
+    },
+
+    renderLastComment: function() {
+      var product = this.props.product;
+      var target = this.props.target;
       var commentCount = target && target.comments_count;
 
-      // Don't show any footer if there's no comments or tags
+      // Don't show any footer if there are no comments or tags
       // This isn't great, we should always have something for people to do
       if (!commentCount) {
         return;
@@ -61,12 +96,13 @@
 
       // TODO This stuff should really be common across all the items
       var commentsUrl = this.props.target.url + "#comments";
-
       var lastComment = this.props.last_comment;
 
       return (
         <div className="px3 py2 h6 mt0 mb0 border-top">
-          <a className="gray-3" href={commentsUrl} style={{ textDecoration: 'underline' }}>
+          <a className="gray-3"
+              href={commentsUrl}
+              style={{ textDecoration: 'underline' }}>
             <span className="mr1">
               <Icon icon="comment" />
             </span>
@@ -74,32 +110,19 @@
           </a>
 
           <div className="py2">
-          <Comment author={lastComment.user}
-                  body={lastComment.markdown_body}
-                  timestamp={lastComment.created_at} />
+          <Comment
+              author={lastComment.user}
+              body={lastComment.markdown_body}
+              timestamp={lastComment.created_at} />
           </div>
         </div>
       );
     },
 
-    renderSource: function() {
-      var product = this.props.product
-
-      if (typeof product === "undefined" || product === null) {
-        return null;
-      }
-
-      return (
-        <a className="block px3 py2 clearfix border-bottom" href={product.url}>
-          <div className="left mr1">
-            <AppIcon app={product} size={36} />
-          </div>
-          <div className="overflow-hidden" style={{ lineHeight: '16px' }}>
-            <div className="h6 mt0 mb0 black">{product.name}</div>
-            <div className="h6 mt0 mb0 gray-dark">{product.pitch}</div>
-          </div>
-        </a>
-      );
+    renderLove: function() {
+      return <div className="px3 py2 border-top mb0">
+        <Love heartable_id={this.props.heartable_id} heartable_type="NewsFeedItem" />
+      </div>
     },
 
     renderMeta: function() {
@@ -132,42 +155,90 @@
       }
     },
 
+    renderModal: function() {
+      var target = this.props.target;
+
+      if (target) {
+        var onModalHidden = this.onModalHidden;
+        var modal;
+
+        switch (target.type) {
+        case 'task':
+          modal = NewsFeedItemBountyModal;
+          break;
+        default:
+          modal = NewsFeedItemModal;
+          break;
+        }
+
+        return React.createFactory(modal)({
+          item: this.props,
+          onHidden: onModalHidden
+        });
+      }
+    },
+
+    renderSource: function() {
+      var product = this.props.product
+
+      if (typeof product === "undefined" || product === null) {
+        return null;
+      }
+
+      return (
+        <a className="block px3 py2 clearfix border-bottom" href={product.url}>
+          <div className="left mr1">
+            <AppIcon app={product} size={36} />
+          </div>
+          <div className="overflow-hidden" style={{ lineHeight: '16px' }}>
+            <div className="h6 mt0 mb0 black">{product.name}</div>
+            <div className="h6 mt0 mb0 gray-dark">{product.pitch}</div>
+          </div>
+        </a>
+      );
+    },
+
     renderTarget: function() {
       var product = this.props.product;
       var target = this.props.target;
       var user = this.props.user;
+      var triggerModal = this.triggerModal;
 
       if (target) {
         switch (target.type) {
         case 'task':
-          return <NewsFeedItemBounty item={this.props} />;
+          return <NewsFeedItemBounty
+              item={this.props}
+              triggerModal={triggerModal} />;
 
         case 'team_membership':
           return <NewsFeedItemIntroduction
-            user={user}
-            intro={target.bio}
-            product={product} />;
+              {...this.props}
+              triggerModal={triggerModal} />;
 
         case 'discussion':
           return <NewsFeedItemPost
-            body={target.markdown_body || target.description_html}
-            url={target.url}
-            title={target.title} />;
+              body={target.markdown_body || target.description_html}
+              url={target.url}
+              title={target.title}
+              triggerModal={triggerModal} />;
 
         case 'post':
           return <NewsFeedItemPost
-            body={target.markdown_body}
-            url={target.url}
-            title={target.title} />;
+              body={target.markdown_body}
+              url={target.url}
+              title={target.title}
+              triggerModal={triggerModal} />;
 
         default:
           return <NewsFeedItemPost
-            title={target.name || target.title}
-            body={target.description ||
-                  target.markdown_body ||
-                  target.description_html ||
-                  target.body}
-            url={target.url} />;
+              title={target.name || target.title}
+              body={target.description ||
+                    target.markdown_body ||
+                    target.description_html ||
+                    target.body}
+              url={target.url}
+              triggerModal={triggerModal} />;
         }
       }
     },
@@ -195,13 +266,6 @@
       );
     },
 
-    renderLove: function() {
-      return <div className="px3 py2 border-top mb0">
-        <Love heartable_id={this.props.heartable_id} heartable_type="NewsFeedItem" />
-      </div>
-    },
-
-
     targetNoun: function(type) {
       var typeMap = this.typeMap;
 
@@ -210,6 +274,12 @@
       }
 
       return type;
+    },
+
+    triggerModal: function() {
+      this.setState({
+        modalShown: true
+      });
     }
   });
 

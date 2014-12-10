@@ -12,6 +12,7 @@ var NewsFeedItemComments = React.createClass({
   displayName: 'NewsFeedItemComments',
 
   propTypes: {
+    commentable: React.PropTypes.bool,
     item: React.PropTypes.object.isRequired,
     showAllComments: React.PropTypes.bool
   },
@@ -30,6 +31,7 @@ var NewsFeedItemComments = React.createClass({
     NewsFeedItemStore.removeChangeListener(this.getComments);
   },
 
+  // unused for now
   fetchCommentsFromServer: function(e) {
     e.stopPropagation();
 
@@ -54,6 +56,12 @@ var NewsFeedItemComments = React.createClass({
     });
   },
 
+  getDefaultComments: function() {
+    return {
+      commentable: false
+    };
+  },
+
   getInitialState: function() {
     var item = this.props.item;
     var showAllComments = this.props.showAllComments;
@@ -68,7 +76,7 @@ var NewsFeedItemComments = React.createClass({
 
     return {
       comments: lastComment ? [lastComment] : [],
-      numberOfComments: item.target.comments_count || item.comments_count,
+      numberOfComments: item.comments_count,
       optimisticComments: [],
       showCommentsAfter: showCommentsAfter,
       url: item.url + '/comments'
@@ -113,10 +121,7 @@ var NewsFeedItemComments = React.createClass({
     return this.state.comments.map(function(comment) {
       if (new Date(comment.created_at) >= renderIfAfter) {
         return (
-          /*
-            replace class with timeline-item
-           */
-          <div className="h6 mt0 mb2 px3" key={comment.id}>
+          <div className="timeline-item" key={comment.id}>
             <Comment author={comment.user} body={comment.markdown_body} timestamp={comment.created_at} />
           </div>
         );
@@ -131,7 +136,7 @@ var NewsFeedItemComments = React.createClass({
     if (numberOfComments > this.state.comments.length) {
       return (
         <a className="block h6 clearfix mt0 mb2 px3 gray-dark clickable"
-            onClick={this.fetchCommentsFromServer}
+            onClick={this.triggerModal}
             style={{textDecoration: 'underline'}}>
           <span className="mr1">
             <Icon icon="comment" />
@@ -143,14 +148,16 @@ var NewsFeedItemComments = React.createClass({
   },
 
   renderNewCommentForm: function() {
-    var url = this.state.url;
+    if (this.props.commentable) {
+      var url = this.state.url;
 
-    if (window.app.currentUser()) {
-      return (
-        <div className="border-top px3 py2">
-          <NewComment {...this.props} url={url} thread={this.props.item.id} user={window.app.currentUser()} />
-        </div>
-      );
+      if (window.app.currentUser()) {
+        return (
+          <div className="border-top px3 py2">
+            <NewComment {...this.props} url={url} thread={this.props.item.id} user={window.app.currentUser()} />
+          </div>
+        );
+      }
     }
   },
 
@@ -164,14 +171,12 @@ var NewsFeedItemComments = React.createClass({
     });
   },
 
-  showMoreComments: function() {
-    return function(e) {
-      this.setState({
-        showCommentsAfter: 0
-      });
-    }.bind(this);
+  triggerModal: function(e) {
+    e.stopPropagation();
+
+    this.props.triggerModal();
   }
-})
+});
 
 if (typeof module !== 'undefined') {
   module.exports = NewsFeedItemComments;

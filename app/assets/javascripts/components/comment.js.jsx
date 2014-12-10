@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 // TODO asset pipelined (chrislloyd)
 // var marked = require('marked')
 
@@ -46,11 +44,11 @@ module.exports = React.createClass({
     }
 
     return (
-      <div className="clearfix">
-        <div className="left mr2">
-          <Avatar user={author} size={18} />
+      <div className="clearfix px3">
+        <div className="left activity-avatar">
+          <Avatar user={author} size={30} />
         </div>
-        <div className="overflow-hidden px3">
+        <div className="overflow-hidden activity-body px2">
           <div className="gray-2">
             <a className="bold black" href={author.url}>{author.username}</a>
             {timestamp}
@@ -63,4 +61,4 @@ module.exports = React.createClass({
       </div>
     )
   }
-})
+});
