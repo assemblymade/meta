@@ -19,7 +19,12 @@ $space-5: 48px;
 .pt3  { padding-top: $space-3 }
 .pt4  { padding-top: $space-4 }
 
-.mt_neg1 { margin-top:-$space-1 }
+.mtn1 { margin-top:-$space-1 }
+
+//
+
+.fs-13px { font-size:13px; }
+.fw-500 { font-weight:500; }
 
 // ### transitions
 
