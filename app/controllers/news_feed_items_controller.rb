@@ -24,4 +24,16 @@ class NewsFeedItemsController < ProductController
     render nothing: true, status: 200
   end
 
+  def subscribe
+    @news_feed_item = NewsFeedItem.find(params[:update_id])
+    Watching.watch!(current_user, @news_feed_item)
+    render nothing: true, status: 200
+  end
+
+  def unsubscribe
+    @news_feed_item = NewsFeedItem.find(params[:update_id])
+    Watching.unwatch!(current_user, @news_feed_item)
+    render nothing: true, status: 200
+  end
+
 end

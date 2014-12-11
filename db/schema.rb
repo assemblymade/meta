@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141210195533) do
+ActiveRecord::Schema.define(version: 20141210224135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -361,6 +361,8 @@ ActiveRecord::Schema.define(version: 20141210195533) do
     t.string   "name",       null: false
     t.datetime "created_at"
   end
+
+  add_index "marks", ["name"], name: "index_marks_on_name", unique: true, using: :btree
 
   create_table "measurements", id: :uuid, force: true do |t|
     t.uuid     "metric_id",  null: false

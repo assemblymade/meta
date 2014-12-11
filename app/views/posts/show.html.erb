@@ -1,20 +1,11 @@
 <% title @post.title, @post.product.name %>
 <% activate_nav! :posts %>
 
-
 <script id="heartables" type="application/json">
   <%== @heartables.to_json %>
 </script>
 
-<% if @user_hearts %>
-  <script id="user_hearts" type="application/json">
-    <%== @user_hearts.map{|h| {
-        id: h.id,
-        heartable_id: h.heartable_id,
-      }}.to_json
-    %>
-  </script>
-<% end %>
+<%= render 'shared/user_data' %>
 
 <div class="page-header sheet-header mb0">
   <h2 class="page-header-title"><%= @post.title %></h2>

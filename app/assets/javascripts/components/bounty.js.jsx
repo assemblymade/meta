@@ -5,6 +5,9 @@ var Markdown = require('./markdown.js.jsx');
 var Icon = require('./icon.js.jsx');
 var formatShortTime = require('../lib/format_short_time.js');
 var Love = require('./love.js.jsx');
+var routes = require('../routes')
+
+var SubscriptionsStore = require('../stores/subscriptions_store')
 
 var CLOSED_STATES = ['awarded', 'closed', 'resolved'];
 
@@ -49,7 +52,8 @@ module.exports = React.createClass({
       bounty: bounty,
       closed: (CLOSED_STATES.indexOf(bounty.state) !== -1 ? true : false),
       worker: bounty.workers[0],
-      lockUntil: moment(bounty.locked_at).add(60 * ONE_HOUR)
+      lockUntil: moment(bounty.locked_at).add(60 * ONE_HOUR),
+      subscribed: SubscriptionsStore.get(this.props.item.id)
     };
   },
 
@@ -168,11 +172,12 @@ module.exports = React.createClass({
       return (
         <li>
           <ToggleButton
-            bool={bounty.following}
+            bool={this.state.subscribed}
             text={{ true: 'Unsubscribe', false: 'Subscribe' }}
             icon={{ true: '', false: '' }}
             classes={{ true: '', false: '' }}
-            href={{ true: bounty.mute_url, false: bounty.follow_url }} />
+            href={{ true: routes.product_update_unsubscribe_path({ product_id: this.props.bounty.product.slug, update_id: this.props.item.id }),
+                   false: routes.product_update_subscribe_path({ product_id: this.props.bounty.product.slug, update_id: this.props.item.id }) }} />
         </li>
       );
     }
@@ -313,7 +318,7 @@ module.exports = React.createClass({
             <a href="javascript:void(0)" onClick={this.abandonWork}>Release task</a>
           </div>
         </div>
-      );
+      );  // '
     }
 
     return (
@@ -355,6 +360,18 @@ module.exports = React.createClass({
       worker: currentUser && currentUser.attributes,
       lockUntil: moment().add(60, 'hours').add(1, 'second')
     });
+  },
+
+  componentWillMount: function() {
+    SubscriptionsStore.addChangeListener(this._onChange)
+  },
+
+  componentWillUnmount: function() {
+    SubscriptionsStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange: function() {
+    this.setState({subscribed: SubscriptionsStore.get(this.props.item.id)})
   }
 })
 

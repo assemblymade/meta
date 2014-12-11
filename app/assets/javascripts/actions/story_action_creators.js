@@ -46,7 +46,7 @@ var StoryActionCreators = {
       stories: [story]
     })
 
-    $.get(routes.readraptor_path(story.key), ()=>{
+    $.get(routes.readraptor_path({article_id: story.key}), ()=>{
       Dispatcher.dispatch({
         type: ActionTypes.STORY_MARKED_AS_READ,
         stories: [story]

@@ -311,6 +311,8 @@ ASM::Application.routes.draw do
     end
 
     resources :news_feed_items, only: [:index, :show], path: 'updates', as: :updates do
+      patch :subscribe
+      patch :unsubscribe
       patch 'popularize'
       patch 'depopularize'
 

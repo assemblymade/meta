@@ -27,14 +27,6 @@ class NewsFeedItem < ActiveRecord::Base
     )
   end
 
-  def follow!(user)
-    Watching.watch!(user, self)
-  end
-
-  def unfollow!(user)
-    Watching.unwatch!(user, self)
-  end
-
   def author_id
     self.source_id # currently this is always a user, might be polymorphic in the future
   end

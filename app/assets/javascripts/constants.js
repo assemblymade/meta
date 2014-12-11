@@ -150,6 +150,8 @@
 
       STORY_RECEIVE_STORIES: null,
 
+      SUB_RECEIVE_USER_SUBSCRIPTIONS: null,
+
       USER_SIGNED_IN: null,
 
       WIP_EVENT_CREATING: null,
