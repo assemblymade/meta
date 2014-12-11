@@ -2,6 +2,7 @@
 // var marked = require('marked')
 
 var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
+var BountyStore = require('../../stores/bounty_store');
 var Comment = require('../comment.js.jsx');
 var Dispatcher = window.Dispatcher;
 var Icon = require('../icon.js.jsx');
@@ -14,6 +15,7 @@ var NewsFeedItemBountyTimelineItem = require('./news_feed_item_bounty_timeline_i
 var NewsFeedItemBountyTitleChange = require('./news_feed_item_bounty_title_change.js.jsx');
 var NewsFeedItemBountyWin = require('./news_feed_item_bounty_win.js.jsx');
 var NewsFeedItemStore = require('../../stores/news_feed_item_store');
+var UserStore = require('../../stores/user_store');
 
 var NewsFeedItemComments = React.createClass({
   displayName: 'NewsFeedItemComments',
@@ -31,10 +33,18 @@ var NewsFeedItemComments = React.createClass({
   },
 
   componentWillMount: function() {
+    if (_reach(this.props, 'item.target.type') === 'task') {
+      BountyStore.addChangeListener(this.getBountyState);
+    }
+
     NewsFeedItemStore.addChangeListener(this.getComments);
   },
 
   componentWillUnmount: function() {
+    if (_reach(this.props, 'item.target.type') === 'task') {
+      BountyStore.removeChangeListener(this.getBountyState);
+    }
+
     NewsFeedItemStore.removeChangeListener(this.getComments);
   },
 
@@ -52,9 +62,21 @@ var NewsFeedItemComments = React.createClass({
     }.bind(this));
   },
 
+  getBountyState: function() {
+    var state = BountyStore.getState();
+
+    if (state === 'reviewing') {
+      this.setState({
+        comments: this.state.comments.push(
+          this.renderOptimisticReviewReady()
+        )
+      });
+    }
+  },
+
   getComments: function(e) {
     var comments = NewsFeedItemStore.getComments(this.props.item.id);
-
+    console.log(this.state.comments)
     this.setState({
       comment: '',
       comments: this.state.comments.concat(comments.confirmed),
@@ -109,17 +131,13 @@ var NewsFeedItemComments = React.createClass({
       return;
     }
 
-    var classes = React.addons.classSet({
-      timeline: this.props.showAllComments
-    });
-
     return (
       <div>
         {this.renderLoadMoreButton()}
-        <div className={classes}>
+        <div className="timeline">
           {confirmedComments}
+          {optimisticComments}
         </div>
-        {optimisticComments}
       </div>
     );
   },
@@ -156,11 +174,18 @@ var NewsFeedItemComments = React.createClass({
   },
 
   renderNewCommentForm: function() {
+    var item = this.props.item;
+
     if (this.props.commentable) {
       var url = this.state.url;
 
       if (window.app.currentUser()) {
-        return <NewComment {...this.props} url={url} thread={this.props.item.id} user={window.app.currentUser()} />
+        return <NewComment
+            {...this.props}
+            canContainWork={item.target && item.target.type === 'task'}
+            url={url}
+            thread={item.id}
+            user={window.app.currentUser()} />
       }
     }
   },
@@ -173,6 +198,14 @@ var NewsFeedItemComments = React.createClass({
         </div>
       )
     });
+  },
+
+  renderOptimisticReviewReady: function() {
+    var user = UserStore.get();
+
+    if (user.isCore) {
+      console.log(user);
+    }
   },
 
   triggerModal: function(e) {
@@ -232,10 +265,26 @@ function parseEvent(event) {
   }
 }
 
+function _reach(obj, prop) {
+  var props = prop.split('.');
+
+  while (props.length) {
+    var p = props.shift();
+
+    if (obj && obj.hasOwnProperty(p)) {
+      obj = obj[p]
+    } else {
+      obj = undefined;
+      break;
+    }
+  }
+
+  return obj;
+}
+
 function _sort(a, b) {
   var aDate = +new Date(a.created_at);
   var bDate = +new Date(b.created_at);
 
   return aDate > bDate ? 1 : bDate > aDate ? -1 : 0;
 }
-

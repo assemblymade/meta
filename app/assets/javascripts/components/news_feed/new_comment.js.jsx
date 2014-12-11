@@ -1,4 +1,5 @@
 var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
+var BountyActionCreators = require('../../actions/bounty_action_creators');
 var DropzoneMixin = require('../../mixins/dropzone_mixin');
 var TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
 var xhr = require('../../xhr');
@@ -8,12 +9,25 @@ var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 var NewsFeedItemNewComment = React.createClass({
 
   propTypes: {
+    canContainWork: React.PropTypes.bool,
     thread: React.PropTypes.string.isRequired,
     url: React.PropTypes.string.isRequired,
     user: React.PropTypes.object
   },
 
   mixins: [DropzoneMixin],
+
+  buttonClasses: function(btnClass) {
+    var classes = {
+      btn: true,
+      disabled: this.state.text.length < 2,
+      right: true
+    };
+
+    classes[btnClass] = true;
+
+    return React.addons.classSet(classes);
+  },
 
   calculateRows: function(value) {
     var rows = this.state.rows;
@@ -128,7 +142,8 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   onKeyPress: function(e) {
-    if (!e.shiftKey && e.which === ENTER) {
+    // React isn't picking up the command key :(
+    if ((e.shiftKey || e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
       e.preventDefault();
       e.stopPropagation();
 
@@ -161,6 +176,7 @@ var NewsFeedItemNewComment = React.createClass({
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
               <textarea
+                  id="event_comment_body"
                   ref="textarea"
                   type="text"
                   className={textareaClasses}
@@ -172,6 +188,22 @@ var NewsFeedItemNewComment = React.createClass({
             {this.renderDropzoneInner()}
           </div>
         </div>
+        {this.renderButtons()}
+      </div>
+    );
+  },
+
+  renderButtons: function() {
+    var classes = this.buttonClasses('btn-primary');
+
+    return (
+      <div className="clearfix mt3 mr3 px3">
+        <a className={classes}
+            href="javascript:void(0);"
+            onClick={this.submitComment}>
+          Comment
+        </a>
+        {this.props.canContainWork ? this.renderSubmitWorkButton() : null}
       </div>
     );
   },
@@ -187,11 +219,28 @@ var NewsFeedItemNewComment = React.createClass({
     }
   },
 
-  submitComment: function() {
+  renderSubmitWorkButton: function() {
+    var classes = this.buttonClasses('btn-default');
+
+    return (
+      <a className={classes}
+          href="javascript:void(0);"
+          style={{ color: '#5cb85c !important' }}
+          onClick={this.submitWork}>
+        <span className="icon icon-document icon-left"></span>
+        Submit work for review
+      </a>
+    );
+  },
+
+  submitComment: function(e) {
+    e.stopPropagation();
+
     var comment = this.state.text;
     var thread = this.props.thread;
     var createdAt = Date.now();
 
+    // FIXME: (pletcher) These should go through action creators and the Dispatcher
     if (comment.length >= 2) {
       xhr.post(this.props.url, { body: comment }, _confirmComment(thread, createdAt));
 
@@ -215,6 +264,16 @@ var NewsFeedItemNewComment = React.createClass({
           product: (window.app.currentAnalyticsProduct())
         }
       );
+    }
+  },
+
+  submitWork: function(e) {
+    this.submitComment(e);
+
+    var url = _reach(this.props, 'item.target.url');
+
+    if (url) {
+      BountyActionCreators.submitWork(url + '/review');
     }
   }
 });
@@ -242,4 +301,21 @@ function _confirmComment(thread, timestamp) {
       }
     });
   };
+}
+
+function _reach(obj, prop) {
+  var props = prop.split('.');
+
+  while (props.length) {
+    var p = props.shift();
+
+    if (obj && obj.hasOwnProperty(p)) {
+      obj = obj[p]
+    } else {
+      obj = undefined;
+      break;
+    }
+  }
+
+  return obj;
 }

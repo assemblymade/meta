@@ -87,6 +87,7 @@ module.exports = React.createClass({
         </div>
         {this.renderLove()}
         {this.renderFooter()}
+        {this.renderDiscussion()}
       </div>
     );
   },
@@ -126,6 +127,19 @@ module.exports = React.createClass({
     }
 
     return <div className="gray">No description yet</div>;
+  },
+
+  renderDiscussion: function() {
+    var item = this.props.item;
+    var bounty = this.state.bounty;
+
+    if (item) {
+      return (
+        <div className="discussion" id="discussion-view-el" key={'discussion-' + bounty.id}>
+          <NewsFeedItemComments commentable={true} item={item} showAllComments={true} />
+        </div>
+      );
+    }
   },
 
   renderEditButton: function() {

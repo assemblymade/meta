@@ -64,6 +64,7 @@
   }
 
   function optimisticallyAddComment(comment) {
+    console.log('yep')
     if (comments.optimistic[comment.news_feed_item_id]) {
       comments.optimistic[comment.news_feed_item_id].push(comment);
     } else {

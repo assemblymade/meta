@@ -110,6 +110,8 @@
       ATTACHMENT_UPLOADED: null,
       ATTACHMENT_UPLOADING: null,
 
+      BOUNTY_WORK_SUBMITTED: null,
+
       BOUNTIES_REQUEST: null,
       BOUNTIES_RECEIVE: null,
       BOUNTIES_REORDER: null,
@@ -150,6 +152,7 @@
 
       STORY_RECEIVE_STORIES: null,
 
+      USER_RECEIVE: null,
       USER_SIGNED_IN: null,
 
       WIP_EVENT_CREATING: null,

@@ -21,11 +21,6 @@
     } %>
 </div>
 
-<div class="px3" id="discussion-view-el">
-  <%= render 'wips/discussion', events: @events %>
-  <%= render 'new_event_form' %>
-</div>
-
 <% if signed_in? %>
   <img class="hidden" data-src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@bounty).first, current_user.id).url %>" />
 <% end %>
@@ -33,28 +28,3 @@
 <%= render partial: 'wips/heartables' %>
 <%= render partial: 'bounties/product_assets' %>
 <%= render partial: 'wips/people_store_data' %>
-
-<% content_for :javascript do %>
-  <script>
-    app.product = new Product(<%= json @bounty.product, scope: current_user %>);
-    app.wip = new Wip(<%== WipSerializer.new(@bounty, scope: current_user).to_json %>);
-    app.wipEvents = new WipEvents(<%== @bounty.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
-      url: '<%= product_wip_comments_path(@bounty.product, @bounty) %>'
-    });
-
-    <% if signed_in? %>
-      <% story_id = Story.associated_with_ids(@bounty).first %>
-      app.wip.readRaptorUrl = '<%== ReadraptorTracker.new(story_id, current_user.id).url if story_id %>';
-    <% end %>
-
-    $(document).ready(function() {
-      <%= render 'wips/add_tips_to_wip_events' %>
-
-      app.discussionView = new DiscussionView({
-        el: $('#discussion-view-el'),
-        tipsPath: '<%= product_tips_path(@bounty.product) %>',
-        model: app.wip
-      });
-    })
-  </script>
-<% end %>
