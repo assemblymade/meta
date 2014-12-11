@@ -1,5 +1,6 @@
-<div class="navbar navbar-default navbar-static-top omega">
-  <div class="container"> <!-- container-fluid -->
+<% fluid ||= false %>
+<div class="navbar navbar-default navbar-static-top mb0">
+  <div class="<%= fluid ? 'container-fluid' : 'container' %>">
 
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#platform-navbar-collapse">
@@ -8,10 +9,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-        <a class="inline-block ml2 py2 r768_ml0" style="margin-right:18px;" href="<%= root_path %>">
-          <%= image_tag 'flag.svg', width: 27, height: 17, class: 'logo' %>
-          <span class="sr-only">Assembly</span>
-        </a>
+      <a class="inline-block ml2 py2 r768_ml0" style="margin-right:1.5rem;" href="<%= root_path %>">
+        <%= image_tag 'flag.svg', width: 27, height: 17, class: 'logo' %>
+        <span class="sr-only">Assembly</span>
+      </a>
     </div>
 
     <div class="collapse navbar-collapse" id="platform-navbar-collapse">
