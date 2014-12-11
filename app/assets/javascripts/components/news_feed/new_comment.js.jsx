@@ -141,13 +141,21 @@ var NewsFeedItemNewComment = React.createClass({
     }
   },
 
-  onKeyPress: function(e) {
-    // React isn't picking up the command key :(
+  onKeyDown: function(e) {
     if ((e.shiftKey || e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
       e.preventDefault();
       e.stopPropagation();
 
-      this.submitComment();
+      this.submitComment(e);
+    }
+  },
+
+  onKeyPress: function(e) {
+    if ((e.shiftKey || e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      this.submitComment(e);
     }
   },
 
@@ -182,6 +190,7 @@ var NewsFeedItemNewComment = React.createClass({
                   className={textareaClasses}
                   rows={this.state.rows}
                   onChange={this.onChange}
+                  onKeyDown={this.onKeyDown}
                   onKeyPress={this.onKeyPress}
                   value={this.state.text} />
             </div>
