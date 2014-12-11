@@ -1,4 +1,4 @@
-var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
+var ActionTypes = window.CONSTANTS.ActionTypes;
 var BountyActionCreators = require('../../actions/bounty_action_creators');
 var DropzoneMixin = require('../../mixins/dropzone_mixin');
 var TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
@@ -234,7 +234,7 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   submitComment: function(e) {
-    e.stopPropagation();
+    e && e.stopPropagation();
 
     var comment = this.state.text;
     var thread = this.props.thread;
@@ -245,7 +245,7 @@ var NewsFeedItemNewComment = React.createClass({
       xhr.post(this.props.url, { body: comment }, _confirmComment(thread, createdAt));
 
       Dispatcher.dispatch({
-        action: CONSTANTS.ACTIONS.OPTIMISTICALLY_ADD_COMMENT,
+        type: ActionTypes.NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT,
         data: {
           body: comment,
           created_at: createdAt,
@@ -293,7 +293,7 @@ function _confirmComment(thread, timestamp) {
     }
 
     Dispatcher.dispatch({
-      action: CONSTANTS.ACTIONS.CONFIRM_COMMENT,
+      type: ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT,
       data: {
         thread: thread,
         timestamp: timestamp,
