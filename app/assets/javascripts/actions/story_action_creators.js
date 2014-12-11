@@ -1,6 +1,10 @@
 var routes = require('../routes')
 var ActionTypes = window.CONSTANTS.ActionTypes
-var rrUrl = $('meta[name=read-raptor-url]').attr('content')
+
+var rrUrl = ''
+if ($('meta[name=read-raptor-url]')) {
+  rrUrl = $('meta[name=read-raptor-url]').attr('content')
+}
 
 var StoryActionCreators = {
   fetchStories: function() {

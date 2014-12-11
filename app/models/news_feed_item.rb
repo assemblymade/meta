@@ -8,11 +8,11 @@ class NewsFeedItem < ActiveRecord::Base
   has_many :followings, class_name: 'Watching', as: :watchable
   has_many :followers, through: :followings, source: :user
   has_many :hearts, as: :heartable, after_add: :follow_author
-  has_many :news_feed_item_comments, after_add: :follow_author
+  has_many :comments, class_name: 'NewsFeedItemComment', after_add: :follow_author
 
   before_validation :ensure_last_commented_at, on: :create
 
-  after_commit -> { follow!(self.source) }, on: :create
+  after_commit :follow_self, on: :create
 
   scope :public_items, -> { joins(:product).where('products.state not in (?)', ['stealth', 'reviewing']) }
 
@@ -31,10 +31,6 @@ class NewsFeedItem < ActiveRecord::Base
     self.source_id # currently this is always a user, might be polymorphic in the future
   end
 
-  def comments
-    self.news_feed_item_comments
-  end
-
   def events
     Event.where(wip: self.target).where.not(type: 'Event::Comment')
   end
@@ -50,6 +46,10 @@ class NewsFeedItem < ActiveRecord::Base
   end
 
   def follow_author(o)
-    follow!(o.user)
+    Watching.watch!(o.user, self)
+  end
+
+  def follow_self
+    Watching.watch!(self.source, self)
   end
 end
