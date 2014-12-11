@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141210224135) do
+ActiveRecord::Schema.define(version: 20141211224017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -448,6 +448,7 @@ ActiveRecord::Schema.define(version: 20141210224135) do
     t.datetime "popular_at"
     t.integer  "hearts_count",      default: 0, null: false
     t.datetime "last_commented_at"
+    t.integer  "watchings_count"
   end
 
   create_table "newsletters", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
