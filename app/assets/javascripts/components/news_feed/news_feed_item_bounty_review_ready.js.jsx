@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 module.exports = React.createClass({
   displayName: 'NewsFeedItemBountyReviewReady',
   propTypes: {
@@ -14,7 +12,7 @@ module.exports = React.createClass({
     return (
       <div className="timeline-item">
         <div className="media">
-          <div className="pull-left">
+          <div className="left">
             <div className="marker marker-blue">
               <span className="icon icon-document"></span>
             </div>
@@ -23,7 +21,7 @@ module.exports = React.createClass({
           <div className="media-body">
             {this.renderAwardButtons()}
 
-            <div className="media-heading omega">
+            <div className="px3">
               <a href={actor.url}>{actor.username}</a>
               {' '} submitted work for review
             </div>

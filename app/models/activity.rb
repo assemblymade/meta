@@ -83,7 +83,7 @@ class Activity < ActiveRecord::Base
     s = target_entity
     raise "Bad Subject #{self.inspect}" if s.nil?
 
-    s.class.name.split('::').last
+    s.class.name.split('::').last.gsub(/Decorator$/,'')
   end
 
   def find_product

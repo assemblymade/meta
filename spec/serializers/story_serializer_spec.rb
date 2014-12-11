@@ -11,8 +11,8 @@ describe Story do
       story = Story.create!(verb: 'Comment', subject_type: 'Discussion')
       activity = Activities::Comment.create(actor: user, subject: comment, target: discussion, story: story)
 
-      expect(story.body_preview).to eq(
-        'The issue is change. Change for the future. The people have spoken.'
+      expect(StorySerializer.new(story).body_preview).to eq(
+      'The issue is change. Change for the future. The people have spoken.'
       )
     end
   end

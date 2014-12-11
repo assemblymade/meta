@@ -1,8 +1,7 @@
-/** @jsx React.DOM */
-
 var AppIcon = require('../app_icon.js.jsx');
 var Avatar = require('../avatar.js.jsx');
 var Bounty = require('../bounty.js.jsx');
+var Lightbox = require('../lightbox.js.jsx');
 var MarkdownEditor = require('../markdown_editor.js.jsx');
 var NewsFeedItemBountyClose = require('./news_feed_item_bounty_close.js.jsx');
 var NewsFeedItemBountyCommentReference = require('./news_feed_item_bounty_comment_reference.js.jsx');
@@ -83,10 +82,9 @@ module.exports = React.createClass({
     var bounty = _.extend((this.state.bounty || {}), item.target);
     var product = item.product;
 
-    bounty.product = product;
-    bounty.user = item.user;
-
-    // TODO: (pletcher) Don't render the bounty in a modal
+    // TODO: (pletcher) Don't render the bounty in a modal; use a slide out
+    //       (or something that doesn't barf on random clicks and can support
+    //       inner click events)
 
     var title = <div className="clearfix">
       <div className="left mr2">
@@ -111,7 +109,7 @@ module.exports = React.createClass({
     bounty.user = item.user;
 
     if (this.state.ready) {
-      return [
+      return (
         <Bounty
             key={bounty.id}
             bounty={bounty}
@@ -125,145 +123,10 @@ module.exports = React.createClass({
               coinsMinted: product.coins_minted,
               profitLastMonth: product.profit_last_month
             }}
-            showCoins={product.slug !== 'meta'} />,
-
-        <div className="discussion" id="discussion-view-el" key={'discussion-' + bounty.id}>
-          <div className="timeline omega">
-            {this.renderDiscussion()}
-          </div>
-          {this.renderNewEventForm()}
-        </div>
-      ];
+            showCoins={product.slug !== 'meta'} />
+      );
     }
 
     return <Spinner />;
-  },
-
-  renderCloseActions: function() {
-    var bounty = this.state.bounty;
-
-    if (bounty.can_close) {
-      if (bounty.state === 'resolved') {
-        return (
-          <a className="btn btn-default" name="event_comment[type]" value="Event::Reopen" type="submit">
-            Comment {' & '} Reopen
-          </a>
-        );
-      }
-
-      return (
-        <a className="btn btn-default" name="event_comment[type]" value="Event::Close" type="submit">
-          Comment {' & '} Close
-        </a>
-      );
-    }
-  },
-
-  renderDiscussion: function() {
-    var bounty = this.state.bounty;
-    var product = this.props.item.product;
-    var productSlug = product.slug;
-
-    app.product = new Product(product);
-    app.wip = new Wip(bounty);
-    app.wipEvents = new WipEvents(this.state.events, {
-      url: '/' + productSlug + '/bounties/' + bounty.number + '/comments'
-    });
-
-    app.discussionView = new DiscussionView({
-      el: $('#discussion-view-el'),
-      tipsPath: '/' + productSlug + '/tips',
-      model: app.wip
-    });
-
-    var events = this.state.events.sort(function(a, b) {
-      var aDate = new Date(a.timestamp);
-      var bDate = new Date(b.timestamp);
-
-      return aDate > bDate ? 1 : bDate > aDate ? -1 : 0;
-    });
-
-    return _.map(events, function(event, i) {
-      var type = event.type;
-      var renderedEvent;
-
-      switch(event.type) {
-      case 'Event::Allocation':
-        renderedEvent = null;
-        break;
-      case 'Event::Close':
-        renderedEvent = <NewsFeedItemBountyClose {...event} />;
-        break;
-      case 'Event::CommentReference':
-        renderedEvent = <NewsFeedItemBountyCommentReference {...event} />;
-        break;
-      case 'Event::ReviewReady':
-        renderedEvent = <NewsFeedItemBountyReviewReady {...event} />;
-        break;
-      case 'Event::Win':
-        renderedEvent = <NewsFeedItemBountyWin {...event} />;
-        break;
-      case 'Event::TagChange':
-        // don't render tag change events
-        // renderedEvent = <NewsFeedItemBountyTagChange {...event} />;
-        // See TODO in NewsFeedItemBountyTagChange
-        renderedEvent = <span />;
-        break;
-      case 'Event::TitleChange':
-        renderedEvent = <NewsFeedItemBountyTitleChange {...event} />;
-        break;
-      default:
-        renderedEvent = <NewsFeedItemBountyTimelineItem {...event} />;
-        break;
-      }
-
-      if (i + 1 === events.length ) {
-        var bounty = this.props.item.target;
-
-        if (bounty) {
-          var timestamp = (
-            <div className="timeline-insert js-timestamp clearfix" key={'timestamp-' + bounty.id}>
-              <time className="timestamp left" dateTime={event.timestamp}>{$.timeago(event.timestamp)}</time>
-              <ReadReceipts url={'/_rr/articles/' + bounty.id} track_url={event.readraptor_track_id} />
-            </div>
-          );
-          return [timestamp, renderedEvent];
-        }
-      }
-
-      return renderedEvent;
-    }.bind(this));
-  },
-
-  renderNewEventForm: function() {
-    var currentUser = window.app.currentUser();
-    var item = this.props.item;
-    var bounty = item.target;
-    var product = item.product;
-
-    if (currentUser) {
-      return (
-        <div className="media new-event js-new-event alpha">
-
-          <div className="pull-left">
-            <Avatar user={currentUser.attributes} size={30} />
-          </div>
-
-          <div className="media-body" id="comment">
-            <form action={'/' + product.slug + '/bounties/' + bounty.number + '/comments'} method="post" className="form">
-              <input name="authenticity_token" type="hidden" value={this.props.csrf} />
-              <MarkdownEditor id="event_comment_body" name="event_comment[body]" required={true} />
-
-              <div className="form-actions mb3">
-                <div className="btn-group">
-                  <button name="event_comment[type]" value="Event::Comment" type="submit" className="btn btn-primary">Comment</button>
-                  {this.renderCloseActions()}
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      );
-    }
   }
 });

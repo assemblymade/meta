@@ -7,11 +7,9 @@ class HeartablesController < ApplicationController
 
   def love
     p = heart_params
-    @heart = Heart.create(
-      heartable_type: p[:type],
-      heartable_id: p[:id],
-      user: current_user
-    )
+    heartable = p[:type].constantize.find(p[:id])
+
+    @heart = heartable.hearts.create(user: current_user)
     if @heart.valid?
       TrackEngagement.perform_async(
         current_user.id,

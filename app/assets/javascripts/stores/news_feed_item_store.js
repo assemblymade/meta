@@ -1,5 +1,5 @@
 (function() {
-  var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
+  var ActionTypes = window.CONSTANTS.ActionTypes;
   // var Dispatcher = require('../dispatcher');
   var Store = require('./store');
   var _store = Object.create(Store);
@@ -21,16 +21,13 @@
     }
   });
 
-  NewsFeedItemStore.dispatchIndex = Dispatcher.register(function(payload) {
-    var action = payload.action;
-    var data = payload.data;
-
-    switch (action) {
-    case CONSTANTS.ACTIONS.CONFIRM_COMMENT:
-      confirmComment(data);
+  NewsFeedItemStore.dispatchIndex = Dispatcher.register(function(action) {
+    switch (action.type) {
+    case ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT:
+      confirmComment(action.data);
       break;
-    case CONSTANTS.ACTIONS.OPTIMISTICALLY_ADD_COMMENT:
-      optimisticallyAddComment(data);
+    case ActionTypes.NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT:
+      optimisticallyAddComment(action.data);
       break;
     default:
       // fall through

@@ -6,9 +6,11 @@ var UploadingAttachmentsStore = require('../stores/uploading_attachments_store')
 var DropzoneMixin = {
   initializeDropzone: function() {
     var attachmentUploadUrlTag = $('meta[name=attachment-upload-url]');
+    var clickable = this.refs.clickable;
 
     this.dropzone = new Dropzone(this.getDOMNode(), {
       accept: this.onAccept,
+      clickable: clickable && clickable.getDOMNode(),
       sending: this.onSending,
       url: attachmentUploadUrlTag && attachmentUploadUrlTag.attr('content')
     });

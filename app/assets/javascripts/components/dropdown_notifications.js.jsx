@@ -10,29 +10,43 @@
   var Spinner = require('./spinner.js.jsx');
   var NF = CONSTANTS.NOTIFICATIONS;
 
-  var DropdownNotifications = React.createClass({
-    mixins: [EventMixin, NotificationsMixin],
+  var UserStore = require('../stores/user_store')
+  var StoryStore = require('../stores/story_store')
+  var StoryActionCreators = require('../actions/story_action_creators')
 
-    actors: function(story, actors) {
-      return _.map(
-        story.actor_ids,
-        function(actorId) {
-          return _.findWhere(actors, { id: actorId })
-        }.bind(this)
+  var DropdownNotifications = React.createClass({
+    render: function() {
+      return (
+        <ul className="dropdown-menu" style={{ paddingTop: '0px', minWidth: '380px', width: '380px' }}>
+          <li style={{ overflowY: 'scroll', minHeight: '60px', maxHeight: '400px' }}>
+            {this.state.stories ? this.rows(this.state.stories) : <Spinner />}
+          </li>
+
+          <li className="divider" style={{ marginTop: '0px' }} />
+
+          <li>
+            <a href={this.props.editUserPath} className="text-small">Settings</a>
+          </li>
+
+          <li>
+            <a href="#mark-as-read" className="text-small" onClick={this.markAllAsRead}>Mark all as read</a>
+          </li>
+
+          <li>
+            <a href='/dashboard' className="text-small">All Notifications</a>
+          </li>
+        </ul>
       );
     },
 
     body: function(story) {
-      var task = story.verb === 'Start' ? story.subjects[0] : story.target;
+      var sentence = story.sentences.other
+      if (story.owner.id == UserStore.getId()) {
+        sentence = story.sentences.owner
+      }
 
       return (
-        <span>
-          {this.verbMap[story.verb]}
-          <strong>
-            {this.subjectMap[story.subject_type] && this.subjectMap[story.subject_type].call(this, task)}
-          </strong>
-          {this.product(story)}
-        </span>
+        <span dangerouslySetInnerHTML={{__html: sentence}} />
       );
     },
 
@@ -47,7 +61,7 @@
     entry: function(options) {
       var story = options.story;
 
-      var actors = _.map(this.actors(story, options.actors), func.dot('username')).join(', @')
+      var actors = _.map(story.actors, func.dot('username')).join(', @')
 
       var classes = ['px2', 'py1', 'block', 'clearfix'];
 
@@ -68,7 +82,7 @@
             key={options.key}>
 
           <div className="left mr2">
-            <Avatar user={this.actors(story, options.actors)[0]} size={18} />
+            <Avatar user={story.actors[0]} size={18} />
           </div>
           <div className="overflow-hidden h6 mt0 mb0">
             <strong>{actors}</strong> {this.body(story)}<br/>
@@ -93,20 +107,7 @@
     },
 
     markAsRead: function(story) {
-      story.last_read_at = moment().unix();
-
-      // React doesn't always catch that the story
-      // should update, so we need to update it
-      // optimistically
-      this.setState({
-        story: story
-      });
-
-      Dispatcher.dispatch({
-        action: NF.ACTIONS.MARK_AS_READ,
-        data: story.key,
-        sync: true
-      });
+      StoryActionCreators.markAsRead(story)
     },
 
     optimisticallyMarkAllAsRead: function() {
@@ -141,31 +142,6 @@
       return ' in ' + story.product_name;
     },
 
-    render: function() {
-      return (
-        <ul className="dropdown-menu" style={{ paddingTop: '0px', minWidth: '380px', width: '380px' }}>
-          <li style={{ overflowY: 'scroll', minHeight: '60px', maxHeight: '400px' }}>
-            {this.state.stories ? this.rows(this.state.stories) : <Spinner />}
-          </li>
-
-          <li className="divider" style={{ marginTop: '0px' }} />
-
-          <li>
-            <a href={this.props.editUserPath} className="text-small">Settings</a>
-          </li>
-
-          <li>
-            <a href="#mark-as-read" className="text-small" onClick={this.markAllAsRead}>Mark all as read</a>
-          </li>
-
-          <li>
-            <a href='/dashboard' className="text-small">All Notifications</a>
-          </li>
-
-        </ul>
-      );
-    },
-
     rows: function(stories) {
       var self = this;
 
@@ -184,6 +160,29 @@
           }) }
         </div>
       );
+    },
+
+    // stores
+    getInitialState: function() {
+      return this.getStateFromStore()
+    },
+
+    componentWillMount: function() {
+      StoryStore.addChangeListener(this._onChange)
+    },
+
+    componentWillUnmount: function() {
+      StoryStore.removeChangeListener(this._onChange);
+    },
+
+    _onChange: function() {
+      this.setState(this.getStateFromStore())
+    },
+
+    getStateFromStore: function() {
+      return {
+        stories: StoryStore.getStories(),
+      }
     }
   });
 

@@ -4,6 +4,6 @@ class NotificationsController < ApplicationController
   def index
     @stories = NewsFeed.new(current_user).page(params[:top_id])
 
-    @users = @stories.map(&:activities).flatten.map(&:actor).flatten.uniq
+    render json: @stories
   end
 end

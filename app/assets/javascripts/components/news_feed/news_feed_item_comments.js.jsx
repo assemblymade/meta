@@ -2,16 +2,27 @@
 // var marked = require('marked')
 
 var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
+var BountyStore = require('../../stores/bounty_store');
 var Comment = require('../comment.js.jsx');
 var Dispatcher = window.Dispatcher;
 var Icon = require('../icon.js.jsx');
 var NewComment = require('./new_comment.js.jsx');
+var NewsFeedItemBountyClose = require('./news_feed_item_bounty_close.js.jsx');
+var NewsFeedItemBountyCommentReference = require('./news_feed_item_bounty_comment_reference.js.jsx');
+var NewsFeedItemBountyReviewReady = require('./news_feed_item_bounty_review_ready.js.jsx');
+var NewsFeedItemBountyTagChange = require('./news_feed_item_bounty_tag_change.js.jsx');
+var NewsFeedItemBountyTimelineItem = require('./news_feed_item_bounty_timeline_item.js.jsx');
+var NewsFeedItemBountyTitleChange = require('./news_feed_item_bounty_title_change.js.jsx');
+var NewsFeedItemBountyWin = require('./news_feed_item_bounty_win.js.jsx');
 var NewsFeedItemStore = require('../../stores/news_feed_item_store');
+var ReadReceipts = require('../read_receipts.js.jsx');
+var UserStore = require('../../stores/user_store');
 
 var NewsFeedItemComments = React.createClass({
   displayName: 'NewsFeedItemComments',
 
   propTypes: {
+    commentable: React.PropTypes.bool,
     item: React.PropTypes.object.isRequired,
     showAllComments: React.PropTypes.bool
   },
@@ -23,10 +34,18 @@ var NewsFeedItemComments = React.createClass({
   },
 
   componentWillMount: function() {
+    if (_reach(this.props, 'item.target.type') === 'task') {
+      BountyStore.addChangeListener(this.getBountyState);
+    }
+
     NewsFeedItemStore.addChangeListener(this.getComments);
   },
 
   componentWillUnmount: function() {
+    if (_reach(this.props, 'item.target.type') === 'task') {
+      BountyStore.removeChangeListener(this.getBountyState);
+    }
+
     NewsFeedItemStore.removeChangeListener(this.getComments);
   },
 
@@ -37,10 +56,25 @@ var NewsFeedItemComments = React.createClass({
 
     $.get(url, function(response) {
       this.setState({
-        comments: response,
+        comments: response.comments,
+        events: response.events,
         showCommentsAfter: 0
       });
     }.bind(this));
+  },
+
+  getBountyState: function() {
+    var state = BountyStore.getState();
+
+    if (state === 'reviewing') {
+      var comments = this.state.comments;
+
+      comments.push(this.renderOptimisticReviewReady());
+
+      this.setState({
+        comments: comments
+      });
+    }
   },
 
   getComments: function(e) {
@@ -52,6 +86,12 @@ var NewsFeedItemComments = React.createClass({
       numberOfComments: this.state.numberOfComments + comments.confirmed.length,
       optimisticComments: comments.optimistic
     });
+  },
+
+  getDefaultProps: function() {
+    return {
+      commentable: false
+    };
   },
 
   getInitialState: function() {
@@ -68,7 +108,8 @@ var NewsFeedItemComments = React.createClass({
 
     return {
       comments: lastComment ? [lastComment] : [],
-      numberOfComments: item.target.comments_count || item.comments_count,
+      events: [],
+      numberOfComments: item.comments_count,
       optimisticComments: [],
       showCommentsAfter: showCommentsAfter,
       url: item.url + '/comments'
@@ -77,7 +118,7 @@ var NewsFeedItemComments = React.createClass({
 
   render: function() {
     return (
-      <div>
+      <div className="px3">
         {this.renderComments()}
         {this.renderNewCommentForm()}
       </div>
@@ -94,26 +135,41 @@ var NewsFeedItemComments = React.createClass({
     }
 
     return (
-      <div className="py2 border-top">
+      <div>
         {this.renderLoadMoreButton()}
-        <div className="mt2 mb2">
+        <div className="timeline">
           {confirmedComments}
+          {optimisticComments}
         </div>
-        {optimisticComments}
       </div>
     );
   },
 
   renderConfirmedComments: function() {
     var renderIfAfter = this.state.showCommentsAfter;
+    var comments = this.state.comments.concat(this.state.events).sort(_sort);
+    var awardUrl = _reach(this.props, 'item.target.url') + '/award';
 
-    return this.state.comments.map(function(comment) {
+    return comments.map(function(comment, i) {
       if (new Date(comment.created_at) >= renderIfAfter) {
-        return (
-          <div className="h6 mt0 mb2 px3" key={comment.id}>
-            <Comment author={comment.user} body={comment.markdown_body} timestamp={comment.created_at} />
-          </div>
-        );
+
+        var renderedEvent = parseEvent(comment, awardUrl);
+
+        if (i + 1 === comments.length) {
+          var timestamp = (
+            <div className="timeline-insert js-timestamp clearfix" key={'timestamp-' + comment.id}>
+              <time className="timestamp left" dateTime={comment.timestamp}>{moment(comment.created_at).fromNow()}</time>
+              <ReadReceipts url={'/_rr/articles/' + comment.id} track_url={comment.readraptor_track_id} />
+            </div>
+          );
+
+          return [
+            timestamp,
+            renderedEvent
+          ];
+        }
+
+        return renderedEvent;
       }
     });
   },
@@ -123,9 +179,10 @@ var NewsFeedItemComments = React.createClass({
     var target = this.props.item.target;
 
     if (numberOfComments > this.state.comments.length) {
-      // TODO: Call onClick={this.fetchCommentsFromServer} when comments are working
       return (
-        <a className="block h6 clearfix mt0 mb2 px3 gray-dark clickable" onClick={this.fetchCommentsFromServer} style={{'textDecoration': 'underline'}}>
+        <a className="block text-small mt2 gray-dark clickable"
+            onClick={this.triggerModal}
+            style={{textDecoration: 'underline'}}>
           <span className="mr1">
             <Icon icon="comment" />
           </span>
@@ -136,38 +193,135 @@ var NewsFeedItemComments = React.createClass({
   },
 
   renderNewCommentForm: function() {
-    var url = this.state.url;
+    var item = this.props.item;
 
-    if (window.app.currentUser()) {
-      return (
-        <div className="border-top px3 py2">
-          <NewComment {...this.props} url={url} thread={this.props.item.id} user={window.app.currentUser()} />
-        </div>
-      );
+    if (this.props.commentable) {
+      var url = this.state.url;
+
+      if (window.app.currentUser()) {
+        return <NewComment
+            {...this.props}
+            canContainWork={item.target && item.target.type === 'task'}
+            url={url}
+            thread={item.id}
+            user={window.app.currentUser()} />
+      }
     }
   },
 
   renderOptimisticComments: function() {
     return this.state.optimisticComments.map(function(comment) {
       return (
-        <div className="h6 mt0 mb2 px3" key={comment.id}>
+        <div className="py3" key={comment.id}>
           <Comment author={comment.user} body={marked(comment.body)} optimistic={true} />
         </div>
       )
     });
   },
 
-  showMoreComments: function() {
-    return function(e) {
-      this.setState({
-        showCommentsAfter: 0
-      });
-    }.bind(this);
+  renderOptimisticReviewReady: function() {
+    var user = UserStore.get();
+
+    // when we get the event back in the confirmation, set the award_url
+    // so that the buttons show up
+    if (user.isCore) {
+      return {
+        type: 'Event::ReviewReady',
+        actor: user,
+        // award_url: this.props.url + '/award',
+        created_at: new Date(),
+        id: 'FIXME'
+      };
+    }
+  },
+
+  triggerModal: function(e) {
+    e.stopPropagation();
+
+    this.props.triggerModal();
   }
-})
+});
 
 if (typeof module !== 'undefined') {
   module.exports = NewsFeedItemComments;
 }
 
-window.NewsFeedItemComments = module.exports
+window.NewsFeedItemComments = module.exports;
+
+function parseEvent(event, awardUrl) {
+  var renderedEvent;
+
+  switch(event.type) {
+  case 'Event::Allocation':
+    renderedEvent = null;
+    break;
+  case 'Event::Close':
+    renderedEvent = <NewsFeedItemBountyClose {...event} />;
+    break;
+  case 'Event::CommentReference':
+    renderedEvent = <NewsFeedItemBountyCommentReference {...event} />;
+    break;
+  case 'Event::ReviewReady':
+    renderedEvent = <NewsFeedItemBountyReviewReady {...event} />;
+    break;
+  case 'Event::Win':
+    renderedEvent = <NewsFeedItemBountyWin {...event} />;
+    break;
+  case 'Event::TagChange':
+    // don't render tag change events
+    // renderedEvent = <NewsFeedItemBountyTagChange {...event} />;
+    // See TODO in NewsFeedItemBountyTagChange
+    break;
+  case 'Event::TitleChange':
+    renderedEvent = <NewsFeedItemBountyTitleChange {...event} />;
+    break;
+  case 'news_feed_item_comment':
+    renderedEvent = <Comment
+        author={event.user}
+        awardUrl={awardUrl}
+        body={event.markdown_body}
+        timestamp={event.created_at}
+        heartable={true}
+        heartableId={event.id} />;
+    break;
+  default:
+    if (!event.actor) {
+      break;
+    }
+
+    renderedEvent = <NewsFeedItemBountyTimelineItem {...event} />;
+    break;
+  }
+
+  if (renderedEvent) {
+    return (
+      <div className="py2" key={event.id}>
+        {renderedEvent}
+      </div>
+    );
+  }
+}
+
+function _reach(obj, prop) {
+  var props = prop.split('.');
+
+  while (props.length) {
+    var p = props.shift();
+
+    if (obj && obj.hasOwnProperty(p)) {
+      obj = obj[p]
+    } else {
+      obj = undefined;
+      break;
+    }
+  }
+
+  return obj;
+}
+
+function _sort(a, b) {
+  var aDate = +new Date(a.created_at);
+  var bDate = +new Date(b.created_at);
+
+  return aDate > bDate ? 1 : bDate > aDate ? -1 : 0;
+}

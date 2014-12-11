@@ -21,7 +21,7 @@ namespace :discussions do
       discussion.comments.each do |comment|
         NewsFeedItemComment.create(
           body: comment.body,
-          created_at: comment.created_at,
+          # created_at: comment.created_at,
           news_feed_item: nfi,
           target_id:  post.id,
           user: comment.user
@@ -37,7 +37,7 @@ namespace :discussions do
       NewsFeedItem.where(target_id: key).each do |nfi|
         next if nfi_deleted
 
-        if nfi.news_feed_item_comments.count == 0
+        if nfi.comments.count == 0
           nfi.delete
           nfi_deleted = true
         end
@@ -46,19 +46,33 @@ namespace :discussions do
   end
 
   task reset_comment_created_at: :environment do
-    Discussion.all.each do |discussion|
-      next if discussion.product.nil?
-      next if Post.where(title: discussion.title, product: discussion.product).any?
-      next if Post.where(slug: discussion.title.parameterize, product: discussion.product).any?
+    NewsFeedItem.where(target_type: 'Post').each do |nfi|
+      if nfi.comments.any?
+        nfi.comments.each do |comment|
+          youngest = Time.new(2014)
 
-      post = Post.find_by(slug: discussion.title.parameterize, product: discussion.product)
+          if event = Event::Comment.find_by(user: comment.user, body: comment.body)
+            comment.update(created_at: event.created_at)
 
-      next unless post
+            if event.created_at > youngest
+              youngest = event.created_at
+            end
+          end
 
-      discussion.comments.each do |comment|
-        if nfic = NewsFeedItemComment.find_by(body: comment.body, user: comment.user, target_id: post.id)
-          nfic.update(created_at: comment.created_at)
+          nfi.update(last_commented_at: youngest)
         end
+      else
+        nfi.update(last_commented_at: nfi.target.created_at)
+      end
+    end
+  end
+
+  task remove_main_threads: :environment do
+    NewsFeedItem.where(target_type: 'Post').each do |nfi|
+      if nfi.target.try(:title) == 'Main thread'
+        post = nfi.target
+        post.delete
+        nfi.delete
       end
     end
   end

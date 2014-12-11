@@ -1,4 +1,5 @@
-var Avatar = require('../avatar.js.jsx')
+var Avatar = require('../avatar.js.jsx');
+var NewsFeedItemModalMixin = require('../../mixins/news_feed_item_modal_mixin');
 
 module.exports = React.createClass({
   displayName: 'NewsFeedItemIntroduction',
@@ -6,15 +7,21 @@ module.exports = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired,
     product: React.PropTypes.object.isRequired,
-    intro: React.PropTypes.string.isRequired,
+    target: React.PropTypes.shape({
+      bio: React.PropTypes.string.isRequired
+    }).isRequired,
+    url: React.PropTypes.string.isRequired
   },
+
+  mixins: [NewsFeedItemModalMixin],
 
   render: function() {
     var user = this.props.user;
     var product = this.props.product;
+    var target = this.props.target;
 
     return (
-      <a className="block p3 center" href={user.url}>
+      <a className="block p3 center" href={this.props.url} onClick={this.handleClick}>
         <div className="h4 black mt0 mb0">Welcome @{user.username}</div>
         <div className="h5 gray-2 mt0 mb0">to {product.name}</div>
 
@@ -25,9 +32,9 @@ module.exports = React.createClass({
         <div className="h5 bold mt0 mb0 gray-1">{user.username}:</div>
 
         <div className="gray-darker">
-          {this.props.intro}
+          {target.bio}
         </div>
       </a>
-    )
+    );
   }
-})
+});

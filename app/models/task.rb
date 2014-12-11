@@ -9,7 +9,7 @@ class Task < Wip
   has_many :votes, :as => :voteable, :after_add => :vote_added
   has_many :workers, :through => :wip_workers, :source => :user
   has_many :news_feed_items, as: :target
-  
+
   scope :allocated,   -> { where(state: :allocated) }
   scope :reviewing,   -> { where(state: :reviewing) }
   scope :won,         -> { joins(:awards) }
@@ -220,12 +220,12 @@ class Task < Wip
 
     minting = nil
     add_activity(closer, Activities::Award) do
-      win = ::Event::Win.new(user: closer, event: winning_event)
+      win = ::Event::Win.new(user: closer)
       add_event(win) do
         award = self.awards.create!(
           awarder: closer,
           winner: winning_event.user,
-          event: winning_event,
+          event: win,
           wip: self
         )
 
