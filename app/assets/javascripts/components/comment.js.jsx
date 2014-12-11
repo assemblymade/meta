@@ -92,7 +92,7 @@ module.exports = React.createClass({
                     role="menu"
                     aria-labelledby={"dropdown-" + heartableId}>
                   <li>
-                    <a class="event-award"
+                    <a className="event-award"
                         href={awardUrl + '?event_id=' + heartableId}
                         data-method="patch"
                         data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
@@ -104,7 +104,7 @@ module.exports = React.createClass({
                   </li>
 
                   <li>
-                    <a class="event-award"
+                    <a className="event-award"
                         href={awardUrl + '?event_id=' + heartableId + '&close=true'}
                         data-method="patch"
                         data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
