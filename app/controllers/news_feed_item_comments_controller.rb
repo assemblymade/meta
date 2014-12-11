@@ -8,7 +8,7 @@ class NewsFeedItemCommentsController < ProductController
   respond_to :json
 
   def create
-    @item = @news_feed_item.news_feed_item_comments.create(
+    @item = @news_feed_item.news_feed_item_comments.create!(
       user: current_user,
       body: params[:body]
     )
@@ -20,16 +20,26 @@ class NewsFeedItemCommentsController < ProductController
 
   def index
     comments = ActiveModel::ArraySerializer.new(
-      @news_feed_item.news_feed_item_comments.order(created_at: :asc),
+      @news_feed_item.comments.order(created_at: :asc),
       each_serializer: NewsFeedItemCommentSerializer
     )
 
-    respond_with comments, location: product_url(@product)
+    events = ActiveModel::ArraySerializer.new(
+      @news_feed_item.events.order(created_at: :asc),
+      each_serializer: EventSerializer,
+      scope: current_user
+    )
+
+    feed = {
+      comments: comments,
+      events: events
+    }
+
+    respond_with feed, location: product_url(@product)
   end
 
   def publish_comment
     if target = @news_feed_item.target
-
       # we're currently duplicating comments to wip comments. This will be fixed
       # we can remove this if block then
       if target.is_a? Wip

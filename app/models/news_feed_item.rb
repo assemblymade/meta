@@ -35,6 +35,10 @@ class NewsFeedItem < ActiveRecord::Base
     self.news_feed_item_comments
   end
 
+  def events
+    Event.where(wip: self.target).where.not(type: 'Event::Comment')
+  end
+
   def ensure_last_commented_at
     unless self.last_commented_at
       self.update!(last_commented_at: Time.now)

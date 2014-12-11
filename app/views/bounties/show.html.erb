@@ -26,11 +26,6 @@
     } %>
 </div>
 
-<div class="px3" id="discussion-view-el">
-  <%= render 'wips/discussion', events: @events %>
-  <%= render 'new_event_form' %>
-</div>
-
 <% if signed_in? %>
   <img class="hidden" data-src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@bounty).first, current_user.id).url %>" />
 <% end %>

@@ -1,5 +1,7 @@
 <% title 'Introduction', '@'+@membership.user.username %>
+
 <% heartables = [@membership.news_feed_item] + @membership.news_feed_item.news_feed_item_comments %>
+
 <% if heartables %>
   <script id="heartables" type="application/json">
     <%== heartables.map{|h| {
@@ -22,9 +24,10 @@
   <% end %>
 <% end %>
 
-<div class="sm-col sm-col-8 px2">
+<div class="px2">
   <%= react_component 'NewsFeedItem',
         NewsFeedItemSerializer.new(@membership.news_feed_item).as_json.merge(
+          commentable: true,
           productPage: true,
           showAllComments: true
   ) %>

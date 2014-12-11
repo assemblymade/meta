@@ -40,6 +40,8 @@ class CommentsController < ProductController
           socket_id: params[:socket_id]
         )
 
+        NewsFeedItemComment.publish_to_news_feed(@wip, @event, body)
+
         @event.reload
 
         # update @wip.locked_at if the commenting user was working on it

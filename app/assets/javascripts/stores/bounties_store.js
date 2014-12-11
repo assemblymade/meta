@@ -1,4 +1,4 @@
-var EventEmitter = require('events').EventEmitter
+var Store = require('./es6_store')
 var ActionTypes = window.CONSTANTS.ActionTypes
 
 var _dispatchToken
@@ -7,7 +7,7 @@ var _loading = false
 var _page = 0
 var _pages = 0
 
-class BountiesStore extends EventEmitter {
+class BountiesStore extends Store {
   constructor() {
     super()
 
@@ -16,7 +16,7 @@ class BountiesStore extends EventEmitter {
         case ActionTypes.BOUNTIES_REQUEST:
           _bounties = action.bounties || []
           _loading = true
-          this.emit('change')
+          this.emitChange()
           break
 
         case ActionTypes.BOUNTIES_RECEIVE:
@@ -24,12 +24,12 @@ class BountiesStore extends EventEmitter {
           _loading = false
           _page = action.page
           _pages = action.pages
-          this.emit('change')
+          this.emitChange()
           break
 
         case ActionTypes.BOUNTIES_REORDER:
           _bounties = action.bounties
-          this.emit('change')
+          this.emitChange()
           break
       }
     })

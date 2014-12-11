@@ -3,7 +3,11 @@ class NewsFeedItemsController < ProductController
 
   def show
     @news_feed_item = NewsFeedItem.find(params[:id])
-    redirect_to @news_feed_item.target
+    begin
+      redirect_to @news_feed_item.target
+    rescue => e
+      redirect_to url_for([@product, @news_feed_item.target])
+    end
   end
 
   def index

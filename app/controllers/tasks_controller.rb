@@ -102,7 +102,7 @@ class TasksController < WipsController
       format.html { render 'bounties/show' }
       format.json { render json: {
         bounty: WipSerializer.new(@bounty, scope: current_user),
-        events: @bounty.events.map { |e| EventSerializer.for(e, current_user) }
+        events: @bounty.events.where.not(type: 'Event::Comment').map { |e| EventSerializer.for(e, current_user) }
       } }
     end
   end
