@@ -20,6 +20,7 @@ class Idea < ActiveRecord::Base
   after_commit :update_news_feed_item
 
   scope :with_mark,  -> (name) { joins(:marks).where(marks: { name: name }) }
+  scope :with_percentile, -> (percentile) { all.sort_by(&:percentile).take(percentile*all.count/100) }
 
   def slug_candidates
     [
@@ -80,11 +81,11 @@ class Idea < ActiveRecord::Base
   end
 
   def historical_rank_contemporary
-    Idea.order(score: :desc).find_index(self)
+    Idea.order(score: :desc).find_index(self)+1
   end
 
   def percentile
-    self.historical_rank.to_f / Idea.count*100.round(2)
+    self.historical_rank_contemporary.to_f / Idea.count*100.round(2)
   end
 
 end
