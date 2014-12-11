@@ -208,6 +208,7 @@ var NewsFeedItemNewComment = React.createClass({
     return (
       <div className="clearfix mt3 mr3 px3">
         <a className={classes}
+            style={{ border: '1px solid #338eda' }}
             href="javascript:void(0);"
             onClick={this.submitComment}>
           Comment
@@ -234,7 +235,7 @@ var NewsFeedItemNewComment = React.createClass({
     return (
       <a className={classes}
           href="javascript:void(0);"
-          style={{ color: '#5cb85c !important' }}
+          style={{ color: '#5cb85c !important', border: '1px solid #d3d3d3' }}
           onClick={this.submitWork}>
         <span className="icon icon-document icon-left"></span>
         Submit work for review
