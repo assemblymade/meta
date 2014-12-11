@@ -2,6 +2,7 @@
 // var marked = require('marked')
 
 var Avatar = require('./avatar.js.jsx');
+var Icon = require('./icon.js.jsx');
 var Love = require('./love.js.jsx');
 var Markdown = require('./markdown.js.jsx');
 
@@ -28,7 +29,7 @@ module.exports = React.createClass({
     var hearts = null
 
     var cs = React.addons.classSet({
-      'activity-body': true,
+      'activity-content': true,
       'gray-dark': this.isOptimistic()
     })
 
@@ -51,12 +52,13 @@ module.exports = React.createClass({
         <div className="left activity-avatar">
           <Avatar user={author} size={30} />
         </div>
+
+        {this.renderEllipsisMenu()}
         <div className="overflow-hidden activity-body px3">
           <div className="gray-2" style={{ display: 'inline-block' }}>
             <a className="bold black" href={author.url}>{author.username}</a>
             {this.renderLove()}
           </div>
-          {this.renderEllipsisMenu()}
 
           <div className={cs}>
             <Markdown content={body} normalized={true} />
@@ -67,37 +69,58 @@ module.exports = React.createClass({
   },
 
   renderEllipsisMenu: function() {
-    if (this.props.awardUrl) {
-      return [
-        <a href="javascript:void(0);"
-            className="dropdown-toggle"
-            id={"dropdown-" + this.props.heartableId}
-            data-toggle="dropdown">
-          <span className="icon icon-ellipsis" style={{ fontSize: 18 }} />
-        </a>,
+    var awardUrl = this.props.awardUrl;
 
-        <ul className="dropdown-menu right text-small"
-            role="menu"
-            aria-labelledby={"dropdown-" + this.props.heartableId}>
-          <li>
-            <a class="event-award"
-                href={this.props.awardUrl + '?event_id=' + this.props.heartableId}
-                data-method="patch"
-                data-confirm={'Are you sure you want to award this task to ' + this.props.author.username + '?'}>
-              {'Award bounty to ' + this.props.author.username + ' and keep it open'}
-            </a>
-          </li>
+    if (awardUrl) {
+      var heartableId = this.props.heartableId;
+      var username = this.props.author.username;
 
-          <li>
-            <a class="event-award"
-                href={this.props.awardUrl + '?event_id=' + this.props.heartableId + '&close=true'}
-                data-method="patch"
-                data-confirm={'Are you sure you want to award this task to ' + this.props.author.username + '?'}>
-              {'Award bounty to ' + this.props.author.username + ' and close it'}
-            </a>
-          </li>
-        </ul>
-      ];
+      return (
+        <div className="activity-actions clearfix right">
+          <ul className="list-inline right">
+            <li>
+
+              <div className="dropdown">
+                <a href="javascript:void(0);"
+                    className="dropdown-toggle"
+                    id={"dropdown-" + this.props.heartableId}
+                    data-toggle="dropdown">
+                  <span className="icon icon-ellipsis" style={{ fontSize: 18 }} />
+                </a>
+
+                <ul className="dropdown-menu dropdown-menu-right text-small"
+                    role="menu"
+                    aria-labelledby={"dropdown-" + heartableId}>
+                  <li>
+                    <a class="event-award"
+                        href={awardUrl + '?event_id=' + heartableId}
+                        data-method="patch"
+                        data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
+                      <span className="ml0 mr2">
+                        <Icon icon="star-o" />
+                      </span>
+                      {'Award bounty to @' + username + ' and keep it open'}
+                    </a>
+                  </li>
+
+                  <li>
+                    <a class="event-award"
+                        href={awardUrl + '?event_id=' + heartableId + '&close=true'}
+                        data-method="patch"
+                        data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
+                      <span className="ml0 mr2">
+                        <Icon icon="star" />
+                      </span>
+                      {'Award bounty to @' + username + ' and close it'}
+                    </a>
+                  </li>
+                </ul>
+
+              </div>
+            </li>
+          </ul>
+        </div>
+      );
     }
   },
 

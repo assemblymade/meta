@@ -148,10 +148,12 @@ var NewsFeedItemComments = React.createClass({
   renderConfirmedComments: function() {
     var renderIfAfter = this.state.showCommentsAfter;
     var comments = this.state.comments.concat(this.state.events).sort(_sort);
+    var awardUrl = _reach(this.props, 'item.target.url') + '/award';
 
     return comments.map(function(comment, i) {
       if (new Date(comment.created_at) >= renderIfAfter) {
-        var renderedEvent = parseEvent(comment);
+
+        var renderedEvent = parseEvent(comment, awardUrl);
 
         if (i + 1 === comments.length) {
           var timestamp = (
@@ -246,7 +248,7 @@ if (typeof module !== 'undefined') {
 
 window.NewsFeedItemComments = module.exports;
 
-function parseEvent(event) {
+function parseEvent(event, awardUrl) {
   var renderedEvent;
 
   switch(event.type) {
@@ -276,6 +278,7 @@ function parseEvent(event) {
   case 'news_feed_item_comment':
     renderedEvent = <Comment
         author={event.user}
+        awardUrl={awardUrl}
         body={event.markdown_body}
         timestamp={event.created_at}
         heartable={true}
