@@ -10,6 +10,7 @@ module.exports = React.createClass({
 
   propTypes: {
     author: React.PropTypes.object.isRequired,
+    awardUrl: React.PropTypes.string,
     body: React.PropTypes.string.isRequired,
     timestamp: React.PropTypes.string,
     heartable: React.PropTypes.bool,
@@ -53,10 +54,9 @@ module.exports = React.createClass({
         <div className="overflow-hidden activity-body px3">
           <div className="gray-2" style={{ display: 'inline-block' }}>
             <a className="bold black" href={author.url}>{author.username}</a>
-            <div className="ml2 right" style={{ display: 'inline-block' }}>
-              {this.renderLove()}
-            </div>
+            {this.renderLove()}
           </div>
+          {this.renderEllipsisMenu()}
 
           <div className={cs}>
             <Markdown content={body} normalized={true} />
@@ -66,9 +66,48 @@ module.exports = React.createClass({
     )
   },
 
+  renderEllipsisMenu: function() {
+    if (this.props.awardUrl) {
+      return [
+        <a href="javascript:void(0);"
+            className="dropdown-toggle"
+            id={"dropdown-" + this.props.heartableId}
+            data-toggle="dropdown">
+          <span className="icon icon-ellipsis" style={{ fontSize: 18 }} />
+        </a>,
+
+        <ul className="dropdown-menu right text-small"
+            role="menu"
+            aria-labelledby={"dropdown-" + this.props.heartableId}>
+          <li>
+            <a class="event-award"
+                href={this.props.awardUrl + '?event_id=' + this.props.heartableId}
+                data-method="patch"
+                data-confirm={'Are you sure you want to award this task to ' + this.props.author.username + '?'}>
+              {'Award bounty to ' + this.props.author.username + ' and keep it open'}
+            </a>
+          </li>
+
+          <li>
+            <a class="event-award"
+                href={this.props.awardUrl + '?event_id=' + this.props.heartableId + '&close=true'}
+                data-method="patch"
+                data-confirm={'Are you sure you want to award this task to ' + this.props.author.username + '?'}>
+              {'Award bounty to ' + this.props.author.username + ' and close it'}
+            </a>
+          </li>
+        </ul>
+      ];
+    }
+  },
+
   renderLove: function() {
     if (this.props.heartable) {
-      return <Love heartable_id={this.props.heartableId} heartable_type='NewsFeedItemComment' />;
+      return (
+        <div className="ml2 right" style={{ display: 'inline-block' }}>
+          <Love heartable_id={this.props.heartableId} heartable_type='NewsFeedItemComment' />
+        </div>
+      );
     }
   }
 });
