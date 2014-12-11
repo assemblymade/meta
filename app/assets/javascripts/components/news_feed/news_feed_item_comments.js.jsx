@@ -66,17 +66,19 @@ var NewsFeedItemComments = React.createClass({
     var state = BountyStore.getState();
 
     if (state === 'reviewing') {
+      var comments = this.state.comments;
+
+      comments.push(this.renderOptimisticReviewReady());
+
       this.setState({
-        comments: this.state.comments.push(
-          this.renderOptimisticReviewReady()
-        )
+        comments: comments
       });
     }
   },
 
   getComments: function(e) {
     var comments = NewsFeedItemStore.getComments(this.props.item.id);
-    console.log(this.state.comments)
+
     this.setState({
       comment: '',
       comments: this.state.comments.concat(comments.confirmed),
@@ -203,8 +205,16 @@ var NewsFeedItemComments = React.createClass({
   renderOptimisticReviewReady: function() {
     var user = UserStore.get();
 
+    // when we get the event back in the confirmation, set the award_url
+    // so that the buttons show up
     if (user.isCore) {
-      console.log(user);
+      return {
+        type: 'Event::ReviewReady',
+        actor: user,
+        // award_url: this.props.url + '/award',
+        created_at: new Date(),
+        id: 'FIXME'
+      };
     }
   },
 
