@@ -65,4 +65,8 @@ class Post < ActiveRecord::Base
     end
   end
 
+  def url_params
+    [product, self]
+  end
+
 end

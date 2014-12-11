@@ -20,7 +20,7 @@ describe NewsFeedItem do
   describe 'followings' do
     it 'adds source on create' do
       nfi = NewsFeedItem.make!
-      expect(nfi.followers).to eq([nfi.source])
+      expect(nfi.reload.followers).to eq([nfi.source])
     end
 
     it 'adds hearter on heart' do
@@ -29,7 +29,7 @@ describe NewsFeedItem do
       nfi = NewsFeedItem.make!
       nfi.hearts.create!(user: hearter)
 
-      expect(nfi.followers).to match_array([nfi.source, hearter])
+      expect(nfi.reload.followers).to match_array([nfi.source, hearter])
     end
 
     it 'adds commentor on comment' do
@@ -38,7 +38,7 @@ describe NewsFeedItem do
       nfi = NewsFeedItem.make!
       nfi.comments.create!(user: commenter)
 
-      expect(nfi.followers).to match_array([nfi.source, commenter])
+      expect(nfi.reload.followers).to match_array([nfi.source, commenter])
     end
   end
 end

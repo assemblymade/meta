@@ -37,7 +37,7 @@ namespace :discussions do
       NewsFeedItem.where(target_id: key).each do |nfi|
         next if nfi_deleted
 
-        if nfi.news_feed_item_comments.count == 0
+        if nfi.comments.count == 0
           nfi.delete
           nfi_deleted = true
         end

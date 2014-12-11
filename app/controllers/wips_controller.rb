@@ -195,7 +195,7 @@ class WipsController < ProductController
     @events = @wip.events.includes(:tips).order(:number)
 
     if nfi = @wip.news_feed_item
-      @heartables = ([nfi] + nfi.news_feed_item_comments).to_a
+      @heartables = ([nfi] + nfi.comments).to_a
       @user_hearts = if signed_in?
         Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
       end

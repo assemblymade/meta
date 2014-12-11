@@ -24,9 +24,7 @@ class Story < ActiveRecord::Base
   end
 
   def self.should_publish?(activity)
-    PUBLISHABLE_ACTIVITIES[[activity.verb, to_noun(activity.target)]].tap do |o|
-      puts "should publish? #{[activity.verb, to_noun(activity.target)]} #{o}"
-    end
+    PUBLISHABLE_ACTIVITIES[[activity.verb, to_noun(activity.target)]]
   end
 
   def self.associated_with_ids(entity)

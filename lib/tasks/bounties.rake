@@ -215,7 +215,7 @@ namespace :bounties do
         if NewsFeedItemComment.find_by(target_id: comment.id).nil?
           puts "#{wip.id} #{wips} - adding #{comment.id} #{comments}"
           nfi = NewsFeedItem.find_by!(target_id: comment.wip_id)
-          item = nfi.news_feed_item_comments.create!(
+          item = nfi.comments.create!(
             created_at: comment.created_at,
             updated_at: comment.updated_at,
             body: comment.body,

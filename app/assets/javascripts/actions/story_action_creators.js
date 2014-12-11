@@ -1,6 +1,10 @@
 var routes = require('../routes')
 var ActionTypes = window.CONSTANTS.ActionTypes
-var rrUrl = $('meta[name=read-raptor-url]').attr('content')
+
+var rrUrl = ''
+if ($('meta[name=read-raptor-url]')) {
+  rrUrl = $('meta[name=read-raptor-url]').attr('content')
+}
 
 var StoryActionCreators = {
   fetchStories: function() {
@@ -46,7 +50,7 @@ var StoryActionCreators = {
       stories: [story]
     })
 
-    $.get(routes.readraptor_path(story.key), ()=>{
+    $.get(routes.readraptor_path({article_id: story.key}), ()=>{
       Dispatcher.dispatch({
         type: ActionTypes.STORY_MARKED_AS_READ,
         stories: [story]

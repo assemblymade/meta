@@ -8,7 +8,7 @@ class NewsFeedItemCommentsController < ProductController
   respond_to :json
 
   def create
-    @item = @news_feed_item.news_feed_item_comments.create!(
+    @item = @news_feed_item.comments.create!(
       user: current_user,
       body: params[:body]
     )

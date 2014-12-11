@@ -8,11 +8,11 @@ class NewsFeedItemSerializer < ApplicationSerializer
   has_one :user
 
   def comments_count
-    object.target.try(:comments_count) || object.news_feed_item_comments.count
+    object.target.try(:comments_count) || object.comments.count
   end
 
   def last_comment
-    NewsFeedItemCommentSerializer.new(object.news_feed_item_comments.order(created_at: :desc).first)
+    NewsFeedItemCommentSerializer.new(object.comments.order(created_at: :desc).first)
   end
 
   def layout

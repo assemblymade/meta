@@ -9,7 +9,7 @@ class PostSerializer < ApplicationSerializer
   has_many :marks
 
   def comments_count
-    news_feed_item.news_feed_item_comments.count
+    news_feed_item.comments.count
   end
 
   def hearts_count
