@@ -6,8 +6,8 @@ namespace :ideas do
       i.add_mark(%(social mobile game marketplace SaaS iOS android utility).split.sample)
     }
     Idea.all.each do |idea|
-      rand(0..10).times { 
-        idea.news_feed_item.news_feed_item_comments.create(user: User.sample, body: rand_words(20, 50)) 
+      rand(0..10).times {
+        idea.news_feed_item.comments.create(user: User.sample, body: rand_words(20, 50)) 
       }
     end
   end
@@ -18,4 +18,3 @@ namespace :ideas do
     }.join(' ')
   end
 end
-

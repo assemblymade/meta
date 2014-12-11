@@ -18,8 +18,7 @@ class IdeaCommentsController < ProductController
 
   def index
     respond_with ActiveModel::ArraySerializer.new(
-      @idea.news_feed_item
-           .news_feed_item_comments.order(created_at: :desc),
+      @idea.news_feed_item.comments.order(created_at: :desc),
       each_serializer: IdeaCommentSerializer
     ).as_json
   end
@@ -30,5 +29,3 @@ class IdeaCommentsController < ProductController
       @idea = Idea.friendly.find(params[:idea_id])
     end
 end
-
-

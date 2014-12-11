@@ -7,7 +7,7 @@ module.exports = {
     dispatch(product_id, ActionTypes.PRODUCT_FOLLOW_CLICKED)
 
     $.ajax({
-           url: routes.product_follow_path(product_id),
+           url: routes.product_follow_path({product_id: product_id}),
           type: 'POST',
       dataType: 'json',
        success: dispatch.bind(null, product_id, ActionTypes.PRODUCT_FOLLOW_SUCCEEDED),
@@ -19,7 +19,7 @@ module.exports = {
     dispatch(product_id, ActionTypes.PRODUCT_UNFOLLOW_CLICKED)
 
     $.ajax({
-           url: routes.product_unfollow_path(product_id),
+           url: routes.product_unfollow_path({product_id: product_id}),
           type: 'POST',
       dataType: 'json',
        success: dispatch.bind(null, product_id, ActionTypes.PRODUCT_UNFOLLOW_SUCCEEDED),

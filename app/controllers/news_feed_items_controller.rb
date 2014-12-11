@@ -3,7 +3,11 @@ class NewsFeedItemsController < ProductController
 
   def show
     @news_feed_item = NewsFeedItem.find(params[:id])
-    redirect_to @news_feed_item.target
+    begin
+      redirect_to @news_feed_item.target
+    rescue => e
+      redirect_to url_for([@product, @news_feed_item.target])
+    end
   end
 
   def index
@@ -21,6 +25,18 @@ class NewsFeedItemsController < ProductController
   def depopularize
     @news_feed_item = NewsFeedItem.find(params[:update_id])
     @news_feed_item.update_columns(popular_at: nil)
+    render nothing: true, status: 200
+  end
+
+  def subscribe
+    @news_feed_item = NewsFeedItem.find(params[:update_id])
+    Watching.watch!(current_user, @news_feed_item)
+    render nothing: true, status: 200
+  end
+
+  def unsubscribe
+    @news_feed_item = NewsFeedItem.find(params[:update_id])
+    Watching.unwatch!(current_user, @news_feed_item)
     render nothing: true, status: 200
   end
 

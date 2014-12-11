@@ -94,12 +94,15 @@ class TasksController < WipsController
 
     @events = Event.render_events(@bounty.events.order(:number), current_user)
     @product_assets = @bounty.product.assets
+    if Watching.watched?(current_user, @bounty.news_feed_item)
+      @user_subscriptions = [@bounty.news_feed_item.id]
+    end
 
     respond_to do |format|
       format.html { render 'bounties/show' }
       format.json { render json: {
         bounty: WipSerializer.new(@bounty, scope: current_user),
-        events: @bounty.events.map { |e| EventSerializer.for(e, current_user) }
+        events: @bounty.events.where.not(type: 'Event::Comment').map { |e| EventSerializer.for(e, current_user) }
       } }
     end
   end

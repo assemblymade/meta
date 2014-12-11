@@ -9,8 +9,8 @@ class Event::CodeAdded < Event
   def deliverable=(code)
     self.event_id = code.id
   end
-  
+
   def awardable?
     true
-  end  
+  end
 end

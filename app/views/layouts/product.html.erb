@@ -3,6 +3,15 @@
         userFollowings: (@product.watching?(current_user) ? [@product.id] : [])
 ) %>
 
+<% if current_user %>
+  <%= initial_store_data(
+    'UserStore',
+    current_user.as_json.merge(
+      isCore: (@product.core_team?(current_user) || current_user.is_staff?)
+    )
+  ) %>
+<% end %>
+
 <% content_for :javascript do %>
   <script>
     window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);

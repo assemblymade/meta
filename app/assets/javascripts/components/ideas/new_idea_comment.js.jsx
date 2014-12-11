@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM
+  var ActionTypes = window.CONSTANTS.ActionTypes
   var TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
   var xhr = require('../../xhr');
   var ENTER = 13;
@@ -93,7 +93,7 @@
         xhr.post(this.props.url, { body: comment }, _confirmComment(createdAt));
 
         Dispatcher.dispatch({
-          action: CONSTANTS.ACTIONS.OPTIMISTICALLY_ADD_COMMENT,
+          type: ActionTypes.NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT,
           data: {
             body: comment,
             created_at: createdAt,
@@ -128,7 +128,7 @@
       }
 
       Dispatcher.dispatch({
-        action: CONSTANTS.ACTIONS.CONFIRM_COMMENT,
+        action: ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT,
         data: { timestamp: timestamp, comment: data }
       });
     };

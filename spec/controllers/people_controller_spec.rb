@@ -62,6 +62,13 @@ describe PeopleController do
 
       expect(Sidekiq::Extensions::DelayedMailer).to have(0).jobs
     end
+
+    it 'creates a story' do
+      product.team_memberships.create!(user: user, is_core: false)
+      patch :update, product_id: product.slug, id: user.id, membership: { bio: 'foo' }, format: :json
+
+      expect(PublishActivity.jobs.size).to eq(1)
+    end
   end
 
   describe 'DELETE #destroy' do

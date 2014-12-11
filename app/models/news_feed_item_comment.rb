@@ -22,4 +22,8 @@ class NewsFeedItemComment < ActiveRecord::Base
   def author_id
     user_id
   end
+
+  def url_params
+    [news_feed_item.url_params, anchor: id]
+  end
 end
