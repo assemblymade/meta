@@ -39,7 +39,7 @@ var PostsIndex = React.createClass({
 
   render: function() {
     return (
-      <div className="col-md-9 col-xs-9">
+      <div>
         {this.renderPosts()}
       </div>
     );
