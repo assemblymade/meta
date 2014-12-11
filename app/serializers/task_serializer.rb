@@ -64,4 +64,10 @@ class TaskSerializer < ApplicationSerializer
   def bounty
     object
   end
+
+  cached
+
+  def cache_key
+    object
+  end
 end

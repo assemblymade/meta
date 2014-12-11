@@ -105,6 +105,11 @@ class Event < ActiveRecord::Base
     number
   end
 
+  # stories
+  def url_params
+    [product, wip, anchor: self.number]
+  end
+
   def self.slug
     name.demodulize.underscore.downcase
   end

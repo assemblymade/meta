@@ -51,20 +51,29 @@ input[type=radio], input[type=checkbox] {
 
 .input-group-search {
   > .control-label {
-    background-color: #ECEDEF; // gray-5
+    background-color: #dbdee3; // gray-5
     border-bottom-left-radius: 2rem;
     border-top-left-radius: 2rem;
     color: $gray-dark;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: normal;
+    line-height: 19px;
     left: 0;
-    padding: .5rem 1rem .5rem 2rem;
+    padding: 7px 1rem 6px 18px;
     position: absolute;
-    width: 122px;
+    width: 110px;
     z-index: 3;
-
+    -webkit-transition:all 0.15s ease-in-out;
+    transition:all 0.15s ease-in-out;
     & + .form-control {
-      padding-left: 122px + 12px;
+      padding-left: 129px;
+      height: 32px;
+      font-size: 13px;
+      line-height: 21px;
+      color:#8b909a;
+      width: 320px;
+      -webkit-transition:all 0.15s ease-in-out;
+      transition:all 0.15s ease-in-out;
     }
   }
 
@@ -74,29 +83,49 @@ input[type=radio], input[type=checkbox] {
     border: none;
     border-radius: 2rem !important;
     box-shadow: none;
-    padding-left: 2rem;
+    padding-left: 18px;
     padding-right: 1rem;
+    height: 32px;
+    font-size: 13px;
+    line-height: 21px;
+    -webkit-transition:all 0.15s ease-in-out;
+    transition:all 0.15s ease-in-out;
 
     &:focus {
       box-shadow: 0 0 0 1px $blue;
+      -webkit-transition:all 0.15s ease-in-out;
+      transition:all 0.15s ease-in-out;
     }
 
     & + .form-control-feedback {
-      color: #C2C7D0; // gray-3
+      color: #688c93; // gray-3
     }
 
     &:focus + .form-control-feedback {
       color: $blue;
+      -webkit-transition:all 0.15s ease-in-out;
+      transition:all 0.15s ease-in-out;
     }
   }
 
   > .form-control-feedback {
-    line-height: 3rem;
-    height: 3rem;
+    line-height: 2.7rem;
+    height: 32px;
     width: 3rem;
     position: absolute;
     top: 0 !important; // needs to be here for responsive styling
-    right: 1rem !important;
+    right: 2px !important;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
     z-index: 2;
+  }
+}
+
+@-moz-document url-prefix() {
+  .input-group-search {
+    > .control-label {
+      padding-top: 6px;
+    }
   }
 }

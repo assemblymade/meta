@@ -1,6 +1,4 @@
-/** @jsx React.DOM */
-
-module.exports = React.createClass({
+var NewsFeedItemBountyWin = React.createClass({
   displayName: 'NewsFeedItemBountyWin',
   propTypes: {
     actor: React.PropTypes.object.isRequired,
@@ -33,3 +31,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = NewsFeedItemBountyWin;

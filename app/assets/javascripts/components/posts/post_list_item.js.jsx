@@ -9,6 +9,10 @@ var PostListIem = React.createClass({
     post: React.PropTypes.object.isRequired
   },
 
+  /**
+   * ListItemMixin: this.renderComments({Number: count})
+   *                this.renderTags({[Object: tag]})
+   */
   mixins: [ListItemMixin],
 
   render: function() {
@@ -16,15 +20,15 @@ var PostListIem = React.createClass({
 
     return (
       <div className="bg-white rounded shadow mb2">
-        <div className="p3">
+        <div className="px3">
           {this.renderTitle()}
           {this.renderSummary()}
         </div>
 
-        <div className="p3 py2 mb0 mt0 gray-dark">
+        <div className="px3 mb1 mt0 gray-dark">
           {this.renderComments(post.comments_count)}
           {this.renderHearts()}
-          {this.renderTags(post.tags)}
+          {this.renderTags(post.marks)}
         </div>
 
         {this.renderUser()}
@@ -45,19 +49,21 @@ var PostListIem = React.createClass({
   renderSummary: function() {
     var post = this.props.post;
 
-    return (
-      <div className="h5 mt0 mb1 gray-dark">
-        {post.summary}
-      </div>
-    );
+    if (post.summary) {
+      return (
+        <div className="h5 mt0 mb2 gray-dark">
+          {post.summary}
+        </div>
+      );
+    }
   },
 
   renderTitle: function() {
     var post = this.props.post;
 
     return (
-      <div className="h4 mt0 mb1">
-        <a href={post.url} className="bold">
+      <div className="h4 mb1" style={{ paddingTop: '1rem' }}>
+        <a href={post.url} className="black">
           {post.title}
         </a>
       </div>

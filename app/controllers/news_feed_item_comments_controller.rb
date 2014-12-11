@@ -8,45 +8,40 @@ class NewsFeedItemCommentsController < ProductController
   respond_to :json
 
   def create
-    @item = @news_feed_item.news_feed_item_comments.create(
+    @item = @news_feed_item.comments.create!(
       user: current_user,
       body: params[:body]
     )
 
-    forward_comment
+    publish_comment
 
     respond_with @item, location: product_updates_url(@product)
   end
 
   def index
     comments = ActiveModel::ArraySerializer.new(
-      @news_feed_item.news_feed_item_comments.order(created_at: :asc),
+      @news_feed_item.comments.order(created_at: :asc),
       each_serializer: NewsFeedItemCommentSerializer
     )
 
-    respond_with comments, location: product_url(@product)
+    events = ActiveModel::ArraySerializer.new(
+      @news_feed_item.events.order(created_at: :asc),
+      scope: current_user
+    )
+
+    discussion = {
+      comments: comments,
+      events: events
+    }
+
+    respond_with discussion, location: product_url(@product)
   end
 
-  def forward_comment
+  def publish_comment
     if target = @news_feed_item.target
-      if target.is_a? TeamMembership
-        wip = target.product.main_thread
-
-        event = Event.create_from_comment(
-          wip,
-          Event::Comment,
-          product_markdown(target.product,
-            "_@#{target.user.username}: " + @item.body + "_"
-          ),
-          current_user
-        )
-
-        Activities::Chat.publish!(
-          actor: event.user,
-          subject: event,
-          target: wip
-        )
-      elsif target.is_a? Wip
+      # we're currently duplicating comments to wip comments. This will be fixed
+      # we can remove this if block then
+      if target.is_a? Wip
         event = Event.create_from_comment(
           target,
           Event::Comment,

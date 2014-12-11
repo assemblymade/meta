@@ -48,6 +48,9 @@ class Webhooks::MailgunController < WebhookController
       if user && wip
         event = Event::Comment.new(user: user, body: params['stripped-text'])
         wip.events << event
+
+        # TODO (pletcher): Remove this insanity
+        NewsFeedItemComment.publish_to_news_feed(wip, event, event.body)
       end
     end
   end

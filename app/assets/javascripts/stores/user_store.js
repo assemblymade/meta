@@ -9,9 +9,15 @@ var UserStore = _.extend(Object.create(Store), {
   init: function() {
     _dispatchToken = Dispatcher.register(function(action) {
       switch(action.type) {
+        case ActionTypes.USER_RECEIVE:
+          _setUser(action.user)
+          this.emitChange();
+
+          break;
         case ActionTypes.USER_SIGNED_IN:
-          _currentUser = action.user
+          _setUser(action.user)
           this.emitChange()
+          break;
       }
     }.bind(this))
   },
@@ -26,11 +32,31 @@ var UserStore = _.extend(Object.create(Store), {
     }
   },
 
+  isCoreTeam: function() {
+    return _currentUser && _currentUser.coreTeam
+  },
+
   isSignedIn: function() {
     return _currentUser !== null
   }
 })
 
 UserStore.init()
+
+function _setUser(user) {
+  if (_currentUser) {
+    _currentUser = _.extend(_currentUser, user)
+  } else {
+    _currentUser = user;
+  }
+}
+
+var dataTag = document.getElementById('UserStore');
+if (dataTag) {
+  Dispatcher.dispatch({
+    type: ActionTypes.USER_RECEIVE,
+    user: JSON.parse(dataTag.innerHTML)
+  });
+}
 
 module.exports = UserStore

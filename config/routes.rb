@@ -311,6 +311,8 @@ ASM::Application.routes.draw do
     end
 
     resources :news_feed_items, only: [:index, :show], path: 'updates', as: :updates do
+      patch :subscribe
+      patch :unsubscribe
       patch 'popularize'
       patch 'depopularize'
 
@@ -318,8 +320,7 @@ ASM::Application.routes.draw do
     end
 
     resources :repositories, only: [:index, :create, :destroy], as: :repos
-
-    resources :work
+    resources :team_memberships, path: 'memberships', only: [:show]
     resources :tasks, only: [:show, :new], path: 'bounties'
     resources :wips, only: [:index, :show, :new, :edit, :create, :update], controller: 'tasks', path: 'bounties' do
       get 'search', :on => :collection
@@ -370,6 +371,8 @@ ASM::Application.routes.draw do
       resources :accounts, only: [:index, :show]
       resources :transactions, only: [:index, :show, :new, :create]
     end
+
+    resources :work
 
     # legacy
     get :chat, to: redirect('/chat/%{product_id}')

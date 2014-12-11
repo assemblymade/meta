@@ -62,10 +62,16 @@ class Event::Comment < Event
     Search::Sanitizer.new.sanitize(body)
   end
 
+  # stories
+  def url_params
+    [product, wip, anchor: "comment-#{self.number}"]
+  end
+
+
   # private
 
   def create_nfi_comment
     # currently we're duplicating all comments to nfi comments
-    NewsFeedItemComment.publish_to_news_feed(wip, self, body)
+    # NewsFeedItemComment.publish_to_news_feed(wip, self, body)
   end
 end

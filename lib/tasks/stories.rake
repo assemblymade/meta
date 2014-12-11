@@ -1,36 +1,13 @@
 namespace :stories do
+
   desc "Republish stories to redis"
   task :republish => :environment do
     NewsFeed.delete_all
-    Story.includes(activities: :subject).find_each do |story|
+    Story.includes(:subject, :story_actors).find_each do |story|
       puts "story: #{story.id} #{story.verb.rjust(15)} #{story.subject_type}"
-      begin
-        publish_activity = PublishActivity.new
-        publish_activity.activity = story.activities.first
-        publish_activity.push_to_feeds!(story)
-        publish_activity.register_with_readraptor!(story)
-      rescue => e
-        puts "error: #{e}"
-        puts "story: #{story.inspect}"
-        raise
-      end
-    end
-  end
 
-  desc "Rebuild stories in database"
-  task :rebuild => :environment do
-    Story.delete_all
-    Activity.where('created_at > ?', 7.days.ago).
-             where(type: [Activities::Comment, Activities::Award, Activities::Close]).
-             includes(:actor, :subject, :target).find_each do |activity|
-
-      Story.create!(
-        created_at: activity.created_at,
-        updated_at: activity.created_at,
-        verb: activity.verb,
-        subject_type: activity.verb_subject,
-      ).tap do |story|
-        activity.update_attributes story_id: story.id
+      (story.subject.product.follower_ids - story.actor_ids).each do |user_id|
+        NewsFeed.new(User, user_id).push(story)
       end
     end
   end
