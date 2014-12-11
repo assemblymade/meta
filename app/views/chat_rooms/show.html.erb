@@ -2,7 +2,7 @@
 <% activate_nav! :community if params[:id] == 'general' %>
 <%= track 'product.chat.viewed', ProductSerializer.new(@product, scope: current_user) %>
 
-<%= render partial: 'shared/navbar', locals: { bounties_link: true } %>
+<%= render 'shared/navbar', bounties_link: true, fluid: true %>
 
 <div class="modal fade"
      id="create-task"
