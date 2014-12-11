@@ -220,12 +220,12 @@ class Task < Wip
 
     minting = nil
     add_activity(closer, Activities::Award) do
-      win = ::Event::Win.new(user: closer, event: winning_event)
+      win = ::Event::Win.new(user: closer)
       add_event(win) do
         award = self.awards.create!(
           awarder: closer,
           winner: winning_event.user,
-          event: winning_event,
+          event: win,
           wip: self
         )
 

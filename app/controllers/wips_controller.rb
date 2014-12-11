@@ -94,7 +94,7 @@ class WipsController < ProductController
   def award
     if winner_id = params.fetch(:event_id)
       authorize! :award, @wip
-      @event = Event.find(winner_id)
+      @event = Event.find(winner_id) rescue NewsFeedItemComment.find(winner_id)
 
       @wip.award! current_user, @event
 

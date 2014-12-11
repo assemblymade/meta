@@ -285,6 +285,10 @@ function parseEvent(event, awardUrl) {
         heartableId={event.id} />;
     break;
   default:
+    if (!event.actor) {
+      break;
+    }
+
     renderedEvent = <NewsFeedItemBountyTimelineItem {...event} />;
     break;
   }

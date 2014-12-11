@@ -41,6 +41,10 @@ module.exports = React.createClass({
     var id = this.props.id;
     var readraptorTrackId = this.props.readraptor_track_id;
 
+    if (!actor) {
+      return <span />;
+    }
+
     return (
       <div className="timeline-item">
         <div className="activity" id={anchor} data-readraptor-track={readraptorTrackId} key={id}>

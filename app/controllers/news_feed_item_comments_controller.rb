@@ -26,16 +26,15 @@ class NewsFeedItemCommentsController < ProductController
 
     events = ActiveModel::ArraySerializer.new(
       @news_feed_item.events.order(created_at: :asc),
-      each_serializer: EventSerializer,
       scope: current_user
     )
 
-    feed = {
+    discussion = {
       comments: comments,
       events: events
     }
 
-    respond_with feed, location: product_url(@product)
+    respond_with discussion, location: product_url(@product)
   end
 
   def publish_comment
