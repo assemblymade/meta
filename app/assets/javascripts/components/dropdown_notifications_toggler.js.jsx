@@ -29,7 +29,7 @@ var NotificationsStore = require('../stores/notifications_store');
     },
 
     badge: function(total) {
-      return <strong className="ml1">{this.badgeCount()}</strong>;
+      return <strong className="mr1">{this.badgeCount()}</strong>;
     },
 
     badgeCount: function() {
