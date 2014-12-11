@@ -21,10 +21,16 @@ $space-5: 48px;
 
 .mtn1 { margin-top:-$space-1 }
 
-//
+// ### typography
 
-.fs-13px { font-size:13px; }
+.fs0_9 { font-size:0.9rem; }
+.fs1_1 { font-size:1.1rem; }
 .fw-500 { font-weight:500; }
+
+// ### misc
+
+.pointer { cursor: pointer; }
+
 
 // ### transitions
 

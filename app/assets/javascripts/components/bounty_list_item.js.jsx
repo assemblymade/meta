@@ -165,15 +165,15 @@ var BountyListItem = React.createClass({
               </div>
 
               <div>
-                <span className="mr2 fs-13px">
+                <span className="mr2 fs1_1">
                   <Coins coins={this.props.bounty.earnable_coins_cache} />
                 </span>
 
-                <span className="gray mr2">
+                <span className="gray mr2 fs1_1">
                   {this.renderComments(bounty.comments_count)}
                 </span>
 
-                <span className="h6 mt0 mb0">
+                <span className="mt0 mb0 fs0_9">
                   {this.renderTags(bounty.tags)}
                 </span>
               </div>
