@@ -125,27 +125,26 @@ class QueryMarks
   def get_all_wip_vectors
     wips = Wip.where(closed_at: nil).where(type: "Task").where('created_at > ?', 90.days.ago)
     #magnitude_query = Marking.where('markings.markable_id = wips.id AND markings.mark_id = marks.id').select('SQRT(SUM(markings.weight ^ 2))').to_sql
-    #wips.joins(:marks).pluck("wips.id, marks.id, markings.weight / (#{magnitude_query})")
+    wips.joins(:marks).groups('wips.id, marks.id').pluck("wips.id, marks.id, SUM(markings.weight)")
 
-    wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
-    wip_vectors.select{ |a, b| a.count > 0 && ['team_building', 'greenlit', 'profitable'].include?(b.product.state) && b.product.flagged_at == nil && b.product.slug != "meta"}
+    #wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
+    #wip_vectors.select{ |a, b| a.count > 0 && ['team_building', 'greenlit', 'profitable'].include?(b.product.state) && b.product.flagged_at == nil && b.product.slug != "meta"}
   end
 
   def get_all_product_vectors
     products = Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagged_at: nil).where.not(slug: 'meta')
-    magnitude_query = Marking.where('markings.markable_id = products.id AND markings.mark_id = marks.id').select('SQRT(SUM(markings.weight ^ 2))').to_sql
     product_vector = products.joins(:marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)").group_by{ |product, mark, weight| product }
-    task_vector = products.joins(tasks: :marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)").group_by{|product, mark, weight| product}
+    product_vector = product_vector.map{ |p, v| [p, v.map{ |p, m, w| [Mark.find(m), w] }  ]}
 
-    product_vector.merge(task_vector) { |_, v1, v2| v1 + v2 }
+    task_vector = products.joins(tasks: :marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)*0.2").group_by{|product, mark, weight| product}
+    task_vector = task_vector.map{ |p, v| [p, v.map{ |p, m, w| [Mark.find(m), w]}]   }
 
-    #Hash[v1].merge(Hash[v2]) { |_, v1, v2| v1 + v2 }
-    #products.joins(:marks, tasks: :marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight) / (#{magnitude_query})")
+    merged_vector = Hash[product_vector].merge(Hash[task_vector])
+    merged_vector.map{ |k, v|
+      magnitude = Math.sqrt(v.sum{ |m, w| w**2})
+      [Product.find(k), v.map{|m, w| [m, w/magnitude]}.sort_by { |e| e[1] }.reverse  ]
+    }
 
-    # products.joins(:marks).pluck("products.id, marks.id, markings.weight / (#{magnitude_query})")
-    #
-    # product_vectors = products.map{ |p| [ normalize_mark_vector(p.mark_vector) , p] }
-    # product_vectors.select{ |a, b| a.count >0 }
   end
 
   def assign_top_bounties_for_user(limit, user, wip_vectors)
@@ -180,8 +179,8 @@ class QueryMarks
 
     if user_vector.count > 0
       product_vectors.each do |data|
-        vector = data[0]
-        product = data[1]
+        vector = data[1]
+        product = data[0]
         correlation = dot_product_vectors(user_vector, vector)
         result.append([correlation, product])
       end
@@ -221,7 +220,7 @@ class QueryMarks
     total = User.count
     n=1
     User.all.each do |a|
-      puts "#{n.to_s} / #{total.to_s} generating user markings -- #{(100*n.to_f/total.to_f).round(2)}%"
+      puts "#{n.to_s} / #{total.to_s} generating user markings -- #{(100*n.to_f/total.to_f).round(2)}%  -- #{a.username}"
       n = n + 1
       a.user_identity.markings.delete_all
       a.user_identity.assign_markings_from_scratch
