@@ -109,7 +109,9 @@ class QueryMarks
       if marking = Marking.find_by(mark: m[0], markable: object)
         marking.update!({weight: m[1]})
       else
-        Marking.create!({markable: object, mark_id: m[0].id, weight: m[1]})
+        if m[0]
+          Marking.create!({markable: object, mark_id: m[0].id, weight: m[1]})
+        end
       end
     end
   end
