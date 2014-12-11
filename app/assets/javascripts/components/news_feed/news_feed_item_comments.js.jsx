@@ -15,6 +15,7 @@ var NewsFeedItemBountyTimelineItem = require('./news_feed_item_bounty_timeline_i
 var NewsFeedItemBountyTitleChange = require('./news_feed_item_bounty_title_change.js.jsx');
 var NewsFeedItemBountyWin = require('./news_feed_item_bounty_win.js.jsx');
 var NewsFeedItemStore = require('../../stores/news_feed_item_store');
+var ReadReceipts = require('../read_receipts.js.jsx');
 var UserStore = require('../../stores/user_store');
 
 var NewsFeedItemComments = React.createClass({
@@ -148,11 +149,25 @@ var NewsFeedItemComments = React.createClass({
     var renderIfAfter = this.state.showCommentsAfter;
     var comments = this.state.comments.concat(this.state.events).sort(_sort);
 
-    return comments.map(function(comment) {
+    return comments.map(function(comment, i) {
       if (new Date(comment.created_at) >= renderIfAfter) {
-        return (
-          parseEvent(comment)
-        );
+        var renderedEvent = parseEvent(comment);
+
+        if (i + 1 === comments.length) {
+          var timestamp = (
+            <div className="timeline-insert js-timestamp clearfix" key={'timestamp-' + comment.id}>
+              <time className="timestamp left" dateTime={comment.timestamp}>{moment(comment.created_at).fromNow()}</time>
+              <ReadReceipts url={'/_rr/articles/' + comment.id} track_url={comment.readraptor_track_id} />
+            </div>
+          );
+
+          return [
+            timestamp,
+            renderedEvent
+          ];
+        }
+
+        return renderedEvent;
       }
     });
   },
@@ -259,7 +274,12 @@ function parseEvent(event) {
     renderedEvent = <NewsFeedItemBountyTitleChange {...event} />;
     break;
   case 'news_feed_item_comment':
-    renderedEvent = <Comment author={event.user} body={event.markdown_body} timestamp={event.created_at} />;
+    renderedEvent = <Comment
+        author={event.user}
+        body={event.markdown_body}
+        timestamp={event.created_at}
+        heartable={true}
+        heartableId={event.id} />;
     break;
   default:
     renderedEvent = <NewsFeedItemBountyTimelineItem {...event} />;

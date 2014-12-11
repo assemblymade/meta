@@ -1,8 +1,9 @@
 // TODO asset pipelined (chrislloyd)
 // var marked = require('marked')
 
-var Avatar = require('./avatar.js.jsx')
-var Markdown = require('./markdown.js.jsx')
+var Avatar = require('./avatar.js.jsx');
+var Love = require('./love.js.jsx');
+var Markdown = require('./markdown.js.jsx');
 
 module.exports = React.createClass({
   displayName: 'Comment',
@@ -11,7 +12,8 @@ module.exports = React.createClass({
     author: React.PropTypes.object.isRequired,
     body: React.PropTypes.string.isRequired,
     timestamp: React.PropTypes.string,
-    heartable: React.PropTypes.bool
+    heartable: React.PropTypes.bool,
+    heartableId: React.PropTypes.string
   },
 
   isOptimistic: function() {
@@ -49,9 +51,11 @@ module.exports = React.createClass({
           <Avatar user={author} size={30} />
         </div>
         <div className="overflow-hidden activity-body px3">
-          <div className="gray-2">
+          <div className="gray-2" style={{ display: 'inline-block' }}>
             <a className="bold black" href={author.url}>{author.username}</a>
-            {timestamp}
+            <div className="ml2 right" style={{ display: 'inline-block' }}>
+              {this.renderLove()}
+            </div>
           </div>
 
           <div className={cs}>
@@ -60,5 +64,11 @@ module.exports = React.createClass({
         </div>
       </div>
     )
+  },
+
+  renderLove: function() {
+    if (this.props.heartable) {
+      return <Love heartable_id={this.props.heartableId} heartable_type='NewsFeedItemComment' />;
+    }
   }
 });
