@@ -125,9 +125,19 @@ class QueryMarks
   #GENERATE TOP_BOUNTIES, TOP_PRODUCTS
 
   def get_all_wip_vectors
-    wips = Wip.where(closed_at: nil).where(type: "Task").where('created_at > ?', 90.days.ago)
+    #wips = Wip.where(closed_at: nil).where(type: "Task").where('created_at > ?', 90.days.ago)
+    #wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
+    #wip_vectors.select{ |a, b| a.count > 0 && ['team_building', 'greenlit', 'profitable'].include?(b.product.state) && b.product.flagged_at == nil && b.product.slug != "meta"}
+
+
+    wips = Wip.where(closed_at: nil).where(type: "Task").where('wips.created_at > ?', 90.days.ago)
     #magnitude_query = Marking.where('markings.markable_id = wips.id AND markings.mark_id = marks.id').select('SQRT(SUM(markings.weight ^ 2))').to_sql
-    wips.joins(:marks).groups('wips.id, marks.id').pluck("wips.id, marks.id, SUM(markings.weight)")
+    data = wips.joins(:marks).group('wips.id').group('marks.id').pluck("wips.id, marks.id, SUM(markings.weight)")
+    data = data.map{|x,y,z| [x, [y,z]]}
+    data = data.group_by(&:first)
+    data = data.map{ |x, v| [Wip.find(x), v.map{ |a,b| [Mark.find(b[0]), b[1]] } ] }
+    data = Hash[data]
+
 
     #wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
     #wip_vectors.select{ |a, b| a.count > 0 && ['team_building', 'greenlit', 'profitable'].include?(b.product.state) && b.product.flagged_at == nil && b.product.slug != "meta"}
@@ -155,8 +165,8 @@ class QueryMarks
 
     if user_vector.count > 0
       wip_vectors.each do |data|
-        vector = data[0]
-        wip = data[1]
+        vector = data[1]
+        wip = data[0]
         correlation = dot_product_vectors(user_vector, vector)
         if correlation > 0
           result.append([correlation.to_f, wip])
