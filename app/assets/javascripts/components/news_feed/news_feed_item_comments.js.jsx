@@ -132,7 +132,7 @@ var NewsFeedItemComments = React.createClass({
     var comments = confirmedComments.concat(optimisticComments);
 
     if (!comments.length) {
-      return;
+      return <div className="py2" />;
     }
 
     return (
