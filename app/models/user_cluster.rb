@@ -30,14 +30,14 @@ class UserCluster < ActiveRecord::Base
     QueryMarks.new.normalized_mark_vector_for_object(self)
   end
 
-  def variance
-    my_center = self.center
+  def calculate_variance
+    my_center = self.normalized_center
     sum_variance = 0
     self.users.each do |user|
       their_vector = user.user_identity.get_mark_vector
-      sum_variance = sum_variance + vector_square_distance(my_center, their_vector)
+      sum_variance = sum_variance + QueryMarks.new.vector_square_distance(my_center, their_vector)
     end
-    self.variance.update!({variance: sum_variance})
+    self.update!({variance: sum_variance})
     sum_variance
   end
 
