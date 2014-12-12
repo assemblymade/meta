@@ -80,12 +80,16 @@ class Idea < ActiveRecord::Base
     lovescore
   end
 
-  def historical_rank_contemporary
+  def rank
     Idea.order(score: :desc).find_index(self)+1
   end
 
   def percentile
-    self.historical_rank_contemporary.to_f / Idea.count*100.round(2)
+    self.rank.to_f / Idea.count*100.round(2)
+  end
+
+  def temperature
+    Math.log(100 / (self.percentile+0.1))*10
   end
 
 end
