@@ -16,10 +16,10 @@ var ListItemMixin = {
     return tags.map(function(tag) {
       return (
         <a className="caps gray-dark mr1" href={tag.url}>
-          #{tag.name.toLowerCase()}
+          #{tag.name}
         </a>
       )
-    })
+    });
   }
 };
 
