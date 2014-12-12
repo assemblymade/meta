@@ -111,10 +111,10 @@
         <div className="table mb2">
           <div className="table-cell">
             <div className="bg-white rounded shadow table mb0">
-              <div className="px3 py2 table-cell border-right" style={{ width: 55 }}>
+              <div className="px3 py1 table-cell border-right" style={{ width: 55 }}>
                 {this.renderFilterDropdown()}
               </div>
-              <div className="px3 py2 table-cell">
+              <div className="px3 py1 table-cell">
                 <input type="text" value={this.props.value} onChange={this.props.onValueChange} className="no-border full-width" style={{ padding: 0 }} />
               </div>
             </div>

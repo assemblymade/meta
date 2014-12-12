@@ -104,10 +104,8 @@
 
           </div>
 
-          <div className="sm-col sm-col-9 px2">
+          <div className="sm-col sm-col-9 px2 mtn1">
             <BountyFilter {...bountyFilterProps} value={this.state.value} onValueChange={this.handleValueChange} sort={this.state.sort} onSortChange={this.handleSortChange} />
-
-            <div className="border-top mt2 mb2"></div>
 
             <BountyList product={this.props.product} valuation={this.props.valuation} onPageChange={this.handlePageChange} draggable={this.draggable()} />
           </div>

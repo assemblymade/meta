@@ -156,7 +156,7 @@ var BountyListItem = React.createClass({
     }
 
     return (
-      <div className="bg-white rounded shadow mb3 js-bounty-list-item" style={style} data-bounty-id={bounty.id}>
+      <div className="bg-white rounded shadow mb2 js-bounty-list-item" style={style} data-bounty-id={bounty.id}>
         <div className="table mb0">
           <div className="table-cell">
             <div className="px3 mt3 mb2">
@@ -169,7 +169,7 @@ var BountyListItem = React.createClass({
                   <Coins coins={this.props.bounty.earnable_coins_cache} />
                 </span>
 
-                <span className="gray mr2 fs1_1">
+                <span className="gray mr2 fs1_1 fw_600">
                   {this.renderComments(bounty.comments_count)}
                 </span>
 
