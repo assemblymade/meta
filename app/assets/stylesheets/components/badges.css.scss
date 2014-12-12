@@ -10,10 +10,14 @@
   line-height: 14px;
   padding: 5px 12px;
   vertical-align: middle;
+  -webkit-transition: background 0.15s ease-in-out;
+  transition: background 0.15s ease-in-out;
 
   &:hover {
     color: white;
     background-color: #8B909A; // $gray-4
+    -webkit-transition: background 0.15s ease-in-out;
+    transition: background 0.15s ease-in-out;
   }
 
   &.active {
