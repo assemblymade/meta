@@ -44,13 +44,13 @@ module.exports = React.createClass({
     var updatedComment = CommentStore.getComment(this.props.id);
 
     if (updatedComment) {
-      CommentActionCreators.confirmUpdateReceived(updatedComment.id);
-
       this.setState({
         editing: false,
         body: updatedComment.markdown_body,
         rawBody: updatedComment.body
       });
+
+      CommentActionCreators.confirmUpdateReceived(updatedComment.id);
     }
   },
 
@@ -81,7 +81,7 @@ module.exports = React.createClass({
       var username = this.props.author.username;
 
       return [
-        <li>
+        <li key={'award-' + id}>
           <a className="event-award"
               href={awardUrl + '?event_id=' + id}
               data-method="patch"
@@ -93,7 +93,7 @@ module.exports = React.createClass({
           </a>
         </li>,
 
-        <li>
+        <li key={'award-and-close-' + id}>
           <a className="event-award"
               href={awardUrl + '?event_id=' + id + '&close=true'}
               data-method="patch"
@@ -155,7 +155,7 @@ module.exports = React.createClass({
 
     if (UserStore.getId() === this.props.author.id) {
       return (
-        <li>
+        <li key={'edit-options-' + this.props.id}>
           <a href="javascript:void(0);" onClick={this.triggerEditMode}>
             <span className="ml0 mr2">
               <Icon icon="pencil" />
@@ -189,7 +189,8 @@ module.exports = React.createClass({
 
               <ul className="dropdown-menu dropdown-menu-right text-small"
                   role="menu"
-                  aria-labelledby={"dropdown-" + id}>
+                  aria-labelledby={"dropdown-" + id}
+                  key={'ul-' + id}>
                   {this.renderAwardOptions()}
                   {this.renderEditOption()}
               </ul>

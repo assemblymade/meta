@@ -27,7 +27,7 @@
 
     render: function() {
       return (
-        <span class="">
+        <span>
           <a className="text-coins bold" href="#" id="bounty-amount-link" onClick={this.toggle}>
             <span className="icon icon-app-coin"></span>
             {' '}
