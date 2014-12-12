@@ -18,12 +18,14 @@ class MakeMarks
   end
 
   def merge_marks(destroyed_mark_name, into_existing_mark_name)
-    if destroyed_mark = Mark.find_by(name: destroyed_mark_name) && into_existing_mark = Mark.find_by(name: into_existing_mark_name)
-      old_markings = Marking.where(mark_id: destroyed_mark.id)
-      old_markings.each do |o|
-        o.update!({mark_id: into_existing_mark.id})
+    if destroyed_mark = Mark.find_by(name: destroyed_mark_name)
+      if into_existing_mark = Mark.find_by(name: into_existing_mark_name)
+        old_markings = Marking.where(mark_id: destroyed_mark.id)
+        old_markings.each do |o|
+          o.update!({mark_id: into_existing_mark.id})
+        end
+        destroyed_mark.destroy
       end
-      destroyed_mark.destroy
     end
   end
 
