@@ -77,20 +77,20 @@ namespace :news_feed_items do
   end
 
   task repopulate_comments: :environment do
-      Event::Comment.all.each do |comment|
-        if nfi = NewsFeedItem.find_by(target_id: comment.wip_id)
-          NewsFeedItemComment.delete_all(news_feed_item_id: nfi.id)
+    Event::Comment.all.each do |comment|
+      if nfi = NewsFeedItem.find_by(target_id: comment.wip_id)
+        NewsFeedItemComment.delete_all(news_feed_item_id: nfi.id)
 
-          nfi.comments.create(
-            user_id: comment.user_id,
-            body: comment.body,
-            created_at: comment.created_at,
-            updated_at: comment.updated_at,
-            target_id: comment.id
-          )
+        nfi.comments.create(
+          user_id: comment.user_id,
+          body: comment.body,
+          created_at: comment.created_at,
+          updated_at: comment.updated_at,
+          target_id: comment.id
+        )
 
-          nfi.update(last_commented_at: comment.created_at)
-        end
+        nfi.update(last_commented_at: comment.created_at)
       end
+    end
   end
 end
