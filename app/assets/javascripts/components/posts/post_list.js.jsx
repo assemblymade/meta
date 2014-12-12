@@ -9,7 +9,7 @@ var PostList = React.createClass({
 
   render: function() {
     return (
-      <div className="row">
+      <div className="row mt0">
         <div className="col-xs-12">
           {this.renderPosts()}
         </div>

@@ -77,7 +77,7 @@ module.exports = React.createClass({
             </li>
           </ul>
 
-          <h1 className="mt0 mb0">
+          <h1 className="mt0 mb0" style={{ fontWeight: 'normal' }}>
             {this.state.bounty.title}
             {' '}
             <small style={{ fontSize: '85%' }}>
