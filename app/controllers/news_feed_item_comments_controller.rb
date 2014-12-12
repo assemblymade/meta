@@ -37,6 +37,16 @@ class NewsFeedItemCommentsController < ProductController
     respond_with discussion, location: product_url(@product)
   end
 
+  def update
+    if comment = NewsFeedItemComment.find(params[:id])
+      comment.update(body: comment_params[:body])
+
+      respond_with comment do |format|
+        format.json { render json: NewsFeedItemCommentSerializer.new(comment), status: :ok, location: product_update_url(@product, @news_feed_item) }
+      end
+    end
+  end
+
   def publish_comment
     if target = @news_feed_item.target
       # we're currently duplicating comments to wip comments. This will be fixed
@@ -66,5 +76,11 @@ class NewsFeedItemCommentsController < ProductController
 
   def set_news_feed_item!
     @news_feed_item = NewsFeedItem.find(params[:update_id])
+  end
+
+  private
+
+  def comment_params
+    params.require(:comment).permit(:body)
   end
 end

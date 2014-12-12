@@ -86,12 +86,12 @@ ActiveRecord::Schema.define(version: 20141211224017) do
 
   create_table "awards", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "awarder_id"
+    t.uuid     "event_id"
     t.uuid     "wip_id"
     t.uuid     "winner_id"
     t.integer  "cents"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.uuid     "event_id"
   end
 
   create_table "bounty_postings", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

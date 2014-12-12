@@ -316,7 +316,7 @@ ASM::Application.routes.draw do
       patch 'popularize'
       patch 'depopularize'
 
-      resources :news_feed_item_comments, only: [:index, :create], as: :comments, path: 'comments'
+      resources :news_feed_item_comments, only: [:index, :create, :update], as: :comments, path: 'comments'
     end
 
     resources :repositories, only: [:index, :create, :destroy], as: :repos
