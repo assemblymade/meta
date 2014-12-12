@@ -122,6 +122,14 @@ class QueryMarks
     dot_product_vectors(vector1, vector2)
   end
 
+  def vector_square_distance(vector1,vector2)
+    vec1=Hash[vector1]
+    vec2=Hash[vector2]
+    vec3 = vec1.merge(vec2){
+      |_, v1, v2| (v1-v2)
+    }.sum{|k,v| v**2 }
+  end
+
   #GENERATE TOP_BOUNTIES, TOP_PRODUCTS
 
   def get_all_wip_vectors
@@ -228,7 +236,14 @@ class QueryMarks
   end
 
   def legible_mark_vector(vector)
-    vector.map{|m, w| [Mark.find(m).name, w]}
+    r=vector.map{|m, w| mark = Mark.find_by(id: m)
+      if mark
+        [mark.name, w]
+      else
+        ['', 0]
+      end}
+    r.delete(['', 0])
+    r
   end
 
   #RUN DAILY
