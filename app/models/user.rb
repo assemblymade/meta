@@ -383,6 +383,21 @@ class User < ActiveRecord::Base
     self.viewings.count
   end
 
+  def best_cluster
+    best_cluster = self.user_cluster
+    best_distance = 99999
+    UserCluster.all.each do |uc|
+      cluster_vector = uc.normalized_center
+      my_vector = self.user_identity.get_mark_vector
+      distance = QueryMarks.new.vector_square_distance(my_vector, cluster_vector)
+      if distance<best_distance
+        best_distance = distance
+        best_cluster = uc
+      end
+    end
+    return best_cluster
+  end
+
   private
 
   def generate_authentication_token

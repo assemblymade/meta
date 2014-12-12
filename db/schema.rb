@@ -756,7 +756,8 @@ ActiveRecord::Schema.define(version: 20141212213316) do
 
   add_index "user_balance_entries", ["profit_report_id", "user_id"], name: "index_user_balance_entries_on_profit_report_id_and_user_id", unique: true, using: :btree
 
-  create_table "user_clusters", force: true do |t|
+  create_table "user_clusters", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.float    "variance"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -879,6 +880,7 @@ ActiveRecord::Schema.define(version: 20141212213316) do
     t.string   "platforms",                         default: [],                   array: true
     t.datetime "gravatar_checked_at"
     t.datetime "gravatar_verified_at"
+    t.uuid     "user_cluster_id"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
