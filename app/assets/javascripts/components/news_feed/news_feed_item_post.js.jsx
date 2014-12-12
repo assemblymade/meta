@@ -16,11 +16,11 @@ module.exports = React.createClass({
     var target = this.props.target;
 
     return (
-      <a className="h3 block mt0 mb3" href={this.props.url} onClick={this.handleClick}>
+      <a className="block mt0 mb3" href={this.props.url} onClick={this.handleClick}>
         <div className="p3">
-          {this.props.title}
+          <div className="h3 mt0 mb1">{this.props.title}</div>
           {this.renderSummary()}
-          <div className="mt3 gray-darker">
+          <div className="gray-darker">
             <Markdown content={this.props.body} normalized={true} />
           </div>
           {this.renderTags(target && target.marks)}
