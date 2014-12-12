@@ -206,3 +206,13 @@ button, .button {
     }
   }
 }
+
+.flip-v {
+  display: block;
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+}
+
+.flip-h {
+
+}

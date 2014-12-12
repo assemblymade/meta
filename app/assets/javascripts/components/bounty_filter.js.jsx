@@ -111,7 +111,7 @@
         <div className="table mb2">
           <div className="table-cell">
             <div className="bg-white rounded shadow table mb0">
-              <div className="pl2_5 pr2 py1 table-cell border-right" style={{ width: 55 }}>
+              <div className="w4_5 pl2_5 pr2 py1 table-cell border-right">
                 {this.renderFilterDropdown()}
               </div>
               <div className="pr2_5 pl2_5 table-cell">
@@ -119,9 +119,8 @@
               </div>
             </div>
           </div>
-
-          <div className="table-cell">
-            <div className="px3 py2" style={{ 'margin-right': -70 }}>
+          <div className="table-cell w10_5">
+            <div className="py2 right-align">
               {this.renderSortDropdown()}
             </div>
           </div>

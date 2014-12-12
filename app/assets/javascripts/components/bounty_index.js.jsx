@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
+  var Accordian = require('./accordian.js.jsx')
   var BountiesStore = require('../stores/bounties_store.js')
   var BountyActionCreators = require('../actions/bounty_action_creators.js')
   var BountyFilter = require('./bounty_filter.js.jsx')
@@ -92,30 +93,20 @@
       var bountyFilterProps = _.pick(this.props, 'tags', 'creators', 'workers')
 
       return (
-        <div className="mxn2"> /* parent container */
-          <div class="create-task">
-            <a href="">
-              Create A New Task
-            </a>
+        <div className="row">
+          <div className="col-xs-12 col-sm-3 r768_float-right">
+            <div className="mb1 r768_pl1">
+              <Accordian title="Tags">
+                <ul data-label="core" className="list-reset">
+                  {this.renderTags()}
+                </ul>
+              </Accordian>
+            </div>
           </div>
-
-
-          // <div className="sm-col sm-col-3 px2" style={{float: 'right !important'}}>
-          //   <div className="px3">
-          //     <div className="h5 mt0 bold">Tags</div>
-          //
-          //     <ul className="mt1 list-unstyled">
-          //       {this.renderTags()}
-          //     </ul>
-          //   </div>
-          //
-          // </div>
-          //
-          // <div className="sm-col sm-col-9 px2 mtn1">
-          //   <BountyFilter {...bountyFilterProps} value={this.state.value} onValueChange={this.handleValueChange} sort={this.state.sort} onSortChange={this.handleSortChange} />
-          //
-          //   <BountyList product={this.props.product} valuation={this.props.valuation} onPageChange={this.handlePageChange} draggable={this.draggable()} />
-          // </div>
+          <div className="col-xs-12 col-sm-9">
+            <BountyFilter {...bountyFilterProps} value={this.state.value} onValueChange={this.handleValueChange} sort={this.state.sort} onSortChange={this.handleSortChange} />
+            <BountyList product={this.props.product} valuation={this.props.valuation} onPageChange={this.handlePageChange} draggable={this.draggable()} />
+          </div>
         </div>
       )
     },
