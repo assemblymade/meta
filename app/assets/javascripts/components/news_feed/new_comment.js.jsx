@@ -141,13 +141,21 @@ var NewsFeedItemNewComment = React.createClass({
     }
   },
 
-  onKeyPress: function(e) {
-    // React isn't picking up the command key :(
+  onKeyDown: function(e) {
     if ((e.shiftKey || e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
       e.preventDefault();
       e.stopPropagation();
 
-      this.submitComment();
+      this.submitComment(e);
+    }
+  },
+
+  onKeyPress: function(e) {
+    if ((e.shiftKey || e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      this.submitComment(e);
     }
   },
 
@@ -182,6 +190,7 @@ var NewsFeedItemNewComment = React.createClass({
                   className={textareaClasses}
                   rows={this.state.rows}
                   onChange={this.onChange}
+                  onKeyDown={this.onKeyDown}
                   onKeyPress={this.onKeyPress}
                   value={this.state.text} />
             </div>
@@ -199,6 +208,7 @@ var NewsFeedItemNewComment = React.createClass({
     return (
       <div className="clearfix mt3 mr3 px3">
         <a className={classes}
+            style={{ border: '1px solid #338eda' }}
             href="javascript:void(0);"
             onClick={this.submitComment}>
           Comment
@@ -225,7 +235,7 @@ var NewsFeedItemNewComment = React.createClass({
     return (
       <a className={classes}
           href="javascript:void(0);"
-          style={{ color: '#5cb85c !important' }}
+          style={{ color: '#5cb85c !important', border: '1px solid #d3d3d3' }}
           onClick={this.submitWork}>
         <span className="icon icon-document icon-left"></span>
         Submit work for review

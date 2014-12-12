@@ -97,12 +97,7 @@
     },
 
     markAllAsRead: function() {
-      Dispatcher.dispatch({
-        action: NF.ACTIONS.MARK_ALL_AS_READ,
-        data: null,
-        sync: true
-      });
-
+      StoryActionCreators.markAllAsRead(this.state.stories)
       this.optimisticallyMarkAllAsRead();
     },
 
@@ -167,7 +162,7 @@
       return this.getStateFromStore()
     },
 
-    componentWillMount: function() {
+    componentDidMount: function() {
       StoryStore.addChangeListener(this._onChange)
     },
 

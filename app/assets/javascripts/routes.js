@@ -104,3 +104,4 @@ exports.product_update_unsubscribe_path = function(options){
   }
 }
 
+window.routes = module.exports

@@ -52,4 +52,8 @@ class NewsFeedItem < ActiveRecord::Base
   def follow_self
     Watching.watch!(self.source, self)
   end
+
+  def update_watchings_count!
+    update! watchings_count: followings.count
+  end
 end

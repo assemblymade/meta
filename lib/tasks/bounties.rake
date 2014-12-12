@@ -1,4 +1,47 @@
 namespace :bounties do
+
+  task :product_analysis => :environment do
+    require 'csv'
+    puts "Enter output file name (or press [enter] for default):"
+    input = STDIN.gets.chomp
+    filename = input.empty? ? "#{Time.now.strftime("%m%d%y")}_product_response.csv" : input
+    CSV.open(filename, 'w') do |row|
+      row << ["Product", "time to first award", "comment responsiveness"]
+
+      Product.all.each do |p|
+        # average time to first award
+        avg_time_to_award = -1
+        tasks_with_awards = p.tasks.where(state: [:awarded, :resolved])
+
+        unless tasks_with_awards.blank?
+          avg_time_to_award = 0
+          tasks_with_awards.each do |t|
+            next if t.awards.blank?
+            avg_time_to_award += (t.awards.minimum(:created_at).to_i - t.created_at.to_i).abs
+          end
+          avg_time_to_award = avg_time_to_award.to_f / p.tasks.where(state: [:awarded, :resolved]).count
+        end
+
+        # average time for comments to receive responses
+        # weighted average of responsiveness across product tasks
+        avg_time_to_comment = -1
+        tasks_with_comments = p.tasks.where('comments_count > 0')
+
+        unless tasks_with_comments.blank?
+          avg_time_to_comment_weighted_numerators = []
+          tasks_with_comments.each do |t|
+            avg_time_to_comment_weighted_numerators <<
+              (t.comments.maximum(:created_at).to_i - t.created_at.to_i) / [t.comments_count - 1, 1].max * t.comments_count
+          end
+          avg_time_to_comment = avg_time_to_comment_weighted_numerators.sum / tasks_with_comments.sum(:comments_count)
+        end
+
+        row << [p.name, avg_time_to_award, avg_time_to_comment]
+      end
+    end
+  end
+
+
   task :analysis => :environment do
 
     def seconds_to_days(seconds)

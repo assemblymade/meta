@@ -15,11 +15,11 @@ var ListItemMixin = {
 
     return tags.map(function(tag) {
       return (
-        <a className="caps gray-dark mr1" href={tag.url}>
-          #{tag.name.toLowerCase()}
+        <a className="caps gray-1 mr2 pointer" href={tag.url}>
+          #{tag.name}
         </a>
       )
-    })
+    });
   }
 };
 

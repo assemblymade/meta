@@ -62,7 +62,7 @@ var PostListIem = React.createClass({
     var post = this.props.post;
 
     return (
-      <div className="h4 mb1" style={{ paddingTop: '1rem' }}>
+      <div className="h4 mb1 mt0" style={{ paddingTop: '1rem' }}>
         <a href={post.url} className="black">
           {post.title}
         </a>

@@ -2,7 +2,8 @@ var Store = require('./es6_store')
 var StoryActionCreators = require('../actions/story_action_creators')
 
 var _dispatchToken,
-    _stories = {}
+    _stories = null,
+    _more = true
 
 var ActionTypes = window.CONSTANTS.ActionTypes;
 
@@ -13,6 +14,11 @@ class StoryStore extends Store {
     _dispatchToken = Dispatcher.register((action) => {
       switch(action.type) {
         case ActionTypes.STORY_RECEIVE_STORIES:
+          _more = action.stories.length == 20;
+          if (!_stories) {
+            _stories = {}
+          }
+
           _(action.stories).each((story)=>{
             _stories[story.id] = story
             _stories[story.id].last_read_at = 0
@@ -33,11 +39,22 @@ class StoryStore extends Store {
   }
 
   getStories() {
+    if (!_stories) {
+      return null
+    }
     return _(_stories).values()
   }
 
   getStoryKeys() {
     return _(_stories).map((s)=>{ return s.key })
+  }
+
+  getLastStory() {
+    return _(_(_stories).values()).last()
+  }
+
+  areMoreStoriesAvailable() {
+    return _more
   }
 }
 

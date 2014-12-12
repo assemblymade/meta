@@ -30,7 +30,7 @@ class Idea < ActiveRecord::Base
   end
 
   def comments
-    news_feed_item_comments
+    news_feed_item.comments
   end
 
   def creator_username

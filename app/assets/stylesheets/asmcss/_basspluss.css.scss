@@ -14,21 +14,28 @@ $space-5: 48px;
 
 .quarter-width { width: 25% }
 
-.px0  { padding-right:0; padding-left:0; }
-
-.pt0  { padding-top: 0 }
 .pt1  { padding-top: $space-1 }
 .pt2  { padding-top: $space-2 }
 .pt3  { padding-top: $space-3 }
 .pt4  { padding-top: $space-4 }
 
-.pr0  { padding-right: 0 }
-.pr1  { padding-right: $space-1 }
-.pr2  { padding-right: $space-2 }
-.pr3  { padding-right: $space-3 }
-.pr4  { padding-right: $space-4 }
+.mtn1 { margin-top:-$space-1 }
 
-.mt_neg1 { margin-top:-$space-1 }
+// ### typography
+
+.fs0_9 { font-size:0.9rem; }
+.fs1 { font-size:1rem; }
+.fs1_1 { font-size:1.1rem; }
+.fs1_2 { font-size:1.2rem; }
+.fs1_3 { font-size:1.3rem; }
+
+.fw-500 { font-weight:500; }
+.fw_600 { font-weight:600; }
+
+// ### misc
+
+.pointer { cursor: pointer; }
+
 
 // ### transitions
 
@@ -37,12 +44,6 @@ $space-5: 48px;
   -webkit-transition-timing-function: $transition-function;
   transition-duration: $transition-duration;
   transition-timing-function: $transition-function;
-}
-
-.tranx_all {
-  -webkit-transition-property: all;
-  transition-property: all;
-  @extend .tranx_fx;
 }
 
 .tranx_m {
@@ -75,7 +76,7 @@ $space-5: 48px;
     display:block !important;
   }
   .r600_m0 {
-    margin-top:0 !important; margin-right:0 !important; margin-bottom:0 !important; margin-left:0 !important;
+    margin:0 !important;
   }
   .r600_mr1 {
     margin-right: $space-1 !important;
@@ -96,10 +97,7 @@ $space-5: 48px;
 }
 @media screen and (min-width: 768px) {
   .r768_m0 {
-    margin-top:0 !important; margin-right:0 !important; margin-bottom:0 !important; margin-left:0 !important;
-  }
-  .r768_ml0 {
-    margin-left:0;
+    margin: 0 !important;
   }
   .r768_pr3 {
     padding-right:$space-3;

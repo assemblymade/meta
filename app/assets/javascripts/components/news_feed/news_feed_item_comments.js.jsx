@@ -2,6 +2,7 @@
 // var marked = require('marked')
 
 var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
+var ActivityFeedComment = require('../activity_feed_comment.js.jsx');
 var BountyStore = require('../../stores/bounty_store');
 var Comment = require('../comment.js.jsx');
 var Dispatcher = window.Dispatcher;
@@ -130,14 +131,14 @@ var NewsFeedItemComments = React.createClass({
     var optimisticComments = this.renderOptimisticComments();
     var comments = confirmedComments.concat(optimisticComments);
 
-    if (!comments.length) {
-      return;
+    if (!comments.length && this.props.showAllComments) {
+      return <div className="py2" />;
     }
 
     return (
       <div>
         {this.renderLoadMoreButton()}
-        <div className="timeline">
+        <div className={this.props.showAllComments ? "timeline" : null}>
           {confirmedComments}
           {optimisticComments}
         </div>
@@ -149,8 +150,17 @@ var NewsFeedItemComments = React.createClass({
     var renderIfAfter = this.state.showCommentsAfter;
     var comments = this.state.comments.concat(this.state.events).sort(_sort);
     var awardUrl = _reach(this.props, 'item.target.url') + '/award';
+    var self = this;
 
     return comments.map(function(comment, i) {
+      if (!self.props.showAllComments) {
+        return <ActivityFeedComment
+            author={comment.user}
+            body={comment.markdown_body}
+            heartable={true}
+            heartableId={comment.id} />
+      }
+
       if (new Date(comment.created_at) >= renderIfAfter) {
 
         var renderedEvent = parseEvent(comment, awardUrl);
