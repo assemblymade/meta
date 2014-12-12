@@ -7,9 +7,13 @@ if ($('meta[name=read-raptor-url]')) {
 }
 
 var StoryActionCreators = {
-  fetchStories: function() {
+  fetchStories: function(topId) {
+    var options = {}
+    if (topId) {
+      options.data = {top_id: topId}
+    }
     $.ajax({
-      url: routes.notifications_path(),
+      url: routes.notifications_path(options),
       type: 'GET',
       dataType: 'json',
       success: function(data) {
@@ -56,6 +60,11 @@ var StoryActionCreators = {
         stories: [story]
       })
     })
+  },
+
+  markAllAsRead: function(stories) {
+    // this could be more efficient
+    _(stories).each(this.markAsRead)
   }
 
 }
