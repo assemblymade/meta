@@ -45,15 +45,4 @@ describe PostsController do
       expect_mail_queued(PostMailer, :mailing_list, assigns(:post).id, 'yoda@dagobah.org')
     end
   end
-
-  describe "#show" do
-    let(:post) { Post.make!(product: product, news_feed_item: NewsFeedItem.make!) }
-
-    it "is successful" do
-      get :show, product_id: product.slug, id: post.slug
-      expect(response).to be_successful
-    end
-
-  end
-
 end
