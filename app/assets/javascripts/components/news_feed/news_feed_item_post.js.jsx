@@ -16,16 +16,14 @@ module.exports = React.createClass({
     var target = this.props.target;
 
     return (
-      <a className="block mt0 mb3" href={this.props.url} onClick={this.handleClick}>
-        <div className="p3">
-          <div className="h3 mt0 mb1">{this.props.title}</div>
-          {this.renderSummary()}
+      <div className="p3 clickable" onClick={this.handleClick}>
+        <a className="h3 block mt0 mb1 black" href={this.props.url}>{this.props.title}</a>
+        {this.renderSummary()}
 
-          <div className="mt3 gray-darker" style={{ fontSize: 16 }}>
-            <Markdown content={this.props.body} normalized={true} />
-          </div>
+        <div className="mt3 gray-darker" style={{ fontSize: 16 }}>
+          <Markdown content={this.props.body} normalized={true} />
         </div>
-      </a>
+      </div>
     );
   },
 
