@@ -69,7 +69,7 @@
                 <li class="inline-block">
                   <a href="<%= @product.homepage_url %>">
                     <%= inline_react_component 'Icon', icon: 'globe' %>
-                    <%= URI(@product.homepage_url.downcase).host %>
+                    <%= URI(@product.homepage_url.downcase).host rescue 'invalid' %>
                   </a>
                 </li>
                 <% end %>
