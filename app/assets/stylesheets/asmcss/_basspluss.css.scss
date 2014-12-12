@@ -1,5 +1,6 @@
 $space-1: 6px;
 $space-2: 12px;
+$space-2_5: 18px;
 $space-3: 24px;
 $space-4: 36px;
 $space-5: 48px;
@@ -18,6 +19,18 @@ $space-5: 48px;
 .pt2  { padding-top: $space-2 }
 .pt3  { padding-top: $space-3 }
 .pt4  { padding-top: $space-4 }
+
+.pr1  { padding-right: $space-1 }
+.pr2  { padding-right: $space-2 }
+.pr2_5  { padding-right: $space-2_5 }
+.pr3  { padding-right: $space-3 }
+.pr4  { padding-right: $space-4 }
+
+.pl1  { padding-left: $space-1 }
+.pl2  { padding-left: $space-2 }
+.pl2_5  { padding-left: $space-2_5 }
+.pl3  { padding-left: $space-3 }
+.pl4  { padding-left: $space-4 }
 
 .mtn1 { margin-top:-$space-1 }
 
