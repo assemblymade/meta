@@ -185,7 +185,7 @@ var NewsFeedItemNewComment = React.createClass({
         <div className="px4">
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
-              <TypeaheadUserTextArea
+              <textarea
                   id="event_comment_body"
                   ref="textarea"
                   type="text"
@@ -194,7 +194,7 @@ var NewsFeedItemNewComment = React.createClass({
                   onChange={this.onChange}
                   onKeyDown={this.onKeyDown}
                   onKeyPress={this.onKeyPress}
-                  defaultValue={this.state.text} />
+                  value={this.state.text} />
             </div>
             {this.renderDropzoneInner()}
           </div>
