@@ -13,6 +13,8 @@ module.exports = React.createClass({
   mixins: [NewsFeedItemModalMixin],
 
   render: function() {
+    var target = this.props.target;
+
     return (
       <a className="h3 block mt0 mb3" href={this.props.url} onClick={this.handleClick}>
         <div className="p3">
@@ -21,6 +23,7 @@ module.exports = React.createClass({
           <div className="mt3 gray-darker">
             <Markdown content={this.props.body} normalized={true} />
           </div>
+          {this.renderTags(target && target.marks)}
         </div>
       </a>
     );
@@ -33,6 +36,18 @@ module.exports = React.createClass({
           <Markdown content={this.props.target.summary} normalized={true} />
         </div>
       );
+    }
+  },
+
+  renderTags: function(tags) {
+    if ((tags || []).length) {
+      return tags.map(function(tag) {
+        return (
+          <a className="h6 caps bold gray-3 clickable" href={tag.url}>
+            {tag.name}
+          </a>
+        )
+      });
     }
   }
 });
