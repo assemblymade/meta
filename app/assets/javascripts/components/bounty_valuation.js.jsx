@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
+  var AppCoins = require('./app_coins.js.jsx')
   var BountyBreakdown = require('./bounty_breakdown.js.jsx');
   var BountyValuation = React.createClass({
     propTypes: {
@@ -27,17 +28,15 @@
 
     render: function() {
       return (
-        <span>
-          <a className="text-coins bold" href="#" id="bounty-amount-link" onClick={this.toggle}>
-            <span className="icon icon-app-coin"></span>
+        <div>
+          <a href="#" id="bounty-amount-link" onClick={this.toggle}>
+            <AppCoins n={this.props.contracts.earnable} />
             {' '}
-            {numeral(this.props.contracts.earnable).format('0,0')}
-            {' '}
-            <span className="icon icon-chevron-down"></span>
+            <span className="icon icon-chevron-down text-coins"></span>
           </a>
 
           {this.renderLightbox()}
-        </span>
+        </div>
       )
     },
 
