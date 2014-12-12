@@ -35,7 +35,7 @@ class QueryMarks
   def mark_vector_for_object(object)  #directly gets markings, don't use for products & wips where inherited marks are also desired
       markings = Marking.where(markable: object)
       markings.map do |m|
-        [m.mark, m.weight]
+        [m.mark_id, m.weight]
       end
   end
 
@@ -106,11 +106,11 @@ class QueryMarks
   def update_markings_to_vector_for_object(object, marking_vector)
     marking_vector.each do |m|
       #check if that marking exists already for object
-      if marking = Marking.find_by(mark: m[0], markable: object)
+      if marking = Marking.find_by(mark_id: m[0], markable: object)
         marking.update!({weight: m[1]})
       else
         if m[0]
-          Marking.create!({markable: object, mark_id: m[0].id, weight: m[1]})
+          Marking.create!({markable: object, mark_id: m[0], weight: m[1]})
         end
       end
     end
@@ -125,38 +125,52 @@ class QueryMarks
   #GENERATE TOP_BOUNTIES, TOP_PRODUCTS
 
   def get_all_wip_vectors
-    #wips = Wip.where(closed_at: nil).where(type: "Task").where('created_at > ?', 90.days.ago)
-    #wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
-    #wip_vectors.select{ |a, b| a.count > 0 && ['team_building', 'greenlit', 'profitable'].include?(b.product.state) && b.product.flagged_at == nil && b.product.slug != "meta"}
-
-
     wips = Wip.where(closed_at: nil).where(type: "Task").where('wips.created_at > ?', 90.days.ago)
-    #magnitude_query = Marking.where('markings.markable_id = wips.id AND markings.mark_id = marks.id').select('SQRT(SUM(markings.weight ^ 2))').to_sql
     data = wips.joins(:marks).group('wips.id').group('marks.id').pluck("wips.id, marks.id, SUM(markings.weight)")
     data = data.map{|x,y,z| [x, [y,z]]}
     data = data.group_by(&:first)
-    data = data.map{ |x, v| [Wip.find(x), v.map{ |a,b| [Mark.find(b[0]), b[1]] } ] }
-    data = Hash[data]
+    task_vector = data.map{ |x, v| [x, v.map{|a,b| [b[0], b[1].to_f] } ] }
 
+    products = Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagged_at: nil).where.not(slug: 'meta')
+    product_vector = products.joins(:marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)").group_by{ |product, mark, weight| product }
+    product_vector = product_vector.map{ |p, v| [p, v.map{ |p, m, w| [m, w*0.2] }  ]}
+    product_vector = Hash[product_vector]
 
-    #wip_vectors = wips.map{|w| [normalize_mark_vector(w.mark_vector), w] }
-    #wip_vectors.select{ |a, b| a.count > 0 && ['team_building', 'greenlit', 'profitable'].include?(b.product.state) && b.product.flagged_at == nil && b.product.slug != "meta"}
+    merged_vector = []
+    task_vector.each do |w, v|
+      r=[w]
+      product_id = Wip.find(w).product.id
+      puts product_id
+      if product_id && product_vector.keys.include?(product_id)
+        pv = Hash[product_vector[product_id]]
+        v = Hash[v].merge(pv)
+      end
+      r.append(v.to_a)
+      merged_vector.append(r)
+    end
+
+    merged_vector.map{|w, v|
+      mag=Math.sqrt(v.sum{|q| q[1]**2})
+       [w, v.map{
+         |m, am| [m, am/mag]
+          }
+        ]
+    }
   end
 
   def get_all_product_vectors
     products = Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagged_at: nil).where.not(slug: 'meta')
     product_vector = products.joins(:marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)").group_by{ |product, mark, weight| product }
-    product_vector = product_vector.map{ |p, v| [p, v.map{ |p, m, w| [Mark.find(m), w] }  ]}
+    product_vector = product_vector.map{ |p, v| [p, v.map{ |p, m, w| [m, w] }  ]}
 
     task_vector = products.joins(tasks: :marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)*0.2").group_by{|product, mark, weight| product}
-    task_vector = task_vector.map{ |p, v| [p, v.map{ |p, m, w| [Mark.find(m), w]}]   }
+    task_vector = task_vector.map{ |p, v| [p, v.map{ |p, m, w| [m, w]}]   }
 
     merged_vector = Hash[product_vector].merge(Hash[task_vector])
     merged_vector.map{ |k, v|
       magnitude = Math.sqrt(v.sum{ |m, w| w**2})
       [Product.find(k), v.map{|m, w| [m, w/magnitude]}.sort_by { |e| e[1] }.reverse  ]
     }
-
   end
 
   def assign_top_bounties_for_user(limit, user, wip_vectors)
@@ -166,9 +180,10 @@ class QueryMarks
     if user_vector.count > 0
       wip_vectors.each do |data|
         vector = data[1]
-        wip = data[0]
+        wip_id = data[0]
         correlation = dot_product_vectors(user_vector, vector)
         if correlation > 0
+          wip = Wip.find(wip_id)
           result.append([correlation.to_f, wip])
         end
       end
@@ -210,6 +225,10 @@ class QueryMarks
 
   def get_date_of_last_marking(object)
     object.markings.sort_by{|hash| hash.updated_at}.reverse.first.updated_at
+  end
+
+  def legible_mark_vector(vector)
+    vector.map{|m, w| [Mark.find(m).name, w]}
   end
 
   #RUN DAILY
