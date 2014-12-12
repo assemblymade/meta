@@ -39,10 +39,10 @@ class NewsFeedItemCommentsController < ProductController
 
   def update
     if comment = NewsFeedItemComment.find(params[:id])
-      comment.update(body: comment_params[:body])
+      comment.update(comment_params)
 
       respond_with comment do |format|
-        format.json { render json: NewsFeedItemCommentSerializer.new(comment), status: :ok, location: product_update_url(@product, @news_feed_item) }
+        format.json { render json: comment }
       end
     end
   end

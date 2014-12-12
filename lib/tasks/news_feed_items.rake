@@ -79,7 +79,7 @@ namespace :news_feed_items do
   task repopulate_comments: :environment do
       Event::Comment.all.each do |comment|
         if nfi = NewsFeedItem.find_by(target_id: comment.wip_id)
-          NewsFeedItemComment.where(news_feed_item_id: nfi.id).map(&:delete)
+          NewsFeedItemComment.delete_all(news_feed_item_id: nfi.id)
 
           nfi.comments.create(
             user_id: comment.user_id,
