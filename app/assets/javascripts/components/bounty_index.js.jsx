@@ -92,23 +92,30 @@
       var bountyFilterProps = _.pick(this.props, 'tags', 'creators', 'workers')
 
       return (
-        <div className="mxn2">
-          <div className="sm-col sm-col-3 px2" style={{float: 'right !important'}}>
-            <div className="px3">
-              <div className="h5 mt0 bold">Tags</div>
-
-              <ul className="mt1 list-unstyled">
-                {this.renderTags()}
-              </ul>
-            </div>
-
+        <div className="mxn2"> /* parent container */
+          <div class="create-task">
+            <a href="">
+              Create A New Task
+            </a>
           </div>
 
-          <div className="sm-col sm-col-9 px2 mtn1">
-            <BountyFilter {...bountyFilterProps} value={this.state.value} onValueChange={this.handleValueChange} sort={this.state.sort} onSortChange={this.handleSortChange} />
 
-            <BountyList product={this.props.product} valuation={this.props.valuation} onPageChange={this.handlePageChange} draggable={this.draggable()} />
-          </div>
+          // <div className="sm-col sm-col-3 px2" style={{float: 'right !important'}}>
+          //   <div className="px3">
+          //     <div className="h5 mt0 bold">Tags</div>
+          //
+          //     <ul className="mt1 list-unstyled">
+          //       {this.renderTags()}
+          //     </ul>
+          //   </div>
+          //
+          // </div>
+          //
+          // <div className="sm-col sm-col-9 px2 mtn1">
+          //   <BountyFilter {...bountyFilterProps} value={this.state.value} onValueChange={this.handleValueChange} sort={this.state.sort} onSortChange={this.handleSortChange} />
+          //
+          //   <BountyList product={this.props.product} valuation={this.props.valuation} onPageChange={this.handlePageChange} draggable={this.draggable()} />
+          // </div>
         </div>
       )
     },
