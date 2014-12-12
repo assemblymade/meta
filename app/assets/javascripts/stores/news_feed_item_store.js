@@ -57,6 +57,9 @@
 
     NewsFeedItemStore.emitChange();
 
+    // FIXME: (pletcher) There shouldn't be side effects like this in the store.
+    //        Instead, initialize the store with the comments from the server
+    //        and keep all of them here
     comments.confirmed[thread] = [];
   }
 

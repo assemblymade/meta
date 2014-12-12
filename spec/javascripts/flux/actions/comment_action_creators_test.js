@@ -3,6 +3,22 @@ jest.dontMock(appFile('actions/comment_action_creators'));
 describe('CommentActionCreators', function() {
   var CommentActionCreators;
 
+  describe('updateComment()', function() {
+    beforeEach(function() {
+      $.ajax = jest.genMockFunction();
+
+      Dispatcher = require(appFile('dispatcher'));
+      CommentActionCreators = require(appFile('actions/comment_action_creators'));
+      Dispatcher.dispatch.mockClear();
+    });
+
+    it('makes a call to update a comment', function(){
+      CommentActionCreators.updateComment('thread', 'commentId', 'commentBody', 'commentUrl');
+
+      expect($.ajax).toBeCalled();
+    });
+  });
+
   describe('uploadAttachment()', function() {
     beforeEach(function() {
       $.ajax = jest.genMockFunction();

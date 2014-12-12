@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var ListItemMixin = {
   renderComments: function(count) {
     return [

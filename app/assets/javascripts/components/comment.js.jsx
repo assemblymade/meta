@@ -2,9 +2,14 @@
 // var marked = require('marked')
 
 var Avatar = require('./avatar.js.jsx');
+var CommentActionCreators = require('../actions/comment_action_creators');
+var CommentStore = require('../stores/comment_store');
 var Icon = require('./icon.js.jsx');
 var Love = require('./love.js.jsx');
 var Markdown = require('./markdown.js.jsx');
+var NewComment = require('./news_feed/new_comment.js.jsx');
+var TipsUi = require('./tips_ui.js.jsx');
+var UserStore = require('../stores/user_store');
 
 module.exports = React.createClass({
   displayName: 'Comment',
@@ -13,9 +18,41 @@ module.exports = React.createClass({
     author: React.PropTypes.object.isRequired,
     awardUrl: React.PropTypes.string,
     body: React.PropTypes.string.isRequired,
-    timestamp: React.PropTypes.string,
+    editUrl: React.PropTypes.string,
     heartable: React.PropTypes.bool,
-    heartableId: React.PropTypes.string
+    id: React.PropTypes.string,
+    timestamp: React.PropTypes.string,
+    rawBody: React.PropTypes.string
+  },
+
+  componentDidMount: function() {
+    CommentStore.addChangeListener(this.getUpdatedComment);
+  },
+
+  componentWillUnmount: function() {
+    CommentStore.removeChangeListener(this.getUpdatedComment);
+  },
+
+  getInitialState: function() {
+    return {
+      body: this.props.body,
+      editing: false,
+      rawBody: this.props.rawBody
+    };
+  },
+
+  getUpdatedComment: function() {
+    var updatedComment = CommentStore.getComment(this.props.id);
+
+    if (updatedComment) {
+      this.setState({
+        editing: false,
+        body: updatedComment.markdown_body,
+        rawBody: updatedComment.body
+      });
+
+      CommentActionCreators.confirmUpdateReceived(updatedComment.id);
+    }
   },
 
   isOptimistic: function() {
@@ -23,29 +60,7 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var author = this.props.author
-    var timestamp = null
-    var body = null
-    var hearts = null
-
-    var cs = React.addons.classSet({
-      'activity-content': true,
-      'gray-dark': this.isOptimistic()
-    })
-
-    if (this.props.timestamp) {
-      timestamp = (
-        <span>
-          {' '} <time>{$.timeago(this.props.timestamp)}</time>
-        </span>
-      )
-    }
-
-    if (this.isOptimistic()) {
-      body = window.marked(this.props.body);
-    } else {
-      body = this.props.body;
-    }
+    var author = this.props.author;
 
     return (
       <div className="timeline-item">
@@ -54,83 +69,168 @@ module.exports = React.createClass({
         </div>
 
         {this.renderEllipsisMenu()}
-        <div className="overflow-hidden activity-body px3">
-          <div className="gray-2" style={{ display: 'inline-block' }}>
-            <a className="bold black" href={author.url}>{author.username}</a>
-            {this.renderLove()}
-          </div>
-
-          <div className={cs}>
-            <Markdown content={body} normalized={true} />
-          </div>
-        </div>
+        {this.state.editing ? this.renderEditableComment() : this.renderComment()}
       </div>
     )
   },
 
-  renderEllipsisMenu: function() {
+  renderAwardOptions: function() {
     var awardUrl = this.props.awardUrl;
 
     if (awardUrl) {
-      var heartableId = this.props.heartableId;
+      var id = this.props.id;
       var username = this.props.author.username;
 
-      return (
-        <div className="activity-actions clearfix right">
-          <ul className="list-inline right">
-            <li>
+      return [
+        <li key={'award-' + id}>
+          <a className="event-award"
+              href={awardUrl + '?event_id=' + id}
+              data-method="patch"
+              data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
+            <span className="ml0 mr2">
+              <Icon icon="star-o" />
+            </span>
+            {'Award bounty to @' + username + ' and keep it open'}
+          </a>
+        </li>,
 
-              <div className="dropdown">
-                <a href="javascript:void(0);"
-                    className="dropdown-toggle"
-                    id={"dropdown-" + this.props.heartableId}
-                    data-toggle="dropdown">
-                  <span className="icon icon-ellipsis" style={{ fontSize: 18 }} />
-                </a>
+        <li key={'award-and-close-' + id}>
+          <a className="event-award"
+              href={awardUrl + '?event_id=' + id + '&close=true'}
+              data-method="patch"
+              data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
+            <span className="ml0 mr2">
+              <Icon icon="star" />
+            </span>
+            {'Award bounty to @' + username + ' and close it'}
+          </a>
+        </li>
+      ];
+    }
+  },
 
-                <ul className="dropdown-menu dropdown-menu-right text-small"
-                    role="menu"
-                    aria-labelledby={"dropdown-" + heartableId}>
-                  <li>
-                    <a className="event-award"
-                        href={awardUrl + '?event_id=' + heartableId}
-                        data-method="patch"
-                        data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
-                      <span className="ml0 mr2">
-                        <Icon icon="star-o" />
-                      </span>
-                      {'Award bounty to @' + username + ' and keep it open'}
-                    </a>
-                  </li>
+  renderComment: function() {
+    var author = this.props.author;
+    var body;
 
-                  <li>
-                    <a className="event-award"
-                        href={awardUrl + '?event_id=' + heartableId + '&close=true'}
-                        data-method="patch"
-                        data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
-                      <span className="ml0 mr2">
-                        <Icon icon="star" />
-                      </span>
-                      {'Award bounty to @' + username + ' and close it'}
-                    </a>
-                  </li>
-                </ul>
+    if (this.isOptimistic()) {
+      body = window.marked(this.state.body);
+    } else {
+      body = this.state.body;
+    }
 
-              </div>
-            </li>
-          </ul>
+    var classes = React.addons.classSet({
+      'activity-content': true,
+      'gray-dark': this.isOptimistic()
+    });
+
+    return (
+      <div className="overflow-hidden activity-body px3">
+        <div className="gray-2" style={{ display: 'inline-block' }}>
+          <a className="bold black" href={author.url}>{author.username}</a>
+          {this.renderLove()}
+          {this.renderTips()}
         </div>
+
+        <div className={classes}>
+          <Markdown content={body} normalized={true} />
+        </div>
+      </div>
+    );
+  },
+
+  renderEditableComment: function() {
+    var id = this.props.id;
+
+    return (
+      <NewComment
+          commentId={this.props.id}
+          initialText={this.state.rawBody}
+          thread={id}
+          url={this.props.editUrl}
+          user={this.props.author} />
+    );
+  },
+
+  renderEditOption: function() {
+    var editUrl = this.props.editUrl;
+
+    if (UserStore.getId() === this.props.author.id) {
+      return (
+        <li key={'edit-options-' + this.props.id}>
+          <a href="javascript:void(0);" onClick={this.triggerEditMode}>
+            <span className="ml0 mr2">
+              <Icon icon="pencil" />
+            </span>
+            Edit comment
+          </a>
+        </li>
       );
     }
+  },
+
+  renderEllipsisMenu: function() {
+    if (this.state.editing) {
+      return;
+    }
+
+    var id = this.props.id;
+
+    return (
+      <div className="activity-actions clearfix right">
+        <ul className="list-inline right">
+          <li>
+
+            <div className="dropdown">
+              <a href="javascript:void(0);"
+                  className="dropdown-toggle"
+                  id={"dropdown-" + id}
+                  data-toggle="dropdown">
+                <span className="icon icon-ellipsis" style={{ fontSize: 18 }} />
+              </a>
+
+              <ul className="dropdown-menu dropdown-menu-right text-small"
+                  role="menu"
+                  aria-labelledby={"dropdown-" + id}
+                  key={'ul-' + id}>
+                  {this.renderAwardOptions()}
+                  {this.renderEditOption()}
+              </ul>
+
+            </div>
+          </li>
+        </ul>
+      </div>
+    );
   },
 
   renderLove: function() {
     if (this.props.heartable) {
       return (
         <div className="ml2 right" style={{ display: 'inline-block' }}>
-          <Love heartable_id={this.props.heartableId} heartable_type='NewsFeedItemComment' />
+          <Love heartable_id={this.props.id} heartable_type='NewsFeedItemComment' />
         </div>
       );
     }
+  },
+
+  renderTips: function() {
+    return (
+      <div className="ml2 right" style={{ display: 'inline-block' }}>
+        <TipsUi
+            viaType="NewsFeedItemComment"
+            viaId={this.props.id}
+            recipient={this.props.author}
+            tips={this.props.tips} />
+      </div>
+    );
+  },
+
+  triggerEditMode: function(e) {
+    e.preventDefault();
+
+    this.setState({
+      editing: true
+    });
   }
 });

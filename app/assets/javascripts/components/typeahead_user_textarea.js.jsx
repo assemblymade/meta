@@ -54,6 +54,11 @@
       }
 
       this.setState(newState);
+
+      // super
+      if (this.props.onChange) {
+        this.props.onChange(e);
+      }
     },
 
     findCaretCoords: function() {

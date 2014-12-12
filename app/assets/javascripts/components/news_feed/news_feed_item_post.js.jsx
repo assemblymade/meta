@@ -20,10 +20,10 @@ module.exports = React.createClass({
         <div className="p3">
           <div className="h3 mt0 mb1">{this.props.title}</div>
           {this.renderSummary()}
-          <div className="gray-darker">
+
+          <div className="mt3 gray-darker" style={{ fontSize: 16 }}>
             <Markdown content={this.props.body} normalized={true} />
           </div>
-          {this.renderTags(target && target.marks)}
         </div>
       </a>
     );
@@ -36,18 +36,6 @@ module.exports = React.createClass({
           <Markdown content={this.props.target.summary} normalized={true} />
         </div>
       );
-    }
-  },
-
-  renderTags: function(tags) {
-    if ((tags || []).length) {
-      return tags.map(function(tag) {
-        return (
-          <a className="h6 caps bold gray-3 clickable" href={tag.url}>
-            {tag.name}
-          </a>
-        )
-      });
     }
   }
 });
