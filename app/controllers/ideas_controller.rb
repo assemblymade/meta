@@ -13,7 +13,7 @@ class IdeasController < ProductController
       Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
     end
 
-    @ideas = ideas.order(:score :desc).page(params[:page]).per(20)
+    @ideas = ideas.order(score: :desc).page(params[:page]).per(20)
   end
 
   def show
