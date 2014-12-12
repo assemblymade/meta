@@ -8,6 +8,7 @@ var Icon = require('./icon.js.jsx');
 var Love = require('./love.js.jsx');
 var Markdown = require('./markdown.js.jsx');
 var NewComment = require('./news_feed/new_comment.js.jsx');
+var TipsUi = require('./tips_ui.js.jsx');
 var UserStore = require('../stores/user_store');
 
 module.exports = React.createClass({
@@ -128,6 +129,7 @@ module.exports = React.createClass({
         <div className="gray-2" style={{ display: 'inline-block' }}>
           <a className="bold black" href={author.url}>{author.username}</a>
           {this.renderLove()}
+          {this.renderTips()}
         </div>
 
         <div className={classes}>
@@ -210,6 +212,18 @@ module.exports = React.createClass({
         </div>
       );
     }
+  },
+
+  renderTips: function() {
+    return (
+      <div className="ml2 right" style={{ display: 'inline-block' }}>
+        <TipsUi
+            viaType="NewsFeedItemComment"
+            viaId={this.props.id}
+            recipient={this.props.author}
+            tips={this.props.tips} />
+      </div>
+    );
   },
 
   triggerEditMode: function(e) {

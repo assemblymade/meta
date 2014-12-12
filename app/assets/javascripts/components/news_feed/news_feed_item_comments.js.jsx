@@ -298,14 +298,14 @@ function parseEvent(event, awardUrl, editUrl) {
     break;
   case 'news_feed_item_comment':
     renderedEvent = <Comment
+        {...event}
         author={event.user}
         awardUrl={awardUrl}
         body={event.markdown_body}
         editUrl={editUrl}
         rawBody={event.body}
         timestamp={event.created_at}
-        heartable={true}
-        id={event.id} />;
+        heartable={true} />;
     break;
   default:
     if (!event.actor) {

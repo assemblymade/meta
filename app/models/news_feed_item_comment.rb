@@ -3,6 +3,7 @@ class NewsFeedItemComment < ActiveRecord::Base
   belongs_to :user
 
   has_many :hearts, as: :heartable
+  has_many :tips, foreign_key: 'via_id'
 
   def self.publish_to_news_feed(target, event, body)
     if news_feed_item = NewsFeedItem.find_by(target: target)
@@ -25,5 +26,9 @@ class NewsFeedItemComment < ActiveRecord::Base
 
   def url_params
     [news_feed_item.url_params, anchor: id]
+  end
+
+  def tip_receiver
+    user
   end
 end

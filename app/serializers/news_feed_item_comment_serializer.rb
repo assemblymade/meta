@@ -1,5 +1,6 @@
 class NewsFeedItemCommentSerializer < ApplicationSerializer
   include MarkdownHelper
+  include TippableSerializer
 
   has_one :user, serializer: UserSerializer
   attributes :body, :created_at, :markdown_body
