@@ -48,7 +48,13 @@ class DiscussionsController < WipsController
       return
     end
 
-    super
+    if room = @product.chat_rooms.find{|cr| cr.wip == @wip }
+      redirect_to chat_room_path(room)
+    end
+
+    # TODO: (whatupdave) find a post with the same title, these discussions are old but the links
+    # are still around
+    redirect_to product_post_path(@product, Post.find_by!(product_id: @product.id, title: @wip.title))
   end
 
   def close

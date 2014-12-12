@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141211224017) do
+ActiveRecord::Schema.define(version: 20141212213316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -450,6 +450,8 @@ ActiveRecord::Schema.define(version: 20141211224017) do
     t.datetime "last_commented_at"
     t.integer  "watchings_count"
   end
+
+  add_index "news_feed_items", ["target_id"], name: "index_news_feed_items_on_target_id", unique: true, using: :btree
 
   create_table "newsletters", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "subject"
