@@ -12,10 +12,10 @@ module.exports = window.Accordian = React.createClass({
   },
 
   render: function() {
-    var body = null
+    var core = null
 
     if (this.state.open) {
-      body = <div className="body">{this.props.children}</div>
+      core = <div className="core">{this.props.children}</div>
     }
 
     var chevron = null
@@ -27,16 +27,16 @@ module.exports = window.Accordian = React.createClass({
 
     return (
       <div className="accordian">
-        <a className="block black pointer" onClick={this.toggleOpen}>
+        <a className="block black pointer noselect" onClick={this.toggleOpen}>
           <span className="block h5 mt0 bold inline-block w50p">
             {this.props.title}
           </span>
-          <span className="inline-block blue w50p right-align">
+          <span className="inline-block gray-green w50p right-align">
             {chevron}
           </span>
         </a>
 
-        {body}
+        {core}
       </div>
     )
   },

@@ -29,7 +29,7 @@
 
       return (
         <div className="dropdown">
-          <a className="dropdown-toggle black bold no-wrap fs1_1" data-toggle="dropdown" href="#">
+          <a className="dropdown-toggle black bold no-wrap fs3" data-toggle="dropdown" href="#">
             Filter
             {' '}
             <span className="icon icon-chevron-down"></span>
@@ -77,7 +77,7 @@
 
       return (
         <div className="dropdown">
-          <a className="dropdown-toggle black bold no-wrap fs1_1" data-toggle="dropdown" href="#">
+          <a className="dropdown-toggle black bold no-wrap fs3" data-toggle="dropdown" href="#">
             Sort ({selectedSort.name})
             {' '}
             <span className="icon icon-chevron-down"></span>
@@ -111,15 +111,15 @@
         <div className="table mb2">
           <div className="table-cell">
             <div className="bg-white rounded shadow table mb0">
-              <div className="w4_5 pl2_5 pr2 py1 table-cell border-right">
+              <div className="w9 pl3 pr2 py1 table-cell border-right">
                 {this.renderFilterDropdown()}
               </div>
-              <div className="pr2_5 pl2_5 table-cell">
+              <div className="pr3 pl3 table-cell gray-2">
                 <input type="text" value={this.props.value} onChange={this.props.onValueChange} className="no-border full-width" style={{ padding: 0 }} />
               </div>
             </div>
           </div>
-          <div className="table-cell w10_5">
+          <div className="table-cell w21">
             <div className="py2 right-align">
               {this.renderSortDropdown()}
             </div>

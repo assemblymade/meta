@@ -46,6 +46,10 @@ a[data-label="brand"] {
 .navbar-nav {
   > li {
     font-size:13px;
+    > a {
+      padding-left:12px;
+      padding-right:12px;
+    }
     > a:hover {
       box-shadow: inset 0 -3px 0 $nav-tabs-link-hover-border-color;
     }

@@ -80,9 +80,9 @@
     renderTags: function() {
       return this.props.tags.map(function(tag) {
         return (
-          <li>
-            <a href="#" onClick={this.addTag(tag)}>
-              <span className="caps">{tag}</span>
+          <li className="lh0_9">
+            <a href="#" className="block pt1 pb2" onClick={this.addTag(tag)}>
+              <span className="fs1 fw-500 caps">#{tag}</span>
             </a>
           </li>
         )
@@ -94,16 +94,27 @@
 
       return (
         <div className="row">
-          <div className="col-xs-12 col-sm-3 r768_float-right">
-            <div className="mb1 r768_pl1">
-              <Accordian title="Tags">
-                <ul data-label="core" className="list-reset">
-                  {this.renderTags()}
-                </ul>
-              </Accordian>
-            </div>
+          <div className="col-xs-12 col-sm-4 r768_float-right">
+            <span className="col-sm-11 col-sm-push-1 p0">
+              <div className="bg-white rounded shadow pt6 pb6 px3 mb3 center">
+                <div className="block h5 mt0 mb0 bold">
+                  Getting Started
+                </div>
+                <div className="h6 m0 gray-1">
+                  What content should go here to get a new member focused on what they should do.
+                </div>
+              </div>
+
+              <div className="mb1 r768_pl1 r768_pr1">
+                <Accordian title="Tags">
+                  <ul className="list-reset">
+                    {this.renderTags()}
+                  </ul>
+                </Accordian>
+              </div>
+            </span>
           </div>
-          <div className="col-xs-12 col-sm-9">
+          <div className="col-xs-12 col-sm-8 r768_pr0">
             <BountyFilter {...bountyFilterProps} value={this.state.value} onValueChange={this.handleValueChange} sort={this.state.sort} onSortChange={this.handleSortChange} />
             <BountyList product={this.props.product} valuation={this.props.valuation} onPageChange={this.handlePageChange} draggable={this.draggable()} />
           </div>
