@@ -66,6 +66,14 @@ class Idea < ActiveRecord::Base
     self.news_feed_item.hearts.count
   end
 
+  def hearted
+    save_score
+  end
+
+  def unhearted
+    save_score
+  end
+
   def save_score
     lovescore = self.score
     heartburn = 60.days.to_i  #period for 100% inflation, equivalent to half-life

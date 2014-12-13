@@ -235,7 +235,7 @@ var NewsFeedItemNewComment = React.createClass({
       return (
         <div className="dropzone-inner">
           To attach files, drag & drop here or
-          {' '}<a href="javascript:void(0);" ref="clickable">select files form your computer</a>&hellip;
+          {' '}<a href="javascript:void(0);" ref="clickable">select files from your computer</a>&hellip;
         </div>
       );
     }
