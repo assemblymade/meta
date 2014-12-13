@@ -22,9 +22,16 @@ module.exports = React.createClass({
 
         <div className="mt3 gray-darker" style={{ fontSize: 16 }}>
           <Markdown content={this.props.body} normalized={true} />
+          {this.renderReadMore()}
         </div>
       </div>
     );
+  },
+
+  renderReadMore: function() {
+    if (this.props.enableModal) {
+      return <a className="text-small mt3" href={this.props.url}>Read more</a>;
+    }
   },
 
   renderSummary: function() {

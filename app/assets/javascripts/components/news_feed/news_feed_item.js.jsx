@@ -228,7 +228,7 @@
         case 'post':
           return <NewsFeedItemPost
               {...this.props}
-              body={target.markdown_body}
+              body={this.props.enableModal ? target.short_body : target.markdown_body}
               url={target.url}
               title={target.title}
               triggerModal={triggerModal} />;
