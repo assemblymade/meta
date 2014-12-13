@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141212213316) do
+ActiveRecord::Schema.define(version: 20141213010255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -518,6 +518,15 @@ ActiveRecord::Schema.define(version: 20141212213316) do
     t.inet     "ip"
     t.text     "variation"
   end
+
+  create_table "product_metrics", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id"
+    t.integer  "comment_responsiveness"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_metrics", ["product_id"], name: "index_product_metrics_on_product_id", unique: true, using: :btree
 
   create_table "product_subscriptions", id: :uuid, force: true do |t|
     t.uuid     "product_id", null: false
