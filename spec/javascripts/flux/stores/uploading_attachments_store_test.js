@@ -15,16 +15,18 @@ describe('UploadingAttachmentsStore', function(){
   describe('getUploadingAttachments()', function() {
     it('returns the attachments being uploaded', function() {
       callback({
+        commentId: 'foo',
         type: ActionTypes.ATTACHMENT_UPLOADING,
         text: '![Uploading](attachment...)'
       });
 
       callback({
+        commentId: 'foo',
         type: ActionTypes.ATTACHMENT_UPLOADING,
         text: '![Uploading](attachment2...)'
       });
 
-      var attachments = UploadingAttachmentsStore.getUploadingAttachments();
+      var attachments = UploadingAttachmentsStore.getUploadingAttachments('foo');
 
       expect(attachments[0]).toEqual('![Uploading](attachment...)');
       expect(attachments[1]).toEqual('![Uploading](attachment2...)');

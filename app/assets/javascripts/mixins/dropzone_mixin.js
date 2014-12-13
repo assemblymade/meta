@@ -1,6 +1,8 @@
+var ActionTypes               = window.CONSTANTS.ActionTypes;
 var AttachmentActionCreators  = require('../actions/attachment_action_creators');
 var AttachmentStore           = require('../stores/attachment_store');
 var Dropzone                  = window.Dropzone;
+var NewCommentActionCreators  = require('../actions/new_comment_action_creators');
 var UploadingAttachmentsStore = require('../stores/uploading_attachments_store');
 
 var DropzoneMixin = {
@@ -9,7 +11,7 @@ var DropzoneMixin = {
     var clickable = this.refs.clickable;
 
     this.dropzone = new Dropzone(this.getDOMNode(), {
-      accept: this.onAccept,
+      accept: this.onAccept(this.props.thread),
       clickable: clickable && clickable.getDOMNode(),
       sending: this.onSending,
       url: attachmentUploadUrlTag && attachmentUploadUrlTag.attr('content')
@@ -22,7 +24,8 @@ var DropzoneMixin = {
   },
 
   getAttachment: function() {
-    var attachment = AttachmentStore.getAttachment();
+    var thread = this.props.thread;
+    var attachment = AttachmentStore.getAttachment(thread);
 
     if (attachment) {
       var currentText = this.state.text || '';
@@ -31,22 +34,19 @@ var DropzoneMixin = {
 
       var text = currentText.replace(replaceText, newText);
 
-      this.setState({
-        text: text
-      });
+      this.updateComment(thread, text);
     }
   },
 
   getUploadingAttachments: function() {
-    var attachments = UploadingAttachmentsStore.getUploadingAttachments();
+    var thread = this.props.thread;
+    var attachments = UploadingAttachmentsStore.getUploadingAttachments(thread);
 
     if (attachments.length) {
       var newText = attachments.join(' ');
       var currentText = this.state.text || '';
 
-      this.setState({
-        text: currentText + newText
-      });
+      this.updateComment(thread, currentText + newText);
     }
   },
 
@@ -56,6 +56,18 @@ var DropzoneMixin = {
     _.each(file.form, function(v, k) {
       formData.append(k, v);
     });
+  },
+
+  updateComment: function(thread, comment) {
+    function sendUpdate() {
+      NewCommentActionCreators.updateComment(thread, comment);
+    }
+
+    if (Dispatcher.isDispatching()) {
+      return setTimeout(sendUpdate, 0);
+    }
+
+    sendUpdate();
   }
 };
 
