@@ -64,7 +64,7 @@ module.exports = React.createClass({
     var author = this.props.author;
 
     return (
-      <div className="timeline-item">
+      <div id={this.props.id} className="timeline-item">
         <div className="left activity-avatar">
           <Avatar user={author} size={30} />
         </div>
@@ -194,6 +194,12 @@ module.exports = React.createClass({
                   aria-labelledby={"dropdown-" + id}
                   key={'ul-' + id}>
 
+                <li>
+                  <a href={this.props.url} role="menuitem">
+                    <i className="icon icon-link dropdown-glyph"></i>
+                      Permalink
+                  </a>
+                </li>
 
                 {this.renderAwardOptions()}
                 {this.renderEditOption()}
