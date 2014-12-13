@@ -25,6 +25,10 @@ class ProductStore extends Store {
   getSlug() {
     return _product.slug
   }
+
+  getCoreTeamIds() {
+    return _product.core_team
+  }
 }
 
 var store = new ProductStore()

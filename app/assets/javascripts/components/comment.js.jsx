@@ -8,6 +8,7 @@ var Icon = require('./icon.js.jsx');
 var Love = require('./love.js.jsx');
 var Markdown = require('./markdown.js.jsx');
 var NewComment = require('./news_feed/new_comment.js.jsx');
+var ProductStore = require('../stores/product_store')
 var TipsUi = require('./tips_ui.js.jsx');
 var UserStore = require('../stores/user_store');
 
@@ -75,11 +76,10 @@ module.exports = React.createClass({
   },
 
   renderAwardOptions: function() {
-    var awardUrl = this.props.awardUrl;
-
-    if (awardUrl) {
+    if (this.currentUserIsCore()) {
       var id = this.props.id;
       var username = this.props.author.username;
+      var awardUrl = this.props.awardUrl;
 
       return [
         <li key={'award-' + id}>
@@ -193,8 +193,10 @@ module.exports = React.createClass({
                   role="menu"
                   aria-labelledby={"dropdown-" + id}
                   key={'ul-' + id}>
-                  {this.renderAwardOptions()}
-                  {this.renderEditOption()}
+
+
+                {this.renderAwardOptions()}
+                {this.renderEditOption()}
               </ul>
 
             </div>
@@ -232,5 +234,9 @@ module.exports = React.createClass({
     this.setState({
       editing: true
     });
+  },
+
+  currentUserIsCore: function() {
+    return _(ProductStore.getCoreTeamIds()).contains(UserStore.getId())
   }
 });
