@@ -2,6 +2,10 @@
 <% activate_nav! :community if params[:id] == 'general' %>
 <%= track 'product.chat.viewed', ProductSerializer.new(@product, scope: current_user) %>
 
+<% if @product %>
+  <%= initial_store_data('ProductStore', { slug: @product.slug, name: @product.name, url: product_url(@product) }) %>
+<% end %>
+
 <%= render 'shared/navbar', bounties_link: true, fluid: true %>
 
 <div class="modal fade"
