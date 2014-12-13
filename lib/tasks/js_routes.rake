@@ -50,6 +50,8 @@ ROUTES = [
   'notifications',
   'product_follow',
   'product_unfollow',
+  'product_update_comment',
+  'product_update_comments',
   'product_update_subscribe',
   'product_update_unsubscribe',
   'readraptor',

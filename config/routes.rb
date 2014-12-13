@@ -43,6 +43,8 @@ ASM::Application.routes.draw do
   get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
+  get '/interests'        => 'pages#interests',   as: :interests
+  get '/suggestions'      => 'pages#suggestions', as: :suggestions
 
   # Readraptor proxy. Remove this when javascript clients can talk directly to RR
   get '/_rr/articles/:id' => 'readraptor#show', as: :readraptor_article
@@ -316,7 +318,7 @@ ASM::Application.routes.draw do
       patch 'popularize'
       patch 'depopularize'
 
-      resources :news_feed_item_comments, only: [:index, :create], as: :comments, path: 'comments'
+      resources :news_feed_item_comments, only: [:index, :create, :update], as: :comments, path: 'comments'
     end
 
     resources :repositories, only: [:index, :create, :destroy], as: :repos

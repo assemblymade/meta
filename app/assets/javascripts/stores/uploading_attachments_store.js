@@ -1,14 +1,13 @@
 var Store = require('./es6_store')
 var ActionTypes = window.CONSTANTS.ActionTypes
 
-var _dispatchToken
-var _currentAttachments = []
+var _currentAttachments = {}
 
 class UploadingAttachmentsStore extends Store {
   constructor() {
     super()
 
-    _dispatchToken = Dispatcher.register((action) => {
+    this.dispatchToken = Dispatcher.register((action) => {
       switch(action.type) {
         case ActionTypes.ATTACHMENT_UPLOADING:
           _addAttachment(action)
@@ -19,9 +18,9 @@ class UploadingAttachmentsStore extends Store {
     })
   }
 
-  getUploadingAttachments() {
-    var attachments = _currentAttachments
-    _currentAttachments = []
+  getUploadingAttachments(commentId) {
+    var attachments = _.clone(_currentAttachments[commentId]) || []
+    _currentAttachments[commentId] = []
 
     return attachments
   }
@@ -29,9 +28,14 @@ class UploadingAttachmentsStore extends Store {
 
 function _addAttachment(action) {
   var text = action.text
+  var commentId = action.commentId
 
   if (text) {
-    _currentAttachments.push(text)
+    if (_currentAttachments[commentId]) {
+      _currentAttachments[commentId].push(text)
+    } else {
+      _currentAttachments[commentId] = [text]
+    }
   }
 }
 

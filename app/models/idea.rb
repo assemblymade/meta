@@ -66,6 +66,14 @@ class Idea < ActiveRecord::Base
     self.news_feed_item.hearts.count
   end
 
+  def hearted
+    save_score
+  end
+
+  def unhearted
+    save_score
+  end
+
   def save_score
     lovescore = self.score
     heartburn = 60.days.to_i  #period for 100% inflation, equivalent to half-life
@@ -80,12 +88,16 @@ class Idea < ActiveRecord::Base
     lovescore
   end
 
-  def historical_rank_contemporary
+  def rank
     Idea.order(score: :desc).find_index(self)+1
   end
 
   def percentile
-    self.historical_rank_contemporary.to_f / Idea.count*100.round(2)
+    self.rank.to_f / Idea.count*100.round(2)
+  end
+
+  def temperature
+    Math.log(100 / (self.percentile+0.1))*10
   end
 
 end

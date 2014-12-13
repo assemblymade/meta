@@ -17,6 +17,7 @@ var NewsFeedItemBountyTitleChange = require('./news_feed_item_bounty_title_chang
 var NewsFeedItemBountyWin = require('./news_feed_item_bounty_win.js.jsx');
 var NewsFeedItemStore = require('../../stores/news_feed_item_store');
 var ReadReceipts = require('../read_receipts.js.jsx');
+var Routes = require('../../routes');
 var UserStore = require('../../stores/user_store');
 
 var NewsFeedItemComments = React.createClass({
@@ -79,7 +80,8 @@ var NewsFeedItemComments = React.createClass({
   },
 
   getComments: function(e) {
-    var comments = NewsFeedItemStore.getComments(this.props.item.id);
+    var thread = this.props.item.id;
+    var comments = NewsFeedItemStore.getComments(thread);
 
     this.setState({
       comment: '',
@@ -135,10 +137,14 @@ var NewsFeedItemComments = React.createClass({
       return <div className="py2" />;
     }
 
+    var classes = React.addons.classSet({
+      timeline: this.props.showAllComments
+    });
+
     return (
       <div>
         {this.renderLoadMoreButton()}
-        <div className={this.props.showAllComments ? "timeline" : null}>
+        <div className={classes}>
           {confirmedComments}
           {optimisticComments}
         </div>
@@ -162,8 +168,13 @@ var NewsFeedItemComments = React.createClass({
       }
 
       if (new Date(comment.created_at) >= renderIfAfter) {
+        var editUrl = Routes.product_update_comment_path({
+          product_id: _reach(self.props, 'item.product.id'),
+          update_id: _reach(self.props, 'item.id'),
+          id: comment.id
+        });
 
-        var renderedEvent = parseEvent(comment, awardUrl);
+        var renderedEvent = parseEvent(comment, awardUrl, editUrl);
 
         if (i + 1 === comments.length) {
           var timestamp = (
@@ -258,7 +269,7 @@ if (typeof module !== 'undefined') {
 
 window.NewsFeedItemComments = module.exports;
 
-function parseEvent(event, awardUrl) {
+function parseEvent(event, awardUrl, editUrl) {
   var renderedEvent;
 
   switch(event.type) {
@@ -287,12 +298,14 @@ function parseEvent(event, awardUrl) {
     break;
   case 'news_feed_item_comment':
     renderedEvent = <Comment
+        {...event}
         author={event.user}
         awardUrl={awardUrl}
         body={event.markdown_body}
+        editUrl={editUrl}
+        rawBody={event.body}
         timestamp={event.created_at}
-        heartable={true}
-        heartableId={event.id} />;
+        heartable={true} />;
     break;
   default:
     if (!event.actor) {

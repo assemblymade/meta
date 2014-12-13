@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
+  var ProductStore = require('../stores/product_store');
 
   COIN_INCREMENT = [1, 1, 1, 2, 5, 5, 5, 5, 25, 25, 25, 50]
   DEBOUNCE_TIMEOUT = 2000
@@ -24,7 +25,8 @@
           opacity = 1.0,
           tooltip = null,
           currentUser = window.app.currentUser() && window.app.currentUser().attributes,
-          url = app.product && app.product.get('url') + '/tips'
+          product = ProductStore.getProduct() || app.product,
+          url = (product.url || product.get('url')) + '/tips';
 
       if (!currentUser) {
         tooltip = 'You need to sign up before you can tip'
@@ -43,7 +45,13 @@
       return (
         <div className="js-tips" style={{opacity: opacity}}>
           <div className={totalCents > 0 ? 'text-coins' : null}>
-            <a ref="button" href="javascript:;" data-placement="top" data-toggle="tooltip" title={tooltip} onClick={this.currentUserCanTip() ? this.handleClick : null}>
+            <a ref="button"
+                href="javascript:void(0);"
+                data-placement="top"
+                data-toggle="tooltip"
+                title={tooltip}
+                onClick={this.currentUserCanTip() ? this.handleClick : null}
+                style={{ color: totalCents > 0 ? '#f0ad4e' : '#d3d3d3' }}>
               <span className="icon icon-app-coin"></span>
               <span> {numeral(this.totalCents()).format('0,0')}</span>
             </a>

@@ -4,6 +4,51 @@ var CONSTANTS = window.CONSTANTS;
 var ActionTypes = CONSTANTS.ActionTypes
 
 var CommentActionCreators = {
+  confirmUpdateReceived: function(commentId) {
+    function confirm() {
+      Dispatcher.dispatch({
+        type: ActionTypes.COMMENT_UPDATE_RECEIVED,
+        commentId: commentId
+      });
+    }
+
+    if (Dispatcher.isDispatching()) {
+      return setTimeout(confirm, 0);
+    }
+
+    confirm();
+  },
+
+  updateComment: function(commentId, commentBody, commentUrl) {
+    var data = JSON.stringify({
+      comment: {
+        body: commentBody
+      }
+    });
+
+    $.ajax({
+      method: 'PATCH',
+      url: commentUrl,
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json'
+      },
+      data: data,
+      success: function(comment) {
+        Dispatcher.dispatch({
+          type: ActionTypes.COMMENT_UPDATED,
+          comment: comment
+        });
+      },
+      error: function(jqXhr, textStatus, err) {
+        Dispatcher.dispatch({
+          type: ActionTypes.COMMENT_UPDATE_FAILED,
+          error: err
+        });
+      }
+    });
+  },
+
   uploadAttachment: function(productSlug, attachmentUrl) {
     $.ajax({
       method: 'POST',

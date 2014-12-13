@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var ListItemMixin = {
   renderComments: function(count) {
     return [
@@ -16,7 +14,7 @@ var ListItemMixin = {
     return tags.map(function(tag) {
       return (
         <a className="caps gray-1 mr2 pointer" href={tag.url}>
-          #{tag.name}
+          {tag.name}
         </a>
       )
     });

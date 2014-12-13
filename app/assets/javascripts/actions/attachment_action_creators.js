@@ -10,8 +10,10 @@ class AttachmentActionCreators {
     _complete(file)
   }
 
-  uploadAttachment(file, done) {
-    _upload(file, done)
+  uploadAttachment(commentId) {
+    return function(file, done) {
+      _upload(commentId, file, done)
+    }
   }
 }
 
@@ -32,9 +34,10 @@ function _complete(file) {
   })
 }
 
-function _upload(file, done) {
+function _upload(commentId, file, done) {
   Dispatcher.dispatch({
     type: ActionTypes.ATTACHMENT_UPLOADING,
+    commentId: commentId,
     text: '![Uploading... ' + file.name + ']()'
   })
 
@@ -52,6 +55,7 @@ function _upload(file, done) {
       file.form = attachment.form
 
       Dispatcher.dispatch({
+        commentId: commentId,
         type: ActionTypes.ATTACHMENT_UPLOADED,
         attachment: attachment
       })
@@ -60,6 +64,7 @@ function _upload(file, done) {
     },
     error: function(jqXhr, textStatus, err) {
       Dispatcher.dispatch({
+        commentId: commentId,
         type: ActionTypes.ATTACHMENT_FAILED,
         error: err
       })

@@ -49,3 +49,17 @@ $yellow:       #F2D930;
 .bg-blue         { background-color: $blue }
 .bg-red          { background-color: $red }
 .bg-yellow       { background-color: $yellow }
+
+.border-white                        { border-color: $white }
+.border-gray-6, .border-gray-lighter { border-color: $gray-6 }
+.border-gray-5, .border-gray-light   { border-color: $gray-5 }
+.border-gray-4                       { border-color: $gray-4 }
+.border-gray-3, .border-gray         { border-color: $gray-3 }
+.border-gray-2, .border-gray-dark    { border-color: $gray-2 }
+.border-gray-1, .border-gray-darker  { border-color: $gray-1 }
+.border-black                        { border-color: $black }
+
+.border-green        { border-color: $green }
+.border-blue         { border-color: $blue }
+.border-red          { border-color: $red }
+.border-yellow       { border-color: $yellow }

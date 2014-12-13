@@ -128,7 +128,7 @@
 
     renderMeta: function() {
       var target = this.props.target
-      var tags = target && target.tags;
+      var tags = target && (target.tags || target.marks);
 
       if (tags) {
         var tagItems = null;
@@ -228,7 +228,7 @@
         case 'post':
           return <NewsFeedItemPost
               {...this.props}
-              body={target.markdown_body}
+              body={this.props.enableModal ? target.short_body : target.markdown_body}
               url={target.url}
               title={target.title}
               triggerModal={triggerModal} />;

@@ -1,5 +1,6 @@
 @import 'basscss';
 @import 'asmcss/basspluss';
+@import 'asmcss/utility';
 @import 'asmcss/colors';
 
 html {
@@ -78,30 +79,6 @@ h6, .h6 {
   line-height: 1.5rem;
 } // 14px/18px
 
-.border { border-color: $gray-lighter }
-.border-top { border-color: $gray-lighter }
-.border-right { border-color: $gray-lighter }
-.border-bottom { border-color: $gray-lighter }
-.border-left { border-color: $gray-lighter }
-
-.rounded { border-radius: 4px }
-.rounded-top {
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-}
-.rounded-right {
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-.rounded-bottom {
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-.rounded-right {
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
-
 .shadow {
   box-shadow: 0px 1px 2px 0px $brand-shadow;
 }
@@ -134,15 +111,7 @@ input[type=week] {
   outline: none;
 }
 
-.blue { color: $blue }
-.bg-blue { background-color: $blue }
-
-.green { color: $green }
-.bg-green { background-color: $green }
-
 // --
-
-.no-border { border: none }
 
 .ellipsis {
   white-space: nowrap;

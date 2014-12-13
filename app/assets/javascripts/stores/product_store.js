@@ -2,7 +2,7 @@ var Store = require('./es6_store')
 var ActionTypes = window.CONSTANTS.ActionTypes
 
 var _dispatchToken
-var _product = {}
+var _product = null
 
 class ProductStore extends Store {
   constructor() {
@@ -24,6 +24,10 @@ class ProductStore extends Store {
 
   getSlug() {
     return _product.slug
+  }
+
+  getCoreTeamIds() {
+    return _product.core_team
   }
 }
 

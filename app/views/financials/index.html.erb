@@ -67,7 +67,7 @@
           <td><%= currency report.revenue, precision: 2 %></td>
           <td class="text-right"><%= currency -report.expenses, precision: 2 %></td>
           <td class="text-right"><%= currency -report.fee, precision: 2 %></td>
-          <td class="text-right"><%= currency report.profit, precision: 2 %></td>
+          <td class="text-right"><%= currency report.profit - report.fee, precision: 2 %></td>
         </tr>
       <% end %>
     </tbody>

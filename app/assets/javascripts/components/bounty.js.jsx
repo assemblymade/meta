@@ -14,6 +14,8 @@ var CLOSED_STATES = ['awarded', 'closed', 'resolved'];
 var ONE_HOUR = 60 * 60 * 1000;
 
 module.exports = React.createClass({
+  displayName: 'Bounty',
+
   propTypes: {
     bounty: React.PropTypes.object.isRequired,
     item: React.PropTypes.object,

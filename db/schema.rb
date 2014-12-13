@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141211224017) do
+ActiveRecord::Schema.define(version: 20141213014603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -451,6 +451,8 @@ ActiveRecord::Schema.define(version: 20141211224017) do
     t.integer  "watchings_count"
   end
 
+  add_index "news_feed_items", ["target_id"], name: "index_news_feed_items_on_target_id", unique: true, using: :btree
+
   create_table "newsletters", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "subject"
     t.text     "body"
@@ -516,6 +518,15 @@ ActiveRecord::Schema.define(version: 20141211224017) do
     t.inet     "ip"
     t.text     "variation"
   end
+
+  create_table "product_metrics", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "product_id"
+    t.integer  "comment_responsiveness"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_metrics", ["product_id"], name: "index_product_metrics_on_product_id", using: :btree
 
   create_table "product_subscriptions", id: :uuid, force: true do |t|
     t.uuid     "product_id", null: false
@@ -754,7 +765,8 @@ ActiveRecord::Schema.define(version: 20141211224017) do
 
   add_index "user_balance_entries", ["profit_report_id", "user_id"], name: "index_user_balance_entries_on_profit_report_id_and_user_id", unique: true, using: :btree
 
-  create_table "user_clusters", force: true do |t|
+  create_table "user_clusters", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.float    "variance"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -877,6 +889,7 @@ ActiveRecord::Schema.define(version: 20141211224017) do
     t.string   "platforms",                         default: [],                   array: true
     t.datetime "gravatar_checked_at"
     t.datetime "gravatar_verified_at"
+    t.uuid     "user_cluster_id"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

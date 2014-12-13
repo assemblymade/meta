@@ -1,15 +1,21 @@
 var ActionTypes = window.CONSTANTS.ActionTypes;
 var BountyActionCreators = require('../../actions/bounty_action_creators');
+var CommentActionCreators = require('../../actions/comment_action_creators');
 var DropzoneMixin = require('../../mixins/dropzone_mixin');
+var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
+var NewCommentStore = require('../../stores/new_comment_store');
 var TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
 var xhr = require('../../xhr');
 var ENTER = 13;
 var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 
 var NewsFeedItemNewComment = React.createClass({
+  displayName: 'NewComment',
 
   propTypes: {
     canContainWork: React.PropTypes.bool,
+    commentId: _dependsOn('initialText', 'string'),
+    initialText: _dependsOn('commentId', 'string'),
     thread: React.PropTypes.string.isRequired,
     url: React.PropTypes.string.isRequired,
     user: React.PropTypes.object
@@ -83,6 +89,8 @@ var NewsFeedItemNewComment = React.createClass({
     // autoresize
     this.previousScrollHeight = this.refs.textarea.getDOMNode().scrollHeight;
     this.textLength = 0;
+
+    NewCommentStore.addChangeListener(this.getCommentFromStore);
   },
 
   componentWillUnmount: function() {
@@ -95,6 +103,14 @@ var NewsFeedItemNewComment = React.createClass({
     domNode.removeEventListener('dragenter', this.onDragEnter, false);
     domNode.removeEventListener('dragleave', this.onDragLeave, false);
     domNode.removeEventListener('drop', this.onDragLeave, false);
+
+    NewCommentStore.removeChangeListener(this.getCommentFromStore);
+  },
+
+  getCommentFromStore: function() {
+    this.setState({
+      text: NewCommentStore.getComment(this.props.thread)
+    });
   },
 
   getDefaultProps: function() {
@@ -107,18 +123,12 @@ var NewsFeedItemNewComment = React.createClass({
     return {
       dragging: false,
       rows: this.props.initialRows,
-      text: ''
+      text: this.props.initialText || ''
     };
   },
 
   onChange: function(e) {
-    var value = e.target.value;
-    var rows = this.calculateRows(value);
-
-    this.setState({
-      rows: rows,
-      text: value
-    });
+    NewCommentActionCreators.updateComment(this.props.thread, e.target.value);
   },
 
   onDragEnter: function(e) {
@@ -177,13 +187,12 @@ var NewsFeedItemNewComment = React.createClass({
 
     return (
       <div className="clearfix" style={{ paddingBottom: '2.5rem' }}>
-        <div className="left">
-          <Avatar user={window.app.currentUser().attributes} size={30} />
-        </div>
+        {this.renderAvatar()}
         <div className="px4">
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
-              <textarea
+              <TypeaheadUserTextArea
+                  {...this.props}
                   id="event_comment_body"
                   ref="textarea"
                   type="text"
@@ -192,7 +201,7 @@ var NewsFeedItemNewComment = React.createClass({
                   onChange={this.onChange}
                   onKeyDown={this.onKeyDown}
                   onKeyPress={this.onKeyPress}
-                  value={this.state.text} />
+                  defaultValue={this.state.text} />
             </div>
             {this.renderDropzoneInner()}
           </div>
@@ -200,6 +209,16 @@ var NewsFeedItemNewComment = React.createClass({
         {this.renderButtons()}
       </div>
     );
+  },
+
+  renderAvatar: function() {
+    if (!this.props.initialText) {
+      return (
+        <div className="left">
+          <Avatar user={window.app.currentUser().attributes} size={30} />
+        </div>
+      );
+    }
   },
 
   renderButtons: function() {
@@ -223,7 +242,7 @@ var NewsFeedItemNewComment = React.createClass({
       return (
         <div className="dropzone-inner">
           To attach files, drag & drop here or
-          {' '}<a href="javascript:void(0);" ref="clickable">select files form your computer</a>&hellip;
+          {' '}<a href="javascript:void(0);" ref="clickable">select files from your computer</a>&hellip;
         </div>
       );
     }
@@ -246,6 +265,24 @@ var NewsFeedItemNewComment = React.createClass({
   submitComment: function(e) {
     e && e.stopPropagation();
 
+    if (this.props.initialText) {
+      this._updateComment();
+    } else {
+      this._submitNewComment();
+    }
+  },
+
+  submitWork: function(e) {
+    this.submitComment(e);
+
+    var url = _reach(this.props, 'item.target.url');
+
+    if (url) {
+      BountyActionCreators.submitWork(url + '/review');
+    }
+  },
+
+  _submitNewComment: function() {
     var comment = this.state.text;
     var thread = this.props.thread;
     var createdAt = Date.now();
@@ -256,6 +293,7 @@ var NewsFeedItemNewComment = React.createClass({
 
       Dispatcher.dispatch({
         type: ActionTypes.NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT,
+        commentId: this.props.thread,
         data: {
           body: comment,
           created_at: createdAt,
@@ -277,13 +315,13 @@ var NewsFeedItemNewComment = React.createClass({
     }
   },
 
-  submitWork: function(e) {
-    this.submitComment(e);
+  _updateComment: function() {
+    var comment = this.state.text;
+    var commentId = this.props.commentId;
+    var url = this.props.url;
 
-    var url = _reach(this.props, 'item.target.url');
-
-    if (url) {
-      BountyActionCreators.submitWork(url + '/review');
+    if (comment.length >= 2) {
+      CommentActionCreators.updateComment(commentId, comment, url);
     }
   }
 });
@@ -310,6 +348,26 @@ function _confirmComment(thread, timestamp) {
         comment: data
       }
     });
+  };
+}
+
+function _dependsOn(dependency, type) {
+  return function (props, propName, componentName) {
+    var thisProp = props[propName];
+
+    if (thisProp) {
+      if (!props.hasOwnProperty(dependency)) {
+        return new Error(propName + ' provided without ' + dependency + '.');
+      }
+
+      if (typeof thisProp !== type) {
+        return new Error(
+          'Expected ' + propName + ' to be a ' + type + ', but it was a ' +
+          typeof thisProp +
+          '.'
+        );
+      }
+    }
   };
 }
 

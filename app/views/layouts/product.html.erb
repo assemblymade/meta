@@ -14,11 +14,12 @@
 
 <% content_for :javascript do %>
   <script>
+    window.app.product = new Product(<%= json @product, scope: current_user %>)
     window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);
   </script>
 <% end %>
 
-<%= initial_store_data('ProductStore', { slug: @product.slug, name: @product.name }) %>
+<%= initial_store_data('ProductStore', { slug: @product.slug, name: @product.name, url: product_url(@product), core_team: @product.core_team_ids }) %>
 
 <%= render 'shared/navbar' %>
 
@@ -69,7 +70,7 @@
                 <li class="inline-block">
                   <a href="<%= @product.homepage_url %>">
                     <%= inline_react_component 'Icon', icon: 'globe' %>
-                    <%= URI(@product.homepage_url.downcase).host %>
+                    <%= URI(@product.homepage_url.downcase).host rescue 'invalid' %>
                   </a>
                 </li>
                 <% end %>

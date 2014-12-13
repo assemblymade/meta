@@ -122,10 +122,18 @@ class QueryMarks
     dot_product_vectors(vector1, vector2)
   end
 
+  def vector_square_distance(vector1,vector2)
+    vec1=Hash[vector1]
+    vec2=Hash[vector2]
+    vec3 = vec1.merge(vec2){
+      |_, v1, v2| (v1-v2)
+    }.sum{|k,v| v**2 }
+  end
+
   #GENERATE TOP_BOUNTIES, TOP_PRODUCTS
 
   def get_all_wip_vectors
-    wips = Wip.where(closed_at: nil).where(type: "Task").where('wips.created_at > ?', 90.days.ago)
+    wips = Wip.where(closed_at: nil).where(type: "Task").where('wips.created_at > ?', 90.days.ago).where.not(product_id: "846ea827-f1d1-48f4-9409-ebae81f868a0")
     data = wips.joins(:marks).group('wips.id').group('marks.id').pluck("wips.id, marks.id, SUM(markings.weight)")
     data = data.map{|x,y,z| [x, [y,z]]}
     data = data.group_by(&:first)
@@ -228,7 +236,14 @@ class QueryMarks
   end
 
   def legible_mark_vector(vector)
-    vector.map{|m, w| [Mark.find(m).name, w]}
+    r=vector.map{|m, w| mark = Mark.find_by(id: m)
+      if mark
+        [mark.name, w]
+      else
+        ['', 0]
+      end}
+    r.delete(['', 0])
+    r
   end
 
   #RUN DAILY
