@@ -293,7 +293,7 @@ ASM::Application.routes.draw do
     resources :payments, only: [:index, :create, :update, :destroy]
     resources :expense_claims, only: [:create]
     resources :product_logos, only: [:index, :show, :create, :update], as: :logos, path: 'logos'
-
+    resources :news_feed_item_posts, only: [:show]
     resources :projects, only: [:index, :show, :new, :create, :edit, :update] do
       put 'tasks/:id' => 'projects#add'
       resources :tasks, only: [:create, :destroy, :show, :update]
