@@ -81,6 +81,7 @@ NewsFeedItem.blueprint do
 end
 
 NewsFeedItemPost.blueprint do
+  news_feed_items { [NewsFeedItem.make!] }
 end
 
 Product.blueprint do
