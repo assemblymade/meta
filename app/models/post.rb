@@ -28,9 +28,9 @@ class Post < ActiveRecord::Base
   ANNOUNCEMENT_MARK = Mark.find_or_create_by!(name: 'announcement')
   DISCUSSION_MARK = Mark.find_or_create_by!(name: 'discussion')
 
-  def summary
-    super || body.split("\n").first
-  end
+  # def summary
+  #   super || body.split("\n").first
+  # end
 
   def follower_ids
     product.follower_ids
