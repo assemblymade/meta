@@ -17,7 +17,6 @@ class Post < ActiveRecord::Base
   validates :author,  presence: true
   validates :title,   uniqueness: { scope: :product_id }, presence: true
   validates :slug,    presence: true
-  validates :summary, length: { minimum: 2, maximum: 140 }, allow_blank: true
 
   after_commit :mark_as_announcement, on: :create
   after_commit :mark_as_discussion, on: :create
