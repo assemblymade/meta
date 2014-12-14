@@ -147,14 +147,18 @@ class QueryMarks
     merged_vector = []
     task_vector.each do |w, v|
       r=[w]
-      product_id = Wip.find(w).product.id
+      product = Wip.find(w).product
+      product_id = product.id
       puts product_id
       if product_id && product_vector.keys.include?(product_id)
         pv = Hash[product_vector[product_id]]
         v = Hash[v].merge(pv)
       end
       r.append(v.to_a)
-      merged_vector.append(r)
+
+      if product.state == 'greenlit' || product.state == 'profitable' || product.state='team_building'
+        merged_vector.append(r)
+      end
     end
 
     merged_vector.map{|w, v|
