@@ -5,7 +5,7 @@ describe NewsFeedItemCommentsController do
   let(:task) { Task.make! }
   let(:nfi_post) { NewsFeedItemPost.make! }
   let(:task_nfi) { NewsFeedItem.make!(target: task) }
-  let(:post_nfi) { NewsFeedItem.make!(target: nfi_post) }
+  let(:post_nfi) { nfi_post.news_feed_items.first }
   let(:product) { task.product }
 
   it 'creates an event when the target is a wip' do
