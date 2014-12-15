@@ -28,14 +28,10 @@ class Story < ActiveRecord::Base
   end
 
   def self.associated_with_ids(entity)
-    Rails.cache.fetch(['story_ids', entity.id]) do
-      activities = Activity.where(target_id: entity.id)
+    Rails.cache.fetch(['story_ids.2', entity.id]) do
+      activities = Activity.where(subject_id: entity.id).to_a + Activity.where(target_id: entity.id).to_a
 
-      if activities.empty?
-        activities = Activity.where(subject_id: entity.id)
-      end
-
-      activities.map(&:story_id).uniq
+      activities.map(&:story_id).uniq.compact
     end
   end
 
