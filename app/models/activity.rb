@@ -53,19 +53,16 @@ class Activity < ActiveRecord::Base
   def notify_staff
     case verb
     when "Comment"
-      SlackNotifier.first_story(
-        actor,
+      SlackNotifier.first_activity(
         self
         ) unless actor.activities.where(type: "Activities::Comment").count > 1
     when "Post"
-      SlackNotifier.first_story(
-        actor,
+      SlackNotifier.first_activity(
         self
         ) unless actor.activities.where(type: "Activities::Post").count > 1
     when "Chat"
-      SlackNotifier.first_chat_message(
-        actor,
-        target.slug
+      SlackNotifier.first_activity(
+        self
         ) unless actor.activities.where(type: "Activities::Chat").count > 1
     end
   end
