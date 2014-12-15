@@ -33,6 +33,7 @@ var TypeaheadUserTextArea = React.createClass({
 
   componentWillUnmount: function() {
     NewCommentStore.removeChangeListener(this.getCommentFromStore);
+    this.textareaNode.trigger('autosize.destroy');
   },
 
   getCommentFromStore: function() {
