@@ -233,8 +233,8 @@ var NewsFeedItemComments = React.createClass({
   renderOptimisticComments: function() {
     return this.state.optimisticComments.map(function(comment) {
       return (
-        <div className="py3" key={comment.id}>
-          <Comment author={comment.user} body={marked(comment.body)} optimistic={true} />
+        <div className="py2" key={comment.id}>
+          <Comment author={comment.user} body={marked(comment.body)} optimistic={true} key={comment.id} />
         </div>
       )
     });

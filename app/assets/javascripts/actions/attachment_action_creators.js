@@ -6,32 +6,11 @@ var ProductStore = require('../stores/product_store')
 var uploadUrl = '/upload/attachments'
 
 class AttachmentActionCreators {
-  completeAttachmentUpload(file) {
-    _complete(file)
-  }
-
   uploadAttachment(commentId) {
     return function(file, done) {
       _upload(commentId, file, done)
     }
   }
-}
-
-function _complete(file) {
-  var product = ProductStore.getSlug()
-  var completeUrl = '/' + (product || 'meta') + '/assets'
-
-  $.ajax({
-    url: completeUrl,
-    method: 'POST',
-    dataType: 'json',
-    data: {
-      asset: {
-        attachment_id: file.attachment.id,
-        name: file.name
-      }
-    }
-  })
 }
 
 function _upload(commentId, file, done) {

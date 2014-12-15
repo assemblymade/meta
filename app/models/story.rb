@@ -28,19 +28,21 @@ class Story < ActiveRecord::Base
   end
 
   def self.associated_with_ids(entity)
-    Rails.cache.fetch(['story_ids', entity.id]) do
-      activities = Activity.where(target_id: entity.id)
+    Rails.cache.fetch(['story_ids.2', entity.id]) do
+      activities = Activity.where(subject_id: entity.id).to_a + Activity.where(target_id: entity.id).to_a
 
-      if activities.empty?
-        activities = Activity.where(subject_id: entity.id)
-      end
-
-      activities.map(&:story_id).uniq
+      activities.map(&:story_id).uniq.compact
     end
   end
 
   def self.associated_with(entity)
     Story.where(id: associated_with_ids(entity))
+  end
+
+  def news_feed_item
+    # TODO: (whatupdave) we should have the story belongs_to a nfi
+    # this is a crutch until we migrate the data
+    subject.try(:news_feed_item) || target.try(:news_feed_item)
   end
 
   def subject
@@ -52,7 +54,8 @@ class Story < ActiveRecord::Base
   end
 
   def reader_ids
-    target.follower_ids - actor_ids
+    # we shouldn't look at the target once all the data is migrated
+    (news_feed_item || target).follower_ids - actor_ids
   end
 
   def notify_by_email(user)

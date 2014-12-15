@@ -209,6 +209,7 @@
         switch (target.type) {
         case 'task':
           return <NewsFeedItemBounty
+              {...this.props}
               item={this.props}
               triggerModal={triggerModal} />;
 

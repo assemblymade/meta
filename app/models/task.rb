@@ -182,7 +182,7 @@ class Task < Wip
   def stop_work!(worker)
     self.update(workers: [])
     unlock_bounty!
-    update(state: 'open') if workers.size == 0
+    unallocate!(worker) if workers.empty?
   end
 
   def allocate(worker)
@@ -191,7 +191,7 @@ class Task < Wip
     end
   end
 
-  def unallocate(reviewer, reason)
+  def unallocate(reviewer, reason = nil)
     StreamEvent.add_unallocated_event!(actor: reviewer, subject: self, target: product)
 
     add_event ::Event::Unallocation.new(user: reviewer, body: reason) do

@@ -19,7 +19,7 @@ class Activity < ActiveRecord::Base
   def self.publish!(opts)
     create!(opts).tap do |a|
       if a.publishable
-        PublishActivity.perform_async(a.id) if Story.should_publish?(a)
+        PublishActivity.perform_async(a.id, a.socket_id) if Story.should_publish?(a)
         room = if a.target.is_a?(ChatRoom)
           a.target
         elsif product = (opts[:product] || a.find_product)
@@ -53,19 +53,16 @@ class Activity < ActiveRecord::Base
   def notify_staff
     case verb
     when "Comment"
-      SlackNotifier.first_story(
-        actor,
+      SlackNotifier.first_activity(
         self
         ) unless actor.activities.where(type: "Activities::Comment").count > 1
     when "Post"
-      SlackNotifier.first_story(
-        actor,
+      SlackNotifier.first_activity(
         self
         ) unless actor.activities.where(type: "Activities::Post").count > 1
     when "Chat"
-      SlackNotifier.first_chat_message(
-        actor,
-        target.slug
+      SlackNotifier.first_activity(
+        self
         ) unless actor.activities.where(type: "Activities::Chat").count > 1
     end
   end

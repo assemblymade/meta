@@ -5,6 +5,7 @@
   <%= react_component 'NewsFeedItem',
         NewsFeedItemSerializer.new(@news_feed_item).as_json.merge(
           commentable: true,
+          enableModal: false,
           productPage: true,
           showAllComments: true
   ) %>

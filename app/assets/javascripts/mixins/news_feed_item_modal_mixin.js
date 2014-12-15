@@ -1,9 +1,11 @@
 var NewsFeedItemModalMixin = {
   handleClick: function(e) {
-    if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
-      e.preventDefault();
+    if (this.props.enableModal) {
+      if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        e.preventDefault();
 
-      this.showModal(e);
+        this.showModal(e);
+      }
     }
   },
 

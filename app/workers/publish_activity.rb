@@ -3,11 +3,11 @@ class PublishActivity
 
   attr_accessor :activity
 
-  def perform(activity_id)
+  def perform(activity_id, socket_id)
     @activity = Activity.find(activity_id)
 
     story = create_story!
-    push_to_feeds!(story)
+    push_to_feeds!(story, socket_id)
     register_with_readraptor!(story)
   end
 
@@ -22,9 +22,15 @@ class PublishActivity
     end
   end
 
-  def push_to_feeds!(story)
+  def push_to_feeds!(story, socket_id)
     story.reader_ids.each do |user_id|
       NewsFeed.new(User, user_id).push(story)
+      PusherWorker.perform_async(
+        "user.#{user_id}",
+        "story-added",
+        story.id,
+        socket_id: socket_id
+      )
     end
   end
 
