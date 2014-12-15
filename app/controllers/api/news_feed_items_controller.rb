@@ -11,7 +11,7 @@ module Api
 
       @item = @product.news_feed_items.new(
         source_id: @user.id,
-        target: NewsFeedItemPost.create(title: @user.username, description: params[:message])
+        target: @product.news_feed_item_posts.create(title: @user.username, description: params[:message])
       )
 
       if @item.save
