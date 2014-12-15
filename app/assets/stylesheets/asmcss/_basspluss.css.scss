@@ -276,7 +276,7 @@
 // I propose the folowing standard .r###_selector
 @media screen and (min-width: 480px) {
   .r480_w50p {
-    width:50%;
+    width:50% !important;
   }
 }
 
@@ -304,7 +304,7 @@
     margin-right: .5rem !important;
   }
   .r600_mb6 {
-    margin-bottom: 3rem;
+    margin-bottom: 3rem !important;
   }
   .r600_table {
     display: table !important;
@@ -368,6 +368,6 @@
     display: block !important;
   }
   .r1024_w50p {
-    width:50% !important;;
+    width:50% !important;
   }
 }

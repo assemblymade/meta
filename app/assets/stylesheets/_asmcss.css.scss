@@ -40,7 +40,7 @@ a {
   color: $link-color;
   -webkit-transition: color 0.1s ease-in-out;
   transition: color 0.1s ease-in-out;
-  &:hover {
+  &:hover, &:focus {
     text-decoration: none;
     -webkit-transition: color 0.1s ease-in-out;
     transition: color 0.1s ease-in-out;
@@ -185,12 +185,25 @@ button, .button {
   }
 }
 
+.pill-hover {
+  a {
+    border-radius: 50px;
+    -webkit-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    //
+    &:hover, &:focus {
+      color: #353941;
+      background: #e7e9ec;
+      border-radius: 50px;
+      text-decoration: none;
+      -webkit-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+      transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+  }
+}
+
 .flip-v {
   display: block;
   -webkit-transform: scaleY(-1);
   transform: scaleY(-1);
-}
-
-.flip-h {
-
 }

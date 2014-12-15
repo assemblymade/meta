@@ -81,8 +81,8 @@
     renderTags: function() {
       return this.props.tags.map(function(tag) {
         return (
-          <li className="lh0_9">
-            <a href="#" className="block pt1 pb2" onClick={this.addTag(tag)}>
+          <li className="mb1 lh0_9 pill-hover">
+            <a href="#" className="block pt1 pb1 pr2 pl2" onClick={this.addTag(tag)}>
               <span className="fs1 fw-500 caps">#{tag}</span>
             </a>
           </li>
@@ -125,18 +125,18 @@
           <div className="col-xs-12 col-sm-4 r768_float-right">
             <span className="col-sm-11 col-sm-push-1 p0">
 
-              <div className="bg-white rounded shadow pt6 pb6 px3 mb3 center">
-                <div className="block h5 mt0 mb0 bold">
+              <div className="bg-white rounded shadow pt3 pr3 pb3 pl3 mb3">
+                <div className="block h5 mt0 mb1 bold">
                   Getting Started
                 </div>
                 <div className="h6 m0 gray-1">
-                  What content should go here to let a user focused on what they should&nbsp;do.
+                  Jump into some discussion in chat and introduce yourself to @core. {{/* < needs to be a link <a href="">@core</a> <%= product_people_path(@product) %> */}}
                 </div>
               </div>
               <div className="col-xs-6 col-sm-12">
-                <div className="mb1"> {/*Tags*/}
+                <div className="pb1"> {/*Tags*/}
                   <Accordian title="Tags">
-                    <ul className="list-reset">
+                    <ul className="list-reset mxn2">
                       {this.renderTags()}
                     </ul>
                   </Accordian>
