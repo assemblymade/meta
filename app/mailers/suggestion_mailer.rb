@@ -21,7 +21,7 @@ class SuggestionMailer < BaseMailer
     end
 
     mail to: @user.email_address,
-    subject: "Are these the kind of bounties you were looking for?"
+    subject: "We found these for you"
   end
 
 end
