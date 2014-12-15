@@ -1,95 +1,47 @@
-/** @jsx React.DOM */
-
-var CONSTANTS = window.CONSTANTS;
 // var Dispatcher = require('../dispatcher');
 var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
 var LocalStorageMixin = require('../mixins/local_storage');
 var NotificationsStore = require('../stores/notifications_store');
+var StoryActionCreators = require('../actions/story_action_creators')
+var StoryStore = require('../stores/story_store')
 
-(function() {
-  var NF = CONSTANTS.NOTIFICATIONS;
+var DropdownNotificationsToggler = React.createClass({
+  mixins: [DropdownTogglerMixin, LocalStorageMixin],
 
-  var DropdownNotificationsToggler = React.createClass({
-    mixins: [DropdownTogglerMixin, LocalStorageMixin],
+  acknowledge: function() {
+    StoryActionCreators.acknowledge();
+  },
 
-    acknowledge: function() {
-      var timestamp = moment().unix();
+  badge: function(total) {
+    return <strong className="mr1">{this.state.badgeCount}</strong>;
+  },
 
-      localStorage.notificationsAck = timestamp;
+  badgeCount: function() {
+    return this.state.badgeCount
+  },
 
-      this.setState({
-        acknowledgedAt: timestamp
-      });
+  componentDidMount: function() {
+    StoryStore.addChangeListener(this._onChange);
+  },
 
-      Dispatcher.dispatch({
-        action: NF.ACTIONS.ACKNOWLEDGE,
-        data: timestamp,
-        sync: true
-      });
-    },
+  componentWillUnmount: function() {
+    StoryStore.removeChangeListener(this._onChange);
+  },
 
-    badge: function(total) {
-      return <strong className="mr1">{this.badgeCount()}</strong>;
-    },
+  getInitialState: function() {
+    return this.getStateFromStore()
+  },
 
-    badgeCount: function() {
-      return NotificationsStore.getUnreadCount(this.state.acknowledgedAt);
-    },
-
-    componentWillMount: function() {
-      NotificationsStore.addChangeListener(this.getStories);
-    },
-
-    getDefaultProps: function() {
-      return {
-        title: document.title
-      };
-    },
-
-    getInitialState: function() {
-      return {
-        stories: null,
-        acknowledgedAt: this.storedAck('notificationsAck')
-      };
-    },
-
-    getStories: function() {
-      this.setState({
-        stories: NotificationsStore.getStories()
-      });
-    },
-
-    latestStory: function() {
-      var stories = this.state.stories;
-
-      if (!stories) {
-        return;
-      }
-
-      var story;
-      for (var i = 0, l = stories.length; i < l; i++) {
-        if (story && stories[i].updated > story.updated) {
-          story = stories[i];
-        }
-
-        if (!story) {
-          story = stories[i];
-        }
-      }
-
-      return story;
-    },
-
-    latestStoryTimestamp: function() {
-      var story = this.latestStory();
-
-      return story && story.updated ? story.updated : 0;
+  getStateFromStore: function() {
+    return {
+      badgeCount: StoryStore.getUnviewedCount()
     }
-  });
+  },
 
-  if (typeof module !== 'undefined') {
-    module.exports = DropdownNotificationsToggler;
+  _onChange: function() {
+    this.setState(this.getStateFromStore())
   }
 
-  window.DropdownNotificationsToggler = DropdownNotificationsToggler;
-})();
+});
+
+module.exports = DropdownNotificationsToggler

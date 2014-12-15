@@ -3,10 +3,10 @@ class NewsFeedItemPostSerializer < ApplicationSerializer
   attributes :url, :title, :description
 
   def url
-    object.try(:url) || product_path(object.news_feed_items.first.product)
+    url_for(object.url_params)
   end
 
   def description
-    product_markdown(object.news_feed_items.first.product, object.description)
+    product_markdown(object.product, object.description)
   end
 end

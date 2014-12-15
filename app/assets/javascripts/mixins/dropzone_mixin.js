@@ -6,7 +6,7 @@ var NewCommentActionCreators  = require('../actions/new_comment_action_creators'
 var UploadingAttachmentsStore = require('../stores/uploading_attachments_store');
 
 var DropzoneMixin = {
-  initializeDropzone: function() {
+  componentDidMount: function() {
     var attachmentUploadUrlTag = $('meta[name=attachment-upload-url]');
     var clickable = this.refs.clickable;
 

@@ -47,6 +47,7 @@ class Product < ActiveRecord::Base
   has_many :metrics
   has_many :milestones
   has_many :news_feed_items
+  has_many :news_feed_item_posts
   has_many :pitch_week_applications
   has_many :posts
   has_many :profit_reports
