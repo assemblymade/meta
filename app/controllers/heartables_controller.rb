@@ -32,7 +32,7 @@ class HeartablesController < ApplicationController
   def unlove
     @heart = Heart.find_by(heartable_id: heart_params[:id], user: current_user)
     if @heart
-      @heart.heartable.unhearted if @heart.destroy
+      @heart.heartable.try(:unhearted) if @heart.destroy
       render json: {
         heartable_id: @heart.heartable_id,
         heartable_type: @heart.heartable_type,
