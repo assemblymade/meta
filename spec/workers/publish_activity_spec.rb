@@ -12,7 +12,7 @@ describe PublishActivity do
       target: discussion
     )
 
-    PublishActivity.new.perform(activity.id)
+    PublishActivity.new.perform(activity.id, 1234)
 
     expect(Story.first).to have_attributes(
       verb: 'Comment',
@@ -31,7 +31,7 @@ describe PublishActivity do
 
     discussion.watch!(watcher)
 
-    PublishActivity.new.perform(activity.id)
+    PublishActivity.new.perform(activity.id, 1234)
     expect(NewsFeed.new(watcher).first.attributes.slice('verb', 'subject_type')).to eq(
       'verb' => 'Comment',
       'subject_type' => 'Discussion',

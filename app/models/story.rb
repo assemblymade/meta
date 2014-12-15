@@ -43,6 +43,12 @@ class Story < ActiveRecord::Base
     Story.where(id: associated_with_ids(entity))
   end
 
+  def news_feed_item
+    # TODO: (whatupdave) we should have the story belongs_to a nfi
+    # this is a crutch until we migrate the data
+    subject.try(:news_feed_item) || target.try(:news_feed_item)
+  end
+
   def subject
     activities.first.subject
   end
@@ -52,7 +58,8 @@ class Story < ActiveRecord::Base
   end
 
   def reader_ids
-    target.follower_ids - actor_ids
+    # we shouldn't look at the target once all the data is migrated
+    (news_feed_item || target).follower_ids - actor_ids
   end
 
   def notify_by_email(user)

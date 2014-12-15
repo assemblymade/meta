@@ -19,7 +19,7 @@ class Activity < ActiveRecord::Base
   def self.publish!(opts)
     create!(opts).tap do |a|
       if a.publishable
-        PublishActivity.perform_async(a.id) if Story.should_publish?(a)
+        PublishActivity.perform_async(a.id, a.socket_id) if Story.should_publish?(a)
         room = if a.target.is_a?(ChatRoom)
           a.target
         elsif product = (opts[:product] || a.find_product)

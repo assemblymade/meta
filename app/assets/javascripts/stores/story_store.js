@@ -1,5 +1,7 @@
+var PusherStore = require('../stores/pusher_store')
 var Store = require('./es6_store')
 var StoryActionCreators = require('../actions/story_action_creators')
+var UserStore = require('./user_store')
 
 var _dispatchToken,
     _more = true,
@@ -43,6 +45,20 @@ class StoryStore extends Store {
 
         case ActionTypes.STORY_ACKNOWLEDGE_STORIES:
           localStorage.storyAck = action.timestamp;
+          this.emitChange()
+          break
+
+        case ActionTypes.PUSHER_INITIALIZED:
+          Dispatcher.waitFor(PusherStore.getDispatchToken())
+
+          var currentUser = UserStore.get()
+          var client = PusherStore.getClient()
+          if (currentUser && client) {
+            client.
+              subscribe('user.' + currentUser.id).
+              bind_all(() => StoryActionCreators.fetchStories());
+          }
+
           this.emitChange()
           break
       }
