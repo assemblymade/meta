@@ -81,8 +81,8 @@
     renderTags: function() {
       return this.props.tags.map(function(tag) {
         return (
-          <li className="mb1 lh0_9 pill-hover">
-            <a href="#" className="block pt1 pb1 pr2 pl2" onClick={this.addTag(tag)}>
+          <li className="mb1 lh0_9">
+            <a href="#" className="pill-hover block pt1 pb1 pr3 pl3" onClick={this.addTag(tag)}>
               <span className="fs1 fw-500 caps">#{tag}</span>
             </a>
           </li>
@@ -91,28 +91,19 @@
     },
 
     renderAssets: function() {
+      var assets = this.props.assets
+
       return (
         <ul className="list-reset mn3 mtn1 mb1">
-          <li className="inline-block w100p pt1 pr1 pl1 r480_w50p r768_w100p r1024_w50p">
-            <a href="#" className="inline-block w100p">
-              <div className="w100p pb66p bg-size-cover bg-repeat-none bg-position-center" style={{ backgroundImage:'url(http://placehold.it/330x220/dbdee3/aaa&text=330x220)' }}></div>
-            </a>
-          </li>
-          <li className="inline-block w100p pt1 pr1 pl1 r480_w50p r768_w100p r1024_w50p">
-            <a href="#" className="inline-block w100p">
-              <div className="w100p pb66p bg-size-cover bg-repeat-none bg-position-center" style={{ backgroundImage:'url(http://placehold.it/330x220/dbdee3/aaa&text=330x220)' }}></div>
-            </a>
-          </li>
-          <li className="inline-block w100p pt1 pr1 pl1 r480_w50p r768_w100p r1024_w50p">
-            <a href="#" className="inline-block w100p">
-              <div className="w100p pb66p bg-size-cover bg-repeat-none bg-position-center" style={{ backgroundImage:'url(http://placehold.it/330x220/dbdee3/aaa&text=330x220)' }}></div>
-            </a>
-          </li>
-          <li className="inline-block w100p pt1 pr1 pl1 r480_w50p r768_w100p r1024_w50p">
-            <a href="#" className="inline-block w100p">
-              <div className="w100p pb66p bg-size-cover bg-repeat-none bg-position-center" style={{ backgroundImage:'url(http://placehold.it/330x220/dbdee3/aaa&text=330x220)' }}></div>
-            </a>
-          </li>
+          {assets.map(function(asset) {
+            return (
+              <li className="inline-block w100p pt1 pr1 pl1 r480_w50p r768_w100p r1024_w50p">
+                <a href={asset.thumbnail_url} className="inline-block w100p">
+                  <div className="w100p pb66p bg-size-cover bg-repeat-none bg-position-center" style={{backgroundImage: 'url('+ asset.thumbnail_url +')', backgroundColor: '#dbdee3' }}></div>
+                </a>
+              </li>
+            )
+          })}
         </ul>
       )
     },
@@ -120,17 +111,22 @@
     render: function() {
       var bountyFilterProps = _.pick(this.props, 'tags', 'creators', 'workers')
 
+      var product = this.props.product
+
+      if (typeof product === "undefined" || product === null) {
+        return null;
+      }
+
       return (
         <div className="row">
           <div className="col-xs-12 col-sm-4 r768_float-right">
             <span className="col-sm-11 col-sm-push-1 p0">
-
-              <div className="bg-white rounded shadow pt3 pr3 pb3 pl3 mb3">
+              <div className="bg-white rounded shadow pt3 pr3 pb4 pl3 mb2" style={{paddingLeft: '1.75rem'}}>
                 <div className="block h5 mt0 mb1 bold">
                   Getting Started
                 </div>
                 <div className="h6 m0 gray-1">
-                  Jump into some discussion in chat and introduce yourself to @core. {{/* < needs to be a link <a href="">@core</a> <%= product_people_path(@product) %> */}}
+                  Jump into some discussion in chat and introduce yourself to <a href={product.people_url}>@core</a>.
                 </div>
               </div>
               <div className="col-xs-6 col-sm-12">
@@ -144,7 +140,7 @@
               </div>
               <div className="col-xs-6 col-sm-12">
                 <div className="mb1"> {/*Assets*/}
-                  <Accordian title="Assets">
+                  <Accordian title="Assets" >
                     {this.renderAssets()}
                   </Accordian>
                 </div>

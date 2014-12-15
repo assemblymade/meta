@@ -206,6 +206,8 @@
 
 // margin
 
+.mb1_5 { margin-bottom:1.5rem }
+
 .mn1 { margin:-0.5rem }
 .mn2 { margin:-1rem }
 .mn3 { margin:-1.5rem }
@@ -220,8 +222,23 @@
 
 .mtn1 { margin-top:-0.5rem }
 .mtn2 { margin-top:-1rem }
+.mtn3 { margin-top:-1.5rem }
+.mtn4 { margin-top:-2rem }
+.mtn5 { margin-top:-2.5rem }
 
-.mb1_5 { margin-bottom:1.5rem }
+.mrn1 { margin-right:-0.5rem }
+.mrn2 { margin-right:-1rem }
+.mrn3 { margin-right:-1.5rem }
+.mrn4 { margin-right:-2rem }
+.mrn5 { margin-right:-2.5rem }
+
+.mln1 { margin-left:-0.5rem }
+.mln2 { margin-left:-1rem }
+.mln3 { margin-left:-1.5rem }
+.mln4 { margin-left:-2rem }
+.mln5 { margin-left:-2.5rem }
+
+
 
 // ### table
 
@@ -244,6 +261,9 @@
 
 .lh0    { line-height:0 }
 .lh0_9  { line-height:0.9rem }
+.lh1    { line-height:1rem }
+.lh1_5  { line-height:1.5rem }
+.lh2    { line-height:2rem }
 
 // ### misc
 
