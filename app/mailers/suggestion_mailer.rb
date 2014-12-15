@@ -21,7 +21,7 @@ class SuggestionMailer < BaseMailer
     end
 
     mail to: @user.email_address,
-    subject: "Hey, we handpicked these for you"
+    subject: "We found these for you"
   end
 
 end
