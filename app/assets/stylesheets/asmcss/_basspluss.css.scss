@@ -9,15 +9,82 @@
 // ### general
 
 .none {display:none !important}
+.overflow-hidden {overflow:hidden;}
+.overflow-x-hidden {overflow-x:hidden;}
+.bg-size-cover {background-size: cover}
+.bg-repeat-none {background-repeat: no-repeat}
+.bg-position-center {background-position: center}
 
 // ### layout
 
-.w100p  { width:100%; }
-.w75p   { width:75%; }
-.w50p   { width:50%; }
-.w25p   { width:25%; }
+// height
+.ht100p  { height:100%; }
+.ht75p   { height:75%; }
+.ht66p   { height:66.6666%; }
+.ht50p   { height:50%; }
+.ht33p   { height:33.3333%; }
+.ht25p   { height:25%; }
+
+.ht1   { height: 0.5rem; }
+.ht2   { height: 1rem; }
+.ht3   { height: 1.5rem; }
+.ht4   { height: 2rem; }
+.ht5   { height: 2.5rem; }
+.ht6   { height: 3rem; }
+.ht7   { height: 3.5rem; }
+.ht8   { height: 4rem; }
+.ht9   { height: 4.5rem; }
+.ht10  { height: 5rem; }
+.ht11  { height: 5.5rem; }
+.ht12  { height: 6rem; }
+.ht13  { height: 6.5rem; }
+.ht14  { height: 7rem; }
+.ht15  { height: 7.5rem; }
+.ht16  { height: 8rem; }
+.ht17  { height: 8.5rem; }
+.ht18  { height: 9rem; }
+.ht19  { height: 9.5rem; }
+.ht20  { height: 10rem; }
+.ht21  { height: 10.5rem; }
+.ht22  { height: 11rem; }
+.ht23  { height: 11.5rem; }
+.ht24  { height: 12rem; }
+.ht25  { height: 12.5rem; }
+.ht26  { height: 13rem; }
+.ht27  { height: 13.5rem; }
+.ht28  { height: 14rem; }
+.ht29  { height: 14.5rem; }
+.ht30  { height: 15rem; }
+.ht31  { height: 15.5rem; }
+.ht32  { height: 16rem; }
+.ht33  { height: 16.5rem; }
+.ht34  { height: 17rem; }
+.ht35  { height: 17.5rem; }
+.ht36  { height: 18rem; }
+.ht37  { height: 18.5rem; }
+.ht38  { height: 19rem; }
+.ht39  { height: 19.5rem; }
+.ht40  { height: 20rem; }
+.ht41  { height: 20.5rem; }
+.ht42  { height: 21rem; }
+.ht43  { height: 21.5rem; }
+.ht44  { height: 22rem; }
+.ht45  { height: 22.5rem; }
+.ht46  { height: 23rem; }
+.ht47  { height: 23.5rem; }
+.ht48  { height: 24rem; }
+.ht49  { height: 24.5rem; }
+.ht50  { height: 25rem; }
+.ht51  { height: 25.5rem; } // 300px
 
 // width
+.w100p  { width:100%; }
+.w75p   { width:75%; }
+.w66p   { width:66.6666%; }
+.w50p   { width:50%; }
+.w33p   { width:33.3333%; }
+.w25p   { width:25%; }
+
 .w1   { width: 0.5rem; }
 .w2   { width: 1rem; }
 .w3   { width: 1.5rem; }
@@ -115,6 +182,13 @@
 .pb9  { padding-bottom: 4.5rem; }
 .pb10  { padding-bottom: 5rem; }
 .pb11  { padding-bottom: 5.5rem; }
+//
+.pb100p  { padding-bottom:100%; }
+.pb75p   { padding-bottom:75%; }
+.pb66p   { padding-bottom:66.6666%; }
+.pb50p   { padding-bottom:50%; }
+.pb33p   { padding-bottom:33.3333%; }
+.pb25p   { padding-bottom:25%; }
 
 .pl0  { padding-left: 0; }
 .pl1  { padding-left: 0.5rem; }
@@ -131,8 +205,23 @@
 
 
 // margin
-.mb1_5 { margin-bottom:1.5rem }
+
+.mn1 { margin:-0.5rem }
+.mn2 { margin:-1rem }
+.mn3 { margin:-1.5rem }
+.mn4 { margin:-2rem }
+.mn5 { margin:-2.5rem }
+.mn6 { margin:-3rem }
+.mn7 { margin:-3.5rem }
+.mn8 { margin:-4rem }
+.mn9 { margin:-4.5rem }
+.mn10 { margin:-5rem }
+.mn11 { margin:-5.5rem }
+
 .mtn1 { margin-top:-0.5rem }
+.mtn2 { margin-top:-1rem }
+
+.mb1_5 { margin-bottom:1.5rem }
 
 // ### table
 
@@ -185,6 +274,11 @@
 // ### responsive
 // natively basscss has "sm, med, lg" prefixes for this, but we need more granular options
 // I propose the folowing standard .r###_selector
+@media screen and (min-width: 480px) {
+  .r480_w50p {
+    width:50%;
+  }
+}
 
 @media screen and (min-width: 600px) {
   .r600_width-auto {
@@ -224,6 +318,15 @@
   }
 }
 @media screen and (min-width: 768px) {
+  .r768_w100p {
+    width:100% !important;
+  }
+  .r768_w50p {
+    width:50% !important;
+  }
+  .r768_w25p {
+    width:25% !important;
+  }
   .r768_m0 {
     margin: 0 !important;
   }
@@ -231,16 +334,16 @@
     margin-left:0 !important;
   }
   .r768_pr0 {
-    padding-right:0;
+    padding-right:0 !important;
   }
   .r768_pr4 {
-    padding-right:2rem;
+    padding-right:2rem !important;
   }
   .r768_pl1 {
-    padding-left:1rem;
+    padding-left:1rem !important;
   }
   .r768_pr1 {
-    padding-right:1rem;
+    padding-right:1rem !important;
   }
   .r768_table {
     display: table !important;
@@ -263,5 +366,8 @@
 @media screen and (min-width: 1024px) {
   .r1024_block {
     display: block !important;
+  }
+  .r1024_w50p {
+    width:50% !important;;
   }
 }

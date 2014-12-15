@@ -35,7 +35,6 @@ module.exports = window.Accordian = React.createClass({
             {chevron}
           </span>
         </a>
-
         {core}
       </div>
     )

@@ -12,6 +12,7 @@
   var BountyIndex = React.createClass({
     propTypes: {
       tags: React.PropTypes.object,
+      assets: React.PropTypes.object,
       pages: React.PropTypes.number,
       product: React.PropTypes.object,
       valuation: React.PropTypes.object
@@ -89,6 +90,33 @@
       }.bind(this))
     },
 
+    renderAssets: function() {
+      return (
+        <ul className="list-reset mn3 mtn1 mb1">
+          <li className="inline-block w100p pt1 pr1 pl1 r480_w50p r768_w100p r1024_w50p">
+            <a href="#" className="inline-block w100p">
+              <div className="w100p pb66p bg-size-cover bg-repeat-none bg-position-center" style={{ backgroundImage:'url(http://placehold.it/330x220/dbdee3/aaa&text=330x220)' }}></div>
+            </a>
+          </li>
+          <li className="inline-block w100p pt1 pr1 pl1 r480_w50p r768_w100p r1024_w50p">
+            <a href="#" className="inline-block w100p">
+              <div className="w100p pb66p bg-size-cover bg-repeat-none bg-position-center" style={{ backgroundImage:'url(http://placehold.it/330x220/dbdee3/aaa&text=330x220)' }}></div>
+            </a>
+          </li>
+          <li className="inline-block w100p pt1 pr1 pl1 r480_w50p r768_w100p r1024_w50p">
+            <a href="#" className="inline-block w100p">
+              <div className="w100p pb66p bg-size-cover bg-repeat-none bg-position-center" style={{ backgroundImage:'url(http://placehold.it/330x220/dbdee3/aaa&text=330x220)' }}></div>
+            </a>
+          </li>
+          <li className="inline-block w100p pt1 pr1 pl1 r480_w50p r768_w100p r1024_w50p">
+            <a href="#" className="inline-block w100p">
+              <div className="w100p pb66p bg-size-cover bg-repeat-none bg-position-center" style={{ backgroundImage:'url(http://placehold.it/330x220/dbdee3/aaa&text=330x220)' }}></div>
+            </a>
+          </li>
+        </ul>
+      )
+    },
+
     render: function() {
       var bountyFilterProps = _.pick(this.props, 'tags', 'creators', 'workers')
 
@@ -96,21 +124,30 @@
         <div className="row">
           <div className="col-xs-12 col-sm-4 r768_float-right">
             <span className="col-sm-11 col-sm-push-1 p0">
+
               <div className="bg-white rounded shadow pt6 pb6 px3 mb3 center">
                 <div className="block h5 mt0 mb0 bold">
                   Getting Started
                 </div>
                 <div className="h6 m0 gray-1">
-                  What content should go here to get a new member focused on what they should do.
+                  What content should go here to let a user focused on what they should&nbsp;do.
                 </div>
               </div>
-
-              <div className="mb1 r768_pl1 r768_pr1">
-                <Accordian title="Tags">
-                  <ul className="list-reset">
-                    {this.renderTags()}
-                  </ul>
-                </Accordian>
+              <div className="col-xs-6 col-sm-12">
+                <div className="mb1"> {/*Tags*/}
+                  <Accordian title="Tags">
+                    <ul className="list-reset">
+                      {this.renderTags()}
+                    </ul>
+                  </Accordian>
+                </div>
+              </div>
+              <div className="col-xs-6 col-sm-12">
+                <div className="mb1"> {/*Assets*/}
+                  <Accordian title="Assets">
+                    {this.renderAssets()}
+                  </Accordian>
+                </div>
               </div>
             </span>
           </div>
