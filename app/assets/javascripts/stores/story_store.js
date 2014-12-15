@@ -2,8 +2,8 @@ var Store = require('./es6_store')
 var StoryActionCreators = require('../actions/story_action_creators')
 
 var _dispatchToken,
-    _stories = null,
-    _more = true
+    _more = true,
+    _stories = null
 
 var ActionTypes = window.CONSTANTS.ActionTypes;
 
@@ -34,8 +34,21 @@ class StoryStore extends Store {
           })
           this.emitChange()
           break
+
+        case ActionTypes.STORY_ACKNOWLEDGE_STORIES:
+          localStorage.storyAck = action.timestamp;
+          this.emitChange()
+          break
       }
     })
+  }
+
+  areMoreStoriesAvailable() {
+    return _more
+  }
+
+  getAcknowledgedAt() {
+    return parseInt(localStorage.storyAck) || 0
   }
 
   getStories() {
@@ -45,16 +58,21 @@ class StoryStore extends Store {
     return _(_stories).values()
   }
 
-  getStoryKeys() {
-    return _(_stories).map((s)=>{ return s.key })
-  }
-
   getLastStory() {
     return _(_(_stories).values()).last()
   }
 
-  areMoreStoriesAvailable() {
-    return _more
+  getStoryKeys() {
+    return _(_stories).map((s)=>{ return s.key })
+  }
+
+  getUnviewed() {
+    var timestamp = this.getAcknowledgedAt()
+    return _(_stories).filter((s)=> s.updated > s.last_read_at && s.updated > timestamp)
+  }
+
+  getUnviewedCount() {
+    return this.getUnviewed().length
   }
 }
 

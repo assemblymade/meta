@@ -37,7 +37,6 @@ var FullPageNotifications = React.createClass({
   },
 
   renderStories: function() {
-    console.log('stories', this.state.stories)
     if (!this.state.stories) {
       return <Spinner />;
     }
