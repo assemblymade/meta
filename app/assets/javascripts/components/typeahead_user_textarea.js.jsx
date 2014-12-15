@@ -10,6 +10,7 @@ var getCaretPosition = require('../vendor/textarea_caret_position');
 
 var TypeaheadUserTextArea = React.createClass({
   propTypes: {
+    defaultValue: React.PropTypes.string,
     id: React.PropTypes.string,
     name: React.PropTypes.string,
     required: React.PropTypes.oneOfType([
@@ -20,9 +21,14 @@ var TypeaheadUserTextArea = React.createClass({
   },
 
   componentDidMount: function() {
-    $(this.refs.textarea.getDOMNode()).autosize();
+    this.textareaNode = $(this.refs.textarea.getDOMNode());
+    this.textareaNode.autosize();
 
     NewCommentStore.addChangeListener(this.getCommentFromStore);
+  },
+
+  componentDidUpdate: function() {
+    this.textareaNode && this.textareaNode.trigger('autosize.resize');
   },
 
   componentWillUnmount: function() {
@@ -33,13 +39,11 @@ var TypeaheadUserTextArea = React.createClass({
     this.setState({
       text: NewCommentStore.getComment(this.props.thread)
     });
-
-    $(this.refs.textarea.getDOMNode()).trigger('autosize.resize');
   },
 
   getInitialState: function() {
     return {
-      text: this.props.defaultValue,
+      text: this.props.defaultValue || '',
       usernameSearch: null,
       searchPosition: [0,0]
     }

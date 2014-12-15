@@ -254,29 +254,7 @@ var NewsFeedItemNewComment = React.createClass({
 
     // FIXME: (pletcher) These should go through action creators and the Dispatcher
     if (comment.length >= 2) {
-      xhr.post(this.props.url, { body: comment }, _confirmComment(thread, createdAt));
-
-      Dispatcher.dispatch({
-        type: ActionTypes.NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT,
-        commentId: this.props.thread,
-        data: {
-          body: comment,
-          created_at: createdAt,
-          news_feed_item_id: thread,
-          user: window.app.currentUser().attributes
-        }
-      });
-
-      this.setState({
-        rows: this.props.initialRows,
-        text: ''
-      });
-
-      window.analytics.track(
-        'news_feed_item.commented', {
-          product: (window.app.currentAnalyticsProduct())
-        }
-      );
+      CommentActionCreators.submitComment(thread, comment, this.props.url);
     }
   },
 
@@ -292,29 +270,6 @@ var NewsFeedItemNewComment = React.createClass({
 });
 
 module.exports = NewsFeedItemNewComment;
-
-function _confirmComment(thread, timestamp) {
-  return function (err, data) {
-    if (err) {
-      return console.error(err);
-    }
-
-    try {
-      data = JSON.parse(data);
-    } catch (e) {
-      console.error(e);
-    }
-
-    Dispatcher.dispatch({
-      type: ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT,
-      data: {
-        thread: thread,
-        timestamp: timestamp,
-        comment: data
-      }
-    });
-  };
-}
 
 function _dependsOn(dependency, type) {
   return function (props, propName, componentName) {
