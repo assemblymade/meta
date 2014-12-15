@@ -5,6 +5,11 @@ var _dispatchToken,
     _more = true,
     _stories = null
 
+// just a flag to let us know when we've called readraptor
+// this way we know if the read state has been validated since
+// by default we assume stories are unread
+var _readStateReadAt = null
+
 var ActionTypes = window.CONSTANTS.ActionTypes;
 
 class StoryStore extends Store {
@@ -28,6 +33,7 @@ class StoryStore extends Store {
           break
 
         case ActionTypes.RR_RECEIVE_READ_RECEIPTS:
+          _readStateReadAt = new Date()
           _(action.articles).each((a)=>{
             var id = a.key.split('_').pop()
             _stories[id].last_read_at = (a.last_read_at || 0)
@@ -67,8 +73,16 @@ class StoryStore extends Store {
   }
 
   getUnviewed() {
+    // if we haven't called readraptor then it will look like all stories
+    // are unread. We don't know yet, so return 0
+    if (!_readStateReadAt) {
+      return 0
+    }
     var timestamp = this.getAcknowledgedAt()
-    return _(_stories).filter((s)=> s.updated > s.last_read_at && s.updated > timestamp)
+
+    return _(_stories).filter((s) =>
+                          s.updated > s.last_read_at &&
+                          s.updated > timestamp)
   }
 
   getUnviewedCount() {
