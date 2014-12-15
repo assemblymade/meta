@@ -13,6 +13,8 @@ $gray:         $gray-3;
 $gray-dark:    $gray-2;
 $gray-darker:  $gray-1;
 
+$gray-green:   #678b92;
+
 $green:        #33D6A6;
 $blue:         #338EDA;
 $red:          #EC3750;
@@ -26,6 +28,8 @@ $yellow:       #F2D930;
 .gray-2, .gray-dark    { color: $gray-2 }
 .gray-1, .gray-darker  { color: $gray-1 }
 .black                 { color: $black }
+
+.gray-green   { color: $gray-green }
 
 .green        { color: $green }
 .blue         { color: $blue }

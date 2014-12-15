@@ -48,11 +48,12 @@
 <!-- Back to our scheduled programming -->
 
 <div id="product">
-  <section class="product-header pt2 mb3 bg-white shadow-light tranx_m r600_mb4">
-      <div class="container">
+  <section class="product-header pt2 mb3 bg-white shadow-light tranx_m r600_mb6">
+    <div>
+      <div class="container pr0 pl0 r768_pr1 r768_pl1">
         <div class="block full-width r768_table">
           <div data-label="primary" class="block full-width center py2 valign-mid r768_table-cell r768_left-align">
-            <div class="app-icon-container center valign-top r768_table-cell r768_pr3">
+            <div class="app-icon-container center valign-top r768_table-cell r768_pr4">
               <a class="relative inline-block" href="<%= product_path(@product) %>">
                 <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 200 %>
               </a>
@@ -159,7 +160,7 @@
           </script>
 
           <div class="center dropdown">
-            <a class="btn btn-primary bg-blue dropdown-toggle mt1 mb2 r600_m0" href="javascript:void(0);" data-toggle="dropdown" id="product-actions">
+            <a class="btn btn-primary bg-blue dropdown-toggle mt2 mb2 r600_m0" href="javascript:void(0);" data-toggle="dropdown" id="product-actions">
               <span class="mr1">New</span>
               <%= inline_react_component 'Icon', icon: 'chevron-down' %>
             </a>
@@ -199,74 +200,76 @@
         </div>
 
       </div>
-    </section>
-</div>
+    </div>
+  </section>
 
-<div class="container">
-  <div id='create-bounty'></div>
-  <%= yield %>
-</div>
 
-<% unless current_user.nil? %>
-  <div class="modal fade" id="edit-membership-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
-      <div class="modal-dialog">
-        <div class="modal-content" style="overflow: visible;">
-          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-          <input name="_method" value="patch" type="hidden">
-          <div class="modal-header">
-            <button type="button" class="close btn btn-sm" data-dismiss="modal">&times;</button>
-            <div class="form-group" style="margin-bottom: 15px">
-              <label class="control-label" for="modal-bio-editor">
-                Introduce yourself, earn some <%= @product.name %> coins
-              </label>
-              <small class="help-block" style="margin-top: 0px">
-                What skills can you contribute, how much time do you have and what are you looking to get out of the experience?
-              </small>
-              <textarea name="membership[bio]" id="modal-bio-editor" class="form-control bio-editor" style="min-height: 130px;"></textarea>
-            </div>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="join-interests">What are you interested in?</label>
-              <% interest_filters = product_membership_interests(@product, true) %>
-              <div data-react-class="InterestPicker"
-                  data-react-props="<%= {
-                    userInterests: @current_user_interests,
-                    interests: interest_filters,
-                    name: 'membership[interests][]'
-                  }.to_json %>">
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary btn-block" id="join-intro-button">Update</button>
-          </div>
-
-        </div>
-      </div>
-    </form>
+  <div class="container overflow-hidden">
+    <div id='create-bounty'></div>
+    <%= yield %>
   </div>
 
-  <div id="public-address-prompt"></div>
-<% end %>
-<%= render 'shared/footer' %>
-<% parent_layout 'application' %>
+  <% unless current_user.nil? %>
+    <div class="modal fade" id="edit-membership-modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
+        <div class="modal-dialog">
+          <div class="modal-content" style="overflow: visible;">
+            <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+            <input name="_method" value="patch" type="hidden">
+            <div class="modal-header">
+              <button type="button" class="close btn btn-sm" data-dismiss="modal">&times;</button>
+              <div class="form-group" style="margin-bottom: 15px">
+                <label class="control-label" for="modal-bio-editor">
+                  Introduce yourself, earn some <%= @product.name %> coins
+                </label>
+                <small class="help-block" style="margin-top: 0px">
+                  What skills can you contribute, how much time do you have and what are you looking to get out of the experience?
+                </small>
+                <textarea name="membership[bio]" id="modal-bio-editor" class="form-control bio-editor" style="min-height: 130px;"></textarea>
+              </div>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="join-interests">What are you interested in?</label>
+                <% interest_filters = product_membership_interests(@product, true) %>
+                <div data-react-class="InterestPicker"
+                    data-react-props="<%= {
+                      userInterests: @current_user_interests,
+                      interests: interest_filters,
+                      name: 'membership[interests][]'
+                    }.to_json %>">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary btn-block" id="join-intro-button">Update</button>
+            </div>
 
-<% content_for :javascript do %>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div id="public-address-prompt"></div>
+  <% end %>
+  <%= render 'shared/footer' %>
+  <% parent_layout 'application' %>
+
+  <% content_for :javascript do %>
+    <script>
+      $('#edit-membership-modal').on('shown.bs.modal', function() {
+        $('#modal-bio-editor').attr('placeholder', app.defaultBio());
+      });
+    </script>
+  <% end %>
+
   <script>
-    $('#edit-membership-modal').on('shown.bs.modal', function() {
-      $('#modal-bio-editor').attr('placeholder', app.defaultBio());
+    $(document).ready(function() {
+      var queryKey = window.parseUri(window.location).queryKey;
+
+      if (queryKey && queryKey.modal) {
+        showCreateBounty();
+      }
     });
   </script>
-<% end %>
-
-<script>
-  $(document).ready(function() {
-    var queryKey = window.parseUri(window.location).queryKey;
-
-    if (queryKey && queryKey.modal) {
-      showCreateBounty();
-    }
-  });
-</script>
+</div>

@@ -18,5 +18,6 @@
     coinsMinted: @product.coins_minted,
     profitLastMonth: @product.profit_last_month,
     steps: BountyGuidance::Valuations.suggestions(@product),
-  }
+  },
+  assets: ActiveModel::ArraySerializer.new(@product.assets.order(created_at: :desc).limit(4), each_serialzier: AssetSerializer)
 } %>

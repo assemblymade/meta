@@ -14,7 +14,7 @@ class AttachmentSerializer < ActiveModel::Serializer
   def created_at
     object.created_at.iso8601
   end
-  
+
   def firesize_url
     ENV['FIRESIZE_URL']
   end
