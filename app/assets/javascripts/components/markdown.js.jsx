@@ -15,6 +15,11 @@ var Markdown = React.createClass({
     safelySetHtml: React.PropTypes.bool
   },
 
+  componentDidMount: function() {
+    // render internal react_ujs components
+    ReactUjs.mountReactComponents($(this.getDOMNode()).find('[data-react-class]'));
+  },
+
   render: function() {
     var normalized = this.props.normalized
 

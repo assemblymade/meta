@@ -20,7 +20,7 @@ var TypeaheadUserTextArea = React.createClass({
   },
 
   componentDidMount: function() {
-    $('textarea').autosize();
+    $(this.refs.textarea.getDOMNode()).autosize();
 
     NewCommentStore.addChangeListener(this.getCommentFromStore);
   },

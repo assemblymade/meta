@@ -1,5 +1,5 @@
 // Unobtrusive scripting adapter for React
-(function(document, window, React) {
+var ReactUjs = (function(document, window, React) {
   var CLASS_NAME_ATTR = 'data-react-class';
   var PROPS_ATTR = 'data-react-props';
 
@@ -15,8 +15,8 @@
     }
   };
 
-  var mountReactComponents = function() {
-    var nodes = findReactDOMNodes();
+  var mountReactComponents = function(_, nodes) {
+    var nodes = nodes || findReactDOMNodes();
     for (var i = 0; i < nodes.length; ++i) {
       var node = nodes[i];
       var className = node.getAttribute(CLASS_NAME_ATTR);
@@ -60,4 +60,8 @@
     handleEvent('page:load', mountReactComponents);
     handleEvent('page:before-change', unmountReactComponents);
   }
+
+  return {
+    mountReactComponents: mountReactComponents
+  };
 })(document, window, React);

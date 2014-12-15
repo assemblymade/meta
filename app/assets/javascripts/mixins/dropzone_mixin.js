@@ -17,8 +17,6 @@ var DropzoneMixin = {
       url: attachmentUploadUrlTag && attachmentUploadUrlTag.attr('content')
     });
 
-    this.dropzone.on('complete', this.onComplete);
-
     AttachmentStore.addChangeListener(this.getAttachment);
     UploadingAttachmentsStore.addChangeListener(this.getUploadingAttachments);
   },
@@ -51,7 +49,6 @@ var DropzoneMixin = {
   },
 
   onAccept: AttachmentActionCreators.uploadAttachment,
-  onComplete: AttachmentActionCreators.completeAttachmentUpload,
   onSending: function(file, xhr, formData) {
     _.each(file.form, function(v, k) {
       formData.append(k, v);

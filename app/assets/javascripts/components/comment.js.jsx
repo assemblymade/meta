@@ -70,7 +70,7 @@ module.exports = React.createClass({
         </div>
 
         {this.renderEllipsisMenu()}
-        {this.state.editing ? this.renderEditableComment() : this.renderComment()}
+        {this.renderComment()}
       </div>
     )
   },
@@ -110,6 +110,10 @@ module.exports = React.createClass({
   },
 
   renderComment: function() {
+    if (this.state.editing) {
+      return this.renderEditableComment();
+    }
+
     var author = this.props.author;
     var body;
 
