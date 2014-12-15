@@ -99,7 +99,7 @@
 
         if (_callbacks[id]) {
           if (_isPending[id]) {
-            console.warn('Dispatcher.waitFor() detected a circular dependency while waiting for ' + _callbacks[i].toString());
+            console.warn('Dispatcher.waitFor() detected a circular dependency while waiting for ' + _callbacks[id].toString());
             continue;
           }
 

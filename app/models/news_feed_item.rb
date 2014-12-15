@@ -7,7 +7,7 @@ class NewsFeedItem < ActiveRecord::Base
 
   has_many :followings, class_name: 'Watching', as: :watchable
   has_many :followers, through: :followings, source: :user
-  has_many :hearts, as: :heartable, after_add: :follow_author
+  has_many :hearts, as: :heartable, after_add: [:follow_author, :hearted]
   has_many :comments, class_name: 'NewsFeedItemComment', after_add: :follow_author
 
   before_validation :ensure_last_commented_at, on: :create
@@ -29,6 +29,14 @@ class NewsFeedItem < ActiveRecord::Base
 
   def author_id
     self.source_id # currently this is always a user, might be polymorphic in the future
+  end
+
+  def hearted(o)
+    target.try(:hearted)
+  end
+
+  def unhearted
+    target.try(:unhearted)
   end
 
   def events

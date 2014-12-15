@@ -15,8 +15,8 @@ var PostsIndex = React.createClass({
   getDefaultProps: function() {
     var product = ProductStore.getProduct();
 
-    if (!product.slug) {
-      console.warn('No product slug found when initializing PostsIndex. Has the ProductStore been initialized?');
+    if (!product) {
+      return {}
     }
 
     return {

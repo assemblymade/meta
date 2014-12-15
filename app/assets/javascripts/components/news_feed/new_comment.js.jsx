@@ -2,6 +2,8 @@ var ActionTypes = window.CONSTANTS.ActionTypes;
 var BountyActionCreators = require('../../actions/bounty_action_creators');
 var CommentActionCreators = require('../../actions/comment_action_creators');
 var DropzoneMixin = require('../../mixins/dropzone_mixin');
+var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
+var NewCommentStore = require('../../stores/new_comment_store');
 var TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
 var xhr = require('../../xhr');
 var ENTER = 13;
@@ -33,38 +35,7 @@ var NewsFeedItemNewComment = React.createClass({
     return React.addons.classSet(classes);
   },
 
-  calculateRows: function(value) {
-    var rows = this.state.rows;
-    var scrollHeight = this.refs.textarea.getDOMNode().scrollHeight;
-
-    if (scrollHeight > this.previousScrollHeight) {
-      this.previousScrollHeight = scrollHeight;
-      this.textLength = value.length;
-
-      rows++;
-    }
-
-    if (rows - this.props.initialRows === 1) {
-      this.rowTextLength = value.length;
-    }
-
-    // FIXME: this.rowTextLength can be off if, e.g., the user has copypasted
-    //        text in. We should find a more robust way of figuring out the row
-    //        height.
-    if (value.length < this.textLength) {
-      if (value.length === 0) {
-        rows = this.props.initialRows;
-      } else {
-        rows = this.props.initialRows + Math.ceil(value.length / this.rowTextLength);
-      }
-    }
-
-    return rows;
-  },
-
   componentDidMount: function() {
-    this.initializeDropzone();
-
     // based on Ben Alpert's (@spicyj) work at
     // https://github.com/Khan/react-components/blob/master/js/window-drag.jsx
 
@@ -84,9 +55,7 @@ var NewsFeedItemNewComment = React.createClass({
     domNode.addEventListener('dragleave', this.onDragLeave, false);
     domNode.addEventListener('drop', this.onDragLeave, false);
 
-    // autoresize
-    this.previousScrollHeight = this.refs.textarea.getDOMNode().scrollHeight;
-    this.textLength = 0;
+    NewCommentStore.addChangeListener(this.getCommentFromStore);
   },
 
   componentWillUnmount: function() {
@@ -99,6 +68,14 @@ var NewsFeedItemNewComment = React.createClass({
     domNode.removeEventListener('dragenter', this.onDragEnter, false);
     domNode.removeEventListener('dragleave', this.onDragLeave, false);
     domNode.removeEventListener('drop', this.onDragLeave, false);
+
+    NewCommentStore.removeChangeListener(this.getCommentFromStore);
+  },
+
+  getCommentFromStore: function() {
+    this.setState({
+      text: NewCommentStore.getComment(this.props.thread)
+    });
   },
 
   getDefaultProps: function() {
@@ -116,13 +93,7 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   onChange: function(e) {
-    var value = e.target.value;
-    var rows = this.calculateRows(value);
-
-    this.setState({
-      rows: rows,
-      text: value
-    });
+    NewCommentActionCreators.updateComment(this.props.thread, e.target.value);
   },
 
   onDragEnter: function(e) {
@@ -185,16 +156,17 @@ var NewsFeedItemNewComment = React.createClass({
         <div className="px4">
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
-              <textarea
+              <TypeaheadUserTextArea
+                  {...this.props}
                   id="event_comment_body"
                   ref="textarea"
                   type="text"
                   className={textareaClasses}
-                  rows={this.state.rows}
                   onChange={this.onChange}
                   onKeyDown={this.onKeyDown}
                   onKeyPress={this.onKeyPress}
-                  value={this.state.text} />
+                  rows={this.state.rows}
+                  defaultValue={this.state.text} />
             </div>
             {this.renderDropzoneInner()}
           </div>
@@ -235,7 +207,7 @@ var NewsFeedItemNewComment = React.createClass({
       return (
         <div className="dropzone-inner">
           To attach files, drag & drop here or
-          {' '}<a href="javascript:void(0);" ref="clickable">select files form your computer</a>&hellip;
+          {' '}<a href="javascript:void(0);" ref="clickable">select files from your computer</a>&hellip;
         </div>
       );
     }
@@ -286,6 +258,7 @@ var NewsFeedItemNewComment = React.createClass({
 
       Dispatcher.dispatch({
         type: ActionTypes.NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT,
+        commentId: this.props.thread,
         data: {
           body: comment,
           created_at: createdAt,

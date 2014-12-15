@@ -12,7 +12,6 @@ class SuggestionMailer < BaseMailer
     @products = @user.top_products.pluck(:product_id).map{|a| Product.find(a) }.take(3)
     @bounties = @user.top_bountys.where('rank < 4').map{|a| Wip.find(a.wip_id)}
     @tags = @user.user_identity.get_mark_vector.take(5)
-    @body_style = "background:#f4f4f5;"
 
     mailgun_tag "suggestions"
 

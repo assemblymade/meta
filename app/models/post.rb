@@ -17,7 +17,6 @@ class Post < ActiveRecord::Base
   validates :author,  presence: true
   validates :title,   uniqueness: { scope: :product_id }, presence: true
   validates :slug,    presence: true
-  validates :summary, length: { minimum: 2, maximum: 140 }, allow_blank: true
 
   after_commit :mark_as_announcement, on: :create
   after_commit :mark_as_discussion, on: :create
@@ -29,9 +28,9 @@ class Post < ActiveRecord::Base
   ANNOUNCEMENT_MARK = Mark.find_or_create_by!(name: 'announcement')
   DISCUSSION_MARK = Mark.find_or_create_by!(name: 'discussion')
 
-  def summary
-    super || body.split("\n").first
-  end
+  # def summary
+  #   super || body.split("\n").first
+  # end
 
   def follower_ids
     product.follower_ids

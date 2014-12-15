@@ -1,96 +1,118 @@
-(function(){
-  var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
+var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 
-  var InPlaceUserSearch = require('./in_place_user_search.js.jsx')
+var ActionTypes = window.CONSTANTS.ActionTypes;
+var InPlaceUserSearch = require('./in_place_user_search.js.jsx')
+var NewCommentActionCreators = require('../actions/new_comment_action_creators');
+var NewCommentStore = require('../stores/new_comment_store')
 
-  var getCaretCoords = require('../vendor/textarea_caret_coords');
-  var getCaretPosition = require('../vendor/textarea_caret_position');
+var getCaretCoords = require('../vendor/textarea_caret_coords');
+var getCaretPosition = require('../vendor/textarea_caret_position');
 
-  var TypeaheadUserTextArea = React.createClass({
-    propTypes: {
-      id: React.PropTypes.string,
-      name: React.PropTypes.string,
-      required: React.PropTypes.oneOfType([
-        React.PropTypes.bool,
-        React.PropTypes.string
-      ])
-    },
+var TypeaheadUserTextArea = React.createClass({
+  propTypes: {
+    id: React.PropTypes.string,
+    name: React.PropTypes.string,
+    required: React.PropTypes.oneOfType([
+      React.PropTypes.bool,
+      React.PropTypes.string
+    ]),
+    thread: React.PropTypes.string
+  },
 
-    getInitialState: function() {
-      return {
-        text: this.props.defaultValue,
-        usernameSearch: null,
-        searchPosition: [0,0]
+  componentDidMount: function() {
+    $(this.refs.textarea.getDOMNode()).autosize();
+
+    NewCommentStore.addChangeListener(this.getCommentFromStore);
+  },
+
+  componentWillUnmount: function() {
+    NewCommentStore.removeChangeListener(this.getCommentFromStore);
+  },
+
+  getCommentFromStore: function() {
+    this.setState({
+      text: NewCommentStore.getComment(this.props.thread)
+    });
+
+    $(this.refs.textarea.getDOMNode()).trigger('autosize.resize');
+  },
+
+  getInitialState: function() {
+    return {
+      text: this.props.defaultValue,
+      usernameSearch: null,
+      searchPosition: [0,0]
+    }
+  },
+
+  render: function() {
+    return <InPlaceUserSearch
+        username={this.state.usernameSearch}
+        onUserChanged={this.handleUserChanged}
+        onUserSelected={this.handleUserSelected}
+        searchPosition="bottom"
+        coords={this.state.searchPosition}>
+      <textarea {...this.props} onChange={this.handleChange} value={this.state.text} ref="textarea" />
+    </InPlaceUserSearch>
+  },
+
+  handleChange: function(e) {
+    var caretPosition = getCaretPosition(this.refs.textarea.getDOMNode())
+    var value = e.target.value;
+    var textToCaret = value.substr(0, caretPosition)
+
+    var newState = {};
+    var matches = textToCaret.match(USER_SEARCH_REGEX);
+
+    if (matches) {
+      newState.usernameSearch = matches.slice(-1)[0] || '';
+
+      if (this.state.usernameSearch == null) {
+        newState.searchPosition = this.findCaretCoords()
       }
-    },
+    } else {
+      newState.usernameSearch = null
+    }
 
-    render: function() {
-      return <InPlaceUserSearch
-          username={this.state.usernameSearch}
-          onUserChanged={this.handleUserChanged}
-          onUserSelected={this.handleUserSelected}
-          searchPosition="bottom"
-          coords={this.state.searchPosition}>
-        <textarea {...this.props} onChange={this.handleChange} value={this.state.text} ref="textarea" />
-      </InPlaceUserSearch>
-    },
+    this.setState(newState);
 
-    handleChange: function(e) {
-      var caretPosition = getCaretPosition(this.refs.textarea.getDOMNode())
-      var textToCaret = e.target.value.substr(0, caretPosition)
+    NewCommentActionCreators.updateComment(this.props.thread, value);
+  },
 
-      var newState = {
-        text: e.target.value
-      }
+  findCaretCoords: function() {
+    var textarea = this.refs.textarea.getDOMNode();
+    var coords = getCaretCoords(textarea, textarea.selectionEnd);
 
-      var matches = textToCaret.match(USER_SEARCH_REGEX)
-      if (matches) {
-        newState.usernameSearch = matches.slice(-1)[0] || ''
-        if (this.state.usernameSearch == null) {
-          newState.searchPosition = this.findCaretCoords()
-        }
-      } else {
-        newState.usernameSearch = null
-      }
+    return [coords.left - 14, coords.top + 16]
+  },
 
-      this.setState(newState);
-
-      // super
-      if (this.props.onChange) {
-        this.props.onChange(e);
-      }
-    },
-
-    findCaretCoords: function() {
-      var textarea = this.refs.textarea.getDOMNode();
-      var coords = getCaretCoords(textarea, textarea.selectionEnd);
-      return [coords.left - 14, coords.top + 16]
-    },
-
-    handleUserChanged: function(user) {
-      if (user) {
-        this.setState({text: this.replaceQueryWithUser(user)})
-      }
-    },
-
-    handleUserSelected: function(user) {
-      if (user) {
-        this.setState({text: this.replaceQueryWithUser(user)})
-      }
-
-      this.setState({usernameSearch: null})
-    },
-
-    replaceQueryWithUser: function(user, suffix) {
-      return this.state.text.replace(USER_SEARCH_REGEX, function(match, space, username, offset, string){
-        return space + '@' + user.username + (suffix || '')
+  handleUserChanged: function(user) {
+    if (user) {
+      this.setState({
+        text: this.replaceQueryWithUser(user)
       })
-    },
-  })
+    }
+  },
 
-  if (typeof module !== 'undefined') {
-    module.exports = TypeaheadUserTextArea;
-  }
+  handleUserSelected: function(user) {
+    if (user) {
+      this.setState({
+        text: this.replaceQueryWithUser(user)
+      })
+    }
 
-  window.TypeaheadUserTextArea = TypeaheadUserTextArea;
-})()
+    this.setState({usernameSearch: null})
+  },
+
+  replaceQueryWithUser: function(user, suffix) {
+    return this.state.text.replace(USER_SEARCH_REGEX, function(match, space, username, offset, string) {
+      return space + '@' + user.username + (suffix || '')
+    })
+  },
+})
+
+if (typeof module !== 'undefined') {
+  module.exports = TypeaheadUserTextArea;
+}
+
+window.TypeaheadUserTextArea = TypeaheadUserTextArea;

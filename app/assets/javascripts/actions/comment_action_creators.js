@@ -5,10 +5,18 @@ var ActionTypes = CONSTANTS.ActionTypes
 
 var CommentActionCreators = {
   confirmUpdateReceived: function(commentId) {
-    Dispatcher.dispatch({
-      type: ActionTypes.COMMENT_UPDATE_RECEIVED,
-      commentId: commentId
-    });
+    function confirm() {
+      Dispatcher.dispatch({
+        type: ActionTypes.COMMENT_UPDATE_RECEIVED,
+        commentId: commentId
+      });
+    }
+
+    if (Dispatcher.isDispatching()) {
+      return setTimeout(confirm, 0);
+    }
+
+    confirm();
   },
 
   updateComment: function(commentId, commentBody, commentUrl) {

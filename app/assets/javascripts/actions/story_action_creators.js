@@ -7,6 +7,13 @@ if ($('meta[name=read-raptor-url]')) {
 }
 
 var StoryActionCreators = {
+  acknowledge: function() {
+    Dispatcher.dispatch({
+      type: ActionTypes.STORY_ACKNOWLEDGE_STORIES,
+      timestamp: moment().unix()
+    })
+  },
+
   fetchStories: function(topId) {
     var options = {}
     if (topId) {

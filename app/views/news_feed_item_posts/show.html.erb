@@ -1,0 +1,11 @@
+<% title @post.title %>
+<%= render 'news_feed_items/heartables' %>
+
+<div class="px2">
+  <%= react_component 'NewsFeedItem',
+    NewsFeedItemSerializer.new(@post.news_feed_item).as_json.merge(
+      commentable: true,
+      productPage: true,
+      showAllComments: true
+    ) %>
+</div>

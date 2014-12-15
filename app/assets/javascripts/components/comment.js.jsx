@@ -8,6 +8,7 @@ var Icon = require('./icon.js.jsx');
 var Love = require('./love.js.jsx');
 var Markdown = require('./markdown.js.jsx');
 var NewComment = require('./news_feed/new_comment.js.jsx');
+var ProductStore = require('../stores/product_store')
 var TipsUi = require('./tips_ui.js.jsx');
 var UserStore = require('../stores/user_store');
 
@@ -63,23 +64,22 @@ module.exports = React.createClass({
     var author = this.props.author;
 
     return (
-      <div className="timeline-item">
+      <div id={this.props.id} className="timeline-item">
         <div className="left activity-avatar">
           <Avatar user={author} size={30} />
         </div>
 
         {this.renderEllipsisMenu()}
-        {this.state.editing ? this.renderEditableComment() : this.renderComment()}
+        {this.renderComment()}
       </div>
     )
   },
 
   renderAwardOptions: function() {
-    var awardUrl = this.props.awardUrl;
-
-    if (awardUrl) {
+    if (this.currentUserIsCore()) {
       var id = this.props.id;
       var username = this.props.author.username;
+      var awardUrl = this.props.awardUrl;
 
       return [
         <li key={'award-' + id}>
@@ -110,6 +110,10 @@ module.exports = React.createClass({
   },
 
   renderComment: function() {
+    if (this.state.editing) {
+      return this.renderEditableComment();
+    }
+
     var author = this.props.author;
     var body;
 
@@ -193,8 +197,16 @@ module.exports = React.createClass({
                   role="menu"
                   aria-labelledby={"dropdown-" + id}
                   key={'ul-' + id}>
-                  {this.renderAwardOptions()}
-                  {this.renderEditOption()}
+
+                <li>
+                  <a href={this.props.url} role="menuitem">
+                    <i className="icon icon-link dropdown-glyph"></i>
+                      Permalink
+                  </a>
+                </li>
+
+                {this.renderAwardOptions()}
+                {this.renderEditOption()}
               </ul>
 
             </div>
@@ -232,5 +244,9 @@ module.exports = React.createClass({
     this.setState({
       editing: true
     });
+  },
+
+  currentUserIsCore: function() {
+    return _(ProductStore.getCoreTeamIds()).contains(UserStore.getId())
   }
 });
