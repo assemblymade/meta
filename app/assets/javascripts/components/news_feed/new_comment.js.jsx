@@ -35,38 +35,7 @@ var NewsFeedItemNewComment = React.createClass({
     return React.addons.classSet(classes);
   },
 
-  calculateRows: function(value) {
-    var rows = this.state.rows;
-    var scrollHeight = this.refs.textarea.getDOMNode().scrollHeight;
-
-    if (scrollHeight > this.previousScrollHeight) {
-      this.previousScrollHeight = scrollHeight;
-      this.textLength = value.length;
-
-      rows++;
-    }
-
-    if (rows - this.props.initialRows === 1) {
-      this.rowTextLength = value.length;
-    }
-
-    // FIXME: this.rowTextLength can be off if, e.g., the user has copypasted
-    //        text in. We should find a more robust way of figuring out the row
-    //        height.
-    if (value.length < this.textLength) {
-      if (value.length === 0) {
-        rows = this.props.initialRows;
-      } else {
-        rows = this.props.initialRows + Math.ceil(value.length / this.rowTextLength);
-      }
-    }
-
-    return rows;
-  },
-
   componentDidMount: function() {
-    this.initializeDropzone();
-
     // based on Ben Alpert's (@spicyj) work at
     // https://github.com/Khan/react-components/blob/master/js/window-drag.jsx
 
@@ -85,10 +54,6 @@ var NewsFeedItemNewComment = React.createClass({
     domNode.addEventListener('dragenter', this.onDragEnter, false);
     domNode.addEventListener('dragleave', this.onDragLeave, false);
     domNode.addEventListener('drop', this.onDragLeave, false);
-
-    // autoresize
-    this.previousScrollHeight = this.refs.textarea.getDOMNode().scrollHeight;
-    this.textLength = 0;
 
     NewCommentStore.addChangeListener(this.getCommentFromStore);
   },
@@ -197,10 +162,10 @@ var NewsFeedItemNewComment = React.createClass({
                   ref="textarea"
                   type="text"
                   className={textareaClasses}
-                  rows={this.state.rows}
                   onChange={this.onChange}
                   onKeyDown={this.onKeyDown}
                   onKeyPress={this.onKeyPress}
+                  rows={this.state.rows}
                   defaultValue={this.state.text} />
             </div>
             {this.renderDropzoneInner()}
