@@ -28,7 +28,8 @@ class SlackNotifier
 
   def self.first_activity(activity)
     return unless ["Chat", "Comment", "Post"].include?(activity.verb)
-    activity = SlackActivitySerializer.new(activity)
+    activity = SlackActivitySerializer.new(activity) rescue nil
+    return if activity.nil?
     user = activity.object.actor
     cta_link = activity.cta_link
     action = activity.action
