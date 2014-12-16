@@ -38,6 +38,7 @@ class Task < Wip
     end
     state :awarded do
       event :allocate,    :transitions_to => :awarded
+      event :unallocate,  :transitions_to => :awarded
       event :award,       :transitions_to => :awarded
       event :close,       :transitions_to => :resolved
       event :review_me,   :transitions_to => :reviewing
