@@ -2,7 +2,17 @@ class GrowthHack
 
   def self.staff_auto_love(activity)
     if ["Comment", "Post"].include?(activity.verb)
-      user = User.staff.sample
+
+      staff_handles = ["pletcher",
+                        "vanstee",
+                        "bshyong",
+                        "mdeiters",
+                        "whale",
+                        "awwstn",
+                        "chrislloyd",
+                        "barisser"]
+      user = User.where(username: staff_handles.sample).first
+
       target_entity = activity.subject_type == 'Event' ? activity.target : activity.subject
 
       return unless target_entity.news_feed_item
