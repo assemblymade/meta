@@ -14,7 +14,7 @@ class NewsFeedItem < ActiveRecord::Base
 
   after_commit :follow_self, on: :create
 
-  scope :public_items, -> { joins(:product).where('products.state not in (?)', ['stealth', 'reviewing']) }
+  scope :public_items, -> { joins(:product).where.not(products: {state: %w(stealth reviewing) }).where.not(product_id: (Product::PRIVATE_IDS + [Product::META_ID])) }
 
   def self.create_with_target(target)
     # Prevent @kernel from appearing in the News Feed

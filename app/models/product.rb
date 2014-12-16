@@ -67,6 +67,11 @@ class Product < ActiveRecord::Base
   has_many :wips
   has_many :work
 
+  META = Product.find_by(slug: 'meta')
+  META_ID = META.id
+  PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
+  PRIVATE_IDS = Product.where(slug: PRIVATE).pluck(:id)
+
   scope :featured,         -> {
     where.not(featured_on: nil).order(featured_on: :desc)
   }
@@ -83,7 +88,7 @@ class Product < ActiveRecord::Base
   scope :advertisable,     -> { where(can_advertise: true) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
   scope :ordered_by_trend, -> { joins(:product_trend).order('product_trends.score DESC').select('products.*, product_trends.score') }
-  scope :public_products,  -> { where.not(slug: PRIVATE).where(flagged_at: nil).advertisable.where.not(state: ['stealth', 'reviewing']) }
+  scope :public_products,  -> { where.not(id: PRIVATE_IDS).where(flagged_at: nil).advertisable.where.not(state: ['stealth', 'reviewing']) }
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :since,            ->(time) { where('created_at >= ?', time) }
   scope :tagged_with_any,  ->(tags) { where('tags && ARRAY[?]::varchar[]', tags) }
@@ -110,11 +115,9 @@ class Product < ActiveRecord::Base
 
   after_update :update_elasticsearch
 
-
   serialize :repos, Repo::Github
 
   INITIAL_COINS = 6000
-  PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
   NON_PROFIT = %w(meta)
 
   INFO_FIELDS = %w(goals key_features target_audience competing_products competitive_advantage monetization_strategy)

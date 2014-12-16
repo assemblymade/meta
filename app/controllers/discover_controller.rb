@@ -1,5 +1,4 @@
 class DiscoverController < ApplicationController
-  META = Product.find_by(slug: 'meta')
   COUNTABLE_FILTERS = [
     'Frontend',
     'Backend',
@@ -109,16 +108,14 @@ class DiscoverController < ApplicationController
                 limit(limit).
                 offset(offset).
                 includes(:news_feed_item).
-                where.not('news_feed_items.product_id = ?', META.id).
+                where.not(news_feed_items: { product_id: Product::PRIVATE_IDS }).
                 order(updated_at: :desc).
                 map(&:news_feed_item)
     else
       NewsFeedItem.public_items.
                 limit(limit).
                 offset(offset).
-                where.not(product: META).
-                order('last_commented_at desc nulls last').
-                order(updated_at: :desc)
+                order('last_commented_at desc')
     end
 
     if params[:filter] == 'hot'
