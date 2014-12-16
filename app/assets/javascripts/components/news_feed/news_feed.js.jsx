@@ -205,7 +205,6 @@
           return null;
         }
 
-
         var classes = React.addons.classSet({
           'sm-col': !productPage,
           'sm-col-6': !productPage,

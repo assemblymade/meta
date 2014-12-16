@@ -36,7 +36,7 @@ module.exports = function MasonryMixin(ref, options) {
       }
 
       if (!this.masonry) {
-        return
+        return;
       }
 
       this.masonry.reloadItems()
