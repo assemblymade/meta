@@ -1,4 +1,8 @@
-<% heartables = [@news_feed_item] + @news_feed_item.comments %>
+<% heartables = if @heartables %>
+  <% @heartables %>
+<% else %>
+  <% [@news_feed_item] + @news_feed_item.comments %>
+<% end %>
 
 <% if heartables %>
   <script id="heartables" type="application/json">

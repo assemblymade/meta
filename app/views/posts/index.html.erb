@@ -1,5 +1,6 @@
 <% title 'Posts', @product.name %>
 <% activate_nav! :posts %>
+<%= render partial: 'wips/heartables' %>
 <%= initial_store_data('PostsStore', { posts: @posts, product: @product.slug }) %>
 
 <div class="sheet-body">

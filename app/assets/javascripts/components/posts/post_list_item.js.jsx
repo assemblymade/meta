@@ -1,6 +1,7 @@
 var Avatar = require('../avatar.js.jsx');
 var Icon = require('../icon.js.jsx');
 var ListItemMixin = require('../../mixins/list_item_mixin.js.jsx');
+var Love = require('../love.js.jsx');
 
 var PostListIem = React.createClass({
   displayName: 'PostListItem',
@@ -27,23 +28,24 @@ var PostListIem = React.createClass({
 
         <div className="px3 mb1 mt0 gray-dark">
           {this.renderComments(post.comments_count)}
-          {this.renderHearts()}
           {this.renderTags(post.marks)}
         </div>
-
+        {this.renderLove()}
         {this.renderUser()}
       </div>
     );
   },
 
-  renderHearts: function() {
-    return [
-      <Icon icon="heart" />,
+  renderLove: function() {
+    var heartableId = this.props.post.news_feed_item_id;
 
-      <span className="px1">
-        {this.props.post.hearts_count}
-      </span>
-    ];
+    if (heartableId) {
+      return (
+        <div className="px3 py1 b0 mt0 gray-2 border-top">
+          <Love heartable_id={heartableId} heartable_type="NewsFeedItem" />
+        </div>
+      );
+    }
   },
 
   renderSummary: function() {
