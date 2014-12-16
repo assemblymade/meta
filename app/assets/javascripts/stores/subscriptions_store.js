@@ -29,7 +29,7 @@ class SubscriptionsStore extends Store {
 
 var store = new SubscriptionsStore()
 
-var dataTag = document.getElementById('user_subscriptions')
+var dataTag = document.getElementById('UserSubscriptionsStore')
 if (dataTag) {
   Dispatcher.dispatch({
     type: ActionTypes.SUB_RECEIVE_USER_SUBSCRIPTIONS,

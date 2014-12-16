@@ -9,7 +9,7 @@ var ListItemMixin = {
   },
 
   renderLove: function(heartableId) {
-    if (!window.app.featureEnabled('much-love') || !heartableId) {
+    if (!heartableId) {
       return;
     }
 

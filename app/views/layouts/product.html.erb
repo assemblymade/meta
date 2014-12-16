@@ -1,25 +1,9 @@
-<%= initial_store_data('ProductFollowersStore',
-        products: [{ id: @product.id, followers_count: @product.watchings_count }],
-        userFollowings: (@product.watching?(current_user) ? [@product.id] : [])
-) %>
-
-<% if current_user %>
-  <%= initial_store_data(
-    'UserStore',
-    current_user.as_json.merge(
-      isCore: (@product.core_team?(current_user) || current_user.is_staff?)
-    )
-  ) %>
-<% end %>
-
 <% content_for :javascript do %>
   <script>
     window.app.product = new Product(<%= json @product, scope: current_user %>)
     window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);
   </script>
 <% end %>
-
-<%= initial_store_data('ProductStore', { slug: @product.slug, name: @product.name, url: product_url(@product), core_team: @product.core_team_ids }) %>
 
 <%= render 'shared/navbar' %>
 

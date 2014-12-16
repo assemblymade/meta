@@ -1,0 +1,3 @@
+<% if @wips %>
+  <%= initial_store_data('BountiesStore', PaginationSerializer.new(@wips.page(1), each_serializer: BountyListSerializer, root: :bounties).as_json) %>
+<% end %>

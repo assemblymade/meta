@@ -4,11 +4,6 @@
 
 <%= track 'product.wip.viewed', WipAnalyticsSerializer.new(@wip, scope: current_user) %>
 
-<%= render partial: 'wips/heartables' %>
-<%= render partial: 'shared/user_data' %>
-<%= render partial: 'bounties/product_assets' %>
-<%= render partial: 'wips/people_store_data' %>
-
 <div class="card mb0">
   <%= react_component 'Bounty', {
       bounty: BountySerializer.new(@bounty, scope: current_user),

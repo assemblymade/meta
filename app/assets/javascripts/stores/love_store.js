@@ -117,14 +117,16 @@ var store = new LoveStore();
 var heartablesJson = {},
     userHeartsJson = {};
 
-var dataTag = document.getElementById('heartables')
+// TODO: Separate LoveStore and UserLoveStore
+
+var dataTag = document.getElementById('LoveStore')
 if (dataTag) {
   Dispatcher.dispatch({
     type: ActionTypes.LOVE_RECEIVE_HEARTABLES,
     heartables: JSON.parse(dataTag.innerHTML)
   })
 }
-var dataTag = document.getElementById('user_hearts')
+var dataTag = document.getElementById('UserLoveStore')
 if (dataTag) {
   Dispatcher.dispatch({
     type: ActionTypes.LOVE_RECEIVE_USER_HEARTS,
