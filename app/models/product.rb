@@ -459,6 +459,11 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def visible_watchers
+    system_user_ids = User.where(username: 'kernel').pluck(:id)
+    watchers.where.not(id: system_user_ids)
+  end
+
   # only people following the product, ie. excludes people on announcements only
   def followers
     watchers
