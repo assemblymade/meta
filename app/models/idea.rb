@@ -88,6 +88,10 @@ class Idea < ActiveRecord::Base
     lovescore
   end
 
+  def url_params
+    [self]
+  end
+
   def rank
     Idea.order(score: :desc).find_index(self)+1
   end
