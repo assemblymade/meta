@@ -32,13 +32,14 @@ describe NewsFeedItem do
       expect(nfi.reload.followers).to match_array([nfi.source, hearter])
     end
 
-    it 'adds commentor on comment' do
+    it 'adds commentor and @mentions on comment' do
       commenter = User.make!
+      whatupdave = User.make!(username: 'whatupdave')
 
       nfi = NewsFeedItem.make!
-      nfi.comments.create!(user: commenter)
+      nfi.comments.create!(user: commenter, body: 'hay @whatupdave!')
 
-      expect(nfi.reload.followers).to match_array([nfi.source, commenter])
+      expect(nfi.reload.followers).to match_array([nfi.source, commenter, whatupdave])
     end
   end
 end

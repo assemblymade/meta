@@ -8,7 +8,7 @@ class NewsFeedItem < ActiveRecord::Base
   has_many :followings, class_name: 'Watching', as: :watchable
   has_many :followers, through: :followings, source: :user
   has_many :hearts, as: :heartable, after_add: [:follow_author, :hearted]
-  has_many :comments, class_name: 'NewsFeedItemComment', after_add: :follow_author
+  has_many :comments, class_name: 'NewsFeedItemComment', after_add: :follow_author_and_mentions
 
   before_validation :ensure_last_commented_at, on: :create
 
@@ -55,6 +55,12 @@ class NewsFeedItem < ActiveRecord::Base
 
   def follow_author(o)
     Watching.watch!(o.user, self)
+  end
+
+  def follow_author_and_mentions(o)
+    [o.user, o.mentioned_users].flatten.uniq.each do |user|
+      Watching.watch!(user, self)
+    end
   end
 
   def follow_self

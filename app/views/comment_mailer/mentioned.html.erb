@@ -21,14 +21,14 @@
   <% end %>
 
   <tr>
-    <td colspan="2" style="padding:15px 15px 0px;">
+    <td colspan="2" style="padding:15px 15px; border-bottom:solid thin #eee;">
       <%= link_to @target, url_for(@comment.url_params), style: "font-size:20px;" %>
     </td>
   </tr>
 
   <tr>
     <td colspan="2" style="padding:15px 15px 15px;font-size:14px;">
-      <%= image_tag(@comment.user.avatar.url(120), width: 25, height: 25, class: 'img-circle', style: 'display:inline-block;clear:none;float:none') %>
+      <%= image_tag(@comment.user.avatar.url(25), width: 25, height: 25, class: 'img-circle', style: 'display:inline-block;clear:none;float:none') %>
       @<%= @comment.user.username %>
       <p style="color:#8b909a;">
         <%= Search::Sanitizer.new.sanitize(@comment.body) %>
