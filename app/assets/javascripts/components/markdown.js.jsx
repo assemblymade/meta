@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var Markdown = React.createClass({
   displayName: 'Markdown',
 
