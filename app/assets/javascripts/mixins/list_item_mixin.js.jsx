@@ -8,6 +8,18 @@ var ListItemMixin = {
     ];
   },
 
+  renderLove: function(heartableId) {
+    if (!window.app.featureEnabled('much-love') || !heartableId) {
+      return;
+    }
+
+    return (
+      <div className="px3 py2 border-top mb0 mt0">
+        <Love heartable_type='NewsFeedItem' heartable_id={heartableId} />
+      </div>
+    )
+  },
+
   renderTags: function(tags) {
     tags = tags || [];
 

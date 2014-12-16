@@ -90,18 +90,6 @@ var BountyListItem = React.createClass({
     )
   },
 
-  renderLove: function() {
-    if (!window.app.featureEnabled('much-love')) {
-      return <span/>
-    }
-
-    return (
-      <div className="px3 py2 border-top mb0 mt0">
-        <Love heartable_type='NewsFeedItem' heartable_id={this.props.bounty.news_feed_item_id} />
-      </div>
-    )
-  },
-
   renderLocker: function() {
     var bounty = this.props.bounty
 
@@ -178,7 +166,7 @@ var BountyListItem = React.createClass({
                 </span>
               </div>
             </div>
-            {this.renderLove()}
+            {this.renderLove(this.props.bounty.news_feed_item_id)}
             {this.renderLocker()}
           </div>
           {this.renderHandle()}

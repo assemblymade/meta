@@ -30,22 +30,10 @@ var PostListIem = React.createClass({
           {this.renderComments(post.comments_count)}
           {this.renderTags(post.marks)}
         </div>
-        {this.renderLove()}
+        {this.renderLove(this.props.post.news_feed_item_id)}
         {this.renderUser()}
       </div>
     );
-  },
-
-  renderLove: function() {
-    var heartableId = this.props.post.news_feed_item_id;
-
-    if (heartableId) {
-      return (
-        <div className="px3 py1 b0 mt0 gray-2 border-top">
-          <Love heartable_id={heartableId} heartable_type="NewsFeedItem" />
-        </div>
-      );
-    }
   },
 
   renderSummary: function() {
