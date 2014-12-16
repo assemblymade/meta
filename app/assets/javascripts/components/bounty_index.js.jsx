@@ -92,13 +92,15 @@
 
     renderAssets: function() {
       var assets = this.props.assets
+      var product = this.props.product
+      var assets_url = product.url+'/assets'
 
       return (
         <ul className="list-reset mn3 mtn1 mb1">
           {assets.map(function(asset) {
             return (
               <li className="inline-block w100p pt1 pr1 pl1 r480_w50p r768_w100p r1024_w50p">
-                <a href={asset.thumbnail_url} className="inline-block w100p">
+                <a href={assets_url} className="inline-block w100p">
                   <div className="w100p pb66p bg-size-cover bg-repeat-none bg-position-center" style={{backgroundImage: 'url('+ asset.thumbnail_url +')', backgroundColor: '#dbdee3' }}></div>
                 </a>
               </li>
