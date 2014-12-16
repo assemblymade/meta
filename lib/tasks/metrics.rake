@@ -209,4 +209,21 @@ namespace :metrics do
     end
     data
   end
+
+  desc "Number of users created each week"
+  task :signups => :environment do
+    not_cumulative_totals = User.group("DATE_TRUNC('week', created_at)").order("DATE_TRUNC('week', created_at) ASC").count
+    cumulative_totals = User.pluck("DISTINCT DATE_TRUNC('week', created_at), COUNT(users.*) OVER (ORDER BY DATE_TRUNC('week', created_at) ASC)").to_h
+
+    totals = not_cumulative_totals.merge(cumulative_totals) do |_, not_cumulative, cumulative|
+      [not_cumulative, cumulative]
+    end
+
+    puts ' %15s %15s %15s' % ['Week', 'Total', 'Cumulative']
+    puts '-' * 16 * 3
+
+    totals.each do |date, totals|
+      puts ' %15s %15s %15s' % [date.to_date, totals.first, totals.last]
+    end
+  end
 end
