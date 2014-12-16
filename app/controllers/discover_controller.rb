@@ -138,12 +138,7 @@ class DiscoverController < ApplicationController
       end
     end
 
-    @heartables = (@posts + @posts.map{|p| p[:last_comment]}).
-            map(&:as_json).
-            compact.
-            map(&:stringify_keys).
-            map{|h| h.slice('heartable_id', 'heartable_type', 'hearts_count') }.to_a
-
+    @heartables = Heart.store_data(posts)
 
     if signed_in?
       @user_hearts = Heart.where(
