@@ -108,7 +108,7 @@ class DiscoverController < ApplicationController
                 limit(limit).
                 offset(offset).
                 includes(:news_feed_item).
-                where.not(news_feed_items: { product_id: Product::PRIVATE_IDS }).
+                where.not(news_feed_items: { product_id: Product.private_ids }).
                 order(updated_at: :desc).
                 map(&:news_feed_item)
     else
