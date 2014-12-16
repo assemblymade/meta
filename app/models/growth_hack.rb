@@ -2,8 +2,10 @@ class GrowthHack
 
   def self.staff_auto_love(activity)
     if ["Comment", "Post"].include?(activity.verb)
-      user = User.where(is_staff: true).sample
+      user = User.staff.sample
       target_entity = activity.subject_type == 'Event' ? activity.target : activity.subject
+
+      return if target_entity.news_feed_item.nil?
 
       attributes = {
         user_id: user.id, 
@@ -11,8 +13,9 @@ class GrowthHack
         heartable_type: "NewsFeedItem"
       }
 
-      Heart.delay_for((rand(1..20) * 30).seconds).
-      create(attributes) unless Heart.exists?(attributes)
+      unless Heart.exists?(attributes)
+        Heart.delay_for(rand(5..10).minutes).create(attributes) 
+      end
     end
   end
 
