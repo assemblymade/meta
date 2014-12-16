@@ -24,7 +24,7 @@ class NewsFeedItemCommentSerializer < ApplicationSerializer
   end
 
   def url
-    url_for(object.url_params)
+    url_for(object.try(:url_params))
   end
 
 end
