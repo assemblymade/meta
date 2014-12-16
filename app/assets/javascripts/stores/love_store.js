@@ -17,24 +17,24 @@ class LoveStore extends Store {
         case ActionTypes.LOVE_RECEIVE_HEARTABLES:
           _heartables = _.reduce(action.heartables, function(memo, h){ memo[h.heartable_id] = h; return memo }, {})
           LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
-          this.emit('change')
+          this.emitChange()
           break
 
         case ActionTypes.LOVE_RECEIVE_USER_HEARTS:
           _userHearts = _.reduce(action.userHearts, function(memo, h){ memo[h.heartable_id] = h; return memo }, {})
-          this.emit('change')
+          this.emitChange()
           break
 
         case ActionTypes.LOVE_CLICKED:
           _heartables[action.heartable_id].hearts_count += 1
           _userHearts[action.heartable_id] = {} // optimistic heart
-          this.emit('change')
+          this.emitChange()
           break
 
         case ActionTypes.LOVE_UNCLICKED:
           _heartables[action.heartable_id].hearts_count -= 1
           delete _userHearts[action.heartable_id]
-          this.emit('change')
+          this.emitChange()
           break
 
         case ActionTypes.LOVE_RECEIVE_RECENT_HEARTS:
@@ -47,7 +47,7 @@ class LoveStore extends Store {
           _(action.user_hearts).each(function(heart){
             _userHearts[heart.heartable_id] = heart
           })
-          this.emit('change')
+          this.emitChange()
           break
 
         case ActionTypes.WIP_EVENT_CREATED:
@@ -57,7 +57,7 @@ class LoveStore extends Store {
             heartable_id: event.news_feed_item_comment_id,
             hearts_count: 0
           }
-          this.emit('change')
+          this.emitChange()
           break
 
         case ActionTypes.NEWS_FEED_RECEIVE_RAW_ITEMS:
@@ -79,7 +79,7 @@ class LoveStore extends Store {
             _userHearts[h.heartable_id] = h
           })
 
-          this.emit('change')
+          this.emitChange()
           break
 
         case ActionTypes.CHAT_MESSAGE_RECEIVE_ACTIVITIES:
@@ -91,7 +91,7 @@ class LoveStore extends Store {
             }
           })
           LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
-          this.emit('change')
+          this.emitChange()
           break
 
       } // switch
@@ -114,23 +114,20 @@ class LoveStore extends Store {
 var store = new LoveStore();
 
 // Load initial data from script tags on the page (if they're present)
-var heartablesJson = {},
-    userHeartsJson = {};
-
 // TODO: Separate LoveStore and UserLoveStore
 
-var dataTag = document.getElementById('LoveStore')
-if (dataTag) {
+var loveStoreDataTag = document.getElementById('LoveStore')
+if (loveStoreDataTag) {
   Dispatcher.dispatch({
     type: ActionTypes.LOVE_RECEIVE_HEARTABLES,
-    heartables: JSON.parse(dataTag.innerHTML)
+    heartables: JSON.parse(loveStoreDataTag.innerHTML)
   })
 }
-var dataTag = document.getElementById('UserLoveStore')
-if (dataTag) {
+var userLoveStoreDataTag = document.getElementById('UserLoveStore')
+if (userLoveStoreDataTag) {
   Dispatcher.dispatch({
     type: ActionTypes.LOVE_RECEIVE_USER_HEARTS,
-    userHearts: JSON.parse(dataTag.innerHTML)
+    userHearts: JSON.parse(userLoveStoreDataTag.innerHTML)
   })
 }
 

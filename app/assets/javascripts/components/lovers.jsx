@@ -9,17 +9,19 @@ var Lovers = React.createClass({
     var message = "likes this"
     var count = this.state.hearts_count
 
-    if (count == 2) {
+    if (count === 2) {
       message = "and 1 other like this"
     } else if (count > 2) {
       message = "and " + (count - 1) + " others like this"
     }
 
-    return <div className="gray-2 left">
-      {this.renderAvatar(this.state.recentLovers[0])}
-      <span className="black bold"> {this.state.recentLovers[0].username} </span>
-      {message}
-    </div>
+    return (
+      <div className="gray-2 left">
+        {this.renderAvatar(this.state.recentLovers[0])}
+        <span className="black bold"> {this.state.recentLovers[0].username} </span>
+        {message}
+      </div>
+    );
   },
 
   getInitialState: function() {
@@ -35,7 +37,11 @@ var Lovers = React.createClass({
   },
 
   renderAvatar: function(user) {
-    return <div className="left mr1" style={{paddingTop: 4}}><Avatar user={user} size={18} /></div>
+    return (
+      <div className="left mr1" style={{paddingTop: 4}}>
+        <Avatar user={user} size={18} />
+      </div>
+    );
   },
 
   getStateFromStore: function() {
