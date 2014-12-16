@@ -144,6 +144,9 @@
 
       PEOPLE_RECEIVE: null,
 
+      POST_ARCHIVED: null,
+      POST_UNARCHIVED: null,
+
       POSTS_RECEIVE: null,
       PRODUCT_RECEIVE: null,
 

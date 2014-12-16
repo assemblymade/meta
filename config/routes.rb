@@ -363,6 +363,7 @@ ASM::Application.routes.draw do
 
     resources :posts do
       post :preview, on: :collection
+      patch :unarchive, on: :member
     end
     resources :status_messages, only: [:create]
 

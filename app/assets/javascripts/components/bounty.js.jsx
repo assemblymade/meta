@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var BountyActionCreators = require('../actions/bounty_action_creators');
 var Markdown = require('./markdown.js.jsx');
 var Icon = require('./icon.js.jsx');
