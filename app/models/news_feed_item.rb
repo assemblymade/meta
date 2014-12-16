@@ -14,7 +14,7 @@ class NewsFeedItem < ActiveRecord::Base
 
   after_commit :follow_self, on: :create
 
-  scope :public_items, -> { joins(:product).where('products.state not in (?)', ['stealth', 'reviewing']) }
+  scope :public_items, -> { joins(:product).where.not(products: {state: %w(stealth reviewing) }).where.not(product_id: (Product.private_ids + [Product.meta_id])) }
 
   def self.create_with_target(target)
     # Prevent @kernel from appearing in the News Feed
@@ -44,9 +44,7 @@ class NewsFeedItem < ActiveRecord::Base
   end
 
   def ensure_last_commented_at
-    unless self.last_commented_at
-      self.update!(last_commented_at: Time.now)
-    end
+    self.last_commented_at = Time.now
   end
 
   def url_params

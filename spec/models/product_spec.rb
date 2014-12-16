@@ -69,7 +69,9 @@ describe Product do
 
     subject { product }
 
-    its(:repos) { should =~ repos}
+    it 'has repos' do
+      expect(product.repos).to eq(repos)
+    end
   end
 
   it 'returned featured products by date of featuring' do

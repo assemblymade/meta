@@ -70,24 +70,24 @@
       var product = this.props.product;
       var target = this.props.target;
 
-      if (this.props.productPage) {
+      // if (this.props.productPage) {
         return <NewsFeedItemComments
             {...this.props}
             item={this.props}
             triggerModal={this.triggerModal} />;
-      }
+      // }
 
-      this.renderLastComment();
+      return this.renderLastComment();
     },
 
     renderLastComment: function() {
       var product = this.props.product;
       var target = this.props.target;
-      var commentCount = target && target.comments_count;
+      var commentsCount = target && target.comments_count;
 
       // Don't show any footer if there are no comments or tags
       // This isn't great, we should always have something for people to do
-      if (!commentCount) {
+      if (!commentsCount) {
         return;
       }
 
@@ -107,11 +107,11 @@
             <span className="mr1">
               <Icon icon="comment" />
             </span>
-            View {commentCount > 1 ? 'all' : ''} {commentCount} {commentCount > 1 ? 'comments' : 'comment'}
+            View {commentsCount > 1 ? 'all' : ''} {commentsCount} {commentsCount > 1 ? 'comments' : 'comment'}
           </a>
 
           <div className="py2">
-            <Comment
+            <Activity
                 author={lastComment.user}
                 body={lastComment.markdown_body}
                 timestamp={lastComment.created_at} />
