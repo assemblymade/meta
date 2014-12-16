@@ -31,6 +31,10 @@ en:
         other: "#%{number} %{title}"
         owner: "#%{number} %{title}"
 
+      wip:
+        other: "#%{number} %{title}"
+        owner: "#%{number} %{title}"
+
       team_membership:
         other: "an introduction"
         owner: "your introduction"

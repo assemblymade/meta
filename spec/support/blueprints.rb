@@ -85,6 +85,12 @@ NewsFeedItemPost.blueprint do
   news_feed_item { NewsFeedItem.make! }
 end
 
+NewsFeedItemComment.blueprint do
+  news_feed_item
+  user
+  body { Faker::Lorem.paragraph(1) }
+end
+
 Product.blueprint do
   user
   name  { "Product #{sn}" }

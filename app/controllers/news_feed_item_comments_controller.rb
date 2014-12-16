@@ -14,6 +14,7 @@ class NewsFeedItemCommentsController < ProductController
     )
 
     publish_comment
+    email_mentioned_users(@item)
 
     respond_with @item, location: product_updates_url(@product)
   end
@@ -82,5 +83,13 @@ class NewsFeedItemCommentsController < ProductController
 
   def comment_params
     params.require(:comment).permit(:body)
+  end
+
+  def email_mentioned_users(comment)
+    comment.mentioned_users.each do |mentioned_user|
+      EmailLog.send_once mentioned_user.id, comment.id do
+        CommentMailer.delay(queue: 'mailer').mentioned(mentioned_user.id, comment.id)
+      end
+    end
   end
 end

@@ -1,3 +1,4 @@
+# TODO: (whatupdave) rename this to just Comment
 class NewsFeedItemComment < ActiveRecord::Base
   belongs_to :news_feed_item, touch: :last_commented_at
   belongs_to :user
@@ -26,6 +27,10 @@ class NewsFeedItemComment < ActiveRecord::Base
 
   def url_params
     [news_feed_item.url_params, anchor: id]
+  end
+
+  def mentioned_users
+    FindMentionedUsers.new.perform(body, news_feed_item.product) - [self.user]
   end
 
   def tip_receiver

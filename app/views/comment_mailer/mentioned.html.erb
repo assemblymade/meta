@@ -1,0 +1,51 @@
+<span style="font-size:18px;font-weight:bold;color:#444">Hi @<%= @user.username %>,</span style="font-size:18px;">
+
+<p style="font-size:18px;line-height:24px;margin-top:15px;color:#8b909a;">
+  You were just mentioned in a comment:
+</p>
+
+
+<table style="margin-bottom:25px;background:white;height:100px;width:100%;">
+  <% if product = @comment.product %>
+  <tr style="height:30px;border-bottom:solid thin #eee;">
+    <td style="padding:10px 15px;vertical-align:top;width:30px;">
+      <%= app_icon(product, size: 25) %>
+    </td>
+    <td style="padding-top:12px; height:30px;vertical-align:top;text-align:left;" valign="top">
+      <%= link_to product.name, product_url(product), style: "font-size:14px;font-weight:bold;color:#333 !important;" %>
+      <span style="font-size:14px;padding-left:10px;color:#8b909a;">
+        <%= product.pitch %>
+      </span>
+    </td>
+  </tr>
+  <% end %>
+
+  <tr>
+    <td colspan="2" style="padding:15px 15px 0px;">
+      <%= link_to @target, url_for(@comment.url_params), style: "font-size:20px;" %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="padding:15px 15px 15px;font-size:14px;">
+      <%= image_tag(@comment.user.avatar.url(120), width: 25, height: 25, class: 'img-circle', style: 'display:inline-block;clear:none;float:none') %>
+      @<%= @comment.user.username %>
+      <p style="color:#8b909a;">
+        <%= Search::Sanitizer.new.sanitize(@comment.body) %>
+      </p>
+    </td>
+  </tr>
+
+</table>
+
+<table style="margin-top:30px;">
+  <tr>
+    <td>
+      <center>
+        <span class="button success radius" style="border-radius: 20px;-moz-border-radius: 20px;-webkit-border-radius: 20px;padding:10px 60px;color:white;font-weight:bold;">
+          <%= link_to "Join the conversation", url_for(@comment.url_params), style: "color:white !important;" %>
+        </span>
+      </center>
+    </td>
+  </tr>
+</table>

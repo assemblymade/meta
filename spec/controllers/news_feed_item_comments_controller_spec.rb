@@ -23,4 +23,15 @@ describe NewsFeedItemCommentsController do
       post :create, product_id: product.slug, update_id: post_nfi.id, body: 'Fancy!'
     }.to_not change(Event, :count)
   end
+
+  it "emails mentioned users" do
+    sign_in user
+
+    whatupdave = User.make!(username: 'whatupdave')
+    post :create, product_id: product.slug, update_id: task_nfi.id, body: 'Hey @whatupdave!'
+
+    Sidekiq::Extensions::DelayedMailer.drain # process the mail queue
+
+    expect(last_email.to).to eq([whatupdave.email])
+  end
 end
