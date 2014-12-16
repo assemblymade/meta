@@ -7,7 +7,7 @@
 <!-- FIXME: Decide on one consistent way to send these down -->
 <% if heartables %>
   <script id="LoveStore" type="application/json">
-    <% if heartables.first.try(:target_id) %>
+    <% if heartables.try(:first).try(:target_id) %>
       <%== heartables.map{|h| {
         target_id: h.target_id,
         heartable_id: h.id,
