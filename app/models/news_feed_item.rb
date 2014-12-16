@@ -44,9 +44,7 @@ class NewsFeedItem < ActiveRecord::Base
   end
 
   def ensure_last_commented_at
-    unless self.last_commented_at
-      self.update!(last_commented_at: Time.now)
-    end
+    self.last_commented_at = Time.now
   end
 
   def url_params

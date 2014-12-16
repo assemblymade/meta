@@ -15,6 +15,12 @@ describe NewsFeedItem do
     it 'does not create a NewsFeedItem from @kernel' do
       expect(NewsFeedItem.create_with_target(kernel_task)).to be_nil
     end
+
+    it 'has last_commented_at set' do
+      expect(
+        NewsFeedItem.create_with_target(task).last_commented_at
+      ).to be_within(2).of(Time.now)
+    end
   end
 
   describe 'followings' do
