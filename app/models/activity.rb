@@ -1,4 +1,6 @@
 class Activity < ActiveRecord::Base
+  belongs_to :product
+
   belongs_to :actor,   polymorphic: true
   belongs_to :subject, polymorphic: true
   belongs_to :target,  polymorphic: true
@@ -10,6 +12,8 @@ class Activity < ActiveRecord::Base
   validates :actor,   presence: true
   validates :subject, presence: true
   validates :target,  presence: true
+
+  before_validation :set_product_id, on: :create
 
   after_commit :track_in_segment, on: :create
   after_commit :notify_staff, on: :create
@@ -105,5 +109,10 @@ class Activity < ActiveRecord::Base
 
   def product
     find_product
+  end
+
+  # private
+  def set_product_id
+    self.product_id ||= (try(:subject).try(:product_id) || try(:subject).try(:product).try(:id))
   end
 end
