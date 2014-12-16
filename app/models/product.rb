@@ -68,9 +68,9 @@ class Product < ActiveRecord::Base
   has_many :work
 
   META = Product.find_by(slug: 'meta')
-  META_ID = META.id
+  META_ID = META.try(:id)
   PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
-  PRIVATE_IDS = Product.where(slug: PRIVATE).pluck(:id)
+  PRIVATE_IDS = PRIVATE.any? ? Product.where(slug: PRIVATE).pluck(:id) : []
 
   scope :featured,         -> {
     where.not(featured_on: nil).order(featured_on: :desc)
