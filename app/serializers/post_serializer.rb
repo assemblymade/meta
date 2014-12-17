@@ -2,7 +2,7 @@ class PostSerializer < ApplicationSerializer
   include MarkdownHelper
   include TruncateHtmlHelper
 
-  attributes :markdown_body, :url, :summary, :title, :news_feed_item_id, :created_at, :deleted_at
+  attributes :markdown_body, :url, :summary, :title, :news_feed_item_id, :created_at
   attributes :comments_count, :hearts_count, :short_body
 
   has_one :user

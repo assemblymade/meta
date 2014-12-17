@@ -1,19 +1,16 @@
 var AppIcon = require('../app_icon.js.jsx');
+var ArchivedNewsFeedItemsStore = require('../../stores/archived_news_feed_items_store');
 var Avatar = require('../avatar.js.jsx');
 var Comment = require('../comment.js.jsx');
 var Icon = require('../icon.js.jsx');
 var Markdown = require('../markdown.js.jsx');
+var NewsFeedItemActionCreators = require('../../actions/news_feed_item_action_creators');
 var NewsFeedItemBounty = require('./news_feed_item_bounty.js.jsx');
 var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx');
 var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
-var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
 var NewsFeedItemModal = require('./news_feed_item_modal.js.jsx');
-
-/** MOVE POST-SPECIFIC STUFF TO ITS OWN COMPONENT */
-var PostActionCreators = require('../../actions/post_action_creators');
-var ArchivedPostsStore = require('../../stores/archived_posts_store');
-/***/
-
+var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
+var NewsFeedItemStore = require('../../stores/news_feed_item_store');
 var Tag = require('../tag.js.jsx');
 var Tile = require('../tile.js.jsx');
 var UserStore = require('../../stores/user_store');
@@ -40,7 +37,7 @@ var NewsFeedItem = React.createClass({
   },
 
   componentDidMount: function() {
-    ArchivedPostsStore.addChangeListener(this.getPostStateFromStore);
+    ArchivedNewsFeedItemsStore.addChangeListener(this.getStateFromStore);
   },
 
   getDefaultProps: function() {
@@ -52,17 +49,17 @@ var NewsFeedItem = React.createClass({
 
   getInitialState: function() {
     return {
-      isArchived: this.props.target && this.props.target.deleted_at != null,
+      isArchived: this.props.archived_at != null,
       modalShown: false
     };
   },
 
-  getPostStateFromStore: function() {
+  getStateFromStore: function() {
     var target = this.props.target;
 
     if (target && target.type === 'post') {
       this.setState({
-        isArchived: ArchivedPostsStore.isArchived(target.id)
+        isArchived: ArchivedNewsFeedItemsStore.isArchived(this.props.id)
       });
     }
   },
@@ -71,12 +68,12 @@ var NewsFeedItem = React.createClass({
   // it's time to split these out
   handleArchive: function() {
     var productSlug = this.props.product.slug;
-    var targetId = this.props.target.id;
+    var itemId = this.props.id;
 
     if (this.state.isArchived) {
-      PostActionCreators.unarchive(productSlug, targetId);
+      NewsFeedItemActionCreators.unarchive(productSlug, itemId);
     } else {
-      PostActionCreators.archive(productSlug, targetId);
+      NewsFeedItemActionCreators.archive(productSlug, itemId);
     }
   },
 
@@ -106,6 +103,7 @@ var NewsFeedItem = React.createClass({
       return;
     }
 
+    // only turn on for posts
     if (this.props.target && this.props.target.type === 'post') {
       var text = 'Archive';
       if (this.state.isArchived) {

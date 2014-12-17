@@ -3,7 +3,7 @@ class PostsController < ProductController
 
   def index
     find_product!
-    posts = @product.posts.where(deleted_at: nil).order(created_at: :desc)
+    posts = @product.posts.order(created_at: :desc)
 
     @posts = ActiveModel::ArraySerializer.new(posts)
     @heartables = posts.map(&:news_feed_item)
@@ -37,22 +37,6 @@ class PostsController < ProductController
     end
 
     respond_with @post, location: product_post_path(@post.product, @post)
-  end
-
-  def destroy
-    find_post!
-
-    @post.update(deleted_at: Time.now)
-
-    render nothing: true
-  end
-
-  def unarchive
-    find_post!
-
-    @post.update(deleted_at: nil)
-
-    render nothing: true
   end
 
   def preview
@@ -122,7 +106,7 @@ private
   end
 
   def post_params
-    params.require(:post).permit(:title, :summary, :body, :published_at, :flagged_at, :deleted_at)
+    params.require(:post).permit(:title, :summary, :body, :published_at, :flagged_at)
   end
 
 end

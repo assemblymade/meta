@@ -1,5 +1,5 @@
 class NewsFeedItemSerializer < ApplicationSerializer
-  attributes :url, :popular_at, :layout, :last_comment, :comments_count
+  attributes :url, :archived_at, :popular_at, :layout, :last_comment, :comments_count
 
   attributes :heartable_id, :heartable_type, :hearts_count
 
@@ -12,7 +12,7 @@ class NewsFeedItemSerializer < ApplicationSerializer
   end
 
   def last_comment
-    NewsFeedItemCommentSerializer.new(object.comments.order(created_at: :desc).first)
+    NewsFeedItemCommentSerializer.new(object.last_comment)
   end
 
   def layout

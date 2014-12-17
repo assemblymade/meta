@@ -451,6 +451,7 @@ ActiveRecord::Schema.define(version: 20141217002411) do
     t.integer  "hearts_count",      default: 0, null: false
     t.datetime "last_commented_at"
     t.integer  "watchings_count"
+    t.datetime "archived_at"
   end
 
   add_index "news_feed_items", ["target_id"], name: "index_news_feed_items_on_target_id", unique: true, using: :btree
@@ -501,7 +502,6 @@ ActiveRecord::Schema.define(version: 20141217002411) do
     t.string   "slug"
     t.text     "summary"
     t.datetime "flagged_at"
-    t.datetime "deleted_at"
   end
 
   add_index "posts", ["flagged_at"], name: "index_posts_on_flagged_at", using: :btree
