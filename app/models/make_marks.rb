@@ -8,6 +8,17 @@ class MakeMarks
     end
   end
 
+  def mark_additively(object, mark, weight)
+    marking = Marking.where(markable_id: object.id).where(mark_id: mark.id)
+    if not marking.present?
+      Marking.create!({markable: object, mark_id: mark.id, weight: weight})
+    else
+      marking=marking.first #there should only ever be 1 entry here
+      oldweight = marking.weight
+      marking.update!({weight: oldweight + weight})
+    end
+  end
+
   def mark_with_name(object, mark_name)
     mark_name = mark_name.downcase
     themark = Mark.find_by(name: mark_name)
