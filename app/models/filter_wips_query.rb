@@ -37,9 +37,9 @@ class FilterWipsQuery
     expanded_states = states.flat_map do |state|
       case state
       when 'open'
-        'open'
+        ['open', 'awarded']
       when 'doing'
-        ['allocated', 'awarded']
+        ['allocated']
       when 'reviewing'
         'reviewing'
       when 'done'

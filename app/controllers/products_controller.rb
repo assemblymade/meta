@@ -120,7 +120,6 @@ class ProductsController < ProductController
       @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['heartable_id']})
     end
 
-
     respond_to do |format|
       format.html { render 'products/new_show', layout: 'product' }
       format.json {

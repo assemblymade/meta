@@ -17,13 +17,13 @@ describe FilterWipsQuery do
   it 'filters by state' do
     query = FilterWipsQuery.new(product_wips, user, { state: 'open' })
 
-    expect(query.state_filter).to eq(Wip.where(state: ['open']))
+    expect(query.state_filter).to eq(Wip.where(state: ['open', 'awarded']))
   end
 
   it 'filters by multiple states' do
     query = FilterWipsQuery.new(product_wips, user, { state: ['open', 'doing'] })
 
-    expect(query.state_filter).to eq(Wip.where(state: ['open','allocated', 'awarded']))
+    expect(query.state_filter).to eq(Wip.where(state: ['open', 'awarded', 'allocated']))
   end
 
   it 'selects a page' do

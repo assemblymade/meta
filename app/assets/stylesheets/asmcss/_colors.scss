@@ -1,11 +1,12 @@
 $white:  #FFF;
+$black:  #353941;
+
 $gray-6: #F4F4F5;
 $gray-5: #ECEDEF;
 $gray-4: #DBDEE3;
 $gray-3: #C2C7D0;
 $gray-2: #8B909A;
 $gray-1: #666D78;
-$black:  #353941;
 
 $gray-lighter: $gray-6;
 $gray-light:   $gray-5;
@@ -20,46 +21,39 @@ $blue:         #338EDA;
 $red:          #EC3750;
 $yellow:       #F2D930;
 
-.white                 { color: $white }
-.gray-6, .gray-lighter { color: $gray-6 }
-.gray-5, .gray-light   { color: $gray-5 }
-.gray-4                { color: $gray-4 }
-.gray-3, .gray         { color: $gray-3 }
-.gray-2, .gray-dark    { color: $gray-2 }
-.gray-1, .gray-darker  { color: $gray-1 }
-.black                 { color: $black }
+$colors: (
+  "white": $white,
+  "black": $black,
 
-.gray-green   { color: $gray-green }
+  "gray-6": $gray-6,
+  "gray-5": $gray-5,
+  "gray-4": $gray-4,
+  "gray-3": $gray-3,
+  "gray-2": $gray-2,
+  "gray-1": $gray-1,
 
-.green        { color: $green }
-.blue         { color: $blue }
-.red          { color: $red }
-.yellow       { color: $yellow }
+  "gray-lighter": $gray-lighter,
+  "gray-light": $gray-light,
+  "gray": $gray,
+  "gray-dark": $gray-dark,
+  "gray-darker": $gray-darker,
 
-.bg-white                    { background-color: $white }
-.bg-gray-6, .bg-gray-lighter { background-color: $gray-6 }
-.bg-gray-5, .bg-gray-light   { background-color: $gray-5 }
-.bg-gray-4                   { background-color: $gray-4 }
-.bg-gray-3, .bg-gray         { background-color: $gray-3 }
-.bg-gray-2, .bg-gray-dark    { background-color: $gray-2 }
-.bg-gray-1, .bg-gray-darker  { background-color: $gray-1 }
-.bg-black                    { background-color: $black }
+  "green": $green,
+  "blue":  $blue,
+  "red":   $red,
+  "yellow": $yellow
+);
 
-.bg-green        { background-color: $green }
-.bg-blue         { background-color: $blue }
-.bg-red          { background-color: $red }
-.bg-yellow       { background-color: $yellow }
+@each $name, $value in $colors {
+  .#{$name}        { color: $value }
+  .bg-#{$name}     { background-color: $value }
+  .border-#{$name} { border-color: $value }
+  .fill-#{$name}   { fill: $value }
+  .stroke-#{$name} { stroke: $value }
 
-.border-white                        { border-color: $white }
-.border-gray-6, .border-gray-lighter { border-color: $gray-6 }
-.border-gray-5, .border-gray-light   { border-color: $gray-5 }
-.border-gray-4                       { border-color: $gray-4 }
-.border-gray-3, .border-gray         { border-color: $gray-3 }
-.border-gray-2, .border-gray-dark    { border-color: $gray-2 }
-.border-gray-1, .border-gray-darker  { border-color: $gray-1 }
-.border-black                        { border-color: $black }
-
-.border-green        { border-color: $green }
-.border-blue         { border-color: $blue }
-.border-red          { border-color: $red }
-.border-yellow       { border-color: $yellow }
+  .#{$name}-hover:hover        { color: $value }
+  .bg-#{$name}-hover:hover     { background-color: $value }
+  .border-#{$name}-hover:hover { border-color: $value }
+  .fill-#{$name}-hover:hover   { fill: $value }
+  .stroke-#{$name}-hover:hover { stroke: $value }
+}

@@ -9,7 +9,7 @@ var routes = require('../routes')
 
 var SubscriptionsStore = require('../stores/subscriptions_store')
 
-var CLOSED_STATES = ['awarded', 'closed', 'resolved'];
+var CLOSED_STATES = ['closed', 'resolved'];
 
 var ONE_HOUR = 60 * 60 * 1000;
 

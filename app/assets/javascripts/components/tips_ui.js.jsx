@@ -26,7 +26,7 @@
           tooltip = null,
           currentUser = window.app.currentUser() && window.app.currentUser().attributes,
           product = ProductStore.getProduct() || app.product,
-          url = (product.url || product.get('url')) + '/tips';
+          url = (product.url || (product && product.get && product.get('url'))) + '/tips';
 
       if (!currentUser) {
         tooltip = 'You need to sign up before you can tip'

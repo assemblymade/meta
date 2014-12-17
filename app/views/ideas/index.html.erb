@@ -40,12 +40,11 @@
         </div>
         <div class="text-muted right">
           Submitted by <%= link_to "@#{idea.creator_username}", idea.user, class: 'text-stealth-link' %>
-        </div> 
+        </div>
       </div>
     </div>
   <% end %>
   <%= paginate @ideas, theme: 'twitter-bootstrap-3' %>
 </div>
-<%= render 'wips/heartables' %>
 
 

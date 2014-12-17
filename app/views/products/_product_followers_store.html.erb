@@ -1,0 +1,6 @@
+<% if @product %>
+  <%= initial_store_data('ProductFollowersStore',
+          products: [{ id: @product.id, followers_count: @product.watchings_count }],
+          userFollowings: (@product.watching?(current_user) ? [@product.id] : [])
+  ) %>
+<% end %>

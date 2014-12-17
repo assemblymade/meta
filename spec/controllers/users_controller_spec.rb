@@ -14,6 +14,12 @@ describe UsersController do
       expect(response).to be_successful
     end
 
+    it 'is successful with a filter' do
+      get :show, id: user.username, user: 'started'
+
+      expect(response).to be_successful
+    end
+
     it 'assigns wips' do
       get :show, id: user.username
 

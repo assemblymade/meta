@@ -28,8 +28,12 @@ en:
         owner: ''
 
       task:
-        other: "#%{number} %{title}"
-        owner: "#%{number} %{title}"
+        other: "%{title} #%{number} "
+        owner: "%{title} #%{number}"
+
+      wip:
+        other: "%{title} #%{number}"
+        owner: "%{title} #%{number}"
 
       team_membership:
         other: "an introduction"

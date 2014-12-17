@@ -1,5 +1,5 @@
 class SuggestionMailer < BaseMailer
-  layout 'suggested_bounties'
+  layout 'new_email'
 
   helper FiresizeHelper
   helper AppIconHelper

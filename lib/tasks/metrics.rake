@@ -65,7 +65,7 @@ namespace :metrics do
     # User.where("created_at < ?", Date.today.beginning_of_month).where("last_request_at >= ?", last_month.beginning_of_month)
     mau   = User.where("created_at <= ?", last_month.end_of_month).where("last_request_at >= ?", last_month.beginning_of_month).count
     total = User.where("created_at <= ?", last_month.end_of_month).count
-    
+
     puts "MAU RAW: #{mau}"
     puts "Total RAW: #{total}"
     puts "MAU: #{mau.to_f / total.to_f}"
@@ -204,9 +204,72 @@ namespace :metrics do
 
   def by_month
     data = []
-    ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014", "1-apr-2014", "1-may-2014", "1-jun-2014", "1-jul-2014", "1-aug-2014", "1-sep-2014", "1-oct-2014"].each do |month|
+    ["1-nov-2013", "1-dec-2013", "1-jan-2014", "1-feb-2014", "1-mar-2014", "1-apr-2014", "1-may-2014", "1-jun-2014", "1-jul-2014", "1-aug-2014", "1-sep-2014", "1-oct-2014", "1-nov-2014"].each do |month|
       data << yield(Date.parse(month))
     end
     data
   end
+
+  desc "Number of users created each week"
+  task :signups => :environment do
+    not_cumulative_totals = User.group("DATE_TRUNC('week', created_at)").order("DATE_TRUNC('week', created_at) ASC").count
+    cumulative_totals = User.pluck("DISTINCT DATE_TRUNC('week', created_at), COUNT(users.*) OVER (ORDER BY DATE_TRUNC('week', created_at) ASC)").to_h
+
+    totals = not_cumulative_totals.merge(cumulative_totals) do |_, not_cumulative, cumulative|
+      [not_cumulative, cumulative]
+    end
+
+    puts ' %15s %15s %15s' % ['Week', 'Total', 'Cumulative']
+    puts '-' * 16 * 3
+
+    totals.each do |date, totals|
+      puts ' %15s %15s %15s' % [date.to_date, totals.first, totals.last]
+    end
+  end
+
+  desc "Number of actively developed products by month"
+  task :active_products => :environment do
+    months = {}
+    Activity.where.not(product_id: nil).group(:product_id, "date_trunc('month', created_at)").order("date_trunc('month', created_at)").count.each do |(product_id, date), count|
+      months[date] ||= {}
+      if count > 10
+        product = Product.find(product_id)
+        months[date][product.slug] = count
+      end
+    end
+
+    puts 'Most active products by activity'
+    puts
+    puts ' %15s %15s %15s' % ['Month', 'Active', 'Top Product']
+    puts '-' * 16 * 3
+
+    months.each do |date, products|
+      top_product = products.sort_by{|_, count| -count}.find{|p| p[0] != 'meta' }[0]
+      puts ' %15s %15s %15s' % [date.to_date, products.count, top_product]
+    end
+    puts Sparkr.sparkline(months.map{|d, p| p.count})
+  end
+
+  task :active_products_csv => :environment do
+    months = {}
+    Activity.where.not(product_id: nil).group(:product_id, "date_trunc('month', created_at)").order("date_trunc('month', created_at)").count.each do |(product_id, date), count|
+      months[date] ||= {}
+      if count > 10
+        product = Product.find(product_id)
+        months[date][product.slug] = count
+      end
+    end
+
+    require 'csv'
+    csv = CSV.generate do |csv|
+      csv << ["Month", "Active Products", "Top Product"]
+      months.each do |date, products|
+        top_product = products.sort_by{|_, count| -count}.find{|p| p[0] != 'meta' }[0]
+        csv << [date.to_date, products.count, top_product]
+      end
+    end
+
+    puts csv
+  end
+
 end

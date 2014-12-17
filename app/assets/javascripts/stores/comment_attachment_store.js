@@ -98,7 +98,7 @@ function removeAttachments() {
 }
 
 function _parseInitialAttachments() {
-  var productAssetsTag = document.getElementById('product_assets');
+  var productAssetsTag = document.getElementById('CommentAttachmentStore');
 
   if (productAssetsTag) {
     var productAssets;

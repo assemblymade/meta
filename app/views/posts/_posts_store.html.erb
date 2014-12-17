@@ -1,0 +1,3 @@
+<% if @posts %>
+  <%= initial_store_data('PostsStore', { posts: @posts, product: @product.try(:slug) }) %>
+<% end %>

@@ -27,8 +27,15 @@ var DropzoneMixin = {
 
     if (attachment) {
       var currentText = this.state.text || '';
-      var newText = '![' + attachment.name + '](' + attachment.href + ')\n';
-      var replaceText = '![Uploading... ' + attachment.name + ']()';
+      var attachmentName = attachment.name;
+      var newText;
+      if (/\.(gif|jpg|jpeg|png|psd)$/.test(attachmentName)) {
+        newText = '![' + attachmentName + '](' + attachment.href + ')\n';
+      } else {
+        newText = '[' + attachmentName + '](' + attachment.href + ')\n';
+      }
+
+      var replaceText = '![Uploading... ' + attachmentName + ']()';
 
       var text = currentText.replace(replaceText, newText);
 

@@ -8,13 +8,13 @@ class NewsFeedItem < ActiveRecord::Base
   has_many :followings, class_name: 'Watching', as: :watchable
   has_many :followers, through: :followings, source: :user
   has_many :hearts, as: :heartable, after_add: [:follow_author, :hearted]
-  has_many :comments, class_name: 'NewsFeedItemComment', after_add: :follow_author
+  has_many :comments, class_name: 'NewsFeedItemComment', after_add: :comment_added
 
   before_validation :ensure_last_commented_at, on: :create
 
   after_commit :follow_self, on: :create
 
-  scope :public_items, -> { joins(:product).where('products.state not in (?)', ['stealth', 'reviewing']) }
+  scope :public_items, -> { joins(:product).where.not(products: {state: %w(stealth reviewing) }).where.not(product_id: (Product.private_ids + [Product.meta_id])) }
 
   def self.create_with_target(target)
     # Prevent @kernel from appearing in the News Feed
@@ -44,9 +44,7 @@ class NewsFeedItem < ActiveRecord::Base
   end
 
   def ensure_last_commented_at
-    unless self.last_commented_at
-      self.update!(last_commented_at: Time.now)
-    end
+    self.last_commented_at = Time.now
   end
 
   def url_params
@@ -55,6 +53,13 @@ class NewsFeedItem < ActiveRecord::Base
 
   def follow_author(o)
     Watching.watch!(o.user, self)
+  end
+
+  def comment_added(o)
+    update!(last_commented_at: o.created_at)
+    [o.user, o.mentioned_users].flatten.uniq.each do |user|
+      Watching.watch!(user, self)
+    end
   end
 
   def follow_self

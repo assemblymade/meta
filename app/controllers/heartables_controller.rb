@@ -1,5 +1,5 @@
 class HeartablesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :hearts
 
   def index
 

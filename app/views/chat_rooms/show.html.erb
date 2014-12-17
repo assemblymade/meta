@@ -2,10 +2,6 @@
 <% activate_nav! :community if params[:id] == 'general' %>
 <%= track 'product.chat.viewed', ProductSerializer.new(@product, scope: current_user) %>
 
-<% if @product %>
-  <%= initial_store_data('ProductStore', { slug: @product.slug, name: @product.name, url: product_url(@product) }) %>
-<% end %>
-
 <%= render 'shared/navbar', bounties_link: true, fluid: true %>
 
 <div class="modal fade"
@@ -176,11 +172,6 @@
   </div>
 
 </div>
-
-<%= initial_store_data('PeopleStore', @default_users.as_json) %>
-<%= initial_store_data('ChatMessageStore', @activity_stream.map {|a, _|
-  ActivitySerializer.new(a, scope: current_user)
-}.as_json) %>
 
 <% content_for :javascript do %>
   <script>

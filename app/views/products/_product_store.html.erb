@@ -1,0 +1,11 @@
+<% if @product %>
+  <%= initial_store_data(
+        'ProductStore',
+        {
+          slug: @product.slug,
+          name: @product.name,
+          url: (product_url(@product) rescue '#'),
+          core_team: @product.core_team_ids
+        }
+      ) %>
+<% end %>

@@ -103,6 +103,7 @@ class window.Application
 
   currentProductBalance: ->
     if user = @currentUser()
+      return 0 unless app.product
       user.get('product_balance')[app.product.id]
 
   mountReactComponents: (el)->

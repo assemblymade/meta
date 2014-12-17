@@ -35,6 +35,10 @@ module.exports = function MasonryMixin(ref, options) {
         return;
       }
 
+      if (!this.masonry) {
+        return;
+      }
+
       this.masonry.reloadItems()
       this.imagesLoaded()
 

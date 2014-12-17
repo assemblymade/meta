@@ -6,6 +6,7 @@ class PostsController < ProductController
     posts = @product.posts.order(created_at: :desc)
 
     @posts = ActiveModel::ArraySerializer.new(posts)
+    @heartables = posts.map(&:news_feed_item)
   end
 
   def new
