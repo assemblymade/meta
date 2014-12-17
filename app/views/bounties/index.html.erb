@@ -4,7 +4,7 @@
 
 <%= react_component 'BountyIndex', {
   tags: Wip::Tag.suggested_tags,
-  pages: @wips.page(1).total_pages,
+  pages: @bounties.page(1).total_pages,
   product: ProductSerializer.new(@product, scope: current_user),
   valuation: {
     product: ProductSerializer.new(@product),

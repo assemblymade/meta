@@ -9,9 +9,9 @@ class TasksController < WipsController
       params.merge!(sort: 'priority', state: 'open')
     end
 
-    @wips = find_wips
+    @bounties = find_wips
 
-    @heartables = NewsFeedItem.where(target_id: @wips.map(&:id))
+    @heartables = NewsFeedItem.where(target_id: @bounties.map(&:id))
 
     if signed_in?
       @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map(&:id))
@@ -30,7 +30,7 @@ class TasksController < WipsController
           return
         end
 
-        render json: @wips,
+        render json: @bounties,
           serializer: PaginationSerializer,
           each_serializer: BountyListSerializer,
           root: :bounties
