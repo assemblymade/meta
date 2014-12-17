@@ -451,8 +451,11 @@
 }
 
 @media screen and (min-width: 992px) {
+  .r992_inline-block {
+    display: inline-block !important;
+  }
   .r992_w45 {
-    width: 22.5rem;
+    width: 22.5rem !important;
   }
 }
 

@@ -32,8 +32,8 @@ module.exports = React.createClass({
       'mcenter': true,
       'dropdown-toggle': true,
       'toggler': true,
-      'active': (this.state.following),
-      'pill-button-success': (this.state.following),
+      'active': this.state.following,
+      'pill-button-success': this.state.following,
       'r768_mright': true,
     })
   },
