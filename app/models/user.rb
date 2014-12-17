@@ -398,6 +398,12 @@ class User < ActiveRecord::Base
     return best_cluster
   end
 
+  def assign_to_cluster
+    newcluster = self.best_cluster
+    newcluster.add_user(self)
+    newcluster
+  end
+
   private
 
   def generate_authentication_token
