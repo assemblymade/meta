@@ -59,15 +59,17 @@ class Activity < ActiveRecord::Base
     when "Comment"
       unless actor.activities.where(type: "Activities::Comment").count > 1
         SlackNotifier.first_activity(self)
-        GrowthHack.staff_auto_love(self)
       end
     when "Post"
       unless actor.activities.where(type: "Activities::Post").count > 1
         SlackNotifier.first_activity(self)
-        GrowthHack.staff_auto_love(self)
       end
     when "Chat"
       unless actor.activities.where(type: "Activities::Chat").count > 1
+        SlackNotifier.first_activity(self)
+      end
+    when "Introduce"
+      unless actor.activities.where(type: "Activities::Introduce").count > 1
         SlackNotifier.first_activity(self)
         GrowthHack.staff_auto_love(self)
       end
