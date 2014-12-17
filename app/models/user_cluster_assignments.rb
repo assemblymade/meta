@@ -1,4 +1,4 @@
-def UserClusterAssignments
+class UserClusterAssignments
 
 
 end
