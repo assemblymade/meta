@@ -96,6 +96,17 @@ class Idea < ActiveRecord::Base
     self.rank.to_f / Idea.count*100.round(2)
   end
 
+  def heart_distance_from_percentile(goal_percentile)
+    index = (Idea.all.count * goal_percentile.to_f/100).to_i
+    expected_score = Idea.all.sort_by{|q| q.score}.reverse.take(index+1).last.score
+    heartburn = 60.days.to_i  #period for 100% inflation, equivalent to half-life
+    epoch_start = DateTime.new(2013,6,6).to_i
+    time_since = DateTime.now.to_i - epoch_start
+    multiplier = 2 ** (time_since.to_f / heartburn.to_f)
+    hearts_missing = (expected_score - self.score) / (multiplier)
+    hearts_missing = (hearts_missing+0.999).to_i 
+  end
+
   def temperature
     Math.log(100 / (self.percentile+0.1))*10
   end
