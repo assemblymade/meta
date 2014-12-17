@@ -653,6 +653,15 @@ class Product < ActiveRecord::Base
     end
     pm = ProductMetric.create(product: self)
     pm.update_attribute(:comment_responsiveness, avg_time_to_comment)
+    avg_time_to_comment
+  end
+
+  def comment_responsiveness
+    if pm = ProductMetric.where(product: self).last
+      pm.comment_responsiveness
+    else
+      calc_task_comments_response_time
+    end
   end
 
   def mark_vector
