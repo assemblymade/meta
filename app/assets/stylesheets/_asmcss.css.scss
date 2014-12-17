@@ -136,16 +136,44 @@ button, .button {
 }
 
 .pill-button {
+// default
+  display: block;
   position:relative;
-  display: inline-block;
   padding:7px 30px;
+  text-align:center;
   border-radius: 50px;
-  color: $blue;
+  color: $black;
   font-size:13px;
-  background:$white;
-  box-shadow: 0px 3px 5px -4px rgba(50, 50, 50, 0.3);
+  background:$gray-5;
   -webkit-transition: all 0.15s ease-in-out;
   transition: all 0.15s ease-in-out;
+  //
+  &:hover {
+    color: inherit;
+    background:$gray-3;
+    -webkit-transition: all 0.15s ease-in-out;
+    transition: all 0.15s ease-in-out;
+  }
+  &.active {
+    color: $gray-3;
+    background:$gray-5;
+  }
+}
+// general
+.pill-button-shadow {
+  box-shadow: 0px 3px 5px -4px rgba(50, 50, 50, 0.3);
+  //
+  &:hover {
+    box-shadow: 0px 3px 5px -4px rgba(50, 50, 50, 0.15);
+  }
+}
+.pill-button-shadow-dark {
+  box-shadow: 0px 3px 5px -4px rgba(50, 50, 50, 0.6);
+  &:hover {
+    box-shadow: 0px 3px 5px -4px rgba(50, 50, 50, 0.3);
+  }
+}
+.pill-button-border {
   //
   &:before {
     content:'';
@@ -157,29 +185,96 @@ button, .button {
     height:100%;
     border:1px solid rgba(100,100,100,0.15);
     border-radius: 50px;
-    -webkit-transition: background 0.15s ease-in-out;
-    transition: background 0.15s ease-in-out;
   }
+}
+// themes
+.pill-button-theme-white-blue {
+  color: $blue;
+  background: $white;
+  //
   &:hover {
+    color: $blue;
+    background: rgba(51,142,218,0.25);
+    -webkit-transition: all 0.15s ease-in-out;
+    transition: all 0.15s ease-in-out;
+  }
+  &.active {
+    color: #666d78;
+    background:$white;
+    box-shadow: none;
+    -webkit-transition: all 0.15s ease-in-out;
+    transition: all 0.15s ease-in-out;
+  }
+  &.pill-button-success {
     //
-    &:before {
-      background: rgba(51,142,218,0.25);
-      -webkit-transition: background 0.15s ease-in-out;
-      transition: background 0.15s ease-in-out;
+    .title {
+      position:relative;
+      padding-left:1rem;
+      &:before {
+        content:'';
+        position:absolute;
+        top:50%;
+        left:-6px;
+        margin-top:-5px;
+        width:11px;
+        height:11px;
+        background-image: url(/assets/icon-success-check-green.png);
+        background-size: cover;
+      }
     }
   }
-  &.lesser {
-    color: $gray-3;
-    background:$gray-light;
-    box-shadow: none;
+}
+.pill-button-theme-green {
+  color: $white;
+  background: $green;
+  //
+  &:hover {
+    color: $white;
+    background:#2ec095;
+    -webkit-transition: all 0.15s ease-in-out;
+    transition: all 0.15s ease-in-out;
+  }
+  &:focus {
+    color: $white;
+  }
+}
+
+.pill-button-split {
+  position:relative;
+  //
+  .pill-button-split-icon {
+    display:block;
+    position:absolute;
+    right:0;
+    top:0;
+    height:100%;
+    width: 4.5rem;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border:1px solid rgba(100,100,100,0.15);
+    border-left:1px solid rgba(100,100,100,0.125);
+    box-shadow: inset 1px 0px 0px 0px rgba(255,255,255,0.125);
+    -webkit-transition: all 0.15s ease-in-out;
+    transition: all 0.15s ease-in-out;
     //
-    &:before {
-      border:none;
+    .fa {
+      -webkit-transition: all 0.2s ease-in-out;
+      transition: all 0.15s ease-in-out;
     }
-    &:hover {
+  }
+  &.open {
+    //
+    .pill-button-split-icon {
       //
-      &:before {
-        background:none;
+      &.pill-button-theme-green {
+        background:#2ec095;
+      }
+      .fa {
+        display: block;
+        -webkit-transform: translate3d(-1px, 4px, 0) rotate(180deg);
+                transform: translate3d(-1px, 4px, 0) rotate(180deg);
+        -webkit-transition: all 0.2s ease-in-out;
+                transition: all 0.2s ease-in-out;
       }
     }
   }
@@ -190,7 +285,7 @@ button, .button {
   -webkit-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
   //
-  &:hover, &:focus {
+  &:hover {
     color: #353941;
     background: #e7e9ec;
     border-radius: 50px;
@@ -198,10 +293,4 @@ button, .button {
     -webkit-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
     transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
   }
-}
-
-.flip-v {
-  display: block;
-  -webkit-transform: scaleY(-1);
-  transform: scaleY(-1);
 }

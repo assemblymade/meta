@@ -11,9 +11,18 @@
 .none {display:none !important}
 .overflow-hidden {overflow:hidden;}
 .overflow-x-hidden {overflow-x:hidden;}
+
 .bg-size-cover {background-size: cover}
 .bg-repeat-none {background-repeat: no-repeat}
 .bg-position-center {background-position: center}
+
+.right-align {text-align:right}
+.center-align {text-align:center}
+.left-align {text-align:left}
+
+.float-left { float:left }
+.float-right { float:right }
+.float-none { float:none }
 
 // ### layout
 
@@ -78,6 +87,7 @@
 .ht51  { height: 25.5rem; } // 300px
 
 // width
+.w110p  { width:110%; }
 .w100p  { width:100%; }
 .w75p   { width:75%; }
 .w66p   { width:66.6666%; }
@@ -206,6 +216,10 @@
 
 // margin
 
+.mright { margin-right: 0; margin-left: auto; }
+.mcenter { margin-right: auto; margin-left: auto; }
+.mleft { margin-right: auto; margin-left: 0; }
+
 .mb1_5 { margin-bottom:1.5rem }
 
 .mn1 { margin:-0.5rem }
@@ -238,6 +252,7 @@
 .mln4 { margin-left:-2rem }
 .mln5 { margin-left:-2.5rem }
 
+.mln5p { margin-left:-5% }
 
 
 // ### table
@@ -295,23 +310,47 @@
 // natively basscss has "sm, med, lg" prefixes for this, but we need more granular options
 // I propose the folowing standard .r###_selector
 @media screen and (min-width: 480px) {
+  .r480_block {
+    display:block !important;
+  }
   .r480_w50p {
     width:50% !important;
   }
 }
 
 @media screen and (min-width: 600px) {
+  .r600_none {
+    display:none !important;
+  }
   .r600_width-auto {
     width:auto !important;
   }
   .r600_float-right {
     float:right !important;
   }
+  .r600_float-left {
+    float:left !important;
+  }
   .r600_right-align {
     text-align:right !important;
   }
   .r600_block {
     display:block !important;
+  }
+  .r600_w35 {
+    width: 17.5rem;
+  }
+  .r600_p0 {
+    padding:0 !important;
+  }
+  .r600_pt0 {
+    padding-top:0 !important;
+  }
+  .r600_pb0 {
+    padding-bottom:0 !important;
+  }
+  .r600_pl2 {
+    padding-left:1rem !important;
   }
   .r600_m0 {
     margin:0 !important;
@@ -322,6 +361,9 @@
   }
   .r600_mr1 {
     margin-right: .5rem !important;
+  }
+  .r600_mr2 {
+    margin-right: 1rem !important;
   }
   .r600_mb6 {
     margin-bottom: 3rem !important;
@@ -338,6 +380,15 @@
   }
 }
 @media screen and (min-width: 768px) {
+  .r768_none {
+    display:none !important;
+  }
+  .r768_block {
+    display:block !important;
+  }
+  .r768_inline-block {
+    display:inline-block !important;
+  }
   .r768_w100p {
     width:100% !important;
   }
@@ -347,11 +398,24 @@
   .r768_w25p {
     width:25% !important;
   }
+  .r768_w35 {
+    width: 17.5rem !important;
+  }
+  .r768_mright {
+    margin-right: 0;
+    margin-left: auto;
+  }
+  .r768_mcenter {
+    margin-left: auto; margin-right: auto;
+  }
   .r768_m0 {
     margin: 0 !important;
   }
   .r768_ml0 {
     margin-left:0 !important;
+  }
+  .r768_p0 {
+    padding:0 !important;
   }
   .r768_pr0 {
     padding-right:0 !important;
@@ -364,6 +428,9 @@
   }
   .r768_pr1 {
     padding-right:1rem !important;
+  }
+  .r768_pb0 {
+    padding-bottom:0 !important;
   }
   .r768_table {
     display: table !important;
@@ -383,9 +450,18 @@
   }
 }
 
+@media screen and (min-width: 992px) {
+  .r992_w45 {
+    width: 22.5rem;
+  }
+}
+
 @media screen and (min-width: 1024px) {
   .r1024_block {
     display: block !important;
+  }
+  .r1024_inline-block {
+    display: inline-block !important;
   }
   .r1024_w50p {
     width:50% !important;
