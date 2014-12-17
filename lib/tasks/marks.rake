@@ -56,6 +56,11 @@ namespace :marks do
     end
   end
 
+  desc "create mark-to-mark relationships from scratch for all users"
+  task :mark_to_mark_all => :environment do
+    MarkToMark.new.inspect_all_user_markings
+  end
+
   desc "Deletes marks with uppercase letters"
   task :downcase_all => :environment do
     Mark.all.each do |mark|
