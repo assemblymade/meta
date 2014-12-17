@@ -1,4 +1,5 @@
 <% if @bounties && @bounties.any? %>
+  <!-- FIXME: If we're expecting paginatable data, we need to safeguard against non-paginatable inputs -->
   <%= initial_store_data(
     'BountiesStore',
     PaginationSerializer.new(
