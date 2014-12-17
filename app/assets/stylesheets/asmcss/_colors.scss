@@ -22,26 +22,26 @@ $red:          #EC3750;
 $yellow:       #F2D930;
 
 $colors: (
-  white: $white,
-  black: $black,
+  "white": $white,
+  "black": $black,
 
-  gray-6: $gray-6,
-  gray-5: $gray-5,
-  gray-4: $gray-4,
-  gray-3: $gray-3,
-  gray-2: $gray-2,
-  gray-1: $gray-1,
+  "gray-6": $gray-6,
+  "gray-5": $gray-5,
+  "gray-4": $gray-4,
+  "gray-3": $gray-3,
+  "gray-2": $gray-2,
+  "gray-1": $gray-1,
 
-  gray-lighter: $gray-lighter,
-  gray-light: $gray-light,
-  gray: $gray,
-  gray-dark: $gray-dark,
-  gray-darker: $gray-darker,
+  "gray-lighter": $gray-lighter,
+  "gray-light": $gray-light,
+  "gray": $gray,
+  "gray-dark": $gray-dark,
+  "gray-darker": $gray-darker,
 
-  green: $green,
-  blue:  $blue,
-  red:   $red,
-  yellow: $yellow
+  "green": $green,
+  "blue":  $blue,
+  "red":   $red,
+  "yellow": $yellow
 );
 
 @each $name, $value in $colors {
