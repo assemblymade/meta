@@ -76,7 +76,7 @@ class Idea < ActiveRecord::Base
 
   def save_score
     lovescore = self.score
-    heartburn = 60.days.to_i  #period for 100% inflation, equivalent to half-life
+    heartburn = 30.days.to_i  #period for 100% inflation, equivalent to half-life
     epoch_start = DateTime.new(2013,6,6).to_i
 
     self.news_feed_item.hearts.where('created_at > ?',self.last_score_update).each do |h|
@@ -99,12 +99,12 @@ class Idea < ActiveRecord::Base
   def heart_distance_from_percentile(goal_percentile)
     index = (Idea.all.count * goal_percentile.to_f/100).to_i
     expected_score = Idea.all.sort_by{|q| q.score}.reverse.take(index+1).last.score
-    heartburn = 60.days.to_i  #period for 100% inflation, equivalent to half-life
+    heartburn = 30.days.to_i  #period for 100% inflation, equivalent to half-life
     epoch_start = DateTime.new(2013,6,6).to_i
     time_since = DateTime.now.to_i - epoch_start
     multiplier = 2 ** (time_since.to_f / heartburn.to_f)
     hearts_missing = (expected_score - self.score) / (multiplier)
-    hearts_missing = (hearts_missing+0.999).to_i 
+    hearts_missing = (hearts_missing+0.999).to_i
   end
 
   def temperature
