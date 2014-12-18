@@ -3,10 +3,7 @@ class PostsController < ProductController
 
   def index
     find_product!
-    posts = @product.posts.
-      joins(:news_feed_item).
-      where('news_feed_items.archived_at is null').
-      order(created_at: :desc)
+    posts = @product.posts.unarchived.order(created_at: :desc)
 
     @posts = ActiveModel::ArraySerializer.new(posts)
     @heartables = posts.map(&:news_feed_item)

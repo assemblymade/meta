@@ -25,6 +25,10 @@ class Post < ActiveRecord::Base
 
   friendly_id :title, use: :slugged
 
+  scope :unarchived, -> {
+    joins(:news_feed_item).where('news_feed_items.archived_at is null')
+  }
+
   ANNOUNCEMENT_MARK = Mark.find_or_create_by!(name: 'announcement')
   DISCUSSION_MARK = Mark.find_or_create_by!(name: 'discussion')
 
