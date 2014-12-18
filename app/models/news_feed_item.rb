@@ -1,3 +1,5 @@
+# Possible names: Thread, Story, ...
+
 class NewsFeedItem < ActiveRecord::Base
   include Kaminari::ActiveRecordModelExtension
 
@@ -9,6 +11,8 @@ class NewsFeedItem < ActiveRecord::Base
   has_many :followers, through: :followings, source: :user
   has_many :hearts, as: :heartable, after_add: [:follow_author, :hearted]
   has_many :comments, class_name: 'NewsFeedItemComment', after_add: :comment_added
+
+  validates :target, presence: true
 
   before_validation :ensure_last_commented_at, on: :create
 

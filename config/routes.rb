@@ -149,7 +149,8 @@ ASM::Application.routes.draw do
     post '/github' => 'github#create'
     post '/assembly_assets/transaction' => 'assembly_assets#transaction'
     post '/readraptor/immediate/:entity_id' => 'read_raptor#immediate', as: :readraptor_immediate
-    post '/readraptor/daily'     => 'read_raptor#daily'
+    post '/readraptor/daily'          => 'read_raptor#daily'
+    post '/readraptor/unread_comment' => 'read_raptor#unread_coment', as: :readraptor_unread_comment
     post '/pusher' => 'pusher#auth'
   end
 

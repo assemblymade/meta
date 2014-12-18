@@ -77,7 +77,7 @@ end
 NewsFeedItem.blueprint do
   source
   product
-  target { product }
+  target { Task.make! }
 end
 
 NewsFeedItemPost.blueprint do
@@ -89,6 +89,14 @@ NewsFeedItemComment.blueprint do
   news_feed_item
   user
   body { Faker::Lorem.paragraph(1) }
+end
+
+Post.blueprint do
+  product
+  author
+  title { "My Post #{sn}" }
+  summary { "Post subject #{sn}" }
+  body { Faker::Lorem.paragraphs(3).join }
 end
 
 Product.blueprint do
@@ -173,11 +181,3 @@ Financial::Liability.blueprint {}
 Financial::Equity.blueprint {}
 Financial::Revenue.blueprint {}
 Financial::Expense.blueprint {}
-
-Post.blueprint do
-  product
-  author
-  title { "My Post #{sn}" }
-  summary { "Post subject #{sn}" }
-  body { Faker::Lorem.paragraphs(3).join }
-end

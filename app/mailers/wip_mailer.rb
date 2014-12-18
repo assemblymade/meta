@@ -18,7 +18,7 @@ class WipMailer < BaseMailer
 
     wip_slug = [@product.slug, @wip.number]
 
-    options = list_headers(wip_slug, wip_slug, product_wip_url(@product, @wip)).merge(
+    options = list_headers(Wip.to_s, @wip.id, wip_slug, wip_slug, product_wip_url(@product, @wip)).merge(
       from: from_address_for(@wip.user),
       to:   @user.email,
       subject: "[#{@wip.product.slug}] #{@wip.title} (##{@wip.number})"
@@ -46,7 +46,7 @@ class WipMailer < BaseMailer
     wip_slug = [@product.slug, @wip.number]
     event_slug = [@product.slug, @wip.number, @event.number]
 
-    options = list_headers(wip_slug, event_slug, product_wip_url(@product, @wip)).merge(
+    options = list_headers(Wip.to_s, @wip.id, wip_slug, event_slug, product_wip_url(@product, @wip)).merge(
       from: from_address_for(@event.user),
       to: @user.email,
       subject: "[#{@product.slug}] #{@wip.title} (##{@wip.number})"
@@ -64,35 +64,10 @@ class WipMailer < BaseMailer
     end
   end
 
-  def list_headers(thread_parts, message_parts, archive_url)
-    reply_address = SecureReplyTo.new('wip', @wip.id, @user.username).to_s
-
-    thread_id = thread_parts.join('/')
-    thread_address = "<#{thread_id}@assembly.com>"
-    message_id = "<#{message_parts.join('/')}@assembly.com>"
-
-    {
-      "Reply-To" => "#{thread_parts.join('/')} <#{reply_address}>",
-
-      "Message-ID" => message_id,
-      "In-Reply-To" => thread_address,
-      "References"  => thread_address,
-
-      "List-ID" => "#{thread_id} <#{thread_parts.join('.')}.assembly.com>",
-      "List-Archive" => archive_url,
-      "List-Post"  => "<mailto:#{reply_address}>",
-      "Precedence" => "list",
-    }
-  end
-
 # private
 
   def tag(name)
     headers 'X-Mailgun-Tag' => name.to_s
-  end
-
-  def from_address_for(user)
-    "#{user.username} <notifications@assemblymail.com>"
   end
 
 end
