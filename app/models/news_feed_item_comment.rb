@@ -19,6 +19,18 @@ class NewsFeedItemComment < ActiveRecord::Base
     end
   end
 
+  def notify_subscribers!
+    NotifySubscribers.new.perform(self)
+  end
+
+  def publish_activity!
+    Activities::Comment.publish!(
+      actor: user,
+      subject: self,
+      target: news_feed_item.target
+    )
+  end
+
   def product
     news_feed_item.product
   end
@@ -37,5 +49,10 @@ class NewsFeedItemComment < ActiveRecord::Base
 
   def tip_receiver
     user
+  end
+
+  # don't call this directly, it will get called by the readraptor webhook
+  def notify_by_email(user)
+    CommentMailer.delay(queue: 'mailer').new_comment(user.id, self.id)
   end
 end

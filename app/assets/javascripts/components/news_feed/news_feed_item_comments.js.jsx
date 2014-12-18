@@ -160,7 +160,11 @@ var NewsFeedItemComments = React.createClass({
   renderConfirmedComments: function() {
     var renderIfAfter = this.state.showCommentsAfter;
     var comments = this.state.comments.concat(this.state.events).sort(_sort);
-    var awardUrl = _reach(this.props, 'item.target.url') + '/award';
+    var awardUrl;
+    if (_reach(this.props, 'item.target.type') === 'task') {
+      awardUrl = _reach(this.props, 'item.target.url') + '/award';
+    }
+
     var self = this;
 
     return comments.map(function(comment, i) {

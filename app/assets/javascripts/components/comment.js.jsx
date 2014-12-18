@@ -76,7 +76,7 @@ module.exports = React.createClass({
   },
 
   renderAwardOptions: function() {
-    if (this.currentUserIsCore()) {
+    if (this.currentUserIsCore() && this.props.awardUrl) {
       var id = this.props.id;
       var username = this.props.author.username;
       var awardUrl = this.props.awardUrl;

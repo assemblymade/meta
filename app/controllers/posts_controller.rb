@@ -1,12 +1,16 @@
 class PostsController < ProductController
-  respond_to :html
+  respond_to :html, :json
 
   def index
     find_product!
-    posts = @product.posts.order(created_at: :desc)
+    query = @product.posts.order(created_at: :desc)
+
+    posts = Post.filter_with_params(query, params)
 
     @posts = ActiveModel::ArraySerializer.new(posts)
-    @heartables = posts.map(&:news_feed_item)
+    @heartables = query.map(&:news_feed_item)
+
+    respond_with @posts, location: product_posts_path(@product)
   end
 
   def new

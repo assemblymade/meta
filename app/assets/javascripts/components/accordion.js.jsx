@@ -1,5 +1,5 @@
-module.exports = window.Accordian = React.createClass({
-  displayName: 'Accordian',
+module.exports = window.Accordion = React.createClass({
+  displayName: 'Accordion',
 
   propTypes: {
     title: React.PropTypes.string.isRequired,
@@ -26,7 +26,7 @@ module.exports = window.Accordian = React.createClass({
     }
 
     return (
-      <div className="accordian">
+      <div className="accordion">
         <a className="pill-hover block black pointer noselect pl4 pr3 pb1 pt1 mln3 mrn3 mb1" onClick={this.toggleOpen}>
           <span className="block h5 mt0 mb0 bold inline-block w50p">
             {this.props.title}

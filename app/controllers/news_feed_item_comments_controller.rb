@@ -14,8 +14,8 @@ class NewsFeedItemCommentsController < ProductController
     )
 
     if @item.valid?
-      publish_comment
-      email_mentioned_users(@item)
+      @item.publish_activity!
+      @item.notify_subscribers!
     end
 
     respond_with @item, location: product_updates_url(@product)
@@ -50,33 +50,6 @@ class NewsFeedItemCommentsController < ProductController
     end
   end
 
-  def publish_comment
-    if target = @news_feed_item.target
-      # we're currently duplicating comments to wip comments. This will be fixed
-      # we can remove this if block then
-      if target.is_a? Wip
-        event = Event.create_from_comment(
-          target,
-          Event::Comment,
-          @item.body,
-          current_user
-        )
-
-        Activities::Comment.publish!(
-          actor: event.user,
-          subject: event,
-          target: target
-        )
-      else
-        Activities::Comment.publish!(
-          actor: @item.user,
-          subject: @item,
-          target: target
-        )
-      end
-    end
-  end
-
   def set_news_feed_item!
     @news_feed_item = NewsFeedItem.find(params[:update_id])
   end
@@ -85,13 +58,5 @@ class NewsFeedItemCommentsController < ProductController
 
   def comment_params
     params.require(:comment).permit(:body)
-  end
-
-  def email_mentioned_users(comment)
-    comment.mentioned_users.each do |mentioned_user|
-      EmailLog.send_once mentioned_user.id, comment.id do
-        CommentMailer.delay(queue: 'mailer').mentioned(mentioned_user.id, comment.id)
-      end
-    end
   end
 end

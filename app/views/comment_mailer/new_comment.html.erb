@@ -1,0 +1,15 @@
+<style type="text/css">
+    img {
+      height:auto !important;
+      max-width:600px !important;
+      width: 100% !important;
+    }
+</style>
+
+<%= @product ? product_markdown(@product, @comment.body) : markdown(@comment.body) %>
+
+<p style="font-size:small;-webkit-text-size-adjust:none;color:#666;">
+  &mdash;
+  <br>
+  Reply to this email or <a href="<%= polymorphic_url(@nfi.url_params) %>">view on Assembly</a>
+</p>

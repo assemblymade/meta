@@ -16,11 +16,11 @@ class StorySentences
   def as_json
     owner = [
       t("verbs.#{verb}.singular"),
-      '<b>' + t("subjects.#{target_type}.owner", story.target.attributes.symbolize_keys) + '</b>'
+      '<b>' + t("subjects.short.#{target_type}.owner", story.target.attributes.symbolize_keys) + '</b>'
     ]
     other = [
       t("verbs.#{verb}.singular"),
-      '<b>' + t("subjects.#{target_type}.other", story.target.attributes.symbolize_keys) + '</b>'
+      '<b>' + t("subjects.short.#{target_type}.other", story.target.attributes.symbolize_keys) + '</b>'
     ]
 
     if product = story.subject.try(:product)

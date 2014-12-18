@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  var Accordian = require('./accordian.js.jsx')
+  var Accordion = require('./accordion.js.jsx')
   var BountiesStore = require('../stores/bounties_store.js')
   var BountyActionCreators = require('../actions/bounty_action_creators.js')
   var BountyFilter = require('./bounty_filter.js.jsx')
@@ -37,7 +37,10 @@
       var atBottom = $(window).scrollTop() + $(window).height() > $(document).height() - 200
 
       if (atBottom) {
-        BountyActionCreators.requestNextPage(this.props.product.slug, this.params(this.state.value, this.state.sort))
+        BountyActionCreators.requestNextPage(
+          this.props.product.slug,
+          this.params(this.state.value, this.state.sort)
+        )
       }
     },
 
@@ -133,18 +136,18 @@
               </div>
               <div className="col-xs-6 col-sm-12">
                 <div className="pb1"> {/*Tags*/}
-                  <Accordian title="Tags">
+                  <Accordion title="Tags">
                     <ul className="list-reset mxn2">
                       {this.renderTags()}
                     </ul>
-                  </Accordian>
+                  </Accordion>
                 </div>
               </div>
               <div className="col-xs-6 col-sm-12">
                 <div className="mb1"> {/*Assets*/}
-                  <Accordian title="Assets" >
+                  <Accordion title="Assets" >
                     {this.renderAssets()}
-                  </Accordian>
+                  </Accordion>
                 </div>
               </div>
             </span>

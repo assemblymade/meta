@@ -1,3 +1,5 @@
+# Possible names: Thread, Story, ...
+
 class NewsFeedItem < ActiveRecord::Base
   include Kaminari::ActiveRecordModelExtension
 
@@ -10,11 +12,19 @@ class NewsFeedItem < ActiveRecord::Base
   has_many :hearts, as: :heartable, after_add: [:follow_author, :hearted]
   has_many :comments, class_name: 'NewsFeedItemComment', after_add: :comment_added
 
+  validates :target, presence: true
+
   before_validation :ensure_last_commented_at, on: :create
 
   after_commit :follow_self, on: :create
 
-  scope :public_items, -> { joins(:product).where.not(products: {state: %w(stealth reviewing) }).where.not(product_id: (Product.private_ids + [Product.meta_id])) }
+  scope :public_items, -> {
+    joins(:product).
+    where.not(products: {state: %w(stealth reviewing) }).
+    where.not(product_id: (Product.private_ids + [Product.meta_id]))
+  }
+
+  scope :unarchived_items, -> { where(archived_at: nil) }
 
   def self.create_with_target(target)
     # Prevent @kernel from appearing in the News Feed
@@ -29,6 +39,10 @@ class NewsFeedItem < ActiveRecord::Base
 
   def author_id
     self.source_id # currently this is always a user, might be polymorphic in the future
+  end
+
+  def last_comment
+    comments.order(created_at: :desc).first
   end
 
   def hearted(o)

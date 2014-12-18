@@ -25,7 +25,7 @@ class TasksController < WipsController
 
       format.json do
         if params[:count]
-          tasks_count = { total: @product.tasks.where(state: 'open').count }
+          tasks_count = { total: @product.tasks.where(state: ['open', 'awarded']).count }
           render json: tasks_count
           return
         end

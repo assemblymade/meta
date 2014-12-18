@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var Avatar = require('../avatar.js.jsx');
 var Icon = require('../icon.js.jsx');
 
