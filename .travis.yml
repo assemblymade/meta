@@ -21,6 +21,7 @@ cache:
 services:
 - redis-server
 - elasticsearch
+sudo: false
 deploy:
   provider: heroku
   strategy: git
