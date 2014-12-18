@@ -233,7 +233,7 @@ button, .button {
   //
   &:hover {
     color: $white;
-    background:#2ec095;
+    background:$green-dark;
     -webkit-transition: all 0.15s ease-in-out;
     transition: all 0.15s ease-in-out;
   }
@@ -270,7 +270,7 @@ button, .button {
     .pill-button-split-icon {
       //
       &.pill-button-theme-green {
-        background:#2ec095;
+        background:$green-dark;
       }
       .fa:before {
         display: block;
