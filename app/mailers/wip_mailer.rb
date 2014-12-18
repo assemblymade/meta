@@ -18,7 +18,7 @@ class WipMailer < BaseMailer
 
     wip_slug = [@product.slug, @wip.number]
 
-    options = list_headers(Wip.to_s, @wip.id, wip_slug, wip_slug, product_wip_url(@product, @wip)).merge(
+    options = list_headers(Wip.to_s, @wip.id, @user.username, wip_slug, wip_slug, product_wip_url(@product, @wip)).merge(
       from: from_address_for(@wip.user),
       to:   @user.email,
       subject: "[#{@wip.product.slug}] #{@wip.title} (##{@wip.number})"
@@ -46,7 +46,7 @@ class WipMailer < BaseMailer
     wip_slug = [@product.slug, @wip.number]
     event_slug = [@product.slug, @wip.number, @event.number]
 
-    options = list_headers(Wip.to_s, @wip.id, wip_slug, event_slug, product_wip_url(@product, @wip)).merge(
+    options = list_headers(Wip.to_s, @wip.id, @user.username, wip_slug, event_slug, product_wip_url(@product, @wip)).merge(
       from: from_address_for(@event.user),
       to: @user.email,
       subject: "[#{@product.slug}] #{@wip.title} (##{@wip.number})"

@@ -24,30 +24,11 @@ class NewsFeedItemComment < ActiveRecord::Base
   end
 
   def publish_activity!
-    if target = news_feed_item.target
-      # we're currently duplicating comments to wip comments. This will be fixed
-      # we can remove this if block then
-      if target.is_a? Wip
-        event = Event.create_from_comment(
-          target,
-          Event::Comment,
-          body,
-          user
-        )
-
-        Activities::Comment.publish!(
-          actor: event.user,
-          subject: event,
-          target: target
-        )
-      else
-        Activities::Comment.publish!(
-          actor: user,
-          subject: self,
-          target: target
-        )
-      end
-    end
+    Activities::Comment.publish!(
+      actor: user,
+      subject: self,
+      target: news_feed_item.target
+    )
   end
 
   def product
