@@ -1,3 +1,61 @@
 .dropdown-glyph {
   margin-right: $dropdown-glyph-margin;
 }
+
+.dropdown-menu {
+  border:none;
+  padding:0;
+  margin:0.5rem 0 0 0;
+  min-width:0;
+  border-radius: 5px;
+  box-shadow: 0 0 8px rgba(100, 100, 100, 0.1);
+  //
+  &:before {
+    content:'';
+    z-index:5;
+    pointer-events: none;
+    display: block;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border:1px solid rgba(100,100,100,0.2);
+    border-radius: 5px;
+  }
+  li {
+    a {
+      position:relative;
+      z-index:1;
+      padding:0.5rem 2rem;
+      font-size: 1.1rem;
+      //
+      &:hover {
+        font-weight:bold;
+        border-bottom: inset 1px solid rgba(100,100,100,0.2);
+        border-top: inset 1px solid rgba(100,100,100,0.2);
+        border-radius: 0;
+        padding-right: 1.945rem;
+        letter-spacing: -0.03rem;
+      }
+    }
+    &:first-child {
+      a {
+        padding-top:1rem;
+        &:hover {
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+        }
+      }
+    }
+    &:last-child {
+      a {
+        padding-bottom:1rem;
+        &:hover {
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+      }
+    }
+  }
+}

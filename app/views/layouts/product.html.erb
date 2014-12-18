@@ -145,26 +145,26 @@
           <div class="center-align mcenter dropdown pt2 pb2 w45 r600_float-right r600_pt0 r600_pb0 r600_mr2 r600_w35 r768_p0 r768_m0 r992_w45">
             <div class="pill-button-split">
               <a class="pill-button pill-button-theme-green pill-button-border" href="javascript:void(0);" onclick="javascript:showCreateBounty();">
-                <div class="title bold fs5 pr7 pill-button-text-shadow">Create <span class="r600_none r992_inline-block">A New</span> Task</div>
+                <div class="title bold fs5 pr7 pill-button-text-shadow">Create <span class="r600_none r992_inline-block">A New</span> Bounty</div>
               </a>
               <a class="pill-button-split-icon pill-button-theme-green pill-button-text-shadow dropdown-toggle fs1" href="javascript:void(0);" id="product-actions" data-toggle="dropdown">
                 <%= inline_react_component 'Icon', icon: 'chevron-down' %>
               </a>
-              <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="product-actions">
-                <li role="presentation">
+              <ul class="dropdown-menu pull-right caret-right" role="menu" aria-labelledby="product-actions">
+                <!-- <li role="presentation">
                   <a href="javascript:void(0);" onclick="javascript:showCreateBounty();">
-                    <span class="mr1">New Bounty</span>
+                    <span>New Bounty</span>
                   </a>
-                </li>
+                </li> -->
                 <li role="presentation">
                   <a href="<%= new_product_post_path(@product) %>">
-                    <span class="mr1">New Post</span>
+                    <span>New Post</span>
                   </a>
                 </li>
                 <% if signed_in? && current_user.staff? %>
                 <li role="presentation">
                   <a href="<%= new_product_asset_path(@product) %>">
-                    <span class="mr1">New Asset</span>
+                    <span>New Asset</span>
                   </a>
                 </li>
                 <% end %>
