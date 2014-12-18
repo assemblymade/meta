@@ -194,7 +194,9 @@ class QueryMarks
         correlation = dot_product_vectors(user_vector, vector)
         if correlation > 0
           wip = Wip.find(wip_id)
-          result.append([correlation.to_f, wip])
+          if wip.user != user
+            result.append([correlation.to_f, wip])
+          end
         end
       end
 
