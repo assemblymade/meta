@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  var Accordian = require('./accordian.js.jsx')
+  var Accordion = require('./accordion.js.jsx')
   var BountiesStore = require('../stores/bounties_store.js')
   var BountyActionCreators = require('../actions/bounty_action_creators.js')
   var BountyFilter = require('./bounty_filter.js.jsx')
@@ -37,7 +37,10 @@
       var atBottom = $(window).scrollTop() + $(window).height() > $(document).height() - 200
 
       if (atBottom) {
-        BountyActionCreators.requestNextPage(this.props.product.slug, this.params(this.state.value, this.state.sort))
+        BountyActionCreators.requestNextPage(
+          this.props.product.slug,
+          this.params(this.state.value, this.state.sort)
+        )
       }
     },
 
@@ -128,23 +131,27 @@
                   Getting Started
                 </div>
                 <div className="h6 m0 gray-1">
-                  Jump into some discussion in chat and introduce yourself to <a href={product.people_url}>@core</a>.
+                  Updates are a great way to keep new contributors up to date
+                  with progress and new ways to help out. When you are ready,
+                  we'll also email the entry to everyone following
+                  <span>{product.name}</span>. You can include images and
+                  use Markdown to make it more awesome.
                 </div>
               </div>
               <div className="col-xs-6 col-sm-12">
                 <div className="pb1"> {/*Tags*/}
-                  <Accordian title="Tags">
+                  <Accordion title="Tags">
                     <ul className="list-reset mxn2">
                       {this.renderTags()}
                     </ul>
-                  </Accordian>
+                  </Accordion>
                 </div>
               </div>
               <div className="col-xs-6 col-sm-12">
                 <div className="mb1"> {/*Assets*/}
-                  <Accordian title="Assets" >
+                  <Accordion title="Assets" >
                     {this.renderAssets()}
-                  </Accordian>
+                  </Accordion>
                 </div>
               </div>
             </span>
