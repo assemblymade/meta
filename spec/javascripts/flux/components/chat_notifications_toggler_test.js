@@ -1,4 +1,5 @@
 jest.dontMock(pathToFile('components/chat_notifications_toggler.js.jsx'));
+jest.dontMock(pathToFile('mixins/dropdown_toggler.js.jsx'));
 jest.dontMock(pathToFile('mixins/local_storage.js'));
 
 describe('ChatNotificationsToggler', function() {
