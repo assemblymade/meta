@@ -8,7 +8,7 @@ class AddTargetIdToNfiComments < ActiveRecord::Migration
       nfi = wip.news_feed_item
 
       wip.comments.each do |comment|
-        nfi.news_feed_item_comments.create(
+        nfi.comments.create(
           news_feed_item: nfi,
           target_id: comment.id,
           body: comment.body,
