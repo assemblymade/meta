@@ -35,7 +35,7 @@
     display: table-cell;
     width:25%;
     @media screen and (min-width: 600px) {
-      display: inline-block !important;
+      display: inline-block;
       width:auto;
       margin-left:-4px;
     }

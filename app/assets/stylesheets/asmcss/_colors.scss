@@ -17,6 +17,7 @@ $gray-darker:  $gray-1;
 $gray-green:   #678b92;
 
 $green:        #33D6A6;
+$green-dark:   #2ec095;
 $blue:         #338EDA;
 $red:          #EC3750;
 $yellow:       #F2D930;
@@ -180,6 +181,7 @@ $yellow:       #F2D930;
 
 .green        { color: $green }
 .bg-green     { background-color: $green }
+.green-dark     { background-color: $green-dark }
 .border-green { border-color: $green }
 .fill-green   { fill: $green }
 .stroke-green { stroke: $green }
