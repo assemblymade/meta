@@ -157,7 +157,7 @@ var BountyListItem = React.createClass({
                   <Coins coins={this.props.bounty.earnable_coins_cache} />
                 </span>
 
-                <span className="gray mr2 fs4 fw_600">
+                <span className="gray mr2 fs3 fw_600">
                   {this.renderComments(bounty.comments_count)}
                 </span>
 

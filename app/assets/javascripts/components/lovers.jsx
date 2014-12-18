@@ -16,10 +16,14 @@ var Lovers = React.createClass({
     }
 
     return (
-      <div className="gray-2 left">
-        {this.renderAvatar(this.state.recentLovers[0])}
-        <span className="black bold"> {this.state.recentLovers[0].username} </span>
-        {message}
+      <div>
+        <div className="inline-block valign-top">
+          {this.renderAvatar(this.state.recentLovers[0])}
+        </div>
+        <div className="inline-block valign-top gray-2 fs3">
+          <span className="black bold"> {this.state.recentLovers[0].username} </span>
+          {message}
+        </div>
       </div>
     );
   },
@@ -38,7 +42,7 @@ var Lovers = React.createClass({
 
   renderAvatar: function(user) {
     return (
-      <div className="left mr1" style={{paddingTop: 4}}>
+      <div className="left mr1">
         <Avatar user={user} size={18} />
       </div>
     );
