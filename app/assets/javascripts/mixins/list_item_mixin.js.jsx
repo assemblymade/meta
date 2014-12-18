@@ -2,7 +2,7 @@ var ListItemMixin = {
   renderComments: function(count) {
     return [
       <Icon icon="comment" />,
-      <span className="px1 foo">
+      <span className="px1">
         {count}
       </span>
     ];
