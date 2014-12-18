@@ -1,7 +1,8 @@
 // var Dispatcher = require('../dispatcher')
 
 var CONSTANTS = window.CONSTANTS;
-var ActionTypes = CONSTANTS.ActionTypes
+var ActionTypes = CONSTANTS.ActionTypes;
+var UserStore = require('../stores/user_store');
 
 var CommentActionCreators = {
   confirmUpdateReceived: function(commentId) {
@@ -21,7 +22,7 @@ var CommentActionCreators = {
 
   submitComment: function(commentId, commentBody, commentUrl) {
     var timestamp = Date.now();
-    var user = window.app.currentUser().attributes;
+    var user = UserStore.get();
 
     Dispatcher.dispatch({
       type: ActionTypes.NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT,

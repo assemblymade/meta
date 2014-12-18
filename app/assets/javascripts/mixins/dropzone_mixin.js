@@ -28,15 +28,13 @@ var DropzoneMixin = {
     if (attachment) {
       var currentText = this.state.text || '';
       var attachmentName = attachment.name;
-      var newText;
+      var newText = '[' + attachmentName + '](' + attachment.href + ')\n';
+
       if (/\.(gif|jpg|jpeg|png|psd)$/.test(attachmentName)) {
-        newText = '![' + attachmentName + '](' + attachment.href + ')\n';
-      } else {
-        newText = '[' + attachmentName + '](' + attachment.href + ')\n';
+        newText = '!' + newText;
       }
 
       var replaceText = '![Uploading... ' + attachmentName + ']()';
-
       var text = currentText.replace(replaceText, newText);
 
       this.updateComment(thread, text);

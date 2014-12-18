@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var BountyActionCreators = require('../actions/bounty_action_creators');
 var Markdown = require('./markdown.js.jsx');
 var Icon = require('./icon.js.jsx');
@@ -377,7 +375,7 @@ module.exports = React.createClass({
     });
   },
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     SubscriptionsStore.addChangeListener(this._onChange)
   },
 

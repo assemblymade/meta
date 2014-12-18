@@ -2,6 +2,8 @@
 
 (function(){
   var Lightbox = require('./lightbox.js.jsx')
+  var NewComment = require('./news_feed/new_comment.js.jsx');
+  var UserStore = require('../stores/user_store');
 
   var CreateBounty = React.createClass({
     displayName: 'CreateBounty',
@@ -70,7 +72,13 @@
                 <label className="control-label">
                   Description
                 </label>
-                <MarkdownEditor name="task[description]" required="true" />
+                <NewComment
+                    name="task[description]"
+                    thread="task_description"
+                    hideButtons={true} url="#"
+                    user={UserStore.get()}
+                    initialRows={4}
+                    hideAvatar={true} />
               </div>
 
               <div className="form-group mb2">

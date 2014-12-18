@@ -1,5 +1,13 @@
 /** @jsx React.DOM */
 
+/**
+ * Before using this component, consider that by reaching down into
+ * the DOM with `MarkdownEditorView`, you'll need to add handling for all
+ * of the uploads yourself. `NewComment.js.jsx` is an alternative that can
+ * be dropped in with the right props (they all get passed to the `textarea`
+ * eventually, so you can use it in forms etc.)
+ */
+
 (function(){
   var CommentAttachmentStore = require('../stores/comment_attachment_store');
   var TypeaheadUserTextArea = require('./typeahead_user_textarea.js.jsx');

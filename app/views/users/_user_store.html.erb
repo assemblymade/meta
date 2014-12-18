@@ -1,7 +1,7 @@
 <% if current_user %>
   <%= initial_store_data(
     'UserStore',
-    current_user.as_json.merge(
+    current_user.as_json(only: [:bio, :created_at, :id, :is_staff, :username]).merge(
       isCore: ((@product && @product.core_team?(current_user)) || current_user.is_staff?)
     )
   ) %>
