@@ -14,7 +14,6 @@ class PagesController < ApplicationController
   end
 
   def interests
-    @curated_marks = CuratedMark.all
   end
 
   def suggestions

@@ -1,196 +1,167 @@
 var Interests = React.createClass({
   propTypes: {
-    curatedMarks: React.PropTypes.array.isRequired
+    marks: React.PropTypes.array.isRequired
   },
 
   getInitialState: function() {
     return {
-      selectedMarks: [],
-      selectedSuggestions: []
+      selected: []
     }
   },
 
-  renderCuratedMarks: function() {
-    return this.props.curatedMarks.map(function(mark) {
-      return this.renderCuratedMark(mark)
+  renderMarks: function(section) {
+    var marks = this.props.marks[section]
+
+    marks = marks.map(function(mark) {
+      return this.renderMark(mark, section)
     }.bind(this))
-  },
-
-  renderCuratedMark: function(mark) {
-    var selectedMarks = this.state.selectedMarks
-    var index = _.pluck(selectedMarks, 'name').indexOf(mark.name)
-    var selected = index >= 0
-
-    var handleClick = function() {
-      if (selected) {
-        selectedMarks.splice(index, 1)
-      } else {
-        selectedMarks.push(mark)
-      }
-
-      this.setState({
-        selectedMarks: selectedMarks
-      })
-    }.bind(this)
-
-    var classes = ['btn', 'btn-block', 'mt2', 'py2', 'border-2']
-
-    if (selected) {
-      classes = classes.concat(['btn-default', 'green', 'border-green'])
-    } else {
-      classes = classes.concat(['btn-primary', 'white', 'bg-blue', 'border-blue'])
-    }
-
-    var icon = null
-
-    if (selected) {
-      icon = <span className="icon icon-check mr1"></span>
-    }
 
     return (
-      <div className="col-md-4">
-        <div className="bg-white rounded h4 mt0 mb0 p3">
-          <h3 className="bold h3 mt0 mb1">
-            {mark.name.toUpperCase()}
-          </h3>
-
-          <p className="mb0">
-            {mark.description}            
-          </p>
-
-          <a className={classes.join(' ')} onClick={handleClick} href="#">
-            {icon}
-            That&#39;s me
-          </a>
+      <div className="row">
+        <div className="col-xs-12">
+          <h4 className="gray caps mt3 mb3 ml2">
+            {section}
+          </h4>
+          {marks}
         </div>
       </div>
     )
   },
 
-  renderSuggestedHeader: function() {
-    if (this.state.selectedMarks.length) {
-      return (
-        <div>
-          <div className="row py4">
-            <div className="col-md-4 col-md-offset-4">
-              <hr />
-            </div>
-          </div>
+  renderMark: function(mark, section) {
+    var selected = this.state.selected
+    var index = selected.indexOf(mark)
+    var isSelected = index >= 0
 
-          <div className="row mb4">
-            <div className="col-md-8 col-md-offset-2 center">
-              <p className="large">Sweet! Pick three specialties so we can help you find the perfect product.</p>
-            </div>
-          </div>
-        </div>
-      )
-    }
-  },
+    var handleClick = function(event) {
+      event.stopPropagation()
+      event.preventDefault()
 
-  renderSuggestedMarks: function() {
-    var selectedMarks = this.state.selectedMarks
-
-    var marks = _.pluck(selectedMarks, 'related_marks')
-    var marks = _.zip.apply(this, marks)
-    var marks = _.chain(marks).flatten().compact().groupBy(function(mark, index) { return Math.floor(index / 4) }).values().value()
-
-    return marks.map(function(row) {
-      return (
-        <div className="row mt3">
-          {row.map(this.renderSuggestedMark)}
-        </div>
-      )
-    }.bind(this))
-  },
-
-  renderSuggestedMark: function(mark) {
-    var selectedSuggestions = this.state.selectedSuggestions
-    var index = _.pluck(selectedSuggestions, 'name').indexOf(mark.name)
-    var selected = index >= 0
-
-    var handleClick = function() {
-      if (selected) {
-        selectedSuggestions.splice(index, 1)
+      if (isSelected) {
+        selected.splice(index, 1)
       } else {
-        selectedSuggestions.push(mark)
+        selected.push(mark)
       }
 
       this.setState({
-        selectedSuggestions: selectedSuggestions
+        selected: selected
       })
     }.bind(this)
 
-    var classes = ['btn', 'btn-block', 'py3', 'bg-white', 'border-2']
+    var classes = ['bg-white', 'border-2', 'p2', 'rounded', 'caps', 'bold']
 
-    if (selected) {
-      classes = classes.concat(['btn-default', 'green', 'border-green'])
+    if (isSelected) {
+      classes = classes.concat(['green', 'green-hover', 'green-focus', 'border-green'])
     } else {
-      classes = classes.concat(['btn-primary', 'blue', 'border-white'])
+      classes = classes.concat(['blue', 'border-white'])
     }
 
     var icon = null
 
-    if (selected) {
+    if (isSelected) {
       icon = <span className="icon icon-check mr1"></span>
     }
 
     return (
-      <div className="col-md-3">
+      <div className="inline-block px2 py3">
         <a className={classes.join(' ')} onClick={handleClick} href="#">
-          {mark.name.toUpperCase()}
+          {icon}
+          {mark.toUpperCase()}
         </a>
       </div>
     )
   },
 
-  renderSuggestedFooter: function() {
-    var selectedMarks = this.state.selectedMarks
-    var selectedSuggestions = this.state.selectedSuggestions
+  renderProgress: function() {
+    var progress = (this.state.selected.length / 3) * 360;
 
-    if (selectedMarks.length) {
-      var progress = Math.min(selectedSuggestions.length / 3 * 100, 100)
+    if (progress >= 360) {
+      return
+    }
 
-      var classes = ['right', 'btn', 'btn-primary']
+    return (
+      <span className="mr2 pie-container">
+        <div className={progress > 180 ? 'pie big' : 'pie'} data-start="0" data-value={progress}></div>
+        <div className={progress < 180 ? 'pie big' : 'pie'} data-start={progress} data-value={360 - progress}></div>
+      </span>
+    )
+  },
 
-      if (progress < 100) {
-        classes.push('disabled')
-      }
+  renderFooter: function() {
+    var selected = this.state.selected
+    var progress = Math.min(selected.length / 3 * 100, 100)
 
-      var suggestionsUrl = ['/', 'suggestions']
+    var classes = ['right', 'bg-blue', 'bold', 'h4', 'px3', 'py2', 'rounded', 'mt0', 'b0', 'align-left']
 
-      if(selectedSuggestions.length) {
-       var params = selectedSuggestions.map(function(mark) {
-          return 'tags[]=' + encodeURI(mark.name)
-        }).join('&')
-        suggestionsUrl = suggestionsUrl.concat(['?', params])
-      }
+    if (progress < 100) {
+      classes.push('gray-light', 'gray-light-hover')
+    } else {
+      classes.push('white', 'white-hover')
+    }
 
-      return (
-        <div className="row mt4">
-          <div className="col-md-6">
-            <div className="progress mt1">
-              <div className="progress-bar bg-green" role="progressbar" aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100" style={{ width: progress + '%' }}></div>
-            </div>
-          </div>
+    var suggestionsUrl = ['/', 'suggestions']
 
-          <div className="col-md-6">
-            <a className={classes.join(' ')} href={suggestionsUrl.join('')}>
-              Take a look at some suggestions
+    if (selected.length) {
+     var params = selected.map(function(mark) {
+        return 'tags[]=' + encodeURI(mark)
+      }).join('&')
+      suggestionsUrl = suggestionsUrl.concat(['?', params])
+    }
+
+    var selectionsLeft = 3 - selected.length
+    var text = null
+    var style = {}
+
+    if (selectionsLeft > 0) {
+      var topic = selectionsLeft > 1 ? 'topics' : 'topic'
+      text = 'Pick ' + selectionsLeft + ' more ' + topic
+      style = { width: 250, paddingLeft: 64 }
+    } else {
+      text = 'Yay! Take a look at your suggestions.'
+    }
+
+    var handleClick = function(event) {
+      event.stopPropagation()
+      event.preventDefault()
+
+      this.setState({
+        selected: _.union(this.state.selected, ['Fortran', 'Microsoft Paint', 'Air Guitar'])
+      })
+    }.bind(this)
+
+    if(!this.state.selected.length) {
+      var skipButton = (
+        <span className="h4 py2 mt0 mb0 mr2" style={{ 'line-height': 48 }}>
+          <a onClick={handleClick} href="#" className="underline">Just pick them for me</a>
+          {' '}
+          or
+        </span>
+      )
+    }
+
+    return (
+      <div className="row mt4">
+        <div className="col-xs-12">
+          <div className="align-right">
+            {skipButton}
+            <a className={classes.join(' ')} style={style} href={suggestionsUrl.join('')}>
+              {this.renderProgress()}
+              {text}
             </a>
           </div>
         </div>
-      )
-    }
+      </div>
+    )
   },
 
   render: function() {
     return (
       <div>
-        {this.renderCuratedMarks()}
+        {this.renderMarks('Development')}
+        {this.renderMarks('Design')}
+        {this.renderMarks('Strategy & Growth')}
 
-        {this.renderSuggestedHeader()}
-        {this.renderSuggestedMarks()}
-        {this.renderSuggestedFooter()}
+        {this.renderFooter()}
       </div>
     )
   }
