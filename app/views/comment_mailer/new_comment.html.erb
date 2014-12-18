@@ -1,9 +1,12 @@
 <style type="text/css">
-    img {
-      height:auto !important;
-      max-width:600px !important;
-      width: 100% !important;
-    }
+  body {
+    font-family: Helvetica, Arial, Verdana, "Trebuchet MS";
+  }
+  img {
+    height:auto !important;
+    max-width:600px !important;
+    width: 100% !important;
+  }
 </style>
 
 <%= @product ? product_markdown(@product, @comment.body) : markdown(@comment.body) %>
