@@ -35,9 +35,7 @@ var NewsFeedItemComments = React.createClass({
       this.setState({ loading: true });
       this.fetchCommentsFromServer({ stopPropagation: function() {} });
     }
-  },
 
-  componentWillMount: function() {
     if (_reach(this.props, 'item.target.type') === 'task') {
       BountyStore.addChangeListener(this.getBountyState);
     }
@@ -167,11 +165,15 @@ var NewsFeedItemComments = React.createClass({
 
     return comments.map(function(comment, i) {
       if (!self.props.showAllComments) {
-        return <ActivityFeedComment
-            author={comment.user}
-            body={comment.markdown_body}
-            heartable={true}
-            heartableId={comment.id} />
+        if (comment.type !== 'news_feed_item_comment') {
+          return null;
+        } else {
+          return <ActivityFeedComment
+              author={comment.user}
+              body={comment.markdown_body}
+              heartable={true}
+              heartableId={comment.id} />
+        }
       }
 
       if (new Date(comment.created_at) >= renderIfAfter) {

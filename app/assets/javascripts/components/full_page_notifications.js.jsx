@@ -118,7 +118,7 @@ var FullPageNotifications = React.createClass({
     return this.getStateFromStore()
   },
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     StoryStore.addChangeListener(this._onChange)
   },
 

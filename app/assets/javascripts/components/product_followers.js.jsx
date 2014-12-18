@@ -38,7 +38,7 @@ module.exports = React.createClass({
     return this.getStateFromStore()
   },
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     ProductFollowersStore.addListener('change', this._onChange)
   },
 

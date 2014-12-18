@@ -9,6 +9,12 @@ var xhr = require('../../xhr');
 var ENTER = 13;
 var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
 
+/**
+ * TODO: Rethink how this component interacts with its parents and children.
+ * Right now, it breaks the one-way flow of data -- is there a better
+ * way to pass data in?
+ */
+
 var NewsFeedItemNewComment = React.createClass({
   displayName: 'NewComment',
 
@@ -264,7 +270,6 @@ var NewsFeedItemNewComment = React.createClass({
     var thread = this.props.thread;
     var createdAt = Date.now();
 
-    // FIXME: (pletcher) These should go through action creators and the Dispatcher
     if (comment.length >= 2) {
       CommentActionCreators.submitComment(thread, comment, this.props.url);
     }
