@@ -18,6 +18,7 @@ var NewsFeedItemBountyWin = require('./news_feed_item_bounty_win.js.jsx');
 var NewsFeedItemStore = require('../../stores/news_feed_item_store');
 var ReadReceipts = require('../read_receipts.js.jsx');
 var Routes = require('../../routes');
+var Spinner = require('../spinner.js.jsx');
 var UserStore = require('../../stores/user_store');
 
 var NewsFeedItemComments = React.createClass({
@@ -31,6 +32,7 @@ var NewsFeedItemComments = React.createClass({
 
   componentDidMount: function() {
     if (this.props.showAllComments) {
+      this.setState({ loading: true });
       this.fetchCommentsFromServer({ stopPropagation: function() {} });
     }
   },
@@ -60,6 +62,7 @@ var NewsFeedItemComments = React.createClass({
       this.setState({
         comments: response.comments,
         events: response.events,
+        loading: false,
         showCommentsAfter: 0
       });
     }.bind(this));
@@ -129,6 +132,10 @@ var NewsFeedItemComments = React.createClass({
   },
 
   renderComments: function() {
+    if (this.state.loading) {
+      return <Spinner />;
+    }
+
     var confirmedComments = this.renderConfirmedComments();
     var optimisticComments = this.renderOptimisticComments();
     var comments = confirmedComments.concat(optimisticComments);
@@ -196,6 +203,10 @@ var NewsFeedItemComments = React.createClass({
   },
 
   renderLoadMoreButton: function() {
+    if (this.props.showAllComments) {
+      return;
+    }
+
     var numberOfComments = this.state.numberOfComments;
     var target = this.props.item.target;
 

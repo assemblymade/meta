@@ -15,6 +15,8 @@ var NewsFeedItemNewComment = React.createClass({
   propTypes: {
     canContainWork: React.PropTypes.bool,
     commentId: _dependsOn('initialText', 'string'),
+    hideAvatar: React.PropTypes.bool,
+    hideButtons: React.PropTypes.bool,
     initialText: _dependsOn('commentId', 'string'),
     thread: React.PropTypes.string.isRequired,
     url: React.PropTypes.string.isRequired,
@@ -153,7 +155,7 @@ var NewsFeedItemNewComment = React.createClass({
     return (
       <div className="clearfix" style={{ paddingBottom: '2.5rem' }}>
         {this.renderAvatar()}
-        <div className="px4">
+        <div className={this.props.hideAvatar ? null : "px4"}>
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
               <TypeaheadUserTextArea
@@ -177,6 +179,10 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   renderAvatar: function() {
+    if (this.props.hideAvatar) {
+      return;
+    }
+
     if (!this.props.initialText) {
       return (
         <div className="left">
@@ -187,6 +193,10 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   renderButtons: function() {
+    if (this.props.hideButtons) {
+      return;
+    }
+
     var classes = this.buttonClasses('btn-primary');
 
     return (
@@ -197,7 +207,7 @@ var NewsFeedItemNewComment = React.createClass({
             onClick={this.submitComment}>
           Comment
         </a>
-        {this.props.canContainWork ? this.renderSubmitWorkButton() : null}
+        {this.renderSubmitWorkButton()}
       </div>
     );
   },
@@ -214,17 +224,19 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   renderSubmitWorkButton: function() {
-    var classes = this.buttonClasses('btn-default');
+    if (this.props.canContainWork) {
+      var classes = this.buttonClasses('btn-default');
 
-    return (
-      <a className={classes}
-          href="javascript:void(0);"
-          style={{ color: '#5cb85c !important', border: '1px solid #d3d3d3' }}
-          onClick={this.submitWork}>
-        <span className="icon icon-document icon-left"></span>
-        Submit work for review
-      </a>
-    );
+      return (
+        <a className={classes + ' mr2'}
+            href="javascript:void(0);"
+            style={{ color: '#5cb85c !important', border: '1px solid #d3d3d3' }}
+            onClick={this.submitWork}>
+          <span className="icon icon-document icon-left"></span>
+          Submit work for review
+        </a>
+      );
+    }
   },
 
   submitComment: function(e) {
