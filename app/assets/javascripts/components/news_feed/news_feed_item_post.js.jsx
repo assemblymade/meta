@@ -1,5 +1,6 @@
 var Markdown = require('../markdown.js.jsx');
 var NewsFeedItemModalMixin = require('../../mixins/news_feed_item_modal_mixin');
+var UserStore = require('../../stores/user_store');
 
 module.exports = React.createClass({
   displayName: 'NewsFeedItemPost',
@@ -7,10 +8,17 @@ module.exports = React.createClass({
   propTypes: {
     title: React.PropTypes.string.isRequired,
     body: React.PropTypes.string.isRequired,
+    target: React.PropTypes.object,
     url: React.PropTypes.string.isRequired
   },
 
   mixins: [NewsFeedItemModalMixin],
+
+  getInitialState: function() {
+    return {
+      archived: this.props.target && this.props.target.archived
+    };
+  },
 
   render: function() {
     var target = this.props.target;

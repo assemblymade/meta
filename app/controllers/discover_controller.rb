@@ -113,6 +113,7 @@ class DiscoverController < ApplicationController
                 map(&:news_feed_item)
     else
       NewsFeedItem.public_items.
+                unarchived_items.
                 limit(limit).
                 offset(offset).
                 order('last_commented_at desc')

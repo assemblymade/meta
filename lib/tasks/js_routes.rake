@@ -49,7 +49,9 @@ end
 ROUTES = [
   'notifications',
   'product_follow',
+  'product_post',
   'product_unfollow',
+  'product_update',
   'product_update_comment',
   'product_update_comments',
   'product_update_subscribe',

@@ -1,270 +1,266 @@
-/** @jsx React.DOM */
+var MasonryMixin = require('../../mixins/masonry_mixin.js');
+var NewsFeedItem = require('./news_feed_item.js.jsx');
+var NewsFeedMixin = require('../../mixins/news_feed_mixin.js.jsx');
+var Spinner = require('../spinner.js.jsx');
+var ActionTypes = window.CONSTANTS.ActionTypes
 
-(function() {
-  var MasonryMixin = require('../../mixins/masonry_mixin.js');
-  var NewsFeedItem = require('./news_feed_item.js.jsx');
-  var NewsFeedMixin = require('../../mixins/news_feed_mixin.js.jsx');
-  var Spinner = require('../spinner.js.jsx');
-  var ActionTypes = window.CONSTANTS.ActionTypes
-
-  var NewsFeed = React.createClass({
-    mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0}), NewsFeedMixin],
-    propTypes: {
-      filterCounts: function(props, propName, componentName) {
-        if (!props.productPage && !props.filterCounts) {
-          return new Error('Required prop `filterCounts` was not found.');
-        }
-      },
-
-      productPage: React.PropTypes.bool,
-      url: React.PropTypes.string.isRequired
-    },
-
-    componentDidMount: function() {
-      window.analytics.track(
-        'news_feed_item.viewed', {
-          product: (window.app.currentAnalyticsProduct())
-        }
-      );
-
-      this.initializeEagerFetching();
-    },
-
-    countFor: function(filter) {
-      return this.props.filterCounts[filter];
-    },
-
-    displayCount: function() {
-      var filter = this.state.hoverFilter;
-
-      if (filter) {
-        var count = this.countFor(filter);
-
-        return (
-          <span className="gray-darker text-large">
-            There are about
-            <span className="bold">
-              {' '}<span className="text-info">{count}</span> {filter}
-            </span>
-            {' '} bounties
-          </span>
-        );
+var NewsFeed = React.createClass({
+  mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0}), NewsFeedMixin],
+  propTypes: {
+    filterCounts: function(props, propName, componentName) {
+      if (!props.productPage && !props.filterCounts) {
+        return new Error('Required prop `filterCounts` was not found.');
       }
-
-      return <span className="text-large">&nbsp;</span>
     },
 
-    fetchMoreNewsFeedItems: _.debounce(this.eagerlyFetchMoreNewsFeedItems, 200),
+    productPage: React.PropTypes.bool,
+    url: React.PropTypes.string.isRequired
+  },
 
-    filterBy: function(filter, e) {
-      this.setState({
-        filter: filter
-      }, function() {
-        var url = window.location.pathname + '?page=' + this.state.page +
-          '&filter=' + filter;
+  componentDidMount: function() {
+    window.analytics.track(
+      'news_feed_item.viewed', {
+        product: (window.app.currentAnalyticsProduct())
+      }
+    );
 
-        window.xhr.get(url, this._handleFilteredNewsFeedItems);
-      }.bind(this));
-    },
+    this.initializeEagerFetching();
+  },
 
-    filters: function() {
+  countFor: function(filter) {
+    return this.props.filterCounts[filter];
+  },
+
+  displayCount: function() {
+    var filter = this.state.hoverFilter;
+
+    if (filter) {
+      var count = this.countFor(filter);
+
       return (
-        <ul className="nav nav-skills bg-white mb2" key="news-feed-filter-list">
-          {_.map(_.keys(this.props.filters), this.renderFilterListItem)}
-        </ul>
+        <span className="gray-darker text-large">
+          There are about
+          <span className="bold">
+            {' '}<span className="text-info">{count}</span> {filter}
+          </span>
+          {' '} bounties
+        </span>
       );
-    },
+    }
 
-    getDefaultProps: function() {
-      var filters = lowerCaseAndReflect([
-        'Frontend',
-        'Backend',
-        'Design',
-        'Marketing',
-        'Writing',
-        'Mobile'
-      ]);
+    return <span className="text-large">&nbsp;</span>
+  },
 
-      // if (window.app.featureEnabled('hot-updates')) {
-      //   filters['Hot'] = 'hot';
-      // } else {
-      //   filters['Mobile'] = 'mobile';
-      // }
+  fetchMoreNewsFeedItems: _.debounce(this.eagerlyFetchMoreNewsFeedItems, 200),
 
-      return {
-        filters: filters
-      };
-    },
+  filterBy: function(filter, e) {
+    this.setState({
+      filter: filter
+    }, function() {
+      var url = window.location.pathname + '?page=' + this.state.page +
+        '&filter=' + filter;
 
-    getInitialState: function() {
-      var queryKey = window.parseUri(window.location).queryKey || {};
+      window.xhr.get(url, this._handleFilteredNewsFeedItems);
+    }.bind(this));
+  },
 
-      return {
-        filter: (queryKey.filter || ''),
-        items: this.props.items,
-        loading: false,
-        page: (queryKey.page || 1)
-      };
-    },
+  filters: function() {
+    return (
+      <ul className="nav nav-skills bg-white mb2" key="news-feed-filter-list">
+        {_.map(_.keys(this.props.filters), this.renderFilterListItem)}
+      </ul>
+    );
+  },
 
-    handleFilterMouseOver: function(filter, e) {
-      this.setState({
-        hoverFilter: filter,
-      });
-    },
+  getDefaultProps: function() {
+    var filters = lowerCaseAndReflect([
+      'Frontend',
+      'Backend',
+      'Design',
+      'Marketing',
+      'Writing',
+      'Mobile'
+    ]);
 
-    handleFilterMouseOut: function(filter, e) {
-      this.setState({
-        hoverFilter: null,
-      });
-    },
+    // if (window.app.featureEnabled('hot-updates')) {
+    //   filters['Hot'] = 'hot';
+    // } else {
+    //   filters['Mobile'] = 'mobile';
+    // }
 
-    render: function() {
-      var disabled = false;
+    return {
+      filters: filters
+    };
+  },
 
-      if (this.state.disableLoadMoreButton) {
-        disabled = true;
+  getInitialState: function() {
+    var queryKey = window.parseUri(window.location).queryKey || {};
+
+    return {
+      filter: (queryKey.filter || ''),
+      items: this.props.items,
+      loading: false,
+      page: (queryKey.page || 1)
+    };
+  },
+
+  handleFilterMouseOver: function(filter, e) {
+    this.setState({
+      hoverFilter: filter,
+    });
+  },
+
+  handleFilterMouseOut: function(filter, e) {
+    this.setState({
+      hoverFilter: null,
+    });
+  },
+
+  render: function() {
+    var disabled = false;
+
+    if (this.state.disableLoadMoreButton) {
+      disabled = true;
+    }
+
+    if (this.props.productPage) {
+      var style = null
+
+      if (this.props.items.length) {
+        style = { marginTop: '-1rem' }
       }
 
-      if (this.props.productPage) {
-        var style = null
+      return (
+        <div className="mxn2" style={style}>
+          {this.renderItems()}
+        </div>
+      );
+    }
 
-        if (this.props.items.length) {
-          style = { marginTop: '-1rem' }
-        }
+    return (
+      <div>
+        {this.filters()}
+        {this.spinner()}
 
-        return (
-          <div className="mxn2" style={style}>
+        <div className="container" key="news-feed-container">
+          <div className="py1 text-center" key="news-feed-filter-count">
+            {this.displayCount()}
+          </div>
+          <div className="clearfix mxn2" ref="masonryContainer" key="news-feed-items">
             {this.renderItems()}
           </div>
-        );
+
+          <div className="mb4" key="news-feed-load-more">
+            <a href="javascript:void(0);"
+                  onClick={this.fetchMoreNewsFeedItems}
+                  className="btn btn-default btn-block" disabled={disabled}>
+              {this.state.disabled ? <Spinner /> : 'Load more'}
+            </a>
+          </div>
+        </div>
+      </div>
+    )
+  },
+
+  renderEmpty: function() {
+    return (
+      <div className="well text-center">
+        There hasn't been any activity yet. Why not <a href="/chat/meta">jump into chat</a> to see where you can help?
+      </div>
+    );
+  },
+
+  renderFilterListItem: function(filter) {
+    var label = this.props.filters[filter];
+    var buttonClass = filter === this.state.filter ?
+      'active' :
+      '';
+
+    // var onClick = this.filterBy.bind(this, filter);
+    var onClick = function() {
+      window.analytics.track('news_feed_item.filter.clicked', { filter: filter });
+    };
+
+    return (
+      <li className={buttonClass} key={filter}>
+        <a href={"?filter=" + filter}
+            onMouseOver={this.handleFilterMouseOver.bind(this, filter)}
+            onMouseOut={this.handleFilterMouseOut.bind(this, filter)}>
+          {label}
+        </a>
+      </li>
+    );
+  },
+
+  renderItems: function() {
+    var productPage = this.props.productPage;
+
+    return _.map(this.state.items, function(item) {
+      var target = item.target;
+
+      if (target.type === 'team_membership' && !productPage) {
+        return null;
       }
 
+      var classes = React.addons.classSet({
+        'sm-col': !productPage,
+        'sm-col-6': !productPage,
+        'p2': true
+      });
+
       return (
-        <div>
-          {this.filters()}
-          {this.spinner()}
-
-          <div className="container" key="news-feed-container">
-            <div className="py1 text-center" key="news-feed-filter-count">
-              {this.displayCount()}
-            </div>
-            <div className="clearfix mxn2" ref="masonryContainer" key="news-feed-items">
-              {this.renderItems()}
-            </div>
-
-            <div className="mb4" key="news-feed-load-more">
-              <a href="javascript:void(0);"
-                    onClick={this.fetchMoreNewsFeedItems}
-                    className="btn btn-default btn-block" disabled={disabled}>
-                {this.state.disabled ? <Spinner /> : 'Load more'}
-              </a>
-            </div>
-          </div>
+        <div className={classes} key={item.id}>
+          <NewsFeedItem {...item} productPage={productPage} />
         </div>
       )
-    },
+    });
+  },
 
-    renderEmpty: function() {
+  spinner: function() {
+    if (this.state.loading) {
       return (
-        <div className="well text-center">
-          There hasn't been any activity yet. Why not <a href="/chat/meta">jump into chat</a> to see where you can help?
+        <div className="fixed top-0 left-0 z4 full-width" style={{ height: '100%' }}>
+          <div className="absolute bg-darken-4 full-width" style={{ opacity: '0.4', height: '100%' }} />
+          <div className="relative" style={{ top: '40%' }}>
+            <Spinner />
+          </div>
         </div>
       );
-    },
-
-    renderFilterListItem: function(filter) {
-      var label = this.props.filters[filter];
-      var buttonClass = filter === this.state.filter ?
-        'active' :
-        '';
-
-      // var onClick = this.filterBy.bind(this, filter);
-      var onClick = function() {
-        window.analytics.track('news_feed_item.filter.clicked', { filter: filter });
-      };
-
-      return (
-        <li className={buttonClass} key={filter}>
-          <a href={"?filter=" + filter}
-              onMouseOver={this.handleFilterMouseOver.bind(this, filter)}
-              onMouseOut={this.handleFilterMouseOut.bind(this, filter)}>
-            {label}
-          </a>
-        </li>
-      );
-    },
-
-    renderItems: function() {
-      var productPage = this.props.productPage;
-
-      return _.map(this.state.items, function(item) {
-        var target = item.target;
-
-        if (target.type === 'team_membership' && !productPage) {
-          return null;
-        }
-
-        var classes = React.addons.classSet({
-          'sm-col': !productPage,
-          'sm-col-6': !productPage,
-          'p2': true
-        });
-
-        return (
-          <div className={classes} key={item.id}>
-            <NewsFeedItem {...item} productPage={productPage} />
-          </div>
-        )
-      });
-    },
-
-    spinner: function() {
-      if (this.state.loading) {
-        return (
-          <div className="fixed top-0 left-0 z4 full-width" style={{ height: '100%' }}>
-            <div className="absolute bg-darken-4 full-width" style={{ opacity: '0.4', height: '100%' }} />
-            <div className="relative" style={{ top: '40%' }}>
-              <Spinner />
-            </div>
-          </div>
-        );
-      }
-    },
-
-    _handleFilteredNewsFeedItems: function(err, results) {
-      if (err) {
-        return console.error(err);
-      }
-
-      var items;
-      try {
-        items = JSON.parse(results);
-      } catch (e) {
-        return console.error(e);
-      }
-
-      this.setState({
-        items: items
-      });
     }
-  });
+  },
 
-  function lowerCaseAndReflect(array) {
-    var map = {};
-
-    for (var i = 0, l = array.length; i < l; i++) {
-      var item = array[i];
-
-      map[item.toLowerCase()] = item;
+  _handleFilteredNewsFeedItems: function(err, results) {
+    if (err) {
+      return console.error(err);
     }
 
-    return map;
+    var items;
+    try {
+      items = JSON.parse(results);
+    } catch (e) {
+      return console.error(e);
+    }
+
+    this.setState({
+      items: items
+    });
+  }
+});
+
+function lowerCaseAndReflect(array) {
+  var map = {};
+
+  for (var i = 0, l = array.length; i < l; i++) {
+    var item = array[i];
+
+    map[item.toLowerCase()] = item;
   }
 
-  if (typeof module !== 'undefined') {
-    module.exports = NewsFeed;
-  }
+  return map;
+}
 
-  window.NewsFeed = NewsFeed;
-})();
+if (typeof module !== 'undefined') {
+  module.exports = NewsFeed;
+}
+
+window.NewsFeed = NewsFeed;

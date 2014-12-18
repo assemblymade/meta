@@ -19,11 +19,22 @@ class Post < ActiveRecord::Base
   validates :slug,    presence: true
 
   after_commit :mark_as_announcement, on: :create
-  after_commit :mark_as_discussion, on: :create
   after_commit :push_to_news_feed, on: :create
   after_commit :update_news_feed_item
 
   friendly_id :title, use: :slugged
+
+  scope :with_mark, -> (name) {
+    joins(:marks).where(marks: { name: name })
+  }
+
+  scope :archived, -> {
+    joins(:news_feed_item).where('news_feed_items.archived_at is not null')
+  }
+
+  scope :unarchived, -> {
+    joins(:news_feed_item).where('news_feed_items.archived_at is null')
+  }
 
   ANNOUNCEMENT_MARK = Mark.find_or_create_by!(name: 'announcement')
   DISCUSSION_MARK = Mark.find_or_create_by!(name: 'discussion')
@@ -31,6 +42,24 @@ class Post < ActiveRecord::Base
   # def summary
   #   super || body.split("\n").first
   # end
+
+  def self.filter_with_params(query, params)
+    query = if params[:archived]
+      query.archived
+    else
+      query.unarchived
+    end
+
+    if params[:announcements]
+      query = query.with_mark('announcement')
+    end
+
+    if params[:discussions]
+      query = query.with_mark('discussion')
+    end
+
+    query
+  end
 
   def follower_ids
     product.follower_ids

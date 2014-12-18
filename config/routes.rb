@@ -313,11 +313,11 @@ ASM::Application.routes.draw do
       resources :comments, only: [:show, :create, :edit, :update]
     end
 
-    resources :news_feed_items, only: [:index, :show], path: 'updates', as: :updates do
-      patch :subscribe
-      patch :unsubscribe
-      patch 'popularize'
-      patch 'depopularize'
+    resources :news_feed_items, only: [:index, :show, :update], path: 'updates', as: :updates do
+      patch :subscribe, on: :member
+      patch :unsubscribe, on: :member
+      patch 'popularize', on: :member
+      patch 'depopularize', on: :member
 
       resources :news_feed_item_comments, only: [:index, :create, :update], as: :comments, path: 'comments'
     end
