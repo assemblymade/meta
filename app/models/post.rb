@@ -25,6 +25,10 @@ class Post < ActiveRecord::Base
 
   friendly_id :title, use: :slugged
 
+  scope :archived, -> {
+    joins(:news_feed_item).where('news_feed_items.archived_at is not null')
+  }
+
   scope :unarchived, -> {
     joins(:news_feed_item).where('news_feed_items.archived_at is null')
   }

@@ -26,13 +26,22 @@ describe PostsController do
       nfi.update(archived_at: Time.now)
     end
 
-    it "does not show archived posts" do
+    it "does not show archived posts by default" do
       get :index, product_id: product.slug
 
       posts = assigns(:posts).as_json
 
       expect(posts.count).to eq(1)
       expect(posts.first[:title]).to eq("post")
+    end
+
+    it "shows archived posts if requested" do
+      get :index, product_id: product.slug, archived: true
+
+      posts = assigns(:posts).as_json
+
+      expect(posts.count).to eq(1)
+      expect(posts.first[:title]).to eq("archived_post")
     end
   end
 

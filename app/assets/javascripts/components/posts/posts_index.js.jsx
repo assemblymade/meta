@@ -1,7 +1,9 @@
 var Accordion = require('../accordion.js.jsx');
+var PostActionCreators = require('../../actions/post_action_creators');
 var PostList = require('./post_list.js.jsx');
 var PostsStore = require('../../stores/posts_store');
 var ProductStore = require('../../stores/product_store');
+var Spinner = require('../spinner.js.jsx');
 
 var PostsIndex = React.createClass({
   displayName: 'PostsIndex',
@@ -11,6 +13,28 @@ var PostsIndex = React.createClass({
 
   componentDidMount: function() {
     PostsStore.addChangeListener(this.getPosts);
+  },
+
+  fetchArchivedPosts: function(e) {
+    this.fetchPosts(e, window.location.pathname + '.json?archived=true');
+  },
+
+  fetchPosts: function(e, path) {
+    var product = this.props.product;
+
+    if (product) {
+      e.preventDefault();
+
+      PostActionCreators.fetchPosts(path, product.slug);
+
+      this.setState({
+        loading: true
+      });
+    }
+  },
+
+  fetchPublicPosts: function(e) {
+    this.fetchPosts(e, window.location.pathname + '.json');
   },
 
   getDefaultProps: function() {
@@ -34,6 +58,7 @@ var PostsIndex = React.createClass({
 
   getPosts: function() {
     this.setState({
+      loading: false,
       posts: PostsStore.getPosts(this.props.product.slug)
     });
   },
@@ -50,18 +75,6 @@ var PostsIndex = React.createClass({
     var posts = this.state.posts;
     var product = this.props.product;
 
-    if (!posts.length) {
-      return [
-        <h4 className="text-muted" key="heading">
-          There don't seem to be any posts here
-        </h4>,
-
-        <p key="explanation">
-          {"Blog posts by " + product.name + "'s partners will appear here just as soon as they're written."}
-        </p>
-      ];
-    }
-
     return (
       <div className="row">
         <div className="col-xs-12 col-sm-4 r768_float-right">
@@ -76,10 +89,10 @@ var PostsIndex = React.createClass({
             </div>
 
             <div className="col-xs-6 col-sm-12">
-              <div className="pb1"> {/*Tags*/}
-                <Accordion title="Tags">
+              <div className="pb1"> {/*Filters*/}
+                <Accordion title="Filters">
                   <ul className="list-reset mxn2">
-                    {this.renderTags()}
+                    {this.renderFilters()}
                   </ul>
                 </Accordion>
               </div>
@@ -87,29 +100,25 @@ var PostsIndex = React.createClass({
           </div>
         </div>
         <div className="col-xs-12 col-sm-8 r768_pr0">
-          <PostList posts={posts} />;
+          {this.state.loading ? <Spinner /> : <PostList posts={posts} />}
         </div>
       </div>
     );
   },
 
-  renderTags: function() {
+  renderFilters: function() {
+    var path = window.location.pathname;
+
     return [
       <li className="mb1 lh0_9">
-        <a href="#" className="pill-hover block pt1 pb1 pr3 pl3">
-          <span className="fs1 fw-500 caps">#foo</span>
+        <a href={path + "?archived=true"} className="pill-hover block pt1 pb1 pr3 pl3" onClick={this.fetchArchivedPosts}>
+          <span className="fs1 fw-500 caps">archived</span>
         </a>
       </li>,
 
       <li className="mb1 lh0_9">
-        <a href="#" className="pill-hover block pt1 pb1 pr3 pl3">
-          <span className="fs1 fw-500 caps">#foo</span>
-        </a>
-      </li>,
-
-      <li className="mb1 lh0_9">
-        <a href="#" className="pill-hover block pt1 pb1 pr3 pl3">
-          <span className="fs1 fw-500 caps">#foo</span>
+        <a href={path} className="pill-hover block pt1 pb1 pr3 pl3" onClick={this.fetchPublicPosts}>
+          <span className="fs1 fw-500 caps">public</span>
         </a>
       </li>
     ];
