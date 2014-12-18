@@ -15,8 +15,16 @@ var PostsIndex = React.createClass({
     PostsStore.addChangeListener(this.getPosts);
   },
 
+  fetchAnnouncements: function(e) {
+    this.fetchPosts(e, window.location.pathname + '.json?announcements=1');
+  },
+
   fetchArchivedPosts: function(e) {
-    this.fetchPosts(e, window.location.pathname + '.json?archived=true');
+    this.fetchPosts(e, window.location.pathname + '.json?archived=1');
+  },
+
+  fetchDiscussions: function(e) {
+    this.fetchPosts(e, window.location.pathname + '.json?discussions=1');
   },
 
   fetchPosts: function(e, path) {
@@ -31,10 +39,6 @@ var PostsIndex = React.createClass({
         loading: true
       });
     }
-  },
-
-  fetchPublicPosts: function(e) {
-    this.fetchPosts(e, window.location.pathname + '.json');
   },
 
   getDefaultProps: function() {
@@ -84,7 +88,11 @@ var PostsIndex = React.createClass({
                 Getting Started
               </div>
               <div className="h6 m0 gray-1">
-                Jump into some discussion in chat and introduce yourself to <a href={product.people_url}>@core</a>.
+                Updates are a great way to keep new contributors up to date
+                with progress and new ways to help out. When you're ready,
+                we'll also email the entry to everyone following
+                {' '}<a href={product.url}>{product.name}</a>. You can include images and
+                use Markdown to make it more awesome.
               </div>
             </div>
 
@@ -111,14 +119,20 @@ var PostsIndex = React.createClass({
 
     return [
       <li className="mb1 lh0_9">
-        <a href={path + "?archived=true"} className="pill-hover block pt1 pb1 pr3 pl3" onClick={this.fetchArchivedPosts}>
-          <span className="fs1 fw-500 caps">archived</span>
+        <a href={path + "?discussions=true"} className="pill-hover block pt1 pb1 pr3 pl3" onClick={this.fetchDiscussions}>
+          <span className="fs1 fw-500 caps">all posts</span>
         </a>
       </li>,
 
       <li className="mb1 lh0_9">
-        <a href={path} className="pill-hover block pt1 pb1 pr3 pl3" onClick={this.fetchPublicPosts}>
-          <span className="fs1 fw-500 caps">public</span>
+        <a href={path + "?announcements=true"} className="pill-hover block pt1 pb1 pr3 pl3" onClick={this.fetchAnnouncements}>
+          <span className="fs1 fw-500 caps">announcements</span>
+        </a>
+      </li>,
+
+      <li className="mb1 lh0_9">
+        <a href={path + "?archived=true"} className="pill-hover block pt1 pb1 pr3 pl3" onClick={this.fetchArchivedPosts}>
+          <span className="fs1 fw-500 caps">archived posts</span>
         </a>
       </li>
     ];

@@ -5,11 +5,7 @@ class PostsController < ProductController
     find_product!
     query = @product.posts.order(created_at: :desc)
 
-    posts = if params[:archived]
-      query.archived
-    else
-      query.unarchived
-    end
+    posts = Post.filter_with_params(query, params)
 
     @posts = ActiveModel::ArraySerializer.new(posts)
     @heartables = query.map(&:news_feed_item)

@@ -1,6 +1,3 @@
-/** @jsx React.DOM */
-
-
 module.exports = React.createClass({
   displayName: 'NewsFeedItemBountyCommentReference',
   propTypes: {

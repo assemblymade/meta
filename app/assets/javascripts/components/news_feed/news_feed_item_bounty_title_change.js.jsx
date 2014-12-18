@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var Icon = require('../icon.js.jsx');
 
 var NewsFeedItemBountyTitleChange = React.createClass({
@@ -35,4 +33,3 @@ var NewsFeedItemBountyTitleChange = React.createClass({
 if (typeof module !== 'undefined') {
   module.exports = NewsFeedItemBountyTitleChange;
 }
-

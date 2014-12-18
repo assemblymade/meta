@@ -131,11 +131,7 @@
                   Getting Started
                 </div>
                 <div className="h6 m0 gray-1">
-                  Updates are a great way to keep new contributors up to date
-                  with progress and new ways to help out. When you are ready,
-                  we'll also email the entry to everyone following
-                  <span>{product.name}</span>. You can include images and
-                  use Markdown to make it more awesome.
+                  Jump into some discussion in chat and introduce yourself to <a href={product.people_url}>@core</a>.
                 </div>
               </div>
               <div className="col-xs-6 col-sm-12">
