@@ -25,8 +25,8 @@ var ListItemMixin = {
 
     return tags.map(function(tag) {
       return (
-        <a className="h6 bold caps gray-3 mr2 pointer" href={tag.url}>
-          {tag.name}
+        <a className="fs0_9 caps gray-2 mr2 pointer" href={tag.url}>
+          #{tag.name}
         </a>
       )
     });

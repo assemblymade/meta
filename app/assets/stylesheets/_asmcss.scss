@@ -45,6 +45,11 @@ a {
     -webkit-transition: color 0.1s ease-in-out;
     transition: color 0.1s ease-in-out;
   }
+  &.no-focus:focus {
+    text-decoration: none;
+    background:inherit;
+    color:inherit;
+  }
 }
 
 pre, code, samp {
