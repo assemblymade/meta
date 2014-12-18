@@ -20,6 +20,8 @@ class Activity < ActiveRecord::Base
 
   attr_accessor :socket_id
 
+  delegate :url_params, to: :target_entity
+
   def self.publish!(opts)
     create!(opts).tap do |a|
       if a.publishable
@@ -112,6 +114,7 @@ class Activity < ActiveRecord::Base
   def product
     find_product
   end
+
 
   # private
   def set_product_id

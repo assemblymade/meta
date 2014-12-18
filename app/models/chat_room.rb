@@ -34,4 +34,8 @@ class ChatRoom < ActiveRecord::Base
   def to_param
     slug
   end
+
+  def url_params
+    [self]
+  end
 end

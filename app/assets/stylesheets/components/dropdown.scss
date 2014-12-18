@@ -8,7 +8,7 @@
   margin:0.5rem 0 0 0;
   min-width:0;
   border-radius: 5px;
-  box-shadow: 0 0 8px rgba(100, 100, 100, 0.1); 
+  box-shadow: 0 0 8px rgba(100, 100, 100, 0.1);
   //
   &:before {
     content:'';
@@ -33,7 +33,6 @@
       //
       &:hover {
         padding-right: 1.445rem;
-        letter-spacing: -0.03rem;
         font-weight:bold;
         box-shadow: inset 0px -1px 0 rgba(100,100,100,0.05), inset 0px 1px 0 rgba(100,100,100,0.05);
         border-radius: 0;

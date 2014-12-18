@@ -567,6 +567,10 @@ class Product < ActiveRecord::Base
     BountyPosting.joins(:bounty).where('wips.product_id = ?', id)
   end
 
+  def url_params
+    self
+  end
+
   # elasticsearch
   def update_elasticsearch
     return unless (['name', 'pitch', 'description'] - self.changed).any?

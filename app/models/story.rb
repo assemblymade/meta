@@ -9,6 +9,8 @@ class Story < ActiveRecord::Base
 
   attr_accessor :socket_id
 
+  delegate :url_params, to: :subject
+
   PUBLISHABLE_ACTIVITIES = [
     ["Comment", "Discussion"],
     ["Comment", "Post"],

@@ -3,14 +3,12 @@ class SlackActivitySerializer < ApplicationSerializer
 
   def url
     if object.type == "Activities::Chat"
-      Rails.application.routes.url_helpers.chat_room_url(
-            ChatRoom.find_by(slug: object.target.slug), 
+      chat_room_url(
+            ChatRoom.find_by(slug: object.target.slug),
             message: "Hey @#{object.actor.username}!")
     else
       target_entity = object.subject_type == 'Event' ? object.target : object.subject
-      polymorphic_url(
-        [target_entity.product, target_entity]
-      )     
+      url_for(target_entity.url_params)
     end
   end
 

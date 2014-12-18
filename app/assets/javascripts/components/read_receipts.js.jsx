@@ -38,7 +38,7 @@
       if (!currentUser) {
         return;
       }
-      
+
       xhr.noCsrfGet(this.props.url, function(err, body) {
         if (err) {
           return console.error(err)

@@ -21,4 +21,6 @@ class Tip < ActiveRecord::Base
 
     tip
   end
+
+  delegate :url_params, to: :via
 end
