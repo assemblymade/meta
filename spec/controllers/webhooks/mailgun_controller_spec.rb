@@ -9,7 +9,7 @@ describe Webhooks::MailgunController do
     before do
       controller.stub(:verify_webhook) { true }
 
-      reply_to = SecureReplyTo.new(NewsFeedItem.to_s, nfi.id, user.username).to_s
+      reply_to = SecureReplyTo.new('news_feed_item', nfi.id, user.username).to_s
 
       post :reply,
         'To' => "#{nfi.id} <#{reply_to}>",

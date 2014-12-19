@@ -5,6 +5,7 @@ class SecureReplyTo
 
   def initialize(object_type, object_id, user_id)
     @object_type, @object_id, @user_id = object_type, object_id, user_id
+    @object_type = @object_type.underscore # it gets downcased somewhere in the pipe
     @secret = ENV['MAILGUN_API_KEY'] || 'assembly-secret'
   end
 
@@ -19,6 +20,10 @@ class SecureReplyTo
     digest = OpenSSL::Digest.new('sha1')
     data = [object_id, user_id].join
     OpenSSL::HMAC.hexdigest(digest, @secret, data)
+  end
+
+  def find_thread!
+    object_type.camelcase.constantize.find(object_id)
   end
 
   def to_s
