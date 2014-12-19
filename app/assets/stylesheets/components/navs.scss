@@ -191,10 +191,6 @@
   > li {
     display: inline-block;
     > a {
-      &:hover, &:active, &:focus {
-        background-color: $blue;
-        color: white;
-      }
       border-radius: 30px;
       padding-left: 15px;
       padding-right: 15px;
@@ -204,8 +200,6 @@
       padding-bottom: 0;
 
       font-size: 14px;
-
-      // background-color: $blue-light;
     }
   }
   > .active {
