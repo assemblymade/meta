@@ -30,6 +30,11 @@ describe ProductMetric do
       mean = ProductMetric.mean_comment_responsiveness
       expect(mean).to eq(((50*2)+ 100)/3)
     end
+    it 'returns the same value for overflow_safe and sql methods' do
+      mean = ProductMetric.mean_comment_responsiveness
+      overflow_safe_mean = ProductMetric.overflow_safe_mean_comment_responsiveness
+      expect(mean.floor).to eq(overflow_safe_mean.floor)
+    end
     it 'returns the correct median_comment_responsiveness on all products' do
       median = ProductMetric.median_comment_responsiveness
       expect(median).to eq((100+50)/2)
