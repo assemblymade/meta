@@ -1,4 +1,4 @@
-@import 'asmcss/colors';
+// @import 'asmcss/colors';
 
 .btn {
   @include button-size(0.5rem, 2rem, $font-size-base, $line-height-base, $border-radius-base);
