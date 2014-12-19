@@ -227,7 +227,8 @@ button, .button {
         width:11px;
         height:11px;
         background-image: url(/assets/icon-success-check-green.png);
-        background-size: cover;
+        background-size: 100%;
+        background-repeat: no-repeat;
       }
     }
   }
