@@ -190,10 +190,6 @@ var NewsFeedItemComments = React.createClass({
         }
       }
 
-      if(!comment.created_at) {
-        debugger
-      }
-
       if (new Date(comment.created_at) >= renderIfAfter) {
         var editUrl = Routes.product_update_comment_path({
           product_id: _reach(self.props, 'item.product.id'),
