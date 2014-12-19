@@ -288,10 +288,12 @@ var NewsFeedItemComments = React.createClass({
   },
 
   componentDidUpdate: function(prevProps, prevState) {
-    if (this.state.comments.length > prevState.comments.length) {
-      $(document.body).animate({
-        'scrollTop':   $('#' + window.location.hash.substring(1)).offset().top
-      }, 500);
+    if (window.location.hash) {
+      if (this.state.comments.length > prevState.comments.length) {
+        $(document.body).animate({
+          'scrollTop':   $('#' + window.location.hash.substring(1)).offset().top
+        }, 500);
+      }
     }
   }
 });
