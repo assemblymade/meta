@@ -61,7 +61,8 @@ ASM::Application.configure do
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = {
     host: 'assembly.com',
-    protocol: 'https'
+    protocol: 'https',
+    only_path: false
   }
   Rails.application.routes.default_url_options[:host] = config.action_mailer.default_url_options[:host]
   Rails.application.routes.default_url_options[:protocol] = config.action_mailer.default_url_options[:protocol]
