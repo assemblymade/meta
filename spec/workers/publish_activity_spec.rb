@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe PublishActivity do
   let(:actor) { User.make! }
-  let(:discussion) { Discussion.make!(user: actor) }
+  let(:nfi) { NewsFeedItem.make! }
+  let(:discussion) { Discussion.make!(user: actor, news_feed_item: nfi) }
   let(:product) { discussion.product }
 
   it 'creates a story for an activity' do
@@ -29,9 +30,10 @@ describe PublishActivity do
 
     watcher = User.make!
 
-    discussion.watch!(watcher)
+    nfi.followers << watcher
 
     PublishActivity.new.perform(activity.id, 1234)
+
     expect(NewsFeed.new(watcher).first.attributes.slice('verb', 'subject_type')).to eq(
       'verb' => 'Comment',
       'subject_type' => 'Discussion',

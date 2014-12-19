@@ -656,7 +656,7 @@ class Product < ActiveRecord::Base
       avg_time_to_comment = avg_time_to_comment_weighted_numerators.sum / tasks_with_comments.sum(:comments_count)
     end
     pm = ProductMetric.create(
-      product: self, 
+      product: self,
       comments_count: self.tasks.sum(:comments_count),
       comment_responsiveness: avg_time_to_comment
     )
