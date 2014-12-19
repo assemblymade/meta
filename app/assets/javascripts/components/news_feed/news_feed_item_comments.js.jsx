@@ -67,8 +67,13 @@ var NewsFeedItemComments = React.createClass({
 
     if (state === 'reviewing') {
       var comments = this.state.comments;
+      var reviewReadyEvent = this.renderOptimisticReviewReady()
 
-      comments.push(this.renderOptimisticReviewReady());
+      if (!reviewReadyEvent) {
+        return
+      }
+
+      comments.push(reviewReadyEvent);
 
       this.setState({
         comments: comments
@@ -183,6 +188,10 @@ var NewsFeedItemComments = React.createClass({
               heartable={true}
               heartableId={comment.id} />
         }
+      }
+
+      if(!comment.created_at) {
+        debugger
       }
 
       if (new Date(comment.created_at) >= renderIfAfter) {
