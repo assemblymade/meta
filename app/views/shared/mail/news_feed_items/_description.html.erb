@@ -1,9 +1,3 @@
-<%  url = if description.product
-      polymorphic_url([description.product, description.target], only_path: false)
-    else
-      polymorphic_url([description.target], only_path: false)
-    end
-%>
-<a href="<%= url %>">
+<a href="<%= full_url_for(description) %>">
   <%= t "models.#{description.target.class.model_name.singular}.description.owner", title: description.target.try(:title) %>
 </a>
