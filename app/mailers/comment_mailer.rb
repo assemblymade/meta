@@ -40,11 +40,4 @@ class CommentMailer < BaseMailer
       format.html { render layout: nil }
     end
   end
-
-  # private
-  def target_name(nfi)
-    owner = nfi.source == @user ? 'owner' : 'other'
-    target_type = nfi.target.class.name.underscore
-    I18n.t("stories.subjects.long.#{target_type}.#{owner}", nfi.target.attributes.symbolize_keys)
-  end
 end

@@ -6,7 +6,7 @@
           <td>
             <center>
               <% @lovers.each do |lover| %>
-                <%= image_tag(lover.avatar.url(120), width: 60, height: 60, class: 'img-circle', style: 'display:inline-block;clear:none;float:none') %>
+                <%= image_tag(lover.avatar.url(50), width: 50, height: 50, class: 'img-circle', style: 'display:inline-block;clear:none;float:none') %>
               <% end %>
             </center>
           </td>
