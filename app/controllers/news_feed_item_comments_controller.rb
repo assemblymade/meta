@@ -27,8 +27,10 @@ class NewsFeedItemCommentsController < ProductController
       each_serializer: NewsFeedItemCommentSerializer
     )
 
+    non_comments = @news_feed_item.events.where.not(type: Event::Comment)
+
     events = ActiveModel::ArraySerializer.new(
-      @news_feed_item.events.order(created_at: :asc),
+      non_comments.order(created_at: :asc),
       scope: current_user
     )
 

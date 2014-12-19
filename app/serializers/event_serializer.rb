@@ -22,8 +22,6 @@ class EventSerializer < ActiveModel::Serializer
   attributes :product_id
   attributes :story_id
 
-  attributes :news_feed_item_comment_id
-
   has_one :wip, serializer: WipSerializer
   has_one :user, key: :actor, serializer: UserSerializer
 
@@ -65,10 +63,6 @@ class EventSerializer < ActiveModel::Serializer
         edit_product_wip_comment_url(product, wip, object)
       end
     end
-  end
-
-  def news_feed_item_comment_id
-    object.news_feed_item_comment.try(:id)
   end
 
   def story_id

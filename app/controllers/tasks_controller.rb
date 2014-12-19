@@ -92,7 +92,6 @@ class TasksController < WipsController
       @invites = Invite.where(invitor: current_user, via: @wip)
     end
 
-    @events = Event.render_events(@bounty.events.order(:number), current_user)
     @product_assets = @bounty.product.assets
     if Watching.watched?(current_user, @bounty.news_feed_item)
       @user_subscriptions = [@bounty.news_feed_item.id]

@@ -15,14 +15,17 @@ module.exports = React.createClass({
   displayName: 'Bounty',
 
   propTypes: {
-    bounty: React.PropTypes.object.isRequired,
-    item: React.PropTypes.object,
+    item: React.PropTypes.object.isRequired,
     noInvites: React.PropTypes.bool,
     showCoins: React.PropTypes.bool
   },
 
+  bounty: function() {
+    return this.props.bounty
+  },
+
   abandonWork: function(e) {
-    var stopWorkUrl = this.props.bounty.stop_work_url;
+    var stopWorkUrl = this.bounty().stop_work_url;
 
     BountyActionCreators.call(e, 'bounty.abandoned', stopWorkUrl);
 
@@ -33,7 +36,7 @@ module.exports = React.createClass({
   },
 
   extendWork: function(e) {
-    var lockUrl = this.props.bounty.lock_url;
+    var lockUrl = this.bounty().lock_url;
 
     BountyActionCreators.call(e, 'bounty.extended', lockUrl);
 
@@ -45,7 +48,7 @@ module.exports = React.createClass({
   },
 
   getInitialState: function() {
-    var bounty = this.props.bounty;
+    var bounty = this.bounty();
 
     return {
       // :<
@@ -189,8 +192,8 @@ module.exports = React.createClass({
             text={{ true: 'Unsubscribe', false: 'Subscribe' }}
             icon={{ true: '', false: '' }}
             classes={{ true: '', false: '' }}
-            href={{ true: routes.product_update_unsubscribe_path({ product_id: this.props.bounty.product.slug, update_id: this.props.item.id }),
-                   false: routes.product_update_subscribe_path({ product_id: this.props.bounty.product.slug, update_id: this.props.item.id }) }} />
+            href={{ true: routes.product_update_unsubscribe_path({ product_id: this.bounty().product.slug, update_id: this.props.item.id }),
+                   false: routes.product_update_subscribe_path({ product_id: this.bounty().product.slug, update_id: this.props.item.id }) }} />
         </li>
       );
     }
@@ -284,7 +287,7 @@ module.exports = React.createClass({
 
   renderStartWorkButton: function() {
     var currentUser = window.app.currentUser();
-    var bounty = this.props.bounty;
+    var bounty = this.bounty();
 
     if (this.state.closed) {
       return (
@@ -355,7 +358,7 @@ module.exports = React.createClass({
 
     return (
       <TagList
-        filterUrl={bounty.product.wips_url}
+        filterUrl={this.props.item.product.wips_url}
         destination={true}
         tags={tags}
         newBounty={true}
@@ -365,7 +368,7 @@ module.exports = React.createClass({
 
   startWork: function(e) {
     var currentUser = window.app.currentUser();
-    var startWorkUrl = this.props.bounty.start_work_url;
+    var startWorkUrl = this.bounty().start_work_url;
 
     BountyActionCreators.call(e, 'bounty.started', startWorkUrl);
 
