@@ -5,6 +5,8 @@ var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
 var ActivityFeedComment = require('../activity_feed_comment.js.jsx');
 var BountyStore = require('../../stores/bounty_store');
 var Comment = require('../comment.js.jsx');
+var DiscussionActionCreators = require('../../actions/discussion_action_creators');
+var DiscussionStore = require('../../stores/discussion_store');
 var Dispatcher = window.Dispatcher;
 var Icon = require('../icon.js.jsx');
 var NewComment = require('./new_comment.js.jsx');
@@ -15,7 +17,6 @@ var NewsFeedItemBountyTagChange = require('./news_feed_item_bounty_tag_change.js
 var NewsFeedItemBountyTimelineItem = require('./news_feed_item_bounty_timeline_item.js.jsx');
 var NewsFeedItemBountyTitleChange = require('./news_feed_item_bounty_title_change.js.jsx');
 var NewsFeedItemBountyWin = require('./news_feed_item_bounty_win.js.jsx');
-var NewsFeedItemStore = require('../../stores/news_feed_item_store');
 var ReadReceipts = require('../read_receipts.js.jsx');
 var Routes = require('../../routes');
 var Spinner = require('../spinner.js.jsx');
@@ -32,7 +33,6 @@ var NewsFeedItemComments = React.createClass({
 
   componentDidMount: function() {
     if (this.props.showAllComments) {
-      this.setState({ loading: true });
       this.fetchCommentsFromServer({ stopPropagation: function() {} });
     }
 
@@ -40,7 +40,7 @@ var NewsFeedItemComments = React.createClass({
       BountyStore.addChangeListener(this.getBountyState);
     }
 
-    NewsFeedItemStore.addChangeListener(this.getComments);
+    DiscussionStore.addChangeListener(this.getDiscussionState);
   },
 
   componentWillUnmount: function() {
@@ -48,22 +48,18 @@ var NewsFeedItemComments = React.createClass({
       BountyStore.removeChangeListener(this.getBountyState);
     }
 
-    NewsFeedItemStore.removeChangeListener(this.getComments);
+    DiscussionStore.removeChangeListener(this.getDiscussionState);
   },
 
   fetchCommentsFromServer: function(e) {
     e.stopPropagation();
 
-    var url = this.state.url;
+    this.setState({ loading: true });
 
-    $.get(url, function(response) {
-      this.setState({
-        comments: response.comments,
-        events: response.events,
-        loading: false,
-        showCommentsAfter: 0
-      });
-    }.bind(this));
+    DiscussionActionCreators.fetchCommentsFromServer(
+      this.state.url,
+      this.props.item.id
+    );
   },
 
   getBountyState: function() {
@@ -80,13 +76,22 @@ var NewsFeedItemComments = React.createClass({
     }
   },
 
-  getComments: function(e) {
-    var thread = this.props.item.id;
-    var comments = NewsFeedItemStore.getComments(thread);
+  getDiscussionState: function(e) {
+    var itemId = this.props.item.id;
+    var comments = DiscussionStore.getComments(itemId);
+    var events = DiscussionStore.getEvents(itemId);
+
+    // FIXME: When `last_comment` is no longer serialized on each item
+    // but set in the store, remove this check
+    if (!this.props.showAllComments) {
+      return;
+    }
 
     this.setState({
       comment: '',
-      comments: this.state.comments.concat(comments.confirmed),
+      comments: comments.confirmed,
+      events: events,
+      loading: false,
       numberOfComments: this.state.numberOfComments + comments.confirmed.length,
       optimisticComments: comments.optimistic
     });
@@ -258,14 +263,12 @@ var NewsFeedItemComments = React.createClass({
   },
 
   renderOptimisticReviewReady: function() {
-    var user = UserStore.get();
-
     // when we get the event back in the confirmation, set the award_url
     // so that the buttons show up
-    if (user.isCore) {
+    if (UserStore.isCoreTeam()) {
       return {
         type: 'Event::ReviewReady',
-        actor: user,
+        actor: UserStore.getUser(),
         // award_url: this.props.url + '/award',
         created_at: new Date(),
         id: 'FIXME'

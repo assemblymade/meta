@@ -34,9 +34,16 @@ class NewsFeedItemCommentsController < ProductController
       scope: current_user
     )
 
+    user_hearts = if signed_in?
+      Heart.where(user: current_user, heartable_id: comments.as_json.map{|h| h['heartable_id']})
+    else
+      []
+    end
+
     discussion = {
       comments: comments,
-      events: events
+      events: events,
+      user_hearts: user_hearts
     }
 
     respond_with discussion, location: product_url(@product)

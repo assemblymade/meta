@@ -1,14 +1,14 @@
-jest.dontMock(pathToFile('stores/news_feed_item_store'));
+jest.dontMock(pathToFile('stores/discussion_store'));
 
 var ActionTypes = global.CONSTANTS.ActionTypes;
 
-describe('NewsFeedItemStore', function() {
+describe('DiscussionStore', function() {
   var callback;
-  var NewsFeedItemStore;
+  var DiscussionStore;
 
   beforeEach(function() {
     Dispatcher = require(pathToFile('dispatcher'));
-    NewsFeedItemStore = require(pathToFile('stores/news_feed_item_store'));
+    DiscussionStore = require(pathToFile('stores/discussion_store'));
     callback = Dispatcher.register.mock.calls[0][0];
   });
 
@@ -24,7 +24,7 @@ describe('NewsFeedItemStore', function() {
         }
       });
 
-      expect(NewsFeedItemStore.getComments('thread').optimistic[0].body).toEqual('Yo yo yo');
+      expect(DiscussionStore.getComments('thread').optimistic[0].body).toEqual('Yo yo yo');
     });
   });
 
@@ -42,7 +42,7 @@ describe('NewsFeedItemStore', function() {
         }
       });
 
-      expect(NewsFeedItemStore.getComments('thread').optimistic[0].body).toEqual('Yo yo yo');
+      expect(DiscussionStore.getComments('thread').optimistic[0].body).toEqual('Yo yo yo');
 
       callback({
         type: ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT,
@@ -58,7 +58,7 @@ describe('NewsFeedItemStore', function() {
         }
       });
 
-      var comments = NewsFeedItemStore.getComments('thread');
+      var comments = DiscussionStore.getComments('thread');
 
       expect(comments.optimistic[0]).toBeUndefined();
     });

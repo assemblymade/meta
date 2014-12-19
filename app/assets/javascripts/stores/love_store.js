@@ -1,6 +1,5 @@
 var Store = require('./es6_store')
 
-var _dispatchToken
 var _heartables = {}
 var _userHearts = {}
 
@@ -12,8 +11,25 @@ class LoveStore extends Store {
   constructor() {
     super()
 
-    _dispatchToken = Dispatcher.register((action) => {
+    this.dispatchToken = Dispatcher.register((action) => {
       switch(action.type) {
+        case ActionTypes.DISCUSSION_RECEIVE:
+          setHeartables(action.comments);
+          setUserHearts(action.userHearts);
+          LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
+          this.emitChange()
+          break
+
+        case ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT:
+          var data = action.data
+          _heartables[data.comment.id] = {
+            heartable_type: 'NewsFeedItemComment',
+            heartable_id: data.comment.id,
+            hearts_count: 0
+          }
+          this.emitChange()
+          break
+
         case ActionTypes.LOVE_RECEIVE_HEARTABLES:
           _heartables = _.reduce(action.heartables, function(memo, h){ memo[h.heartable_id] = h; return memo }, {})
           LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
@@ -112,6 +128,19 @@ class LoveStore extends Store {
 }
 
 var store = new LoveStore();
+
+function setHeartables(heartables) {
+  _heartables = _.extend(_heartables, _.reduce(heartables, _reduceHeartables, {}));
+}
+
+function setUserHearts(heartables) {
+  _userHearts = _.extend(_userHearts, _.reduce(heartables, _reduceHeartables, {}));
+}
+
+function _reduceHeartables(memo, h) {
+  memo[h.heartable_id] = h;
+  return memo;
+}
 
 // Load initial data from script tags on the page (if they're present)
 // TODO: Separate LoveStore and UserLoveStore

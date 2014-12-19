@@ -129,6 +129,8 @@
       COMMENT_UPDATE_FAILED: null,
       COMMENT_UPDATE_RECEIVED: null,
 
+      DISCUSSION_RECEIVE: null,
+
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,
       LOVE_RECEIVE_HEARTABLES: null,

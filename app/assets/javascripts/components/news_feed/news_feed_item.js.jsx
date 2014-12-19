@@ -10,7 +10,6 @@ var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx');
 var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
 var NewsFeedItemModal = require('./news_feed_item_modal.js.jsx');
 var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
-var NewsFeedItemStore = require('../../stores/news_feed_item_store');
 var Tag = require('../tag.js.jsx');
 var Tile = require('../tile.js.jsx');
 var UserStore = require('../../stores/user_store');
