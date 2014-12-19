@@ -16,11 +16,11 @@ var Lovers = React.createClass({
     }
 
     return (
-      <div>
-        <div className="inline-block valign-top">
+      <div className="inline-block">
+        <div className="inline-block valign-mid">
           {this.renderAvatar(this.state.recentLovers[0])}
         </div>
-        <div className="inline-block valign-top gray-2 fs3">
+        <div className="inline-block valign-mid gray-2 fs3">
           <span className="black bold"> {this.state.recentLovers[0].username} </span>
           {message}
         </div>
