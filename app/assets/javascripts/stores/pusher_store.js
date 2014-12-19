@@ -14,7 +14,7 @@ class PusherStore extends Store {
         case ActionTypes.PUSHER_INITIALIZED:
           _client = action.client
 
-          if (UserStore.get() && _client) {
+          if (UserStore.getUser() && _client) {
             _client.
               subscribe('user.' + UserStore.getId()).
               bind_all((payload, data) => {
