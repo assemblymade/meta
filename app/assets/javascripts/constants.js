@@ -161,6 +161,7 @@
 
       PUSHER_INITIALIZED: null,
       PUSHER_PRESENCE_CONNECTED: null,
+      PUSHER_USER_ACTION: null,
 
       RR_RECEIVE_READ_RECEIPTS: null,
 

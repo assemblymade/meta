@@ -11,6 +11,14 @@ class ChatRoom < ActiveRecord::Base
     find_by(slug: 'general')
   end
 
+  def follower_ids
+    if product
+      product.follower_ids
+    else
+      []
+    end
+  end
+
   def key
     "chat_#{id}"
   end
