@@ -23,7 +23,12 @@ class SecureReplyTo
   end
 
   def find_thread!
-    object_type.camelcase.constantize.find(object_id)
+    # special case while mailgun clears out old emails
+    if object_type.downcase == 'newsfeeditem'
+      NewsFeedItem.find(object_id)
+    else
+      object_type.camelcase.constantize.find(object_id)
+    end
   end
 
   def to_s
