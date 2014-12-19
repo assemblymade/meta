@@ -85,7 +85,7 @@ class DiscoverController < ApplicationController
 
     @postings = Task.open.unflagged.tagged_with(@filter).order(created_at: :desc).
       includes(:product).where(products: { flagged_at: nil }).where.not(products: { state: 'stealth'}).
-      page(params[:page]).per(25)
+      where.not(products: { slug: 'meta' }).page(params[:page]).per(25)
 
     @postings = @postings.where(products: { slug: params[:product] }) if params[:product]
 
