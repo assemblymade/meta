@@ -1,7 +1,11 @@
 class TipMailerPreview < ActionMailer::Preview
 
   def tipped
-    TipMailer.tipped(Tip.sample)
+    begin
+      tip = Tip.where(via_type: NewsFeedItemComment).sample
+    end until !tip.via.nil?
+
+    TipMailer.tipped(tip)
   end
 
 end
