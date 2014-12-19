@@ -14,6 +14,14 @@ class BountyStore extends Store {
           _submitWork()
           this.emitChange()
           break
+        case ActionTypes.BOUNTY_CLOSED:
+          _closeBounty()
+          this.emitChange()
+          break
+        case ActionTypes.BOUNTY_REOPENED:
+          _reopenBounty()
+          this.emitChange()
+          break
       }
     })
   }
@@ -24,6 +32,14 @@ class BountyStore extends Store {
 }
 
 module.exports = new BountyStore()
+
+function _closeBounty() {
+  _bounty.state = 'closed'
+}
+
+function _reopenBounty() {
+  _bounty.state = 'open'
+}
 
 function _submitWork() {
   _bounty.state = 'reviewing'

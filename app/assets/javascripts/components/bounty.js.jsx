@@ -1,4 +1,5 @@
 var BountyActionCreators = require('../actions/bounty_action_creators');
+var BountyStore = require('../stores/bounty_store');
 var Markdown = require('./markdown.js.jsx');
 var Icon = require('./icon.js.jsx');
 var formatShortTime = require('../lib/format_short_time.js');
@@ -20,10 +21,6 @@ module.exports = React.createClass({
     showCoins: React.PropTypes.bool
   },
 
-  bounty: function() {
-    return this.props.bounty
-  },
-
   abandonWork: function(e) {
     var stopWorkUrl = this.bounty().stop_work_url;
 
@@ -35,6 +32,28 @@ module.exports = React.createClass({
     });
   },
 
+  bounty: function() {
+    var propBounty = this.props.bounty;
+    var stateBounty = this.state && this.state.bounty || {};
+    return _.extend(propBounty, stateBounty);
+  },
+
+  closeBounty: function(e) {
+    e.stopPropagation();
+
+    BountyActionCreators.closeBounty(this.props.bounty.number);
+  },
+
+  componentDidMount: function() {
+    BountyStore.addChangeListener(this.getBountyState);
+    SubscriptionsStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    BountyStore.removeChangeListener(this.getBountyState);
+    SubscriptionsStore.removeChangeListener(this._onChange);
+  },
+
   extendWork: function(e) {
     var lockUrl = this.bounty().lock_url;
 
@@ -44,6 +63,18 @@ module.exports = React.createClass({
 
     this.setState({
       lockUntil: extendUntil
+    });
+  },
+
+  getBountyState: function() {
+    var bounty = this.state.bounty;
+    var state = BountyStore.getState();
+
+    bounty.state = state || bounty.state;
+
+    this.setState({
+      bounty: bounty,
+      closed: state === 'closed'
     });
   },
 
@@ -111,7 +142,7 @@ module.exports = React.createClass({
 
   renderClosedNotice: function() {
     var bounty = this.state.bounty;
-    var closed = bounty.state == 'resolved' || bounty.state == 'closed'
+    var closed = bounty.state === 'resolved' || bounty.state === 'closed'
 
     if (!closed) {
       return
@@ -257,15 +288,20 @@ module.exports = React.createClass({
     if (bounty.can_update) {
       return (
         <li>
-          <ToggleButton
-            bool={bounty.open}
-            text={{ true: 'Close', false: 'Reopen' }}
-            icon={{ true: '', false: '' }}
-            classes={{ true: '', false: '' }}
-            href={{ true: bounty.close_url, false: bounty.reopen_url }} />
+          {this.renderOpenOrClosedButton()}
         </li>
       )
     }
+  },
+
+  renderOpenOrClosedButton: function() {
+    var bounty = this.state.bounty;
+
+    if (bounty.state !== 'closed' && !this.state.closed) {
+      return <a href="javascript:void(0);" onClick={this.closeBounty}>Close</a>;
+    }
+
+    return <a href="javascript:void(0);" onClick={this.reopenBounty}>Reopen</a>;
   },
 
   renderPopularizeButton: function() {
@@ -289,7 +325,7 @@ module.exports = React.createClass({
     var currentUser = window.app.currentUser();
     var bounty = this.bounty();
 
-    if (this.state.closed) {
+    if (this.state.closed || bounty.state === 'closed') {
       return (
         <a className="btn btn-default disabled">
           {bounty.state === 'resolved' ? 'Completed & Closed' : 'Closed'}
@@ -366,6 +402,12 @@ module.exports = React.createClass({
     );
   },
 
+  reopenBounty: function(e) {
+    e.stopPropagation();
+
+    BountyActionCreators.reopenBounty(this.state.bounty.number);
+  },
+
   startWork: function(e) {
     var currentUser = window.app.currentUser();
     var startWorkUrl = this.bounty().start_work_url;
@@ -376,14 +418,6 @@ module.exports = React.createClass({
       worker: currentUser && currentUser.attributes,
       lockUntil: moment().add(60, 'hours').add(1, 'second')
     });
-  },
-
-  componentDidMount: function() {
-    SubscriptionsStore.addChangeListener(this._onChange)
-  },
-
-  componentWillUnmount: function() {
-    SubscriptionsStore.removeChangeListener(this._onChange);
   },
 
   _onChange: function() {

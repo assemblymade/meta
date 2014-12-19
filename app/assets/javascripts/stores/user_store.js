@@ -22,7 +22,7 @@ var UserStore = _.extend(Object.create(Store), {
     }.bind(this))
   },
 
-  get: function() {
+  getUser: function() {
     return _currentUser
   },
 

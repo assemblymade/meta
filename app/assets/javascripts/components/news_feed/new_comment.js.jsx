@@ -90,7 +90,7 @@ var NewsFeedItemNewComment = React.createClass({
   getDefaultProps: function() {
     return {
       initialRows: 2,
-      user: UserStore.get()
+      user: UserStore.getUser()
     };
   },
 
@@ -154,7 +154,13 @@ var NewsFeedItemNewComment = React.createClass({
 
   render: function() {
     if (!this.props.user) {
-      return <span />;
+      return (
+        <span>
+          I'm afraid I can't let you comment. You'll have to
+          {' '}<a href="/signup">sign up</a>{' '}
+          to do that.
+        </span>
+      );
     }
 
     var dropzoneClasses = React.addons.classSet({
@@ -278,7 +284,6 @@ var NewsFeedItemNewComment = React.createClass({
   _submitNewComment: function() {
     var comment = this.state.text;
     var thread = this.props.thread;
-    var createdAt = Date.now();
 
     if (comment.length >= 2) {
       CommentActionCreators.submitComment(thread, comment, this.props.url);

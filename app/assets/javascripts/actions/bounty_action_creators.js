@@ -3,6 +3,8 @@
 var CONSTANTS = window.CONSTANTS;
 var ActionTypes = CONSTANTS.ActionTypes;
 var BountiesStore = require('../stores/bounties_store.js');
+var ProductStore = require('../stores/product_store.js');
+var Routes = require('../routes');
 
 var BountyActionCreators = {
   call: function(e, eventName, url) {
@@ -10,6 +12,30 @@ var BountyActionCreators = {
 
     _track(eventName);
     _patch(url);
+  },
+
+  closeBounty: function(bountyId) {
+    var url = Routes.product_wip_close_path({
+      product_id: ProductStore.getSlug(),
+      wip_id: bountyId
+    });
+
+    $.ajax({
+      url: url,
+      method: 'PATCH',
+      headers: {
+        accept: 'application/json'
+      },
+      success: function(data) {
+        Dispatcher.dispatch({
+          type: ActionTypes.BOUNTY_CLOSED,
+          bountyId: bountyId
+        });
+      },
+      error: function(jqXhr, textStatus, error) {
+        console.log(error);
+      }
+    });
   },
 
   insertPlaceholder: function(index, height) {
@@ -24,7 +50,7 @@ var BountyActionCreators = {
     Dispatcher.dispatch({
       type: ActionTypes.BOUNTIES_REORDER,
       bounties: bounties
-    })
+    });
   },
 
   movePlaceholder: function(bountyId) {
@@ -76,6 +102,30 @@ var BountyActionCreators = {
       type: 'PATCH',
       dataType: 'json',
       data: data
+    });
+  },
+
+  reopenBounty: function(bountyId) {
+    var url = Routes.product_wip_reopen_path({
+      product_id: ProductStore.getSlug(),
+      wip_id: bountyId
+    });
+
+    $.ajax({
+      url: url,
+      method: 'PATCH',
+      headers: {
+        accept: 'application/json'
+      },
+      success: function(data) {
+        Dispatcher.dispatch({
+          type: ActionTypes.BOUNTY_REOPENED,
+          bountyId: bountyId
+        });
+      },
+      error: function(jqXhr, textStatus, error) {
+        console.log(error);
+      }
     });
   },
 

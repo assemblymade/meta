@@ -56,6 +56,8 @@ ROUTES = [
   'product_update_comments',
   'product_update_subscribe',
   'product_update_unsubscribe',
+  'product_wip_close',
+  'product_wip_reopen',
   'readraptor',
 ]
 

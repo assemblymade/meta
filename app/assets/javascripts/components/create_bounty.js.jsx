@@ -76,7 +76,7 @@
                     name="task[description]"
                     thread="task_description"
                     hideButtons={true} url="#"
-                    user={UserStore.get()}
+                    user={UserStore.getUser()}
                     initialRows={4}
                     hideAvatar={true} />
               </div>

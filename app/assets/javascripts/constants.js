@@ -112,9 +112,13 @@
 
       BOUNTY_WORK_SUBMITTED: null,
 
+      BOUNTY_CLOSED: null,
+
       BOUNTIES_REQUEST: null,
       BOUNTIES_RECEIVE: null,
       BOUNTIES_REORDER: null,
+
+      BOUNTY_REOPENED: null,
 
       CHAT_USER_ONLINE: null,
       CHAT_MESSAGE_RECEIVE_ACTIVITIES: null,
