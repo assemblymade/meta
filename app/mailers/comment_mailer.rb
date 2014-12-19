@@ -40,4 +40,12 @@ class CommentMailer < BaseMailer
       format.html { render layout: nil }
     end
   end
+
+  def url_test
+    @user = User.find_by!(username: 'whatupdave')
+
+    @comment = NewsFeedItemComment.find('dee8ec69-0901-4699-b6b0-b0b6e9e7d1b7')
+
+    mail to: @user.email, subject: 'URL testing'
+  end
 end
