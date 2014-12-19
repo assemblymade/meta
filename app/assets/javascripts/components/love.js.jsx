@@ -18,7 +18,7 @@ var Love = React.createClass({
     }
 
     return (
-      <div className="clearfix" style={{marginBottom: '-3px'}}>
+      <div className="clearfix">
         {this.renderHeart()}
         <Lovers heartable_id={this.props.heartable_id} hearts_count={heartsCount} />
       </div>
@@ -32,8 +32,8 @@ var Love = React.createClass({
     }
 
     return (
-      <a className="gray left mr2 fs3 no-focus" href="javascript:;" onClick={this.handleClick}>
-          <div className="fa fa-heart gray" style={style}></div>
+      <a className="inline-block valign-mid mr1 fs6 gray no-focus" href="javascript:;" onClick={this.handleClick}>
+          <div className="fa fa-heart inline-block gray" style={style}></div>
       </a>
     );
   },
