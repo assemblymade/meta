@@ -5,5 +5,5 @@
     end
 %>
 <a href="<%= url %>">
-  <%= t "models.#{description.target.class.model_name.singular}.description.owner", description.target.attributes.symbolize_keys %>
+  <%= t "models.#{description.target.class.model_name.singular}.description.owner", title: description.target.try(:title) %>
 </a>

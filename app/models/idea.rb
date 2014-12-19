@@ -29,6 +29,11 @@ class Idea < ActiveRecord::Base
     ]
   end
 
+  # this is for heart emails, but I think any 'thread' should have a title
+  def title
+    name
+  end
+
   def comments
     news_feed_item.comments
   end

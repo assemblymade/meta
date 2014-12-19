@@ -55,16 +55,19 @@ en:
   models:
     comment:
       description:
-        owner: 'a comment you made'
+        owner: 'your comment on %{title}'
     discussion:
       description:
         owner: '%{title}'
     idea:
       description:
-        owner: 'an idea you left'
+        owner: 'your idea %{title}'
+    post:
+      description:
+        owner: '%{title}'
     team_membership:
       description:
-        owner: 'a team you joined'
+        owner: 'your introduction'
     task:
       description:
         owner: '%{title}'
