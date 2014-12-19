@@ -22,30 +22,27 @@ module.exports = React.createClass({
     var user = item.user;
 
     return (
-      <div className="p3 clickable"
-          onClick={this.handleClick}
-          key={'nfbi-' + bounty.id}>
-        <div>
-          <a className="h3 block mt0 mb1 black"
-              href={bounty.url}
-              key={"bounty-link-" + bounty.id}>
-            {bounty.title}
-            {' '}
-            <span className="gray">#{bounty.number}</span>
-          </a>
-          <div className="yellow mb3" key={"bounty-value-" + bounty.id}>
-            <span className="mr2" key={'mr2' + bounty.id}>
-              <AppCoins n={bounty.contracts.earnable} />
-            </span>
+
+      <div className="table mb0">
+        <div className="table-cell">
+          <div className="px3 pt3 pb3 clickable" onClick={this.handleClick} key={'nfbi-' + bounty.id}>
+            <a className="h4 mt0 mb1 mtn1 fw-500 blue" href={bounty.url} key={"bounty-link-" + bounty.id}>
+              {bounty.title} {' '}
+              <span className="gray-dark fs4">#{bounty.number}</span>
+            </a>
+            <div className="yellow mb3" key={"bounty-value-" + bounty.id}>
+              <span className="mr2" key={'mr2' + bounty.id}>
+                <AppCoins n={bounty.contracts.earnable} />
+              </span>
+            </div>
+            <div className="mt1 gray-darker fs4" key={'nfbi-body-' + bounty.id} onClick={this.showBounty}>
+              <Markdown content={bounty.short_description} normalized={true} />
+              {this.thumbnails()}
+            </div>
           </div>
         </div>
-        <div className="gray-darker"
-              key={'nfbi-body-' + bounty.id}
-              onClick={this.showBounty}>
-          <Markdown content={bounty.short_description} normalized={true} />
-          {this.thumbnails()}
-        </div>
       </div>
+
     );
   },
 

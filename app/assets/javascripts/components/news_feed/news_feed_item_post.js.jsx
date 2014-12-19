@@ -24,13 +24,20 @@ module.exports = React.createClass({
     var target = this.props.target;
 
     return (
-      <div className="p3 clickable" onClick={this.handleClick}>
-        <a className="h3 block mt0 mb1 black" href={this.props.url}>{this.props.title}</a>
-        {this.renderSummary()}
-
-        <div className="mt3 gray-darker" style={{ fontSize: 16 }}>
-          <Markdown content={this.props.body} normalized={true} />
-          {this.renderReadMore()}
+      <div className="table mb0">
+        <div className="table-cell">
+          <div className="px3 pt3 pb3 clickable" onClick={this.handleClick}>
+            <a className="h4 mt0 mb1 mtn1 fw-500 blue" href={this.props.url}>
+              {this.props.title}
+            </a>
+            <div>
+              {this.renderSummary()}
+            </div>
+            <div className="mt1 gray-darker fs4">
+              <Markdown content={this.props.body} normalized={true} />
+              {this.renderReadMore()}
+            </div>
+          </div>
         </div>
       </div>
     );

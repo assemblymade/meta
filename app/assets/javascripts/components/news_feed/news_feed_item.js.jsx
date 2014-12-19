@@ -272,15 +272,17 @@ var NewsFeedItem = React.createClass({
     }
 
     return (
-      <div className="px3 py2 clearfix border-top h6 mb0">
-        <div className="left mr2">
-          <Avatar user={user} size={18} />
-        </div>
-        <div className="overflow-hidden gray-2">
-          <span className="black bold">
-            {user.username}
-          </span>
+      <div className="px3 py2 border-top mb0 mt0">
+        <div style={{marginBottom: "-3px"}}>
+          <div className="inline-block valign-top">
+            <div className="left mr1">
+              <Avatar user={user} size={18} />
+            </div>
+          </div>
+          <div className="inline-block valign-top gray-2 fs3">
+            <span className="black bold">{user.username}</span>
             {' '} created this {this.targetNoun(target && target.type)}
+          </div>
         </div>
       </div>
     );
