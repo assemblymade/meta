@@ -243,7 +243,11 @@ var NewsFeedItem = React.createClass({
     var user = UserStore.getUser();
 
     if (!user) {
-      return;
+      return (
+        <li>
+          <a href="/signup">Sign up</a>
+        </li>
+      );
     }
 
     // only turn on for posts
