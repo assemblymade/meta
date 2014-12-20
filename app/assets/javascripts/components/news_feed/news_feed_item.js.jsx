@@ -54,9 +54,11 @@ var NewsFeedItem = React.createClass({
   },
 
   getInitialState: function() {
+    var id = this.props.id;
+
     return {
-      isArchived: this.props.archived_at != null,
-      isSubscribed: SubscriptionsStore.isSubscribed(this.props.id),
+      isArchived: ArchivedNewsFeedItemsStore.isArchived(id),
+      isSubscribed: SubscriptionsStore.isSubscribed(id),
       modalShown: false
     };
   },
@@ -72,8 +74,6 @@ var NewsFeedItem = React.createClass({
     }
   },
 
-  // TODO: (pletcher) Move this method to a Post component;
-  // it's time to split these out
   handleArchive: function() {
     var productSlug = this.props.product.slug;
     var itemId = this.props.id;
