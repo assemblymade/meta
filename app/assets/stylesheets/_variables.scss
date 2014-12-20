@@ -474,7 +474,7 @@ $modal-sm: 300px;
 
 $alert-padding:          $line-height-computed $grid-gutter-width;
 $alert-border-radius:    $border-radius-base;
-$alert-link-font-weight: 600;
+$alert-link-font-weight: bold;
 
 $alert-success-bg:     $state-success-bg;
 $alert-success-text:   $state-success-text;
@@ -619,7 +619,7 @@ $carousel-caption-color: #fff;
 
 // Close
 
-$close-font-weight: 600;
+$close-font-weight: bold;
 $close-color:       #000;
 $close-text-shadow: 0 1px 0 #fff;
 

@@ -29,7 +29,7 @@ p.lead,
 
 strong,
 .bold {
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .caps {
@@ -57,7 +57,7 @@ pre, code, samp {
   font-size: inherit;
 }
 
-h1, h2, h3, h4, h5, h6 { font-weight: 600 }
+h1, h2, h3, h4, h5, h6 { font-weight: bold }
 
 h1, .h1 {
   font-size: $font-size-h1; // 30px
