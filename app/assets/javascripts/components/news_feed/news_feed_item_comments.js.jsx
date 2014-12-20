@@ -371,6 +371,9 @@ function parseEvent(event, awardUrl, editUrl) {
   case 'Event::TitleChange':
     renderedEvent = <NewsFeedItemBountyTitleChange {...event} />;
     break;
+  case 'Event::Unallocation':
+    renderedEvent = null
+    break;
   case 'Event::Win':
     renderedEvent = <NewsFeedItemBountyWin {...event} />;
     break;

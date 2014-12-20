@@ -15,6 +15,7 @@ module.exports = React.createClass({
   },
 
   addTipsToWipEvents: function() {
+    return;
     var comments = app.wipEvents.filter(function(e) { return e.get('type') == 'Event::Comment' })
 
     _.each(comments, function(e){
