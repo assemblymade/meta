@@ -18,11 +18,23 @@ class SubscriptionsStore extends Store {
           })
           this.emitChange()
           break
+        case ActionTypes.NEWS_FEED_ITEM_SUBSCRIBED:
+          _subscribables[action.itemId] = 1
+          this.emitChange()
+          break;
+        case ActionTypes.NEWS_FEED_ITEM_UNSUBSCRIBED:
+          delete _subscribables[action.itemId]
+          this.emitChange()
+          break;
       }
     })
   }
 
   get(id) {
+    return !!_subscribables[id]
+  }
+
+  isSubscribed(id) {
     return !!_subscribables[id]
   }
 }
