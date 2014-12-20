@@ -10,6 +10,7 @@ var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx');
 var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
 var NewsFeedItemModal = require('./news_feed_item_modal.js.jsx');
 var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
+var SubscriptionsStore = require('../../stores/subscriptions_store');
 var Tag = require('../tag.js.jsx');
 var Tile = require('../tile.js.jsx');
 var UserStore = require('../../stores/user_store');
@@ -37,6 +38,12 @@ var NewsFeedItem = React.createClass({
 
   componentDidMount: function() {
     ArchivedNewsFeedItemsStore.addChangeListener(this.getStateFromStore);
+    SubscriptionsStore.addChangeListener(this.getStateFromStore);
+  },
+
+  componentWillUnmount: function() {
+    ArchivedNewsFeedItemsStore.removeChangeListener(this.getStateFromStore);
+    SubscriptionsStore.removeChangeListener(this.getStateFromStore);
   },
 
   getDefaultProps: function() {
@@ -49,6 +56,7 @@ var NewsFeedItem = React.createClass({
   getInitialState: function() {
     return {
       isArchived: this.props.archived_at != null,
+      isSubscribed: SubscriptionsStore.isSubscribed(this.props.id),
       modalShown: false
     };
   },
@@ -58,7 +66,8 @@ var NewsFeedItem = React.createClass({
 
     if (target && target.type === 'post') {
       this.setState({
-        isArchived: ArchivedNewsFeedItemsStore.isArchived(this.props.id)
+        isArchived: ArchivedNewsFeedItemsStore.isArchived(this.props.id),
+        isSubscribed: SubscriptionsStore.isSubscribed(this.props.id)
       });
     }
   },
@@ -73,6 +82,17 @@ var NewsFeedItem = React.createClass({
       NewsFeedItemActionCreators.unarchive(productSlug, itemId);
     } else {
       NewsFeedItemActionCreators.archive(productSlug, itemId);
+    }
+  },
+
+  handleSubscribe: function() {
+    var productSlug = this.props.product.slug;
+    var itemId = this.props.id;
+
+    if (this.state.isSubscribed) {
+      NewsFeedItemActionCreators.unsubscribe(productSlug, itemId);
+    } else {
+      NewsFeedItemActionCreators.subscribe(productSlug, itemId);
     }
   },
 
@@ -109,7 +129,11 @@ var NewsFeedItem = React.createClass({
         text = 'Unarchive';
       }
 
-      return <a href="javascript:void(0);" onClick={this.handleArchive}>{text}</a>;
+      return (
+        <li>
+          <a href="javascript:void(0);" onClick={this.handleArchive}>{text}</a>
+        </li>
+      );
     }
   },
 
@@ -129,6 +153,7 @@ var NewsFeedItem = React.createClass({
         <div className="card-footer px3 py2 clearfix">
           <ul className="list-inline mt0 mb0 py1 right">
             {this.renderArchiveButton()}
+            {this.renderSubscribeButton()}
           </ul>
         </div>
       );
@@ -212,6 +237,32 @@ var NewsFeedItem = React.createClass({
         </div>
       </a>
     );
+  },
+
+  renderSubscribeButton: function() {
+    var user = UserStore.getUser();
+
+    if (!user) {
+      return (
+        <li>
+          <a href="/signup">Sign up</a>
+        </li>
+      );
+    }
+
+    // only turn on for posts
+    if (this.props.target && this.props.target.type === 'post') {
+      var text = 'Subscribe';
+      if (this.state.isSubscribed) {
+        text = 'Unsubscribe';
+      }
+
+      return (
+        <li>
+          <a href="javascript:void(0);" onClick={this.handleSubscribe}>{text}</a>
+        </li>
+      );
+    }
   },
 
   renderTarget: function() {

@@ -56,6 +56,10 @@ class PostsController < ProductController
     find_product!
     find_post!
     find_heartables!
+
+    if Watching.watched?(current_user, @post.news_feed_item)
+      @user_subscriptions = [@post.news_feed_item.id]
+    end
   end
 
   def edit

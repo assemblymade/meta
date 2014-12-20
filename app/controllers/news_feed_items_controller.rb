@@ -46,7 +46,7 @@ class NewsFeedItemsController < ProductController
   private
 
   def find_news_feed_item!
-    @news_feed_item = NewsFeedItem.find(params[:id])
+    @news_feed_item = NewsFeedItem.find(params[:id] || params[:update_id])
   end
 
   def news_feed_item_params
