@@ -8,7 +8,7 @@ module.exports = React.createClass({
     var actor = this.props.actor;
 
     return (
-      <div className="timeline-item">
+      <div className="timeline-item" id={this.props.id}>
         <div className="media">
           <div className="pull-left">
             <div className="marker marker-green">

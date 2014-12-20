@@ -16,7 +16,7 @@ var NewsFeedBountyItemTagChange = React.createClass({
     // timestamp down below the last comment
 
     return (
-      <div className="timeline-item">
+      <div className="timeline-item" id={this.props.id}>
         <div className="media">
           <div className="pull-left">
             <div className="marker marker-gray">
