@@ -135,6 +135,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
+    fast-stemmer (1.0.2)
     ffaker (1.22.1)
     ffi (1.9.6)
     font_assets (0.1.11)
@@ -489,6 +490,7 @@ DEPENDENCIES
   fakeweb
   faraday (~> 0.9.0)
   faraday_middleware
+  fast-stemmer
   ffaker
   font_assets
   friendly_id!
