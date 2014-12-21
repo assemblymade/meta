@@ -179,18 +179,15 @@ var NewsFeedItem = React.createClass({
           var url = baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
 
           return (
-            <li className="left px1" key={tag.id}>
-              <a className="h6 mt0 mb0" href={url}><Tag tag={tag} /></a>
-            </li>
+            <div className="inline-block" key={tag.id}>
+              <Tag tag={tag} />
+            </div>
           )
         })
       }
-
       return (
-        <div className="px3 py1 h6 mt0 mb0">
-          <ul className="list-reset clearfix mxn1 mb0">
-            {tagItems}
-          </ul>
+        <div className="px3 pb3">
+          {tagItems}
         </div>
       );
     }

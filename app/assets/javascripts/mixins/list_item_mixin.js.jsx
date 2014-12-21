@@ -2,7 +2,7 @@ var ListItemMixin = {
   renderComments: function(count) {
     return [
       <Icon icon="comment" />,
-      <span className="px1">
+      <span className="px1" style={{marginLeft: '-2px'}}>
         {count}
       </span>
     ];
@@ -25,7 +25,7 @@ var ListItemMixin = {
 
     return tags.map(function(tag) {
       return (
-        <a className="fs0_9 caps gray-2 mr2 pointer" href={tag.url}>
+        <a className="fs1 caps gray-2 mr2 pointer" href={tag.url}>
           #{tag.name}
         </a>
       )

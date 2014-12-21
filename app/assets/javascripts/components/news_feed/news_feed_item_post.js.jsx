@@ -26,10 +26,12 @@ module.exports = React.createClass({
     return (
       <div className="table mb0">
         <div className="table-cell">
-          <div className="px3 pt3 pb3 clickable" onClick={this.handleClick}>
-            <a className="h4 mt0 mb1 mtn1 fw-500 blue" href={this.props.url}>
-              {this.props.title}
-            </a>
+          <div className="px3 pt3 pb3" onClick={this.handleClick}>
+            <div className="mt0 mb1 mtn1 h4 fw-500 clickable">
+              <a href={this.props.url}>
+                {this.props.title}
+              </a>
+            </div>
             <div>
               {this.renderSummary()}
             </div>
