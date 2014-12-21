@@ -48,19 +48,12 @@ class StoryStore extends Store {
           this.emitChange()
           break
 
-        case ActionTypes.PUSHER_INITIALIZED:
-          Dispatcher.waitFor(PusherStore.getDispatchToken())
-
-          var currentUser = UserStore.get()
-          var client = PusherStore.getClient()
-          if (currentUser && client) {
-            client.
-              subscribe('user.' + currentUser.id).
-              bind_all(() => StoryActionCreators.fetchStories());
+        case ActionTypes.PUSHER_USER_ACTION:
+          if (action.event == 'story-added') {
+            StoryActionCreators.fetchStories()
+            this.emitChange()
           }
-
-          this.emitChange()
-          break
+          break;
       }
     })
   }

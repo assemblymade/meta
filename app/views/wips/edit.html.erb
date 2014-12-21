@@ -15,9 +15,16 @@
           <%= f.text_field :title, 'class' => 'form-control', data: {'validate-length' => 2} %>
         </div>
 
-        <div class="form-group">
-          <%= f.label :description, class: 'control-label' %>
-          <%= f.text_area :description, 'class' => 'form-control', data: {'validate-length' => 2, autosize: ''}, rows: 8 %>
+        <div class="form-group" data-react-class="NewComment" data-react-props="<%= {
+          commentId: 'task_description',
+          hideAvatar: true,
+          hideButtons: true,
+          initialRows: 8,
+          initialText: @wip.description,
+          name: 'task[description]',
+          thread: 'task_description',
+          url: product_task_path(@product, @wip)
+        }.to_json %>">
         </div>
 
         <div style="display:none;">

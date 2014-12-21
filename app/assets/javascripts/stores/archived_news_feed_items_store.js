@@ -3,20 +3,24 @@ var Store = require('./es6_store');
 
 var _archivedItems = {};
 
-class ArchivedNewsFeedItemStore extends Store {
+class ArchivedNewsFeedItemsStore extends Store {
   constructor() {
     super()
 
     this.dispatchIndex = Dispatcher.register((action) => {
       switch (action.type) {
+        case ActionTypes.ARCHIVED_NEWS_FEED_ITEMS_RECEIVE:
+          _archivedItems = action.items
+          this.emitChange()
+          break
         case ActionTypes.NEWS_FEED_ITEM_ARCHIVED:
           _archivedItems[action.itemId] = 1
           this.emitChange()
-          break;
+          break
         case ActionTypes.NEWS_FEED_ITEM_UNARCHIVED:
           delete _archivedItems[action.itemId]
           this.emitChange()
-          break;
+          break
         default:
           // fall through
       }
@@ -28,4 +32,14 @@ class ArchivedNewsFeedItemStore extends Store {
   }
 }
 
-module.exports = new ArchivedNewsFeedItemStore()
+var store = new ArchivedNewsFeedItemsStore()
+
+var dataTag = document.getElementById('ArchivedNewsFeedItemsStore')
+if (dataTag) {
+  Dispatcher.dispatch({
+    type: ActionTypes.ARCHIVED_NEWS_FEED_ITEMS_RECEIVE,
+    items: JSON.parse(dataTag.innerHTML)
+  });
+}
+
+module.exports = store

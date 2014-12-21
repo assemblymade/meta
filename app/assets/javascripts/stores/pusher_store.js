@@ -1,5 +1,6 @@
 var Store = require('./es6_store')
 var ActionTypes = window.CONSTANTS.ActionTypes;
+var UserStore = require('./user_store');
 
 var _dispatchToken = null,
     _client = null
@@ -12,6 +13,19 @@ class PusherStore extends Store {
       switch(action.type) {
         case ActionTypes.PUSHER_INITIALIZED:
           _client = action.client
+
+          if (UserStore.getUser() && _client) {
+            _client.
+              subscribe('user.' + UserStore.getId()).
+              bind_all((payload, data) => {
+                Dispatcher.dispatch({
+                  type: ActionTypes.PUSHER_USER_ACTION,
+                  event: payload,
+                  payload: data
+                })
+              });
+          }
+
           this.emitChange()
           break;
       }

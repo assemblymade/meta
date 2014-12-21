@@ -12,6 +12,7 @@ var Icon = require('../icon.js.jsx');
 var NewComment = require('./new_comment.js.jsx');
 var NewsFeedItemBountyClose = require('./news_feed_item_bounty_close.js.jsx');
 var NewsFeedItemBountyCommentReference = require('./news_feed_item_bounty_comment_reference.js.jsx');
+var NewsFeedItemBountyReopen = require('./news_feed_item_bounty_reopen.js.jsx');
 var NewsFeedItemBountyReviewReady = require('./news_feed_item_bounty_review_ready.js.jsx');
 var NewsFeedItemBountyTagChange = require('./news_feed_item_bounty_tag_change.js.jsx');
 var NewsFeedItemBountyTimelineItem = require('./news_feed_item_bounty_timeline_item.js.jsx');
@@ -64,16 +65,41 @@ var NewsFeedItemComments = React.createClass({
 
   getBountyState: function() {
     var state = BountyStore.getState();
+    var comments = this.state.comments;
 
-    if (state === 'reviewing') {
-      var comments = this.state.comments;
+    switch (state) {
+      case 'closed':
+        var closedEvent = this.renderOptimisticClosedEvent();
 
-      comments.push(this.renderOptimisticReviewReady());
+        if (!closedEvent) {
+          return;
+        }
 
-      this.setState({
-        comments: comments
-      });
+        comments.push(closedEvent);
+        break;
+      case 'open':
+        var reopenedEvent = this.renderOptimisticReopenedEvent();
+
+        if (!reopenedEvent) {
+          return;
+        }
+
+        comments.push(reopenedEvent);
+        break;
+      case 'reviewing':
+        var reviewReadyEvent = this.renderOptimisticReviewReadyEvent();
+
+        if (!reviewReadyEvent) {
+          return;
+        }
+
+        comments.push(reviewReadyEvent);
+        break;
     }
+
+    this.setState({
+      comments: comments
+    });
   },
 
   getDiscussionState: function(e) {
@@ -240,14 +266,21 @@ var NewsFeedItemComments = React.createClass({
 
     if (this.props.commentable) {
       var url = this.state.url;
-
-      if (window.app.currentUser()) {
+      if (UserStore.getUser()) {
         return <NewComment
             {...this.props}
             canContainWork={item.target && item.target.type === 'task'}
             url={url}
             thread={item.id}
             user={window.app.currentUser()} />
+      } else {
+        return (
+          <div className="well centered text-center">
+            I'm afraid I can't let you comment. You'll have to
+            {' '}<a href="/signup">sign up</a>{' '}
+            to do that.
+          </div>
+        );
       }
     }
   },
@@ -262,24 +295,46 @@ var NewsFeedItemComments = React.createClass({
     });
   },
 
-  renderOptimisticReviewReady: function() {
+  renderOptimisticClosedEvent: function() {
+    return this.renderOptimisticEvent('Event::Close');
+  },
+
+  renderOptimisticEvent: function(type) {
+    var createdAt = new Date(Date.now() + 500);
+
     // when we get the event back in the confirmation, set the award_url
     // so that the buttons show up
-    if (UserStore.isCoreTeam()) {
-      return {
-        type: 'Event::ReviewReady',
-        actor: UserStore.getUser(),
-        // award_url: this.props.url + '/award',
-        created_at: new Date(),
-        id: 'FIXME'
-      };
+    return {
+      type: type,
+      actor: UserStore.getUser(),
+      // award_url: this.props.url + '/award',
+      created_at: createdAt,
+      id: createdAt.toISOString()
     }
+  },
+
+  renderOptimisticReopenedEvent: function() {
+    return this.renderOptimisticEvent('Event::Reopen');
+  },
+
+  renderOptimisticReviewReadyEvent: function() {
+    return this.renderOptimisticEvent('Event::ReviewReady');
   },
 
   triggerModal: function(e) {
     e.stopPropagation();
 
     this.props.triggerModal();
+  },
+
+  componentDidUpdate: function(prevProps, prevState) {
+    if (window.location.hash) {
+      if (this.state.comments.length > prevState.comments.length) {
+        $(document.body).animate({
+          'scrollTop':   $('#' + window.location.hash.substring(1)).offset().top
+        }, 500);
+      }
+    }
   }
 });
 
@@ -302,11 +357,11 @@ function parseEvent(event, awardUrl, editUrl) {
   case 'Event::CommentReference':
     renderedEvent = <NewsFeedItemBountyCommentReference {...event} />;
     break;
+  case 'Event::Reopen':
+    renderedEvent = <NewsFeedItemBountyReopen {...event} />;
+    break;
   case 'Event::ReviewReady':
     renderedEvent = <NewsFeedItemBountyReviewReady {...event} />;
-    break;
-  case 'Event::Win':
-    renderedEvent = <NewsFeedItemBountyWin {...event} />;
     break;
   case 'Event::TagChange':
     // don't render tag change events
@@ -315,6 +370,12 @@ function parseEvent(event, awardUrl, editUrl) {
     break;
   case 'Event::TitleChange':
     renderedEvent = <NewsFeedItemBountyTitleChange {...event} />;
+    break;
+  case 'Event::Unallocation':
+    renderedEvent = null
+    break;
+  case 'Event::Win':
+    renderedEvent = <NewsFeedItemBountyWin {...event} />;
     break;
   case 'news_feed_item_comment':
     renderedEvent = <Comment

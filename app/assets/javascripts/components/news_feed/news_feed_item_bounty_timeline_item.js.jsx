@@ -15,6 +15,7 @@ module.exports = React.createClass({
   },
 
   addTipsToWipEvents: function() {
+    return;
     var comments = app.wipEvents.filter(function(e) { return e.get('type') == 'Event::Comment' })
 
     _.each(comments, function(e){
@@ -46,7 +47,7 @@ module.exports = React.createClass({
     }
 
     return (
-      <div className="timeline-item">
+      <div className="timeline-item" id={this.props.id}>
         <div className="activity" id={anchor} data-readraptor-track={readraptorTrackId} key={id}>
           <div className="pull-left activity-avatar">
             <a href={actor.url} title={'@' + actor.username}>

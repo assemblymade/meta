@@ -5,6 +5,7 @@ var DropzoneMixin = require('../../mixins/dropzone_mixin');
 var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
 var NewCommentStore = require('../../stores/new_comment_store');
 var TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
+var UserStore = require('../../stores/user_store');
 var xhr = require('../../xhr');
 var ENTER = 13;
 var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
@@ -88,7 +89,8 @@ var NewsFeedItemNewComment = React.createClass({
 
   getDefaultProps: function() {
     return {
-      initialRows: 2
+      initialRows: 2,
+      user: UserStore.getUser()
     };
   },
 
@@ -125,6 +127,10 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   onKeyDown: function(e) {
+    if (this.props.hideButtons) {
+      return;
+    }
+
     if ((e.shiftKey || e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
       e.preventDefault();
       e.stopPropagation();
@@ -134,6 +140,10 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   onKeyPress: function(e) {
+    if (this.props.hideButtons) {
+      return;
+    }
+
     if ((e.shiftKey || e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
       e.preventDefault();
       e.stopPropagation();
@@ -144,7 +154,13 @@ var NewsFeedItemNewComment = React.createClass({
 
   render: function() {
     if (!this.props.user) {
-      return <span />;
+      return (
+        <span>
+          I'm afraid I can't let you comment. You'll have to
+          {' '}<a href="/signup">sign up</a>{' '}
+          to do that.
+        </span>
+      );
     }
 
     var dropzoneClasses = React.addons.classSet({
@@ -268,7 +284,6 @@ var NewsFeedItemNewComment = React.createClass({
   _submitNewComment: function() {
     var comment = this.state.text;
     var thread = this.props.thread;
-    var createdAt = Date.now();
 
     if (comment.length >= 2) {
       CommentActionCreators.submitComment(thread, comment, this.props.url);
@@ -287,6 +302,7 @@ var NewsFeedItemNewComment = React.createClass({
 });
 
 module.exports = NewsFeedItemNewComment;
+window.NewComment = NewsFeedItemNewComment;
 
 function _dependsOn(dependency, type) {
   return function (props, propName, componentName) {

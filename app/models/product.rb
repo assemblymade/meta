@@ -644,6 +644,7 @@ class Product < ActiveRecord::Base
   def calc_task_comments_response_time
     # average time in seconds for comments to receive responses
     # weighted average of responsiveness across tasks with comments
+
     avg_time_to_comment = -1
     tasks_with_comments = self.tasks.where('comments_count > 0')
 

@@ -1,0 +1,6 @@
+<p>
+  url_for: <%= url_for(@comment.url_params) %>
+</p>
+<p>
+  only_path: <%= url_for([@comment.url_params[0], @comment.url_params[1].merge(only_path: false)]) %>
+</p>

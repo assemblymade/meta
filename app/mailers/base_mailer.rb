@@ -6,6 +6,8 @@ class BaseMailer < ActionMailer::Base
   before_action :set_date
   after_action  :prevent_delivery_to_unsubscribed_users
 
+  helper :mail_url
+
   private
 
   def mailgun_tag(name)
@@ -51,6 +53,12 @@ class BaseMailer < ActionMailer::Base
       "List-Post"  => "<mailto:#{reply_address}>",
       "Precedence" => "list",
     }
+  end
+
+  def target_name(nfi)
+    owner = nfi.source == @user ? 'owner' : 'other'
+    target_type = nfi.target.class.name.underscore
+    I18n.t("stories.subjects.long.#{target_type}.#{owner}", nfi.target.attributes.symbolize_keys)
   end
 
   def from_address_for(user)

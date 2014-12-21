@@ -1,3 +1,4 @@
+var ActionTypes = window.CONSTANTS.ActionTypes
 var xhr = require('../xhr');
 // var Dispatcher = require('../dispatcher');
 var Store = require('./store');
@@ -140,6 +141,15 @@ var moment = require('moment');
     var action = payload.action;
     var data = payload.data;
     var sync = payload.sync;
+
+    switch(payload.type) {
+      case ActionTypes.PUSHER_USER_ACTION:
+        if (payload.event == 'chat-added') {
+          _chatRooms['chat_' + payload.payload.chat_room].updated = payload.payload.updated
+        }
+        _notificationsStore.emitChange()
+        break;
+    }
 
     if (!_notificationsStore[action]) {
       return;
