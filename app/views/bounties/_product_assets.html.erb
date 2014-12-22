@@ -1,8 +1,0 @@
-<% if @product_assets %>
-  <script id="product_assets" type="application/json">
-    <%== @product_assets.reduce({}) { |memo, asset|
-      memo[asset.attachment.asset_path] = 1
-      memo
-    }.to_json %>
-  </script>
-<% end %>

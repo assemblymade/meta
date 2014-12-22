@@ -5,9 +5,16 @@ var DropzoneMixin = require('../../mixins/dropzone_mixin');
 var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
 var NewCommentStore = require('../../stores/new_comment_store');
 var TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
+var UserStore = require('../../stores/user_store');
 var xhr = require('../../xhr');
 var ENTER = 13;
 var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
+
+/**
+ * TODO: Rethink how this component interacts with its parents and children.
+ * Right now, it breaks the one-way flow of data -- is there a better
+ * way to pass data in?
+ */
 
 var NewsFeedItemNewComment = React.createClass({
   displayName: 'NewComment',
@@ -15,6 +22,8 @@ var NewsFeedItemNewComment = React.createClass({
   propTypes: {
     canContainWork: React.PropTypes.bool,
     commentId: _dependsOn('initialText', 'string'),
+    hideAvatar: React.PropTypes.bool,
+    hideButtons: React.PropTypes.bool,
     initialText: _dependsOn('commentId', 'string'),
     thread: React.PropTypes.string.isRequired,
     url: React.PropTypes.string.isRequired,
@@ -80,7 +89,8 @@ var NewsFeedItemNewComment = React.createClass({
 
   getDefaultProps: function() {
     return {
-      initialRows: 2
+      initialRows: 2,
+      user: UserStore.getUser()
     };
   },
 
@@ -117,6 +127,10 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   onKeyDown: function(e) {
+    if (this.props.hideButtons) {
+      return;
+    }
+
     if ((e.shiftKey || e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
       e.preventDefault();
       e.stopPropagation();
@@ -126,6 +140,10 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   onKeyPress: function(e) {
+    if (this.props.hideButtons) {
+      return;
+    }
+
     if ((e.shiftKey || e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
       e.preventDefault();
       e.stopPropagation();
@@ -136,7 +154,13 @@ var NewsFeedItemNewComment = React.createClass({
 
   render: function() {
     if (!this.props.user) {
-      return <span />;
+      return (
+        <span>
+          I'm afraid I can't let you comment. You'll have to
+          {' '}<a href="/signup">sign up</a>{' '}
+          to do that.
+        </span>
+      );
     }
 
     var dropzoneClasses = React.addons.classSet({
@@ -153,7 +177,7 @@ var NewsFeedItemNewComment = React.createClass({
     return (
       <div className="clearfix" style={{ paddingBottom: '2.5rem' }}>
         {this.renderAvatar()}
-        <div className="px4">
+        <div className={this.props.hideAvatar ? null : "px4"}>
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
               <TypeaheadUserTextArea
@@ -177,6 +201,10 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   renderAvatar: function() {
+    if (this.props.hideAvatar) {
+      return;
+    }
+
     if (!this.props.initialText) {
       return (
         <div className="left">
@@ -187,6 +215,10 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   renderButtons: function() {
+    if (this.props.hideButtons) {
+      return;
+    }
+
     var classes = this.buttonClasses('btn-primary');
 
     return (
@@ -197,7 +229,7 @@ var NewsFeedItemNewComment = React.createClass({
             onClick={this.submitComment}>
           Comment
         </a>
-        {this.props.canContainWork ? this.renderSubmitWorkButton() : null}
+        {this.renderSubmitWorkButton()}
       </div>
     );
   },
@@ -214,17 +246,19 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   renderSubmitWorkButton: function() {
-    var classes = this.buttonClasses('btn-default');
+    if (this.props.canContainWork) {
+      var classes = this.buttonClasses('btn-default');
 
-    return (
-      <a className={classes}
-          href="javascript:void(0);"
-          style={{ color: '#5cb85c !important', border: '1px solid #d3d3d3' }}
-          onClick={this.submitWork}>
-        <span className="icon icon-document icon-left"></span>
-        Submit work for review
-      </a>
-    );
+      return (
+        <a className={classes + ' mr2'}
+            href="javascript:void(0);"
+            style={{ color: '#5cb85c !important', border: '1px solid #d3d3d3' }}
+            onClick={this.submitWork}>
+          <span className="icon icon-document icon-left"></span>
+          Submit work for review
+        </a>
+      );
+    }
   },
 
   submitComment: function(e) {
@@ -250,33 +284,9 @@ var NewsFeedItemNewComment = React.createClass({
   _submitNewComment: function() {
     var comment = this.state.text;
     var thread = this.props.thread;
-    var createdAt = Date.now();
 
-    // FIXME: (pletcher) These should go through action creators and the Dispatcher
     if (comment.length >= 2) {
-      xhr.post(this.props.url, { body: comment }, _confirmComment(thread, createdAt));
-
-      Dispatcher.dispatch({
-        type: ActionTypes.NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT,
-        commentId: this.props.thread,
-        data: {
-          body: comment,
-          created_at: createdAt,
-          news_feed_item_id: thread,
-          user: window.app.currentUser().attributes
-        }
-      });
-
-      this.setState({
-        rows: this.props.initialRows,
-        text: ''
-      });
-
-      window.analytics.track(
-        'news_feed_item.commented', {
-          product: (window.app.currentAnalyticsProduct())
-        }
-      );
+      CommentActionCreators.submitComment(thread, comment, this.props.url);
     }
   },
 
@@ -292,29 +302,7 @@ var NewsFeedItemNewComment = React.createClass({
 });
 
 module.exports = NewsFeedItemNewComment;
-
-function _confirmComment(thread, timestamp) {
-  return function (err, data) {
-    if (err) {
-      return console.error(err);
-    }
-
-    try {
-      data = JSON.parse(data);
-    } catch (e) {
-      console.error(e);
-    }
-
-    Dispatcher.dispatch({
-      type: ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT,
-      data: {
-        thread: thread,
-        timestamp: timestamp,
-        comment: data
-      }
-    });
-  };
-}
+window.NewComment = NewsFeedItemNewComment;
 
 function _dependsOn(dependency, type) {
   return function (props, propName, componentName) {

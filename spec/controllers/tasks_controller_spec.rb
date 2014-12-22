@@ -41,7 +41,7 @@ describe TasksController do
     end
 
     it "assigns wips" do
-      expect(assigns(:wips)).to be
+      expect(assigns(:bounties)).to be
     end
   end
 

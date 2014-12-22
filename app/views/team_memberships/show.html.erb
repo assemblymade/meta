@@ -1,10 +1,10 @@
 <% title 'Introduction', '@'+@membership.user.username %>
-<%= render 'news_feed_items/heartables' %>
 
-<div class="px2">
+<div class="px2 col-md-8 col-md-offset-2">
   <%= react_component 'NewsFeedItem',
         NewsFeedItemSerializer.new(@news_feed_item).as_json.merge(
           commentable: true,
+          enableModal: false,
           productPage: true,
           showAllComments: true
   ) %>

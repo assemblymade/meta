@@ -5,8 +5,6 @@
   var Avatar = require('./avatar.js.jsx');
   // var Dispatcher = require('../dispatcher');
   var EventMixin = require('../mixins/event.js.jsx');
-  var NotificationsMixin = require('../mixins/notifications.js.jsx');
-  var NotificationsStore = require('../stores/notifications_store');
   var Spinner = require('./spinner.js.jsx');
   var NF = CONSTANTS.NOTIFICATIONS;
 
@@ -140,11 +138,9 @@
     rows: function(stories) {
       var self = this;
 
-      var firstTen = _.first(stories, 10);
-
       return (
         <div style={{ maxHeight: '400px', minHeight: '50px' }}>
-          { _.map(firstTen, function(story) {
+          { _.map(stories, function(story) {
             var opts = {
               key: story.id,
               story: story,
@@ -176,7 +172,7 @@
 
     getStateFromStore: function() {
       return {
-        stories: StoryStore.getStories(),
+        stories: _(StoryStore.getStories()).sortBy((s) => -moment(s.created_at).unix()),
       }
     }
   });

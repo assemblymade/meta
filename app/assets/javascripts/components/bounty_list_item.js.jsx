@@ -30,7 +30,7 @@ var BountyListItem = React.createClass({
     this.setState({
       position: {
         top: position.top,
-        left: position.left + 10,
+        left: position.left,
         width: width,
         height: height,
         mouseX: event.pageX,
@@ -81,24 +81,11 @@ var BountyListItem = React.createClass({
 
     return (
       <a href={bounty.url}>
-        {bounty.title}
-        {' '}
-        <span className="gray-dark">
+        {bounty.title} {' '}
+        <span className="gray-dark fs4">
           #{bounty.number}
         </span>
       </a>
-    )
-  },
-
-  renderLove: function() {
-    if (!window.app.featureEnabled('much-love')) {
-      return <span/>
-    }
-
-    return (
-      <div className="px3 py2 border-top mb0 mt0">
-        <Love heartable_type='NewsFeedItem' heartable_id={this.props.bounty.news_feed_item_id} />
-      </div>
     )
   },
 
@@ -159,26 +146,23 @@ var BountyListItem = React.createClass({
       <div className="bg-white rounded shadow mb2 js-bounty-list-item" style={style} data-bounty-id={bounty.id}>
         <div className="table mb0">
           <div className="table-cell">
-            <div className="px3 mt3 mb2">
-              <div className="h4 mt0 mb1 mtn1 fw-500">
+            <div className="px3 pt3 pb3">
+              <div className="mt0 mb1 mtn1 h4 fw-500 clickable">
                 {this.renderTitle()}
               </div>
-
-              <div>
-                <span className="mr2 fs1_1">
+              <div className="lh0_9">
+                <span className="mr2 fs2">
                   <Coins coins={this.props.bounty.earnable_coins_cache} />
                 </span>
-
-                <span className="gray mr2 fs1_1 fw_600">
+                <span className="gray mr2 fs3 fw_600">
                   {this.renderComments(bounty.comments_count)}
                 </span>
-
-                <span className="mt0 mb0 fs0_9">
+                <span className="mt0 mb0 fs1">
                   {this.renderTags(bounty.tags)}
                 </span>
               </div>
             </div>
-            {this.renderLove()}
+            {this.renderLove(this.props.bounty.news_feed_item_id)}
             {this.renderLocker()}
           </div>
           {this.renderHandle()}

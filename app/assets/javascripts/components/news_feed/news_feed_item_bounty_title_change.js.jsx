@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var Icon = require('../icon.js.jsx');
 
 var NewsFeedItemBountyTitleChange = React.createClass({
@@ -12,7 +10,7 @@ var NewsFeedItemBountyTitleChange = React.createClass({
     var actor = this.props.actor;
 
     return (
-      <div className="timeline-item">
+      <div className="timeline-item" id={this.props.id}>
         <div className="media">
           <div className="pull-left">
             <div className="marker marker-yellow">
@@ -35,4 +33,3 @@ var NewsFeedItemBountyTitleChange = React.createClass({
 if (typeof module !== 'undefined') {
   module.exports = NewsFeedItemBountyTitleChange;
 }
-

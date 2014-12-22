@@ -1,0 +1,660 @@
+// Colors
+
+// This whole stylesheet needs to be sorted through and burned
+// https://assembly.com/meta/bounties/993
+
+$black:         #333;
+
+$blue:          #338EDA;
+$green:         #33D6A6;
+$cyan:          #5bc0de;
+$yellow:        #f2d930;
+$coin-yellow:   #ecbd00;
+$red:           #EC3750;
+
+$facebook:      #3B5998;
+$twitter:       #55ACEE;
+
+// Deprecated
+$purple:        #6700B9;
+$blue-light:    lighten($blue, 10%);
+$green-light:   lighten($green, 10%);
+$purple-light:  lighten($purple, 10%);
+$yellow-light:  lighten($yellow, 10%);
+$red-light:     lighten($red, 10%);
+
+$gray-darker:   lighten(#000, 13.5%); // #222
+$gray-dark:     lighten(#000, 20%);   // #333
+$gray:          lighten(#000, 33.5%); // #555
+$gray-light:    lighten(#000, 46.7%); // #777
+$gray-lighter:  lighten(#000, 93.5%); // #eee
+
+$brand-primary: $blue;
+$brand-success: $green;
+$brand-info:    $cyan;
+$brand-warning: $yellow;
+$brand-danger:  $red;
+$brand-muted:   $gray-light;
+
+$brand-bg:       #FAFAFA;
+$brand-border:   darken($gray-lighter, 10%);
+$brand-divider:  darken($brand-bg, 5%);
+$brand-shadow:   rgba(100, 100, 100, 0.2);
+
+$brand-coins:    $coin-yellow;
+
+$body-bg:       white;
+$text-color:    $black;
+
+
+// Transition Timing
+
+$transition-function: ease-in-out;
+$transition-duration: 0.15s;
+$transition-in-duration: 0.15s;
+$transition-out-duration: 0.15s;
+
+
+$link-color:       $brand-primary;
+$link-hover-color: darken($link-color, 15%);
+
+
+// Copy Deliverable
+
+$text-copy-bg: #fcfcfc;
+$text-copy: darken($text-copy-bg, 75%);
+
+
+// Typography
+
+$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-serif:      Georgia, "Times New Roman", Times, serif;
+$font-family-monospace:  "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace;
+$font-family-base:       $font-family-sans-serif;
+
+$font-size-base:  15px;
+$font-size-large: 18px;
+$font-size-small: 13px;
+
+$font-size-h1: 30px;
+// $font-size-h1: 42px;
+$font-size-h2: 30px;
+$font-size-h3: 24px;
+$font-size-h4: 18px;
+// $font-size-h4: 20px;
+$font-size-h5: $font-size-base;
+$font-size-h6: 13px;
+
+$line-height-base:     1.6;
+$line-height-computed: 24px; // 24px
+
+$headings-font-family: inherit;
+$headings-font-weight: normal;
+$headings-line-height: 1.2;
+$headings-color:       inherit;
+
+
+// Iconography
+
+$icon-font-path:   "bootstrap/";
+$icon-font-name:   "glyphicons-halflings-regular";
+$icon-font-svg-id: "glyphicons_halflingsregular";
+
+
+// Components
+
+$padding-base-vertical:   6px;
+$padding-base-horizontal: 12px;
+
+$padding-xxl-vertical:   36px;
+$padding-xxl-horizontal:  36px;
+
+$padding-xl-vertical:    24px;
+$padding-xl-horizontal:  24px;
+
+$padding-large-vertical:   10px;
+$padding-large-horizontal: 16px;
+
+$padding-small-vertical:   5px;
+$padding-small-horizontal: 10px;
+
+$padding-xs-vertical:   1px;
+$padding-xs-horizontal: 5px;
+
+$line-height-large: 1.33;
+$line-height-small: 1.5;
+
+$line-height-computed-small: floor(($font-size-small * $line-height-small));
+
+$border-radius-base:  3px;
+$border-radius-large: 5px;
+$border-radius-small: 2px;
+
+$component-active-color:  $brand-primary;
+$component-active-bg:     lighten($brand-primary, 40%);
+
+$caret-width-base:  4px;
+$caret-width-large: 5px;
+
+
+// Tables
+
+$table-cell-padding:           8px;
+$table-condensed-cell-padding: 5px;
+
+$table-bg:        transparent;
+$table-bg-accent: #f9f9f9;
+$table-bg-hover:  #f5f5f5;
+$table-bg-active: $table-bg-hover;
+
+$table-border-color: $brand-divider;
+
+
+// Buttons
+
+$btn-font-weight:    600;
+
+$btn-default-color:  $brand-primary;
+$btn-default-bg:     #fff;
+$btn-default-border: $brand-border;
+
+$btn-primary-color:  #fff;
+$btn-primary-bg:     $brand-primary;
+$btn-primary-border: darken($btn-primary-bg, 5%);
+
+$btn-success-color:  #fff;
+$btn-success-bg:     $brand-success;
+$btn-success-border: darken($btn-success-bg, 5%);
+
+$btn-info-color:     #fff;
+$btn-info-bg:        $brand-info;
+$btn-info-border:    darken($btn-info-bg, 5%);
+
+$btn-warning-color:  #fff;
+$btn-warning-bg:     $brand-warning;
+$btn-warning-border: darken($btn-warning-bg, 5%);
+
+$btn-danger-color:   #fff;
+$btn-danger-bg:      $brand-danger;
+$btn-danger-border:  darken($btn-danger-bg, 5%);
+
+$btn-twitter-color:  white;
+$btn-twitter-bg:     $twitter;
+$btn-twitter-border: darken($btn-twitter-bg, 5%);
+
+$btn-facebook-color:  white;
+$btn-facebook-bg:     $facebook;
+$btn-facebook-border: darken($btn-facebook-bg, 5%);
+
+$btn-link-disabled-color: $gray-light;
+
+
+// Forms
+
+$input-bg:           #fff;
+$input-bg-disabled:  lighten($body-bg, 2%);
+
+$input-color:         $text-color;
+$input-border:        $brand-border;
+$input-border-radius: $border-radius-base;
+$input-border-focus:  lighten($brand-primary, 15%);
+
+$input-color-placeholder: #999999;
+
+$input-height-base:  ($line-height-computed + ($padding-base-vertical * 2) + 2);
+$input-height-large: (ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2);
+$input-height-small: (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2);
+
+$legend-color:        $gray-dark;
+$legend-border-color: #e5e5e5;
+
+$input-group-addon-bg:           $gray-lighter;
+$input-group-addon-border-color: $input-border;
+
+
+// Dropdowns
+
+$dropdown-bg:              #fff;
+$dropdown-border:          rgba(0,0,0,.15);
+$dropdown-fallback-border: #ccc;
+$dropdown-divider-bg:      #e5e5e5;
+
+$dropdown-link-color:       $gray-dark;
+$dropdown-link-hover-color: darken($gray-dark, 5%);
+$dropdown-link-hover-bg:    #f5f5f5;
+
+$dropdown-link-active-color: $component-active-color;
+$dropdown-link-active-bg:    $component-active-bg;
+
+$dropdown-link-disabled-color: $gray-light;
+
+$dropdown-header-color: $gray-light;
+
+$dropdown-glyph-margin: 10px;
+
+
+// Grid system
+
+$grid-columns:              12;
+$grid-gutter-width:         30px;
+
+
+// Container sizes
+
+$container-tablet: ((720px + $grid-gutter-width));
+$container-sm:     $container-tablet;
+
+$container-desktop: ((940px + $grid-gutter-width));
+$container-md:      $container-desktop;
+
+$container-large-desktop: ((940px + $grid-gutter-width));
+$container-lg:            $container-large-desktop;
+
+
+// Navbar
+
+// Basics of a navbar
+$navbar-height:              48px;
+$navbar-margin-bottom:       $line-height-computed;
+$navbar-border-radius:       $border-radius-base;
+$navbar-padding-horizontal:  floor(($grid-gutter-width / 2));
+$navbar-padding-vertical:    12px;
+$navbar-collapse-max-height: 340px;
+
+$navbar-default-color:  $gray-dark;
+$navbar-default-bg:     white;
+$navbar-default-border: none;
+
+// Navbar links
+$navbar-default-link-color:          $gray-dark;
+$navbar-default-link-hover-color:    $gray-dark;
+$navbar-default-link-hover-bg:       white;
+$navbar-default-link-active-color:   $gray-darker;
+$navbar-default-link-active-bg:      transparent;
+$navbar-default-link-disabled-color: $gray;
+$navbar-default-link-disabled-bg:    transparent;
+
+// Navbar brand label
+$navbar-default-brand-color:       $gray-light;
+$navbar-default-brand-hover-color: $red;
+$navbar-default-brand-hover-bg:    transparent;
+
+// Navbar toggle
+$navbar-default-toggle-hover-bg:     #ddd;
+$navbar-default-toggle-icon-bar-bg:  #888;
+$navbar-default-toggle-border-color: #ddd;
+
+// Inverted navbar
+// Reset inverted navbar basics
+$navbar-inverse-color:  $gray-lighter;
+$navbar-inverse-bg:     $black;
+$navbar-inverse-border: darken($navbar-inverse-bg, 2%);
+
+// Inverted navbar links
+$navbar-inverse-link-color:          darken($navbar-inverse-color, 10%);
+$navbar-inverse-link-hover-color:    lighten($navbar-inverse-link-color, 10%);
+$navbar-inverse-link-hover-bg:       darken($navbar-inverse-bg, 5%);
+$navbar-inverse-link-active-color:   lighten($navbar-inverse-link-hover-color, 15%);
+$navbar-inverse-link-active-bg:      transparent;
+$navbar-inverse-link-disabled-color: #444;
+$navbar-inverse-link-disabled-bg:    transparent;
+
+// Inverted navbar brand label
+$navbar-inverse-brand-color:       $navbar-inverse-link-color;
+$navbar-inverse-brand-hover-color: white;
+$navbar-inverse-brand-hover-bg:    transparent;
+
+// Inverted navbar search
+$navbar-inverse-search-color:              $navbar-inverse-link-active-color;
+$navbar-inverse-search-bg:                 lighten($navbar-inverse-bg, 12%);
+$navbar-inverse-search-bg-focus:           $navbar-inverse-search-bg;
+$navbar-inverse-search-border:             $navbar-inverse-search-bg;
+$navbar-inverse-search-border-focus:       lighten($navbar-inverse-search-bg,20%);
+$navbar-inverse-search-placeholder-color:  darken($navbar-inverse-link-color, 5%);
+
+// Inverted navbar toggle
+$navbar-inverse-toggle-hover-bg:     #333;
+$navbar-inverse-toggle-icon-bar-bg:  #fff;
+$navbar-inverse-toggle-border-color: #333;
+
+
+// Navs
+
+// Shared nav styles
+$nav-link-padding:  6px 15px;
+$nav-link-hover-bg: $brand-bg;
+
+$nav-disabled-link-color:       $gray-light;
+$nav-disabled-link-hover-color: $gray-light;
+
+$nav-open-link-hover-color: #fff;
+
+// Tabs
+$nav-tabs-border-color: $brand-divider;
+
+$nav-tabs-link-hover-border-color: rgba(100,100,100, 0.0725);
+
+$nav-tabs-active-link-hover-bg:           transparent;
+$nav-tabs-active-link-hover-color:        $gray;
+$nav-tabs-active-link-hover-border-color: $brand-primary;
+
+$nav-tabs-justified-link-border-color:        #ddd;
+$nav-tabs-justified-active-link-border-color: $body-bg;
+
+// Pills
+$nav-pills-border-radius:           $border-radius-base;
+$nav-pills-active-link-hover-bg:    $component-active-bg;
+$nav-pills-active-link-hover-color: $component-active-color;
+
+
+// Pagination
+
+$pagination-color:  $link-color;
+$pagination-bg:     white;
+$pagination-border: $brand-border;
+
+$pagination-hover-color:  $link-hover-color;
+$pagination-hover-bg:     $body-bg;
+$pagination-hover-border: $brand-border;
+
+$pagination-active-color:  white;
+$pagination-active-bg:     $brand-primary;
+$pagination-active-border: $brand-primary;
+
+$pagination-disabled-color:  $gray-light;
+$pagination-disabled-bg:     #fff;
+$pagination-disabled-border: #ddd;
+
+
+// Pager
+
+$pager-bg:            $pagination-bg;
+$pager-border:        $pagination-border;
+$pager-border-radius: 15px;
+
+$pager-hover-bg: $pagination-hover-bg;
+
+$pager-active-bg:    $pagination-active-bg;
+$pager-active-color: $pagination-active-color;
+
+$pager-disabled-color: $pagination-disabled-color;
+
+
+// Jumbotron
+
+$jumbotron-padding:       30px;
+$jumbotron-color:         $black;
+$jumbotron-bg:            $body-bg;
+$jumbotron-heading-color: inherit;
+$jumbotron-font-size:     48px;
+
+
+// Form states and alerts
+
+$state-success-text:   $green;
+$state-success-bg:     lighten($state-success-text, 40%);
+$state-success-border: darken(adjust-hue($state-success-bg, -10), 5%);
+
+$state-info-text:   $blue;
+$state-info-bg:     lighten($state-info-text, 40%);
+$state-info-border: darken(adjust-hue($state-info-bg, -10), 7%);
+
+$state-warning-text:   darken($yellow, 10%);
+$state-warning-bg:     lighten($state-warning-text, 40%);
+$state-warning-border: darken(adjust-hue($state-warning-bg, -10), 5%);
+
+$state-danger-text:   $red;
+$state-danger-bg:     lighten($state-danger-text, 40%);
+$state-danger-border: darken(adjust-hue($state-danger-bg, -10), 5%);
+
+
+// Tooltips
+
+$tooltip-max-width: 200px;
+$tooltip-color:     #fff;
+$tooltip-bg:        #000;
+$tooltip-opacity:   .9;
+
+$tooltip-arrow-width: 5px;
+$tooltip-arrow-color: $tooltip-bg;
+
+
+// Popovers
+
+$popover-bg:                    #fff;
+$popover-max-width:             400px;
+$popover-border-color:          rgba(0,0,0,.1);
+$popover-fallback-border-color: $brand-divider;
+
+$popover-title-bg: darken($popover-bg, 3%);
+
+$popover-arrow-width: 6px;
+$popover-arrow-color: #fff;
+
+$popover-arrow-outer-width:          ($popover-arrow-width + 1);
+$popover-arrow-outer-color:          rgba(0,0,0,.16);
+$popover-arrow-outer-fallback-color: $brand-divider;
+
+
+// Labels
+
+$label-default-bg: $gray-light;
+$label-primary-bg: $brand-primary;
+$label-success-bg: $brand-success;
+$label-info-bg:    $brand-info;
+$label-warning-bg: $brand-warning;
+$label-danger-bg:  $brand-danger;
+
+$label-color:            #fff;
+$label-link-hover-color: #fff;
+
+
+// Modals
+
+$modal-inner-padding: 30px;
+
+$modal-title-padding: 15px 30px;
+$modal-title-line-height: $line-height-base;
+
+$modal-content-bg: white;
+$modal-content-border-color: rgba(0,0,0,0.2);
+$modal-content-fallback-border-color: transparent;
+
+$modal-footer-padding: $modal-title-padding;
+
+$modal-backdrop-bg: white;
+$modal-backdrop-opacity: 1;
+$modal-header-bg: white;
+$modal-header-border-color: $brand-divider;
+$modal-footer-bg: $body-bg;
+$modal-footer-border-color: $brand-divider;
+
+$modal-lg: 900px;
+$modal-md: 600px;
+$modal-sm: 300px;
+
+
+// Alerts
+
+$alert-padding:          $line-height-computed $grid-gutter-width;
+$alert-border-radius:    $border-radius-base;
+$alert-link-font-weight: bold;
+
+$alert-success-bg:     $state-success-bg;
+$alert-success-text:   $state-success-text;
+$alert-success-border: $state-success-border;
+
+$alert-info-bg:     $state-info-bg;
+$alert-info-text:   $state-info-text;
+$alert-info-border: $state-info-border;
+
+$alert-warning-bg:     $state-warning-bg;
+$alert-warning-text:   $state-warning-text;
+$alert-warning-border: $state-warning-border;
+
+$alert-danger-bg:     $state-danger-bg;
+$alert-danger-text:   $state-danger-text;
+$alert-danger-border: $state-danger-border;
+
+
+// Progress bars
+
+$progress-bg:        $gray-lighter;
+$progress-bar-color: #fff;
+
+$progress-bar-bg:         $brand-primary;
+$progress-bar-success-bg: $brand-success;
+$progress-bar-warning-bg: $brand-warning;
+$progress-bar-danger-bg:  $brand-danger;
+$progress-bar-info-bg:    $brand-info;
+
+
+// List group
+
+$list-group-bg:            white;
+$list-group-border:        $brand-divider;
+$list-group-border-radius: 0;
+
+$list-group-hover-bg:          $brand-bg;
+$list-group-active-color:      $component-active-color;
+$list-group-active-bg:         $component-active-bg;
+$list-group-active-border:     $list-group-active-bg;
+$list-group-active-text-color: lighten($list-group-active-bg, 40%);
+
+$list-group-disabled-color:      $gray-light;
+$list-group-disabled-bg:         $gray-lighter;
+$list-group-disabled-text-color: $list-group-disabled-color;
+
+$list-group-link-color:         #555;
+$list-group-link-hover-color:   $list-group-link-color;
+$list-group-link-heading-color: #333;
+
+
+// Panels
+
+$panel-bg:              #fff;
+$panel-body-padding:    15px;
+$panel-heading-padding: 10px 15px;
+$panel-footer-padding:  $panel-heading-padding;
+$panel-border-radius:   $border-radius-base;
+
+$panel-inner-border: $brand-divider;
+$panel-footer-bg:    #f9fafa;
+
+$panel-default-text:       $gray-dark;
+$panel-default-border:     $panel-inner-border;
+$panel-default-heading-bg: #f9fafa;
+
+$panel-primary-text:       #fff;
+$panel-primary-border:     $brand-primary;
+$panel-primary-heading-bg: $brand-primary;
+
+$panel-success-text:       white;
+$panel-success-border:     $state-success-border;
+$panel-success-heading-bg: $green;
+
+$panel-info-text:       white;
+$panel-info-border:     $state-info-border;
+$panel-info-heading-bg: $blue;
+
+$panel-warning-text:       white;
+$panel-warning-border:     $state-warning-border;
+$panel-warning-heading-bg: $yellow;
+
+$panel-danger-text:       white;
+$panel-danger-border:     $state-danger-border;
+$panel-danger-heading-bg: $red;
+
+
+// Thumbnails
+
+$thumbnail-padding:       4px;
+$thumbnail-bg:            lighten($body-bg, 3%);
+$thumbnail-border:        $brand-border;
+$thumbnail-border-radius: $border-radius-base;
+
+$thumbnail-caption-color:   $text-color;
+$thumbnail-caption-padding: 9px;
+
+
+// Wells
+
+$well-bg:     $brand-bg;
+$well-border: $brand-border;
+
+
+// Badges
+
+$badge-color:            #fff;
+$badge-link-hover-color: #fff;
+$badge-bg:               lighten($gray-light, 20%);
+
+$badge-active-color: $link-color;
+$badge-active-bg:    #fff;
+
+$badge-font-weight:   600;
+$badge-line-height:   1;
+$badge-border-radius: $border-radius-base;
+
+
+// Breadcrumbs
+
+$breadcrumb-padding-vertical:   0;
+$breadcrumb-padding-horizontal: 0;
+$breadcrumb-bg:                 transparent;
+$breadcrumb-color:              $brand-muted;
+$breadcrumb-active-color:       $brand-muted;
+
+
+// Carousel
+
+$carousel-text-shadow: 0 1px 2px rgba(0,0,0,.6);
+
+$carousel-control-color:     #fff;
+$carousel-control-width:     15%;
+$carousel-control-opacity:   .5;
+$carousel-control-font-size: 20px;
+
+$carousel-indicator-active-bg:    #fff;
+$carousel-indicator-border-color: #fff;
+
+$carousel-caption-color: #fff;
+
+
+// Close
+
+$close-font-weight: bold;
+$close-color:       #000;
+$close-text-shadow: 0 1px 0 #fff;
+
+
+// Code
+
+$code-color: #c7254e;
+$code-bg:    #f9f2f4;
+
+$kbd-color: #fff;
+$kbd-bg:    #333;
+
+$pre-bg:                    #f5f5f5;
+$pre-color:                 $gray-dark;
+$pre-border-color:          #ccc;
+$pre-scrollable-max-height: 340px;
+
+
+// Type
+
+$text-muted:               $brand-muted;
+$abbr-border-color:        $gray-light;
+$headings-small-color:     $brand-muted;
+$blockquote-small-color:   $gray-light;
+$blockquote-font-size:     $font-size-base * 1.15;
+$blockquote-border-color:  $brand-success;
+$blockquote-border-width:  4px;
+$page-header-border-color: $brand-border;
+
+
+// Miscellaneous
+
+$hr-border:                   $brand-divider;
+$component-offset-horizontal: 180px;

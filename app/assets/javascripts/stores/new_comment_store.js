@@ -1,6 +1,5 @@
 var ActionTypes = window.CONSTANTS.ActionTypes
 var AttachmentStore = require('./attachment_store')
-var NewsFeedItemStore = require('./news_feed_item_store')
 var Store = require('./es6_store')
 
 var _comments = {}

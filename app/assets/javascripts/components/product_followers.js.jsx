@@ -10,7 +10,14 @@ module.exports = React.createClass({
   render: function() {
     return (
       <button className={this.togglerClasses()} type="button" onClick={this.handleClick}>
-        <div className="title">{this.state.following ? 'Following' : 'Follow' }</div>
+        <span className="title fs3">
+          <span className="mainText">
+            {this.state.following ? 'Following' : 'Follow' }
+          </span>
+          <span className="hoverText">
+            Unfollow
+          </span>
+        </span>
       </button>
     );
   },
@@ -26,10 +33,14 @@ module.exports = React.createClass({
   togglerClasses: function() {
     return React.addons.classSet({
       'pill-button': true,
+      'pill-button-theme-white': true,
+      'pill-button-border': true,
+      'pill-button-shadow': true,
+      'mcenter': true,
       'dropdown-toggle': true,
       'toggler': true,
-      'block': true,
-      'lesser': (this.state.following)
+      'active': this.state.following,
+      'r768_mright': true,
     })
   },
 
@@ -38,7 +49,7 @@ module.exports = React.createClass({
     return this.getStateFromStore()
   },
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     ProductFollowersStore.addListener('change', this._onChange)
   },
 

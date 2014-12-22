@@ -29,6 +29,7 @@
     <![endif]-->
   </head>
   <body class="<%= yield(:body_class) %> bg-gray-6">
+    <%= render 'shared/stores' %>
 
     <%= yield %>
 
@@ -50,9 +51,13 @@
         window.app.setSuggestedTags(<%== Wip::Tag.suggested_tags %>);
         if (typeof Pusher !== 'undefined') {
           window.pusher = new Pusher($('meta[name=pusher-key]').attr('content'), {
-                    authEndpoint: <%= webhooks_pusher_path.to_json.html_safe %>
-                  });
+            authEndpoint: <%= webhooks_pusher_path.to_json.html_safe %>
+          });
 
+          Dispatcher.dispatch({
+            type: 'PUSHER_INITIALIZED',
+            client: pusher
+          })
         }
       </script>
       <%= render 'analytics/identify' %>

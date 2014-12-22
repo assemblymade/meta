@@ -22,11 +22,26 @@ describe ProductsController do
 
   describe '#show' do
     context 'product is launched' do
+      let!(:nfi) { NewsFeedItem.make!(product: product) }
+      let!(:archived_nfi) { NewsFeedItem.make!(product:product, archived_at: Time.now) }
+
       it "is successful" do
         get :show, id: product.slug
         expect(response).to be_success
       end
+
+      it "does not show archived items" do
+        get :show, id: product.slug, format: :json
+
+        items = JSON.parse(response.body)["items"]
+        expect(items.count).to eq(1)
+
+        item = items.first
+        expect(item["id"]).to eq(nfi.id)
+        expect(item["archived_at"]).to eq(nil)
+      end
     end
+
     context 'product in stealth' do
       let(:product) { Product.make! }
 

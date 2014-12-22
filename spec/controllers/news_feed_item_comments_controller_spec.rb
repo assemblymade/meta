@@ -8,19 +8,38 @@ describe NewsFeedItemCommentsController do
   let(:post_nfi) { nfi_post.news_feed_item }
   let(:product) { task.product }
 
-  it 'creates an event when the target is a wip' do
-    sign_in user
+  describe '#create' do
+    it "creates a NewsFeedItemComment" do
+      sign_in user
 
-    expect {
-      post :create, product_id: product.slug, update_id: task_nfi.id, body: 'To the library!'
-    }.to change(Event, :count).by(1)
+      post :create, product_id: product.slug, update_id: task_nfi.id, body: "grumble grumble"
+
+      expect(assigns(:item).body).to eq("grumble grumble")
+    end
   end
 
-  it "doesn't create an event for non wips" do
-    sign_in user
+  describe '#index' do
+    let!(:comment) { NewsFeedItemComment.make!(news_feed_item: task_nfi) }
 
-    expect {
-      post :create, product_id: product.slug, update_id: post_nfi.id, body: 'Fancy!'
-    }.to_not change(Event, :count)
+    it "returns NewsFeedItemComments and Events" do
+      get :index, product_id: product.slug, update_id: task_nfi.id, format: :json
+
+      expect(JSON.parse(response.body)["comments"].first["body"]).to eq(comment.body)
+    end
+  end
+
+  describe '#update' do
+    let!(:comment) { NewsFeedItemComment.make!(news_feed_item: task_nfi) }
+
+    it "updates a comment" do
+      get :index, product_id: product.slug, update_id: task_nfi.id, format: :json
+
+      expect(JSON.parse(response.body)["comments"].first["body"]).to eq(comment.body)
+
+      patch :update, product_id: product.slug, update_id: task_nfi.id, id: comment.id, comment: { body: "rabble rabble" }
+      get :index, product_id: product.slug, update_id: task_nfi.id, format: :json
+
+      expect(JSON.parse(response.body)["comments"].first["body"]).to eq("rabble rabble")
+    end
   end
 end

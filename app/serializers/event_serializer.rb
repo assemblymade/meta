@@ -16,13 +16,11 @@ class EventSerializer < ActiveModel::Serializer
 
   attributes :id #, :url
   attributes :anchor
-  attributes :body, :body_html, :body_sanitized, :number, :timestamp, :type, :created_at
+  attributes :body, :body_html, :body_sanitized, :number, :timestamp, :type, :created_at, :target
   attributes :edit_url
   attributes :award_url, :can_award
   attributes :product_id
   attributes :story_id
-
-  attributes :news_feed_item_comment_id
 
   has_one :wip, serializer: WipSerializer
   has_one :user, key: :actor, serializer: UserSerializer
@@ -67,12 +65,16 @@ class EventSerializer < ActiveModel::Serializer
     end
   end
 
-  def news_feed_item_comment_id
-    object.news_feed_item_comment.try(:id)
-  end
-
   def story_id
     Story.associated_with_ids(object).try(:first)
+  end
+
+  def target
+    if object.class == Event::Win
+      object.winner
+    else
+      object.try(:target)
+    end
   end
 
   def timestamp

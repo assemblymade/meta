@@ -36,6 +36,13 @@ describe Task do
       expect { task.award!(core_member, comment) }.to change(Activity, :count).by(1)
       expect(task.resolved?).to be_false
     end
+
+    it 'allows for awarding more than once' do
+      task.award!(core_member, comment)
+      task.award!(core_member, comment)
+
+      expect(task).to be_awarded
+    end
   end
 
   describe "#lock_bounty!" do

@@ -15,4 +15,8 @@ class Work < ActiveRecord::Base
   def contracts
     WorkContracts.new(self)
   end
+
+  def url_params
+    product
+  end
 end

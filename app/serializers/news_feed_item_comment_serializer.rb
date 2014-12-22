@@ -27,4 +27,9 @@ class NewsFeedItemCommentSerializer < ApplicationSerializer
     url_for(object.url_params)
   end
 
+  cached
+
+  def cache_key
+    ['json', object]
+  end
 end

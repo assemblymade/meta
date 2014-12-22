@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var Avatar = require('../avatar.js.jsx');
 var Icon = require('../icon.js.jsx');
 
@@ -18,7 +16,7 @@ var NewsFeedBountyItemTagChange = React.createClass({
     // timestamp down below the last comment
 
     return (
-      <div className="timeline-item">
+      <div className="timeline-item" id={this.props.id}>
         <div className="media">
           <div className="pull-left">
             <div className="marker marker-gray">

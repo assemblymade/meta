@@ -1,6 +1,3 @@
-/** @jsx React.DOM */
-
-
 module.exports = React.createClass({
   displayName: 'NewsFeedItemBountyCommentReference',
   propTypes: {
@@ -17,7 +14,7 @@ module.exports = React.createClass({
     var targetUrl = this.props.target_url;
 
     return (
-      <div className="timeline-item">
+      <div className="timeline-item" id={this.props.id}>
         <div className="media">
           <div className="pull-left">
             <div className="marker marker-blue">

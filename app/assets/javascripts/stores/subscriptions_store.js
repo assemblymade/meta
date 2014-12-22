@@ -18,6 +18,14 @@ class SubscriptionsStore extends Store {
           })
           this.emitChange()
           break
+        case ActionTypes.NEWS_FEED_ITEM_SUBSCRIBED:
+          _subscribables[action.itemId] = 1
+          this.emitChange()
+          break;
+        case ActionTypes.NEWS_FEED_ITEM_UNSUBSCRIBED:
+          delete _subscribables[action.itemId]
+          this.emitChange()
+          break;
       }
     })
   }
@@ -25,11 +33,15 @@ class SubscriptionsStore extends Store {
   get(id) {
     return !!_subscribables[id]
   }
+
+  isSubscribed(id) {
+    return !!_subscribables[id]
+  }
 }
 
 var store = new SubscriptionsStore()
 
-var dataTag = document.getElementById('user_subscriptions')
+var dataTag = document.getElementById('UserSubscriptionsStore')
 if (dataTag) {
   Dispatcher.dispatch({
     type: ActionTypes.SUB_RECEIVE_USER_SUBSCRIPTIONS,

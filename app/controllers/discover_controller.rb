@@ -1,5 +1,4 @@
 class DiscoverController < ApplicationController
-  META = Product.find_by(slug: 'meta')
   COUNTABLE_FILTERS = [
     'Frontend',
     'Backend',
@@ -86,7 +85,7 @@ class DiscoverController < ApplicationController
 
     @postings = Task.open.unflagged.tagged_with(@filter).order(created_at: :desc).
       includes(:product).where(products: { flagged_at: nil }).where.not(products: { state: 'stealth'}).
-      page(params[:page]).per(25)
+      where.not(products: { slug: 'meta' }).page(params[:page]).per(25)
 
     @postings = @postings.where(products: { slug: params[:product] }) if params[:product]
 
@@ -109,16 +108,15 @@ class DiscoverController < ApplicationController
                 limit(limit).
                 offset(offset).
                 includes(:news_feed_item).
-                where.not('news_feed_items.product_id = ?', META.id).
+                where.not(news_feed_items: { product_id: Product.private_ids }).
                 order(updated_at: :desc).
                 map(&:news_feed_item)
     else
       NewsFeedItem.public_items.
+                unarchived_items.
                 limit(limit).
                 offset(offset).
-                where.not(product: META).
-                order('last_commented_at desc nulls last').
-                order(updated_at: :desc)
+                order('last_commented_at desc')
     end
 
     if params[:filter] == 'hot'
@@ -141,12 +139,7 @@ class DiscoverController < ApplicationController
       end
     end
 
-    @heartables = (@posts + @posts.map{|p| p[:last_comment]}).
-            map(&:as_json).
-            compact.
-            map(&:stringify_keys).
-            map{|h| h.slice('heartable_id', 'heartable_type', 'hearts_count') }.to_a
-
+    @heartables = Heart.store_data(posts)
 
     if signed_in?
       @user_hearts = Heart.where(

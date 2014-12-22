@@ -7,7 +7,7 @@ class StorySerializer < ApplicationSerializer
   attributes :key, :body_preview, :sentences, :updated, :url
 
   def url
-    story_path(object)
+    url_for(object.url_params)
   end
 
   def subject

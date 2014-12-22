@@ -13,7 +13,7 @@
         offers: this.props.offers,
         offer: this.props.steps[2],
         showingDetails: !UserStore.isSignedIn(),
-        currentUser: UserStore.get()
+        currentUser: UserStore.getUser()
       };
     },
 

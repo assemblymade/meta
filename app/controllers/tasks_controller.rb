@@ -9,9 +9,9 @@ class TasksController < WipsController
       params.merge!(sort: 'priority', state: 'open')
     end
 
-    @wips = find_wips
+    @bounties = find_wips
 
-    @heartables = NewsFeedItem.where(target_id: @wips.map(&:id))
+    @heartables = NewsFeedItem.where(target_id: @bounties.map(&:id))
 
     if signed_in?
       @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map(&:id))
@@ -25,12 +25,12 @@ class TasksController < WipsController
 
       format.json do
         if params[:count]
-          tasks_count = { total: @product.tasks.where(state: 'open').count }
+          tasks_count = { total: @product.tasks.where(state: ['open', 'awarded']).count }
           render json: tasks_count
           return
         end
 
-        render json: @wips,
+        render json: @bounties,
           serializer: PaginationSerializer,
           each_serializer: BountyListSerializer,
           root: :bounties
@@ -92,7 +92,6 @@ class TasksController < WipsController
       @invites = Invite.where(invitor: current_user, via: @wip)
     end
 
-    @events = Event.render_events(@bounty.events.order(:number), current_user)
     @product_assets = @bounty.product.assets
     if Watching.watched?(current_user, @bounty.news_feed_item)
       @user_subscriptions = [@bounty.news_feed_item.id]

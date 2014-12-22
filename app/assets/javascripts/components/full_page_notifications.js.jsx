@@ -2,7 +2,6 @@ var CONSTANTS = window.CONSTANTS;
 var Avatar = require('./avatar.js.jsx');
 // var Dispatcher = require('../dispatcher');
 var EventMixin = require('../mixins/event.js.jsx');
-var NotificationsMixin = require('../mixins/notifications.js.jsx');
 var NotificationsStore = require('../stores/notifications_store');
 var Spinner = require('./spinner.js.jsx');
 var StoryActionCreators = require('../actions/story_action_creators')
@@ -119,7 +118,7 @@ var FullPageNotifications = React.createClass({
     return this.getStateFromStore()
   },
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     StoryStore.addChangeListener(this._onChange)
   },
 

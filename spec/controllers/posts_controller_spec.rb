@@ -18,6 +18,33 @@ describe PostsController do
     end
   end
 
+  describe "#index" do
+    before do
+      post = product.posts.create!(author: current_user, body: 'post', title: 'post')
+      archived_post = product.posts.create!(author: current_user, body: 'post', title: 'archived_post')
+      nfi = NewsFeedItem.find_by(target_id: archived_post.id)
+      nfi.update(archived_at: Time.now)
+    end
+
+    it "does not show archived posts by default" do
+      get :index, product_id: product.slug
+
+      posts = assigns(:posts).as_json
+
+      expect(posts.count).to eq(1)
+      expect(posts.first[:title]).to eq("post")
+    end
+
+    it "shows archived posts if requested" do
+      get :index, product_id: product.slug, archived: true
+
+      posts = assigns(:posts).as_json
+
+      expect(posts.count).to eq(1)
+      expect(posts.first[:title]).to eq("archived_post")
+    end
+  end
+
   describe "#create" do
     it 'creates the update' do
       sign_in current_user

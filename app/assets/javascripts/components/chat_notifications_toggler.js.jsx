@@ -31,8 +31,12 @@ var LocalStorageMixin = require('../mixins/local_storage');
       return this.shouldRead() ? ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt) : 0;
     },
 
-    componentWillMount: function() {
+    componentDidMount: function() {
       ChatNotificationsStore.addChangeListener(this.getNotifications);
+    },
+
+    componentWillUnmount: function() {
+      ChatNotificationsStore.removeChangeListener(this.getNotifications);
     },
 
     getDefaultProps: function() {

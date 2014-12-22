@@ -8,12 +8,15 @@ class NewsFeedItemCommentsController < ProductController
   respond_to :json
 
   def create
-    @item = @news_feed_item.comments.create!(
+    @item = @news_feed_item.comments.create(
       user: current_user,
       body: params[:body]
     )
 
-    publish_comment
+    if @item.valid?
+      @item.publish_activity!
+      @item.notify_subscribers!
+    end
 
     respond_with @item, location: product_updates_url(@product)
   end
@@ -26,12 +29,20 @@ class NewsFeedItemCommentsController < ProductController
 
     events = ActiveModel::ArraySerializer.new(
       @news_feed_item.events.order(created_at: :asc),
+      each_serializer: EventSerializer,
       scope: current_user
     )
 
+    user_hearts = if signed_in?
+      Heart.where(user: current_user, heartable_id: comments.as_json.map{|h| h['heartable_id']})
+    else
+      []
+    end
+
     discussion = {
       comments: comments,
-      events: events
+      events: events,
+      user_hearts: user_hearts
     }
 
     respond_with discussion, location: product_url(@product)
@@ -43,33 +54,6 @@ class NewsFeedItemCommentsController < ProductController
 
       respond_with comment do |format|
         format.json { render json: comment }
-      end
-    end
-  end
-
-  def publish_comment
-    if target = @news_feed_item.target
-      # we're currently duplicating comments to wip comments. This will be fixed
-      # we can remove this if block then
-      if target.is_a? Wip
-        event = Event.create_from_comment(
-          target,
-          Event::Comment,
-          @item.body,
-          current_user
-        )
-
-        Activities::Comment.publish!(
-          actor: event.user,
-          subject: event,
-          target: target
-        )
-      else
-        Activities::Comment.publish!(
-          actor: @item.user,
-          subject: @item,
-          target: target
-        )
       end
     end
   end

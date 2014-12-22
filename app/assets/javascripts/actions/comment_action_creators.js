@@ -1,7 +1,8 @@
 // var Dispatcher = require('../dispatcher')
 
 var CONSTANTS = window.CONSTANTS;
-var ActionTypes = CONSTANTS.ActionTypes
+var ActionTypes = CONSTANTS.ActionTypes;
+var UserStore = require('../stores/user_store');
 
 var CommentActionCreators = {
   confirmUpdateReceived: function(commentId) {
@@ -17,6 +18,49 @@ var CommentActionCreators = {
     }
 
     confirm();
+  },
+
+  submitComment: function(commentId, commentBody, commentUrl) {
+    var timestamp = Date.now();
+    var user = UserStore.getUser();
+
+    Dispatcher.dispatch({
+      type: ActionTypes.NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT,
+      commentId: commentId,
+      data: {
+        body: commentBody,
+        created_at: timestamp,
+        news_feed_item_id: commentId,
+        user: user
+      }
+    });
+
+    window.analytics.track(
+      'news_feed_item.commented', {
+        product: (window.app.currentAnalyticsProduct())
+      }
+    );
+
+    $.ajax({
+      method: 'POST',
+      url: commentUrl,
+      json: true,
+      data: { body: commentBody },
+      success: function(comment) {
+        Dispatcher.dispatch({
+          type: ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT,
+          data: {
+            thread: commentId,
+            timestamp: timestamp,
+            comment: comment
+          }
+        });
+      },
+      error: function(jqXhr, textStatus, err) {
+        // TODO: Handle errors -- maybe add a retry?
+        console.log(err);
+      }
+    });
   },
 
   updateComment: function(commentId, commentBody, commentUrl) {

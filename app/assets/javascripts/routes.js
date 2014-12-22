@@ -138,4 +138,71 @@ exports.product_update_comment_path = function(options){
   }
 }
 
-window.routes = module.exports
+exports.product_update_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/updates/' + params.id + '?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/updates/' + params.id + ''
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/updates/' + params.id + ''
+  }
+}
+
+exports.product_wip_close_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/bounties/' + params.wip_id + '/close?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/bounties/' + params.wip_id + '/close'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/bounties/' + params.wip_id + '/close'
+  }
+}
+
+exports.product_wip_reopen_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/bounties/' + params.wip_id + '/reopen?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/bounties/' + params.wip_id + '/reopen'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/bounties/' + params.wip_id + '/reopen'
+  }
+}
+
+exports.product_post_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/posts/' + params.id + '?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/posts/' + params.id + ''
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/posts/' + params.id + ''
+  }
+}
+

@@ -1,10 +1,5 @@
-<%  url = if description.product
-      polymorphic_url([description.product, description.news_feed_item.target], only_path: false)
-    else
-      polymorphic_url([description.news_feed_item.target], only_path: false)
-    end
-%>
+<% nfi = description.news_feed_item %>
 
-<a href="<%= url %>">
-  <%= t "models.comment.description.owner" %>
+<a href="<%= full_url_for(description) %>">
+  <%= t "models.comment.description.owner", title: nfi.target.try(:title) %>
 </a>

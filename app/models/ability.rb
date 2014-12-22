@@ -22,6 +22,11 @@ class Ability
       user == current_user
     end
 
+    # NewsFeedItems
+    can [:update], NewsFeedItem do |nfi|
+      (nfi.product && nfi.product.core_team?(current_user)) || current_user.staff?
+    end
+
     # Products
     can [:feature], Product do
       current_user.staff?

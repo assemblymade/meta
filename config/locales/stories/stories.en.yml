@@ -8,29 +8,59 @@ en:
       comment:
         singular: commented on
       introduce:
-        singular: introduced themselves
+        singular: posted
       post:
         singular: published
       start:
         singular: started
 
     subjects:
-      discussion:
-        other: "#%{number} %{title}"
-        owner: "#%{number} %{title}"
+      short:
+        discussion:
+          other: "#%{number} %{title}"
+          owner: "#%{number} %{title}"
 
-      post:
-        other: 'a post'
-        owner: 'a post you wrote'
+        post:
+          other: 'a post'
+          owner: 'a post you wrote'
 
-      product:
-        other: ''
-        owner: ''
+        product:
+          other: ''
+          owner: ''
 
-      task:
-        other: "#%{number} %{title}"
-        owner: "#%{number} %{title}"
+        task:
+          other: "%{title} #%{number} "
+          owner: "%{title} #%{number}"
 
-      team_membership:
-        other: "an introduction"
-        owner: "your introduction"
+        wip:
+          other: "%{title} #%{number}"
+          owner: "%{title} #%{number}"
+
+        team_membership:
+          other: "an introduction"
+          owner: "your introduction"
+
+      long:
+        discussion:
+          other: "#%{number} %{title}"
+          owner: "#%{number} %{title}"
+
+        post:
+          other: '%{title}'
+          owner: '%{title}'
+
+        product:
+          other: ''
+          owner: ''
+
+        task:
+          other: "%{title} #%{number} "
+          owner: "%{title} #%{number}"
+
+        wip:
+          other: "%{title} #%{number}"
+          owner: "%{title} #%{number}"
+
+        team_membership:
+          other: "an introduction"
+          owner: "your introduction"

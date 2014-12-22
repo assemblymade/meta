@@ -14,7 +14,7 @@ class Webhooks::MailgunController < WebhookController
   end
 
   def reply
-    create_event
+    process_reply
 
     render nothing: true, status: 200
   end
@@ -38,19 +38,17 @@ class Webhooks::MailgunController < WebhookController
     signature == OpenSSL::HMAC.hexdigest(digest, api_key, data)
   end
 
-  def create_event
+  def process_reply
     if reply_to = params['To']
       address = SecureReplyTo.parse(reply_to)
 
       user = User.find_by(username: address.user_id)
-      wip = Wip.find(address.object_id)
+      thread_entity = address.find_thread!
 
-      if user && wip
-        event = Event::Comment.new(user: user, body: params['stripped-text'])
-        wip.events << event
-
-        # TODO (pletcher): Remove this insanity
-        NewsFeedItemComment.publish_to_news_feed(wip, event, event.body)
+      if user && thread_entity
+        thread_entity.comments.create!(user: user, body: params['stripped-text'])
+        thread_entity.try(:publish_activity!)
+        thread_entity.try(:notify_subscribers!)
       end
     end
   end

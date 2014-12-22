@@ -1,5 +1,7 @@
+var PusherStore = require('../stores/pusher_store')
 var Store = require('./es6_store')
 var StoryActionCreators = require('../actions/story_action_creators')
+var UserStore = require('./user_store')
 
 var _dispatchToken,
     _more = true,
@@ -45,6 +47,13 @@ class StoryStore extends Store {
           localStorage.storyAck = action.timestamp;
           this.emitChange()
           break
+
+        case ActionTypes.PUSHER_USER_ACTION:
+          if (action.event == 'story-added') {
+            StoryActionCreators.fetchStories()
+            this.emitChange()
+          }
+          break;
       }
     })
   }

@@ -29,6 +29,11 @@ class Idea < ActiveRecord::Base
     ]
   end
 
+  # this is for heart emails, but I think any 'thread' should have a title
+  def title
+    name
+  end
+
   def comments
     news_feed_item.comments
   end
@@ -86,6 +91,10 @@ class Idea < ActiveRecord::Base
     end
     self.update!({last_score_update: DateTime.now, score: lovescore})
     lovescore
+  end
+
+  def url_params
+    [self]
   end
 
   def rank

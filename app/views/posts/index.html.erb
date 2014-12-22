@@ -1,27 +1,11 @@
 <% title 'Posts', @product.name %>
 <% activate_nav! :posts %>
-<%= initial_store_data('PostsStore', { posts: @posts, product: @product.slug }) %>
 
 <div class="sheet-body">
   <div class="row">
 
-    <div class="col-md-9 col-xs-9">
+    <div class="col-md-12 col-xs-12">
       <%= react_component('PostsIndex') %>
-    </div>
-
-    <div class="col-md-3 col-xs-3">
-      <div class="mb3">
-        <%= link_to 'Write a new post', new_product_post_path(@product), class: %w(btn btn-success btn-block) %>
-      </div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h6 class="panel-title">Everyone loves an update</h6>
-        </div>
-        <div class="panel-body">
-          Updates are a great way to keep new contributors up to date with progress and new ways to help out. When you are ready, we'll also email the entry to everyone following <%= @product.name %>. You can include images and use Markdown to make it more awesome.
-        </div>
-      </div>
     </div>
   </div>
 </div>

@@ -67,6 +67,16 @@ class Product < ActiveRecord::Base
   has_many :wips
   has_many :work
 
+  PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
+
+  def self.private_ids
+    @private_ids ||= (PRIVATE.any? ? Product.where(slug: PRIVATE).pluck(:id) : [])
+  end
+
+  def self.meta_id
+    @meta_id ||= Product.find_by(slug: 'meta').try(:id)
+  end
+
   scope :featured,         -> {
     where.not(featured_on: nil).order(featured_on: :desc)
   }
@@ -83,7 +93,7 @@ class Product < ActiveRecord::Base
   scope :advertisable,     -> { where(can_advertise: true) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
   scope :ordered_by_trend, -> { joins(:product_trend).order('product_trends.score DESC').select('products.*, product_trends.score') }
-  scope :public_products,  -> { where.not(slug: PRIVATE).where(flagged_at: nil).advertisable.where.not(state: ['stealth', 'reviewing']) }
+  scope :public_products,  -> { where.not(id: Product.private_ids).where(flagged_at: nil).advertisable.where.not(state: ['stealth', 'reviewing']) }
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :since,            ->(time) { where('created_at >= ?', time) }
   scope :tagged_with_any,  ->(tags) { where('tags && ARRAY[?]::varchar[]', tags) }
@@ -110,11 +120,9 @@ class Product < ActiveRecord::Base
 
   after_update :update_elasticsearch
 
-
   serialize :repos, Repo::Github
 
   INITIAL_COINS = 6000
-  PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
   NON_PROFIT = %w(meta)
 
   INFO_FIELDS = %w(goals key_features target_audience competing_products competitive_advantage monetization_strategy)
@@ -451,6 +459,11 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def visible_watchers
+    system_user_ids = User.where(username: 'kernel').pluck(:id)
+    watchers.where.not(id: system_user_ids)
+  end
+
   # only people following the product, ie. excludes people on announcements only
   def followers
     watchers
@@ -554,6 +567,10 @@ class Product < ActiveRecord::Base
     BountyPosting.joins(:bounty).where('wips.product_id = ?', id)
   end
 
+  def url_params
+    self
+  end
+
   # elasticsearch
   def update_elasticsearch
     return unless (['name', 'pitch', 'description'] - self.changed).any?
@@ -627,6 +644,7 @@ class Product < ActiveRecord::Base
   def calc_task_comments_response_time
     # average time in seconds for comments to receive responses
     # weighted average of responsiveness across tasks with comments
+
     avg_time_to_comment = -1
     tasks_with_comments = self.tasks.where('comments_count > 0')
 
@@ -638,8 +656,20 @@ class Product < ActiveRecord::Base
       end
       avg_time_to_comment = avg_time_to_comment_weighted_numerators.sum / tasks_with_comments.sum(:comments_count)
     end
-    pm = ProductMetric.create(product: self)
-    pm.update_attribute(:comment_responsiveness, avg_time_to_comment)
+    pm = ProductMetric.create(
+      product: self,
+      comments_count: self.tasks.sum(:comments_count),
+      comment_responsiveness: avg_time_to_comment
+    )
+    avg_time_to_comment
+  end
+
+  def comment_responsiveness
+    if pm = ProductMetric.where(product: self).order(created_at: :asc).last
+      pm.comment_responsiveness
+    else
+      calc_task_comments_response_time
+    end
   end
 
   def mark_vector

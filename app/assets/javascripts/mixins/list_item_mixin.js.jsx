@@ -2,10 +2,22 @@ var ListItemMixin = {
   renderComments: function(count) {
     return [
       <Icon icon="comment" />,
-      <span className="px1">
+      <span className="px1" style={{marginLeft: '-2px'}}>
         {count}
       </span>
     ];
+  },
+
+  renderLove: function(heartableId) {
+    if (!heartableId) {
+      return;
+    }
+
+    return (
+      <div className="px3 py2 border-top mb0 mt0">
+        <Love heartable_type='NewsFeedItem' heartable_id={heartableId} />
+      </div>
+    )
   },
 
   renderTags: function(tags) {
@@ -13,8 +25,8 @@ var ListItemMixin = {
 
     return tags.map(function(tag) {
       return (
-        <a className="caps gray-1 mr2 pointer" href={tag.url}>
-          {tag.name}
+        <a className="fs1 caps gray-2 mr2 pointer" href={tag.url}>
+          #{tag.name}
         </a>
       )
     });

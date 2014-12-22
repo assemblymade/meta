@@ -1,4 +1,6 @@
 class Activity < ActiveRecord::Base
+  belongs_to :product
+
   belongs_to :actor,   polymorphic: true
   belongs_to :subject, polymorphic: true
   belongs_to :target,  polymorphic: true
@@ -11,15 +13,21 @@ class Activity < ActiveRecord::Base
   validates :subject, presence: true
   validates :target,  presence: true
 
+  before_validation :set_product_id, on: :create
+
   after_commit :track_in_segment, on: :create
   after_commit :notify_staff, on: :create
 
   attr_accessor :socket_id
 
+  delegate :url_params, to: :target_entity
+
   def self.publish!(opts)
     create!(opts).tap do |a|
       if a.publishable
-        PublishActivity.perform_async(a.id) if Story.should_publish?(a)
+        if Story.should_publish?(a)
+          PublishActivity.perform_async(a.id, a.socket_id)
+        end
         room = if a.target.is_a?(ChatRoom)
           a.target
         elsif product = (opts[:product] || a.find_product)
@@ -53,20 +61,22 @@ class Activity < ActiveRecord::Base
   def notify_staff
     case verb
     when "Comment"
-      SlackNotifier.first_story(
-        actor,
-        self
-        ) unless actor.activities.where(type: "Activities::Comment").count > 1
+      unless actor.activities.where(type: "Activities::Comment").count > 1
+        SlackNotifier.first_activity(self)
+      end
     when "Post"
-      SlackNotifier.first_story(
-        actor,
-        self
-        ) unless actor.activities.where(type: "Activities::Post").count > 1
+      unless actor.activities.where(type: "Activities::Post").count > 1
+        SlackNotifier.first_activity(self)
+      end
     when "Chat"
-      SlackNotifier.first_chat_message(
-        actor,
-        target.slug
-        ) unless actor.activities.where(type: "Activities::Chat").count > 1
+      unless actor.activities.where(type: "Activities::Chat").count > 1
+        SlackNotifier.first_activity(self)
+      end
+    when "Introduce"
+      unless actor.activities.where(type: "Activities::Introduce").count > 1
+        SlackNotifier.first_activity(self)
+        GrowthHack.staff_auto_love(self)
+      end
     end
   end
 
@@ -105,5 +115,11 @@ class Activity < ActiveRecord::Base
 
   def product
     find_product
+  end
+
+
+  # private
+  def set_product_id
+    self.product_id ||= (try(:subject).try(:product_id) || try(:subject).try(:product).try(:id))
   end
 end

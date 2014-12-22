@@ -58,7 +58,7 @@ class ProductMailerPreview < ActionMailer::Preview
   def new_introduction
     ProductMailer.new_introduction(
       User.sample.id,
-      TeamMembership.with_bios.with_interests.sample.id
+      TeamMembership.joins(:news_feed_item).with_bios.with_interests.sample.id
     )
   end
 end

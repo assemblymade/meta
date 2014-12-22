@@ -22,7 +22,7 @@ var UserStore = _.extend(Object.create(Store), {
     }.bind(this))
   },
 
-  get: function() {
+  getUser: function() {
     return _currentUser
   },
 
@@ -33,7 +33,7 @@ var UserStore = _.extend(Object.create(Store), {
   },
 
   isCoreTeam: function() {
-    return _currentUser && _currentUser.coreTeam
+    return (_currentUser && (_currentUser.coreTeam || _currentUser.is_core || _currentUser.is_staff))
   },
 
   isSignedIn: function() {

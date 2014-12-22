@@ -1,12 +1,6 @@
 <% title @post.title, @post.product.name %>
 <% activate_nav! :posts %>
 
-<script id="heartables" type="application/json">
-  <%== @heartables.to_json %>
-</script>
-
-<%= render 'shared/user_data' %>
-
 <% nfi = NewsFeedItemSerializer.new(@post.news_feed_item) %>
 <div data-react-class="NewsFeedItem" data-react-props="<%= nfi.as_json.merge({
   commentable: true,
@@ -15,5 +9,3 @@
   rows: 2,
   showAllComments: true
 }).to_json %>"></div>
-
-

@@ -1,6 +1,7 @@
 var Avatar = require('../avatar.js.jsx');
 var Icon = require('../icon.js.jsx');
 var ListItemMixin = require('../../mixins/list_item_mixin.js.jsx');
+var Love = require('../love.js.jsx');
 
 var PostListIem = React.createClass({
   displayName: 'PostListItem',
@@ -11,6 +12,7 @@ var PostListIem = React.createClass({
 
   /**
    * ListItemMixin: this.renderComments({Number: count})
+   *                this.renderLove({String: news_feed_item_id})
    *                this.renderTags({[Object: tag]})
    */
   mixins: [ListItemMixin],
@@ -27,23 +29,12 @@ var PostListIem = React.createClass({
 
         <div className="px3 mb1 mt0 gray-dark">
           {this.renderComments(post.comments_count)}
-          {this.renderHearts()}
           {this.renderTags(post.marks)}
         </div>
-
+        {this.renderLove(this.props.post.news_feed_item_id)}
         {this.renderUser()}
       </div>
     );
-  },
-
-  renderHearts: function() {
-    return [
-      <Icon icon="heart" />,
-
-      <span className="px1">
-        {this.props.post.hearts_count}
-      </span>
-    ];
   },
 
   renderSummary: function() {

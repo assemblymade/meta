@@ -100,7 +100,7 @@ class ProductsController < ProductController
       @product.news_feed_items
     end
 
-    query = query.where.not(last_commented_at: nil).
+    query = query.unarchived_items.where.not(last_commented_at: nil).
                   page(params[:page]).per(10).order(last_commented_at: :desc).
                   reject{|nfi| nfi.target.is_a? Discussion }
 
@@ -119,7 +119,6 @@ class ProductsController < ProductController
     if signed_in?
       @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['heartable_id']})
     end
-
 
     respond_to do |format|
       format.html { render 'products/new_show', layout: 'product' }

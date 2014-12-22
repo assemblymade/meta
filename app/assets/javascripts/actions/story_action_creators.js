@@ -33,9 +33,13 @@ var StoryActionCreators = {
   },
 
   fetchReadState: function(storyKeys) {
+    var currentUser = app.currentUser()
+    if (!currentUser) {
+      return
+    }
     var url = rrUrl +
       '/readers/' +
-      app.currentUser().get('id') +
+      currentUser.get('id') +
       '/articles?' +
       _.map(storyKeys, function(k) {
         return 'key=' + k

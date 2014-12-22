@@ -1,0 +1,212 @@
+.nav {
+  > li > a {
+    color: $gray-light;
+
+    &:hover {
+      color: $gray-dark;
+    }
+  }
+}
+
+.nav-pills {
+  > li > a {
+    color: $gray-light;
+
+    &:hover {
+      color: $gray-dark;
+    }
+  }
+}
+
+.nav-tabs {
+  border-bottom: none;
+  display:table;
+  width:100%;
+  text-align:center;
+  //
+  @media screen and (min-width: 600px) {
+    display:block;
+    width:auto;
+  }
+
+  > li {
+    margin-bottom: 0;
+    float: none;
+    display: table-cell;
+    width:25%;
+    @media screen and (min-width: 600px) {
+      display: inline-block;
+      width:auto;
+      margin-left:-4px;
+    }
+  }
+
+  > li > a {
+    border: none;
+
+    color: #8B909A;
+
+    margin-right: 0;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    &:hover,
+    &:active,
+    &:focus {
+      border: none;
+      box-shadow: inset 0 -3px 0 $nav-tabs-link-hover-border-color;
+      color: $blue;
+      background: transparent;
+    }
+  }
+
+  > li.active > a,
+  > li.active > a:hover,
+  > li.active > a:active,
+  > li.active > a:focus, {
+    color: #353941;
+    border: none;
+    box-shadow: inset 0 -3px 0 $nav-tabs-active-link-hover-border-color;
+  }
+
+  > li.active > a,
+  > li.active > a:hover {
+    color: $text-color;
+  }
+
+  > li.active {
+    a:hover,
+    a:focus {
+      cursor: pointer;
+    }
+  }
+}
+
+.nav-tabs.nav-slim {
+  > li > a {
+    margin-left: 10px;
+    margin-right: 10px;
+
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  > li:first-child > a {
+    margin-left: 0;
+  }
+
+  > li:last-child > a {
+    margin-right: 0;
+  }
+}
+
+.nav-tabs.nav-justified {
+  > li > a {
+    border-bottom-width: 3px;
+    border-bottom-color: transparent;
+
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  > li > a:hover {
+    cursor: pointer;
+    border-bottom-color: $nav-tabs-link-hover-border-color;
+  }
+
+  > li.active > a,
+  > li.active > a:hover {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom-color: $nav-tabs-active-link-hover-border-color;
+
+    border-bottom-width: 3px;
+
+    background-color: $gray-lighter;
+  }
+}
+
+.nav-skills {
+  margin-left: -1px;
+
+  > li {
+    float: left;
+    width: 50%;
+
+    border-bottom: 1px solid $brand-divider;
+
+    > a {
+      display: block;
+      text-align: center;
+      border-left: 1px solid $brand-divider;
+
+      padding-top: 24px;
+      padding-bottom: 24px - 3px;
+
+      font-size: 14px;
+      text-transform: uppercase;
+      font-weight: bold;
+
+      color: $blue;
+
+      border-bottom: 3px solid transparent;
+
+      &:hover {
+        color: $blue;
+        background-color: white;
+        border-bottom-color: $blue
+      }
+    }
+  }
+
+  > .active {
+    > a {
+      background-color: $brand-divider;
+      color: $text-color;
+      border-bottom-color: $blue;
+      &:hover {
+        color: $text-color;
+        background-color: $brand-divider;
+      }
+    }
+  }
+}
+
+@media all and (min-width: $screen-sm-min) {
+  .nav-skills {
+    > li {
+      width: percentage(100 / 6 / 100);
+
+      > a {
+        padding-top: 48px;
+        padding-bottom: 48px - 3px;
+      }
+    }
+  }
+}
+
+.nav-mini-pills {
+  > li {
+    display: inline-block;
+    > a {
+      border-radius: 30px;
+      padding-left: 15px;
+      padding-right: 15px;
+
+      line-height: 28px;
+      padding-top: 0;
+      padding-bottom: 0;
+
+      font-size: 14px;
+    }
+  }
+  > .active {
+    > a,
+    > a:hover {
+      background-color: $blue;
+      color: white;
+    }
+  }
+}

@@ -5,6 +5,7 @@ class SecureReplyTo
 
   def initialize(object_type, object_id, user_id)
     @object_type, @object_id, @user_id = object_type, object_id, user_id
+    @object_type = @object_type.underscore # it gets downcased somewhere in the pipe
     @secret = ENV['MAILGUN_API_KEY'] || 'assembly-secret'
   end
 
@@ -19,6 +20,15 @@ class SecureReplyTo
     digest = OpenSSL::Digest.new('sha1')
     data = [object_id, user_id].join
     OpenSSL::HMAC.hexdigest(digest, @secret, data)
+  end
+
+  def find_thread!
+    # special case while mailgun clears out old emails
+    if object_type.downcase == 'newsfeeditem'
+      NewsFeedItem.find(object_id)
+    else
+      object_type.camelcase.constantize.find(object_id)
+    end
   end
 
   def to_s

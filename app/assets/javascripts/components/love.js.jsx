@@ -1,70 +1,76 @@
-/** @jsx React.DOM */
+var LoveStore = require('../stores/love_store')
+var LoveActionCreators = require('../actions/love_action_creators')
+var xhr = require('../xhr')
+var Lovers = require('./lovers.jsx')
+var UserStore = require('../stores/user_store')
 
-(function(){
-  var LoveStore = require('../stores/love_store')
-  var LoveActionCreators = require('../actions/love_action_creators')
-  var xhr = require('../xhr')
-  var Lovers = require('./lovers.jsx')
+var Love = React.createClass({
+  propTypes: {
+    heartable_id: React.PropTypes.string.isRequired,
+    heartable_type: React.PropTypes.string.isRequired
+  },
 
-  var Love = React.createClass({
-    propTypes: {
-      heartable_id: React.PropTypes.string.isRequired,
-      heartable_type: React.PropTypes.string.isRequired
-    },
+  render: function() {
+    var heartsCount = this.state.hearts_count;
+    // Dammit, JavaScript
+    if (heartsCount == null) {
+      return <div />
+    }
 
-    render: function() {
-      // Dammit, JavaScript
-      if (this.state.hearts_count == null) {
-        return <div/>
-      }
-
-      var style = {
-        fontSize: 18,
-      }
-      if (this.state.user_heart) {
-        style['color'] = 'rgba(236,55,79,1)'
-      }
-
-      return <div className="clearfix">
-        <a className="gray left mr1" href="javascript:;" onClick={this.handleClick} style={{paddingTop:2}}>
-          <div className="fa fa-heart" style={style}></div>
-        </a>
-        <Lovers heartable_id={this.props.heartable_id} hearts_count={this.state.hearts_count} />
+    return (
+      <div className="clearfix">
+        {this.renderHeart()}
+        <Lovers heartable_id={this.props.heartable_id} hearts_count={heartsCount} />
       </div>
-    },
+    );
+  },
 
-    getInitialState: function() {
-      return this.getStateFromStore()
-    },
+  renderHeart: function() {
+    var style = { }
+    if (this.state.user_heart) {
+      style['color'] = 'rgba(236,55,79,1)'
+    }
 
-    componentDidMount: function() {
-      LoveStore.addListener('change', this._onChange)
-    },
+    return (
+      <a className="inline-block valign-mid mr1 fs6 gray no-focus" href="javascript:;" onClick={this.handleClick}>
+          <div className="fa fa-heart inline-block gray" style={style}></div>
+      </a>
+    );
+  },
 
-    componentWillUnmount: function() {
-      LoveStore.removeListener('change', this._onChange)
-    },
+  getInitialState: function() {
+    return this.getStateFromStore()
+  },
 
-    handleClick: function() {
+  componentDidMount: function() {
+    LoveStore.addListener('change', this._onChange)
+  },
+
+  componentWillUnmount: function() {
+    LoveStore.removeListener('change', this._onChange)
+  },
+
+  handleClick: function() {
+    if (UserStore.isSignedIn()) {
       if (this.state.user_heart) {
         LoveActionCreators.clickUnlove(this.props.heartable_type, this.props.heartable_id)
       } else {
         LoveActionCreators.clickLove(this.props.heartable_type, this.props.heartable_id)
       }
-    },
-
-    getStateFromStore: function() {
-      return LoveStore.get(this.props.heartable_id) || {}
-    },
-
-    _onChange: function() {
-      this.replaceState(this.getStateFromStore())
     }
-  })
+  },
 
-  if (typeof module !== 'undefined') {
-    module.exports = Love
+  getStateFromStore: function() {
+    return LoveStore.get(this.props.heartable_id) || {}
+  },
+
+  _onChange: function() {
+    this.replaceState(this.getStateFromStore())
   }
+})
 
-  window.Love = Love
-})()
+if (typeof module !== 'undefined') {
+  module.exports = Love
+}
+
+window.Love = Love

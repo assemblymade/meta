@@ -11,6 +11,14 @@ class ChatRoom < ActiveRecord::Base
     find_by(slug: 'general')
   end
 
+  def follower_ids
+    if product
+      product.follower_ids
+    else
+      []
+    end
+  end
+
   def key
     "chat_#{id}"
   end
@@ -33,5 +41,9 @@ class ChatRoom < ActiveRecord::Base
 
   def to_param
     slug
+  end
+
+  def url_params
+    [self]
   end
 end

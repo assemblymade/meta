@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141214165053) do
+ActiveRecord::Schema.define(version: 20141218020529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20141214165053) do
     t.datetime "created_at"
     t.uuid     "story_id"
     t.integer  "hearts_count", default: 0, null: false
+    t.uuid     "product_id"
   end
 
   add_index "activities", ["story_id"], name: "index_activities_on_story_id", using: :btree
@@ -450,6 +451,7 @@ ActiveRecord::Schema.define(version: 20141214165053) do
     t.integer  "hearts_count",      default: 0, null: false
     t.datetime "last_commented_at"
     t.integer  "watchings_count"
+    t.datetime "archived_at"
   end
 
   add_index "news_feed_items", ["target_id"], name: "index_news_feed_items_on_target_id", unique: true, using: :btree
@@ -490,6 +492,14 @@ ActiveRecord::Schema.define(version: 20141214165053) do
     t.datetime "updated_at"
   end
 
+  create_table "platform_metrics", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.float    "mean_product_responsiveness"
+    t.float    "median_product_responsiveness"
+    t.datetime "calculated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "posts", id: :uuid, force: true do |t|
     t.uuid     "product_id", null: false
     t.uuid     "author_id",  null: false
@@ -525,6 +535,7 @@ ActiveRecord::Schema.define(version: 20141214165053) do
     t.integer  "comment_responsiveness"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "comments_count",         default: 0
   end
 
   add_index "product_metrics", ["product_id"], name: "index_product_metrics_on_product_id", using: :btree

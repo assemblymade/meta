@@ -76,7 +76,7 @@ module.exports = React.createClass({
   },
 
   renderAwardOptions: function() {
-    if (this.currentUserIsCore()) {
+    if (this.currentUserIsCore() && this.props.awardUrl) {
       var id = this.props.id;
       var username = this.props.author.username;
       var awardUrl = this.props.awardUrl;
@@ -130,8 +130,8 @@ module.exports = React.createClass({
 
     return (
       <div className="overflow-hidden activity-body px3">
-        <div className="gray-2" style={{ display: 'inline-block' }}>
-          <a className="bold black" href={author.url}>{author.username}</a>
+        <div className="inline-block gray-2">
+          <a className="inline-block bold black" href={author.url}>{author.username}</a>
           {this.renderLove()}
           {this.renderTips()}
         </div>
@@ -219,7 +219,7 @@ module.exports = React.createClass({
   renderLove: function() {
     if (this.props.heartable) {
       return (
-        <div className="ml2 right" style={{ display: 'inline-block' }}>
+        <div className="inline-block ml2">
           <Love heartable_id={this.props.id} heartable_type='NewsFeedItemComment' />
         </div>
       );
@@ -228,7 +228,7 @@ module.exports = React.createClass({
 
   renderTips: function() {
     return (
-      <div className="ml2 right" style={{ display: 'inline-block' }}>
+      <div className="inline-block ml2">
         <TipsUi
             viaType="NewsFeedItemComment"
             viaId={this.props.id}

@@ -19,6 +19,16 @@ module Api
             target: @chat_room,
             socket_id: params[:socket_id]
           )
+
+          channels = @chat_room.follower_ids.map{|user_id| "user.#{user_id}"}
+          if channels.any?
+            PusherWorker.perform_async(
+              channels,
+              "chat-added",
+              { chat_room: @chat_room.id, updated: @event.created_at.to_i },
+              socket_id: params[:socket_id]
+            )
+          end
         end
 
         respond_to do |format|

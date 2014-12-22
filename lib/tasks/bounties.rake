@@ -290,11 +290,15 @@ namespace :bounties do
       task_expiration = task.locked_at + 60.hours
 
       if now > task_expiration
-        task.stop_work!(User.find(task.locked_by))
+        begin
+          task.stop_work!(User.find(task.locked_by))
+        rescue => e
+          puts "#stop_work! failed!\n #{e}"
+        end
       elsif task_expiration - now < 12.hours
         unless task.state == 'reviewing'
           EmailLog.send_once task.locked_by, "#{task.id}-#{task.locked_at}" do
-            UserMailer.twelve_hour_reminder(task.locked_by, task.id)
+            UserMailer.delay(queue: 'mailer').twelve_hour_reminder(task.locked_by, task.id)
           end
         end
       end

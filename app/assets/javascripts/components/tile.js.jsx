@@ -3,7 +3,7 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div className="bg-white rounded shadow">
+      <div className="bg-white rounded shadow mb2">
         {this.props.children}
       </div>
     )
