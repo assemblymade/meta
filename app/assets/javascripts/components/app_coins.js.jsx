@@ -10,10 +10,10 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <span className="text-coins">
-        <span className="icon icon-app-coin mr1"></span>
+      <a className="text-coins bold" href="#" id="bounty-amount-link">
+      <span className="icon icon-app-coin fs5 pr1" style={{marginRight: "-1px"}}></span>
         {numeral(this.props.n).format('0,0')}
-      </span>
+      </a>
     )
   }
 })

@@ -1,11 +1,15 @@
 // Colors
 
+// This whole stylesheet needs to be sorted through and burned
+// https://assembly.com/meta/bounties/993
+
 $black:         #333;
 
 $blue:          #338EDA;
 $green:         #33D6A6;
 $cyan:          #5bc0de;
-$yellow:        #f0ad4e;
+$yellow:        #f2d930;
+$coin-yellow:   #ecbd00;
 $red:           #EC3750;
 
 $facebook:      #3B5998;
@@ -37,7 +41,7 @@ $brand-border:   darken($gray-lighter, 10%);
 $brand-divider:  darken($brand-bg, 5%);
 $brand-shadow:   rgba(100, 100, 100, 0.2);
 
-$brand-coins:    $yellow;
+$brand-coins:    $coin-yellow;
 
 $body-bg:       white;
 $text-color:    $black;

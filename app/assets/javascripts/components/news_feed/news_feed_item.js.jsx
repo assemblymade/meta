@@ -179,18 +179,15 @@ var NewsFeedItem = React.createClass({
           var url = baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
 
           return (
-            <li className="left px1" key={tag.id}>
-              <a className="h6 mt0 mb0" href={url}><Tag tag={tag} /></a>
-            </li>
+            <div className="inline-block" key={tag.id}>
+              <Tag tag={tag} />
+            </div>
           )
         })
       }
-
       return (
-        <div className="px3 py1 h6 mt0 mb0">
-          <ul className="list-reset clearfix mxn1 mb0">
-            {tagItems}
-          </ul>
+        <div className="px3 pb3">
+          {tagItems}
         </div>
       );
     }
@@ -323,15 +320,17 @@ var NewsFeedItem = React.createClass({
     }
 
     return (
-      <div className="px3 py2 clearfix border-top h6 mb0">
-        <div className="left mr2">
-          <Avatar user={user} size={18} />
-        </div>
-        <div className="overflow-hidden gray-2">
-          <span className="black bold">
-            {user.username}
-          </span>
+      <div className="px3 py2 border-top mb0 mt0">
+        <div style={{marginBottom: "-3px"}}>
+          <div className="inline-block valign-top">
+            <div className="left mr1">
+              <Avatar user={user} size={18} />
+            </div>
+          </div>
+          <div className="inline-block valign-top gray-2 fs3">
+            <span className="black bold">{user.username}</span>
             {' '} created this {this.targetNoun(target && target.type)}
+          </div>
         </div>
       </div>
     );
