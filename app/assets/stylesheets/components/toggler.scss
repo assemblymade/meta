@@ -7,7 +7,7 @@
   outline: none;
 
   color: $brand-border;
-  font-weight: 600;
+  font-weight: bold;
   line-height: $line-height-computed;
 
   &:hover {
@@ -37,7 +37,7 @@
 
   color: white;
   background-color: $brand-divider;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .toggler-primary {
