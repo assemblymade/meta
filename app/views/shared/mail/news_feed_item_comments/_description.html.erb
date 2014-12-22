@@ -1,5 +1,5 @@
 <% nfi = description.news_feed_item %>
 
 <a href="<%= full_url_for(description) %>">
-  <%= t "models.comment.description.owner", title: nfi.target.title %>
+  <%= t "models.comment.description.owner", title: nfi.target.try(:title) %>
 </a>
