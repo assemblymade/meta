@@ -183,30 +183,40 @@ class QueryMarks
     }
   end
 
+  def user_bounties(user_vector, wip_vectors)
+    return unless user_vector.count > 0
+
+    correlations = wip_vectors.map do |wip_vector|
+      wip_id = wip_vector[0]
+      vector = wip_vector[1]
+
+      correlation = dot_product_vectors(user_vector, vector)
+
+      next unless correlation > 0
+
+      [correlation.to_f, wip_id]
+    end.compact
+
+    wips = Wip.where(id: correlations.map(&:last)).map { |w| [w.id, w] }.to_h
+
+    correlations.map do |correlation, wip_id|
+      [correlation, wips[wip_id]]
+    end
+  end
+
   def assign_top_bounties_for_user(limit, user, wip_vectors)
     user_vector = normalize_mark_vector(user.user_identity.get_mark_vector)
-    result = []
 
-    if user_vector.count > 0
-      wip_vectors.each do |data|
-        vector = data[1]
-        wip_id = data[0]
-        correlation = dot_product_vectors(user_vector, vector)
-        if correlation > 0
-          wip = Wip.find(wip_id)
-          result.append([correlation.to_f, wip])
-        end
-      end
+    result = user_bounties(user_vector, wip_vectors)
 
-      TopBounty.where(user_id: user.id).delete_all
-      n=0
-      result.sort_by{|a, b| a}.reverse.take(limit).each do |w|
-        n=n+1
-        TopBounty.create!({user_id: user.id, score: w[0], rank: n, wip_id: w[1].id})
-      end
-      result.sort_by{|a,b| a}.reverse
+    TopBounty.where(user_id: user.id).delete_all
+    n=0
+    result.sort_by{|a, b| a}.reverse.take(limit).each do |w|
+      n=n+1
+      TopBounty.create!({user_id: user.id, score: w[0], rank: n, wip_id: w[1].id})
     end
-    result.sort_by{|a, b| a}.reverse
+
+    result.sort_by{|a,b| a}.reverse
   end
 
 
