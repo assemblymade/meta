@@ -180,7 +180,7 @@ module.exports = React.createClass({
 
     if (item) {
       return (
-        <div className="discussion" id="discussion-view-el" key={'discussion-' + bounty.id}>
+        <div className="discussion block _mq-480_none _mq-600_block _mq-1024_none" id="discussion-view-el" key={'discussion-' + bounty.id}>
           <NewsFeedItemComments commentable={true} item={item} showAllComments={true} />
         </div>
       );

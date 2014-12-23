@@ -1,0 +1,24 @@
+// ### Responsive ###
+@media screen and (min-width: 480px) {
+  $pre: "_mq-480_";
+  @import 'asmcss/nocss';
+}
+
+@media screen and (min-width: 600px) {
+  $pre: "_mq-600_";
+  @import 'asmcss/nocss';
+}
+@media screen and (min-width: 768px) {
+  $pre: "_mq-768_";
+  @import 'asmcss/nocss';
+}
+
+@media screen and (min-width: 992px) {
+  $pre: "_mq-992_";
+  @import 'asmcss/nocss';
+}
+
+@media screen and (min-width: 1024px) {
+  $pre: "_mq-1024_";
+  @import 'asmcss/nocss';
+}
