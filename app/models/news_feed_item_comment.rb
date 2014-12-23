@@ -7,6 +7,7 @@ class NewsFeedItemComment < ActiveRecord::Base
   has_many :tips, foreign_key: 'via_id'
 
   validates :body, presence: true
+  validates :news_feed_item, presence: true
 
   def self.publish_to_news_feed(target, event, body)
     if news_feed_item = NewsFeedItem.find_by(target: target)

@@ -8,6 +8,10 @@ describe UnreadMailer do
     let(:article_ids) { entities.map{|e| {type: e.class.to_s, id: e.id }} }
     let(:mail) { UnreadMailer.unread_content(user.id, article_ids) }
 
+    before do
+      entities.each{|e| NewsFeedItem.create_with_target(e) }
+    end
+
     it 'renders the subject' do
       expect(mail.subject).to eql("1 update on #{entities.first.product.name}")
     end

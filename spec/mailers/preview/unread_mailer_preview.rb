@@ -1,4 +1,4 @@
-class DigestMailerPreview < ActionMailer::Preview
+class UnreadMailerPreview < ActionMailer::Preview
 
   def daily
     UnreadMailer.unread_content(user.id, serialize_articles(random_activity(10)))
@@ -42,12 +42,12 @@ class DigestMailerPreview < ActionMailer::Preview
 
     wips = Wip
       .order('random()')
-      .take(wip_limit)
+      .take(wip_limit).reject{|o| o.news_feed_item.nil? }
 
-    comments = Event::Comment.
-      includes(wip: :product).
+
+    comments = NewsFeedItemComment.
       order('random()').
-      take(comment_limit)
+      take(comment_limit).reject{|c| c.news_feed_item.nil? }
 
     wips + comments
   end
