@@ -30,7 +30,7 @@ var BountyListItem = React.createClass({
     this.setState({
       position: {
         top: position.top,
-        left: position.left,
+        left: position.left + 10,
         width: width,
         height: height,
         mouseX: event.pageX,
