@@ -17,7 +17,6 @@
           <br/>
           <a href="<%= product_plan_path(@product) %>">Read more</a>
         </div>
-
         <% else %>
         <p class="gray-dark">Uh, there's nothing here yet. Grab a coffee, because this product is still percolating!</p>
         <% if can?(:update, @product) %>
@@ -107,7 +106,6 @@
       </div>
     </span>
   </div>
-
   <div class="col-xs-12 col-sm-8 r768_pr0">
     <% if signed_in? %>
       <% product_membership = current_user.team_memberships.find_by(product: @product) %>
@@ -138,5 +136,4 @@
         productPage: true,
         url: product_path(@product) %>
   </div>
-
 </div>
