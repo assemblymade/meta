@@ -81,7 +81,7 @@ var PostListIem = React.createClass({
 
     return (
       <div className="h4 mb1 mt0" style={{ paddingTop: '1rem' }}>
-        <a href={post.url} className="black" onClick={this.showModal}>
+        <a href={post.url} className="black">
           {post.title}
         </a>
       </div>
