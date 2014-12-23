@@ -24,6 +24,7 @@ class Story < ActiveRecord::Base
   end
 
   def self.should_publish?(activity)
+    return false unless activity.actor.flagged_at.nil?
     return true if PUBLISHABLE_VERBS.include?(activity.verb)
 
     PUBLISHABLE_ACTIVITIES[[activity.verb, to_noun(activity.subject), to_noun(activity.target)]]

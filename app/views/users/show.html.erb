@@ -24,7 +24,13 @@
             <%= @user.email %>
             <dt>last request</dt>
             <%= time_ago_in_words(@user.last_request_at) %> ago
-
+            <dt>
+              <% if @user.flagged_at %>
+                <a href="<%= unflag_user_path(@user) %>" data-method="patch">Unflag</a>
+              <% else %>
+                <a href="<%= flag_user_path(@user) %>" data-method="patch">Flag</a>
+              <% end %>
+            </dt>
           </dl>
         <% end %>
 
