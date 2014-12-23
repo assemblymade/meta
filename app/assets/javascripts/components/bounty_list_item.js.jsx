@@ -189,7 +189,7 @@ var BountyListItem = React.createClass({
     var bounty = this.props.bounty
 
     return (
-      <a href={bounty.url} onClick={this.showModal}>
+      <a href={bounty.url}>
         {bounty.title} {' '}
         <span className="gray-dark fs4">
           #{bounty.number}

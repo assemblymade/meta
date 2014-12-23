@@ -8,7 +8,7 @@ class NewsFeedItemSerializer < ApplicationSerializer
   has_one :user
 
   def comments_count
-    object.target.try(:comments_count) || object.comments.count
+    object.target.try(:comments_count) || object.comments_count
   end
 
   def last_comment
