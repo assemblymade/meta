@@ -114,8 +114,8 @@ var Interests = React.createClass({
 
     if (selectionsLeft > 0) {
       var topic = selectionsLeft > 1 ? 'topics' : 'topic'
-      text = 'Pick ' + selectionsLeft + ' more ' + topic
-      style = { width: 250, paddingLeft: 64 }
+      text = 'Pick ' + selectionsLeft + ' or more ' + topic
+      style = { width: 280, paddingLeft: 64 }
     } else {
       text = 'Yay! Take a look at your suggestions.'
     }
@@ -157,9 +157,9 @@ var Interests = React.createClass({
   render: function() {
     return (
       <div>
-        {this.renderMarks('Development')}
-        {this.renderMarks('Design')}
         {this.renderMarks('Strategy & Growth')}
+        {this.renderMarks('Design')}
+        {this.renderMarks('Development')}
 
         {this.renderFooter()}
       </div>
