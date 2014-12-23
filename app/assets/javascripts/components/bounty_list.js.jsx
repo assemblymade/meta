@@ -20,22 +20,30 @@ var BountyList = React.createClass({
   },
 
   renderBounties: function() {
-    if(!this.state.bounties.length) {
+    if (!this.state.bounties.length) {
       return
     }
 
     var product = this.props.product
 
     return this.state.bounties.map(function(bounty) {
-      if(bounty.placeholder) {
+      if (bounty.placeholder) {
         return (
           <div className="bg-gray-light mb3 rounded" style={{ height: bounty.height }}></div>
         )
-      } else {
-        return (
-          <BountyListItem bounty={bounty} product={product} valuation={this.props.valuation} handleMouseDown={this.handleMouseDown} handleMouseMove={this.handleMouseMove} handleMouseUp={this.handleMouseUp} key={bounty.id} index={this.state.bounties.indexOf(bounty)} draggable={this.props.draggable} />
-        )
       }
+
+      return (
+        <BountyListItem bounty={bounty}
+            product={product}
+            valuation={this.props.valuation}
+            handleMouseDown={this.handleMouseDown}
+            handleMouseMove={this.handleMouseMove}
+            handleMouseUp={this.handleMouseUp}
+            key={bounty.id}
+            index={this.state.bounties.indexOf(bounty)}
+            draggable={this.props.draggable} />
+      );
     }.bind(this))
   },
 
