@@ -38,8 +38,9 @@ module Actions
         return nil
       end
 
-      recipient.name = @user.name
+      recipient.name = @user.tax_info.full_name
       recipient.email = @user.email
+      recipient.tax_id = @user.tax_info.taxpayer_id
       recipient.card = @card_token
       recipient.metadata = metadata
 

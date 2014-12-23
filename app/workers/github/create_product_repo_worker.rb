@@ -4,9 +4,10 @@ module Github
       product = Product.find(product_id)
       repo_name ||= product.slug
       request_through = request_through.to_sym
+      create_through_github = request_through == :post
 
       path = "/orgs/#{ENV['GITHUB_PRODUCTS_ORG']}/repos"
-      payload = if request_through == :post
+      payload = if create_through_github
         # create through github
         {
           name: repo_name,
@@ -34,10 +35,8 @@ module Github
 
         add_webhooks([ENV['GITHUB_PRODUCTS_ORG'], product.slug].join('/'))
 
-        if request_through == :post
+        if create_through_github
           add_readme(product, repo_name)
-        else
-          notify_core_team(product)
         end
 
         repo = Repo::Github.new("https://github.com/#{ENV['GITHUB_PRODUCTS_ORG']}/#{repo_name}")
@@ -52,6 +51,10 @@ module Github
               github_login
             )
           end
+        end
+
+        if !create_through_github
+          notify_core_team(product)
         end
       end
     end

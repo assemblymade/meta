@@ -1,5 +1,6 @@
 class Mark < ActiveRecord::Base
   include ActiveRecord::UUID
+  include Kaminari::ActiveRecordModelExtension
 
   has_many :markings
   has_many :tasks, :through => :markings, source: :markable, source_type: 'Wip'
@@ -8,8 +9,12 @@ class Mark < ActiveRecord::Base
   has_many :posts, :through => :markings
   has_many :watchings, :as => :watchable
   has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
+  belongs_to :mark_stem, touch: true, counter_cache: true
+
+  after_commit :assign_stem, on: :create
 
   validates :name, length: { minimum: 2 }, allow_blank: true
+
 
   def follow!(user)
     Watching.watch!(user, self)
@@ -58,6 +63,13 @@ class Mark < ActiveRecord::Base
     #   []
     # end
     vector
+  end
+
+  def assign_stem
+    mark_name = name.gsub(/[^0-9a-z]/i, ' ').squeeze
+    ms = MarkStem.where(name: mark_name.try(:stem)).first_or_create
+    update_attribute(:mark_stem_id, ms.id) if mark_stem_id.blank? || mark_stem_id != ms.id
+    ms.name
   end
 
 end

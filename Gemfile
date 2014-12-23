@@ -86,6 +86,7 @@ gem 'uglifier'
 gem 'warden', "~> 1.2.3"
 gem 'workflow'
 gem 'zeroclipboard-rails'
+gem 'fast-stemmer'
 
 group :development, :test do
   gem 'active_record_query_trace'

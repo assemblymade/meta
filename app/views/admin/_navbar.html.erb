@@ -43,6 +43,9 @@
       <li class="<%= "active" if controller_active?(:asset_history) %>">
         <%= link_to 'Asset History', '/admin/asset_history' %>
       </li>
+      <li class="<%= "active" if controller_active?(:tags) %>">
+        <%= link_to 'Tags', '/admin/tags' %>
+      </li>
       <li>
         <%= link_to 'Sidekiq', '/admin/sidekiq' %>
       </li>

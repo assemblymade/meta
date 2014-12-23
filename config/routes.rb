@@ -185,6 +185,7 @@ ASM::Application.routes.draw do
     resources :karma, only: [:index]
     resources :karmahistory, only: [:index]
     resources :leaderboard, only: [:index]
+    resources :tags, only: [:index]
     resources :bounties, only: [:index]
     namespace :bounties do
       get :graph_data

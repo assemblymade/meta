@@ -52,7 +52,7 @@ describe Users::PaymentOptionsController do
         expect(assigns(:payment_option).last4).to eq('5556')
       end
 
-      it 'creates recipient and saves recipient_id' do
+      it 'updates recipient and saves recipient_id' do
         # Stripe.api_key = 'nope'
         user.create_payment_option(type: User::DebitPaymentOption.to_s)
 
