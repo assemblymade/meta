@@ -13,10 +13,6 @@ describe NewsFeedItem do
       expect(NewsFeedItem.create_with_target(task)).to be_a NewsFeedItem
     end
 
-    it 'does not create a NewsFeedItem from @kernel' do
-      expect(NewsFeedItem.create_with_target(kernel_task)).to be_nil
-    end
-
     it 'has last_commented_at set' do
       expect(
         NewsFeedItem.create_with_target(task).last_commented_at
