@@ -18,6 +18,7 @@ var NewsFeedItemBountyTagChange = require('./news_feed_item_bounty_tag_change.js
 var NewsFeedItemBountyTimelineItem = require('./news_feed_item_bounty_timeline_item.js.jsx');
 var NewsFeedItemBountyTitleChange = require('./news_feed_item_bounty_title_change.js.jsx');
 var NewsFeedItemBountyWin = require('./news_feed_item_bounty_win.js.jsx');
+var ProductStore = require('../../stores/product_store');
 var ReadReceipts = require('../read_receipts.js.jsx');
 var Routes = require('../../routes');
 var Spinner = require('../spinner.js.jsx');
@@ -141,8 +142,10 @@ var NewsFeedItemComments = React.createClass({
       showCommentsAfter = 0;
     }
 
+    var slug = _reach(this.props, 'item.product.slug') || ProductStore.getSlug();
+
     var url = Routes.product_update_comments_path({
-      product_id: _reach(this.props, 'item.product.id'),
+      product_id: slug,
       update_id: _reach(this.props, 'item.id'),
     });
 
