@@ -104,12 +104,10 @@
             return (
               <li className="inline-block w100p pt1 pr1 pl1 r480_w50p r768_w100p r1024_w50p">
                 <a href={assets_url} className="relative inline-block w100p" style={{backgroundColor: '#dbdee3'}}>
-                  {/*
                   <div className="z1 absolute pos_t0 pos_l0 inline-block valign-pro w100p align-center pr1 pl1 fs2 gray-dark">
-                    <div className="bold caps">EXT</div>
-                    Name-of-the-file-truncat...
+                    <div className="bold caps">{asset.attachment.extension}</div>
+                    <div className="multiline-ellipsis" style={{ height: 36 }}>{asset.name}</div>
                   </div>
-                  */}
                   <div className="z2 relative w100p pb66p border-inset-dark bg-size-cover bg-repeat-none bg-position-center" style={{backgroundImage: 'url('+ asset.thumbnail_url +')'}}></div>
                 </a>
               </li>
