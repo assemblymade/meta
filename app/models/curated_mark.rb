@@ -1,15 +1,15 @@
 CURATED_MARKS = {
   'Development' =>
-    ['Ruby', 'JavaScript', 'HTML & CSS', 'iOS', 'API', 'Fortran', 'DevOps',
+    ['Ruby', 'JavaScript', 'HTML & CSS', 'iOS', 'API', 'DevOps',
      'Go', 'Python', 'Android', 'Rails', 'React', 'Bootstrap', 'Backbone',
      'Security', 'Postgres', 'Redis', 'Bitcoin'],
   'Design' => 
-    ['UI', 'UX', 'IA', 'Branding', 'Typography', 'Microsoft Paint', 'Mockups',
+    ['UI', 'UX', 'IA', 'Branding', 'Typography', 'Mockups',
      'Illustration', 'Colors', 'Logo', 'Photoshop', 'Illustrator',
      'Responsive', 'Homepage', 'Theme', 'Blog', 'Styleguide'],
   'Strategy & Growth' =>
     ['Copywriting', 'Marketing', 'Product Management', 'User Research',
-     'Growth', 'Air Guitar', 'Monetization', 'Email Marketing', 'Social Media',
+     'Growth', 'Monetization', 'Email Marketing', 'Social Media',
      'Onboarding', 'Blogging', 'SEO', 'Pricing', 'Naming', 'Roadmapping']
 }
 

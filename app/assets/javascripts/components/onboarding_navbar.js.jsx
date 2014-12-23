@@ -13,6 +13,7 @@ module.exports =  React.createClass({
     var divStyle = {
       padding: '11px 0 10px 7px'
     };
+
     return (
       <ul className="list-reset">
         <li className="left dropdown hidden-xs">
@@ -21,7 +22,14 @@ module.exports =  React.createClass({
             <span className="visible-xs-inline ml1">{appUser.username}</span>
           </a>
 
-          <UserNavbarDropdown {...this.props} />
+          <ul className="dropdown-menu">
+            <li>
+              <a href={this.props.destroyUserSessionPath} data-method='delete'>
+                <span className='icon icon-logout dropdown-glyph'></span>
+                Log out
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     );

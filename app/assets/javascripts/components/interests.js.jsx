@@ -3,6 +3,17 @@ var Interests = React.createClass({
     marks: React.PropTypes.array.isRequired
   },
 
+  getDefaultProps: function() {
+    return {
+      jokeMarks: {
+        'Development': ['Intercal'],
+        'Design': ['Microsoft Paint'],
+        'Strategy & Growth': ['Air Guitar']
+      },
+      marks: {}
+    }
+  },
+
   getInitialState: function() {
     return {
       selected: []
@@ -11,6 +22,9 @@ var Interests = React.createClass({
 
   renderMarks: function(section) {
     var marks = this.props.marks[section]
+    var jokeMarks = this.props.jokeMarks[section]
+
+    marks = marks.concat(_.intersection(this.state.selected, jokeMarks))
 
     marks = marks.map(function(mark) {
       return this.renderMark(mark, section)
@@ -114,10 +128,10 @@ var Interests = React.createClass({
 
     if (selectionsLeft > 0) {
       var topic = selectionsLeft > 1 ? 'topics' : 'topic'
-      text = 'Pick ' + selectionsLeft + ' or more ' + topic
-      style = { width: 280, paddingLeft: 64 }
+      text = 'Pick ' + selectionsLeft + ' more ' + topic
+      style = { width: 250, paddingLeft: 64 }
     } else {
-      text = 'Yay! Take a look at your suggestions.'
+      text = 'Go ahead and look at your suggestions'
     }
 
     var handleClick = function(event) {
@@ -125,7 +139,7 @@ var Interests = React.createClass({
       event.preventDefault()
 
       this.setState({
-        selected: _.union(this.state.selected, ['Fortran', 'Microsoft Paint', 'Air Guitar'])
+        selected: _.union(this.state.selected, ['Intercal', 'Microsoft Paint', 'Air Guitar'])
       })
     }.bind(this)
 
@@ -139,11 +153,20 @@ var Interests = React.createClass({
       )
     }
 
+    if(this.state.selected.length >= 3) {
+      var encouragement = (
+        <span className="h4 py2 mt0 mb0 mr2" style={{ lineHeight: '48px' }}>
+          Keep going! You're on a roll.
+        </span>
+      )
+    }
+
     return (
       <div className="row mt4">
         <div className="col-xs-12">
           <div className="align-right">
             {skipButton}
+            {encouragement}
             <a className={classes.join(' ')} style={style} href={suggestionsUrl.join('')}>
               {this.renderProgress()}
               {text}

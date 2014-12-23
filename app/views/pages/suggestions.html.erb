@@ -5,17 +5,191 @@
 
 <div class="container mb4">
   <div class="center py4">
-    <h1 class="h1 mt0 mb0">Ok, just finished looking through <%= pluralize(Wip.count, 'bounty') %>.</h1>
-    <p class="h3 mt0 mb0 gray-darker">These are bounties that could really use your help. Check 'em out.</p>
+    <h1 class="h1 mt0 mb0">Ok, just finished looking through <%= pluralize(Product.count, 'product') %> and <%= pluralize(Wip.count, 'bounty') %>.</h1>
+    <p class="h3 mt0 mb0 gray-darker">These are all products and bounties that could really use your help. Check 'em out.</p>
   </div>
 
   <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <% @task_groups.each do |task_group| %>
-        <h4><%= task_group.title %></h4>
-        <% task_group.tasks.each do |task| %>
-          <%= render 'bounties/chip', bounty: task %>
-        <% end %>
+    <div class="col-xs-10 col-xs-offset-1">
+
+      <h2 class="center mt2 mb3">Help a product grow after launch</h2>
+
+      <div class="table">
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="bg-white rounded clearfix overflow-hidden shadow">
+            <div class="md-show border-bottom">
+              <div class="md-show">
+                <%= firesize_img @popular.logo_url, 340, 340, 'g_center' %>
+              </div>
+            </div>
+
+            <div class="p3">
+              <div class="mt0 mb0 blue"><%= @popular.name %></div>
+              <p class="gray-darker h6 mt0 mb3 full-width" style="height:3rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; text-overflow:-o-ellipsis-lastline;">
+                <%= @popular.pitch %>
+              </p>
+
+              <div class="clearfix">
+                <ul class="list-reset mb0 overflow-hidden full-width" style="height:1.5rem">
+                  <li class="left">
+                    <div class="badge bg-light-gray block" style="padding-top:0;padding-bottom:0;line-height:1.5rem">
+                      <span class="icon icon-users"></span>
+                      <%= @popular.visible_watchers.count %>
+                    </div>
+                  </li>
+
+                  <% followers_sorted_by_coins(@popular, 10).each do |user| %>
+                    <li class="left ml1"><%= avatar_tag(user, 18) %></li>
+                  <% end %>
+
+                </ul>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <% @popular.tasks.limit(3).each do |bounty| %>
+            <div class="bg-white rounded shadow mb2">
+              <div class="p3">
+                <div class="mb1 h4 mt0">
+                  <a href="<%= product_wip_path(bounty.product, bounty) %>">
+                    <%= bounty.title %>
+                  </a>
+                </div>
+
+                <div>
+                  <span class="gray mr2">
+                    <span class="sr-only">comments</span>
+                    <span class="fa fa-comment"></span>
+                    <%= bounty.comments_count %>
+                  </span>
+
+                  <span class="h6">
+                    <% bounty.tags.each do |tag| %>
+                      <a class="caps gray-dark mr1" href="<%= product_wips_path(bounty.product, tag: tag.name) %>">
+                        #<%= tag.name.downcase %>
+                      </a>
+                    <% end %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <h2 class="center mt4 mb3">Help a new product get off the ground</h2>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="bg-white rounded clearfix overflow-hidden shadow">
+            <div class="md-show border-bottom">
+              <div class="md-show">
+                <%= firesize_img @specific.logo_url, 340, 340, 'g_center' %>
+              </div>
+            </div>
+
+            <div class="p3">
+              <div class="mt0 mb0 blue"><%= @specific.name %></div>
+              <p class="gray-darker h6 mt0 mb3 full-width" style="height:3rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; text-overflow:-o-ellipsis-lastline;">
+                <%= @specific.pitch %>
+              </p>
+
+              <div class="clearfix">
+                <ul class="list-reset mb0 overflow-hidden full-width" style="height:1.5rem">
+                  <li class="left">
+                    <div class="badge bg-light-gray block" style="padding-top:0;padding-bottom:0;line-height:1.5rem">
+                      <span class="icon icon-users"></span>
+                      <%= @specific.visible_watchers.count %>
+                    </div>
+                  </li>
+
+                  <% followers_sorted_by_coins(@specific, 10).each do |user| %>
+                    <li class="left ml1"><%= avatar_tag(user, 18) %></li>
+                  <% end %>
+
+                </ul>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <% @specific.tasks.limit(3).each do |bounty| %>
+            <div class="bg-white rounded shadow mb2">
+              <div class="p3">
+                <div class="mb1 h4 mt0">
+                  <a href="<%= product_wip_path(bounty.product, bounty) %>">
+                    <%= bounty.title %>
+                  </a>
+                </div>
+
+                <div>
+                  <span class="gray mr2">
+                    <span class="sr-only">comments</span>
+                    <span class="fa fa-comment"></span>
+                    <%= bounty.comments_count %>
+                  </span>
+
+                  <span class="h6">
+                    <% bounty.tags.each do |tag| %>
+                      <a class="caps gray-dark mr1" href="<%= product_wips_path(bounty.product, tag: tag.name) %>">
+                        #<%= tag.name.downcase %>
+                      </a>
+                    <% end %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <h2 class="center mt4 mb3">Help refine some early ideas</h2>
+
+      <% @ideas.each do |idea| %>
+        <div class="idea-feed-item card p3">
+          <div class="mt0 mb2">
+            <div class="left">
+              <%= react_component 'Love', heartable_id: idea.news_feed_item.id, heartable_type: 'NewsFeedItem', public: true %>
+            </div>
+            <div class="right text-muted">
+              <%= link_to idea, class: "text-stealth-link" do %>
+              <strong>
+                <span class="icon icon-speech icon-left"></span>
+                  <%= idea.comments.count %>
+                <span class="sr-only">comments</span>
+              </strong>
+              <% end %>
+            </div>
+            <span class="clearfix"></span>
+          </div>
+          <h4 class="mt0 mb3">
+            <%= link_to idea.name, idea %>
+          </h4>
+          <div class="mb4 mt2">
+            <div class="left">
+              <% unless idea.marks.empty? %>
+                <ul class="list-inline mb0">
+                  <% idea.marks.each do |mark| %>
+                    <li><a class="tag"><%= mark.name %></a></li>
+                  <% end %>
+                </ul>
+              <% end %>
+            </div>
+            <div class="text-muted right">
+              Submitted by <%= link_to "@#{idea.creator_username}", idea.user, class: 'text-stealth-link' %>
+            </div>
+          </div>
+        </div>
       <% end %>
     </div>
   </div>
