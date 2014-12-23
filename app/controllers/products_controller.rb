@@ -37,7 +37,6 @@ class ProductsController < ProductController
       @product.retrieve_key_pair
       schedule_greet
       schedule_one_hour_checkin
-      schedule_one_day_checkin
     else
       render action: :new, layout: 'application'
     end
