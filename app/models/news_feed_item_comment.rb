@@ -1,6 +1,6 @@
 # TODO: (whatupdave) rename this to just Comment
 class NewsFeedItemComment < ActiveRecord::Base
-  belongs_to :news_feed_item, touch: true
+  belongs_to :news_feed_item, touch: true, counter_cache: :comments_count
   belongs_to :user
 
   has_many :hearts, as: :heartable
