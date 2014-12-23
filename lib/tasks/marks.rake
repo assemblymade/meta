@@ -72,4 +72,23 @@ namespace :marks do
       mark.destroy
     end
   end
+
+  task :unify_marks => :environment do
+    require 'json'
+    tags = {}
+    Mark.find_each do |mark|
+      if mark.name.include?(",")
+        mark.name.split(',').each do |mx|
+          mx_name = mx.gsub(/[^0-9a-z]/i, ' ').squeeze
+          tags[mx_name.downcase.stem] ||= []
+          tags[mx_name.downcase.stem] << mx unless tags[mx_name.downcase.stem].include?(mx)
+        end
+      else
+        mark_name = mark.name.gsub(/[^0-9a-z,]/i, ' ').squeeze
+        tags[mark_name.downcase.stem] ||= []
+        tags[mark_name.downcase.stem] << mark.name unless tags[mark_name.downcase.stem].include?(mark.name)
+      end
+    end
+    puts tags.to_json
+  end
 end
