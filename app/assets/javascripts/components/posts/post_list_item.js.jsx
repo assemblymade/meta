@@ -2,6 +2,7 @@ var Avatar = require('../avatar.js.jsx');
 var Icon = require('../icon.js.jsx');
 var ListItemMixin = require('../../mixins/list_item_mixin.js.jsx');
 var Love = require('../love.js.jsx');
+var NewsFeedItemModal = require('../news_feed/news_feed_item_modal.js.jsx');
 
 var PostListIem = React.createClass({
   displayName: 'PostListItem',
@@ -11,11 +12,19 @@ var PostListIem = React.createClass({
   },
 
   /**
-   * ListItemMixin: this.renderComments({Number: count})
+   * ListItemMixin: this.onModalHidden()
+   *                this.renderComments({Number: count})
    *                this.renderLove({String: news_feed_item_id})
    *                this.renderTags({[Object: tag]})
+   *                this.showModal()
    */
   mixins: [ListItemMixin],
+
+  getInitialState: function() {
+    return {
+      modalShown: false
+    };
+  },
 
   render: function() {
     var post = this.props.post;
@@ -33,8 +42,26 @@ var PostListIem = React.createClass({
         </div>
         {this.renderLove(this.props.post.news_feed_item_id)}
         {this.renderUser()}
+        {this.renderModal()}
       </div>
     );
+  },
+
+  renderModal: function() {
+    if (this.state.modalShown) {
+      var post = this.props.post;
+      var newsFeedItemid = post.news_feed_item_id;
+
+      var item = {
+        heartable_id: newsFeedItemid,
+        id: newsFeedItemid,
+        product: post.product,
+        target: post,
+        user: post.user
+      };
+
+      return <NewsFeedItemModal item={item} onHidden={this.onModalHidden} />;
+    }
   },
 
   renderSummary: function() {
@@ -54,7 +81,7 @@ var PostListIem = React.createClass({
 
     return (
       <div className="h4 mb1 mt0" style={{ paddingTop: '1rem' }}>
-        <a href={post.url} className="black">
+        <a href={post.url} className="black" onClick={this.showModal}>
           {post.title}
         </a>
       </div>

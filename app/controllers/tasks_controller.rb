@@ -24,6 +24,7 @@ class TasksController < WipsController
       end
 
       format.json do
+        # TODO (pletcher) move this call elsewhere
         if params[:count]
           tasks_count = { total: @product.tasks.where(state: ['open', 'awarded']).count }
           render json: tasks_count
@@ -100,7 +101,7 @@ class TasksController < WipsController
     respond_to do |format|
       format.html { render 'bounties/show' }
       format.json { render json: {
-        bounty: WipSerializer.new(@bounty, scope: current_user),
+        bounty: TaskSerializer.new(@bounty, scope: current_user),
         events: @bounty.events.where.not(type: 'Event::Comment').map { |e| EventSerializer.for(e, current_user) }
       } }
     end

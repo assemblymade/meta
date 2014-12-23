@@ -141,13 +141,18 @@ var NewsFeedItemComments = React.createClass({
       showCommentsAfter = 0;
     }
 
+    var url = Routes.product_update_comments_path({
+      product_id: _reach(this.props, 'item.product.id'),
+      update_id: _reach(this.props, 'item.id'),
+    });
+
     return {
       comments: lastComment ? [lastComment] : [],
       events: [],
       numberOfComments: item.comments_count,
       optimisticComments: [],
       showCommentsAfter: showCommentsAfter,
-      url: item.url + '/comments'
+      url: url
     };
   },
 

@@ -15,6 +15,8 @@ class TaskSerializer < ApplicationSerializer
   has_many :wip_workers
   has_many :workers
 
+  has_one :user
+
   def url
     product_wip_path(product, number || id)
   end

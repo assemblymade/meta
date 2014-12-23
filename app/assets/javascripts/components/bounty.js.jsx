@@ -35,6 +35,7 @@ module.exports = React.createClass({
   bounty: function() {
     var propBounty = this.props.bounty;
     var stateBounty = this.state && this.state.bounty || {};
+
     return _.extend(propBounty, stateBounty);
   },
 
@@ -85,14 +86,14 @@ module.exports = React.createClass({
       // :<
       bounty: bounty,
       closed: (CLOSED_STATES.indexOf(bounty.state) !== -1 ? true : false),
-      worker: bounty.workers[0],
+      worker: bounty.workers && bounty.workers[0],
       lockUntil: moment(bounty.locked_at).add(60 * ONE_HOUR),
       subscribed: SubscriptionsStore.get(this.props.item.id)
     };
   },
 
   render: function() {
-    var bounty = this.state.bounty;
+    var bounty = this.bounty();
 
     return (
       <div>
