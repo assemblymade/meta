@@ -116,7 +116,10 @@ ASM::Application.routes.draw do
     get    '/users/confirmation' => 'users/confirmations#show', :as => :user_confirmation
     post   '/users/confirmation' => 'users/confirmations#create'
 
-    resources :users, only: [:show, :update]
+    resources :users, only: [:show, :update] do
+      patch :flag, on: :member
+      patch :unflag, on: :member
+    end
 
     get '/users/:id/karma' => 'users#karma', :as => :user_karma
     get '/users/:id/assets' => 'users#assets', :as => :user_assets
