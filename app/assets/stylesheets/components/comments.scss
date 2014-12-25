@@ -1,0 +1,13 @@
+.comments {
+  //
+  .comments-filter {
+    a {
+      color:$black;
+      opacity:0.5;
+      //
+      &:hover, &.active {
+        opacity:1;
+      }
+    }
+  }
+}

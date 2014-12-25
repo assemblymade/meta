@@ -2,8 +2,9 @@
 @import 'asmcss/basspluss';
 @import 'asmcss/utility';
 @import 'asmcss/colors';
-@import 'asmcss/nocss_mq';
+@import 'asmcss/nocss_vars';
 @import 'asmcss/nocss';
+@import 'asmcss/nocss_mq';
 
 
 html {
@@ -41,12 +42,12 @@ strong,
 
 a {
   color: $link-color;
-  -webkit-transition: color 0.1s ease-in-out;
-  transition: color 0.1s ease-in-out;
+  -webkit-transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
+  transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
   &:hover, &:focus {
     text-decoration: none;
-    -webkit-transition: color 0.1s ease-in-out;
-    transition: color 0.1s ease-in-out;
+    -webkit-transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
+    transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
   }
   &.no-focus:focus {
     text-decoration: none;
