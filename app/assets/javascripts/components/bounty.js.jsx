@@ -47,12 +47,12 @@ module.exports = React.createClass({
 
   componentDidMount: function() {
     BountyStore.addChangeListener(this.getBountyState);
-    SubscriptionsStore.addChangeListener(this._onChange);
+    SubscriptionsStore.addChangeListener(this.getSubscriptionState);
   },
 
   componentWillUnmount: function() {
     BountyStore.removeChangeListener(this.getBountyState);
-    SubscriptionsStore.removeChangeListener(this._onChange);
+    SubscriptionsStore.removeChangeListener(this.getSubscriptionState);
   },
 
   extendWork: function(e) {
@@ -90,6 +90,12 @@ module.exports = React.createClass({
       lockUntil: moment(bounty.locked_at).add(60 * ONE_HOUR),
       subscribed: SubscriptionsStore.get(this.props.item.id)
     };
+  },
+
+  getSubscriptionState: function() {
+    this.setState({
+      subscribed: SubscriptionsStore.get(this.props.item.id)
+    });
   },
 
   render: function() {
@@ -419,11 +425,7 @@ module.exports = React.createClass({
       worker: currentUser && currentUser.attributes,
       lockUntil: moment().add(60, 'hours').add(1, 'second')
     });
-  },
-
-  _onChange: function() {
-    this.setState({subscribed: SubscriptionsStore.get(this.props.item.id)})
   }
-})
+});
 
 window.Bounty = module.exports
