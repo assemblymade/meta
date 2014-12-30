@@ -2,6 +2,9 @@
 @import 'asmcss/basspluss';
 @import 'asmcss/utility';
 @import 'asmcss/colors';
+@import 'asmcss/nocss_vars';
+@import 'asmcss/nocss';
+@import 'asmcss/nocss_mq';
 
 html {
   font-size: 12px;
@@ -38,12 +41,13 @@ strong,
 
 a {
   color: $link-color;
-  -webkit-transition: color 0.1s ease-in-out;
-  transition: color 0.1s ease-in-out;
+  -webkit-transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
+  transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
   &:hover, &:focus {
     text-decoration: none;
-    -webkit-transition: color 0.1s ease-in-out;
-    transition: color 0.1s ease-in-out;
+    outline: 0;
+    -webkit-transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
+    transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
   }
   &.no-focus:focus {
     text-decoration: none;
@@ -136,6 +140,21 @@ input[type=week] {
   user-select: none;
 }
 
+._border-inset-dark {
+  position:relative;
+  //
+  &:before {
+    content:'';
+    display: block;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border:1px solid rgba(100,100,100,0.08);
+  }
+}
+
 button, .button {
   padding: 0;
 }
@@ -150,6 +169,8 @@ button, .button {
   color: $black;
   font-size:13px;
   background:$gray-5;
+  border: none;
+  outline: none;
   // -webkit-transition: all 0.15s ease-in-out;
   // transition: all 0.15s ease-in-out;
   //
