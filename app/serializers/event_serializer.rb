@@ -72,6 +72,10 @@ class EventSerializer < ActiveModel::Serializer
   def target
     if object.class == Event::Win
       object.winner
+    # FIXME (pletcher): This isn't terrible -- it just adds in a couple of fields --
+    # but there must be a better way to do it
+    elsif object.class == Event::CommentReference
+      Event::CommentReferenceSerializer.new(object)
     else
       object.try(:target)
     end

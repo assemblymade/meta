@@ -3,6 +3,8 @@ var ProductFollowersStore = require('../stores/product_followers_store');
 var ProductActionCreators = require('../actions/product_action_creators');
 
 module.exports = React.createClass({
+  displayName: 'ProductFollowers',
+
   propTypes: {
     product_id: React.PropTypes.string.isRequired
   },
