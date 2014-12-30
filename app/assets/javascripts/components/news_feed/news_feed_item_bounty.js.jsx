@@ -38,7 +38,7 @@ module.exports = React.createClass({
                 </span>
               </div>
             </div>
-            <div className="mt1 gray-darker fs4" key={'nfbi-body-' + bounty.id} onClick={this.showBounty}>
+            <div className="mt1 gray-darker fs4 break-word" key={'nfbi-body-' + bounty.id} onClick={this.showBounty}>
               <Markdown content={bounty.short_description} normalized={true} />
               {this.thumbnails()}
             </div>
@@ -48,45 +48,45 @@ module.exports = React.createClass({
     );
   },
 
-tags: function() {
-  var item = this.props.item;
-  var bounty = item.target;
-  var product = item.product;
+  tags: function() {
+    var item = this.props.item;
+    var bounty = item.target;
+    var product = item.product;
 
-  return _.map(bounty.tags, function(tag) {
-    var name = tag.name;
+    return _.map(bounty.tags, function(tag) {
+      var name = tag.name;
 
-    return (
-      <a className="mr1"
-        href={product.url + '/bounties?state=open&tag=' + name}
-        style={{ color: '#6e6e6e' }}
-        key={bounty.id + '-' + key}>
-      {name}
-    </a>
-  );
-}.bind(this));
-},
-
-thumbnails: function() {
-  var item = this.props.item;
-  var bounty = item.target;
-  var thumbnails = bounty.thumbnails;
-
-  if (thumbnails.length) {
-    var thumbs = _.map(thumbnails, function(thumb, i) {
       return (
-        <span className="px2" key={'thumb-' + i}>
-        <Thumbnail src={thumb} size={100} />
-        </span>
+        <a className="mr1"
+            href={product.url + '/bounties?state=open&tag=' + name}
+            style={{ color: '#6e6e6e' }}
+            key={bounty.id + '-' + key}>
+          {name}
+        </a>
       );
-    });
+    }.bind(this));
+  },
 
-    return (
-      <div className="clearfix" key={'thumbs-container-' + bounty.id}>
-      <div className="gray py1">Images</div>
-    {thumbs}
-    </div>
-  );
-}
-}
+  thumbnails: function() {
+    var item = this.props.item;
+    var bounty = item.target;
+    var thumbnails = bounty.thumbnails;
+
+    if (thumbnails.length) {
+      var thumbs = _.map(thumbnails, function(thumb, i) {
+        return (
+          <span className="px2" key={'thumb-' + i}>
+          <Thumbnail src={thumb} size={100} />
+          </span>
+        );
+      });
+
+      return (
+        <div className="clearfix" key={'thumbs-container-' + bounty.id}>
+          <div className="gray py1">Images</div>
+          {thumbs}
+        </div>
+      );
+    }
+  }
 });

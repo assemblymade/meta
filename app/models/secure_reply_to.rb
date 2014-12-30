@@ -6,6 +6,7 @@ class SecureReplyTo
   def initialize(object_type, object_id, user_id)
     @object_type, @object_id, @user_id = object_type, object_id, user_id
     @object_type = @object_type.underscore # it gets downcased somewhere in the pipe
+    @user_id = @user_id.downcase
     @secret = ENV['MAILGUN_API_KEY'] || 'assembly-secret'
   end
 

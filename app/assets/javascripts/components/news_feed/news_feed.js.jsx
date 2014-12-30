@@ -206,7 +206,8 @@ var NewsFeed = React.createClass({
 
       var classes = React.addons.classSet({
         'sm-col': !productPage,
-        'sm-col-6': !productPage
+        'sm-col-6': !productPage,
+        'px1': !productPage
       });
 
       return (

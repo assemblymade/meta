@@ -65,7 +65,7 @@ class Event < ActiveRecord::Base
   end
 
   def notify_by_email?
-    MAILABLE.include? self.class
+    MAILABLE.include?(self.class) && user.flagged_at.nil?
   end
 
   def auto_watch!(user)

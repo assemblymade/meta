@@ -147,6 +147,21 @@ var NewsFeedItem = React.createClass({
         triggerModal={this.triggerModal} />;
   },
 
+  renderEditButton: function() {
+    if (UserStore.isCoreTeam() || this.props.user.id === UserStore.getId()) {
+      var target = this.props.target;
+
+      // only turn on for posts
+      if (target && target.type === 'post') {
+        return (
+          <li>
+            <a href={target.url + '/edit'}>Edit</a>
+          </li>
+        );
+      }
+    }
+  },
+
   renderFooter: function() {
     if (this.props.showAllComments) {
       return (
@@ -154,6 +169,7 @@ var NewsFeedItem = React.createClass({
           <ul className="list-inline mt0 mb0 py1 right">
             {this.renderArchiveButton()}
             {this.renderSubscribeButton()}
+            {this.renderEditButton()}
           </ul>
         </div>
       );

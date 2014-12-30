@@ -31,6 +31,7 @@ describe AttachmentsController do
         'size' => 13124,
         'content_type' => 'image/png',
         'href' => "/#{attachment.key}",
+        'extension' => 'png',
         'form' => {
           'key' => attachment.key,
           'acl' => 'public-read',

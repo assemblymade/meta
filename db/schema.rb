@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141218020529) do
+ActiveRecord::Schema.define(version: 20141223225045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -349,6 +349,13 @@ ActiveRecord::Schema.define(version: 20141218020529) do
     t.datetime "updated_at"
   end
 
+  create_table "mark_stems", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "marks_count", default: 0
+  end
+
   create_table "markings", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "markable_type"
     t.uuid     "markable_id"
@@ -359,10 +366,12 @@ ActiveRecord::Schema.define(version: 20141218020529) do
   end
 
   create_table "marks", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string   "name",       null: false
+    t.string   "name",         null: false
     t.datetime "created_at"
+    t.uuid     "mark_stem_id"
   end
 
+  add_index "marks", ["mark_stem_id"], name: "index_marks_on_mark_stem_id", using: :btree
   add_index "marks", ["name"], name: "index_marks_on_name", unique: true, using: :btree
 
   create_table "measurements", id: :uuid, force: true do |t|
@@ -452,6 +461,7 @@ ActiveRecord::Schema.define(version: 20141218020529) do
     t.datetime "last_commented_at"
     t.integer  "watchings_count"
     t.datetime "archived_at"
+    t.integer  "comments_count",    default: 0
   end
 
   add_index "news_feed_items", ["target_id"], name: "index_news_feed_items_on_target_id", unique: true, using: :btree
@@ -902,6 +912,7 @@ ActiveRecord::Schema.define(version: 20141218020529) do
     t.datetime "gravatar_checked_at"
     t.datetime "gravatar_verified_at"
     t.uuid     "user_cluster_id"
+    t.datetime "flagged_at"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

@@ -17,8 +17,8 @@ en:
     subjects:
       short:
         discussion:
-          other: "#%{number} %{title}"
-          owner: "#%{number} %{title}"
+          other: "%{title} #%{number} "
+          owner: "%{title} #%{number}"
 
         post:
           other: 'a post'
@@ -42,8 +42,8 @@ en:
 
       long:
         discussion:
-          other: "#%{number} %{title}"
-          owner: "#%{number} %{title}"
+          other: "%{title} #%{number} "
+          owner: "%{title} #%{number}"
 
         post:
           other: '%{title}'

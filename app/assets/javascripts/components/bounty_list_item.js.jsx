@@ -1,15 +1,18 @@
-var BountyActionCreators = require('../actions/bounty_action_creators.js')
-var Coins = require('./coins.js.jsx')
-var ListItemMixin = require('../mixins/list_item_mixin.js.jsx')
+var BountyActionCreators = require('../actions/bounty_action_creators.js');
+var Coins = require('./coins.js.jsx');
+var ListItemMixin = require('../mixins/list_item_mixin.js.jsx');
+var NewsFeedItemBountyModal = require('./news_feed/news_feed_item_bounty_modal.js.jsx');
 
 var BountyListItem = React.createClass({
-  mixins: [ListItemMixin],
 
-  getInitialState: function() {
-    return {
-      position: null
-    }
-  },
+  /**
+   * ListItemMixin: this.onModalHidden()
+   *                this.renderComments({Number: count})
+   *                this.renderLove({String: news_feed_item_id})
+   *                this.renderTags({[Object: tag]})
+   *                this.showModal()
+   */
+  mixins: [ListItemMixin],
 
   componentDidUpdate: function(props, state) {
     if (this.state.position && !state.position) {
@@ -21,6 +24,13 @@ var BountyListItem = React.createClass({
     }
   },
 
+  getInitialState: function() {
+    return {
+      modalShown: false,
+      position: null
+    };
+  },
+
   handleMouseDown: function(event) {
     var bountyDiv = event.target.parentElement.parentElement
     var position = $(bountyDiv).position()
@@ -30,7 +40,7 @@ var BountyListItem = React.createClass({
     this.setState({
       position: {
         top: position.top,
-        left: position.left,
+        left: position.left + 10,
         width: width,
         height: height,
         mouseX: event.pageX,
@@ -76,58 +86,6 @@ var BountyListItem = React.createClass({
     return false
   },
 
-  renderTitle: function() {
-    var bounty = this.props.bounty
-
-    return (
-      <a href={bounty.url}>
-        {bounty.title} {' '}
-        <span className="gray-dark fs4">
-          #{bounty.number}
-        </span>
-      </a>
-    )
-  },
-
-  renderLocker: function() {
-    var bounty = this.props.bounty
-
-    if(!bounty.locker) {
-      return
-    }
-
-    var user = bounty.locker
-
-    return (
-      <div className="px3 py2 border-top h6 mb0 mt0">
-        <Avatar user={user} size={18} style={{ display: 'inline-block' }} />
-        {' '}
-        <a href={user.url} className="bold black">
-          {user.username}
-        </a>
-        {' '}
-        <span className="gray-dark">
-          has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
-        </span>
-      </div>
-    )
-  },
-
-  renderHandle: function() {
-    if (this.props.draggable) {
-      var handleClasses = ["handle", "table-cell"]
-
-      if (this.state.position) {
-        handleClasses.push("active")
-      }
-
-      return (
-        <div className={handleClasses.join(' ')} onMouseDown={this.handleMouseDown}>
-        </div>
-      )
-    }
-  },
-
   render: function() {
     var bounty = this.props.bounty
     var style = {}
@@ -167,9 +125,78 @@ var BountyListItem = React.createClass({
           </div>
           {this.renderHandle()}
         </div>
+        {this.renderModal()}
       </div>
     )
+  },
+
+  renderHandle: function() {
+    if (this.props.draggable) {
+      var handleClasses = ["handle", "table-cell"]
+
+      if (this.state.position) {
+        handleClasses.push("active")
+      }
+
+      return (
+        <div className={handleClasses.join(' ')} onMouseDown={this.handleMouseDown}>
+        </div>
+      )
+    }
+  },
+
+  renderLocker: function() {
+    var bounty = this.props.bounty
+
+    if(!bounty.locker) {
+      return
+    }
+
+    var user = bounty.locker
+
+    return (
+      <div className="px3 py2 border-top h6 mb0 mt0">
+        <Avatar user={user} size={18} style={{ display: 'inline-block' }} />
+        {' '}
+        <a href={user.url} className="bold black">
+          {user.username}
+        </a>
+        {' '}
+        <span className="gray-dark">
+          has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
+        </span>
+      </div>
+    )
+  },
+
+  renderModal: function() {
+    if (this.state.modalShown) {
+      var bounty = this.props.bounty;
+
+      var item = {
+        commentable: true,
+        id: bounty.news_feed_item_id,
+        product: this.props.product,
+        productPage: true,
+        target: bounty
+      };
+
+      return <NewsFeedItemBountyModal item={item} onHidden={this.onModalHidden} />;
+    }
+  },
+
+  renderTitle: function() {
+    var bounty = this.props.bounty
+
+    return (
+      <a href={bounty.url}>
+        {bounty.title} {' '}
+        <span className="gray-dark fs4">
+          #{bounty.number}
+        </span>
+      </a>
+    )
   }
-})
+});
 
 module.exports = BountyListItem

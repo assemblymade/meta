@@ -35,7 +35,7 @@ module.exports = React.createClass({
             <div>
               {this.renderSummary()}
             </div>
-            <div className="mt1 gray-darker fs4">
+            <div className="mt1 gray-darker fs4 break-word">
               <Markdown content={this.props.body} normalized={true} />
               {this.renderReadMore()}
             </div>

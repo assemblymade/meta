@@ -106,7 +106,7 @@ module.exports = React.createClass({
     var product = item.product;
 
     bounty.product = product;
-    bounty.user = item.user;
+    bounty.user = bounty.user || item.user;
 
     if (this.state.ready) {
       return (

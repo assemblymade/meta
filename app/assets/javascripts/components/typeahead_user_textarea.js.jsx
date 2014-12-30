@@ -93,24 +93,26 @@ var TypeaheadUserTextArea = React.createClass({
 
   handleUserChanged: function(user) {
     if (user) {
-      this.setState({
-        text: this.replaceQueryWithUser(user)
-      })
+      var text = this.replaceQueryWithUser(user);
+
+      NewCommentActionCreators.updateComment(this.props.thread, text);
     }
   },
 
   handleUserSelected: function(user) {
     if (user) {
-      this.setState({
-        text: this.replaceQueryWithUser(user)
-      })
+      var text = this.replaceQueryWithUser(user);
+
+      NewCommentActionCreators.updateComment(this.props.thread, text)
     }
 
-    this.setState({usernameSearch: null})
+    this.setState({ usernameSearch: null })
   },
 
   replaceQueryWithUser: function(user, suffix) {
-    return this.state.text.replace(USER_SEARCH_REGEX, function(match, space, username, offset, string) {
+    var text = this.state.text;
+
+    return text.replace(USER_SEARCH_REGEX, function(match, space, username, offset, string) {
       return space + '@' + user.username + (suffix || '')
     })
   },

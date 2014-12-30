@@ -79,7 +79,7 @@ http_interactions:
             "type": "Visa"
           }
         }
-    http_version: 
+    http_version:
   recorded_at: Mon, 04 Aug 2014 19:03:12 GMT
 - request:
     method: post
@@ -180,7 +180,7 @@ http_interactions:
           },
           "default_card": "card_4WuYxZVCqQdkeb"
         }
-    http_version: 
+    http_version:
   recorded_at: Mon, 04 Aug 2014 19:03:12 GMT
 - request:
     method: post
@@ -261,7 +261,7 @@ http_interactions:
             "type": "Visa"
           }
         }
-    http_version: 
+    http_version:
   recorded_at: Mon, 04 Aug 2014 19:03:13 GMT
 - request:
     method: get
@@ -360,7 +360,7 @@ http_interactions:
           },
           "default_card": "card_4WuYxZVCqQdkeb"
         }
-    http_version: 
+    http_version:
   recorded_at: Mon, 04 Aug 2014 19:03:13 GMT
 - request:
     method: post
@@ -461,6 +461,6 @@ http_interactions:
           },
           "default_card": "card_4WuYFAh5j4M4Tj"
         }
-    http_version: 
+    http_version:
   recorded_at: Mon, 04 Aug 2014 19:03:14 GMT
 recorded_with: VCR 2.9.2

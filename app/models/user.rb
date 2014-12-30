@@ -150,6 +150,14 @@ class User < ActiveRecord::Base
     Avatar.new(self)
   end
 
+  def flag!
+    update(flagged_at: Time.now)
+  end
+
+  def unflag!
+    update(flagged_at: nil)
+  end
+
   def karma_total
     Deed.where(user_id: self.id).sum(:karma_value)
   end

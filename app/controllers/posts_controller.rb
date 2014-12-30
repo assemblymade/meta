@@ -3,7 +3,7 @@ class PostsController < ProductController
 
   def index
     find_product!
-    query = @product.posts.order(created_at: :desc)
+    query = @product.posts.order(created_at: :desc).includes(:news_feed_item)
 
     posts = Post.filter_with_params(query, params)
 

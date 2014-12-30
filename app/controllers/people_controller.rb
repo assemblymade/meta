@@ -111,10 +111,6 @@ class PeopleController < ProductController
   end
 
   def process_introduction
-    @product.follower_ids.each do |user_id|
-      ProductMailer.delay(queue: 'mailer').new_introduction(user_id, @membership.id)
-    end
-
     track_params = ProductAnalyticsSerializer.new(@product, scope: current_user).as_json
     track_event 'product.team.introduced', track_params
 
@@ -125,6 +121,10 @@ class PeopleController < ProductController
       subject: @membership,
       target: @product
     )
+
+    @product.follower_ids.each do |user_id|
+      ProductMailer.delay(queue: 'mailer').new_introduction(user_id, @membership.id)
+    end
   end
 
 end
