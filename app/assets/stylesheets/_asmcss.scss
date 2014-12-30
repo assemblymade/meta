@@ -41,13 +41,13 @@ strong,
 
 a {
   color: $link-color;
-  -webkit-transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
-  transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
+  // -webkit-transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
+  // transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
   &:hover, &:focus {
     text-decoration: none;
     outline: 0;
-    -webkit-transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
-    transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
+    // -webkit-transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
+    // transition: color 0.1s ease-in-out, opacity 0.1s ease-in-out;
   }
   &.no-focus:focus {
     text-decoration: none;
@@ -282,8 +282,8 @@ button, .button {
   &:hover {
     color: $white;
     background:$green-dark;
-    -webkit-transition: all 0.15s ease-in-out;
-    transition: all 0.15s ease-in-out;
+    // -webkit-transition: all 0.15s ease-in-out;
+    // transition: all 0.15s ease-in-out;
   }
   &:focus {
     color: $white;
@@ -305,12 +305,12 @@ button, .button {
     border-bottom-right-radius: 50px;
     border:1px solid rgba(100,100,100,0.15);
     border-left:1px solid rgba(100,100,100,0.125);
-    -webkit-transition: all 0.15s ease-in-out;
-    transition: all 0.15s ease-in-out;
+    // -webkit-transition: all 0.15s ease-in-out;
+    // transition: all 0.15s ease-in-out;
     //
     .fa:before {
-      -webkit-transition: all 0.2s ease-in-out;
-      transition: all 0.15s ease-in-out;
+      // -webkit-transition: all 0.2s ease-in-out;
+      // transition: all 0.15s ease-in-out;
     }
   }
   &.open {
@@ -324,8 +324,8 @@ button, .button {
         display: block;
         -webkit-transform: translate3d(0,0,0) rotate(180deg);
                 transform: translate3d(0,0,0) rotate(180deg);
-        -webkit-transition: all 0.2s ease-in-out;
-                transition: all 0.2s ease-in-out;
+        // -webkit-transition: all 0.2s ease-in-out;
+        //         transition: all 0.2s ease-in-out;
       }
     }
   }
@@ -333,15 +333,15 @@ button, .button {
 
 .pill-hover {
   border-radius: 50px;
-  -webkit-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  // -webkit-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  // transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
   //
   &:hover {
     color: #353941;
     background: #e7e9ec;
     border-radius: 50px;
     text-decoration: none;
-    -webkit-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
-    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    // -webkit-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    // transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
   }
 }
