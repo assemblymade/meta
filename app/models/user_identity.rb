@@ -67,7 +67,7 @@ class UserIdentity < ActiveRecord::Base
   # end
 
   def get_mark_vector()
-    QueryMarks.new.normalized_mark_vector_for_object(self).sort{|a,b| b[1] <=> a[1]}
+    vector = QueryMarks.new.normalized_mark_vector_for_object(self).sort{|a,b| b[1] <=> a[1]}
   end
 
 end

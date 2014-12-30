@@ -1,45 +1,46 @@
-class UserCluster < ActiveRecord::Base
-  has_many :users
-  has_many :markings
+class UserCluster
+  attr_accessor :users, :mark_vector, :variance
+  def initialize
+    @users = []
+    @mark_vector = []
+    @variance = 0
+  end
 
-  def calculate_center
-    my_mark_vector = []
-    self.users.each do |user|
-      user_vector = user.user_identity.get_mark_vector
-      my_mark_vector = QueryMarks.new.add_mark_vectors(my_mark_vector, user_vector)
+  def add_user_id(user_id, user_vector)
+    if not self.users.include?(user_id)
+      @users.append(user_id)
+      @oldmarkvector = @mark_vector
+      @mark_vector = QueryMarks.new.add_mark_vectors(@mark_vector, user_vector)
+      average_vector = QueryMarks.new.scale_mark_vector(@mark_vector, 1.0 / @users.count.to_f)
+      if @users.count>1
+        average_old_vector = QueryMarks.new.scale_mark_vector(@oldmarkvector, 1.0/(@users.count.to_f-1.0))
+      else
+        average_old_vector = []
+      end
+
+      variance_change = QueryMarks.new.add_mark_vectors(QueryMarks.new.scale_mark_vector(average_old_vector , -1), user_vector).sum{|a| a[1]**2}
+      variance_change = variance_change * QueryMarks.new.add_mark_vectors( user_vector, QueryMarks.new.scale_mark_vector(average_vector ,-1)).sum{|a| a[1]**2}
+      @variance = @variance + Math.sqrt(variance_change)
     end
-    QueryMarks.new.update_markings_to_vector_for_object(self, my_mark_vector)
   end
 
-  def add_user(user)
-    user_vector = user.user_identity.get_mark_vector
-    my_mark_vector = QueryMarks.new.add_mark_vectors(my_mark_vector, user_vector)
-    QueryMarks.new.update_markings_to_vector_for_object(self, my_mark_vector)
-    self.users.append(user)
+  def average_vector
+    s=@mark_vector.sum{|a| a[1]**2}
+    QueryMarks.new.scale_mark_vector(@mark_vector, 1.0 / s).sort_by{|a| a[1]}.reverse
   end
 
-  def remove_user(user)
-    user_vector = user.user_identity.get_mark_vector
-    scaled_user_vector = QueryMarks.new.scale_mark_vector(user_vector, -1.0)
-    my_mark_vector = QueryMarks.new.add_mark_vectors(my_mark_vector, scaled_user_vector)
-    QueryMarks.new.update_markings_to_vector_for_object(self, my_mark_vector)
-    self.users.delete(user)
-  end
-
-  def normalized_center
-    QueryMarks.new.normalized_mark_vector_for_object(self)
-  end
-
-  def calculate_variance
-    my_center = self.normalized_center
-    sum_variance = 0
-    self.users.each do |user|
-      their_vector = user.user_identity.get_mark_vector
-      sum_variance = sum_variance + QueryMarks.new.vector_square_distance(my_center, their_vector)
+  def remove_user_id(user_id, user_vector)
+    @users.delete(user_id)
+    average_old_vector = QueryMarks.new.scale_mark_vector(@mark_vector, 1.0 / @users.count.to_f)
+    @mark_vector = QueryMarks.new.add_mark_vectors(@mark_vector, QueryMarks.new.scale_mark_vector(user_vector, -1))
+    if @users.count>0
+      average_vector = QueryMarks.new.scale_mark_vector(@mark_vector, 1.0 / @users.count.to_f)
+    else
+      average_vector = []
     end
-    self.update!({variance: sum_variance})
-    sum_variance
+
+    variance_change = QueryMarks.new.add_mark_vectors(QueryMarks.new.scale_mark_vector(average_old_vector , -1), user_vector).sum{|a| a[1]**2}
+    variance_change = variance_change * QueryMarks.new.add_mark_vectors( user_vector, QueryMarks.new.scale_mark_vector(average_vector ,-1)).sum{|a| a[1]**2}
+    @variance = @variance - Math.sqrt(variance_change)
   end
-
-
 end

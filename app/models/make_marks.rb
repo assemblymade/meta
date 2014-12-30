@@ -8,10 +8,10 @@ class MakeMarks
     end
   end
 
-  def mark_additively(object, mark, weight)
-    marking = Marking.where(markable_id: object.id).where(mark_id: mark.id)
+  def mark_additively(object, mark_id, weight)
+    marking = Marking.where(markable_id: object.id).where(mark_id: mark_id)
     if not marking.present?
-      Marking.create!({markable: object, mark_id: mark.id, weight: weight})
+      Marking.create!({markable: object, mark_id: mark_id, weight: weight})
     else
       marking=marking.first #there should only ever be 1 entry here
       oldweight = marking.weight
@@ -38,6 +38,17 @@ class MakeMarks
         destroyed_mark.destroy
       end
     end
+  end
+
+  def mark_with_vector_additively(object, mark_vector, weight)
+    if not weight==1
+      mark_vector = QueryMarks.new.scale_mark_vector(mark_vector, weight)
+    end
+
+    mark_vector.each do |v|
+      mark_additively(object, v[0], v[1])
+    end
+
   end
 
 
