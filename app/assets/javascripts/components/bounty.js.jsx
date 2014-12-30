@@ -174,170 +174,200 @@ module.exports = React.createClass({
     return <div className="gray">No description yet</div>;
   },
 
+  toggleLiked: function(e) {
+    var $likeData = document.querySelector('.like-data'),
+        $likeList = document.querySelector('.like-list');
+
+    e.preventDefault();
+    $likeData.classList.toggle('_open');
+    $likeData.classList.toggle('_mb0_5');
+
+    if ($likeList.classList.contains('_open') === true) {
+      $likeList.classList.toggle('_open');
+      $likeList.classList.toggle('_mb1_5');
+      $likeList.classList.toggle('_mtn0_25');
+    };
+  },
+  toggleLikeList: function(e) {
+    var $likeList = document.querySelector('.like-list');
+
+    e.preventDefault();
+    $likeList.classList.toggle('_open');
+    $likeList.classList.toggle('_mb1_5');
+    $likeList.classList.toggle('_mtn0_25');
+  },
+
   renderDiscussion: function() {
     var item = this.props.item;
     var bounty = this.state.bounty;
 
-
     {{/*
+      --- Handoff - Styles for Page Comments
+      --- Component CSS: app/assets/stylesheets/components/comments.scss
+      --- OOCSS: app/assets/stylesheets/asmcss/_nocss.scss
 
-      Handoff - New comment styles
-      Component CSS: app/assets/stylesheets/components/comments.scss
-      OOCSS: app/assets/stylesheets/asmcss/_nocss.scss
+      --- Check @whale's latest style guide & card unification comps for additional insight
 
-      *for ease of transition, I created :classLabels where useful below. These are not being used for styling.
+      --- Comments are used below to help identify sections. Delete whatever isn't useful.
+      --- Any questions? Ping Dustin.
 
-      Check whales latest styleguide & card unigication comps for additional insight
-
-      Any questions? Ping Dustin!
-
-      */}}
+      JS functions (convert):
+        toggleLiked
+        toggleLikeList
+    */}}
 
     if (item) {
       return (
         <div className="discussion _p0" id="discussion-view-el" key={'discussion-' + bounty.id}>
-          <div className="comments _ml3 _mr0_25 _pt3 _border-left0_5 border-gray-6 _mq-600_ml4 _mq-600_mr2">
-            <div className="_mx2">  
-              <div className="_mb1_75 _clearfix">
-                <div className="_float-left _mln3">
-                  <div className="_float-left _mt0_25 _img-circle _w1_5 _ht1_5 bg-white _border0_25 border-gray-6"></div> 
-                  <div className="_ml3 _h6 _strong">
-                    <span className="_mr0_5 gray-3">
-                      <Icon icon="comment" />
-                    </span>
-                    24 comments
-                  </div>
+          {{/* comments - header */}}
+          <div className="comments-header _ml3 _mr0_25 _pt3 _border-left0_3 border-gray-6 _mq-600_ml4 _mq-600_mr2">
+            <div className="_mx2 _clearfix">
+              {{/* comments header group */}}
+              <div className="_pos-relative _float-left">
+                <div style={{/* bullet */}} className="_pos-absolute _pos-t0 _pos-ln3 _w1_5 _ht1_5 _mt0_25 _ml0_1 _img-circle bg-white _border0_25 border-gray-6"></div>
+                <div style={{/* comment count */}} className="_h6 _strong">
+                  <span className="_mr0_5 gray-3">
+                    <Icon icon="comment" />
+                  </span>
+                  24 comments
                 </div>
-                <ul className="comments-filter _list-reset _list-inline _list-ml1_25 _text-align-right _h6 fw-500 _mq-600_float-right">
-                  <li style={{marginLeft:'0'}}>
-                    <a className="active" href="#">Oldest</a>
-                  </li>
-                  <li>
-                    <a href="#">Newest</a>
-                  </li>
-                  <li className="_mrn1 _mq-600_mr0">
-                    <a className="_none _mq-600_inline-block" href="#">Liked</a>
-                  </li>
-                  <li className="_mrn1 _mq-600_mr0">
-                    <a className="_none _mq-600_inline-block" href="#">Work Submitted</a>
-                  </li>
-                </ul>
               </div>
-              <div className="comment">
-                <div className="comment-header">
-                  <div className="comment-header-top _hover-toggle _clearfix">
-
-                    <div className="_table _table-fixed w100p">
-                      <div className="_table-cell _valign-top">
-                        <div className="_mln3_5 _clearfix">
-                          <div className="bullet _float-left _w2_5 _ht2_5 _mtn0_25 _img-circle bg-black"></div>
-                          <div className="_ml3_5">
-                            <a href="#" className="_username _inline-block _mr0_5 _h6 _strong black"> 
-                              dustintheweb
-                            </a>
-                            <div className="_inline-block _mb0_25 _h6 gray-2">
-                              <div className="likes _inline-block _mr0_75">
-                                <div className="_heart-count _inline-block _mr0_75">
-                                  <span className="_mr0_25 red">                                
-                                    <Icon icon="heart" />
-                                  </span>
-                                  <div className="_heart-count _inline-block gray-2 _pr0_75 _border-right1px border-gray-4">2</div>
-                                </div>
-                                <a className="gray-2 _pr0_75 _border-right1px border-gray-4" href="#">Like</a>
-                              </div>
-                              <div className="_reply _inline-block">
-                                <a className="gray-2" href="#">Reply</a>
-                              </div>
-                            </div>
+              {{/* comments filter */}}
+              <ul className="comments-filter _list-reset _list-inline _list-ml1_25 _text-align-right _h6 fw-500 _mq-600_float-right">
+                <li style={{marginLeft:'0'}}>
+                  <a className="active" href="#">Oldest</a>
+                </li>
+                <li>
+                  <a href="#">Newest</a>
+                </li>
+                <li className="_mrn1 _mq-600_mr0">
+                  <a className="_none _mq-600_inline-block" href="#">Liked</a>
+                </li>
+                <li className="_mrn1 _mq-600_mr0">
+                  <a className="_none _mq-600_inline-block" href="#">Work Submitted</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {{/* comments - main */}}
+          <div className="_ml3 _mr0_25 _pt3 _border-left0_3 border-gray-6 _mq-600_ml4 _mq-600_mr2">
+            <div className="_mx2">
+              {{/* post */}}
+              <div className="_hover-toggle">
+                {{/* post header */}}
+                <div className="_mb0_5">
+                  {{/* post header top */}}
+                  <div className="_table _table-fixed w100p _mb0_25">
+                    <div className="_pos-relative _table-cell _valign-top">
+                      <img className="_pos-absolute _pos-t0 _pos-ln3_5 _w2_5 _ht2_5 _mtn0_25 _ml0_1 _img-circle bg-black" src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=60" />
+                      <a href="#" className="_username _inline-block _mr0_5 _h6 _strong black">
+                        dustintheweb
+                      </a>
+                      <div className="_inline-block _mb0_25 _h6 gray-2">
+                        <div className="likes _inline-block _mr0_75">
+                          <div style={{/* heart counter */}} className="_inline-block _mr0_75">
+                            <span className="_mr0_25 red">
+                              <Icon icon="heart" />
+                            </span>
+                            <div style={{/* heart count */}} className="_inline-block gray-2 _pr0_75 _border-right1px border-gray-4">2</div>
                           </div>
+                          <a className="_pr0_75 _border-right1px border-gray-4" onClick={this.toggleLiked} href="#">Like</a>
+                        </div>
+                        <div className="_reply _inline-block">
+                          <a href="#">Reply</a>
                         </div>
                       </div>
-                      <div className="_none _h6 _valign-top _w15 _text-align-right _mq-768_table-cell">
-                        <a href="#" className="_timestamp _none gray-2 _hover-toggle-item-block">
-                          2 hours ago
-                        </a>
+                    </div>
+                    <div style={{/* timestamp */}} className="_none _h6 _valign-top _w15 _text-align-right _mq-768_table-cell">
+                      <div className="_timestamp _none gray-2 _hover-toggle-item-block">
+                        2 hours ago
                       </div>
                     </div>
-                  </div> 
-                    
-                  <div className="_comment-header-core _mb1_25">
-                    <div className="_like-data _h6 gray-1">
-                      <a className="_inline-block _strong black" href="#">
-                        <img className="_inline-block _img-circle _w1_5 _mr0_75" src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
-                        <span className="_inline-block _valign-middle">You</span>
-                      </a>
-                      <a className="_inline-block _valign-middle _strong black" href="#">, Whale</a>
-                      <div className="_inline-block _valign-middle">&nbsp;and <a href="#">16 others</a> like this.</div>
+                  </div>
+                  {{/* post header main */}}
+                  <div style={{/* liked details */}} className="like-data _h6 gray-1 _mh0 _overflow-hidden">
+                    <a className="_inline-block _strong black" href="#">
+                      <img className="_inline-block _img-circle _w1_5 _mr0_75 bg-black" src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
+                      <span className="_inline-block _valign-middle">You</span>
+                    </a>
+                    <a className="_inline-block _valign-middle _strong black" href="#">, Whale</a>
+                    <div className="_inline-block _valign-middle">&nbsp;and&nbsp;
+                      <a onClick={this.toggleLikeList} href="#">16 others</a> like this.
                     </div>
-                    <div className="_like-avatars _mt0_25">
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#808fb2'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#b87c7a'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#ea8247'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#89b87a'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#7f704d'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#478385'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#157db8'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#764785'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#808fb2'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#b87c7a'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#ea8247'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#89b87a'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#7f704d'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#478385'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#157db8'}}></div>
-                      </a>
-                      <a className="_inline-block _mr0_5" href="#">
-                        <div className="_bullet _inline-block _valign-middle _w1_5 _ht1_5 _img-circle" style={{backgroundColor:'#764785'}}></div>
-                      </a>
-                    </div>
+                  </div>
+                  <div style={{/* liked avatars */}} className="like-list _mh0 _overflow-hidden">
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-lavender" src="https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-rose" src="https://s3.amazonaws.com/uifaces/faces/twitter/csswizardry/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-orange" src="https://s3.amazonaws.com/uifaces/faces/twitter/mlane/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-green" src="https://s3.amazonaws.com/uifaces/faces/twitter/whale/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-brown" src="https://s3.amazonaws.com/uifaces/faces/twitter/motherfuton/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-teal" src="https://s3.amazonaws.com/uifaces/faces/twitter/putorti/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-blue" src="https://s3.amazonaws.com/uifaces/faces/twitter/idiot/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-purple" src="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-lavender" src="https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-rose" src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-orange" src="https://s3.amazonaws.com/uifaces/faces/twitter/boheme/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-green" src="https://s3.amazonaws.com/uifaces/faces/twitter/chadengle/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-brown" src="https://s3.amazonaws.com/uifaces/faces/twitter/peterlandt/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-teal" src="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-blue" src="https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" />
+                    </a>
+                    <a className="_inline-block _mr0_5" href="#">
+                      <img className="_inline-block _valign-middle _w1_5 _ht1_5 _img-circle bg-accent-purple" src="https://s3.amazonaws.com/uifaces/faces/twitter/sindresorhus/128.jpg" />
+                    </a>
                   </div>
                 </div>
-                <div className="_comment-core _mb2_5">
-                  <p className="_mb2 _text-2">  
+                {{/* post main */}}
+                <div className="_mb2_5">
+                  <p className="_mb2 _text-2">
                     <a href="#">@mdeiters</a> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do <strong>eiusmod tempor incididunt</strong> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </p>
-                  <div className="_quote _mb2 _mln5 _text-2 _italic gray-1 _clearfix">
-                    <div className="_quote-bullet _float-left">
-                      <img className="_mr1 _w1_5" src="/assets/icon-comment-quote.png" />
+                  {{/* quote */}}
+                  <div className="_mb2 _mln4_5 _text-2 _italic gray-1 _clearfix">
+                    <div style={{/* bullet */}} className="_float-left">
+                      <img className="_none _mr1 _mt0_25 _w1_25 _valign-top _mq-768_inline-block " src="/assets/icon-comment-quote.png" />
                     </div>
-                    <div className="_ml2_5 _pl2 _border-left0_5" style={{borderColor:'#53cbdd'}}>
-                      Here’s a quote about something from before that you should feel really special about, don’t you think?
+                    <div className="_mln0_05">
+                      <div className="_ml2_25 _pl2 _pb0_25 _border-left0_3 border-aqua">
+                        Here’s a quote about something from before that you should feel really special about, don’t you think?
+                      </div>
                     </div>
                   </div>
-                  <div className="_image-upload _clearfix _mb2">
+                  {{/* img upload */}}
+                  <div className="_clearfix _mb2">
                     <a href="#">
                       <img src="http://placehold.it/1000x800/c2c7d0/8B909A&text=image upload" />
                     </a>
-                    <div className="_image-data _mt0_25">
+                    <div style={{/* img data */}}  className="_mt0_25">
                       <a className="_float-left _h6" href="#">
                         <span className="_caps">jpg</span> - 124kb
                       </a>
@@ -347,25 +377,28 @@ module.exports = React.createClass({
                   <p className="_mb2 _text-2">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do cc / <a href="#">@whale</a> & <a href="#">@chrislloyd</a>
                   </p>
-                  <div className="_comment-data _mln3 _h6 _clearfix">
-                    <div className="_bullet _float-left _mt0_25 _img-circle _w1_5 _ht1_5 bg-white _border0_25 border-gray-6"></div>
-                    <div className="_example-1 none _ml3 gray-2">                      
+                  <div style={{/* comment data */}} className="_pos-relative _h6 _clearfix">
+                    <div style={{/* bullet */}} className="_pos-absolute _pos-t0 _pos-ln3 _w1_5 _ht1_5 _mt0_25 _ml0_1 _img-circle bg-white _border0_25 border-gray-6"></div>
+                    <div className="_example-1 none gray-2">
                       About 14 hours ago - viewed by <a href="#">23 people</a>
                     </div>
-                    <div className="_example-2 _ml3 gray-2">
+                    <div className="_example-2 gray-2">
                       <a className="_strong black" href="#">mdeiters</a> mentioned this in task <strong>Improve contributor onboarding</strong> <a href="#">#918</a>
                     </div>
                   </div>
                 </div>
-                <hr className="my0 _mrn2_25 _mln5_5 border-gray-5 _mq-600_mrn4 _mq-600_mln6_5"/> 
+                <hr className="my0 _mrn2_25 _mln5_5 border-gray-5 _mq-600_mrn4 _mq-600_mln6_5"/>
               </div>
+            {{/* end post */}}
             </div>
           </div>
-          <div className="comment-footer _pos-relative _ml3 _mr0_25 _py3 _border-left0_5 border-gray-6 _mq-600_ml4 _mq-600_mr2">
-            <div className="_mx2 _clearfix"> 
-              <div className="_comment-footer-core _pos-relative _mb1">
-                <div className="bullet _pos-absolute _pos-t0 _pos-ln3_5 _w2_5 _ht2_5 _img-circle bg-black"></div>         
-                <textarea type="text" placeholder="Leave Your Comments" className="_overflow-hidden _ht14_5 _w100p _px1_5 _pt1 _pb0 _break-word _resize-none _text-2 gray-2 bg-gray-6 _border-none _border-rad0_5"></textarea>                    
+          {{/* comments - footer */}}
+          <div className="comments-footer _pos-relative _ml3 _mr0_25 _py3 _border-left0_3 border-gray-6 _mq-600_ml4 _mq-600_mr2">
+            <div className="_mx2 _clearfix">
+              {{/* comments footer main */}}
+              <div className="_pos-relative _mb1">
+                <img className="_pos-absolute _pos-t0 _pos-ln3_5 _w2_5 _ht2_5 _ml0_1 _img-circle bg-black" src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=60" />
+                <textarea type="text" placeholder="Leave Your Comments" className="_overflow-hidden _ht14_5 _w100p _px1_5 _pt1 _pb0 _break-word _resize-none _text-2 gray-2 bg-gray-6 _border-none _border-rad0_5"></textarea>
               </div>
               <button type="button" className="pill-button pill-button-theme-white pill-button-border pill-button-shadow _float-right">
                 <span className="title _fs1_1 _lh2">Leave a comment</span>

@@ -18,10 +18,22 @@ $gray-green:   #678b92;
 
 $green:        #33D6A6;
 $green-dark:   #2ec095;
+$aqua:		   #53cbdd;
 $blue:         #338EDA;
 $red:          #EC3750;
 $yellow:       #F2D930;
 $coin-yellow:  #ecbd00;
+
+// accent-colors
+$accent-brown: #7f704d;
+$accent-green: #89b87a;
+$accent-teal: #478385;
+$accent-blue: #157db8;
+$accent-purple: #764785;
+$accent-lavender: #808fb2;
+$accent-rose: #b87c7a;
+$accent-orange: #ea8247;
+
 
 // TODO: Replace with loop once sass-rails is fixed
 .white        { color: $white }
@@ -182,7 +194,6 @@ $coin-yellow:  #ecbd00;
 
 .green        { color: $green }
 .bg-green     { background-color: $green }
-.green-dark     { background-color: $green-dark }
 .border-green { border-color: $green }
 .fill-green   { fill: $green }
 .stroke-green { stroke: $green }
@@ -192,6 +203,30 @@ $coin-yellow:  #ecbd00;
 .border-green-hover:hover { border-color: $green }
 .fill-green-hover:hover   { fill: $green }
 .stroke-green-hover:hover { stroke: $green }
+
+.green-dark        { color: $green-dark }
+.bg-green-dark     { background-color: $green-dark }
+.border-green-dark { border-color: $green-dark }
+.fill-green-dark   { fill: $green-dark }
+.stroke-green-dark { stroke: $green-dark }
+
+.green-dark-hover:hover        { color: $green-dark }
+.bg-green-dark-hover:hover     { background-color: $green-dark }
+.border-green-dark-hover:hover { border-color: $green-dark }
+.fill-green-dark-hover:hover   { fill: $green-dark }
+.stroke-green-dark-hover:hover { stroke: $green-dark }
+
+.aqua        { color: $aqua }
+.bg-aqua     { background-color: $aqua }
+.border-aqua { border-color: $aqua }
+.fill-aqua   { fill: $aqua }
+.stroke-aqua { stroke: $aqua }
+
+.aqua-hover:hover        { color: $aqua }
+.bg-aqua-hover:hover     { background-color: $aqua }
+.border-aqua-hover:hover { border-color: $aqua }
+.fill-aqua-hover:hover   { fill: $aqua }
+.stroke-aqua-hover:hover { stroke: $aqua }
 
 .blue        { color:  $blue }
 .bg-blue     { background-color:  $blue }
@@ -228,3 +263,101 @@ $coin-yellow:  #ecbd00;
 .border-yellow-hover:hover { border-color: $yellow }
 .fill-yellow-hover:hover   { fill: $yellow }
 .stroke-yellow-hover:hover { stroke: $yellow }
+
+//
+
+.accent-brown        { color: $accent-brown }
+.bg-accent-brown     { background-color: $accent-brown }
+.border-accent-brown { border-color: $accent-brown }
+.fill-accent-brown   { fill: $accent-brown }
+.stroke-accent-brown { stroke: $accent-brown }
+
+.accent-brown-hover:hover        { color: $accent-brown }
+.bg-accent-brown-hover:hover     { background-color: $accent-brown }
+.border-accent-brown-hover:hover { border-color: $accent-brown }
+.fill-accent-brown-hover:hover   { fill: $accent-brown }
+.stroke-accent-brown-hover:hover { stroke: $accent-brown }
+
+.accent-green        { color: $accent-green }
+.bg-accent-green     { background-color: $accent-green }
+.border-accent-green { border-color: $accent-green }
+.fill-accent-green   { fill: $accent-green }
+.stroke-accent-green { stroke: $accent-green }
+
+.accent-green-hover:hover        { color: $accent-green }
+.bg-accent-green-hover:hover     { background-color: $accent-green }
+.border-accent-green-hover:hover { border-color: $accent-green }
+.fill-accent-green-hover:hover   { fill: $accent-green }
+.stroke-accent-green-hover:hover { stroke: $accent-green }
+
+.accent-teal        { color: $accent-teal }
+.bg-accent-teal     { background-color: $accent-teal }
+.border-accent-teal { border-color: $accent-teal }
+.fill-accent-teal   { fill: $accent-teal }
+.stroke-accent-teal { stroke: $accent-teal }
+
+.accent-teal-hover:hover        { color: $accent-teal }
+.bg-accent-teal-hover:hover     { background-color: $accent-teal }
+.border-accent-teal-hover:hover { border-color: $accent-teal }
+.fill-accent-teal-hover:hover   { fill: $accent-teal }
+.stroke-accent-teal-hover:hover { stroke: $accent-teal }
+
+.accent-blue        { color: $accent-blue }
+.bg-accent-blue     { background-color: $accent-blue }
+.border-accent-blue { border-color: $accent-blue }
+.fill-accent-blue   { fill: $accent-blue }
+.stroke-accent-blue { stroke: $accent-blue }
+
+.accent-blue-hover:hover        { color: $accent-blue }
+.bg-accent-blue-hover:hover     { background-color: $accent-blue }
+.border-accent-blue-hover:hover { border-color: $accent-blue }
+.fill-accent-blue-hover:hover   { fill: $accent-blue }
+.stroke-accent-blue-hover:hover { stroke: $accent-blue }
+
+.accent-purple        { color: $accent-purple }
+.bg-accent-purple     { background-color: $accent-purple }
+.border-accent-purple { border-color: $accent-purple }
+.fill-accent-purple   { fill: $accent-purple }
+.stroke-accent-purple { stroke: $accent-purple }
+
+.accent-purple-hover:hover        { color: $accent-purple }
+.bg-accent-purple-hover:hover     { background-color: $accent-purple }
+.border-accent-purple-hover:hover { border-color: $accent-purple }
+.fill-accent-purple-hover:hover   { fill: $accent-purple }
+.stroke-accent-purple-hover:hover { stroke: $accent-purple }
+
+.accent-lavender        { color: $accent-lavender }
+.bg-accent-lavender     { background-color: $accent-lavender }
+.border-accent-lavender { border-color: $accent-lavender }
+.fill-accent-lavender   { fill: $accent-lavender }
+.stroke-accent-lavender { stroke: $accent-lavender }
+
+.accent-lavender-hover:hover        { color: $accent-lavender }
+.bg-accent-lavender-hover:hover     { background-color: $accent-lavender }
+.border-accent-lavender-hover:hover { border-color: $accent-lavender }
+.fill-accent-lavender-hover:hover   { fill: $accent-lavender }
+.stroke-accent-lavender-hover:hover { stroke: $accent-lavender }
+
+.accent-rose        { color: $accent-rose }
+.bg-accent-rose     { background-color: $accent-rose }
+.border-accent-rose { border-color: $accent-rose }
+.fill-accent-rose   { fill: $accent-rose }
+.stroke-accent-rose { stroke: $accent-rose }
+
+.accent-rose-hover:hover        { color: $accent-rose }
+.bg-accent-rose-hover:hover     { background-color: $accent-rose }
+.border-accent-rose-hover:hover { border-color: $accent-rose }
+.fill-accent-rose-hover:hover   { fill: $accent-rose }
+.stroke-accent-rose-hover:hover { stroke: $accent-rose }
+
+.accent-orange        { color: $accent-orange }
+.bg-accent-orange     { background-color: $accent-orange }
+.border-accent-orange { border-color: $accent-orange }
+.fill-accent-orange   { fill: $accent-orange }
+.stroke-accent-orange { stroke: $accent-orange }
+
+.accent-orange-hover:hover        { color: $accent-orange }
+.bg-accent-orange-hover:hover     { background-color: $accent-orange }
+.border-accent-orange-hover:hover { border-color: $accent-orange }
+.fill-accent-orange-hover:hover   { fill: $accent-orange }
+.stroke-accent-orange-hover:hover { stroke: $accent-orange }
