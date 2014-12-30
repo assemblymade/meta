@@ -102,9 +102,17 @@ module.exports = React.createClass({
     var bounty = this.bounty();
 
     return (
+      test
+    );
+  },
+
+  depricatedRender: function() {
+    var bounty = this.bounty();
+
+    return (
       <div>
         <div className="p3 border-bottom">
-          <ul className="list-inline mb2" style={{ marginBottom: '6px' }}>
+          <ul className="list-inline mb2" style={{ marginBottom: '6px' }}> 
             {this.renderBountyValuation()}
             <li>
               {this.renderTagList()}
@@ -130,9 +138,11 @@ module.exports = React.createClass({
         <div className="p3">
           {this.renderDescription()}
         </div>
+
         {this.renderLove()}
         {this.renderFooter()}
         {this.renderDiscussion()}
+
       </div>
     );
   },
@@ -364,11 +374,11 @@ module.exports = React.createClass({
                   </div>
                   {{/* img upload */}}
                   <div className="_clearfix _mb2">
-                    <a href="#">
+                    <a href="http://placehold.it/1000x800/c2c7d0/8B909A&text=image upload" target="_blank">
                       <img src="http://placehold.it/1000x800/c2c7d0/8B909A&text=image upload" />
                     </a>
                     <div style={{/* img data */}}  className="_mt0_25">
-                      <a className="_float-left _h6" href="#">
+                      <a className="_float-left _h6" href="http://placehold.it/1000x800/c2c7d0/8B909A&text=image upload" target="_blank">
                         <span className="_caps">jpg</span> - 124kb
                       </a>
                       <a className="_float-right _h6 gray-2" href="#">Add File to Assets</a>
