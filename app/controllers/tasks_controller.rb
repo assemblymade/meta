@@ -98,6 +98,10 @@ class TasksController < WipsController
       @user_subscriptions = [@bounty.news_feed_item.id]
     end
 
+    if current_user && @wip
+      ViewWorker.perform_async(current_user.id, @wip.id, "Wip")
+    end
+
     respond_to do |format|
       format.html { render 'bounties/show' }
       format.json { render json: {

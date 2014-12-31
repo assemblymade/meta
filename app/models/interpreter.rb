@@ -4,7 +4,14 @@ class Interpreter
     marks = Mark.all.map{|q| q.name}
     text = text.downcase.gsub(/[^A-Za-z0-9\s]/i, '')
     words = text.split(' ')
-    words.select{|a| marks.include?(a)}
+    mark_words = words.select{|a| marks.include?(a)}
+
+    prods = Product.all.select{|a| words.include?(a.name.downcase) }
+    marks_products = prods.map{|a| a.mark_vector.sort_by{|a| a[1]}.reverse.take(5)}.flatten(1).map{|a| a[0]}.map{|a| Mark.find(a).name}
+
+    mark_words = marks_products +mark_words
+    mark_words = mark_words.uniq
+    return mark_words
   end
 
   def mark_vector_from_text(text)
