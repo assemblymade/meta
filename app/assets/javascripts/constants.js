@@ -107,7 +107,7 @@
     // TODO: move constants into here. 1 Flat namespace will ensure constants don't collide
     ActionTypes: keyMirror({
       ARCHIVED_NEWS_FEED_ITEMS_RECEIVE: null,
-      
+
       ATTACHMENT_FAILED: null,
       ATTACHMENT_UPLOADED: null,
       ATTACHMENT_UPLOADING: null,
@@ -140,6 +140,7 @@
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,
       LOVE_RECEIVE_HEARTABLES: null,
+      LOVE_RECEIVE_ALL_HEARTS: null,
       LOVE_RECEIVE_RECENT_HEARTS: null,
       LOVE_RECEIVE_USER_HEARTS: null,
 

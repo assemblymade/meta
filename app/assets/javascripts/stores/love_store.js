@@ -36,6 +36,9 @@ class LoveStore extends Store {
           this.emitChange()
           break
 
+        case ActionTypes.LOVE_RECEIVE_ALL_HEARTS:
+          break
+
         case ActionTypes.LOVE_RECEIVE_USER_HEARTS:
           _userHearts = _.reduce(action.userHearts, function(memo, h){ memo[h.heartable_id] = h; return memo }, {})
           this.emitChange()

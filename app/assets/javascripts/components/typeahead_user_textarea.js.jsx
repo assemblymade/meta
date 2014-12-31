@@ -57,7 +57,10 @@ var TypeaheadUserTextArea = React.createClass({
         onUserSelected={this.handleUserSelected}
         searchPosition="bottom"
         coords={this.state.searchPosition}>
-      <textarea {...this.props} onChange={this.handleChange} value={this.state.text} ref="textarea" />
+      <textarea {...this.props}
+          onChange={this.handleChange}
+          value={this.state.text}
+          ref="textarea" />
     </InPlaceUserSearch>
   },
 
