@@ -17,7 +17,7 @@ Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(
     app,
     js_errors: true,
-    timeout: 60,
+    timeout: 120,
     phantomjs_options: ['--load-images=no'],
     phantomjs_logger: Logger.new('/dev/null') # STDOUT
   )
