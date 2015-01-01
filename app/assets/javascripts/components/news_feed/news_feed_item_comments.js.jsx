@@ -161,7 +161,7 @@ var NewsFeedItemComments = React.createClass({
 
   render: function() {
     return (
-      <div className="px3">
+      <div className="_mq-600_px3 px2">
         {this.renderComments()}
         {this.renderNewCommentForm()}
       </div>
@@ -191,6 +191,7 @@ var NewsFeedItemComments = React.createClass({
         <div className={classes}>
           {confirmedComments}
           {optimisticComments}
+          <hr className="my0 mt3 border-gray-5 _mrn3 _mln3" />
         </div>
       </div>
     );
@@ -200,7 +201,10 @@ var NewsFeedItemComments = React.createClass({
     var renderIfAfter = this.state.showCommentsAfter;
     var comments = this.state.comments.concat(this.state.events).sort(_sort);
     var awardUrl;
-    if (_reach(this.props, 'item.target.type') === 'task') {
+
+    // Sometimes a type of 'task_decorator' is found; the indexOf() check
+    // accounts for that case as well as just plain 'task'.
+    if ((_reach(this.props, 'item.target.type') || '').indexOf('task') > -1) {
       awardUrl = _reach(this.props, 'item.target.url') + '/award';
     }
 
@@ -226,23 +230,7 @@ var NewsFeedItemComments = React.createClass({
           id: comment.id
         });
 
-        var renderedEvent = parseEvent(comment, awardUrl, editUrl);
-
-        if (i + 1 === comments.length) {
-          var timestamp = (
-            <div className="timeline-insert js-timestamp clearfix" key={'timestamp-' + comment.id}>
-              <time className="timestamp left" dateTime={comment.timestamp}>{moment(comment.created_at).fromNow()}</time>
-              <ReadReceipts url={'/_rr/articles/' + comment.id} track_url={comment.readraptor_track_id} />
-            </div>
-          );
-
-          return [
-            timestamp,
-            renderedEvent
-          ];
-        }
-
-        return renderedEvent;
+        return parseEvent(comment, awardUrl, editUrl);
       }
     });
   },
@@ -276,26 +264,26 @@ var NewsFeedItemComments = React.createClass({
       if (UserStore.getUser()) {
         return <NewComment
             {...this.props}
-            canContainWork={item.target && item.target.type === 'task'}
+            canContainWork={item.target && item.target.type.indexOf('task') > -1}
             url={url}
             thread={item.id}
             user={window.app.currentUser()} />
-      } else {
-        return (
-          <div className="well centered text-center">
-            I'm afraid I can't let you comment. You'll have to
-            {' '}<a href="/signup">sign up</a>{' '}
-            to do that.
-          </div>
-        );
       }
+
+      return (
+        <div className="well centered text-center">
+          I'm afraid I can't let you comment. You'll have to
+          {' '}<a href="/signup">sign up</a>{' '}
+          to do that.
+        </div>
+      );
     }
   },
 
   renderOptimisticComments: function() {
     return this.state.optimisticComments.map(function(comment) {
       return (
-        <div className="py2" key={comment.id}>
+        <div className="_py1_25" key={comment.id}>
           <Comment author={comment.user} body={marked(comment.body)} optimistic={true} key={comment.id} />
         </div>
       )
@@ -406,7 +394,7 @@ function parseEvent(event, awardUrl, editUrl) {
 
   if (renderedEvent) {
     return (
-      <div className="py2" key={event.id}>
+      <div className="_py1_25" key={event.id}>
         {renderedEvent}
       </div>
     );

@@ -1,6 +1,6 @@
 .timeline {
   position: relative;
-  padding-top: 3rem;
+  padding-top: 1.5rem;
   padding-bottom: 3rem;
 
   &:before {
@@ -9,7 +9,7 @@
     top: 0;
     bottom: 0;
     left: (30px - 2px) / 2;
-    width: 2px;
+    width: 4px;
     background-color: $brand-divider;
     z-index: 0;
   }

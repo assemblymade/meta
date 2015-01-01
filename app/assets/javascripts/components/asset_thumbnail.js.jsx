@@ -72,10 +72,10 @@ var AssetThumbnail = React.createClass({
     }
 
     return <div className="clickable">
-      <img src={this.props.preview} alt={this.props.name} className="img-rounded" onClick={this.handleClick} />
+      <img src={this.props.preview} alt={this.props.name} onClick={this.handleClick} />
       <div>
         <a onClick={this.handleClick} href={this.props.url} target="_blank" className="text-small">
-          {this.props.name} <span className="glyphicon glyphicon-new-window text-muted" />
+          {this.props.name}
         </a>
         {this.renderUploadButton()}
       </div>
@@ -97,9 +97,11 @@ var AssetThumbnail = React.createClass({
     }
 
     var classes = React.addons.classSet({
-      bold: true,
+      'gray-2': true,
       small: true,
+      mt0: true,
       ml2: true,
+      right: true,
       'text-success': this.state.uploaded,
       'text-danger': this.state.error
     });
@@ -118,7 +120,7 @@ var AssetThumbnail = React.createClass({
 
     return (
       <a className={classes} href="javascript:void(0);" alt="Upload as asset" onClick={this.handleUpload}>
-        Save to product assets
+        Add file to assets
       </a>
     );
   }

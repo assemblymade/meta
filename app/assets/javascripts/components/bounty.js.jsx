@@ -130,6 +130,7 @@ module.exports = React.createClass({
         <div className="p3">
           {this.renderDescription()}
         </div>
+
         {this.renderLove()}
         {this.renderFooter()}
         {this.renderDiscussion()}
@@ -180,7 +181,7 @@ module.exports = React.createClass({
 
     if (item) {
       return (
-        <div className="discussion" id="discussion-view-el" key={'discussion-' + bounty.id}>
+        <div className="discussion _p0" id="discussion-view-el" key={'discussion-' + bounty.id}>
           <NewsFeedItemComments commentable={true} item={item} showAllComments={true} />
         </div>
       );
@@ -357,14 +358,14 @@ module.exports = React.createClass({
     if (worker.id === currentUser.id) {
       return (
         <div className="clearfix">
-          <a className="btn btn-default left mr2"
-              style={{ color: '#5CB85C !important', border: '1px solid #d3d3d3' }}
-              type="button"
+          <button className="inline-block left mr2 pill-button pill-button-theme-white pill-button-border pill-button-shadow"
+              href="javascript:void(0);"
+              style={{ color: '#5cb85c !important' }}
               data-scroll="true"
               data-target="#event_comment_body">
             <span className="icon icon-document icon-left"></span>
-            Submit work for review
-          </a>
+            <span className="title _fs1_1 _lh2">Submit work</span>
+          </button>
           <div className="left h6 mt0 mb0 gray-darker">
             <Icon icon="lock" />
             {' '}

@@ -94,6 +94,7 @@ class TasksController < WipsController
     end
 
     @product_assets = @bounty.product.assets
+
     if Watching.watched?(current_user, @bounty.news_feed_item)
       @user_subscriptions = [@bounty.news_feed_item.id]
     end

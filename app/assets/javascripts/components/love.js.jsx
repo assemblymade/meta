@@ -20,20 +20,25 @@ var Love = React.createClass({
     return (
       <div className="clearfix">
         {this.renderHeart()}
-        <Lovers heartable_id={this.props.heartable_id} hearts_count={heartsCount} />
       </div>
     );
   },
 
   renderHeart: function() {
-    var style = { }
-    if (this.state.user_heart) {
-      style['color'] = 'rgba(236,55,79,1)'
-    }
+    var heartsCount = this.state.hearts_count || 0;
+    var classes = React.addons.classSet({
+      fa: true,
+      'fa-heart': true,
+      gray: !this.state.user_heart,
+      'inline-block': true,
+      _mr0_25: true,
+      red: this.state.user_heart
+    });
 
     return (
-      <a className="inline-block valign-mid mr1 fs6 gray no-focus" href="javascript:;" onClick={this.handleClick}>
-          <div className="fa fa-heart inline-block gray" style={style}></div>
+      <a className="inline-block valign-top mr1 fs6 gray no-focus" href="javascript:void(0);" onClick={this.handleClick}>
+        <div className={classes}></div>
+        {heartsCount}
       </a>
     );
   },

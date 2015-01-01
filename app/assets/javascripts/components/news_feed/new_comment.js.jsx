@@ -34,12 +34,13 @@ var NewsFeedItemNewComment = React.createClass({
 
   buttonClasses: function(btnClass) {
     var classes = {
-      btn: true,
       disabled: this.state.text.length < 2,
+      'pill-button': true,
+      'pill-button-theme-white': true,
+      'pill-button-border': true,
+      'pill-button-shadow': true,
       right: true
     };
-
-    classes[btnClass] = true;
 
     return React.addons.classSet(classes);
   },
@@ -89,7 +90,7 @@ var NewsFeedItemNewComment = React.createClass({
 
   getDefaultProps: function() {
     return {
-      initialRows: 2,
+      initialRows: 3,
       user: UserStore.getUser()
     };
   },
@@ -165,19 +166,25 @@ var NewsFeedItemNewComment = React.createClass({
 
     var dropzoneClasses = React.addons.classSet({
       'dropzone': true,
-      'markdown-editor-control': this.state.rows > 1,
-      'ml1': true
+      'markdown-editor-control': this.state.rows > 1
     });
 
     var textareaClasses = React.addons.classSet({
-      'form-control': true,
-      'bg-gray-lighter': this.state.dragging
+      'bg-gray-4': this.state.dragging,
+      'bg-gray-6': !this.state.dragging,
+      '_ht14_5': true,
+      '_w100p': true,
+      '_px1_5': true,
+      '_pt1': true,
+      '_pb3': true,
+      '_border-none': true,
+      '_border-rad0_5': true
     });
 
     return (
-      <div className="clearfix" style={{ paddingBottom: '2.5rem' }}>
+      <div className="clearfix comments-footer" style={{ paddingBottom: '2.5rem' }}>
         {this.renderAvatar()}
-        <div className={this.props.hideAvatar ? null : "px4"}>
+        <div className={this.props.hideAvatar ? null : "_px3_5"}>
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
               <TypeaheadUserTextArea
@@ -190,7 +197,8 @@ var NewsFeedItemNewComment = React.createClass({
                   onKeyDown={this.onKeyDown}
                   onKeyPress={this.onKeyPress}
                   rows={this.state.rows}
-                  defaultValue={this.state.text} />
+                  defaultValue={this.state.text}
+                  placeholder="Leave your comments" />
             </div>
             {this.renderDropzoneInner()}
           </div>
@@ -223,12 +231,11 @@ var NewsFeedItemNewComment = React.createClass({
 
     return (
       <div className="clearfix mt3 mr3 px3">
-        <a className={classes}
-            style={{ border: '1px solid #338eda' }}
+        <button className={classes}
             href="javascript:void(0);"
             onClick={this.submitComment}>
-          Comment
-        </a>
+          <span className="_fs1_1 _lh2">Leave a comment</span>
+        </button>
         {this.renderSubmitWorkButton()}
       </div>
     );
@@ -250,13 +257,13 @@ var NewsFeedItemNewComment = React.createClass({
       var classes = this.buttonClasses('btn-default');
 
       return (
-        <a className={classes + ' mr2'}
+        <button className={classes + ' mr2'}
             href="javascript:void(0);"
-            style={{ color: '#5cb85c !important', border: '1px solid #d3d3d3' }}
+            style={{ color: '#5cb85c !important' }}
             onClick={this.submitWork}>
           <span className="icon icon-document icon-left"></span>
-          Submit work for review
-        </a>
+          <span className="title _fs1_1 _lh2">Submit work</span>
+        </button>
       );
     }
   },
