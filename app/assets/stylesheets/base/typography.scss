@@ -68,10 +68,24 @@ a.text-coins:hover {
 }
 
 blockquote {
-  padding: 0 $grid-gutter-width;
-  margin: $line-height-computed 0;
-  margin-left: -3px;
-  border-width: 3px;
+  position: relative;
+  top: 0.8rem;
+  left: -2.8rem;
+  margin: 0;
+  border-left: 4px solid #53cbdd; // $aqua
+
+  &:before {
+    // content: url("icon-comment-quote.png");
+    position: relative;
+    top: 0px;
+    left: -60px;
+    height: 20px;
+  }
+
+  p {
+    position: relative;
+    left: 1.5rem;
+  }
 }
 
 .text-small-caps {

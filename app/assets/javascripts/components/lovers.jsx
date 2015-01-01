@@ -50,10 +50,14 @@ var Lovers = React.createClass({
       return null;
     }
 
+    if (!this.state.user_heart) {
+      return null;
+    }
+
     var lover = this.getFirstLover();
 
     return (
-      <div className="inline-block mb1">
+      <div className="inline-block _mb1_25">
         <div className="inline-block valign-mid">
           {this.renderAvatar(lover)}
         </div>

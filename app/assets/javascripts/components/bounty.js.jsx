@@ -102,7 +102,7 @@ module.exports = React.createClass({
     var bounty = this.bounty();
 
     return (
-      <div className="p2">
+      <div>
         <div className="p3 border-bottom">
           <ul className="list-inline mb2" style={{ marginBottom: '6px' }}>
             {this.renderBountyValuation()}
@@ -358,14 +358,14 @@ module.exports = React.createClass({
     if (worker.id === currentUser.id) {
       return (
         <div className="clearfix">
-          <a className="btn btn-default left mr2"
-              style={{ color: '#5CB85C !important', border: '1px solid #d3d3d3' }}
-              type="button"
+          <button className="inline-block left mr2 pill-button pill-button-theme-white pill-button-border pill-button-shadow"
+              href="javascript:void(0);"
+              style={{ color: '#5cb85c !important' }}
               data-scroll="true"
               data-target="#event_comment_body">
             <span className="icon icon-document icon-left"></span>
-            Submit work for review
-          </a>
+            <span className="title _fs1_1 _lh2">Submit work</span>
+          </button>
           <div className="left h6 mt0 mb0 gray-darker">
             <Icon icon="lock" />
             {' '}

@@ -1,3 +1,5 @@
+var NewsFeedItemEvent = require('./news_feed_item_event.js.jsx');
+
 module.exports = React.createClass({
   displayName: 'NewsFeedItemBountyReopen',
   propTypes: {
@@ -8,23 +10,11 @@ module.exports = React.createClass({
     var actor = this.props.actor;
 
     return (
-      <div className="timeline-item" id={this.props.id}>
-        <div className="media">
-          <div className="pull-left">
-            <div className="marker marker-green">
-              <span className="icon icon-disc"></span>
-            </div>
-          </div>
+      <NewsFeedItemEvent>
+        Reopened by
 
-          <div className="media-body">
-            <div className="media-heading omega">
-              Reopened by
-
-              {' '}<a href={actor.url}>{actor.username}</a>
-            </div>
-          </div>
-        </div>
-      </div>
+        {' '}<a href={actor.url} className="_strong black">{actor.username}</a>
+      </NewsFeedItemEvent>
     );
   }
 });

@@ -166,20 +166,25 @@ var NewsFeedItemNewComment = React.createClass({
 
     var dropzoneClasses = React.addons.classSet({
       'dropzone': true,
-      'markdown-editor-control': this.state.rows > 1,
-      'ml1': true
+      'markdown-editor-control': this.state.rows > 1
     });
 
     var textareaClasses = React.addons.classSet({
-      'form-control': true,
-      'bg-gray-lighter': this.state.dragging,
-      'bg-gray-6': !this.state.dragging
+      'bg-gray-4': this.state.dragging,
+      'bg-gray-6': !this.state.dragging,
+      '_ht14_5': true,
+      '_w100p': true,
+      '_px1_5': true,
+      '_pt1': true,
+      '_pb3': true,
+      '_border-none': true,
+      '_border-rad0_5': true
     });
 
     return (
-      <div className="clearfix" style={{ paddingBottom: '2.5rem' }}>
+      <div className="clearfix comments-footer" style={{ paddingBottom: '2.5rem' }}>
         {this.renderAvatar()}
-        <div className={this.props.hideAvatar ? null : "px4"}>
+        <div className={this.props.hideAvatar ? null : "_px3_5"}>
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
               <TypeaheadUserTextArea

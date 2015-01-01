@@ -82,14 +82,14 @@ module.exports = React.createClass({
       var awardUrl = this.props.awardUrl;
 
       return [
-        <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 h6"
+        <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 gray-2 _h6"
             href={awardUrl + '?event_id=' + id}
             key={'award-' + id}
             data-method="patch"
             data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
           Award
         </a>,
-        <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 h6"
+        <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 gray-2 _h6"
             href={awardUrl + '?event_id=' + id + '&close=true'}
             key={'award-and-close-' + id}
             data-method="patch"
@@ -115,19 +115,17 @@ module.exports = React.createClass({
     }
 
     var classes = React.addons.classSet({
-      'activity-content': true,
       'gray-dark': this.isOptimistic()
     });
 
     return (
-      <div className="overflow-hidden px2 _hover-toggle" style={{ top: -5, position: 'relative' }}>
-        <div className="inline-block gray-2">
+      <div className="px4 _hover-toggle" style={{ top: -5, position: 'relative' }}>
+        <div className="inline-block">
           <a className="inline-block bold h6 mt0 mb0 _mr0_5 black" href={author.url}>{author.username}</a>
           {this.renderLove()}
           {this.renderReply()}
           {this.renderEditOption()}
           {this.renderAwardOptions()}
-          {this.renderPermalink()}
           {this.renderTips()}
         </div>
 
@@ -162,7 +160,7 @@ module.exports = React.createClass({
 
     if (UserStore.getId() === this.props.author.id) {
       return (
-        <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 h6" href="javascript:void(0);" onClick={this.triggerEditMode}>
+        <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 gray-2 _h6" href="javascript:void(0);" onClick={this.triggerEditMode}>
           Edit
         </a>
       );
@@ -187,7 +185,7 @@ module.exports = React.createClass({
 
   renderPermalink: function() {
     return (
-      <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 h6" href={this.props.url} role="menuitem">
+      <a className="_ml0_75 _pl0_75 _pr0_75 _border-left1px border-gray-4 h6 gray-2" href={this.props.url} role="menuitem">
         <Icon icon="link" />
       </a>
     );
@@ -195,7 +193,7 @@ module.exports = React.createClass({
 
   renderReply: function() {
     return (
-      <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 h6"
+      <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 gray-2 _h6"
           href="javascript:void(0);"
           onClick={this.reply.bind(this, this.props.author)}>
         Reply
@@ -205,23 +203,25 @@ module.exports = React.createClass({
 
   renderTimestamp: function() {
     return (
-      <div className="h6 _w15 _text-align-right inline-block right">
-        <div className="_timestamp _none gray-2 _hover-toggle-item-block">
+      <div className="_h6 _text-align-right inline-block _clearfix right">
+        <div className="_none gray-2 _hover-toggle-item-block _pr0_75">
           {moment(this.props.timestamp).fromNow()}
+          {this.renderPermalink()}
         </div>
       </div>
     );
   },
 
   renderTips: function() {
+    // TipsUi is causing display issues :(
     return (
-      <div className="inline-block _pl0_75 _border-left1px border-gray-4 h6">
+      <span className="_pl0_75 _inline-block _ht1_5 _border-left1px border-gray-4 _h6">
         <TipsUi
             viaType="NewsFeedItemComment"
             viaId={this.props.id}
             recipient={this.props.author}
             tips={this.props.tips} />
-      </div>
+      </span>
     );
   },
 

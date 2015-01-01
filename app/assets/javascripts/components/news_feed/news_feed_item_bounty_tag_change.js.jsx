@@ -1,5 +1,6 @@
 var Avatar = require('../avatar.js.jsx');
 var Icon = require('../icon.js.jsx');
+var NewsFeedItemEvent = require('./news_feed_item_event.js.jsx');
 
 var NewsFeedBountyItemTagChange = React.createClass({
   displayName: 'NewsFeedBountyItemTagChange',
@@ -16,24 +17,12 @@ var NewsFeedBountyItemTagChange = React.createClass({
     // timestamp down below the last comment
 
     return (
-      <div className="timeline-item" id={this.props.id}>
-        <div className="media">
-          <div className="pull-left">
-            <div className="marker marker-gray">
-              <Icon icon="tags" />
-            </div>
-          </div>
-
-          <div className="media-body">
-            <div className="media-heading omega">
-              <a href={actor.url}>
-                <Avatar user={actor} style={{ display: 'inline-block' }} /> {actor.username}
-                {' '}<span style={{ fontWeight: 400 }}>changed the tags.</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <NewsFeedItemEvent>
+        <a href={actor.url}>
+          <Avatar user={actor} style={{ display: 'inline-block' }} /> {actor.username}
+          {' '}<span style={{ fontWeight: 400 }}>changed the tags.</span>
+        </a>
+      </NewsFeedItemEvent>
     );
   }
 });

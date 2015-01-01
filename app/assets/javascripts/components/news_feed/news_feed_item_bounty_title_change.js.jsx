@@ -1,4 +1,5 @@
 var Icon = require('../icon.js.jsx');
+var NewsFeedItemEvent = require('./news_feed_item_event.js.jsx');
 
 var NewsFeedItemBountyTitleChange = React.createClass({
   propTypes: {
@@ -10,22 +11,10 @@ var NewsFeedItemBountyTitleChange = React.createClass({
     var actor = this.props.actor;
 
     return (
-      <div className="timeline-item" id={this.props.id}>
-        <div className="media">
-          <div className="pull-left">
-            <div className="marker marker-yellow">
-              <Icon icon="pencil" />
-            </div>
-          </div>
-
-          <div className="media-body">
-            <div className="media-heading omega">
-              <a href={actor.url}>{actor.username}</a>
-              {' '} renamed this from {this.props.old_title}
-            </div>
-          </div>
-        </div>
-      </div>
+      <NewsFeedItemEvent>
+        <a href={actor.url}>{actor.username}</a>
+        {' '} renamed this from {this.props.old_title}
+      </NewsFeedItemEvent>
     );
   }
 });
