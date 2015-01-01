@@ -121,7 +121,7 @@ module.exports = React.createClass({
     return (
       <div className="px4 _hover-toggle" style={{ top: -5, position: 'relative' }}>
         <div className="inline-block">
-          <a className="inline-block bold h6 mt0 mb0 _mr0_5 black" href={author.url}>{author.username}</a>
+          <a className="inline-block bold h6 mt0 mb0 _mr0_5 black" href={author.url}>{this.renderCoreTeamIcon()} {author.username}</a>
           {this.renderLove()}
           {this.renderReply()}
           {this.renderEditOption()}
@@ -140,6 +140,12 @@ module.exports = React.createClass({
         </div>
       </div>
     );
+  },
+
+  renderCoreTeamIcon: function() {
+    if (_(ProductStore.getCoreTeamIds()).contains(this.props.author.id)) {
+      return <Icon icon="bolt" />
+    }
   },
 
   renderEditableComment: function() {
