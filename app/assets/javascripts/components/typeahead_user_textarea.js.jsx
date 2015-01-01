@@ -1,4 +1,4 @@
-var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
+var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/i
 
 var ActionTypes = window.CONSTANTS.ActionTypes;
 var InPlaceUserSearch = require('./in_place_user_search.js.jsx')
