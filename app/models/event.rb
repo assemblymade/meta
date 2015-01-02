@@ -35,11 +35,10 @@ class Event < ActiveRecord::Base
   attr_accessor :socket_id # for Pusher
   attr_accessor :readraptor_tag # set which tag you are viewing
 
-  def self.record_identity_change
-    if self.type == 'Event::Comment'
-      interpreted_vector = Interpreter.new.mark_vector_from_text(self.body)
-
-      MakeMarks.new.mark_with_vector_additively(object, mark_vector, )
+  def record_identity_change
+    if type == 'Event::Comment'
+      interpreted_vector = Interpreter.new.mark_vector_from_text(body)
+      MakeMarks.new.mark_with_vector_additively(user.user_identity, interpreted_vector, 0.1)
     end
   end
 
