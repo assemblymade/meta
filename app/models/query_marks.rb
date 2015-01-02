@@ -103,6 +103,11 @@ class QueryMarks
     dot_product
   end
 
+  def subtract_vectors(vector1, vector2)
+    vector2 = scale_mark_vector(vector2, -1)
+    add_mark_vectors(vector1, vector2)
+  end
+
   def update_markings_to_vector_for_object(object, marking_vector)
     marking_vector.each do |m|
       #check if that marking exists already for object
@@ -141,7 +146,7 @@ class QueryMarks
 
     products = Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagged_at: nil).where.not(slug: 'meta')
     product_vector = products.joins(:marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)").group_by{ |product, mark, weight| product }
-    product_vector = product_vector.map{ |p, v| [p, v.map{ |p, m, w| [m, w*0.2] }  ]}
+    product_vector = product_vector.map{ |p, v| [p, v.map{ |p, m, w| [m, w] }  ]}
     product_vector = Hash[product_vector]
 
     merged_vector = []
@@ -194,7 +199,9 @@ class QueryMarks
         correlation = dot_product_vectors(user_vector, vector)
         if correlation > 0
           wip = Wip.find(wip_id)
-          result.append([correlation.to_f, wip])
+          if wip.user != user
+            result.append([correlation.to_f, wip])
+          end
         end
       end
 

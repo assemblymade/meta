@@ -21,7 +21,6 @@ class AdjustMarkings
     end
 
     user_identity = user.user_identity
-
     old_mark_vector = QueryMarks.new.mark_vector_for_object(user_identity)
 
     if marked_object
@@ -41,6 +40,5 @@ class AdjustMarkings
       QueryMarks.new.update_markings_to_vector_for_object(user_identity, cumulative_mark_vector)
 
     end
-
   end
 end
