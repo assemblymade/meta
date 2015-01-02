@@ -1,3 +1,5 @@
+// Colors
+
 $white:  #FFF;
 $black:  #353941;
 
@@ -18,7 +20,7 @@ $gray-green:   #678b92;
 
 $green:        #33D6A6;
 $green-dark:   #2ec095;
-$aqua:		   #53cbdd;
+$aqua:         #53cbdd;
 $blue:         #338EDA;
 $red:          #EC3750;
 $yellow:       #F2D930;
@@ -36,6 +38,8 @@ $accent-orange: #ea8247;
 
 
 // TODO: Replace with loop once sass-rails is fixed
+// Update: I believe it was a specificity issue. This will probably work now.
+
 .white        { color: $white }
 .bg-white     { background-color: $white }
 .border-white { border-color: $white }

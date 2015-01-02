@@ -1,124 +1,25 @@
-@import 'variables',
-         'bootstrap';
-@import 'mixins/*',
-         'base/*',
-         'components/*',
-         'slop';
+@charset "utf-8";
 
-@import 'asmcss';
+// ==== Config ==========================================================
 
-.hide-long-links {
-  .long-link { display: none; }
-  .stream-event-attachment { display: none; }
-  .commit-message { display: none; }
-  .text-muted { color: $link-color; }
-}
+// -- Vars -------------------------
+@import 'config/vars/general';
+@import 'config/vars/typography';   // Fonts: Typography Variables, Font Stacks, Font-Face, etc
+@import 'config/vars/colors';
 
-.alpha {
-  margin-top: 0 !important;
-}
+// -- Libs -------------------------
+@import 'bootstrap';
 
-.omega {
-  margin-bottom: 0 !important;
-}
+// -- Mixins -------------------------
+@import 'config/mixins/*';
 
-.neuter-paragraphs > p:last-child {
-  @extend .omega;
-}
+// ==== App =============================================================
 
-.fb-like {
-  top: -7px;
-}
+@import "app/base";                 // Base: Universal styles & helper classes (eg html, body, clearfix, etc)
+@import "app/structure";            // Structure: Default framework structure styles
+@import "app/content";              // Content: Default styles for all content - h1, p, tables, lists, etc
+@import "app/components/*";
+@import "app/slop";                 // plz kill...  ‎‎(ﾉಥ益ಥ）ﾉ﻿ ┻━┻
 
-.img-shadow {
-  display: block;
-  position: relative;
-
-  &:before {
-    display: block;
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
-    border-radius: $border-radius-base;
-  }
-
-  img {
-    display: block;
-  }
-}
-
-.sub-thingy {
-  margin-top: -24px;
-  padding-top: 12px; padding-bottom: 12px; border-bottom: 1px solid $brand-divider;
-  margin-bottom: 24px;
-}
-
-.play-button {
-  display: inline-block;
-  margin-top: $line-height-computed * 2;
-  margin-bottom: $line-height-computed * 2;
-  padding: ($line-height-computed * 2) ($grid-gutter-width * 2);
-  outline: none;
-}
-
-.play-button:hover {
-  background-color: rgba(black, .2);
-}
-
-.play-button:focus {
-  outline: none;
-}
-
-.masthead-gradient {
-  @include gradient-vertical(rgb(34, 157, 171), rgb(16, 53, 97), 24%, 100%);
-
-  position: absolute;
-
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  opacity: .7;
-}
-
-.feature {
-  padding-bottom: $padding-large-vertical;
-  position: relative;
-
-  > .glyphicon {
-    display: block;
-    font-size: $font-size-large;
-    margin-left: -36px;
-    position: absolute;
-  }
-
-  > .feature-title {
-    line-height: 1.1;
-    margin-top: 0;
-  }
-}
-
-// TODO This was @chrislloyd's hack. To be replaced when more time is spent on the welcome banner.
-
-.welcome-banner-left {
-  background-image: url(image-path('asm-flatsidebars-left-2x.png'));
-  background-repeat: none;
-  background-size: 813px 166px;
-  width: 813px;
-  height: 166px;
-  left: -813px - 48px;
-  top: -0.5rem;
-}
-
-.welcome-banner-right {
-  background-image: url(image-path('asm-flatsidebars-right-2x.png'));
-  background-repeat: none;
-  background-size: 813px 166px;
-  width: 813px;
-  height: 166px;
-  right: -813px - 48px;
-  top: -0.5rem;
-}
+@import 'asmcss';                   // to be phased out. work around no longer needed. All styles worth preserving
+                                    // should be integrated back into the main scss partials above.
