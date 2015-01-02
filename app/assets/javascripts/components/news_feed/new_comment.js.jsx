@@ -182,7 +182,7 @@ var NewsFeedItemNewComment = React.createClass({
     });
 
     return (
-      <div className="clearfix comments-footer" style={{ paddingBottom: '2.5rem' }}>
+      <div className="clearfix" style={{ paddingBottom: '2.5rem' }}>
         {this.renderAvatar()}
         <div className={this.props.hideAvatar ? null : "_px3_5"}>
           <div className={dropzoneClasses}>

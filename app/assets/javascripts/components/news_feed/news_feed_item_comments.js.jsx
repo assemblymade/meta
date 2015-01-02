@@ -191,7 +191,7 @@ var NewsFeedItemComments = React.createClass({
         <div className={classes}>
           {confirmedComments}
           {optimisticComments}
-          <hr className="my0 mt3 border-gray-5 _mrn3 _mln3" />
+          <hr className="mb0 mt3 border-gray-5 _mrn3 _mln3" />
         </div>
       </div>
     );
@@ -261,22 +261,12 @@ var NewsFeedItemComments = React.createClass({
 
     if (this.props.commentable) {
       var url = this.state.url;
-      if (UserStore.getUser()) {
-        return <NewComment
-            {...this.props}
-            canContainWork={item.target && item.target.type.indexOf('task') > -1}
-            url={url}
-            thread={item.id}
-            user={window.app.currentUser()} />
-      }
-
-      return (
-        <div className="well centered text-center">
-          I'm afraid I can't let you comment. You'll have to
-          {' '}<a href="/signup">sign up</a>{' '}
-          to do that.
-        </div>
-      );
+      return <NewComment
+          {...this.props}
+          canContainWork={item.target && item.target.type.indexOf('task') > -1}
+          url={url}
+          thread={item.id}
+          user={window.app.currentUser()} />
     }
   },
 
