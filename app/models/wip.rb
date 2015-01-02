@@ -217,7 +217,7 @@ class Wip < ActiveRecord::Base
     my_parent_mark_vector = QueryMarks.new.mark_vector_for_object(self.product)
 
     #scale parent vector by constant
-    my_parent_mark_vector = QueryMarks.new.scale_mark_vector(my_parent_mark_vector, 0.2)
+    my_parent_mark_vector = QueryMarks.new.scale_mark_vector(my_parent_mark_vector, 1)
 
     final_mark_vector = QueryMarks.new.add_mark_vectors(my_parent_mark_vector, my_mark_vector)
   end

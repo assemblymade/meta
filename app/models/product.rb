@@ -305,7 +305,7 @@ class Product < ActiveRecord::Base
 
   def core_team?(user)
     return false if user.nil?
-    team_memberships.core_team.active.find_by(user_id: user.id)
+    team_memberships.core_team.active.find_by(user_id: user.id).present?
   end
 
   def member?(user)

@@ -18,6 +18,7 @@ class Event < ActiveRecord::Base
 
   after_commit -> { self.wip.event_added(self); }, on: :create
   after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.wip.id) }
+  after_commit -> { self.record_identity_change }
 
   delegate :product, :to => :wip
 
@@ -33,6 +34,14 @@ class Event < ActiveRecord::Base
 
   attr_accessor :socket_id # for Pusher
   attr_accessor :readraptor_tag # set which tag you are viewing
+
+  def self.record_identity_change
+    if self.type == 'Event::Comment'
+      interpreted_vector = Interpreter.new.mark_vector_from_text(self.body)
+
+      MakeMarks.new.mark_with_vector_additively(object, mark_vector, )
+    end
+  end
 
   def self.analytics_name
     "wip.#{slug}"

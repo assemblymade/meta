@@ -9,7 +9,7 @@ class MarkToMark
           if not m==u
             othermark = Mark.find_by(id: m[0])
             if othermark
-              MakeMarks.new.mark_additively(mark, othermark, m[1]*u[1])
+              MakeMarks.new.mark_additively(mark, othermark.id, m[1]*u[1])
             end
           end
         end

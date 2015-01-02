@@ -8,10 +8,10 @@ class MakeMarks
     end
   end
 
-  def mark_additively(object, mark, weight)
-    marking = Marking.where(markable_id: object.id).where(mark_id: mark.id)
+  def mark_additively(object, mark_id, weight)
+    marking = Marking.where(markable_id: object.id).where(mark_id: mark_id)
     if not marking.present?
-      Marking.create!({markable: object, mark_id: mark.id, weight: weight})
+      Marking.create!({markable: object, mark_id: mark_id, weight: weight})
     else
       marking=marking.first #there should only ever be 1 entry here
       oldweight = marking.weight
@@ -40,5 +40,37 @@ class MakeMarks
     end
   end
 
+  def mark_with_vector_additively(object , mark_vector, weight)
+    if weight != 1
+      mark_vector = QueryMarks.new.scale_mark_vector(mark_vector, weight)
+    end
+
+    mark_vector.each do |v|
+      mark_additively(object, v[0], v[1])
+    end
+  end
+
+  def mark_with_object_for_viewings(user_id, viewable_id, viewable_type, scalar)
+    if viewable_type == "Product"
+      viewable = Product.find(viewable_id)
+    elsif viewable_type == "Wip"
+      viewable = Wip.find(viewable_id)
+    end
+
+    applicable_viewings = Viewing.where(user_id: user_id, viewable_id: viewable_id)
+    previous_views = applicable_viewings.count
+
+    view_weight = 1.0
+
+    if previous_views == 0
+      Viewing.create!({user_id: user_id, viewable_id: viewable_id, viewable_type: viewable_type, weight: view_weight})
+      AdjustMarkings.perform_async(user_id, viewable.id, viewable_type, scalar * Math.sqrt(view_weight))
+    else
+      new_weight = applicable_viewings.first.weight + view_weight
+      applicable_viewings.first.update(weight: new_weight)
+      diff = Math.sqrt(new_weight) - Math.sqrt(view_weight)
+      AdjustMarkings.perform_async(user_id, viewable.id, viewable_type, scalar * diff)
+    end
+  end
 
 end
