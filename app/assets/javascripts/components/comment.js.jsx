@@ -119,7 +119,7 @@ module.exports = React.createClass({
     });
 
     return (
-      <div className="px4 _hover-toggle" style={{ top: -5, position: 'relative' }}>
+      <div className="px4 _hover-toggle">
         <div className="inline-block">
           <a className="inline-block bold h6 mt0 mb0 _mr0_5 black" href={author.url}>{this.renderCoreTeamIcon()} {author.username}</a>
           {this.renderLove()}
