@@ -53,11 +53,23 @@
                 onClick={this.currentUserCanTip() ? this.handleClick : null}
                 style={{ color: totalCents > 0 ? '#f0ad4e' : '#d3d3d3' }}>
               <span className="icon icon-app-coin"></span>
-              <span> {numeral(this.totalCents()).format('0,0')}</span>
+              {this.renderTotalCents()}
             </a>
           </div>
         </div>
       )
+    },
+
+    renderTotalCents: function() {
+      var totalCents = this.totalCents();
+
+      if (totalCents > 0) {
+        return (
+          <span>
+            {numeral(this.totalCents()).format('0,0')}
+          </span>
+        );
+      }
     },
 
     optimisticTip: function() {

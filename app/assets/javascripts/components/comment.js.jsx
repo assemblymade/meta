@@ -75,28 +75,21 @@ module.exports = React.createClass({
     );
   },
 
-  renderAwardOptions: function() {
+  renderAwardOption: function() {
     if (this.currentUserIsCore() && this.props.awardUrl) {
       var id = this.props.id;
       var username = this.props.author.username;
       var awardUrl = this.props.awardUrl;
 
-      return [
+      return (
         <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 gray-2 _h6"
             href={awardUrl + '?event_id=' + id}
             key={'award-' + id}
             data-method="patch"
             data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
           Award
-        </a>,
-        <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 gray-2 _h6"
-            href={awardUrl + '?event_id=' + id + '&close=true'}
-            key={'award-and-close-' + id}
-            data-method="patch"
-            data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
-          Award & close
         </a>
-      ];
+      );
     }
   },
 
@@ -122,21 +115,20 @@ module.exports = React.createClass({
       <div className="px4 _hover-toggle">
         <div className="inline-block">
           <a className="inline-block bold h6 mt0 mb0 _mr0_5 black" href={author.url}>{this.renderCoreTeamIcon()} {author.username}</a>
-          {this.renderLove()}
-          {this.renderReply()}
-          {this.renderEditOption()}
-          {this.renderAwardOptions()}
-          {this.renderTips()}
         </div>
 
         {this.renderTimestamp()}
 
-        <div className="h6 gray-1 mt0 mb0 overflow-hidden">
-          {this.renderLovers()}
-        </div>
-
         <div className={classes}>
           <Markdown content={body} normalized={true} />
+        </div>
+
+        <div className="inline-block _pt0_5">
+          {this.renderTips()}
+          {this.renderLove()}
+          {this.renderEditOption()}
+          {this.renderReply()}
+          {this.renderAwardOption()}
         </div>
       </div>
     );
@@ -175,26 +167,16 @@ module.exports = React.createClass({
 
   renderLove: function() {
     if (this.props.heartable) {
-      return (
-        <div className="inline-block _mb0_25 _h6 gray-2">
+      return [
+        <div className="_inline-block _mb0_25 _h6 gray-2">
           <Love heartable_id={this.props.id} heartable_type='NewsFeedItemComment' />
+        </div>,
+
+        <div className="_inline-block _h6">
+          <Lovers heartable_id={this.props.id} />
         </div>
-      );
+      ];
     }
-  },
-
-  renderLovers: function() {
-    if (this.props.heartable) {
-      return <Lovers heartable_id={this.props.id} />
-    }
-  },
-
-  renderPermalink: function() {
-    return (
-      <a className="_ml0_75 _pl0_75 _pr0_75 _border-left1px border-gray-4 h6 gray-2" href={this.props.url} role="menuitem">
-        <Icon icon="link" />
-      </a>
-    );
   },
 
   renderReply: function() {
@@ -209,10 +191,9 @@ module.exports = React.createClass({
 
   renderTimestamp: function() {
     return (
-      <div className="_h6 _text-align-right inline-block _clearfix right">
-        <div className="_none gray-2 _hover-toggle-item-block _pr0_75">
-          {moment(this.props.timestamp).fromNow()}
-          {this.renderPermalink()}
+      <div className="_h6 _text-align-right _inline-block">
+        <div className="_none _hover-toggle-item-block _pr0_75">
+          <a href={this.props.url} className="gray-2">{moment(this.props.timestamp).fromNow()}</a>
         </div>
       </div>
     );
@@ -221,7 +202,7 @@ module.exports = React.createClass({
   renderTips: function() {
     // TipsUi is causing display issues :(
     return (
-      <span className="_pl0_75 _inline-block _ht1_5 _border-left1px border-gray-4 _h6">
+      <span className="_pr0_75 _inline-block _ht1_5 _h6">
         <TipsUi
             viaType="NewsFeedItemComment"
             viaId={this.props.id}

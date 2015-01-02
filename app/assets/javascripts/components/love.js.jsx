@@ -38,7 +38,7 @@ var Love = React.createClass({
     return (
       <a className="inline-block valign-top mr1 fs6 gray no-focus" href="javascript:void(0);" onClick={this.handleClick}>
         <div className={classes}></div>
-        {heartsCount}
+        {heartsCount > 0 ? heartsCount : null}
       </a>
     );
   },

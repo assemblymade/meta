@@ -21,13 +21,7 @@ var Lovers = React.createClass({
   },
 
   getFirstLover: function() {
-    var recentLovers = this.state.recentLovers;
-
-    if (this.state.user_heart) {
-      return UserStore.getUser();
-    }
-
-    return recentLovers[0];
+    return this.state.recentLovers[0];
   },
 
   getStateFromStore: function() {
@@ -50,18 +44,14 @@ var Lovers = React.createClass({
       return null;
     }
 
-    if (!this.state.user_heart) {
-      return null;
-    }
-
     var lover = this.getFirstLover();
 
     return (
-      <div className="inline-block _mb1_25">
+      <div className="inline-block _pr0_75">
         <div className="inline-block valign-mid">
           {this.renderAvatar(lover)}
         </div>
-        <div className="inline-block valign-mid gray-2 fs3">
+        <div className="inline-block gray-2 _h6">
           {this.renderLoverLink(lover)}
           {this.renderMessage()}
         </div>
@@ -80,12 +70,14 @@ var Lovers = React.createClass({
   renderLoverLink: function(lover) {
     var userId = UserStore.getId();
 
-    return (
-      <a href={lover.url}
-          className="black bold">
-        {lover.id === userId ? 'You' : lover.username}
-      </a>
-    );
+    if (lover) {
+      return (
+        <a href={lover.url}
+            className="black bold">
+          {lover.id === userId ? 'You' : lover.username}
+        </a>
+      );
+    }
   },
 
   renderManyLovers: function() {

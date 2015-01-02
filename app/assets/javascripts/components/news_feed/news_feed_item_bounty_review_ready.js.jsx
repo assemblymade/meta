@@ -30,7 +30,7 @@ module.exports = React.createClass({
 
     if (awardUrl) {
       return (
-        <div className="btn-group pull-right">
+        <div className="btn-group right">
           <a className="btn btn-default btn-xs"
               href={awardUrl + '?event_id=' + id}
               data-method="patch"
