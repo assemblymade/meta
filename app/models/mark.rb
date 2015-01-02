@@ -59,12 +59,11 @@ class Mark < ActiveRecord::Base
       end
     end
     s = Math.sqrt(vector.sum{|a| a[1]**2})
-    if s>0
+    if s > 0
       vector.map{|a| [a[0], a[1]/s ]}.sort_by{|a| a[1]}.reverse
     else
       []
     end
-    #vector
   end
 
   def assign_stem

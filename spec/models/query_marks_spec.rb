@@ -37,7 +37,7 @@ describe QueryMarks do
     expect(subtracted).to eq([[denmark.id, 0.8], [finn_mark.id, -2.5]])
   end
 
-  it 'update markigns on object from vector' do
+  it 'update markings on object from vector' do
     QueryMarks.new.update_markings_to_vector_for_object(product2, vector1)
     expect(product2.mark_vector).to eq(vector1)
   end

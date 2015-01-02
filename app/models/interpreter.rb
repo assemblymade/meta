@@ -7,9 +7,9 @@ class Interpreter
     mark_words = words.select{|a| marks.include?(a)}
 
     prods = Product.all.select{|a| words.include?(a.name.downcase) }
-    marks_products = prods.map{|a| a.mark_vector.sort_by{|a| a[1]}.reverse.take(5)}.flatten(1).map{|a| a[0]}.map{|a| Mark.find(a).name}
+    marks_products = prods.map{|a| a.mark_vector.sort_by{|a| -1*a[1]}.take(5)}.flatten(1).map{|a| a[0]}.map{|a| Mark.find(a).name}
 
-    mark_words = marks_products +mark_words
+    mark_words = marks_products + mark_words
     mark_words = mark_words.uniq
     return mark_words
   end

@@ -25,7 +25,6 @@ describe MakeMarks do
     Marking.create!({markable: user.user_identity, mark_id: firstmark.id, weight: 1.0})
     Marking.create!({markable: user.user_identity, mark_id: secondmark.id, weight: 1.0})
     MakeMarks.new.merge_marks('pommern', 'tyrol')
-    #expect(Mark.find_by(name: 'sudmark').nil?).to eq(true)# && expect(mark.markings.count).to eq(2)
     expect(firstmark.markings.count).to eq(2)
   end
 
