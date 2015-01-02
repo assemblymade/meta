@@ -146,7 +146,7 @@ class QueryMarks
 
     products = Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagged_at: nil).where.not(slug: 'meta')
     product_vector = products.joins(:marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)").group_by{ |product, mark, weight| product }
-    product_vector = product_vector.map{ |p, v| [p, v.map{ |p, m, w| [m, w*1.0] }  ]}
+    product_vector = product_vector.map{ |p, v| [p, v.map{ |p, m, w| [m, w] }  ]}
     product_vector = Hash[product_vector]
 
     merged_vector = []

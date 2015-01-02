@@ -23,8 +23,8 @@ class Interpreter
       vector = QueryMarks.new.add_mark_vectors(vector, QueryMarks.new.scale_mark_vector(m.correlated_marks, 0.2))
     end
 
-    s=Math.sqrt(vector.sum{|a| a[1]**2})
-    vector.map{|a| [a[0], a[1]/s.to_f] }
+    s = Math.sqrt(vector.sum{|a| a[1]**2})
+    vector.map{|a| [a[0], a[1]/s.to_f]}
   end
 
   def suggested_bountys_from_text(text)
@@ -41,9 +41,8 @@ class Interpreter
         result.append([correlation.to_f, wip])
       end
     end
-
     n=0
-    result.sort_by{|a, b| a}.reverse
+    result.sort_by{|a, b| -1*a}
   end
 
 end

@@ -54,7 +54,7 @@ class Mark < ActiveRecord::Base
       r=[]
       if m.markable
         r.append(m.markable.id)
-        r.append(m.weight.to_f / (m.markable.markings.count**0.3)+1)
+        r.append(m.weight.to_f / (m.markable.markings.count**0.3) + 1)
         vector.append(r)
       end
     end
