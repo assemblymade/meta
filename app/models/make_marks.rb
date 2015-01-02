@@ -10,13 +10,12 @@ class MakeMarks
 
   def mark_additively(object, mark_id, weight)
     marking = Marking.where(markable_id: object.id).where(mark_id: mark_id)
-    if marking
+    if not marking.present?
+      Marking.create!({markable: object, mark_id: mark_id, weight: weight})
+    else
       marking=marking.first #there should only ever be 1 entry here
       oldweight = marking.weight
       marking.update!({weight: oldweight + weight})
-    else
-      Marking.create!({markable: object, mark_id: mark_id, weight: weight})
-
     end
   end
 

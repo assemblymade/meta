@@ -38,7 +38,7 @@ class Event < ActiveRecord::Base
   def record_identity_change
     if type == 'Event::Comment'
       interpreted_vector = Interpreter.new.mark_vector_from_text(body)
-      MakeMarks.new.mark_with_vector_additively(user.user_identity, mark_vector, 0.1)
+      MakeMarks.new.mark_with_vector_additively(user.user_identity, interpreted_vector, 0.1)
     end
   end
 
