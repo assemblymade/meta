@@ -13,10 +13,10 @@ module.exports = React.createClass({
 
     return (
       <NewsFeedItemEvent>
-        <a href={target.url}>{target.username}</a>
+        <a href={target.url} className="black bold">{target.username}</a>
         {' '} was awarded this by {' '}
 
-        <a href={actor.url}>{actor.username}</a>
+        <a href={actor.url} className="black bold">{actor.username}</a>
       </NewsFeedItemEvent>
     );
   }
