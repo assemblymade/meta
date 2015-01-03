@@ -1,15 +1,15 @@
 .tag {
   background-color: white;
-  border: 1px solid $gray-lighter;
+  border: 1px solid $gray-4;
   border-radius: 2px;
-  color: $gray-light;
+  color: $gray-2;
   font-size: 14px;
   padding: 2px 7px;
 
   &:hover,
   &.hover {
-    border: 1px solid darken($gray-lighter, 10%);
-    color: darken($gray-light, 10%);
+    border: 1px solid darken($gray-4, 10%);
+    color: darken($gray-2, 10%);
 
     .remove {
       display: inline;

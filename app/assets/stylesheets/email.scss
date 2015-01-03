@@ -1,6 +1,5 @@
-@import 'variables';
+@import 'config/vars/general';
 @import 'ink';
-@import 'base/mixins';
 
 $headings-font-weight: bold;
 
@@ -20,7 +19,6 @@ $dl-horizontal-offset:        $component-offset-horizontal !default;
 
 @import 'bootstrap/mixins';
 @import 'bootstrap/type';
-@import 'base/typography';
 
 a {
   color: $link-color !important;

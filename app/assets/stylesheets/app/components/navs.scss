@@ -1,19 +1,19 @@
 .nav {
   > li > a {
-    color: $gray-light;
+    color: $gray-1;
 
     &:hover {
-      color: $gray-dark;
+      color: $black;
     }
   }
 }
 
 .nav-pills {
   > li > a {
-    color: $gray-light;
+    color: $gray-1;
 
     &:hover {
-      color: $gray-dark;
+      color: $black;
     }
   }
 }
