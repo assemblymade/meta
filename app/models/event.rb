@@ -18,7 +18,7 @@ class Event < ActiveRecord::Base
 
   after_commit -> { self.wip.event_added(self); }, on: :create
   after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.wip.id) }
-  after_commit -> { self.record_identity_change }
+  # after_commit -> { self.record_identity_change } # This is messing with the Redis worker queue
 
   delegate :product, :to => :wip
 

@@ -66,8 +66,12 @@ module.exports = React.createClass({
 
     return (
       <div id={this.props.id} className="timeline-item">
-        <div className="left activity-avatar">
+        <div className="left activity-avatar _inline-block">
           <Avatar user={author} size={30} />
+        </div>
+
+        <div className="left _inline-block" style={{ position: 'relative', left: '-8px', top: '-5px' }}>
+          {this.renderCoreTeamIcon()}
         </div>
 
         {this.renderComment()}
@@ -114,7 +118,7 @@ module.exports = React.createClass({
     return (
       <div className="px4 _hover-toggle">
         <div className="inline-block">
-          <a className="inline-block bold h6 mt0 mb0 _mr0_5 black" href={author.url}>{this.renderCoreTeamIcon()} {author.username}</a>
+          <a className="inline-block bold h6 mt0 mb0 _mr0_5 black" href={author.url}>{author.username}</a>
         </div>
 
         {this.renderTimestamp()}
@@ -136,7 +140,7 @@ module.exports = React.createClass({
 
   renderCoreTeamIcon: function() {
     if (_(ProductStore.getCoreTeamIds()).contains(this.props.author.id)) {
-      return <Icon icon="bolt" />
+      return <img src="/assets/core_icon.svg" width="12" />;
     }
   },
 

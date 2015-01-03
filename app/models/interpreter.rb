@@ -16,8 +16,7 @@ class Interpreter
     end
 
     mark_words = marks_products + mark_words
-    mark_words = mark_words.uniq
-    return mark_words
+    mark_words.uniq
   end
 
   def mark_vector_from_text(text)
