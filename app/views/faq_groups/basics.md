@@ -68,3 +68,7 @@ On Kickstarter, you can contribute money to help a product or idea launch, and y
 # Who covers the costs of development?
 
 In most cases, Assembly helps cover costs, and in others, costs that you spend on a product can be tracked and will be reimbursed when the product earns revenue. We have restrictions to this, but generally we financially assist growing product get off the ground.
+
+# What is the platform fee?
+
+Assembly connects you with others around the world so you can build products with the freedom of not having to hand initial capital to run the product, managing the finances, paying accounting and legal costs and all the other burdens of operating a traditional product. For this, the platform collects a 10% platform fee of the revenue after expenses. We’re continuing to invest in new ways to create additional value for the community.
