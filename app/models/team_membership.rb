@@ -11,7 +11,7 @@ class TeamMembership < ActiveRecord::Base
   scope :with_interests, -> { where('exists(select 1 from team_membership_interests tmi where tmi.team_membership_id = team_memberships.id)') }
 
   after_commit :update_counter_caches
-  after_commit :assign_vector_from_text
+  # after_commit :assign_vector_from_text # FIXME: Calling this method crashes Meta
 
   def core_team?
     self.is_core
