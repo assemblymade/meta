@@ -45,6 +45,16 @@ var NewsFeedItemComments = React.createClass({
     DiscussionStore.addChangeListener(this.getDiscussionState);
   },
 
+  componentDidUpdate: function(prevProps, prevState) {
+    if (window.location.hash) {
+      if (this.state.comments.length > prevState.comments.length) {
+        $(document.body).animate({
+          'scrollTop':   $('#' + window.location.hash.substring(1)).offset().top
+        }, 500);
+      }
+    }
+  },
+
   componentWillUnmount: function() {
     if (_reach(this.props, 'item.target.type') === 'task') {
       BountyStore.removeChangeListener(this.getBountyState);
@@ -191,7 +201,7 @@ var NewsFeedItemComments = React.createClass({
         <div className={classes}>
           {confirmedComments}
           {optimisticComments}
-          <hr className="mb0 mt3 border-gray-5 _mrn3 _mln3" />
+          {this.renderRuler()}
         </div>
       </div>
     );
@@ -214,13 +224,13 @@ var NewsFeedItemComments = React.createClass({
       if (!self.props.showAllComments) {
         if (comment.type !== 'news_feed_item_comment') {
           return null;
-        } else {
-          return <ActivityFeedComment
-              author={comment.user}
-              body={comment.markdown_body}
-              heartable={true}
-              heartableId={comment.id} />
         }
+
+        return <ActivityFeedComment
+            author={comment.user}
+            body={comment.markdown_body}
+            heartable={true}
+            heartableId={comment.id} />
       }
 
       if (new Date(comment.created_at) >= renderIfAfter) {
@@ -306,20 +316,16 @@ var NewsFeedItemComments = React.createClass({
     return this.renderOptimisticEvent('Event::ReviewReady');
   },
 
+  renderRuler: function() {
+    if (this.state.comments.length > 0) {
+      return <hr className="mb0 mt3 border-gray-5 _mrn3 _mln3" />;
+    }
+  },
+
   triggerModal: function(e) {
     e.stopPropagation();
 
     this.props.triggerModal();
-  },
-
-  componentDidUpdate: function(prevProps, prevState) {
-    if (window.location.hash) {
-      if (this.state.comments.length > prevState.comments.length) {
-        $(document.body).animate({
-          'scrollTop':   $('#' + window.location.hash.substring(1)).offset().top
-        }, 500);
-      }
-    }
   }
 });
 

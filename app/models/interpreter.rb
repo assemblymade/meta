@@ -1,13 +1,19 @@
 class Interpreter
 
   def marks_in_text(text)
-    marks = Mark.all.map{|q| q.name}
+    marks = Mark.all.pluck(:name)
     text = text.downcase.gsub(/[^A-Za-z0-9\s]/i, '')
     words = text.split(' ')
     mark_words = words.select{|a| marks.include?(a)}
 
-    prods = Product.all.select{|a| words.include?(a.name.downcase) }
-    marks_products = prods.map{|a| a.mark_vector.sort_by{|a| -1*a[1]}.take(5)}.flatten(1).map{|a| a[0]}.map{|a| Mark.find(a).name}
+    prods = Product.where('name ilike any (array[?])', words)
+    marks_products = prods.map do |prod|
+      prod.mark_vector.sort_by do |mv|
+        -mv[1]
+      end.take(5)
+    end.flatten(1).map do |mark_id|
+      Mark.find(mark_id[0]).name
+    end
 
     mark_words = marks_products + mark_words
     mark_words = mark_words.uniq
@@ -41,8 +47,8 @@ class Interpreter
         result.append([correlation.to_f, wip])
       end
     end
-    n=0
-    result.sort_by{|a, b| -1*a}
+    n = 0
+    result.sort_by{ |a, b| -a }
   end
 
 end
