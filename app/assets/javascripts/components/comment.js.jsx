@@ -70,7 +70,7 @@ module.exports = React.createClass({
           <Avatar user={author} size={30} />
         </div>
 
-        <div className="left _inline-block" style={{ position: 'relative', left: '-8px', top: '-5px' }}>
+        <div className="left _inline-block" style={{ position: 'relative', left: '-8px', top: '-6px' }}>
           {this.renderCoreTeamIcon()}
         </div>
 
