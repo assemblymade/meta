@@ -1,25 +1,20 @@
 @charset "utf-8";
 
-// ==== Config ==========================================================
+// ==== Framework =======================================================
 
-// -- Vars -------------------------
-@import 'config/vars/general';
-@import 'config/vars/typography';   // Fonts: Typography Variables, Font Stacks, Font-Face, etc
-@import 'config/vars/colors';
-
-// -- Libs -------------------------
-@import 'bootstrap';
-
-// -- Mixins -----------------------
-@import 'config/mixins/*';
+@import 'bootstrap/bootstrap-config'; // Bootstrap specific variables / config -- currently deprecating
+@import 'bootstrap';                  // Ruby gem
 
 // ==== App =============================================================
 
-@import "app/base";                 // Base: Universal styles & helper classes (eg html, body, clearfix, etc)
-@import "app/structure";            // Structure: Default framework structure styles
-@import "app/content";              // Content: Default styles for all content - h1, p, tables, lists, etc
+// config
+@import 'app/mixins/*';
+@import "app/config";                 // Config: high-level styles, vars, & common helper classes
+@import 'app/fonts';                  // Fonts: font vars, stacks, @Font-Face, etc
+@import 'app/colors';
+// core
+@import "app/main";                   // Main: structure & content styles, vars, etc - h1, p, tables, lists, forms
 @import "app/components/*";
-@import "app/slop";                 // plz kill...  ‎‎(ﾉಥ益ಥ）ﾉ﻿ ┻━┻
+@import "app/slop";                   // plz kill...  ‎‎(ﾉಥ益ಥ）ﾉ﻿ ┻━┻
 
-@import 'asmcss';                   // to be phased out. work around no longer needed. All styles worth preserving
-                                    // should be integrated back into the main scss partials above.
+// - TODO: http://goo.gl/NnNg3g

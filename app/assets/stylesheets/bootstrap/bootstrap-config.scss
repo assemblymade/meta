@@ -1,9 +1,12 @@
+// - This style sheet is a semi-deprecated tar pit. Many things need to be moved out. Cleanup in Progress.
 
-// -- TODO - This stylesheet has deprecated redundancies & unorganized styles.
-// ---- All styles worth preserving needs to be organized below
-// ---- Colors & Typography now have external partials. Relocate those styles.
+// - TODO
+// ---- Below you will find a mix of deprecated redundancies, unorganized styles, and bootstrap specific config.
+// ---- All unorganized styles worth preserving need to be ordered below &/or moved out into the appropriate partial.
 
 // Colors
+
+@import 'app/colors';		// temp solution to resolve some gross specificity jank
 
 $black:         #333;
 

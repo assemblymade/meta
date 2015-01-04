@@ -1,0 +1,291 @@
+// This style sheet has deprecated styles, redundancies, & unorganized styles - Cleanup in Progress
+
+// - TODO
+// --- Port in appropriate vars from where they are being defined
+// --- All styles worth preserving needs to be organized below
+
+// -- general -------------------
+strong, .bold {
+  font-weight: bold;
+}
+.caps {
+  letter-spacing: .05em;
+}
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// -- anchors -------------------
+a {
+  color: $link-color;
+  &:hover, &:focus {
+    text-decoration: none;
+    outline: 0;
+  }
+  &.no-focus:focus {
+    text-decoration: none;
+    background:inherit;
+    color:inherit;
+  }
+}
+
+// -- headers -------------------
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-sans-serif;
+  font-weight: bold;
+  line-height: $headings-line-height;
+}
+h1, .h1 {
+  font-size: $font-size-h1; // 30px/48px
+  line-height: 4rem;
+}
+h2, .h2 {
+  font-size: $font-size-h2; // 30px/36px
+  line-height: 3rem;
+}
+h3, .h3 {
+  font-size: $font-size-h3; // 24px/30px
+  line-height: 2.5rem;
+}
+h4, .h4 {
+  font-size: $font-size-h4; // 18px/24px
+  line-height: 2rem;
+}
+h5, .h5 {
+  font-size: $font-size-h5; // 16px/24px
+  line-height: 2rem;
+}
+h6, .h6 {
+  font-size: $font-size-h6; // 14px/18px
+  line-height: 1.5rem;
+}
+
+// -- paragraph -----------------
+p, dl, ol, ul {
+  font-size: 1.25rem;
+}
+
+p.lead, .lead p {
+  font-size: 2rem !important;
+}
+
+// -- code ----------------------
+pre, code, samp {
+  font-family: $font-family-monospace;
+  font-size: inherit;
+}
+code {
+  color: $red;
+  background-color: $gray-lighter;
+}
+
+mark, .mark {
+  border-radius: $border-radius-small;
+  color: darken($brand-warning, 33%);
+  background-color: lighten($state-warning-bg, 5%);
+}
+
+// -- quotes ---------------------
+blockquote {
+  position: relative;
+  top: 0.8rem;
+  left: -2.8rem;
+  margin: 0;
+  border-left: 4px solid #53cbdd; // $aqua
+  &:before {
+    // content: url("icon-comment-quote.png");
+    position: relative;
+    top: 0px;
+    left: -60px;
+    height: 20px;
+  }
+  p {
+    position: relative;
+    left: 1.5rem;
+  }
+}
+
+// -- forms ---------------------
+// input
+input, select, textarea, fieldset {
+  margin-bottom: 0;
+}
+
+input[type=text],
+input[type=datetime],
+input[type=datetime-local],
+input[type=email],
+input[type=month],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=tel],
+input[type=time],
+input[type=url],
+input[type=week] {
+  height: auto;
+  padding: 6px 12px;
+  line-height: $line-height-base;
+  outline: none;
+}
+
+// -- lists ---------------------
+.list-inline-piped {
+  > li + li {
+    border-left: 1px solid $brand-divider;
+    padding-left: 5px + 4px; // + 4px accounts for inline-block whitespace
+  }
+}
+
+.list-inline-media {
+  @extend .list-inline;
+  display: inline-block;
+
+  > li {
+    padding-left: 1px;
+    padding-right: 1px;
+
+    &:first-of-type {
+      padding-left: 6px;
+    }
+  }
+}
+
+.list-piped {
+  @extend .list-inline;
+
+  > li + li {
+    border-left: 1px solid $brand-divider;
+    padding-left: 5px + 4px; // + 4px accounts for inline-block whitespace
+  }
+}
+
+.list-grid {
+  @extend .list-unstyled;
+  @include clearfix;
+
+  > li {
+    float: left;
+    padding: $padding-small-vertical;
+  }
+}
+
+// pill lists
+.pill-hover {
+  border-radius: 50px;
+  //
+  &:hover {
+    color: #353941;
+    background: #e7e9ec;
+    border-radius: 50px;
+    text-decoration: none;
+  }
+}
+
+// -- track down & clean -------------------
+.text-weight-normal {
+  font-weight: 400;
+}
+
+.text-large, .large {
+  font-size: $font-size-large;
+}
+
+.text-small {
+  font-size: $font-size-small;
+}
+
+.text-serif {
+  font-family: $font-family-serif;
+}
+
+@include text-emphasis-variant('.text-coins', $brand-coins);
+@include text-emphasis-variant('.text-info', $brand-info);
+@include text-emphasis-variant('.text-white', white);
+
+a.text-coins:hover {
+  color: #e3a400;
+}
+
+.text-small-caps {
+  text-transform: uppercase;
+  font-size: 90%;
+}
+
+.text-copy {
+  padding: 26px $padding-xxl-horizontal 25px 68px;
+  font-size: 15px;
+  line-height: 1.764;
+  color: $text-copy;
+  border-radius: $border-radius-base;
+  border: 1px solid darken($text-copy-bg, 6%);
+  box-shadow: 0 1px 1px 0 $brand-shadow;
+  background-color: $text-copy-bg;
+  @include background-image-retina(("copy-deliverable-bg-horizontal", "copy-deliverable-bg"), ("png", "png"), (36px, 1px), (1px, 26px), ("repeat-y", "repeat"));
+
+  h1, h2, h3, h4, h5,
+  h6 {
+    font-size: inherit;
+    color: inherit !important;
+    line-height: 1.764;
+    margin-bottom: floor(15px * 1.764);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    text-rendering: optimizeLegibility;
+  }
+
+  > * {
+    margin-bottom: floor(15px * 1.764);
+  }
+
+  :first-child {
+    margin-top: 0;
+  }
+}
+
+.link-hover-primary:hover {
+  color: $link-color !important;
+  text-decoration: none;
+}
+
+.link-hover-success:hover {
+  color: $brand-success !important;
+  text-decoration: none;
+}
+
+.link-hover-warning:hover {
+  color: $brand-warning !important;
+  text-decoration: none;
+}
+
+.link-hover-danger:hover {
+  color: $brand-danger !important;
+  text-decoration: none;
+}
+
+.text-stealth-link {
+  &, &:hover {
+    color: inherit
+  }
+}
+
+.text-muted-links {
+  color: $gray;
+
+  a {
+    color: inherit;
+  }
+}
+
+// -- prob trash -------------------
+
+.text-white {
+  color: #fff;
+}
