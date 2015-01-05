@@ -59,6 +59,7 @@ ROUTES = [
   'product_wip_close',
   'product_wip_reopen',
   'readraptor',
+  'user'
 ]
 
 def routes

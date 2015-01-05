@@ -184,7 +184,7 @@ var NewsFeedItemNewComment = React.createClass({
     return (
       <div className="clearfix" style={{ paddingBottom: '2.5rem' }}>
         {this.renderAvatar()}
-        <div className={this.props.hideAvatar ? null : "_px3_5"}>
+        <div className={this.props.hideAvatar ? null : "_pl3_5"}>
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
               <TypeaheadUserTextArea

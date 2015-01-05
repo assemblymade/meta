@@ -2,6 +2,23 @@
 // rake js:routes
 
 var exports = module.exports = {};
+exports.user_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/users/' + params.id + '?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/users/' + params.id + ''
+  } else {
+    var params = options;
+    return '/users/' + params.id + ''
+  }
+}
+
 exports.notifications_path = function(options){
   if (options && options.data) {
     var op_params = []
