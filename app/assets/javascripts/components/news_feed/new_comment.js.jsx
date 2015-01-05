@@ -230,7 +230,7 @@ var NewsFeedItemNewComment = React.createClass({
     var classes = this.buttonClasses('btn-primary');
 
     return (
-      <div className="clearfix mt3 mr3 px3">
+      <div className="clearfix mt3">
         <button className={classes}
             href="javascript:void(0);"
             onClick={this.submitComment}>

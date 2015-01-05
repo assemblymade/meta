@@ -242,7 +242,7 @@ module.exports = React.createClass({
     if (window.app.currentUser()) {
       return (
         <div className="card-footer p3 clearfix">
-          <div className="left">
+          <div className="left _pl1">
             {this.renderStartWorkButton()}
           </div>
 
