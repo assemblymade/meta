@@ -1,56 +1,8 @@
-// - This style sheet is a semi-deprecated tar pit. Many things need to be moved out. Cleanup in Progress.
+// Base Global Variables
+// - reference:  https://github.com/twbs/bootstrap-sass
 
-// - TODO
-// ---- Below you will find a mix of deprecated redundancies, unorganized styles, and bootstrap specific config.
-// ---- All unorganized styles worth preserving need to be ordered below &/or moved out into the appropriate partial.
-
-// Colors
-
-@import 'app/colors';		// temp solution to resolve some gross specificity jank
-
-$black:         #333;
-
-$blue:          #338EDA;
-$green:         #33D6A6;
-$cyan:          #5bc0de;
-$yellow:        #f2d930;
-$coin-yellow:   #ecbd00;
-$red:           #EC3750;
-
-$facebook:      #3B5998;
-$twitter:       #55ACEE;
-
-// Deprecated
-$purple:        #6700B9;
-$blue-light:    lighten($blue, 10%);
-$green-light:   lighten($green, 10%);
-$purple-light:  lighten($purple, 10%);
-$yellow-light:  lighten($yellow, 10%);
-$red-light:     lighten($red, 10%);
-
-$gray-darker:   lighten(#000, 13.5%); // #222
-$gray-dark:     lighten(#000, 20%);   // #333
-$gray:          lighten(#000, 33.5%); // #555
-$gray-light:    lighten(#000, 46.7%); // #777
-$gray-lighter:  lighten(#000, 93.5%); // #eee
-
-$brand-primary: $blue;
-$brand-success: $green;
-$brand-info:    $cyan;
-$brand-warning: $yellow;
-$brand-danger:  $red;
-$brand-muted:   $gray-light;
-
-$brand-bg:       #FAFAFA;
-$brand-border:   darken($gray-lighter, 10%);
-$brand-divider:  darken($brand-bg, 5%);
-$brand-shadow:   rgba(100, 100, 100, 0.2);
-
-$brand-coins:    $coin-yellow;
-
-$body-bg:       white;
-$text-color:    $black;
-
+@import 'vars/fonts';             // Font vars, stacks, @Font-Face, etc
+@import 'vars/colors';
 
 // Transition Timing
 
@@ -60,50 +12,17 @@ $transition-in-duration: 0.15s;
 $transition-out-duration: 0.15s;
 
 
-$link-color:       $brand-primary;
-$link-hover-color: darken($link-color, 15%);
+// Iconography
+
+$icon-font-path:   "bootstrap/";
+$icon-font-name:   "glyphicons-halflings-regular";
+$icon-font-svg-id: "glyphicons_halflingsregular";
 
 
 // Copy Deliverable
 
 $text-copy-bg: #fcfcfc;
 $text-copy: darken($text-copy-bg, 75%);
-
-
-// Typography
-
-$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
-$font-family-serif:      Georgia, "Times New Roman", Times, serif;
-$font-family-monospace:  "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace;
-$font-family-base:       $font-family-sans-serif;
-
-$font-size-base:  15px;
-$font-size-large: 18px;
-$font-size-small: 13px;
-
-$font-size-h1: 30px;
-// $font-size-h1: 42px;
-$font-size-h2: 30px;
-$font-size-h3: 24px;
-$font-size-h4: 18px;
-// $font-size-h4: 20px;
-$font-size-h5: $font-size-base;
-$font-size-h6: 13px;
-
-$line-height-base:     1.6;
-$line-height-computed: 24px; // 24px
-
-$headings-font-family: inherit;
-$headings-font-weight: normal;
-$headings-line-height: 1.2;
-$headings-color:       inherit;
-
-
-// Iconography
-
-$icon-font-path:   "bootstrap/";
-$icon-font-name:   "glyphicons-halflings-regular";
-$icon-font-svg-id: "glyphicons_halflingsregular";
 
 
 // Components
@@ -191,7 +110,7 @@ $btn-facebook-color:  white;
 $btn-facebook-bg:     $facebook;
 $btn-facebook-border: darken($btn-facebook-bg, 5%);
 
-$btn-link-disabled-color: $gray-light;
+$btn-link-disabled-color: $gray-darker;
 
 
 // Forms
@@ -213,7 +132,7 @@ $input-height-small: (floor($font-size-small * $line-height-small) + ($padding-s
 $legend-color:        $gray-dark;
 $legend-border-color: #e5e5e5;
 
-$input-group-addon-bg:           $gray-lighter;
+$input-group-addon-bg:           $gray-darker;
 $input-group-addon-border-color: $input-border;
 
 
@@ -231,9 +150,9 @@ $dropdown-link-hover-bg:    #f5f5f5;
 $dropdown-link-active-color: $component-active-color;
 $dropdown-link-active-bg:    $component-active-bg;
 
-$dropdown-link-disabled-color: $gray-light;
+$dropdown-link-disabled-color: $gray-darker;
 
-$dropdown-header-color: $gray-light;
+$dropdown-header-color: $gray-darker;
 
 $dropdown-glyph-margin: 10px;
 
@@ -280,7 +199,7 @@ $navbar-default-link-disabled-color: $gray;
 $navbar-default-link-disabled-bg:    transparent;
 
 // Navbar brand label
-$navbar-default-brand-color:       $gray-light;
+$navbar-default-brand-color:       $gray-darker;
 $navbar-default-brand-hover-color: $red;
 $navbar-default-brand-hover-bg:    transparent;
 
@@ -291,7 +210,7 @@ $navbar-default-toggle-border-color: #ddd;
 
 // Inverted navbar
 // Reset inverted navbar basics
-$navbar-inverse-color:  $gray-lighter;
+$navbar-inverse-color:  $gray-darker;
 $navbar-inverse-bg:     $black;
 $navbar-inverse-border: darken($navbar-inverse-bg, 2%);
 
@@ -329,8 +248,8 @@ $navbar-inverse-toggle-border-color: #333;
 $nav-link-padding:  6px 15px;
 $nav-link-hover-bg: $brand-bg;
 
-$nav-disabled-link-color:       $gray-light;
-$nav-disabled-link-hover-color: $gray-light;
+$nav-disabled-link-color:       $gray-darker;
+$nav-disabled-link-hover-color: $gray-darker;
 
 $nav-open-link-hover-color: #fff;
 
@@ -366,7 +285,7 @@ $pagination-active-color:  white;
 $pagination-active-bg:     $brand-primary;
 $pagination-active-border: $brand-primary;
 
-$pagination-disabled-color:  $gray-light;
+$pagination-disabled-color:  $gray-darker;
 $pagination-disabled-bg:     #fff;
 $pagination-disabled-border: #ddd;
 
@@ -443,7 +362,7 @@ $popover-arrow-outer-fallback-color: $brand-divider;
 
 // Labels
 
-$label-default-bg: $gray-light;
+$label-default-bg: $gray-darker;
 $label-primary-bg: $brand-primary;
 $label-success-bg: $brand-success;
 $label-info-bg:    $brand-info;
@@ -504,7 +423,7 @@ $alert-danger-border: $state-danger-border;
 
 // Progress bars
 
-$progress-bg:        $gray-lighter;
+$progress-bg:        $gray-darker;
 $progress-bar-color: #fff;
 
 $progress-bar-bg:         $brand-primary;
@@ -526,8 +445,8 @@ $list-group-active-bg:         $component-active-bg;
 $list-group-active-border:     $list-group-active-bg;
 $list-group-active-text-color: lighten($list-group-active-bg, 40%);
 
-$list-group-disabled-color:      $gray-light;
-$list-group-disabled-bg:         $gray-lighter;
+$list-group-disabled-color:      $gray-darker;
+$list-group-disabled-bg:         $gray-darker;
 $list-group-disabled-text-color: $list-group-disabled-color;
 
 $list-group-link-color:         #555;
@@ -592,7 +511,7 @@ $well-border: $brand-border;
 
 $badge-color:            #fff;
 $badge-link-hover-color: #fff;
-$badge-bg:               lighten($gray-light, 20%);
+$badge-bg:               lighten($gray-darker, 20%);
 
 $badge-active-color: $link-color;
 $badge-active-bg:    #fff;
@@ -650,9 +569,9 @@ $pre-scrollable-max-height: 340px;
 // Type
 
 $text-muted:               $brand-muted;
-$abbr-border-color:        $gray-light;
+$abbr-border-color:        $gray-darker;
 $headings-small-color:     $brand-muted;
-$blockquote-small-color:   $gray-light;
+$blockquote-small-color:   $gray-darker;
 $blockquote-font-size:     $font-size-base * 1.15;
 $blockquote-border-color:  $brand-info;
 $blockquote-border-width:  4px;
