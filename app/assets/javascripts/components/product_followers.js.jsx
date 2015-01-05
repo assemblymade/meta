@@ -12,7 +12,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <button className={this.togglerClasses()} type="button" onClick={this.handleClick}>
-        <span className="title fs3">
+        <span className="title fs3 lh2">
           <span className="mainText">
             {this.state.following ? 'Following' : 'Follow' }
           </span>
@@ -40,7 +40,6 @@ module.exports = React.createClass({
       'pill-button-shadow': true,
       'mcenter': true,
       'dropdown-toggle': true,
-      'toggler': true,
       'active': this.state.following,
       'r768_mright': true,
     })
