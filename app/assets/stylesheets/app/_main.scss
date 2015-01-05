@@ -1,14 +1,12 @@
 // Cleanup in progress - some deprecated, redundant, & unorganized styles
 // - TODO: http://goo.gl/XgoCGy
 
-
 @import 'basscss';                            // deprecating these imports, other first, bass last
 @import '-deprecated/basspluss';
 @import '-deprecated/utility';
 @import '-deprecated/nocss_vars';
 @import '-deprecated/nocss';
 @import '-deprecated/nocss_mq';
-
 
 * {
   -webkit-font-smoothing: antialiased;
@@ -157,10 +155,13 @@ mark, .mark {
 // -- quotes ---------------------
 blockquote {
   position: relative;
-  top: 0.8rem;
-  left: -2.8rem;
-  margin: 0;
-  border-left: 4px solid #53cbdd; // $aqua
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom:1rem;
+  margin-left: -2.8rem;
+  padding-top:0;
+  padding-bottom:0;
+  border-left: 4px solid $aqua;
   &:before {
     // content: url("icon-comment-quote.png");
     position: relative;
