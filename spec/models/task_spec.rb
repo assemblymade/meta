@@ -34,7 +34,7 @@ describe Task do
   describe "award" do
     it "creates award Activity but does not resolve the task" do
       expect { task.award!(core_member, comment) }.to change(Activity, :count).by(1)
-      expect(task.resolved?).to be_false
+      expect(task.resolved?).to be_falsy
     end
 
     it 'allows for awarding more than once' do
@@ -64,19 +64,19 @@ describe Task do
   describe "award and close" do
     it "transitions to resolved" do
       expect { task.award!(core_member, comment) }.to change(Activity, :count).by(1)
-      expect(task.resolved?).to be_false
-      expect(task.awarded?).to be_true
+      expect(task.resolved?).to be_falsy
+      expect(task.awarded?).to be_truthy
 
       task.close!(core_member)
 
-      expect(task.resolved?).to be_true
+      expect(task.resolved?).to be_truthy
     end
   end
 
   describe 'close' do
     it "creates award Activity and resolves the task" do
       expect { task.close!(core_member) }.to change(Activity, :count).by(1)
-      expect(task.closed?).to be_true
+      expect(task.closed?).to be_truthy
     end
   end
 end

@@ -6,8 +6,6 @@ class BaseMailer < ActionMailer::Base
   before_action :set_date
   after_action  :prevent_delivery_to_unsubscribed_users
 
-  helper :mail_url
-
   private
 
   def mailgun_tag(name)

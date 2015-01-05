@@ -17,7 +17,7 @@ describe ApplyForPitchWeek do
       allow(PitchWeekApplication).to receive(:create!) { application }
 
       expect(PitchWeekMailer).to receive(:awaiting_approval).with(application.id) { email }
-      expect(email).to receive(:deliver)
+      expect(email).to receive(:deliver_now)
 
       subject.perform(product.id, product.user.id)
     end

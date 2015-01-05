@@ -64,8 +64,8 @@ describe User do
        User.awaiting_personal_email.should be_empty
      end
 
-     User.awaiting_personal_email.should include(user)
-     UserMailer.follow_up(user.id)
-     User.awaiting_personal_email.should_not include(user)
+     expect(User.awaiting_personal_email).to include(user)
+     UserMailer.follow_up(user.id).deliver_now
+     expect(User.awaiting_personal_email).to_not include(user)
   end
 end
