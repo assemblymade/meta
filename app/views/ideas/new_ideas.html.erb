@@ -1,0 +1,229 @@
+<% title "Ideas" %>
+<% provide(:description, "") %>
+
+<%= track 'ideas_page.viewed' %>
+
+<%= render 'shared/navbar' %>
+<% activate_nav! :ideas %>
+
+<!--
+
+Front-end Process / CSS Architecture:
+
+- All features / functionality start out as a base component with a set of base styles.
+- There is one SCSS file per component.
+- All unique modifications are made in an isolated section of that same SCSS file. (Not inline or in a jsx file).
+- Use semantic naming conventions when defining uniques (page prefix, logical grouping, etc).
+
+example:
+
+<section class="hero ideas-hero">
+  <div class="hero-main">
+    <h1>stuff</h1>
+    <button class="pill-button theme-green shadow">
+      Heya
+    </button>
+  </div>
+</section>
+
+-->
+
+<!--
+reusable components
+  local nav
+  button
+  search (type 2)
+  tiles
+  pagination
+-->
+
+<main role="main">
+
+  <section class="new-hero new-hero-ideas"> <!-- .hero namespace is being used by legacy code. I'll re-factor & update the name of this component. -->
+    <div class="container">
+      <div class="header">
+        <img src="../assets/ideas/ideas-header-morse.png">
+      </div>
+      <div class="main">
+        <h1>
+          The best product ideas - built by all&nbsp;of&nbsp;us.
+        </h1>
+        <button type="button" class="pill-button pill-button-ideas">
+          <span class="title _fs1_5 _lh2_75">Add your product idea</span>
+        </button>
+      </div>
+      <div class="_footer">
+        <p>
+          Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea - ready to be built on Assembly.
+        </p>
+        <a href="#">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+<!--   <section class="feature ideas-feature">
+    <figure>
+      <figcaption>
+        <div class="morse _mb2">
+          <img src="../assets/ideas/ideas-header-morse.png">
+        </div>
+        <h1 class="_h1 _m0 _mb3 white">
+          The best product ideas - built by all&nbsp;of&nbsp;us.
+        </h1>
+        <button type="button" class="pill-button pill-button-theme-green pill-button-border pill-button-shadow _margin-align-center _mb2_75 _px3_25">
+          <span class="title _fs1_5 _lh2_75">Add your product idea</span>
+        </button>
+        <p class="white">
+          Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea - ready to be built on Assembly.
+        </p>
+        <a href="#" class="white _underline">Learn More</a>
+      </figcaption>
+    </figure>
+  </section> -->
+  <!-- <section class="tile-grid">
+    <div class="tile-grid-header">
+      <ul class="list-reset list-inline _m0 _mb1 _mq-768_mb0">
+        <li>
+          <a href="#" class="black">My Ideas</a>
+        </li>
+        <li>
+          <a href="#" class="black">Trending</a>
+        </li>
+        <li>
+          <a href="#" class="black">Popular</a>
+        </li>
+        <li>
+          <a href="#" class="black">New</a>
+        </li>
+        <li>
+          <a href="#" class="black">Topics</a>
+        </li>
+      </ul>
+    </div>
+    <div class="tile-grid-core">
+      <div class="item">
+        <div class="tile small-tile">
+          <h3>Sell digital products from your cloud storage account</h3>
+          <p>
+            Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea - ready to be built on Assembly.
+          </p>
+        </div>
+      </div>
+    </div>
+    <ul class="pagination">
+
+    </ul>
+  </section> -->
+
+</main>
+
+
+
+<!-- <div class="" style="background-image:url(../assets/ideas/ideas-header-bg.jpg)">
+  <div class="container">
+  <div class="row">
+
+    <div class="feature col-md-12 _mt2_25 _text-align-center">
+      <div class="_mb2">
+        <img src="../assets/ideas/ideas-header-morse.png">
+      </div>
+      <h1 class="_h1 _m0 _mb3 white">
+        The best product ideas - built by all&nbsp;of&nbsp;us.
+      </h1>
+      <button type="button" class="pill-button pill-button-theme-green pill-button-border pill-button-shadow _margin-align-center _mb2_75 _px3_25">
+        <span class="title _fs1_5 _lh2_75">Add your product idea</span>
+      </button>
+      <p class="white">
+        Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea - ready to be built on Assembly.
+      </p>
+      <a href="#" class="white _underline">Learn More</a>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="container _mt2_5">
+  <div class="row _mb2">
+    <div class="col-sm-8">
+      <ul class="list-reset list-inline _m0 _mb1 _mq-768_mb0">
+        <li>
+          <a href="#" class="black">My Ideas</a>
+        </li>
+        <li>
+          <a href="#" class="black">Trending</a>
+        </li>
+        <li>
+          <a href="#" class="black">Popular</a>
+        </li>
+        <li>
+          <a href="#" class="black">New</a>
+        </li>
+        <li>
+          <a href="#" class="black">Topics</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-4">
+      <div>
+        <input type="search" name="" value="" placeholder="Search Ideas" class="_w100p">
+      </div>
+    </div>
+  </div>
+  <div class="row _mb2">
+    <div class="col-sm-4">
+      <div class="bg-white rounded shadow">
+        <br><br><br><br><br><br><br><br><br><br>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="bg-white rounded shadow">
+        <br><br><br><br><br><br><br><br><br><br>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="bg-white rounded shadow">
+        <br><br><br><br><br><br><br><br><br><br>
+      </div>
+    </div>
+  </div>
+  <div class="row _mb2">
+    <div class="col-md-6">
+      <div class="bg-gray-5">
+        <br><br><br><br><br><br>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="bg-gray-5">
+        <br><br><br><br><br><br>
+      </div>
+    </div>
+  </div>
+  <div class="row _mb2">
+    <div class="col-md-4">
+      <div class="bg-white rounded shadow">
+        <br><br><br><br><br><br><br><br><br><br>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bg-white rounded shadow">
+        <br><br><br><br><br><br><br><br><br><br>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bg-white rounded shadow">
+        <br><br><br><br><br><br><br><br><br><br>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<%= render 'shared/footer' %>
+
+<% parent_layout 'application' %>
+
+<% content_for :javascript do %>
+<script>
+  function($) {
+     // var $body = $('body'),
+  })(jQuery);
+</script>
+<% end %>

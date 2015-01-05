@@ -1,0 +1,64 @@
+/* >> Hero Component >>>>>>>>>>>>>>>>>>>>
+=========================================== */
+
+/*
+-- HTML Pattern ----------------
+<section class="hero hero-delta">
+  <div class="header">
+    <p>Section Header Content</p>
+  </div>
+  <div class="main">
+    <p>Section Main Content</p>
+  </div>
+  <div class="footer">
+    <p>Section Footer Content</p>
+  </div>
+</section>
+*/
+
+// -- Handoff Notes --------------------
+
+.new-hero {
+// base
+  @import 'app/temp/style-guide-updates';  // details: https://assembly.com/meta/bounties/1038
+
+  //
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-color: $gray-4;
+  background-image: url(http://placehold.it/1440x450/8B909A/91969f&text=background+img);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  @media screen and (min-width: 768px) {
+    background-image: url(http://placehold.it/2560x900/8B909A/91969f&text=background+img);
+  }
+  .container {
+    @extend .text-1;
+    text-align: center;
+  }
+  .header, .main {
+    margin-bottom: 2rem;
+  }
+
+  &._hero-ideas {
+  // http://assembly.com/ideas
+    // color: $white;
+    // background-image: url(../assets/ideas/ideas-header-bg.jpg);
+    // background-position: top center;
+    @media screen and (min-width: 768px) {
+      // background-image: url(../assets/ideas/ideas-header-bg-lg.jpg);
+    }
+    h1 {
+      color: $white;
+      margin-bottom: 3rem;
+    }
+    a {
+      // color: $white;
+      // text-decoration:underline;
+    }
+    .main {
+
+    }
+  }
+}
