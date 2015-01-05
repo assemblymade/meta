@@ -1,0 +1,209 @@
+// -- TODO - This stylesheet has deprecated redundancies & unorganized styles.
+// ---- All styles worth preserving needs to be organized below
+// ---- Colors & Typography now have external partials. Relocate those styles.
+
+a:hover {
+  text-decoration: none;
+}
+
+.text-weight-normal {
+  font-weight: 400;
+}
+
+.text-large,
+.large {
+  font-size: $font-size-large;
+}
+
+.text-small {
+  font-size: $font-size-small;
+}
+
+.text-serif {
+  font-family: $font-family-serif;
+}
+
+@include text-emphasis-variant('.text-coins', $brand-coins);
+@include text-emphasis-variant('.text-info', $brand-info);
+@include text-emphasis-variant('.text-white', white);
+
+a.text-coins:hover {
+  color: #e3a400;
+}
+
+.list-inline-piped {
+  > li + li {
+    border-left: 1px solid $brand-divider;
+    padding-left: 5px + 4px; // + 4px accounts for inline-block whitespace
+  }
+}
+
+.list-inline-media {
+  @extend .list-inline;
+  display: inline-block;
+
+  > li {
+    padding-left: 1px;
+    padding-right: 1px;
+
+    &:first-of-type {
+      padding-left: 6px;
+    }
+  }
+}
+
+.list-piped {
+  @extend .list-inline;
+
+  > li + li {
+    border-left: 1px solid $brand-divider;
+    padding-left: 5px + 4px; // + 4px accounts for inline-block whitespace
+  }
+}
+
+.list-grid {
+  @extend .list-unstyled;
+  @include clearfix;
+
+  > li {
+    float: left;
+    padding: $padding-small-vertical;
+  }
+}
+
+blockquote {
+  position: relative;
+  top: 0.8rem;
+  left: -2.8rem;
+  margin: 0;
+  padding-bottom: 20px;
+  border-left: 4px solid #53cbdd; // $aqua
+  z-index: 0;
+  color: $gray-darker;
+
+  &:before {
+    // content: url("icon-comment-quote.png");
+    position: relative;
+    top: 0px;
+    left: -60px;
+  }
+
+  p {
+    position: relative;
+    left: 1.5rem;
+  }
+}
+
+.text-small-caps {
+  text-transform: uppercase;
+  font-size: 90%;
+}
+
+.text-copy {
+  padding: 26px $padding-xxl-horizontal 25px 68px;
+  font-size: 15px;
+  line-height: 1.764;
+  color: $text-copy;
+  border-radius: $border-radius-base;
+  border: 1px solid darken($text-copy-bg, 6%);
+  box-shadow: 0 1px 1px 0 $brand-shadow;
+  background-color: $text-copy-bg;
+  @include background-image-retina(("copy-deliverable-bg-horizontal", "copy-deliverable-bg"), ("png", "png"), (36px, 1px), (1px, 26px), ("repeat-y", "repeat"));
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: inherit;
+    color: inherit !important;
+    line-height: 1.764;
+    margin-bottom: floor(15px * 1.764);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+h1, h2, h3, h4, h5, h6 {
+  text-rendering: optimizeLegibility;
+}
+
+  > * {
+    margin-bottom: floor(15px * 1.764);
+  }
+
+  :first-child {
+    margin-top: 0;
+  }
+}
+
+code {
+  color: $red;
+  background-color: $gray-lighter;
+}
+
+mark,
+.mark {
+  border-radius: $border-radius-small;
+  color: darken($brand-warning, 33%);
+  background-color: lighten($state-warning-bg, 5%);
+}
+
+.link-hover-primary:hover {
+  color: $link-color !important;
+  text-decoration: none;
+}
+
+.link-hover-success:hover {
+  color: $brand-success !important;
+  text-decoration: none;
+}
+
+.link-hover-warning:hover {
+  color: $brand-warning !important;
+  text-decoration: none;
+}
+
+.link-hover-danger:hover {
+  color: $brand-danger !important;
+  text-decoration: none;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-stealth-link {
+  &, &:hover {
+    color: inherit
+  }
+}
+
+.text-muted-links {
+  color: $gray;
+
+  a {
+    color: inherit;
+  }
+}
+
+.text-white {
+  color: #fff;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.multiline-ellipsis {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: -o-ellipsis-lastline;
+}
