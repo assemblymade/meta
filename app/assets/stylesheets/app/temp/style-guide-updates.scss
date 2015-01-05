@@ -1,0 +1,48 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-sans-serif;
+  font-weight: bold;
+  line-height: $headings-line-height;
+}
+h1, .h1, h1 a, h1 p {
+  font-size: 3.5rem;        // 42/48
+  line-height: 4rem;
+}
+h2, .h2 {
+  font-size: 2.5rem;        // 30/36
+  line-height: 3rem;
+}
+h3, .h3 {
+  font-size: 2rem;          // 24/30
+  line-height: 2.5rem;
+}
+h4, .h4 {
+  font-size: 1.5rem;        // 18/22
+  line-height: 1.9rem;
+}
+h5, .h5 {
+  font-size: 1.3rem;        // 15/20
+  line-height: 1.7rem;
+}
+h6, .h6 {
+  font-size: 1.1rem;        // 13/20
+  line-height: 1.7rem;
+}
+h7, .h7 {
+  font-size: 1rem;          // 12/12
+  line-height: 1rem;
+}
+
+// General Copy
+
+.text-1, .text-1 a, .text-1 p {     // 20/28
+  font-size: 1.7rem;
+  line-height: 2.25rem;
+}
+.text-2, .text-2 a, .text-2 p {     // 15/24
+  font-size: 1.3rem;
+  line-height: 2rem;
+}
+.text-3, .text-3 a, .text-3 p {     // 13/20
+  font-size: 1.1rem;
+  line-height: 1.7rem;
+}

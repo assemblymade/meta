@@ -16,6 +16,10 @@ class IdeasController < ProductController
     @ideas = ideas.order(score: :desc).page(params[:page]).per(20)
   end
 
+  def new_ideas
+    render 'new_ideas', layout: nil
+  end
+
   def show
     find_idea!
 
