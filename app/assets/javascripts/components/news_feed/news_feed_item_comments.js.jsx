@@ -171,7 +171,7 @@ var NewsFeedItemComments = React.createClass({
 
   render: function() {
     return (
-      <div className="_mq-600_px3 px2">
+      <div className="_pl2 _pr3 _mq-600_px2 _mq-600_pr4">
         {this.renderComments()}
         {this.renderNewCommentForm()}
       </div>
