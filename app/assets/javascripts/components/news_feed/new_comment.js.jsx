@@ -132,7 +132,7 @@ var NewsFeedItemNewComment = React.createClass({
       return;
     }
 
-    if ((e.shiftKey || e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
+    if ((e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
       e.preventDefault();
       e.stopPropagation();
 
@@ -145,7 +145,7 @@ var NewsFeedItemNewComment = React.createClass({
       return;
     }
 
-    if ((e.shiftKey || e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
+    if ((e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
       e.preventDefault();
       e.stopPropagation();
 
