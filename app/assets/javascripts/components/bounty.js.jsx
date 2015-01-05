@@ -246,7 +246,7 @@ module.exports = React.createClass({
             {this.renderStartWorkButton()}
           </div>
 
-          <ul className="list-inline mt0 mb0 py1 right">
+          <ul className="list-inline mt0 mb0 py1 right _pr3">
             {this.renderEditButton()}
             {this.renderOpenButton()}
             {this.renderFollowButton()}
