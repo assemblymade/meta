@@ -9,10 +9,7 @@ describe MarkVectorFromText do
       Mark.create!({name: "elrond"})
       sample_text = "elrond"
       MarkVectorFromText.new.perform(user.id, sample_text)
-      # expect(
-      #   QueryMarks.new.legible_mark_vector(user.user_identity.get_mark_vector)
-      # ).to change(Marking, :count).by(1)
-
+      pending "Test still incomplete.  Check out Interpreter and AddMarkIdentity which are downstream."
     end
   end
 end
