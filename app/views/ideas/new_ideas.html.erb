@@ -34,6 +34,7 @@ reusable components
   button
   search (type 2)
   tiles
+  actionbar
   pagination
 -->
 
@@ -50,7 +51,6 @@ reusable components
         <button type="button" class="_button pill theme-green shadow text-shadow border">  <!-- namespace, same as above -->
           <span class="title">Add your product idea</span>
         </button>
-        <div class="footer">poop</div>
       </div>
       <div class="footer">
         <p>
@@ -65,10 +65,13 @@ reusable components
   <section class="tile-grid tile-grid-ideas">
     <div class="container">
       <div class="header">
-        <div class="table">
-          <div class="cell cell-one">
+        <nav class="tile-grid-nav">
+          <div class="item">
             <ul class="nav nav-pills">
-              <li class="active">
+              <li>
+                <a href="#">All Ideas</a>
+              </li>
+              <li>
                 <a href="#">My Ideas</a>
               </li>
               <li>
@@ -79,6 +82,9 @@ reusable components
               </li>
               <li>
                 <a href="#">New</a>
+              </li>
+              <li>
+                <a href="#">Greenlit</a>
               </li>
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
@@ -94,96 +100,796 @@ reusable components
               </li>
             </ul>
           </div>
-          <div class="cell cell-two">
+          <div class="item">
             <form class="navbar-form" role="search">
               <div class="form-group">
                 <input type="text" class="form-control" placeholder="Search Ideas">
               </div>
             </form>
           </div>
-        </div>
+        </nav>
       </div>
       <div class="main">
         <div class="grid fixed-small">
           <div class="item">
             <div class="tile tile-small">
-              <div class="flap"></div>
-              <div class="header">
-                <h4>Sell digital products from your cloud storage account</h4>
-              </div>
+              <div class="corner accent-green"></div>
               <div class="main">
-                <div class="content">
-                  <p>
-                    Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea - ready to be built on Assembly.
-                  </p>
-                </div>
-                <a class="ident">
-                  <img src="http://dummyimage.com/800x600/4d494d/686a82.gif&text=placeholder+image" alt="placeholder+image"> @mdeiters
+                <a href="#">
+                  <div class="xh4"> <!-- temp h4 due to bug: bounty link -->
+                    Sell digital products from your cloud storage account
+                  </div>
+                  <div class="content">
+                    <p>
+                      People are increasingly creating digital content, and there is no easy way to sell this content. The idea is to create a web platform where sellers can authenticate with their cloud storage accounts...
+                    </p>
+                  </div>
                 </a>
               </div>
               <div class="footer">
                 <div class="action-bar">
-                  
+                  <div class="item">
+                    <div class="details-group">
+                      <a class="ident" href="#">
+                        <img src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
+                        <span>You</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="action-group">
+                      <div class="item">
+                        <a href="#" class="comment-count">
+                          <span>
+                            <Icon icon="comment" />
+                          </span>
+                          24 Comments
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/p4cUn3W.png">
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/Hilon4j.png">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="progress-group">
+                      <div class="item">
+                        <progress max="100" value="80"></progress>
+                      </div>
+                      <div class="item">
+                        <div class="progress-count">
+                          <!-- 33 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="item">
             <div class="tile tile-small">
-              <div class="header">
-                <h3>Sell digital products from your cloud storage account</h3>
-                <p>
-                  Get feedback on your ideas, as they gain momentum and popularity we'll.
-                </p>
+              <div class="corner accent-blue"></div>
+              <div class="main">
+                <a href="#">
+                  <div class="xh4"> <!-- temp h4 due to bug: bounty link -->
+                    #TBT: Every Thursday SMS me an old photo
+                  </div>
+                  <div class="content">
+                    <p>
+                      If it's popular, we could offer users a free ad-supported version or a paid ad-free version.
+                    </p>
+                  </div>
+                </a>
+              </div>
+              <div class="footer">
+                <div class="action-bar">
+                  <div class="item">
+                    <div class="details-group">
+                      <a class="ident" href="#">
+                        <img src="https://gravatar.com/avatar/07af31f83a0d4ef6bd360bd14704408d?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
+                        <span>Pletcher</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="action-group">
+                      <div class="item">
+                        <a href="#" class="comment-count">
+                          <span>
+                            <Icon icon="comment" />
+                          </span>
+                          24 Comments
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/p4cUn3W.png">
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/Hilon4j.png">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="progress-group">
+                      <div class="item">
+                        <progress max="100" value="30"></progress>
+                      </div>
+                      <div class="item">
+                        <div class="progress-count">
+                          <!-- 33 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="item">
             <div class="tile tile-small">
-
-              <h3>Sell digital products from your cloud storage account</h3>
-              <p>
-                Get feedback on your ideas, 
-              </p>
+              <div class="corner accent-red"></div>
+              <div class="main">
+                <a href="#">
+                  <div class="xh4"> <!-- temp h4 due to bug: bounty link -->
+                    Sell digital products from your cloud storage account
+                  </div>
+                  <div class="content">
+                    <p>
+                      People are increasingly creating digital content, and there is no easy way to sell this content. The idea is to create a web platform where sellers can authenticate with their cloud storage accounts...
+                    </p>
+                  </div>
+                </a>
+              </div>
+              <div class="footer">
+                <div class="action-bar">
+                  <div class="item">
+                    <div class="details-group">
+                      <a class="ident" href="#">
+                        <img src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
+                        <span>You</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="action-group">
+                      <div class="item">
+                        <a href="#" class="comment-count">
+                          <span>
+                            <Icon icon="comment" />
+                          </span>
+                          24 Comments
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/p4cUn3W.png">
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/Hilon4j.png">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="progress-group">
+                      <div class="item">
+                        <progress max="100" value="60"></progress>
+                      </div>
+                      <div class="item">
+                        <div class="progress-count">
+                          <!-- 33 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="float-row">
             <a href="#" class="float-item">
-              <span>Top Trending</span>
+              <div class="h7">Top Trending</div>
               Design Ideas
             </a>
             <a href="#" class="float-item">
-              <span>Top Trending</span>
+              <div class="h7">Top Trending</div>
               Mobile Product Ideas
             </a>
           </div>
           <div class="item">
             <div class="tile tile-small">
-              <h3>Sell digital products from your cloud storage account</h3>
-              <p>
-                Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea - ready to be built on Assembly.
-              </p>
+              <div class="corner accent-blue"></div>
+              <div class="main">
+                <a href="#">
+                  <div class="xh4"> <!-- temp h4 due to bug: bounty link -->
+                    #TBT: Every Thursday SMS me an old photo
+                  </div>
+                  <div class="content">
+                    <p>
+                      If it's popular, we could offer users a free ad-supported version or a paid ad-free version.
+                    </p>
+                  </div>
+                </a>
+              </div>
+              <div class="footer">
+                <div class="action-bar">
+                  <div class="item">
+                    <div class="details-group">
+                      <a class="ident" href="#">
+                        <img src="https://gravatar.com/avatar/07af31f83a0d4ef6bd360bd14704408d?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
+                        <span>Pletcher</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="action-group">
+                      <div class="item">
+                        <a href="#" class="comment-count">
+                          <span>
+                            <Icon icon="comment" />
+                          </span>
+                          24 Comments
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/p4cUn3W.png">
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/Hilon4j.png">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="progress-group">
+                      <div class="item">
+                        <progress max="100" value="30"></progress>
+                      </div>
+                      <div class="item">
+                        <div class="progress-count">
+                          <!-- 33 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="item">
             <div class="tile tile-small">
-              <h3>Sell digital products from your cloud storage account</h3>
-              <p>
-                Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea - ready to be built on Assembly.
-              </p>
+              <div class="corner accent-red"></div>
+              <div class="main">
+                <a href="#">
+                  <div class="xh4"> <!-- temp h4 due to bug: bounty link -->
+                    Sell digital products from your cloud storage account
+                  </div>
+                  <div class="content">
+                    <p>
+                      People are increasingly creating digital content, and there is no easy way to sell this content. The idea is to create a web platform where sellers can authenticate with their cloud storage accounts...
+                    </p>
+                  </div>
+                </a>
+              </div>
+              <div class="footer">
+                <div class="action-bar">
+                  <div class="item">
+                    <div class="details-group">
+                      <a class="ident" href="#">
+                        <img src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
+                        <span>You</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="action-group">
+                      <div class="item">
+                        <a href="#" class="comment-count">
+                          <span>
+                            <Icon icon="comment" />
+                          </span>
+                          24 Comments
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/p4cUn3W.png">
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/Hilon4j.png">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="progress-group">
+                      <div class="item">
+                        <progress max="100" value="60"></progress>
+                      </div>
+                      <div class="item">
+                        <div class="progress-count">
+                          <!-- 33 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="item">
             <div class="tile tile-small">
-              <h3>Sell digital products from your cloud storage account</h3>
-              <p>
-                Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea - ready to be built on Assembly.
-              </p>
+              <div class="corner accent-green"></div>
+              <div class="main">
+                <a href="#">
+                  <div class="xh4"> <!-- temp h4 due to bug: bounty link -->
+                    Sell digital products from your cloud storage account
+                  </div>
+                  <div class="content">
+                    <p>
+                      People are increasingly creating digital content, and there is no easy way to sell this content. The idea is to create a web platform where sellers can authenticate with their cloud storage accounts...
+                    </p>
+                  </div>
+                </a>
+              </div>
+              <div class="footer">
+                <div class="action-bar">
+                  <div class="item">
+                    <div class="details-group">
+                      <a class="ident" href="#">
+                        <img src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
+                        <span>You</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="action-group">
+                      <div class="item">
+                        <a href="#" class="comment-count">
+                          <span>
+                            <Icon icon="comment" />
+                          </span>
+                          24 Comments
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/p4cUn3W.png">
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/Hilon4j.png">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="progress-group">
+                      <div class="item">
+                        <progress max="100" value="80"></progress>
+                      </div>
+                      <div class="item">
+                        <div class="progress-count">
+                          <!-- 33 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="tile tile-small">
+              <div class="corner accent-green"></div>
+              <div class="main">
+                <a href="#">
+                  <div class="xh4"> <!-- temp h4 due to bug: bounty link -->
+                    Sell digital products from your cloud storage account
+                  </div>
+                  <div class="content">
+                    <p>
+                      People are increasingly creating digital content, and there is no easy way to sell this content. The idea is to create a web platform where sellers can authenticate with their cloud storage accounts...
+                    </p>
+                  </div>
+                </a>
+              </div>
+              <div class="footer">
+                <div class="action-bar">
+                  <div class="item">
+                    <div class="details-group">
+                      <a class="ident" href="#">
+                        <img src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
+                        <span>You</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="action-group">
+                      <div class="item">
+                        <a href="#" class="comment-count">
+                          <span>
+                            <Icon icon="comment" />
+                          </span>
+                          24 Comments
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/p4cUn3W.png">
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/Hilon4j.png">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="progress-group">
+                      <div class="item">
+                        <progress max="100" value="80"></progress>
+                      </div>
+                      <div class="item">
+                        <div class="progress-count">
+                          <!-- 33 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="tile tile-small">
+              <div class="corner accent-blue"></div>
+              <div class="main">
+                <a href="#">
+                  <div class="xh4"> <!-- temp h4 due to bug: bounty link -->
+                    #TBT: Every Thursday SMS me an old photo
+                  </div>
+                  <div class="content">
+                    <p>
+                      If it's popular, we could offer users a free ad-supported version or a paid ad-free version.
+                    </p>
+                  </div>
+                </a>
+              </div>
+              <div class="footer">
+                <div class="action-bar">
+                  <div class="item">
+                    <div class="details-group">
+                      <a class="ident" href="#">
+                        <img src="https://gravatar.com/avatar/07af31f83a0d4ef6bd360bd14704408d?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
+                        <span>Pletcher</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="action-group">
+                      <div class="item">
+                        <a href="#" class="comment-count">
+                          <span>
+                            <Icon icon="comment" />
+                          </span>
+                          24 Comments
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/p4cUn3W.png">
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/Hilon4j.png">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="progress-group">
+                      <div class="item">
+                        <progress max="100" value="30"></progress>
+                      </div>
+                      <div class="item">
+                        <div class="progress-count">
+                          <!-- 33 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="tile tile-small">
+              <div class="corner accent-red"></div>
+              <div class="main">
+                <a href="#">
+                  <div class="xh4"> <!-- temp h4 due to bug: bounty link -->
+                    Sell digital products from your cloud storage account
+                  </div>
+                  <div class="content">
+                    <p>
+                      People are increasingly creating digital content, and there is no easy way to sell this content. The idea is to create a web platform where sellers can authenticate with their cloud storage accounts...
+                    </p>
+                  </div>
+                </a>
+              </div>
+              <div class="footer">
+                <div class="action-bar">
+                  <div class="item">
+                    <div class="details-group">
+                      <a class="ident" href="#">
+                        <img src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
+                        <span>You</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="action-group">
+                      <div class="item">
+                        <a href="#" class="comment-count">
+                          <span>
+                            <Icon icon="comment" />
+                          </span>
+                          24 Comments
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/p4cUn3W.png">
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/Hilon4j.png">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="progress-group">
+                      <div class="item">
+                        <progress max="100" value="60"></progress>
+                      </div>
+                      <div class="item">
+                        <div class="progress-count">
+                          <!-- 33 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="float-row">
+            <a href="#" class="float-item">
+              <div class="h7">Top Trending</div>
+              Design Ideas
+            </a>
+            <a href="#" class="float-item">
+              <div class="h7">Top Trending</div>
+              Mobile Product Ideas
+            </a>
+          </div>
+          <div class="item">
+            <div class="tile tile-small">
+              <div class="corner accent-green"></div>
+              <div class="main">
+                <a href="#">
+                  <div class="xh4"> <!-- temp h4 due to bug: bounty link -->
+                    Sell digital products from your cloud storage account
+                  </div>
+                  <div class="content">
+                    <p>
+                      People are increasingly creating digital content, and there is no easy way to sell this content. The idea is to create a web platform where sellers can authenticate with their cloud storage accounts...
+                    </p>
+                  </div>
+                </a>
+              </div>
+              <div class="footer">
+                <div class="action-bar">
+                  <div class="item">
+                    <div class="details-group">
+                      <a class="ident" href="#">
+                        <img src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
+                        <span>You</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="action-group">
+                      <div class="item">
+                        <a href="#" class="comment-count">
+                          <span>
+                            <Icon icon="comment" />
+                          </span>
+                          24 Comments
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/p4cUn3W.png">
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/Hilon4j.png">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="progress-group">
+                      <div class="item">
+                        <progress max="100" value="80"></progress>
+                      </div>
+                      <div class="item">
+                        <div class="progress-count">
+                          <!-- 33 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="tile tile-small">
+              <div class="corner accent-blue"></div>
+              <div class="main">
+                <a href="#">
+                  <div class="xh4"> <!-- temp h4 due to bug: bounty link -->
+                    #TBT: Every Thursday SMS me an old photo
+                  </div>
+                  <div class="content">
+                    <p>
+                      If it's popular, we could offer users a free ad-supported version or a paid ad-free version.
+                    </p>
+                  </div>
+                </a>
+              </div>
+              <div class="footer">
+                <div class="action-bar">
+                  <div class="item">
+                    <div class="details-group">
+                      <a class="ident" href="#">
+                        <img src="https://gravatar.com/avatar/07af31f83a0d4ef6bd360bd14704408d?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
+                        <span>Pletcher</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="action-group">
+                      <div class="item">
+                        <a href="#" class="comment-count">
+                          <span>
+                            <Icon icon="comment" />
+                          </span>
+                          24 Comments
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/p4cUn3W.png">
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/Hilon4j.png">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="progress-group">
+                      <div class="item">
+                        <progress max="100" value="30"></progress>
+                      </div>
+                      <div class="item">
+                        <div class="progress-count">
+                          <!-- 33 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="tile tile-small">
+              <div class="corner accent-red"></div>
+              <div class="main">
+                <a href="#">
+                  <div class="xh4"> <!-- temp h4 due to bug: bounty link -->
+                    Sell digital products from your cloud storage account
+                  </div>
+                  <div class="content">
+                    <p>
+                      People are increasingly creating digital content, and there is no easy way to sell this content. The idea is to create a web platform where sellers can authenticate with their cloud storage accounts...
+                    </p>
+                  </div>
+                </a>
+              </div>
+              <div class="footer">
+                <div class="action-bar">
+                  <div class="item">
+                    <div class="details-group">
+                      <a class="ident" href="#">
+                        <img src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&amp;s=36" />
+                        <span>You</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="action-group">
+                      <div class="item">
+                        <a href="#" class="comment-count">
+                          <span>
+                            <Icon icon="comment" />
+                          </span>
+                          24 Comments
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/p4cUn3W.png">
+                        </a>
+                      </div>
+                      <div class="item">
+                        <a href="#" class="action-icon">
+                          <img src="http://i.imgur.com/Hilon4j.png">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="progress-group">
+                      <div class="item">
+                        <progress max="100" value="60"></progress>
+                      </div>
+                      <div class="item">
+                        <div class="progress-count">
+                          <!-- 33 -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="footer">
+      <!-- <div class="footer">
         <nav>
           <ul class="pagination">
             <li class="disabled">
@@ -203,108 +909,10 @@ reusable components
             </li>
           </ul>
         </nav>
-      </div>
+      </div> -->
     </div>
   </section>
 </main>
-
-
-<!-- <div class="" style="background-image:url(../assets/ideas/ideas-header-bg.jpg)">
-  <div class="container">
-  <div class="row">
-
-    <div class="feature col-md-12 _mt2_25 _text-align-center">
-      <div class="_mb2">
-        <img src="../assets/ideas/ideas-header-morse.png">
-      </div>
-      <h1 class="_h1 _m0 _mb3 white">
-        The best product ideas - built by all&nbsp;of&nbsp;us.
-      </h1>
-      <button type="button" class="pill-button pill-button-theme-green pill-button-border pill-button-shadow _margin-align-center _mb2_75 _px3_25">
-        <span class="title _fs1_5 _lh2_75">Add your product idea</span>
-      </button>
-      <p class="white">
-        Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea - ready to be built on Assembly.
-      </p>
-      <a href="#" class="white _underline">Learn More</a>
-    </div>
-  </div>
-  </div>
-</div>
-<div class="container _mt2_5">
-  <div class="row _mb2">
-    <div class="col-sm-8">
-      <ul class="list-reset list-inline _m0 _mb1 _mq-768_mb0">
-        <li>
-          <a href="#" class="black">My Ideas</a>
-        </li>
-        <li>
-          <a href="#" class="black">Trending</a>
-        </li>
-        <li>
-          <a href="#" class="black">Popular</a>
-        </li>
-        <li>
-          <a href="#" class="black">New</a>
-        </li>
-        <li>
-          <a href="#" class="black">Topics</a>
-        </li>
-      </ul>
-    </div>
-    <div class="col-sm-4">
-      <div>
-        <input type="search" name="" value="" placeholder="Search Ideas" class="_w100p">
-      </div>
-    </div>
-  </div>
-  <div class="row _mb2">
-    <div class="col-sm-4">
-      <div class="bg-white rounded shadow">
-        <br><br><br><br><br><br><br><br><br><br>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="bg-white rounded shadow">
-        <br><br><br><br><br><br><br><br><br><br>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="bg-white rounded shadow">
-        <br><br><br><br><br><br><br><br><br><br>
-      </div>
-    </div>
-  </div>
-  <div class="row _mb2">
-    <div class="col-md-6">
-      <div class="bg-gray-5">
-        <br><br><br><br><br><br>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="bg-gray-5">
-        <br><br><br><br><br><br>
-      </div>
-    </div>
-  </div>
-  <div class="row _mb2">
-    <div class="col-md-4">
-      <div class="bg-white rounded shadow">
-        <br><br><br><br><br><br><br><br><br><br>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="bg-white rounded shadow">
-        <br><br><br><br><br><br><br><br><br><br>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="bg-white rounded shadow">
-        <br><br><br><br><br><br><br><br><br><br>
-      </div>
-    </div>
-  </div>
-</div> -->
 
 <%= render 'shared/footer' %>
 
