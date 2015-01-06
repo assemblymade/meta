@@ -3,14 +3,15 @@ require 'spec_helper'
 describe MarkVectorFromText do
   let(:user) { User.make! }
   let(:product) { Product.make! }
-  let(:marker) {Mark.create!({name: "Westernesse"})}
 
   describe '#perform' do
     it 'test marking a user from text' do
-      sample_text = "Westernesse was in the lands of Arnor, in the Second Age."
-      expect {
-        MarkVectorFromText.new.perform(user.id, sample_text)
-      }.to change(Marking, :count).by(1)
+      Mark.create!({name: "elrond"})
+      sample_text = "rails"
+      MarkVectorFromText.new.perform(user.id, sample_text)
+      # expect(
+      #   QueryMarks.new.legible_mark_vector(user.user_identity.get_mark_vector)
+      # ).to change(Marking, :count).by(1)
 
     end
   end
