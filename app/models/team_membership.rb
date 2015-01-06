@@ -41,7 +41,7 @@ class TeamMembership < ActiveRecord::Base
 
   def assign_vector_from_text
     if text = self.bio
-      MarkVectorFromText.perform_async(text)
+      MarkVectorFromText.perform_async(self.user_id, text)
     end
   end
 
