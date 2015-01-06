@@ -35,9 +35,7 @@
         <div style="margin-bottom: 10px"
              data-react-class="TagList"
              data-react-props="<%= {
-                tags: (@wip.tags ? @wip.tags.map do |tag|
-                  tag.name
-                end.as_json : []),
+                tags: (@wip.tags.any? ? @wip.tags.map(&:name) : []).as_json,
                 destination: true,
                 allowRemoval: true,
                 filterUrl: product_wips_path(@wip.product),
