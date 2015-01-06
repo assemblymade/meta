@@ -1,22 +1,17 @@
 class Interpreter
 
   def marks_in_text(text)
-    marks = Mark.all.pluck(:name)
+    marks = Mark.all.map{|q| q.name}
     text = text.downcase.gsub(/[^A-Za-z0-9\s]/i, '')
     words = text.split(' ')
     mark_words = words.select{|a| marks.include?(a)}
 
-    prods = Product.where('name ilike any (array[?])', words)
-    marks_products = prods.map do |prod|
-      prod.mark_vector.sort_by do |mv|
-        -mv[1]
-      end.take(5)
-    end.flatten(1).map do |mark_id|
-      Mark.find(mark_id[0]).name
-    end
+    prods = Product.where(state: ['greenlit', 'profitable']).select{|a| words.include?(a.name.downcase) }
+    marks_products = prods.map{|a| a.mark_vector.sort_by{|a| -1*a[1]}.take(5)}.flatten(1).map{|a| a[0]}.map{|a| Mark.find(a).name}
 
     mark_words = marks_products + mark_words
-    mark_words.uniq
+    mark_words = mark_words.uniq
+    return mark_words
   end
 
   def mark_vector_from_text(text)
@@ -46,8 +41,8 @@ class Interpreter
         result.append([correlation.to_f, wip])
       end
     end
-    n = 0
-    result.sort_by{ |a, b| -a }
+    n=0
+    result.sort_by{|a, b| -1*a}
   end
 
 end

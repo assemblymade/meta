@@ -673,23 +673,7 @@ class Product < ActiveRecord::Base
   end
 
   def mark_vector
-    #get unnormalized mark vector of product itself
     my_mark_vector = QueryMarks.new.mark_vector_for_object(self)
-
-    #get unnormalized mark vector of wips
-    # FIXME: Don't iterate through every wip, especially not in proc
-    # These values should be cached on the product itself and only updated
-    # when a new task is added
-    self.wips.each do |w|
-      my_child_mark_vector = QueryMarks.new.mark_vector_for_object(w)
-
-      #scale parent vector by constant
-      my_child_mark_vector = QueryMarks.new.scale_mark_vector(my_child_mark_vector, 0.2)
-
-      my_mark_vector = QueryMarks.new.add_mark_vectors(my_child_mark_vector, my_mark_vector)
-    end
-
-    my_mark_vector
   end
 
   def normalized_mark_vector()

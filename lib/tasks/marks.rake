@@ -73,6 +73,17 @@ namespace :marks do
     end
   end
 
+  desc "retroactively add wip marks to parent product markings, run once"
+  task :wip_markings_on_product => :environment do
+    n=Wip.where(type: "Task").count
+    m=0
+    Wip.where(type: "Task").each do |w|
+        m=m+1
+        puts "#{m} / #{n}"
+        w.update_product_markings
+    end
+  end
+
   task :unify_marks => :environment do
     require 'json'
     tags = {}

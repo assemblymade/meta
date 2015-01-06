@@ -1,8 +1,16 @@
 class AdjustMarkings
   include Sidekiq::Worker
-  def perform(user_id, marked_object_id, marked_object_type, scalar)
+  def perform(markable_id, markable_type, marked_object_id, marked_object_type, scalar)
 
-    user = User.find(user_id)
+    if markable_type == "User"
+      user = User.find(markable_id)
+      markable = user.user_identity
+    elsif markable_type == "Product"
+      markable = Product.find(markable_id)
+    elsif markable_type == "Wip"
+      markable = Wip.find(markable_id)
+    end
+
 
     if marked_object_type == "Product"
       marked_object = Product.where(id: marked_object_id)
@@ -20,8 +28,7 @@ class AdjustMarkings
       end
     end
 
-    user_identity = user.user_identity
-    old_mark_vector = QueryMarks.new.mark_vector_for_object(user_identity)
+    old_mark_vector = QueryMarks.new.mark_vector_for_object(markable)
 
     if marked_object
       if marked_object.class.name == "Wip"
@@ -37,7 +44,7 @@ class AdjustMarkings
       end
 
       cumulative_mark_vector = QueryMarks.new.add_mark_vectors(old_mark_vector, new_mark_vector)
-      QueryMarks.new.update_markings_to_vector_for_object(user_identity, cumulative_mark_vector)
+      QueryMarks.new.update_markings_to_vector_for_object(markable, cumulative_mark_vector)
 
     end
   end
