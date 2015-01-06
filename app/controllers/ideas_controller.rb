@@ -6,7 +6,14 @@ class IdeasController < ProductController
 
   def index
     # Only NFIs associated with Ideas have a nil associated product
-    ideas = Idea.includes(:news_feed_item).all
+    # TODO: Move these filters/sorts to something like FilterWipsQuery
+    ideas = if params[:filter] == 'user'
+      Idea.by(current_user)
+    elsif params[:filter] == 'greenlit'
+      Idea.greenlit
+    else
+      Idea
+    end.send((params[:sort] || 'trending').to_sym).includes(:news_feed_item).all
 
     @heartables = ideas.map(&:news_feed_item)
     @user_hearts = if signed_in?
@@ -14,6 +21,12 @@ class IdeasController < ProductController
     end
 
     @ideas = ideas.order(score: :desc).page(params[:page]).per(20)
+  end
+
+  def user_ideas
+    @ideas = Idea.by(current_user).order(score: :desc).page(params[:page]).per(20)
+
+    render :index
   end
 
   def show
@@ -69,11 +82,11 @@ class IdeasController < ProductController
 
   private
 
-    def find_idea!
-      @idea = Idea.friendly.find(params[:id])
-    end
+  def find_idea!
+    @idea = Idea.friendly.find(params[:id])
+  end
 
-    def idea_params
-      params.require(:idea).permit([:name, :body])
-    end
+  def idea_params
+    params.require(:idea).permit([:name, :body])
+  end
 end

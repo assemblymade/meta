@@ -1,6 +1,9 @@
 <%= track 'ideas_page.viewed' %>
 <% title "Ideas" %>
 <% activate_nav! :ideas %>
+<% activate_nav! (params[:sort] || 'trending').to_sym %>
+<% activate_nav! (params[:filter] || '').to_sym %>
+
 <h2 class="text-center mid-gray">Vote on ideas and find collaborators</h2>
 <div class="text-center">
   <span>
@@ -8,6 +11,25 @@
   </span>
 </div>
 <div class="idea-feed mt3">
+  <ul class="nav nav-tabs">
+    <% if current_user %>
+      <li class="<%= nav_active_class(:user) %>">
+        <a href="<%= ideas_path(filter: 'user') %>">My ideas</a>
+      </li>
+    <% end %>
+
+    <li class="<%= nav_active_class(:trending) %>">
+      <a href="<%= ideas_path %>">Trending</a>
+    </li>
+
+    <li class="<%= nav_active_class(:greenlit) %>">
+      <a href="<%= ideas_path(filter: 'greenlit') %>">Greenlit</a>
+    </li>
+
+    <li class="<%= nav_active_class(:newness) %>">
+      <a href="<%= ideas_path(sort: 'newness') %>">New</a>
+    </li>
+  </ul>
   <% @ideas.each do |idea| %>
     <div class="idea-feed-item card p3">
       <div class="mt0 mb2">
@@ -30,6 +52,7 @@
       </h4>
       <div class="mb4 mt2">
         <div class="left">
+
           <% unless idea.marks.empty? %>
             <ul class="list-inline mb0">
               <% idea.marks.each do |mark| %>
@@ -37,6 +60,7 @@
               <% end %>
             </ul>
           <% end %>
+
         </div>
         <div class="text-muted right">
           Submitted by <%= link_to "@#{idea.creator_username}", idea.user, class: 'text-stealth-link' %>
@@ -46,5 +70,3 @@
   <% end %>
   <%= paginate @ideas, theme: 'twitter-bootstrap-3' %>
 </div>
-
-
