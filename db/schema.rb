@@ -504,6 +504,8 @@ ActiveRecord::Schema.define(version: 20150106200506) do
   end
 
   create_table "platform_metrics", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.float    "mean_product_responsiveness"
+    t.float    "median_product_responsiveness"
     t.datetime "calculated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
