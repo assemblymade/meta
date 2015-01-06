@@ -110,7 +110,7 @@ describe TasksController do
     it 'unmutes a wip' do
       patch :watch, product_id: product.slug, wip_id: wip.number, task: { title: 'Foo' }
       expect(response.status).to eq(302)
-      expect(assigns(:wip).followed_by?(worker)).to be_true
+      expect(assigns(:wip).followed_by?(worker)).to be_truthy
     end
   end
 

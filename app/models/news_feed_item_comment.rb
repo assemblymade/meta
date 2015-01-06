@@ -41,7 +41,7 @@ class NewsFeedItemComment < ActiveRecord::Base
   end
 
   def url_params
-    [news_feed_item.url_params, anchor: id]
+    [news_feed_item.url_params, anchor: id].flatten
   end
 
   def mentioned_users

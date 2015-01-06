@@ -35,11 +35,11 @@ describe Watching do
     end
 
     it 'returns true if watched' do
-      expect(Watching.watched?(user, watchable)).to be_true
+      expect(Watching.watched?(user, watchable)).to be_truthy
     end
 
     it 'returns false if unwatched' do
-      expect(Watching.watched?(non_watcher, watchable)).to be_false
+      expect(Watching.watched?(non_watcher, watchable)).to be_falsy
     end
   end
 
@@ -50,7 +50,7 @@ describe Watching do
 
       Watching.auto_watch!(user, watchable)
 
-      expect(Watching.watched?(user, watchable)).to be_false
+      expect(Watching.watched?(user, watchable)).to be_falsy
     end
   end
 end

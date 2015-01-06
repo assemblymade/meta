@@ -27,6 +27,9 @@ class SecureReplyTo
     # special case while mailgun clears out old emails
     if object_type.downcase == 'newsfeeditem'
       NewsFeedItem.find(object_id)
+    # special case while we're creating Event::Comments on wips
+    elsif object_type.downcase == 'wip'
+      NewsFeedItem.find_by(target_id: object_id)
     else
       object_type.camelcase.constantize.find(object_id)
     end

@@ -46,7 +46,7 @@ class WipsController < ProductController
 
   def update
     UpdatesWip.update(@wip, update_wip_params, current_user)
-    respond_with [@wip.product, @wip]
+    respond_with @wip.product, @wip
   end
 
   def apply_tags

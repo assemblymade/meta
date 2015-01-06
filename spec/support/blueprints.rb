@@ -170,6 +170,7 @@ Event::Comment.blueprint do
   user
   wip  { Discussion.make! }
   body { Faker::Lorem.paragraph }
+  attachments { [] }
 end
 
 Financial::Account.blueprint do

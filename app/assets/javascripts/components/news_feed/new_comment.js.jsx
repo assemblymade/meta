@@ -132,7 +132,7 @@ var NewsFeedItemNewComment = React.createClass({
       return;
     }
 
-    if ((e.shiftKey || e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
+    if ((e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
       e.preventDefault();
       e.stopPropagation();
 
@@ -145,7 +145,7 @@ var NewsFeedItemNewComment = React.createClass({
       return;
     }
 
-    if ((e.shiftKey || e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
+    if ((e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
       e.preventDefault();
       e.stopPropagation();
 
@@ -184,7 +184,7 @@ var NewsFeedItemNewComment = React.createClass({
     return (
       <div className="clearfix" style={{ paddingBottom: '2.5rem' }}>
         {this.renderAvatar()}
-        <div className={this.props.hideAvatar ? null : "_px3_5"}>
+        <div className={this.props.hideAvatar ? null : "_pl3_5"}>
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
               <TypeaheadUserTextArea
@@ -230,7 +230,7 @@ var NewsFeedItemNewComment = React.createClass({
     var classes = this.buttonClasses('btn-primary');
 
     return (
-      <div className="clearfix mt3 mr3 px3">
+      <div className="clearfix mt3">
         <button className={classes}
             href="javascript:void(0);"
             onClick={this.submitComment}>

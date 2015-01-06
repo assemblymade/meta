@@ -242,11 +242,11 @@ module.exports = React.createClass({
     if (window.app.currentUser()) {
       return (
         <div className="card-footer p3 clearfix">
-          <div className="left">
+          <div className="left _pl1">
             {this.renderStartWorkButton()}
           </div>
 
-          <ul className="list-inline mt0 mb0 py1 right">
+          <ul className="list-inline mt0 mb0 py1 right _pr3">
             {this.renderEditButton()}
             {this.renderOpenButton()}
             {this.renderFollowButton()}

@@ -50,7 +50,7 @@ describe Product do
     its(:core_team) { should =~ [badass] }
 
     it 'checks membership' do
-      product.core_team?(badass).should be_true
+      product.core_team?(badass).should be_truthy
     end
   end
 

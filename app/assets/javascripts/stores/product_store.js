@@ -18,6 +18,10 @@ class ProductStore extends Store {
     })
   }
 
+  getName() {
+    return _product.name
+  }
+
   getProduct() {
     return _product
   }
