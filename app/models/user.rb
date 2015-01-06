@@ -17,7 +17,6 @@ class User < ActiveRecord::Base
 
   has_many :assembly_assets
   has_many :awards, foreign_key: 'winner_id'
-  has_many :choices
   has_many :deeds
   has_many :events
   has_many :hearts
