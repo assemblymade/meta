@@ -7,7 +7,7 @@ class StorySerializer < ApplicationSerializer
   attributes :key, :body_preview, :sentences, :updated, :url
 
   def url
-    url_for(object.url_params)
+    object.url_params && url_for(object.url_params)
   end
 
   def subject
