@@ -37,12 +37,12 @@
     > .header, > .main {
       margin-bottom: 2rem;
     }
-    > .footer {
-      // bootstrap overwrite
-      margin:0;
-      padding:0;
-      border: none;
-    }
+  }
+  .footer {
+    // bootstrap overwrite
+    margin:0;
+    padding:0;
+    border: none;
   }
 }
 
