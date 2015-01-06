@@ -7,7 +7,7 @@ describe MarkVectorFromText do
   describe '#perform' do
     it 'test marking a user from text' do
       Mark.create!({name: "elrond"})
-      sample_text = "rails"
+      sample_text = "elrond"
       MarkVectorFromText.new.perform(user.id, sample_text)
       # expect(
       #   QueryMarks.new.legible_mark_vector(user.user_identity.get_mark_vector)
