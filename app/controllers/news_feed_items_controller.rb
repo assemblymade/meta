@@ -6,7 +6,7 @@ class NewsFeedItemsController < ProductController
     begin
       redirect_to @news_feed_item.target
     rescue => e
-      redirect_to url_for(@product, @news_feed_item.target)
+      redirect_to url_for([@product, @news_feed_item.target])
     end
   end
 
