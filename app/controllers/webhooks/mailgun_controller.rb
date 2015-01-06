@@ -43,7 +43,7 @@ class Webhooks::MailgunController < WebhookController
       address = SecureReplyTo.parse(reply_to)
 
       user = User.find_by(username: address.user_id)
-      thread_entity = address.object_type.constantize.find(address.object_id)
+      thread_entity = address.find_thread!
 
       if user && thread_entity
         thread_entity.comments.create!(user: user, body: params['stripped-text'])

@@ -35,6 +35,26 @@ describe UsersController do
     end
   end
 
+  describe '#flag' do
+    it 'flags a user' do
+      patch :flag, id: user.username
+
+      expect(assigns(:user).flagged_at).to be_within(5).of(Time.now)
+    end
+  end
+
+  describe '#unflag' do
+    it 'unflags a user' do
+      patch :flag, id: user.username
+
+      expect(assigns(:user).flagged_at).to be_within(5).of(Time.now)
+
+      patch :unflag, id: user.username
+
+      expect(assigns(:user).flagged_at).to be_nil
+    end
+  end
+
   describe '#tracking' do
     it 'returns a ReadRaptor tracking URL' do
       get :tracking, article_id: wip.id

@@ -135,6 +135,7 @@ User.blueprint do
   password              { 'password' }
   password_confirmation { 'password' }
   last_sign_in_ip       { '1.1.1.1'}
+  flagged_at { nil }
 end
 
 UserIdentity.blueprint do
@@ -169,6 +170,7 @@ Event::Comment.blueprint do
   user
   wip  { Discussion.make! }
   body { Faker::Lorem.paragraph }
+  attachments { [] }
 end
 
 Financial::Account.blueprint do

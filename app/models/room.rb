@@ -5,7 +5,7 @@ class Room < ActiveRecord::Base
   has_many :watchings, :as => :watchable
   has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
 
-  validate :number, uniqueness: { scope: :product }
+  validates :number, uniqueness: { scope: :product }
 
   def self.create_for!(product, target)
     product.with_lock do

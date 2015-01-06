@@ -15,24 +15,29 @@ class DiscussionStore extends Store {
 
     this.dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
-      case ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT:
-        confirmComment(action.data)
+        case ActionTypes.COMMENT_UPDATED:
+          updateComment(action)
 
-        this.emitChange()
-        break
-      case ActionTypes.NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT:
-        optimisticallyAddComment(action.data)
+          this.emitChange()
+          break
+        case ActionTypes.DISCUSSION_RECEIVE:
+          setComments(action)
+          setEvents(action)
 
-        this.emitChange()
-        break
-      case ActionTypes.DISCUSSION_RECEIVE:
-        setComments(action)
-        setEvents(action)
+          this.emitChange()
+          break
+        case ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT:
+          confirmComment(action.data)
 
-        this.emitChange()
-        break
-      default:
-        // fall through
+          this.emitChange()
+          break
+        case ActionTypes.NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT:
+          optimisticallyAddComment(action.data)
+
+          this.emitChange()
+          break
+        default:
+          // fall through
       }
     });
   }
@@ -103,4 +108,23 @@ function setEvents(action) {
   var itemId = action.itemId;
 
   _events[itemId] = events;
+}
+
+function updateComment(action) {
+  var comment = action.comment;
+  var itemId = comment.news_feed_item_id;
+  var comments = _comments.confirmed[itemId];
+
+  if (comments && comments.length) {
+    for (var i = 0, l = comments.length; i < l; i++) {
+      var c = comments[i];
+
+      if (c.id === comment.id) {
+        // `c` holds the value of comments[i], not a reference to it;
+        // we need to update comments[i] directly
+        comments[i] = comment;
+        break;
+      }
+    }
+  }
 }

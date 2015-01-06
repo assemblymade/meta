@@ -1,4 +1,6 @@
-var NewsFeedItemBountyWin = React.createClass({
+var NewsFeedItemEvent = require('./news_feed_item_event.js.jsx');
+
+module.exports = React.createClass({
   displayName: 'NewsFeedItemBountyWin',
   propTypes: {
     actor: React.PropTypes.object.isRequired,
@@ -10,26 +12,12 @@ var NewsFeedItemBountyWin = React.createClass({
     var target = this.props.target;
 
     return (
-      <div className="timeline-item">
-        <div className="media">
-          <div className="pull-left">
-            <div className="marker marker-green">
-              <span className="icon icon-star"></span>
-            </div>
-          </div>
+      <NewsFeedItemEvent>
+        <a href={target.url} className="black bold">{target.username}</a>
+        {' '} was awarded this by {' '}
 
-          <div className="media-body">
-            <div className="media-heading omega">
-              <a href={target.url}>{target.username}</a>
-              {' '} was awarded this by {' '}
-
-              <a href={actor.url}>{actor.username}</a>
-            </div>
-          </div>
-        </div>
-      </div>
+        <a href={actor.url} className="black bold">{actor.username}</a>
+      </NewsFeedItemEvent>
     );
   }
 });
-
-module.exports = NewsFeedItemBountyWin;

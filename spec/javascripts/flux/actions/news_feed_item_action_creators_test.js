@@ -18,9 +18,25 @@ describe('NewsFeedItemActionCreators', function() {
     });
   });
 
+  describe('subscribe', function() {
+    it('makes an AJAX request to subscribe to a news feed item', function() {
+      NewsFeedItemActionCreators.subscribe('product', 'nfi_id');
+
+      expect($.ajax).toBeCalled();
+    });
+  });
+
   describe('unarchive', function() {
     it('makes an AJAX request to unarchive a news feed item', function() {
       NewsFeedItemActionCreators.unarchive('product', 'nfi_id');
+
+      expect($.ajax).toBeCalled();
+    });
+  });
+
+  describe('unsubscribe', function() {
+    it('makes an AJAX request to unsubscribe from a news feed item', function() {
+      NewsFeedItemActionCreators.unsubscribe('product', 'nfi_id');
 
       expect($.ajax).toBeCalled();
     });

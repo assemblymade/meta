@@ -3,7 +3,7 @@ class NewsFeedItemCommentSerializer < ApplicationSerializer
   include TippableSerializer
 
   has_one :user, serializer: UserSerializer
-  attributes :body, :created_at, :markdown_body, :url
+  attributes :body, :created_at, :markdown_body, :news_feed_item_id, :url
 
   attributes :heartable_id, :heartable_type, :hearts_count
 

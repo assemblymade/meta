@@ -41,10 +41,11 @@ class CommentMailer < BaseMailer
     end
   end
 
-  # private
-  def target_name(nfi)
-    owner = nfi.source == @user ? 'owner' : 'other'
-    target_type = nfi.target.class.name.underscore
-    I18n.t("stories.subjects.long.#{target_type}.#{owner}", nfi.target.attributes.symbolize_keys)
+  def url_test
+    @user = User.find_by!(username: 'whatupdave')
+
+    @comment = NewsFeedItemComment.find('dee8ec69-0901-4699-b6b0-b0b6e9e7d1b7')
+
+    mail to: @user.email, subject: 'URL testing'
   end
 end

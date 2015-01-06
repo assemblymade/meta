@@ -2,7 +2,11 @@ class HeartablesController < ApplicationController
   before_action :authenticate_user!, except: :hearts
 
   def index
+    @hearts = Heart.includes(user).where(heartable_id: params[:heartable_id])
 
+    render json: {
+      hearts: ActiveModel::ArraySerializer.new(@hearts)
+    }
   end
 
   def love

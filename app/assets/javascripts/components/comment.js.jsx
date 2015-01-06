@@ -8,7 +8,9 @@ var Icon = require('./icon.js.jsx');
 var Love = require('./love.js.jsx');
 var Markdown = require('./markdown.js.jsx');
 var NewComment = require('./news_feed/new_comment.js.jsx');
-var ProductStore = require('../stores/product_store')
+var NewCommentActionCreators = require('../actions/new_comment_action_creators');
+var ProductStore = require('../stores/product_store');
+var Routes = require('../routes');
 var TipsUi = require('./tips_ui.js.jsx');
 var UserStore = require('../stores/user_store');
 
@@ -27,6 +29,13 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function() {
+    if (this.refs.coreIndicator) {
+      $(this.refs.coreIndicator.getDOMNode()).tooltip({
+        container: 'body',
+        placement: 'top'
+      });
+    }
+
     CommentStore.addChangeListener(this.getUpdatedComment);
   },
 
@@ -65,47 +74,36 @@ module.exports = React.createClass({
 
     return (
       <div id={this.props.id} className="timeline-item">
-        <div className="left activity-avatar">
-          <Avatar user={author} size={30} />
+        <div className="left activity-avatar _inline-block">
+          <a href={Routes.user_path({ id: this.props.author.username })}>
+            <Avatar user={author} size={30} />
+          </a>
         </div>
 
-        {this.renderEllipsisMenu()}
+        <div className="left _inline-block" style={{ position: 'relative', left: '-8px', top: '-6px' }}>
+          {this.renderCoreTeamIcon()}
+        </div>
+
         {this.renderComment()}
       </div>
-    )
+    );
   },
 
-  renderAwardOptions: function() {
+  renderAwardOption: function() {
     if (this.currentUserIsCore() && this.props.awardUrl) {
       var id = this.props.id;
       var username = this.props.author.username;
       var awardUrl = this.props.awardUrl;
 
-      return [
-        <li key={'award-' + id}>
-          <a className="event-award"
-              href={awardUrl + '?event_id=' + id}
-              data-method="patch"
-              data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
-            <span className="ml0 mr2">
-              <Icon icon="star-o" />
-            </span>
-            {'Award bounty to @' + username + ' and keep it open'}
-          </a>
-        </li>,
-
-        <li key={'award-and-close-' + id}>
-          <a className="event-award"
-              href={awardUrl + '?event_id=' + id + '&close=true'}
-              data-method="patch"
-              data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
-            <span className="ml0 mr2">
-              <Icon icon="star" />
-            </span>
-            {'Award bounty to @' + username + ' and close it'}
-          </a>
-        </li>
-      ];
+      return (
+        <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 gray-2 _h6"
+            href={awardUrl + '?event_id=' + id}
+            key={'award-' + id}
+            data-method="patch"
+            data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
+          Award
+        </a>
+      );
     }
   },
 
@@ -124,23 +122,42 @@ module.exports = React.createClass({
     }
 
     var classes = React.addons.classSet({
-      'activity-content': true,
       'gray-dark': this.isOptimistic()
     });
 
     return (
-      <div className="overflow-hidden activity-body px3">
-        <div className="gray-2" style={{ display: 'inline-block' }}>
-          <a className="bold black" href={author.url}>{author.username}</a>
-          {this.renderLove()}
-          {this.renderTips()}
+      <div className="px4 _hover-toggle">
+        <div className="inline-block">
+          <a className="inline-block bold h6 mt0 mb0 _mr0_5 black" href={author.url}>{author.username}</a>
         </div>
+
+        {this.renderTimestamp()}
 
         <div className={classes}>
           <Markdown content={body} normalized={true} />
         </div>
+
+        <div className="inline-block _pt0_5">
+          {this.renderTips()}
+          {this.renderLove()}
+          {this.renderEditOption()}
+          {this.renderReply()}
+          {this.renderAwardOption()}
+        </div>
       </div>
     );
+  },
+
+  renderCoreTeamIcon: function() {
+    var author = this.props.author;
+
+    if (_(ProductStore.getCoreTeamIds()).contains(author.id)) {
+      return <img src="/assets/core_icon.svg"
+          width="12"
+          ref="coreIndicator"
+          data-toggle="tooltip"
+          title={'@' + author.username + ' is a member of the ' + ProductStore.getName() + ' core team'} />;
+    }
   },
 
   renderEditableComment: function() {
@@ -161,81 +178,79 @@ module.exports = React.createClass({
 
     if (UserStore.getId() === this.props.author.id) {
       return (
-        <li key={'edit-options-' + this.props.id}>
-          <a href="javascript:void(0);" onClick={this.triggerEditMode}>
-            <span className="ml0 mr2">
-              <Icon icon="pencil" />
-            </span>
-            Edit comment
-          </a>
-        </li>
+        <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 gray-2 _h6" href="javascript:void(0);" onClick={this.triggerEditMode}>
+          Edit
+        </a>
       );
     }
-  },
-
-  renderEllipsisMenu: function() {
-    if (this.state.editing) {
-      return;
-    }
-
-    var id = this.props.id;
-
-    return (
-      <div className="activity-actions clearfix right">
-        <ul className="list-inline right">
-          <li>
-
-            <div className="dropdown">
-              <a href="javascript:void(0);"
-                  className="dropdown-toggle"
-                  id={"dropdown-" + id}
-                  data-toggle="dropdown">
-                <span className="icon icon-ellipsis" style={{ fontSize: 18 }} />
-              </a>
-
-              <ul className="dropdown-menu dropdown-menu-right text-small"
-                  role="menu"
-                  aria-labelledby={"dropdown-" + id}
-                  key={'ul-' + id}>
-
-                <li>
-                  <a href={this.props.url} role="menuitem">
-                    <i className="icon icon-link dropdown-glyph"></i>
-                      Permalink
-                  </a>
-                </li>
-
-                {this.renderAwardOptions()}
-                {this.renderEditOption()}
-              </ul>
-
-            </div>
-          </li>
-        </ul>
-      </div>
-    );
   },
 
   renderLove: function() {
     if (this.props.heartable) {
-      return (
-        <div className="ml2 right" style={{ display: 'inline-block' }}>
+      return [
+        <div className="_inline-block _mb0_25 _h6 gray-2">
           <Love heartable_id={this.props.id} heartable_type='NewsFeedItemComment' />
+        </div>,
+
+        <div className="_inline-block _h6">
+          <Lovers heartable_id={this.props.id} />
         </div>
-      );
+      ];
     }
   },
 
-  renderTips: function() {
+  renderReply: function() {
+    if (this.props.author.id === UserStore.getId()) {
+      return;
+    }
+
     return (
-      <div className="ml2 right" style={{ display: 'inline-block' }}>
+      <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 gray-2 _h6"
+          href="javascript:void(0);"
+          onClick={this.reply.bind(this, this.props.author)}>
+        Reply
+      </a>
+    );
+  },
+
+  renderTimestamp: function() {
+    return (
+      <div className="_h6 _text-align-right _inline-block">
+        <div className="_none _hover-toggle-item-block _pr0_75">
+          <a href={this.props.url} className="gray-2">{moment(this.props.timestamp).fromNow()}</a>
+        </div>
+      </div>
+    );
+  },
+
+  renderTips: function() {
+    if (this.props.author.id === UserStore.getId()) {
+      return;
+    }
+
+    // TipsUi is causing display issues :(
+    return (
+      <span className="_pr0_75 _inline-block _ht1_5 _h6">
         <TipsUi
             viaType="NewsFeedItemComment"
             viaId={this.props.id}
             recipient={this.props.author}
             tips={this.props.tips} />
-      </div>
+      </span>
     );
+  },
+
+  reply: function(user, e) {
+    e.preventDefault();
+
+    NewCommentActionCreators.updateComment(this.props.news_feed_item_id, '@' + user.username);
+
+    var el = document.getElementById('event_comment_body');
+    $('html, body').animate({
+      scrollTop: $(el).offset().top
+    }, 600);
+
+    el.focus();
   },
 
   triggerEditMode: function(e) {
@@ -247,6 +262,6 @@ module.exports = React.createClass({
   },
 
   currentUserIsCore: function() {
-    return _(ProductStore.getCoreTeamIds()).contains(UserStore.getId())
+    return UserStore.isCoreTeam();
   }
 });

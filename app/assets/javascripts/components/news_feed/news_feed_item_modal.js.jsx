@@ -20,13 +20,16 @@ var NewsFeedItemModal = React.createClass({
   render: function() {
     return (
       <Lightbox size="modal-lg">
-        {this.renderIntroduction()}
+        {this.renderItem()}
       </Lightbox>
     );
   },
 
-  renderIntroduction: function() {
-    return <NewsFeedItem {...this.props.item} commentable={true} showAllComments={true} enableModal={false} />;
+  renderItem: function() {
+    return <NewsFeedItem {...this.props.item}
+        commentable={true}
+        showAllComments={true}
+        enableModal={false} />;
   }
 });
 

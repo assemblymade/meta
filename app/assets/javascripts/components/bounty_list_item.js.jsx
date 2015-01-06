@@ -1,15 +1,18 @@
-var BountyActionCreators = require('../actions/bounty_action_creators.js')
-var Coins = require('./coins.js.jsx')
-var ListItemMixin = require('../mixins/list_item_mixin.js.jsx')
+var BountyActionCreators = require('../actions/bounty_action_creators.js');
+var Coins = require('./coins.js.jsx');
+var ListItemMixin = require('../mixins/list_item_mixin.js.jsx');
+var NewsFeedItemBountyModal = require('./news_feed/news_feed_item_bounty_modal.js.jsx');
 
 var BountyListItem = React.createClass({
-  mixins: [ListItemMixin],
 
-  getInitialState: function() {
-    return {
-      position: null
-    }
-  },
+  /**
+   * ListItemMixin: this.onModalHidden()
+   *                this.renderComments({Number: count})
+   *                this.renderLove({String: news_feed_item_id})
+   *                this.renderTags({[Object: tag]})
+   *                this.showModal()
+   */
+  mixins: [ListItemMixin],
 
   componentDidUpdate: function(props, state) {
     if (this.state.position && !state.position) {
@@ -19,6 +22,13 @@ var BountyListItem = React.createClass({
       document.removeEventListener('mousemove', this.handleMouseMove)
       document.removeEventListener('mouseup', this.handleMouseUp)
     }
+  },
+
+  getInitialState: function() {
+    return {
+      modalShown: false,
+      position: null
+    };
   },
 
   handleMouseDown: function(event) {
@@ -76,18 +86,63 @@ var BountyListItem = React.createClass({
     return false
   },
 
-  renderTitle: function() {
+  render: function() {
     var bounty = this.props.bounty
+    var style = {}
+
+    if (this.state.position) {
+      var style = {
+        position: 'absolute',
+        top: this.state.position.top,
+        left: this.state.position.left,
+        width: this.state.position.width,
+        'border': '2px solid #C2C7D0'
+      }
+    }
 
     return (
-      <a href={bounty.url}>
-        {bounty.title}
-        {' '}
-        <span className="gray-dark fs4">
-          #{bounty.number}
-        </span>
-      </a>
+      <div className="bg-white rounded shadow mb2 js-bounty-list-item" style={style} data-bounty-id={bounty.id}>
+        <div className="table mb0">
+          <div className="table-cell">
+            <div className="px3 pt3 pb3">
+              <div className="mt0 mb1 mtn1 h4 fw-500 clickable">
+                {this.renderTitle()}
+              </div>
+              <div className="lh0_9">
+                <span className="mr2 fs2">
+                  <Coins coins={this.props.bounty.earnable_coins_cache} />
+                </span>
+                <span className="gray mr2 fs3 fw_600">
+                  {this.renderComments(bounty.comments_count)}
+                </span>
+                <span className="mt0 mb0 fs1">
+                  {this.renderTags(bounty.tags)}
+                </span>
+              </div>
+            </div>
+            {this.renderLove(this.props.bounty.news_feed_item_id)}
+            {this.renderLocker()}
+          </div>
+          {this.renderHandle()}
+        </div>
+        {this.renderModal()}
+      </div>
     )
+  },
+
+  renderHandle: function() {
+    if (this.props.draggable) {
+      var handleClasses = ["handle", "table-cell"]
+
+      if (this.state.position) {
+        handleClasses.push("active")
+      }
+
+      return (
+        <div className={handleClasses.join(' ')} onMouseDown={this.handleMouseDown}>
+        </div>
+      )
+    }
   },
 
   renderLocker: function() {
@@ -114,66 +169,34 @@ var BountyListItem = React.createClass({
     )
   },
 
-  renderHandle: function() {
-    if (this.props.draggable) {
-      var handleClasses = ["handle", "table-cell"]
+  renderModal: function() {
+    if (this.state.modalShown) {
+      var bounty = this.props.bounty;
 
-      if (this.state.position) {
-        handleClasses.push("active")
-      }
+      var item = {
+        commentable: true,
+        id: bounty.news_feed_item_id,
+        product: this.props.product,
+        productPage: true,
+        target: bounty
+      };
 
-      return (
-        <div className={handleClasses.join(' ')} onMouseDown={this.handleMouseDown}>
-        </div>
-      )
+      return <NewsFeedItemBountyModal item={item} onHidden={this.onModalHidden} />;
     }
   },
 
-  render: function() {
+  renderTitle: function() {
     var bounty = this.props.bounty
-    var style = {}
-
-    if (this.state.position) {
-      var style = {
-        position: 'absolute',
-        top: this.state.position.top,
-        left: this.state.position.left,
-        width: this.state.position.width,
-        'border': '2px solid #C2C7D0'
-      }
-    }
 
     return (
-      <div className="bg-white rounded shadow mb2 js-bounty-list-item" style={style} data-bounty-id={bounty.id}>
-        <div className="table mb0">
-          <div className="table-cell">
-            <div className="px3 pt3 pb3">
-              <div className="h4 mt0 mb1 mtn1 fw-500">
-                {this.renderTitle()}
-              </div>
-
-              <div className="lh0_9">
-                <span className="mr2 fs2">
-                  <Coins coins={this.props.bounty.earnable_coins_cache} />
-                </span>
-
-                <span className="gray mr2 fs3 fw_600">
-                  {this.renderComments(bounty.comments_count)}
-                </span>
-
-                <span className="mt0 mb0 fs1">
-                  {this.renderTags(bounty.tags)}
-                </span>
-              </div>
-            </div>
-            {this.renderLove(this.props.bounty.news_feed_item_id)}
-            {this.renderLocker()}
-          </div>
-          {this.renderHandle()}
-        </div>
-      </div>
+      <a href={bounty.url}>
+        {bounty.title} {' '}
+        <span className="gray-dark fs4">
+          #{bounty.number}
+        </span>
+      </a>
     )
   }
-})
+});
 
 module.exports = BountyListItem

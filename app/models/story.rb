@@ -9,7 +9,7 @@ class Story < ActiveRecord::Base
 
   attr_accessor :socket_id
 
-  delegate :url_params, to: :subject
+  delegate :url_params, to: :subject, allow_nil: true
 
   PUBLISHABLE_VERBS = [
     "Award", "Close", "Comment", "Introduce", "Start"
@@ -24,6 +24,7 @@ class Story < ActiveRecord::Base
   end
 
   def self.should_publish?(activity)
+    return false unless activity.actor.flagged_at.nil?
     return true if PUBLISHABLE_VERBS.include?(activity.verb)
 
     PUBLISHABLE_ACTIVITIES[[activity.verb, to_noun(activity.subject), to_noun(activity.target)]]

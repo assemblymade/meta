@@ -1,3 +1,5 @@
+var NewsFeedItemEvent = require('./news_feed_item_event.js.jsx');
+
 module.exports = React.createClass({
   displayName: 'NewsFeedItemBountyReviewReady',
   propTypes: {
@@ -10,24 +12,14 @@ module.exports = React.createClass({
     var actor = this.props.actor;
 
     return (
-      <div className="timeline-item">
-        <div className="media">
-          <div className="left">
-            <div className="marker marker-blue">
-              <span className="icon icon-document"></span>
-            </div>
-          </div>
+      <NewsFeedItemEvent>
+        {this.renderAwardButtons()}
 
-          <div className="media-body">
-            {this.renderAwardButtons()}
-
-            <div className="px3">
-              <a href={actor.url}>{actor.username}</a>
-              {' '} submitted work for review
-            </div>
-          </div>
+        <div>
+          <a href={actor.url}>{actor.username}</a>
+          {' '} submitted work for review
         </div>
-      </div>
+      </NewsFeedItemEvent>
     );
   },
 
@@ -38,7 +30,7 @@ module.exports = React.createClass({
 
     if (awardUrl) {
       return (
-        <div className="btn-group pull-right">
+        <div className="btn-group right">
           <a className="btn btn-default btn-xs"
               href={awardUrl + '?event_id=' + id}
               data-method="patch"

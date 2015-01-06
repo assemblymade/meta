@@ -11,6 +11,7 @@ class TeamMembership < ActiveRecord::Base
   scope :with_interests, -> { where('exists(select 1 from team_membership_interests tmi where tmi.team_membership_id = team_memberships.id)') }
 
   after_commit :update_counter_caches
+  # after_commit :assign_vector_from_text # FIXME: Calling this method crashes Meta
 
   def core_team?
     self.is_core
@@ -37,4 +38,12 @@ class TeamMembership < ActiveRecord::Base
   def follower_ids
     news_feed_item.try(:follower_ids) || []
   end
+
+  def assign_vector_from_text
+    if text = self.bio
+      mv = Interpreter.new.mark_vector_from_text(text)
+      AddMarkIdentity.perform_async(self.user_id, mv, 3.0)
+    end
+  end
+
 end

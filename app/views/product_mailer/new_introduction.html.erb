@@ -31,12 +31,12 @@
                 <br/>
                 <hr/>
 
-                <p><strong>Help @<%=@new_member.username %> get up and running.</strong> Jump into chat and tell them about the current plan for <%= @product.name %> and work with them to get started on the right track</p>
+                <p><strong>Help @<%=@new_member.username %> get up and running.</strong> Jump in, tell them about the current plan for <%= @product.name %>, and work with them to get started on the right track.</p>
                 <% if room = @product.chat_rooms.first %>
                   <table class="button success radius">
                     <tr>
                       <td>
-                        <a href="<%= chat_room_url(@product.chat_rooms.first, message: "Welcome @#{@new_member.username}! Can I help you get started with #{@product.name}?") %>">Say hi to @<%= @new_member.username %></a>
+                        <a href="<%= product_update_url(@product, @membership.news_feed_item, message: "Welcome @#{@new_member.username}! Can I help you get started with #{@product.name}?") %>">Say hi to @<%= @new_member.username %></a>
                       </td>
                     </tr>
                   </table>

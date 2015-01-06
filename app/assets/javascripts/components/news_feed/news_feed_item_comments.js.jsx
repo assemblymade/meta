@@ -12,11 +12,13 @@ var Icon = require('../icon.js.jsx');
 var NewComment = require('./new_comment.js.jsx');
 var NewsFeedItemBountyClose = require('./news_feed_item_bounty_close.js.jsx');
 var NewsFeedItemBountyCommentReference = require('./news_feed_item_bounty_comment_reference.js.jsx');
+var NewsFeedItemBountyReopen = require('./news_feed_item_bounty_reopen.js.jsx');
 var NewsFeedItemBountyReviewReady = require('./news_feed_item_bounty_review_ready.js.jsx');
 var NewsFeedItemBountyTagChange = require('./news_feed_item_bounty_tag_change.js.jsx');
 var NewsFeedItemBountyTimelineItem = require('./news_feed_item_bounty_timeline_item.js.jsx');
 var NewsFeedItemBountyTitleChange = require('./news_feed_item_bounty_title_change.js.jsx');
 var NewsFeedItemBountyWin = require('./news_feed_item_bounty_win.js.jsx');
+var ProductStore = require('../../stores/product_store');
 var ReadReceipts = require('../read_receipts.js.jsx');
 var Routes = require('../../routes');
 var Spinner = require('../spinner.js.jsx');
@@ -43,6 +45,16 @@ var NewsFeedItemComments = React.createClass({
     DiscussionStore.addChangeListener(this.getDiscussionState);
   },
 
+  componentDidUpdate: function(prevProps, prevState) {
+    if (window.location.hash) {
+      if (this.state.comments.length > prevState.comments.length) {
+        $(document.body).animate({
+          'scrollTop':   $('#' + window.location.hash.substring(1)).offset().top
+        }, 500);
+      }
+    }
+  },
+
   componentWillUnmount: function() {
     if (_reach(this.props, 'item.target.type') === 'task') {
       BountyStore.removeChangeListener(this.getBountyState);
@@ -64,21 +76,41 @@ var NewsFeedItemComments = React.createClass({
 
   getBountyState: function() {
     var state = BountyStore.getState();
+    var comments = this.state.comments;
 
-    if (state === 'reviewing') {
-      var comments = this.state.comments;
-      var reviewReadyEvent = this.renderOptimisticReviewReady()
+    switch (state) {
+      case 'closed':
+        var closedEvent = this.renderOptimisticClosedEvent();
 
-      if (!reviewReadyEvent) {
-        return
-      }
+        if (!closedEvent) {
+          return;
+        }
 
-      comments.push(reviewReadyEvent);
+        comments.push(closedEvent);
+        break;
+      case 'open':
+        var reopenedEvent = this.renderOptimisticReopenedEvent();
 
-      this.setState({
-        comments: comments
-      });
+        if (!reopenedEvent) {
+          return;
+        }
+
+        comments.push(reopenedEvent);
+        break;
+      case 'reviewing':
+        var reviewReadyEvent = this.renderOptimisticReviewReadyEvent();
+
+        if (!reviewReadyEvent) {
+          return;
+        }
+
+        comments.push(reviewReadyEvent);
+        break;
     }
+
+    this.setState({
+      comments: comments
+    });
   },
 
   getDiscussionState: function(e) {
@@ -120,19 +152,26 @@ var NewsFeedItemComments = React.createClass({
       showCommentsAfter = 0;
     }
 
+    var slug = _reach(this.props, 'item.product.slug') || ProductStore.getSlug();
+
+    var url = Routes.product_update_comments_path({
+      product_id: slug,
+      update_id: _reach(this.props, 'item.id'),
+    });
+
     return {
       comments: lastComment ? [lastComment] : [],
       events: [],
       numberOfComments: item.comments_count,
       optimisticComments: [],
       showCommentsAfter: showCommentsAfter,
-      url: item.url + '/comments'
+      url: url
     };
   },
 
   render: function() {
     return (
-      <div className="px3">
+      <div className="_pl2 _pr3 _mq-600_px2 _mq-600_pr4">
         {this.renderComments()}
         {this.renderNewCommentForm()}
       </div>
@@ -162,6 +201,7 @@ var NewsFeedItemComments = React.createClass({
         <div className={classes}>
           {confirmedComments}
           {optimisticComments}
+          {this.renderRuler()}
         </div>
       </div>
     );
@@ -171,7 +211,10 @@ var NewsFeedItemComments = React.createClass({
     var renderIfAfter = this.state.showCommentsAfter;
     var comments = this.state.comments.concat(this.state.events).sort(_sort);
     var awardUrl;
-    if (_reach(this.props, 'item.target.type') === 'task') {
+
+    // Sometimes a type of 'task_decorator' is found; the indexOf() check
+    // accounts for that case as well as just plain 'task'.
+    if ((_reach(this.props, 'item.target.type') || '').indexOf('task') > -1) {
       awardUrl = _reach(this.props, 'item.target.url') + '/award';
     }
 
@@ -181,13 +224,13 @@ var NewsFeedItemComments = React.createClass({
       if (!self.props.showAllComments) {
         if (comment.type !== 'news_feed_item_comment') {
           return null;
-        } else {
-          return <ActivityFeedComment
-              author={comment.user}
-              body={comment.markdown_body}
-              heartable={true}
-              heartableId={comment.id} />
         }
+
+        return <ActivityFeedComment
+            author={comment.user}
+            body={comment.markdown_body}
+            heartable={true}
+            heartableId={comment.id} />
       }
 
       if (new Date(comment.created_at) >= renderIfAfter) {
@@ -197,23 +240,7 @@ var NewsFeedItemComments = React.createClass({
           id: comment.id
         });
 
-        var renderedEvent = parseEvent(comment, awardUrl, editUrl);
-
-        if (i + 1 === comments.length) {
-          var timestamp = (
-            <div className="timeline-insert js-timestamp clearfix" key={'timestamp-' + comment.id}>
-              <time className="timestamp left" dateTime={comment.timestamp}>{moment(comment.created_at).fromNow()}</time>
-              <ReadReceipts url={'/_rr/articles/' + comment.id} track_url={comment.readraptor_track_id} />
-            </div>
-          );
-
-          return [
-            timestamp,
-            renderedEvent
-          ];
-        }
-
-        return renderedEvent;
+        return parseEvent(comment, awardUrl, editUrl);
       }
     });
   },
@@ -228,10 +255,9 @@ var NewsFeedItemComments = React.createClass({
 
     if (numberOfComments > this.state.comments.length) {
       return (
-        <a className="block text-small mt2 gray-dark clickable"
-            onClick={this.triggerModal}
-            style={{textDecoration: 'underline'}}>
-          <span className="mr1">
+        <a className="block mt2 fs3 gray-dark clickable"
+            onClick={this.triggerModal}>
+          <span className="pr2 gray fs5">
             <Icon icon="comment" />
           </span>
           View all {numberOfComments} comments
@@ -245,39 +271,54 @@ var NewsFeedItemComments = React.createClass({
 
     if (this.props.commentable) {
       var url = this.state.url;
-
-      if (window.app.currentUser()) {
-        return <NewComment
-            {...this.props}
-            canContainWork={item.target && item.target.type === 'task'}
-            url={url}
-            thread={item.id}
-            user={window.app.currentUser()} />
-      }
+      return <NewComment
+          {...this.props}
+          canContainWork={item.target && item.target.type.indexOf('task') > -1}
+          url={url}
+          thread={item.id}
+          user={window.app.currentUser()} />
     }
   },
 
   renderOptimisticComments: function() {
     return this.state.optimisticComments.map(function(comment) {
       return (
-        <div className="py2" key={comment.id}>
+        <div className="_py1_25" key={comment.id}>
           <Comment author={comment.user} body={marked(comment.body)} optimistic={true} key={comment.id} />
         </div>
       )
     });
   },
 
-  renderOptimisticReviewReady: function() {
+  renderOptimisticClosedEvent: function() {
+    return this.renderOptimisticEvent('Event::Close');
+  },
+
+  renderOptimisticEvent: function(type) {
+    var createdAt = new Date(Date.now() + 500);
+
     // when we get the event back in the confirmation, set the award_url
     // so that the buttons show up
-    if (UserStore.isCoreTeam()) {
-      return {
-        type: 'Event::ReviewReady',
-        actor: UserStore.getUser(),
-        // award_url: this.props.url + '/award',
-        created_at: new Date(),
-        id: 'FIXME'
-      };
+    return {
+      type: type,
+      actor: UserStore.getUser(),
+      // award_url: this.props.url + '/award',
+      created_at: createdAt,
+      id: createdAt.toISOString()
+    }
+  },
+
+  renderOptimisticReopenedEvent: function() {
+    return this.renderOptimisticEvent('Event::Reopen');
+  },
+
+  renderOptimisticReviewReadyEvent: function() {
+    return this.renderOptimisticEvent('Event::ReviewReady');
+  },
+
+  renderRuler: function() {
+    if (this.state.comments.length > 0) {
+      return <hr className="mb0 mt3 border-gray-5 _mrn3 _mln3" />;
     }
   },
 
@@ -307,11 +348,11 @@ function parseEvent(event, awardUrl, editUrl) {
   case 'Event::CommentReference':
     renderedEvent = <NewsFeedItemBountyCommentReference {...event} />;
     break;
+  case 'Event::Reopen':
+    renderedEvent = <NewsFeedItemBountyReopen {...event} />;
+    break;
   case 'Event::ReviewReady':
     renderedEvent = <NewsFeedItemBountyReviewReady {...event} />;
-    break;
-  case 'Event::Win':
-    renderedEvent = <NewsFeedItemBountyWin {...event} />;
     break;
   case 'Event::TagChange':
     // don't render tag change events
@@ -320,6 +361,12 @@ function parseEvent(event, awardUrl, editUrl) {
     break;
   case 'Event::TitleChange':
     renderedEvent = <NewsFeedItemBountyTitleChange {...event} />;
+    break;
+  case 'Event::Unallocation':
+    renderedEvent = null
+    break;
+  case 'Event::Win':
+    renderedEvent = <NewsFeedItemBountyWin {...event} />;
     break;
   case 'news_feed_item_comment':
     renderedEvent = <Comment
@@ -343,7 +390,7 @@ function parseEvent(event, awardUrl, editUrl) {
 
   if (renderedEvent) {
     return (
-      <div className="py2" key={event.id}>
+      <div className="_py1_25" key={event.id}>
         {renderedEvent}
       </div>
     );

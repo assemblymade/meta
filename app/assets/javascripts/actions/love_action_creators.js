@@ -32,6 +32,23 @@ module.exports = {
     })
   },
 
+  retrieveAllHearts: function(heartable_id) {
+    $.ajax({
+      url: '/heartables/hearts',
+      type: 'GET',
+      dataType: 'json',
+      data: {
+        heartable_id: heartable_id
+      },
+      success: function(data) {
+        Dispatcher.dispatch({
+          type: ActionTypes.LOVE_RECEIVE_ALL_HEARTS,
+          hearts: data.hearts
+        });
+      }
+    });
+  },
+
   retrieveRecentHearts: function(heartable_ids) {
     $.ajax({
       url: '/heartables/hearts',
@@ -49,4 +66,4 @@ module.exports = {
       }
     })
   }
-}
+};

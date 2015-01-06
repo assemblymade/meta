@@ -16,7 +16,7 @@ class EventSerializer < ActiveModel::Serializer
 
   attributes :id #, :url
   attributes :anchor
-  attributes :body, :body_html, :body_sanitized, :number, :timestamp, :type, :created_at
+  attributes :body, :body_html, :body_sanitized, :number, :timestamp, :type, :created_at, :target
   attributes :edit_url
   attributes :award_url, :can_award
   attributes :product_id
@@ -67,6 +67,18 @@ class EventSerializer < ActiveModel::Serializer
 
   def story_id
     Story.associated_with_ids(object).try(:first)
+  end
+
+  def target
+    if object.class == Event::Win
+      object.winner
+    # FIXME (pletcher): This isn't terrible -- it just adds in a couple of fields --
+    # but there must be a better way to do it
+    elsif object.class == Event::CommentReference
+      Event::CommentReferenceSerializer.new(object)
+    else
+      object.try(:target)
+    end
   end
 
   def timestamp

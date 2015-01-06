@@ -1,6 +1,6 @@
 <% title 'Introduction', '@'+@membership.user.username %>
 
-<div class="px2">
+<div class="px2 col-md-8 col-md-offset-2">
   <%= react_component 'NewsFeedItem',
         NewsFeedItemSerializer.new(@news_feed_item).as_json.merge(
           commentable: true,

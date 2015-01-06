@@ -107,6 +107,7 @@ var PostsIndex = React.createClass({
             </div>
           </div>
         </div>
+
         <div className="col-xs-12 col-sm-8 r768_pr0">
           {this.state.loading ? <Spinner /> : <PostList posts={posts} />}
         </div>
@@ -118,19 +119,19 @@ var PostsIndex = React.createClass({
     var path = window.location.pathname;
 
     return [
-      <li className="mb1 lh0_9">
+      <li className="mb1 lh0_9" key="filter-all">
         <a href={path + "?discussions=true"} className="pill-hover block pt1 pb1 pr3 pl3" onClick={this.fetchDiscussions}>
           <span className="fs1 fw-500 caps">all posts</span>
         </a>
       </li>,
 
-      <li className="mb1 lh0_9">
+      <li className="mb1 lh0_9" key="filter-announcements">
         <a href={path + "?announcements=true"} className="pill-hover block pt1 pb1 pr3 pl3" onClick={this.fetchAnnouncements}>
           <span className="fs1 fw-500 caps">announcements</span>
         </a>
       </li>,
 
-      <li className="mb1 lh0_9">
+      <li className="mb1 lh0_9" key="filter-archived">
         <a href={path + "?archived=true"} className="pill-hover block pt1 pb1 pr3 pl3" onClick={this.fetchArchivedPosts}>
           <span className="fs1 fw-500 caps">archived posts</span>
         </a>

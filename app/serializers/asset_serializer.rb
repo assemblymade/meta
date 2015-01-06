@@ -1,7 +1,7 @@
 class AssetSerializer < ApplicationSerializer
   include FiresizeHelper
 
-  attributes :thumbnail_url
+  attributes :thumbnail_url, :name
 
   has_one :attachment
 

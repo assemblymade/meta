@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   respond_to :html, :json
 
-  before_action :set_user, only: [:update, :dismiss_welcome_banner]
+  before_action :set_user, only: [:update, :dismiss_welcome_banner, :flag, :unflag]
 
   def show
     set_user
@@ -28,6 +28,18 @@ class UsersController < ApplicationController
   def edit
     authenticate_user!
     @user = current_user.decorate
+  end
+
+  def flag
+    @user.flag!
+
+    respond_with @user
+  end
+
+  def unflag
+    @user.unflag!
+
+    respond_with @user
   end
 
   def assets

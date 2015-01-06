@@ -1,8 +1,12 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
-ruby '2.1.5'
 
-gem 'active_model_serializers'
+ruby '2.2.0'
+
+gem 'active_model_serializers',
+  github: 'rails-api/active_model_serializers',
+  branch: '0-8-stable'
+
 gem 'analytics-ruby', '~> 2.0.0'
 gem 'attr_encrypted'
 gem 'aws-sdk', '~> 1.0'
@@ -52,7 +56,7 @@ gem 'puma'
 gem 'pusher'
 gem 'premailer-rails'
 gem 'rack-streaming-proxy'
-gem 'rails', '4.1.8'
+gem 'rails', '4.2.0'
 gem 'rails-assets-backbone',            '1.0.0'
 gem 'rails-assets-basscss',             '4.1.2'
 gem 'rails-assets-dropzone',            '3.9.0'
@@ -74,6 +78,7 @@ gem 'rails_stdout_logging', group: [:development, :production]
 gem 'react-rails', '~> 0.12.0.0'
 gem 'redcarpet'
 gem 'redis'
+gem 'responders', '~> 2.0.0'
 gem 'sanitize'
 gem 'sass-rails'
 gem 'sequenced', '~> 1.5.0'
@@ -86,6 +91,7 @@ gem 'uglifier'
 gem 'warden', "~> 1.2.3"
 gem 'workflow'
 gem 'zeroclipboard-rails'
+gem 'fast-stemmer'
 
 group :development, :test do
   gem 'active_record_query_trace'
@@ -104,6 +110,8 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'rest_client'
   gem 'rspec-rails'
+  gem 'rspec-its'
+  gem 'rspec-collection_matchers'
   gem 'spring-commands-rspec'
   gem 'syntax'
   gem 'teaspoon'

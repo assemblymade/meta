@@ -1,0 +1,48 @@
+<h5>Consider merging:</h5>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Stem</th>
+      <th>Marks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @merge.each_with_index do |s, i| %>
+      <tr>
+        <td><%= s.name %></td>
+        <td>
+          <%= s.marks.map(&:name).join(', ') %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h4>Tag Dashboard</h4>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Stem</th>
+      <th>Marks</th>
+      <th>Updated at</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @stems.each_with_index do |s, i| %>
+      <tr>
+        <td><%= s.name %></td>
+        <td>
+          <% s.marks.each do |m| %>
+           <li><%= m.name %></li>
+         <% end %>
+        </td>
+        <td><%= time_ago_in_words(s.updated_at) %> ago</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @stems, theme: 'twitter-bootstrap-3' %>
+

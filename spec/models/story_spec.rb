@@ -4,6 +4,7 @@ describe Story do
   describe 'reader_ids' do
     let(:product) { task.product }
     let(:follower) { User.make! }
+    let(:flagged) { User.make!(flagged_at: Time.now) }
     let(:nfi) { NewsFeedItem.make! }
     let(:task) { Task.make!(news_feed_item: nfi) }
 
@@ -25,6 +26,12 @@ describe Story do
 
       story = Story.make!(activities: [Activities::Start.make!(target: task)])
       expect(story.reader_ids).to include(follower.id)
+    end
+
+    it 'should not publish a story by a flagged user' do
+      activity = Activities::Start.make!(subject: task, target: product, actor: flagged)
+
+      expect(Story.should_publish?(activity)).to eq(false)
     end
   end
 end

@@ -22,7 +22,7 @@
 
   <tr>
     <td colspan="2" style="padding:15px 15px; border-bottom:solid thin #eee;">
-      <%= link_to @target, polymorphic_url(@comment.url_params.first), style: "font-size:20px;" %>
+      <%= link_to @target, @comment.url_params, style: "font-size:20px;" %>
     </td>
   </tr>
 
@@ -43,7 +43,7 @@
     <td>
       <center>
         <span class="button success radius" style="border-radius: 20px;-moz-border-radius: 20px;-webkit-border-radius: 20px;padding:10px 60px;color:white;font-weight:bold;">
-          <%= link_to "Join the conversation", polymorphic_url(@comment.url_params.first), style: "color:white !important;" %>
+          <%= link_to "Join the conversation", url_for(@comment.url_params), style: "color:white !important;" %>
         </span>
       </center>
     </td>

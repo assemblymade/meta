@@ -1,4 +1,4 @@
-var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
+var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/i
 
 var ActionTypes = window.CONSTANTS.ActionTypes;
 var InPlaceUserSearch = require('./in_place_user_search.js.jsx')
@@ -57,7 +57,10 @@ var TypeaheadUserTextArea = React.createClass({
         onUserSelected={this.handleUserSelected}
         searchPosition="bottom"
         coords={this.state.searchPosition}>
-      <textarea {...this.props} onChange={this.handleChange} value={this.state.text} ref="textarea" />
+      <textarea {...this.props}
+          onChange={this.handleChange}
+          value={this.state.text}
+          ref="textarea" />
     </InPlaceUserSearch>
   },
 
@@ -93,24 +96,26 @@ var TypeaheadUserTextArea = React.createClass({
 
   handleUserChanged: function(user) {
     if (user) {
-      this.setState({
-        text: this.replaceQueryWithUser(user)
-      })
+      var text = this.replaceQueryWithUser(user);
+
+      NewCommentActionCreators.updateComment(this.props.thread, text);
     }
   },
 
   handleUserSelected: function(user) {
     if (user) {
-      this.setState({
-        text: this.replaceQueryWithUser(user)
-      })
+      var text = this.replaceQueryWithUser(user);
+
+      NewCommentActionCreators.updateComment(this.props.thread, text)
     }
 
-    this.setState({usernameSearch: null})
+    this.setState({ usernameSearch: null })
   },
 
   replaceQueryWithUser: function(user, suffix) {
-    return this.state.text.replace(USER_SEARCH_REGEX, function(match, space, username, offset, string) {
+    var text = this.state.text;
+
+    return text.replace(USER_SEARCH_REGEX, function(match, space, username, offset, string) {
       return space + '@' + user.username + (suffix || '')
     })
   },

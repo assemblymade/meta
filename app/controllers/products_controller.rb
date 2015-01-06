@@ -37,7 +37,6 @@ class ProductsController < ProductController
       @product.retrieve_key_pair
       schedule_greet
       schedule_one_hour_checkin
-      schedule_one_day_checkin
     else
       render action: :new, layout: 'application'
     end
@@ -80,9 +79,10 @@ class ProductsController < ProductController
     end
 
     #queue recording of view event as 'viewing'
-    if current_user && @product
-      ViewWorker.perform_async(current_user.id, @product.id, "Product")
-    end
+    # FIXME: This call is dominating the worker queue
+    # if current_user && @product
+    #   ViewWorker.perform_async(current_user.id, @product.id, "Product")
+    # end
 
 
     @top_wip_tags = QueryMarks.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)

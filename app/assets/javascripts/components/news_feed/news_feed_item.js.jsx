@@ -10,6 +10,7 @@ var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx');
 var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
 var NewsFeedItemModal = require('./news_feed_item_modal.js.jsx');
 var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
+var SubscriptionsStore = require('../../stores/subscriptions_store');
 var Tag = require('../tag.js.jsx');
 var Tile = require('../tile.js.jsx');
 var UserStore = require('../../stores/user_store');
@@ -37,6 +38,12 @@ var NewsFeedItem = React.createClass({
 
   componentDidMount: function() {
     ArchivedNewsFeedItemsStore.addChangeListener(this.getStateFromStore);
+    SubscriptionsStore.addChangeListener(this.getStateFromStore);
+  },
+
+  componentWillUnmount: function() {
+    ArchivedNewsFeedItemsStore.removeChangeListener(this.getStateFromStore);
+    SubscriptionsStore.removeChangeListener(this.getStateFromStore);
   },
 
   getDefaultProps: function() {
@@ -47,8 +54,11 @@ var NewsFeedItem = React.createClass({
   },
 
   getInitialState: function() {
+    var id = this.props.id;
+
     return {
-      isArchived: this.props.archived_at != null,
+      isArchived: ArchivedNewsFeedItemsStore.isArchived(id),
+      isSubscribed: SubscriptionsStore.isSubscribed(id),
       modalShown: false
     };
   },
@@ -58,13 +68,12 @@ var NewsFeedItem = React.createClass({
 
     if (target && target.type === 'post') {
       this.setState({
-        isArchived: ArchivedNewsFeedItemsStore.isArchived(this.props.id)
+        isArchived: ArchivedNewsFeedItemsStore.isArchived(this.props.id),
+        isSubscribed: SubscriptionsStore.isSubscribed(this.props.id)
       });
     }
   },
 
-  // TODO: (pletcher) Move this method to a Post component;
-  // it's time to split these out
   handleArchive: function() {
     var productSlug = this.props.product.slug;
     var itemId = this.props.id;
@@ -73,6 +82,17 @@ var NewsFeedItem = React.createClass({
       NewsFeedItemActionCreators.unarchive(productSlug, itemId);
     } else {
       NewsFeedItemActionCreators.archive(productSlug, itemId);
+    }
+  },
+
+  handleSubscribe: function() {
+    var productSlug = this.props.product.slug;
+    var itemId = this.props.id;
+
+    if (this.state.isSubscribed) {
+      NewsFeedItemActionCreators.unsubscribe(productSlug, itemId);
+    } else {
+      NewsFeedItemActionCreators.subscribe(productSlug, itemId);
     }
   },
 
@@ -109,7 +129,11 @@ var NewsFeedItem = React.createClass({
         text = 'Unarchive';
       }
 
-      return <a href="javascript:void(0);" onClick={this.handleArchive}>{text}</a>;
+      return (
+        <li>
+          <a href="javascript:void(0);" onClick={this.handleArchive}>{text}</a>
+        </li>
+      );
     }
   },
 
@@ -123,12 +147,29 @@ var NewsFeedItem = React.createClass({
         triggerModal={this.triggerModal} />;
   },
 
+  renderEditButton: function() {
+    if (UserStore.isCoreTeam() || this.props.user.id === UserStore.getId()) {
+      var target = this.props.target;
+
+      // only turn on for posts
+      if (target && target.type === 'post') {
+        return (
+          <li>
+            <a href={target.url + '/edit'}>Edit</a>
+          </li>
+        );
+      }
+    }
+  },
+
   renderFooter: function() {
     if (this.props.showAllComments) {
       return (
         <div className="card-footer px3 py2 clearfix">
           <ul className="list-inline mt0 mb0 py1 right">
             {this.renderArchiveButton()}
+            {this.renderSubscribeButton()}
+            {this.renderEditButton()}
           </ul>
         </div>
       );
@@ -154,18 +195,15 @@ var NewsFeedItem = React.createClass({
           var url = baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
 
           return (
-            <li className="left px1" key={tag.id}>
-              <a className="h6 mt0 mb0" href={url}><Tag tag={tag} /></a>
-            </li>
+            <div className="inline-block" key={tag.id}>
+              <Tag tag={tag} />
+            </div>
           )
         })
       }
-
       return (
-        <div className="px3 py1 h6 mt0 mb0">
-          <ul className="list-reset clearfix mxn1 mb0">
-            {tagItems}
-          </ul>
+        <div className="px3 pb3">
+          {tagItems}
         </div>
       );
     }
@@ -212,6 +250,32 @@ var NewsFeedItem = React.createClass({
         </div>
       </a>
     );
+  },
+
+  renderSubscribeButton: function() {
+    var user = UserStore.getUser();
+
+    if (!user) {
+      return (
+        <li>
+          <a href="/signup">Sign up</a>
+        </li>
+      );
+    }
+
+    // only turn on for posts
+    if (this.props.target && this.props.target.type === 'post') {
+      var text = 'Subscribe';
+      if (this.state.isSubscribed) {
+        text = 'Unsubscribe';
+      }
+
+      return (
+        <li>
+          <a href="javascript:void(0);" onClick={this.handleSubscribe}>{text}</a>
+        </li>
+      );
+    }
   },
 
   renderTarget: function() {
@@ -272,15 +336,17 @@ var NewsFeedItem = React.createClass({
     }
 
     return (
-      <div className="px3 py2 clearfix border-top h6 mb0">
-        <div className="left mr2">
-          <Avatar user={user} size={18} />
-        </div>
-        <div className="overflow-hidden gray-2">
-          <span className="black bold">
-            {user.username}
-          </span>
+      <div className="px3 py2 border-top mb0 mt0">
+        <div style={{marginBottom: "-3px"}}>
+          <div className="inline-block valign-top">
+            <div className="left mr1">
+              <Avatar user={user} size={18} />
+            </div>
+          </div>
+          <div className="inline-block valign-top gray-2 fs3">
+            <span className="black bold">{user.username}</span>
             {' '} created this {this.targetNoun(target && target.type)}
+          </div>
         </div>
       </div>
     );

@@ -1,8 +1,0 @@
-@include table-row-variant('pending', #fcf8e3);
-
-.table > caption {
-  text-align: left;
-  border-bottom: 1px solid $table-border-color;
-  padding: $table-cell-padding;
-  font-weight: 600;
-}

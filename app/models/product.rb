@@ -255,7 +255,7 @@ class Product < ActiveRecord::Base
   end
 
   def team_building_days_left
-    [(stopped_team_building_at.to_date - Date.today).to_i, 0].max
+    [(stopped_team_building_at.to_date - Date.today).to_i, 1].max
   end
 
   def team_building_percentage
@@ -305,7 +305,7 @@ class Product < ActiveRecord::Base
 
   def core_team?(user)
     return false if user.nil?
-    team_memberships.core_team.active.find_by(user_id: user.id)
+    team_memberships.core_team.active.find_by(user_id: user.id).present?
   end
 
   def member?(user)
@@ -644,6 +644,7 @@ class Product < ActiveRecord::Base
   def calc_task_comments_response_time
     # average time in seconds for comments to receive responses
     # weighted average of responsiveness across tasks with comments
+
     avg_time_to_comment = -1
     tasks_with_comments = self.tasks.where('comments_count > 0')
 
@@ -676,6 +677,9 @@ class Product < ActiveRecord::Base
     my_mark_vector = QueryMarks.new.mark_vector_for_object(self)
 
     #get unnormalized mark vector of wips
+    # FIXME: Don't iterate through every wip, especially not in proc
+    # These values should be cached on the product itself and only updated
+    # when a new task is added
     self.wips.each do |w|
       my_child_mark_vector = QueryMarks.new.mark_vector_for_object(w)
 
@@ -684,8 +688,8 @@ class Product < ActiveRecord::Base
 
       my_mark_vector = QueryMarks.new.add_mark_vectors(my_child_mark_vector, my_mark_vector)
     end
+
     my_mark_vector
-    #return QueryMarks.new.normalize_mark_vector(my_mark_vector)
   end
 
   def normalized_mark_vector()

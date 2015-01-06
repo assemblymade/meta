@@ -5,6 +5,7 @@ class PostSerializer < ApplicationSerializer
   attributes :markdown_body, :url, :summary, :title, :news_feed_item_id, :created_at
   attributes :comments_count, :hearts_count, :short_body
 
+  has_one :product, serializer: ProductSerializer
   has_one :user
 
   has_many :marks
@@ -15,10 +16,6 @@ class PostSerializer < ApplicationSerializer
 
   def hearts_count
     news_feed_item.hearts.count
-  end
-
-  def product
-    object.product
   end
 
   def markdown_body

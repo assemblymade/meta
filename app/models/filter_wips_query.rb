@@ -106,10 +106,9 @@ class FilterWipsQuery
       user.wips_watched
     when 'awarded'
       # TODO: Backfill awards and swap with a simpler query
-      Wip.joins(events: :event).
-        where(events: { type: 'Event::Win' }).
-        where(events_events: { user_id: user.id }).
-        order('events.created_at DESC')
+      Wip.joins(awards: :wip).
+          where(awards: { winner_id: user.id }).
+          order('wips.created_at DESC')
     when 'commented'
       user.wips_commented_on
     else # all

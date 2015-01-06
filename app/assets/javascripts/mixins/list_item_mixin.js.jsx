@@ -1,8 +1,14 @@
 var ListItemMixin = {
+  onModalHidden: function() {
+    this.setState({
+      modalShown: false
+    });
+  },
+
   renderComments: function(count) {
     return [
       <Icon icon="comment" />,
-      <span className="px1">
+      <span className="px1" style={{marginLeft: '-2px'}}>
         {count}
       </span>
     ];
@@ -25,10 +31,22 @@ var ListItemMixin = {
 
     return tags.map(function(tag) {
       return (
-        <a className="fs0_9 caps gray-2 mr2 pointer" href={tag.url}>
+        <a className="fs1 caps gray-2 mr2 pointer" href={tag.url} key={'post-tag-' + tag.name}>
           #{tag.name}
         </a>
       )
+    });
+  },
+
+  showModal: function(e) {
+    if (e.ctrlKey || e.metaKey || e.shiftKey) {
+      return;
+    }
+
+    e.preventDefault();
+
+    this.setState({
+      modalShown: true
     });
   }
 };

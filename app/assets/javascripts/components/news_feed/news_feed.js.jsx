@@ -131,8 +131,10 @@ var NewsFeed = React.createClass({
       }
 
       return (
-        <div className="mxn2" style={style}>
-          {this.renderItems()}
+        <div className="row">
+          <div className="col-xs-12">
+            {this.renderItems()}
+          </div>
         </div>
       );
     }
@@ -205,7 +207,7 @@ var NewsFeed = React.createClass({
       var classes = React.addons.classSet({
         'sm-col': !productPage,
         'sm-col-6': !productPage,
-        'p2': true
+        'px1': !productPage
       });
 
       return (

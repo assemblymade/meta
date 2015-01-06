@@ -1,15 +1,17 @@
 require 'spec_helper'
 
 describe WipGroup do
-  let(:creator) { User.make(name: 'whatupdave') }
-  let(:products) { [Product.make(user: creator, name: "Updog"), Product.make(user: creator, name: "Much Wow")] }
-  let(:watchers) { [User.make, User.make]}
+  let(:creator) { User.make!(name: 'whatupdave') }
+  let(:products) { [Product.make!(user: creator, name: "Updog"), Product.make!(user: creator, name: "Much Wow")] }
+  let(:watchers) { [User.make!, User.make!]}
 
   let(:tasks) do
     tasks = []
     products.each do |p|
       2.times do
-        tasks << Task.make(product: p, user: creator)
+        task = Task.make!(product: p, user: creator)
+        NewsFeedItem.create_with_target(task)
+        tasks << task
       end
     end
     tasks
@@ -19,7 +21,9 @@ describe WipGroup do
     discussions = []
     products.each do |p|
       2.times do
-        discussions << Discussion.make(product: p, user: creator)
+        discussion = Discussion.make!(product: p, user: creator)
+        NewsFeedItem.create_with_target(discussion)
+        discussions << discussion
       end
     end
     discussions
@@ -29,7 +33,7 @@ describe WipGroup do
     comments = []
     (tasks + discussions).map do |wip|
       2.times do
-        comments << Event::Comment.make(wip: wip, user: creator)
+        comments << NewsFeedItemComment.make!(news_feed_item: wip.news_feed_item, user: creator)
       end
     end
     comments
@@ -40,10 +44,10 @@ describe WipGroup do
     expect(group.products.keys).to match_array(products)
 
     product = group.products[products.first]
-    expect(product.keys).to match_array(tasks.take(2) + discussions.take(2))
+    expect(product.keys).to match_array(tasks.take(2).map(&:news_feed_item) + discussions.take(2).map(&:news_feed_item))
 
-    wip = group.products[products.first][tasks.first]
-    expect(wip).to match_array(comments.take(2))
+    nfi = group.products[products.first][tasks.first.news_feed_item]
+    expect(nfi).to match_array(comments.take(2))
   end
 
   it "collects watchers" do

@@ -1,8 +1,7 @@
-@import 'variables';
+@import "vars/base";
 @import 'ink';
-@import 'base/mixins';
 
-$headings-font-weight: 600;
+$headings-font-weight: bold;
 
 $font-size-h1: 24px;
 $font-size-h2: 24px;
@@ -20,7 +19,6 @@ $dl-horizontal-offset:        $component-offset-horizontal !default;
 
 @import 'bootstrap/mixins';
 @import 'bootstrap/type';
-@import 'base/typography';
 
 a {
   color: $link-color !important;
@@ -87,7 +85,7 @@ pre {
 
   a {
     color: white !important;
-    font-weight: 600;
+    font-weight: bold;
   }
 }
 
@@ -141,7 +139,7 @@ pre {
   font-size: 13px;
   text-transform: uppercase;
   line-height: 32px;
-  font-weight: 600;
+  font-weight: bold;
   letter-spacing: 0.618pt;
 }
 

@@ -106,15 +106,21 @@
 
     // TODO: move constants into here. 1 Flat namespace will ensure constants don't collide
     ActionTypes: keyMirror({
+      ARCHIVED_NEWS_FEED_ITEMS_RECEIVE: null,
+
       ATTACHMENT_FAILED: null,
       ATTACHMENT_UPLOADED: null,
       ATTACHMENT_UPLOADING: null,
 
       BOUNTY_WORK_SUBMITTED: null,
 
+      BOUNTY_CLOSED: null,
+
       BOUNTIES_REQUEST: null,
       BOUNTIES_RECEIVE: null,
       BOUNTIES_REORDER: null,
+
+      BOUNTY_REOPENED: null,
 
       CHAT_USER_ONLINE: null,
       CHAT_MESSAGE_RECEIVE_ACTIVITIES: null,
@@ -134,6 +140,7 @@
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,
       LOVE_RECEIVE_HEARTABLES: null,
+      LOVE_RECEIVE_ALL_HEARTS: null,
       LOVE_RECEIVE_RECENT_HEARTS: null,
       LOVE_RECEIVE_USER_HEARTS: null,
 
@@ -142,7 +149,9 @@
       NEWS_FEED_ITEM_ARCHIVED: null,
       NEWS_FEED_ITEM_CONFIRM_COMMENT: null,
       NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT: null,
+      NEWS_FEED_ITEM_SUBSCRIBED: null,
       NEWS_FEED_ITEM_UNARCHIVED: null,
+      NEWS_FEED_ITEM_UNSUBSCRIBED: null,
 
       NEWS_FEED_RECEIVE_RAW_ITEMS: null,
 
@@ -161,6 +170,7 @@
 
       PUSHER_INITIALIZED: null,
       PUSHER_PRESENCE_CONNECTED: null,
+      PUSHER_USER_ACTION: null,
 
       RR_RECEIVE_READ_RECEIPTS: null,
 

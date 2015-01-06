@@ -24,6 +24,7 @@ class TasksController < WipsController
       end
 
       format.json do
+        # TODO (pletcher) move this call elsewhere
         if params[:count]
           tasks_count = { total: @product.tasks.where(state: ['open', 'awarded']).count }
           render json: tasks_count
@@ -93,14 +94,20 @@ class TasksController < WipsController
     end
 
     @product_assets = @bounty.product.assets
+
     if Watching.watched?(current_user, @bounty.news_feed_item)
       @user_subscriptions = [@bounty.news_feed_item.id]
     end
 
+    # FIXME: This call is dominating the worker queue
+    # if current_user && @wip
+    #   ViewWorker.perform_async(current_user.id, @wip.id, "Wip")
+    # end
+
     respond_to do |format|
       format.html { render 'bounties/show' }
       format.json { render json: {
-        bounty: WipSerializer.new(@bounty, scope: current_user),
+        bounty: TaskSerializer.new(@bounty, scope: current_user),
         events: @bounty.events.where.not(type: 'Event::Comment').map { |e| EventSerializer.for(e, current_user) }
       } }
     end

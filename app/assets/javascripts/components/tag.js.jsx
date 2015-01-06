@@ -8,7 +8,9 @@ var Tag = React.createClass({
   render: function() {
     var tag = this.props.tag;
     return (
-      <div className="inline-block h6 mt0 mb0 caps bold gray-3">{this.props.tag.name}</div>
+      <a className="fs1 caps gray-2 mr2 pointer" href={this.props.tag.url}>
+        #{this.props.tag.name}
+      </a>
     );
   }
 

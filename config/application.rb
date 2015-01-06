@@ -17,7 +17,7 @@ module ASM
     I18n.enforce_available_locales = false
 
     # Serve static assets. Heroku needs this for production.
-    config.serve_static_assets = true
+    config.serve_static_files = true
 
     if ENV['ASSET_HOST']
       config.action_controller.asset_host = ENV['ASSET_HOST']
@@ -55,5 +55,7 @@ module ASM
       require 'console_helpers'
       Rails::ConsoleMethods.send :include, ASM::Console
     end
+
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end

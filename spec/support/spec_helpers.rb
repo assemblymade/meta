@@ -8,4 +8,10 @@ module SpecHelpers
       Sidekiq::Extensions::DelayedMailer
     ).to have_enqueued_job(YAML.dump([mailer, method, args]))
   end
+
+  def expect_mail_not_queued(mailer, method, *args)
+    expect(
+      Sidekiq::Extensions::DelayedMailer
+    ).not_to have_enqueued_job(YAML.dump([mailer, method, args]))
+  end
 end

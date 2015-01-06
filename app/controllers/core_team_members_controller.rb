@@ -14,13 +14,15 @@ class CoreTeamMembersController < ProductController
         team_membership.update_attributes(is_core: true)
       end
 
-      CoreTeamMailer.delay(queue: 'mailer').welcome(@product.id, user.id)
+      if user.flagged_at.nil?
+        CoreTeamMailer.delay(queue: 'mailer').welcome(@product.id, user.id)
 
-      Activities::CreateCoreTeamMembership.publish!(
-        actor: user,
-        target: @product,
-        subject: @product
-      )
+        Activities::CreateCoreTeamMembership.publish!(
+          actor: user,
+          target: @product,
+          subject: @product
+        )
+      end
 
       if user.has_github_account?
         (@product.repos || []).each do |repo|

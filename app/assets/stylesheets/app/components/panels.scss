@@ -1,0 +1,83 @@
+.panel {
+  box-shadow: none;
+}
+
+.panel-heading {
+  padding: 8px 15px 5px;
+  border-radius: $border-radius-base $border-radius-base 0 0;
+}
+
+.panel-default {
+  .panel-heading {
+    border-bottom-color: $panel-inner-border;
+    color: $gray-light;
+  }
+
+  .panel-title {
+    color: $gray-light;
+  }
+}
+
+.panel-subtle {
+  @extend .panel-default;
+
+  padding-bottom: 5px;
+
+  .panel-heading {
+    background-color: white;
+    padding: 0;
+
+    a {
+      color: $link-color;
+      padding: 15px 20px 10px 20px;
+    }
+  }
+
+  .panel-body {
+    padding: 15px 20px;
+
+    p:last-child {
+      margin-bottom: 0px;
+    }
+  }
+
+  .panel-heading + .panel-collapse {
+    .panel-body {
+      border-top: none;
+      padding-top: 0px;
+    }
+  }
+}
+
+// Hack because we can't modify bootstrap
+h6.panel-title {
+  font-size: $font-size-h6;
+}
+
+.panel-nav {
+  > li > a {
+    font-weight: bold;
+    color: $text-color;
+
+    &:hover {
+      color: $link-color;
+    }
+  }
+}
+
+.panel-body + .panel-heading {
+  border-top: 1px solid $panel-inner-border;
+  border-radius: 0;
+}
+
+.panel-body > .list-grid {
+  margin: - $padding-small-vertical;
+}
+
+.panel-group {
+  .panel + .panel {
+    margin-top: 15px;
+  }
+
+  margin-bottom: 15px;
+}

@@ -18,6 +18,7 @@ class Event < ActiveRecord::Base
 
   after_commit -> { self.wip.event_added(self); }, on: :create
   after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.wip.id) }
+  # after_commit -> { self.record_identity_change } # This is messing with the Redis worker queue
 
   delegate :product, :to => :wip
 
@@ -33,6 +34,13 @@ class Event < ActiveRecord::Base
 
   attr_accessor :socket_id # for Pusher
   attr_accessor :readraptor_tag # set which tag you are viewing
+
+  def record_identity_change
+    if type == 'Event::Comment'
+      interpreted_vector = Interpreter.new.mark_vector_from_text(body)
+      MakeMarks.new.mark_with_vector_additively(user.user_identity, interpreted_vector, 0.1)
+    end
+  end
 
   def self.analytics_name
     "wip.#{slug}"
@@ -56,7 +64,7 @@ class Event < ActiveRecord::Base
   end
 
   def notify_by_email?
-    MAILABLE.include? self.class
+    MAILABLE.include?(self.class) && user.flagged_at.nil?
   end
 
   def auto_watch!(user)

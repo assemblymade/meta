@@ -103,6 +103,11 @@ class QueryMarks
     dot_product
   end
 
+  def subtract_vectors(vector1, vector2)
+    vector2 = scale_mark_vector(vector2, -1)
+    add_mark_vectors(vector1, vector2)
+  end
+
   def update_markings_to_vector_for_object(object, marking_vector)
     marking_vector.each do |m|
       #check if that marking exists already for object
@@ -141,7 +146,7 @@ class QueryMarks
 
     products = Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagged_at: nil).where.not(slug: 'meta')
     product_vector = products.joins(:marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)").group_by{ |product, mark, weight| product }
-    product_vector = product_vector.map{ |p, v| [p, v.map{ |p, m, w| [m, w*0.2] }  ]}
+    product_vector = product_vector.map{ |p, v| [p, v.map{ |p, m, w| [m, w] }  ]}
     product_vector = Hash[product_vector]
 
     merged_vector = []
@@ -183,40 +188,32 @@ class QueryMarks
     }
   end
 
-  def user_bounties(user_vector, wip_vectors)
-    return unless user_vector.count > 0
-
-    correlations = wip_vectors.map do |wip_vector|
-      wip_id = wip_vector[0]
-      vector = wip_vector[1]
-
-      correlation = dot_product_vectors(user_vector, vector)
-
-      next unless correlation > 0
-
-      [correlation.to_f, wip_id]
-    end.compact
-
-    wips = Wip.where(id: correlations.map(&:last)).map { |w| [w.id, w] }.to_h
-
-    correlations.map do |correlation, wip_id|
-      [correlation, wips[wip_id]]
-    end
-  end
-
   def assign_top_bounties_for_user(limit, user, wip_vectors)
     user_vector = normalize_mark_vector(user.user_identity.get_mark_vector)
+    result = []
 
-    result = user_bounties(user_vector, wip_vectors)
+    if user_vector.count > 0
+      wip_vectors.each do |data|
+        vector = data[1]
+        wip_id = data[0]
+        correlation = dot_product_vectors(user_vector, vector)
+        if correlation > 0
+          wip = Wip.find(wip_id)
+          if wip.user != user
+            result.append([correlation.to_f, wip])
+          end
+        end
+      end
 
-    TopBounty.where(user_id: user.id).delete_all
-    n=0
-    result.sort_by{|a, b| a}.reverse.take(limit).each do |w|
-      n=n+1
-      TopBounty.create!({user_id: user.id, score: w[0], rank: n, wip_id: w[1].id})
+      TopBounty.where(user_id: user.id).delete_all
+      n=0
+      result.sort_by{|a, b| a}.reverse.take(limit).each do |w|
+        n=n+1
+        TopBounty.create!({user_id: user.id, score: w[0], rank: n, wip_id: w[1].id})
+      end
+      result.sort_by{|a,b| a}.reverse
     end
-
-    result.sort_by{|a,b| a}.reverse
+    result.sort_by{|a, b| a}.reverse
   end
 
 
