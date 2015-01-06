@@ -9,7 +9,8 @@ var Love = require('./love.js.jsx');
 var Markdown = require('./markdown.js.jsx');
 var NewComment = require('./news_feed/new_comment.js.jsx');
 var NewCommentActionCreators = require('../actions/new_comment_action_creators');
-var ProductStore = require('../stores/product_store')
+var ProductStore = require('../stores/product_store');
+var Routes = require('../routes');
 var TipsUi = require('./tips_ui.js.jsx');
 var UserStore = require('../stores/user_store');
 
@@ -28,6 +29,13 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function() {
+    if (this.refs.coreIndicator) {
+      $(this.refs.coreIndicator.getDOMNode()).tooltip({
+        container: 'body',
+        placement: 'top'
+      });
+    }
+
     CommentStore.addChangeListener(this.getUpdatedComment);
   },
 
@@ -67,7 +75,9 @@ module.exports = React.createClass({
     return (
       <div id={this.props.id} className="timeline-item">
         <div className="left activity-avatar _inline-block">
-          <Avatar user={author} size={30} />
+          <a href={Routes.user_path({ id: this.props.author.username })}>
+            <Avatar user={author} size={30} />
+          </a>
         </div>
 
         <div className="left _inline-block" style={{ position: 'relative', left: '-8px', top: '-6px' }}>
@@ -139,8 +149,14 @@ module.exports = React.createClass({
   },
 
   renderCoreTeamIcon: function() {
-    if (_(ProductStore.getCoreTeamIds()).contains(this.props.author.id)) {
-      return <img src="/assets/core_icon.svg" width="12" />;
+    var author = this.props.author;
+
+    if (_(ProductStore.getCoreTeamIds()).contains(author.id)) {
+      return <img src="/assets/core_icon.svg"
+          width="12"
+          ref="coreIndicator"
+          data-toggle="tooltip"
+          title={'@' + author.username + ' is a member of the ' + ProductStore.getName() + ' core team'} />;
     }
   },
 
@@ -184,6 +200,10 @@ module.exports = React.createClass({
   },
 
   renderReply: function() {
+    if (this.props.author.id === UserStore.getId()) {
+      return;
+    }
+
     return (
       <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 gray-2 _h6"
           href="javascript:void(0);"
@@ -204,6 +224,10 @@ module.exports = React.createClass({
   },
 
   renderTips: function() {
+    if (this.props.author.id === UserStore.getId()) {
+      return;
+    }
+
     // TipsUi is causing display issues :(
     return (
       <span className="_pr0_75 _inline-block _ht1_5 _h6">

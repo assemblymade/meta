@@ -255,7 +255,7 @@ class Product < ActiveRecord::Base
   end
 
   def team_building_days_left
-    [(stopped_team_building_at.to_date - Date.today).to_i, 0].max
+    [(stopped_team_building_at.to_date - Date.today).to_i, 1].max
   end
 
   def team_building_percentage

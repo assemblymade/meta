@@ -155,20 +155,19 @@ mark, .mark {
 // -- quotes ---------------------
 blockquote {
   position: relative;
-  margin-top: 0;
-  margin-right: 0;
-  margin-bottom:1rem;
-  margin-left: -2.8rem;
-  padding-top:0;
-  padding-bottom:0;
+  margin: 0 0 1rem -2.8rem;
   border-left: 4px solid $aqua;
+  top: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+
   &:before {
     // content: url("icon-comment-quote.png");
     position: relative;
-    top: 0px;
+    top: 0;
     left: -60px;
-    height: 20px;
   }
+
   p {
     position: relative;
     left: 1.5rem;
