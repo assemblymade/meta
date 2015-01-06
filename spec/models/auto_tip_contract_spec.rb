@@ -11,7 +11,7 @@ describe AutoTipContract do
     end
 
     it 'does not allow more than one contract' do
-      AutoTipContract.create(product: product, user: user, amount: 0.1).should have(1).error_on(:user)
+      expect(AutoTipContract.create(product: product, user: user, amount: 0.1)).to have(1).error_on(:user)
     end
 
     it 'allows a contract for a new user' do
@@ -19,13 +19,13 @@ describe AutoTipContract do
     end
 
     it 'does not allow a contract with an amount < 0' do
-      AutoTipContract.create(product: product, user: user, amount: -10).should have(1).error_on(:amount)
+      expect(AutoTipContract.create(product: product, user: user, amount: -10)).to have(1).error_on(:amount)
     end
   end
 
   describe '#contracts_less_than_100_percent' do
     it 'does not allow contracts totaling more than 100%' do
-      AutoTipContract.create(product: product, user: user, amount: 1.1).should have(1).error_on(:product)
+      expect(AutoTipContract.create(product: product, user: user, amount: 1.1)).to have(1).error_on(:product)
     end
   end
 end

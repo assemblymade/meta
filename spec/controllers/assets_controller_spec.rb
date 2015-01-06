@@ -10,7 +10,7 @@ describe AssetsController do
     let(:wip) { Task.make!(product: product, user: current_user) }
     let(:event) {
       Event::Comment.make!(
-        attachments: [attachment],
+        attachments: [attachment.id],
         user: current_user,
         wip: wip
       )

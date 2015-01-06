@@ -9,14 +9,14 @@ describe Segment::Contributor do
   subject { Segment::Contributor.new }
 
   it "doesn't contain noob" do
-    subject.contains?(noob).should be_false
+    subject.contains?(noob).should be_falsy
   end
 
   context 'started a discussion' do
     before { Discussion.make!(product: product, user: contributor) }
 
     it 'contains contributor' do
-      subject.contains?(contributor).should be_true
+      subject.contains?(contributor).should be_truthy
     end
   end
 
@@ -26,7 +26,7 @@ describe Segment::Contributor do
     before { wip.award!(noob, comment) }
 
     it 'contains contributor' do
-      subject.contains?(contributor).should be_true
+      subject.contains?(contributor).should be_truthy
     end
   end
 
@@ -35,7 +35,7 @@ describe Segment::Contributor do
     before { 3.times { Event::Comment.make!(user: contributor, wip: wip) } }
 
     it 'contains contributor' do
-      subject.contains?(contributor).should be_true
+      subject.contains?(contributor).should be_truthy
     end
   end
 

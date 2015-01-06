@@ -26,7 +26,7 @@ class CoinsMinted
       entry_balance = entry.cents
 
       tip_entries = bounty.contracts.tip_contracts.each do |contract|
-        tip = contract.percentage * entry.cents
+        tip = contract.percentage.to_f * entry.cents
 
         entry_balance -= tip
 

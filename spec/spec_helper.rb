@@ -5,13 +5,13 @@ require File.expand_path("../../config/environment", __FILE__)
 
 require 'simplecov'
 require 'rspec/rails'
-require 'rspec/autorun'
+require 'rspec/collection_matchers'
 require 'capybara/rspec'
+require 'capybara/poltergeist'
 require 'email_spec'
 require 'sidekiq/testing'
 require 'webmock/rspec'
 require 'codeclimate-test-reporter'
-require 'capybara/poltergeist'
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(
@@ -40,7 +40,16 @@ ActiveRecord::Migration.maintain_test_schema!
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = false
+  config.infer_spec_type_from_file_location!
   config.order = 'random'
+
+  config.expect_with :rspec do |expect|
+    expect.syntax = [:should, :expect]
+  end
+
+  config.mock_with :rspec do |mock|
+    mock.syntax = [:should, :expect]
+  end
 
   config.include(EmailSpec::Helpers)
   config.include(EmailSpec::Matchers)
@@ -69,7 +78,7 @@ RSpec.configure do |config|
     Sidekiq::Worker.clear_all
     # Get the current example from the example_method object
 
-    example = example_method.example
+    example = example_method.example_group.example
     if example.metadata[:sidekiq] == :fake
       Sidekiq::Testing.fake!
     elsif example.metadata[:sidekiq] == :inline

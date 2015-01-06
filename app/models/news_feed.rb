@@ -10,7 +10,7 @@ class NewsFeed
   end
 
   def self.deserialize(*strs)
-    Story.where(id: strs).includes(:actors, :activities)
+    Story.where(id: strs.flatten).includes(:actors, :activities)
   end
 
   def self.delete_all

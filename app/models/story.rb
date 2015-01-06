@@ -9,7 +9,7 @@ class Story < ActiveRecord::Base
 
   attr_accessor :socket_id
 
-  delegate :url_params, to: :subject
+  delegate :url_params, to: :subject, allow_nil: true
 
   PUBLISHABLE_VERBS = [
     "Award", "Close", "Comment", "Introduce", "Start"

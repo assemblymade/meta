@@ -13,7 +13,7 @@ ASM::Application.configure do
   config.eager_load = false
 
   # Configure static asset server for tests with Cache-Control for performance.
-  config.serve_static_assets  = true
+  config.serve_static_files = true
   config.static_cache_control = "public, max-age=3600"
 
   # Show full error reports and disable caching.
@@ -31,7 +31,7 @@ ASM::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
   config.action_mailer.default_url_options = {
-    host: 'assembly.test'
+    host: 'http://assembly.test',
   }
 
   Rails.application.routes.default_url_options[:host] = config.action_mailer.default_url_options[:host]

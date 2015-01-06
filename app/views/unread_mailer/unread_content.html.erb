@@ -10,7 +10,7 @@
                   <% @mentions.each do |comment, mentions| %>
                     <p style="">
                       from @<%= comment.user.username %><br/>
-                      <a href="<%= full_url_for(comment) %>">
+                      <a href="<%= url_for(comment.url_params) %>">
                         <%= t "models.comment.description.owner", title: comment.nfi.target.try(:title) %>
                       </a>
                       <br/>
@@ -49,7 +49,7 @@
                       <% raise nfis.inspect if nfi.nil? %>
 
                       <p style="font-size:14px;line-height:18px;color:#2B2F3E;">
-                        <a href="<%= full_url_for(nfi) %>">
+                        <a href="<%= url_for(nfi.url_params) %>">
                           <%= t "stories.subjects.long.#{nfi.target.class.model_name.singular}.other", nfi.target.attributes.symbolize_keys %>
                         </a>
                         <% if new_comments.size > 0 %>

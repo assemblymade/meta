@@ -34,7 +34,7 @@ describe ContractsController do
 
       expect(response).to be_successful
       expect(contract.reload).to_not be_active
-      expect(AutoTipContract.where(product: product, user: staff_user, amount: 0.2 / 100)).to exist
+      expect(AutoTipContract.where(product: product, user: staff_user).where('ROUND(amount, 3) = ?', 0.002)).to exist
     end
 
     it 'does not let allow unauthorized users to update contracts' do

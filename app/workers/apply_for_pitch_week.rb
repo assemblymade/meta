@@ -9,6 +9,6 @@ class ApplyForPitchWeek
       applicant_id: applicant_id
     )
 
-    PitchWeekMailer.awaiting_approval(application.id).deliver
+    PitchWeekMailer.awaiting_approval(application.id).deliver_now
   end
 end
