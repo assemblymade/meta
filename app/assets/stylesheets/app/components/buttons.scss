@@ -109,7 +109,187 @@ button, .button {
   }
 }
 
-// pill button
+// new component
+
+._button {
+  display: block;
+  position:relative;
+  padding:0.5rem 2.25rem;
+  text-align:center;
+  color: $black;
+  font-size:13px;
+  background:$gray-5;
+  border: none;
+  outline: none;
+  //
+  &:hover {
+    color: inherit;
+    background:$gray-3;
+  }
+  .main-text {
+    display:inline;
+  }
+  .hover-text {
+    display:none;
+  }
+  &.active {
+    color: $gray-3;
+    background:$gray-5;
+    //
+    &:hover {
+      //
+      .hover-text {
+        display:inline;
+      }
+      .main-text {
+        display:none;
+      }
+    }
+  }
+  // title
+  .title {
+    font-size:1.2rem;
+    line-height:2rem;
+  }
+// border
+  &.border {
+    //
+    &:before {
+      content:'';
+      display: block;
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      border:1px solid rgba(100,100,100,0.1);
+      border-bottom:1px solid rgba(100,100,100,0.15);
+      border-radius: 50px;
+    }
+  }
+// type
+  &.bevel {
+   border-radius: .25rem;
+   //
+     &.border {
+      //
+      &:before {
+        border-radius: .25rem;
+      }
+    }
+  }
+  &.pill {
+    border-radius: 4rem;
+    //
+    &.border {
+      //
+      &:before {
+        border-radius: 4rem;
+      }
+    }
+  }
+// themes
+  &.theme-white {
+    color: $blue;
+    background: $white;
+    //
+    &:hover {
+      color: #666d78;
+      background: $white;
+    }
+    &.active {
+      width:125px;
+      color: #666d78;
+      background:$white;
+      //
+      &:hover {
+        //
+        .title {
+          padding-left:0;
+          &:before {
+            visibility: hidden;
+          }
+        }
+      }
+      .title {
+        position:relative;
+        padding-left:1rem;
+        &:before {
+          content:'';
+          position:absolute;
+          top:50%;
+          left:-6px;
+          margin-top:-5px;
+          width:11px;
+          height:11px;
+          background-image: url(/assets/icon-success-check-green.png);
+          background-size: 100%;
+          background-repeat: no-repeat;
+        }
+      }
+    }
+  }
+  &.theme-green {
+    color: $white;
+    background: $green;
+    //
+    &:hover {
+      color: $white;
+      background:$green-dark;
+    }
+    &:focus {
+      color: $white;
+    }
+  }
+// shadow
+  &.shadow {
+    box-shadow: 0px 1px 3px -1px rgba(50, 50, 50, 0.1);
+  }
+  &.shadow-dark {
+    box-shadow: 0px 3px 5px -4px rgba(50, 50, 50, 0.6);
+    &:hover {
+      box-shadow: 0px 3px 5px -4px rgba(50, 50, 50, 0.3);
+    }
+  }
+  &.text-shadow {
+    text-shadow: 0px 1px rgba(50, 50, 50, 0.2);
+  }
+// feature
+  &.split {
+    position:relative;
+    //
+    .split-icon {
+      display:block;
+      position:absolute;
+      right:0;
+      top:0;
+      height:100%;
+      width: 4.5rem;
+      padding-top: 0.75rem;
+      border-top-right-radius: 50px;
+      border-bottom-right-radius: 50px;
+      border:1px solid rgba(100,100,100,0.15);
+      border-left:1px solid rgba(100,100,100,0.125);
+      //
+    }
+    &.open {
+      //
+      .split-icon {
+        //
+        &.theme-green {
+          background:$green-dark;
+        }
+        .fa:before {
+          display: block;
+          -webkit-transform: translate3d(0,0,0) rotate(180deg);
+                  transform: translate3d(0,0,0) rotate(180deg);
+        }
+      }
+    }
+  }
+}
+
+// TODO: below deprecated, consolidate into above
 
 .pill-button {
 // default
@@ -123,14 +303,10 @@ button, .button {
   background:$gray-5;
   border: none;
   outline: none;
-  // -webkit-transition: all 0.15s ease-in-out;
-  // transition: all 0.15s ease-in-out;
   //
   &:hover {
     color: inherit;
     background:$gray-3;
-    // -webkit-transition: all 0.15s ease-in-out;
-    // transition: all 0.15s ease-in-out;
   }
   .mainText {
     display:inline;
@@ -189,15 +365,11 @@ button, .button {
   &:hover {
     color: #666d78;
     background: $white;
-    // -webkit-transition: all 0.15s ease-in-out;
-    // transition: all 0.15s ease-in-out;
   }
   &.active {
     width:125px;
     color: #666d78;
     background:$white;
-    // -webkit-transition: all 0.15s ease-in-out;
-    // transition: all 0.15s ease-in-out;
     //
     &:hover {
       //
@@ -233,8 +405,6 @@ button, .button {
   &:hover {
     color: $white;
     background:$green-dark;
-    // -webkit-transition: all 0.15s ease-in-out;
-    // transition: all 0.15s ease-in-out;
   }
   &:focus {
     color: $white;
@@ -255,13 +425,6 @@ button, .button {
     border-bottom-right-radius: 50px;
     border:1px solid rgba(100,100,100,0.15);
     border-left:1px solid rgba(100,100,100,0.125);
-    // -webkit-transition: all 0.15s ease-in-out;
-    // transition: all 0.15s ease-in-out;
-    //
-    .fa:before {
-      // -webkit-transition: all 0.2s ease-in-out;
-      // transition: all 0.15s ease-in-out;
-    }
   }
   &.open {
     //
@@ -274,8 +437,6 @@ button, .button {
         display: block;
         -webkit-transform: translate3d(0,0,0) rotate(180deg);
                 transform: translate3d(0,0,0) rotate(180deg);
-        // -webkit-transition: all 0.2s ease-in-out;
-        //         transition: all 0.2s ease-in-out;
       }
     }
   }

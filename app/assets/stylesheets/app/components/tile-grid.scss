@@ -1,0 +1,142 @@
+/* >> Tile Grid Component >>>>>>>>>>>>>>>>>>>>
+=========================================== */
+
+/*
+-- HTML Pattern ----------------
+<section class="tile-grid tile-grid-delta">
+  <div class="header">
+    <p>Section Header Content</p>
+  </div>
+  <div class="main">
+    <div class="item">
+      <div class="tile small">
+        Tile
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <p>Section Footer Content</p>
+  </div>
+</section>
+*/
+
+// -- Base Component ------------
+.tile-grid {
+  @import 'app/temp/style-guide-updates';  // < details: https://assembly.com/meta/bounties/1038
+  //
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-color: $white;
+  > .container  {
+    @extend .text-2;
+    //
+    > .header {
+      display:inline-block;
+      width: 100%;
+      text-align: center;
+      overflow: hidden;
+      @media screen and (min-width: 1024px) {
+        display:block;
+        text-align: left;
+      }
+    }
+    > .header, > .main {
+      margin-bottom: 2rem;
+    }
+    > .footer {
+      // bootstrap overwrite
+      margin:0;
+      padding:0;
+      border: none;
+    }
+  }
+
+  // half specific, clean
+  .table {
+    display:table;
+    table-layout:fixed;
+    width:100%;
+    margin-bottom:0;
+    //
+    .cell {
+      display:inline-block;
+      @media screen and (min-width: 1024px) {
+        display:table-cell;
+        vertical-align: middle;
+      }
+    }
+    .cell-two {
+      width:100%;
+      @media screen and (min-width: 1024px) {
+        width:25rem;
+        text-align: right;
+      }
+    }
+  }
+
+  .grid {
+    overflow:hidden;
+  }
+  // type
+  .fixed-small {
+    margin-right: -2rem;
+    margin-left: -2rem;
+    text-align: center;
+    //
+    .item {
+      display: inline-block;
+      margin:1rem;
+      vertical-align: top;
+      width: 24.5rem;
+      height: 30rem;
+      background: $gray-3;
+    }
+  }
+  .float-row {
+    float:left;
+    width:100%;
+  }
+  .float-item {
+    display:inline-block;
+    width:50%;
+    // margin:0 -2rem;
+    text-align: center;
+    background: $gray-5;
+    @media screen and (min-width: 600px) {
+      display:inline-block;
+      width: 24.5rem;
+      margin:1rem;
+    }
+    @media screen and (min-width: 990px) {
+      display:inline-block;
+      width: 38rem;
+      margin:1rem;
+    }
+  }
+  // .nav {
+  //   display:inline-block;
+  //   @media screen and (min-width: 1024px) {
+  //     display:block;
+  //   }
+  // }
+  .navbar-form {
+    width: 100%;
+    padding-right:0;
+    //
+    .form-group, .form-control {
+      width:100%;
+    }
+  }
+
+  .pagination {
+
+  }
+
+}
+
+// -- Delta's ------------
+//
+// http://assembly.com/ideas
+.tile-grid-ideas {
+  
+}
