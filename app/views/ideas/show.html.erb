@@ -1,4 +1,3 @@
-<%= track 'idea.viewed' %>
 <% title "Idea", @idea.name %>
 <% activate_nav! :ideas %>
 <div class="subnav">
@@ -56,8 +55,3 @@
 <% end %>
 
 <%= react_component 'IdeaDiscussion', comments: @comments, url: idea_comments_path(@idea), signup_path: new_user_registration_path, login_path: new_user_session_path %>
-
-
-
-
-
