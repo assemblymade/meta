@@ -5,11 +5,6 @@ describe MarkVectorFromText do
   let(:product) { Product.make! }
 
   describe '#perform' do
-    it 'test marking a user from text' do
-      pending "Test depends on a downstream worker and class; add spies and test that they're called correctly ASAP"
-      Mark.create!({name: "elrond"})
-      sample_text = "elrond"
-      MarkVectorFromText.new.perform(user.id, sample_text)
-    end
+    it 'test marking a user from text'
   end
 end
