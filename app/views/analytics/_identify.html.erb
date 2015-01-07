@@ -4,13 +4,15 @@
     <%== UserAnalyticsSerializer.new(current_user).to_json %>
   );
 
-  var productAnalytics = <%== (@product ? ProductAnalyticsSerializer.new(@product) : {}).to_json %>;
+  <% if !current_user.staff? %>
+    var productAnalytics = <%== (@product ? ProductAnalyticsSerializer.new(@product) : {}).to_json %>;
 
-  analytics.track('visited', _.extend({
-    path: window.location.pathname,
-    referrer: document.referrer,
-    title: document.title,
-    search: window.location.search
-  }, productAnalytics));
+    analytics.track('visited', _.extend({
+      path: window.location.pathname,
+      referrer: document.referrer,
+      title: document.title,
+      search: window.location.search
+    }, productAnalytics));
+  <% end %>
 
 </script>
