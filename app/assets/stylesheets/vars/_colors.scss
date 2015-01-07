@@ -228,7 +228,7 @@ $red-light:     lighten($red, 10%);
 .fill-gray-darker-hover:hover   { fill: $gray-darker }
 .stroke-gray-darker-hover:hover { stroke: $gray-darker }
 
-.green        { color: $green }
+.green        { color: $green; }
 .bg-green     { background-color: $green }
 .border-green { border-color: $green }
 .fill-green   { fill: $green }

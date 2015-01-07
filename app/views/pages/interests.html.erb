@@ -3,11 +3,18 @@
 
 <%= render 'shared/onboarding_navbar' %>
 
-<div class="container mb4">
-  <div class="center py4">
-    <h1 class="h1 mt0 mb0">Hey there @<%= current_user.username %>. Nice to meet you.</h1>
-    <p class="h3 mt1 mb0 gray-darker">Assembly is a place where people help each other bring great ideas to life. <br> <strong>Tell us what you're into</strong> and we'll show you some sweet products to check out.</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <br>
+      <div class="center">
+        <h1 style="font-size: 48px">Hey there @<%= current_user.username %>!</h1>
+        <p class="large text-muted">Assembly is a place where people help each other bring great ideas to life. <br> <strong>Tell us what you're into</strong> and we'll find the perfect place for you to get started.</p>
+      </div>
+    </div>
   </div>
 
-  <%= react_component 'Interests', marks: CuratedMark::CURATED_MARKS %>
+  <div class="mt4 mb4">
+    <%= react_component 'Interests', marks: CuratedMark::CURATED_MARKS %>
+  </div>
 </div>
