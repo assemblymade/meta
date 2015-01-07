@@ -528,7 +528,7 @@ class Product < ActiveRecord::Base
 
   def profit_last_month
     last_report = profit_reports.order('end_at DESC').first
-    last_report && last_report.profit
+    (last_report && last_report.profit) || 0
   end
 
   def ownership
