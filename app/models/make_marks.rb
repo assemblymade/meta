@@ -64,12 +64,12 @@ class MakeMarks
 
     if previous_views == 0
       Viewing.create!({user_id: user_id, viewable_id: viewable_id, viewable_type: viewable_type, weight: view_weight})
-      AdjustMarkings.perform_async(user_id, viewable.id, viewable_type, scalar * Math.sqrt(view_weight))
+      AdjustMarkings.perform_async(user_id, "User",viewable.id, viewable_type, scalar * Math.sqrt(view_weight))
     else
       new_weight = applicable_viewings.first.weight + view_weight
       applicable_viewings.first.update(weight: new_weight)
       diff = Math.sqrt(new_weight) - Math.sqrt(view_weight)
-      AdjustMarkings.perform_async(user_id, viewable.id, viewable_type, scalar * diff)
+      AdjustMarkings.perform_async(user_id, "User",viewable.id, viewable_type, scalar * diff)
     end
   end
 

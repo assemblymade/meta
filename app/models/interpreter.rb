@@ -14,7 +14,6 @@ class Interpreter
     end.flatten(1).map do |mark_id|
       Mark.find(mark_id[0]).name
     end
-
     mark_words = marks_products + mark_words
     mark_words.uniq
   end
@@ -47,7 +46,7 @@ class Interpreter
       end
     end
     n = 0
-    result.sort_by{ |a, b| -a }
+    result.sort_by{|a, b| -a}
   end
 
 end
