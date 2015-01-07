@@ -641,37 +641,6 @@ class Product < ActiveRecord::Base
     [10_000_000, transaction_log_entries.sum(:cents)].max
   end
 
-  def calc_task_comments_response_time
-    # average time in seconds for comments to receive responses
-    # weighted average of responsiveness across tasks with comments
-
-    avg_time_to_comment = -1
-    tasks_with_comments = self.tasks.where('comments_count > 0')
-
-    unless tasks_with_comments.blank?
-      avg_time_to_comment_weighted_numerators = []
-      tasks_with_comments.each do |t|
-        avg_time_to_comment_weighted_numerators <<
-          (t.comments.maximum(:created_at).to_i - t.created_at.to_i) / [t.comments_count - 1, 1].max * t.comments_count
-      end
-      avg_time_to_comment = avg_time_to_comment_weighted_numerators.sum / tasks_with_comments.sum(:comments_count)
-    end
-    pm = ProductMetric.create(
-      product: self,
-      comments_count: self.tasks.sum(:comments_count),
-      comment_responsiveness: avg_time_to_comment
-    )
-    avg_time_to_comment
-  end
-
-  def comment_responsiveness
-    if pm = ProductMetric.where(product: self).order(created_at: :asc).last
-      pm.comment_responsiveness
-    else
-      calc_task_comments_response_time
-    end
-  end
-
   def mark_vector
     #get unnormalized mark vector of product itself
     my_mark_vector = QueryMarks.new.mark_vector_for_object(self)
