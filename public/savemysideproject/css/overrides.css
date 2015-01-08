@@ -1,0 +1,55 @@
+/*p.newstyle {
+    font-size: 1.1em;
+    line-height: 1.6em;
+    max-width: 35em;
+    margin: 0 auto 1.25em;
+    text-align: left;
+}
+h2.newstyle {
+    margin-bottom: 1.25em;
+}
+h3.newstyle {
+    text-align: center;
+}
+h4.newstyle {
+    font-size: 1.1em;
+    line-height: 1.6em;
+    max-width: 35em;
+    margin: 0 auto 1.5em;
+    text-align: left;
+}
+.hero h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 1.25em;
+    padding-bottom: 1.25em;
+}
+.stat h2 {
+    max-width: 20em;
+    margin: 0 auto 1.25em;
+}
+ul.half-width li {
+    float: left;
+    width: 47.5%;
+    margin-right: 5%;
+    margin-bottom: 2em;
+}
+ul.half-width li:last-child {
+    margin-right: 0;
+}
+div.faq {
+    max-width: 43.5em;
+    margin: 0 auto 1.25em;
+}
+
+a.contact {
+    font-size: 1.2em;
+}
+
+
+a {
+  color:#10a2b8;
+}
+
+
+*/
