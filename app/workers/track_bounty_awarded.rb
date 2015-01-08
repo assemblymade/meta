@@ -9,7 +9,7 @@ class TrackBountyAwarded
     bounty = Task.find(bounty_id)
     Analytics.track(
       user_id: winner.id,
-      event: 'bounty.awarded',
+      event: 'vested',
       timestamp: bounty.closed_at,
       properties: {
         product_id: bounty.product.id,

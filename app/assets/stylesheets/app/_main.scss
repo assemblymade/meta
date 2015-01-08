@@ -22,6 +22,10 @@ body {
   font-size: 1.25rem;
 }
 
+textarea {
+  border: 1px solid $gray-5;
+}
+
 // -- general -------------------
 strong, .bold {
   font-weight: bold;

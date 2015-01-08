@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20150107221428) do
+=======
+ActiveRecord::Schema.define(version: 20141231171025) do
+>>>>>>> 900c1af95f72ec04f63d30970c72d8a567977d21
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -521,11 +525,13 @@ ActiveRecord::Schema.define(version: 20150107221428) do
   end
 
   create_table "platform_metrics", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.float    "mean_product_responsiveness"
-    t.float    "median_product_responsiveness"
     t.datetime "calculated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "mean_core_responsiveness"
+    t.integer  "median_core_responsiveness"
+    t.integer  "mean_noncore_responsiveness"
+    t.integer  "median_noncore_responsiveness"
   end
 
   create_table "posts", id: :uuid, force: :cascade do |t|
@@ -560,10 +566,13 @@ ActiveRecord::Schema.define(version: 20150107221428) do
 
   create_table "product_metrics", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "product_id"
-    t.integer  "comment_responsiveness"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "comments_count",         default: 0
+    t.integer  "comments_count",          default: 0
+    t.integer  "core_responsiveness"
+    t.integer  "noncore_responsiveness"
+    t.text     "response_times"
+    t.integer  "trailing_month_activity"
   end
 
   add_index "product_metrics", ["product_id"], name: "index_product_metrics_on_product_id", using: :btree

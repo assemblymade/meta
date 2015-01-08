@@ -1,6 +1,4 @@
 <% title 'This is happening!' %>
-<%= track 'surveys.new.viewed' %>
-
 <%= render 'shared/navbar' %>
 
 <div class="container">
@@ -86,12 +84,12 @@
           <button class="btn btn-primary pull-left margin-bottom:4rem" type="submit">Let's do this!</button>
         </div>
       <% end %>
-        
+
       <br>
       <hr style="">
-            
+
       <p class="text-muted">or maybe you just want to <a class="bold" href="<%= start_idea_path %>" onclick="javascript:window.analytics.track('surveys.show.exit.clicked');" style="font-weight:bold;text-decoration:underline">start a product</a> or you're all <a href="<%= discover_path %>" style="font-weight:bold;text-decoration:underline" onclick="javascript:window.analytics.track('surveys.show.exit.clicked');">&ldquo;Geez man! Just let me dive in!!&rdquo;</a></p>
-      
+
 
     </div>
   </div><!-- .row -->

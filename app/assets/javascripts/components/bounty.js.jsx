@@ -4,6 +4,7 @@ var Markdown = require('./markdown.js.jsx');
 var Icon = require('./icon.js.jsx');
 var formatShortTime = require('../lib/format_short_time.js');
 var Love = require('./love.js.jsx');
+var Trackable = require('./trackable.js.jsx')
 var routes = require('../routes')
 
 var SubscriptionsStore = require('../stores/subscriptions_store')
@@ -182,7 +183,7 @@ module.exports = React.createClass({
     if (item) {
       return (
         <div id="discussion-view-el" key={'discussion-' + bounty.id}>
-          <NewsFeedItemComments commentable={true} item={item} showAllComments={true} />
+          <NewsFeedItemComments commentable={true} item={item} showAllComments={true} analytics={this.props.analytics} />
         </div>
       );
     }

@@ -8,17 +8,18 @@ class NewsFeedItemCommentsController < ProductController
   respond_to :json
 
   def create
-    @item = @news_feed_item.comments.create(
+    @comment = @news_feed_item.comments.create(
       user: current_user,
       body: params[:body]
     )
 
-    if @item.valid?
-      @item.publish_activity!
-      @item.notify_subscribers!
+    if @comment.valid?
+      @comment.publish_activity!
+      @comment.notify_subscribers!
+      @comment.track_acknowledgements!
     end
 
-    respond_with @item, location: product_updates_url(@product)
+    respond_with @comment, location: product_updates_url(@product)
   end
 
   def index
@@ -40,6 +41,7 @@ class NewsFeedItemCommentsController < ProductController
     end
 
     discussion = {
+      analytics: DiscussionAnalyticsSerializer.new(@news_feed_item),
       comments: comments,
       events: events,
       user_hearts: user_hearts

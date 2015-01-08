@@ -2,7 +2,7 @@ class TrackEngagement
   include Sidekiq::Worker
   sidekiq_options queue: 'analytics'
 
-  EVENT_NAME = 'activity.v2'
+  EVENT_NAME = (ENV['ENGAGEMENT_METRIC'] || 'influenced')
 
   def perform(user_id, timestamp, verb, verb_subject, product_id)
     user = User.find(user_id)

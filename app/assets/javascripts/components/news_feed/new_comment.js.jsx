@@ -171,13 +171,11 @@ var NewsFeedItemNewComment = React.createClass({
 
     var textareaClasses = React.addons.classSet({
       'bg-gray-4': this.state.dragging,
-      'bg-gray-6': !this.state.dragging,
       '_ht14_5': true,
       '_w100p': true,
       '_px1_5': true,
       '_pt1': true,
       '_pb3': true,
-      '_border-none': true,
       '_border-rad0_5': true
     });
 

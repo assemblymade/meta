@@ -34,6 +34,11 @@ class Idea < ActiveRecord::Base
     name
   end
 
+  # ideas will belongs_to a product soon
+  def product
+    nil
+  end
+
   def comments
     news_feed_item.comments
   end

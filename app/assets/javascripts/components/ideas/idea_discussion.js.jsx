@@ -5,8 +5,9 @@ var IdeaCommentsStore = require('../../stores/idea_comments_store');
 module.exports = React.createClass({
   displayName: 'IdeaDiscussion',
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     IdeaCommentsStore.addChangeListener(this.getComments);
+    analytics.track('viewed', this.props.analytics)
   },
 
   getComments: function(e) {
