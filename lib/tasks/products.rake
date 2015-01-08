@@ -36,7 +36,10 @@ namespace :products do
       languages.each do |k, v|
         marks << k if v/total_lines.to_f > THRESHOLD
       end
-      puts "would mark #{p.slug} with #{marks}"
+
+      marks.each do |m|
+        MakeMarks.new.mark_with_name(p, m)
+      end
     end
   end
 end
