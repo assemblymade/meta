@@ -305,8 +305,8 @@ ActiveRecord::Schema.define(version: 20150106200506) do
     t.uuid     "product_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "score",             default: 0.0
-    t.datetime "last_score_update", default: '2013-06-06 00:00:00'
+    t.float    "score",                         default: 0.0
+    t.datetime "last_score_update",             default: '2013-06-06 00:00:00'
     t.datetime "greenlit_at"
   end
 
@@ -504,8 +504,6 @@ ActiveRecord::Schema.define(version: 20150106200506) do
   end
 
   create_table "platform_metrics", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.float    "mean_product_responsiveness"
-    t.float    "median_product_responsiveness"
     t.datetime "calculated_at"
     t.datetime "created_at"
     t.datetime "updated_at"

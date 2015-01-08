@@ -1,26 +1,20 @@
-class IdeasController < ProductController
+class IdeasController < ApplicationController
   respond_to :html, :json
-  layout 'global'
+  layout 'application'
 
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
 
   def index
-    # Only NFIs associated with Ideas have a nil associated product
-    # TODO: Move these filters/sorts to something like FilterWipsQuery
-    ideas = if params[:filter] == 'user'
-      Idea.by(current_user)
-    elsif params[:filter] == 'greenlit'
-      Idea.greenlit
-    else
-      Idea
-    end.send((params[:sort] || 'trending').to_sym).includes(:news_feed_item).all
+    ideas = FilterIdeasQuery.call(filter_params)
 
     @heartables = ideas.map(&:news_feed_item)
     @user_hearts = if signed_in?
       Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
     end
 
-    @ideas = ideas.order(score: :desc).page(params[:page]).per(20)
+    @ideas = ideas.page(params[:page]).per(20)
+
+    respond_with @ideas
   end
 
   def new_ideas
@@ -86,5 +80,9 @@ class IdeasController < ProductController
 
   def idea_params
     params.require(:idea).permit([:name, :body])
+  end
+
+  def filter_params
+    params.permit([:filter, :mark, :sort, :user])
   end
 end
