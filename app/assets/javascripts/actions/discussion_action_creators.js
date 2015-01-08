@@ -13,6 +13,8 @@ var DiscussionActionCreators = {
       },
       url: url,
       success: function(data) {
+        analytics.track('viewed', data.analytics)
+
         Dispatcher.dispatch({
           type: ActionTypes.DISCUSSION_RECEIVE,
           comments: data.comments,

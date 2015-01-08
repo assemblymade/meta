@@ -1,8 +1,6 @@
 class WipAnalyticsSerializer < ProductAnalyticsSerializer
   attributes :wip_id, :wip_number
-  attributes :wip_votes_count, :wip_comments_count
-  attributes :wip_type
-  attributes :featured
+  attributes :discussion_type
 
   def product_id
     product.id
@@ -20,20 +18,8 @@ class WipAnalyticsSerializer < ProductAnalyticsSerializer
     wip.number
   end
 
-  def wip_votes_count
-    wip.votes_count
-  end
-
-  def wip_comments_count
-    wip.comments_count
-  end
-
-  def wip_type
+  def discussion_type
     wip.type
-  end
-
-  def featured
-    wip.featured?
   end
 
   # private

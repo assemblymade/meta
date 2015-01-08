@@ -11,7 +11,7 @@ module Api
         end
 
         if @event.valid?
-          email_mentioned_users(@event)
+          process_mentioned_users(@event)
 
           @activity = Activities::Chat.publish!(
             actor: current_user,
@@ -46,11 +46,20 @@ module Api
         end
       end
 
-      def email_mentioned_users(event)
+      def process_mentioned_users(event)
+        props = DiscussionAnalyticsSerializer.new(@chat_room).as_json
+
         (event.mentioned_users - [event.user]).each do |mentioned_user|
           EmailLog.send_once mentioned_user.id, event.id do
             ChatMailer.delay(queue: 'mailer').mentioned_in_chat(mentioned_user.id, event.id)
           end
+
+          Analytics.track(
+            user_id: mentioned_user.id,
+            event: 'acknowledged',
+            timestamp: event.created_at,
+            properties: props
+          )
         end
       end
     end

@@ -2,12 +2,11 @@
 <% description Nokogiri::HTML(product_markdown(@bounty.product, @bounty.description)).text %>
 <% activate_nav! :bounties %>
 
-<%= track 'product.wip.viewed', WipAnalyticsSerializer.new(@wip, scope: current_user) %>
-
 <div class="card mb0">
   <%= react_component 'Bounty', {
       bounty: BountySerializer.new(@bounty, scope: current_user),
       item: (NewsFeedItemSerializer.new(@bounty.news_feed_item) if @bounty.news_feed_item),
+      analytics: WipAnalyticsSerializer.new(@wip, scope: current_user),
       valuation: {
         product: { name: @product.name },
         url: product_wips_path(@product),

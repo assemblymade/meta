@@ -1,7 +1,6 @@
 class EventSerializer < ActiveModel::Serializer
   include ReadraptorTrackable
   include MarkdownHelper
-  include TippableSerializer
 
   # FIXME Remove `rescue` as a conditional
   def self.for(event, user)
@@ -22,7 +21,6 @@ class EventSerializer < ActiveModel::Serializer
   attributes :product_id
   attributes :story_id
 
-  has_one :wip, serializer: WipSerializer
   has_one :user, key: :actor, serializer: UserSerializer
 
   def anchor
