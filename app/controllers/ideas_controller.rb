@@ -1,19 +1,24 @@
-class IdeasController < ProductController
+class IdeasController < ApplicationController
   respond_to :html, :json
-  layout 'global'
+  layout 'application'
 
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
 
   def index
-    # Only NFIs associated with Ideas have a nil associated product
-    ideas = Idea.includes(:news_feed_item).all
+    ideas = FilterIdeasQuery.call(filter_params)
 
     @heartables = ideas.map(&:news_feed_item)
     @user_hearts = if signed_in?
       Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
     end
 
-    @ideas = ideas.order(score: :desc).page(params[:page]).per(20)
+    @ideas = ideas.page(params[:page]).per(20)
+
+    respond_with ActiveModel::ArraySerializer.new(@ideas)
+  end
+
+  def new_ideas
+    render 'new_ideas', layout: nil
   end
 
   def show
@@ -69,11 +74,15 @@ class IdeasController < ProductController
 
   private
 
-    def find_idea!
-      @idea = Idea.friendly.find(params[:id])
-    end
+  def find_idea!
+    @idea = Idea.friendly.find(params[:id])
+  end
 
-    def idea_params
-      params.require(:idea).permit([:name, :body])
-    end
+  def idea_params
+    params.require(:idea).permit([:name, :body])
+  end
+
+  def filter_params
+    params.permit([:filter, :mark, :sort, :user])
+  end
 end

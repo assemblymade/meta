@@ -40,6 +40,8 @@
     "marked": "^0.3.2",
     "masonry": "braznaavtrav/masonry",
     "moment": "^2.8.1",
+    "page": "^1.5.0",
+    "qs": "^2.3.3",
     "react": "^0.12.0",
     "react-spinner": "^0.1.9",
     "react-tools": "^0.12.0",

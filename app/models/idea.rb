@@ -19,8 +19,18 @@ class Idea < ActiveRecord::Base
   after_commit :push_to_news_feed, on: :create
   after_commit :update_news_feed_item
 
+  scope :trending, -> { order(score: :desc) }
+  scope :by, -> (user) { where(user_id: user.id) }
+  scope :greenlit, -> { where.not(greenlit_at: nil) }
+  scope :newness, -> { order(created_at: :desc) }
   scope :with_mark,  -> (name) { joins(:marks).where(marks: { name: name }) }
-  scope :with_percentile, -> (percentile) { all.sort_by(&:percentile).take(percentile*all.count/100) }
+  scope :with_percentile, -> (percentile) {
+    all.sort_by(&:percentile).
+    take(percentile * all.count/100)
+  }
+
+  HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
+  EPOCH_START = Time.new(2013, 6, 6)
 
   def slug_candidates
     [
@@ -52,8 +62,8 @@ class Idea < ActiveRecord::Base
   end
 
   def update_news_feed_item
-    if self.news_feed_item
-      self.news_feed_item.update(updated_at: Time.now)
+    if news_feed_item
+      news_feed_item.update(updated_at: Time.now)
     end
   end
 
@@ -63,7 +73,7 @@ class Idea < ActiveRecord::Base
       return self.markings.destroy_all
     else
       mark_names.each do |mark_name|
-        self.add_mark(mark_name)
+        add_mark(mark_name)
       end
     end
   end
@@ -73,7 +83,7 @@ class Idea < ActiveRecord::Base
   end
 
   def love
-    self.news_feed_item.hearts.count
+    news_feed_item.hearts.count
   end
 
   def hearted
@@ -85,16 +95,18 @@ class Idea < ActiveRecord::Base
   end
 
   def save_score
-    lovescore = self.score
-    heartburn = 30.days.to_i  #period for 100% inflation, equivalent to half-life
-    epoch_start = DateTime.new(2013,6,6).to_i
+    lovescore = score
 
-    self.news_feed_item.hearts.where('created_at > ?',self.last_score_update).each do |h|
-      time_since = h.created_at.to_i - epoch_start
-      multiplier = 2 ** (time_since.to_f / heartburn.to_f)
+    news_feed_item.hearts.where('created_at > ?', last_score_update).each do |h|
+      time_since = h.created_at - EPOCH_START
+      multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
       lovescore = lovescore + multiplier
     end
-    self.update!({last_score_update: DateTime.now, score: lovescore})
+
+    update!({
+      last_score_update: DateTime.now,
+      score: lovescore
+    })
     lovescore
   end
 
@@ -103,26 +115,24 @@ class Idea < ActiveRecord::Base
   end
 
   def rank
-    Idea.order(score: :desc).find_index(self)+1
+    Idea.order(score: :desc).find_index(self) + 1
   end
 
   def percentile
-    self.rank.to_f / Idea.count*100.round(2)
+    self.rank.to_f / Idea.count * 100.round(2)
   end
 
   def heart_distance_from_percentile(goal_percentile)
     index = (Idea.all.count * goal_percentile.to_f/100).to_i
-    expected_score = Idea.all.sort_by{|q| q.score}.reverse.take(index+1).last.score
-    heartburn = 30.days.to_i  #period for 100% inflation, equivalent to half-life
-    epoch_start = DateTime.new(2013,6,6).to_i
-    time_since = DateTime.now.to_i - epoch_start
-    multiplier = 2 ** (time_since.to_f / heartburn.to_f)
+    expected_score = Idea.order(score: :desc).limit(index + 1).last.score
+    time_since = Time.now - EPOCH_START
+    multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
     hearts_missing = (expected_score - self.score) / (multiplier)
     hearts_missing = (hearts_missing+0.999).to_i
   end
 
   def temperature
-    Math.log(100 / (self.percentile+0.1))*10
+    Math.log(100 / (self.percentile + 0.1)) * 10
   end
 
 end

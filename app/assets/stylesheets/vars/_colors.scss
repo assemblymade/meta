@@ -41,6 +41,9 @@ $accent-lavender: #808fb2;
 $accent-rose: #b87c7a;
 $accent-orange: #ea8247;
 
+$accent-brown-rgb: 146, 185, 71;
+
+
 // brand vars
 $brand-primary: $blue;
 $brand-success: $green;
@@ -53,6 +56,7 @@ $brand-bg:       #FAFAFA;
 $brand-border:   darken($gray-lighter, 10%);
 $brand-divider:  darken($brand-bg, 5%);
 $brand-shadow:   rgba(100, 100, 100, 0.2);
+$brand-shadow-light:   rgba(100, 100, 100, 0.15);
 
 $brand-coins:    $coin-yellow;
 

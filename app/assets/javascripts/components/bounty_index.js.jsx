@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 (function() {
   var Accordion = require('./accordion.js.jsx')
   var BountiesStore = require('../stores/bounties_store.js')
