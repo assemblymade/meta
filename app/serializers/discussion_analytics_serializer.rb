@@ -2,7 +2,7 @@ class DiscussionAnalyticsSerializer < ProductAnalyticsSerializer
   attributes :discussion_type
 
   def discussion_type
-    object.target.class.name.underscore
+    (object.try(:target) || object).class.name.underscore
   end
 
   # private

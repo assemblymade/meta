@@ -32,6 +32,25 @@ class NewsFeedItemComment < ActiveRecord::Base
     )
   end
 
+  def track_acknowledgements!
+    commenters = news_feed_item.comments.map(&:user).uniq
+    mentionees = mentioned_users.uniq
+
+    acknowledgees = (commenters + mentionees).reject(&:is_staff?)
+
+    if acknowledgees.any?
+      props = DiscussionAnalyticsSerializer.new(news_feed_item).as_json
+      acknowledgees.each do |user|
+        Analytics.track(
+          user_id: user.id,
+          event: 'acknowledged',
+          timestamp: self.created_at,
+          properties: props
+        )
+      end
+    end
+  end
+
   def product
     news_feed_item.product
   end
