@@ -75,8 +75,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update(user_params)
-    respond_with @user, location: (params[:return_to] || user_path(@user))
+    current_user.update(user_params)
+    respond_with current_user
   end
 
   def dismiss_welcome_banner
