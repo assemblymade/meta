@@ -17,11 +17,9 @@ namespace :products do
   end
 
   task :mark_with_repo_languages => :environment do
-    THRESHOLD = 0.1
-
     Product.all.each do |p|
       languages = {}
-      marks = []
+      marks = {}
 
       p.repos.each do |r|
         new_languages = Github::Worker.new.get("repos/#{r.full_name}/languages")
@@ -34,11 +32,12 @@ namespace :products do
       total_lines = languages.values.sum
 
       languages.each do |k, v|
-        marks << k if v/total_lines.to_f > THRESHOLD
+        marks[k] = v/total_lines.to_f
       end
 
-      marks.each do |m|
-        MakeMarks.new.mark_with_name(p, m)
+      marks.each do |m, w|
+        mark = Mark.where(name: m.downcase).first_or_create
+        MakeMarks.new.mark_additively(p, mark.id, w)
       end
     end
   end
