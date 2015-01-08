@@ -17,11 +17,13 @@ class User < ActiveRecord::Base
 
   has_many :assembly_assets
   has_many :awards, foreign_key: 'winner_id'
+  has_many :choices
   has_many :deeds
   has_many :events
   has_many :hearts
   has_many :products
   has_many :product_logos
+  has_many :proposals
   has_many :followed_products, through: :watchings, source: :watchable, source_type: Product
   has_many :followed_tags, through: :watchings, source: :watchable, source_type: Wip::Tag
   has_many :wips

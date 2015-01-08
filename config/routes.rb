@@ -365,6 +365,7 @@ ASM::Application.routes.draw do
     resources :tips, only: [:create]
 
     resources :contracts, only: [:index, :create, :update, :destroy]
+    resources :governance, only: [:index, :create, :edit]
 
     resources :posts do
       post :preview, on: :collection

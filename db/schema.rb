@@ -11,13 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141223225045) do
+ActiveRecord::Schema.define(version: 20150107221428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "pg_stat_statements"
   enable_extension "uuid-ossp"
+
+  create_table "accords", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string   "type"
+    t.string   "state"
+    t.uuid     "proposal_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -125,6 +133,16 @@ ActiveRecord::Schema.define(version: 20141223225045) do
   end
 
   add_index "chat_rooms", ["slug"], name: "index_chat_rooms_on_slug", unique: true, using: :btree
+
+  create_table "choices", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.float    "value"
+    t.float    "weight"
+    t.string   "type"
+    t.uuid     "proposal_id"
+    t.uuid     "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "chronicles", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "user_id"
@@ -632,6 +650,16 @@ ActiveRecord::Schema.define(version: 20141223225045) do
     t.integer "expenses",               null: false
     t.integer "coins"
     t.integer "annuity",    default: 0, null: false
+  end
+
+  create_table "proposals", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "state"
+    t.uuid     "product_id"
+    t.uuid     "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "rooms", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
