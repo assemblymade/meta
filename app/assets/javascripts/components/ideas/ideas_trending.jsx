@@ -1,3 +1,4 @@
+var Idea = require('./idea.js.jsx');
 var IdeasStore = require('../../stores/ideas_store');
 
 var IdeasTrending = React.createClass({
@@ -43,24 +44,11 @@ var IdeasTrending = React.createClass({
 
   renderIdeas: function() {
     var ideas = this.state.ideas;
+    var IdeaFactory = React.createFactory(Idea);
 
     if (ideas.length) {
       return ideas.map(function(idea) {
-        return (
-          <div className="tile tile-small">
-            <div className="main">
-              <div className="xh4">
-                {idea.name}
-              </div>
-
-              <div className="content">
-                <p>
-                  {idea.body}
-                </p>
-              </div>
-            </div>
-          </div>
-        );
+        return IdeaFactory({ idea: idea });
       });
     }
   }

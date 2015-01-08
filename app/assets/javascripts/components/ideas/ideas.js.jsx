@@ -129,9 +129,8 @@ var Ideas = React.createClass({
               </nav>
             </div>
           </div>
+          {this.state.component}
         </section>
-
-        {this.state.component}
       </main>
     );
   },

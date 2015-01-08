@@ -14,7 +14,7 @@ class IdeasController < ApplicationController
 
     @ideas = ideas.page(params[:page]).per(20)
 
-    respond_with @ideas
+    respond_with ActiveModel::ArraySerializer.new(@ideas)
   end
 
   def new_ideas
