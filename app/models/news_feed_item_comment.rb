@@ -36,7 +36,7 @@ class NewsFeedItemComment < ActiveRecord::Base
     commenters = news_feed_item.comments.map(&:user).uniq
     mentionees = mentioned_users.uniq
 
-    acknowledgees = (commenters + mentionees).reject(&:is_staff?)
+    acknowledgees = (commenters + mentionees).reject(&:is_staff?) - [self.user]
 
     if acknowledgees.any?
       props = DiscussionAnalyticsSerializer.new(news_feed_item).as_json
