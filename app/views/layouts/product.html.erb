@@ -123,23 +123,21 @@
               window.analytics.track('product.wip.showed_bounty_modal', { product: "<%= @product.slug %>" });
               try {
                 $('#create-bounty-modal').modal('show');
-              } catch (e) {
-            }
-
-            React.render(
-              CreateBounty({
-                id: 'create-bounty-modal',
-                product: { name: "<%= @product.name %>" },
-                url: "<%= product_wips_path(@product) %>",
-                maxOffer: "<%= (6 * @product.average_bounty).round(-4) %>",
-                averageBounty: "<%= @product.average_bounty %>",
-                coinsMinted: "<%= @product.coins_minted %>",
-                profitLastMonth: "<%= @product.profit_last_month %>",
-                steps: "<%= BountyGuidance::Valuations.suggestions(@product) %>",
-              }),
-              document.getElementById('create-bounty')
-              );
-            }
+              } catch (e) {}
+                React.render(
+                  CreateBounty({
+                    id: 'create-bounty-modal',
+                    product: { name: "<%= @product.name %>" },
+                    url: "<%= product_wips_path(@product) %>",
+                    maxOffer: <%= (6 * @product.average_bounty).round(-4) %>,
+                    averageBounty: <%= @product.average_bounty %>,
+                    coinsMinted: <%= @product.coins_minted %>,
+                    profitLastMonth: <%= @product.profit_last_month %>,
+                    steps: <%= BountyGuidance::Valuations.suggestions(@product) %>
+                  }),
+                  document.getElementById('create-bounty')
+                );
+              }
           </script>
 
           <div class="center-align mcenter dropdown pt2 pb2 w45 r600_float-right r600_pt0 r600_pb0 r600_mr2 r600_w35 r768_p0 r768_m0 r992_w45">

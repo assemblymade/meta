@@ -41,6 +41,7 @@ class Wip < ActiveRecord::Base
   after_commit :set_number, on: :create
   after_commit -> { Indexer.perform_async(:index, Wip.to_s, self.id) }, on: :create
   after_commit :update_news_feed_item
+  after_commit :update_product_markings, on: :create
   after_update :update_elasticsearch
 
   scope :available,   ->{ where(state: 'open') }
@@ -224,6 +225,13 @@ class Wip < ActiveRecord::Base
 
   def normalized_mark_vector()
     QueryMarks.new.normalize_mark_vector(self.mark_vector())
+  end
+
+  def update_product_markings
+    if self.type == "Task"
+      scalar = 0.2
+      AdjustMarkings.perform_async(self.product_id, "Product", self.id, "Wip", scalar)
+    end
   end
 
   # flagging

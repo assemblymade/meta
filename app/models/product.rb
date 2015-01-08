@@ -528,7 +528,7 @@ class Product < ActiveRecord::Base
 
   def profit_last_month
     last_report = profit_reports.order('end_at DESC').first
-    last_report && last_report.profit
+    (last_report && last_report.profit) || 0
   end
 
   def ownership
@@ -641,55 +641,8 @@ class Product < ActiveRecord::Base
     [10_000_000, transaction_log_entries.sum(:cents)].max
   end
 
-  def calc_task_comments_response_time
-    # average time in seconds for comments to receive responses
-    # weighted average of responsiveness across tasks with comments
-
-    avg_time_to_comment = -1
-    tasks_with_comments = self.tasks.where('comments_count > 0')
-
-    unless tasks_with_comments.blank?
-      avg_time_to_comment_weighted_numerators = []
-      tasks_with_comments.each do |t|
-        avg_time_to_comment_weighted_numerators <<
-          (t.comments.maximum(:created_at).to_i - t.created_at.to_i) / [t.comments_count - 1, 1].max * t.comments_count
-      end
-      avg_time_to_comment = avg_time_to_comment_weighted_numerators.sum / tasks_with_comments.sum(:comments_count)
-    end
-    pm = ProductMetric.create(
-      product: self,
-      comments_count: self.tasks.sum(:comments_count),
-      comment_responsiveness: avg_time_to_comment
-    )
-    avg_time_to_comment
-  end
-
-  def comment_responsiveness
-    if pm = ProductMetric.where(product: self).order(created_at: :asc).last
-      pm.comment_responsiveness
-    else
-      calc_task_comments_response_time
-    end
-  end
-
   def mark_vector
-    #get unnormalized mark vector of product itself
     my_mark_vector = QueryMarks.new.mark_vector_for_object(self)
-
-    #get unnormalized mark vector of wips
-    # FIXME: Don't iterate through every wip, especially not in proc
-    # These values should be cached on the product itself and only updated
-    # when a new task is added
-    self.wips.each do |w|
-      my_child_mark_vector = QueryMarks.new.mark_vector_for_object(w)
-
-      #scale parent vector by constant
-      my_child_mark_vector = QueryMarks.new.scale_mark_vector(my_child_mark_vector, 0.2)
-
-      my_mark_vector = QueryMarks.new.add_mark_vectors(my_child_mark_vector, my_mark_vector)
-    end
-
-    my_mark_vector
   end
 
   def normalized_mark_vector()

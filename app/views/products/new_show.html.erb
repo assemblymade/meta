@@ -2,8 +2,6 @@
 <% description @product.pitch %>
 <% activate_nav! :product %>
 
-<%= track 'product.viewed', ProductAnalyticsSerializer.new(@product, scope: current_user) %>
-
 <div class="row">
   <div class="col-xs-12 col-sm-4 r768_float-right">
     <span class="col-sm-11 col-sm-push-1 p0">

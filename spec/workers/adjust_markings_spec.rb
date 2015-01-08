@@ -10,7 +10,7 @@ describe AdjustMarkings do
       Marking.create!({mark: mark, markable: product, weight: 2.0})
 
       expect {
-        AdjustMarkings.new.perform(user.id, product.id, "Product", 1.0)
+        AdjustMarkings.new.perform(user.id, "User", product.id, "Product", 1.0)
       }.to change(Marking, :count).by(1)
     end
   end

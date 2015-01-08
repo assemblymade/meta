@@ -4,5 +4,5 @@ class Award < ActiveRecord::Base
   belongs_to :event
   belongs_to :wip
 
-  after_commit -> { AdjustMarkings.perform_async(self.winner.id, self.wip.id, "Wip", 1.0) }, on: :create
+  after_commit -> { AdjustMarkings.perform_async(self.winner.id, "User", self.wip.id, "Wip", 1.0) }, on: :create
 end

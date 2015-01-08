@@ -5,6 +5,8 @@ class User::Withdrawal < ActiveRecord::Base
   validates :total_amount, presence: true
   validates :amount_withheld, presence: true
 
+  scope :paid, -> { where.not(payment_sent_at: nil) }
+
   acts_as_sequenced column: :reference, start_at: 1
 
   def withholding

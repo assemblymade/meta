@@ -3,6 +3,7 @@
 $white:  #FFF;
 $black:  #353941;
 
+$gray-7: #F9F9F9;
 $gray-6: #F4F4F5;
 $gray-5: #ECEDEF;
 $gray-4: #DBDEE3;
@@ -95,6 +96,8 @@ $red-light:     lighten($red, 10%);
 .border-black-hover:hover { border-color: $black }
 .fill-black-hover:hover   { fill: $black }
 .stroke-black-hover:hover { stroke: $black }
+
+.bg-gray-7 { background-color: $gray-7 }
 
 .gray-6        { color: $gray-6 }
 .bg-gray-6     { background-color: $gray-6 }
