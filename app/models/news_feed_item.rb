@@ -1,4 +1,5 @@
-# Possible names: Thread, Story, ...
+# TODO: Needs a new name
+# suggestions: Thread, Story, Discussion
 
 class NewsFeedItem < ActiveRecord::Base
   include Kaminari::ActiveRecordModelExtension

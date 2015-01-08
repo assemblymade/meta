@@ -2,6 +2,7 @@
   <script>
     window.app.product = new Product(<%= json @product, scope: current_user %>)
     window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);
+    analytics.track('viewed', window.app.currentAnalyticsProduct().attributes)
   </script>
 <% end %>
 

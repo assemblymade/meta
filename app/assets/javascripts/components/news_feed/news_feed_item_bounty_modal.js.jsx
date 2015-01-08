@@ -29,8 +29,6 @@ module.exports = React.createClass({
 
     window.app.setCurrentAnalyticsProduct(this.props.item.product);
 
-    analytics.track('product.wip.viewed', { bounty: this.props.item.target, news_feed: true });
-
     this.fetchBounty();
   },
 
@@ -47,6 +45,7 @@ module.exports = React.createClass({
       this.setState({
         bounty: response.bounty,
         events: response.events,
+        analytics: response.analytics,
         ready: true
       });
     }.bind(this));
@@ -111,6 +110,7 @@ module.exports = React.createClass({
     if (this.state.ready) {
       return (
         <Bounty
+            analytics={this.state.analytics}
             key={bounty.id}
             bounty={bounty}
             noInvites={true}

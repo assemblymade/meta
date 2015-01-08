@@ -40,6 +40,7 @@ class NewsFeedItemCommentsController < ProductController
     end
 
     discussion = {
+      analytics: DiscussionAnalyticsSerializer.new(@news_feed_item),
       comments: comments,
       events: events,
       user_hearts: user_hearts
