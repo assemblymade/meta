@@ -5,11 +5,20 @@ class Proposal < ActiveRecord::Base
   has_many :accords
 
   def vote_ratio
-    self.choices.sum(&:weighted) / self.choices.count
+    if self.choices.count > 0
+      self.choices.to_a.sum{|a| a.value*a.weight} / self.choices.to_a.sum{|a| a.weight}
+    else
+      0
+    end
   end
 
   def votes_ratio_absolute
-    self.choices.sum(&:unweighted) / self.choices.count
+    self.choices.sum{|a| if a.value > 0
+      1
+    else
+      -1
+    end
+      } / self.choices.count
   end
 
   def votes_core
@@ -42,6 +51,10 @@ class Proposal < ActiveRecord::Base
         })
         self.choices.append(new_choice)
     end
+  end
+
+  def status
+    "#{self.vote_ratio*100} %"
   end
 
 end

@@ -5,6 +5,9 @@
 <%= render 'people/nav' %>
 
 <h1>Proposals</h1>
+
+<br>
+<h3>Open</h3>
 <table class="table table-responsive table-hover">
   <thead>
     <tr>
@@ -16,17 +19,50 @@
   </thead>
   <tbody>
     <% @open_proposals.each do |op| %>
-      <td class="text-left"><%= op.name %></td>
-      <td class="text-right"></td>
-      <td class="text-right"><%= op.description %></td>
-      <td class="text-right"></td>
+    <td class="text-left"><a href= <%= product_proposals_path(op) %> ><%= op.name %></a></td>
+    <td class="text-right"></td>
+    <td class="text-right"><%= op.description %></td>
+    <td class="text-right"><%= op.status %></td>
     <% end %>
   </tbody>
 </table>
-
 <br>
-<h2>Open</h2>
+<h3>Active</h3>
+<table class="table table-responsive table-hover">
+  <thead>
+    <tr>
+      <th class="text-left">Name</th>
+      <th class="text-right">Type</th>
+      <th class="text-right">Description</th>
+      <th class="text-right">Vote Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @active_proposals.each do |ap| %>
+    <td class="text-left"><a href= <%= product_proposals_path(ap) %> ><%= ap.name %></a></td>
+    <td class="text-right"></td>
+    <td class="text-right"><%= ap.description %></td>
+    <td class="text-right"><%= ap.status %></td>
+    <% end %>
+  </tbody>
+</table>
 <br>
-<h2>Active</h2>
-<br>
-<h2>Closed/Failed</h2>
+<h3>Closed/Failed</h3>
+<table class="table table-responsive table-hover">
+  <thead>
+    <tr>
+      <th class="text-left">Name</th>
+      <th class="text-right">Type</th>
+      <th class="text-right">Description</th>
+      <th class="text-right">Vote Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @closed_proposals.each do |cp| %>
+    <td class="text-left"><a href= <%= product_proposals_path(cp) %> ><%= cp.name %></a></td>
+    <td class="text-right"></td>
+    <td class="text-right"><%= cp.description %></td>
+    <td class="text-right"><%= cp.status %></td>
+    <% end %>
+  </tbody>
+</table>
