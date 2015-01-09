@@ -36,7 +36,7 @@ function _route(route) {
   var path = route[0];
   var component = route[1];
 
-  page(path, _getAndDispatchData(component))
+  page(path, _getAndDispatchData(component));
 }
 
 function _getAndDispatchData(component) {
