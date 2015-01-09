@@ -1,4 +1,5 @@
 var Avatar = require('../ui/avatar.js.jsx');
+var SVGIcon = require('../ui/svg_icon.js.jsx');
 var Footer = require('../ui/footer.js.jsx');
 var SmallTile = require('../ui/small_tile.js.jsx');
 var UserStore = require('../../stores/user_store');
@@ -31,7 +32,7 @@ var Idea = React.createClass({
         <SmallTile>
           <div className="main">
             <a href={idea.url}>
-              <div className="xh4" style={{ minHeight: 44, maxHeight: 44, height: 44}}>
+              <div className="xh4">
                 {idea.name}
               </div>
 
@@ -46,8 +47,8 @@ var Idea = React.createClass({
               <div className="item">
                 <div className="details-group">
                   <a href={user.url} className="inline-block">
-                    <Avatar user={user} style={{ display: 'inline-block' }} />
-                    <span className="gray-1 px1">{this.renderUsername()}</span>
+                    <Avatar user={user} />
+                    <span>{this.renderUsername()}</span>
                   </a>
                 </div>
               </div>
@@ -56,20 +57,20 @@ var Idea = React.createClass({
                 <div className="action-group">
                   <div className="item">
                     <a href={idea.url} className="comment-count">
-                      <Icon icon="comment" />
-                      {idea.comments_count} {idea.comments_count === 1 ? 'comment' : 'comments'}
+                      <SVGIcon type={'svg-icon-comment'} />
+                      {idea.comments_count} {idea.comments_count === 1 ? 'Comment' : 'Comments'}
                     </a>
                   </div>
 
                   <div className="item">
                     <a href="#" className="action-icon">
-                      <img src="http://i.imgur.com/p4cUn3W.png" />
+                      <SVGIcon type={'svg-icon-share'} />
                     </a>
                   </div>
 
                   <div className="item">
                     <a href="#" className="action-icon">
-                      <img src="http://i.imgur.com/Hilon4j.png" />
+                      <SVGIcon type={'svg-icon-heart'} />
                     </a>
                   </div>
                 </div>
@@ -79,6 +80,11 @@ var Idea = React.createClass({
                 <div className="progress-group">
                   <div className="item">
                     <progress max="100" value="80" />
+                  </div>
+                  <div className="item">
+                    <div className="progress-count">
+                      322
+                    </div>
                   </div>
                 </div>
               </div>

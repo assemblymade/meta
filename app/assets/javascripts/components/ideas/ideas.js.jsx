@@ -128,8 +128,8 @@ var Ideas = React.createClass({
                 </div>
               </nav>
             </div>
+            {this.state.component}
           </div>
-          {this.state.component}
         </section>
       </main>
     );

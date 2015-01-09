@@ -94,34 +94,47 @@
   }
   .details-group {
     padding: 1rem 2rem;
-  }
-  .ident {
-    display:inline-block;
-    font-weight: bold;
-    color: $black;
     //
-    &, a {
-      font-size: 1.1rem;
-    }
-    img {
+    > a:first-child {
       display:inline-block;
-      width: 1.5rem;
-      border-radius:50%;
-      background: $black;
-    }
-    span {
-      display:inline-block;
-      vertical-align: middle;
+      font-weight: bold;
+      color: $black;
+      //
+      & {
+        font-size: 1.1rem;
+      }
+      img {
+        display:inline-block;
+        width: 1.5rem;
+        height: auto;
+        border-radius:50%;
+        background: $black;
+      }
+      span {
+        margin-left: 0.5rem;
+        display:inline-block;
+        vertical-align: middle;
+      }
     }
   }
-  .comment-count {
+  a.comment-count {
+    display: inline-block;
+    vertical-align: middle;
     color:$gray-2;
     font-size: 1.1rem;
     line-height: 1.7rem;
     font-weight: bold;
     //
-    span {
-      margin-right:0.25rem;
+    &:hover, &:active {
+      //
+      .svg-icon-comment  {
+        fill:$gray-2;
+      }
+    }
+    .svg-icon-comment {
+      width: 1.3rem;
+      margin-right:0.5rem;
+      fill:$gray-3;
     }
   }
   .action-group {
@@ -142,15 +155,54 @@
         padding-right: 2rem;
         padding-left: 2rem;
       }
+      &:last-child {
+        border-right:none;
+      }
     }
     .action-icon {
       display: block;
       padding: 1rem 0;
+      //
+      &:hover, &:active {
+      //
+        .svg-icon-share {
+          fill:$gray-2;
+        }
+        .svg-icon-heart .path1, .svg-icon-heart .path2 {
+          fill:$red;
+        }
+      }
+      .svg-icon-share {
+        width: 1.9rem;
+        fill:$gray-3;
+      }
+      .svg-icon-heart {
+        width: 1.6rem;
+        //
+        .path1 {
+          fill:$white;
+        }
+        .path2 {
+          fill:$gray-3;
+        }
+      }
     }
   }
   .progress-group {
-    padding: 1.5rem 2rem;
+    display:table;
+    table-layout:fixed;
+    width: 100%;
+    padding: 1.5rem 0rem 1.5rem 2rem;
     //
+    > .item {
+      display:table-cell;
+      vertical-align: middle;
+      //
+      &:last-child{
+        width: 5rem;
+        text-align: center;
+      }
+    }
     progress {
       display:block;
       width:100%;
@@ -175,6 +227,12 @@
       background: -moz-linear-gradient(top, $green 1%,$green 100%);
     }
   }
+  .progress-count {
+    color:$black;
+    font-size: 1.1rem;
+    line-height: 1.7rem;
+    font-weight: bold;
+  }
 }
 
 // -- Size Variations ------------
@@ -183,8 +241,8 @@
   min-height: 30.5rem;
   margin-bottom: 0; // let the grid/container create margins
   //
-  > .main .content {
-    height: 12.5rem;
+  > .main {
+    height: 17rem;
     overflow: hidden;
   }
   > .main a .content {
