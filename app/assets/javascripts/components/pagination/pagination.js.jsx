@@ -85,6 +85,7 @@ var Pagination = React.createClass({
       disabled: currentPage === 1
     });
 
+    // TODO: Change these to Links when we've migrated to ReactRouter
     return (
       <li className={classes} key="previous">
         <a href="javascript:void(0);" onClick={this.changePage(currentPage - 1)}>

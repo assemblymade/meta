@@ -1,5 +1,6 @@
 var Idea = require('./idea.js.jsx');
 var IdeasStore = require('../../stores/ideas_store');
+var Pagination = require('../pagination/pagination.js.jsx');
 
 var IdeasTrending = React.createClass({
   displayName: 'IdeasTrending',

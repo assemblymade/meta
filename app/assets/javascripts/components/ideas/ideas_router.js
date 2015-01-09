@@ -23,6 +23,10 @@ class IdeasRouter {
   }
 }
 
+var router = new IdeasRouter(ideasRoutes);
+
+module.exports = router;
+
 function _parse(context, next) {
   context.query = qs.parse(context.querystring);
   next();
@@ -47,5 +51,3 @@ function _getAndDispatchData(component) {
     })
   }, 500)
 }
-
-module.exports = new IdeasRouter(ideasRoutes);

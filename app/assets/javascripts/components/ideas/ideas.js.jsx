@@ -1,6 +1,3 @@
-var CONSTANTS = window.CONSTANTS;
-var ActionTypes = CONSTANTS.ActionTypes;
-
 var Footer = require('../ui/footer.js.jsx');
 var IdeasRouter = require('./ideas_router');
 var IdeasStore = require('../../stores/ideas_store');
