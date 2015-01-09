@@ -1,4 +1,4 @@
-// var Dispatcher = require('../../dispatcher');
+var Dispatcher = window.Dispatcher
 var CONSTANTS = window.CONSTANTS
 var ActionTypes = CONSTANTS.ActionTypes
 var ideasRoutes = require('./ideas_routes')
