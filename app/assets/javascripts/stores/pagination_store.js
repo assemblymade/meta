@@ -37,9 +37,12 @@ var store = new PaginationStore()
 
 var dataTag = document.getElementById('PaginationStore')
 if (dataTag) {
+  var data = JSON.parse(dataTag.innerHTML);
+
   Dispatcher.dispatch({
     type: ActionTypes.PAGINATION_TOTAL_PAGES_RECEIVE,
-    totalPages: JSON.parse(dataTag.innerHTML).totalPages
+    currentPage: data.current_page,
+    totalPages: data.total_pages
   })
 }
 

@@ -25,12 +25,6 @@ var Pagination = React.createClass({
     PaginationStore.removeChangeListener(this.setCurrentPage);
   },
 
-  getDefaultProps: function() {
-    return {
-      dataName: 'data'
-    };
-  },
-
   getInitialState: function() {
     return {
       currentPage: PaginationStore.getCurrentPage(),
@@ -39,6 +33,10 @@ var Pagination = React.createClass({
   },
 
   render: function() {
+    if (this.state.totalPages === 1) {
+      return null;
+    }
+
     return (
       <ul className="pagination">
         {this.renderPreviousButton()}

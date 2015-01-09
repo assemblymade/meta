@@ -9,7 +9,10 @@ class IdeasController < ApplicationController
   def index
     ideas = FilterIdeasQuery.call(filter_params)
 
-    @stores[:pagination_store] = (ideas.count / IDEAS_PER_PAGE.to_f).ceil
+    @stores[:pagination_store] = {
+      current_page: params[:page] || 1,
+      total_pages: (ideas.count / IDEAS_PER_PAGE.to_f).ceil
+    }
 
     @heartables = ideas.map(&:news_feed_item)
     @user_hearts = if signed_in?
