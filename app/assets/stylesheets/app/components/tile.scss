@@ -36,6 +36,9 @@
     padding:0;
     border: none;
   }
+  h1 {
+    display: none; // temp, you'll want to kill these from the data pull
+  }
   h2, h4 {
     margin-top: 0;
   }

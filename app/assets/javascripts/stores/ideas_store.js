@@ -36,7 +36,7 @@ class IdeasRouteStore extends Store {
 module.exports = new IdeasRouteStore()
 
 function _setData(action) {
-  currentComponent = action.component || null
-  currentContext = action.context || {}
-  currentIdeas = action.ideas || []
+  currentComponent = action.component || currentComponent
+  currentContext = action.context || currentContext
+  currentIdeas = action.ideas || currentIdeas
 }

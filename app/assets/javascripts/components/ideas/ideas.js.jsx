@@ -1,5 +1,10 @@
+var CONSTANTS = window.CONSTANTS;
+var ActionTypes = CONSTANTS.ActionTypes;
+
+var Footer = require('../ui/footer.js.jsx');
 var IdeasRouter = require('./ideas_router');
 var IdeasStore = require('../../stores/ideas_store');
+var Pagination = require('../pagination/pagination.js.jsx');
 var UserStore = require('../../stores/user_store');
 
 var Ideas = React.createClass({
@@ -10,7 +15,7 @@ var Ideas = React.createClass({
 
     // The router will have fired before the component mounted, so we need
     // to call `navigate` after mounting
-    IdeasRouter.navigate(window.location.pathname);
+    IdeasRouter.navigate(window.location);
   },
 
   componentWillUnmount: function() {
@@ -129,6 +134,11 @@ var Ideas = React.createClass({
               </nav>
             </div>
             {this.state.component}
+            <Footer>
+              <nav>
+                <Pagination actionCall={IdeasRouter.navigate} />
+              </nav>
+            </Footer>
           </div>
         </section>
       </main>

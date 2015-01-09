@@ -1,6 +1,7 @@
 var Avatar = require('../ui/avatar.js.jsx');
 var SVGIcon = require('../ui/svg_icon.js.jsx');
 var Footer = require('../ui/footer.js.jsx');
+var ProgressBar = require('../ui/progress_bar.js.jsx');
 var SmallTile = require('../ui/small_tile.js.jsx');
 var UserStore = require('../../stores/user_store');
 
@@ -37,7 +38,7 @@ var Idea = React.createClass({
               </div>
 
               <div className="content">
-                <p>{idea.short_body}</p>
+                <p dangerouslySetInnerHTML={{ __html: idea.short_body }} />
               </div>
             </a>
           </div>
@@ -77,16 +78,7 @@ var Idea = React.createClass({
               </div>
 
               <div className="item">
-                <div className="progress-group">
-                  <div className="item">
-                    <progress max="100" value="80" />
-                  </div>
-                  <div className="item">
-                    <div className="progress-count">
-                      322
-                    </div>
-                  </div>
-                </div>
+                <ProgressBar progress={80} />
               </div>
             </div>
           </Footer>
