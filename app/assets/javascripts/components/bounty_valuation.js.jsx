@@ -3,6 +3,8 @@
 (function() {
   var AppCoins = require('./app_coins.js.jsx')
   var BountyBreakdown = require('./bounty_breakdown.js.jsx');
+  var Icon = require('./ui/icon.js.jsx')
+
   var BountyValuation = React.createClass({
     propTypes: {
       contracts: React.PropTypes.object.isRequired,
@@ -29,10 +31,13 @@
     render: function() {
       return (
         <div>
-          <a href="#" id="bounty-amount-link" onClick={this.toggle}>
-            <AppCoins n={this.props.contracts.earnable} />
-            {' '}
-            <span className="icon icon-chevron-down text-coins"></span>
+          <a className="block clearfix" href="#" id="bounty-amount-link" onClick={this.toggle}>
+            <div className="left">
+              <AppCoins n={this.props.contracts.earnable} />
+            </div>
+            <div className="left yellow ml1">
+              <Icon icon="chevron-down" />
+            </div>
           </a>
 
           {this.renderLightbox()}

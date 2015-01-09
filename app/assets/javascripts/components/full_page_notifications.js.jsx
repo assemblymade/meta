@@ -1,5 +1,5 @@
 var CONSTANTS = window.CONSTANTS;
-var Avatar = require('./avatar.js.jsx');
+var Avatar = require('./ui/avatar.js.jsx');
 // var Dispatcher = require('../dispatcher');
 var EventMixin = require('../mixins/event.js.jsx');
 var NotificationsStore = require('../stores/notifications_store');

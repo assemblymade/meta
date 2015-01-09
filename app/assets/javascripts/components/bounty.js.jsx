@@ -1,8 +1,12 @@
+var AvatarWithUsername = require('./ui/avatar_with_username.js.jsx')
 var BountyActionCreators = require('../actions/bounty_action_creators');
 var BountyStore = require('../stores/bounty_store');
+var Button = require('./ui/button.js.jsx')
 var Markdown = require('./markdown.js.jsx');
 var Icon = require('./icon.js.jsx');
 var formatShortTime = require('../lib/format_short_time.js');
+var SingleLineList = require('./ui/single_line_list.js.jsx')
+var Label = require('./ui/label.js.jsx')
 var Love = require('./love.js.jsx');
 var routes = require('../routes')
 
@@ -99,53 +103,85 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var bounty = this.bounty();
+    var bounty = this.bounty()
+    var currentUser = window.app.currentUser()
+
+    var bountyValuation = null
+    if (this.props.showCoins) {
+      bountyValuation = <BountyValuation {...this.state.bounty} {...this.props.valuation} />
+    }
+
+    var lockMessage = null
+    var worker = this.state.worker
+    if (worker && !(this.state.closed || bounty.state === 'closed')) {
+      if (currentUser && worker.id === currentUser.id) {
+        lockMessage = (
+          <div className="px3 py2 border-bottom border-gray-5 gray-1" style={{backgroundColor: '#F4FFC0'}}>
+            <Icon icon="lock" /> You have a hold on this bounty held until {this.state.lockUntil.format('dddd [at] h a')} &mdash; <a href="javascript:void(0)" onClick={this.abandonWork}>release this bounty</a> or <a href="javascript:void(0)" onClick={this.extendWork}>extend for two days</a>
+          </div>
+        )
+      } else {
+        lockMessage = (
+          <div className="px3 py2 border-bottom border-gray-5 gray-1" style={{backgroundColor: '#F4FFC0'}}>
+            <AvatarWithUsername user={worker} /> has {formatShortTime(this.state.lockUntil)} to work on this bounty.
+          </div>
+        )
+      }
+    }
 
     return (
-      <div>
-        <div className="p3 border-bottom">
-          <ul className="list-inline mb2" style={{ marginBottom: '6px' }}>
-            {this.renderBountyValuation()}
-            <li>
-              {this.renderTagList()}
-            </li>
-            <li className="text-muted" style={{ fontSize: '14px', color: '#a5a5a5' }}>
-              Created by
-              {' '}
-              <a className="text-stealth-link" href={bounty.user.url}>@{bounty.user.username}</a>
-              {' '}
-              {moment(bounty.created).fromNow()}
-            </li>
-          </ul>
+      <div className="bg-white rounded">
+        <div className="border-bottom border-gray-5">
+          <div className="clearfix border-bottom border-gray-5">
+            <div className="left px3 py2 border-right border-gray-5">
+              {bountyValuation}
+            </div>
 
-          <h1 className="mt0 mb0" style={{ fontWeight: 'normal' }}>
-            {this.state.bounty.title}
-            {' '}
-            <small style={{ fontSize: '85%' }}>
-              <a href={bounty.url} className="gray">#{bounty.number}</a>
-            </small>
-          </h1>
+            <div className="left px3 py2">
+              <ul className="list-inline mt0 mb0" style={{fontSize:13, lineHeight: '2rem'}}>
+                {this.renderEditButton()}
+                {this.renderOpenButton()}
+                {this.renderFollowButton()}
+                {this.renderInviteFriendButton()}
+              </ul>
+            </div>
+
+            <div className="right px2 py1">
+              {this.renderStartWorkButton()}
+            </div>
+          </div>
+
+          {lockMessage}
+
+          <div className="p3 px4">
+
+            <div className="mb3 h6 mt0 mb0">
+              <AvatarWithUsername user={bounty.user} size={18} />
+              {' '}
+              <span className="gray-2">posted</span>
+            </div>
+
+            <h1 className="mt0 mb0" style={{ lineHeight: '36px' }}>
+              {this.state.bounty.title}
+              {' '}
+              <a href={bounty.url} className="gray-3" style={{fontWeight: 'normal'}}>#{bounty.number}</a>
+            </h1>
+
+            <div className="py1 mb2">
+              <SingleLineList items={_.map(this.state.bounty.tags, function(label) {
+                return <Label name={label.name} />
+              })} />
+            </div>
+
+            {this.renderDescription()}
+          </div>
+
+          {this.renderLove()}
         </div>
 
-        <div className="p3">
-          {this.renderDescription()}
-        </div>
-
-        {this.renderLove()}
-        {this.renderFooter()}
         {this.renderDiscussion()}
       </div>
     );
-  },
-
-  renderBountyValuation: function() {
-    if (this.props.showCoins) {
-      return (
-        <li className="text-large">
-          <BountyValuation {...this.state.bounty} {...this.props.valuation} />
-        </li>
-      );
-    }
   },
 
   renderClosedNotice: function() {
@@ -238,27 +274,6 @@ module.exports = React.createClass({
     }
   },
 
-  renderFooter: function() {
-    if (window.app.currentUser()) {
-      return (
-        <div className="card-footer p3 clearfix">
-          <div className="left _pl1">
-            {this.renderStartWorkButton()}
-          </div>
-
-          <ul className="list-inline mt0 mb0 py1 right _pr3">
-            {this.renderEditButton()}
-            {this.renderOpenButton()}
-            {this.renderFollowButton()}
-            {this.renderInviteFriendButton()}
-          </ul>
-        </div>
-      );
-    }
-
-    return <div className="border-bottom" />;
-  },
-
   renderInviteFriendButton: function() {
     if (this.props.noInvites) {
       return null;
@@ -335,9 +350,9 @@ module.exports = React.createClass({
 
     if (this.state.closed || bounty.state === 'closed') {
       return (
-        <a className="btn btn-default disabled">
+        <Button>
           {bounty.state === 'resolved' ? 'Completed & Closed' : 'Closed'}
-        </a>
+        </Button>
       );
     }
 
@@ -345,69 +360,19 @@ module.exports = React.createClass({
       return;
     }
 
-    if (!this.state.worker) {
-      return (
-        <button className="btn btn-success mr2" type="button" onClick={this.startWork}>
-          Work on this bounty
-        </button>
-      );
+    if (this.state.worker) {
+      if (this.state.worker.id == currentUser.id) {
+        return (
+          <a href="#event_comment_body" className="block py1 green green-dark-hover">
+            <Icon icon="check" /> Submit work
+          </a>
+        )
+      } else {
+        return <Button><Icon icon="lock" /> Locked for {formatShortTime(this.state.lockUntil)}</Button>
+      }
+    } else {
+      return <Button action={this.startWork}>Work on this bounty</Button>
     }
-
-    var worker = this.state.worker;
-
-    if (worker.id === currentUser.id) {
-      return (
-        <div className="clearfix">
-          <button className="inline-block left mr2 pill-button pill-button-theme-white pill-button-border pill-button-shadow"
-              href="javascript:void(0);"
-              style={{ color: '#5cb85c !important' }}
-              data-scroll="true"
-              data-target="#event_comment_body">
-            <span className="icon icon-document icon-left"></span>
-            <span className="title _fs1_1 _lh2">Submit work</span>
-          </button>
-          <div className="left h6 mt0 mb0 gray-darker">
-            <Icon icon="lock" />
-            {' '}
-            We'll hold this task for you till {this.state.lockUntil.format('dddd [at] h a')}
-            <br />
-            <a href="javascript:void(0)" onClick={this.extendWork}>Hold until two days from now</a>
-            {' '}
-            or
-            {' '}
-            <a href="javascript:void(0)" onClick={this.abandonWork}>Release task</a>
-          </div>
-        </div>
-      );  // '
-    }
-
-    return (
-      <div className="py1 gray">
-        <span className="mr1"><Icon icon="lock" /></span>
-        {' '}
-        <a className="gray-darker" href={worker.url}>
-          <span style={{ opacity: '0.7' }}>
-            <Avatar user={worker} style={{ display: 'inline' }} />
-          </span>
-          {' '} @{worker.username}
-        </a>
-        {' '} has {formatShortTime(this.state.lockUntil)} to work on this
-      </div>
-    )
-  },
-
-  renderTagList: function() {
-    var bounty = this.state.bounty;
-    var tags = _.map(bounty.tags, function(tag) { return tag.name });
-
-    return (
-      <TagList
-        filterUrl={this.props.item.product.wips_url}
-        destination={true}
-        tags={tags}
-        newBounty={true}
-        url={bounty.tag_url} />
-    );
   },
 
   reopenBounty: function(e) {

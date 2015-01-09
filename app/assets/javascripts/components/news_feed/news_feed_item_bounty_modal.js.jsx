@@ -1,5 +1,5 @@
 var AppIcon = require('../app_icon.js.jsx');
-var Avatar = require('../avatar.js.jsx');
+var Avatar = require('../ui/avatar.js.jsx');
 var Bounty = require('../bounty.js.jsx');
 var Lightbox = require('../lightbox.js.jsx');
 var MarkdownEditor = require('../markdown_editor.js.jsx');

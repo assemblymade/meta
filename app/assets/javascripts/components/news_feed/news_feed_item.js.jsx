@@ -1,6 +1,6 @@
 var AppIcon = require('../app_icon.js.jsx');
 var ArchivedNewsFeedItemsStore = require('../../stores/archived_news_feed_items_store');
-var Avatar = require('../avatar.js.jsx');
+var Avatar = require('../ui/avatar.js.jsx');
 var Comment = require('../comment.js.jsx');
 var Icon = require('../icon.js.jsx');
 var Markdown = require('../markdown.js.jsx');

@@ -1,5 +1,6 @@
 .markdown {
   word-wrap: break-word;
+  color: $gray-1;
 
   img {
     max-width: 100%;
@@ -7,7 +8,14 @@
 
   p, dl, ul, ol {
     font-size: inherit;
-    color: inherit;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: $black;
+  }
+
+  ul, ol {
+    padding-left: 0;
   }
 
   :first-child {
@@ -27,7 +35,7 @@
   h4,
   h5,
   h6 {
-    @extend .h4;
+    @extend .h5;
     margin-top: 2rem;
     margin-bottom: 1rem;
     font-weight: bold;

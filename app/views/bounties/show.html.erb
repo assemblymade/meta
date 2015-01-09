@@ -4,22 +4,20 @@
 
 <%= track 'product.wip.viewed', WipAnalyticsSerializer.new(@wip, scope: current_user) %>
 
-<div class="card mb0">
-  <%= react_component 'Bounty', {
-      bounty: BountySerializer.new(@bounty, scope: current_user),
-      item: (NewsFeedItemSerializer.new(@bounty.news_feed_item) if @bounty.news_feed_item),
-      valuation: {
-        product: { name: @product.name },
-        url: product_wips_path(@product),
-        maxOffer: (6 * @product.average_bounty).round(-4),
-        averageBounty: @product.average_bounty,
-        coinsMinted: @product.coins_minted,
-        profitLastMonth: @product.profit_last_month,
-        steps: BountyGuidance::Valuations.suggestions(@product)
-      },
-      showCoins: !@product.meta?
-    } %>
-</div>
+<%= react_component 'Bounty', {
+    bounty: BountySerializer.new(@bounty, scope: current_user),
+    item: (NewsFeedItemSerializer.new(@bounty.news_feed_item) if @bounty.news_feed_item),
+    valuation: {
+      product: { name: @product.name },
+      url: product_wips_path(@product),
+      maxOffer: (6 * @product.average_bounty).round(-4),
+      averageBounty: @product.average_bounty,
+      coinsMinted: @product.coins_minted,
+      profitLastMonth: @product.profit_last_month,
+      steps: BountyGuidance::Valuations.suggestions(@product)
+    },
+    showCoins: !@product.meta?
+  } %>
 
 <% if signed_in? %>
   <img class="hidden" data-src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@bounty).first, current_user.id).url %>" />
