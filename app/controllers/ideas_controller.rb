@@ -4,15 +4,19 @@ class IdeasController < ApplicationController
 
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
 
+  IDEAS_PER_PAGE = 12
+
   def index
     ideas = FilterIdeasQuery.call(filter_params)
+
+    @stores[:pagination_store] = (ideas.count / IDEAS_PER_PAGE.to_f).ceil
 
     @heartables = ideas.map(&:news_feed_item)
     @user_hearts = if signed_in?
       Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
     end
 
-    @ideas = ideas.page(params[:page]).per(20)
+    @ideas = ideas.page(params[:page]).per(IDEAS_PER_PAGE)
 
     respond_with ActiveModel::ArraySerializer.new(@ideas)
   end

@@ -157,6 +157,9 @@
 
       NEWS_FEED_RECEIVE_RAW_ITEMS: null,
 
+      PAGINATION_PAGE_CHANGED: null,
+      PAGINATION_TOTAL_PAGES_RECEIVE: null,
+
       PEOPLE_RECEIVE: null,
 
       POSTS_RECEIVE: null,

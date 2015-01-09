@@ -1,0 +1,3 @@
+<% if total_pages = @stores[:pagination_store] %>
+  <%= initial_store_data('PaginationStore', { totalPages: total_pages }) %>
+<% end %>
