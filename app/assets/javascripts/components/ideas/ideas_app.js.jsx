@@ -4,8 +4,8 @@ var IdeasStore = require('../../stores/ideas_store');
 var Pagination = require('../pagination/pagination.js.jsx');
 var UserStore = require('../../stores/user_store');
 
-var Ideas = React.createClass({
-  displayName: 'Ideas',
+var IdeasApp = React.createClass({
+  displayName: 'IdeasApp',
 
   componentDidMount: function() {
     IdeasStore.addChangeListener(this.getComponentAndContext);
@@ -158,4 +158,4 @@ var Ideas = React.createClass({
   }
 });
 
-window.Ideas = Ideas;
+window.IdeasApp = IdeasApp;
