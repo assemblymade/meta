@@ -39,12 +39,14 @@ var Apps = React.createClass({
 
         {this.renderAppsList(tryable)}
 
-        <div>
-          <a href="#" className="float-item">
+        <div className="col col-6 pr2 pb2">
+          <a href="#" className="big-block-button">
             <div className="h7">Top Trending</div>
             Design Ideas
           </a>
-          <a href="#" className="float-item">
+        </div>
+        <div className="col col-6 pl2 pb2">
+          <a href="#" className="big-block-button">
             <div className="h7">Top Trending</div>
             Mobile Product Ideas
           </a>
