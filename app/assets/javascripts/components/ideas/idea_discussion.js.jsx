@@ -5,8 +5,18 @@ var IdeaCommentsStore = require('../../stores/idea_comments_store');
 module.exports = React.createClass({
   displayName: 'IdeaDiscussion',
 
-  componentWillMount: function() {
+  propTypes: {
+    comments: React.PropTypes.array,
+    login_path: React.PropTypes.string.isRequired,
+    signup_path: React.PropTypes.string.isRequired
+  },
+
+  componentDidMount: function() {
     IdeaCommentsStore.addChangeListener(this.getComments);
+  },
+
+  componentWillUnmount: function() {
+    IdeaCommentsStore.removeChangeListener(this.getComments);
   },
 
   getComments: function(e) {
@@ -20,19 +30,21 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      comments: this.props.comments,
+      comments: this.props.comments || [],
       optimisticComments: [],
       url: this.props.url
     }
   },
+
   render: function() {
     return (
-      <div className="px3">
+      <div>
         {this.renderComments()}
         {this.renderNewCommentForm()}
       </div>
     );
   },
+
   renderNewCommentForm: function(){
     return (
       <NewComment url={this.state.url}
@@ -41,12 +53,14 @@ module.exports = React.createClass({
                   login_path={this.props.login_path} />
     )
   },
+
   renderComments: function() {
     var comments = this.state.comments.map(function(comment){
       return (
         <Comment author={comment.user} body={comment.markdown_body} key={comment.id} id={comment.id}/>
       );
     });
+
     return (
       <div className="timeline">
         {comments}

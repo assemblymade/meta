@@ -251,7 +251,6 @@ var NewsFeedItemComments = React.createClass({
     }
 
     var numberOfComments = this.state.numberOfComments;
-    var target = this.props.item.target;
 
     if (numberOfComments > this.state.comments.length) {
       return (

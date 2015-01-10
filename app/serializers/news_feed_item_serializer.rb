@@ -20,7 +20,7 @@ class NewsFeedItemSerializer < ApplicationSerializer
   end
 
   def product
-    Product.find(object.product_id)
+    Product.find(object.product_id) if object.try(:product_id)
   end
 
   def target

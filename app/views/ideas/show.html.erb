@@ -6,50 +6,8 @@
 
 <%= react_component 'IdeasApp' %>
 
-<div class="idea-item card mt2 mb0">
-  <div class="p3 border-bottom">
-    <ul class="list-inline mb2">
-      <% unless @marks.empty? %>
-        <li>
-          <ul class="list-inline">
-            <% @marks.each do |mark| %>
-              <li><a class="tag"><%= mark %></a></li>
-            <% end %>
-          </ul>
-        </li>
-      <% end %>
-      <li class="text-muted">Submitted by <%= link_to "@#{@idea.creator_username}", @idea.user, class: 'text-stealth-link' %></li>
-      <div class="right">
-        <%= react_component 'Love', heartable_id: @idea.news_feed_item.id, heartable_type: 'NewsFeedItem', public: true %>
-      </div>
-    </ul>
-    <h3 class="mt0 mb0">
-      <%= @idea.name %>
-    </h3>
-  </div>
-  <div class="p3">
-    <%= idea_markdown @idea.body %>
-  </div>
-  <div class="card-footer p3 clearfix">
-    <% if current_user == @idea.user %>
-      <ul class="list-inline left mt0 mb0">
-        <li class="mid-gray"><span class="">Discuss your idea with the community and <%= link_to 'start the product', new_product_path %> when you are ready.</span></li>
-      </ul>
-    <% else %>
-      <ul class="list-inline left mt0 mb0">
-        <li class="mid-gray">Want to build this product? Discuss below and ask @<%= @idea.creator_username %> with questions.</li>
-      </ul>
-    <% end %>
-    <% if current_user == @idea.user || current_user.try(:staff?) %>
-      <ul class="list-inline right mt0 mb0">
-        <li><%= link_to 'Edit', edit_idea_path(@idea) %></li>
-      </ul>
-    <% end %>
-  </div>
-</div>
-
 <% if signed_in? %>
   <img class="hidden" data-src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@idea).first, current_user.id).url %>" />
 <% end %>
 
-<%= react_component 'IdeaDiscussion', comments: @comments, url: idea_comments_path(@idea), signup_path: new_user_registration_path, login_path: new_user_session_path %>
+<!-- <%= react_component 'IdeaDiscussion', comments: @comments, url: idea_comments_path(@idea), signup_path: new_user_registration_path, login_path: new_user_session_path %> -->
