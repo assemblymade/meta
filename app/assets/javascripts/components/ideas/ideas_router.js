@@ -14,7 +14,8 @@ class IdeasRouter {
     page.start()
   }
 
-  navigate(url) {
+  navigate(url, e) {
+    e && e.preventDefault();
     page(url);
   }
 
@@ -23,31 +24,31 @@ class IdeasRouter {
   }
 }
 
-var router = new IdeasRouter(ideasRoutes);
+var router = new IdeasRouter(ideasRoutes)
 
 module.exports = router;
 
 function _parse(context, next) {
-  context.query = qs.parse(context.querystring);
-  next();
+  context.query = qs.parse(context.querystring)
+  next()
 }
 
 function _route(route) {
-  var path = route[0];
-  var component = route[1];
+  var path = route[0]
+  var component = route[1]
+  var callback = route[2]
 
-  page(path, _getAndDispatchData(component));
+  page(path, _getAndDispatch(component, callback))
 }
 
-function _getAndDispatchData(component) {
+function _getAndDispatch(component, callback) {
   return _.debounce(function(context) {
-    $.getJSON(window.location, function(ideas) {
-      Dispatcher.dispatch({
-        type: ActionTypes.IDEAS_ROUTE_CHANGED,
-        component: component,
-        context: context,
-        ideas: ideas
-      })
+    Dispatcher.dispatch({
+      type: ActionTypes.IDEAS_ROUTE_CHANGED,
+      component: component,
+      context: context
     })
+
+    $.getJSON(window.location, callback)
   }, 500)
 }

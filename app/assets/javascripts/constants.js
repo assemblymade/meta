@@ -139,6 +139,9 @@
 
       DISCUSSION_RECEIVE: null,
 
+      IDEA_RECEIVE: null,
+      IDEAS_RECEIVE: null,
+
       IDEAS_ROUTE_CHANGED: null,
 
       LOVE_CLICKED: null,

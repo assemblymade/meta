@@ -3,12 +3,16 @@ class IdeaSerializer < ApplicationSerializer
   include TruncateHtmlHelper
 
   attributes :body, :comments_count, :created_at, :greenlit_at, :id, :name
-  attributes :score, :short_body, :url
+  attributes :news_feed_item_id, :score, :short_body, :url
 
   has_one :user
 
   def comments_count
     object.comments.count
+  end
+
+  def news_feed_item_id
+    object.news_feed_item.id
   end
 
   def short_body

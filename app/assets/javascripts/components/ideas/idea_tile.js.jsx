@@ -1,8 +1,8 @@
 var Avatar = require('../ui/avatar.js.jsx');
-var SVGIcon = require('../ui/svg_icon.js.jsx');
 var Footer = require('../ui/footer.js.jsx');
 var ProgressBar = require('../ui/progress_bar.js.jsx');
 var SmallTile = require('../ui/small_tile.js.jsx');
+var SvgIcon = require('../ui/svg_icon.js.jsx');
 var UserStore = require('../../stores/user_store');
 
 var Idea = React.createClass({
@@ -58,20 +58,20 @@ var Idea = React.createClass({
                 <div className="action-group">
                   <div className="item">
                     <a href={idea.url} className="comment-count">
-                      <SVGIcon type={'svg-icon-comment'} />
+                      <SvgIcon type={'svg-icon-comment'} />
                       {idea.comments_count} {idea.comments_count === 1 ? 'Comment' : 'Comments'}
                     </a>
                   </div>
 
                   <div className="item">
                     <a href="#" className="action-icon">
-                      <SVGIcon type={'svg-icon-share'} />
+                      <SvgIcon type={'svg-icon-share'} />
                     </a>
                   </div>
 
                   <div className="item">
                     <a href="#" className="action-icon">
-                      <SVGIcon type={'svg-icon-heart'} />
+                      <SvgIcon type={'svg-icon-heart'} />
                     </a>
                   </div>
                 </div>

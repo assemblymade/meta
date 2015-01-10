@@ -1,5 +1,5 @@
-var SVGIcon = React.createClass({
-  displayName: 'SVGIcon',
+var SvgIcon = React.createClass({
+  displayName: 'SvgIcon',
 
   render: function() {
     var fill
@@ -34,4 +34,4 @@ var SVGIcon = React.createClass({
   }
 });
 
-module.exports = SVGIcon;
+module.exports = SvgIcon;

@@ -17,11 +17,6 @@ var ProgressBar = React.createClass({
         <div className="item">
           <progress max="100" value={this.props.progress} />
         </div>
-        <div className="item">
-          <div className="progress-count">
-            322
-          </div>
-        </div>
       </div>
     );
   }

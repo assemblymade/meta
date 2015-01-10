@@ -44,6 +44,8 @@ class IdeasController < ApplicationController
         Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
       end
     end
+
+    respond_with IdeaSerializer.new(@idea)
   end
 
   def new

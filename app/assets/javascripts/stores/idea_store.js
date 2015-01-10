@@ -2,29 +2,29 @@ var CONSTANTS = window.CONSTANTS // require('../constants')
 var ActionTypes = CONSTANTS.ActionTypes
 var Store = require('./es6_store')
 
-var currentIdeas = []
+var currentIdea = {}
 
-class IdeasStore extends Store {
+class IdeaStore extends Store {
   constructor() {
     super()
 
     this.dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
-        case ActionTypes.IDEAS_RECEIVE:
-          _setIdeas(action)
+        case ActionTypes.IDEA_RECEIVE:
+          _setIdea(action)
           this.emitChange()
           break
-      }
-    })
+        }
+      })
+    }
+
+    getIdea() {
+      return currentIdea
+    }
   }
 
-  getIdeas() {
-    return currentIdeas
+  module.exports = new IdeaStore()
+
+  function _setIdea(action) {
+    currentIdea = action.idea
   }
-}
-
-module.exports = new IdeasStore()
-
-function _setIdeas(action) {
-  currentIdeas = action.ideas
-}

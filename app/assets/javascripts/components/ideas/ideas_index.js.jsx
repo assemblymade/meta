@@ -1,5 +1,5 @@
 var Footer = require('../ui/footer.js.jsx');
-var Idea = require('./idea.js.jsx');
+var IdeaTile = require('./idea_tile.js.jsx');
 var IdeasStore = require('../../stores/ideas_store');
 var Pagination = require('../pagination/pagination.js.jsx');
 var UserStore = require('../../stores/user_store');
@@ -80,21 +80,21 @@ var IdeasIndex = React.createClass({
                     {this.renderMyIdeas()}
 
                     <li>
-                      <a href="javascript:void(0);"
+                      <a href="/ideas?filter=trending"
                         onClick={navigate.bind(null, '/ideas?filter=trending')}>
                         Trending
                       </a>
                     </li>
 
                     <li>
-                      <a href="javascript:void(0);"
+                      <a href="/ideas?sort=newness"
                         onClick={navigate.bind(null, '/ideas?sort=newness')}>
                         New
                       </a>
                     </li>
 
                     <li>
-                      <a href="javascript:void(0);"
+                      <a href="/ideas?filter=greenlit"
                         onClick={navigate.bind(null, '/ideas?filter=greenlit')}>
                         Greenlit
                       </a>
@@ -106,19 +106,19 @@ var IdeasIndex = React.createClass({
                       </a>
                       <ul className="dropdown-menu" role="menu">
                         <li>
-                          <a href="javascript:void(0);"
+                          <a href="/ideas?mark=design"
                             onClick={navigate.bind(null, '/ideas?mark=design')}>
                             Design
                           </a>
                         </li>
                         <li>
-                          <a href="javascript:void(0);"
+                          <a href="/ideas?mark=saas"
                             onClick={navigate.bind(null, '/ideas?mark=saas')}>
                             SaaS
                           </a>
                         </li>
                         <li>
-                          <a href="javascript:void(0);"
+                          <a href="/ideas?mark=b2b"
                             onClick={navigate.bind(null, '/ideas?mark=b2b')}>
                             B2B
                           </a>
@@ -148,7 +148,7 @@ var IdeasIndex = React.createClass({
 
   renderIdeas: function() {
     var ideas = this.state.ideas;
-    var IdeaFactory = React.createFactory(Idea);
+    var IdeaFactory = React.createFactory(IdeaTile);
 
     if (ideas.length) {
       return ideas.map(function(idea) {
