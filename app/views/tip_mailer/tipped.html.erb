@@ -23,7 +23,9 @@
                   Sweet! <a href="<%= user_url(@tip.from) %>">
                     @<%= @tip.from.username %>
                   </a>
-                  just tipped you <%= pluralize(@tip.cents, 'coin') %> for your comment on <a href="<%= product_url(@tip.product) %>"><%= @tip.product.name %></a>.
+                  just tipped you <%= pluralize(@tip.cents, 'coin') %> for your
+                  <%= @tip.via.is_a?(Activities::Introduce) ? 'introduction' : 'comment' %>
+                  on <a href="<%= product_url(@tip.product) %>"><%= @tip.product.name %></a>.
                 </h1>
 
                 <%= render partial: "tip_mailer/#{@tip.via.to_partial_path}", object: @tip.via %>
