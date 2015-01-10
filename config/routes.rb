@@ -56,6 +56,9 @@ ASM::Application.routes.draw do
 
   get '/styleguide' => 'pages#styleguide'
 
+  resources :apps, only: [:index] do
+  end
+
   resources :ideas do
     resources :idea_comments, only: [:index, :create], as: :comments, path: 'comments'
     patch :mark

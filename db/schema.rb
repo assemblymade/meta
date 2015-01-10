@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108190148) do
+ActiveRecord::Schema.define(version: 20150109223523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -622,6 +622,7 @@ ActiveRecord::Schema.define(version: 20150108190148) do
     t.string   "state",                             limit: 255
     t.datetime "last_checked_btc"
     t.datetime "issued_coins"
+    t.text     "try_url"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree

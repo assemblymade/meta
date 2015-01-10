@@ -47,7 +47,9 @@ EOS
 end
 
 ROUTES = [
+  'apps',
   'notifications',
+  'product',
   'product_follow',
   'product_post',
   'product_unfollow',

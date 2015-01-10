@@ -12,6 +12,7 @@ class Product < ActiveRecord::Base
 
   DEFAULT_BOUNTY_SIZE=10000
   PITCH_WEEK_REQUIRED_BUILDERS=10
+  DEFAULT_IMAGE_PATH='/assets/app_icon.png'
 
   extend FriendlyId
 
@@ -495,7 +496,7 @@ class Product < ActiveRecord::Base
     elsif poster
       poster_image.url
     else
-      '/assets/app_icon.png'
+      DEFAULT_IMAGE_PATH
     end
   end
 
