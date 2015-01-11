@@ -2,12 +2,15 @@
 
 var CustomIcons = [
   'app-coin',
-  'chevron-down'
+  'chevron-down',
+  'document',
+  'settings',
+  'wallet',
+  'user',
+  'logout'
 ]
 
-module.exports = React.createClass({
-  displayName: 'Icon',
-
+var Icon = React.createClass({
   render: function() {
     var cs = null
     if (CustomIcons.indexOf(this.props.icon) != -1) {
@@ -18,3 +21,5 @@ module.exports = React.createClass({
     return <span className={cs}></span>
   }
 })
+
+module.exports = window.Icon = Icon
