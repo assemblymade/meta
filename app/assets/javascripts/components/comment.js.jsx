@@ -134,7 +134,7 @@ module.exports = React.createClass({
         {this.renderTimestamp()}
 
         <div className={classes}>
-          <Markdown content={body} normalized={true} />
+          <Markdown content={body} normalized={true} wideQuotes={true} />
         </div>
 
         <div className="inline-block _pt0_5">

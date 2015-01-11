@@ -18,6 +18,14 @@
     padding-left: 0;
   }
 
+  blockquote {
+    border-left: 4px solid #53CBDD;
+    margin-left: -2rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    padding-left: calc(2rem - 4px);
+  }
+
   :first-child {
     margin-top: 0;
   }
@@ -29,7 +37,12 @@
 
 // Markdown Normalizer class overrides multiple heading types
 .markdown-normalized {
-  h1,
+  h1 {
+    @extend .h4;
+    margin-top: 3rem;
+    font-weight: bold;
+  }
+
   h2,
   h3,
   h4,
@@ -39,6 +52,15 @@
     margin-top: 2rem;
     margin-bottom: 1rem;
     font-weight: bold;
+  }
+}
+
+// (@chrislloyd) Custom offset for comments in a timeline. It would be nice if
+// this was a consistant style
+.markdown-wide-quotes {
+  blockquote {
+    margin-left:  calc(-2rem - 4px - 6px);
+    padding-left: calc(2rem + 6px);
   }
 }
 
