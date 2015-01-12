@@ -1,0 +1,50 @@
+<% title 'Proposals' %>
+<% activate_nav! :people %>
+<% activate_nav! :people_governance %>
+
+<%= render 'people/nav' %>
+
+<h3><%= @product.name %> Proposal</h3>
+<br>
+<div class="row">
+  <div class="col-md-6">
+    <h2><%= @proposal.name %></h2>
+    <%= @proposal.description %>
+  </div>
+
+  <div class="col-md-3 col-md-offset-3">
+    <br><h4>Vote Status</h4>
+    <%= "#{@proposal.status} #{@proposal.win_criteria_text}" %>
+    <% if @proposal.won? %>
+    <span class="green display-inline"><%= inline_react_component 'Icon', icon: 'check' %></span>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3 col-md-offset-9">
+    <form id="vtr" method="post" action="/choices" >
+      <input type="hidden" name="voter" value="<%= @current_user.id %>" />
+      <input type="hidden" name="weight" value=1.0 />
+      <input type="hidden" name="proposal" value= "<%= @proposal.id %>"  />
+    <input type="submit" value="Approve" class="btn btn-success">
+    </form>
+  </div>
+
+  <div class="col-md-3 col-md-offset-11">
+    <% if @proposal.user_vote_status(@current_user) %>
+    <span class="green display-inline"><%= inline_react_component 'Icon', icon: 'check' %></span>
+    <% end %>
+  </div>
+</div>
+
+<% if @proposal.contracts.count > 0 %>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h3>Agreements</h3>
+      <% @proposal.accords.each do |a| %>
+
+      <% end %>
+    </div>
+  </div>
+<% end %>

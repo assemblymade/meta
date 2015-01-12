@@ -414,6 +414,12 @@ class User < ActiveRecord::Base
     newcluster
   end
 
+  #governance
+
+  def can_vote?(product)
+    TransactionLogEntry.product_balances(self).include?(product.id)
+  end
+
   private
 
   def generate_authentication_token

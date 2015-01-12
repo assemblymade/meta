@@ -12,5 +12,9 @@ class ProposalsController < ProductController
 
   end
 
+  def show
+    @proposal = Proposal.find(params[:id])
+  end
+
 
 end

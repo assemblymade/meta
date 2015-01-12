@@ -5,6 +5,10 @@
 var Icon = React.createClass({
   displayName: 'Icon',
 
+  propTypes: {
+    icon: React.PropTypes.string.isRequired
+  },
+
   render: function() {
     var iconClassName = "fa-" + this.props.icon
     var cs = React.addons.classSet('fa', iconClassName)

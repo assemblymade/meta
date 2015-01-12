@@ -126,6 +126,7 @@ ASM::Application.routes.draw do
     post '/users/:id/dismiss_welcome_banner' => 'users#dismiss_welcome_banner', :as => :dismiss_welcome_banner
 
     resources :notifications, only: [:index]
+    resources :choices, only: [:index, :create, :update, :destroy]
 
     # saved searches
     scope '/user', controller: 'users' do
@@ -365,8 +366,9 @@ ASM::Application.routes.draw do
     resources :tips, only: [:create]
 
     resources :contracts, only: [:index, :create, :update, :destroy]
-    resources :governance, only: [:index, :create, :edit]
-    resources :proposals, only: [:index, :create, :edit]
+
+    resources :governance, only: [:index, :create, :edit, :show]
+    resources :proposals, only: [:index, :create, :edit, :update, :destroy, :show]
 
     resources :posts do
       post :preview, on: :collection

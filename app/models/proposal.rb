@@ -2,11 +2,19 @@ class Proposal < ActiveRecord::Base
   belongs_to :product
   belongs_to :user
   has_many :choices
-  has_many :accords
+  has_many :vestings
+
+  def contracts
+    if self.contract_type == "vesting"
+      self.vestings
+    else
+      []
+    end
+  end
 
   def vote_ratio
     if self.choices.count > 0
-      self.choices.to_a.sum{|a| a.value*a.weight} / self.choices.to_a.sum{|a| a.weight}
+      (self.choices.to_a.sum{|a| a.value*a.weight}).round(2)
     else
       0
     end
@@ -26,19 +34,26 @@ class Proposal < ActiveRecord::Base
   end
 
   def won?  #define win criteria here
-    self.vote_ratio > 0
+    self.vote_ratio > 0.5
   end
 
-  def vote(user, value)
+  def win_criteria_text #update this also with win criteria
+    "/ 50 %"
+  end
+
+  def user_weight(user)
     my_coins = user.transaction_log_entries.where(product_id: self.product.id).sum(:cents)
-    puts my_coins
     total_coins = TransactionLogEntry.where(product_id: product.id).sum(:cents)
-    puts total_coins
     if total_coins > 0
       weight = my_coins.to_f / total_coins.to_f
     else
       weight = 0
     end
+    weight
+  end
+
+  def vote(user, value)
+    weight = user_weight(user)
     if self.choices.map(&:user).include?(user)
       self.choices.where(user_id: user.id).update({value: value, weight: weight})  #overrides any old vote if it exists
     else
@@ -54,7 +69,11 @@ class Proposal < ActiveRecord::Base
   end
 
   def status
-    "#{self.vote_ratio*100} %"
+    "#{self.vote_ratio.to_f*100} %"
+  end
+
+  def user_vote_status(user)
+    self.choices.map{|a| a.user_id}.include?(user.id)
   end
 
 end

@@ -11,25 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20150107221428) do
-=======
-ActiveRecord::Schema.define(version: 20141231171025) do
->>>>>>> 900c1af95f72ec04f63d30970c72d8a567977d21
+ActiveRecord::Schema.define(version: 20150112061502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "pg_stat_statements"
   enable_extension "uuid-ossp"
-
-  create_table "accords", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.string   "type"
-    t.string   "state"
-    t.uuid     "proposal_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -665,6 +653,8 @@ ActiveRecord::Schema.define(version: 20141231171025) do
     t.string   "name"
     t.string   "description"
     t.string   "state"
+    t.string   "contract_type"
+    t.datetime "expiration"
     t.uuid     "product_id"
     t.uuid     "user_id"
     t.datetime "created_at"
@@ -972,6 +962,19 @@ ActiveRecord::Schema.define(version: 20141231171025) do
     t.integer  "number",                     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "vestings", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "proposal_id"
+    t.datetime "start_date"
+    t.datetime "expiration_date"
+    t.integer  "intervals"
+    t.integer  "coins"
+    t.uuid     "recipient"
+    t.string   "state"
+    t.uuid     "product_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "viewings", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
