@@ -48,6 +48,8 @@ end
 
 ROUTES = [
   'apps',
+  'idea_comment',
+  'idea_comments',
   'notifications',
   'product',
   'product_follow',

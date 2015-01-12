@@ -110,24 +110,25 @@ class Idea < ActiveRecord::Base
   end
 
   def rank
-    Idea.order(score: :desc).find_index(self) + 1
+    Idea.where('score > ?', score).count + 1
   end
 
   def percentile
     self.rank.to_f / Idea.count * 100.round(2)
   end
 
-  def heart_distance_from_percentile(goal_percentile)
-    index = (Idea.all.count * goal_percentile.to_f/100).to_i
-    expected_score = Idea.order(score: :desc).limit(index + 1).last.score
+  # Top percentile is 0, not 100
+  def heart_distance_from_percentile(goal_percentile=20)
+    index = (Idea.where(greenlit_at: nil).count * goal_percentile.to_f/100).to_i
+    expected_score = Idea.order(score: :desc).limit(index == 0 ? 1 : index).last.score
     time_since = Time.now - EPOCH_START
     multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
     hearts_missing = (expected_score - self.score) / (multiplier)
-    hearts_missing = (hearts_missing+0.999).to_i
+    hearts_missing = (hearts_missing + 0.999).to_i
   end
 
   def temperature
-    Math.log(100 / (self.percentile + 0.1)) * 10
+    100 - percentile
   end
 
 end

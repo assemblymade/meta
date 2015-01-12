@@ -12,10 +12,12 @@ var ProgressBar = React.createClass({
   },
 
   render: function() {
+    var progress = this.props.progress;
+
     return (
       <div className="progress-group">
         <div className="item">
-          <progress max="100" value={this.props.progress} />
+          <progress max="100" value={progress} title={progress} />
         </div>
       </div>
     );

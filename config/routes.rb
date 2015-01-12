@@ -60,7 +60,7 @@ ASM::Application.routes.draw do
   end
 
   resources :ideas do
-    resources :idea_comments, only: [:index, :create], as: :comments, path: 'comments'
+    resources :idea_comments, only: [:index, :create, :update], as: :comments, path: 'comments'
     patch :mark
   end
 

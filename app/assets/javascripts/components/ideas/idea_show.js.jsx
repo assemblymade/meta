@@ -5,7 +5,9 @@ var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
 var Love = require('../love.js.jsx');
 var Markdown = require('../markdown.js.jsx');
+var NewsFeedItemComments = require('../news_feed/news_feed_item_comments.js.jsx');
 var ProgressBar = require('../ui/progress_bar.js.jsx');
+var RelatedIdeas = require('./related_ideas.js.jsx');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
 
 var IdeaShow = React.createClass({
@@ -21,23 +23,29 @@ var IdeaShow = React.createClass({
   },
 
   componentDidMount: function() {
-    IdeaStore.addChangeListener(this.getIdea);
+    IdeaStore.addChangeListener(this.onIdeaChange);
   },
 
   componentWillUnmount: function() {
-    IdeaStore.removeChangeListener(this.getIdea);
-  },
-
-  getIdea: function() {
-    this.setState({
-      idea: IdeaStore.getIdea()
-    });
+    IdeaStore.removeChangeListener(this.onIdeaChange);
   },
 
   getInitialState: function() {
     return {
       idea: IdeaStore.getIdea()
     };
+  },
+
+  onIdeaChange: function() {
+    this.setState({
+      idea: IdeaStore.getIdea()
+    });
+  },
+
+  onRelatedIdeasChange: function() {
+    this.setState({
+      relatedIdeas: RelatedIdeaStore.getRelatedIdeas()
+    });
   },
 
   render: function() {
@@ -95,18 +103,8 @@ var IdeaShow = React.createClass({
               </div>
             </div>
 
-            <div className="col col-4 px2">
-              <div className="mb4">
-                <IdeaTile idea={idea} />
-              </div>
-
-              <div>
-                <IdeaTile idea={idea} />
-              </div>
-            </div>
+            <RelatedIdeas />
           </div>
-          {this.renderSubscriptionForm()}
-          {this.renderDiscoverBlocks()}
         </div>
       </main>
     );
@@ -117,12 +115,12 @@ var IdeaShow = React.createClass({
     var user = idea.user;
 
     return (
-      <div className="py3 px4 border-bottom border-2px">
-        <span className="left mr1"><Avatar user={user} /></span>
+      <div className="_pt3 border-2px">
+        <span className="left mr1 ml4"><Avatar user={user} /></span>
         <span className="bold">{user.username}</span>{' '}
         <span className="gray-2">posted</span>
 
-        <div className="py3">
+        <div className="py3 px4">
           <h1 className="mt0 mb0">{idea.name}</h1>
 
           <div className="mt3">
@@ -130,11 +128,12 @@ var IdeaShow = React.createClass({
           </div>
         </div>
 
-        <div className="py3">
-          <IdeaDiscussion comments={[]}
-              login_path="/login"
-              signup_path="/signup"
-              url={idea.url + '/comments'} />
+        <hr className="py0 mb0" style={{ 'border-bottom-color': '#ededed', 'border-width': 2 }} />
+
+        <div className="px4">
+          <NewsFeedItemComments commentable={true}
+              item={idea.news_feed_item}
+              showAllComments={true} />
         </div>
       </div>
     );
@@ -142,7 +141,7 @@ var IdeaShow = React.createClass({
 
   renderDiscoverBlocks: function() {
     return (
-      <div className="clearfix mxn2">
+      <div className="clearfix mxn2 py2">
         <a href="#" className="block col col-6 px2">
           <div className="rounded text-white bg-gray-2 p3">
             <div className="clearfix">
@@ -186,7 +185,7 @@ var IdeaShow = React.createClass({
         </div>
 
         <div className="col col-8 border-2px border-right border-left border-gray px2">
-          <ProgressBar progress={88} />
+          <ProgressBar progress={idea.temperature} />
         </div>
 
         <div className="col col-1 px1 mt2">

@@ -144,7 +144,8 @@ var NewsFeedItem = React.createClass({
     return <NewsFeedItemComments
         {...this.props}
         item={this.props}
-        triggerModal={this.triggerModal} />;
+        triggerModal={this.triggerModal}
+        hasProduct={!!product} />;
   },
 
   renderEditButton: function() {

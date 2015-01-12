@@ -182,7 +182,10 @@ module.exports = React.createClass({
     if (item) {
       return (
         <div id="discussion-view-el" key={'discussion-' + bounty.id}>
-          <NewsFeedItemComments commentable={true} item={item} showAllComments={true} />
+          <NewsFeedItemComments commentable={true}
+              item={item}
+              showAllComments={true}
+              hasProduct={true} />
         </div>
       );
     }

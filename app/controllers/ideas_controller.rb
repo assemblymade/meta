@@ -45,7 +45,16 @@ class IdeasController < ApplicationController
       end
     end
 
-    respond_with IdeaSerializer.new(@idea)
+    respond_with({
+      idea: IdeaSerializer.new(@idea),
+      comments: @comments,
+      heartables: @heartables || [],
+      related_ideas: ActiveModel::ArraySerializer.new(
+        Idea.with_mark(@marks.first).limit(2),
+        each_serializer: IdeaSerializer
+      ),
+      user_hearts: @user_hearts || []
+    })
   end
 
   def new

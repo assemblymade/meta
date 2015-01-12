@@ -78,7 +78,7 @@ var Idea = React.createClass({
               </div>
 
               <div className="item">
-                <ProgressBar progress={80} />
+                <ProgressBar progress={idea.temperature} />
               </div>
             </div>
           </Footer>

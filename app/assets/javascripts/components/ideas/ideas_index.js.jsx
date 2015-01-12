@@ -47,7 +47,7 @@ var IdeasIndex = React.createClass({
 
     return (
       <main role="main">
-        <section className="_hero hero-ideas">
+        <section className="_hero hero-ideas" key="ideas-header">
           <div className="container">
             <div className="header">
               <img src="../assets/ideas/ideas-header-morse.png" />
@@ -71,7 +71,7 @@ var IdeasIndex = React.createClass({
           </div>
         </section>
 
-        <section className="tile-grid tile-grid-ideas">
+        <section className="tile-grid tile-grid-ideas" key="ideas-grid">
           <div className="container">
             <div className="header">
               <nav className="tile-grid-nav">

@@ -30,6 +30,7 @@ var NewsFeedItemComments = React.createClass({
   propTypes: {
     commentable: React.PropTypes.bool,
     item: React.PropTypes.object.isRequired,
+    hasProduct: React.PropTypes.bool,
     showAllComments: React.PropTypes.bool
   },
 
@@ -136,7 +137,8 @@ var NewsFeedItemComments = React.createClass({
 
   getDefaultProps: function() {
     return {
-      commentable: false
+      commentable: false,
+      hasProduct: false
     };
   },
 
@@ -152,12 +154,19 @@ var NewsFeedItemComments = React.createClass({
       showCommentsAfter = 0;
     }
 
-    var slug = _reach(this.props, 'item.product.slug') || ProductStore.getSlug();
+    var url;
+    if (this.props.hasProduct) {
+      var slug = _reach(this.props, 'item.product.slug') || ProductStore.getSlug();
 
-    var url = Routes.product_update_comments_path({
-      product_id: slug,
-      update_id: _reach(this.props, 'item.id'),
-    });
+      url = Routes.product_update_comments_path({
+        product_id: slug,
+        update_id: _reach(this.props, 'item.id'),
+      });
+    } else {
+      url = Routes.idea_comments_path({
+        idea_id: item.target_id
+      });
+    }
 
     return {
       comments: lastComment ? [lastComment] : [],
@@ -170,8 +179,16 @@ var NewsFeedItemComments = React.createClass({
   },
 
   render: function() {
+    var hasProduct = this.props.hasProduct;
+    var classes = React.addons.classSet({
+      _pl2: hasProduct,
+      _pr3: hasProduct,
+      '_mq-600_px2': hasProduct,
+      '_mq-600_pr4': hasProduct
+    });
+
     return (
-      <div className="_pl2 _pr3 _mq-600_px2 _mq-600_pr4">
+      <div className={classes}>
         {this.renderComments()}
         {this.renderNewCommentForm()}
       </div>
@@ -234,11 +251,20 @@ var NewsFeedItemComments = React.createClass({
       }
 
       if (new Date(comment.created_at) >= renderIfAfter) {
-        var editUrl = Routes.product_update_comment_path({
-          product_id: _reach(self.props, 'item.product.id'),
-          update_id: _reach(self.props, 'item.id'),
-          id: comment.id
-        });
+        var editUrl;
+
+        if (self.props.hasProduct) {
+          editUrl = Routes.product_update_comment_path({
+            product_id: _reach(self.props, 'item.product.id'),
+            update_id: _reach(self.props, 'item.id'),
+            id: comment.id
+          });
+        } else {
+          editUrl = Routes.idea_comment_path({
+            idea_id: _reach(self.props, 'item.target_id'),
+            id: comment.id
+          });
+        }
 
         return parseEvent(comment, awardUrl, editUrl);
       }

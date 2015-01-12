@@ -107,7 +107,7 @@
     // TODO: move constants into here. 1 Flat namespace will ensure constants don't collide
     ActionTypes: keyMirror({
       APPS_RECEIVE: null,
-      
+
       ARCHIVED_NEWS_FEED_ITEMS_RECEIVE: null,
 
       ATTACHMENT_FAILED: null,
@@ -181,6 +181,8 @@
       PUSHER_INITIALIZED: null,
       PUSHER_PRESENCE_CONNECTED: null,
       PUSHER_USER_ACTION: null,
+
+      RELATED_IDEAS_RECEIVE: null,
 
       RR_RECEIVE_READ_RECEIPTS: null,
 

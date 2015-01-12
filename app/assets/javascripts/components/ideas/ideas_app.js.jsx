@@ -22,8 +22,10 @@ var IdeasApp = React.createClass({
     var Component = IdeasRoutesStore.getComponent();
     var context = IdeasRoutesStore.getContext();
 
-    this.setState({
-      component: <Component params={context.params} query={context.query} navigate={IdeasRouter.navigate} />
+    this.replaceState({
+      component: <Component params={context.params}
+          query={context.query}
+          navigate={IdeasRouter.navigate} />
     });
   },
 
