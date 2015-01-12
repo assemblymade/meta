@@ -16,6 +16,12 @@ var Idea = React.createClass({
     }).isRequired
   },
 
+  getDefaultProps: function() {
+    return {
+      onHeart: function() {}
+    }
+  },
+
   getInitialState: function() {
     return {
       currentUserId: UserStore.getId()
@@ -68,7 +74,7 @@ var Idea = React.createClass({
                   </div>
 
                   <div className="item">
-                    <a href="#" className="action-icon">
+                    <a href="#" className="action-icon" onClick={this.props.onHeart}>
                       <img src="http://i.imgur.com/Hilon4j.png" />
                     </a>
                   </div>
