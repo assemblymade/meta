@@ -1099,4 +1099,5 @@ ActiveRecord::Schema.define(version: 20150112061502) do
     t.datetime "created_at"
   end
 
+  add_foreign_key "news_feed_item_comments", "news_feed_items"
 end

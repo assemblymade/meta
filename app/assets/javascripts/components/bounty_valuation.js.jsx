@@ -11,7 +11,8 @@
       maxOffer: React.PropTypes.number,
       averageBounty: React.PropTypes.number,
       coinsMinted: React.PropTypes.number,
-      profitLastMonth: React.PropTypes.number
+      profitLastMonth: React.PropTypes.number,
+      steps: React.PropTypes.array
     },
 
     getInitialState: function() {
@@ -22,7 +23,7 @@
 
     renderLightbox: function() {
       if (this.state.shown) {
-        return <BountyBreakdown {...this.props} onHidden={this.handleHide} steps={this.props.steps} />
+        return <BountyBreakdown {...this.props} onHidden={this.handleHide} />
       }
     },
 
