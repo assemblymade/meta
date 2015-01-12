@@ -1,10 +1,15 @@
 module.exports = React.createClass({
   displayName: 'Label',
 
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
+
   render: function() {
     var style = {
       fontSize: '11px',
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
+      letterSpacing: '0.05rem'
     }
 
     return (
