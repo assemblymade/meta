@@ -1,7 +1,6 @@
 var Avatar = require('./avatar.js.jsx')
 
-module.exports = React.createClass({
-  displayName: 'AvatarWithUsername',
+var AvatarWithUsername = React.createClass({
 
   propTypes: {
     size: React.PropTypes.number
@@ -24,3 +23,5 @@ module.exports = React.createClass({
     )
   }
 })
+
+module.exports = AvatarWithUsername

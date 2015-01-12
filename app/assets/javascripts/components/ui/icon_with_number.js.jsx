@@ -5,6 +5,11 @@ var Icon = require('./icon.js.jsx')
 module.exports = React.createClass({
   displayName: 'IconWithNumber',
 
+  propTypes: {
+    icon: React.PropTypes.string.isRequired,
+    n: React.PropTypes.number.isRequired
+  },
+
   render: function() {
     var label = null
     if (this.props.n > 0) {
