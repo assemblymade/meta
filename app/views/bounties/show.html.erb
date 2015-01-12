@@ -4,20 +4,35 @@
 
 <%= track 'product.wip.viewed', WipAnalyticsSerializer.new(@wip, scope: current_user) %>
 
-<%= react_component 'Bounty', {
-    bounty: BountySerializer.new(@bounty, scope: current_user),
-    item: (NewsFeedItemSerializer.new(@bounty.news_feed_item) if @bounty.news_feed_item),
-    valuation: {
-      product: { name: @product.name },
-      url: product_wips_path(@product),
-      maxOffer: (6 * @product.average_bounty).round(-4),
-      averageBounty: @product.average_bounty,
-      coinsMinted: @product.coins_minted,
-      profitLastMonth: @product.profit_last_month,
-      steps: BountyGuidance::Valuations.suggestions(@product)
-    },
-    showCoins: !@product.meta?
-  } %>
+
+
+<div id="discussion-el"></div>
+<% content_for :javascript do %>
+  <script>
+    var bountyElement = React.createElement(Bounty, <%= {
+        bounty: BountySerializer.new(@bounty, scope: current_user),
+        item: (NewsFeedItemSerializer.new(@bounty.news_feed_item) if @bounty.news_feed_item),
+        valuation: {
+          product: { name: @product.name },
+          url: product_wips_path(@product),
+          maxOffer: (6 * @product.average_bounty).round(-4),
+          averageBounty: @product.average_bounty,
+          coinsMinted: @product.coins_minted,
+          profitLastMonth: @product.profit_last_month,
+          steps: BountyGuidance::Valuations.suggestions(@product)
+        },
+        showCoins: !@product.meta?
+      }.to_json.html_safe
+    %>)
+
+    var discussionElement = React.createElement(Discussion, {
+      target: bountyElement,
+      newsFeedItem: <%= (NewsFeedItemSerializer.new(@bounty.news_feed_item) if @bounty.news_feed_item).to_json.html_safe %>,
+    })
+
+    React.render(discussionElement, document.getElementById('discussion-el'))
+  </script>
+<% end %>
 
 <% if signed_in? %>
   <img class="hidden" data-src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@bounty).first, current_user.id).url %>" />

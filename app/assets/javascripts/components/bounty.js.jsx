@@ -2,27 +2,86 @@ var AvatarWithUsername = require('./ui/avatar_with_username.js.jsx')
 var BountyActionCreators = require('../actions/bounty_action_creators');
 var BountyStore = require('../stores/bounty_store');
 var Button = require('./ui/button.js.jsx')
-var Markdown = require('./markdown.js.jsx');
-var Icon = require('./icon.js.jsx');
 var formatShortTime = require('../lib/format_short_time.js');
-var SingleLineList = require('./ui/single_line_list.js.jsx')
-var Label = require('./ui/label.js.jsx')
+var Icon = require('./icon.js.jsx');
 var Love = require('./love.js.jsx');
 var routes = require('../routes')
-
 var SubscriptionsStore = require('../stores/subscriptions_store')
+var TextPost = require('./ui/text_post.js.jsx')
 
-var CLOSED_STATES = ['closed', 'resolved'];
+// TODO (chrislloyd) hack to get it loading
+var Discussion = require('./ui/discussion.js.jsx')
 
-var ONE_HOUR = 60 * 60 * 1000;
+var CLOSED_STATES = ['closed', 'resolved']
+var ONE_HOUR = 60 * 60 * 1000
 
-module.exports = React.createClass({
-  displayName: 'Bounty',
+var Bounty = React.createClass({
 
   propTypes: {
     item: React.PropTypes.object.isRequired,
     noInvites: React.PropTypes.bool,
     showCoins: React.PropTypes.bool
+  },
+
+  render: function() {
+    var bounty = this.bounty()
+    var currentUser = window.app.currentUser()
+
+    var valuation = null
+    if (this.props.showCoins) {
+      valuation = (
+        <div className="left px3 py2 border-right border-gray-5">
+          <BountyValuation {...this.state.bounty} {...this.props.valuation} />
+        </div>
+      )
+    }
+
+    var lockMessage = null
+    var worker = this.state.worker
+    if (worker && !(this.state.closed || bounty.state === 'closed')) {
+      if (currentUser && worker.id === currentUser.id) {
+        lockMessage = (
+          <div className="px3 py2 border-bottom border-gray-5 gray-1" style={{backgroundColor: '#F4FFC0'}}>
+            <Icon icon="lock" /> You have a hold on this bounty held until {this.state.lockUntil.format('dddd [at] h a')} &mdash; <a href="javascript:void(0)" onClick={this.abandonWork}>release this bounty</a> or <a href="javascript:void(0)" onClick={this.extendWork}>extend for two days</a>
+          </div>
+        )
+      } else {
+        lockMessage = (
+          <div className="px3 py2 border-bottom border-gray-5 gray-1" style={{backgroundColor: '#F4FFC0'}}>
+            <AvatarWithUsername user={worker} /> has {formatShortTime(this.state.lockUntil)} to work on this bounty.
+          </div>
+        )
+      }
+    }
+
+    return (
+      <div className="bg-white rounded">
+        <div className="clearfix border-bottom border-gray-5">
+          {valuation}
+
+          <div className="left px3 py2">
+            <ul className="list-inline mt0 mb0" style={{fontSize:13, lineHeight: '2rem'}}>
+              {this.renderEditButton()}
+              {this.renderOpenButton()}
+              {this.renderFollowButton()}
+              {this.renderInviteFriendButton()}
+            </ul>
+          </div>
+
+          <div className="right px2 py1">
+            {this.renderStartWorkButton()}
+          </div>
+        </div>
+
+        {lockMessage}
+
+        <div className="p3 px4">
+          <TextPost author={bounty.user} timestamp={bounty.created_at} title={bounty.title} labels={bounty.tags} body={bounty.markdown_description} />
+        </div>
+
+        {this.renderLove()}
+      </div>
+    );
   },
 
   abandonWork: function(e) {
@@ -100,88 +159,6 @@ module.exports = React.createClass({
     this.setState({
       subscribed: SubscriptionsStore.get(this.props.item.id)
     });
-  },
-
-  render: function() {
-    var bounty = this.bounty()
-    var currentUser = window.app.currentUser()
-
-    var bountyValuation = null
-    if (this.props.showCoins) {
-      bountyValuation = <BountyValuation {...this.state.bounty} {...this.props.valuation} />
-    }
-
-    var lockMessage = null
-    var worker = this.state.worker
-    if (worker && !(this.state.closed || bounty.state === 'closed')) {
-      if (currentUser && worker.id === currentUser.id) {
-        lockMessage = (
-          <div className="px3 py2 border-bottom border-gray-5 gray-1" style={{backgroundColor: '#F4FFC0'}}>
-            <Icon icon="lock" /> You have a hold on this bounty held until {this.state.lockUntil.format('dddd [at] h a')} &mdash; <a href="javascript:void(0)" onClick={this.abandonWork}>release this bounty</a> or <a href="javascript:void(0)" onClick={this.extendWork}>extend for two days</a>
-          </div>
-        )
-      } else {
-        lockMessage = (
-          <div className="px3 py2 border-bottom border-gray-5 gray-1" style={{backgroundColor: '#F4FFC0'}}>
-            <AvatarWithUsername user={worker} /> has {formatShortTime(this.state.lockUntil)} to work on this bounty.
-          </div>
-        )
-      }
-    }
-
-    return (
-      <div className="bg-white rounded">
-        <div className="border-bottom border-gray-5">
-          <div className="clearfix border-bottom border-gray-5">
-            <div className="left px3 py2 border-right border-gray-5">
-              {bountyValuation}
-            </div>
-
-            <div className="left px3 py2">
-              <ul className="list-inline mt0 mb0" style={{fontSize:13, lineHeight: '2rem'}}>
-                {this.renderEditButton()}
-                {this.renderOpenButton()}
-                {this.renderFollowButton()}
-                {this.renderInviteFriendButton()}
-              </ul>
-            </div>
-
-            <div className="right px2 py1">
-              {this.renderStartWorkButton()}
-            </div>
-          </div>
-
-          {lockMessage}
-
-          <div className="p3 px4">
-
-            <div className="mb3 h6 mt0 mb0">
-              <AvatarWithUsername user={bounty.user} size={18} />
-              {' '}
-              <span className="gray-2">posted</span>
-            </div>
-
-            <h1 className="mt0 mb0" style={{ lineHeight: '36px' }}>
-              {this.state.bounty.title}
-              {' '}
-              <a href={bounty.url} className="gray-3" style={{fontWeight: 'normal'}}>#{bounty.number}</a>
-            </h1>
-
-            <div className="py1 mb2">
-              <SingleLineList items={_.map(this.state.bounty.tags, function(label) {
-                return <Label name={label.name} />
-              })} />
-            </div>
-
-            {this.renderDescription()}
-          </div>
-
-          {this.renderLove()}
-        </div>
-
-        {this.renderDiscussion()}
-      </div>
-    );
   },
 
   renderClosedNotice: function() {
@@ -298,7 +275,7 @@ module.exports = React.createClass({
   renderLove: function() {
     if (this.props.item) {
       return (
-        <div className="px3 py2 mb0 mt0 border-top">
+        <div className="px4 py2 mb0 mt0 border-top">
           <Love heartable_id={this.props.item.id} heartable_type="NewsFeedItem" />
         </div>
       );
@@ -363,15 +340,15 @@ module.exports = React.createClass({
     if (this.state.worker) {
       if (this.state.worker.id == currentUser.id) {
         return (
-          <a href="#event_comment_body" className="block py1 green green-dark-hover">
-            <Icon icon="check" /> Submit work
+          <a href="#event_comment_body" className="block p1 green green-dark-hover">
+            Submit work
           </a>
         )
       } else {
         return <Button><Icon icon="lock" /> Locked for {formatShortTime(this.state.lockUntil)}</Button>
       }
     } else {
-      return <Button action={this.startWork}>Work on this bounty</Button>
+      return <Button action={this.startWork} type="primary">Work on this bounty</Button>
     }
   },
 
@@ -392,6 +369,6 @@ module.exports = React.createClass({
       lockUntil: moment().add(60, 'hours').add(1, 'second')
     });
   }
-});
+})
 
-window.Bounty = module.exports
+module.exports = window.Bounty = Bounty
