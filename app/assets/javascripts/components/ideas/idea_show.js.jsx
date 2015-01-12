@@ -71,7 +71,7 @@ var IdeaShow = React.createClass({
               <h4 className="mt2 mb2">
                 <a href="/ideas"
                     className="bold"
-                    onClick={navigate.bind(null, (document.referrer || '/ideas'))}>
+                    onClick={navigate.bind(null, '/ideas')}>
                     &#8592; All app ideas
                 </a>
               </h4>
