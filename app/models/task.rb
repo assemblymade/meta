@@ -1,4 +1,6 @@
 class Task < Wip
+  belongs_to :locker, class_name: 'User', foreign_key: 'locked_by'
+
   has_many :deliverables, foreign_key: 'wip_id'
   alias_method :design_deliverables, :deliverables
 

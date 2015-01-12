@@ -1,6 +1,12 @@
 class DashboardController < ApplicationController
   respond_to :html
 
+  def index
+    posts = NewsFeedItem.public_items.unarchived_items.limit(20).order('last_commented_at DESC')
+    @news_feed_items = ActiveModel::ArraySerializer.new(posts).as_json
+    @bounties = current_user.locked_wips
+  end
+
   def activity
     authenticate_user!
 
