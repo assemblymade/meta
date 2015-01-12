@@ -1,4 +1,5 @@
 var Avatar = require('../ui/avatar.js.jsx');
+var Icon = require('../icon.js.jsx');
 var IdeaDiscussion = require('./idea_discussion.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
@@ -65,8 +66,8 @@ var IdeaShow = React.createClass({
         </div>
 
         <div className="container">
-          <div className="clearfix py3">
-            <div className="col col-8">
+          <div className="clearfix mxn2 py3">
+            <div className="col col-8 px2">
               <h4 className="mt2 mb2">
                 <a href="/ideas"
                     className="bold"
@@ -76,20 +77,25 @@ var IdeaShow = React.createClass({
               </h4>
             </div>
 
-            <div className="col col-4">
+            <div className="col col-4 px2">
               <h5 className="mt2 mb2">Related app ideas</h5>
             </div>
           </div>
 
-          <div className="clearfix">
-            <div className="col col-8">
-              <div className="idea-item card">
+          <div className="clearfix mxn2">
+            <div className="col col-8 px2">
+              {/*
+                * It looks like we're removing borders from .card.
+                * If that's the case, remove this inline style and set it
+                * in the stylesheet
+                */}
+              <div className="idea-item card" style={{ border: 'none' }}>
                 {this.renderHeader()}
                 {this.renderBody()}
               </div>
             </div>
 
-            <div className="col col-4">
+            <div className="col col-4 px2">
               <div className="mb4">
                 <IdeaTile idea={idea} />
               </div>
@@ -99,12 +105,8 @@ var IdeaShow = React.createClass({
               </div>
             </div>
           </div>
-
-          <div className="clearfix">
-            <div className="card bg-white py3">
-              <span className="px4">Get updates on each day's top-ranking product ideas</span>
-            </div>
-          </div>
+          {this.renderSubscriptionForm()}
+          {this.renderDiscoverBlocks()}
         </div>
       </main>
     );
@@ -138,32 +140,97 @@ var IdeaShow = React.createClass({
     );
   },
 
+  renderDiscoverBlocks: function() {
+    return (
+      <div className="clearfix mxn2">
+        <a href="#" className="block col col-6 px2">
+          <div className="rounded text-white bg-gray-2 p3">
+            <div className="clearfix">
+              <div className="col col-8">
+                <h6 className="caps mt0 mb0" style={{ fontWeight: 'normal' }}>Trending</h6>
+                <span className="bold" style={{ fontSize: 18 }}>Design ideas</span>
+              </div>
+              <div className="col col-4">
+                <span className="right mt0 mb0" style={{ fontSize: 36, fontWeight: 200 }}>112</span>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a href="#" className="block col col-6 px2">
+          <div className="rounded text-white bg-gray-2 p3">
+            <div className="clearfix">
+              <div className="col col-8">
+                <h6 className="caps mt0 mb0" style={{ fontWeight: 'normal' }}>Trending</h6>
+                <span className="bold" style={{ fontSize: 18 }}>Mobile ideas</span>
+              </div>
+              <div className="col col-4">
+                <span className="right mt0 mb0" style={{ fontSize: 36, fontWeight: 200 }}>112</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    )
+  },
+
   renderHeader: function() {
     var idea = this.state.idea;
 
     return (
-      <div className="table mb0 border-bottom border-2px">
-        <div className="table-cell center col col-2 px2 mt2">
+      <div className="clearfix border-bottom border-2px mb0">
+        <div className="center col col-2 px2 mt2">
           <Love
             heartable_id={idea.news_feed_item.id}
             heartable_type="NewsFeedItem" />
         </div>
 
-        <div className="table-cell col col-8 border-2px border-right border-left border-gray px2">
+        <div className="col col-8 border-2px border-right border-left border-gray px2">
           <ProgressBar progress={88} />
         </div>
 
-        <div className="table-cell col col-1 px2 mt2">
+        <div className="col col-1 px1 mt2">
           <a href={idea.url} className="comment-count">
             <SvgIcon type={'svg-icon-comment'} />
             {idea.comments_count}
           </a>
         </div>
 
-        <div className="table-cell col col-1 p2 center border-2px border-left border-gray">
-          <a href="#" className="action-icon">
+        <div className="col col-1 p2 center border-2px border-left border-gray">
+          <a href="#" className="action-icon gray">
             <SvgIcon type={'svg-icon-share'} />
           </a>
+        </div>
+      </div>
+    );
+  },
+
+  renderSubscriptionForm: function() {
+    return (
+      <div className="card bg-white">
+        <div className="clearfix overflow-hidden">
+          <div className="py2 col col-1 center">
+            <Icon icon="cloud" />
+          </div>
+
+          <div className="py2 col col-5">
+            <span className="mt2">Get updates on each day's top-ranking product ideas</span>
+          </div>
+
+          <div className="py2 col col-5">
+            <form className="form-inline">
+              <div className="form-group">
+                <input className="ml4 form-control input-sm left" ref="email" />
+                <button className="btn-primary pill-button pill-button-theme-white pill-button-border pill-button-shadow left ml2">
+                  <span className="py2">Join</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div className="py2 col col-1 border-left border-2px center">
+            <span>&times;</span>
+          </div>
         </div>
       </div>
     );
