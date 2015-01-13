@@ -1,13 +1,25 @@
 class Vesting < ActiveRecord::Base
-  belongs_to :proposal, polymorphic: true
+  belongs_to :proposal
+  belongs_to :product
+  belongs_to :user
 
   def payout
     coins_each = self.coins / self.intervals
     to_id = self.user_id
-    cents =
-    via =
-    from_id = 
-    TransactionLogEntry.transfer!(self.product, from_id, to_id, cents, via, created_at=Time.now)
+    product = self.proposal.product
+
+    TransactionLogEntry.minted!(
+      SecureRandom.uuid,
+      Time.now,
+      product,
+      to_id,
+      coins_each,
+      comment: 'vesting schedule'
+    )
   end
+
+  def check_for_payout
+  end
+
 
 end

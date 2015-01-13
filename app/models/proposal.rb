@@ -69,11 +69,15 @@ class Proposal < ActiveRecord::Base
   end
 
   def status
-    "#{self.vote_ratio.to_f*100} %"
+    "#{self.vote_ratio.to_f*100} "
   end
 
   def user_vote_status(user)
     self.choices.map{|a| a.user_id}.include?(user.id)
+  end
+
+  def expired?
+    self.expiration - Time.now < 0
   end
 
 end

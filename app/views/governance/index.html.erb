@@ -5,96 +5,73 @@
 <%= render 'people/nav' %>
 
 <h1>Proposals</h1>
-
 <br>
-<h3>Open</h3>
 <table class="table table-responsive table-hover">
   <thead>
     <tr>
       <th class="text-left">Name</th>
-      <th class="text-right">Type</th>
-      <th class="text-right">Description</th>
-      <th class="text-right">Vote Status</th>
+      <th class="text-right">Creation</th>
+      <th class="text-right">Expiration</th>
+      <th class="text-right">Status</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-    <% @open_proposals.each do |op| %>
+    <% @proposals.each do |p| %>
     <tr>
-      <td class="text-left"><a href= <%= product_proposal_path(@product, op) %> ><%= op.name %></a></td>
-      <td class="text-right"></td>
-      <td class="text-right"><%= op.description %></td>
-      <td class="text-right"><%= op.status %></td>
+      <td class="text-left"><a href= <%= product_proposal_path(@product, p) %> ><%= p.name %></a></td>
+
+      <% creation_diff= ((Time.now - p.created_at)/86400).to_i %>
+      <% if creation_diff<0 %>
+        <td class="text-right"><%= "#{creation_diff} days ago" %></td>
+      <% elsif creation_diff > 0 %>
+        <td class="text-right"><%= "#{creation_diff} days left" %></td>
+      <% else %>
+        <td class="text-right">Today</td>
+      <% end %>
+
+      <% expiration_diff = ((p.expiration - Time.now ) / 86400).to_i %>
+      <% if expiration_diff < 0 %>
+        <td class="text-right"><%= "#{-expiration_diff} days ago" %>
+      <% elsif expiration_diff > 0 %>
+        <td class="text-right"><%= "#{expiration_diff} days left" %>
+      <% else %>
+        <td class="text-right">Today</td>
+      <% end %>
+
+      <td class="text-right"><%= "#{p.status}#{p.win_criteria_text}"  %></td>
+
       <td>
-        <% if op.won? %>
-          <span class="green"><%= react_component 'Icon', icon: 'check' %></span>
+        <% if !p.expired? %>
+        <form id="vtr" method="post" action="/choices" >
+          <% if !p.user_vote_status(@current_user) %>
+            <input type="hidden" name="voter" value="<%= @current_user.id %>" />
+            <input type="hidden" name="weight" value=1.0 />
+            <input type="hidden" name="proposal" value= "<%= p.id %>"  />
+            <button type="submit" class="btn btn-success">
+              <span class="mr1"><%= inline_react_component 'Icon', icon: 'gavel' %></span>
+              Approve
+            </button>
+          <% else %>
+            <input type="hidden" name="voter" value="<%= @current_user.id %>" />
+            <input type="hidden" name="weight" value=1.0 />
+            <input type="hidden" name="proposal" value= "<%= p.id %>"  />
+            <input type="submit" value="Unvote" class="btn btn-danger">
+          <% end %>
+        </form>
         <% else %>
-          <span class="gray"><%= react_component 'Icon', icon: 'gavel' %></span>
+          <% if p.won? %>
+          <button type="button" class="btn btn-success" disabled="disabled">
+            <span class="mr1"><%= inline_react_component 'Icon', icon: 'check' %></span>Passed
+          </button>
+          <% else %>
+          <button type="button" class="btn btn-danger" disabled="disabled">
+            <span class="mr1"><%= inline_react_component 'Icon', icon: 'close' %></span>Failed
+          </button>
+          <% end %>
         <% end %>
       </td>
     </tr>
     <% end %>
   </tbody>
 </table>
-<br>
-<% if @active_proposals.count > 0 %>
-  <h3>Active</h3>
-  <table class="table table-responsive table-hover">
-    <thead>
-      <tr>
-        <th class="text-left">Name</th>
-        <th class="text-right">Type</th>
-        <th class="text-right">Description</th>
-        <th class="text-right">Vote Status</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @active_proposals.each do |ap| %>
-      <tr>
-        <td class="text-left"><a href= <%= product_proposal_path(@product, ap) %> ><%= ap.name %></a></td>
-        <td class="text-right"></td>
-        <td class="text-right"><%= ap.description %></td>
-        <td class="text-right"><%= ap.status %></td>
-        <td>
-          <% if ap.won? %>
-          <span class="green"><%= react_component 'Icon', icon: 'check' %></span>
-          <% end %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% end %>
-<br>
-<% if @closed_proposals.count > 0 %>
-  <h3>Closed/Failed</h3>
-  <table class="table table-responsive table-hover">
-    <thead>
-      <tr>
-        <th class="text-left">Name</th>
-        <th class="text-right">Type</th>
-        <th class="text-right">Description</th>
-        <th class="text-right">Vote Status</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @closed_proposals.each do |cp| %>
-      <tr>
-      <td class="text-left"><a href= <%= product_proposal_path(@product, cp) %> ><%= cp.name %></a></td>
-      <td class="text-right"></td>
-      <td class="text-right"><%= cp.description %></td>
-      <td class="text-right"><%= cp.status %></td>
-      <td>
-        <% if cp.won? %>
-        <span class="green"><%= react_component 'Icon', icon: 'check' %></span>
-        <% else %>
-        <span class="red"><%= react_component 'Icon', icon: 'close' %></span>
-        <% end %>
-      </td>
-    </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% end %>

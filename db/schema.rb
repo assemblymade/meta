@@ -969,8 +969,9 @@ ActiveRecord::Schema.define(version: 20150112061502) do
     t.datetime "start_date"
     t.datetime "expiration_date"
     t.integer  "intervals"
+    t.integer  "intervals_paid"
     t.integer  "coins"
-    t.uuid     "recipient"
+    t.uuid     "user_id"
     t.string   "state"
     t.uuid     "product_id"
     t.datetime "created_at",      null: false
