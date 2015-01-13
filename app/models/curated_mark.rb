@@ -1,16 +1,22 @@
 CURATED_MARKS = {
   'Development' =>
-    ['Ruby', 'JavaScript', 'HTML & CSS', 'iOS', 'API', 'DevOps',
-     'Go', 'Python', 'Android', 'Rails', 'React', 'Bootstrap', 'Backbone',
-     'Security', 'Postgres', 'Redis', 'Bitcoin'],
+    [
+     'API', 'DevOps', 'Security', 'SQL', 'JavaScript', 'HTML & CSS',
+     'Ruby', 'Python', 'Java', '.NET', 'Go', 'PHP', 'iOS', 'Android',
+     'Node', 'React', 'Bootstrap', 'Backbone', 'Ember', 'Angular'
+    ],
   'Design' => 
-    ['UI', 'UX', 'IA', 'Branding', 'Typography', 'Mockups',
-     'Illustration', 'Colors', 'Logo', 'Photoshop', 'Illustrator',
-     'Responsive', 'Homepage', 'Theme', 'Blog', 'Styleguide'],
-  'Strategy & Growth' =>
-    ['Copywriting', 'Marketing', 'Product Management', 'User Research',
-     'Growth', 'Monetization', 'Email Marketing', 'Social Media',
-     'Onboarding', 'Blogging', 'SEO', 'Pricing', 'Naming', 'Roadmapping']
+    [
+      'UI/UX', 'IA', 'Mockups', 'Wireframing', 'Sketches'
+      'Branding', 'Typography', 'Illustration', 'Logo', 'Photography',
+      'HTML & CSS', 'Responsive',  'Styleguide', 'Homepage', 'Theme'
+   ],
+  'Growth' =>
+    [ 
+      'Strategy', 'Product Management', 'Monetization','Pricing', 'Naming',
+      'Community', 'User Research', 'Copywriting', 'Blogging', 'Social Media',
+      'BD', 'Marketing', 'Email Marketing', 'SEM', 'SEO'
+    ]
 }
 
 class CuratedMark
