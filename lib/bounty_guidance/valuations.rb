@@ -8,7 +8,7 @@ module BountyGuidance
     EXPONENTIAL_INCREMENT = 2.0
     FEE = 0.10
 
-    MEDIAN_DOLLAR_BOUNTY_VALUE = 40
+    MEDIAN_DOLLAR_BOUNTY_VALUE = 75
 
     MAX_PROFIT_REPORTS = 30  #maximum number of months of profit backhistory to query
 
