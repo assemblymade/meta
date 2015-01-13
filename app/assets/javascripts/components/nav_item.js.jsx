@@ -1,6 +1,12 @@
 var NavItem = React.createClass({
   displayName: 'NavItem',
 
+  getDefaultProps: function() {
+    return {
+      href: '#'
+    }
+  },
+
   renderBadge: function() {
     var hasBadge = this.props.badge
 
@@ -12,6 +18,7 @@ var NavItem = React.createClass({
   render: function() {
     var label = this.props.label
     var isActive = this.props.active
+    var href = this.props.href
 
     var badge = this.renderBadge()
 
@@ -22,7 +29,7 @@ var NavItem = React.createClass({
 
     return (
       <li className={classes}>
-        <a href="#">
+        <a href={href}>
           {label}
           {badge}
         </a>
