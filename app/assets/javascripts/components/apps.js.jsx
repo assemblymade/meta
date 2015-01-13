@@ -10,10 +10,13 @@ var filters = [
 
 var Apps = React.createClass({
   render: function() {
-    var apps = _(this.state.apps).partition(a => a.try_url)
+    // var apps = _(this.state.apps).partition(a => a.try_url)
+    //
+    // tryable = apps[0]
+    // inDev = apps[1]
 
-    tryable = apps[0]
-    inDev = apps[1]
+    var firstSectionApps = _(this.state.apps).first(3)
+    var secondSectionApps = _(this.state.apps).rest(3)
 
     return <section className="tile-grid tile-grid-ideas">
       <div className="container main">
@@ -39,7 +42,7 @@ var Apps = React.createClass({
           </nav>
         </div>
 
-        {this.renderAppsList(tryable)}
+        {this.renderAppsList(firstSectionApps)}
 
         <div className="col col-6 pr2 pb2">
           <a href={"/apps?filter=" + this.props.topics[0].slug} className="big-block-button">
@@ -54,7 +57,7 @@ var Apps = React.createClass({
           </a>
         </div>
 
-        {this.renderAppsList(inDev)}
+        {this.renderAppsList(secondSectionApps)}
       </div>
     </section>
   },

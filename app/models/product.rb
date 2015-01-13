@@ -106,6 +106,7 @@ class Product < ActiveRecord::Base
   scope :team_building, -> { public_products.where(state: 'team_building') }
   scope :greenlit,     -> { public_products.where(state: 'greenlit') }
   scope :profitable,   -> { public_products.where(state: 'profitable') }
+  scope :live,         -> { where.not(try_url: nil) }
   scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
 
   validates :slug, uniqueness: { allow_nil: true }
