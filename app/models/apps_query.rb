@@ -1,7 +1,8 @@
 class AppsQuery
-  def initialize(user, filter)
+  def initialize(user, filter, topic)
     @user = user
     @filter = filter
+    @topic = topic
   end
 
   def perform
@@ -15,11 +16,13 @@ class AppsQuery
   end
 
   def filter_clause
-    case @filter
-    when 'mine'
+    case
+    when @filter == 'mine'
       Product.where(user: @user)
-    when 'live'
+    when @filter == 'live'
       Product.public_products.live
+    when @topic.present?
+      Product.public_products.with_mark(@topic)
     else
       Product.public_products
     end

@@ -45,13 +45,13 @@ var Apps = React.createClass({
         {this.renderAppsList(firstSectionApps)}
 
         <div className="col col-6 pr2 pb2">
-          <a href={"/apps?filter=" + this.props.topics[0].slug} className="big-block-button">
+          <a href={"/apps?topic=" + this.props.topics[0].slug} className="big-block-button">
             <div className="h7">Top Trending</div>
             {this.props.topics[0].hero_title}
           </a>
         </div>
         <div className="col col-6 pl2 pb2">
-          <a href={"/apps?filter=" + this.props.topics[1].slug} className="big-block-button">
+          <a href={"/apps?topic=" + this.props.topics[1].slug} className="big-block-button">
             <div className="h7">Top Trending</div>
             {this.props.topics[1].hero_title}
           </a>
@@ -79,7 +79,7 @@ var Apps = React.createClass({
       </a>
       <ul className="dropdown-menu" role="menu">
         {_(this.props.topics).map(f => <li>
-          <a href={"/apps?filter=" + f.slug}>{f.name}</a>
+          <a href={"/apps?topic=" + f.slug}>{f.name}</a>
           </li>
         )}
       </ul>

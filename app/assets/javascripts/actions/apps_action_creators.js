@@ -2,12 +2,12 @@ var ActionTypes = window.CONSTANTS.ActionTypes;
 var routes = require('../routes')
 
 var AppsActionCreators = {
-  filterSelected: function(filter) {
+  filterSelected: function(filter, topic) {
     $.ajax({
       method: 'GET',
       dataType: 'json',
       url: routes.apps_path() + '.json',
-      data: { filter: filter },
+      data: { filter: filter, topic: topic },
       success: function(apps) {
         Dispatcher.dispatch({
           type: ActionTypes.APPS_RECEIVE,

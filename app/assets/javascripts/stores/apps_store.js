@@ -34,8 +34,8 @@ if (dataTag) {
     apps: JSON.parse(dataTag.innerHTML)
   })
 } else {
-  var filter = url.parse(window.location.href, true).query.filter
-  AppsActionCreators.filterSelected(filter)
+  var query = url.parse(window.location.href, true).query
+  AppsActionCreators.filterSelected(query.filter, query.topic)
 }
 
 module.exports = store

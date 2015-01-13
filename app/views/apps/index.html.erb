@@ -2,14 +2,14 @@
 
 <%= render 'shared/navbar' %>
 
-<% if ['saas', 'mobile'].include?(params[:filter]) %>
+<% if ['saas', 'mobile'].include?(params[:topic]) %>
   <div class="container">
     <div class="clearfix mxn2 py2">
       <div class="rounded text-white bg-gray-2 p3">
         <div class="clearfix">
           <div class="col col-8">
             <h6 class="caps mt0 mb0" style={{ fontWeight: 'normal' }}>Trending</h6>
-            <span class="bold" style={{ fontSize: 18 }}><%= t "#{params[:filter]}.hero_title", scope: :showcases %></span>
+            <span class="bold" style={{ fontSize: 18 }}><%= t "#{params[:topic]}.hero_title", scope: :showcases %></span>
           </div>
           <div class="col col-4">
             <span class="right mt0 mb0" style={{ fontSize: 36, fontWeight: 200 }}><%= @products.count %></span>
