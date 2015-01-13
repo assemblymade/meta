@@ -244,8 +244,8 @@ var Bounty = React.createClass({
             text={{ true: 'Unsubscribe', false: 'Subscribe' }}
             icon={{ true: '', false: '' }}
             classes={{ true: '', false: '' }}
-            href={{ true: routes.product_update_unsubscribe_path({ product_id: this.bounty().product.slug, update_id: this.props.item.id }),
-                   false: routes.product_update_subscribe_path({ product_id: this.bounty().product.slug, update_id: this.props.item.id }) }} />
+            href={{ true: routes.product_update_unsubscribe_path({ product_id: bounty.product.slug, update_id: this.props.item.id }),
+                   false: routes.product_update_subscribe_path({ product_id: bounty.product.slug, update_id: this.props.item.id }) }} />
         </li>
       );
     }

@@ -4,14 +4,11 @@ var SubscriptionsStore = require('../stores/subscriptions_store')
 var TextPost = require('./ui/text_post.js.jsx')
 var UserStore = require('../stores/user_store')
 
-
-window.UserStore = UserStore
-
 var Update = React.createClass({
 
   propTypes: {
-    update: React.PropTypes.element,
-    newsFeedItem: React.PropTypes.element,
+    update: React.PropTypes.object,
+    newsFeedItem: React.PropTypes.object,
     productSlug: React.PropTypes.string
   },
 
@@ -44,9 +41,6 @@ var Update = React.createClass({
   },
 
   render: function() {
-    console.log(this.props)
-    console.log(this.props.newsFeedItem.heartable_id)
-
     return (
       <div>
         <div className="p4">
