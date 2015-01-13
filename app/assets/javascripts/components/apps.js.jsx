@@ -1,5 +1,6 @@
 var AppsStore = require('../stores/apps_store')
 var App = require('./app.js.jsx')
+var ProductSearch = require('./product_search.js.jsx')
 
 var filters = [
   ['mine', 'My Apps'],
@@ -10,11 +11,6 @@ var filters = [
 
 var Apps = React.createClass({
   render: function() {
-    // var apps = _(this.state.apps).partition(a => a.try_url)
-    //
-    // tryable = apps[0]
-    // inDev = apps[1]
-
     var firstSectionApps = _(this.state.apps).first(3)
     var secondSectionApps = _(this.state.apps).rest(3)
 
@@ -33,11 +29,7 @@ var Apps = React.createClass({
             </div>
 
             <div className="item">
-              <form className="navbar-form" role="search">
-                <div className="form-group">
-                  <input type="text" className="form-control" placeholder="Search Apps" />
-                </div>
-              </form>
+              <ProductSearch />
             </div>
           </nav>
         </div>

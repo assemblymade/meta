@@ -589,10 +589,33 @@ class Product < ActiveRecord::Base
     indexes :pitch,       analyzer: 'snowball'
     indexes :description, analyzer: 'snowball'
     indexes :tech,        analyzer: 'keyword'
+
+    indexes :suggest, type: 'completion', payloads: true, index_analyzer: 'simple', search_analyzer: 'simple'
   end
 
   def as_indexed_json(options={})
-    as_json(root: false, methods: [:tech, :hidden, :sanitized_description], only: [:slug, :name, :pitch, :poster])
+    as_json(root: false, methods: [:tech, :hidden, :sanitized_description, :suggest], only: [:slug, :name, :pitch, :poster])
+  end
+
+  def suggest
+    {
+      input: [name, pitch] + name.split(' ') + pitch.split(' '),
+      output: id,
+      weight: product_trend.score.to_i,
+      payload: {
+        id: id,
+        slug: slug,
+        name: name,
+        pitch: pitch,
+        logo_url: full_logo_url,
+      }
+    }
+  end
+
+  def full_logo_url
+    # this is a hack to get a full url into elasticsearch, so firesize can resize it correctly.
+    # DEFAULT_IMAGE_PATH is a relative image path
+    logo_url == DEFAULT_IMAGE_PATH ? File.join(Rails.application.routes.url_helpers.root_url, DEFAULT_IMAGE_PATH) : logo_url
   end
 
   def tech
