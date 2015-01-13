@@ -27,6 +27,12 @@ class NewsFeedItem < ActiveRecord::Base
 
   scope :unarchived_items, -> { where(archived_at: nil) }
 
+  scope :for_feed, -> {
+    public_items.
+      unarchived_items.
+      order(last_commented_at: :desc)
+  }
+
   def self.create_with_target(target)
     create!(
       product: target.try(:product),

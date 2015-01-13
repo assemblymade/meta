@@ -3,4 +3,4 @@
 
 <%= render 'shared/navbar' %>
 
-<%= react_component 'DashboardPage' %>
+<%= react_component 'DashboardPage', activeNavItem: params.fetch(:filter, 'all') %>
