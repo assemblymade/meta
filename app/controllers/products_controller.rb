@@ -307,6 +307,7 @@ class ProductsController < ProductController
       :tags_string,
       :poster,
       :homepage_url,
+      :try_url,
       :you_tube_video_url,
       :terms_of_service,
       {:tags => []}
