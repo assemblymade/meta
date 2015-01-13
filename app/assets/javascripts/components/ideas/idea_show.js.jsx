@@ -1,6 +1,5 @@
 var Avatar = require('../ui/avatar.js.jsx');
 var Icon = require('../icon.js.jsx');
-var IdeaDiscussion = require('./idea_discussion.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
 var Love = require('../love.js.jsx');
@@ -128,7 +127,7 @@ var IdeaShow = React.createClass({
           </div>
         </div>
 
-        <hr className="py0 mb0" style={{ 'border-bottom-color': '#ededed', 'border-width': 2 }} />
+        <hr className="py0 mb0" style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
 
         <div className="px4">
           <NewsFeedItemComments commentable={true}

@@ -25,6 +25,7 @@ var NewsFeedItemNewComment = React.createClass({
     hideAvatar: React.PropTypes.bool,
     hideButtons: React.PropTypes.bool,
     initialText: _dependsOn('commentId', 'string'),
+    placeholder: React.PropTypes.string,
     thread: React.PropTypes.string.isRequired,
     url: React.PropTypes.string.isRequired,
     user: React.PropTypes.object
@@ -91,6 +92,7 @@ var NewsFeedItemNewComment = React.createClass({
   getDefaultProps: function() {
     return {
       initialRows: 3,
+      placeholder: 'Leave your comments',
       user: UserStore.getUser()
     };
   },
@@ -198,7 +200,7 @@ var NewsFeedItemNewComment = React.createClass({
                   onKeyPress={this.onKeyPress}
                   rows={this.state.rows}
                   defaultValue={this.state.text}
-                  placeholder="Leave your comments" />
+                  placeholder={this.props.placeholder} />
             </div>
             {this.renderDropzoneInner()}
           </div>

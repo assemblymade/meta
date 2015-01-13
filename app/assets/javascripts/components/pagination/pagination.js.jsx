@@ -18,11 +18,11 @@ var Pagination = React.createClass({
   },
 
   componentDidMount: function() {
-    PaginationStore.addChangeListener(this.setCurrentPage);
+    PaginationStore.addChangeListener(this.updateState);
   },
 
   componentWillUnmount: function() {
-    PaginationStore.removeChangeListener(this.setCurrentPage);
+    PaginationStore.removeChangeListener(this.updateState);
   },
 
   getInitialState: function() {
@@ -95,9 +95,10 @@ var Pagination = React.createClass({
     );
   },
 
-  setCurrentPage: function() {
+  updateState: function() {
     this.setState({
-      currentPage: PaginationStore.getCurrentPage()
+      currentPage: PaginationStore.getCurrentPage(),
+      totalPages: PaginationStore.getTotalPages()
     });
   }
 });

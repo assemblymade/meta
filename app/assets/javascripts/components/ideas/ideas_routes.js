@@ -9,10 +9,18 @@ var routes = [
 
 module.exports = routes;
 
-function _showIdeas(ideas) {
+function _showIdeas(data) {
+  var ideas = data.ideas;
+  var totalPages = data.total_pages;
+
   Dispatcher.dispatch({
     type: ActionTypes.IDEAS_RECEIVE,
     ideas: ideas
+  });
+
+  Dispatcher.dispatch({
+    type: ActionTypes.PAGINATION_TOTAL_PAGES_RECEIVE,
+    totalPages: totalPages
   });
 }
 

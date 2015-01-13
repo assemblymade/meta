@@ -75,7 +75,7 @@ gem 'rails-assets-jquery-timeago'
 gem 'rails-assets-jquery.inview',       '1.0.0'
 gem 'rails-assets-underscore',          '1.7.0'
 gem 'rails_stdout_logging', group: [:development, :production]
-gem 'react-rails', '~> 0.12.0.0'
+gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
 gem 'redcarpet'
 gem 'redis'
 gem 'responders', '~> 2.0.0'

@@ -224,7 +224,8 @@ module.exports = React.createClass({
   },
 
   renderTips: function() {
-    if (this.props.author.id === UserStore.getId()) {
+    if (this.props.author.id === UserStore.getId() ||
+        _.isEmpty(ProductStore.getProduct())) {
       return;
     }
 

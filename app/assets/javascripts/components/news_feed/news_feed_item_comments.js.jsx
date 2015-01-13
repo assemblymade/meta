@@ -343,7 +343,17 @@ var NewsFeedItemComments = React.createClass({
 
   renderRuler: function() {
     if (this.state.comments.length > 0) {
-      return <hr className="mb0 mt3 border-gray-5 _mrn3 _mln3" />;
+      var hasProduct = this.props.hasProduct;
+      var classes = React.addons.classSet({
+        mb0: true,
+        mt3: true,
+        'border-gray-5': true,
+        _mrn3: hasProduct,
+        _mrn4: !hasProduct,
+        _mln3: hasProduct,
+        _mln4: !hasProduct
+      });
+      return <hr className={classes} />;
     }
   },
 

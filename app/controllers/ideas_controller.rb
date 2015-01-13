@@ -8,10 +8,10 @@ class IdeasController < ApplicationController
 
   def index
     ideas = FilterIdeasQuery.call(filter_params)
-
+    total_pages = (ideas.count / IDEAS_PER_PAGE.to_f).ceil
     @stores[:pagination_store] = {
       current_page: params[:page] || 1,
-      total_pages: (ideas.count / IDEAS_PER_PAGE.to_f).ceil
+      total_pages: total_pages
     }
 
     @heartables = ideas.map(&:news_feed_item)
@@ -21,7 +21,10 @@ class IdeasController < ApplicationController
 
     @ideas = ideas.page(params[:page]).per(IDEAS_PER_PAGE)
 
-    respond_with ActiveModel::ArraySerializer.new(@ideas)
+    respond_with({
+      ideas: ActiveModel::ArraySerializer.new(@ideas),
+      total_pages: total_pages
+    })
   end
 
   def new_ideas

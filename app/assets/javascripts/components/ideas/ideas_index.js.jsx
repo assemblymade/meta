@@ -1,6 +1,7 @@
 var Footer = require('../ui/footer.js.jsx');
 var IdeaTile = require('./idea_tile.js.jsx');
 var IdeasStore = require('../../stores/ideas_store');
+var NewIdeaModal = require('./new_idea_modal.js.jsx');
 var Pagination = require('../pagination/pagination.js.jsx');
 var UserStore = require('../../stores/user_store');
 
@@ -38,8 +39,21 @@ var IdeasIndex = React.createClass({
 
   getInitialState: function() {
     return {
-      ideas: IdeasStore.getIdeas()
+      ideas: IdeasStore.getIdeas(),
+      modalShown: false
     }
+  },
+
+  onAddIdeaClick: function() {
+    this.setState({
+      modalShown: true
+    });
+  },
+
+  onModalHidden: function() {
+    this.setState({
+      modalShown: false
+    });
   },
 
   render: function() {
@@ -47,29 +61,7 @@ var IdeasIndex = React.createClass({
 
     return (
       <main role="main">
-        <section className="_hero hero-ideas" key="ideas-header">
-          <div className="container">
-            <div className="header">
-              <img src="../assets/ideas/ideas-header-morse.png" />
-            </div>
-            <div className="main">
-              <h1>
-                The best product ideas &mdash; built by all of us.
-              </h1>
-              <button type="button" className="_button pill theme-green shadow text-shadow border">
-                <span className="title">Add your product idea</span>
-              </button>
-            </div>
-            <div className="footer">
-              <p>
-                Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea &mdash; ready to be built on Assembly.
-              </p>
-              <div className="text-3">
-                <a href="#">Learn More</a>
-              </div>
-            </div>
-          </div>
-        </section>
+        {this.renderHeader()}
 
         <section className="tile-grid tile-grid-ideas" key="ideas-grid">
           <div className="container">
@@ -142,7 +134,36 @@ var IdeasIndex = React.createClass({
             </Footer>
           </div>
         </section>
+        <NewIdeaModal modalShown={this.state.modalShown} onHidden={this.onModalHidden} />
       </main>
+    );
+  },
+
+  renderHeader: function() {
+    return (
+      <section className="_hero hero-ideas" key="ideas-header">
+        <div className="container">
+          <div className="header">
+            <img src="../assets/ideas/ideas-header-morse.png" />
+          </div>
+          <div className="main">
+            <h1>
+              The best product ideas &mdash; built by all of us.
+            </h1>
+            <button type="button" className="_button pill theme-green shadow text-shadow border" onClick={this.onAddIdeaClick}>
+              <span className="title">Add your product idea</span>
+            </button>
+          </div>
+          <div className="footer">
+            <p>
+              Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea &mdash; ready to be built on Assembly.
+            </p>
+            <div className="text-3">
+              <a href="#">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </section>
     );
   },
 

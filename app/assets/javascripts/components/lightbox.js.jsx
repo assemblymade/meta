@@ -1,56 +1,72 @@
-/** @jsx React.DOM */
+var Lightbox = React.createClass({
+  propTypes: {
+    footer: React.PropTypes.oneOf([
+      React.PropTypes.string,
+      React.PropTypes.element
+    ]),
+    id: React.PropTypes.string,
+    onHidden: React.PropTypes.func,
+    size: React.PropTypes.string,
+    title: React.PropTypes.oneOf([
+      React.PropTypes.string,
+      React.PropTypes.element
+    ])
+  },
 
-(function() {
-  var Lightbox = React.createClass({
-    propTypes: {
-      title: React.PropTypes.any
-    },
+  componentDidMount: function() {
+    var modal = $(this.getDOMNode()).modal({ show: true });
+    modal.on('hidden.bs.modal', this.props.onHidden);
+  },
 
-    getDefaultProps: function() {
-      return {
-        size: ''
-      }
-    },
+  componentWillUnmount: function() {
+    var modal = $(this.getDOMNode()).modal({ show: false });
+    modal.off('hidden.bs.modal', this.props.onHidden);
+  },
 
-    render: function() {
-      return (
-        <div className="modal fade" id={this.props.id} role="dialog" tabIndex="-1" aria-labelledby={this.props.title || "lightbox"} aria-hidden="true">
-          <div className={"modal-dialog " + this.props.size}>
-            <div className="modal-content" style={{ overflow: 'visible' }}>
-              {this.header()}
-              {this.props.children}
-            </div>
-            {this.footer()}
-          </div>
-        </div>
-      );
-    },
-
-    header: function() {
-      if (this.props.title) {
-        return <div className="px3 py2 clearfix">
-          <a className="close" data-dismiss="modal">
-            <span aria-hidden="true">&times;</span><span className="sr-only">Close</span>
-          </a>
-          <h4 className="mt0 mb0" id={this.props.title}>{this.props.title}</h4>
-        </div>
-      }
-      return null
-    },
-
-    footer: function() {
-      if (this.props.footer) {
-        return <div className="p3 border-top">
-          {this.props.footer}
-        </div>
-      }
-      return null
+  getDefaultProps: function() {
+    return {
+      id: 'modal',
+      onHidden: function() {
+        console.warn("No `onHidden()` property supplied to Lightbox");
+      },
+      size: ''
     }
-  });
+  },
 
-  if (typeof module !== 'undefined') {
-    module.exports = Lightbox;
+  render: function() {
+    return (
+      <div className="modal fade" id={this.props.id} role="dialog" tabIndex="-1" aria-labelledby={this.props.title || "lightbox"} aria-hidden="true">
+        <div className={"modal-dialog " + this.props.size}>
+          <div className="modal-content" style={{ overflow: 'visible' }}>
+            {this.header()}
+            {this.props.children}
+          </div>
+          {this.footer()}
+        </div>
+      </div>
+    );
+  },
+
+  header: function() {
+    if (this.props.title) {
+      return <div className="px3 py2 clearfix">
+        <a className="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span className="sr-only">Close</span>
+        </a>
+        <h4 className="mt0 mb0" id={this.props.title}>{this.props.title}</h4>
+      </div>
+    }
+    return null
+  },
+
+  footer: function() {
+    if (this.props.footer) {
+      return <div className="p3 border-top">
+        {this.props.footer}
+      </div>
+    }
+    return null
   }
+});
 
-  window.Lightbox = Lightbox;
-})();
+module.exports = window.Lightbox = Lightbox;
