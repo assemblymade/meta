@@ -6,6 +6,7 @@ var Comment = require('../comment.js.jsx');
 var Discussion = require('../ui/discussion.js.jsx')
 var Icon = require('../icon.js.jsx');
 var Introduction = require('../introduction.js.jsx')
+var Lightbox = require('../lightbox.js.jsx')
 var Markdown = require('../markdown.js.jsx');
 var moment = require('moment');
 var NewsFeedItemActionCreators = require('../../actions/news_feed_item_action_creators');

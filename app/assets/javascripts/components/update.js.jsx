@@ -109,9 +109,8 @@ var Update = React.createClass({
   },
 
   renderEditButton: function() {
-    if (UserStore.isCoreTeam() || this.props.user.id === UserStore.getId()) {
-      var update = this.props.update;
-
+    var update = this.props.update
+    if (UserStore.isCoreTeam() || update.user.id === UserStore.getId()) {
       return (
         <li>
           <a href={update.url + '/edit'}>Edit</a>
