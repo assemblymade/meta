@@ -1,5 +1,4 @@
 var Markdown = React.createClass({
-  displayName: 'Markdown',
 
   propTypes: {
     content: React.PropTypes.oneOfType([
@@ -10,28 +9,37 @@ var Markdown = React.createClass({
       React.PropTypes.bool,
       React.PropTypes.string
     ]),
-    safelySetHtml: React.PropTypes.bool
+    safelySetHtml: React.PropTypes.bool,
+    wideQuotes: React.PropTypes.bool
+  },
+
+  getDefaultProps: function() {
+    return {
+      normalized: false,
+      safelySetHtml: false,
+      wideQuotes: false
+    }
   },
 
   componentDidMount: function() {
     // render internal react_ujs components
-    ReactUjs.mountReactComponents($(this.getDOMNode()).find('[data-react-class]'));
+    var node = $(this.getDOMNode()).find('[data-react-class]')
+    ReactUjs.mountReactComponents(node)
   },
 
   render: function() {
-    var normalized = this.props.normalized
-
     var cs = React.addons.classSet({
       'markdown': true,
-      'markdown-normalized': !!normalized
-    });
+      'markdown-normalized': !!this.props.normalized,
+      'markdown-wide-quotes': this.props.wideQuotes
+    })
 
     if (this.props.safelySetHtml) {
       return (
         <div className={cs}>
           {this.props.content}
         </div>
-      );
+      )
     }
 
     return (

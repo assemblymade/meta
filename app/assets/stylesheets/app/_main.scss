@@ -156,27 +156,6 @@ mark, .mark {
   background-color: lighten($state-warning-bg, 5%);
 }
 
-// -- quotes ---------------------
-blockquote {
-  position: relative;
-  margin: 0 0 1rem -2.8rem;
-  border-left: 4px solid $aqua;
-  top: 0.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 1rem;
-
-  &:before {
-    // content: url("icon-comment-quote.png");
-    position: relative;
-    top: 0;
-    left: -60px;
-  }
-
-  p {
-    position: relative;
-    left: 1.5rem;
-  }
-}
 
 // -- forms ---------------------
 // input

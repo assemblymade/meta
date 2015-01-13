@@ -1,11 +1,21 @@
 <% title @post.title, @post.product.name %>
 <% activate_nav! :posts %>
 
-<% nfi = NewsFeedItemSerializer.new(@post.news_feed_item) %>
-<div data-react-class="NewsFeedItem" data-react-props="<%= nfi.as_json.merge({
-  commentable: true,
-  enableModal: false,
-  productPage: true,
-  rows: 2,
-  showAllComments: true
-}).to_json %>"></div>
+<div id="discussion-el"></div>
+<% content_for :javascript do %>
+  <script>
+    var updateElement = React.createElement(Update, <%= {
+        productSlug: @post.product.slug,
+        update: PostSerializer.new(@post),
+        newsFeedItem: NewsFeedItemSerializer.new(@post.news_feed_item)
+      }.to_json.html_safe
+    %>)
+
+    var discussionElement = React.createElement(Discussion, {
+      target: updateElement,
+      newsFeedItem: <%= NewsFeedItemSerializer.new(@post.news_feed_item).to_json.html_safe %>,
+    })
+
+    React.render(discussionElement, document.getElementById('discussion-el'))
+  </script>
+<% end %>
