@@ -2,8 +2,7 @@ var Icon = require('./icon.js.jsx')
 // TODO This lib is required in application.js (chrislloyd)
 // var numeral = require('numeral')
 
-module.exports = React.createClass({
-  displayName: 'IconWithNumber',
+var IconWithNumber = React.createClass({
 
   propTypes: {
     icon: React.PropTypes.string.isRequired,
@@ -13,7 +12,15 @@ module.exports = React.createClass({
   render: function() {
     var label = null
     if (this.props.n > 0) {
-      label = <span className="ml1">{numeral(this.props.n).format('0,0')}</span>
+      // This is a horrible hack for CI because numeral isn't required in the
+      // jest tests. Ask @chrislloyd about this one.
+      var formattedNumeral
+      if (window.numeral) {
+        formattedNumeral = numeral(this.props.n).format('0,0')
+      } else {
+        formattedNumeral = this.props.n
+      }
+      label = <span className="ml1">{formattedNumeral}</span>
     }
 
     return (
@@ -24,3 +31,5 @@ module.exports = React.createClass({
     )
   }
 })
+
+module.exports = IconWithNumber

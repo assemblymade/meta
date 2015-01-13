@@ -3,6 +3,7 @@
 var Popover = require('./popover.js.jsx');
 var InviteBountyForm = require('./invite_bounty_form.js.jsx');
 var Lightbox = require('./lightbox.js.jsx');
+var BsModalMixin = require('../mixins/bs_modal_mixin.js.jsx')
 
 var InviteFriendBounty = React.createClass({
   getInitialState: function() {
