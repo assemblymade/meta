@@ -31,14 +31,18 @@
 
     render: function() {
       return (
-        <div>
-          <a className="block clearfix" href="#" id="bounty-amount-link" onClick={this.toggle}>
+        <div className="clearfix">
+          <a className="block left clearfix" href="#" id="bounty-amount-link" onClick={this.toggle}>
             <div className="left">
               <AppCoins n={this.props.contracts.earnable} />
             </div>
             <div className="left yellow ml1">
               <Icon icon="chevron-down" />
             </div>
+          </a>
+
+          <a className="block right ml2 gray-4 gray-2-hover" href="/help/revenue">
+            <Icon icon="question-circle" />
           </a>
 
           {this.renderLightbox()}
