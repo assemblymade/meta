@@ -1,6 +1,7 @@
 var Dispatcher = window.Dispatcher
 var CONSTANTS = window.CONSTANTS
 var ActionTypes = CONSTANTS.ActionTypes
+var IdeaScrim = require('./idea_scrim.js.jsx');
 var ideasRoutes = require('./ideas_routes')
 var page = require('page')
 var qs = require('qs')
@@ -44,11 +45,16 @@ function _route(route) {
 function _getAndDispatch(component, callback) {
   return _.debounce(function(context) {
     Dispatcher.dispatch({
-      type: ActionTypes.IDEAS_ROUTE_CHANGED,
-      component: component,
-      context: context
+      type: ActionTypes.IDEAS_ROUTE_CHANGING,
+      component: IdeaScrim
     })
 
-    $.getJSON(window.location, callback)
+    $.getJSON(window.location).done(function() {
+      Dispatcher.dispatch({
+        type: ActionTypes.IDEAS_ROUTE_CHANGED,
+        component: component,
+        context: context
+      })
+    }).done(callback)
   }, 500)
 }

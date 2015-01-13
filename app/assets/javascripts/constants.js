@@ -143,6 +143,7 @@
       IDEAS_RECEIVE: null,
 
       IDEAS_ROUTE_CHANGED: null,
+      IDEAS_ROUTE_CHANGING: null,
 
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,
