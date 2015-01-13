@@ -30,10 +30,10 @@ module.exports = React.createClass({
 
     return (
       <div>
-        <div className="mb3 h6 mt0 mb0">
+        <div className="mb3 h6 mt0 mb0 visible-hover-wrapper">
           <AvatarWithUsername user={this.props.author} size={18} />
           {' '}
-          <span className="gray-2">posted {moment(this.props.timestamp).fromNow()}</span>
+          <span className="gray-2 visible-hover">posted {moment(this.props.timestamp).fromNow()}</span>
         </div>
 
         <h1 className="mt0 mb0" style={{ lineHeight: '36px' }}>
