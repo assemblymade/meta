@@ -93,7 +93,7 @@ class Product < ActiveRecord::Base
   }
   scope :advertisable,     -> { where(can_advertise: true) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
-  scope :ordered_by_trend, -> { joins(:product_trend).order('product_trends.score DESC').select('products.*, product_trends.score') }
+  scope :ordered_by_trend, -> { joins(:product_trend).order('product_trends.score DESC') }
   scope :public_products,  -> { where.not(id: Product.private_ids).where(flagged_at: nil).advertisable.where.not(state: ['stealth', 'reviewing']) }
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :since,            ->(time) { where('created_at >= ?', time) }

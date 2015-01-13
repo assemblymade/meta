@@ -3,23 +3,21 @@
 <%= render 'shared/navbar' %>
 
 <% if ['saas', 'mobile'].include?(params[:filter]) %>
-  <section class="_hero hero-ideas">
-    <div class="container">
-      <div class="header">
-        <img src="../assets/ideas/ideas-header-morse.png">
-      </div>
-      <div class="main">
-        <h1>
-          <%= t "#{params[:filter]}.hero_title", scope: :showcases %>
-        </h1>
-      </div>
-      <div class="footer">
-        <p>
-          <%= t "#{params[:filter]}.description", scope: :showcases %>
-        </p>
+  <div class="container">
+    <div class="clearfix mxn2 py2">
+      <div class="rounded text-white bg-gray-2 p3">
+        <div class="clearfix">
+          <div class="col col-8">
+            <h6 class="caps mt0 mb0" style={{ fontWeight: 'normal' }}>Trending</h6>
+            <span class="bold" style={{ fontSize: 18 }}><%= t "#{params[:filter]}.hero_title", scope: :showcases %></span>
+          </div>
+          <div class="col col-4">
+            <span class="right mt0 mb0" style={{ fontSize: 36, fontWeight: 200 }}><%= @products.count %></span>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 <% end %>
 
 <%= react_component 'Apps', filter: params[:filter], topics: (['saas', 'mobile'].map{|slug|
