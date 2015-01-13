@@ -3,12 +3,13 @@ var App = require('./app.js.jsx')
 
 var filters = [
   ['mine', 'My Apps'],
-  ['trending', 'Trending']
+  ['live', 'Live'],
+  ['trending', 'Trending'],
+  ['new', 'New'],
 ]
 
 var Apps = React.createClass({
   render: function() {
-
     var apps = _(this.state.apps).partition(a => a.try_url)
 
     tryable = apps[0]
@@ -24,6 +25,7 @@ var Apps = React.createClass({
                     <a href={"/apps?filter=" + f[0]}>{f[1]}</a>
                   </li>
                 )}
+                {this.renderTopics()}
               </ul>
             </div>
 
@@ -40,15 +42,15 @@ var Apps = React.createClass({
         {this.renderAppsList(tryable)}
 
         <div className="col col-6 pr2 pb2">
-          <a href="#" className="big-block-button">
+          <a href={"/apps?filter=" + this.props.topics[0].slug} className="big-block-button">
             <div className="h7">Top Trending</div>
-            Design Ideas
+            {this.props.topics[0].hero_title}
           </a>
         </div>
         <div className="col col-6 pl2 pb2">
-          <a href="#" className="big-block-button">
+          <a href={"/apps?filter=" + this.props.topics[1].slug} className="big-block-button">
             <div className="h7">Top Trending</div>
-            Mobile Product Ideas
+            {this.props.topics[1].hero_title}
           </a>
         </div>
 
@@ -65,6 +67,20 @@ var Apps = React.createClass({
         </div>
       )}
     </div>
+  },
+
+  renderTopics: function() {
+    return <li className="dropdown">
+      <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+        Topics <span className="caret"></span>
+      </a>
+      <ul className="dropdown-menu" role="menu">
+        {_(this.props.topics).map(f => <li>
+          <a href={"/apps?filter=" + f.slug}>{f.name}</a>
+          </li>
+        )}
+      </ul>
+    </li>
   },
 
   getInitialState: function() {

@@ -2,4 +2,27 @@
 
 <%= render 'shared/navbar' %>
 
-<%= react_component 'Apps', filter: params[:filter]  %>
+<% if ['saas', 'mobile'].include?(params[:filter]) %>
+  <section class="_hero hero-ideas">
+    <div class="container">
+      <div class="header">
+        <img src="../assets/ideas/ideas-header-morse.png">
+      </div>
+      <div class="main">
+        <h1>
+          <%= t "#{params[:filter]}.hero_title", scope: :showcases %>
+        </h1>
+      </div>
+      <div class="footer">
+        <p>
+          <%= t "#{params[:filter]}.description", scope: :showcases %>
+        </p>
+      </div>
+    </div>
+  </section>
+<% end %>
+
+<%= react_component 'Apps', filter: params[:filter], topics: (['saas', 'mobile'].map{|slug|
+      I18n.t(slug, scope: :showcases).merge(slug: slug)
+    })
+%>
