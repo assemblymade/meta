@@ -1,5 +1,5 @@
 (function() {
-  var Avatar = require('../components/avatar.js.jsx');
+  var Avatar = require('../components/ui/avatar.js.jsx');
   var PeoplePageMixin = {
     avatar: function(user) {
       if (!user) {

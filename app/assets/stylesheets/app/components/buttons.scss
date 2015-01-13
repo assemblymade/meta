@@ -280,3 +280,40 @@ button, .button {
     }
   }
 }
+
+
+// --
+
+.button {
+  border: none;
+  outline: none;
+}
+
+.button-primary {
+  background-color: $green;
+
+//  (chrislloyd) I prefer the gradient if there's borders + text-shadow
+  background: $green linear-gradient(transparent, rgba(black, .05));
+
+  font-weight: bold;
+  padding: .5rem 2rem;
+  color: white;
+  border-radius: 999px;
+  line-height: 2rem;
+
+  box-shadow: inset 0 0 0 1px rgba(black, .1);
+  text-shadow: 0 1px 0 rgba(black, .1);
+
+  &:hover {
+    background-color: $green-dark;
+  }
+}
+
+.button-is-disabled,
+.button-is-disabled:hover {
+  border-color: $gray-4;
+  background: $gray-5;
+  color: $gray-1;
+  text-shadow: none;
+  cursor: default;
+}

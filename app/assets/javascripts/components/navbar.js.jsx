@@ -1,67 +1,77 @@
-/** @jsx React.DOM */
+var Avatar = require('./ui/avatar.js.jsx');
+var ChatNotifications = require('./chat_notifications.js.jsx');
+var ChatNotificationsToggler = require('./chat_notifications_toggler.js.jsx');
+var DropdownMenu = require('./ui/dropdown_menu.js.jsx')
+var DropdownMixin = require('../mixins/dropdown_mixin.js.jsx')
+var DropdownNotifications = require('./dropdown_notifications.js.jsx');
+var DropdownNotificationsToggler = require('./dropdown_notifications_toggler.js.jsx');
+var TitleNotificationsCount = require('./title_notifications_count.js.jsx');
 
-(function() {
-  var Avatar = require('./avatar.js.jsx');
-  var ChatNotifications = require('./chat_notifications.js.jsx');
-  var ChatNotificationsToggler = require('./chat_notifications_toggler.js.jsx');
-  var DropdownNotifications = require('./dropdown_notifications.js.jsx');
-  var DropdownNotificationsToggler = require('./dropdown_notifications_toggler.js.jsx');
-  var TitleNotificationsCount = require('./title_notifications_count.js.jsx');
-  var UserNavbarDropdown = require('./user_navbar_dropdown.js.jsx');
+var Navbar = React.createClass({
+  mixins: [DropdownMixin],
 
-  var Navbar = React.createClass({
+  render: function() {
+    var appUser = window.app.currentUser().attributes;
+    var user = this.props.currentUser;
+    var divStyle = {
+      padding: '11px 0 10px 7px'
+    };
 
-    render: function() {
-      var appUser = window.app.currentUser().attributes;
-      var user = this.props.currentUser;
-      var divStyle = {
-        padding: '11px 0 10px 7px'
-      };
-      return (
-        <ul className="list-reset">
-          <li className="hidden">
-            <TitleNotificationsCount />
-          </li>
+    var userDropdownMenu = null;
+    if (this.isDropdownOpen()) {
+      userDropdownMenu = (
+        <DropdownMenu position="right" key="user dropdown menu">
+          <DropdownMenu.Item label="Profile" icon="user" action={this.props.userPath} />
+          <DropdownMenu.Item label="Balance" icon="wallet" action={this.props.balancePath} />
+          <DropdownMenu.Item label="Settings" icon="settings" action={this.props.editUserPath} />
 
-          <li className="left navbar-item-muted sm-show">
-            <ChatNotificationsToggler
-              icon="comment"
-              href='#notifications'
-              label='Chat' />
+          <DropdownMenu.Divider />
 
-            <ChatNotifications
-                url={this.props.chatPath}
-                username={appUser.username} />
-          </li>
-
-          <li className="left navbar-item-muted sm-show">
-            <DropdownNotificationsToggler
-                icon="bell"
-                href='#stories'
-                label='Notifications' />
-
-            <DropdownNotifications
-                url={this.props.notificationsPath}
-                username={appUser.username}
-                editUserPath={this.props.editUserPath} />
-          </li>
-
-          <li className="left dropdown hidden-xs">
-            <a href='javascript:void(0);' className="block dropdown-toggle px1" style={divStyle} data-toggle='dropdown' key={'navbar dropdown'}>
-              <Avatar user={appUser} size="27" />
-              <span className="visible-xs-inline ml1">{appUser.username}</span>
-            </a>
-
-            <UserNavbarDropdown {...this.props} />
-          </li>
-        </ul>
-      );
+          <DropdownMenu.Item label="Log out" icon="logout" action={this.props.destroyUserSessionPath} method="delete" />
+        </DropdownMenu>
+      )
     }
-  });
 
-  if (typeof module !== 'undefined') {
-    module.exports = Navbar;
+    return (
+      <ul className="list-reset">
+        <li className="hidden">
+          <TitleNotificationsCount />
+        </li>
+
+        <li className="left navbar-item-muted sm-show px1">
+          <ChatNotificationsToggler
+            icon="comment"
+            href='#notifications'
+            label='Chat' />
+
+          <ChatNotifications
+              url={this.props.chatPath}
+              username={appUser.username} />
+        </li>
+
+        <li className="left navbar-item-muted sm-show px1">
+          <DropdownNotificationsToggler
+              icon="bell"
+              href='#stories'
+              label='Notifications' />
+
+          <DropdownNotifications
+              url={this.props.notificationsPath}
+              username={appUser.username}
+              editUserPath={this.props.editUserPath} />
+        </li>
+
+        <li className="left dropdown hidden-xs">
+          <a className="block dropdown-toggle px1" style={divStyle} key={'navbar dropdown'} onClick={this.toggleDropdown} href="javascript:;">
+            <Avatar user={appUser} size="27" />
+            <span className="visible-xs-inline ml1">{appUser.username}</span>
+          </a>
+          {userDropdownMenu}
+        </li>
+      </ul>
+    )
   }
 
-  window.Navbar = Navbar;
-})();
+})
+
+module.exports = window.Navbar = Navbar

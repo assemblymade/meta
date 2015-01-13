@@ -1,9 +1,14 @@
 var AppIcon = require('../app_icon.js.jsx');
 var ArchivedNewsFeedItemsStore = require('../../stores/archived_news_feed_items_store');
-var Avatar = require('../avatar.js.jsx');
+var Avatar = require('../ui/avatar.js.jsx');
+var Bounty = require('../bounty.js.jsx')
 var Comment = require('../comment.js.jsx');
+var Discussion = require('../ui/discussion.js.jsx')
 var Icon = require('../icon.js.jsx');
+var Introduction = require('../introduction.js.jsx')
+var Lightbox = require('../lightbox.js.jsx')
 var Markdown = require('../markdown.js.jsx');
+var moment = require('moment');
 var NewsFeedItemActionCreators = require('../../actions/news_feed_item_action_creators');
 var NewsFeedItemBounty = require('./news_feed_item_bounty.js.jsx');
 var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx');
@@ -13,8 +18,9 @@ var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
 var SubscriptionsStore = require('../../stores/subscriptions_store');
 var Tag = require('../tag.js.jsx');
 var Tile = require('../tile.js.jsx');
+var Update = require('../update.js.jsx')
 var UserStore = require('../../stores/user_store');
-var moment = require('moment');
+
 var ONE_DAY = 24 * 60 * 60 * 1000;
 
 var NewsFeedItem = React.createClass({
@@ -210,26 +216,45 @@ var NewsFeedItem = React.createClass({
   },
 
   renderModal: function() {
-    var target = this.props.target;
+    var item = this.props
+    var product = this.props.product
+    var target = this.props.target
 
-    if (target) {
-      var onModalHidden = this.onModalHidden;
-      var modal;
+    var modalTarget;
 
-      switch (target.type) {
-      case 'task':
-        modal = NewsFeedItemBountyModal;
-        break;
-      default:
-        modal = NewsFeedItemModal;
-        break;
-      }
+    target.product = product
 
-      return React.createFactory(modal)({
-        item: this.props,
-        onHidden: onModalHidden
-      });
+    switch (target.type) {
+    case 'task':
+      modalTarget = <Bounty
+        key={target.id}
+        bounty={target}
+        noInvites={true}
+        item={item}
+        showCoins={product.slug !== 'meta'}
+        editCoins={false} />
+      break
+    case 'post':
+      modalTarget = <Update update={target}
+                            item={item}
+                            newsFeedItem={item}
+                            productSlug={product.slug} />
+      break
+    case 'team_membership':
+      modalTarget = <Introduction {...item} />
+      break
+    default:
+      modalTarget = <NewsFeedItem {...item}
+                                  commentable={false}
+                                  enableModal={false}
+                                  productPage={true}
+                                  showAllComments={false} />
+      break
     }
+
+    return <Lightbox onHidden={this.onModalHidden} showControlledOuside={true} size="modal-lg">
+      <Discussion target={modalTarget} newsFeedItem={item} />
+    </Lightbox>
   },
 
   renderSource: function() {

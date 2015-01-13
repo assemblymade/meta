@@ -170,8 +170,13 @@ var NewsFeedItemComments = React.createClass({
   },
 
   render: function() {
+    var cs = React.addons.classSet({
+      'px3': !this.props.showAllComments,
+      'px2 _mq-600_px4': this.props.showAllComments
+    })
+
     return (
-      <div className="_pl2 _pr3 _mq-600_px2 _mq-600_pr4">
+      <div className={cs}>
         {this.renderComments()}
         {this.renderNewCommentForm()}
       </div>
@@ -318,7 +323,7 @@ var NewsFeedItemComments = React.createClass({
 
   renderRuler: function() {
     if (this.state.comments.length > 0) {
-      return <hr className="mb0 mt3 border-gray-5 _mrn3 _mln3" />;
+      return <hr className="mb0 mt3 border-gray-5 _mrn4 _mln4" />;
     }
   },
 

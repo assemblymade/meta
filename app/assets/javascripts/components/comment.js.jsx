@@ -1,7 +1,7 @@
 // TODO asset pipelined (chrislloyd)
 // var marked = require('marked')
 
-var Avatar = require('./avatar.js.jsx');
+var Avatar = require('./ui/avatar.js.jsx');
 var CommentActionCreators = require('../actions/comment_action_creators');
 var CommentStore = require('../stores/comment_store');
 var Icon = require('./icon.js.jsx');
@@ -134,7 +134,7 @@ module.exports = React.createClass({
         {this.renderTimestamp()}
 
         <div className={classes}>
-          <Markdown content={body} normalized={true} />
+          <Markdown content={body} normalized={true} wideQuotes={true} />
         </div>
 
         <div className="inline-block _pt0_5">

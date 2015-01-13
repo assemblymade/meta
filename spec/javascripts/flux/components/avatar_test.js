@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 
-jest.dontMock(pathToFile('components/avatar.js.jsx'));
+jest.dontMock(pathToFile('components/ui/avatar.js.jsx'));
 
 describe('Avatar', function() {
-  var Avatar = require(pathToFile('components/avatar.js.jsx'));
+  var Avatar = require(pathToFile('components/ui/avatar.js.jsx'));
 
   it('renders a default avatar', function() {
     var avatar = TestUtils.renderIntoDocument(
