@@ -74,7 +74,7 @@ module MarkdownHelper
   end
 
   def html_whitelist
-    whitelist = HTML::Pipeline::SanitizationFilter::WHITELIST
+    whitelist = HTML::Pipeline::SanitizationFilter::WHITELIST.dup
     whitelist[:elements] << 'iframe'
     whitelist[:attributes]['iframe'] = %w(src webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder)
     whitelist
