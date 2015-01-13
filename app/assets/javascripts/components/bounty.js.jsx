@@ -9,6 +9,8 @@ var Trackable = require('./trackable.js.jsx')
 var routes = require('../routes')
 var SubscriptionsStore = require('../stores/subscriptions_store')
 var TextPost = require('./ui/text_post.js.jsx')
+var ToggleButton = require('./toggle_button.js.jsx')
+var InviteFriendBounty = require('./invite_friend_bounty.js.jsx')
 
 // TODO (chrislloyd) hack to get it loading
 var Discussion = require('./ui/discussion.js.jsx')
