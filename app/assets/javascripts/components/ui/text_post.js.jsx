@@ -29,8 +29,8 @@ module.exports = React.createClass({
     }
 
     return (
-      <div>
-        <div className="mb3 h6 mt0 mb0 visible-hover-wrapper">
+      <div className="visible-hover-wrapper">
+        <div className="mb3 h6 mt0 mb0">
           <AvatarWithUsername user={this.props.author} size={18} />
           {' '}
           <span className="gray-2 visible-hover">posted {moment(this.props.timestamp).fromNow()}</span>
