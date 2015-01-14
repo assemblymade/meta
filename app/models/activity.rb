@@ -52,8 +52,12 @@ class Activity < ActiveRecord::Base
     (subject_type == 'Event' || subject_type == 'NewsFeedItemComment') ? target : subject
   end
 
+  def track_analytics?
+    !actor.try(:staff?)
+  end
+
   def track_in_segment
-    return if actor.try(:staff?)
+    return if !track_analytics?
 
     TrackActivityCreated.perform_async(self.id)
   end
