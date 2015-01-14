@@ -3,6 +3,7 @@ class Proposal < ActiveRecord::Base
   belongs_to :user
   has_many :choices
   has_many :vestings
+  has_one :news_feed_item, foreign_key: 'target_id'
 
   def contracts
     if self.contract_type == "vesting"

@@ -4,11 +4,15 @@
 
 <%= render 'people/nav' %>
 
-<% nfi = NewsFeedItemSerializer.new(@post.news_feed_item) %>
-<div data-react-class="NewsFeedItem" data-react-props="<%= nfi.as_json.merge({
-commentable: true,
-enableModal: false,
-productPage: true,
-rows: 2,
-showAllComments: true
-}).to_json %>"></div>
+<% content_for :javascript do %>
+  <script>
+
+
+    var discussionElement = React.createElement(Discussion, {
+      target: updateElement
+
+    })
+
+    React.render(discussionElement, document.getElementById('discussion-el'))
+  </script>
+<% end %>
