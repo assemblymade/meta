@@ -1,4 +1,4 @@
-var Avatar = require('../ui/avatar.js.jsx');
+var Avatar = require('../avatar.js.jsx');
 var NewsFeedItemModalMixin = require('../../mixins/news_feed_item_modal_mixin');
 
 module.exports = React.createClass({

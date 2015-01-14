@@ -64,14 +64,6 @@ Heart.blueprint do
   heartable { NewsFeedItem.make! }
 end
 
-Idea.blueprint do
-  user
-  body { Faker::Lorem.paragraphs(2).join }
-  name { Faker::Company.name }
-  news_feed_item { NewsFeedItem.make! }
-  greenlit_at { nil }
-end
-
 Milestone.blueprint do
   user
   product

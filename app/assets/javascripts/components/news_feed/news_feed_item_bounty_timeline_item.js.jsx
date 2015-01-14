@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var Avatar = require('../ui/avatar.js.jsx');
+var Avatar = require('../avatar.js.jsx');
 
 module.exports = React.createClass({
   displayName: 'NewsFeedItemBountyTimelineItem',

@@ -307,7 +307,6 @@ ActiveRecord::Schema.define(version: 20150108190148) do
     t.datetime "updated_at"
     t.float    "score",                         default: 0.0
     t.datetime "last_score_update",             default: '2013-06-06 00:00:00'
-    t.datetime "greenlit_at"
   end
 
   create_table "integrations", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|

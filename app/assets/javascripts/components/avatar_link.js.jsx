@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  var Avatar = require('./ui/avatar.js.jsx')
+  var Avatar = require('./avatar.js.jsx')
   var UserLink = require('./user_link.js.jsx')
 
   var AvatarLink = React.createClass({

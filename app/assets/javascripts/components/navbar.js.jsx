@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 (function() {
-  var Avatar = require('./ui/avatar.js.jsx');
+  var Avatar = require('./avatar.js.jsx');
   var ChatNotifications = require('./chat_notifications.js.jsx');
   var ChatNotificationsToggler = require('./chat_notifications_toggler.js.jsx');
   var DropdownNotifications = require('./dropdown_notifications.js.jsx');

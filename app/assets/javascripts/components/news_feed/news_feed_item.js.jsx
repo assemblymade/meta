@@ -1,6 +1,6 @@
 var AppIcon = require('../app_icon.js.jsx');
 var ArchivedNewsFeedItemsStore = require('../../stores/archived_news_feed_items_store');
-var Avatar = require('../ui/avatar.js.jsx');
+var Avatar = require('../avatar.js.jsx');
 var Comment = require('../comment.js.jsx');
 var Icon = require('../icon.js.jsx');
 var Markdown = require('../markdown.js.jsx');
@@ -12,7 +12,7 @@ var NewsFeedItemModal = require('./news_feed_item_modal.js.jsx');
 var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
 var SubscriptionsStore = require('../../stores/subscriptions_store');
 var Tag = require('../tag.js.jsx');
-var Tile = require('../ui/tile.js.jsx');
+var Tile = require('../tile.js.jsx');
 var UserStore = require('../../stores/user_store');
 var moment = require('moment');
 var ONE_DAY = 24 * 60 * 60 * 1000;

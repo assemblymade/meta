@@ -2,7 +2,7 @@
 
 // TODO This could be used for Wip/Task/Bounty comments also (bshyong)
 
-var Avatar = require('../ui/avatar.js.jsx')
+var Avatar = require('../avatar.js.jsx')
 var Markdown = require('../markdown.js.jsx')
 var Love = require('../love.js.jsx')
 
