@@ -121,6 +121,9 @@ class Activity < ActiveRecord::Base
     find_product
   end
 
+  def engagement?
+    false
+  end
 
   # private
   def set_product_id
