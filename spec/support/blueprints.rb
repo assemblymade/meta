@@ -6,7 +6,7 @@ Activity.blueprint do
   target   { Event::Comment.make! }
 end
 
-Activities::Start.blueprint do
+Activities::Post.blueprint do
   subject  { Task.make! }
   actor    { User.make! }
   target   { Event::Comment.make! }
@@ -110,7 +110,7 @@ end
 Story.blueprint do
   verb          { 'Start' }
   subject_type  { 'Discussion' }
-  activities    { [Activities::Start.make!(subject: Discussion.make!)] }
+  activities    { [Activities::Post.make!(subject: Discussion.make!)] }
 end
 
 Task.blueprint do

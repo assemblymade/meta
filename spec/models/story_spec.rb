@@ -11,7 +11,7 @@ describe Story do
     it 'should be the product if that is the target' do
       product.followers << follower
 
-      activity = Activities::Start.make!(subject: task, target: product)
+      activity = Activities::Post.make!(subject: task, target: product)
       story = Story.create!(
         verb: activity.verb,
         subject_type: activity.verb_subject,
@@ -24,12 +24,12 @@ describe Story do
       nfi.followers << follower
       nfi.comments.create!(user: follower, body: 'sup')
 
-      story = Story.make!(activities: [Activities::Start.make!(target: task)])
+      story = Story.make!(activities: [Activities::Post.make!(target: task)])
       expect(story.reader_ids).to include(follower.id)
     end
 
     it 'should not publish a story by a flagged user' do
-      activity = Activities::Start.make!(subject: task, target: product, actor: flagged)
+      activity = Activities::Post.make!(subject: task, target: product, actor: flagged)
 
       expect(Story.should_publish?(activity)).to eq(false)
     end
