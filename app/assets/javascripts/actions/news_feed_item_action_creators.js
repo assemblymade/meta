@@ -32,6 +32,10 @@ var NewsFeedItemActionCreators = {
       productSlug,
       itemId
     );
+  },
+
+  retrieve: function() {
+    retrieve();
   }
 };
 
@@ -97,6 +101,22 @@ function unsubscribe(productSlug, itemId) {
   });
 
   subscribeRequest(itemId, action, url);
+}
+
+function retrieve() {
+  var action = ActionTypes.NEWS_FEED_ITEM_RECEIVE;
+  var url = '/news_feed_items.json'
+
+  $.ajax({
+    url: url,
+    method: 'GET',
+    json: true,
+    success: function(data) {
+    },
+    error: function(jqXhr, textStatus, error) {
+      console.log(error);
+    }
+  })
 }
 
 module.exports = NewsFeedItemActionCreators;

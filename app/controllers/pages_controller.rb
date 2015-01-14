@@ -19,16 +19,34 @@ class PagesController < ApplicationController
   end
 
   def interests
-    @curated_marks = CuratedMark.all
   end
 
   def suggestions
-    mark_names = params[:tags].map(&:downcase)
+    if params[:tags].present?
+      mark_names = params[:tags].map(&:downcase)
+      marks = Mark.where(name: mark_names)
+      vector = marks.pluck(:id).map { |id| [id, 1] }
+      vectors = [vector] + vector.map { |v| [v] }
+
+      wip_vectors = QueryMarks.new.get_all_wip_vectors
+    end
+
     current_user.user_identity.marks << (Mark.where(name: mark_names) - current_user.user_identity.marks)
 
-    wip_vectors = QueryMarks.new.get_all_wip_vectors
-    QueryMarks.new.assign_top_bounties_for_user(10, current_user, wip_vectors)
+    @popular = Product.find_by(slug: 'coderwall')
 
-    @bounties = current_user.top_bountys.includes(:wip).map(&:wip)
+    @specific = Product.find_by(slug: 'helpful')
+
+    @ideas = Idea.limit(3)
+  end
+end
+
+class TaskGroup < Struct.new(:marks, :tasks)
+  def title
+    if marks.one?
+      "Because you selected \"#{marks.first.name.upcase}\""
+    else
+      "Special for you"
+    end
   end
 end

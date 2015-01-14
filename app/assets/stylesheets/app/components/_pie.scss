@@ -1,0 +1,83 @@
+.pie-container {
+  position: relative;
+  left: -10px;
+  float: left;
+  width: 30px;
+  margin-top: -2px;
+  margin-left: -40px;
+}
+
+.pie {
+  position: absolute;
+  width: 15px;
+  height: 30px;
+  overflow: hidden;
+  left: 22.5px;
+
+  @include transform-origin(left center);
+}
+
+.pie.big {
+  width: 30px;
+  height: 30px;
+  left: 7.5px;
+
+  @include transform-origin(center center);
+}
+
+.pie:before {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 30px;
+  left: -15px;
+  border-radius: 15px 0 0 15px;
+
+  @include transform-origin(right center);
+}
+
+.pie.big:before {
+  left: 0px;
+}
+
+.pie.big:after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 30px;
+  left: 15px;
+  border-radius: 0 15px 15px 0;
+}
+
+.pie:nth-of-type(1):BEFORE,
+.pie:nth-of-type(1):AFTER {
+  background-color: darken($blue, 25%);
+}
+.pie:nth-of-type(2):AFTER,
+.pie:nth-of-type(2):BEFORE {
+  background-color: darken($blue, 5%);
+}
+
+.pie[data-start="120"] {
+  transform: rotate(120deg);
+}
+
+.pie[data-start="240"] {
+  transform: rotate(240deg);
+}
+
+.pie[data-start="360"] {
+  transform: rotate(360deg);
+}
+
+.pie[data-value="0"]:before {
+  transform: rotate(0deg);
+}
+
+.pie[data-value="120"]:before {
+  transform: rotate(120deg);
+}
+
+.pie[data-value="240"]:before {
+  transform: rotate(240deg);
+}

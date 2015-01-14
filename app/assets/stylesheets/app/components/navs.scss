@@ -210,3 +210,37 @@
     }
   }
 }
+
+.new-nav {
+  list-style: none;
+  padding-left: 0;
+}
+
+.new-nav-item {
+}
+
+.new-nav-item a {
+  color: $gray-1;
+  display: block;
+  padding: 6px 12px;
+
+  &:hover {
+    background-color: $gray-5;
+    border-radius: $border-radius-base;
+  }
+}
+
+.new-nav-item-is-active a {
+  color: $black;
+  font-weight: bold;
+}
+
+.new-nav-item-badge:before {
+  background-color: $green;
+  border-radius: 50%;
+  content: '';
+  display: inline-block;
+  height: 9px;
+  margin-left: 6px;
+  width: 9px;
+}
