@@ -1,12 +1,14 @@
 var Avatar = require('../ui/avatar.js.jsx');
 var Icon = require('../icon.js.jsx');
+var IdeaContainer = require('./idea_container.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
 var Love = require('../love.js.jsx');
 var Markdown = require('../markdown.js.jsx');
 var NewsFeedItemComments = require('../news_feed/news_feed_item_comments.js.jsx');
 var ProgressBar = require('../ui/progress_bar.js.jsx');
-var RelatedIdeas = require('./related_ideas.js.jsx');
+var StartConversationModal = require('./start_conversation_modal.js.jsx');
+var StartConversationModalStore = require('../../stores/start_conversation_modal_store');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
 
 var IdeaShow = React.createClass({
@@ -23,21 +25,30 @@ var IdeaShow = React.createClass({
 
   componentDidMount: function() {
     IdeaStore.addChangeListener(this.onIdeaChange);
+    StartConversationModalStore.addChangeListener(this.onModalChange);
   },
 
   componentWillUnmount: function() {
     IdeaStore.removeChangeListener(this.onIdeaChange);
+    StartConversationModalStore.removeChangeListener(this.onModalChange);
   },
 
   getInitialState: function() {
     return {
-      idea: IdeaStore.getIdea()
+      idea: IdeaStore.getIdea(),
+      startConversationModalShown: StartConversationModalStore.isModalShown()
     };
   },
 
   onIdeaChange: function() {
     this.setState({
       idea: IdeaStore.getIdea()
+    });
+  },
+
+  onModalChange: function() {
+    this.setState({
+      startConversationModalShown: StartConversationModalStore.isModalShown()
     });
   },
 
@@ -72,39 +83,12 @@ var IdeaShow = React.createClass({
           </div>
         </div>
 
-        <div className="container">
-          <div className="clearfix mxn2 py3">
-            <div className="col col-8 px2">
-              <h4 className="mt2 mb2">
-                <a href="/ideas"
-                    className="bold"
-                    onClick={navigate.bind(null, '/ideas')}>
-                    &#8592; All app ideas
-                </a>
-              </h4>
-            </div>
-
-            <div className="col col-4 px2">
-              <h5 className="mt2 mb2">Related app ideas</h5>
-            </div>
-          </div>
-
-          <div className="clearfix mxn2">
-            <div className="col col-8 px2">
-              {/*
-                * It looks like we're removing borders from .card.
-                * If that's the case, remove this inline style and set it
-                * in the stylesheet
-                */}
-              <div className="idea-item card" style={{ border: 'none' }}>
-                {this.renderHeader()}
-                {this.renderBody()}
-              </div>
-            </div>
-
-            <RelatedIdeas />
-          </div>
-        </div>
+        <IdeaContainer navigate={navigate}>
+          {this.renderHeader()}
+          {this.renderBody()}
+        </IdeaContainer>
+        <StartConversationModal idea={idea}
+          modalShown={this.state.startConversationModalShown} />
       </main>
     );
   },

@@ -16,6 +16,7 @@ var IdeasApp = React.createClass({
   componentWillUnmount: function() {
     IdeasRoutesStore.removeChangeListener(this.getComponentAndContext);
     IdeasRouter.stop();
+    pace.stop();
   },
 
   getComponentAndContext: function() {

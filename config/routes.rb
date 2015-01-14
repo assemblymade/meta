@@ -45,7 +45,7 @@ ASM::Application.routes.draw do
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
   get '/interests'        => 'pages#interests',   as: :interests
   get '/suggestions'      => 'pages#suggestions', as: :suggestions
-  get '/ideas/new'        => 'ideas#new_ideas',   as: :new_ideas
+  # get '/ideas/new_ideas'  => 'ideas#new_ideas',   as: :new_ideas
 
 
   # Readraptor proxy. Remove this when javascript clients can talk directly to RR

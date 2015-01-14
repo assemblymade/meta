@@ -85,6 +85,10 @@ var TypeaheadUserTextArea = React.createClass({
     this.setState(newState);
 
     NewCommentActionCreators.updateComment(this.props.thread, value);
+
+    if (this.props.onChange) {
+      this.props.onChange(e);
+    }
   },
 
   findCaretCoords: function() {

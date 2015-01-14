@@ -140,10 +140,10 @@
       DISCUSSION_RECEIVE: null,
 
       IDEA_RECEIVE: null,
-      IDEAS_RECEIVE: null,
 
+      IDEAS_RECEIVE: null,
       IDEAS_ROUTE_CHANGED: null,
-      IDEAS_ROUTE_CHANGING: null,
+      IDEAS_NEW_IDEA_CREATED: null,
 
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,
@@ -189,6 +189,9 @@
       RELATED_IDEAS_RECEIVE: null,
 
       RR_RECEIVE_READ_RECEIPTS: null,
+
+      START_CONVERSATION_MODAL_HIDDEN: null,
+      START_CONVERSATION_MODAL_SHOWN: null,
 
       STORY_ACKNOWLEDGE_STORIES: null,
       STORY_RECEIVE_STORIES: null,

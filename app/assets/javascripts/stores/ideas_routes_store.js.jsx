@@ -15,10 +15,6 @@ class IdeasRoutesStore extends Store {
           _setData(action)
           this.emitChange()
           break
-        case ActionTypes.IDEAS_ROUTE_CHANGING:
-          _setScrim(action)
-          this.emitChange()
-          break
       }
     })
   }
@@ -37,20 +33,4 @@ module.exports = new IdeasRoutesStore()
 function _setData(action) {
   currentComponent = action.component || currentComponent
   currentContext = action.context || currentContext
-}
-
-function _setScrim(action) {
-  var Scrim = action.component
-  var Component = currentComponent
-
-  currentComponent = React.createClass({
-    displayName: 'TempComponent',
-    render() {
-      return (
-        <Scrim>
-          {Component ? <Component {...this.props} /> : null}
-        </Scrim>
-      );
-    }
-  })
 }

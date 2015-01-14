@@ -6,6 +6,17 @@ class IdeasController < ApplicationController
 
   IDEAS_PER_PAGE = 12
 
+  def create
+    @idea = Idea.create_with_discussion(current_user, idea_params)
+    if @idea.valid?
+      @idea.add_marks(params[:idea][:tag_list])
+
+      respond_with @idea
+    else
+      render :new
+    end
+  end
+
   def index
     ideas = FilterIdeasQuery.call(filter_params)
     total_pages = (ideas.count / IDEAS_PER_PAGE.to_f).ceil
@@ -27,8 +38,13 @@ class IdeasController < ApplicationController
     })
   end
 
-  def new_ideas
-    render 'new_ideas', layout: nil
+  def new
+    respond_with({
+      related_ideas: ActiveModel::ArraySerializer.new(
+        Idea.take(2),
+        each_serializer: IdeaSerializer
+      )
+    })
   end
 
   def show
@@ -60,20 +76,6 @@ class IdeasController < ApplicationController
     })
   end
 
-  def new
-    @idea = Idea.new
-  end
-
-  def create
-    @idea = current_user.ideas.create(idea_params)
-    if @idea.valid?
-      @idea.add_marks(params[:idea][:tag_list])
-      redirect_to @idea
-    else
-      render :new
-    end
-  end
-
   def edit
     find_idea!
     authorize! :update, @idea
@@ -100,7 +102,7 @@ class IdeasController < ApplicationController
   end
 
   def idea_params
-    params.require(:idea).permit([:name, :body])
+    params.require(:idea).permit([:name, :body, :founder_preference])
   end
 
   def filter_params

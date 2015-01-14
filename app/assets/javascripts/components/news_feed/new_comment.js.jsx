@@ -105,10 +105,6 @@ var NewsFeedItemNewComment = React.createClass({
     };
   },
 
-  onChange: function(e) {
-    NewCommentActionCreators.updateComment(this.props.thread, e.target.value);
-  },
-
   onDragEnter: function(e) {
     if (this._dragCollection.length === 0) {
       this.setState({
@@ -129,30 +125,12 @@ var NewsFeedItemNewComment = React.createClass({
     }
   },
 
-  onKeyDown: function(e) {
+  onKeyboardInteraction: function(e) {
     if (this.props.hideButtons) {
       return;
     }
 
-    if ((e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      this.submitComment(e);
-    }
-  },
-
-  onKeyPress: function(e) {
-    if (this.props.hideButtons) {
-      return;
-    }
-
-    if ((e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      this.submitComment(e);
-    }
+    _handleKeyboardInteraction(e, this.submitComment);
   },
 
   render: function() {
@@ -195,9 +173,8 @@ var NewsFeedItemNewComment = React.createClass({
                   ref="textarea"
                   type="text"
                   className={textareaClasses}
-                  onChange={this.onChange}
-                  onKeyDown={this.onKeyDown}
-                  onKeyPress={this.onKeyPress}
+                  onKeyDown={this.onKeyboardInteraction}
+                  onKeyPress={this.onKeyboardInteraction}
                   rows={this.state.rows}
                   defaultValue={this.state.text}
                   placeholder={this.props.placeholder} />
@@ -331,6 +308,15 @@ function _dependsOn(dependency, type) {
       }
     }
   };
+}
+
+function _handleKeyboardInteraction(e, callback) {
+  if ((e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    callback(e);
+  }
 }
 
 function _reach(obj, prop) {

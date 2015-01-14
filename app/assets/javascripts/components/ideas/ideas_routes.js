@@ -4,10 +4,18 @@ var ActionTypes = CONSTANTS.ActionTypes
 
 var routes = [
   ['/ideas', require('./ideas_index.js.jsx'), _showIdeas],
+  ['/ideas/new', require('./ideas_new.js.jsx'), _showCreateIdea],
   ['/ideas/:id', require('./idea_show.js.jsx'), _showIdea]
 ];
 
 module.exports = routes;
+
+function _showCreateIdea(data) {
+  Dispatcher.dispatch({
+    type: ActionTypes.RELATED_IDEAS_RECEIVE,
+    relatedIdeas: data.related_ideas
+  });
+}
 
 function _showIdeas(data) {
   var ideas = data.ideas;

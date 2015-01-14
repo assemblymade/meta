@@ -53,6 +53,57 @@ exports.idea_comment_path = function(options){
   }
 }
 
+exports.ideas_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/ideas?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/ideas'
+  } else {
+    var params = options;
+    return '/ideas'
+  }
+}
+
+exports.new_idea_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/ideas/new?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/ideas/new'
+  } else {
+    var params = options;
+    return '/ideas/new'
+  }
+}
+
+exports.idea_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/ideas/' + params.id + '?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/ideas/' + params.id + ''
+  } else {
+    var params = options;
+    return '/ideas/' + params.id + ''
+  }
+}
+
 exports.user_path = function(options){
   if (options && options.data) {
     var op_params = []

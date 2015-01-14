@@ -39,21 +39,8 @@ var IdeasIndex = React.createClass({
 
   getInitialState: function() {
     return {
-      ideas: IdeasStore.getIdeas(),
-      modalShown: false
-    }
-  },
-
-  onAddIdeaClick: function() {
-    this.setState({
-      modalShown: true
-    });
-  },
-
-  onModalHidden: function() {
-    this.setState({
-      modalShown: false
-    });
+      ideas: IdeasStore.getIdeas()
+    };
   },
 
   render: function() {
@@ -134,7 +121,6 @@ var IdeasIndex = React.createClass({
             </Footer>
           </div>
         </section>
-        <NewIdeaModal modalShown={this.state.modalShown} onHidden={this.onModalHidden} />
       </main>
     );
   },
@@ -150,7 +136,9 @@ var IdeasIndex = React.createClass({
             <h1>
               The best product ideas &mdash; built by all of us.
             </h1>
-            <button type="button" className="_button pill theme-green shadow text-shadow border" onClick={this.onAddIdeaClick}>
+            <button type="button"
+                className="_button pill theme-green shadow text-shadow border"
+                onClick={this.props.navigate.bind(null, '/ideas/new')}>
               <span className="title">Add your product idea</span>
             </button>
           </div>

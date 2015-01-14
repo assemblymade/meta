@@ -23,7 +23,7 @@ var CommentActionCreators = {
   submitComment: function(commentId, commentBody, commentUrl) {
     var timestamp = Date.now();
     var user = UserStore.getUser();
-
+    console.log(arguments);
     Dispatcher.dispatch({
       type: ActionTypes.NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT,
       commentId: commentId,

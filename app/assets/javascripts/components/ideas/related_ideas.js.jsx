@@ -26,7 +26,7 @@ var RelatedIdeas = React.createClass({
 
   render: function() {
     return (
-      <div className="col col-4 px2">
+      <div>
         {this.renderIdeaTiles()}
       </div>
     );

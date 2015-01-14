@@ -16,7 +16,6 @@ class Idea < ActiveRecord::Base
   validates :name, presence: true,
                    length: { minimum: 2, maximum: 255 }
 
-  after_commit :push_to_news_feed, on: :create
   after_commit :update_news_feed_item
 
   scope :trending, -> { order(score: :desc) }
@@ -37,6 +36,14 @@ class Idea < ActiveRecord::Base
       :name,
       [:creator_username, :name],
     ]
+  end
+
+  def self.create_with_discussion(user, idea_params)
+    transaction do
+      idea = user.ideas.create(idea_params)
+      idea.push_to_news_feed
+      idea
+    end
   end
 
   # this is for heart emails, but I think any 'thread' should have a title

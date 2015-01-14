@@ -1,6 +1,8 @@
 <% title "Submit an Idea" %>
-<style>body { background-color: white !important; }</style>
-<h1 class="mt1">Submit your idea</h1>
+<% activate_nav! :ideas %>
 
-<%= render 'form', idea: @idea %>
+<%= render 'shared/navbar' %>
 
+<%= react_component 'IdeasApp', {} %>
+
+<%= render 'shared/footer' %>
