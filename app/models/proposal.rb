@@ -5,6 +5,9 @@ class Proposal < ActiveRecord::Base
   has_many :vestings
   has_one :news_feed_item, foreign_key: 'target_id'
 
+  after_commit :push_to_news_feed, on: :create
+  after_commit :update_news_feed_item
+
   def contracts
     if self.contract_type == "vesting"
       self.vestings
@@ -90,6 +93,16 @@ class Proposal < ActiveRecord::Base
       s = "#{days} days left to vote"
     end
     s
+  end
+
+  def push_to_news_feed
+    NewsFeedItem.create_with_target(self)
+  end
+
+  def update_news_feed_item
+    if self.news_feed_item
+      self.news_feed_item.update(updated_at: Time.now)
+    end
   end
 
 end

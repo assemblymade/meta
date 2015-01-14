@@ -1,18 +1,26 @@
-<% title 'Proposals' %>
-<% activate_nav! :people %>
-<% activate_nav! :people_governance %>
-
-<%= render 'people/nav' %>
-
-<% content_for :javascript do %>
-  <script>
-
-
-    var discussionElement = React.createElement(Discussion, {
-      target: updateElement
-
-    })
-
-    React.render(discussionElement, document.getElementById('discussion-el'))
+<html>
+<head>
+  <title>Hello React</title>
+  <script src="http://fb.me/react-0.12.2.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.12.2.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+</head>
+<body>
+  <div id="content"></div>
+  <script type="text/jsx">
+      var CommentBox = React.createClass({
+        render: function() {
+          return (
+            <div className="commentBox">
+            Hello, world! I am a CommentBox.
+            </div>
+          );
+        }
+      });
+      React.render(
+        <CommentBox />,
+        document.getElementById('content')
+      );
   </script>
-<% end %>
+</body>
+</html>

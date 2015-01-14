@@ -4,11 +4,13 @@
 <div id="discussion-el"></div>
 <% content_for :javascript do %>
   <script>
+    var proposal_element = React.createElement(Proposal)
+
     var updateElement = React.createElement(Update, <%= {
-      productSlug: @post.product.slug,
-      update: PostSerializer.new(@post),
-      newsFeedItem: NewsFeedItemSerializer.new(@post.news_feed_item)
-    }.to_json.html_safe
+        productSlug: @post.product.slug,
+        update: PostSerializer.new(@post),
+        newsFeedItem: NewsFeedItemSerializer.new(@post.news_feed_item)
+      }.to_json.html_safe
     %>)
 
     var discussionElement = React.createElement(Discussion, {
