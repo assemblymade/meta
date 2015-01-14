@@ -112,24 +112,26 @@ var DashboardPage = React.createClass({
         <div>
           {items.map(function(bounty) {
             return (
-              <Tile>
-                <div>
-                  <a className="block px3 py2 mt0 mb0 h5 fw-500 blue" href={bounty.url}>
-                    {bounty.title}
-                  </a>
-                </div>
-                <div className="px3 py2 border-top h6 mb0 mt0">
-                  <Avatar user={bounty.locker} size={18} style={{ display: 'inline-block' }} />
-                  {' '}
-                  <a href={bounty.locker.url} className="bold black">
-                    {bounty.locker.username}
-                  </a>
-                  {' '}
-                  <span className="gray-dark">
-                    has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
-                  </span>
-                </div>
-              </Tile>
+              <div className="mb2">
+                <Tile>
+                  <div>
+                    <a className="block px3 py2 mt0 mb0 h5 fw-500 blue" href={bounty.url}>
+                      {bounty.title}
+                    </a>
+                  </div>
+                  <div className="px3 py2 border-top h6 mb0 mt0">
+                    <Avatar user={bounty.locker} size={18} style={{ display: 'inline-block' }} />
+                    {' '}
+                    <a href={bounty.locker.url} className="bold black">
+                      {bounty.locker.username}
+                    </a>
+                    {' '}
+                    <span className="gray-dark">
+                      has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
+                    </span>
+                  </div>
+                </Tile>
+              </div>
             )
           })}
         </div>
