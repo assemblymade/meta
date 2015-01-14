@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108190148) do
+ActiveRecord::Schema.define(version: 20150114021512) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "uuid-ossp"
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "pg_stat_statements"
-  enable_extension "uuid-ossp"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -364,6 +364,8 @@ ActiveRecord::Schema.define(version: 20150108190148) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "markings", ["markable_id", "mark_id"], name: "index_markings_on_markable_id_and_mark_id", unique: true, using: :btree
 
   create_table "marks", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name",         limit: 255, null: false
@@ -1064,5 +1066,6 @@ ActiveRecord::Schema.define(version: 20150108190148) do
     t.datetime "created_at"
   end
 
+  add_foreign_key "markings", "marks"
   add_foreign_key "news_feed_item_comments", "news_feed_items"
 end
