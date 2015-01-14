@@ -80,4 +80,15 @@ class Proposal < ActiveRecord::Base
     self.expiration - Time.now < 0
   end
 
+  def time_left_text
+    days = ((self.expiration - Time.now)/86400).to_i
+    if days == 0
+      days = ((self.expiration - Time.now)/3600).to_i
+      s = "#{days} hours left"
+    else
+      s = "#{days} days left to vote"
+    end
+    s
+  end
+
 end

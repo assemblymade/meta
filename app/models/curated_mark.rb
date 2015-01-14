@@ -7,7 +7,7 @@ SUGGESTED_MARKS = [
       'Postgres', 'CSS', 'MongoDB', 'HTML5', 'Python', 'Backend', 'API',
       'Flask', 'DevOps', 'RethinkDB', 'ZeroMQ', 'Go', 'Bitcoin', 'Ember',
       'Clojure', 'React', 'Security'
-    ],
+    ]
   },
   {
     name: 'Design',

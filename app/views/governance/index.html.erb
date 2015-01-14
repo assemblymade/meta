@@ -48,17 +48,23 @@
             <input type="hidden" name="voter" value="<%= @current_user.id %>" />
             <input type="hidden" name="weight" value=1.0 />
             <input type="hidden" name="proposal" value= "<%= p.id %>"  />
-            <button type="submit" class="btn btn-success">
-              <span class="mr1"><%= inline_react_component 'Icon', icon: 'gavel' %></span>
-              Approve
-            </button>
+
+            <%= form_for :choice do |f| %>
+              <%= f.submit "Approve", class: "btn btn-success" %>
+            <% end %>
+
           <% else %>
             <input type="hidden" name="voter" value="<%= @current_user.id %>" />
             <input type="hidden" name="weight" value=1.0 />
             <input type="hidden" name="proposal" value= "<%= p.id %>"  />
-            <input type="submit" value="Unvote" class="btn btn-danger">
+
+            <%= form_for :choice do |f| %>
+              <%= f.submit "Unvote", class: "btn btn-danger" %>
+            <% end %>
+
           <% end %>
         </form>
+
         <% else %>
           <% if p.won? %>
           <button type="button" class="btn btn-success" disabled="disabled">

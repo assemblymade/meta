@@ -1,6 +1,5 @@
 class ChoicesController < ProductController
   respond_to :html, :json
-  skip_before_filter  :verify_authenticity_token
 
   def index
 

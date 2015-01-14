@@ -14,6 +14,7 @@ class ProposalsController < ProductController
 
   def show
     @proposal = Proposal.find(params[:id])
+    @proposal_n = Proposal.all.find_index(@proposal)+1
   end
 
 
