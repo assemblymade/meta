@@ -16,6 +16,7 @@ class Idea < ActiveRecord::Base
   validates :name, presence: true,
                    length: { minimum: 2, maximum: 255 }
 
+  after_commit :ensure_news_feed_item, on: :create
   after_commit :update_news_feed_item
 
   scope :trending, -> { order(score: :desc) }
@@ -44,6 +45,10 @@ class Idea < ActiveRecord::Base
       idea.push_to_news_feed
       idea
     end
+  end
+
+  def ensure_news_feed_item
+    push_to_news_feed if news_feed_item.nil?
   end
 
   # this is for heart emails, but I think any 'thread' should have a title
