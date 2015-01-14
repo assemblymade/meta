@@ -5,14 +5,14 @@ CURATED_MARKS = {
      'Ruby', 'Python', 'Java', '.NET', 'Go', 'PHP', 'iOS', 'Android',
      'Node', 'React', 'Bootstrap', 'Backbone', 'Ember', 'Angular'
     ],
-  'Design' => 
+  'Design' =>
     [
-      'UI/UX', 'IA', 'Mockups', 'Wireframing', 'Sketches'
+      'UI/UX', 'IA', 'Mockups', 'Wireframing', 'Sketches',
       'Branding', 'Typography', 'Illustration', 'Logo', 'Photography',
       'HTML & CSS', 'Responsive',  'Styleguide', 'Homepage', 'Theme'
    ],
   'Growth' =>
-    [ 
+    [
       'Strategy', 'Product Management', 'Monetization','Pricing', 'Naming',
       'Community', 'User Research', 'Copywriting', 'Blogging', 'Social Media',
       'BD', 'Marketing', 'Email Marketing', 'SEM', 'SEO'
