@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   has_many :proposals
   has_many :followed_products, through: :watchings, source: :watchable, source_type: Product
   has_many :followed_tags, through: :watchings, source: :watchable, source_type: Wip::Tag
+  has_many :locked_wips, class_name: 'Wip', foreign_key: 'locked_by'
   has_many :wips
   has_many :wip_workers, :class_name => 'Wip::Worker'
   has_many :wips_working_on, ->{ where(state: Task::IN_PROGRESS) }, :through => :wip_workers, :source => :wip

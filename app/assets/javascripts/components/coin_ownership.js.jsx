@@ -3,7 +3,7 @@
 var CONSTANTS = window.CONSTANTS;
 // var Dispatcher = require('../dispatcher');
 var CoinOwnershipStore = require('../stores/coin_ownership_store');
-var Avatar = require('./avatar.js.jsx');
+var Avatar = require('./ui/avatar.js.jsx');
 var PersonPicker = require('./person_picker.js.jsx');
 
 (function() {

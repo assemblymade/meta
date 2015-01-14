@@ -15,8 +15,24 @@
                 </td>
               </tr>
             </table>
-            <table>
-              <tr>
+            <table style="margin-bottom:10px;">
+              <% if @previous_events %>
+                <% @previous_events.each do |pe| %>
+                  <tr>
+                    <td class="one sub-columns">
+                      <%= image_tag(pe.user.avatar.url(60), width: 30, height: 30, class: 'img-circle') %>
+                    </td>
+                    <td>
+                      <% if product = pe.wip.product %>
+                        <%= product_markdown(product, pe.body) %>
+                      <% else %>
+                        <%= markdown(pe.body) %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+              <tr style="background:#FFF0B7;">
                 <td class="one sub-columns">
                   <%= image_tag(@event.user.avatar.url(60), width: 30, height: 30, class: 'img-circle') %>
                 </td>
@@ -27,7 +43,6 @@
                     <%= markdown(@event.body) %>
                   <% end %>
                 </td>
-
               </tr>
             </table>
 

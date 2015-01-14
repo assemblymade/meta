@@ -1,48 +1,28 @@
 class DashboardController < ApplicationController
+  before_action :authenticate_user!
+
   respond_to :html
 
-  def activity
-    authenticate_user!
-
-    @stories = NewsFeed.new(current_user).page(params[:top_id])
-    @users = @stories.map(&:activities).flatten.map(&:actor).flatten.uniq
-
-    respond_with @stories
+  def index
+    posts = NewsFeedItem.joins(:product).merge(products).for_feed.limit(20)
+    @news_feed_items = ActiveModel::ArraySerializer.new(posts).as_json
+    @bounties = current_user.locked_wips
+    @products = ActiveModel::ArraySerializer.new(suggested_products).as_json unless posts.present?
   end
 
-  def bounties
-    authenticate_user!
-
-    default_filters = {
-      user: 'assigned',
-      state: true,
-      sort: ['commented', 'awarded'].exclude?(params[:user]) && 'newest'
-    }.with_indifferent_access
-
-    filters = default_filters.merge(params.slice(:user, :state))
-    query = FilterWipsQuery.call(Task.all, current_user, filters)
-    @wips = PaginatingDecorator.new(query)
-
-    set_empty_state if @wips.empty?
-
-    respond_with @wips
-  end
-
-  def set_empty_state
-    @empty_state_link_location = discover_path
-
-    if params[:user].blank?
-      @empty_state_text = "You aren't working on any bounties"
-      @empty_state_link_text = 'Find a bounty to work on'
-    elsif params[:user] == 'started'
-      @empty_state_text = "You haven't created any bounties"
-      @empty_state_link_text = 'Find a project and create a bounty'
-    elsif params[:user] == 'commented'
-      @empty_state_text = "You haven't commented on any bounties"
-      @empty_state_link_text = 'Read the most active bounties'
-    elsif params[:user] == 'awarded'
-      @empty_state_text = "You haven't been awarded any bounties"
-      @empty_state_link_text = 'Find a bounty to work on'
+  def products
+    case params.fetch(:filter, 'all')
+    when 'all'
+      Product.public_products
+    when 'following'
+      current_user.followed_products
+    when 'interests'
+      product_ids = current_user.top_products.pluck(:product_id)
+      Product.where(id: product_ids)
     end
+  end
+
+  def suggested_products
+    Product.public_products.ordered_by_trend.limit(3)
   end
 end

@@ -130,13 +130,7 @@ var NewsFeed = React.createClass({
         style = { marginTop: '-1rem' }
       }
 
-      return (
-        <div className="row">
-          <div className="col-xs-12">
-            {this.renderItems()}
-          </div>
-        </div>
-      );
+      return <div>{this.renderItems()}</div>
     }
 
     return (
@@ -169,7 +163,7 @@ var NewsFeed = React.createClass({
       <div className="well text-center">
         There hasn't been any activity yet. Why not <a href="/chat/meta">jump into chat</a> to see where you can help?
       </div>
-    );
+    ); // '
   },
 
   renderFilterListItem: function(filter) {

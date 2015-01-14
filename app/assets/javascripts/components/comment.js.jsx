@@ -1,7 +1,7 @@
 // TODO asset pipelined (chrislloyd)
 // var marked = require('marked')
 
-var Avatar = require('./avatar.js.jsx');
+var Avatar = require('./ui/avatar.js.jsx');
 var CommentActionCreators = require('../actions/comment_action_creators');
 var CommentStore = require('../stores/comment_store');
 var Icon = require('./icon.js.jsx');
@@ -126,15 +126,15 @@ module.exports = React.createClass({
     });
 
     return (
-      <div className="px4 _hover-toggle">
-        <div className="inline-block">
-          <a className="inline-block bold h6 mt0 mb0 _mr0_5 black" href={author.url}>{author.username}</a>
+      <div className="px4 visible-hover-wrapper">
+        <div className="h6 mt0 mb1">
+          <a className="bold black black-hover" href={author.url}>{author.username}</a>
+          {' '}
+          <a href={this.props.url} className="gray-2 gray-2-hover visible-hover">commented {moment(this.props.timestamp).fromNow()}</a>
         </div>
 
-        {this.renderTimestamp()}
-
         <div className={classes}>
-          <Markdown content={body} normalized={true} />
+          <Markdown content={body} normalized={true} wideQuotes={true} />
         </div>
 
         <div className="inline-block _pt0_5">
@@ -210,16 +210,6 @@ module.exports = React.createClass({
           onClick={this.reply.bind(this, this.props.author)}>
         Reply
       </a>
-    );
-  },
-
-  renderTimestamp: function() {
-    return (
-      <div className="_h6 _text-align-right _inline-block">
-        <div className="_none _hover-toggle-item-block _pr0_75">
-          <a href={this.props.url} className="gray-2">{moment(this.props.timestamp).fromNow()}</a>
-        </div>
-      </div>
     );
   },
 

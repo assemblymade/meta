@@ -1,4 +1,4 @@
-var Avatar = require('../avatar.js.jsx');
+var Avatar = require('../ui/avatar.js.jsx');
 var Icon = require('../icon.js.jsx');
 var NewsFeedItemEvent = require('./news_feed_item_event.js.jsx');
 

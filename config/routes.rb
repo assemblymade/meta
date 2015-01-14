@@ -91,9 +91,8 @@ ASM::Application.routes.draw do
       get   '/welcome/thanks', action: :show
     end
 
-    get '/dashboard' => 'dashboard#activity', as: :dashboard
-    get '/dashboard/activity' => 'dashboard#activity', as: :activity_dashboard
-    get '/dashboard/bounties' => 'dashboard#bounties', as: :bounties_dashboard
+    get '/dashboard' => 'dashboard#index', as: :dashboard
+    get '/dashboard/:filter' => 'dashboard#index', as: :dashboard_filter
 
     # settings
     get    '/settings' => 'users#edit', as: :edit_user

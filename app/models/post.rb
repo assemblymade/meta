@@ -36,8 +36,8 @@ class Post < ActiveRecord::Base
     joins(:news_feed_item).where('news_feed_items.archived_at is null')
   }
 
-  ANNOUNCEMENT_MARK = Mark.find_or_create_by!(name: 'announcement')
-  DISCUSSION_MARK = Mark.find_or_create_by!(name: 'discussion')
+  ANNOUNCEMENT_MARK = 'announcement'
+  DISCUSSION_MARK = 'discussion'
 
   # def summary
   #   super || body.split("\n").first
@@ -71,12 +71,12 @@ class Post < ActiveRecord::Base
 
   def mark_as_announcement
     if self.product.core_team?(self.user)
-      Marking.create!(markable: self, mark: ANNOUNCEMENT_MARK, weight: 1.0)
+      Marking.create!(markable: self, mark: Mark.find_or_create_by!(name: ANNOUNCEMENT_MARK), weight: 1.0)
     end
   end
 
   def mark_as_discussion
-    Marking.create!(markable: self, mark: DISCUSSION_MARK, weight: 1.0)
+    Marking.create!(markable: self, mark: Mark.find_or_create_by!(name: DISCUSSION_MARK), weight: 1.0)
   end
 
   def push_to_news_feed
