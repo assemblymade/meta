@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Users::ChatRoomsController do
+describe ChatRoomsController do
   let!(:general) { ChatRoom.make!(slug: 'general', wip: Wip.make! ) }
 
   let(:product) { Product.make! }
