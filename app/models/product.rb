@@ -51,7 +51,6 @@ class Product < ActiveRecord::Base
   has_many :pitch_week_applications
   has_many :posts
   has_many :profit_reports
-  has_many :products
   has_many :proposals
   has_many :rooms
   has_many :showcases
