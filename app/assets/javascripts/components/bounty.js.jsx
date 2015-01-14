@@ -191,19 +191,6 @@ var Bounty = React.createClass({
     return <div className="gray">No description yet</div>;
   },
 
-  renderDiscussion: function() {
-    var item = this.props.item;
-    var bounty = this.state.bounty;
-
-    if (item) {
-      return (
-        <div id="discussion-view-el" key={'discussion-' + bounty.id}>
-          <NewsFeedItemComments commentable={true} item={item} showAllComments={true} analytics={this.props.analytics} />
-        </div>
-      );
-    }
-  },
-
   renderEditButton: function() {
     var bounty = this.state.bounty;
 
@@ -342,11 +329,13 @@ var Bounty = React.createClass({
 
     if (this.state.worker) {
       if (this.state.worker.id == currentUser.id) {
-        return (
-          <a href="#event_comment_body" className="block p1 green green-dark-hover">
-            Submit work
-          </a>
-        )
+        if (bounty.state == "reviewing") {
+          return <Button>Core Team review requested</Button>
+        } else {
+          return (
+            <Button action={this.requestReview}>Request Core Team review</Button>
+          )
+        }
       } else {
         return <Button><Icon icon="lock" /> Locked for {formatShortTime(this.state.lockUntil)}</Button>
       }
@@ -371,6 +360,10 @@ var Bounty = React.createClass({
       worker: currentUser && currentUser.attributes,
       lockUntil: moment().add(60, 'hours').add(1, 'second')
     });
+  },
+
+  requestReview: function() {
+    BountyActionCreators.submitWork(this.props.bounty.url + '/review')
   }
 })
 

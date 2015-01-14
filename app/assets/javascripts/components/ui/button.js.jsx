@@ -8,7 +8,8 @@ module.exports = React.createClass({
 
   getDefaultProps: function() {
     return {
-      type: 'default'
+      type: 'default',
+      submit: false
     }
   },
 
@@ -21,9 +22,15 @@ module.exports = React.createClass({
     })
 
     return (
-      <button className={cs} onClick={this.props.action} type="button" disabled={!this.props.action}>
+      <button className={cs} onClick={this.props.action} type={this.submitType()} disabled={!this.props.action}>
         {this.props.children}
       </button>
     )
+  },
+
+  // --
+
+  submitType: function() {
+    return this.props.submit ? "submit" : "button"
   }
 })
