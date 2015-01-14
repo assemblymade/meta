@@ -1,7 +1,6 @@
 var IconWithNumber = require('./ui/icon_with_number.js.jsx')
 
-module.exports = React.createClass({
-  displayName: 'AppCoins',
+var AppCoins = React.createClass({
 
   propTypes: {
     n: React.PropTypes.number.isRequired
@@ -10,8 +9,10 @@ module.exports = React.createClass({
   render: function() {
     return (
       <span className="text-coins bold">
-        <IconWithNumber icon="app-coin" n={this.props.n} />
+        <IconWithNumber icon="app-coin" n={this.props.n} showZeros={true} />
       </span>
     )
   }
 })
+
+module.exports = AppCoins

@@ -6,12 +6,20 @@ var IconWithNumber = React.createClass({
 
   propTypes: {
     icon: React.PropTypes.string.isRequired,
-    n: React.PropTypes.number.isRequired
+    n: React.PropTypes.number.isRequired,
+    showZeros: React.PropTypes.bool,
+  },
+
+  getDefaultProps: function() {
+    return {
+      showZeros: false
+    }
   },
 
   render: function() {
-    var label = null
-    if (this.props.n > 0) {
+    var label
+
+    if (this.props.n > 0 || this.props.showZeros) {
       // This is a horrible hack for CI because numeral isn't required in the
       // jest tests. Ask @chrislloyd about this one.
       var formattedNumeral
@@ -25,8 +33,7 @@ var IconWithNumber = React.createClass({
 
     return (
       <div>
-        <Icon icon={this.props.icon} />
-        {label}
+        <Icon icon={this.props.icon} /> {label}
       </div>
     )
   }
