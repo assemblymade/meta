@@ -10,7 +10,7 @@ class TrackEngaged
     Analytics.track(
       user_id: user.id,
       event: EVENT_NAME,
-      timestamp: Time.at(timestamp),
+      timestamp: Time.parse(timestamp),
       properties: {
         engagement: engagement
       }
