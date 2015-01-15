@@ -1,3 +1,5 @@
+var Label = require('../components/ui/label.js.jsx')
+
 var ListItemMixin = {
   onModalHidden: function() {
     this.setState({
@@ -31,8 +33,8 @@ var ListItemMixin = {
 
     return tags.map(function(tag) {
       return (
-        <a className="fs1 caps gray-2 mr2 pointer" href={tag.url} key={'post-tag-' + tag.name}>
-          #{tag.name}
+        <a className="mr2" href={tag.url} key={'post-tag-' + tag.name}>
+          <Label name={tag.name} />
         </a>
       )
     });

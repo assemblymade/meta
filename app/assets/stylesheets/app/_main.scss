@@ -89,11 +89,11 @@ strong, .bold {
 // -- anchors -------------------
 a {
   color: $link-color;
-  &:hover, &:focus {
+  &:hover {
     text-decoration: none;
     outline: 0;
   }
-  &.no-focus:focus {
+  &:focus {
     text-decoration: none;
     background:inherit;
     color:inherit;
