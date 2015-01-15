@@ -230,6 +230,16 @@
   }
 }
 
+.new-nav-item-small a {
+  font-size: $font-size-h6;
+}
+
+.new-nav-item-divider {
+  border-bottom: 1px solid $gray;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
 .new-nav-item-is-active a {
   color: $black;
   font-weight: bold;

@@ -11,7 +11,9 @@ class DashboardController < ApplicationController
   end
 
   def products
-    case params.fetch(:filter, 'all')
+    filter_param = params.fetch(:filter, 'all')
+
+    case filter_param
     when 'all'
       Product.public_products
     when 'following'
@@ -19,6 +21,8 @@ class DashboardController < ApplicationController
     when 'interests'
       product_ids = current_user.top_products.pluck(:product_id)
       Product.where(id: product_ids)
+    else
+      Product.where(slug: filter_param)
     end
   end
 

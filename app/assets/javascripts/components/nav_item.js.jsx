@@ -1,9 +1,20 @@
 var NavItem = React.createClass({
   displayName: 'NavItem',
 
+  propTypes: {
+    active: React.PropTypes.bool,
+    divider: React.PropTypes.bool,
+    href: React.PropTypes.string,
+    label: React.PropTypes.string,
+    small: React.PropTypes.bool
+  },
+
   getDefaultProps: function() {
     return {
-      href: '#'
+      active: false,
+      divider: false,
+      href: '#',
+      small: false
     }
   },
 
@@ -16,14 +27,24 @@ var NavItem = React.createClass({
   },
 
   render: function() {
+    var divider = this.props.divider
+
+    if (divider) {
+      return (
+        <li className="new-nav-item new-nav-item-divider"></li>
+      )
+    }
+
     var label = this.props.label
     var isActive = this.props.active
+    var isSmall = this.props.small
     var href = this.props.href
 
     var badge = this.renderBadge()
 
     var classes = React.addons.classSet({
       'new-nav-item': true,
+      'new-nav-item-small': isSmall,
       'new-nav-item-is-active': isActive
     })
 
