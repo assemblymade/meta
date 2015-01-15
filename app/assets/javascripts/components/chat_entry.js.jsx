@@ -45,7 +45,7 @@
                 </li>
               </ul>
               <ul className="list-reset clearfix mb0">
-                <li className="left mr1">
+                <li className="left mr1" style={{'line-height': 16}}>
                   <UserLink url={this.props.user.url} username={this.props.user.username} className="chat-actor">
                     {this.props.user.username}
                   </UserLink>
