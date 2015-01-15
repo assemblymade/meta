@@ -64,12 +64,16 @@ class IdeasController < ApplicationController
       end
     end
 
+    related_ideas = Idea.with_mark(@marks.first).limit(2)
+
+    related_ideas = related_ideas.empty? ? Idea.limit(2) : related_ideas
+
     respond_with({
       idea: IdeaSerializer.new(@idea),
       comments: @comments,
       heartables: @heartables || [],
       related_ideas: ActiveModel::ArraySerializer.new(
-        Idea.with_mark(@marks.first).limit(2),
+        related_ideas,
         each_serializer: IdeaSerializer
       ),
       user_hearts: @user_hearts || []

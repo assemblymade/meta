@@ -274,10 +274,10 @@ module.exports = React.createClass({
       return (
         <li>
           <InviteFriendBounty
-            url={'/user/invites'}
-            invites={bounty.invites}
-            via_type={'Wip'}
-            via_id={bounty.id} />
+              url={'/user/invites'}
+              invites={bounty.invites}
+              via_type={'Wip'}
+              via_id={bounty.id} />
         </li>
       );
     }

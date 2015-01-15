@@ -165,8 +165,8 @@ a.comment-count {
     }
   }
   .action-icon {
-    display: block;
     padding: 1rem 0;
+
     //
     &:hover, &:active {
       //
@@ -177,22 +177,31 @@ a.comment-count {
         fill:$red;
       }
     }
-    .svg-icon-share {
-      width: 1.9rem;
-      fill:$gray-3;
-    }
-    .svg-icon-heart {
-      width: 1.6rem;
-      //
-      .path1 {
-        fill:$white;
-      }
-      .path2 {
-        fill:$gray-3;
-      }
-    }
   }
 }
+
+.action-icon.red {
+  .svg-icon-heart .path1, .svg-icon-heart .path2 {
+    fill: $red;
+  }
+}
+
+.svg-icon-heart {
+  width: 1.6rem;
+  //
+  .path1 {
+    fill:$white;
+  }
+  .path2 {
+    fill:$gray-3;
+  }
+}
+
+.svg-icon-share {
+  width: 1.9rem;
+  fill:$gray-3;
+}
+
 .progress-group {
   display:table;
   table-layout:fixed;

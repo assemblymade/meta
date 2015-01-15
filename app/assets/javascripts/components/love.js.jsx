@@ -3,6 +3,7 @@ var LoveActionCreators = require('../actions/love_action_creators')
 var xhr = require('../xhr')
 var Lovers = require('./lovers.jsx')
 var Icon = require('./icon.js.jsx')
+var SvgIcon = require('./ui/svg_icon.js.jsx');
 var UserStore = require('../stores/user_store')
 
 var Love = React.createClass({
@@ -28,6 +29,7 @@ var Love = React.createClass({
   renderHeart: function() {
     var heartsCount = this.state.hearts_count || 0;
     var classes = React.addons.classSet({
+      'action-icon': true,
       gray: !this.state.user_heart,
       'inline-block': true,
       _mr0_25: true,
@@ -36,8 +38,10 @@ var Love = React.createClass({
 
     return (
       <a className="inline-block valign-top mr1 fs6 gray no-focus" href="javascript:void(0);" onClick={this.handleClick}>
-        <div className={classes}><Icon icon="heart" /></div>
-        {heartsCount > 0 ? heartsCount : null}
+        <div className={classes}>
+          <SvgIcon type="heart" />
+        </div>
+        <span className="mt2">{heartsCount > 0 ? heartsCount : null}</span>
       </a>
     );
   },

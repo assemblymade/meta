@@ -1,14 +1,14 @@
 /** @jsx React.DOM */
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var Popover = require('./popover.js.jsx');
 var InviteBountyForm = require('./invite_bounty_form.js.jsx');
 
 (function() {
   var InviteFriendBounty = React.createClass({
     getInitialState: function() {
       return {
-        invites: this.props.invites
+        invites: this.props.invites,
+        modalShown: false
       }
     },
 
@@ -16,31 +16,37 @@ var InviteBountyForm = require('./invite_bounty_form.js.jsx');
       return (
         <div>
           <a href="javascript:void(0);" onClick={this.handleClick}>Recruit help</a>
+          {this.renderModal()}
+        </div>
+      )
+    },
+
+    handleClick: function() {
+      this.setState({
+        modalShown: true
+      }, function() {
+        this.refs.modal.show()
+      }.bind(this));
+    },
+
+    handleHide: function() {
+      this.setState({
+        modalShown: false
+      }, function() {
+        this.refs.modal.hide()
+      }.bind(this));
+    },
+
+    renderModal: function() {
+      if (this.state.modalShown) {
+        return (
           <InviteFriendModal {...this.props}
             onCancel={this.handleHide}
             show={false}
             onSubmit={this.handleFormSubmit}
             ref="modal" />
-        </div>
-      )
-    },
-
-    handleFormSubmit: function(invite) {
-      // window.location.reload()
-      // this.setState(
-      //   React.addons.update(this.state, {
-      //     invites: {$push: [invite] },
-      //     modal: {$set: false }
-      //   })
-      // )
-    },
-
-    handleClick: function() {
-      this.refs.modal.show()
-    },
-
-    handleHide: function() {
-      this.refs.modal.hide()
+        );
+      }
     }
   });
 

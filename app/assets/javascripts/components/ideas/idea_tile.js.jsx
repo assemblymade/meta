@@ -1,6 +1,10 @@
 var Avatar = require('../ui/avatar.js.jsx');
+var Drawer = require('../ui/drawer.js.jsx');
 var Footer = require('../ui/footer.js.jsx');
+var IdeaSharePanel = require('./idea_share_panel.js.jsx');
+var Love = require('../love.js.jsx');
 var ProgressBar = require('../ui/progress_bar.js.jsx');
+var Share = require('../ui/share.js.jsx');
 var SmallTile = require('../ui/small_tile.js.jsx');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
 var UserStore = require('../../stores/user_store');
@@ -12,20 +16,31 @@ var Idea = React.createClass({
     idea: React.PropTypes.shape({
       comments_count: React.PropTypes.number.isRequired,
       name: React.PropTypes.string.isRequired,
+      news_feed_item: React.PropTypes.shape({
+        id: React.PropTypes.string.isRequired
+      }),
       short_body: React.PropTypes.string.isRequired,
       url: React.PropTypes.string.isRequired,
       user: React.PropTypes.object.isRequired
     }).isRequired
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
-      currentUserId: UserStore.getId()
+      currentUserId: UserStore.getId(),
+      isDrawerOpen: false
     };
   },
 
-  render: function() {
+  handleShareClick(e) {
+    this.setState({
+      isDrawerOpen: !this.state.isDrawerOpen
+    });
+  },
+
+  render() {
     var idea = this.props.idea;
+    var item = idea.news_feed_item;
     var user = idea.user;
 
     return (
@@ -54,25 +69,29 @@ var Idea = React.createClass({
                 </div>
               </div>
 
+              <div className="mxn3">
+                <Drawer open={this.state.isDrawerOpen}>
+                  <IdeaSharePanel idea={idea} />
+                </Drawer>
+              </div>
+
               <div className="item">
                 <div className="action-group">
                   <div className="item">
                     <a href={idea.url} className="comment-count">
-                      <SvgIcon type={'svg-icon-comment'} />
+                      <SvgIcon type="comment" />
                       {idea.comments_count} {idea.comments_count === 1 ? 'Comment' : 'Comments'}
                     </a>
                   </div>
 
                   <div className="item">
-                    <a href="#" className="action-icon">
-                      <SvgIcon type={'svg-icon-share'} />
+                    <a href="javascript:void(0);" onClick={this.handleShareClick}>
+                      <SvgIcon type="share" />
                     </a>
                   </div>
 
                   <div className="item">
-                    <a href="#" className="action-icon">
-                      <SvgIcon type={'svg-icon-heart'} />
-                    </a>
+                    <Love heartable_id={item.id} heartable_type="NewsFeedItem" />
                   </div>
                 </div>
               </div>
@@ -87,7 +106,7 @@ var Idea = React.createClass({
     );
   },
 
-  renderUsername: function() {
+  renderUsername() {
     var user = this.props.idea.user;
 
     if (this.state.currentUserId === user.id) {

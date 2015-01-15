@@ -46,7 +46,7 @@ function _getAndDispatch(component, callback) {
   return _.debounce(function(context) {
     NProgress.start()
 
-    $.getJSON(window.location).done(callback).done(function(data) {
+    $.getJSON(window.location, { cache: false }).done(callback).done(function(data) {
       NProgress.done()
       Dispatcher.dispatch({
         type: ActionTypes.IDEAS_ROUTE_CHANGED,

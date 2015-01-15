@@ -173,14 +173,14 @@ var IdeaShow = React.createClass({
 
         <div className="col col-1 px1 mt2">
           <a href={idea.url} className="comment-count">
-            <SvgIcon type={'svg-icon-comment'} />
+            <SvgIcon type="comment" />
             {idea.comments_count}
           </a>
         </div>
 
         <div className="col col-1 p2 center border-2px border-left border-gray">
           <a href="#" className="action-icon gray">
-            <SvgIcon type={'svg-icon-share'} />
+            <SvgIcon type="share" />
           </a>
         </div>
       </div>

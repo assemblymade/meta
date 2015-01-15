@@ -25,6 +25,6 @@ class IdeaSerializer < ApplicationSerializer
   end
 
   def url
-    idea_path(object)
+    idea_url(object)
   end
 end
