@@ -1,6 +1,8 @@
 var Avatar = require('../ui/avatar.js.jsx');
+var Drawer = require('../ui/drawer.js.jsx');
 var Icon = require('../icon.js.jsx');
 var IdeaContainer = require('./idea_container.js.jsx');
+var IdeaSharePanel = require('./idea_share_panel.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
 var Love = require('../love.js.jsx');
@@ -36,8 +38,15 @@ var IdeaShow = React.createClass({
   getInitialState: function() {
     return {
       idea: IdeaStore.getIdea(),
+      isDrawerOpen: false,
       startConversationModalShown: StartConversationModalStore.isModalShown()
     };
+  },
+
+  handleShareClick: function() {
+    this.setState({
+      isDrawerOpen: !this.state.isDrawerOpen
+    });
   },
 
   onIdeaChange: function() {
@@ -85,6 +94,13 @@ var IdeaShow = React.createClass({
 
         <IdeaContainer navigate={navigate}>
           {this.renderHeader()}
+
+          <div className="mxn3">
+            <Drawer open={this.state.isDrawerOpen}>
+              <IdeaSharePanel idea={idea} />
+            </Drawer>
+          </div>
+
           {this.renderBody()}
         </IdeaContainer>
         <StartConversationModal idea={idea}
@@ -179,7 +195,7 @@ var IdeaShow = React.createClass({
         </div>
 
         <div className="col col-1 p2 center border-2px border-left border-gray">
-          <a href="#" className="action-icon gray">
+          <a href="javascript:void(0);" className="action-icon gray" onClick={this.handleShareClick}>
             <SvgIcon type="share" />
           </a>
         </div>
