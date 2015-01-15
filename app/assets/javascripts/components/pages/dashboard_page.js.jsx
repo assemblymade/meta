@@ -7,7 +7,50 @@ var NewsFeedItem = require('../news_feed/news_feed_item.js.jsx')
 var NewsFeedItemsStore = require('../../stores/news_feed_items_store.js')
 var ProductsStore = require('../../stores/products_store.js')
 var ProductChip = require('../product_chip.js.jsx')
+var UserBountiesStore = require('../../stores/user_bounties_store.js')
 var Tile = require('../ui/tile.js.jsx')
+
+var MiniBounty = React.createClass({
+  getDefaultProps: function() {
+    return {
+      locker: true
+    }
+  },
+
+  render: function() {
+    var bounty = this.props.bounty
+    var locker = null
+
+    if (this.props.locker && bounty.locker) {
+      var locker = (
+        <div className="px3 py2 border-top h6 mb0 mt0">
+          <Avatar user={bounty.locker} size={18} style={{ display: 'inline-block' }} />
+          {' '}
+          <a href={bounty.locker.url} className="bold black">
+            {bounty.locker.username}
+          </a>
+          {' '}
+          <span className="gray-dark">
+            has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
+          </span>
+        </div>
+      )
+    }
+
+    return (
+      <div className="mb2">
+        <Tile>
+          <div>
+            <a className="block px3 py2 mt0 mb0 h5 fw-500 blue" href={bounty.url}>
+              {bounty.title}
+            </a>
+          </div>
+          {locker}
+        </Tile>
+      </div>
+    )
+  }
+})
 
 var DashboardPage = React.createClass({
   getDefaultProps: function() {
@@ -19,23 +62,24 @@ var DashboardPage = React.createClass({
   getInitialState: function() {
     return {
       newsFeedItems: [],
-      bounties: [],
+      lockedBounties: [],
+      reviewingBounties: [],
       products: []
     }
   },
 
   componentDidMount: function() {
-    BountiesStore.addChangeListener(this.getStateFromStore)
     NewsFeedItemsStore.addChangeListener(this.getStateFromStore)
     ProductsStore.addChangeListener(this.getStateFromStore)
+    UserBountiesStore.addChangeListener(this.getStateFromStore)
 
     this.getStateFromStore()
   },
 
   componentWillUnmount: function() {
-    BountiesStore.removeChangeListener(this.getStateFromStore)
     NewsFeedItemsStore.removeChangeListener(this.getStateFromStore)
     ProductsStore.removeChangeListener(this.getStateFromStore)
+    UserBountiesStore.removeChangeListener(this.getStateFromStore)
   },
 
   renderProduct: function() {
@@ -88,7 +132,7 @@ var DashboardPage = React.createClass({
 
     return (
       <Nav>
-        <NavItem label="Community"       href='/dashboard'           active={activeNavItem == 'all'} />
+        <NavItem label="Everything"      href='/dashboard'           active={activeNavItem == 'all'} />
         <NavItem label="Your interests"  href='/dashboard/following' active={activeNavItem == 'following'} />
         <NavItem label="What you follow" href='/dashboard/interests' active={activeNavItem == 'interests'} />
 
@@ -145,9 +189,7 @@ var DashboardPage = React.createClass({
   },
 
   renderBounties: function() {
-    var items = this.state.bounties
-
-    if (!items.length) {
+    if (!this.state.lockedBounties.length && !this.state.reviewingBounties) {
       return (
         <Tile>
           <div className="center p3">
@@ -161,36 +203,34 @@ var DashboardPage = React.createClass({
           </div>
         </Tile>
       )
-    } else {
-      return (
-        <div>
-          {items.map(function(bounty) {
-            return (
-              <div className="mb2">
-                <Tile>
-                  <div>
-                    <a className="block px3 py2 mt0 mb0 h5 fw-500 blue" href={bounty.url}>
-                      {bounty.title}
-                    </a>
-                  </div>
-                  <div className="px3 py2 border-top h6 mb0 mt0">
-                    <Avatar user={bounty.locker} size={18} style={{ display: 'inline-block' }} />
-                    {' '}
-                    <a href={bounty.locker.url} className="bold black">
-                      {bounty.locker.username}
-                    </a>
-                    {' '}
-                    <span className="gray-dark">
-                      has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
-                    </span>
-                  </div>
-                </Tile>
-              </div>
-            )
-          })}
-        </div>
-      )
     }
+
+    var lockedBounties = (
+      <div className="mb3">
+        <h6 className="gray caps mt2 mb2">Bounties you're working on</h6>
+        {this.state.lockedBounties.map(function(bounty) {
+          return <MiniBounty bounty={bounty} />
+        })}
+      </div>
+    )
+
+    var reviewingBounties = (
+      <div className="mb3">
+        <h6 className="gray caps mt2 mb2">Bounties in review</h6>
+        {this.state.reviewingBounties.map(function(bounty) {
+          return <MiniBounty bounty={bounty} locker={false} />
+        })}
+      </div>
+    )
+
+    var bounties = (
+      <div>
+        {lockedBounties}
+        {reviewingBounties}
+      </div>
+    )
+
+    return bounties
   },
 
   render: function() {
@@ -212,7 +252,6 @@ var DashboardPage = React.createClass({
           </div>
           <div className="col col-4 px2">
             {product}
-            <h6 className="gray caps mt2 mb2">Bounties you're working on</h6>
             {bounties}
           </div>
         </div>
@@ -222,7 +261,8 @@ var DashboardPage = React.createClass({
 
   getStateFromStore: function() {
     this.setState({
-      bounties: BountiesStore.getBounties(),
+      lockedBounties: UserBountiesStore.getLockedBounties(),
+      reviewingBounties: UserBountiesStore.getReviewingBounties(),
       newsFeedItems: NewsFeedItemsStore.getNewsFeedItems(),
       products: ProductsStore.getProducts()
     })
