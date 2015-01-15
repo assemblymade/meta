@@ -113,7 +113,7 @@ var BountyListItem = React.createClass({
               </div>
               <div className="clearfix h6 mt0 mb0 gray-3 mxn1">
                 <div className="left px1">
-                  <AppCoins coins={this.props.bounty.earnable_coins_cache} />
+                  <AppCoins n={this.props.bounty.earnable_coins_cache} />
                 </div>
                 <div className="left px1 bold">
                   <IconWithNumber icon={<Icon icon="comment" />} n={bounty.comments_count} />
