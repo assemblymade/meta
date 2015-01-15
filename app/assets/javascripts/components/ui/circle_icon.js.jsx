@@ -22,6 +22,7 @@ var CircleIcon = React.createClass({
       borderRadius: '100%',
       color: '#fff',
       display: 'inline-block',
+      fontSize: 16,
       height: diameter,
       margin: this.props.margin,
       textAlign: 'center',

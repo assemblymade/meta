@@ -15,6 +15,8 @@ function _showCreateIdea(data) {
     type: ActionTypes.RELATED_IDEAS_RECEIVE,
     relatedIdeas: data.related_ideas
   });
+
+  console.log(data);
 }
 
 function _showIdeas(data) {
@@ -53,5 +55,10 @@ function _showIdea(data) {
     type: ActionTypes.DISCUSSION_RECEIVE,
     comments: comments,
     itemId: idea.news_feed_item.id
+  });
+  // console.log(heartables);
+  Dispatcher.dispatch({
+    type: ActionTypes.LOVE_RECEIVE_HEARTABLES,
+    heartables: heartables
   });
 }

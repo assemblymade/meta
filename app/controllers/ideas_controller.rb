@@ -65,7 +65,6 @@ class IdeasController < ApplicationController
     end
 
     related_ideas = Idea.with_mark(@marks.first).limit(2)
-
     related_ideas = related_ideas.empty? ? Idea.limit(2) : related_ideas
 
     respond_with({

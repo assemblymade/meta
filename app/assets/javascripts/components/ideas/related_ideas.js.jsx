@@ -1,4 +1,4 @@
-var IdeaTile = require('./idea_tile.js.jsx');
+var RelatedIdeaTile = require('./related_idea_tile.js.jsx');
 var RelatedIdeasStore = require('../../stores/related_ideas_store');
 
 var RelatedIdeas = React.createClass({
@@ -36,7 +36,7 @@ var RelatedIdeas = React.createClass({
     return this.state.ideas.map((idea) => {
       return (
         <div className="mb2" key={idea.id}>
-          <IdeaTile idea={idea} />
+          <RelatedIdeaTile idea={idea} />
         </div>
       );
     });

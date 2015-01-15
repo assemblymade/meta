@@ -19,14 +19,14 @@ var IdeaSharePanel = React.createClass({
 
       client.on('aftercopy', function(event) {
         self.setState({
-          copyIcon: 'check-square'
+          copyIcon: 'check'
         });
 
         setTimeout(function() {
           self.setState({
             copyIcon: 'link'
           });
-        }, 1000);
+        }, 1500);
       });
     });
   },
