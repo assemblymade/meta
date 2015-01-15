@@ -129,14 +129,21 @@ var DashboardPage = React.createClass({
   renderNav: function() {
     var activeNavItem = this.props.activeNavItem
     var followedProducts = this.props.followedProducts
+    var followingNavItem = null
+    var divider = null
+
+    if (followedProducts.length) {
+      followingNavItem = <NavItem label="What you follow" href='/dashboard/following' active={activeNavItem == 'interests'} />
+      divider = <NavItem divider={true} />
+    }
 
     return (
       <Nav>
         <NavItem label="Everything"      href='/dashboard'           active={activeNavItem == 'all'} />
-        <NavItem label="Your interests"  href='/dashboard/following' active={activeNavItem == 'following'} />
-        <NavItem label="What you follow" href='/dashboard/interests' active={activeNavItem == 'interests'} />
+        <NavItem label="Your interests"  href='/dashboard/interests' active={activeNavItem == 'following'} />
+        {followingNavItem}
 
-        <NavItem divider={true} />
+        {divider}
 
         {followedProducts.map(function(product) {
           return <NavItem label={product.name} href={'/dashboard/' + product.slug } active={activeNavItem == product.slug} small={true} />
