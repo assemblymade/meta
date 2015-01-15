@@ -33,8 +33,10 @@ class IdeasController < ApplicationController
     @ideas = ideas.page(params[:page]).per(IDEAS_PER_PAGE)
 
     respond_with({
+      heartables: @heartables,
       ideas: ActiveModel::ArraySerializer.new(@ideas),
-      total_pages: total_pages
+      total_pages: total_pages,
+      user_hearts: @user_hearts
     })
   end
 

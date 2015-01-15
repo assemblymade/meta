@@ -15,13 +15,13 @@ function _showCreateIdea(data) {
     type: ActionTypes.RELATED_IDEAS_RECEIVE,
     relatedIdeas: data.related_ideas
   });
-
-  console.log(data);
 }
 
 function _showIdeas(data) {
+  var heartables = data.heartables;
   var ideas = data.ideas;
   var totalPages = data.total_pages;
+  var userHearts = data.user_hearts;
 
   Dispatcher.dispatch({
     type: ActionTypes.IDEAS_RECEIVE,
@@ -31,6 +31,19 @@ function _showIdeas(data) {
   Dispatcher.dispatch({
     type: ActionTypes.PAGINATION_TOTAL_PAGES_RECEIVE,
     totalPages: totalPages
+  });
+
+  Dispatcher.dispatch({
+    type: ActionTypes.LOVE_RECEIVE_HEARTABLES,
+    heartables: (heartables || []).map((heartable) => {
+      heartable.heartable_id = heartable.id;
+      return heartable;
+    })
+  });
+
+  Dispatcher.dispatch({
+    type: ActionTypes.LOVE_RECEIVE_USER_HEARTS,
+    userHearts: userHearts
   });
 }
 
@@ -56,9 +69,17 @@ function _showIdea(data) {
     comments: comments,
     itemId: idea.news_feed_item.id
   });
-  // console.log(heartables);
+
   Dispatcher.dispatch({
     type: ActionTypes.LOVE_RECEIVE_HEARTABLES,
-    heartables: heartables
+    heartables: (heartables || []).map((heartable) => {
+      heartable.heartable_id = heartable.id;
+      return heartable;
+    })
+  });
+
+  Dispatcher.dispatch({
+    type: ActionTypes.LOVE_RECEIVE_USER_HEARTS,
+    userHearts: userHearts
   });
 }

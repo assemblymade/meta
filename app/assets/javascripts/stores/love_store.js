@@ -34,13 +34,12 @@ class LoveStore extends Store {
           _heartables = _.reduce(
             action.heartables,
             function(memo, h) {
-              memo[h.heartable_id] = h;
+              memo[h.id] = h;
               return memo
             },
             {}
           );
 
-          console.log(_heartables);
           LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
           this.emitChange()
           break
@@ -49,7 +48,14 @@ class LoveStore extends Store {
           break
 
         case ActionTypes.LOVE_RECEIVE_USER_HEARTS:
-          _userHearts = _.reduce(action.userHearts, function(memo, h){ memo[h.heartable_id] = h; return memo }, {})
+          _userHearts = _.reduce(
+            action.userHearts,
+            function(memo, h) {
+              memo[h.heartable_id] = h;
+              return memo
+            },
+            {}
+          );
           this.emitChange()
           break
 
