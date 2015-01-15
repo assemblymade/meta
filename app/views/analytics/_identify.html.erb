@@ -14,19 +14,4 @@
   <% if flash[:signed_up] %>
     analytics.track('user.created');
   <% end %>
-
-
-  <% if !signed_in? || !current_user.staff? %>
-    var productAnalytics = <%== (@product ? ProductAnalyticsSerializer.new(@product) : {}).to_json %>;
-
-    analytics.track(<%== TrackEngaged::EVENT_NAME.to_json %>, _.extend({
-      engagement: 'viewed',
-      path: window.location.pathname,
-      referrer: document.referrer,
-      title: document.title,
-      search: window.location.search,
-      authenticated: <%== signed_in?.to_json %>
-    }, productAnalytics));
-  <% end %>
-
 </script>

@@ -1,0 +1,34 @@
+<script>
+  window.TrackEngagement = {
+    track: function(viewTarget, properties) {
+      window._analyticsViewTarget = viewTarget; // prevent the bugsnag error if this is called at least once
+
+      analytics.track(<%== TrackEngaged::EVENT_NAME.to_json %>, _.extend({
+        engagement: 'viewed',
+        viewTarget: viewTarget,
+        path: window.location.pathname,
+        referrer: document.referrer,
+        title: document.title,
+        search: window.location.search,
+      }, properties));
+    }
+  }
+
+  <% if !signed_in? || !current_user.staff? %>
+    if (window._analyticsViewTarget) {
+      var properties = _.extend(
+        window._analyticsEngagedProperties || {},
+        <%== (@product ? ProductAnalyticsSerializer.new(@product) : {}).to_json %>,
+        { authenticated: <%== signed_in?.to_json %> }
+      )
+
+      TrackEngagement.track(window._analyticsViewTarget, properties)
+    }
+
+    setTimeout(function(){
+      if (!window._analyticsViewTarget) {
+        Bugsnag.notify("UntrackedPageView", "Make sure you call track_engaged");
+      }
+    }, 2000)
+  <% end %>
+</script>

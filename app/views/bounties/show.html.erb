@@ -2,8 +2,6 @@
 <% description Nokogiri::HTML(product_markdown(@bounty.product, @bounty.description)).text %>
 <% activate_nav! :bounties %>
 
-<%= track 'product.wip.viewed', WipAnalyticsSerializer.new(@wip, scope: current_user) %>
-
 <div id="discussion-el"></div>
 <% content_for :javascript do %>
   <script>

@@ -4,6 +4,7 @@ var NewFeedItemComments = require('../news_feed/news_feed_item_comments.js.jsx')
 var Discussion = React.createClass({
 
   propTypes: {
+    newsFeedItem: React.PropTypes.object.isRequired,
     target: React.PropTypes.element.isRequired
   },
 
