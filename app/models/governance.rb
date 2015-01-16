@@ -19,7 +19,15 @@ class Governance
     the_proposal.vestings.append(new_vesting)
   end
 
-
+  def enforce_all
+    proposals = Proposal.where(state: "active")
+    proposals.each do |p|
+      if not p.expired?
+        p.enforce
+        Rails.logger.info "Enforcing Proposal #{p.name}"
+      end
+    end
+  end
 
 
 end

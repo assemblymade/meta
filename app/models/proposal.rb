@@ -105,4 +105,12 @@ class Proposal < ActiveRecord::Base
     end
   end
 
+  def enforce
+    if self.contract_type == "vesting"
+      self.contracts.each do |c|
+        c.check_for_payout
+      end
+    end
+  end
+
 end
