@@ -19,12 +19,6 @@ var MiniBounty = React.createClass({
     }
   },
 
-  getInitialState: function() {
-    return {
-      loading: false
-    }
-  },
-
   render: function() {
     var bounty = this.props.bounty
     var locker = null
@@ -63,7 +57,8 @@ var MiniBounty = React.createClass({
 var DashboardPage = React.createClass({
   getDefaultProps: function() {
     return  {
-      filter: 'all'
+      filter: 'all',
+      initialShowAll: false
     }
   },
 
@@ -73,6 +68,8 @@ var DashboardPage = React.createClass({
       lockedBounties: [],
       reviewingBounties: [],
       products: [],
+      loading: false,
+      showAll: this.props.initialShowAll
     }
   },
 
@@ -103,6 +100,7 @@ var DashboardPage = React.createClass({
 
   renderProduct: function() {
     var filter = this.props.filter
+
     var product = _.find(this.props.followedProducts, function(product) {
       return product.slug == filter
     })
@@ -147,13 +145,26 @@ var DashboardPage = React.createClass({
 
   renderNav: function() {
     var filter = this.props.filter
-    var followedProducts = this.props.followedProducts
+    var showAll = this.state.showAll
+    var followedProducts = showAll ? this.props.followedProducts : this.props.followedProducts.slice(0, 5)
     var followingNavItem = null
     var divider = null
+    var showAllLink = null
 
     if (followedProducts.length) {
       followingNavItem = <NavItem label="What you follow" href='/dashboard/following' active={filter == 'interests'} />
       divider = <NavItem divider={true} />
+    }
+
+    if (this.props.followedProducts.length > 5 && !showAll) {
+      var click = function(event) {
+        event.stopPropagation()
+        event.preventDefault()
+
+        this.setState({ showAll: true })
+      }.bind(this)
+
+      showAllLink = <NavItem label="Show all" onClick={click} small={true} />
     }
 
     return (
@@ -167,6 +178,8 @@ var DashboardPage = React.createClass({
         {followedProducts.map(function(product) {
           return <NavItem label={product.name} href={'/dashboard/' + product.slug } active={filter == product.slug} small={true} />
         })}
+
+        {showAllLink}
       </Nav>
     )
   },
