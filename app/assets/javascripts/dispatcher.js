@@ -52,6 +52,11 @@
         return;
       }
 
+      if (!payload.action && !payload.type) {
+        console.error('Cannot dispatch null action. Make sure action type is in constants.js')
+        return;
+      }
+
       _startDispatching(payload);
 
       try {

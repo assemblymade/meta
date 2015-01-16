@@ -12,7 +12,7 @@
             <h2 class="mt0"><%= t "#{params[:topic]}.hero_title", scope: :showcases %></h2>
           </div>
           <div class="col col-4">
-            <span class="right mb0" style="font-size: 28px; margin-top: 22px"><%= @products.count %></span>
+            <span class="right mb0" style="font-size: 28px; margin-top: 22px"><%= @products_count %></span>
           </div>
         </div>
       </div>
@@ -20,7 +20,10 @@
   </div>
 <% end %>
 
-<%= react_component 'Apps', filter: params[:filter], topics: (['saas', 'mobile'].map{|slug|
-      I18n.t(slug, scope: :showcases).merge(slug: slug)
-    })
+<%= react_component 'Apps',
+      search: params[:search],
+      filter: params[:filter],
+      topics: (['saas', 'mobile'].map{|slug|
+        I18n.t(slug, scope: :showcases).merge(slug: slug)
+      })
 %>

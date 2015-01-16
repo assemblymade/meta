@@ -13,6 +13,7 @@ class Product < ActiveRecord::Base
   DEFAULT_BOUNTY_SIZE=10000
   PITCH_WEEK_REQUIRED_BUILDERS=10
   DEFAULT_IMAGE_PATH='/assets/app_icon.png'
+  MARK_SEARCH_THRESHOLD=0.10
 
   extend FriendlyId
 
@@ -590,11 +591,26 @@ class Product < ActiveRecord::Base
     indexes :description, analyzer: 'snowball'
     indexes :tech,        analyzer: 'keyword'
 
+    indexes :marks do
+      indexes :name
+      indexes :weight, type: 'float'
+    end
+
     indexes :suggest, type: 'completion', payloads: true, index_analyzer: 'simple', search_analyzer: 'simple'
   end
 
   def as_indexed_json(options={})
-    as_json(root: false, methods: [:tech, :hidden, :sanitized_description, :suggest], only: [:slug, :name, :pitch, :poster])
+    as_json(
+      root: false,
+      only: [:slug, :name, :pitch, :poster],
+      methods: [:tech, :hidden, :sanitized_description, :suggest]
+    ).merge(marks: mark_weights, logo_url: full_logo_url)
+  end
+
+  def mark_weights
+    markings.sort_by{|marking| -marking.weight }.
+             take(5).
+             map{|marking| { weight: marking.weight, name: marking.mark.name } }
   end
 
   def suggest

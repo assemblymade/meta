@@ -1,6 +1,7 @@
 var AppsStore = require('../stores/apps_store')
 var App = require('./app.js.jsx')
 var ProductSearch = require('./product_search.js.jsx')
+var Spinner = require('./spinner.js.jsx')
 
 var filters = [
   ['mine', 'My Apps'],
@@ -10,10 +11,11 @@ var filters = [
 ]
 
 var Apps = React.createClass({
-  render: function() {
-    var firstSectionApps = _(this.state.apps).first(3)
-    var secondSectionApps = _(this.state.apps).rest(3)
+  propTypes: {
+    search: React.PropTypes.string.isRequired
+  },
 
+  render: function() {
     return <section className="tile-grid tile-grid-ideas">
       <div className="container main">
         <div className="header">
@@ -29,29 +31,41 @@ var Apps = React.createClass({
             </div>
 
             <div className="item">
-              <ProductSearch />
+              <form action="/apps">
+                <input type="text" className="form-control" placeholder="Search Apps" name="search" defaultValue={this.props.search} />
+              </form>
             </div>
           </nav>
         </div>
 
-        {this.renderAppsList(firstSectionApps)}
-
-        <div className="col col-6 pr2 pb2">
-          <a href={"/apps?topic=" + this.props.topics[0].slug} className="big-block-button">
-            <div className="h7">Top Trending</div>
-            {this.props.topics[0].hero_title}
-          </a>
-        </div>
-        <div className="col col-6 pl2 pb2">
-          <a href={"/apps?topic=" + this.props.topics[1].slug} className="big-block-button">
-            <div className="h7">Top Trending</div>
-            {this.props.topics[1].hero_title}
-          </a>
-        </div>
-
-        {this.renderAppsList(secondSectionApps)}
+        {this.renderApps()}
       </div>
     </section>
+  },
+
+  renderApps: function() {
+    if (this.state.apps == null) {
+      return <Spinner />
+    }
+    return <div>
+      {this.renderAppsList(_(this.state.apps).first(3))}
+
+      <div className="col col-6 pr2 pb2">
+        <a href={"/apps?topic=" + this.props.topics[0].slug} className="big-block-button">
+          <div className="h7">Top Trending</div>
+          {this.props.topics[0].hero_title}
+        </a>
+      </div>
+
+      <div className="col col-6 pl2 pb2">
+        <a href={"/apps?topic=" + this.props.topics[1].slug} className="big-block-button">
+          <div className="h7">Top Trending</div>
+          {this.props.topics[1].hero_title}
+        </a>
+      </div>
+
+      {this.renderAppsList(_(this.state.apps).rest(3))}
+    </div>
   },
 
   renderAppsList: function(apps) {

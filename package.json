@@ -33,6 +33,7 @@
   "dependencies": {
     "Set": "^0.4.1",
     "browserify": "^5.9.1",
+    "elasticsearch": "^3.1.1",
     "imagesloaded": "^3.1.8",
     "immutable": "^3.3.0",
     "jquery": "^2.1.1",

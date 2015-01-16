@@ -1,17 +1,61 @@
 var ActionTypes = window.CONSTANTS.ActionTypes;
+var elasticsearch = require('elasticsearch')
 var routes = require('../routes')
 
 var AppsActionCreators = {
+  search: function(search) {
+    Dispatcher.dispatch({
+      type: ActionTypes.APPS_START_SEARCH
+    });
+
+    var client = new elasticsearch.Client({
+      host: document.getElementsByName('es-url')[0].content
+    });
+
+    client.search({
+      size: 100,
+      index: 'products',
+      body: {
+        query: {
+          multi_match: {
+            query: search,
+            fields: [ 'name.raw^2', 'name', 'pitch', 'marks.name', 'sanitized_description' ],
+            operator: 'or',
+            fuzziness: 1
+          }
+        },
+
+        filter: {
+          term: {
+            hidden: false
+          }
+        }
+      }
+    }).then(function (resp) {
+      Dispatcher.dispatch({
+        type: ActionTypes.APPS_RECEIVE_SEARCH_RESULTS,
+        results: resp
+      });
+    }, function (err) {
+      console.trace(err.message);
+    });
+
+  },
+
   filterSelected: function(filter, topic) {
+    Dispatcher.dispatch({
+      type: ActionTypes.APPS_START_SEARCH
+    });
+
     $.ajax({
       method: 'GET',
       dataType: 'json',
       url: routes.apps_path() + '.json',
       data: { filter: filter, topic: topic },
-      success: function(apps) {
+      success: function(response) {
         Dispatcher.dispatch({
           type: ActionTypes.APPS_RECEIVE,
-          apps: apps
+          apps: response
         });
       },
       error: function(jqXhr, textStatus, error) {

@@ -6,7 +6,7 @@ class AppsQuery
   end
 
   def perform
-    clauses.inject(Product.all) do |query, clause|
+    clauses.inject(Product.includes(logo: :attachment)) do |query, clause|
       query.merge(clause)
     end
   end
