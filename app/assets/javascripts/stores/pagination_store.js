@@ -3,7 +3,9 @@ var ActionTypes = CONSTANTS.ActionTypes
 // var Dispatcher = require('../dispatcher');
 var Store = require('./es6_store')
 
-var currentPage = parseUri(window.location).query.page || 1
+var parsedUri = parseUri(window.location) || {};
+var query = parsedUri.query || {};
+var currentPage = query.page || 1
 var totalPages = 1
 
 class PaginationStore extends Store {

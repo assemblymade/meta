@@ -1,11 +1,9 @@
 var IdeasIndex = require('./ideas_index.js.jsx');
 var IdeasRouter = require('./ideas_router');
-var IdeasRoutesStore = require('../../stores/ideas_routes_store.js.jsx');
+var IdeasRoutesStore = require('../../stores/ideas_routes_store');
 
 var IdeasApp = React.createClass({
-  displayName: 'IdeasApp',
-
-  componentDidMount: function() {
+  componentDidMount() {
     IdeasRoutesStore.addChangeListener(this.getComponentAndContext);
 
     // The router will have fired before the component mounted, so we need
@@ -13,13 +11,12 @@ var IdeasApp = React.createClass({
     IdeasRouter.navigate(window.location.pathname);
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     IdeasRoutesStore.removeChangeListener(this.getComponentAndContext);
     IdeasRouter.stop();
-    pace.stop();
   },
 
-  getComponentAndContext: function() {
+  getComponentAndContext() {
     var Component = IdeasRoutesStore.getComponent();
     var context = IdeasRoutesStore.getContext();
 
@@ -30,15 +27,15 @@ var IdeasApp = React.createClass({
     });
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       component: null
     }
   },
 
-  render: function() {
+  render() {
     return this.state.component;
   }
 });
 
-window.IdeasApp = IdeasApp;
+module.exports = window.IdeasApp = IdeasApp;
