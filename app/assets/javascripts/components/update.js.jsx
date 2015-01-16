@@ -7,7 +7,13 @@ var UserStore = require('../stores/user_store')
 var Update = React.createClass({
 
   propTypes: {
-    update: React.PropTypes.object,
+    update: React.PropTypes.shape({
+      created: React.PropTypes.string,
+      markdown_body: React.PropTypes.string,
+      marks: React.PropTypes.array,
+      title: React.PropTypes.string,
+      user: React.PropTypes.object
+    }),
     newsFeedItem: React.PropTypes.object,
     productSlug: React.PropTypes.string
   },
@@ -41,14 +47,21 @@ var Update = React.createClass({
   },
 
   render: function() {
+    var update = this.props.update;
+
     return (
       <div>
         <div className="p4">
-          <TextPost author={this.props.update.user} timestamp={this.props.update.created} title={this.props.update.title} body={this.props.update.markdown_body} labels={this.props.update.marks} />
+          <TextPost author={update.user}
+              timestamp={update.created}
+              title={update.title}
+              body={update.markdown_body}
+              labels={update.marks} />
         </div>
 
         <div className="px3 py2 border-top border-bottom">
-          <Love heartable_id={this.props.newsFeedItem.heartable_id} heartable_type="NewsFeedItem" />
+          <Love heartable_id={this.props.newsFeedItem.heartable_id}
+              heartable_type="NewsFeedItem" />
         </div>
 
         {this.renderFooter()}

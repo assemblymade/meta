@@ -4,18 +4,20 @@
 <div id="discussion-el"></div>
 <% content_for :javascript do %>
   <script>
-    var updateElement = React.createElement(Update, <%= {
+    $(document).ready(function() {
+      var updateElement = React.createElement(Update, <%= {
         productSlug: @post.product.slug,
         update: PostSerializer.new(@post),
         newsFeedItem: NewsFeedItemSerializer.new(@post.news_feed_item)
       }.to_json.html_safe
-    %>)
+      %>)
 
-    var discussionElement = React.createElement(Discussion, {
-      target: updateElement,
-      newsFeedItem: <%= NewsFeedItemSerializer.new(@post.news_feed_item).to_json.html_safe %>,
+      var discussionElement = React.createElement(Discussion, {
+        target: updateElement,
+        newsFeedItem: <%= NewsFeedItemSerializer.new(@post.news_feed_item).to_json.html_safe %>,
+      })
+
+      React.render(discussionElement, document.getElementById('discussion-el'))
     })
-
-    React.render(discussionElement, document.getElementById('discussion-el'))
   </script>
 <% end %>
