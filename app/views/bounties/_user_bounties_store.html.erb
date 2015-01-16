@@ -1,0 +1,6 @@
+<% if @user_bounties && @user_bounties.any? %>
+  <%= initial_store_data(
+    'UserBountiesStore',
+    @user_bounties.as_json
+  ) %>
+<% end %>

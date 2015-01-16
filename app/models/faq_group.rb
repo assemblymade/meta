@@ -11,7 +11,7 @@ class FaqGroup
     ['launching', 'Starting a new Product'],
     ['migrating', 'Migrating an Existing Product'],
     ['platform',  'Platform Features'],
-    ['terms',     'Terminology']    
+    ['terms',     'Terminology']
   ]
 
   def self.all
@@ -45,7 +45,6 @@ class FaqGroup
     @renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML,
       autolink: true,
       fenced_code_block: true,
-      autolink: true,
       lax_spacing: true,
       space_after_headers: true,
       superscript: true

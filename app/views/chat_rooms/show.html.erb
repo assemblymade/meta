@@ -1,4 +1,5 @@
 <% title @chat_room.name %>
+<%= track_engaged 'chat' %>
 <% activate_nav! :community if params[:id] == 'general' %>
 
 <%= render 'shared/navbar', bounties_link: true, fluid: true %>

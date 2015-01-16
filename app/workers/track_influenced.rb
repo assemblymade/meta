@@ -1,8 +1,8 @@
-class TrackEngagement
+class TrackInfluenced
   include Sidekiq::Worker
   sidekiq_options queue: 'analytics'
 
-  EVENT_NAME = (ENV['ENGAGEMENT_METRIC'] || 'influenced')
+  EVENT_NAME = (ENV['METRIC_INFLUENCED'] || 'influenced.v3')
 
   def perform(user_id, timestamp, verb, verb_subject, product_id)
     user = User.find(user_id)

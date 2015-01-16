@@ -52,6 +52,20 @@ describe Task do
     end
   end
 
+  describe '#start_work!' do
+    it "locks the bounty if it isn't locked" do
+      task.start_work!(worker)
+      expect(task.locked_at).to be_within(2).of(Time.now)
+      expect(task.locked_by).to eq(worker.id)
+    end
+
+    it "does not lock the bounty if it's already locked" do
+      task.lock_bounty!(core_member)
+      task.start_work!(worker)
+      expect(task.locked_by).to eq(core_member.id)
+    end
+  end
+
   describe "#unlock_bounty!" do
     it "releases the bounty for other workers" do
       task.lock_bounty!(worker)

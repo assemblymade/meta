@@ -144,5 +144,5 @@ group :production do
   gem 'memcachier'
   gem 'newrelic_rpm'
   gem 'rails_12factor'
-  gem 'skylight', '~> 0.4.2'
+  gem 'skylight', '~> 0.5'
 end

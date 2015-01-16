@@ -2,6 +2,7 @@
 
 var CustomIcons = [
   'app-coin',
+  'chevron-up',
   'chevron-down',
   'document',
   'settings',

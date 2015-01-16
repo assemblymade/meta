@@ -18,12 +18,6 @@ var NewsFeed = React.createClass({
   },
 
   componentDidMount: function() {
-    window.analytics.track(
-      'news_feed_item.viewed', {
-        product: (window.app.currentAnalyticsProduct())
-      }
-    );
-
     this.initializeEagerFetching();
   },
 

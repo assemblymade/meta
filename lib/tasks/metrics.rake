@@ -61,11 +61,12 @@ namespace :metrics do
   end
 
   task :mau2 => :environment do
-    last_month = 1.month.ago
+    last_month = 2.month.ago
     # User.where("created_at < ?", Date.today.beginning_of_month).where("last_request_at >= ?", last_month.beginning_of_month)
     mau   = User.where("created_at <= ?", last_month.end_of_month).where("last_request_at >= ?", last_month.beginning_of_month).count
     total = User.where("created_at <= ?", last_month.end_of_month).count
 
+    puts "#{last_month.beginning_of_month} > #{last_month.end_of_month}"
     puts "MAU RAW: #{mau}"
     puts "Total RAW: #{total}"
     puts "MAU: #{mau.to_f / total.to_f}"

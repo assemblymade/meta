@@ -8,7 +8,7 @@
 }
 
 .activity-chat {
-  margin: 10px 0;
+  margin: 12px 0 0;
 }
 
 .activity-body {
@@ -37,6 +37,7 @@
 .activity-actions {
   font-size: $font-size-small;
   color: $gray-light;
+  height: 18px;
 
   a {
     font-weight: bold;

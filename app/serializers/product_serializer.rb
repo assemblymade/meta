@@ -1,7 +1,7 @@
 class ProductSerializer < ApplicationSerializer
 
   attributes :url, :wips_url, :people_url
-  attributes :name, :pitch, :slug, :quality, :average_bounty, :logo_url, :can_update
+  attributes :name, :pitch, :slug, :quality, :average_bounty, :logo_url, :can_update, :wips_count, :partners_count
 
   def wips_url
     product_wips_path(object)
@@ -13,6 +13,14 @@ class ProductSerializer < ApplicationSerializer
 
   def url
     product_path(object)
+  end
+
+  def wips_count
+    object.wips.count
+  end
+
+  def partners_count
+    object.partners.count
   end
 
   def can_update

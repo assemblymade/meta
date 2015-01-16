@@ -13,7 +13,7 @@ describe PostChatMessage do
     end
 
     context 'product has activity' do
-      let!(:activity) { Activity.make!(target: product, type: 'Activities::Start') }
+      let!(:activity) { Activity.make!(target: product, type: 'Activities::Post') }
 
       it 'returns false' do
         pcm = PostChatMessage.new

@@ -8,7 +8,7 @@ var Interests = React.createClass({
       jokeMarks: {
         'Development': ['Intercal'],
         'Design': ['Microsoft Paint'],
-        'Strategy & Growth': ['Air Guitar']
+        'Growth': ['Air Guitar']
       },
       marks: {}
     }
@@ -180,7 +180,7 @@ var Interests = React.createClass({
   render: function() {
     return (
       <div>
-        {this.renderMarks('Strategy & Growth')}
+        {this.renderMarks('Growth')}
         {this.renderMarks('Design')}
         {this.renderMarks('Development')}
 

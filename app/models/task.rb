@@ -179,7 +179,7 @@ class Task < Wip
     self.workers << worker unless self.workers.include?(worker)
     Analytics.track(user_id: worker.id, event: 'product.wip.start_work', properties: WipAnalyticsSerializer.new(self, scope: worker).as_json)
     allocate!(worker) unless self.workers.count > 1
-    lock_bounty!(worker)
+    lock_bounty!(worker) if self.locked_at.nil?
   end
 
   def stop_work!(worker)

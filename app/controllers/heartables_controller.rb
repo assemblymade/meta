@@ -15,7 +15,7 @@ class HeartablesController < ApplicationController
 
     @heart = heartable.hearts.create(user: current_user)
     if @heart.valid?
-      TrackEngagement.perform_async(
+      TrackInfluenced.perform_async(
         current_user.id,
         @heart.created_at.to_i,
         'Heart',

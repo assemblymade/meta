@@ -1,8 +1,11 @@
-var LoveStore = require('../stores/love_store')
+var IconToggler = require('./ui/icon_toggler.js.jsx')
+var IconWithNumber = require('./ui/icon_with_number.js.jsx')
 var LoveActionCreators = require('../actions/love_action_creators')
-var xhr = require('../xhr')
 var Lovers = require('./lovers.jsx')
+var LoveStore = require('../stores/love_store')
 var UserStore = require('../stores/user_store')
+var xhr = require('../xhr')
+
 
 var Love = React.createClass({
   propTypes: {
@@ -17,30 +20,10 @@ var Love = React.createClass({
       return <div />
     }
 
-    return (
-      <div className="clearfix">
-        {this.renderHeart()}
-      </div>
-    );
-  },
+    var icon = <Icon icon="heart" />
+    var toggler = <IconToggler on={this.state.user_heart} icon={icon} action={this.handleClick} color="red" />
 
-  renderHeart: function() {
-    var heartsCount = this.state.hearts_count || 0;
-    var classes = React.addons.classSet({
-      fa: true,
-      'fa-heart': true,
-      gray: !this.state.user_heart,
-      'inline-block': true,
-      _mr0_25: true,
-      red: this.state.user_heart
-    });
-
-    return (
-      <a className="inline-block valign-top mr1 fs6 gray no-focus" href="javascript:void(0);" onClick={this.handleClick}>
-        <div className={classes}></div>
-        {heartsCount > 0 ? heartsCount : null}
-      </a>
-    );
+    return <IconWithNumber icon={toggler} n={heartsCount} />
   },
 
   getInitialState: function() {
@@ -55,7 +38,7 @@ var Love = React.createClass({
     LoveStore.removeListener('change', this._onChange)
   },
 
-  handleClick: function() {
+  handleClick: function(e) {
     if (UserStore.isSignedIn()) {
       if (this.state.user_heart) {
         LoveActionCreators.clickUnlove(this.props.heartable_type, this.props.heartable_id)

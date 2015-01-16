@@ -25,6 +25,12 @@
       });
     }
   }
+
+  window.Bugsnag = {
+    notify: function(errorName, msg) {
+      console.error('[Bugsnag]', errorName, msg)
+    }
+  }
 <% end %>
 </script>
 
