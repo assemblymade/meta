@@ -1,5 +1,5 @@
 var IdeasIndex = require('./ideas_index.js.jsx');
-var IdeasRouter = require('./ideas_router');
+var IdeasRouter = require('../../actions/ideas_router');
 var IdeasRoutesStore = require('../../stores/ideas_routes_store');
 
 var IdeasApp = React.createClass({

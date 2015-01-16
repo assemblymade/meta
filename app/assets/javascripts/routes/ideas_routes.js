@@ -3,9 +3,9 @@ var CONSTANTS = window.CONSTANTS
 var ActionTypes = CONSTANTS.ActionTypes
 
 var routes = [
-  ['/ideas', require('./ideas_index.js.jsx'), _showIdeas],
-  ['/ideas/new', require('./ideas_new.js.jsx'), _showCreateIdea],
-  ['/ideas/:id', require('./idea_show.js.jsx'), _showIdea]
+  ['/ideas', require('../components/ideas/ideas_index.js.jsx'), _showIdeas],
+  ['/ideas/new', require('../components/ideas/ideas_new.js.jsx'), _showCreateIdea],
+  ['/ideas/:id', require('../components/ideas/idea_show.js.jsx'), _showIdea]
 ];
 
 module.exports = routes;

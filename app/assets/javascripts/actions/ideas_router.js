@@ -1,7 +1,7 @@
 var Dispatcher = window.Dispatcher
 var CONSTANTS = window.CONSTANTS
 var ActionTypes = CONSTANTS.ActionTypes
-var ideasRoutes = require('./ideas_routes')
+var ideasRoutes = require('../routes/ideas_routes')
 var NProgress = require('nprogress')
 var page = require('page')
 var qs = require('qs')
@@ -46,7 +46,8 @@ function _getAndDispatch(component, callback) {
   return _.debounce(function(context) {
     NProgress.start()
 
-    $.getJSON(window.location, { cache: false }).done(callback).done(function(data) {
+    $.getJSON(window.location, { cache: false }).done(callback)
+    .done(function(data) {
       NProgress.done()
       Dispatcher.dispatch({
         type: ActionTypes.IDEAS_ROUTE_CHANGED,
