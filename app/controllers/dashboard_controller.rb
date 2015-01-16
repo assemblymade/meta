@@ -10,6 +10,9 @@ class DashboardController < ApplicationController
       reviewingBounties: Task.joins(:product).merge(current_user.core_products).where(state: 'reviewing')
     }.transform_values { |bounties| ActiveModel::ArraySerializer.new(bounties, each_serializer: BountySerializer).as_json }
 
+    @heartables = @news_feed_items + @news_feed_items.map(&:comments).flatten
+    @user_hearts = signed_in? && Heart.where(user_id: current_user.id, heartable_id: @heartables.map(&:id))
+
     @products = ActiveModel::ArraySerializer.new(suggested_products).as_json unless @news_feed_items.present?
   end
 
