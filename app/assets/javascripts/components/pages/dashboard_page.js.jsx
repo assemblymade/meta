@@ -5,15 +5,23 @@ var Nav = require('../nav.js.jsx')
 var NavItem = require('../nav_item.js.jsx')
 var NewsFeedItem = require('../news_feed/news_feed_item.js.jsx')
 var NewsFeedItemsStore = require('../../stores/news_feed_items_store.js')
+var NewsFeedItemsActionCreators = require('../../actions/news_feed_items_action_creators.js')
 var ProductsStore = require('../../stores/products_store.js')
 var ProductChip = require('../product_chip.js.jsx')
 var UserBountiesStore = require('../../stores/user_bounties_store.js')
+var Spinner = require('../spinner.js.jsx')
 var Tile = require('../ui/tile.js.jsx')
 
 var MiniBounty = React.createClass({
   getDefaultProps: function() {
     return {
       locker: true
+    }
+  },
+
+  getInitialState: function() {
+    return {
+      loading: false
     }
   },
 
@@ -55,7 +63,7 @@ var MiniBounty = React.createClass({
 var DashboardPage = React.createClass({
   getDefaultProps: function() {
     return  {
-      activeNavItem: 'all'
+      filter: 'all'
     }
   },
 
@@ -64,7 +72,7 @@ var DashboardPage = React.createClass({
       newsFeedItems: [],
       lockedBounties: [],
       reviewingBounties: [],
-      products: []
+      products: [],
     }
   },
 
@@ -72,6 +80,7 @@ var DashboardPage = React.createClass({
     NewsFeedItemsStore.addChangeListener(this.getStateFromStore)
     ProductsStore.addChangeListener(this.getStateFromStore)
     UserBountiesStore.addChangeListener(this.getStateFromStore)
+    window.addEventListener('scroll', this.onScroll)
 
     this.getStateFromStore()
   },
@@ -80,15 +89,25 @@ var DashboardPage = React.createClass({
     NewsFeedItemsStore.removeChangeListener(this.getStateFromStore)
     ProductsStore.removeChangeListener(this.getStateFromStore)
     UserBountiesStore.removeChangeListener(this.getStateFromStore)
+
+    window.removeEventListener('scroll', this.onScroll)
+  },
+
+  onScroll: function() {
+    var atBottom = $(window).scrollTop() + $(window).height() > $(document).height() - 200
+
+    if (atBottom) {
+      NewsFeedItemsActionCreators.requestNextPage(this.params())
+    }
   },
 
   renderProduct: function() {
-    var activeNavItem = this.props.activeNavItem
+    var filter = this.props.filter
     var product = _.find(this.props.followedProducts, function(product) {
-      return product.slug == activeNavItem
+      return product.slug == filter
     })
 
-    if (product && !_.contains(['all', 'interests', 'following'], activeNavItem)) {
+    if (product && !_.contains(['all', 'interests', 'following'], filter)) {
       return (
         <div className="mb3" style={{ marginTop: 42 }}>
           <Tile>
@@ -127,33 +146,40 @@ var DashboardPage = React.createClass({
   },
 
   renderNav: function() {
-    var activeNavItem = this.props.activeNavItem
+    var filter = this.props.filter
     var followedProducts = this.props.followedProducts
     var followingNavItem = null
     var divider = null
 
     if (followedProducts.length) {
-      followingNavItem = <NavItem label="What you follow" href='/dashboard/following' active={activeNavItem == 'interests'} />
+      followingNavItem = <NavItem label="What you follow" href='/dashboard/following' active={filter == 'interests'} />
       divider = <NavItem divider={true} />
     }
 
     return (
       <Nav>
-        <NavItem label="Everything"      href='/dashboard'           active={activeNavItem == 'all'} />
-        <NavItem label="Your interests"  href='/dashboard/interests' active={activeNavItem == 'following'} />
+        <NavItem label="Everything"      href='/dashboard'           active={filter == 'all'} />
+        <NavItem label="Your interests"  href='/dashboard/interests' active={filter == 'following'} />
         {followingNavItem}
 
         {divider}
 
         {followedProducts.map(function(product) {
-          return <NavItem label={product.name} href={'/dashboard/' + product.slug } active={activeNavItem == product.slug} small={true} />
+          return <NavItem label={product.name} href={'/dashboard/' + product.slug } active={filter == product.slug} small={true} />
         })}
       </Nav>
     )
   },
 
+  renderSpinner: function() {
+    if(this.state.loading) {
+      return <Spinner />
+    }
+  },
+
   renderNewsFeedItems: function() {
     var items = this.state.newsFeedItems
+    var spinner = this.renderSpinner()
 
     if (!items.length) {
       return this.renderSuggestProducts()
@@ -167,6 +193,7 @@ var DashboardPage = React.createClass({
               </div>
             )
           })}
+          {spinner}
         </div>
       )
     }
@@ -271,9 +298,16 @@ var DashboardPage = React.createClass({
       lockedBounties: UserBountiesStore.getLockedBounties(),
       reviewingBounties: UserBountiesStore.getReviewingBounties(),
       newsFeedItems: NewsFeedItemsStore.getNewsFeedItems(),
+      loading: NewsFeedItemsStore.getLoading(),
       products: ProductsStore.getProducts()
     })
   },
+
+  params: function() {
+    return {
+      filter: this.props.filter
+    }
+  }
 })
 
 window.DashboardPage = module.exports = DashboardPage

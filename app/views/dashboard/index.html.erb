@@ -4,6 +4,6 @@
 <%= render 'shared/navbar' %>
 
 <%= react_component 'DashboardPage', {
-  activeNavItem: params.fetch(:filter, 'all'),
+  filter: params.fetch(:filter, 'all'),
   followedProducts: ActiveModel::ArraySerializer.new(current_user.followed_products.ordered_by_trend)
 } %>

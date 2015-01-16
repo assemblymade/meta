@@ -273,6 +273,9 @@ ASM::Application.routes.draw do
   # legacy
   get '/meta/chat', to: redirect(path: '/chat/general')
 
+  # FIXME: Fix news_feed_items_controller to allow missing product
+  get '/news_feed_items' => 'dashboard#news_feed_items'
+
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do
 
