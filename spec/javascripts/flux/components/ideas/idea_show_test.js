@@ -7,13 +7,6 @@ describe('IdeaShow', function() {
   var _$;
 
   global.Dispatcher = require(appFile('dispatcher'));
-
-  global.ZeroClipboard = function() {
-    return {
-      on: function() {}
-    };
-  };
-
   global.ReactUjs = {
     mountReactComponents: noop
   };
@@ -71,7 +64,9 @@ describe('IdeaShow', function() {
       var main = TestUtils.scryRenderedDOMComponentsWithTag(ideaShow, 'main');
       var nfiComments = TestUtils.findRenderedComponentWithType(
         ideaShow,
-        require(appFile('components/news_feed/news_feed_item_comments.js.jsx'))
+        require.requireActual(
+          appFile('components/news_feed/news_feed_item_comments.js.jsx')
+        )
       );
 
       expect(TestUtils.isCompositeComponent(ideaShow)).toBe(true);

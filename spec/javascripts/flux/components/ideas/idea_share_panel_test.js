@@ -2,12 +2,6 @@ jest.dontMock(appFile('components/ideas/idea_share_panel.js.jsx'));
 
 describe('IdeaSharePanel', function() {
   it('renders a panel of sharing options', function() {
-    global.ZeroClipboard = function() {
-      return {
-        on: function() {}
-      };
-    };
-
     var IdeaSharePanel = require(appFile('components/ideas/idea_share_panel.js.jsx'));
     var idea = { url: '/twitter' };
     var ideaSharePanel = TestUtils.renderIntoDocument(
