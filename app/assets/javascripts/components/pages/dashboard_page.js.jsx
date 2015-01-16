@@ -239,23 +239,27 @@ var DashboardPage = React.createClass({
       )
     }
 
-    var lockedBounties = (
-      <div className="mb3">
-        <h6 className="gray caps mt2 mb2">Bounties you're working on</h6>
-        {this.state.lockedBounties.map(function(bounty) {
-          return <MiniBounty bounty={bounty} />
-        })}
-      </div>
-    )
+    if (this.state.lockedBounties.length) {
+      var lockedBounties = (
+        <div className="mb3">
+          <h6 className="gray caps mt2 mb2">Bounties you're working on</h6>
+          {this.state.lockedBounties.map(function(bounty) {
+            return <MiniBounty bounty={bounty} />
+          })}
+        </div>
+      )
+    }
 
-    var reviewingBounties = (
-      <div className="mb3">
-        <h6 className="gray caps mt2 mb2">Bounties in review</h6>
-        {this.state.reviewingBounties.map(function(bounty) {
-          return <MiniBounty bounty={bounty} locker={false} />
-        })}
-      </div>
-    )
+    if (this.state.reviewingBounties.length) {
+      var reviewingBounties = (
+        <div className="mb3">
+          <h6 className="gray caps mt2 mb2">Bounties to review</h6>
+          {this.state.reviewingBounties.map(function(bounty) {
+            return <MiniBounty bounty={bounty} locker={false} />
+          })}
+        </div>
+      )
+    }
 
     var bounties = (
       <div>
