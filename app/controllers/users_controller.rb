@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   def edit
     authenticate_user!
     @user = current_user.decorate
+    @balance = User::Balance.new(current_user)
   end
 
   def flag

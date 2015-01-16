@@ -22,7 +22,6 @@ var Navbar = React.createClass({
       userDropdownMenu = (
         <DropdownMenu position="right" key="user dropdown menu">
           <DropdownMenu.Item label="Profile" icon="user" action={this.props.userPath} />
-          <DropdownMenu.Item label="Balance" icon="wallet" action={this.props.balancePath} />
           <DropdownMenu.Item label="Settings" icon="settings" action={this.props.editUserPath} />
 
           <DropdownMenu.Divider />
