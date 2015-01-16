@@ -650,6 +650,13 @@ class Product < ActiveRecord::Base
     QueryMarks.new.normalize_mark_vector(self.mark_vector())
   end
 
+  def majority_owner
+    total_coins = TransactionLogEntry.where(product: self).sum(:cents)
+    majority_owner = TransactionLogEntry.where(product: self).group('wallet_id').sum(:cents).sort_by{|k,v| -v}.first
+
+    majority_owner[1].to_f / total_coins.to_f >= 0.5
+  end
+
   protected
 
   def add_to_event_stream

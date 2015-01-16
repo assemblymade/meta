@@ -1,24 +1,58 @@
-var AvatarWithUsername = require('./ui/avatar_with_username.js.jsx')
-var BountyActionCreators = require('../actions/bounty_action_creators');
-var BountyStore = require('../stores/bounty_store');
-var Button = require('./ui/button.js.jsx')
-var formatShortTime = require('../lib/format_short_time.js');
-var Icon = require('./icon.js.jsx');
-var Love = require('./love.js.jsx');
-var Trackable = require('./trackable.js.jsx')
-var routes = require('../routes')
-var SubscriptionsStore = require('../stores/subscriptions_store')
+var Accordion = require('./accordion.js.jsx');
+var Spinner = require('./spinner.js.jsx');
 var TextPost = require('./ui/text_post.js.jsx')
-var ToggleButton = require('./toggle_button.js.jsx')
-var InviteFriendBounty = require('./invite_friend_bounty.js.jsx')
-
-// TODO (chrislloyd) hack to get it loading
-var Discussion = require('./ui/discussion.js.jsx')
-
-var ONE_HOUR = 60 * 60 * 1000
+var UserStore = require('../stores/user_store')
 
 var Proposal = React.createClass({
+  displayName: 'Proposal',
+  propTypes: {
+    newsFeedItem: React.PropTypes.object,
+    user: React.PropTypes.object,
+    proposal: React.PropTypes.object
+  },
 
-})
+  render: function() {
+    return (
+      <div>
+        {this.renderProposal()}
+      </div>
+    );
+  },
 
-module.exports = window.Proposal = Proposal
+  renderProposal: function() {
+
+
+    return (
+      <div>
+
+        <div className="p4">
+          <TextPost author={this.props.user} timestamp={this.props.newsFeedItem.created} title={this.props.proposal.name} body={this.props.proposal.description} labels={[]} />
+        </div>
+
+        <div className="px3 py2 border-top border-bottom">
+          <Love heartable_id={this.props.newsFeedItem.id} heartable_type="NewsFeedItem" />
+        </div>
+
+
+        {this.renderFooter()}
+
+      </div>
+
+    );
+  },
+
+
+  renderFooter: function() {
+    return (
+      <div className="card-footer px3 py2 clearfix">
+        <ul className="list-inline mt0 mb0 py1 right">
+        
+        </ul>
+      </div>
+    )
+  }
+
+
+});
+
+module.exports = window.Proposal = Proposal;
