@@ -89,6 +89,16 @@ class Idea < ActiveRecord::Base
     MakeMarks.new.mark_with_name(self, mark_name)
   end
 
+  def greenlight!
+    update(greenlit_at: Time.now)
+  end
+
+  def greenlight?
+    if percentile <= 20
+      greenlight!
+    end
+  end
+
   def love
     news_feed_item.hearts.count
   end
@@ -114,7 +124,8 @@ class Idea < ActiveRecord::Base
       last_score_update: DateTime.now,
       score: lovescore
     })
-    lovescore
+
+    greenlight?
   end
 
   def url_params

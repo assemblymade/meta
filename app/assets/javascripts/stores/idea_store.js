@@ -14,17 +14,17 @@ class IdeaStore extends Store {
           _setIdea(action)
           this.emitChange()
           break
-        }
-      })
-    }
-
-    getIdea() {
-      return currentIdea
-    }
+      }
+    })
   }
 
-  module.exports = new IdeaStore()
-
-  function _setIdea(action) {
-    currentIdea = action.idea
+  getIdea() {
+    return currentIdea
   }
+}
+
+module.exports = new IdeaStore()
+
+function _setIdea(action) {
+  currentIdea = action.idea
+}
