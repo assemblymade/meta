@@ -23,12 +23,11 @@ describe('IdeaTile', function() {
       <IdeaTile idea={idea} />
     );
 
-    var progress = TestUtils.findRenderedComponentWithType(
+    var items = TestUtils.scryRenderedDOMComponentsWithClass(
       ideaTile,
-      require.requireActual(appFile('components/ui/progress_bar.js.jsx'))
+      'item'
     );
 
-    expect(progress).toBeDefined();
-    expect(progress.props.progress).toEqual(idea.temperature);
+    expect(items.length).toBeGreaterThan(0);
   });
 });

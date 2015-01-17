@@ -62,16 +62,9 @@ describe('IdeaShow', function() {
       );
 
       var main = TestUtils.scryRenderedDOMComponentsWithTag(ideaShow, 'main');
-      var nfiComments = TestUtils.findRenderedComponentWithType(
-        ideaShow,
-        require.requireActual(
-          appFile('components/news_feed/news_feed_item_comments.js.jsx')
-        )
-      );
 
       expect(TestUtils.isCompositeComponent(ideaShow)).toBe(true);
       expect(main.length).toBe(1);
-      expect(nfiComments).toBeDefined();
     });
   });
 });
