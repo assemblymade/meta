@@ -85,7 +85,9 @@ var IdeaShow = React.createClass({
               </h4>
             </div>
             <div className="px4 right py1">
-              <button type="button" className="_button pill theme-green shadow text-shadow border">
+              <button type="button"
+                  className="_button pill theme-green shadow text-shadow border"
+                  onClick={navigate.bind(null, '/ideas/new')}>
                 <span className="title">Add your app idea</span>
               </button>
             </div>

@@ -18,7 +18,7 @@ class IdeaActionCreators {
       contentType: 'application/json',
       dataType: 'json',
       success: function(newIdea) {
-        page(newIdea.url);
+        page(newIdea.path);
 
         Dispatcher.dispatch({
           type: ActionTypes.IDEAS_NEW_IDEA_CREATED

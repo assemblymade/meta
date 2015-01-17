@@ -10,7 +10,6 @@ class AppsStore extends Store {
     super()
 
     this.dispatchToken = Dispatcher.register((action) => {
-      console.log(action)
       switch(action.type) {
         case ActionTypes.APPS_START_SEARCH:
           _apps = null

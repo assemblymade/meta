@@ -22,7 +22,6 @@ var ProductSearchActionCreators = {
       type: 'POST',
       data: JSON.stringify(postData),
       success: function(data) {
-        console.log('data', data)
         var products = _.map(data.suggest_products[0].options, function(option) {
           return _.extend(option.payload, { query_text: option.text })
         })
