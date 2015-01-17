@@ -17,33 +17,33 @@ var IdeasIndex = React.createClass({
     query: React.PropTypes.object
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     IdeasStore.addChangeListener(this.getIdeas);
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     IdeasStore.removeChangeListener(this.getIdeas);
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       currentUser: UserStore.getUser() || {}
     };
   },
 
-  getIdeas: function() {
+  getIdeas() {
     this.setState({
       ideas: IdeasStore.getIdeas()
     });
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       ideas: IdeasStore.getIdeas()
     };
   },
 
-  render: function() {
+  render() {
     var navigate = this.props.navigate;
 
     return (
@@ -125,7 +125,7 @@ var IdeasIndex = React.createClass({
     );
   },
 
-  renderHeader: function() {
+  renderHeader() {
     return (
       <section className="_hero hero-ideas" key="ideas-header">
         <div className="container">
@@ -147,7 +147,7 @@ var IdeasIndex = React.createClass({
               Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea &mdash; ready to be built on Assembly.
             </p>
             <div className="text-3">
-              <a href="#">Learn More</a>
+              <a href="/help/basics">Learn more</a>
             </div>
           </div>
         </div>
@@ -155,7 +155,7 @@ var IdeasIndex = React.createClass({
     );
   },
 
-  renderIdeas: function() {
+  renderIdeas() {
     var ideas = this.state.ideas;
     var IdeaFactory = React.createFactory(IdeaTile);
 
@@ -166,7 +166,7 @@ var IdeasIndex = React.createClass({
     }
   },
 
-  renderMyIdeas: function() {
+  renderMyIdeas() {
     var navigate = this.props.navigate;
     var username = this.props.currentUser.username;
 

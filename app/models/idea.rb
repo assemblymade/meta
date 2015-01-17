@@ -14,7 +14,8 @@ class Idea < ActiveRecord::Base
   delegate :news_feed_item_comments, to: :news_feed_item
 
   validates :name, presence: true,
-                   length: { minimum: 2, maximum: 255 }
+                   length: { minimum: 2, maximum: 255 },
+                   exclusion: { in: %w(admin about script if owner core) }
 
   after_commit :ensure_news_feed_item, on: :create
   after_commit :update_news_feed_item
