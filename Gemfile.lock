@@ -323,7 +323,6 @@ GEM
       railties (= 4.2.0)
       sprockets-rails
     rails-assets-backbone (1.0.0)
-    rails-assets-basscss (4.1.2)
     rails-assets-dropzone (3.9.0)
     rails-assets-es5-shim (4.0.3)
     rails-assets-ink (1.0.5)
@@ -576,7 +575,6 @@ DEPENDENCIES
   rack-streaming-proxy
   rails (= 4.2.0)
   rails-assets-backbone (= 1.0.0)
-  rails-assets-basscss (= 4.1.2)
   rails-assets-dropzone (= 3.9.0)
   rails-assets-es5-shim (= 4.0.3)
   rails-assets-ink (= 1.0.5)
