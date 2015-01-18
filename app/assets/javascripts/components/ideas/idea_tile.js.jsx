@@ -102,7 +102,7 @@ var Idea = React.createClass({
                 <div className="py3 px3">
                   <ProgressBar progress={idea.temperature}
                       threshold={TILTING_THRESHOLD}
-                      type="success" />
+                      type={idea.greenlit_at ? 'success' : 'gray'} />
                 </div>
               </div>
             </div>

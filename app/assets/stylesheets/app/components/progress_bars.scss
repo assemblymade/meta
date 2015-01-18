@@ -28,3 +28,15 @@
 .progress-bar-success {
   background: $green;
 }
+
+.progress-bar-gray {
+  background: $gray-2;
+}
+
+.progress-threshold {
+  background: $gray-2;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 3px;
+}

@@ -5,10 +5,11 @@ var ProgressBar = React.createClass({
     progress: React.PropTypes.number.isRequired,
     threshold: React.PropTypes.number,
     type: React.PropTypes.oneOf([
+      'danger',
       'default',
+      'gray',
       'success',
-      'warning',
-      'danger'
+      'warning'
     ])
   },
 
@@ -44,13 +45,7 @@ var ProgressBar = React.createClass({
 
   renderThreshold: function() {
     if (this.props.threshold) {
-      return <div style={{
-          position: 'absolute',
-          top: 0,
-          left: this.props.threshold + '%',
-          backgroundColor: 'gray',
-          height: '100%',
-          width: 3 }} />
+      return <div className="progress-threshold" style={{ left: this.props.threshold + '%'}} />
     }
   }
 });

@@ -191,7 +191,7 @@ var IdeaShow = React.createClass({
           <div className="item mt1 mb1 py2 px3">
             <ProgressBar progress={idea.temperature}
                 threshold={TILTING_THRESHOLD}
-                type="success" />
+                type={idea.greenlit_at ? 'success' : 'gray'} />
           </div>
         </div>
 
