@@ -12,3 +12,19 @@
 .progress-small {
   height: 6px;
 }
+
+.progress {
+  display:block;
+  width:100%;
+  height: 1rem;
+  border-radius: 1rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  background: $gray-5;
+}
+
+.progress-bar-success {
+  background: $green;
+}

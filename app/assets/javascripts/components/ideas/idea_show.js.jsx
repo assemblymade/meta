@@ -13,6 +13,8 @@ var StartConversationModal = require('./start_conversation_modal.js.jsx');
 var StartConversationModalStore = require('../../stores/start_conversation_modal_store');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
 
+var TILTING_THRESHOLD = 80;
+
 var IdeaShow = React.createClass({
   displayName: 'IdeaShow',
 
@@ -186,7 +188,11 @@ var IdeaShow = React.createClass({
         </div>
 
         <div className="col col-8 border-2px border-right border-left border-gray px2">
-          <ProgressBar progress={idea.temperature} />
+          <div className="item mt1 mb1 py2 px3">
+            <ProgressBar progress={idea.temperature}
+                threshold={TILTING_THRESHOLD}
+                type="success" />
+          </div>
         </div>
 
         <div className="col col-1 px1 mt2">

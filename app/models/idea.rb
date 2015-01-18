@@ -94,7 +94,7 @@ class Idea < ActiveRecord::Base
     update(greenlit_at: Time.now)
   end
 
-  def greenlight?
+  def should_greenlight?
     if percentile <= 20
       greenlight!
     end
@@ -126,7 +126,7 @@ class Idea < ActiveRecord::Base
       score: lovescore
     })
 
-    greenlight?
+    should_greenlight?
   end
 
   def url_params

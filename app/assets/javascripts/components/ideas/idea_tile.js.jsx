@@ -9,6 +9,8 @@ var SmallTile = require('../ui/small_tile.js.jsx');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
 var UserStore = require('../../stores/user_store');
 
+var TILTING_THRESHOLD = 80;
+
 var Idea = React.createClass({
   displayName: 'Idea',
 
@@ -97,7 +99,11 @@ var Idea = React.createClass({
               </div>
 
               <div className="item">
-                <ProgressBar progress={idea.temperature} />
+                <div className="py3 px3">
+                  <ProgressBar progress={idea.temperature}
+                      threshold={TILTING_THRESHOLD}
+                      type="success" />
+                </div>
               </div>
             </div>
           </Footer>
