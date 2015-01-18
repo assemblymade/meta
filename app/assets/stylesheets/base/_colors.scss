@@ -1,9 +1,5 @@
-// TODO: Replace with loop once sass-rails is fixed
-//
-
 $colors: (
   "white":  $white,
-  "gray-7": $gray-7,
   "gray-6": $gray-6,
   "gray-5": $gray-5,
   "gray-4": $gray-4,
@@ -19,21 +15,9 @@ $colors: (
   "gray-darker":  $gray-darker,
 
   "green":      $green,
-  "green-dark": $green-dark,
-  "aqua":       $aqua,
-  "cyan":       $cyan,
   "blue":       $blue,
   "red":        $red,
-  "yellow":     $yellow,
-
-  "accent-brown":    $accent-brown,
-  "accent-green":    $accent-green,
-  "accent-teal":     $accent-teal,
-  "accent-blue":     $accent-blue,
-  "accent-purple":   $accent-purple,
-  "accent-lavender": $accent-lavender,
-  "accent-rose":     $accent-rose,
-  "accent-orange":   $accent-orange
+  "yellow":     $yellow
 );
 
 @each $color, $hex in $colors {
