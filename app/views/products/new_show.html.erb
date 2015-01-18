@@ -19,7 +19,7 @@
             </div>
             <a href="<%= product_plan_path(@product) %>">Read more</a>
           <% else %>
-            <p class="gray-dark">Uh, there's nothing here yet. Grab a coffee, because this product is still percolating!</p>
+            <p class="gray-2">Uh, there's nothing here yet. Grab a coffee, because this product is still percolating!</p>
             <% if can?(:update, @product) %>
               <a class="btn btn-primary btn-block" href="<%= edit_product_path(@product) %>">Add the plan</a>
             <% end %>
@@ -56,10 +56,10 @@
             <div class="h2 mt0 mb0 green left mr3">
               <%= inline_react_component 'Icon', icon: 'users' %>
             </div>
-            <h4 class="gray-darker mt0 mb2 py1">Team Building</h6>
+            <h4 class="gray-1 mt0 mb2 py1">Team Building</h6>
           </div>
 
-          <p class="gray-dark mb3">
+          <p class="gray-2 mb3">
             This product is growing a team. It needs to reach <strong>10 team members</strong> in
             <strong>30 days</strong> before it is Greenlit. You can become a team member by
             <a href="<%= product_people_path(@product) %>">introducing yourself</a>.</p>
@@ -76,7 +76,7 @@
       <% end %>
       <div class="px3">
         <% if @product_marks.count > 0 %>
-          <h6 class="mt0 py2 mb0 gray-dark">Product Tags</h6>
+          <h6 class="mt0 py2 mb0 gray-2">Product Tags</h6>
           <ul class="list-reset">
             <% @product_marks.each do |mark| %>
               <li>
@@ -85,7 +85,7 @@
             <% end %>
           </ul>
         <% end %>
-        <h6 class="mt0 py2 mb0 gray-dark">Bounty Tags</h6>
+        <h6 class="mt0 py2 mb0 gray-2">Bounty Tags</h6>
         <ul class="list-reset">
           <% @top_wip_tags.each do |tag, count| %>
             <li>

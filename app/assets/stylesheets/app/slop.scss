@@ -102,7 +102,7 @@ $user-davidkaneda: #848C24;
     font-size: 34px;
 
     span {
-      color: $gray-light;
+      color: $gray-5;
     }
   }
 
@@ -138,7 +138,7 @@ $user-davidkaneda: #848C24;
 
 .deprecated-card-colored {
   margin-bottom: 0;
-  background-color: $gray;
+  background-color: $gray-2;
   box-shadow:
     0 1px 0 0 $brand-shadow;
 
@@ -321,7 +321,7 @@ figure,
 .figure {
   font-size: $font-size-small;
   font-style: italic;
-  color: $gray;
+  color: $gray-2;
   border-top: 1px dotted $brand-divider;
   padding: 10px 0;
 }
@@ -356,7 +356,7 @@ figure,
 //
 // .block-colored {
 //   background: $body-bg;
-//   color: $gray-dark;
+//   color: $gray-2;
 // }
 //
 // .block-bordered {
@@ -436,7 +436,7 @@ figure,
 
     span,
     span a {
-      color: $gray;
+      color: $gray-2;
       font-weight: normal;
       font-size: 92.5%;
     }
@@ -594,4 +594,3 @@ figure,
   right: -813px - 48px;
   top: -0.5rem;
 }
-

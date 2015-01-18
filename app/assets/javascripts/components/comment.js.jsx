@@ -122,7 +122,7 @@ module.exports = React.createClass({
     }
 
     var classes = React.addons.classSet({
-      'gray-dark': this.isOptimistic()
+      'gray-2': this.isOptimistic()
     });
 
     return (

@@ -1,6 +1,6 @@
 .handle {
   background: white image-url('handle.png') no-repeat 50% 50%;
-  border-left: 1px solid $gray-lighter;
+  border-left: 1px solid $gray-6;
   cursor: -webkit-grab;
   cursor: -moz-grab;
   cursor: grab;
@@ -19,6 +19,6 @@
     cursor: -webkit-grabbing;
     cursor: -moz-grabbing;
     cursor: grabbing;
-    background-color: $gray-lighter
+    background-color: $gray-6
   }
 }

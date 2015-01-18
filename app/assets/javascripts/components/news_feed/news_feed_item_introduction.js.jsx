@@ -35,7 +35,7 @@ module.exports = React.createClass({
 
         <div className="h5 bold mt0 mb0 gray-1">{user.username}:</div>
 
-        <div className="gray-darker">
+        <div className="gray-1">
           {target.bio}
         </div>
       </a>
@@ -61,7 +61,7 @@ module.exports = React.createClass({
 
         <div className="h5 bold mt0 mb0 gray-1">{user.username}:</div>
 
-        <div className="gray-darker">
+        <div className="gray-1">
           {target.bio}
         </div>
       </span>

@@ -101,7 +101,7 @@
       return (
         <ul className="list-reset mn3 mtn1 mb1">
           {assets.map(function(asset) {
-            var classes = "z1 absolute pos_t0 pos_l0 inline-block valign-pro w100p align-center pr1 pl1 fs2 gray-dark"
+            var classes = "z1 absolute pos_t0 pos_l0 inline-block valign-pro w100p align-center pr1 pl1 fs2 gray-2"
             if (['png', 'gif'].indexOf(asset.attachment.extension) > -1) {
               classes += " none"
             }

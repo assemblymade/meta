@@ -147,7 +147,7 @@ pre, code, samp {
 }
 code {
   color: $red;
-  background-color: $gray-lighter;
+  background-color: $gray-6;
 }
 
 mark, .mark {
@@ -328,7 +328,7 @@ a.text-coins:hover {
 }
 
 .text-muted-links {
-  color: $gray;
+  color: $gray-2;
 
   a {
     color: inherit;

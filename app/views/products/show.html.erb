@@ -60,7 +60,7 @@
 
       <% product_membership = current_user.team_memberships.find_by(product: @product) %>
 
-      <div class="mb3 mid-gray">
+      <div class="mb3 gray-3">
         <strong>Welcome <%= current_user.username %>!</strong> If you like the idea of what's being built here, jump in! There are a lot of ways to get involved. When you do work on an Assembly product you become part owner in it.
       </div>
 
@@ -153,7 +153,7 @@
             <div class="overflow-hidden">
               <div><%= user.username %></div>
               <% if user.bio.present? %>
-                <div class="mid-gray"><%= user.bio %></div>
+                <div class="gray-3"><%= user.bio %></div>
               <% end %>
             </div>
         </a>

@@ -36,7 +36,7 @@ var PostListIem = React.createClass({
           {this.renderSummary()}
         </div>
 
-        <div className="px3 mb1 mt0 gray-dark">
+        <div className="px3 mb1 mt0 gray-2">
           {this.renderComments(post.comments_count)}
           {this.renderTags(post.marks)}
         </div>
@@ -69,7 +69,7 @@ var PostListIem = React.createClass({
 
     if (post.summary) {
       return (
-        <div className="h5 mt0 mb2 gray-dark">
+        <div className="h5 mt0 mb2 gray-2">
           {post.summary}
         </div>
       );
@@ -96,7 +96,7 @@ var PostListIem = React.createClass({
       <div className="h6 px3 py2 b0 mt0 border-top">
         <Avatar user={user} size={24} style={{ display: 'inline-block' }} />
 
-        <span className="gray-dark ml2">
+        <span className="gray-2 ml2">
           <a href={user.url}>@{user.username}</a> wrote this post {moment(post.created_at).fromNow()}
         </span>
       </div>

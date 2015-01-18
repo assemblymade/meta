@@ -33,7 +33,7 @@ var Interests = React.createClass({
     return (
       <div className="row">
         <div className="col-xs-12">
-          <h4 className="gray caps mt3 mb3 ml2">
+          <h4 className="gray-2 caps mt3 mb3 ml2">
             {section}
           </h4>
           {marks}
@@ -108,7 +108,7 @@ var Interests = React.createClass({
     var classes = ['right', 'bg-blue', 'bold', 'h4', 'px3', 'py2', 'rounded', 'mt0', 'b0', 'align-left']
 
     if (progress < 100) {
-      classes.push('gray-light', 'gray-light-hover')
+      classes.push('gray-5', 'gray-5-hover')
     } else {
       classes.push('white', 'white-hover')
     }

@@ -18,7 +18,7 @@ var ProductChip = React.createClass({
 
           <div className="overflow-hidden" style={{ lineHeight: '16px' }}>
             <div className="h6 mt0 mb0 black">{product.name}</div>
-            <div className="h6 mt0 mb0 gray-dark">{product.pitch}</div>
+            <div className="h6 mt0 mb0 gray-2">{product.pitch}</div>
           </div>
         </a>
       </Tile>

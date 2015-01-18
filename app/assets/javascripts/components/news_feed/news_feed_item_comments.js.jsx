@@ -260,9 +260,9 @@ var NewsFeedItemComments = React.createClass({
 
     if (numberOfComments > this.state.comments.length) {
       return (
-        <a className="block mt2 fs3 gray-dark clickable"
+        <a className="block mt2 fs3 gray-2 clickable"
             onClick={this.triggerModal}>
-          <span className="pr2 gray fs5">
+          <span className="pr2 gray-2 fs5">
             <Icon icon="comment" />
           </span>
           View all {numberOfComments} comments

@@ -3,7 +3,7 @@
     <div class="mb1 h4 mt0">
       <a href="<%= product_wip_path(bounty.product, bounty) %>">
         <%= bounty.title %>
-        <span class="gray-dark ml1">#<%= bounty.number %></span>
+        <span class="gray-2 ml1">#<%= bounty.number %></span>
       </a>
     </div>
 
@@ -20,7 +20,7 @@
         }.merge(BountySerializer.new(bounty, scope: current_user).as_json) %>
       </span>
 
-      <span class="gray mr2">
+      <span class="gray-2 mr2">
         <span class="sr-only">comments</span>
         <span class="fa fa-comment"></span>
         <%= bounty.comments_count %>
@@ -28,7 +28,7 @@
 
       <span class="h6">
         <% bounty.tags.each do |tag| %>
-          <a class="caps gray-dark mr1" href="<%= product_wips_path(bounty.product, tag: tag.name) %>">
+          <a class="caps gray-2 mr1" href="<%= product_wips_path(bounty.product, tag: tag.name) %>">
             #<%= tag.name.downcase %>
           </a>
         <% end %>
@@ -46,7 +46,7 @@
         <%= locker.username %>
       </a>
 
-      <span class="gray-dark">
+      <span class="gray-2">
         has <%= time_ago_in_words(bounty.locked_at + 60.hours) %> to work on this
       </span>
     </div>
