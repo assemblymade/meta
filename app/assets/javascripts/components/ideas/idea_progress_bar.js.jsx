@@ -6,7 +6,7 @@ var TILTING_THRESHOLD = 75;
 var IdeaProgressBar = React.createClass({
   propTypes: {
     idea: React.PropTypes.shape({
-      greenlit_at: React.PropTypes.any.isRequired,
+      greenlit_at: React.PropTypes.string,
       news_feed_item: React.PropTypes.shape({
         id: React.PropTypes.string.isRequired
       }).isRequired,
@@ -40,8 +40,10 @@ var IdeaProgressBar = React.createClass({
   },
 
   updateProgress() {
+    var progress = this.state.progress +
+      IdeaProgressStore.getProgress(this.props.idea.news_feed_item.id)
     this.setState({
-      progress: IdeaProgressStore.getProgress(this.props.idea.news_feed_item.id)
+      progress: progress
     });
   }
 });
