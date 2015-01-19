@@ -99,26 +99,19 @@
       var assets_url = product.url+'/assets'
 
       return (
-        <ul className="list-reset mn3 mtn1 mb1">
+        <div className="clearfix">
           {assets.map(function(asset) {
-            var classes = "z1 absolute pos_t0 pos_l0 inline-block valign-pro w100p align-center pr1 pl1 fs2 gray-2"
-            if (['png', 'gif'].indexOf(asset.attachment.extension) > -1) {
-              classes += " none"
+            if (['png', 'gif'].indexOf(asset.attachment.extension) < 0) {
+              return null
             }
 
             return (
-              <li className="inline-block w100p pt1 pr1 pl1 r480_w50p r768_w100p r1024_w50p">
-                <a href={assets_url} className="relative inline-block w100p" style={{backgroundColor: '#dbdee3'}}>
-                  <div className={classes}>
-                    <div className="bold caps">{asset.attachment.extension}</div>
-                    <div className="multiline-ellipsis">{asset.name}</div>
-                  </div>
-                  <div className="z2 relative w100p pb66p border-inset-dark bg-size-cover bg-repeat-none bg-position-center" style={{backgroundImage: 'url('+asset.thumbnail_url+')'}}></div>
-                </a>
-              </li>
+              <div className="sm-col sm-col-6 px1 mb1">
+                <a href={assets_url} title={asset.name} className="block bg-gray-4 bg-size-cover bg-repeat-none bg-position-center" style={{backgroundImage: 'url('+asset.thumbnail_url+')', height: '80px'}}></a>
+              </div>
             )
           })}
-        </ul>
+        </div>
       )
     },
 
