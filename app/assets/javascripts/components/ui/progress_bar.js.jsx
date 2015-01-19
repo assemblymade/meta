@@ -6,7 +6,7 @@ var ProgressBar = React.createClass({
     threshold: React.PropTypes.number,
     type: React.PropTypes.oneOf([
       'danger',
-      'default',
+      'primary',
       'gray',
       'success',
       'warning'
