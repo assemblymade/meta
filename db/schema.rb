@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114214933) do
+ActiveRecord::Schema.define(version: 20150119172507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -297,18 +297,16 @@ ActiveRecord::Schema.define(version: 20150114214933) do
   add_index "hearts", ["user_id", "heartable_id"], name: "index_hearts_on_user_id_and_heartable_id", unique: true, using: :btree
 
   create_table "ideas", id: :uuid, force: :cascade do |t|
-    t.string   "slug",               limit: 255,                                 null: false
-    t.string   "name",               limit: 255,                                 null: false
+    t.string   "slug",              limit: 255,                                 null: false
+    t.string   "name",              limit: 255,                                 null: false
     t.text     "body"
-    t.uuid     "user_id",                                                        null: false
-    t.boolean  "claimed",                        default: false
+    t.uuid     "user_id",                                                       null: false
+    t.boolean  "claimed",                       default: false
     t.uuid     "product_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "score",                          default: 0.0
-    t.datetime "last_score_update",              default: '2013-06-06 00:00:00'
-    t.datetime "greenlit_at"
-    t.boolean  "founder_preference"
+    t.float    "score",                         default: 0.0
+    t.datetime "last_score_update",             default: '2013-06-06 00:00:00'
   end
 
   create_table "integrations", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -625,7 +623,6 @@ ActiveRecord::Schema.define(version: 20150114214933) do
     t.string   "state",                             limit: 255
     t.datetime "last_checked_btc"
     t.datetime "issued_coins"
-    t.text     "try_url"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
@@ -1045,6 +1042,7 @@ ActiveRecord::Schema.define(version: 20150114214933) do
     t.datetime "locked_at"
     t.uuid     "locked_by"
     t.integer  "priority"
+    t.integer  "hearts_count",                     default: 0,       null: false
   end
 
   add_index "wips", ["flagged_at"], name: "index_wips_on_flagged_at", using: :btree
