@@ -188,7 +188,7 @@ module.exports = React.createClass({
   renderLove: function() {
     if (this.props.heartable) {
       return [
-        <div className="_inline-block _mb0_25 _h6 gray-2">
+        <div className="_inline-block _mb0_25 _h6 mr1 gray-2">
           <Love heartable_id={this.props.id} heartable_type='NewsFeedItemComment' />
         </div>,
 
