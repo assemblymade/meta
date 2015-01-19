@@ -1,19 +1,16 @@
-/** @jsx React.DOM */
-
-// TODO For webpack, requires font-awesome
-
 var Icon = React.createClass({
-  displayName: 'Icon',
+  propTypes: {
+    icon: React.PropTypes.string.isRequired,
+    style: React.PropTypes.object
+  },
 
   render: function() {
-    var iconClassName = "fa-" + this.props.icon
-    var cs = React.addons.classSet('fa', iconClassName)
-    return <span className={cs}></span>
+    var icon = this.props.icon.toString()
+    var style = this.props.style
+    var classes = ['fa', 'fa-' + icon].join(' ')
+
+    return <span className={classes} style={style} />
   }
 })
 
-if (typeof module !== 'undefined') {
-  module.exports = Icon;
-}
-
-window.Icon = Icon;
+window.Icon = module.exports = Icon;

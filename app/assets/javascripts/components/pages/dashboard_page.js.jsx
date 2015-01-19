@@ -21,11 +21,12 @@ var MiniBounty = React.createClass({
 
   render: function() {
     var bounty = this.props.bounty
-    var locker = null
+    var product = bounty.product
+    var details = null
 
     if (this.props.locker && bounty.locker) {
-      var locker = (
-        <div className="px3 py2 border-top h6 mb0 mt0">
+      var details = (
+        <div className="mt2 h6 mt0 mb0">
           <Avatar user={bounty.locker} size={18} style={{ display: 'inline-block' }} />
           {' '}
           <a href={bounty.locker.url} className="bold black">
@@ -37,17 +38,46 @@ var MiniBounty = React.createClass({
           </span>
         </div>
       )
+    } else {
+      details = (
+        <div className="mt2">
+          <div className="right h6 mt0 mb0" style={{ marginTop: 3 }}>
+            <div className="ml2 inline gray bold">
+              <Icon icon={"comment"} />
+              <span className="ml1">{bounty.comments_count}</span>
+            </div>
+            <div className="ml2 inline gray bold">
+              <Icon icon={"heart"} />
+              <span className="ml1">{bounty.hearts_count}</span>
+            </div>
+          </div>
+
+          <div className="h6 mt0 mb0">
+            <Avatar user={bounty.user} size={18} style={{ display: 'inline-block' }} />
+            {' '}
+            <a href={bounty.user.url} className="bold black">
+              {bounty.user.username}
+            </a>
+          </div>
+        </div>
+      )
     }
 
     return (
       <div className="mb2">
         <Tile>
           <div>
-            <a className="block px3 py2 mt0 mb0 h5 fw-500 blue" href={bounty.url}>
-              {bounty.title}
+            <a href={product.url} className="block p2 mt0 mb0 border-bottom">
+              <AppIcon app={product} size={24} style={{ display: 'inline' }} />
+              <span className="h6 mt0 mb0 black bold ml1">{product.name}</span>
             </a>
           </div>
-          {locker}
+          <div className="p2 mt0 mb0">
+            <a className="block h5 mt0 mb0 fw-500 blue" href={bounty.url}>
+              {bounty.title}
+            </a>
+            {details}
+          </div>
         </Tile>
       </div>
     )
