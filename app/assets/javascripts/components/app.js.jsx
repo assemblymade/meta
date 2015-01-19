@@ -1,13 +1,17 @@
+var ActivityGraph = require('./activity_graph.js.jsx')
 var routes = require('../routes')
 var Thumbnail = require('./thumbnail.js.jsx')
 
 var App = React.createClass({
   render: function() {
-    return <div className="app">
-      <div className="left">
+    return <div className="app relative">
+      <div className="mb2">
         <a href={this.appPath()}>
           <Thumbnail size={60} src={this.props.logo_url} />
         </a>
+        <div className="right mt2">
+          <ActivityGraph width={180} height={48} data={this.props.recent_activity} />
+        </div>
       </div>
 
       <div className="app-info">
@@ -19,11 +23,8 @@ var App = React.createClass({
         <div className="app-pitch">
           {this.props.pitch}
         </div>
-        <div className="app-tags">
-          {_(this.props.popular_open_tags).map(tag => <a href="#" className="mr1">#{tag}</a>)}
-        </div>
-        {this.appButton()}
       </div>
+
     </div>
   },
 

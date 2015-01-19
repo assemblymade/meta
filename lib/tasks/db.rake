@@ -22,11 +22,6 @@ namespace :db do
       raise 'local dump not found' unless File.exists? 'db/latest.dump'
 
       puts 'Cleaning out local database tables'
-      ActiveRecord::Base.connection.tables.each do |table|
-        puts "Dropping #{table}"
-        ActiveRecord::Base.connection.execute("DROP TABLE #{table};")
-      end
-
       puts 'Loading Production database locally'
       `pg_restore --verbose --clean --no-acl --no-owner -h localhost -d asm_development db/latest.dump`
 
