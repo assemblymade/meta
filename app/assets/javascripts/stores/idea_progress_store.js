@@ -19,10 +19,11 @@ class IdeaProgressStore extends Store {
         case ActionTypes.LOVE_UNCLICKED:
           _decrementIdeaProgress(action.heartable_id)
           this.emitChange()
+
           // we need to reset progress to 0 so that
           // components don't keep decrementing when
           // other components' actions are triggered
-          _resetIdeaProgress(action.heartable_id);
+          _resetIdeaProgress(action.heartable_id)
           break
       }
     })

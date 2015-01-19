@@ -45,6 +45,7 @@ var IdeaSharePanel = React.createClass({
 
   handleCopyClick(e) {
     e.preventDefault();
+    // the listeners for this event get attached in componentDidMount()
   },
 
   handleFacebookClick(e) {

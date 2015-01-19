@@ -118,15 +118,17 @@ var IdeaShow = React.createClass({
 
     return (
       <div className="_pt3 border-2px">
-        <span className="left mr1 ml4"><Avatar user={user} /></span>
-        <span className="bold">{user.username}</span>{' '}
-        <span className="gray-2">posted</span>
-
         <div className="py3 px4">
           <h1 className="mt0 mb0">{idea.name}</h1>
 
           <div className="mt3">
             <Markdown content={idea.body} normalized={true} />
+          </div>
+
+          <div className="clearfix mt3">
+            <span className="left mr1"><Avatar user={user} /></span>
+            <span className="bold">{user.username}</span>{' '}
+            <span className="gray-2">posted {moment(idea.created_at).fromNow()}</span>
           </div>
         </div>
 
@@ -135,7 +137,8 @@ var IdeaShow = React.createClass({
         <div className="px4">
           <NewsFeedItemComments commentable={true}
               item={idea.news_feed_item}
-              showAllComments={true} />
+              showAllComments={true}
+              showQuestionButtons={true} />
         </div>
       </div>
     );

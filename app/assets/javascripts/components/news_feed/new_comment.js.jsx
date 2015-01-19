@@ -16,7 +16,7 @@ var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
  * way to pass data in?
  */
 
-var NewsFeedItemNewComment = React.createClass({
+var NewComment = React.createClass({
   displayName: 'NewComment',
 
   propTypes: {
@@ -287,8 +287,7 @@ var NewsFeedItemNewComment = React.createClass({
   }
 });
 
-module.exports = NewsFeedItemNewComment;
-window.NewComment = NewsFeedItemNewComment;
+module.exports = window.NewComment = NewComment;
 
 function _dependsOn(dependency, type) {
   return function (props, propName, componentName) {

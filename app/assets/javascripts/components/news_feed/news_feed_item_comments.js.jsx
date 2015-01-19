@@ -5,10 +5,13 @@ var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
 var ActivityFeedComment = require('../activity_feed_comment.js.jsx');
 var BountyStore = require('../../stores/bounty_store');
 var Comment = require('../comment.js.jsx');
+var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
 var DiscussionActionCreators = require('../../actions/discussion_action_creators');
 var DiscussionStore = require('../../stores/discussion_store');
 var Dispatcher = window.Dispatcher;
+var Drawer = require('../ui/drawer.js.jsx');
 var Icon = require('../icon.js.jsx');
+var IdeaSharePanel = require('../ideas/idea_share_panel.js.jsx');
 var NewComment = require('./new_comment.js.jsx');
 var NewsFeedItemBountyClose = require('./news_feed_item_bounty_close.js.jsx');
 var NewsFeedItemBountyCommentReference = require('./news_feed_item_bounty_comment_reference.js.jsx');
@@ -22,6 +25,7 @@ var ProductStore = require('../../stores/product_store');
 var ReadReceipts = require('../read_receipts.js.jsx');
 var Routes = require('../../routes');
 var Spinner = require('../spinner.js.jsx');
+var SvgIcon = require('../ui/svg_icon.js.jsx');
 var UserStore = require('../../stores/user_store');
 
 var NewsFeedItemComments = React.createClass({
@@ -31,7 +35,8 @@ var NewsFeedItemComments = React.createClass({
     commentable: React.PropTypes.bool,
     item: React.PropTypes.object.isRequired,
     hasProduct: React.PropTypes.bool,
-    showAllComments: React.PropTypes.bool
+    showAllComments: React.PropTypes.bool,
+    showQuestionButtons: React.PropTypes.bool
   },
 
   componentDidMount: function() {
@@ -114,6 +119,14 @@ var NewsFeedItemComments = React.createClass({
     });
   },
 
+  getDefaultProps: function() {
+    return {
+      commentable: false,
+      hasProduct: false,
+      showQuestionButtons: false
+    };
+  },
+
   getDiscussionState: function(e) {
     var itemId = this.props.item.id;
     var comments = DiscussionStore.getComments(itemId);
@@ -133,13 +146,6 @@ var NewsFeedItemComments = React.createClass({
       numberOfComments: this.state.numberOfComments + comments.confirmed.length,
       optimisticComments: comments.optimistic
     });
-  },
-
-  getDefaultProps: function() {
-    return {
-      commentable: false,
-      hasProduct: false
-    };
   },
 
   getInitialState: function() {
@@ -176,6 +182,32 @@ var NewsFeedItemComments = React.createClass({
       showCommentsAfter: showCommentsAfter,
       url: url
     };
+  },
+
+  handleAnswerQuestionClick: function(username, e) {
+    e.stopPropagation();
+
+    var $commentBox = $(this.refs['new-comment'].getDOMNode());
+
+    $('html, body').animate({
+      scrollTop: $commentBox.offset().top
+    }, 'fast');
+
+    $('#event_comment_body').focus();
+
+    var item = this.props.item;
+    var thread = item.id;
+    var text = '@' + username + ', ';
+
+    NewCommentActionCreators.updateComment(thread, text);
+  },
+
+  handleShareQuestionClick: function(e) {
+    e.stopPropagation();
+
+    this.setState({
+      showIdeaPanel: !this.state.showIdeaPanel
+    });
   },
 
   render: function() {
@@ -225,6 +257,7 @@ var NewsFeedItemComments = React.createClass({
   },
 
   renderConfirmedComments: function() {
+    var showAllComments = this.props.showAllComments;
     var renderIfAfter = this.state.showCommentsAfter;
     var comments = this.state.comments.concat(this.state.events).sort(_sort);
     var awardUrl;
@@ -237,8 +270,8 @@ var NewsFeedItemComments = React.createClass({
 
     var self = this;
 
-    return comments.map(function(comment, i) {
-      if (!self.props.showAllComments) {
+    var renderedComments = comments.map(function(comment, i) {
+      if (!showAllComments) {
         if (comment.type !== 'news_feed_item_comment') {
           return null;
         }
@@ -269,6 +302,41 @@ var NewsFeedItemComments = React.createClass({
         return parseEvent(comment, awardUrl, editUrl);
       }
     });
+
+    if (showAllComments &&
+        this.props.showQuestionButtons &&
+        comments.length === 1 &&
+        comments[0].body.indexOf('?') > -1) {
+      var comment = comments[0];
+      var questionButtons = (
+        <div className="clearfix mb3 ml4">
+          <Drawer open={this.state.showIdeaPanel}>
+            <IdeaSharePanel idea={{ url: window.location.toString() }}
+                message={comment.body + ' via @asm'} />
+          </Drawer>
+
+          <div className="left">
+            <button className="pill-button pill-button-theme-white pill-button-border pill-button-shadow mr3"
+                onClick={this.handleAnswerQuestionClick.bind(this, comment.user.username)}>
+              <span style={{ fontSize: '1.2rem', lineHeight: '2rem' }}>Answer this question</span>
+            </button>
+          </div>
+
+          <div className="left">
+            <button className="pill-button pill-button-theme-white pill-button-border pill-button-shadow"
+                onClick={this.handleShareQuestionClick}>
+              <span  style={{ fontSize: '1.2rem', lineHeight: '2rem' }}>
+                <SvgIcon type="share" /> Share this question
+              </span>
+            </button>
+          </div>
+        </div>
+      );
+
+      renderedComments.push(questionButtons);
+    }
+
+    return renderedComments;
   },
 
   renderLoadMoreButton: function() {
@@ -301,7 +369,7 @@ var NewsFeedItemComments = React.createClass({
           canContainWork={item.target && item.target.type.indexOf('task') > -1}
           url={url}
           thread={item.id}
-          user={window.app.currentUser()} />
+          ref="new-comment" />
     }
   },
 

@@ -110,7 +110,7 @@ var TypeaheadUserTextArea = React.createClass({
     if (user) {
       var text = this.replaceQueryWithUser(user);
 
-      NewCommentActionCreators.updateComment(this.props.thread, text)
+      NewCommentActionCreators.updateComment(this.props.thread, text);
     }
 
     this.setState({ usernameSearch: null })
