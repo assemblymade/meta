@@ -8,10 +8,16 @@ var CustomIcons = [
   'settings',
   'wallet',
   'user',
-  'logout'
+  'logout',
+  'field-guide'
 ]
 
 var Icon = React.createClass({
+
+  propTypes: {
+    icon: React.PropTypes.string.isRequired
+  },
+
   render: function() {
     var cs = null
     if (CustomIcons.indexOf(this.props.icon) != -1) {
