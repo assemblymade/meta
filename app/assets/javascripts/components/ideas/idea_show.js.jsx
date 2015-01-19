@@ -2,6 +2,7 @@ var Avatar = require('../ui/avatar.js.jsx');
 var Drawer = require('../ui/drawer.js.jsx');
 var Icon = require('../icon.js.jsx');
 var IdeaContainer = require('./idea_container.js.jsx');
+var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
@@ -12,8 +13,6 @@ var ProgressBar = require('../ui/progress_bar.js.jsx');
 var StartConversationModal = require('./start_conversation_modal.js.jsx');
 var StartConversationModalStore = require('../../stores/start_conversation_modal_store');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
-
-var TILTING_THRESHOLD = 80;
 
 var IdeaShow = React.createClass({
   displayName: 'IdeaShow',
@@ -27,17 +26,17 @@ var IdeaShow = React.createClass({
     query: React.PropTypes.object
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     IdeaStore.addChangeListener(this.onIdeaChange);
     StartConversationModalStore.addChangeListener(this.onModalChange);
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     IdeaStore.removeChangeListener(this.onIdeaChange);
     StartConversationModalStore.removeChangeListener(this.onModalChange);
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       idea: IdeaStore.getIdea(),
       isDrawerOpen: false,
@@ -45,31 +44,31 @@ var IdeaShow = React.createClass({
     };
   },
 
-  handleShareClick: function() {
+  handleShareClick() {
     this.setState({
       isDrawerOpen: !this.state.isDrawerOpen
     });
   },
 
-  onIdeaChange: function() {
+  onIdeaChange() {
     this.setState({
       idea: IdeaStore.getIdea()
     });
   },
 
-  onModalChange: function() {
+  onModalChange() {
     this.setState({
       startConversationModalShown: StartConversationModalStore.isModalShown()
     });
   },
 
-  onRelatedIdeasChange: function() {
+  onRelatedIdeasChange() {
     this.setState({
       relatedIdeas: RelatedIdeaStore.getRelatedIdeas()
     });
   },
 
-  render: function() {
+  render() {
     var idea = this.state.idea;
     var navigate = this.props.navigate;
 
@@ -113,7 +112,7 @@ var IdeaShow = React.createClass({
     );
   },
 
-  renderBody: function() {
+  renderBody() {
     var idea = this.state.idea;
     var user = idea.user;
 
@@ -142,7 +141,7 @@ var IdeaShow = React.createClass({
     );
   },
 
-  renderDiscoverBlocks: function() {
+  renderDiscoverBlocks() {
     return (
       <div className="clearfix mxn2 py2">
         <a href="#" className="block col col-6 px2">
@@ -176,7 +175,7 @@ var IdeaShow = React.createClass({
     )
   },
 
-  renderHeader: function() {
+  renderHeader() {
     var idea = this.state.idea;
 
     return (
@@ -189,9 +188,7 @@ var IdeaShow = React.createClass({
 
         <div className="col col-8 border-2px border-right border-left border-gray px2">
           <div className="item mt1 mb1 py2 px3">
-            <ProgressBar progress={idea.temperature}
-                threshold={TILTING_THRESHOLD}
-                type={idea.greenlit_at ? 'success' : 'gray'} />
+            <IdeaProgressBar idea={idea} />
           </div>
         </div>
 
@@ -211,7 +208,7 @@ var IdeaShow = React.createClass({
     );
   },
 
-  renderSubscriptionForm: function() {
+  renderSubscriptionForm() {
     return (
       <div className="card bg-white">
         <div className="clearfix overflow-hidden">

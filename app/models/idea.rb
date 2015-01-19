@@ -95,9 +95,7 @@ class Idea < ActiveRecord::Base
   end
 
   def should_greenlight?
-    if percentile <= 20
-      greenlight!
-    end
+    percentile <= 20
   end
 
   def love
@@ -126,7 +124,9 @@ class Idea < ActiveRecord::Base
       score: lovescore
     })
 
-    should_greenlight?
+    if should_greenlight?
+      greenlight!
+    end
   end
 
   def url_params

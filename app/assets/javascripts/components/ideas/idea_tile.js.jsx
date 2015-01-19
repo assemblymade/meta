@@ -1,6 +1,7 @@
 var Avatar = require('../ui/avatar.js.jsx');
 var Drawer = require('../ui/drawer.js.jsx');
 var Footer = require('../ui/footer.js.jsx');
+var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
 var Love = require('../love.js.jsx');
 var ProgressBar = require('../ui/progress_bar.js.jsx');
@@ -8,8 +9,6 @@ var Share = require('../ui/share.js.jsx');
 var SmallTile = require('../ui/small_tile.js.jsx');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
 var UserStore = require('../../stores/user_store');
-
-var TILTING_THRESHOLD = 80;
 
 var Idea = React.createClass({
   displayName: 'Idea',
@@ -100,9 +99,7 @@ var Idea = React.createClass({
 
               <div className="item">
                 <div className="py3 px3">
-                  <ProgressBar progress={idea.temperature}
-                      threshold={TILTING_THRESHOLD}
-                      type={idea.greenlit_at ? 'success' : 'gray'} />
+                  <IdeaProgressBar idea={idea} />
                 </div>
               </div>
             </div>
