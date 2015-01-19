@@ -31,57 +31,58 @@
 
 <!-- Back to our scheduled programming -->
 
-<div id="product">
-  <section class="product-header pt2 mb3 bg-white shadow-light tranx_m r600_mb6">
-    <div>
-      <div class="container pr0 pl0 r768_pr1 r768_pl1">
-        <div class="block full-width pb2 r768_table r600_pb0">
-          <div class="primary block full-width center py2 valign-mid r768_table-cell r768_left-align">
-            <div class="app-icon-container center valign-top r768_table-cell r768_pr4">
-              <a class="relative inline-block" href="<%= product_path(@product) %>">
-                <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 200 %>
-              </a>
-            </div>
-            <div class="block valign-top r768_table-cell">
-              <h1 class="p0 m0">
-                <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
-              </h1>
-              <h4 class="p0 m0 regular gray-1">
-                <%= truncate(@product.pitch, length: 60, separator: ' ') %>
-              </h4>
-              <ul class="list-reset tranx_m r768_m0" style="margin-bottom:5px;">
-                <% if @product.homepage_url? %>
-                <li class="inline-block">
-                  <a href="<%= @product.homepage_url %>">
-                    <%= inline_react_component 'Icon', icon: 'globe' %>
-                    <%= URI(@product.homepage_url.downcase).host rescue 'invalid' %>
-                  </a>
-                </li>
-                <% end %>
-                <li class="inline-block ml1">
-                  <a href="<%= product_repos_path(@product) %>">
-                    <%= inline_react_component 'Icon', icon: 'github' %>
-                    Code
-                  </a>
-                </li>
-                <% if can?(:edit, @product) %>
-                <li class="inline-block ml1">
-                  <a href="<%= edit_product_path(@product) %>">
-                    <%= inline_react_component 'Icon', icon: 'gear' %>
-                    Edit product
-                  </a>
-                </li>
-                <% end %>
-              </ul>
-            </div>
+<div class="product-header pt2 mb3 bg-white shadow-light tranx_m r600_mb6">
+  <div>
+    <div class="container px0 r768_pr1 r768_pl1">
+      <div class="block full-width pb2 r768_table r600_pb0">
+        <div class="primary block full-width center py2 valign-mid r768_table-cell r768_left-align">
+          <div class="app-icon-container center valign-top r768_table-cell r768_pr4">
+            <a class="relative inline-block" href="<%= product_path(@product) %>">
+              <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 200 %>
+            </a>
           </div>
-          <div data-label="secondary" class="mcenter center valign-mid r768_table-cell r768_right-align" style="width:200px">
-            <%= react_component('ProductFollowers', product_id: @product.id) %>
+          <div class="block valign-top r768_table-cell">
+            <h1 class="p0 m0">
+              <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
+            </h1>
+            <h4 class="p0 m0 regular gray-1">
+              <%= truncate(@product.pitch, length: 60, separator: ' ') %>
+            </h4>
+            <ul class="list-reset tranx_m r768_m0" style="margin-bottom:5px;">
+              <% if @product.homepage_url? %>
+              <li class="inline-block">
+                <a href="<%= @product.homepage_url %>">
+                  <%= inline_react_component 'Icon', icon: 'globe' %>
+                  <%= URI(@product.homepage_url.downcase).host rescue 'invalid' %>
+                </a>
+              </li>
+              <% end %>
+              <li class="inline-block ml1">
+                <a href="<%= product_repos_path(@product) %>">
+                  <%= inline_react_component 'Icon', icon: 'github' %>
+                  Code
+                </a>
+              </li>
+              <% if can?(:edit, @product) %>
+              <li class="inline-block ml1">
+                <a href="<%= edit_product_path(@product) %>">
+                  <%= inline_react_component 'Icon', icon: 'gear' %>
+                  Edit product
+                </a>
+              </li>
+              <% end %>
+            </ul>
           </div>
         </div>
-        <!--  -->
+        <div data-label="secondary" class="mcenter center valign-mid r768_table-cell r768_right-align" style="width:200px">
+          <%= react_component('ProductFollowers', product_id: @product.id) %>
+        </div>
+      </div>
+      <!--  -->
 
-        <div class="tertiary clearfix">
+      <div class="tertiary clearfix mxn3">
+
+        <div class="sm-col sm-col-8 px3">
 
           <ul class="nav nav-tabs r600_pl2 r600_float-left">
             <li class="<%= nav_active_class(:product) %>">
@@ -118,6 +119,9 @@
             <% end %>
           </ul>
 
+        </div><!-- .col -->
+
+        <div class="sm-col sm-col-4 px3 py1 center sm-right-align">
           <script>
             var showCreateBounty = function() {
               window.analytics.track('product.wip.showed_bounty_modal', { product: "<%= @product.slug %>" });
@@ -140,129 +144,133 @@
               }
           </script>
 
-          <div class="center-align mcenter dropdown pt2 pb2 w45 r600_float-right r600_pt0 r600_pb0 r600_mr2 r600_w35 r768_p0 r768_m0 r992_w45">
-            <div class="pill-button-split">
-              <% if nav_active?(:product) || nav_active?(:bounties) %>
-                <a class="pill-button pill-button-theme-green pill-button-border" href="javascript:void(0);" onclick="javascript:showCreateBounty();">
-                  <div class="title bold fs5 pr7 pill-button-text-shadow">Create <span class="r600_none r992_inline-block">a new</span> bounty</div>
-                </a>
-              <% elsif nav_active?(:posts) %>
-                <a class="pill-button pill-button-theme-green pill-button-border" href="<%= new_product_post_path(@product) %>">
-                  <div class="title bold fs5 pr7 pill-button-text-shadow">Create <span class="r600_none r992_inline-block">a new</span> post</div>
-                </a>
-              <% elsif nav_active?(:assets) %>
-                <a class="pill-button pill-button-theme-green pill-button-border" href="<%= new_product_asset_path(@product) %>">
-                  <div class="title bold fs5 pr7 pill-button-text-shadow">Create <span class="r600_none r992_inline-block">a new</span> asset</div>
-                </a>
-              <% else %>
-                <a class="pill-button pill-button-theme-green pill-button-border" href="javascript:void(0);" onclick="javascript:showCreateBounty();">
-                  <div class="title bold fs5 pr7 pill-button-text-shadow">Create <span class="r600_none r992_inline-block">a new</span> bounty</div>
-                </a>
-              <% end %>
-              <a class="pill-button-split-icon pill-button-theme-green pill-button-text-shadow dropdown-toggle fs1" href="javascript:void(0);" id="product-actions" data-toggle="dropdown">
-                <%= inline_react_component 'Icon', icon: 'chevron-down' %>
-              </a>
-              <ul class="dropdown-menu pull-right caret-right" role="menu" aria-labelledby="product-actions">
-                <% if !nav_active?(:product) && !nav_active?(:bounties) %>
-                  <li role="presentation">
-                    <a href="javascript:void(0);" onclick="javascript:showCreateBounty();">
-                      <span>New Bounty</span>
-                    </a>
-                  </li>
-                <% end %>
 
-                <% if !nav_active?(:posts) %>
-                  <li role="presentation">
-                    <a href="<%= new_product_post_path(@product) %>">
-                      <span>New Post</span>
-                    </a>
-                  </li>
-                <% end %>
+          <div id="new-el"></div>
 
-                <% if signed_in? && !nav_active?(:assets) %>
-                  <li role="presentation">
-                    <a href="<%= new_product_asset_path(@product) %>">
-                      <span>New Asset</span>
-                    </a>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
+          <% content_for :javascript do %>
+            <script>
+              $(document).ready(function() {
 
-          </div>
+                var createBountyMenuItem = React.createElement(DropdownMenu.Item, {
+                  label: 'Create bounty',
+                  action: "javascript:showCreateBounty();void(0);"
+                })
+
+                var createPostMenuItem = React.createElement(DropdownMenu.Item, {
+                  label: 'Create post',
+                  action: <%= new_product_post_path(@product).to_json.html_safe %>
+                })
+
+                var createAssetMenuItem = React.createElement(DropdownMenu.Item, {
+                  label: 'Create asset',
+                  action: <%= new_product_asset_path(@product).to_json.html_safe %>
+                })
+
+                var menuItems = {
+                  bounty: createBountyMenuItem,
+                  post:   createPostMenuItem,
+                  asset:  createAssetMenuItem
+                }
+
+                var activeMenuItem = "<%= nav_active?(:posts) ? "post" : (nav_active?(:assets) ? "asset" : "bounty") %>";
+
+                var primaryAction = menuItems[activeMenuItem].props.action
+                var primaryLabel = menuItems[activeMenuItem].props.label
+                delete menuItems[activeMenuItem]
+
+                var dropdownMenu = React.createElement(DropdownMenu, {position: 'right'}, _.values(menuItems))
+
+                var buttonDropdown = React.createElement(ButtonDropdown, {
+                  type: 'primary',
+                  dropdownMenu: dropdownMenu,
+                  block: true,
+                  action: function() { window.location = primaryAction }
+                }, primaryLabel)
+
+                React.render(buttonDropdown, document.getElementById('new-el'))
+
+              })
+
+            </script>
+          <% end %>
         </div>
 
       </div>
+
     </div>
-  </section>
+  </div>
+</div>
 
 
-  <div class="container overflow-hidden">
-    <div id='create-bounty'></div>
-    <%= yield %>
+
+<div class="container overflow-hidden">
+  <div id='create-bounty'></div>
+  <%= yield %>
+</div>
+
+<% unless current_user.nil? %>
+  <div class="modal fade" id="edit-membership-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
+      <div class="modal-dialog">
+        <div class="modal-content" style="overflow: visible;">
+          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+          <input name="_method" value="patch" type="hidden">
+          <div class="modal-header">
+            <button type="button" class="close btn btn-sm" data-dismiss="modal">&times;</button>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label class="control-label" for="modal-bio-editor">
+                Introduce yourself, earn some <%= @product.name %> coins
+              </label>
+              <small class="help-block" style="margin-top: 0px">
+                What skills can you contribute, how much time do you have and what are you looking to get out of the experience?
+              </small>
+              <textarea name="membership[bio]" id="modal-bio-editor" class="form-control bio-editor" style="min-height: 130px;"></textarea>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="join-interests">What are you interested in?</label>
+              <% interest_filters = product_membership_interests(@product, true) %>
+              <div data-react-class="InterestPicker"
+                  data-react-props="<%= {
+                    userInterests: @current_user_interests,
+                    interests: interest_filters,
+                    name: 'membership[interests][]'
+                  }.to_json %>">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary btn-block" id="join-intro-button">Update</button>
+          </div>
+
+        </div>
+      </div>
+    </form>
   </div>
 
-  <% unless current_user.nil? %>
-    <div class="modal fade" id="edit-membership-modal" tabindex="-1" role="dialog" aria-hidden="true">
-      <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
-        <div class="modal-dialog">
-          <div class="modal-content" style="overflow: visible;">
-            <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-            <input name="_method" value="patch" type="hidden">
-            <div class="modal-header">
-              <button type="button" class="close btn btn-sm" data-dismiss="modal">&times;</button>
-              <div class="form-group" style="margin-bottom: 15px">
-                <label class="control-label" for="modal-bio-editor">
-                  Introduce yourself, earn some <%= @product.name %> coins
-                </label>
-                <small class="help-block" style="margin-top: 0px">
-                  What skills can you contribute, how much time do you have and what are you looking to get out of the experience?
-                </small>
-                <textarea name="membership[bio]" id="modal-bio-editor" class="form-control bio-editor" style="min-height: 130px;"></textarea>
-              </div>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="join-interests">What are you interested in?</label>
-                <% interest_filters = product_membership_interests(@product, true) %>
-                <div data-react-class="InterestPicker"
-                    data-react-props="<%= {
-                      userInterests: @current_user_interests,
-                      interests: interest_filters,
-                      name: 'membership[interests][]'
-                    }.to_json %>">
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary btn-block" id="join-intro-button">Update</button>
-            </div>
+  <div id="public-address-prompt"></div>
+<% end %>
 
-          </div>
-        </div>
-      </form>
-    </div>
 
-    <div id="public-address-prompt"></div>
-  <% end %>
-  <%= render 'shared/footer' %>
-  <% parent_layout 'application' %>
-
-  <% content_for :javascript do %>
-    <script>
-      $('#edit-membership-modal').on('shown.bs.modal', function() {
-        $('#modal-bio-editor').attr('placeholder', app.defaultBio());
-      });
-    </script>
-  <% end %>
-
+<% content_for :javascript do %>
   <script>
-    $(document).ready(function() {
-      var queryKey = window.parseUri(window.location).queryKey;
-
-      if (queryKey && queryKey.modal) {
-        showCreateBounty();
-      }
+    $('#edit-membership-modal').on('shown.bs.modal', function() {
+      $('#modal-bio-editor').attr('placeholder', app.defaultBio());
     });
   </script>
-</div>
+  <script>
+  $(document).ready(function() {
+    var queryKey = window.parseUri(window.location).queryKey;
+
+    if (queryKey && queryKey.modal) {
+      showCreateBounty();
+    }
+  });
+  </script>
+<% end %>
+
+<%= render 'shared/footer' %>
+
+
+<% parent_layout 'application' %>

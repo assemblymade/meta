@@ -49,14 +49,24 @@ var store = new NewsFeedItemsStore()
 
 var dataTag = document.getElementById('NewsFeedItemsStore')
 if (dataTag) {
-  data = JSON.parse(dataTag.innerHTML)
+  var data = JSON.parse(dataTag.innerHTML)
 
   Dispatcher.dispatch({
     type: ActionTypes.NEWS_FEED_ITEMS_RECEIVE,
-    news_feed_items: data.news_feed_items,
-    page: data.meta.pagination.page,
-    pages: data.meta.pagination.pages
+    news_feed_items: data.news_feed_items
   });
+
+  // This seems like a hack but the lack of `data.meta` was causing
+  // other errors downstream. Talk to @chrislloyd if you want an
+  // explanation.
+  if (data.meta && data.meta.pagination) {
+    Dispatcher.dispatch({
+      type: ActionTypes.NEWS_FEED_ITEMS_RECEIVE,
+      news_feed_items: data.news_feed_items,
+      page: data.meta.pagination.page,
+      pages: data.meta.pagination.pages
+    });
+  }
 }
 
 module.exports = store

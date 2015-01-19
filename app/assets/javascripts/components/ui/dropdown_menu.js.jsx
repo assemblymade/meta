@@ -67,4 +67,4 @@ var DropdownMenu = React.createClass({
   }
 })
 
-module.exports = DropdownMenu
+module.exports = window.DropdownMenu = DropdownMenu
