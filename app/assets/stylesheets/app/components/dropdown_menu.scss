@@ -19,6 +19,8 @@ $dropdown-shadow-color: rgba(100, 100, 100, .1);
   border-radius: 3px;
   background-clip: padding-box;
 
+  text-align: left;
+
   box-shadow: 0 0 0 1px $dropdown-border-color,
               0 .25rem .5rem 0 $dropdown-shadow-color;
 
@@ -68,4 +70,3 @@ $dropdown-shadow-color: rgba(100, 100, 100, .1);
   margin-top: .5rem;
   margin-bottom: .5rem;
 }
-

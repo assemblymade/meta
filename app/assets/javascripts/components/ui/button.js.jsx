@@ -1,13 +1,16 @@
-module.exports = React.createClass({
-  displayName: 'Button',
+var Button = React.createClass({
 
   propTypes: {
     action: React.PropTypes.func,
-    type:   React.PropTypes.oneOf(['default', 'primary'])
+    type:   React.PropTypes.oneOf(['default', 'primary']),
+    block:  React.PropTypes.bool,
+    active: React.PropTypes.bool
   },
 
   getDefaultProps: function() {
     return {
+      active: false,
+      block: false,
       type: 'default',
       submit: false
     }
@@ -18,7 +21,9 @@ module.exports = React.createClass({
       'button': true,
       'button-default': this.props.type === 'default',
       'button-primary': this.props.type === 'primary',
-      'button-is-disabled': !this.props.action
+      'button-is-disabled': !this.props.action,
+      'active': this.props.active,
+      'button-block': this.props.block
     })
 
     return (
@@ -34,3 +39,5 @@ module.exports = React.createClass({
     return this.props.submit ? "submit" : "button"
   }
 })
+
+module.exports = Button

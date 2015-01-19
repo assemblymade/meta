@@ -8,12 +8,12 @@
     <h3 class="black mt0 mb0"><strong><%= user.username %></strong></h3>
 
     <% if user.location? %>
-      <div class="h6 gray-dark mt0 mb0"><%= user.location %></div>
+      <div class="h6 gray-2 mt0 mb0"><%= user.location %></div>
     <% end %>
   </div>
 
   <% if user.bio? %>
-    <div class="p3 center gray-darker border-top">
+    <div class="p3 center gray-1 border-top">
       <%= react_component 'Markdown', content: markdown(user.bio), normalized: true %>
     </div>
   <% end %>
@@ -22,7 +22,7 @@
 
     <!-- Staff -->
     <% if user.staff? %>
-      <a class="block px3 py2 border-top gray-dark" href="<%= product_people_path(product_id: 'meta', filter: 'core') %>" title="Assembly Staff">
+      <a class="block px3 py2 border-top gray-2" href="<%= product_people_path(product_id: 'meta', filter: 'core') %>" title="Assembly Staff">
         <%= inline_react_component 'Icon', icon: 'coffee' %>
         Assembly Staff
       </a>
@@ -30,12 +30,12 @@
 
     <!-- Twitter -->
     <% if user.twitter_connected? %>
-      <a class="block px3 py2 border-top gray-dark" href="<%= user.twitter_url %>" title="@<%= @user.twitter_nickname %>">
+      <a class="block px3 py2 border-top gray-2" href="<%= user.twitter_url %>" title="@<%= @user.twitter_nickname %>">
         <%= inline_react_component 'Icon', icon: 'twitter' %>
         <%= user.twitter_nickname %>
       </a>
     <% elsif signed_in? && @user == current_user %>
-      <a class="block px3 py2 border-top gray-dark" href="<%= user_omniauth_authorize_path(:twitter) %>">
+      <a class="block px3 py2 border-top gray-2" href="<%= user_omniauth_authorize_path(:twitter) %>">
         <%= inline_react_component 'Icon', icon: 'twitter' %>
         Connect Twitter account
       </a>
@@ -43,12 +43,12 @@
 
     <!-- Github -->
     <% if user.github_connected? %>
-      <a class="block px3 py2 border-top gray-dark" href="<%= user.github_url %>" title="<%= @user.github_login %>">
+      <a class="block px3 py2 border-top gray-2" href="<%= user.github_url %>" title="<%= @user.github_login %>">
         <%= inline_react_component 'Icon', icon: 'github' %>
         <%= @user.github_login %>
       </a>
     <% elsif signed_in? && @user == current_user %>
-      <a class="block px3 py2 border-top gray-dark" href="<%= user_omniauth_authorize_path(:github) %>">
+      <a class="block px3 py2 border-top gray-2" href="<%= user_omniauth_authorize_path(:github) %>">
         <%= inline_react_component 'Icon', icon: 'github' %>
         Connect GitHub account
       </a>

@@ -32,7 +32,7 @@ var NewsFeed = React.createClass({
       var count = this.countFor(filter);
 
       return (
-        <span className="gray-darker text-large">
+        <span className="gray-1 text-large">
           There are about
           <span className="bold">
             {' '}<span className="text-info">{count}</span> {filter}

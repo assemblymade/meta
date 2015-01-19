@@ -2,7 +2,7 @@
 
 (function() {
   var CreateBounty = require('./create_bounty.js.jsx');
-  var Icon = require('./icon.js.jsx');
+  var Icon = require('./ui/icon.js.jsx');
 
   var CreateBountyButton = React.createClass({
     propTypes: {

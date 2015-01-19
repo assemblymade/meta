@@ -4,7 +4,7 @@
 var Avatar = require('./ui/avatar.js.jsx');
 var CommentActionCreators = require('../actions/comment_action_creators');
 var CommentStore = require('../stores/comment_store');
-var Icon = require('./icon.js.jsx');
+var Icon = require('./ui/icon.js.jsx');
 var Love = require('./love.js.jsx');
 var Markdown = require('./markdown.js.jsx');
 var NewComment = require('./news_feed/new_comment.js.jsx');
@@ -122,7 +122,7 @@ module.exports = React.createClass({
     }
 
     var classes = React.addons.classSet({
-      'gray-dark': this.isOptimistic()
+      'gray-2': this.isOptimistic()
     });
 
     return (
@@ -220,7 +220,7 @@ module.exports = React.createClass({
 
     // TipsUi is causing display issues :(
     return (
-      <span className="_pr0_75 _inline-block _ht1_5 _h6">
+      <span className="_pr0_75 _inline-block _h6" style={{height: '1.5rem'}}>
         <TipsUi
             viaType="NewsFeedItemComment"
             viaId={this.props.id}

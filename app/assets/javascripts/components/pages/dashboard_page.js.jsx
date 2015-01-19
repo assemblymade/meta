@@ -33,7 +33,7 @@ var MiniBounty = React.createClass({
             {bounty.locker.username}
           </a>
           {' '}
-          <span className="gray-dark">
+          <span className="gray-2">
             has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
           </span>
         </div>
@@ -248,8 +248,8 @@ var DashboardPage = React.createClass({
     return (
       <div>
         <div className="text-center mt4">
-          <h3 className="gray-dark">You must be new around here.</h3>
-          <p className="h4 mt0 mb0 gray-dark fw-400">Follow some products that you care about.</p>
+          <h3 className="gray-2">You must be new around here.</h3>
+          <p className="h4 mt0 mb0 gray-2 fw-400">Follow some products that you care about.</p>
         </div>
 
         <div className="mt4">
@@ -270,8 +270,8 @@ var DashboardPage = React.createClass({
       return (
         <Tile>
           <div className="center p3">
-            <p className="mt0 mb0 h5 gray-darker bold">Find a bounty to work on.</p>
-            <p className="gray-dark mb0">There are plenty of products that could use your help.</p>
+            <p className="mt0 mb0 h5 gray-1 bold">Find a bounty to work on.</p>
+            <p className="gray-2 mb0">There are plenty of products that could use your help.</p>
           </div>
           <div className="p3 center" style={{ backgroundColor: '#f9f9f9' }}>
             <a href="/discover/bounties" className="pill-button pill-button-theme-white pill-button-border pill-button-shadow bold" style={{ display: 'inline-block', lineHeight: '24px' }}>

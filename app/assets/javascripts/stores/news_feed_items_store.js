@@ -49,14 +49,18 @@ var store = new NewsFeedItemsStore()
 
 var dataTag = document.getElementById('NewsFeedItemsStore')
 if (dataTag) {
-  data = JSON.parse(dataTag.innerHTML)
-
-  Dispatcher.dispatch({
+  var data = JSON.parse(dataTag.innerHTML)
+  var action = {
     type: ActionTypes.NEWS_FEED_ITEMS_RECEIVE,
-    news_feed_items: data.news_feed_items,
-    page: data.meta.pagination.page,
-    pages: data.meta.pagination.pages
-  });
+    news_feed_items: data.news_feed_items
+  }
+
+  if (data.meta && data.meta.pagination) {
+    action.page = data.meta.pagination.page
+    action.pages = data.meta.pagination.pages
+  }
+
+  Dispatcher.dispatch(action)
 }
 
 module.exports = store

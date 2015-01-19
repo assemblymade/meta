@@ -15,4 +15,4 @@ var AppCoins = React.createClass({
   }
 })
 
-module.exports = AppCoins
+module.exports = window.AppCoins = AppCoins

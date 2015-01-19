@@ -17,7 +17,7 @@
 }
 
 .marker-blip {
-  background-color: $gray-light;
+  background-color: $gray-5;
   border: 2px solid white;
   width: 10px;
   height: 10px;
@@ -25,17 +25,17 @@
 }
 
 .marker-default {
-  border-color: $gray-light;
-  color: $gray-light;
+  border-color: $gray-5;
+  color: $gray-5;
 }
 
 .marker-black {
-  border-color: $gray-darker;
-  color: $gray-darker;
+  border-color: $gray-1;
+  color: $gray-1;
 }
 .marker-gray {
-  border-color: $gray;
-  color: $gray;
+  border-color: $gray-2;
+  color: $gray-2;
 }
 .marker-blue {
   border-color: $blue;

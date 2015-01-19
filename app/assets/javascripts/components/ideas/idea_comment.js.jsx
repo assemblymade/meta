@@ -19,7 +19,7 @@ module.exports = React.createClass({
     var body = null
 
     var cs = React.addons.classSet({
-      'gray-dark': this.isOptimistic(),
+      'gray-2': this.isOptimistic(),
     })
 
     if (this.isOptimistic()) {

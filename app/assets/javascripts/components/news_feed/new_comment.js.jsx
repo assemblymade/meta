@@ -172,8 +172,7 @@ var NewsFeedItemNewComment = React.createClass({
 
     var textareaClasses = React.addons.classSet({
       'bg-gray-4': this.state.dragging,
-      '_ht14_5': true,
-      '_w100p': true,
+      'full-width': true,
       '_px1_5': true,
       '_pt1': true,
       '_pb3': true,
@@ -197,7 +196,8 @@ var NewsFeedItemNewComment = React.createClass({
                   onKeyPress={this.onKeyPress}
                   rows={this.state.rows}
                   defaultValue={this.state.text}
-                  placeholder="Leave your comments" />
+                  placeholder="Leave your comments"
+                  style={{height: '14.5rem'}} />
             </div>
             {this.renderDropzoneInner()}
           </div>

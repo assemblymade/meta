@@ -317,7 +317,11 @@ button, .button {
   background: $green linear-gradient(transparent, rgba(black, .05));
   box-shadow: inset 0 0 0 1px rgba(black, .1);
 
-  &:hover {
+  &:hover,
+  &.hover,
+  &:active,
+  &.active {
+    color: white;
     background-color: $green-dark;
   }
 }
@@ -329,4 +333,9 @@ button, .button {
   color: $gray-1;
   text-shadow: none;
   cursor: default;
+}
+
+.button-block {
+  text-align: center;
+  display: block;
 }
