@@ -38,7 +38,7 @@ module.exports = React.createClass({
                 </span>
               </div>
             </div>
-            <div className="mt1 gray-1 fs4 break-word" key={'nfbi-body-' + bounty.id} onClick={this.showBounty}>
+            <div className="mt1 gray-1 fs4" key={'nfbi-body-' + bounty.id} onClick={this.showBounty}>
               <Markdown content={bounty.short_description} normalized={true} />
               {this.thumbnails()}
             </div>

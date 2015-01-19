@@ -220,7 +220,7 @@ module.exports = React.createClass({
 
     // TipsUi is causing display issues :(
     return (
-      <span className="_pr0_75 _inline-block _ht1_5 _h6">
+      <span className="_pr0_75 _inline-block _h6" style={{height: '1.5rem'}}>
         <TipsUi
             viaType="NewsFeedItemComment"
             viaId={this.props.id}

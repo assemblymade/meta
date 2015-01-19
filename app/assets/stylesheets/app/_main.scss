@@ -64,21 +64,6 @@ strong, .bold {
   box-shadow: 0px 0px 1px 0px $brand-shadow;
 }
 
-._border-inset-dark {
-  position:relative;
-  //
-  &:before {
-    content:'';
-    display: block;
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    border:1px solid rgba(100,100,100,0.08);
-  }
-}
-
 // -- anchors -------------------
 a {
   color: $link-color;
@@ -183,7 +168,7 @@ input[type=week] {
 }
 
 .list-inline-media {
-  @extend .list-inline;
+  // @extend .list-inline;
   display: inline-block;
 
   > li {
@@ -197,7 +182,7 @@ input[type=week] {
 }
 
 .list-piped {
-  @extend .list-inline;
+  // @extend .list-inline;
 
   > li + li {
     border-left: 1px solid $brand-divider;
@@ -206,7 +191,7 @@ input[type=week] {
 }
 
 .list-grid {
-  @extend .list-unstyled;
+  // @extend .list-unstyled;
   @include clearfix;
 
   > li {
