@@ -206,7 +206,7 @@ var DashboardPage = React.createClass({
 
     return (
       <Nav>
-        <NavItem label="Everything"      href='/dashboard'           active={filter == 'all'} />
+        <NavItem label="Everything"      href='/dashboard/all'           active={filter == 'all'} />
         <NavItem label="Your interests"  href='/dashboard/interests' active={filter == 'interests'} />
         {followingNavItem}
 
