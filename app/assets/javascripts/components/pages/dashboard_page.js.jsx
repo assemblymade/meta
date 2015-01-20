@@ -355,10 +355,10 @@ var DashboardPage = React.createClass({
       return (
         <div>
           <Tile>
-            <div className="px4 py4 text-center">
+            <div className="px4 py3 text-center">
               <h1 className="mt0 mb0">Hey there @vanstee!</h1>
-              <p className="gray-dark">Looks like you're new around here.</p>
-              <p className="gray-dark"><strong>Tell us what you're into below</strong> and we show you where to get started. </p>
+              <p className="gray-1">Looks like you're new around here.</p>
+              <p className="gray-2"><strong>Tell us what you're into below</strong> and we show you where to get started. </p>
             </div>
 
             <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
