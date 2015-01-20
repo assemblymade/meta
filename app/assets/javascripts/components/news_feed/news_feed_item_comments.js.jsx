@@ -180,6 +180,7 @@ var NewsFeedItemComments = React.createClass({
       numberOfComments: item.comments_count,
       optimisticComments: [],
       showCommentsAfter: showCommentsAfter,
+      showSharePanel: false,
       url: url
     };
   },
@@ -206,7 +207,7 @@ var NewsFeedItemComments = React.createClass({
     e.stopPropagation();
 
     this.setState({
-      showIdeaPanel: !this.state.showIdeaPanel
+      showSharePanel: !this.state.showSharePanel
     });
   },
 
@@ -310,7 +311,7 @@ var NewsFeedItemComments = React.createClass({
       var comment = comments[0];
       var questionButtons = (
         <div className="clearfix mb3 ml4">
-          <Drawer open={this.state.showIdeaPanel}>
+          <Drawer open={this.state.showSharePanel}>
             <IdeaSharePanel idea={{ url: window.location.toString() }}
                 message={comment.body + ' via @asm'} />
           </Drawer>

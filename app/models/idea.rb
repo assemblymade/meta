@@ -111,7 +111,7 @@ class Idea < ActiveRecord::Base
   end
 
   def save_score
-    lovescore = score
+    lovescore = 0
 
     news_feed_item.hearts.where('created_at > ?', last_score_update).each do |h|
       time_since = h.created_at - EPOCH_START
