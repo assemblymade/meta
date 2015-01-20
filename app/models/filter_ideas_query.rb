@@ -30,9 +30,11 @@ class FilterIdeasQuery
   end
 
   def filter_by
-    return unless options[:filter]
-
-    Idea.send(options[:filter].to_sym)
+    if options[:filter]
+      Idea.send(options[:filter].to_sym)
+    else
+      Idea.where(greenlit_at: nil)
+    end
   end
 
   def sort_by

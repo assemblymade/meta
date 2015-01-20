@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119172507) do
+ActiveRecord::Schema.define(version: 20150120194016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -309,6 +309,7 @@ ActiveRecord::Schema.define(version: 20150119172507) do
     t.datetime "last_score_update",              default: '2013-06-06 00:00:00'
     t.datetime "greenlit_at"
     t.boolean  "founder_preference"
+    t.integer  "tilting_threshold"
   end
 
   create_table "integrations", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|

@@ -1,7 +1,7 @@
 var IdeaProgressStore = require('../../stores/idea_progress_store');
 var ProgressBar = require('../ui/progress_bar.js.jsx');
 
-var TILTING_THRESHOLD = 75;
+var TILTING_THRESHOLD = 79;
 
 var IdeaProgressBar = React.createClass({
   propTypes: {

@@ -20,7 +20,7 @@ class Idea < ActiveRecord::Base
   after_commit :ensure_news_feed_item, on: :create
   after_commit :update_news_feed_item
 
-  scope :trending, -> { order(score: :desc) }
+  scope :trending, -> { where(greenlit_at: nil).order(score: :desc) }
   scope :by, -> (user) { where(user_id: user.id) }
   scope :greenlit, -> { where.not(greenlit_at: nil) }
   scope :newness, -> { order(created_at: :desc) }

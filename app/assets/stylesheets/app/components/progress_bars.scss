@@ -6,6 +6,7 @@
 
 .progress-bar {
   @include box-shadow(none);
+  border-radius: 1rem;
 }
 
 .progress-sm,
