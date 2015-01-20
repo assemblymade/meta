@@ -389,6 +389,7 @@ class User < ActiveRecord::Base
 
   def can_vote?(product)
     TransactionLogEntry.product_balances(self).include?(product.id)
+  end
 
   def mark_names=(new_mark_names)
     new_marks = new_mark_names.map { |name| Mark.where(name: name.downcase).first_or_create }
