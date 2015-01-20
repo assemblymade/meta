@@ -412,11 +412,11 @@ var DashboardPage = React.createClass({
             </div>
             <div className="p3 center" style={{ backgroundColor: '#f9f9f9' }}>
               <a href="/discover/products" className="pill-button pill-button-theme-white pill-button-border pill-button-shadow bold" style={{ display: 'inline-block', lineHeight: '24px' }}>
-                Explore Apps
+                Explore products
               </a>
 
               <div className="mt2 center">
-                or <a href="/ideas" className="mt3 center">share a new product idea</a>
+                or <a href="/start" className="mt3 center">start your own</a>
               </div>
             </div>
           </Tile>
