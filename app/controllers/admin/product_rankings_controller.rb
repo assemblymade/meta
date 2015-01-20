@@ -38,7 +38,7 @@ class Admin::ProductRankingsController < AdminController
       update[:quality] = quality
       @product.update!(quality: quality)
     end
-    
+
     if params[:event]
       @product.process_event!(params[:event])
     end
