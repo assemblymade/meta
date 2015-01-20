@@ -407,13 +407,17 @@ var DashboardPage = React.createClass({
         <div style={{ marginTop: 42 }}>
           <Tile>
             <div className="center p3">
-              <p className="mt0 mb0 h5 gray-1 bold">Need something to work on?</p>
-              <p className="gray-2 mb0">There are plenty of products that could use your help.</p>
+              <p className="mt0 mb2 h5 gray-1 bold">Find & help interesting products</p>
+              <p className="gray-2 mb0">Products here are built and owned by the community. When you contribute to a product the community rewards you with an ownership stake in its success.</p>
             </div>
             <div className="p3 center" style={{ backgroundColor: '#f9f9f9' }}>
               <a href="/discover/products" className="pill-button pill-button-theme-white pill-button-border pill-button-shadow bold" style={{ display: 'inline-block', lineHeight: '24px' }}>
-                Discover products
+                Explore Apps
               </a>
+
+              <div className="mt2 center">
+                or <a href="/ideas" className="mt3 center">share a new product idea</a>
+              </div>
             </div>
           </Tile>
         </div>
