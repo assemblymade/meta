@@ -113,4 +113,8 @@ class Proposal < ActiveRecord::Base
     end
   end
 
+  def url_params
+    [self.product, self]
+  end
+
 end
