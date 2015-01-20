@@ -1,4 +1,5 @@
 var Avatar = require('../ui/avatar.js.jsx');
+var BigLove = require('../big_love.js.jsx');
 var Drawer = require('../ui/drawer.js.jsx');
 var Icon = require('../icon.js.jsx');
 var IdeaContainer = require('./idea_container.js.jsx');
@@ -184,7 +185,7 @@ var IdeaShow = React.createClass({
     return (
       <div className="clearfix border-bottom border-2px mb0">
         <div className="center col col-2 px2 mt2">
-          <Love
+          <BigLove
             heartable_id={idea.news_feed_item.id}
             heartable_type="NewsFeedItem" />
         </div>
