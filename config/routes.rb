@@ -13,7 +13,7 @@ ASM::Application.routes.draw do
   end
 
   authenticated do
-    get '/', to: redirect('/discover')
+    get '/', to: redirect('/dashboard')
   end
 
   root :to => 'pages#home'

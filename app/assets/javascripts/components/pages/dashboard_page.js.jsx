@@ -9,6 +9,7 @@ var NewsFeedItemsActionCreators = require('../../actions/news_feed_items_action_
 var ProductsStore = require('../../stores/products_store.js')
 var ProductChip = require('../product_chip.js.jsx')
 var UserBountiesStore = require('../../stores/user_bounties_store.js')
+var UserStore = require('../../stores/user_store.js')
 var Spinner = require('../spinner.js.jsx')
 var Tile = require('../ui/tile.js.jsx')
 
@@ -103,7 +104,8 @@ var DashboardPage = React.createClass({
       interests: this.props.initialInterests,
       loading: false,
       showAll: this.props.initialShowAll,
-      selected: []
+      selected: [],
+      currentUser: UserStore.getUser()
     }
   },
 
@@ -111,6 +113,7 @@ var DashboardPage = React.createClass({
     NewsFeedItemsStore.addChangeListener(this.getStateFromStore)
     ProductsStore.addChangeListener(this.getStateFromStore)
     UserBountiesStore.addChangeListener(this.getStateFromStore)
+
     window.addEventListener('scroll', this.onScroll)
 
     this.getStateFromStore()
@@ -350,13 +353,14 @@ var DashboardPage = React.createClass({
     var spinner = this.renderSpinner()
     var filter = this.props.filter
     var interests = this.state.interests
+    var user = this.state.currentUser
 
     if (filter == 'interests' && !interests.length) {
       return (
         <div>
           <Tile>
             <div className="px4 py3 text-center">
-              <h1 className="mt0 mb0">Hey there @vanstee!</h1>
+              <h1 className="mt0 mb0">Hey there @{user.username}!</h1>
               <p className="gray-1">Looks like you're new around here.</p>
               <p className="gray-2"><strong>Tell us what you're into below</strong> and we show you where to get started. </p>
             </div>
