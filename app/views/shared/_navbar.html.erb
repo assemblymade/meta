@@ -27,14 +27,6 @@
           <a href="<%= discover_path %>">Products</a>
         </li>
 
-        <li class="<%= nav_active_class(:platform_updates) %>">
-          <a href="<%= discover_path(:updates) %>">What’s Happening</a>
-        </li>
-
-        <li class="<%= nav_active_class(:discover_bounties) %>">
-          <a href="<%= discover_path(:bounties) %>">Hot Bounties</a>
-        </li>
-
         <% if current_user.try(:staff?) %>
           <li class="<%= nav_active_class(:ideas) %>">
             <a href="<%= ideas_path %>">Ideas</a>
