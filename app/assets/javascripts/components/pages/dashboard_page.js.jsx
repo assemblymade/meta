@@ -43,11 +43,11 @@ var MiniBounty = React.createClass({
       details = (
         <div className="mt2">
           <div className="right h6 mt0 mb0" style={{ marginTop: 3 }}>
-            <div className="ml2 inline gray bold">
+            <div className="ml2 inline gray-3 bold">
               <Icon icon={"comment"} />
               <span className="ml1">{bounty.comments_count}</span>
             </div>
-            <div className="ml2 inline gray bold">
+            <div className="ml2 inline gray-3 bold">
               <Icon icon={"heart"} />
               <span className="ml1">{bounty.hearts_count}</span>
             </div>
@@ -189,7 +189,7 @@ var DashboardPage = React.createClass({
     var showAllLink = null
 
     if (followedProducts.length) {
-      followingNavItem = <NavItem label="Following" href='/dashboard/following' active={filter == 'following'} />
+      followingNavItem = <NavItem label="What you follow" href='/dashboard/following' active={filter == 'following'} />
       divider = <NavItem divider={true} />
     }
 
@@ -232,7 +232,7 @@ var DashboardPage = React.createClass({
 
     return (
       <div >
-        <h6 className="gray caps mt2 mb2">{section}</h6>
+        <h6 className="gray-3 caps mt2 mb2">{section}</h6>
         {marks.map(function(mark) {
           return this.renderMark(mark)
         }.bind(this))}
@@ -423,7 +423,7 @@ var DashboardPage = React.createClass({
     if (this.state.lockedBounties.length) {
       var lockedBounties = (
         <div className="mb3">
-          <h6 className="gray caps mt2 mb2">Bounties you're working on</h6>
+          <h6 className="gray-3 caps mt2 mb2">Bounties you're working on</h6>
           {this.state.lockedBounties.map(function(bounty) {
             return <MiniBounty bounty={bounty} />
           })}
@@ -434,7 +434,7 @@ var DashboardPage = React.createClass({
     if (this.state.reviewingBounties.length) {
       var reviewingBounties = (
         <div className="mb3">
-          <h6 className="gray caps mt2 mb2">Bounties to review</h6>
+          <h6 className="gray-3 caps mt2 mb2">Bounties to review</h6>
           {this.state.reviewingBounties.map(function(bounty) {
             return <MiniBounty bounty={bounty} locker={false} />
           })}
@@ -466,7 +466,7 @@ var DashboardPage = React.createClass({
             {nav}
           </div>
           <div className="col col-6 px2 mb4">
-            <h6 className="gray caps mt2 mb2">What's Happening</h6>
+            <h6 className="gray-3 caps mt2 mb2">What's Happening</h6>
             {newsFeedItems}
           </div>
           <div className="col col-4 px2">
