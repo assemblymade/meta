@@ -176,7 +176,8 @@ var NewsFeedItemNewComment = React.createClass({
       '_px1_5': true,
       '_pt1': true,
       '_pb3': true,
-      '_border-rad0_5': true
+      '_border-rad0_5': true,
+      'h5 mt0 mb0': true
     });
 
     return (
