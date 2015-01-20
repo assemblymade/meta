@@ -1,4 +1,4 @@
-<div class="dropdown align-right">
+<div class="dropdown right-align">
   <% if @milestone %>
     <a href="<%= product_project_path(@product, @milestone)%>"><%= @milestone.wip.title %></a>
   <% elsif can?(:edit, @wip) %>
