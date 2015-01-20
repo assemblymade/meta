@@ -276,6 +276,8 @@ ASM::Application.routes.draw do
   # FIXME: Fix news_feed_items_controller to allow missing product
   get '/news_feed_items' => 'dashboard#news_feed_items'
 
+  resource :user, only: [:update]
+
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do
 
