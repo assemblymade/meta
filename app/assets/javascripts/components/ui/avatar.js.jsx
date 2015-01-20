@@ -17,13 +17,15 @@
     },
 
     render: function() {
-      var size = this.props.size.toString();
+      var size = this.props.size.toString()
+      var username = this.props.user.username
 
       return <img className="avatar"
           src={this.avatarUrl()}
           height={size}
           width={size}
-          style={this.props.style} />;
+          style={this.props.style}
+          alt={this.props.user.username} />;
     },
 
     avatarUrl: function() {
