@@ -51,11 +51,11 @@
 
 .pie:nth-of-type(1):BEFORE,
 .pie:nth-of-type(1):AFTER {
-  background-color: darken($blue, 25%);
+  background-color: $blue;
 }
 .pie:nth-of-type(2):AFTER,
 .pie:nth-of-type(2):BEFORE {
-  background-color: darken($blue, 5%);
+  background-color: lighten($blue, 40%);
 }
 
 .pie[data-start="120"] {

@@ -8,7 +8,7 @@
 }
 
 .activity-chat {
-  margin: 12px 0 0;
+  margin: 10px 0 0;
 }
 
 .activity-body {
@@ -16,7 +16,7 @@
   &:hover {
     .activity-actions,
     .activity-actions a:not(.chat-actor) {
-      color: $gray;
+      color: $gray-2;
 
       .js-tips a {
         color: $brand-coins;
@@ -36,7 +36,7 @@
 
 .activity-actions {
   font-size: $font-size-small;
-  color: $gray-light;
+  color: $gray-5;
   height: 18px;
 
   a {

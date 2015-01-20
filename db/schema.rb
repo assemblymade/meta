@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114214933) do
+ActiveRecord::Schema.define(version: 20150119172507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -494,6 +494,20 @@ ActiveRecord::Schema.define(version: 20150114214933) do
     t.inet     "ip",         null: false
     t.datetime "created_at", null: false
   end
+
+  create_table "ownership_statuses", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "product_id"
+    t.string   "state"
+    t.string   "asset"
+    t.text     "description"
+    t.datetime "pending_until"
+    t.datetime "state_updated_at"
+    t.datetime "owned_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ownership_statuses", ["product_id"], name: "index_ownership_statuses_on_product_id", using: :btree
 
   create_table "perks", id: :uuid, force: :cascade do |t|
     t.uuid     "product_id"
@@ -1078,6 +1092,7 @@ ActiveRecord::Schema.define(version: 20150114214933) do
     t.datetime "locked_at"
     t.uuid     "locked_by"
     t.integer  "priority"
+    t.integer  "hearts_count",                     default: 0,       null: false
   end
 
   add_index "wips", ["flagged_at"], name: "index_wips_on_flagged_at", using: :btree

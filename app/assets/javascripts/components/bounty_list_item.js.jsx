@@ -167,7 +167,7 @@ var BountyListItem = React.createClass({
           {user.username}
         </a>
         {' '}
-        <span className="gray-dark">
+        <span className="gray-2">
           has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
         </span>
       </div>
@@ -196,7 +196,7 @@ var BountyListItem = React.createClass({
     return (
       <a href={bounty.url}>
         {bounty.title} {' '}
-        <span className="gray-dark fs4">
+        <span className="gray-2 fs4">
           #{bounty.number}
         </span>
       </a>

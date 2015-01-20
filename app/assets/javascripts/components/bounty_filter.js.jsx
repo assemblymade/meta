@@ -111,15 +111,15 @@
         <div className="table mb2">
           <div className="table-cell">
             <div className="bg-white rounded shadow table mb0">
-              <div className="w9 pl3 pr2 py1 table-cell border-right">
+              <div className="px3 py1 table-cell border-right" style={{width: '4.5rem'}}>
                 {this.renderFilterDropdown()}
               </div>
-              <div className="pr3 pl3 table-cell gray-2">
-                <input type="text" value={this.props.value} onChange={this.props.onValueChange} className="no-border full-width" style={{ padding: 0 }} />
+              <div className="px3 table-cell gray-2">
+                <input type="text" value={this.props.value} onChange={this.props.onValueChange} className="p0 full-width" style={{ border: 'none' }} />
               </div>
             </div>
           </div>
-          <div className="table-cell w21">
+          <div className="table-cell " style={{width: '10.5rem'}}>
             <div className="py2 right-align">
               {this.renderSortDropdown()}
             </div>

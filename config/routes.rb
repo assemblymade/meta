@@ -13,7 +13,7 @@ ASM::Application.routes.draw do
   end
 
   authenticated do
-    get '/', to: redirect('/discover')
+    get '/', to: redirect('/dashboard')
   end
 
   root :to => 'pages#home'
@@ -189,6 +189,7 @@ ASM::Application.routes.draw do
     resources :karmahistory, only: [:index]
     resources :leaderboard, only: [:index]
     resources :tags, only: [:index]
+    resources :ownership, only: [:index, :update]
     resources :bounties, only: [:index]
     namespace :bounties do
       get :graph_data
@@ -273,6 +274,11 @@ ASM::Application.routes.draw do
 
   # legacy
   get '/meta/chat', to: redirect(path: '/chat/general')
+
+  # FIXME: Fix news_feed_items_controller to allow missing product
+  get '/news_feed_items' => 'dashboard#news_feed_items'
+
+  resource :user, only: [:update]
 
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do

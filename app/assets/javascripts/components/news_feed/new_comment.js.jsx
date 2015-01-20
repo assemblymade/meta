@@ -157,11 +157,9 @@ var NewsFeedItemNewComment = React.createClass({
   render: function() {
     if (!this.props.user) {
       return (
-        <span>
-          I'm afraid I can't let you comment. You'll have to
-          {' '}<a href="/signup">sign up</a>{' '}
-          to do that.
-        </span>
+        <div className="p3">
+          You need to <a href="/signup">sign up</a> before you can comment.
+        </div>
       );
     }
 
@@ -172,12 +170,12 @@ var NewsFeedItemNewComment = React.createClass({
 
     var textareaClasses = React.addons.classSet({
       'bg-gray-4': this.state.dragging,
-      '_ht14_5': true,
-      '_w100p': true,
+      'full-width': true,
       '_px1_5': true,
       '_pt1': true,
       '_pb3': true,
-      '_border-rad0_5': true
+      '_border-rad0_5': true,
+      'h5 mt0 mb0': true
     });
 
     return (
@@ -197,7 +195,8 @@ var NewsFeedItemNewComment = React.createClass({
                   onKeyPress={this.onKeyPress}
                   rows={this.state.rows}
                   defaultValue={this.state.text}
-                  placeholder="Leave your comments" />
+                  placeholder="Leave your comments"
+                  style={{height: '14.5rem'}} />
             </div>
             {this.renderDropzoneInner()}
           </div>

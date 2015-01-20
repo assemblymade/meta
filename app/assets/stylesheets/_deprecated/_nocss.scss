@@ -1697,11 +1697,11 @@ $px4:   4px;
 .#{$pre}tranx_m {
   -webkit-transition-property: margin;
   transition-property: margin;
-  @extend .tranx_fx;
+  // @extend .tranx_fx;
 }
 
 .#{$pre}tranx_p {
   -webkit-transition-property: padding;
   transition-property: padding;
-  @extend .tranx_fx;
+  // @extend .tranx_fx;
 }

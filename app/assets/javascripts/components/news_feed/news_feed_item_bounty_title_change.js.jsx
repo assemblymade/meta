@@ -1,4 +1,4 @@
-var Icon = require('../icon.js.jsx');
+var Icon = require('../ui/icon.js.jsx');
 var NewsFeedItemEvent = require('./news_feed_item_event.js.jsx');
 
 var NewsFeedItemBountyTitleChange = React.createClass({

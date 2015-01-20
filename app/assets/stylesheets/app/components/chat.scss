@@ -31,7 +31,7 @@
 }
 
 .indicator-default {
-  background-color: $gray-light;
+  background-color: $gray-5;
 }
 
 .indicator-info {
@@ -48,4 +48,8 @@
 
 .chat .markdown img {
   max-width: 50%;
+}
+
+.chat .activity-content {
+  color: #333;
 }

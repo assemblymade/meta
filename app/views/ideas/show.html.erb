@@ -35,11 +35,11 @@
   <div class="card-footer p3 clearfix">
     <% if current_user == @idea.user %>
       <ul class="list-inline left mt0 mb0">
-        <li class="mid-gray"><span class="">Discuss your idea with the community and <%= link_to 'start the product', new_product_path %> when you are ready.</span></li>
+        <li class="gray-3"><span class="">Discuss your idea with the community and <%= link_to 'start the product', new_product_path %> when you are ready.</span></li>
       </ul>
     <% else %>
       <ul class="list-inline left mt0 mb0">
-        <li class="mid-gray">Want to build this product? Discuss below and ask @<%= @idea.creator_username %> with questions.</li>
+        <li class="gray-3">Want to build this product? Discuss below and ask @<%= @idea.creator_username %> with questions.</li>
       </ul>
     <% end %>
     <% if current_user == @idea.user || current_user.try(:staff?) %>

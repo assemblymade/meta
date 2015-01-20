@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def after_sign_up_path_for_user
-    url_for(controller: '/surveys', action: 'new')
+    dashboard_path
   end
 
   def after_sign_out_path_for_user
@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for_user
-    session[:previous_url] || discover_path
+    session[:previous_url] || dashboard_path
   end
 
 

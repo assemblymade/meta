@@ -217,8 +217,8 @@ class QueryMarks
   end
 
 
-  def assign_top_products_for_user(limit, user, product_vectors)
-    user_vector = normalize_mark_vector(user.user_identity.get_mark_vector)
+  def assign_top_products_for_user(limit, user, product_vectors, user_vector = nil)
+    user_vector ||= normalize_mark_vector(user.user_identity.get_mark_vector)
     result = []
 
     if user_vector.count > 0

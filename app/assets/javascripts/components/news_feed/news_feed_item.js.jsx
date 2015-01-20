@@ -4,7 +4,7 @@ var Avatar = require('../ui/avatar.js.jsx');
 var Bounty = require('../bounty.js.jsx')
 var Comment = require('../comment.js.jsx');
 var Discussion = require('../ui/discussion.js.jsx')
-var Icon = require('../icon.js.jsx');
+var Icon = require('../ui/icon.js.jsx');
 var Introduction = require('../introduction.js.jsx')
 var Lightbox = require('../lightbox.js.jsx')
 var Markdown = require('../markdown.js.jsx');
@@ -271,7 +271,7 @@ var NewsFeedItem = React.createClass({
         </div>
         <div className="overflow-hidden" style={{ lineHeight: '16px' }}>
           <div className="h6 mt0 mb0 black">{product.name}</div>
-          <div className="h6 mt0 mb0 gray-dark">{product.pitch}</div>
+          <div className="h6 mt0 mb0 gray-2">{product.pitch}</div>
         </div>
       </a>
     );

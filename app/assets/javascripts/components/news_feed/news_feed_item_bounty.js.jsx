@@ -24,11 +24,11 @@ module.exports = React.createClass({
     return (
       <div className="table mb0">
         <div className="table-cell">
-          <div className="px3 pt3 pb3" onClick={this.handleClick} key={'nfbi-' + bounty.id}>
-            <div className="mt0 mb1 mtn1 h4 fw-500 clickable">
+          <div className="p3" onClick={this.handleClick} key={'nfbi-' + bounty.id}>
+            <div className="mt0 mb1 h4 fw-500 clickable">
               <a href={bounty.url} key={"bounty-link-" + bounty.id}>
                 {bounty.title}
-                {' '} <span className="gray-dark fs4">#{bounty.number}</span>
+                {' '} <span className="gray-2 fs4">#{bounty.number}</span>
               </a>
             </div>
             <div className="lh0_9 pb2">
@@ -38,7 +38,7 @@ module.exports = React.createClass({
                 </span>
               </div>
             </div>
-            <div className="mt1 gray-darker fs4 break-word" key={'nfbi-body-' + bounty.id} onClick={this.showBounty}>
+            <div className="mt1 gray-1 fs4" key={'nfbi-body-' + bounty.id} onClick={this.showBounty}>
               <Markdown content={bounty.short_description} normalized={true} />
               {this.thumbnails()}
             </div>
@@ -83,7 +83,7 @@ module.exports = React.createClass({
 
       return (
         <div className="clearfix" key={'thumbs-container-' + bounty.id}>
-          <div className="gray py1">Images</div>
+          <div className="gray-2 py1">Images</div>
           {thumbs}
         </div>
       );

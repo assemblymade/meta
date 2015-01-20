@@ -21,7 +21,7 @@
     .interest-close {
       position: relative;
       right: 0px;
-      color: $gray-darker;
+      color: $gray-1;
 
       &:hover {
         text-decoration: none;
@@ -68,7 +68,7 @@
   height: 0;
   margin-top: 150px;
   padding-left: 0;
-  border: 1px dashed $gray-lighter;
+  border: 1px dashed $gray-6;
   position: relative;
   z-index: 2;
 
@@ -83,8 +83,8 @@
     > .step {
       background-color: white;
       border-radius: 18px;
-      border: 2px solid $gray-lighter;
-      color: $gray-light;
+      border: 2px solid $gray-6;
+      color: $gray-5;
       height: 36px;
       font-weight: bold;
       line-height: 32px;

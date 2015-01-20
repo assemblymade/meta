@@ -1,13 +1,6 @@
 // Cleanup in progress - some deprecated, redundant, & unorganized styles
 // - TODO: http://goo.gl/XgoCGy
 
-@import 'basscss';                            // deprecating these imports, other first, bass last
-@import '-deprecated/basspluss';
-@import '-deprecated/utility';
-@import '-deprecated/nocss_vars';
-@import '-deprecated/nocss';
-@import '-deprecated/nocss_mq';
-
 * {
   -webkit-font-smoothing: antialiased;
 }
@@ -71,21 +64,6 @@ strong, .bold {
   box-shadow: 0px 0px 1px 0px $brand-shadow;
 }
 
-._border-inset-dark {
-  position:relative;
-  //
-  &:before {
-    content:'';
-    display: block;
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    border:1px solid rgba(100,100,100,0.08);
-  }
-}
-
 // -- anchors -------------------
 a {
   color: $link-color;
@@ -147,7 +125,7 @@ pre, code, samp {
 }
 code {
   color: $red;
-  background-color: $gray-lighter;
+  background-color: $gray-6;
 }
 
 mark, .mark {
@@ -190,7 +168,7 @@ input[type=week] {
 }
 
 .list-inline-media {
-  @extend .list-inline;
+  // @extend .list-inline;
   display: inline-block;
 
   > li {
@@ -204,7 +182,7 @@ input[type=week] {
 }
 
 .list-piped {
-  @extend .list-inline;
+  // @extend .list-inline;
 
   > li + li {
     border-left: 1px solid $brand-divider;
@@ -213,7 +191,7 @@ input[type=week] {
 }
 
 .list-grid {
-  @extend .list-unstyled;
+  // @extend .list-unstyled;
   @include clearfix;
 
   > li {
@@ -328,7 +306,7 @@ a.text-coins:hover {
 }
 
 .text-muted-links {
-  color: $gray;
+  color: $gray-2;
 
   a {
     color: inherit;

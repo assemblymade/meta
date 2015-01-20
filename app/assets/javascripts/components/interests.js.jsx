@@ -33,7 +33,7 @@ var Interests = React.createClass({
     return (
       <div className="row">
         <div className="col-xs-12">
-          <h4 className="gray caps mt3 mb3 ml2">
+          <h4 className="gray-2 caps mt3 mb3 ml2">
             {section}
           </h4>
           {marks}
@@ -105,10 +105,10 @@ var Interests = React.createClass({
     var selected = this.state.selected
     var progress = Math.min(selected.length / 3 * 100, 100)
 
-    var classes = ['right', 'bg-blue', 'bold', 'h4', 'px3', 'py2', 'rounded', 'mt0', 'b0', 'align-left']
+    var classes = ['right', 'bg-blue', 'bold', 'h4', 'px3', 'py2', 'rounded', 'mt0', 'b0', 'left-align']
 
     if (progress < 100) {
-      classes.push('gray-light', 'gray-light-hover')
+      classes.push('gray-5', 'gray-5-hover')
     } else {
       classes.push('white', 'white-hover')
     }
@@ -164,7 +164,7 @@ var Interests = React.createClass({
     return (
       <div className="row mt4">
         <div className="col-xs-12">
-          <div className="align-right">
+          <div className="right-align">
             {skipButton}
             {encouragement}
             <a className={classes.join(' ')} style={style} href={suggestionsUrl.join('')}>
