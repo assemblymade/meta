@@ -24,8 +24,8 @@ module.exports = React.createClass({
     return (
       <div className="table mb0">
         <div className="table-cell">
-          <div className="px3 pt3 pb3" onClick={this.handleClick} key={'nfbi-' + bounty.id}>
-            <div className="mt0 mb1 mtn1 h4 fw-500 clickable">
+          <div className="p3" onClick={this.handleClick} key={'nfbi-' + bounty.id}>
+            <div className="mt0 mb1 h4 fw-500 clickable">
               <a href={bounty.url} key={"bounty-link-" + bounty.id}>
                 {bounty.title}
                 {' '} <span className="gray-2 fs4">#{bounty.number}</span>
