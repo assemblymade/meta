@@ -134,7 +134,8 @@ protected
       :email,
       :location,
       :bio,
-      :mail_preference
+      :mail_preference,
+      mark_names: []
     )
   end
 

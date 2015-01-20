@@ -7,6 +7,7 @@ class Mark < ActiveRecord::Base
   has_many :discussions, :through => :markings
   has_many :products, :through => :markings
   has_many :posts, :through => :markings
+  has_many :users, through: :markings
   has_many :watchings, :as => :watchable
   has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
   belongs_to :mark_stem, touch: true, counter_cache: true

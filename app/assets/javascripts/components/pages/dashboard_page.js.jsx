@@ -25,7 +25,7 @@ var MiniBounty = React.createClass({
     var details = null
 
     if (this.props.locker && bounty.locker) {
-      var details = (
+      details = (
         <div className="mt2 h6 mt0 mb0">
           <Avatar user={bounty.locker} size={18} style={{ display: 'inline-block' }} />
           {' '}
@@ -87,8 +87,10 @@ var MiniBounty = React.createClass({
 var DashboardPage = React.createClass({
   getDefaultProps: function() {
     return  {
-      filter: 'all',
-      initialShowAll: false
+      filter: 'interests',
+      initialShowAll: false,
+      initialInterests: [],
+      marks: {}
     }
   },
 
@@ -98,8 +100,10 @@ var DashboardPage = React.createClass({
       lockedBounties: [],
       reviewingBounties: [],
       products: [],
+      interests: this.props.initialInterests,
       loading: false,
-      showAll: this.props.initialShowAll
+      showAll: this.props.initialShowAll,
+      selected: []
     }
   },
 
@@ -182,7 +186,7 @@ var DashboardPage = React.createClass({
     var showAllLink = null
 
     if (followedProducts.length) {
-      followingNavItem = <NavItem label="What you follow" href='/dashboard/following' active={filter == 'interests'} />
+      followingNavItem = <NavItem label="Following" href='/dashboard/following' active={filter == 'following'} />
       divider = <NavItem divider={true} />
     }
 
@@ -200,7 +204,7 @@ var DashboardPage = React.createClass({
     return (
       <Nav>
         <NavItem label="Everything"      href='/dashboard'           active={filter == 'all'} />
-        <NavItem label="Your interests"  href='/dashboard/interests' active={filter == 'following'} />
+        <NavItem label="Your interests"  href='/dashboard/interests' active={filter == 'interests'} />
         {followingNavItem}
 
         {divider}
@@ -220,65 +224,195 @@ var DashboardPage = React.createClass({
     }
   },
 
+  renderMarks: function(section) {
+    var marks = this.props.marks[section]
+
+    return (
+      <div >
+        <h6 className="gray caps mt2 mb2">{section}</h6>
+        {marks.map(function(mark) {
+          return this.renderMark(mark)
+        }.bind(this))}
+      </div>
+    )
+  },
+
+  renderMark: function(mark) {
+    var selected = this.state.selected
+    var index = selected.indexOf(mark)
+    var isSelected = index >= 0
+
+    var click = function(event) {
+      event.stopPropagation()
+      event.preventDefault()
+
+      if (isSelected) {
+        selected.splice(index, 1)
+      } else {
+        selected.push(mark)
+      }
+
+      this.setState({
+        selected: selected
+      })
+    }.bind(this)
+
+    var classes = ['mark']
+
+    if (isSelected) {
+      classes = classes.concat(['mark-is-selected'])
+    }
+
+    return (
+      <a href="#" onClick={click} className={classes.join(' ')}>
+        {mark}
+      </a>
+    )
+  },
+
+  renderProgress: function() {
+    var progress = (this.state.selected.length / 3) * 360;
+
+    return (
+      <span className="mr2 pie-container">
+        <div className={progress > 180 ? 'pie big' : 'pie'} data-start="0" data-value={progress}></div>
+        <div className={progress < 180 ? 'pie big' : 'pie'} data-start={progress} data-value={360 - progress}></div>
+      </span>
+    )
+  },
+
+  renderSubmit: function() {
+    var selected = this.state.selected
+    var classes = ['pill-button', 'pill-button-theme-white', 'pill-button-border', 'pill-button-shadow', 'bold']
+    var selectionsNeeded = 3 - selected.length
+    var progress = null
+    var text = null
+    var padding = null
+    var click = function() {}
+
+    if (selectionsNeeded <= 0) {
+      text = 'Yay! Take a look at your suggestions'
+
+      click = function(event) {
+        event.stopPropagation()
+        event.preventDefault()
+
+        $.ajax({
+          url: '/user',
+          method: 'PUT',
+          dataType: 'json',
+          data: {
+            user: {
+              mark_names: this.state.selected
+            }
+          },
+          success: function() {
+            window.location = '/dashboard/interests'
+          }
+        })
+      }.bind(this)
+    } else {
+      classes = classes.concat(['gray', 'hover-gray'])
+
+      switch(selectionsNeeded) {
+        case 1:
+          topics = '1 more topic'
+          break
+        case 2:
+          topics = '2 more topics'
+          break
+        case 3:
+          topics = '3 topics'
+          break
+      }
+
+      text = 'Pick at least ' + topics
+
+      var progress = (
+        <div style={{ marginTop: 1, marginLeft: 3 }}>
+          {this.renderProgress()}
+        </div>
+      )
+
+      var padding = 46
+    }
+
+    return (
+      <a onClick={click} className={classes.join(' ')} style={{ display: 'inline-block', lineHeight: '26px', paddingLeft: padding }}>
+        {progress}
+        {text}
+      </a>
+    )
+  },
+
   renderNewsFeedItems: function() {
     var items = this.state.newsFeedItems
     var spinner = this.renderSpinner()
+    var filter = this.props.filter
+    var interests = this.state.interests
 
-    if (!items.length) {
-      return this.renderSuggestProducts()
-    } else {
+    if (filter == 'interests' && !interests.length) {
       return (
         <div>
-          {items.map(function(item) {
-            return (
-              <div>
-                <NewsFeedItem {...item} />
-              </div>
-            )
-          })}
-          {spinner}
+          <Tile>
+            <div className="px4 py4 text-center">
+              <h1 className="mt0 mb0">Hey there @vanstee!</h1>
+              <p className="gray-dark">Looks like you're new around here.</p>
+              <p className="gray-dark"><strong>Tell us what you're into below</strong> and we show you where to get started. </p>
+            </div>
+
+            <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
+              {this.renderMarks('Growth')}
+            </div>
+
+            <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
+              {this.renderMarks('Design')}
+            </div>
+
+            <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
+              {this.renderMarks('Development')}
+            </div>
+          </Tile>
+
+          <Tile>
+            <div className="px3 py3 border-top text-center">
+              {this.renderSubmit()}
+            </div>
+          </Tile>
         </div>
       )
     }
-  },
-
-  renderSuggestProducts: function() {
-    var products = this.state.products
 
     return (
       <div>
-        <div className="text-center mt4">
-          <h3 className="gray-2">You must be new around here.</h3>
-          <p className="h4 mt0 mb0 gray-2 fw-400">Follow some products that you care about.</p>
-        </div>
-
-        <div className="mt4">
-          {products.map(function(product) {
-            return (
-              <div className="mb2">
-                <ProductChip product={product} />
-              </div>
-            )
-          })}
-        </div>
+        {items.map(function(item) {
+          return (
+            <div>
+              <NewsFeedItem {...item} />
+            </div>
+          )
+        })}
+        {spinner}
       </div>
     )
   },
 
   renderBounties: function() {
-    if (!this.state.lockedBounties.length && !this.state.reviewingBounties) {
+    if (!this.state.lockedBounties.length && !this.state.reviewingBounties.length) {
       return (
-        <Tile>
-          <div className="center p3">
-            <p className="mt0 mb0 h5 gray-1 bold">Find a bounty to work on.</p>
-            <p className="gray-2 mb0">There are plenty of products that could use your help.</p>
-          </div>
-          <div className="p3 center" style={{ backgroundColor: '#f9f9f9' }}>
-            <a href="/discover/bounties" className="pill-button pill-button-theme-white pill-button-border pill-button-shadow bold" style={{ display: 'inline-block', lineHeight: '24px' }}>
-              Find bounties
-            </a>
-          </div>
-        </Tile>
+        <div style={{ marginTop: 42 }}>
+          <Tile>
+            <div className="center p3">
+              <p className="mt0 mb0 h5 gray-1 bold">Need something to work on?</p>
+              <p className="gray-2 mb0">There are plenty of products that could use your help.</p>
+            </div>
+            <div className="p3 center" style={{ backgroundColor: '#f9f9f9' }}>
+              <a href="/discover/products" className="pill-button pill-button-theme-white pill-button-border pill-button-shadow bold" style={{ display: 'inline-block', lineHeight: '24px' }}>
+                Discover products
+              </a>
+            </div>
+          </Tile>
+        </div>
       )
     }
 
@@ -327,7 +461,7 @@ var DashboardPage = React.createClass({
             <div style={{ marginTop: 42 }}></div>
             {nav}
           </div>
-          <div className="col col-6 px2">
+          <div className="col col-6 px2 mb4">
             <h6 className="gray caps mt2 mb2">What's Happening</h6>
             {newsFeedItems}
           </div>
