@@ -12,7 +12,7 @@ class Story < ActiveRecord::Base
   delegate :url_params, to: :subject, allow_nil: true
 
   PUBLISHABLE_VERBS = [
-    "Award", "Close", "Comment", "Introduce", "Start"
+    "Award", "Close", "Comment", "Introduce", "Post", "Start"
   ].each_with_object({}) {|keys, h| h[keys] = true }
 
   PUBLISHABLE_ACTIVITIES = [
