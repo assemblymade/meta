@@ -1,21 +1,37 @@
 var IdeaProgressStore = require('../../stores/idea_progress_store');
 var ProgressBar = require('../ui/progress_bar.js.jsx');
 
-var TILTING_THRESHOLD = 79;
-
 var IdeaProgressBar = React.createClass({
   propTypes: {
     idea: React.PropTypes.shape({
       greenlit_at: React.PropTypes.string,
+      hearts_count: React.PropTypes.number.isRequired,
       news_feed_item: React.PropTypes.shape({
         id: React.PropTypes.string.isRequired
       }).isRequired,
-      temperature: React.PropTypes.number.isRequired
+      tilting_threshold: React.PropTypes.number.isRequired
     }).isRequired
+  },
+
+  calculateProgress(heartsIncOrDec) {
+    var idea = this.props.idea;
+    var heartsCount = idea.hearts_count + (heartsIncOrDec || 0);
+    var threshold = idea.tilting_threshold;
+    // the threshold is to the 80% percentile;
+    // we want to show the meter up to the 100% percentile
+    var max = parseInt(threshold * 1.2, 10);
+
+    return (heartsCount / max) * 100;
   },
 
   componentDidMount() {
     IdeaProgressStore.addChangeListener(this.updateProgress);
+  },
+
+  componentWillReceiveProps() {
+    this.setState({
+      progress: this.calculateProgress()
+    });
   },
 
   componentWillUnmount() {
@@ -24,7 +40,7 @@ var IdeaProgressBar = React.createClass({
 
   getInitialState() {
     return {
-      progress: this.props.idea.temperature
+      progress: this.calculateProgress()
     };
   },
 
@@ -34,16 +50,18 @@ var IdeaProgressBar = React.createClass({
 
     return (
       <ProgressBar progress={progress}
-          threshold={TILTING_THRESHOLD}
-          type={(progress > TILTING_THRESHOLD || idea.greenlit_at) ? 'success' : 'gray'} />
+          threshold={80}
+          type={(idea.hearts_count > idea.tilting_threshold || idea.greenlit_at) ? 'success' : 'gray'} />
     );
   },
 
   updateProgress() {
-    var progress = this.state.progress +
-      IdeaProgressStore.getProgress(this.props.idea.news_feed_item.id)
+    var heartsIncOrDec = IdeaProgressStore.getProgress(
+      this.props.idea.news_feed_item.id
+    );
+
     this.setState({
-      progress: progress
+      progress: this.calculateProgress(heartsIncOrDec)
     });
   }
 });

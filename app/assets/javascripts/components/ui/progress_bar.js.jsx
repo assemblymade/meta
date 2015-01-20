@@ -13,14 +13,14 @@ var ProgressBar = React.createClass({
     ])
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       progress: 0,
       type: 'default'
     }
   },
 
-  render: function() {
+  render() {
     var progress = this.props.progress;
     var progressBarClasses = {
       'progress-bar': true
@@ -43,7 +43,7 @@ var ProgressBar = React.createClass({
     );
   },
 
-  renderThreshold: function() {
+  renderThreshold() {
     if (this.props.threshold) {
       return <div className="progress-threshold" style={{ left: this.props.threshold + '%'}} />
     }

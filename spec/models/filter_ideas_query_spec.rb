@@ -38,7 +38,7 @@ describe FilterIdeasQuery do
     it 'sorts by newness' do
       ideas = FilterIdeasQuery.call({ sort: 'newness' })
 
-      expect(ideas.count).to eq(4)
+      expect(ideas.count).to eq(3)
       expect(ideas.last).to eq(old_idea)
     end
   end

@@ -2,7 +2,7 @@ var CONSTANTS = window.CONSTANTS // require('../constants')
 var ActionTypes = CONSTANTS.ActionTypes
 var Store = require('./es6_store')
 
-var INCREMENT = 3;
+var INCREMENT = 1;
 
 var currentIdeaProgress = {}
 
@@ -19,11 +19,6 @@ class IdeaProgressStore extends Store {
         case ActionTypes.LOVE_UNCLICKED:
           _decrementIdeaProgress(action.heartable_id)
           this.emitChange()
-
-          // we need to reset progress to 0 so that
-          // components don't keep decrementing when
-          // other components' actions are triggered
-          _resetIdeaProgress(action.heartable_id)
           break
       }
     })
@@ -37,13 +32,9 @@ class IdeaProgressStore extends Store {
 module.exports = new IdeaProgressStore()
 
 function _decrementIdeaProgress(heartableId) {
-  currentIdeaProgress[heartableId] = -INCREMENT;
+  currentIdeaProgress[heartableId] = 0;
 }
 
 function _incrementIdeaProgress(heartableId) {
   currentIdeaProgress[heartableId] = INCREMENT;
-}
-
-function _resetIdeaProgress(heartableId) {
-  currentIdeaProgress[heartableId] = 0;
 }

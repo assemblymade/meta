@@ -43,7 +43,7 @@ var Love = React.createClass({
         <div className={classes}>
           <SvgIcon type="heart" />
         </div>
-        <span className="mt2">{heartsCount > 0 ? heartsCount : null}</span>
+        <span className="mt2 gray-2">{heartsCount > 0 ? heartsCount : null}</span>
       </a>
     );
   },

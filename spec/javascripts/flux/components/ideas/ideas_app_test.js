@@ -1,4 +1,5 @@
 jest.dontMock(appFile('components/ideas/ideas_app.js.jsx'));
+jest.dontMock('url');
 
 describe('IdeasApp', function() {
   beforeEach(function() {

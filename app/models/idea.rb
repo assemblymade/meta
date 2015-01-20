@@ -16,6 +16,9 @@ class Idea < ActiveRecord::Base
   validates :name, presence: true,
                    length: { minimum: 2, maximum: 255 },
                    exclusion: { in: %w(admin about script if owner core) }
+  validates :tilting_threshold, presence: true
+
+  before_validation :set_tilting_threshold!, on: :create
 
   after_commit :ensure_news_feed_item, on: :create
   after_commit :update_news_feed_item
@@ -100,7 +103,7 @@ class Idea < ActiveRecord::Base
   end
 
   def should_greenlight?
-    percentile <= 20
+    hearts_count >= tilting_threshold
   end
 
   def love
@@ -129,9 +132,8 @@ class Idea < ActiveRecord::Base
       score: lovescore
     })
 
-    if should_greenlight?
-      greenlight!
-    end
+    set_tilting_threshold! if tilting_threshold.nil?
+    greenlight! if should_greenlight?
   end
 
   def url_params
@@ -143,21 +145,39 @@ class Idea < ActiveRecord::Base
   end
 
   def percentile
-    self.rank.to_f / Idea.count * 100.round(2)
+    rank.to_f / Idea.count * 100.round(2)
+  end
+
+  def set_tilting_threshold!
+    return unless tilting_threshold.nil?
+
+    threshold = heart_distance_from_percentile
+    previous_threshold = Idea.order(created_at: :desc)
+                             .limit(1)
+                             .try(:tilting_threshold)
+
+    if threshold < previous_threshold.to_i
+      threshold = previous_threshold
+    end
+
+    if threshold.nil? || threshold == 0
+      threshold = 1
+    end
+
+    update(tilting_threshold: threshold)
   end
 
   # Top percentile is 0, not 100
   def heart_distance_from_percentile(goal_percentile=20)
     index = (Idea.where(greenlit_at: nil).count * goal_percentile.to_f/100).to_i
-    expected_score = Idea.order(score: :desc).limit(index == 0 ? 1 : index).last.score
+    expected_score = Idea.order(score: :desc).limit(index == 0 ? 1 : index).last.try(:score) || 0
     time_since = Time.now - EPOCH_START
     multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
-    hearts_missing = (expected_score - self.score) / (multiplier)
+    hearts_missing = (expected_score - score) / (multiplier)
     hearts_missing = (hearts_missing + 0.999).to_i
   end
 
-  def temperature
-    100 - percentile
+  def hearts_count
+    news_feed_item.hearts_count
   end
-
 end

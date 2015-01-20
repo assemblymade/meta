@@ -1,6 +1,7 @@
 var IdeasIndex = require('./ideas_index.js.jsx');
 var IdeasRouter = require('../../actions/ideas_router');
 var IdeasRoutesStore = require('../../stores/ideas_routes_store');
+var url = require('url');
 
 var IdeasApp = React.createClass({
   componentDidMount() {
@@ -8,7 +9,9 @@ var IdeasApp = React.createClass({
 
     // The router will have fired before the component mounted, so we need
     // to call `navigate` after mounting
-    IdeasRouter.navigate(window.location.pathname);
+
+    var parsedUrl = url.parse(window.location.toString());
+    IdeasRouter.navigate(parsedUrl.path);
   },
 
   componentWillUnmount() {
