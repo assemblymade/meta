@@ -1,6 +1,7 @@
 var Avatar = require('../ui/avatar.js.jsx');
 var Icon = require('../icon.js.jsx');
 var Love = require('../love.js.jsx');
+var ListItemMixin = require('../../mixins/list_item_mixin.js.jsx');
 var NewsFeedItemModal = require('../news_feed/news_feed_item_modal.js.jsx');
 
 var ProposalListIem = React.createClass({
@@ -9,6 +10,8 @@ var ProposalListIem = React.createClass({
   propTypes: {
     proposal: React.PropTypes.object.isRequired
   },
+
+  mixins: [ListItemMixin],
 
   render: function() {
     var proposal = this.props.proposal;
@@ -21,13 +24,17 @@ var ProposalListIem = React.createClass({
         </div>
 
         <div className="px3 mb1 mt0 gray-dark">
-
+          {this.renderComments(proposal.comments_count)}
         </div>
-
         {this.renderUser()}
-
       </div>
     );
+  },
+
+  renderProgress: function() {
+    return (
+      <ProgressBar percent={11} />
+    )
   },
 
   renderSummary: function() {
