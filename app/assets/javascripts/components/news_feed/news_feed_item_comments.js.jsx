@@ -322,7 +322,7 @@ var NewsFeedItemComments = React.createClass({
   },
 
   renderRuler: function() {
-    if (this.state.comments.length > 0) {
+    if (this.state.comments.length > 1) {
       return <hr className="mb0 mt3 border-gray-5 _mrn4 _mln4" />;
     }
   },
