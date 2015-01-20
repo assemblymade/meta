@@ -10,6 +10,7 @@ var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
 var Love = require('../love.js.jsx');
 var Markdown = require('../markdown.js.jsx');
+var moment = require('moment');
 var NewsFeedItemComments = require('../news_feed/news_feed_item_comments.js.jsx');
 var ProgressBar = require('../ui/progress_bar.js.jsx');
 var StartConversationModal = require('./start_conversation_modal.js.jsx');

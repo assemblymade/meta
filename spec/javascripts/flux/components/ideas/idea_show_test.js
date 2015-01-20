@@ -1,6 +1,7 @@
 jest.dontMock(appFile('components/ideas/idea_show.js.jsx'));
 jest.dontMock(appFile('stores/related_ideas_store'));
 jest.dontMock(appFile('stores/start_conversation_modal_store'));
+jest.dontMock('moment');
 
 describe('IdeaShow', function() {
   var noop = function() {};
