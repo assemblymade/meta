@@ -57,6 +57,11 @@ class Idea < ActiveRecord::Base
     name
   end
 
+  # ideas will belongs_to a product soon
+  def product
+    nil
+  end
+
   def comments
     news_feed_item.comments
   end
@@ -70,8 +75,8 @@ class Idea < ActiveRecord::Base
   end
 
   def update_news_feed_item
-    if news_feed_item
-      news_feed_item.update(updated_at: Time.now)
+    if self.news_feed_item
+      self.news_feed_item.update(updated_at: Time.now)
     end
   end
 
@@ -81,7 +86,7 @@ class Idea < ActiveRecord::Base
       return self.markings.destroy_all
     else
       mark_names.each do |mark_name|
-        add_mark(mark_name)
+        self.add_mark(mark_name)
       end
     end
   end
@@ -99,7 +104,7 @@ class Idea < ActiveRecord::Base
   end
 
   def love
-    news_feed_item.hearts.count
+    self.news_feed_item.hearts.count
   end
 
   def hearted

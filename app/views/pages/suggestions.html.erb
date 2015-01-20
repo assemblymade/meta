@@ -1,19 +1,20 @@
 <% title 'Tell us about yourself' %>
-<%= track 'interests' %>
+<%= track_engaged 'interests' %>
 
 <%= render 'shared/navbar' %>
 
 <div class="container mb4">
-  <div class="center py4">
-    <h1 class="h1 mt0 mb0">Ok, just finished looking through <%= pluralize(Wip.count, 'bounty') %>.</h1>
-    <p class="h3 mt0 mb0 gray-darker">These are bounties that could really use your help. Check 'em out.</p>
+  <div class="py4">
+    <br>
+    <div class="center">
+      <h1 style="font-size: 48px">Help us decide what to build.</h1>
+      <p class="large text-muted">Each week, the ideas with the most interest are greenlight. <br> <strong>Heart the ones you like</strong> and help the idea creators focus their efforts by <strong>asking questions</strong>.</p>
+    </div>
   </div>
 
   <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <% @bounties.each do |bounty| %>
-        <%= render 'bounties/chip', bounty: bounty %>
-      <% end %>
+    <div class="col-xs-12">
+      <%= react_component 'Suggestions', ideas: ActiveModel::ArraySerializer.new(@ideas) %>
     </div>
   </div>
 </div>

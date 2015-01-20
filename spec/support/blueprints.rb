@@ -6,7 +6,7 @@ Activity.blueprint do
   target   { Event::Comment.make! }
 end
 
-Activities::Start.blueprint do
+Activities::Post.blueprint do
   subject  { Task.make! }
   actor    { User.make! }
   target   { Event::Comment.make! }
@@ -64,18 +64,18 @@ Heart.blueprint do
   heartable { NewsFeedItem.make! }
 end
 
+Milestone.blueprint do
+  user
+  product
+  wip
+end
+
 Idea.blueprint do
   user
   body { Faker::Lorem.paragraphs(2).join }
   name { Faker::Company.name }
   news_feed_item { NewsFeedItem.make! }
   greenlit_at { nil }
-end
-
-Milestone.blueprint do
-  user
-  product
-  wip
 end
 
 Interest.blueprint do
@@ -118,7 +118,7 @@ end
 Story.blueprint do
   verb          { 'Start' }
   subject_type  { 'Discussion' }
-  activities    { [Activities::Start.make!(subject: Discussion.make!)] }
+  activities    { [Activities::Post.make!(subject: Discussion.make!)] }
 end
 
 Task.blueprint do

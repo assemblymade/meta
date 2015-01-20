@@ -1,6 +1,5 @@
 <% title 'Discussions', @product.name %>
 <% activate_nav! :discussions %>
-<%= track 'product.wips.viewed',  ProductAnalyticsSerializer.new(@product) %>
 
 <% if @wips.empty? %>
   <div class="row">

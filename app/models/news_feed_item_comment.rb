@@ -3,7 +3,7 @@ class NewsFeedItemComment < ActiveRecord::Base
   belongs_to :news_feed_item, touch: true, counter_cache: :comments_count
   belongs_to :user
 
-  has_many :hearts, as: :heartable
+  has_many :hearts, as: :heartable, after_add: :hearted
   has_many :tips, foreign_key: 'via_id'
 
   validates :body, presence: true
@@ -32,6 +32,17 @@ class NewsFeedItemComment < ActiveRecord::Base
     )
   end
 
+  def track_acknowledgements!
+    commenters = news_feed_item.comments.map(&:user).uniq
+    mentionees = mentioned_users.uniq
+
+    acknowledgees = (commenters + mentionees).reject(&:is_staff?) - [self.user]
+
+    if acknowledgees.any?
+      TrackAcknowledgements.perform_async(news_feed_item.to_global_id, acknowledgees.map(&:id))
+    end
+  end
+
   def product
     news_feed_item.product
   end
@@ -55,5 +66,11 @@ class NewsFeedItemComment < ActiveRecord::Base
   # don't call this directly, it will get called by the readraptor webhook
   def notify_by_email(user)
     CommentMailer.delay(queue: 'mailer').new_comment(user.id, self.id)
+  end
+
+  def hearted(heart)
+    if !self.user.staff?
+      TrackAcknowledgements.perform_async(news_feed_item.to_global_id, [self.user_id])
+    end
   end
 end

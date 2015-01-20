@@ -4,7 +4,7 @@
 var Avatar = require('./ui/avatar.js.jsx');
 var CommentActionCreators = require('../actions/comment_action_creators');
 var CommentStore = require('../stores/comment_store');
-var Icon = require('./icon.js.jsx');
+var Icon = require('./ui/icon.js.jsx');
 var Love = require('./love.js.jsx');
 var Markdown = require('./markdown.js.jsx');
 var NewComment = require('./news_feed/new_comment.js.jsx');
@@ -122,19 +122,19 @@ module.exports = React.createClass({
     }
 
     var classes = React.addons.classSet({
-      'gray-dark': this.isOptimistic()
+      'gray-2': this.isOptimistic()
     });
 
     return (
-      <div className="px4 _hover-toggle">
-        <div className="inline-block">
-          <a className="inline-block bold h6 mt0 mb0 _mr0_5 black" href={author.url}>{author.username}</a>
+      <div className="px4 visible-hover-wrapper">
+        <div className="h6 mt0 mb1">
+          <a className="bold black black-hover" href={author.url}>{author.username}</a>
+          {' '}
+          <a href={this.props.url} className="gray-2 gray-2-hover visible-hover">commented {moment(this.props.timestamp).fromNow()}</a>
         </div>
 
-        {this.renderTimestamp()}
-
         <div className={classes}>
-          <Markdown content={body} normalized={true} />
+          <Markdown content={body} normalized={true} wideQuotes={true} />
         </div>
 
         <div className="inline-block _pt0_5">
@@ -188,7 +188,7 @@ module.exports = React.createClass({
   renderLove: function() {
     if (this.props.heartable) {
       return [
-        <div className="_inline-block _mb0_25 _h6 gray-2">
+        <div className="_inline-block _mb0_25 _h6 mr1 gray-2">
           <Love heartable_id={this.props.id} heartable_type='NewsFeedItemComment' />
         </div>,
 
@@ -213,16 +213,6 @@ module.exports = React.createClass({
     );
   },
 
-  renderTimestamp: function() {
-    return (
-      <div className="_h6 _text-align-right _inline-block">
-        <div className="_none _hover-toggle-item-block _pr0_75">
-          <a href={this.props.url} className="gray-2">{moment(this.props.timestamp).fromNow()}</a>
-        </div>
-      </div>
-    );
-  },
-
   renderTips: function() {
     if (this.props.author.id === UserStore.getId() ||
         _.isEmpty(ProductStore.getProduct())) {
@@ -231,7 +221,7 @@ module.exports = React.createClass({
 
     // TipsUi is causing display issues :(
     return (
-      <span className="_pr0_75 _inline-block _ht1_5 _h6">
+      <span className="_pr0_75 _inline-block _h6" style={{height: '1.5rem'}}>
         <TipsUi
             viaType="NewsFeedItemComment"
             viaId={this.props.id}

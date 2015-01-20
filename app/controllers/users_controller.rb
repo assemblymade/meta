@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   def edit
     authenticate_user!
     @user = current_user.decorate
+    @balance = User::Balance.new(current_user)
   end
 
   def flag
@@ -75,8 +76,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update(user_params)
-    respond_with @user, location: (params[:return_to] || user_path(@user))
+    current_user.update(user_params)
+    respond_with current_user
   end
 
   def dismiss_welcome_banner

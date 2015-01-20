@@ -6,8 +6,13 @@ class BadgeMailer < BaseMailer
   def first_win(event_id)
     mailgun_campaign 'notifications'
 
-    @event = Event.find(event_id)
-    @wip = @event.wip.decorate
+    if @event = Event.find_by(id: event_id)
+      @wip = @event.wip.decorate
+    else
+      @event = NewsFeedItemComment.find(event_id)
+      @wip = @event.news_feed_item.target
+    end
+
     @product = @wip.product
     @user = @event.user
     @awarder = @wip.closer || @wip.awards.last.awarder

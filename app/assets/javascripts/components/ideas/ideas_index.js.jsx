@@ -1,3 +1,4 @@
+var Button = require('../ui/button.js.jsx');
 var Footer = require('../ui/footer.js.jsx');
 var IdeaTile = require('./idea_tile.js.jsx');
 var IdeasStore = require('../../stores/ideas_store');
@@ -136,11 +137,7 @@ var IdeasIndex = React.createClass({
             <h1>
               The best product ideas &mdash; built by all of us.
             </h1>
-            <button type="button"
-                className="_button pill theme-green shadow text-shadow border"
-                onClick={this.props.navigate.bind(null, '/ideas/new')}>
-              <span className="title">Add your product idea</span>
-            </button>
+            <Button type="primary" action={this.props.navigate.bind(null, '/ideas/new')}>Add your product idea</Button>
           </div>
           <div className="footer">
             <p>

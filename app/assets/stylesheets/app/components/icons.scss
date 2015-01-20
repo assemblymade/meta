@@ -32,7 +32,7 @@
 
   &.dropdown-glyph {
     // vertical-align: text-bottom;
-    color: $gray;
+    color: $gray-2;
     top: -1px;
   }
 }
@@ -181,7 +181,7 @@ you can use the generic selector below, but it's slower:
   top: -2px;
 
   &.dropdown-glyph {
-    color: $gray;
+    color: $gray-2;
   }
 }
 

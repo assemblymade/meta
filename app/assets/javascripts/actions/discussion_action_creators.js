@@ -13,6 +13,7 @@ var DiscussionActionCreators = {
       },
       url: url,
       success: function(data) {
+        TrackEngagement.track(data.analytics.discussion_type, data.analytics)
         Dispatcher.dispatch({
           type: ActionTypes.DISCUSSION_RECEIVE,
           comments: data.comments,

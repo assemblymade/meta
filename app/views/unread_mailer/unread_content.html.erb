@@ -11,7 +11,7 @@
                     <p style="">
                       from @<%= comment.user.username %><br/>
                       <a href="<%= url_for(comment.url_params) %>">
-                        <%= t "models.comment.description.owner", title: comment.nfi.target.try(:title) %>
+                        <%= t "models.comment.description.owner", title: comment.news_feed_item.target.try(:title) %>
                       </a>
                       <br/>
                       <% mentions.each do |mention| %>

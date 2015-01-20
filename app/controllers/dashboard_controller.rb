@@ -1,48 +1,51 @@
 class DashboardController < ApplicationController
-  respond_to :html
+  before_action :authenticate_user!
 
-  def activity
-    authenticate_user!
+  respond_to :html, :json
 
-    @stories = NewsFeed.new(current_user).page(params[:top_id])
-    @users = @stories.map(&:activities).flatten.map(&:actor).flatten.uniq
+  def index
+    @news_feed_items = NewsFeedItem.joins(:product).merge(products).includes(:comments).for_feed.page(1)
+    @user_bounties = {
+      lockedBounties: current_user.locked_wips,
+      reviewingBounties: Task.joins(:product).merge(current_user.core_products).where(state: 'reviewing')
+    }.transform_values { |bounties| ActiveModel::ArraySerializer.new(bounties, each_serializer: BountySerializer).as_json }
 
-    respond_with @stories
+    @heartables = @news_feed_items + @news_feed_items.map(&:comments).flatten
+    @user_hearts = signed_in? && Heart.where(user_id: current_user.id, heartable_id: @heartables.map(&:id))
+
+    @products = ActiveModel::ArraySerializer.new(suggested_products).as_json unless @news_feed_items.present?
   end
 
-  def bounties
-    authenticate_user!
+  # FIXME: Create a query object to handle all this junk
+  def news_feed_items
+    items = NewsFeedItem.where(target_type: 'Wip').
+      joins(:product).merge(products).
+      for_feed.
+      page(params[:page])
 
-    default_filters = {
-      user: 'assigned',
-      state: true,
-      sort: ['commented', 'awarded'].exclude?(params[:user]) && 'newest'
-    }.with_indifferent_access
-
-    filters = default_filters.merge(params.slice(:user, :state))
-    query = FilterWipsQuery.call(Task.all, current_user, filters)
-    @wips = PaginatingDecorator.new(query)
-
-    set_empty_state if @wips.empty?
-
-    respond_with @wips
+    render json: items,
+      each_serializer: NewsFeedItemSerializer,
+      serializer: PaginationSerializer,
+      root: :news_feed_items
   end
 
-  def set_empty_state
-    @empty_state_link_location = discover_path
+  def products
+    filter_param = params.fetch(:filter, 'all')
 
-    if params[:user].blank?
-      @empty_state_text = "You aren't working on any bounties"
-      @empty_state_link_text = 'Find a bounty to work on'
-    elsif params[:user] == 'started'
-      @empty_state_text = "You haven't created any bounties"
-      @empty_state_link_text = 'Find a project and create a bounty'
-    elsif params[:user] == 'commented'
-      @empty_state_text = "You haven't commented on any bounties"
-      @empty_state_link_text = 'Read the most active bounties'
-    elsif params[:user] == 'awarded'
-      @empty_state_text = "You haven't been awarded any bounties"
-      @empty_state_link_text = 'Find a bounty to work on'
+    case filter_param
+    when 'all'
+      Product.public_products
+    when 'following'
+      current_user.followed_products
+    when 'interests'
+      product_ids = current_user.top_products.pluck(:product_id)
+      Product.where(id: product_ids)
+    else
+      Product.where(slug: filter_param)
     end
+  end
+
+  def suggested_products
+    Product.public_products.ordered_by_trend.limit(3)
   end
 end

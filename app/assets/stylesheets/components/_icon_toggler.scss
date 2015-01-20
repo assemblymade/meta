@@ -1,0 +1,9 @@
+.icon-toggler {
+  background: transparent;
+  outline: none;
+  border: none;
+  line-height: inherit;
+  // Fix for icons being clipped
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+}

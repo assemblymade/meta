@@ -1,4 +1,4 @@
-var Icon = require('../icon.js.jsx');
+var Icon = require('../ui/icon.js.jsx');
 var IdeaStore = require
 var Lightbox = require('../lightbox.js.jsx');
 var NewIdeaForm = require('./new_idea_form.js.jsx');

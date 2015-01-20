@@ -67,7 +67,7 @@ class TasksController < WipsController
         project.tasks << @bounty
       end
 
-      @activity = Activities::Start.publish!(
+      @activity = Activities::Post.publish!(
         actor: current_user,
         subject: @bounty,
         target: @product,
@@ -107,8 +107,7 @@ class TasksController < WipsController
     respond_to do |format|
       format.html { render 'bounties/show' }
       format.json { render json: {
-        bounty: TaskSerializer.new(@bounty, scope: current_user),
-        events: @bounty.events.where.not(type: 'Event::Comment').map { |e| EventSerializer.for(e, current_user) }
+        bounty: TaskSerializer.new(@bounty, scope: current_user)
       } }
     end
   end

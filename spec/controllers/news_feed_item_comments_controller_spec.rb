@@ -14,7 +14,7 @@ describe NewsFeedItemCommentsController do
 
       post :create, product_id: product.slug, update_id: task_nfi.id, body: "grumble grumble"
 
-      expect(assigns(:item).body).to eq("grumble grumble")
+      expect(assigns(:comment).body).to eq("grumble grumble")
     end
   end
 

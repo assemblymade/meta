@@ -33,9 +33,8 @@ class IdeaCommentsController < ProductController
       []
     end
 
-    discussion =
-
     respond_with({
+      analytics: DiscussionAnalyticsSerializer.new(@idea.news_feed_item),
       comments: comments,
       events: events,
       user_hearts: user_hearts

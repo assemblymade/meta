@@ -2,7 +2,7 @@ var LoveStore = require('../stores/love_store')
 var LoveActionCreators = require('../actions/love_action_creators')
 var xhr = require('../xhr')
 var Lovers = require('./lovers.jsx')
-var Icon = require('./icon.js.jsx')
+var Icon = require('./ui/icon.js.jsx')
 var SvgIcon = require('./ui/svg_icon.js.jsx');
 var UserStore = require('../stores/user_store')
 

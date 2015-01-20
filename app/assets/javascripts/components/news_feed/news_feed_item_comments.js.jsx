@@ -10,7 +10,7 @@ var DiscussionActionCreators = require('../../actions/discussion_action_creators
 var DiscussionStore = require('../../stores/discussion_store');
 var Dispatcher = window.Dispatcher;
 var Drawer = require('../ui/drawer.js.jsx');
-var Icon = require('../icon.js.jsx');
+var Icon = require('../ui/icon.js.jsx');
 var IdeaSharePanel = require('../ideas/idea_share_panel.js.jsx');
 var NewComment = require('./new_comment.js.jsx');
 var NewsFeedItemBountyClose = require('./news_feed_item_bounty_close.js.jsx');
@@ -349,9 +349,9 @@ var NewsFeedItemComments = React.createClass({
 
     if (numberOfComments > this.state.comments.length) {
       return (
-        <a className="block mt2 fs3 gray-dark clickable"
+        <a className="block mt2 fs3 gray-2 clickable"
             onClick={this.triggerModal}>
-          <span className="pr2 gray fs5">
+          <span className="pr2 gray-2 fs5">
             <Icon icon="comment" />
           </span>
           View all {numberOfComments} comments

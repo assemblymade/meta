@@ -1,0 +1,14 @@
+@media #{$breakpoint-sm} {
+  .sm-right-align { text-align: right !important }
+  .sm-center { text-align: center !important }
+}
+
+@media #{$breakpoint-md} {
+  .md-right-align { text-align: right !important }
+  .md-center { text-align: center !important }
+}
+
+@media #{$breakpoint-lg} {
+  .lg-right-align { text-align: right !important }
+  .lg-center { text-align: center !important }
+}

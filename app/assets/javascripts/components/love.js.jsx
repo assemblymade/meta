@@ -1,10 +1,12 @@
-var LoveStore = require('../stores/love_store')
 var LoveActionCreators = require('../actions/love_action_creators')
-var xhr = require('../xhr')
 var Lovers = require('./lovers.jsx')
-var Icon = require('./icon.js.jsx')
+var IconToggler = require('./ui/icon_toggler.js.jsx')
+var IconWithNumber = require('./ui/icon_with_number.js.jsx')
+var Icon = require('./ui/icon.js.jsx')
 var SvgIcon = require('./ui/svg_icon.js.jsx');
+var LoveStore = require('../stores/love_store')
 var UserStore = require('../stores/user_store')
+var xhr = require('../xhr')
 
 var Love = React.createClass({
   propTypes: {
@@ -58,7 +60,7 @@ var Love = React.createClass({
     LoveStore.removeListener('change', this._onChange)
   },
 
-  handleClick: function() {
+  handleClick: function(e) {
     if (UserStore.isSignedIn()) {
       if (this.state.user_heart) {
         LoveActionCreators.clickUnlove(this.props.heartable_type, this.props.heartable_id)

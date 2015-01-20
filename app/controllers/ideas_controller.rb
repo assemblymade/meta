@@ -1,4 +1,4 @@
-class IdeasController < ApplicationController
+class IdeasController < ProductController
   respond_to :html, :json
   layout 'application'
 

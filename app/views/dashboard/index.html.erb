@@ -1,0 +1,9 @@
+<% title 'Dashboard' %>
+<% activate_nav! :dashboard %>
+
+<%= render 'shared/navbar' %>
+
+<%= react_component 'DashboardPage', {
+  filter: params.fetch(:filter, 'all'),
+  followedProducts: ActiveModel::ArraySerializer.new(current_user.followed_products.ordered_by_trend)
+} %>

@@ -1,5 +1,5 @@
 var CommentActionCreators = require('../../actions/comment_action_creators');
-var Icon = require('../icon.js.jsx');
+var Icon = require('../ui/icon.js.jsx');
 var Lightbox = require('../lightbox.js.jsx');
 var NewComment = require('../news_feed/new_comment.js.jsx');
 var NewCommentStore = require('../../stores/new_comment_store');

@@ -1,16 +1,11 @@
 module AnalyticsHelper
-  def track_inline(event, options=nil)
-    if options
-      js = "analytics.track('#{event}', #{options.to_json});"
-    else
-      js = "analytics.track('#{event}');"
-    end
-    js.html_safe
-  end
-
-  def track(event, options=nil)
+  def track_engaged(event, options=nil)
+    return if staff?
     content_for :javascript do
-      content_tag(:script, track_inline(event, options)) unless staff?
+      content_tag(
+        :script,
+        "window._analyticsViewTarget = '#{event}'; window._analyticsEngagedProperties = #{options.to_json};".html_safe
+      )
     end
   end
 

@@ -1,11 +1,7 @@
-module.exports = React.createClass({
-  displayName: 'Tile',
-
+var Tile = React.createClass({
   render: function() {
-    return (
-      <div className="bg-white rounded shadow mb2">
-        {this.props.children}
-      </div>
-    )
+    return <div className="bg-white rounded shadow">{this.props.children}</div>
   }
-});
+})
+
+module.exports = Tile

@@ -1,12 +1,10 @@
 <% title "Ideas" %>
-<%= track 'ideas_page.viewed' %>
+<%= track_engaged 'ideas' %>
 
 <% activate_nav! :ideas %>
 <% activate_nav! (params[:sort] || 'trending').to_sym %>
 <% activate_nav! (params[:filter] || '').to_sym %>
 
 <%= render 'shared/navbar' %>
-
 <%= react_component 'IdeasApp' %>
-
 <%= render 'shared/footer' %>

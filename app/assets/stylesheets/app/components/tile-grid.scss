@@ -22,13 +22,13 @@
 
 // -- Base Component ------------
 .tile-grid {
-  @import 'app/temp/style-guide-updates';  // < details: https://assembly.com/meta/bounties/1038
+  //@import 'app/temp/style-guide-updates';  // < details: https://assembly.com/meta/bounties/1038
   //
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
   background-color: $white;
   > .container  {
-    @extend .text-2;
+    // @extend .text-2;
     //
     > .main {
       overflow: hidden;

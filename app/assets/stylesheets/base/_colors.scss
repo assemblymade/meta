@@ -1,0 +1,25 @@
+$colors: (
+  "white":  $white,
+  "gray-6": $gray-6,
+  "gray-5": $gray-5,
+  "gray-4": $gray-4,
+  "gray-3": $gray-3,
+  "gray-2": $gray-2,
+  "gray-1": $gray-1,
+  "black":  $black,
+
+  "green":      $green,
+  "blue":       $blue,
+  "red":        $red,
+  "yellow":     $yellow
+);
+
+@each $color, $hex in $colors {
+  .#{$color}        { color: $hex }
+  .bg-#{$color}     { background-color: $hex }
+  .border-#{$color} { border-color: $hex }
+
+  .#{$color}-hover:hover        { color: $hex }
+  .bg-#{$color}-hover:hover     { background-color: $hex }
+  .border-#{$color}-hover:hover { border-color: $hex }
+}

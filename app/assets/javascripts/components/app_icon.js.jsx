@@ -14,12 +14,15 @@ var AppIcon = React.createClass({
   },
 
   render: function() {
-    var size = this.props.size.toString()
+    var logoUrl = this.props.app.logo_url
+    var size = this.props.size
+    var style = this.props.style
 
     return <img className="app-icon"
-        src={this.props.app.logo_url}
+        src={logoUrl}
         height={size}
-        width={size} />
+        width={size}
+        style={style} />
   }
 
 })

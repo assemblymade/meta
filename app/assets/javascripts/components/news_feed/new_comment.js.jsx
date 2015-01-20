@@ -1,5 +1,6 @@
 var ActionTypes = window.CONSTANTS.ActionTypes;
 var BountyActionCreators = require('../../actions/bounty_action_creators');
+var Button = require('../ui/button.js.jsx')
 var CommentActionCreators = require('../../actions/comment_action_creators');
 var DropzoneMixin = require('../../mixins/dropzone_mixin');
 var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
@@ -151,20 +152,18 @@ var NewComment = React.createClass({
 
     var textareaClasses = React.addons.classSet({
       'bg-gray-4': this.state.dragging,
-      'bg-gray-6': !this.state.dragging,
-      '_ht14_5': true,
-      '_w100p': true,
+      'full-width': true,
       '_px1_5': true,
       '_pt1': true,
       '_pb3': true,
-      '_border-none': true,
-      '_border-rad0_5': true
+      '_border-rad0_5': true,
+      'h5 mt0 mb0': true
     });
 
     return (
       <div className="clearfix" style={{ paddingBottom: '2.5rem' }}>
         {this.renderAvatar()}
-        <div className={this.props.hideAvatar ? null : "_pl3_5"}>
+        <div className={this.props.hideAvatar ? "mb3" : "mb3 _pl3_5"}>
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
               <TypeaheadUserTextArea
@@ -203,21 +202,14 @@ var NewComment = React.createClass({
 
   renderButtons: function() {
     if (this.props.hideButtons) {
-      return;
+      return
     }
 
-    var classes = this.buttonClasses('btn-primary');
-
     return (
-      <div className="clearfix mt3">
-        <button className={classes}
-            href="javascript:void(0);"
-            onClick={this.submitComment}>
-          <span className="_fs1_1 _lh2">Leave a comment</span>
-        </button>
-        {this.renderSubmitWorkButton()}
+      <div className="text-right">
+        <Button action={this.submitComment} submit>Leave a comment</Button>
       </div>
-    );
+    )
   },
 
   renderDropzoneInner: function() {
@@ -227,22 +219,6 @@ var NewComment = React.createClass({
           To attach files, drag & drop here or
           {' '}<a href="javascript:void(0);" ref="clickable">select files from your computer</a>&hellip;
         </div>
-      );
-    }
-  },
-
-  renderSubmitWorkButton: function() {
-    if (this.props.canContainWork) {
-      var classes = this.buttonClasses('btn-default');
-
-      return (
-        <button className={classes + ' mr2'}
-            href="javascript:void(0);"
-            style={{ color: '#5cb85c !important' }}
-            onClick={this.submitWork}>
-          <span className="icon icon-document icon-left"></span>
-          <span className="title _fs1_1 _lh2">Submit work</span>
-        </button>
       );
     }
   },

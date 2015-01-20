@@ -1,7 +1,8 @@
 var Avatar = require('../ui/avatar.js.jsx');
 var BigLove = require('../big_love.js.jsx');
+var Button = require('../ui/button.js.jsx');
 var Drawer = require('../ui/drawer.js.jsx');
-var Icon = require('../icon.js.jsx');
+var Icon = require('../ui/icon.js.jsx');
 var IdeaContainer = require('./idea_container.js.jsx');
 var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
@@ -87,11 +88,9 @@ var IdeaShow = React.createClass({
               </h4>
             </div>
             <div className="px4 right py1">
-              <button type="button"
-                  className="_button pill theme-green shadow text-shadow border"
-                  onClick={navigate.bind(null, '/ideas/new')}>
-                <span className="title">Add your app idea</span>
-              </button>
+              <Button type="primary" action={navigate.bind(null, '/ideas/new')}>
+                Add your app idea
+              </Button>
             </div>
           </div>
         </div>

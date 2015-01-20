@@ -1,4 +1,4 @@
-var Icon = require('../icon.js.jsx');
+var Icon = require('../ui/icon.js.jsx');
 
 var CircleIcon = React.createClass({
   propTypes: {

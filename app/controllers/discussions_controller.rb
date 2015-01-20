@@ -24,7 +24,7 @@ class DiscussionsController < WipsController
         MilestoneTask.find_or_create_by!(milestone: @milestone, task: @wip)
       end
 
-      @activity = Activities::Start.publish!(
+      @activity = Activities::Post.publish!(
         actor: current_user,
         subject: @wip,
         target: @product,

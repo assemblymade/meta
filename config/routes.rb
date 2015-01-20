@@ -45,8 +45,6 @@ ASM::Application.routes.draw do
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
   get '/interests'        => 'pages#interests',   as: :interests
   get '/suggestions'      => 'pages#suggestions', as: :suggestions
-  # get '/ideas/new_ideas'  => 'ideas#new_ideas',   as: :new_ideas
-
 
   # Readraptor proxy. Remove this when javascript clients can talk directly to RR
   get '/_rr/articles/:id' => 'readraptor#show', as: :readraptor_article
@@ -96,9 +94,8 @@ ASM::Application.routes.draw do
       get   '/welcome/thanks', action: :show
     end
 
-    get '/dashboard' => 'dashboard#activity', as: :dashboard
-    get '/dashboard/activity' => 'dashboard#activity', as: :activity_dashboard
-    get '/dashboard/bounties' => 'dashboard#bounties', as: :bounties_dashboard
+    get '/dashboard' => 'dashboard#index', as: :dashboard
+    get '/dashboard/:filter' => 'dashboard#index', as: :dashboard_filter
 
     # settings
     get    '/settings' => 'users#edit', as: :edit_user
@@ -278,6 +275,9 @@ ASM::Application.routes.draw do
 
   # legacy
   get '/meta/chat', to: redirect(path: '/chat/general')
+
+  # FIXME: Fix news_feed_items_controller to allow missing product
+  get '/news_feed_items' => 'dashboard#news_feed_items'
 
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do

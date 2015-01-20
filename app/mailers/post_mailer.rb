@@ -16,8 +16,9 @@ class PostMailer < BaseMailer
 
     prevent_delivery(@user)
 
-    mail to: @user.email_address,
-         subject: @post.title
+    mail from: from_address_for(@post.user),
+         to: @user.email_address,
+         subject: "[#{@product.name}] #{@post.title}"
   end
 
   def mailing_list(post_id, email_address)

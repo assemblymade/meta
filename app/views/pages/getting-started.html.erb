@@ -9,234 +9,173 @@
 
 <%= render 'shared/navbar' %>
 
-<div class="page page-flat page-with-header">
-  <div class="hero" style="z-index: 0;">
-    <div class="container text-center">
+<div class="">
+  <div class="hero">
+    <div class="container center">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-          <h6>Assembly <i class="icon icon-field-guide"></i> Field Guide</h6>
-          <h1>Getting Started</h1>
-          <p class="lead">By trade, we may be developers, designers, writers, and marketers&mdash;but at heart, we're makers.
-          <br>
-          <strong>Assembly is where we band together to build.</strong>
-        </p>
+        <div class="sm-col sm-col-2">&nbsp;</div>
+        <div class="sm-col sm-col-8">
+          <h4 style="color:#bc9454">Assembly <%= inline_react_component 'Icon', icon: 'field-guide' %> Field Guide</h4>
+          <h1 style="font-size:48px;line-height:4rem">Getting Started</h1>
+          <p class="h3 mt0 mb0">By trade, we may be developers, designers, writers, and marketers&mdash;but at heart, we're makers.
+            <br>
+            <strong>Assembly is where we band together to build.</strong>
+          </p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="getting-started">
-    <div class="container neuter-paragraphs">
-      <p class="lead-hero">If you want to challenge yourself, learn alongside peers and make a meaningful contribution to a project you believe in, Assembly is for you. <strong>We're a community that crafts impactful and profitable software products, together.</strong></p>
+  <div class="py3 white" style="background-color:#9d8371">
+    <div class="container">
+      <p class="h3 mt0 mb0">If you want to challenge yourself, learn alongside peers and make a meaningful contribution to a project you believe in, Assembly is for you. <strong>We're a community that crafts impactful and profitable software products, together.</strong></p>
     </div>
   </div>
 
-  <div class="container" style="background-color: white; z-index: 1; position: relative;">
-    <div class="row">
-      <div class="col-md-8">
+  <div class="container bg-white py4" style="z-index: 1; position: relative;">
+    <div class="clearfix mxn3">
+      <div class="sm-col sm-col-1 px3">&nbsp;</div>
+      <div class="sm-col sm-col-7 px3">
 
-        <div class="section">
+        <h3>Don't be shy!</h3>
 
-          <div class="row" style="margin-bottom: 16px;">
-            <div class="col-sm-11 col-sm-offset-1">
-              <h4>Don't be shy!</h4>
-              <p><strong>New here? Hop into a discussion and introduce yourself</strong>. The Assembly community is friendly and welcoming, we promise. Share what you’re interested in – chances are someone will be looking for just the skills you have.</p>
-              <p>Here are a few Assembly projects with active discussions happening right now:</p>
-            </div>
+        <p><strong>New here? Hop into a discussion and introduce yourself</strong>. The Assembly community is friendly and welcoming, we promise. Share what you’re interested in – chances are someone will be looking for just the skills you have.</p>
+        <p>Here are a few Assembly projects with active discussions happening right now:</p>
+
+
+        <div class="clearfix mxn1 py3">
+          <!-- Helpful -->
+          <div class="sm-col sm-col-4 px1 mb2">
+            <a href="<%= product_path('helpful') %>" class="block rounded p3 white white-hover" style="background-color:#494d52">
+              <h4 class="mt0 mb2">Support comes from people, not software</h4>
+              <div class="h6 mt0 mb0">Helpful</div>
+            </a>
           </div>
 
-          <div class="row" style="margin-bottom: 24px;">
-            <div class="col-xs-4">
-              <a href="<%= product_path('helpful') %>" class="deprecated-card deprecated-card-sm deprecated-card-colored product-helpful">
-                <div class="deprecated-card-body">
-                  <div class="summary">
-                    <div class="summary-target">
-                      Support comes from people, not software
-                    </div>
-                    <p class="summary-name omega">
-                      Helpful
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div class="col-xs-4">
-              <a href="<%= product_path('family-table') %>" class="deprecated-card deprecated-card-sm deprecated-card-colored product-family-table">
-                <div class="deprecated-card-body">
-                  <div class="summary">
-                    <div class="summary-target">
-                      One place to organize the whole family
-                    </div>
-                    <p class="summary-name omega">
-                      Family Table
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div class="col-xs-4">
-              <a href="<%= product_path('buckets') %>" class="deprecated-card deprecated-card-sm deprecated-card-colored product-buckets">
-                <div class="deprecated-card-body">
-                  <div class="summary">
-                    <div class="summary-target">
-                      Manage content better
-                    </div>
-                    <p class="summary-name omega">
-                      Buckets
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
+          <!-- Family Table -->
+          <div class="sm-col sm-col-4 px1 mb2">
+            <a href="<%= product_path('family-table') %>" class="block rounded p3 white white-hover" style="background-color:#77b8b4">
+              <h4 class="mt0 mb2">One place to organize the whole family</h4>
+              <div class="h6 mt0 mb0">Family Table</div>
+            </a>
           </div>
 
-          <div class="row">
-            <div class="col-sm-11 col-sm-offset-1">
-              <p>Once you find an exciting product, you’re ready to dive in:</p>
-              <p><strong>Developers:</strong> Pick out a code bounty, ask people how you can help, fork the repo, and start writing and committing code.</p>
-              <p><strong>Designers:</strong> Find a design bounty, ask the team how you can help, download any design assets, and start creating mockups for new pages.</p>
-              <p><strong>Anyone else:</strong> Whatever your skills may be, an Assembly team likely needs them. Introduce yourself and let people know what you'd like to work on.</p>
-              <p>Also, you can always improve upon work that was done previously. Remember, the Assembly community values progress over consensus.</p>
-            </div>
+          <!-- Buckets -->
+          <div class="sm-col sm-col-4 px1 mb2">
+            <a href="<%= product_path('buckets') %>" class="block rounded p3 white white-hover" style="background-color:#f9d233">
+              <h4 class="mt0 mb2">Manage content better</h4>
+              <div class="h6 mt0 mb0">Buckets</div>
+            </a>
           </div>
 
-        </div><!-- .section -->
+        </div>
 
-        <div class="section">
 
-          <div class="row" style="margin-bottom: 24px;">
-            <div class="col-sm-11 col-sm-offset-1">
-              <h4>Collaboration</h4>
-              <p>Products on Assembly are crowd-<strong><em>founded</em></strong>. Anyone can submit an idea, and anyone can join the team and get that product to market.</p>
-            </div>
+        <p>Once you find an exciting product, you’re ready to dive in:</p>
+        <p><strong>Developers:</strong> Pick out a code bounty, ask people how you can help, fork the repo, and start writing and committing code.</p>
+        <p><strong>Designers:</strong> Find a design bounty, ask the team how you can help, download any design assets, and start creating mockups for new pages.</p>
+        <p><strong>Anyone else:</strong> Whatever your skills may be, an Assembly team likely needs them. Introduce yourself and let people know what you'd like to work on.</p>
+        <p>Also, you can always improve upon work that was done previously. Remember, the Assembly community values progress over consensus.</p>
+
+
+
+        <h3>Collaboration</h3>
+
+        <p>Products on Assembly are crowd-<strong><em>founded</em></strong>. Anyone can submit an idea, and anyone can join the team and get that product to market.</p>
+
+
+        <div class="clearfix py3 mxn2">
+          <div class="col col-4 px2">
+            <a href="<%= user_path('whale') %>">
+              <h4>@whale</h4>
+              <p class="h6 mt0 mb0 gray-2">Chief Creative Officer at Relay Foods. Designer and Father.</p>
+            </a>
           </div>
 
-          <div class="row" style="margin-bottom: 24px;">
-            <div class="col-xs-4">
-              <a href="<%= user_path('whale') %>" class="deprecated-card deprecated-card-sm deprecated-card-colored user-whale" style="min-height: 152px;">
-                <div class="deprecated-card-inner"></div>
-                <div class="deprecated-card-body">
-                  <div class="summary">
-                    <p class="summary-name">whale</p>
-                    <div class="summary-target omega">Chief Creative Officer at Relay Foods. Designer and Father.</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div class="col-xs-4">
-              <a href="<%= user_path('chexee') %>" class="deprecated-card deprecated-card-sm deprecated-card-colored user-chexee" style="min-height: 152px;">
-                <div class="deprecated-card-inner"></div>
-                <div class="deprecated-card-body">
-                  <div class="summary">
-                    <p class="summary-name">chexee</p>
-                    <div class="summary-target omega">Designer. Human Bower bird of purple objects.</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div class="col-xs-4">
-              <a href="<%= user_path('davidkaneda') %>" class="deprecated-card deprecated-card-sm deprecated-card-colored user-davidkaneda" style="min-height: 152px;">
-                <div class="deprecated-card-inner"></div>
-                <div class="deprecated-card-body">
-                  <div class="summary">
-                    <p class="summary-name">davidkaneda</p>
-                    <div class="summary-target omega">Web guy and 9bits curator. Creator of jqTouch.</div>
-                  </div>
-                </div>
-              </a>
-            </div>
+          <div class="col col-4 px2">
+            <a href="<%= user_path('chexee') %>">
+              <h4>@chexee</h4>
+              <p class="h6 mt0 mb0 gray-2">Designer. Human Bower bird of purple objects.</p>
+            </a>
           </div>
 
-          <figure style="margin-bottom: 24px;">Meet a few of our many talented contributors.</figure>
+          <div class="col col-4 px2">
+            <a href="<%= user_path('davidkaneda') %>">
 
-
-          <div class="row">
-            <div class="col-sm-11 col-sm-offset-1">
-              <p>Assembly apps are built by everyone, and like successful open source products, each app also has a Core Team of contributors. The Core Team influences the vision of the app and the standards for quality, and determines which contributions are accepted. It consists of the most active and respected contributors on the app. The Core Team may comprise the original creator, Assembly staff members, and members of the community who help make the product a reality (that’s you!).</p>
-              <p>Some people work on Assembly projects for just few hours a month. Some put in 40 hours a week. It’s up to you to work on what you want, when you want, where you want. The best part is that if you step away, the project keeps moving forward.</p>
-            </div>
+              <h4>@davidkaneda</h4>
+              <p class="h6 mt0 mb0 gray-2">Web guy and 9bits curator. Creator of jqTouch.</p>
+            </a>
           </div>
+        </div>
 
-        </div><!-- .section -->
+        <p class="border-top gray-2 h6 py2 mt0 mb3">Meet a few of our many talented contributors.</p>
 
-        <div class="section">
+        <p>Assembly apps are built by everyone, and like successful open source products, each app also has a Core Team of contributors. The Core Team influences the vision of the app and the standards for quality, and determines which contributions are accepted. It consists of the most active and respected contributors on the app. The Core Team may comprise the original creator, Assembly staff members, and members of the community who help make the product a reality (that’s you!).</p>
 
-          <div class="row" style="margin-bottom: 24px;">
-            <div class="col-sm-11 col-sm-offset-1">
-              <h4>Ownership</h4>
-              <p>The ownership of an Assembly product is distributed through App Coins. App Coins can be earned primarily by contributing to a product (design, code, copy, etc.). You can also receive “tips” in the form of App Coins when you provide insight, advice &ndash; or simply make someone laugh.</p>
-            </div>
-          </div>
+        <p>Some people work on Assembly projects for just few hours a month. Some put in 40 hours a week. It’s up to you to work on what you want, when you want, where you want. The best part is that if you step away, the project keeps moving forward.</p>
 
-          <% if @ownership.user_cents.any? %>
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
+
+        <h3>Ownership</h3>
+        <p>The ownership of an Assembly product is distributed through App Coins. App Coins can be earned primarily by contributing to a product (design, code, copy, etc.). You can also receive “tips” in the form of App Coins when you provide insight, advice &ndash; or simply make someone laugh.</p>
+
+        <div class="py3">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="text-left">Partner</th>
+                  <th class="text-right">
+                    Coins
+                  </th>
+                  <th class="text-right">
+                    Ownership
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @ownership.user_cents[0...5].each do |user, cents| %>
                   <tr>
-                    <th class="text-left">Partner</th>
-                    <th class="text-right">
-                      Coins
-                    </th>
-                    <th class="text-right">
-                      Ownership
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% @ownership.user_cents[0...5].each do |user, cents| %>
-                    <tr>
-                      <td>
-                        <a href="<%= user_path(user) %>">
-                          <div class="left mr2">
-                            <%= avatar_tag(user, 24) %>
-                          </div>
-                          <strong><%= user.username %></strong>
-                        </a>
-                      </td>
+                    <td>
+                      <a href="<%= user_path(user) %>">
+                        <div class="left mr2">
+                          <%= avatar_tag(user, 24) %>
+                        </div>
+                        <strong><%= user.username %></strong>
+                      </a>
+                    </td>
+                    <td class="text-right">
+                      <%= react_component 'AppCoins', n: cents %>
+                    </td>
+                    <% if @product.for_profit? %>
                       <td class="text-right">
-                        <i class="icon icon-app-coin text-coins small"></i>
-                        <%= number_to_currency cents / 100.to_d, precision: 2, unit: '' %>
+                        <%= number_to_percentage(cents / @ownership.total_cents.to_d * 100, precision: 2) %>
                       </td>
-                      <% if @product.for_profit? %>
-                        <td class="text-right">
-                          <%= number_to_percentage(cents / @ownership.total_cents.to_d * 100, precision: 2) %>
-                        </td>
-                      <% end %>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div><!-- .table-responsive -->
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div><!-- .table-responsive -->
 
-            <figure style="margin-bottom: 36px;">App Coin distribution for <a href="<%= product_path(@product) %>"><%= @product.name %></a></figure>
-          <% end %>
+          <p class="border-top gray-2 h6 py2 mt0 mb3">App Coin distribution for <a href="<%= product_path(@product) %>"><%= @product.name %></a></p>
+        </div>
 
-          <div class="row">
-            <div class="col-sm-11 col-sm-offset-1">
-              <p>When an app launches and starts earning money, the profits are split each month among everyone who helped build it &ndash; based on the percentage of ownership each person has.</p>
-              <p>While the emphasis is on collaborating to create apps with sustainable earnings over the long term, people also occasionally ask about acquisitions. The answer is, if a company offers to acquire an Assembly product and the product’s core team decides to accept the offer, that income would be distributed (after expenses are paid) based on App Coin ownership, just like any other revenue.</p>
-              <p>For more info on app ownership and revenue, <a href="<%= faq_path %>">see our FAQ</a>.</p>
-            </div>
-          </div>
 
-        </div><!-- .section -->
+        <p>When an app launches and starts earning money, the profits are split each month among everyone who helped build it &ndash; based on the percentage of ownership each person has.</p>
+        <p>While the emphasis is on collaborating to create apps with sustainable earnings over the long term, people also occasionally ask about acquisitions. The answer is, if a company offers to acquire an Assembly product and the product’s core team decides to accept the offer, that income would be distributed (after expenses are paid) based on App Coin ownership, just like any other revenue.</p>
+        <p>For more info on app ownership and revenue, <a href="<%= faq_path %>">see our FAQ</a>.</p>
+
 
       </div><!-- .col -->
 
-      <hr class="visible-xs-block visible-sm-block">
-
-      <div class="col-md-3 col-md-offset-1 small">
-        <h6>We're alongside you on this journey</h6>
-        <p>Our goal is to create a transparent community of makers who seek collaboration, education, and creation.</p>
-        <p>Joining our community is an opportunity to solve interesting problems, learn valuable lessons, and work with talented people around the world. To top it off, you'll have a meaningful stake in projects with the potential to make substantial revenue.</p>
-        <p style="margin-bottom: 24px;"><strong>We can't wait to see what we make together.</strong></p>
+      <div class="sm-col sm-col-3 h6 mt0 mb0 gray-1 px3">
+        <h5>We're alongside you on this journey</h5>
+        <p class="h6 mt0 mb2">Our goal is to create a transparent community of makers who seek collaboration, education, and creation.</p>
+        <p class="h6 mt0 mb2">Joining our community is an opportunity to solve interesting problems, learn valuable lessons, and work with talented people around the world. To top it off, you'll have a meaningful stake in projects with the potential to make substantial revenue.</p>
+        <p class="h6 mt0 mb3"><i>We can't wait to see what we make together.</i></p>
         <p>
           <% if user_signed_in? %>
-            <a href="<%= new_user_registration_path %>" class="btn btn-success btn-sm btn-block">
+            <a href="<%= new_user_registration_path %>" class="button button-primary button-block">
               Sign up
             </a>
           <% else %>
