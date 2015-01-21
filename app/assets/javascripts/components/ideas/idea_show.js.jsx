@@ -184,7 +184,7 @@ var IdeaShow = React.createClass({
     var ideaUser = idea.user;
     var greenlit = idea.hearts_count >= idea.tilting_threshold || idea.greenlit_at;
 
-    if (true || greenlit) {
+    if (greenlit) {
       if (ideaUser.id === UserStore.getId()) {
         return (
           <div className="clearfix border-bottom border-top border-2px py2">
