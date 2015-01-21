@@ -20,8 +20,10 @@ var Avatar = React.createClass({
   },
 
   render: function() {
+    var username, _ref
+
     var size = this.props.size.toString()
-    var username = this.props.user.username
+    var username =  (_ref = this.props.user) != null ? _ref.username : void 0
 
     return <img className="avatar"
         src={this.avatarUrl()}
