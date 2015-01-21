@@ -71,7 +71,6 @@ var Love = React.createClass({
   },
 
   getStateFromStore: function() {
-    console.log(this.props)
     return LoveStore.get(this.props.heartable_id) || {}
   },
 

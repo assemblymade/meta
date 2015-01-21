@@ -126,10 +126,7 @@ class LoveStore extends Store {
 
         default:
           return
-
       } // switch
-
-      console.log(action)
       this.emitChange()
     }) // register
   }

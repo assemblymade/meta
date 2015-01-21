@@ -32,7 +32,6 @@ module.exports = new CommentStore()
 
 function setComment(comment) {
   _comment = comment
-  console.log('set to', comment)
 }
 
 function unsetComment(commentId) {
