@@ -50,8 +50,8 @@ var IdeaStartConversation = React.createClass({
   onPostQuestionClick(e) {
     var idea = this.state.idea;
     var question = this.state.question;
-    var url = Routes.idea_comments_path({
-      idea_id: idea.id
+    var url = Routes.discussion_comments_path({
+      discussion_id: idea.news_feed_item.id
     });
 
     if (question) {
@@ -65,8 +65,8 @@ var IdeaStartConversation = React.createClass({
     var idea = this.state.idea;
     var item = idea.news_feed_item;
     var placeholder = "Examples: What's the best name for the product?";
-    var url = Routes.idea_comments_path({
-      idea_id: idea.id
+    var url = Routes.discussion_comments_path({
+      discussion_id: item.id
     });
 
     var placeholder = "Examples: 1. What's the best name for the product? " +
