@@ -162,21 +162,22 @@ class Idea < ActiveRecord::Base
       threshold = previous_threshold
     end
 
-    if threshold.nil? || threshold <= 0
-      threshold = DEFAULT_TILTING_THRESHOLD
-    end
-
     update(tilting_threshold: threshold)
   end
 
   # Top percentile is 0, not 100
   def heart_distance_from_percentile(goal_percentile=20)
     index = (Idea.where(greenlit_at: nil).count * goal_percentile.to_f/100).to_i
-    expected_score = Idea.order(score: :desc).limit(index == 0 ? 1 : index).last.score
-    time_since = Time.now - EPOCH_START
-    multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
-    hearts_missing = (expected_score - score) / multiplier
-    (hearts_missing + 0.999).to_i
+
+    if last_idea = Idea.order(score: :desc).limit(index == 0 ? 1 : index).last
+      expected_score = last_idea.score
+      time_since = Time.now - EPOCH_START
+      multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
+      hearts_missing = (expected_score - score) / multiplier
+      (hearts_missing + 0.999).to_i
+    else
+      DEFAULT_TILTING_THRESHOLD
+    end
   end
 
   def hearts_count
