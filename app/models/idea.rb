@@ -169,11 +169,11 @@ class Idea < ActiveRecord::Base
   # Top percentile is 0, not 100
   def heart_distance_from_percentile(goal_percentile=20)
     index = (Idea.where(greenlit_at: nil).count * goal_percentile.to_f/100).to_i
-    expected_score = Idea.order(score: :desc).limit(index == 0 ? 1 : index).last.try(:score) || 0
+    expected_score = Idea.order(score: :desc).limit(index == 0 ? 1 : index).last.score
     time_since = Time.now - EPOCH_START
     multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
     hearts_missing = (expected_score - score) / multiplier
-    (hearts_missing + 0.999).to_i
+    (hearts_missing + 0.999).to_i.inspect
   end
 
   def hearts_count

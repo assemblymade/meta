@@ -15,6 +15,14 @@ class IdeaStore extends Store {
           _setIdea(action)
           this.emitChange()
           break
+        case ActionTypes.LOVE_CLICKED:
+          _incrementHearts(action)
+          this.emitChange()
+          break
+        case ActionTypes.LOVE_UNCLICKED:
+          _decrementHearts(action)
+          this.emitChange()
+          break
       }
     })
   }
@@ -25,6 +33,20 @@ class IdeaStore extends Store {
 }
 
 module.exports = new IdeaStore()
+
+function _decrementHearts(action) {
+  if (currentIdea.news_feed_item &&
+      currentIdea.news_feed_item.id === action.heartable_id) {
+    currentIdea.hearts_count--;
+  }
+}
+
+function _incrementHearts(action) {
+  if (currentIdea.news_feed_item &&
+      currentIdea.news_feed_item.id === action.heartable_id) {
+    currentIdea.hearts_count++;
+  }
+}
 
 function _setIdea(action) {
   currentIdea = action.idea

@@ -50,6 +50,7 @@ ROUTES = [
   'apps',
   'discussion_comment',
   'discussion_comments',
+  'heartables_lovers',
   'idea',
   'ideas',
   'new_idea',

@@ -12,7 +12,6 @@
 #= require jquery-timeago
 #= require es5-shim
 #= require react
-#= require react_ujs
 #= require notify.js
 #= require zeroclipboard
 

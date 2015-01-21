@@ -155,6 +155,8 @@
       LOVE_RECEIVE_RECENT_HEARTS: null,
       LOVE_RECEIVE_USER_HEARTS: null,
 
+      LOVERS_RECEIVE: null,
+
       NEW_COMMENT_UPDATED: null,
 
       NEWS_FEED_ITEM_ARCHIVED: null,

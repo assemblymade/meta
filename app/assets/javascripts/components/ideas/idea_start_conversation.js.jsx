@@ -118,7 +118,7 @@ var IdeaStartConversation = React.createClass({
 
             <div className="right">
               <Button type="primary" action={this.onPostQuestionClick}>
-                <span className="title">Post the question</span>
+                <span className="title">Submit idea</span>
               </Button>
             </div>
           </div>

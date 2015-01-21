@@ -121,6 +121,23 @@ exports.readraptor_path = function(options){
   }
 }
 
+exports.heartables_lovers_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/heartables/' + params.heartable_id + '/lovers?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/heartables/' + params.heartable_id + '/lovers'
+  } else {
+    var params = options;
+    return '/heartables/' + params.heartable_id + '/lovers'
+  }
+}
+
 exports.discussion_comments_path = function(options){
   if (options && options.data) {
     var op_params = []

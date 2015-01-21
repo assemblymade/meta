@@ -64,6 +64,14 @@ class HeartablesController < ApplicationController
     }
   end
 
+  def lovers
+    @lovers = Heart.includes(:user).where(heartable_id: params[:heartable_id]).map(&:user)
+
+    render json: {
+      lovers: ActiveModel::ArraySerializer.new(@lovers)
+    }
+  end
+
   # private
 
   def heart_params

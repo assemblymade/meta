@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 (function() {
   var Avatar = React.createClass({
     propTypes: {

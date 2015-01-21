@@ -4,11 +4,13 @@ var Button = require('../ui/button.js.jsx');
 var Drawer = require('../ui/drawer.js.jsx');
 var Icon = require('../ui/icon.js.jsx');
 var IdeaContainer = require('./idea_container.js.jsx');
+var IdeaLovers = require('./idea_lovers.js.jsx');
 var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
 var Love = require('../love.js.jsx');
+var LoveStore = require('../../stores/love_store');
 var Markdown = require('../markdown.js.jsx');
 var moment = require('moment');
 var NewsFeedItemComments = require('../news_feed/news_feed_item_comments.js.jsx');
@@ -27,22 +29,25 @@ var IdeaShow = React.createClass({
 
   componentDidMount() {
     IdeaStore.addChangeListener(this.onIdeaChange);
+    LoveStore.addChangeListener(this.onLoveChange);
   },
 
   componentWillUnmount() {
     IdeaStore.removeChangeListener(this.onIdeaChange);
+    LoveStore.removeChangeListener(this.onLoveChange);
   },
 
   getInitialState() {
     return {
       idea: IdeaStore.getIdea(),
-      isDrawerOpen: false,
+      isSocialDrawerOpen: false,
+      isHowItWorksDrawerOpen: false
     };
   },
 
   handleShareClick() {
     this.setState({
-      isDrawerOpen: !this.state.isDrawerOpen
+      isSocialDrawerOpen: !this.state.isSocialDrawerOpen
     });
   },
 
@@ -52,15 +57,29 @@ var IdeaShow = React.createClass({
     });
   },
 
-  onModalChange() {
-    this.setState({
-      startConversationModalShown: StartConversationModalStore.isModalShown()
-    });
+  onLoveChange() {
+    var idea = this.state.idea;
+    var item = idea && idea.news_feed_item;
+    var heartableId = item && item.id;
+
+    if (heartableId) {
+      var heartable = LoveStore.get(heartableId);
+
+      this.setState({
+        isSocialDrawerOpen: heartable && heartable.user_heart
+      });
+    }
   },
 
   onRelatedIdeasChange() {
     this.setState({
       relatedIdeas: RelatedIdeaStore.getRelatedIdeas()
+    });
+  },
+
+  onQuestionMarkClick(e) {
+    this.setState({
+      isHowItWorksDrawerOpen: !this.state.isHowItWorksDrawerOpen
     });
   },
 
@@ -93,7 +112,7 @@ var IdeaShow = React.createClass({
           {this.renderHeader()}
 
           <div className="mxn3">
-            <Drawer open={this.state.isDrawerOpen}>
+            <Drawer open={this.state.isSocialDrawerOpen}>
               <IdeaSharePanel idea={idea} />
             </Drawer>
           </div>
@@ -109,7 +128,7 @@ var IdeaShow = React.createClass({
     var user = idea.user;
 
     return (
-      <div className="_pt3 border-2px">
+      <div className="border-2px">
         <div className="py3 px4">
           <h1 className="mt0 mb0">{idea.name}</h1>
 
@@ -126,7 +145,7 @@ var IdeaShow = React.createClass({
 
         <hr className="py0 mb0" style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
 
-        <div className="px4">
+        <div id="comments" className="px4">
           <NewsFeedItemComments commentable={true}
               dropzoneInnerText={false}
               item={idea.news_feed_item}
@@ -168,39 +187,106 @@ var IdeaShow = React.createClass({
           </div>
         </a>
       </div>
-    )
+    );
+  },
+
+  renderExplanationHeading() {
+    var idea = this.state.idea;
+    var heartsToGo = idea.tilting_threshold - idea.hearts_count;
+    if (heartsToGo > 0) {
+      return (
+        <h5 className="mb1 mt0">
+          This idea needs {heartsToGo} more
+          {heartsToGo === 1 ? ' heart' : ' hearts'} to be greenlit for development.
+        </h5>
+      );
+    }
   },
 
   renderHeader() {
     var idea = this.state.idea;
 
-    return (
-      <div className="clearfix border-bottom border-2px mb0">
-        <div className="center col col-2 px2 mt2">
+    return [
+      <div className="clearfix border-bottom border-2px" key="heart-and-idea">
+        <div className="center col col-2 px2">
           <BigLove
             heartable_id={idea.news_feed_item.id}
             heartable_type="NewsFeedItem" />
         </div>
 
-        <div className="col col-8 border-2px border-right border-left border-gray px2">
-          <div className="item mt1 mb1 py2 px3">
-            <IdeaProgressBar idea={idea} />
+        <div className="col col-10">
+          <span className="right px4">
+            {this.renderHeartsToGo()}
+          </span>
+
+          <small className="left gray-2 bold mt1 mb1">
+            {idea.hearts_count} hearts
+          </small>
+
+          <div className="clearfix mt3 mb1 py1 mr2">
+            <div className="col col-11">
+              <IdeaProgressBar idea={idea} />
+            </div>
+            <div className="col col-1 mb0 mt0 px2" style={{ color: '#fa7838', position: 'relative', top: '-5px' }}>
+              <span className="clickable" onClick={this.onQuestionMarkClick}>
+                <Icon icon="question-circle" />
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className="col col-1 px1 mt2">
-          <a href={idea.url} className="comment-count">
-            <SvgIcon type="comment" />
-            {idea.comments_count}
-          </a>
+        <div className="clearfix">
+          <Drawer height={120} open={this.state.isHowItWorksDrawerOpen}>
+            <div className="px3 gray-2">
+              {this.renderExplanationHeading()}
+              <p>
+                Every day we green light the most loved ideas on Assembly.
+                They are then made into real products by you and the community.
+                Share this idea with your friends on Twitter of Facebook to help
+                greenlight it.
+              </p>
+            </div>
+          </Drawer>
+        </div>
+      </div>,
+
+      <div className="clearfix border-bottom border-2px mb0" key="comments-and-share">
+        <div className="left mt2 px3">
+          <IdeaLovers heartableId={idea.news_feed_item.id} />
         </div>
 
-        <div className="col col-1 p2 center border-2px border-left border-gray">
-          <a href="javascript:void(0);" className="action-icon gray" onClick={this.handleShareClick}>
-            <SvgIcon type="share" />
-          </a>
+        <div className="right clearfix">
+          <div className="left mt2 mr3">
+            <a href="#comments" className="comment-count">
+              <SvgIcon type="comment" />
+              {idea.comments_count} {idea.comments_count === 1 ? 'comment' : 'comments'}
+            </a>
+          </div>
+          <div className="right p2 center border-2px border-left border-gray">
+            <a href="javascript:void(0);" className="action-icon gray" onClick={this.handleShareClick}>
+              <SvgIcon type="share" />
+            </a>
+          </div>
         </div>
       </div>
+    ];
+  },
+
+  renderHeartsToGo() {
+    var idea = this.state.idea;
+    var heartsToGo = idea.tilting_threshold - idea.hearts_count;
+    if (heartsToGo > 0) {
+      return (
+        <small className="right gray-3 mt1 mb1 mr2">
+          {heartsToGo} {heartsToGo === 1 ? 'heart' : 'hearts'} to go!
+        </small>
+      );
+    }
+
+    return (
+      <small className="right green mt1 mb1 mr2">
+        This idea has been greenlit!
+      </small>
     );
   },
 
