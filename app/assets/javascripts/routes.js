@@ -19,40 +19,6 @@ exports.apps_path = function(options){
   }
 }
 
-exports.idea_comments_path = function(options){
-  if (options && options.data) {
-    var op_params = []
-    for(var key in options.data){
-      op_params.push([key, options.data[key]].join('='));
-    }
-    var params = options.params;
-    return '/ideas/' + params.idea_id + '/comments?' + op_params.join('&');
-  } else if(options && options.params) {
-    var params = options.params;
-    return '/ideas/' + params.idea_id + '/comments'
-  } else {
-    var params = options;
-    return '/ideas/' + params.idea_id + '/comments'
-  }
-}
-
-exports.idea_comment_path = function(options){
-  if (options && options.data) {
-    var op_params = []
-    for(var key in options.data){
-      op_params.push([key, options.data[key]].join('='));
-    }
-    var params = options.params;
-    return '/ideas/' + params.idea_id + '/comments/' + params.id + '?' + op_params.join('&');
-  } else if(options && options.params) {
-    var params = options.params;
-    return '/ideas/' + params.idea_id + '/comments/' + params.id + ''
-  } else {
-    var params = options;
-    return '/ideas/' + params.idea_id + '/comments/' + params.id + ''
-  }
-}
-
 exports.ideas_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -155,6 +121,40 @@ exports.readraptor_path = function(options){
   }
 }
 
+exports.discussion_comments_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/discussions/' + params.discussion_id + '/comments?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/discussions/' + params.discussion_id + '/comments'
+  } else {
+    var params = options;
+    return '/discussions/' + params.discussion_id + '/comments'
+  }
+}
+
+exports.discussion_comment_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/discussions/' + params.discussion_id + '/comments/' + params.id + '?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/discussions/' + params.discussion_id + '/comments/' + params.id + ''
+  } else {
+    var params = options;
+    return '/discussions/' + params.discussion_id + '/comments/' + params.id + ''
+  }
+}
+
 exports.product_follow_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -220,40 +220,6 @@ exports.product_update_unsubscribe_path = function(options){
   } else {
     var params = options;
     return '/' + params.product_id + '/updates/' + params.update_id + '/unsubscribe'
-  }
-}
-
-exports.product_update_comments_path = function(options){
-  if (options && options.data) {
-    var op_params = []
-    for(var key in options.data){
-      op_params.push([key, options.data[key]].join('='));
-    }
-    var params = options.params;
-    return '/' + params.product_id + '/updates/' + params.update_id + '/comments?' + op_params.join('&');
-  } else if(options && options.params) {
-    var params = options.params;
-    return '/' + params.product_id + '/updates/' + params.update_id + '/comments'
-  } else {
-    var params = options;
-    return '/' + params.product_id + '/updates/' + params.update_id + '/comments'
-  }
-}
-
-exports.product_update_comment_path = function(options){
-  if (options && options.data) {
-    var op_params = []
-    for(var key in options.data){
-      op_params.push([key, options.data[key]].join('='));
-    }
-    var params = options.params;
-    return '/' + params.product_id + '/updates/' + params.update_id + '/comments/' + params.id + '?' + op_params.join('&');
-  } else if(options && options.params) {
-    var params = options.params;
-    return '/' + params.product_id + '/updates/' + params.update_id + '/comments/' + params.id + ''
-  } else {
-    var params = options;
-    return '/' + params.product_id + '/updates/' + params.update_id + '/comments/' + params.id + ''
   }
 }
 

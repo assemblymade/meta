@@ -160,20 +160,6 @@ var NewsFeedItemComments = React.createClass({
       showCommentsAfter = 0;
     }
 
-    var url;
-    if (this.props.hasProduct) {
-      var slug = _reach(this.props, 'item.product.slug') || ProductStore.getSlug();
-
-      url = Routes.product_update_comments_path({
-        product_id: slug,
-        update_id: _reach(this.props, 'item.id'),
-      });
-    } else {
-      url = Routes.idea_comments_path({
-        idea_id: item.target_id
-      });
-    }
-
     return {
       comments: lastComment ? [lastComment] : [],
       events: [],
@@ -181,7 +167,7 @@ var NewsFeedItemComments = React.createClass({
       optimisticComments: [],
       showCommentsAfter: showCommentsAfter,
       showSharePanel: false,
-      url: url
+      url: Routes.discussion_comments_path({discussion_id: this.props.item.id})
     };
   },
 
@@ -285,20 +271,10 @@ var NewsFeedItemComments = React.createClass({
       }
 
       if (new Date(comment.created_at) >= renderIfAfter) {
-        var editUrl;
-
-        if (self.props.hasProduct) {
-          editUrl = Routes.product_update_comment_path({
-            product_id: _reach(self.props, 'item.product.id'),
-            update_id: _reach(self.props, 'item.id'),
-            id: comment.id
-          });
-        } else {
-          editUrl = Routes.idea_comment_path({
-            idea_id: _reach(self.props, 'item.target_id'),
-            id: comment.id
-          });
-        }
+        var editUrl = Routes.discussion_comment_path({
+          discussion_id: self.props.item.id,
+          id: comment.id
+        });
 
         return parseEvent(comment, awardUrl, editUrl);
       }

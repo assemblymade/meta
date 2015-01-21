@@ -73,8 +73,8 @@ class Ability
     end
 
     # Comments
-    can :create, Event::Comment
-    can :update, Event::Comment do |comment|
+    can :create, NewsFeedItemComment
+    can :update, NewsFeedItemComment do |comment|
       comment.user == current_user
     end
 
