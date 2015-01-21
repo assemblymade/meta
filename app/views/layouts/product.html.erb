@@ -1,3 +1,13 @@
+<%
+  # Disincentivises people creating spam products to abuse our Google
+  # juice. (@chrislloyd)
+%>
+<% if @product.stealth? || @product.flagged? %>
+  <% content_for :head do %>
+    <meta name="robots" content="noindex, nofollow">
+  <% end %>
+<% end %>
+
 <% content_for :javascript do %>
   <script>
     window.app.product = new Product(<%= json @product, scope: current_user %>)
