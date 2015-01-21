@@ -66,7 +66,7 @@ var IdeaShow = React.createClass({
       var heartable = LoveStore.get(heartableId);
 
       this.setState({
-        isSocialDrawerOpen: heartable && heartable.user_heart
+        isSocialDrawerOpen: heartable && !!heartable.user_heart
       });
     }
   },
