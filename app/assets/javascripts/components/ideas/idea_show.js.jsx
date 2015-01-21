@@ -85,11 +85,13 @@ var IdeaShow = React.createClass({
 
   render() {
     var idea = this.state.idea;
-    var navigate = this.props.navigate;
 
     if (_.isEmpty(idea)) {
       return null;
     }
+
+    var navigate = this.props.navigate;
+    var shareMessage = 'We need help with ' + idea.name + '! via @asm';
 
     return (
       <main role="main">
@@ -112,8 +114,8 @@ var IdeaShow = React.createClass({
           {this.renderHeader()}
 
           <div className="mxn3">
-            <Drawer open={this.state.isSocialDrawerOpen}>
-              <IdeaSharePanel idea={idea} />
+            <Drawer open={this.state.isSocialDrawerOpen} height={150}>
+              <IdeaSharePanel idea={idea} size="large" message={shareMessage} />
             </Drawer>
           </div>
 

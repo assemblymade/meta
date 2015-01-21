@@ -2,7 +2,7 @@ var Icon = require('../ui/icon.js.jsx');
 
 var CircleIcon = React.createClass({
   propTypes: {
-    diamter: React.PropTypes.number,
+    diameter: React.PropTypes.number,
     icon: React.PropTypes.string.isRequired,
     margin: React.PropTypes.number
   },
@@ -45,7 +45,7 @@ function _determineColor(icon) {
     case 'google-plus':
       return '#d34836';
     case 'twitter':
-      return '#4099FF';
+      return '#4099ff';
     default:
       return '#333';
   }

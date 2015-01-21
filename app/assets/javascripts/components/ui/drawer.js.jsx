@@ -5,12 +5,13 @@
 var Drawer = React.createClass({
   propTypes: {
     height: React.PropTypes.number,
-    open: React.PropTypes.bool.isRequired
+    open: React.PropTypes.bool
   },
 
   getDefaultProps() {
     return {
-      height: 50
+      height: 50,
+      open: false
     }
   },
 

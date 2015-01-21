@@ -1,30 +1,43 @@
 var CircleIcon = require('../ui/circle_icon.js.jsx');
+var Icon = require('../ui/icon.js.jsx');
+
+var SHORT_HOST = "http://asm.co";
 
 var IdeaSharePanel = React.createClass({
   propTypes: {
     idea: React.PropTypes.shape({
-      url: React.PropTypes.string.isRequired
+      greenlit_at: React.PropTypes.any,
+      hearts_count: React.PropTypes.number.isRequired,
+      name: React.PropTypes.string.isRequired,
+      path: React.PropTypes.string.isRequired,
+      tilting_threshold: React.PropTypes.number.isRequired
     }).isRequired,
-
-    message: React.PropTypes.string
+    message: React.PropTypes.string,
+    size: React.PropTypes.oneOf([
+      'small',
+      'large'
+    ])
   },
 
   componentDidMount() {
-    var self = this
-    var client = new ZeroClipboard(this.refs.copy.getDOMNode())
+    var self = this;
+    var client = new ZeroClipboard(this.refs.copy.getDOMNode());
+
     client.on('ready', function(event) {
       client.on('copy', function(event) {
-        event.clipboardData.setData('text/plain', self.props.idea.url)
+        event.clipboardData.setData('text/plain', self.state.shortUrl);
       });
 
       client.on('aftercopy', function(event) {
         self.setState({
-          copyIcon: 'check'
+          copyIcon: 'check',
+          copyText: 'Copied!'
         });
 
         setTimeout(function() {
           self.setState({
-            copyIcon: 'link'
+            copyIcon: 'link',
+            copyText: self.shortUrl().substr(0, 35) + '...'
           });
         }, 1500);
       });
@@ -33,13 +46,16 @@ var IdeaSharePanel = React.createClass({
 
   getDefaultProps() {
     return {
-      message: 'Check out this idea on @asm:'
+      message: 'Check out this idea on @asm:',
+      size: 'small'
     };
   },
 
   getInitialState() {
     return {
-      copyIcon: 'link'
+      copyIcon: 'link',
+      copyText: this.shortUrl().substr(0, 35) + '...',
+      shortUrl: this.shortUrl()
     };
   },
 
@@ -75,8 +91,10 @@ var IdeaSharePanel = React.createClass({
   handleTwitterClick(e) {
     e.preventDefault();
 
+    var message = this.props.message;
+
     window.open(
-      _twitterUrl(this.props.idea.url, this.props.message),
+      _twitterUrl(this.shortUrl(), message),
       'twitterwindow',
       'height=450, width=550, top=' +
         ($(window).height()/2 - 225) +
@@ -86,7 +104,81 @@ var IdeaSharePanel = React.createClass({
     );
   },
 
+  large() {
+    return (
+      <div className="clearfix bg-gray-6 py1">
+        <div className="px4" key="share-text">
+          {this.renderText()}
+        </div>
+
+        <div className="clearfix px4" key="share-buttons">
+          <div className="left" key="social-buttons">
+            <a href="javascript:void(0);" onClick={this.handleTwitterClick} key="twitter-button">
+              <CircleIcon icon="twitter" />
+              <span className="bold" style={{ color: '#4099FF' }}>Tweet</span>
+            </a>
+
+            <a href="javascript:void(0);" onClick={this.handleFacebookClick} key="facebook-button">
+              <CircleIcon icon="facebook" />
+              <span className="bold" style={{ color: '#3b5998' }}>Share</span>
+            </a>
+
+            <a href="javascript:void(0);" onClick={this.handleGooglePlusClick} key="google-button">
+              <CircleIcon icon="google-plus" />
+              <span className="bold" style={{ color: '#d34836' }}>Plus</span>
+            </a>
+          </div>
+
+          <div className="right gray-2 mt2" key="link-button">
+            <a href="javascript:void(0);" className="gray-2" onClick={this.handleCopyClick} ref="copy">
+              <Icon icon="link" /> {this.state.copyText}
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  },
+
   render() {
+    return this[this.props.size]();
+  },
+
+  renderText() {
+    var idea = this.props.idea;
+
+    if (idea.hearts_count >= idea.tilting_threshold || idea.greenlit_at) {
+      return [
+        <h5 className="mb1 mt0 gray-2 green" key="explanation-heading">
+          Turn on the greenlight!
+        </h5>,
+
+        <p className="gray-2" key="explanation-body">
+          This idea has been greenlit for development &mdash; tell your friends
+          to keep an eye out for its launch!
+        </p>
+      ];
+    }
+
+    return [
+      <h5 className="mb1 mt0 gray-2" key="explanation-heading">
+        We're almost there! Tell your friends to help greenlight this idea.
+      </h5>,
+
+      <p className="gray-2" key="explanation-body">
+        Every day we green light the most loved ideas on Assembly.
+        They are then made into real products by you and the community.
+      </p>
+    ];
+  },
+
+  shortUrl() {
+    var idea = this.props.idea;
+    var path = idea.path;
+
+    return SHORT_HOST + path;
+  },
+
+  small() {
     return (
       <div className="clearfix bg-gray-6 text-center">
         <a href="javascript:void(0);" onClick={this.handleTwitterClick}>
