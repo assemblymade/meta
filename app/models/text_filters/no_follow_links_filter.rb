@@ -5,8 +5,13 @@ module TextFilters
 
     SAFE_DOMAIN = 'assembly.com'.freeze
 
-    def self.spammy_url?(url)
-      !URI(url).host.end_with?(SAFE_DOMAIN)
+    def self.legit_url?(url)
+      begin
+        host = URI(url).host
+        host.nil? || host.end_with?(SAFE_DOMAIN)
+      rescue URI::InvalidURIError
+        true
+      end
     end
 
     def call
@@ -15,7 +20,7 @@ module TextFilters
 
         href = a['href'].strip
 
-        if self.class.spammy_url?(href)
+        if !self.class.legit_url?(href)
           a['rel'] = 'nofollow'
         end
       end

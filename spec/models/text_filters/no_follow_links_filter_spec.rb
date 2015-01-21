@@ -19,4 +19,9 @@ describe TextFilters::NoFollowLinksFilter do
     expect(filter(html).to_html).to eq(html)
   end
 
+  it "doesn't add rel=nofollow to anything else" do
+    html = "<a href=\"mailto:chris@assembly.com\">link</a>"
+    expect(filter(html).to_html).to eq(html)
+  end
+
 end
