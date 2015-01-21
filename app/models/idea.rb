@@ -10,12 +10,13 @@ class Idea < ActiveRecord::Base
   has_many :markings, as: :markable
   has_many :marks, through: :markings
   has_one :news_feed_item, foreign_key: 'target_id'
+  has_one :product
 
   delegate :news_feed_item_comments, to: :news_feed_item
 
   validates :name, presence: true,
                    length: { minimum: 2, maximum: 255 },
-                   exclusion: { in: %w(admin about script if owner core start-conversation) }
+                   exclusion: { in: %w(admin about script if owner core start-conversation product) }
   validates :tilting_threshold, presence: true
 
   before_validation :set_tilting_threshold!, on: :create
@@ -33,8 +34,9 @@ class Idea < ActiveRecord::Base
     take(percentile * all.count/100)
   }
 
-  HEARTBURN = 15.days  # period for 100% inflation, equivalent to half-life
+  HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
   EPOCH_START = Time.new(2013, 6, 6)
+  DEFAULT_TILTING_THRESHOLD = 10
 
   def slug_candidates
     [
@@ -153,14 +155,15 @@ class Idea < ActiveRecord::Base
     threshold = heart_distance_from_percentile
     previous_threshold = Idea.order(created_at: :desc)
                              .limit(1)
+                             .first
                              .try(:tilting_threshold)
 
     if threshold < previous_threshold.to_i
       threshold = previous_threshold
     end
 
-    if threshold.nil? || threshold < 0
-      threshold = 10
+    if threshold.nil? || threshold <= 0
+      threshold = DEFAULT_TILTING_THRESHOLD
     end
 
     update(tilting_threshold: threshold)
@@ -173,7 +176,7 @@ class Idea < ActiveRecord::Base
     time_since = Time.now - EPOCH_START
     multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
     hearts_missing = (expected_score - score) / multiplier
-    (hearts_missing + 0.999).to_i.inspect
+    (hearts_missing + 0.999).to_i
   end
 
   def hearts_count

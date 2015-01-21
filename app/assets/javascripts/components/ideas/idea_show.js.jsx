@@ -13,9 +13,11 @@ var Love = require('../love.js.jsx');
 var LoveStore = require('../../stores/love_store');
 var Markdown = require('../markdown.js.jsx');
 var moment = require('moment');
+var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
 var NewsFeedItemComments = require('../news_feed/news_feed_item_comments.js.jsx');
 var ProgressBar = require('../ui/progress_bar.js.jsx');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
+var UserStore = require('../../stores/user_store');
 
 var IdeaShow = React.createClass({
   propTypes: {
@@ -43,6 +45,25 @@ var IdeaShow = React.createClass({
       isSocialDrawerOpen: false,
       isHowItWorksDrawerOpen: false
     };
+  },
+
+  handlePingClick(e) {
+    e.stopPropagation();
+
+    var idea = this.state.idea;
+    var item = idea.news_feed_item;
+    var thread = item.id;
+    var text = '@' + idea.user.username + ', how can I help you build this?';
+
+    NewCommentActionCreators.updateComment(thread, text);
+
+    var $commentBox = $('#event_comment_body');
+
+    $('html, body').animate({
+      scrollTop: $commentBox.offset().top
+    }, 'fast');
+
+    $commentBox.focus();
   },
 
   handleShareClick() {
@@ -130,7 +151,7 @@ var IdeaShow = React.createClass({
     var user = idea.user;
 
     return (
-      <div className="border-2px">
+      <div className="border-2px" style={{ paddingBottom: '1rem' }}>
         <div className="py3 px4">
           <h1 className="mt0 mb0">{idea.name}</h1>
 
@@ -156,6 +177,57 @@ var IdeaShow = React.createClass({
         </div>
       </div>
     );
+  },
+
+  renderCreateProductRow() {
+    var idea = this.state.idea;
+    var ideaUser = idea.user;
+    var greenlit = idea.hearts_count >= idea.tilting_threshold || idea.greenlit_at;
+
+    if (true || greenlit) {
+      if (ideaUser.id === UserStore.getId()) {
+        return (
+          <div className="clearfix border-bottom border-top border-2px py2">
+            <div className="left mt1 px4">
+              <span className="gray-1">
+                This app idea has been greenlit!
+              </span>
+            </div>
+
+            <div className="right mr2">
+              <a href={"/new?pitch=" + idea.raw_body}>
+                <Button type="primary" action={function() {}}>
+                  <span className="text-white bold">
+                    Start building
+                  </span>
+                </Button>
+              </a>
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div className="clearfix border-bottom border-top border-2px py2">
+            <div className="left mt1 ml4">
+              <span className="gray-1">
+                We're waiting for {' '}
+                <a href={ideaUser.url} className="black bold">
+                  @{ideaUser.username}
+                </a> to turn this idea into a product.
+              </span>
+            </div>
+
+            <div className="right mr2">
+              <Button type="primary" action={this.handlePingClick}>
+                <span className="text-white bold">
+                  Ping them
+                </span>
+              </Button>
+            </div>
+          </div>
+        );
+      }
+    }
   },
 
   renderDiscoverBlocks() {
@@ -222,7 +294,7 @@ var IdeaShow = React.createClass({
           </span>
 
           <small className="left gray-2 bold mt1 mb1">
-            {idea.hearts_count} hearts
+            {idea.hearts_count} {idea.hearts_count === 1 ? 'heart' : 'hearts'}
           </small>
 
           <div className="clearfix mt3 mb1 py1 mr2">
@@ -253,7 +325,7 @@ var IdeaShow = React.createClass({
       </div>,
 
       <div className="clearfix border-bottom border-2px mb0" key="comments-and-share">
-        <div className="left mt2 px3">
+        <div className="left mt2 px4">
           <IdeaLovers heartableId={idea.news_feed_item.id} />
         </div>
 
@@ -270,7 +342,9 @@ var IdeaShow = React.createClass({
             </a>
           </div>
         </div>
-      </div>
+      </div>,
+
+      idea.product ? this.renderProductRow() : this.renderCreateProductRow()
     ];
   },
 
@@ -289,6 +363,32 @@ var IdeaShow = React.createClass({
       <small className="right green mt1 mb1 mr2">
         This idea has been greenlit!
       </small>
+    );
+  },
+
+  renderProductRow() {
+    var idea = this.state.idea;
+    var product = idea.product;
+
+    return (
+      <div className="clearfix border-bottom border-top border-2px py2">
+        <div className="left mt1 px4">
+          <span className="gray-1">
+            Sweet! <a href={product.url} className="black bold">{product.name}</a>{' '}
+            is live!
+          </span>
+        </div>
+
+        <div className="right mr2">
+          <a href={product.url + '/bounties'}>
+            <Button type="primary" action={function() {}}>
+              <span className="text-white bold">
+                Join the team
+              </span>
+            </Button>
+          </a>
+        </div>
+      </div>
     );
   },
 

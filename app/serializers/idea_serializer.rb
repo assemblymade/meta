@@ -7,6 +7,7 @@ class IdeaSerializer < ApplicationSerializer
   attributes :id, :name, :news_feed_item, :path, :percentile, :raw_body
   attributes :score, :short_body, :tilting_threshold, :url
 
+  has_one :product
   has_one :user
 
   def body

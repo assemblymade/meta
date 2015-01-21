@@ -277,11 +277,6 @@ var NewsFeedItemComments = React.createClass({
       var comment = comments[0];
       var questionButtons = (
         <div className="clearfix mb3 ml4">
-          <Drawer open={this.state.showSharePanel}>
-            <IdeaSharePanel idea={{ url: window.location.toString() }}
-                message={comment.body + ' via @asm'} />
-          </Drawer>
-
           <div className="left">
             <button className="pill-button pill-button-theme-white pill-button-border pill-button-shadow mr3"
                 onClick={this.handleAnswerQuestionClick.bind(this, comment.user.username)}>

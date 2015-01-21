@@ -19,7 +19,7 @@ var IdeaLovers = React.createClass({
 
   getDefaultProps() {
     return {
-      limit: 12
+      limit: 8
     };
   },
 
@@ -47,13 +47,13 @@ var IdeaLovers = React.createClass({
     var lovers = this.state.lovers;
     var limit = this.props.limit;
 
-    if (!lovers) {
-      return null;
+    if (!lovers || !lovers.length) {
+      return <span className="gray-1 px3">No love just yet &mdash; be the first to heart this idea!</span>;
     }
 
     var renderedLovers = lovers.slice(0, limit).map((lover) => {
       return (
-        <span className="left px1" key={lover.id}>
+        <span className="left mr1" key={lover.id}>
           <Avatar user={lover} size={20} />
         </span>
       );
