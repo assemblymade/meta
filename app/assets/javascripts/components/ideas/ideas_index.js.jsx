@@ -47,6 +47,12 @@ var IdeasIndex = React.createClass({
   render() {
     var navigate = this.props.navigate;
 
+    var ideasGridStyle = {};
+
+    if (this.state.ideas.length === 1) {
+      ideasGridStyle.textAlign = 'left !important';
+    }
+
     return (
       <main role="main">
         {this.renderHeader()}
@@ -109,7 +115,7 @@ var IdeasIndex = React.createClass({
                 </div>
               </nav>
               <div className="main">
-                <div className="grid fixed-small">
+                <div className="grid fixed-small" style={ideasGridStyle}>
                   {this.renderIdeas()}
                 </div>
               </div>
