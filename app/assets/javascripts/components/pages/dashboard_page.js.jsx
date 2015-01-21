@@ -1,5 +1,5 @@
 var AppIcon = require('../app_icon.js.jsx')
-var Bounty = require('../bounty.js.jsx')
+var BountyCard = require('../bounty_card.js.jsx')
 var BountiesStore = require('../../stores/bounties_store.js')
 var Nav = require('../nav.js.jsx')
 var NavItem = require('../nav_item.js.jsx')
@@ -7,88 +7,18 @@ var NewsFeedItem = require('../news_feed/news_feed_item.js.jsx')
 var NewsFeedItemsStore = require('../../stores/news_feed_items_store.js')
 var NewsFeedItemsActionCreators = require('../../actions/news_feed_items_action_creators.js')
 var ProductsStore = require('../../stores/products_store.js')
-var ProductChip = require('../product_chip.js.jsx')
 var UserBountiesStore = require('../../stores/user_bounties_store.js')
+var UserStore = require('../../stores/user_store.js')
 var Spinner = require('../spinner.js.jsx')
 var Tile = require('../ui/tile.js.jsx')
-
-var MiniBounty = React.createClass({
-  getDefaultProps: function() {
-    return {
-      locker: true
-    }
-  },
-
-  render: function() {
-    var bounty = this.props.bounty
-    var product = bounty.product
-    var details = null
-
-    if (this.props.locker && bounty.locker) {
-      var details = (
-        <div className="mt2 h6 mt0 mb0">
-          <Avatar user={bounty.locker} size={18} style={{ display: 'inline-block' }} />
-          {' '}
-          <a href={bounty.locker.url} className="bold black">
-            {bounty.locker.username}
-          </a>
-          {' '}
-          <span className="gray-2">
-            has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
-          </span>
-        </div>
-      )
-    } else {
-      details = (
-        <div className="mt2">
-          <div className="right h6 mt0 mb0" style={{ marginTop: 3 }}>
-            <div className="ml2 inline gray bold">
-              <Icon icon={"comment"} />
-              <span className="ml1">{bounty.comments_count}</span>
-            </div>
-            <div className="ml2 inline gray bold">
-              <Icon icon={"heart"} />
-              <span className="ml1">{bounty.hearts_count}</span>
-            </div>
-          </div>
-
-          <div className="h6 mt0 mb0">
-            <Avatar user={bounty.user} size={18} style={{ display: 'inline-block' }} />
-            {' '}
-            <a href={bounty.user.url} className="bold black">
-              {bounty.user.username}
-            </a>
-          </div>
-        </div>
-      )
-    }
-
-    return (
-      <div className="mb2">
-        <Tile>
-          <div>
-            <a href={product.url} className="block p2 mt0 mb0 border-bottom">
-              <AppIcon app={product} size={24} style={{ display: 'inline' }} />
-              <span className="h6 mt0 mb0 black bold ml1">{product.name}</span>
-            </a>
-          </div>
-          <div className="p2 mt0 mb0">
-            <a className="block h5 mt0 mb0 fw-500 blue" href={bounty.url}>
-              {bounty.title}
-            </a>
-            {details}
-          </div>
-        </Tile>
-      </div>
-    )
-  }
-})
 
 var DashboardPage = React.createClass({
   getDefaultProps: function() {
     return  {
-      filter: 'all',
-      initialShowAll: false
+      filter: 'interests',
+      initialShowAll: false,
+      initialInterests: [],
+      marks: {}
     }
   },
 
@@ -98,8 +28,11 @@ var DashboardPage = React.createClass({
       lockedBounties: [],
       reviewingBounties: [],
       products: [],
+      interests: this.props.initialInterests,
       loading: false,
-      showAll: this.props.initialShowAll
+      showAll: this.props.initialShowAll,
+      selected: [],
+      currentUser: UserStore.getUser()
     }
   },
 
@@ -107,6 +40,7 @@ var DashboardPage = React.createClass({
     NewsFeedItemsStore.addChangeListener(this.getStateFromStore)
     ProductsStore.addChangeListener(this.getStateFromStore)
     UserBountiesStore.addChangeListener(this.getStateFromStore)
+
     window.addEventListener('scroll', this.onScroll)
 
     this.getStateFromStore()
@@ -182,7 +116,7 @@ var DashboardPage = React.createClass({
     var showAllLink = null
 
     if (followedProducts.length) {
-      followingNavItem = <NavItem label="What you follow" href='/dashboard/following' active={filter == 'interests'} />
+      followingNavItem = <NavItem label="What you follow" href='/dashboard/following' active={filter == 'following'} />
       divider = <NavItem divider={true} />
     }
 
@@ -199,8 +133,8 @@ var DashboardPage = React.createClass({
 
     return (
       <Nav>
-        <NavItem label="Everything"      href='/dashboard'           active={filter == 'all'} />
-        <NavItem label="Your interests"  href='/dashboard/interests' active={filter == 'following'} />
+        <NavItem label="Everything"      href='/dashboard/all'           active={filter == 'all'} />
+        <NavItem label="Your interests"  href='/dashboard/interests' active={filter == 'interests'} />
         {followingNavItem}
 
         {divider}
@@ -220,74 +154,213 @@ var DashboardPage = React.createClass({
     }
   },
 
+  renderMarks: function(section) {
+    var marks = this.props.marks[section]
+
+    return (
+      <div >
+        <h6 className="gray-3 caps mt2 mb2">{section}</h6>
+        {marks.map(function(mark) {
+          return this.renderMark(mark)
+        }.bind(this))}
+      </div>
+    )
+  },
+
+  renderMark: function(mark) {
+    var selected = this.state.selected
+    var index = selected.indexOf(mark)
+    var isSelected = index >= 0
+
+    var click = function(event) {
+      event.stopPropagation()
+      event.preventDefault()
+
+      if (isSelected) {
+        selected.splice(index, 1)
+      } else {
+        selected.push(mark)
+      }
+
+      this.setState({
+        selected: selected
+      })
+    }.bind(this)
+
+    var classes = ['mark']
+
+    if (isSelected) {
+      classes = classes.concat(['mark-is-selected'])
+    }
+
+    return (
+      <a href="#" onClick={click} className={classes.join(' ')}>
+        {mark}
+      </a>
+    )
+  },
+
+  renderProgress: function() {
+    var progress = (this.state.selected.length / 3) * 360;
+
+    return (
+      <span className="mr2 pie-container">
+        <div className={progress > 180 ? 'pie big' : 'pie'} data-start="0" data-value={progress}></div>
+        <div className={progress < 180 ? 'pie big' : 'pie'} data-start={progress} data-value={360 - progress}></div>
+      </span>
+    )
+  },
+
+  renderSubmit: function() {
+    var selected = this.state.selected
+    var classes = ['pill-button', 'pill-button-theme-white', 'pill-button-border', 'pill-button-shadow', 'bold']
+    var selectionsNeeded = 3 - selected.length
+    var progress = null
+    var text = null
+    var padding = null
+    var click = function() {}
+
+    if (selectionsNeeded <= 0) {
+      text = 'Yay! Take a look at your suggestions'
+
+      click = function(event) {
+        event.stopPropagation()
+        event.preventDefault()
+
+        $.ajax({
+          url: '/user',
+          method: 'PUT',
+          dataType: 'json',
+          data: {
+            user: {
+              mark_names: this.state.selected
+            }
+          },
+          success: function() {
+            window.location = '/dashboard/interests'
+          }
+        })
+      }.bind(this)
+    } else {
+      classes = classes.concat(['gray', 'hover-gray'])
+
+      switch(selectionsNeeded) {
+        case 1:
+          topics = '1 more topic'
+          break
+        case 2:
+          topics = '2 more topics'
+          break
+        case 3:
+          topics = '3 topics'
+          break
+      }
+
+      text = 'Pick at least ' + topics
+
+      var progress = (
+        <div style={{ marginTop: 1, marginLeft: 3 }}>
+          {this.renderProgress()}
+        </div>
+      )
+
+      var padding = 46
+    }
+
+    return (
+      <a onClick={click} className={classes.join(' ')} style={{ display: 'inline-block', lineHeight: '26px', paddingLeft: padding }}>
+        {progress}
+        {text}
+      </a>
+    )
+  },
+
   renderNewsFeedItems: function() {
     var items = this.state.newsFeedItems
     var spinner = this.renderSpinner()
+    var filter = this.props.filter
+    var interests = this.state.interests
+    var user = this.state.currentUser
 
-    if (!items.length) {
-      return this.renderSuggestProducts()
-    } else {
+    if (filter == 'interests' && !interests.length) {
       return (
         <div>
-          {items.map(function(item) {
-            return (
-              <div>
-                <NewsFeedItem {...item} />
-              </div>
-            )
-          })}
-          {spinner}
+          <Tile>
+            <div className="px4 py3 text-center">
+              <h1 className="mt0 mb0">Hey there @{user.username}!</h1>
+              <p className="gray-1">Looks like you're new around here.</p>
+              <p className="gray-2"><strong>Tell us what you're into below</strong> and we show you where to get started. </p>
+            </div>
+
+            <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
+              {this.renderMarks('Growth')}
+            </div>
+
+            <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
+              {this.renderMarks('Design')}
+            </div>
+
+            <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
+              {this.renderMarks('Development')}
+            </div>
+          </Tile>
+
+          <Tile>
+            <div className="px3 py3 border-top text-center">
+              {this.renderSubmit()}
+            </div>
+          </Tile>
         </div>
       )
     }
-  },
-
-  renderSuggestProducts: function() {
-    var products = this.state.products
 
     return (
       <div>
-        <div className="text-center mt4">
-          <h3 className="gray-2">You must be new around here.</h3>
-          <p className="h4 mt0 mb0 gray-2 fw-400">Follow some products that you care about.</p>
-        </div>
-
-        <div className="mt4">
-          {products.map(function(product) {
-            return (
-              <div className="mb2">
-                <ProductChip product={product} />
-              </div>
-            )
-          })}
-        </div>
+        {items.map(function(item) {
+          return (
+            <div>
+              <NewsFeedItem {...item} />
+            </div>
+          )
+        })}
+        {spinner}
       </div>
     )
   },
 
   renderBounties: function() {
-    if (!this.state.lockedBounties.length && !this.state.reviewingBounties) {
+    if (!this.state.lockedBounties.length && !this.state.reviewingBounties.length) {
       return (
-        <Tile>
-          <div className="center p3">
-            <p className="mt0 mb0 h5 gray-1 bold">Find a bounty to work on.</p>
-            <p className="gray-2 mb0">There are plenty of products that could use your help.</p>
-          </div>
-          <div className="p3 center" style={{ backgroundColor: '#f9f9f9' }}>
-            <a href="/discover/bounties" className="pill-button pill-button-theme-white pill-button-border pill-button-shadow bold" style={{ display: 'inline-block', lineHeight: '24px' }}>
-              Find bounties
-            </a>
-          </div>
-        </Tile>
+        <div style={{ marginTop: 42 }}>
+          <Tile>
+            <div className="center p3">
+              <p className="mt0 mb2 h5 gray-1 bold">Find & help interesting products</p>
+              <p className="gray-2 mb0">Products here are built and owned by the community. When you contribute to a product the community rewards you with an ownership stake in its success.</p>
+            </div>
+            <div className="p3 center" style={{ backgroundColor: '#f9f9f9' }}>
+              <a href="/discover/products" className="pill-button pill-button-theme-white pill-button-border pill-button-shadow bold" style={{ display: 'inline-block', lineHeight: '24px' }}>
+                Explore products
+              </a>
+
+              <div className="mt2 center">
+                or <a href="/start" className="mt3 center">start your own</a>
+              </div>
+            </div>
+          </Tile>
+        </div>
       )
     }
 
     if (this.state.lockedBounties.length) {
       var lockedBounties = (
         <div className="mb3">
-          <h6 className="gray caps mt2 mb2">Bounties you're working on</h6>
+          <h6 className="gray-3 caps mt2 mb2">Bounties you&#8217;re working on</h6>
           {this.state.lockedBounties.map(function(bounty) {
-            return <MiniBounty bounty={bounty} />
+            return (
+              <div className="mt2">
+                <BountyCard bounty={bounty} showLocker={true} />
+              </div>
+            )
           })}
         </div>
       )
@@ -296,9 +369,13 @@ var DashboardPage = React.createClass({
     if (this.state.reviewingBounties.length) {
       var reviewingBounties = (
         <div className="mb3">
-          <h6 className="gray caps mt2 mb2">Bounties to review</h6>
+          <h6 className="gray-3 caps mt2 mb2">Bounties to review</h6>
           {this.state.reviewingBounties.map(function(bounty) {
-            return <MiniBounty bounty={bounty} locker={false} />
+            return (
+              <div className="mt2">
+                <BountyCard bounty={bounty} />
+              </div>
+            )
           })}
         </div>
       )
@@ -327,8 +404,8 @@ var DashboardPage = React.createClass({
             <div style={{ marginTop: 42 }}></div>
             {nav}
           </div>
-          <div className="col col-6 px2">
-            <h6 className="gray caps mt2 mb2">What's Happening</h6>
+          <div className="col col-6 px2 mb4">
+            <h6 className="gray-3 caps mt2 mb2">What's Happening</h6>
             {newsFeedItems}
           </div>
           <div className="col col-4 px2">

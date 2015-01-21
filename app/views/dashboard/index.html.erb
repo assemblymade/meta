@@ -4,6 +4,8 @@
 <%= render 'shared/navbar' %>
 
 <%= react_component 'DashboardPage', {
-  filter: params.fetch(:filter, 'all'),
-  followedProducts: ActiveModel::ArraySerializer.new(current_user.followed_products.ordered_by_trend)
+  filter: params.fetch(:filter, 'interests'),
+  followedProducts: ActiveModel::ArraySerializer.new(current_user.followed_products.ordered_by_trend),
+  marks: CuratedMark::CURATED_MARKS,
+  initialInterests: current_user.marks.pluck(:name)
 } %>

@@ -4,6 +4,10 @@ class DashboardController < ApplicationController
   respond_to :html, :json
 
   def index
+    product_vectors = QueryMarks.new.get_all_product_vectors
+    user_vector = QueryMarks.new.mark_vector_for_object(current_user)
+    QueryMarks.new.assign_top_products_for_user(10, current_user, product_vectors, user_vector)
+
     @news_feed_items = NewsFeedItem.joins(:product).merge(products).includes(:comments).for_feed.page(1)
     @user_bounties = {
       lockedBounties: current_user.locked_wips,
@@ -30,7 +34,7 @@ class DashboardController < ApplicationController
   end
 
   def products
-    filter_param = params.fetch(:filter, 'all')
+    filter_param = params.fetch(:filter, 'interests')
 
     case filter_param
     when 'all'

@@ -65,7 +65,7 @@
               <%= f.text_area :bio, placeholder: 'Short bio', autocomplete: 'off', rows: 4, class: 'form-control' %>
             </div>
 
-            <div class="align-right">
+            <div class="right-align">
               <%= f.submit 'Update profile', class: 'btn btn-primary' %>
             </div>
           <% end %>
@@ -84,7 +84,7 @@
               <%= f.password_field :password_confirmation, class: 'form-control' %>
             </div>
 
-            <div class="align-right">
+            <div class="right-align">
               <%= f.submit 'Update account', class: 'btn btn-primary' %>
             </div>
           <% end %>
@@ -120,7 +120,7 @@
               </div>
             </div>
 
-            <div class="align-right">
+            <div class="right-align">
               <%= f.submit 'Update notifications', class: 'btn btn-primary' %>
             </div>
           <% end %>
@@ -175,7 +175,7 @@
               <%= render 'users/user/balance_entries/balance_entry', balance_entry: entry %>
               <% end %>
               <tr>
-                <td colspan="4" class="align-right bold">Total:</td>
+                <td colspan="4" class="right-align bold">Total:</td>
                 <td><%= currency(@balance.final_earnings) %></td>
               </tr>
             </table>

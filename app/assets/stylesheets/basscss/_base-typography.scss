@@ -24,12 +24,6 @@ $space-4: 4rem !default;
 
 /* Basscss Base Typography */
 
-body {
-  font-family: $font-family;
-  line-height: $line-height;
-  font-size: 100%;
-}
-
 h1,
 h2,
 h3,
@@ -47,7 +41,6 @@ p,
 dl,
 ol,
 ul {
-  font-size: $h4;
   margin-top: 0;
   margin-bottom: $space-2;
 }

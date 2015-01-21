@@ -23,15 +23,7 @@
           <li className="divider" style={{ marginTop: '0px' }} />
 
           <li>
-            <a href={this.props.editUserPath} className="text-small">Settings</a>
-          </li>
-
-          <li>
             <a href="#mark-as-read" className="text-small" onClick={this.markAllAsRead}>Mark all as read</a>
-          </li>
-
-          <li>
-            <a href='/dashboard' className="text-small">All Notifications</a>
           </li>
         </ul>
       );

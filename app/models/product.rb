@@ -69,6 +69,7 @@ class Product < ActiveRecord::Base
   has_many :wip_activities, through: :wips, source: :activities
   has_many :wips
   has_many :work
+  has_many :ownership_statuses
 
   PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
 

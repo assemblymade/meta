@@ -488,6 +488,20 @@ ActiveRecord::Schema.define(version: 20150120194016) do
     t.datetime "created_at", null: false
   end
 
+  create_table "ownership_statuses", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "product_id"
+    t.string   "state"
+    t.string   "asset"
+    t.text     "description"
+    t.datetime "pending_until"
+    t.datetime "state_updated_at"
+    t.datetime "owned_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ownership_statuses", ["product_id"], name: "index_ownership_statuses_on_product_id", using: :btree
+
   create_table "perks", id: :uuid, force: :cascade do |t|
     t.uuid     "product_id"
     t.integer  "amount"

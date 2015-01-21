@@ -13,7 +13,7 @@ ASM::Application.routes.draw do
   end
 
   authenticated do
-    get '/', to: redirect('/discover')
+    get '/', to: redirect('/dashboard')
   end
 
   root :to => 'pages#home'
@@ -43,8 +43,6 @@ ASM::Application.routes.draw do
   get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
-  get '/interests'        => 'pages#interests',   as: :interests
-  get '/suggestions'      => 'pages#suggestions', as: :suggestions
 
   # Readraptor proxy. Remove this when javascript clients can talk directly to RR
   get '/_rr/articles/:id' => 'readraptor#show', as: :readraptor_article
@@ -192,6 +190,7 @@ ASM::Application.routes.draw do
     resources :karmahistory, only: [:index]
     resources :leaderboard, only: [:index]
     resources :tags, only: [:index]
+    resources :ownership, only: [:index, :update]
     resources :bounties, only: [:index]
     namespace :bounties do
       get :graph_data
@@ -280,10 +279,11 @@ ASM::Application.routes.draw do
   # FIXME: Fix news_feed_items_controller to allow missing product
   get '/news_feed_items' => 'dashboard#news_feed_items'
 
-
   resources :discussions, only: [] do
     resources :comments, only: [:index, :create, :update]
   end
+
+  resource :user, only: [:update]
 
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do

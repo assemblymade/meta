@@ -35,7 +35,7 @@ var NewsFeed = React.createClass({
         <span className="gray-1 text-large">
           There are about
           <span className="bold">
-            {' '}<span className="text-info">{count}</span> {filter}
+            {' '}<span className="green">{count}</span> {filter}
           </span>
           {' '} bounties
         </span>

@@ -115,7 +115,7 @@
                 {this.renderFilterDropdown()}
               </div>
               <div className="px3 table-cell gray-2">
-                <input type="text" value={this.props.value} onChange={this.props.onValueChange} className="no-border full-width" style={{ padding: 0 }} />
+                <input type="text" value={this.props.value} onChange={this.props.onValueChange} className="p0 full-width" style={{ border: 'none' }} />
               </div>
             </div>
           </div>

@@ -143,11 +143,9 @@ var NewComment = React.createClass({
   render: function() {
     if (!this.props.user) {
       return (
-        <span>
-          I'm afraid I can't let you comment. You'll have to
-          {' '}<a href="/signup">sign up</a>{' '}
-          to do that.
-        </span>
+        <div className="p3">
+          You need to <a href="/signup">sign up</a> before you can comment.
+        </div>
       );
     }
 
