@@ -52,7 +52,7 @@ var PostsIndex = React.createClass({
 
   getInitialState: function() {
     return {
-      posts: PostsStore.getPosts(product.slug)
+      posts: PostsStore.getPosts(this.props.product.slug)
     };
   },
 

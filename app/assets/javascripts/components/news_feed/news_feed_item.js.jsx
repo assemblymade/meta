@@ -1,3 +1,4 @@
+var ActivityFeedComment = require('../activity_feed_comment.js.jsx');
 var AppIcon = require('../app_icon.js.jsx');
 var ArchivedNewsFeedItemsStore = require('../../stores/archived_news_feed_items_store');
 var Avatar = require('../ui/avatar.js.jsx');
@@ -144,14 +145,12 @@ var NewsFeedItem = React.createClass({
   },
 
   renderComments: function() {
-    var product = this.props.product;
-    var target = this.props.target;
-
-    return <NewsFeedItemComments
-        {...this.props}
-        item={this.props}
-        triggerModal={this.triggerModal}
-        hasProduct={!!product} />;
+    var comment = this.props.last_comment
+    if (comment) {
+      return <div className="px3">
+        <ActivityFeedComment author={comment.user} body={comment.body} heartable={false} />
+      </div>
+    }
   },
 
   renderEditButton: function() {

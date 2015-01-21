@@ -23,8 +23,7 @@
 
     var discussionElement = React.createElement(Discussion, {
       target: bountyElement,
-      newsFeedItem: <%= (NewsFeedItemSerializer.new(@bounty.news_feed_item) if @bounty.news_feed_item).to_json.html_safe %>,
-      hasProduct: true
+      newsFeedItem: <%= (NewsFeedItemSerializer.new(@bounty.news_feed_item) if @bounty.news_feed_item).to_json.html_safe %>
     })
 
     React.render(discussionElement, document.getElementById('discussion-el'))

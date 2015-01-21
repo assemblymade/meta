@@ -34,7 +34,6 @@ var NewsFeedItemComments = React.createClass({
   propTypes: {
     commentable: React.PropTypes.bool,
     item: React.PropTypes.object.isRequired,
-    hasProduct: React.PropTypes.bool,
     showAllComments: React.PropTypes.bool,
     showQuestionButtons: React.PropTypes.bool
   },
@@ -122,7 +121,6 @@ var NewsFeedItemComments = React.createClass({
   getDefaultProps: function() {
     return {
       commentable: false,
-      hasProduct: false,
       showQuestionButtons: false
     };
   },
@@ -198,14 +196,8 @@ var NewsFeedItemComments = React.createClass({
   },
 
   render: function() {
-    var hasProduct = this.props.hasProduct;
-    var classes = React.addons.classSet({
-      'px2': hasProduct,
-      '_mq-600_px4': hasProduct
-    });
-
     return (
-      <div className={classes}>
+      <div>
         {this.renderComments()}
         {this.renderNewCommentForm()}
       </div>
@@ -377,15 +369,12 @@ var NewsFeedItemComments = React.createClass({
 
   renderRuler: function() {
     if (this.state.comments.length > 0) {
-      var hasProduct = this.props.hasProduct;
       var classes = React.addons.classSet({
         mb0: true,
         mt3: true,
         'border-gray-5': true,
-        _mrn3: hasProduct,
-        _mrn4: !hasProduct,
-        _mln3: hasProduct,
-        _mln4: !hasProduct
+        _mrn4: true,
+        _mln4: true,
       });
       return <hr className={classes} />;
     }

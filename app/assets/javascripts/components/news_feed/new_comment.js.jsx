@@ -165,7 +165,7 @@ var NewComment = React.createClass({
     });
 
     return (
-      <div className="clearfix">
+      <div className="clearfix pb4">
         {this.renderAvatar()}
         <div className={this.props.hideAvatar ? "" : "_pl3_5"}>
           <div className={dropzoneClasses}>
