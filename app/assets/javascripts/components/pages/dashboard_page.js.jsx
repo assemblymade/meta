@@ -356,7 +356,11 @@ var DashboardPage = React.createClass({
         <div className="mb3">
           <h6 className="gray-3 caps mt2 mb2">Bounties you&#8217;re working on</h6>
           {this.state.lockedBounties.map(function(bounty) {
-            return <BountyCard bounty={bounty} showLocker={true} />
+            return (
+              <div className="mt2">
+                <BountyCard bounty={bounty} showLocker={true} />
+              </div>
+            )
           })}
         </div>
       )
@@ -367,7 +371,11 @@ var DashboardPage = React.createClass({
         <div className="mb3">
           <h6 className="gray-3 caps mt2 mb2">Bounties to review</h6>
           {this.state.reviewingBounties.map(function(bounty) {
-            return <BountyCard bounty={bounty} />
+            return (
+              <div className="mt2">
+                <BountyCard bounty={bounty} />
+              </div>
+            )
           })}
         </div>
       )

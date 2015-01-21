@@ -48,8 +48,7 @@ var BountyCard = React.createClass({
 
         <div className="h6 mt0 mb0">
           <Avatar user={bounty.user} size={18} style={{ display: 'inline-block' }} />
-          {' '}
-          <a href={bounty.user.url} className="bold black">
+          <a href={bounty.user.url} className="bold black ml1">
             {bounty.user.username}
           </a>
         </div>
@@ -69,8 +68,7 @@ var BountyCard = React.createClass({
     return (
       <div className="p2 border-top h6 mt0 mb0">
         <Avatar user={locker} size={18} style={{ display: 'inline-block' }} />
-        {' '}
-        <a href={locker.url} className="bold black">
+        <a href={locker.url} className="bold black ml1">
           {locker.username}
         </a>
         {' '}
