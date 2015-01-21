@@ -11,7 +11,7 @@ var ProposalList = React.createClass({
   render: function() {
     return (
       <div className="row mt0">
-        <div className="col-xs-12">
+        <div className="col-xs-10 col-xs-offset-1">
           {this.renderProposals()}
         </div>
       </div>

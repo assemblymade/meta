@@ -37,6 +37,7 @@ var PostListIem = React.createClass({
         </div>
 
         <div className="px3 mb1 mt0 gray-2">
+
           {this.renderComments(post.comments_count)}
           {this.renderTags(post.marks)}
         </div>
@@ -44,6 +45,7 @@ var PostListIem = React.createClass({
         {this.renderUser()}
         {this.renderModal()}
       </div>
+
     );
   },
 

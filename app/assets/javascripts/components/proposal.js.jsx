@@ -15,15 +15,9 @@ var Proposal = React.createClass({
   },
 
   getInitialState: function() {
-
-    if (this.props.proposal.user_vote_status)
-      {
-        return {button_text: "Unvote"}
-      }
-    else
-      {
-        return {button_text: "Approve"}
-      }
+    return {
+      approved: true
+    };
   },
 
   render: function() {
@@ -34,13 +28,25 @@ var Proposal = React.createClass({
     );
   },
 
-  renderProposal: function() {
+  renderSubmit: function() {
+    var text = this.state.approved ? 'Unvote' : 'Approve'
+    var css = this.state.approved ? 'btn btn-danger' : 'btn btn-success'
+    this.state.approved = !this.state.approved
 
-    var button_text = "Approve";
-    if (this.props.proposal.user_vote_status)
-      {
-        button_text = "Unvote";
-      }
+    return (
+      <button className = {css} onClick={this.toggle_vote}>
+      {text}
+    </button>
+    )
+  },
+
+  renderProposal: function() {
+    var my_style = 'progress-success';
+    var progress_style = {
+      position: 'relative',
+      top: "50%",
+      transform: "translateY(120%)"
+    }
 
     return (
       <div>
@@ -52,38 +58,45 @@ var Proposal = React.createClass({
               </div>
             </div>
 
-            <div className="col-md-4">
-              <ProgressBar percent={11} />
-
-              <Button action={this.vote} type="default">
-                {this.state.button_text}
-              </Button>
+            <div className="col-md-4" style = {progress_style} >
+              <ProgressBar percent={this.props.proposal.status} style = {my_style} />
+                <div className = "col-md-offset-3">
+                  {this.renderSubmit()}
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div className="border-top border-gray-5">
-            <NewsFeedItemComments commentable={true} item={this.props.newsFeedItem} showAllComments={true} />
-          </div>
+            <div className="border-top border-gray-5">
+              <NewsFeedItemComments commentable={true} item={this.props.newsFeedItem} showAllComments={true} />
+            </div>
 
-          <div className="px3 py2 border-top border-bottom">
-            <Love heartable_id={this.props.newsFeedItem.id} heartable_type="NewsFeedItem" />
-          </div>
+            <div className="px3 py2 border-top border-bottom">
+              <Love heartable_id={this.props.newsFeedItem.id} heartable_type="NewsFeedItem" />
+            </div>
 
-        </Tile>
-      </div>
+          </Tile>
+        </div>
+        );
+      },
 
-    );
-  },
+    toggle_vote: function(e) {
+      e.preventDefault()
+      if (this.state.approved) {
+        weight = 1.0
+      }
+      else {
+        weight = 0.0
+      }
 
-  vote: function() {
-    this.state.button_text = "Unvote";
-  },
+      var choicedata = {proposal: this.props.proposal.id,voter: this.props.user.id, weight: weight}
+      $.ajax({
+        method: 'POST',
+        url: "/choices",
+        json: true,
+        data: { body: choicedata }
+      });
+      }
 
-  unvote: function() {
-    this.state.button_text = "Approve";
-  }
+  });
 
-
-});
-
-module.exports = window.Proposal = Proposal;
+    module.exports = window.Proposal = Proposal;

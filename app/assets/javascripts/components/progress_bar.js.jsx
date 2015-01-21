@@ -2,7 +2,8 @@ var ProgressBar = React.createClass({
   displayName: 'ProgressBar',
 
   propTypes: {
-    percent: React.PropTypes.number
+    percent: React.PropTypes.number,
+    style: React.PropTypes.oneOf(['progress-info', 'progress-success', 'progress-warning', 'progress-danger'])
   },
 
   render: function() {

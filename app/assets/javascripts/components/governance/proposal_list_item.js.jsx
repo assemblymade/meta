@@ -3,6 +3,7 @@ var Icon = require('../icon.js.jsx');
 var Love = require('../love.js.jsx');
 var ListItemMixin = require('../../mixins/list_item_mixin.js.jsx');
 var NewsFeedItemModal = require('../news_feed/news_feed_item_modal.js.jsx');
+var Button = require('../ui/button.js.jsx')
 
 var ProposalListIem = React.createClass({
   displayName: 'ProposalListItem',
@@ -21,19 +22,57 @@ var ProposalListIem = React.createClass({
         <div className="px3">
           {this.renderTitle()}
           {this.renderSummary()}
+          <div className = "col-md-4 col-md-offset-8">
+            <div className = "row">
+              {this.renderProgress()}
+            </div>
+            <div className = "row">
+              {this.vote_state()}
+            </div>
+          </div>
         </div>
 
         <div className="px3 mb1 mt0 gray-dark">
           {this.renderComments(proposal.comments_count)}
         </div>
+        {this.renderLove(this.props.proposal.news_feed_item_id)}
         {this.renderUser()}
       </div>
     );
   },
 
+  vote_state: function() {
+    if (this.props.proposal.state==="open") {
+      return (
+        <div className="bg-blue white ml4 mr4 py2 rounded bold center">Open</div>
+      )
+    } else if (this.props.proposal.state === "failed") {
+      return (
+        <div className = "bg-red white px2 py1 rounded bold center">Failed</div>
+      )
+    }
+    else if (this.props.proposal.state === "passed") {
+      return (
+        <div className = "bg-green while px2 py1 rounded bold center">Passed</div>
+      )
+    }
+
+  },
+
   renderProgress: function() {
+    var my_style = "progress-info";
+    if (this.props.proposal.state === "passed"){
+      my_style = "progress-success";
+    }
+    else if (this.props.proposal.state === "failed") {
+      my_style = "progress-danger";
+    }
+    else if (this.props.proposal.state === "closed") {
+      my_style = "progress-success";
+    }
+
     return (
-      <ProgressBar percent={11} />
+      <ProgressBar percent={this.props.proposal.status} style = {my_style} />
     )
   },
 
@@ -42,7 +81,7 @@ var ProposalListIem = React.createClass({
 
     if (proposal.description) {
       return (
-        <div className="h5 mt0 mb2 gray-dark">
+        <div className="h5 gray-dark">
           {proposal.description}
         </div>
       );
@@ -53,7 +92,7 @@ var ProposalListIem = React.createClass({
     var proposal = this.props.proposal;
 
     return (
-      <div className="h4 mb1 mt0" style={{ paddingTop: '1rem' }}>
+      <div className="h3 mb1 mt0" style={{ paddingTop: '1rem' }}>
         <a href={proposal.url} className="black">
           {proposal.name}
         </a>

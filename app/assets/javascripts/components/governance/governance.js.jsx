@@ -16,8 +16,28 @@ var Governance = React.createClass({
   render: function() {
     return (
       <div>
-        <div className="col-xs-12 col-sm-8 r768_pr0">
+        <div className="col-xs-8 r768_pr0">
           <ProposalList proposals={this.props.product.proposals} product={this.props.product} />
+        </div>
+
+        <div className = "col-xs-4 r768_pr0">
+          <Tile>
+            {this.renderText()}
+          </Tile>
+        </div>
+
+      </div>
+    );
+  },
+
+  renderText: function() {
+    return (
+      <div className="h3 mb1 mt0" style={{ paddingTop: '1rem' }}>
+        <div className="black">
+          Create a New Proposal
+        </div>
+        <div className="px3">
+          <button className = "btn btn-info">Vesting Contract</button>
         </div>
       </div>
     );
