@@ -298,15 +298,6 @@ var NewsFeedItemComments = React.createClass({
               <span style={{ fontSize: '1.2rem', lineHeight: '2rem' }}>Answer this question</span>
             </button>
           </div>
-
-          <div className="left">
-            <button className="pill-button pill-button-theme-white pill-button-border pill-button-shadow"
-                onClick={this.handleShareQuestionClick}>
-              <span  style={{ fontSize: '1.2rem', lineHeight: '2rem' }}>
-                <SvgIcon type="share" /> Share this question
-              </span>
-            </button>
-          </div>
         </div>
       );
 
