@@ -13,13 +13,9 @@ var Markdown = require('../markdown.js.jsx');
 var moment = require('moment');
 var NewsFeedItemComments = require('../news_feed/news_feed_item_comments.js.jsx');
 var ProgressBar = require('../ui/progress_bar.js.jsx');
-var StartConversationModal = require('./start_conversation_modal.js.jsx');
-var StartConversationModalStore = require('../../stores/start_conversation_modal_store');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
 
 var IdeaShow = React.createClass({
-  displayName: 'IdeaShow',
-
   propTypes: {
     navigate: React.PropTypes.func.isRequired,
     params: React.PropTypes.oneOfType([
@@ -31,19 +27,16 @@ var IdeaShow = React.createClass({
 
   componentDidMount() {
     IdeaStore.addChangeListener(this.onIdeaChange);
-    StartConversationModalStore.addChangeListener(this.onModalChange);
   },
 
   componentWillUnmount() {
     IdeaStore.removeChangeListener(this.onIdeaChange);
-    StartConversationModalStore.removeChangeListener(this.onModalChange);
   },
 
   getInitialState() {
     return {
       idea: IdeaStore.getIdea(),
       isDrawerOpen: false,
-      startConversationModalShown: StartConversationModalStore.isModalShown()
     };
   },
 
@@ -107,8 +100,6 @@ var IdeaShow = React.createClass({
 
           {this.renderBody()}
         </IdeaContainer>
-        <StartConversationModal idea={idea}
-          modalShown={this.state.startConversationModalShown} />
       </main>
     );
   },
@@ -137,6 +128,7 @@ var IdeaShow = React.createClass({
 
         <div className="px4">
           <NewsFeedItemComments commentable={true}
+              dropzoneInnerText={false}
               item={idea.news_feed_item}
               showAllComments={true}
               showQuestionButtons={true} />

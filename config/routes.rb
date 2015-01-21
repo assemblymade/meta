@@ -59,6 +59,7 @@ ASM::Application.routes.draw do
 
   resources :ideas do
     resources :idea_comments, only: [:index, :create, :update], as: :comments, path: 'comments'
+    get '/start-conversation', on: :member, action: :start_conversation
     patch :mark
   end
 

@@ -81,15 +81,27 @@ class IdeasController < ProductController
     })
   end
 
+  def start_conversation
+    find_idea!
+    authorize! :update, @idea
+
+    respond_with IdeaSerializer.new(@idea)
+  end
+
   def edit
     find_idea!
     authorize! :update, @idea
+
+    respond_with IdeaSerializer.new(@idea)
   end
 
   def update
     find_idea!
     @idea.update_attributes(idea_params)
-    redirect_to @idea
+
+    respond_to do |format|
+      format.json  { render json: IdeaSerializer.new(@idea), status: 200 }
+    end
   end
 
   def mark

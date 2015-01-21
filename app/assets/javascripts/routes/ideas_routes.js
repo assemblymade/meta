@@ -5,7 +5,9 @@ var ActionTypes = CONSTANTS.ActionTypes
 var routes = [
   ['/ideas', require('../components/ideas/ideas_index.js.jsx'), _showIdeas],
   ['/ideas/new', require('../components/ideas/ideas_new.js.jsx'), _showCreateIdea],
-  ['/ideas/:id', require('../components/ideas/idea_show.js.jsx'), _showIdea]
+  ['/ideas/:id', require('../components/ideas/idea_show.js.jsx'), _showIdea],
+  ['/ideas/:id/edit', require('../components/ideas/idea_edit.js.jsx'), _showEditIdea],
+  ['/ideas/:id/start-conversation', require('../components/ideas/idea_start_conversation.js.jsx'), _showStartConversation],
 ];
 
 module.exports = routes;
@@ -14,6 +16,13 @@ function _showCreateIdea(data) {
   Dispatcher.dispatch({
     type: ActionTypes.RELATED_IDEAS_RECEIVE,
     relatedIdeas: data.related_ideas
+  });
+}
+
+function _showEditIdea(idea) {
+  Dispatcher.dispatch({
+    type: ActionTypes.IDEA_RECEIVE,
+    idea: idea
   });
 }
 
@@ -81,5 +90,12 @@ function _showIdea(data) {
   Dispatcher.dispatch({
     type: ActionTypes.LOVE_RECEIVE_USER_HEARTS,
     userHearts: userHearts
+  });
+}
+
+function _showStartConversation(idea) {
+  Dispatcher.dispatch({
+    type: ActionTypes.IDEA_RECEIVE,
+    idea: idea
   });
 }

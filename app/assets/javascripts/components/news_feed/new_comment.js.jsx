@@ -23,6 +23,11 @@ var NewComment = React.createClass({
   propTypes: {
     canContainWork: React.PropTypes.bool,
     commentId: _dependsOn('initialText', 'string'),
+    dropzoneInnerText: React.PropTypes.oneOfType([
+      React.PropTypes.bool, // `false` turns off the inner div
+      React.PropTypes.element,
+      React.PropTypes.string
+    ]),
     hideAvatar: React.PropTypes.bool,
     hideButtons: React.PropTypes.bool,
     initialText: _dependsOn('commentId', 'string'),
@@ -92,7 +97,8 @@ var NewComment = React.createClass({
 
   getDefaultProps: function() {
     return {
-      initialRows: 3,
+      dropzoneInnerText: <span>To attach files, drag & drop here or <a href="javascript:void(0);" id="clickable">select files from your computer</a>&hellip;</span>,
+      initialRows: 4,
       placeholder: 'Leave your comments',
       user: UserStore.getUser()
     };
@@ -161,15 +167,14 @@ var NewComment = React.createClass({
     });
 
     return (
-      <div className="clearfix" style={{ paddingBottom: '2.5rem' }}>
+      <div className="clearfix">
         {this.renderAvatar()}
-        <div className={this.props.hideAvatar ? "mb3" : "mb3 _pl3_5"}>
+        <div className={this.props.hideAvatar ? "" : "_pl3_5"}>
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
               <TypeaheadUserTextArea
                   {...this.props}
                   id="event_comment_body"
-                  ref="textarea"
                   type="text"
                   className={textareaClasses}
                   onKeyDown={this.onKeyboardInteraction}
@@ -194,7 +199,7 @@ var NewComment = React.createClass({
     if (!this.props.initialText) {
       return (
         <div className="left">
-          <Avatar user={window.app.currentUser().attributes} size={30} />
+          <Avatar user={UserStore.getUser()} size={30} />
         </div>
       );
     }
@@ -213,11 +218,10 @@ var NewComment = React.createClass({
   },
 
   renderDropzoneInner: function() {
-    if (this.state.rows > 1) {
+    if (this.state.rows > 1 && this.props.dropzoneInnerText) {
       return (
-        <div className="dropzone-inner">
-          To attach files, drag & drop here or
-          {' '}<a href="javascript:void(0);" ref="clickable">select files from your computer</a>&hellip;
+        <div className="dropzone-inner" ref="clickable">
+          {this.props.dropzoneInnerText}
         </div>
       );
     }

@@ -2,10 +2,10 @@ class IdeaSerializer < ApplicationSerializer
   include MarkdownHelper
   include TruncateHtmlHelper
 
-  attributes :body, :comments_count, :created_at, :greenlit_at
-  attributes :hearts_count, :heart_distance_from_percentile
-  attributes :id, :name, :news_feed_item, :path, :percentile, :score
-  attributes :short_body, :tilting_threshold, :url
+  attributes :body, :comments_count, :created_at, :founder_preference
+  attributes :greenlit_at, :hearts_count, :heart_distance_from_percentile
+  attributes :id, :name, :news_feed_item, :path, :percentile, :raw_body
+  attributes :score, :short_body, :tilting_threshold, :url
 
   has_one :user
 
@@ -19,6 +19,10 @@ class IdeaSerializer < ApplicationSerializer
 
   def path
     idea_path(object)
+  end
+
+  def raw_body
+    object.body
   end
 
   def short_body

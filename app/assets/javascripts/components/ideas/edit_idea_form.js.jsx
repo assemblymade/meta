@@ -6,15 +6,29 @@ var NewComment = require('../news_feed/new_comment.js.jsx');
 var NewCommentStore = require('../../stores/new_comment_store');
 var UserStore = require('../../stores/user_store');
 
-var IDEA_BODY_ID = 'new_idea';
+var EditIdeaForm = React.createClass({
+  propTypes: {
+    idea: React.PropTypes.shape({
+      founder_preference: React.PropTypes.bool,
+      name: React.PropTypes.string.isRequired,
+      raw_body: React.PropTypes.string.isRequired
+    }).isRequired
+  },
 
-var NewIdeaForm = React.createClass({
+  componentDidMount() {
+    NewCommentStore.addChangeListener(this.updateBody);
+  },
+
+  componentWillUnmount() {
+    NewCommentStore.removeChangeListener(this.updateBody);
+  },
+
   getInitialState() {
+    var idea = this.props.idea;
     return {
-      firstQuestion: '',
-      ideaName: '',
-      isFounder: true,
-      showWarning: false
+      isFounder: idea.founder_preference,
+      ideaBody: idea.raw_body,
+      ideaName: idea.name
     };
   },
 
@@ -30,28 +44,35 @@ var NewIdeaForm = React.createClass({
     });
   },
 
-  onNextClick(e) {
+  onUpdateClick(e) {
     e.preventDefault();
 
+    var idea = this.props.idea;
+    var item = idea.news_feed_item;
+
     var idea = {
+      body: this.state.ideaBody,
+      id: idea.name,
       name: this.state.ideaName,
-      body: NewCommentStore.getComment(IDEA_BODY_ID),
       founder_preference: this.state.isFounder
     };
 
-    IdeaActionCreators.submitIdeaClicked(idea);
+    IdeaActionCreators.updateIdeaClicked(idea);
   },
 
   render() {
+    var idea = this.props.idea;
+    var item = idea.news_feed_item;
+
     return (
       <form>
         <div className="px4 form-group">
           <label>What's the elevator pitch?</label>
           <input type="text"
-              className="form-control"
-              limit={60}
-              value={this.state.ideaName}
-              onChange={this.handleIdeaNameChange} />
+            className="form-control"
+            limit={60}
+            value={this.state.ideaName}
+            onChange={this.handleIdeaNameChange} />
         </div>
 
         <hr style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
@@ -59,11 +80,13 @@ var NewIdeaForm = React.createClass({
         <div className="px4 form-group">
           <label>Describe it in more detail</label>
           <NewComment canContainWork={false}
+              commentId={item.id}
               dropzoneInnerText={false}
+              initialText={idea.raw_body}
               hideAvatar={true}
               hideButtons={true}
               placeholder={''}
-              thread={IDEA_BODY_ID}
+              thread={item.id}
               url="/ideas" />
         </div>
 
@@ -75,9 +98,9 @@ var NewIdeaForm = React.createClass({
             <div className="radio">
               <label key="founder-option">
                 <input type="radio"
-                    ref="founder"
-                    checked={this.state.isFounder}
-                    onChange={this.onFounderOptionClick} />
+                  ref="founder"
+                  checked={this.state.isFounder}
+                  onChange={this.onFounderOptionClick} />
                 I want to be the founder.
                 <p className="gray-2">
                   As a founder, you determine the course of the app. If you
@@ -88,9 +111,9 @@ var NewIdeaForm = React.createClass({
 
               <label key="non-founder-option">
                 <input type="radio"
-                    ref="non-founder"
-                    checked={!this.state.isFounder}
-                    onChange={this.onFounderOptionClick} />
+                  ref="non-founder"
+                  checked={!this.state.isFounder}
+                  onChange={this.onFounderOptionClick} />
                 I just want to share the idea and let someone else be a founder.
                 <p className="gray-2">
                   You don't have to be a founder of the app, you can just drop
@@ -105,25 +128,23 @@ var NewIdeaForm = React.createClass({
         <hr className="py0 mb0" style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
 
         <div className="clearfix px4 py2">
-          <div className="left">
-            <small>
-              <a href="mailto:austin.smith@assembly.com?subject=I already have a product started"
-                    className="gray-2"
-                    style={{ textDecoration: 'underline' }}>
-                Already have a product started?
-              </a>
-            </small>
-          </div>
-
           <div className="right">
-            <Button type="primary" action={this.onNextClick}>
-              <span className="title">Next</span> <Icon icon="arrow-right" />
+            <Button type="primary" action={this.onUpdateClick}>
+              <span className="title">Update</span>
             </Button>
           </div>
         </div>
       </form>
     );
+  },
+
+  updateBody() {
+    var item = this.props.idea.news_feed_item;
+
+    this.setState({
+      body: NewCommentStore.getComment(item.id)
+    });
   }
 });
 
-module.exports = NewIdeaForm;
+module.exports = EditIdeaForm;

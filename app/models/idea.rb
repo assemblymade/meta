@@ -15,7 +15,7 @@ class Idea < ActiveRecord::Base
 
   validates :name, presence: true,
                    length: { minimum: 2, maximum: 255 },
-                   exclusion: { in: %w(admin about script if owner core) }
+                   exclusion: { in: %w(admin about script if owner core start-conversation) }
   validates :tilting_threshold, presence: true
 
   before_validation :set_tilting_threshold!, on: :create
@@ -33,7 +33,7 @@ class Idea < ActiveRecord::Base
     take(percentile * all.count/100)
   }
 
-  HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
+  HEARTBURN = 15.days  # period for 100% inflation, equivalent to half-life
   EPOCH_START = Time.new(2013, 6, 6)
 
   def slug_candidates
@@ -132,7 +132,6 @@ class Idea < ActiveRecord::Base
       score: lovescore
     })
 
-    set_tilting_threshold! if tilting_threshold.nil?
     greenlight! if should_greenlight?
   end
 
@@ -160,8 +159,8 @@ class Idea < ActiveRecord::Base
       threshold = previous_threshold
     end
 
-    if threshold.nil? || threshold == 0
-      threshold = 1
+    if threshold.nil? || threshold < 0
+      threshold = 10
     end
 
     update(tilting_threshold: threshold)
@@ -173,8 +172,8 @@ class Idea < ActiveRecord::Base
     expected_score = Idea.order(score: :desc).limit(index == 0 ? 1 : index).last.try(:score) || 0
     time_since = Time.now - EPOCH_START
     multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
-    hearts_missing = (expected_score - score) / (multiplier)
-    hearts_missing = (hearts_missing + 0.999).to_i
+    hearts_missing = (expected_score - score) / multiplier
+    (hearts_missing + 0.999).to_i
   end
 
   def hearts_count
