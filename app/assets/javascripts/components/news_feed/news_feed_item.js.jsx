@@ -185,7 +185,7 @@ var NewsFeedItem = React.createClass({
 
   renderLove: function() {
     return <div className="px3 py2 border-top border-bottom">
-      <Love heartable_id={this.props.heartable_id} heartable_type="NewsFeedItem" />
+      <Love heartable_id={this.props.id} heartable_type="NewsFeedItem" />
     </div>
   },
 

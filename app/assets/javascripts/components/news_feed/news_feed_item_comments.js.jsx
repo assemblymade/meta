@@ -200,10 +200,8 @@ var NewsFeedItemComments = React.createClass({
   render: function() {
     var hasProduct = this.props.hasProduct;
     var classes = React.addons.classSet({
-      _pl2: hasProduct,
-      _pr3: hasProduct,
-      '_mq-600_px2': hasProduct,
-      '_mq-600_pr4': hasProduct
+      'px2': hasProduct,
+      '_mq-600_px4': hasProduct
     });
 
     return (
