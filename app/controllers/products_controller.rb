@@ -121,7 +121,7 @@ class ProductsController < ProductController
     end
 
     respond_to do |format|
-      format.html { render 'products/new_show', layout: 'product' }
+      format.html { render }
       format.json {
         render json: {
           user_hearts: @user_hearts,
