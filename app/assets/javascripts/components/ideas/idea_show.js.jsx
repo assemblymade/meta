@@ -52,7 +52,7 @@ var IdeaShow = React.createClass({
     var idea = this.state.idea;
     var item = idea.news_feed_item;
     var thread = item.id;
-    var text = '@' + idea.user.username + ', how can I help you build this?';
+    var text = 'Hey @' + idea.user.username + ', how can I help you build this?';
 
     NewCommentActionCreators.updateComment(thread, text);
 
