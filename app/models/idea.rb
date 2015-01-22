@@ -159,7 +159,7 @@ class Idea < ActiveRecord::Base
                              .try(:tilting_threshold)
 
     if threshold < previous_threshold.to_i
-      threshold = previous_threshold
+      threshold = previous_threshold.to_i
     end
 
     threshold = DEFAULT_TILTING_THRESHOLD if threshold < DEFAULT_TILTING_THRESHOLD
