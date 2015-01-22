@@ -1,4 +1,5 @@
-var Label = require('../components/ui/label.js.jsx')
+var Heart = require('../components/heart.js.jsx');
+var Label = require('../components/ui/label.js.jsx');
 
 var ListItemMixin = {
   onModalHidden: function() {

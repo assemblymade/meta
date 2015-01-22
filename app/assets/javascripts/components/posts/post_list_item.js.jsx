@@ -1,7 +1,7 @@
 var Avatar = require('../ui/avatar.js.jsx');
 var Icon = require('../ui/icon.js.jsx');
 var ListItemMixin = require('../../mixins/list_item_mixin.js.jsx');
-var Heart = require('../ui/heart.js.jsx');
+var Heart = require('../heart.js.jsx');
 var NewsFeedItemModal = require('../news_feed/news_feed_item_modal.js.jsx');
 
 var PostListIem = React.createClass({

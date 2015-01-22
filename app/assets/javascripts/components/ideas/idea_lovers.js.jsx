@@ -48,7 +48,7 @@ var IdeaLovers = React.createClass({
     var limit = this.props.limit;
 
     if (!lovers || !lovers.length) {
-      return <span className="gray-1 px3">No love just yet &mdash; be the first to heart this idea!</span>;
+      return <span className="gray-1">No love just yet &mdash; be the first to heart this idea!</span>;
     }
 
     var renderedLovers = lovers.slice(0, limit).map((lover) => {

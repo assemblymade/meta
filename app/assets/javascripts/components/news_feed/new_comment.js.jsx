@@ -165,21 +165,22 @@ var NewComment = React.createClass({
     });
 
     return (
-      <div className="clearfix pb4">
+      <div className="clearfix">
         {this.renderAvatar()}
         <div className={this.props.hideAvatar ? "" : "_pl3_5"}>
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
               <TypeaheadUserTextArea
                   {...this.props}
-                  id="event_comment_body"
+                  id={this.props.id || "event_comment_body"}
                   type="text"
                   className={textareaClasses}
                   onKeyDown={this.onKeyboardInteraction}
                   onKeyPress={this.onKeyboardInteraction}
                   rows={this.state.rows}
                   defaultValue={this.state.text}
-                  placeholder={this.props.placeholder} />
+                  placeholder={this.props.placeholder}
+                  style={{ minHeight: 150 }} />
             </div>
             {this.renderDropzoneInner()}
           </div>

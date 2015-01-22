@@ -27,9 +27,9 @@ var RelatedIdeaTile = React.createClass({
     var user = idea.user;
     return (
       <div className="bg-white shadow rounded p2">
-        <h4 className="mb2 mt0" style={{ fontWeight: 'normal' }}>
+        <h5 className="mb2 mt0" style={{ fontWeight: 'normal' }}>
           <a href={idea.url}>{idea.name}</a>
-        </h4>
+        </h5>
 
         <div className="clearfix">
           <div className="left">

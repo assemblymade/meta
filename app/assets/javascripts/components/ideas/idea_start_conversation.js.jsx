@@ -1,5 +1,6 @@
 var Button = require('../ui/button.js.jsx');
 var CommentActionCreators = require('../../actions/comment_action_creators');
+var Drawer = require('../ui/drawer.js.jsx');
 var Icon = require('../ui/icon.js.jsx');
 var IdeaActionCreators = require('../../actions/idea_action_creators');
 var IdeaContainer = require('./idea_container.js.jsx');
@@ -7,7 +8,6 @@ var IdeaStore = require('../../stores/idea_store');
 var Lightbox = require('../lightbox.js.jsx');
 var NewComment = require('../news_feed/new_comment.js.jsx');
 var NewCommentStore = require('../../stores/new_comment_store');
-var StartConversationModalActionCreators = require('../../actions/start_conversation_modal_action_creators');
 var Routes = require('../../routes');
 var UserStore = require('../../stores/user_store');
 
@@ -32,9 +32,18 @@ var IdeaStartConversation = React.createClass({
   getInitialState() {
     return {
       idea: IdeaStore.getIdea(),
+      isDrawerOpen: false,
       question: '',
-      showWarning: false
+      showWarning: true
     };
+  },
+
+  handleHowItWorksClick(e) {
+    e.preventDefault();
+
+    this.setState({
+      isDrawerOpen: !this.state.isDrawerOpen
+    });
   },
 
   onBackClick(e) {
@@ -64,25 +73,21 @@ var IdeaStartConversation = React.createClass({
   render() {
     var idea = this.state.idea;
     var item = idea.news_feed_item;
-    var placeholder = "Examples: What's the best name for the product?";
+    var placeholder = "";
     var url = Routes.discussion_comments_path({
       discussion_id: item.id
     });
 
-    var placeholder = "Examples: 1. What's the best name for the product? " +
-      "2. What competing products are out there? "
-      "3. What would you change about the idea?";
-
     return (
       <IdeaContainer navigate={this.props.navigate} showRelatedIdeas={false}>
         <div className="clearfix py2">
-          <div className="left px2">
-            <h4 className="mb0 mt0">What's your app idea?</h4>
+          <div className="left ml4">
+            <h4 className="mb0 mt0">Asking a first question gets things going.</h4>
           </div>
 
-          <div className="right px2">
+          <div className="right px4">
             <small className="mt2">
-              <a href="#">
+              <a href="javascript:void(0);" onClick={this.handleHowItWorksClick}>
                 How it works{' '}
                 <span style={{ color: '#fe8100' }}>
                   <Icon icon="question-circle" />
@@ -96,16 +101,39 @@ var IdeaStartConversation = React.createClass({
 
         <form>
           <div className="form-group px4 mb0">
+            <Drawer open={this.state.isDrawerOpen} height={120}>
+              <div className="px3 gray-1">
+                <p className="px3">
+                  After you submit your idea, you'll hash out the specifics of your
+                  project with the Assembly community. Gain enough traction (through
+                  hearts on your idea), and you'll be ready to launch!
+                </p>
+              </div>
+
+              <hr className="mb0 mt0" style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
+            </Drawer>
+
+            <div className="mb3">
+              <p>
+                Examples:
+              </p>
+              <ol>
+                <li>What's the best name for the product?</li>
+                <li>What competing products are out there?</li>
+                <li>What would you change about the idea?</li>
+              </ol>
+            </div>
             <NewComment canContainWork={false}
+              dropzoneInnerText={false}
               hideAvatar={true}
               hideButtons={true}
               onChange={this.validateQuestion}
+              placeholder={placeholder}
               thread={item.id}
               url={url}
               user={UserStore.getUser()} />
+            {this.renderQuestionWarning()}
           </div>
-
-          {this.renderQuestionWarning()}
 
           <hr className="mb0 mt0" style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
 
@@ -117,7 +145,7 @@ var IdeaStartConversation = React.createClass({
             </div>
 
             <div className="right">
-              <Button type="primary" action={this.onPostQuestionClick}>
+              <Button type="primary" action={!this.state.showWarning && this.onPostQuestionClick}>
                 <span className="title">Submit idea</span>
               </Button>
             </div>
@@ -130,14 +158,14 @@ var IdeaStartConversation = React.createClass({
   renderQuestionWarning() {
     if (this.state.showWarning) {
       return (
-        <div className="inline-block px4 mt0 mb1">
+        <div className="inline-block mt0 m1">
           <span className="mr2" style={{ color: '#eb0000' }}><Icon icon="warning" /></span>
           <span className="gray-2">Oops! That doesn't look like a question.</span>
         </div>
       );
     }
 
-    return <div className="inline-block px4 mt0 mb1"><span style={{ height: '100%' }} /></div>;
+    return <div className="inline-block mt0 m1"><span style={{ height: '100%' }} />&nbsp;</div>;
   },
 
   validateQuestion(e) {

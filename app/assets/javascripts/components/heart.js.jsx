@@ -1,10 +1,10 @@
-var LoveStore = require('../../stores/love_store')
-var LoveActionCreators = require('../../actions/love_action_creators')
-var Icon = require('./icon.js.jsx')
-var IconToggler = require('./icon_toggler.js.jsx')
-var IconWithNumber = require('./icon_with_number.js.jsx')
-var SvgIcon = require('./svg_icon.js.jsx');
-var UserStore = require('../../stores/user_store')
+var LoveStore = require('../stores/love_store')
+var LoveActionCreators = require('../actions/love_action_creators')
+var Icon = require('./ui/icon.js.jsx')
+var IconToggler = require('./ui/icon_toggler.js.jsx')
+var IconWithNumber = require('./ui/icon_with_number.js.jsx')
+var SvgIcon = require('./ui/svg_icon.js.jsx');
+var UserStore = require('../stores/user_store')
 
 var Heart = React.createClass({
   propTypes: {
@@ -51,10 +51,10 @@ var Heart = React.createClass({
 
     return (
       <a className="inline-block valign-top mr1 fs6 gray no-focus" href="javascript:void(0);" onClick={this.handleClick}>
-      <div className={classes}>
-      <SvgIcon type="heart" />
-      </div>
-      <span className="mt2 gray-2">{heartsCount > 0 ? heartsCount : null}</span>
+        <div className={classes}>
+          <SvgIcon type="heart" />
+        </div>
+        <span className="mt2 gray-2">{heartsCount > 0 ? heartsCount : null}</span>
       </a>
     );
   },
@@ -68,7 +68,7 @@ var Heart = React.createClass({
 
     return (
       <div className={"pointer heart-circle heart-circle-" + (this.state.user_heart ? 'white' : 'green')} onClick={this.handleClick}>
-      <SvgIcon type="heart" />
+        <SvgIcon type="heart" />
       </div>
     );
   },

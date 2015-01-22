@@ -8,7 +8,7 @@ var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
-var Heart = require('../ui/heart.js.jsx');
+var Heart = require('../heart.js.jsx');
 var LoveStore = require('../../stores/love_store');
 var Markdown = require('../markdown.js.jsx');
 var moment = require('moment');
@@ -330,8 +330,10 @@ var IdeaShow = React.createClass({
         <div className="clearfix">
           <Drawer height={120} open={this.state.isHowItWorksDrawerOpen}>
             <div className="px3 gray-2">
-              {this.renderExplanationHeading()}
-              <p>
+              <div className="px3">
+                {this.renderExplanationHeading()}
+              </div>
+              <p className="px3">
                 Every day we green light the most loved ideas on Assembly.
                 They are then made into real products by you and the community.
                 Share this idea with your friends on Twitter of Facebook to help
