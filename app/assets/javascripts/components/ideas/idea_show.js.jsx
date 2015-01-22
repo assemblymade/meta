@@ -1,5 +1,4 @@
 var Avatar = require('../ui/avatar.js.jsx');
-var BigLove = require('../big_love.js.jsx');
 var Button = require('../ui/button.js.jsx');
 var Drawer = require('../ui/drawer.js.jsx');
 var Icon = require('../ui/icon.js.jsx');
@@ -9,7 +8,7 @@ var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
-var Love = require('../love.js.jsx');
+var Heart = require('../ui/heart.js.jsx');
 var LoveStore = require('../../stores/love_store');
 var Markdown = require('../markdown.js.jsx');
 var moment = require('moment');
@@ -283,7 +282,8 @@ var IdeaShow = React.createClass({
     return [
       <div className="clearfix border-bottom border-2px" key="heart-and-idea">
         <div className="center col col-2 px2">
-          <BigLove
+          <Heart
+            size="large"
             heartable_id={idea.news_feed_item.id}
             heartable_type="NewsFeedItem" />
         </div>

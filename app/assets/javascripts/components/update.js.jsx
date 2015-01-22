@@ -60,7 +60,7 @@ var Update = React.createClass({
         </div>
 
         <div className="px3 py2 border-top border-bottom">
-          <Love heartable_id={this.props.newsFeedItem.id}
+          <Heart size="small" heartable_id={this.props.newsFeedItem.id}
               heartable_type="NewsFeedItem" />
         </div>
 

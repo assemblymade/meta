@@ -5,7 +5,7 @@ var Avatar = require('../ui/avatar.js.jsx');
 var Bounty = require('../bounty.js.jsx')
 var Comment = require('../comment.js.jsx');
 var Discussion = require('../ui/discussion.js.jsx')
-var Icon = require('../ui/icon.js.jsx');
+var Heart = require('../ui/heart.js.jsx');
 var Introduction = require('../introduction.js.jsx')
 var Lightbox = require('../lightbox.js.jsx')
 var Markdown = require('../markdown.js.jsx');
@@ -184,7 +184,7 @@ var NewsFeedItem = React.createClass({
 
   renderLove: function() {
     return <div className="px3 py2 border-top border-bottom">
-      <Love heartable_id={this.props.id} heartable_type="NewsFeedItem" />
+      <Heart size="small" heartable_id={this.props.id} heartable_type="NewsFeedItem" />
     </div>
   },
 

@@ -2,7 +2,7 @@ var AppCoins = require('./app_coins.js.jsx');
 var BountyActionCreators = require('../actions/bounty_action_creators.js');
 var IconWithNumber = require('./ui/icon_with_number.js.jsx')
 var ListItemMixin = require('../mixins/list_item_mixin.js.jsx');
-var Love = require('./love.js.jsx')
+var Heart = require('./ui/heart.js.jsx')
 var NewsFeedItemBountyModal = require('./news_feed/news_feed_item_bounty_modal.js.jsx');
 
 
@@ -119,7 +119,7 @@ var BountyListItem = React.createClass({
                   <IconWithNumber icon={<Icon icon="comment" />} n={bounty.comments_count} />
                 </div>
                 <div className="left px1 bold">
-                  <Love heartable_id={this.props.bounty.news_feed_item_id} heartable_type="NewsFeedItem" />
+                  <Heart size="small" heartable_id={this.props.bounty.news_feed_item_id} heartable_type="NewsFeedItem" />
                 </div>
                 <div className="left px1">
                   {this.renderTags(bounty.tags)}

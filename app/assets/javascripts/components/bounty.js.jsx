@@ -4,7 +4,7 @@ var BountyStore = require('../stores/bounty_store');
 var Button = require('./ui/button.js.jsx')
 var formatShortTime = require('../lib/format_short_time.js');
 var Icon = require('./ui/icon.js.jsx');
-var Love = require('./love.js.jsx');
+var Heart = require('./ui/heart.js.jsx');
 var Trackable = require('./trackable.js.jsx')
 var routes = require('../routes')
 var SubscriptionsStore = require('../stores/subscriptions_store')
@@ -266,7 +266,7 @@ var Bounty = React.createClass({
     if (this.props.item) {
       return (
         <div className="px4 py2 mb0 mt0 border-top">
-          <Love heartable_id={this.props.item.id} heartable_type="NewsFeedItem" />
+          <Heart size="small" heartable_id={this.props.item.id} heartable_type="NewsFeedItem" />
         </div>
       );
     }

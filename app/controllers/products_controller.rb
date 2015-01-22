@@ -110,7 +110,7 @@ class ProductsController < ProductController
       end
     end
 
-    @heartables = (@news_feed_items + @news_feed_items.map{|p| p[:last_comment]})
+    @heartables = (@news_feed_items + @news_feed_items.map{|p| p[:last_comment]}).compact
 
     if signed_in?
       @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['id']})

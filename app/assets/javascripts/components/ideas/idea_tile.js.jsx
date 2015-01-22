@@ -3,7 +3,7 @@ var Drawer = require('../ui/drawer.js.jsx');
 var Footer = require('../ui/footer.js.jsx');
 var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
-var Love = require('../love.js.jsx');
+var Heart = require('../ui/heart.js.jsx');
 var ProgressBar = require('../ui/progress_bar.js.jsx');
 var Share = require('../ui/share.js.jsx');
 var SmallTile = require('../ui/small_tile.js.jsx');
@@ -92,7 +92,7 @@ var Idea = React.createClass({
                   </div>
 
                   <div className="item">
-                    <Love heartable_id={item.id} heartable_type="NewsFeedItem" />
+                    <Heart size="medium" heartable_id={item.id} heartable_type="NewsFeedItem" />
                   </div>
                 </div>
               </div>

@@ -4,7 +4,7 @@
 
 var Avatar = require('../ui/avatar.js.jsx')
 var Markdown = require('../markdown.js.jsx')
-var Love = require('../love.js.jsx')
+var Heart = require('../ui/heart.js.jsx')
 
 module.exports = React.createClass({
   displayName: 'IdeaComment',
@@ -43,7 +43,7 @@ module.exports = React.createClass({
                   </a>
                 </li>
                 <li>
-                  <Love heartable_id={this.props.id} heartable_type="NewsFeedItemComment" />
+                  <Heart size="small" heartable_id={this.props.id} heartable_type="NewsFeedItemComment" />
                 </li>
               </ul>
             </div>

@@ -23,7 +23,7 @@ var ListItemMixin = {
 
     return (
       <div className="px3 py2 border-top mb0 mt0">
-        <Love heartable_type='NewsFeedItem' heartable_id={heartableId} />
+        <Heart size="small" heartable_type='NewsFeedItem' heartable_id={heartableId} />
       </div>
     )
   },
