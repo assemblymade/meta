@@ -1,6 +1,7 @@
 var Avatar = require('../ui/avatar.js.jsx');
 var Button = require('../ui/button.js.jsx');
 var Drawer = require('../ui/drawer.js.jsx');
+var Heart = require('../heart.js.jsx');
 var Icon = require('../ui/icon.js.jsx');
 var IdeaContainer = require('./idea_container.js.jsx');
 var IdeaLovers = require('./idea_lovers.js.jsx');
@@ -8,7 +9,6 @@ var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
-var Heart = require('../heart.js.jsx');
 var IdeaSharePanelStore = require('../../stores/idea_share_panel_store');
 var Markdown = require('../markdown.js.jsx');
 var moment = require('moment');
