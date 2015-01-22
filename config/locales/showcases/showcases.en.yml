@@ -1,0 +1,11 @@
+en:
+  showcases:
+    saas:
+      name: SaaS
+      hero_title: SaaS Products
+      description: Charge businesses by the month!
+
+    mobile:
+      name: Mobile
+      hero_title: Mobile Apps
+      description: Like angry birds

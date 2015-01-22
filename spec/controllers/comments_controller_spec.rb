@@ -2,22 +2,46 @@ require 'spec_helper'
 
 describe CommentsController do
   let(:user) { User.make! }
-  let(:product) { Product.make!(user: user, state: 'team_building') }
-  let(:wip) { Task.make!(user: user, product: product) }
-  let(:watcher) { User.make! }
+  let(:discussion) { NewsFeedItem.make! }
 
-  describe '#create' do
+  describe 'index' do
     before do
-      sign_in user
-
-      wip.save!
-      wip.watch! watcher
+      discussion.comments.create(user: user, body: 'oh hay')
     end
 
-    it "assigns event" do
-      post :create, product_id: product.slug, wip_id: wip.number, event_comment: { body: 'oh hai!', type: Event::Comment.to_s }
+    it 'returns comments' do
+      get :index, discussion_id: discussion.id, format: :json
 
-      expect(assigns(:event)).to be_a(Event)
+      body = JSON.parse(response.body)
+      expect(body["comments"].count).to eq(1)
     end
   end
+
+  describe 'create' do
+    before do
+      sign_in user
+    end
+
+    it 'persists' do
+      post :create, discussion_id: discussion.id, body: 'i like to move it move it', format: :json
+
+      expect(assigns(:comment).body).to eq('i like to move it move it')
+    end
+  end
+
+  describe 'update' do
+    let!(:comment) { discussion.comments.create!(user: user, body: 'oh hay') }
+
+    before do
+      sign_in user
+    end
+
+    it "updates a comment" do
+      patch :update, discussion_id: discussion.id, id: comment.id, comment: { body: "rabble rabble" }, format: :json
+
+      body = JSON.parse(response.body)
+      expect(body["markdown_body"]).to eq("<p>rabble rabble</p>")
+    end
+  end
+
 end

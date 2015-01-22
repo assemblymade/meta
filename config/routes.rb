@@ -43,8 +43,6 @@ ASM::Application.routes.draw do
   get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
-  get '/interests'        => 'pages#interests',   as: :interests
-  get '/suggestions'      => 'pages#suggestions', as: :suggestions
 
   # Readraptor proxy. Remove this when javascript clients can talk directly to RR
   get '/_rr/articles/:id' => 'readraptor#show', as: :readraptor_article
@@ -54,8 +52,13 @@ ASM::Application.routes.draw do
 
   get '/styleguide' => 'pages#styleguide'
 
+  resources :apps, only: [:index] do
+  end
+
   resources :ideas do
-    resources :idea_comments, only: [:index, :create], as: :comments, path: 'comments'
+    get '/start-conversation', on: :member, action: :start_conversation
+    get '/admin', on: :member, action: :admin
+    patch '/admin', on: :member, action: :admin_update
     patch :mark
   end
 
@@ -142,6 +145,7 @@ ASM::Application.routes.draw do
   post 'heartables/love', as: :love
   post 'heartables/unlove', as: :unlove
   get  'heartables/hearts'
+  get  'heartables/:heartable_id/lovers', controller: :heartables, action: :lovers, as: :heartables_lovers
 
   resources :stories, only: [:show]
 
@@ -277,6 +281,10 @@ ASM::Application.routes.draw do
 
   # FIXME: Fix news_feed_items_controller to allow missing product
   get '/news_feed_items' => 'dashboard#news_feed_items'
+
+  resources :discussions, only: [] do
+    resources :comments, only: [:index, :create, :update]
+  end
 
   resource :user, only: [:update]
 

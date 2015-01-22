@@ -17,15 +17,21 @@ var USER_SEARCH_REGEX = /(^|\s)@(\w+)$/
  * way to pass data in?
  */
 
-var NewsFeedItemNewComment = React.createClass({
+var NewComment = React.createClass({
   displayName: 'NewComment',
 
   propTypes: {
     canContainWork: React.PropTypes.bool,
     commentId: _dependsOn('initialText', 'string'),
+    dropzoneInnerText: React.PropTypes.oneOfType([
+      React.PropTypes.bool, // `false` turns off the inner div
+      React.PropTypes.element,
+      React.PropTypes.string
+    ]),
     hideAvatar: React.PropTypes.bool,
     hideButtons: React.PropTypes.bool,
     initialText: _dependsOn('commentId', 'string'),
+    placeholder: React.PropTypes.string,
     thread: React.PropTypes.string.isRequired,
     url: React.PropTypes.string.isRequired,
     user: React.PropTypes.object
@@ -91,7 +97,9 @@ var NewsFeedItemNewComment = React.createClass({
 
   getDefaultProps: function() {
     return {
-      initialRows: 3,
+      dropzoneInnerText: <span>To attach files, drag & drop here or <a href="javascript:void(0);" id="clickable">select files from your computer</a>&hellip;</span>,
+      initialRows: 4,
+      placeholder: 'Leave your comments',
       user: UserStore.getUser()
     };
   },
@@ -102,10 +110,6 @@ var NewsFeedItemNewComment = React.createClass({
       rows: this.props.initialRows,
       text: this.props.initialText || ''
     };
-  },
-
-  onChange: function(e) {
-    NewCommentActionCreators.updateComment(this.props.thread, e.target.value);
   },
 
   onDragEnter: function(e) {
@@ -128,30 +132,12 @@ var NewsFeedItemNewComment = React.createClass({
     }
   },
 
-  onKeyDown: function(e) {
+  onKeyboardInteraction: function(e) {
     if (this.props.hideButtons) {
       return;
     }
 
-    if ((e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      this.submitComment(e);
-    }
-  },
-
-  onKeyPress: function(e) {
-    if (this.props.hideButtons) {
-      return;
-    }
-
-    if ((e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      this.submitComment(e);
-    }
+    _handleKeyboardInteraction(e, this.submitComment);
   },
 
   render: function() {
@@ -179,24 +165,22 @@ var NewsFeedItemNewComment = React.createClass({
     });
 
     return (
-      <div className="clearfix" style={{ paddingBottom: '2.5rem' }}>
+      <div className="clearfix">
         {this.renderAvatar()}
-        <div className={this.props.hideAvatar ? "mb3" : "mb3 _pl3_5"}>
+        <div className={this.props.hideAvatar ? "" : "_pl3_5"}>
           <div className={dropzoneClasses}>
             <div style={{ position: 'relative' }}>
               <TypeaheadUserTextArea
                   {...this.props}
-                  id="event_comment_body"
-                  ref="textarea"
+                  id={this.props.id || "event_comment_body"}
                   type="text"
                   className={textareaClasses}
-                  onChange={this.onChange}
-                  onKeyDown={this.onKeyDown}
-                  onKeyPress={this.onKeyPress}
+                  onKeyDown={this.onKeyboardInteraction}
+                  onKeyPress={this.onKeyboardInteraction}
                   rows={this.state.rows}
                   defaultValue={this.state.text}
-                  placeholder="Leave your comments"
-                  style={{height: '14.5rem'}} />
+                  placeholder={this.props.placeholder}
+                  style={{ minHeight: 150 }} />
             </div>
             {this.renderDropzoneInner()}
           </div>
@@ -214,7 +198,7 @@ var NewsFeedItemNewComment = React.createClass({
     if (!this.props.initialText) {
       return (
         <div className="left">
-          <Avatar user={window.app.currentUser().attributes} size={30} />
+          <Avatar user={UserStore.getUser()} size={30} />
         </div>
       );
     }
@@ -233,11 +217,10 @@ var NewsFeedItemNewComment = React.createClass({
   },
 
   renderDropzoneInner: function() {
-    if (this.state.rows > 1) {
+    if (this.state.rows > 1 && this.props.dropzoneInnerText) {
       return (
-        <div className="dropzone-inner">
-          To attach files, drag & drop here or
-          {' '}<a href="javascript:void(0);" ref="clickable">select files from your computer</a>&hellip;
+        <div className="dropzone-inner" ref="clickable">
+          {this.props.dropzoneInnerText}
         </div>
       );
     }
@@ -283,8 +266,7 @@ var NewsFeedItemNewComment = React.createClass({
   }
 });
 
-module.exports = NewsFeedItemNewComment;
-window.NewComment = NewsFeedItemNewComment;
+module.exports = window.NewComment = NewComment;
 
 function _dependsOn(dependency, type) {
   return function (props, propName, componentName) {
@@ -304,6 +286,15 @@ function _dependsOn(dependency, type) {
       }
     }
   };
+}
+
+function _handleKeyboardInteraction(e, callback) {
+  if ((e.metaKey || e.ctrlKey || e.altKey) && e.which === ENTER) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    callback(e);
+  }
 }
 
 function _reach(obj, prop) {

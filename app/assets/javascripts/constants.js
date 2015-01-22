@@ -106,6 +106,10 @@
 
     // TODO: move constants into here. 1 Flat namespace will ensure constants don't collide
     ActionTypes: keyMirror({
+      APPS_RECEIVE: null,
+      APPS_RECEIVE_SEARCH_RESULTS: null,
+      APPS_START_SEARCH: null,
+
       ARCHIVED_NEWS_FEED_ITEMS_RECEIVE: null,
 
       ATTACHMENT_FAILED: null,
@@ -137,12 +141,21 @@
 
       DISCUSSION_RECEIVE: null,
 
+      IDEA_RECEIVE: null,
+      IDEA_UPDATED: null,
+
+      IDEAS_RECEIVE: null,
+      IDEAS_ROUTE_CHANGED: null,
+      IDEAS_NEW_IDEA_CREATED: null,
+
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,
       LOVE_RECEIVE_HEARTABLES: null,
       LOVE_RECEIVE_ALL_HEARTS: null,
       LOVE_RECEIVE_RECENT_HEARTS: null,
       LOVE_RECEIVE_USER_HEARTS: null,
+
+      LOVERS_RECEIVE: null,
 
       NEW_COMMENT_UPDATED: null,
 
@@ -158,6 +171,9 @@
 
       NEWS_FEED_RECEIVE_RAW_ITEMS: null,
 
+      PAGINATION_PAGE_CHANGED: null,
+      PAGINATION_TOTAL_PAGES_RECEIVE: null,
+
       PEOPLE_RECEIVE: null,
 
       POSTS_RECEIVE: null,
@@ -172,14 +188,20 @@
       PRODUCT_UNFOLLOW_FAILED: null,
 
       PRODUCTS_RECEIVE: null,
+      PRODUCTS_SEARCH_INVALIDATE: null,
+      PRODUCTS_SEARCH_RECEIVE: null,
 
       PUSHER_INITIALIZED: null,
       PUSHER_PRESENCE_CONNECTED: null,
       PUSHER_USER_ACTION: null,
 
+      RELATED_IDEAS_RECEIVE: null,
+
       RR_RECEIVE_READ_RECEIPTS: null,
 
       STORY_ACKNOWLEDGE_STORIES: null,
+      STORY_MARKING_AS_READ: null,
+      STORY_MARKED_AS_READ: null,
       STORY_RECEIVE_STORIES: null,
 
       SUB_RECEIVE_USER_SUBSCRIPTIONS: null,

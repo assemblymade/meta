@@ -17,7 +17,6 @@ class LoveStore extends Store {
           setHeartables(action.comments);
           setUserHearts(action.userHearts);
           LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
-          this.emitChange()
           break
 
         case ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT:
@@ -27,46 +26,61 @@ class LoveStore extends Store {
             heartable_id: data.comment.id,
             hearts_count: 0
           }
-          this.emitChange()
           break
 
         case ActionTypes.LOVE_RECEIVE_HEARTABLES:
-          _heartables = _.reduce(action.heartables, function(memo, h){ memo[h.heartable_id] = h; return memo }, {})
+          _heartables = _.reduce(
+            action.heartables,
+            function(memo, h) {
+              memo[h.id] = h;
+              return memo
+            },
+            {}
+          );
+
           LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
-          this.emitChange()
           break
 
         case ActionTypes.LOVE_RECEIVE_ALL_HEARTS:
           break
 
         case ActionTypes.LOVE_RECEIVE_USER_HEARTS:
-          _userHearts = _.reduce(action.userHearts, function(memo, h){ memo[h.heartable_id] = h; return memo }, {})
-          this.emitChange()
+          _userHearts = _.reduce(
+            action.userHearts,
+            function(memo, h) {
+              memo[h.heartable_id] = h;
+              return memo
+            },
+            {}
+          );
           break
 
         case ActionTypes.LOVE_CLICKED:
           _heartables[action.heartable_id].hearts_count += 1
           _userHearts[action.heartable_id] = {} // optimistic heart
-          this.emitChange()
           break
 
         case ActionTypes.LOVE_UNCLICKED:
           _heartables[action.heartable_id].hearts_count -= 1
           delete _userHearts[action.heartable_id]
-          this.emitChange()
           break
 
         case ActionTypes.LOVE_RECEIVE_RECENT_HEARTS:
           _(action.recent_hearts).each(function(heart) {
+            if (!_heartables[heart.heartable_id]) {
+              _heartables[heart.heartable_id] = {};
+            }
+
             if (!_heartables[heart.heartable_id].hearts) {
               _heartables[heart.heartable_id].hearts = []
             }
+
             _heartables[heart.heartable_id].hearts.push(heart)
           })
+
           _(action.user_hearts).each(function(heart){
             _userHearts[heart.heartable_id] = heart
           })
-          this.emitChange()
           break
 
         case ActionTypes.WIP_EVENT_CREATED:
@@ -76,7 +90,6 @@ class LoveStore extends Store {
             heartable_id: event.news_feed_item_comment_id,
             hearts_count: 0
           }
-          this.emitChange()
           break
 
         case ActionTypes.NEWS_FEED_RECEIVE_RAW_ITEMS:
@@ -98,7 +111,6 @@ class LoveStore extends Store {
             _userHearts[h.heartable_id] = h
           })
 
-          this.emitChange()
           break
 
         case ActionTypes.CHAT_MESSAGE_RECEIVE_ACTIVITIES:
@@ -110,10 +122,12 @@ class LoveStore extends Store {
             }
           })
           LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
-          this.emitChange()
           break
 
+        default:
+          return
       } // switch
+      this.emitChange()
     }) // register
   }
 

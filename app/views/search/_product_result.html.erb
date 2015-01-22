@@ -17,7 +17,7 @@
       <% end %>
     </strong>
 
-    <h4 class="text-weight-normal" style="margin-top: 5px;">
+    <h4 class="regular" style="margin-top: 5px;">
       <%= sanitize (result.try(:highlight).try(:pitch) ? result.highlight.pitch.join.html_safe : result.pitch), tags: %w(mark) %>
     </h4>
     <% if fragments = result.try(:highlight).try(:sanitized_description) %>

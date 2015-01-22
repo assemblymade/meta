@@ -1,0 +1,33 @@
+.app {
+  min-height: 12rem
+}
+
+.app-title {
+  line-height: 22px;
+}
+
+.app-pitch {
+  line-height: 14px;
+  font-size: 13px;
+  color: $gray-darker;
+}
+
+.big-block-button {
+  display: block;
+  margin: 1rem auto;
+  padding: 3rem 2rem;
+  text-align: center;
+  color:$gray-1;
+  font-size: 1.5rem;
+  background: $gray-5;
+
+  &:hover {
+    background: $gray-4;
+  }
+
+  .h7 {
+    margin-bottom: 0.25rem;
+    font-weight: bold;
+    opacity: 0.3;
+  }
+}

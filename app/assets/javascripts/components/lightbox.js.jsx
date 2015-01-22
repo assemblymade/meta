@@ -1,13 +1,27 @@
 var Lightbox = React.createClass({
   propTypes: {
-    title:                React.PropTypes.any,
-    showControlledOuside: React.PropTypes.bool
+    footer: React.PropTypes.oneOf([
+      React.PropTypes.string,
+      React.PropTypes.element
+    ]),
+    id: React.PropTypes.string,
+    onHidden: React.PropTypes.func,
+    showControlledOuside: React.PropTypes.bool,
+    size: React.PropTypes.string,
+    title: React.PropTypes.oneOf([
+      React.PropTypes.string,
+      React.PropTypes.element
+    ])
   },
 
   getDefaultProps: function() {
     return {
-      size: '',
-      showControlledOuside: false
+      id: 'modal',
+      onHidden: function() {
+        console.warn("No `onHidden()` property supplied to Lightbox");
+      },
+      showControlledOuside: false,
+      size: ''
     }
   },
 
@@ -16,6 +30,11 @@ var Lightbox = React.createClass({
       var modal = $(this.getDOMNode()).modal({ show: true })
       modal.on('hidden.bs.modal', this.props.onHidden)
     }
+  },
+
+  componentWillUnmount: function() {
+    var modal = $(this.getDOMNode()).modal({ show: false });
+    modal.off('hidden.bs.modal', this.props.onHidden);
   },
 
   render: function() {

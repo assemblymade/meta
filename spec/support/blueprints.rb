@@ -70,6 +70,14 @@ Milestone.blueprint do
   wip
 end
 
+Idea.blueprint do
+  user
+  body { Faker::Lorem.paragraphs(2).join }
+  name { Faker::Company.name }
+  news_feed_item { NewsFeedItem.make! }
+  greenlit_at { nil }
+end
+
 Interest.blueprint do
   slug { "interest_#{sn}"}
 end

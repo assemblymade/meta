@@ -1,4 +1,5 @@
 var ArchivedNewsFeedItemsStore = require('../stores/archived_news_feed_items_store')
+var Heart = require('./heart.js.jsx');
 var NewsFeedItemActionCreators = require('../actions/news_feed_item_action_creators')
 var SubscriptionsStore = require('../stores/subscriptions_store')
 var TextPost = require('./ui/text_post.js.jsx')
@@ -60,7 +61,7 @@ var Update = React.createClass({
         </div>
 
         <div className="px3 py2 border-top border-bottom">
-          <Love heartable_id={this.props.newsFeedItem.heartable_id}
+          <Heart size="small" heartable_id={this.props.newsFeedItem.id}
               heartable_type="NewsFeedItem" />
         </div>
 

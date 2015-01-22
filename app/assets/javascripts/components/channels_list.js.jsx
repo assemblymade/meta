@@ -42,7 +42,7 @@
                 isActive = this.props.currentRoom === roomId
 
             var classes = React.addons.classSet({
-              'block clearfix text-white': true,
+              'block clearfix white': true,
               'bold': hasUnread,
               'channel-list-active': isActive
             })

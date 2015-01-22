@@ -5,7 +5,7 @@ class Mark < ActiveRecord::Base
   has_many :markings
   has_many :tasks, :through => :markings, source: :markable, source_type: 'Wip'
   has_many :discussions, :through => :markings
-  has_many :products, :through => :markings
+  has_many :products, :through => :markings, source: :markable, source_type: 'Product'
   has_many :posts, :through => :markings
   has_many :users, through: :markings
   has_many :watchings, :as => :watchable

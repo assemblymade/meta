@@ -5,7 +5,8 @@ var Avatar = require('./ui/avatar.js.jsx');
 var CommentActionCreators = require('../actions/comment_action_creators');
 var CommentStore = require('../stores/comment_store');
 var Icon = require('./ui/icon.js.jsx');
-var Love = require('./love.js.jsx');
+var Heart = require('./heart.js.jsx');
+var Lovers = require('./lovers.js.jsx');
 var Markdown = require('./markdown.js.jsx');
 var NewComment = require('./news_feed/new_comment.js.jsx');
 var NewCommentActionCreators = require('../actions/new_comment_action_creators');
@@ -189,7 +190,7 @@ module.exports = React.createClass({
     if (this.props.heartable) {
       return [
         <div className="_inline-block _mb0_25 _h6 mr1 gray-2">
-          <Love heartable_id={this.props.id} heartable_type='NewsFeedItemComment' />
+          <Heart size="small" heartable_id={this.props.id} heartable_type='NewsFeedItemComment' />
         </div>,
 
         <div className="_inline-block _h6">
@@ -214,7 +215,8 @@ module.exports = React.createClass({
   },
 
   renderTips: function() {
-    if (this.props.author.id === UserStore.getId()) {
+    if (this.props.author.id === UserStore.getId() ||
+        _.isEmpty(ProductStore.getProduct())) {
       return;
     }
 

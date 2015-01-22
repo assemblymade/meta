@@ -1,5 +1,5 @@
 var AppIcon = require('../app_icon.js.jsx')
-var Bounty = require('../bounty.js.jsx')
+var BountyCard = require('../bounty_card.js.jsx')
 var BountiesStore = require('../../stores/bounties_store.js')
 var Nav = require('../nav.js.jsx')
 var NavItem = require('../nav_item.js.jsx')
@@ -7,83 +7,10 @@ var NewsFeedItem = require('../news_feed/news_feed_item.js.jsx')
 var NewsFeedItemsStore = require('../../stores/news_feed_items_store.js')
 var NewsFeedItemsActionCreators = require('../../actions/news_feed_items_action_creators.js')
 var ProductsStore = require('../../stores/products_store.js')
-var ProductChip = require('../product_chip.js.jsx')
 var UserBountiesStore = require('../../stores/user_bounties_store.js')
 var UserStore = require('../../stores/user_store.js')
 var Spinner = require('../spinner.js.jsx')
 var Tile = require('../ui/tile.js.jsx')
-
-var MiniBounty = React.createClass({
-  getDefaultProps: function() {
-    return {
-      locker: true
-    }
-  },
-
-  render: function() {
-    var bounty = this.props.bounty
-    var product = bounty.product
-    var details = null
-
-    if (this.props.locker && bounty.locker) {
-      details = (
-        <div className="mt2 h6 mt0 mb0">
-          <Avatar user={bounty.locker} size={18} style={{ display: 'inline-block' }} />
-          {' '}
-          <a href={bounty.locker.url} className="bold black">
-            {bounty.locker.username}
-          </a>
-          {' '}
-          <span className="gray-2">
-            has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
-          </span>
-        </div>
-      )
-    } else {
-      details = (
-        <div className="mt2">
-          <div className="right h6 mt0 mb0" style={{ marginTop: 3 }}>
-            <div className="ml2 inline gray-3 bold">
-              <Icon icon={"comment"} />
-              <span className="ml1">{bounty.comments_count}</span>
-            </div>
-            <div className="ml2 inline gray-3 bold">
-              <Icon icon={"heart"} />
-              <span className="ml1">{bounty.hearts_count}</span>
-            </div>
-          </div>
-
-          <div className="h6 mt0 mb0">
-            <Avatar user={bounty.user} size={18} style={{ display: 'inline-block' }} />
-            {' '}
-            <a href={bounty.user.url} className="bold black">
-              {bounty.user.username}
-            </a>
-          </div>
-        </div>
-      )
-    }
-
-    return (
-      <div className="mb2">
-        <Tile>
-          <div>
-            <a href={product.url} className="block p2 mt0 mb0 border-bottom">
-              <AppIcon app={product} size={24} style={{ display: 'inline' }} />
-              <span className="h6 mt0 mb0 black bold ml1">{product.name}</span>
-            </a>
-          </div>
-          <div className="p2 mt0 mb0">
-            <a className="block h5 mt0 mb0 fw-500 blue" href={bounty.url}>
-              {bounty.title}
-            </a>
-            {details}
-          </div>
-        </Tile>
-      </div>
-    )
-  }
-})
 
 var DashboardPage = React.createClass({
   getDefaultProps: function() {
@@ -427,9 +354,13 @@ var DashboardPage = React.createClass({
     if (this.state.lockedBounties.length) {
       var lockedBounties = (
         <div className="mb3">
-          <h6 className="gray-3 caps mt2 mb2">Bounties you're working on</h6>
+          <h6 className="gray-3 caps mt2 mb2">Bounties you&#8217;re working on</h6>
           {this.state.lockedBounties.map(function(bounty) {
-            return <MiniBounty bounty={bounty} />
+            return (
+              <div className="mt2">
+                <BountyCard bounty={bounty} showLocker={true} />
+              </div>
+            )
           })}
         </div>
       )
@@ -440,7 +371,11 @@ var DashboardPage = React.createClass({
         <div className="mb3">
           <h6 className="gray-3 caps mt2 mb2">Bounties to review</h6>
           {this.state.reviewingBounties.map(function(bounty) {
-            return <MiniBounty bounty={bounty} locker={false} />
+            return (
+              <div className="mt2">
+                <BountyCard bounty={bounty} />
+              </div>
+            )
           })}
         </div>
       )

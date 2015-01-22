@@ -7,9 +7,6 @@ var Spinner = require('../spinner.js.jsx');
 
 var PostsIndex = React.createClass({
   displayName: 'PostsIndex',
-  propTypes: {
-    initialPosts: React.PropTypes.array.isRequired
-  },
 
   componentDidMount: function() {
     PostsStore.addChangeListener(this.getPosts);
@@ -49,14 +46,13 @@ var PostsIndex = React.createClass({
     }
 
     return {
-      initialPosts: PostsStore.getPosts(product.slug),
       product: product
     };
   },
 
   getInitialState: function() {
     return {
-      posts: this.props.initialPosts
+      posts: PostsStore.getPosts(this.props.product.slug)
     };
   },
 
