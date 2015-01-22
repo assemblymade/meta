@@ -29,6 +29,8 @@ var IdeaShow = React.createClass({
   },
 
   componentDidMount() {
+    window.scrollTo(0, 0);
+
     IdeaStore.addChangeListener(this.onIdeaChange);
     IdeaSharePanelStore.addChangeListener(this.onIdeaSharePanelChange);
   },

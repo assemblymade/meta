@@ -57,6 +57,7 @@ function _getAndDispatch(component, callback) {
     $.getJSON(window.location, { cache: false }).done(callback)
     .done(function(data) {
       NProgress.done()
+
       Dispatcher.dispatch({
         type: ActionTypes.IDEAS_ROUTE_CHANGED,
         component: component,
