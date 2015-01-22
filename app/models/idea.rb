@@ -162,6 +162,8 @@ class Idea < ActiveRecord::Base
       threshold = previous_threshold
     end
 
+    threshold = DEFAULT_TILTING_THRESHOLD if threshold < DEFAULT_TILTING_THRESHOLD
+
     update(tilting_threshold: threshold)
   end
 
