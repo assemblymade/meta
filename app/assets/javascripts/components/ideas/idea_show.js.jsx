@@ -9,7 +9,7 @@ var IdeaSharePanel = require('./idea_share_panel.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
 var Heart = require('../heart.js.jsx');
-var LoveStore = require('../../stores/love_store');
+var IdeaSharePanelStore = require('../../stores/idea_share_panel_store');
 var Markdown = require('../markdown.js.jsx');
 var moment = require('moment');
 var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
@@ -30,12 +30,12 @@ var IdeaShow = React.createClass({
 
   componentDidMount() {
     IdeaStore.addChangeListener(this.onIdeaChange);
-    LoveStore.addChangeListener(this.onLoveChange);
+    IdeaSharePanelStore.addChangeListener(this.onIdeaSharePanelChange);
   },
 
   componentWillUnmount() {
     IdeaStore.removeChangeListener(this.onIdeaChange);
-    LoveStore.removeChangeListener(this.onLoveChange);
+    IdeaSharePanelStore.removeChangeListener(this.onIdeaSharePanelChange);
   },
 
   getInitialState() {
@@ -77,18 +77,10 @@ var IdeaShow = React.createClass({
     });
   },
 
-  onLoveChange() {
-    var idea = this.state.idea;
-    var item = idea && idea.news_feed_item;
-    var heartableId = item && item.id;
-
-    if (heartableId) {
-      var heartable = LoveStore.get(heartableId);
-
-      this.setState({
-        isSocialDrawerOpen: heartable && !!heartable.user_heart
-      });
-    }
+  onIdeaSharePanelChange() {
+    this.setState({
+      isSocialDrawerOpen: IdeaSharePanelStore.isDrawerOpen()
+    });
   },
 
   onRelatedIdeasChange() {
