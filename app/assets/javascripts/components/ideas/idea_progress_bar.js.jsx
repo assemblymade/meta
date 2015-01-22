@@ -17,11 +17,8 @@ var IdeaProgressBar = React.createClass({
     var idea = this.props.idea;
     var heartsCount = idea.hearts_count + (heartsIncOrDec || 0);
     var threshold = idea.tilting_threshold;
-    // the threshold is to the 80% percentile;
-    // we want to show the meter up to the 100% percentile
-    var max = parseInt(threshold * 1.25, 10);
 
-    return (heartsCount / max) * 100;
+    return (heartsCount / threshold) * 100;
   },
 
   componentDidMount() {
@@ -50,7 +47,6 @@ var IdeaProgressBar = React.createClass({
 
     return (
       <ProgressBar progress={progress}
-          threshold={80}
           type={(this.state.heartsCount > idea.tilting_threshold || idea.greenlit_at) ? 'success' : 'gray'} />
     );
   },

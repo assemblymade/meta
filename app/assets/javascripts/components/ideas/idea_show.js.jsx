@@ -108,14 +108,14 @@ var IdeaShow = React.createClass({
 
     return (
       <main role="main">
-        <div className="subnav bg-white py3 px4 md-show lg-show">
-          <div className="clearfix">
-            <div className="px4 left">
+        <div className="subnav bg-white py3 md-show lg-show">
+          <div className="container clearfix">
+            <div className="left">
               <h4 className="mt2 mb2">
                 Band together to build the app ideas people love.
               </h4>
             </div>
-            <div className="px4 right py1">
+            <div className="right py1">
               <Button type="primary" action={navigate.bind(null, '/ideas/new')}>
                 Add your app idea
               </Button>
@@ -296,7 +296,7 @@ var IdeaShow = React.createClass({
           </span>
 
           <small className="left gray-2 bold mt1 mb1">
-            {idea.hearts_count} {idea.hearts_count === 1 ? 'heart' : 'hearts'}
+            {idea.hearts_count} / {idea.tilting_threshold} hearts
           </small>
 
           <div className="clearfix mt3 mb1 py1 mr2">
@@ -318,10 +318,9 @@ var IdeaShow = React.createClass({
                 {this.renderExplanationHeading()}
               </div>
               <p className="px3">
-                Every day we green light the most loved ideas on Assembly.
-                They are then made into real products by you and the community.
-                Share this idea with your friends on Twitter of Facebook to help
-                greenlight it.
+                Every day we greenlight the most loved ideas on Assembly.
+                Then the community has the opportunity to build this idea into
+                a product &mdash; together.
               </p>
             </div>
           </Drawer>

@@ -199,7 +199,9 @@ var NewsFeedItemComments = React.createClass({
     return (
       <div>
         {this.renderComments()}
-        {this.renderNewCommentForm()}
+        <div className="py3">
+          {this.renderNewCommentForm()}
+        </div>
       </div>
     );
   },
