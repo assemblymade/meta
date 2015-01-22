@@ -103,7 +103,6 @@ var IdeaShow = React.createClass({
     }
 
     var navigate = this.props.navigate;
-    var shareMessage = 'We need help with ' + idea.name + '! via @asm';
 
     return (
       <main role="main">
@@ -124,13 +123,6 @@ var IdeaShow = React.createClass({
 
         <IdeaContainer navigate={navigate}>
           {this.renderHeader()}
-
-          <div className="mxn3">
-            <Drawer open={this.state.isSocialDrawerOpen} height={150}>
-              <IdeaSharePanel idea={idea} size="large" message={shareMessage} />
-            </Drawer>
-          </div>
-
           {this.renderBody()}
         </IdeaContainer>
       </main>
@@ -144,11 +136,9 @@ var IdeaShow = React.createClass({
       var idea = this.state.idea;
 
       return (
-        <div className="border-2px clearfix">
-          <div className="py2 px4 right">
-            <a href={idea.url + '/admin'}>Admin</a>
-          </div>
-        </div>
+        <span className="right mt1">
+          <a href={idea.url + '/admin'}>Admin</a>
+        </span>
       )
     }
   },
@@ -170,6 +160,7 @@ var IdeaShow = React.createClass({
             <span className="left mr1"><Avatar user={user} /></span>
             <span className="bold">{user.username}</span>{' '}
             <span className="gray-2">posted {moment(idea.created_at).fromNow()}</span>
+            {this.renderAdminRow()}
           </div>
         </div>
 
@@ -286,10 +277,9 @@ var IdeaShow = React.createClass({
 
   renderHeader() {
     var idea = this.state.idea;
+    var shareMessage = 'We need help with ' + idea.name + '! via @asm';
 
     return [
-      this.renderAdminRow(),
-
       <div className="clearfix border-bottom border-2px" key="heart-and-idea">
         <div className="center col col-2 px2">
           <Heart
@@ -332,6 +322,12 @@ var IdeaShow = React.createClass({
                 greenlight it.
               </p>
             </div>
+          </Drawer>
+        </div>
+
+        <div className="clearfix">
+          <Drawer open={this.state.isSocialDrawerOpen} height={140}>
+            <IdeaSharePanel idea={idea} size="large" message={shareMessage} />
           </Drawer>
         </div>
       </div>,

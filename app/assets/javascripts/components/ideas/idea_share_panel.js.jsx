@@ -54,7 +54,7 @@ var IdeaSharePanel = React.createClass({
   getInitialState() {
     return {
       copyIcon: 'link',
-      copyText: this.shortUrl().substr(0, 35) + '...',
+      copyText: this.shortUrl().substr(0, 30) + '...',
       shortUrl: this.shortUrl()
     };
   },
@@ -106,30 +106,30 @@ var IdeaSharePanel = React.createClass({
 
   large() {
     return (
-      <div className="clearfix bg-gray-6 py1">
+      <div className="clearfix border-top">
         <div className="px4" key="share-text">
           {this.renderText()}
         </div>
 
         <div className="clearfix px4" key="share-buttons">
           <div className="left" key="social-buttons">
-            <a href="javascript:void(0);" onClick={this.handleTwitterClick} key="twitter-button">
-              <CircleIcon icon="twitter" />
+            <a href="javascript:void(0);" className="mr1" onClick={this.handleTwitterClick} key="twitter-button">
+              <CircleIcon icon="twitter" margin={5} />
               <span className="bold" style={{ color: '#4099FF' }}>Tweet</span>
             </a>
 
-            <a href="javascript:void(0);" onClick={this.handleFacebookClick} key="facebook-button">
-              <CircleIcon icon="facebook" />
+            <a href="javascript:void(0);" className="mr1" onClick={this.handleFacebookClick} key="facebook-button">
+              <CircleIcon icon="facebook" margin={5} />
               <span className="bold" style={{ color: '#3b5998' }}>Share</span>
             </a>
 
-            <a href="javascript:void(0);" onClick={this.handleGooglePlusClick} key="google-button">
-              <CircleIcon icon="google-plus" />
+            <a href="javascript:void(0);" className="mr1" onClick={this.handleGooglePlusClick} key="google-button">
+              <CircleIcon icon="google-plus" margin={5} />
               <span className="bold" style={{ color: '#d34836' }}>Plus</span>
             </a>
           </div>
 
-          <div className="right gray-2 mt2" key="link-button">
+          <div className="right gray-2 mt1" key="link-button">
             <a href="javascript:void(0);" className="gray-2" onClick={this.handleCopyClick} ref="copy">
               <Icon icon="link" /> {this.state.copyText}
             </a>
@@ -148,7 +148,7 @@ var IdeaSharePanel = React.createClass({
 
     if (idea.hearts_count >= idea.tilting_threshold || idea.greenlit_at) {
       return [
-        <h5 className="mb1 mt0 gray-2 green" key="explanation-heading">
+        <h5 className="mb1 mt1 gray-2 green" key="explanation-heading">
           Turn on the greenlight!
         </h5>,
 
@@ -160,7 +160,7 @@ var IdeaSharePanel = React.createClass({
     }
 
     return [
-      <h5 className="mb1 mt0 gray-2" key="explanation-heading">
+      <h5 className="mb1 mt1 gray-2" key="explanation-heading">
         We're almost there! Tell your friends to help greenlight this idea.
       </h5>,
 

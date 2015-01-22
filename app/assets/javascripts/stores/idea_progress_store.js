@@ -32,7 +32,7 @@ class IdeaProgressStore extends Store {
 module.exports = new IdeaProgressStore()
 
 function _decrementIdeaProgress(heartableId) {
-  currentIdeaProgress[heartableId] = -INCREMENT;
+  currentIdeaProgress[heartableId] = 0;
 }
 
 function _incrementIdeaProgress(heartableId) {
