@@ -5,7 +5,8 @@ module MarkdownHelper
     TextFilters::MarkdownFilter,
     HTML::Pipeline::SanitizationFilter,
     TextFilters::ImgThumbnailFilter,
-    TextFilters::UserMentionFilter
+    TextFilters::UserMentionFilter,
+    TextFilters::NoFollowLinksFilter
   ]
 
   PRODUCT_FILTERS = [
@@ -15,6 +16,7 @@ module MarkdownHelper
     TextFilters::AssetInlineFilter,
     TextFilters::ImgThumbnailFilter,
     HTML::Pipeline::EmojiFilter,
+    TextFilters::NoFollowLinksFilter
   ]
 
   def markdown(text)
