@@ -45,7 +45,7 @@ var Idea = React.createClass({
     var user = idea.user;
 
     return (
-      <div className="item">
+      <div className="item" key={idea.id}>
         <SmallTile>
           <div className="main">
             <div className="xh4">

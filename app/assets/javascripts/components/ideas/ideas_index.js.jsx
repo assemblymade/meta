@@ -65,45 +65,45 @@ var IdeasIndex = React.createClass({
                   <ul className="nav nav-pills">
                     {this.renderMyIdeas()}
 
-                    <li>
+                    <li key="filter-trending">
                       <a href="/ideas?filter=trending"
                         onClick={navigate.bind(null, '/ideas?filter=trending')}>
                         Trending
                       </a>
                     </li>
 
-                    <li>
+                    <li key="filter-newness">
                       <a href="/ideas?sort=newness"
                         onClick={navigate.bind(null, '/ideas?sort=newness')}>
                         New
                       </a>
                     </li>
 
-                    <li>
+                    <li key="filter-greenlit">
                       <a href="/ideas?filter=greenlit"
                         onClick={navigate.bind(null, '/ideas?filter=greenlit')}>
                         Greenlit
                       </a>
                     </li>
 
-                    <li className="dropdown">
+                    <li className="dropdown" key="filter-dropdown">
                       <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
                         Topics <span className="caret"></span>
                       </a>
                       <ul className="dropdown-menu" role="menu">
-                        <li>
+                        <li key="dropdown-design">
                           <a href="/ideas?mark=design"
                             onClick={navigate.bind(null, '/ideas?mark=design')}>
                             Design
                           </a>
                         </li>
-                        <li>
+                        <li key="dropdown-saas">
                           <a href="/ideas?mark=saas"
                             onClick={navigate.bind(null, '/ideas?mark=saas')}>
                             SaaS
                           </a>
                         </li>
-                        <li>
+                        <li key="dropdown-b2b">
                           <a href="/ideas?mark=b2b"
                             onClick={navigate.bind(null, '/ideas?mark=b2b')}>
                             B2B
@@ -114,7 +114,7 @@ var IdeasIndex = React.createClass({
                   </ul>
                 </div>
               </nav>
-              <div className="main">
+              <div className="main" key="main-ideas">
                 <div className="grid fixed-small" style={ideasGridStyle}>
                   {this.renderIdeas()}
                 </div>
@@ -136,16 +136,16 @@ var IdeasIndex = React.createClass({
     return (
       <section className="_hero hero-ideas" key="ideas-header">
         <div className="container">
-          <div className="header">
+          <div className="header" key="hero-header">
             <img src="../assets/ideas/ideas-header-morse.png" />
           </div>
-          <div className="main">
+          <div className="main" key="hero-main">
             <h1>
               The best product ideas &mdash; built by all of us.
             </h1>
             <Button type="primary" action={this.props.navigate.bind(null, '/ideas/new')}>Add your product idea</Button>
           </div>
-          <div className="footer">
+          <div className="footer" key="hero-footer">
             <p>
               Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea &mdash; ready to be built on Assembly.
             </p>
@@ -163,8 +163,8 @@ var IdeasIndex = React.createClass({
     var IdeaFactory = React.createFactory(IdeaTile);
 
     if (ideas.length) {
-      return ideas.map(function(idea) {
-        return IdeaFactory({ idea: idea });
+      return ideas.map((idea) => {
+        return IdeaFactory({ idea: idea, key: idea.id });
       });
     }
   },
