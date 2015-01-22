@@ -16,7 +16,7 @@ var Governance = React.createClass({
   render: function() {
     return (
       <div>
-        <div className="col-xs-8 r768_pr0">
+        <div className="py2 col-xs-8 r768_pr0">
           <ProposalList proposals={this.props.product.proposals} product={this.props.product} />
         </div>
 
@@ -32,12 +32,15 @@ var Governance = React.createClass({
 
   renderText: function() {
     return (
-      <div className="h3 mb1 mt0" style={{ paddingTop: '1rem' }}>
+      <div className="h4 center px3 py3" style={{ paddingTop: '1rem' }}>
         <div className="black">
           Create a New Proposal
         </div>
-        <div className="px3">
+        <div className="px3 py3">
           <button className = "btn btn-info">Vesting Contract</button>
+        </div>
+        <div className="px3 py3">
+          <button className = "btn">Others Coming Soon</button>
         </div>
       </div>
     );

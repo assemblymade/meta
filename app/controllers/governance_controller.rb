@@ -7,6 +7,15 @@ class GovernanceController < ProductController
   def index
     find_product!
     @proposals = Proposal.where(product: @product)
+
+    @heartables = Heart.store_data(@proposals.map(&:news_feed_item))
+
+    if signed_in?
+      @user_hearts = Heart.where(
+        user: current_user,
+        heartable_id: @heartables.map{ |h| h['heartable_id'] }
+      )
+    end
   end
 
   def create

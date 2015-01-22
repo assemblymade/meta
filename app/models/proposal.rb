@@ -73,7 +73,7 @@ class Proposal < ActiveRecord::Base
   end
 
   def status
-    "#{(self.vote_ratio.to_f*100).round(0)}"
+    (self.vote_ratio.to_f*100).round(0)
   end
 
   def user_vote_status(user)

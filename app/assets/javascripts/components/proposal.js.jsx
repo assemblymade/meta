@@ -11,12 +11,14 @@ var Proposal = React.createClass({
   propTypes: {
     newsFeedItem: React.PropTypes.object,
     user: React.PropTypes.object,
-    proposal: React.PropTypes.object
+    proposal: React.PropTypes.object,
+    user_vote_state: React.PropTypes.bool
   },
 
   getInitialState: function() {
     return {
-      approved: true
+      approved: this.props.user_vote_state,
+      percent: this.props.proposal.status
     };
   },
 
@@ -31,12 +33,18 @@ var Proposal = React.createClass({
   renderSubmit: function() {
     var text = this.state.approved ? 'Unvote' : 'Approve'
     var css = this.state.approved ? 'btn btn-danger' : 'btn btn-success'
-    this.state.approved = !this.state.approved
 
     return (
       <button className = {css} onClick={this.toggle_vote}>
       {text}
     </button>
+    )
+  },
+
+  renderAgreements: function() {
+    return (
+      <div>
+      </div>
     )
   },
 
@@ -59,7 +67,7 @@ var Proposal = React.createClass({
             </div>
 
             <div className="col-md-4" style = {progress_style} >
-              <ProgressBar percent={this.props.proposal.status} style = {my_style} />
+              <ProgressBar percent={this.state.percent} style = {my_style} />
                 <div className = "col-md-offset-3">
                   {this.renderSubmit()}
                 </div>
@@ -81,21 +89,22 @@ var Proposal = React.createClass({
 
     toggle_vote: function(e) {
       e.preventDefault()
-      if (this.state.approved) {
-        weight = 1.0
-      }
-      else {
-        weight = 0.0
-      }
 
-      var choicedata = {proposal: this.props.proposal.id,voter: this.props.user.id, weight: weight}
+      var choicedata = {proposal: this.props.proposal.id}
+
+      var proposalComponent = this
       $.ajax({
         method: 'POST',
         url: "/choices",
         json: true,
-        data: { body: choicedata }
-      });
-      }
+        data: choicedata,
+      success: function(data) {
+        proposalComponent.setState({percent: data.progress, approved: data.approved})
+        console.log(data.progress)
+      }});
+
+
+    }
 
   });
 

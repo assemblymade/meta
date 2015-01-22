@@ -20,14 +20,18 @@ var ProposalListIem = React.createClass({
     return (
       <div className="bg-white rounded shadow mb2">
         <div className="px3">
-          {this.renderTitle()}
-          {this.renderSummary()}
-          <div className = "col-md-4 col-md-offset-8">
-            <div className = "row">
-              {this.renderProgress()}
+          <div className="row">
+            <div className="col-md-7">
+              {this.renderTitle()}
+              {this.renderSummary()}
             </div>
-            <div className = "row">
-              {this.vote_state()}
+            <div className="col-md-5">
+              <div className = "row py3">
+                {this.renderProgress()}
+              </div>
+              <div className = "row">
+                {this.vote_state()}
+              </div>
             </div>
           </div>
         </div>
