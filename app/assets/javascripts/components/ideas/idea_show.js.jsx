@@ -115,7 +115,7 @@ var IdeaShow = React.createClass({
 
     return (
       <main role="main">
-        <div className="subnav bg-white p3">
+        <div className="subnav bg-white py3 px4 md-show lg-show">
           <div className="clearfix">
             <div className="px4 left">
               <h4 className="mt2 mb2">

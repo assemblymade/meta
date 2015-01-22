@@ -35,7 +35,7 @@ var RelatedIdeaTile = React.createClass({
           <div className="left">
             <a href={user.url} className="clearfix">
               <span className="left mr2"><Avatar user={user} /></span>
-              <span className="black bold right">{this.renderUsername()}</span>
+              <span className="black bold right">{user.username}</span>
             </a>
           </div>
 
@@ -51,16 +51,6 @@ var RelatedIdeaTile = React.createClass({
         </div>
       </div>
     );
-  },
-
-  renderUsername() {
-    var user = this.props.idea.user;
-
-    if (this.state.currentUserId === user.id) {
-      return 'you';
-    }
-
-    return user.username;
   }
 });
 

@@ -63,7 +63,7 @@ var Idea = React.createClass({
                 <div className="details-group">
                   <a href={user.url} className="inline-block">
                     <Avatar user={user} />
-                    <span>{this.renderUsername()}</span>
+                    <span>{user.username}</span>
                   </a>
                 </div>
               </div>
@@ -105,16 +105,6 @@ var Idea = React.createClass({
         </SmallTile>
       </div>
     );
-  },
-
-  renderUsername() {
-    var user = this.props.idea.user;
-
-    if (this.state.currentUserId === user.id) {
-      return 'you';
-    }
-
-    return user.username;
   }
 });
 
