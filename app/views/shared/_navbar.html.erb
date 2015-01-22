@@ -29,7 +29,7 @@
 
         <% if current_user.try(:staff?) %>
           <li class="<%= nav_active_class(:ideas) %>">
-            <a href="<%= ideas_path %>">Fresh Ideas</a>
+            <a href="<%= ideas_path %>">Ideas</a>
           </li>
         <% end %>
 
