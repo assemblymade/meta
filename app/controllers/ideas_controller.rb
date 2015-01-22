@@ -129,7 +129,7 @@ class IdeasController < ProductController
   end
 
   def idea_params
-    params.require(:idea).permit([:name, :body, :founder_preference])
+    params.require(:idea).permit([:name, :body, :founder_preference, :flagged_at])
   end
 
   def filter_params

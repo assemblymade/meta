@@ -1,5 +1,6 @@
 var IdeaContainer = require('./idea_container.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
+var IdeaActionCreators = require('../../actions/idea_action_creators.js');
 
 var TOPICS = [
   "Productivity & Tools",
@@ -61,6 +62,7 @@ var IdeaAdmin = React.createClass({
           <h5>Topics</h5>
           <div className="clearfix">
             {this.renderTopics()}
+            {this.renderFlag()}
           </div>
         </div>
       </IdeaContainer>
@@ -83,6 +85,31 @@ var IdeaAdmin = React.createClass({
         </div>
       );
     });
+  },
+
+  renderFlag() {
+    var idea = this.state.idea;
+
+    var click = function(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      if (idea.flagged_at) {
+        idea.flagged_at = null
+      } else {
+        idea.flagged_at = new Date()
+      }
+
+      IdeaActionCreators.updateIdeaClicked(idea);
+    }
+
+    return (
+      <div className="form-group mt2">
+        <button className="button button-default" onClick={click}>
+          {idea.flagged_at ? 'Unflag' : 'Flag'}
+        </button>
+      </div>
+    )
   }
 });
 
