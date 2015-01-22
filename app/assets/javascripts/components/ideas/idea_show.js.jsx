@@ -148,7 +148,7 @@ var IdeaShow = React.createClass({
   renderAdminRow() {
     var currentUser = UserStore.getUser();
 
-    if (currentUser.is_staff) {
+    if (currentUser && currentUser.is_staff) {
       var idea = this.state.idea;
 
       return (

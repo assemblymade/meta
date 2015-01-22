@@ -48,15 +48,13 @@ var Idea = React.createClass({
       <div className="item">
         <SmallTile>
           <div className="main">
-            <a href={idea.url}>
-              <div className="xh4">
-                {idea.name}
-              </div>
+            <div className="xh4">
+              <a href={idea.url}> {idea.name}</a>
+            </div>
 
-              <div className="content">
-                <p dangerouslySetInnerHTML={{ __html: idea.short_body }} />
-              </div>
-            </a>
+            <div className="content">
+              <p dangerouslySetInnerHTML={{ __html: idea.short_body }} />
+            </div>
           </div>
 
           <Footer>
