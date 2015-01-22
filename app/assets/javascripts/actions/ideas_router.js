@@ -5,14 +5,22 @@ var ideasRoutes = require('../routes/ideas_routes')
 var NProgress = require('nprogress')
 var page = require('page')
 var qs = require('qs')
+var url = require('url');
 
 class IdeasRouter {
   constructor(routes) {
     page('*', _parse);
 
     routes.forEach(_route)
+  }
 
+  initialize() {
     page.start()
+
+    // The router will have fired before the component mounted, so we need
+    // to call `navigate` after mounting
+    var parsedUrl = url.parse(window.location.toString());
+    this.navigate(parsedUrl.path);
   }
 
   navigate(url, e) {

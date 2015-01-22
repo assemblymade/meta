@@ -6,6 +6,7 @@ var routes = [
   ['/ideas', require('../components/ideas/ideas_index.js.jsx'), _showIdeas],
   ['/ideas/new', require('../components/ideas/ideas_new.js.jsx'), _showCreateIdea],
   ['/ideas/:id', require('../components/ideas/idea_show.js.jsx'), _showIdea],
+  ['/ideas/:id/admin', require('../components/ideas/idea_admin.js.jsx'), _showIdeaAdmin],
   ['/ideas/:id/edit', require('../components/ideas/idea_edit.js.jsx'), _showEditIdea],
   ['/ideas/:id/start-conversation', require('../components/ideas/idea_start_conversation.js.jsx'), _showStartConversation],
 ];
@@ -20,6 +21,13 @@ function _showCreateIdea(data) {
 }
 
 function _showEditIdea(idea) {
+  Dispatcher.dispatch({
+    type: ActionTypes.IDEA_RECEIVE,
+    idea: idea
+  });
+}
+
+function _showIdeaAdmin(idea) {
   Dispatcher.dispatch({
     type: ActionTypes.IDEA_RECEIVE,
     idea: idea

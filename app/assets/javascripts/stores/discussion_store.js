@@ -70,13 +70,13 @@ function confirmComment(data) {
     }
   }
 
-  var optimisticComment = data.comment;
-
-  if (optimisticComment) {
+  var confirmedComment = data.comment;
+  console.log(confirmedComment);
+  if (confirmedComment) {
     if (_comments.confirmed[thread]) {
-      _comments.confirmed[thread].push(optimisticComment);
+      _comments.confirmed[thread].push(confirmedComment);
     } else {
-      _comments.confirmed[thread] = [optimisticComment];
+      _comments.confirmed[thread] = [confirmedComment];
     }
   }
 }

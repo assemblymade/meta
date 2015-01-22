@@ -57,6 +57,8 @@ ASM::Application.routes.draw do
 
   resources :ideas do
     get '/start-conversation', on: :member, action: :start_conversation
+    get '/admin', on: :member, action: :admin
+    patch '/admin', on: :member, action: :admin_update
     patch :mark
   end
 

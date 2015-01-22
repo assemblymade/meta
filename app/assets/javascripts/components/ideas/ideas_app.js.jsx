@@ -6,12 +6,7 @@ var url = require('url');
 var IdeasApp = React.createClass({
   componentDidMount() {
     IdeasRoutesStore.addChangeListener(this.getComponentAndContext);
-
-    // The router will have fired before the component mounted, so we need
-    // to call `navigate` after mounting
-
-    var parsedUrl = url.parse(window.location.toString());
-    IdeasRouter.navigate(parsedUrl.path);
+    IdeasRouter.initialize();
   },
 
   componentWillUnmount() {

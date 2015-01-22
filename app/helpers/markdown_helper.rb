@@ -4,13 +4,13 @@ module MarkdownHelper
   DEFAULT_FILTERS = [
     TextFilters::MarkdownFilter,
     HTML::Pipeline::SanitizationFilter,
-    TextFilters::ImgThumbnailFilter
+    TextFilters::ImgThumbnailFilter,
+    TextFilters::UserMentionFilter
   ]
 
   PRODUCT_FILTERS = [
     TextFilters::MarkdownFilter,
     HTML::Pipeline::SanitizationFilter,
-    TextFilters::UserMentionFilter,
     TextFilters::ShortcutFilter,
     TextFilters::AssetInlineFilter,
     TextFilters::ImgThumbnailFilter,
@@ -18,23 +18,10 @@ module MarkdownHelper
   ]
 
   def markdown(text)
-    @default_pipeline ||= HTML::Pipeline.new(DEFAULT_FILTERS)
+    @default_pipeline ||= HTML::Pipeline.new(DEFAULT_FILTERS,
+      users_base_url: File.join(EXTENDER.root_url, 'users')
+    )
     @default_pipeline.call(text)[:output].to_s.html_safe
-  end
-
-  def idea_markdown(text)
-    @comment_pipeline ||= HTML::Pipeline.new(PRODUCT_FILTERS,
-      asset_root: 'https://a248.e.akamai.net/assets.github.com/images/icons',
-      whitelist: html_whitelist,
-      firesize_url: ENV['FIRESIZE_URL'],
-      users_base_url: File.join(EXTENDER.root_url, 'users'))
-    begin
-      result = @comment_pipeline.call(text)
-      result[:output].to_s.html_safe
-    rescue => e
-      Rails.logger.error("pipeline=#{e.message} text=#{text}")
-      text
-    end
   end
 
   # this is used in mailers, so use full urls

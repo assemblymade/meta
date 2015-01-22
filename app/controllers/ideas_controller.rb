@@ -2,9 +2,17 @@ class IdeasController < ProductController
   respond_to :html, :json
   layout 'application'
 
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :admin]
 
   IDEAS_PER_PAGE = 12
+
+  def admin
+    return unless current_user.is_staff?
+
+    find_idea!
+
+    respond_with IdeaSerializer.new(@idea)
+  end
 
   def create
     @idea = Idea.create_with_discussion(current_user, idea_params)
@@ -97,6 +105,8 @@ class IdeasController < ProductController
 
   def update
     find_idea!
+    authorize! :update, @idea
+
     @idea.update_attributes(idea_params)
 
     respond_to do |format|

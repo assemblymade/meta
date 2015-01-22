@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150120194016) do
+ActiveRecord::Schema.define(version: 20150122004709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "uuid-ossp"
@@ -310,6 +310,7 @@ ActiveRecord::Schema.define(version: 20150120194016) do
     t.datetime "greenlit_at"
     t.boolean  "founder_preference"
     t.integer  "tilting_threshold"
+    t.json     "topics",                         default: {}
   end
 
   create_table "integrations", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|

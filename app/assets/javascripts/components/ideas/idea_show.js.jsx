@@ -145,6 +145,22 @@ var IdeaShow = React.createClass({
     );
   },
 
+  renderAdminRow() {
+    var currentUser = UserStore.getUser();
+
+    if (currentUser.is_staff) {
+      var idea = this.state.idea;
+
+      return (
+        <div className="border-2px clearfix">
+          <div className="py2 px4 right">
+            <a href={idea.url + '/admin'}>Admin</a>
+          </div>
+        </div>
+      )
+    }
+  },
+
   renderBody() {
     var idea = this.state.idea;
     var user = idea.user;
@@ -280,6 +296,8 @@ var IdeaShow = React.createClass({
     var idea = this.state.idea;
 
     return [
+      this.renderAdminRow(),
+
       <div className="clearfix border-bottom border-2px" key="heart-and-idea">
         <div className="center col col-2 px2">
           <Heart

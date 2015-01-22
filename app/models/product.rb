@@ -619,7 +619,7 @@ class Product < ActiveRecord::Base
     {
       input: [name, pitch] + name.split(' ') + pitch.split(' '),
       output: id,
-      weight: product_trend.score.to_i,
+      weight: product_trend.try(:score).to_i,
       payload: {
         id: id,
         slug: slug,
