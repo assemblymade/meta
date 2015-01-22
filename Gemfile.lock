@@ -19,6 +19,16 @@ GIT
     active_model_serializers (0.8.3)
       activemodel (>= 3.0)
 
+GIT
+  remote: git://github.com/reactjs/react-rails.git
+  revision: 579a91a917b9577a16938d4ab4a097ab394d9282
+  specs:
+    react-rails (1.0.0.pre)
+      connection_pool
+      execjs
+      rails (>= 3.1)
+      react-source (~> 0.12)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -365,11 +375,7 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    react-rails (0.12.0.0)
-      execjs
-      rails (>= 3.1)
-      react-source (= 0.12)
-    react-source (0.12.0)
+    react-source (0.12.2)
     redcarpet (3.1.2)
     redis (3.2.0)
     redis-namespace (1.5.1)
@@ -592,7 +598,7 @@ DEPENDENCIES
   rails-assets-underscore (= 1.7.0)
   rails_12factor
   rails_stdout_logging
-  react-rails (~> 0.12.0.0)
+  react-rails (~> 1.0.0.pre)!
   redcarpet
   redis
   responders (~> 2.0.0)

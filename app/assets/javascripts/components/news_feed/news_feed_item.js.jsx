@@ -1,10 +1,11 @@
+var ActivityFeedComment = require('../activity_feed_comment.js.jsx');
 var AppIcon = require('../app_icon.js.jsx');
 var ArchivedNewsFeedItemsStore = require('../../stores/archived_news_feed_items_store');
 var Avatar = require('../ui/avatar.js.jsx');
 var Bounty = require('../bounty.js.jsx')
 var Comment = require('../comment.js.jsx');
 var Discussion = require('../ui/discussion.js.jsx')
-var Icon = require('../ui/icon.js.jsx');
+var Heart = require('../heart.js.jsx');
 var Introduction = require('../introduction.js.jsx')
 var Lightbox = require('../lightbox.js.jsx')
 var Markdown = require('../markdown.js.jsx');
@@ -144,13 +145,12 @@ var NewsFeedItem = React.createClass({
   },
 
   renderComments: function() {
-    var product = this.props.product;
-    var target = this.props.target;
-
-    return <NewsFeedItemComments
-        {...this.props}
-        item={this.props}
-        triggerModal={this.triggerModal} />;
+    var comment = this.props.last_comment
+    if (comment) {
+      return <div className="px3">
+        <ActivityFeedComment author={comment.user} body={comment.body} heartable={false} />
+      </div>
+    }
   },
 
   renderEditButton: function() {
@@ -184,7 +184,7 @@ var NewsFeedItem = React.createClass({
 
   renderLove: function() {
     return <div className="px3 py2 border-top border-bottom">
-      <Love heartable_id={this.props.heartable_id} heartable_type="NewsFeedItem" />
+      <Heart size="small" heartable_id={this.props.id} heartable_type="NewsFeedItem" />
     </div>
   },
 

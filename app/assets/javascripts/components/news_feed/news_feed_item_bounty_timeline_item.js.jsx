@@ -100,7 +100,7 @@ module.exports = React.createClass({
                 </li>
 
                 <li className="left mr1">
-                  <Love heartable_type='NewsFeedItemComment' heartable_id={this.props.news_feed_item_comment_id} />
+                  <Heart size="small" heartable_type='NewsFeedItemComment' heartable_id={this.props.news_feed_item_comment_id} />
                 </li>
               </ul>
 

@@ -39,10 +39,6 @@ describe('ChatNotifications', function() {
 
     ChatNotificationsStore.getChatRooms.mockReturnValue(chatRooms);
 
-    // Not sure if this kind of mock is an antipattern.
-    // Having to do this to get tests to pass might suggest that
-    // we need to move the getUnreadCount functions to the components
-    // rather than keeping them in the store.
     ChatNotificationsStore.getUnreadCount.mockImplementation(function(acknowledgedAt) {
       var count = _.countBy(
         chatRooms,

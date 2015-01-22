@@ -22,31 +22,31 @@ describe('Dispatcher', function() {
       var spy = jest.genMockFn();
 
       Dispatcher.register(spy);
-      Dispatcher.dispatch('foo');
+      Dispatcher.dispatch({type: 'foo'});
 
-      expect(spy).toBeCalledWith('foo');
+      expect(spy).toBeCalledWith({type: 'foo'});
     });
 
     it('returns if there are no callbacks', function() {
       var spy = jest.genMockFn();
 
-      Dispatcher.dispatch('foo');
+      Dispatcher.dispatch({type: 'foo'});
 
       expect(spy.mock.calls.length).toEqual(0);
     });
 
     it('returns if already dispatching', function() {
       var spy = jest.genMockFn().mockImpl(function() {
-        Dispatcher.dispatch('bar');
+        Dispatcher.dispatch({type: 'bar'});
       });
 
       global.console.warn = jest.genMockFn();
 
       Dispatcher.register(spy);
-      Dispatcher.dispatch('foo');
+      Dispatcher.dispatch({type: 'foo'});
 
       expect(spy.mock.calls.length).toEqual(1);
-      expect(spy).toBeCalledWith('foo');
+      expect(spy).toBeCalledWith({type: 'foo'});
       expect(console.warn).toBeCalled();
     });
 
@@ -58,15 +58,15 @@ describe('Dispatcher', function() {
       var spy = jest.genMockFn();
       var id = Dispatcher.register(spy);
 
-      Dispatcher.dispatch('foo');
+      Dispatcher.dispatch({type: 'foo'});
 
-      expect(spy).toBeCalledWith('foo');
+      expect(spy).toBeCalledWith({type: 'foo'});
 
       Dispatcher.remove(id);
-      Dispatcher.dispatch('bar');
+      Dispatcher.dispatch({type: 'bar'});
 
       expect(spy.mock.calls.length).toEqual(1);
-      expect(spy.mock.calls[0][0]).toBe('foo');
+      expect(spy.mock.calls[0][0]).toEqual({type: 'foo'});
     });
   });
 
@@ -79,7 +79,7 @@ describe('Dispatcher', function() {
         Dispatcher.waitFor([id]);
       });
 
-      Dispatcher.dispatch('foo');
+      Dispatcher.dispatch({type: 'foo'});
 
       expect(Dispatcher.waitFor).toBeCalled();
       expect(spy).toBeCalled();

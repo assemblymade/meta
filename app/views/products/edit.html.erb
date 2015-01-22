@@ -38,14 +38,6 @@
           </div>
 
           <div class="form-group">
-            <%= f.label :pitch, 'Five word pitch', class: 'form-label' %>
-            <%= f.text_field :pitch, class: 'form-control', placeholder: @four_word_story_example %>
-            <p class="help-block">
-              If you had 30 seconds to describe your business to a friend, what would you say? Use simple, direct words.
-            </p>
-          </div>
-
-          <div class="form-group">
             <%= f.label :you_tube_video_url, 'Pitch video link', class: 'form-label' %>
             <%= f.url_field :you_tube_video_url, class: 'form-control', maxlength: 255 %>
             <p class="help-block">
@@ -55,8 +47,16 @@
           </div>
 
           <div class="form-group">
-            <%= f.label :homepage_url, 'Product homepage url', class: 'form-label' %>
-            <%= f.url_field :homepage_url, class: 'form-control', maxlength: 255 %>
+            <%= f.label :homepage_url, 'Product Display URL', class: 'form-label' %>
+            <%= f.url_field :homepage_url, class: 'form-control', placeholder: "eg: https://#{@product.slug}.com", maxlength: 255 %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :try_url, 'Product Try URL', class: 'form-label' %>
+            <%= f.url_field :try_url, class: 'form-control', placeholder: "eg: https://#{@product.slug}.com?utm=assembly", maxlength: 255 %>
+            <p class="help-block">
+              Once you've added this link your product will show up as Live.
+            </p>
           </div>
 
 

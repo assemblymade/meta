@@ -16,7 +16,9 @@ var Discussion = React.createClass({
       <Tile>
         {this.props.target}
         <div className="border-top border-gray-5">
-          <NewsFeedItemComments commentable={true} item={item} showAllComments={true} />
+          <div className="px2 _mq-600_px4">
+            <NewsFeedItemComments commentable={true} item={item} showAllComments={true} />
+          </div>
         </div>
       </Tile>
     )

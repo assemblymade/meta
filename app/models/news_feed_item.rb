@@ -57,6 +57,10 @@ class NewsFeedItem < ActiveRecord::Base
     target.try(:unhearted)
   end
 
+  def product?
+    !!target.try(:product)
+  end
+
   def events
     Event.where(wip: self.target).where.not(type: 'Event::Comment')
   end
