@@ -12,6 +12,10 @@ class IdeaProgressStore extends Store {
 
     this.dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
+        case ActionTypes.LOVE_RECEIVE_USER_HEARTS:
+          _setUserHearts(action.userHearts);
+          this.emitChange();
+          break;
         case ActionTypes.LOVE_CLICKED:
           _incrementIdeaProgress(action.heartable_id)
           this.emitChange()
@@ -29,12 +33,26 @@ class IdeaProgressStore extends Store {
   }
 }
 
-module.exports = new IdeaProgressStore()
+module.exports = new IdeaProgressStore();
 
 function _decrementIdeaProgress(heartableId) {
-  currentIdeaProgress[heartableId] = 0;
+  if (typeof currentIdeaProgress[heartableId] === 'undefined') {
+    currentIdeaProgress[heartableId] = 0;
+  }
+
+  currentIdeaProgress[heartableId] -= INCREMENT;
 }
 
 function _incrementIdeaProgress(heartableId) {
-  currentIdeaProgress[heartableId] = INCREMENT;
+  if (typeof currentIdeaProgress[heartableId] === 'undefined') {
+    currentIdeaProgress[heartableId] = 0;
+  }
+
+  currentIdeaProgress[heartableId] += INCREMENT;
+}
+
+function _setUserHearts(userHearts) {
+  userHearts.forEach((heart) => {
+    currentIdeaProgress[heart.heartable_id] = 0;
+  });
 }
