@@ -71,7 +71,7 @@ function confirmComment(data) {
   }
 
   var confirmedComment = data.comment;
-  console.log(confirmedComment);
+
   if (confirmedComment) {
     if (_comments.confirmed[thread]) {
       _comments.confirmed[thread].push(confirmedComment);
