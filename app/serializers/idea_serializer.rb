@@ -2,7 +2,7 @@ class IdeaSerializer < ApplicationSerializer
   include MarkdownHelper
   include TruncateHtmlHelper
 
-  attributes :body, :comments_count, :created_at, :flagged_at,
+  attributes :body, :categories, :comments_count, :created_at, :flagged_at,
     :founder_preference, :greenlit_at, :hearts_count,
     :heart_distance_from_percentile, :id, :name, :news_feed_item, :path,
     :percentile, :raw_body, :score, :short_body, :tilting_threshold, :topics,

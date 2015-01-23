@@ -148,7 +148,7 @@
       IDEAS_ROUTE_CHANGED: null,
       IDEAS_NEW_IDEA_CREATED: null,
 
-      IDEA_TOPICS_RECEIVE: null,
+      IDEA_ADMIN_RECEIVE: null,
 
       LOVE_CLICKED: null,
       LOVE_UNCLICKED: null,

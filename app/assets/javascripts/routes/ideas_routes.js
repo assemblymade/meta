@@ -34,7 +34,8 @@ function _showIdeaAdmin(data) {
   });
 
   Dispatcher.dispatch({
-    type: ActionTypes.IDEA_TOPICS_RECEIVE,
+    type: ActionTypes.IDEA_ADMIN_RECEIVE,
+    categories: data.categories,
     topics: data.topics
   });
 }

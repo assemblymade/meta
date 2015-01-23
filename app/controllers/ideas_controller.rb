@@ -12,13 +12,20 @@ class IdeasController < ProductController
     find_idea!
 
     respond_with({
+      categories: Idea::CATEGORY_NAMES.map.with_index { |name, i|
+        {
+          name: name,
+          slug: Idea::CATEGORY_SLUGS[i]
+        }
+      },
+
       idea: IdeaSerializer.new(@idea),
-      topics: Idea::TOPIC_NAMES.map.with_index do |name, i|
+      topics: Idea::TOPIC_NAMES.map.with_index { |name, i|
         {
           name: name,
           slug: Idea::TOPIC_SLUGS[i]
         }
-      end
+      }
     })
   end
 
@@ -140,9 +147,10 @@ class IdeasController < ProductController
     params.require(:idea).permit([
       :name,
       :body,
-      :founder_preference,
       :flagged_at,
-      :topics => []
+      :founder_preference,
+      :topics => [],
+      :categories => []
     ])
   end
 

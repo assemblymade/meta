@@ -3,6 +3,7 @@ var Dispatcher = window.Dispatcher;
 var Store = require('./es6_store');
 
 var availableTopics = [];
+var availableCategories = [];
 
 class IdeaAdminStore extends Store {
   constructor() {
@@ -10,12 +11,17 @@ class IdeaAdminStore extends Store {
 
     Dispatcher.register((action) => {
       switch (action.type) {
-        case ActionTypes.IDEA_TOPICS_RECEIVE:
+        case ActionTypes.IDEA_ADMIN_RECEIVE:
+          availableCategories = action.categories;
           availableTopics = action.topics;
           this.emitChange();
           break;
       }
     });
+  }
+
+  getAvailableCategories() {
+    return availableCategories;
   }
 
   getAvailableTopics() {
