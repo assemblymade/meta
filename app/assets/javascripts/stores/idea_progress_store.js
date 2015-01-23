@@ -52,7 +52,9 @@ function _incrementIdeaProgress(heartableId) {
 }
 
 function _setUserHearts(userHearts) {
-  userHearts.forEach((heart) => {
-    currentIdeaProgress[heart.heartable_id] = 0;
-  });
+  if (userHearts && userHearts.length) {
+    userHearts.forEach((heart) => {
+      currentIdeaProgress[heart.heartable_id] = 0;
+    });
+  }
 }
