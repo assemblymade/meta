@@ -92,7 +92,7 @@ var IdeasIndex = React.createClass({
                 </div>
               </nav>
               <div className="main" key="main-ideas">
-                <div className="grid fixed-small" style={ideasGridStyle}>
+                <div className="clearfix mxn2" style={ideasGridStyle}>
                   {this.renderIdeas()}
                 </div>
               </div>
@@ -137,11 +137,12 @@ var IdeasIndex = React.createClass({
 
   renderIdeas() {
     var ideas = this.state.ideas;
-    var IdeaFactory = React.createFactory(IdeaTile);
 
     if (ideas.length) {
       return ideas.map((idea) => {
-        return IdeaFactory({ idea: idea, key: idea.id });
+        return <div className="sm-col sm-col-4 p2" key={idea.id}>
+          <IdeaTile idea={idea} />
+        </div>
       });
     }
   },
