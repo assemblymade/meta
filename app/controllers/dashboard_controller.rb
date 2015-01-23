@@ -5,6 +5,12 @@ class DashboardController < ApplicationController
 
   def index
     # FIXME: Have an object to the heavy lifting here
+    if current_user.top_products.empty?
+      product_vectors = QueryMarks.new.get_all_product_vectors
+      user_vector = QueryMarks.new.mark_vector_for_object(current_user)
+      QueryMarks.new.assign_top_products_for_user(10, current_user, product_vectors, user_vector)
+    end
+
     dashboard = DashboardQuery.call(current_user, params.fetch(:filter, 'interests'))
 
     @news_feed_items = dashboard.news_feed_items
