@@ -1,15 +1,15 @@
-$app-top-height: 70px;
-
-.app-top {
-  height: $app-top-height - 7; // sorry about the -7
-}
+// $app-top-height: 70px;
+//
+// .app-top {
+//   height: $app-top-height - 7; // sorry about the -7
+// }
 
 .app-main {
-  min-height: 12rem
+  min-height: 15rem
 }
 
 .app-logo {
-  margin-top: -$app-top-height;
+  // margin-top: -$app-top-height;
   img {
     width: 60px;
     height: 60px;
@@ -18,13 +18,21 @@ $app-top-height: 70px;
   }
 }
 
+.app-info {
+  padding-left: 70px;
+}
+
 .app-title {
-  line-height: 38px;
-  font-size: $font-size-large;
+  line-height: 1;
+  font-size: 16px;
 }
 
 .app-pitch {
-  font-size: $font-size-large;
+  line-height: 1.2;
+  font-size: 16px;
+}
+
+.app-tags {
   line-height: 1.2;
 }
 
@@ -53,5 +61,5 @@ $app-top-height: 70px;
   border-radius:1rem;
   font-size:13px;
   line-height:2rem;
-  padding: 0 1.5rem;
+  padding: 0.2rem 1.5rem;
 }

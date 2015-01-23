@@ -15,34 +15,32 @@ var App = React.createClass({
 
   render: function() {
     return <div className="">
-      <div className="app-top rounded-top shadow-top px3 pt3" style={this.cardColorStyle()}>
-        <div className="right">
-          <div className="bold pill-gray">
-            In Progress
-          </div>
-        </div>
-      </div>
       <div className="app-main bg-white p3 relative rounded-bottom shadow-bottom">
-        <div className="app-logo">
-          <a href={this.appPath()}>
+        <div>
+          <a className="left pr2 pb2" href={this.appPath()}>
             <Thumbnail size={60} src={this.props.logo_url} />
+          </a>
+
+          <a href={this.appPath()} className="text-stealth-link app-title gray-2">
+            {this.props.name}
           </a>
         </div>
 
-        <div className="app-info">
-          <div className="app-title gray-2">
-            <a href={this.appPath()} className="text-stealth-link">
-              {this.props.name}
-            </a>
-          </div>
-          <div className="app-pitch">
-            {this.pitch()}
-          </div>
-          <div>
-            {_(this.searchTags()).first(3).map(tag => <span className="mr1 gray-2 uppercase small">#{tag}</span>)}
-          </div>
+        <div className="app-pitch">
+          {this.pitch()}
         </div>
 
+        <div className="app-info">
+          <div class="app-tags">
+            {_(this.searchTags()).first(3).map(tag => <span className="mr1 gray-2 uppercase small">#{tag}</span>)}
+          </div>
+
+          <div>
+            <span className="bold pill-gray">
+              In Progress
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   },
