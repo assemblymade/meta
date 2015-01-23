@@ -23,7 +23,7 @@ module.exports = React.createClass({
     var size = this.props.size;
 
     return (
-      <img src={this.props.basePath + '/' + size + 'x' + size + '/g_center/' + this.props.src} style={{ maxHeight: size }} />
+      <img src={this.props.basePath + '/' + size + 'x' + size + '/g_center/' + this.props.src} style={{ maxHeight: size }} className="rounded" />
     );
   }
 });

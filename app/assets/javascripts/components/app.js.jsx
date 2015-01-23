@@ -1,6 +1,7 @@
 var Button = require('./ui/button.js.jsx')
 var routes = require('../routes')
 var Thumbnail = require('./thumbnail.js.jsx')
+var Label = require('./ui/label.js.jsx')
 
 var App = React.createClass({
   getDefaultProps: function() {
@@ -10,34 +11,31 @@ var App = React.createClass({
   },
 
   render: function() {
-    return <div className="">
-      <div className="app-main bg-white p3 relative rounded-bottom shadow-bottom">
-        <div>
-          <a className="left pr2 pb2" href={this.appPath()}>
-            <Thumbnail size={60} src={this.props.logo_url} />
-          </a>
+    return <div className="clearfix" style={{minHeight: 120}}>
+      <div className="left mr2">
+        <a href={this.appPath()}>
+          <Thumbnail size={60} src={this.props.logo_url} />
+        </a>
+      </div>
 
-          <a href={this.appPath()} className="text-stealth-link app-title gray-2">
-            {this.props.name}
-          </a>
-        </div>
+      <div className="overflow-hidden">
+        <h6 className="mt0 mb0">{this.props.name}</h6>
 
-        <div className="app-pitch">
-          {this.pitch()}
-        </div>
+        <p className="mt0 mb0">{this.pitch()}</p>
 
-        <div className="app-info">
-          <div class="app-tags">
-            {_(this.searchTags()).first(3).map(tag => <span className="mr1 gray-2 uppercase small">#{tag}</span>)}
-          </div>
-
-          <div>
-            <span className="bold pill-gray">
-              In Progress
+        <div className="mb1">
+          {_(this.searchTags()).first(3).map(tag =>
+            <span className="mr1 inline-block" key={tag}>
+              <Label name={tag} />
             </span>
-          </div>
+          )}
+        </div>
+
+        <div className="bg-white bold border border-gray-4 gray-2 inline-block h6 mt0 mb0 px2" style={{borderRadius: '99px', fontSize: 11}}>
+          In Progress
         </div>
       </div>
+
     </div>
   },
 

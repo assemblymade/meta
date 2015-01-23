@@ -31,8 +31,10 @@ var Apps = React.createClass({
 
   render: function() {
     return <section className="tile-grid tile-grid-ideas">
+      <div className="clearfix">
+      </div>
       <div className="container main">
-        <div className="header">
+        <div className="header py4">
           <nav className="tile-grid-nav">
             <div className="item">
               <ul className="nav nav-pills">
@@ -69,9 +71,9 @@ var Apps = React.createClass({
   },
 
   renderAppsList: function(apps) {
-    return <div className="clearfix mt2 mxn2">
+    return <div className="clearfix mxn3">
       {_(apps).map(app =>
-        <div className="col col-4 px2 mb3">
+        <div className="sm-col sm-col-4 p3">
           <App {...app} />
         </div>
       )}
