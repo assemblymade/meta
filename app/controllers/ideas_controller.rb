@@ -142,7 +142,7 @@ class IdeasController < ProductController
       :body,
       :founder_preference,
       :flagged_at,
-      :topics => Idea::TOPIC_SLUGS
+      :topics => []
     ])
   end
 

@@ -33,16 +33,8 @@ var IdeaAdmin = React.createClass({
 
   handleTopicSelected(topic, e) {
     var idea = this.state.idea;
-    var topics = idea.topics;
 
-    for (var t in topics) {
-      if (topics.hasOwnProperty(t) && t !== topic) {
-        topics[t] = false;
-      }
-    }
-
-    topics[topic] = true;
-    idea.topics = topics;
+    idea.topics = [topic];
 
     this.setState({
       idea: idea
@@ -95,7 +87,7 @@ var IdeaAdmin = React.createClass({
         <div className="form-group gray-1 mb0">
           <label>
             <input type="radio"
-                checked={ideaTopics[topic.slug]}
+                checked={ideaTopics.indexOf(topic.slug) > -1}
                 onChange={this.handleTopicSelected.bind(this, topic.slug)} />
             {' ' + topic.name}
           </label>
