@@ -1,9 +1,15 @@
 var Button = require('./ui/button.js.jsx')
 var routes = require('../routes')
+var SingleLineList = require('./ui/single_line_list.js.jsx')
 var Thumbnail = require('./thumbnail.js.jsx')
 var Label = require('./ui/label.js.jsx')
 
 var App = React.createClass({
+
+  propTypes: {
+    app: React.PropTypes.object.isRequired
+  },
+
   getDefaultProps: function() {
     return {
       maxPitchLength: 50
@@ -11,58 +17,74 @@ var App = React.createClass({
   },
 
   render: function() {
-    return <div className="clearfix" style={{minHeight: 120}}>
-      <div className="left mr2">
-        <a href={this.appPath()}>
-          <Thumbnail size={60} src={this.props.logo_url} />
-        </a>
-      </div>
+    var tags
+    var logoUrl = this.props.app.logo_url
+    var name = this.props.app.name
 
-      <div className="overflow-hidden">
-        <h6 className="mt0 mb0">{this.props.name}</h6>
+    tags = _(this.searchTags()).first(3).map(tag => {
+      return <Label name={tag} />
+    })
 
-        <p className="mt0 mb0">{this.pitch()}</p>
+    return <a className="block clearfix bg-white rounded shadow" style={{minHeight: 120}} href={this.appPath()}>
+      <div className="border-bottom p3 right-align">
+        {this.appButton()}
 
-        <div className="mb1">
-          {_(this.searchTags()).first(3).map(tag =>
-            <span className="mr1 inline-block" key={tag}>
-              <Label name={tag} />
-            </span>
-          )}
-        </div>
-
-        <div className="bg-white bold border border-gray-4 gray-2 inline-block h6 mt0 mb0 px2" style={{borderRadius: '99px', fontSize: 11}}>
-          In Progress
+        <div className="left bg-white rounded border-inset-dark">
+          <Thumbnail size={66} src={logoUrl} />
         </div>
       </div>
 
-    </div>
+      <div className="p3 mt2">
+        <h4 className="regular mt0 mb0 gray-2">{name}</h4>
+
+        <div style={{minHeight: '6rem'}}>
+          <p className="h4 mt0 mb0 bold black">{this.pitch()}</p>
+        </div>
+
+        <div className="mt1">
+          <SingleLineList items={tags} />
+        </div>
+      </div>
+
+    </a>
   },
 
   pitch: function() {
-    if (this.props.pitch.length > this.props.maxPitchLength) {
-      return this.props.pitch.substring(0, this.props.maxPitchLength-3) + '...'
+    var pitch = this.props.app.pitch
+
+    if (pitch.length > this.props.maxPitchLength) {
+      return pitch.substring(0, this.props.maxPitchLength-3) + '...'
     }
-    return this.props.pitch
+    
+    return pitch
   },
 
   searchTags: function() {
-    if (this.props.search_tags.length == 0) {
+    var searchTags = this.props.app.search_tags
+
+    if (searchTags.length == 0) {
       return ['DefaultTag']
     }
-    return this.props.search_tags
+
+    return searchTags
   },
 
   appButton: function() {
-    if (this.props.try_url) {
-      return <a href={this.props.try_url} className="btn btn-xs btn-success mt1">Try</a>
+    var tryUrl = this.props.app.try_url
+
+    if (tryUrl) {
+      return <div className="inline-block h5 mt0 mb0 bold px2 bg-yellow black" style={{borderRadius: '99px', fontSize: 11}}>
+        Live
+      </div>
     } else {
-      return <a href={this.appPath()}>In Development</a>
+      return <div className="inline-block h5 mt0 mb0 bold px2 bg-gray-5 black" style={{borderRadius: '99px', fontSize: 11}}>
+        In progress
+      </div>
     }
   },
 
   appPath: function() {
-    return routes.product_path({id: this.props.slug})
+    return routes.product_path({id: this.props.app.slug})
   }
 })
 

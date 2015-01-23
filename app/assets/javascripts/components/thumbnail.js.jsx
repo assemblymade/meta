@@ -1,7 +1,5 @@
-/** @jsx React.DOM */
+var Thumbnail = React.createClass({
 
-module.exports = React.createClass({
-  displayName: 'Thumbnail',
   propTypes: {
     src: React.PropTypes.string.isRequired,
     size: React.PropTypes.number
@@ -23,7 +21,9 @@ module.exports = React.createClass({
     var size = this.props.size;
 
     return (
-      <img src={this.props.basePath + '/' + size + 'x' + size + '/g_center/' + this.props.src} style={{ maxHeight: size }} className="rounded" />
-    );
+      <img src={this.props.basePath + '/' + size + 'x' + size + '/g_center/' + this.props.src} style={{ maxHeight: size }} />
+    )
   }
-});
+})
+
+module.exports = Thumbnail

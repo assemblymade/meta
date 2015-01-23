@@ -1,5 +1,8 @@
 var AppsStore = require('../stores/apps_store')
 var App = require('./app.js.jsx')
+var DropdownMenu = require('./ui/dropdown_menu.js.jsx')
+var DropdownMixin = require('../mixins/dropdown_mixin.js.jsx')
+var Icon = require('./ui/icon.js.jsx')
 var ProductSearch = require('./product_search.js.jsx')
 var Spinner = require('./spinner.js.jsx')
 
@@ -25,6 +28,8 @@ _.mixin({
 });
 
 var Apps = React.createClass({
+  mixins: [DropdownMixin],
+
   propTypes: {
     search: React.PropTypes.string.isRequired
   },
@@ -71,10 +76,10 @@ var Apps = React.createClass({
   },
 
   renderAppsList: function(apps) {
-    return <div className="clearfix mxn3">
+    return <div className="clearfix mxn2">
       {_(apps).map(app =>
-        <div className="sm-col sm-col-4 p3">
-          <App {...app} />
+        <div className="sm-col sm-col-4 p2">
+          <App app={app} />
         </div>
       )}
     </div>
@@ -102,16 +107,23 @@ var Apps = React.createClass({
   },
 
   renderTopics: function() {
+    var dropdownMenu
+
+    if (this.isDropdownOpen()) {
+      dropdownMenu = (
+        <DropdownMenu position="right">
+          {_(this.props.topics).map(f =>
+            <DropdownMenu.Item label={f.name} action={"/apps?topic=" + f.slug} />
+          )}
+        </DropdownMenu>
+      )
+    }
+
     return <li className="dropdown">
-      <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-        Topics <span className="caret"></span>
+      <a href="javascript:void(0)" onClick={this.toggleDropdown}>
+        Topics <Icon icon="chevron-down" />
       </a>
-      <ul className="dropdown-menu" role="menu">
-        {_(this.props.topics).map(f => <li>
-          <a href={"/apps?topic=" + f.slug}>{f.name}</a>
-          </li>
-        )}
-      </ul>
+      {dropdownMenu}
     </li>
   },
 
