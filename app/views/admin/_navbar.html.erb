@@ -7,6 +7,9 @@
       <li class="<%= "active" if controller_active?(:withdrawals) %>">
         <%= link_to 'Withdrawals', admin_withdrawals_path %>
       </li>
+      <li class="<%= "active" if controller_active?(:apps) %>">
+        <%= link_to 'Apps', admin_apps_path %>
+      </li>
       <li class="<%= "active" if product_rankings_controller? %>">
         <%= link_to 'Products', admin_product_rankings_path %>
       </li>

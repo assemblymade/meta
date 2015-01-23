@@ -55,7 +55,8 @@ class Product < ActiveRecord::Base
   has_many :posts
   has_many :profit_reports
   has_many :rooms
-  has_many :showcases
+  has_many :showcase_entries
+  has_many :showcases, through: :showcase_entries
   has_many :status_messages
   has_many :stream_events
   has_many :subscribers
@@ -111,6 +112,7 @@ class Product < ActiveRecord::Base
   scope :profitable,   -> { public_products.where(state: 'profitable') }
   scope :live,         -> { where.not(try_url: nil) }
   scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
+  scope :untagged, -> { where('array_length(tags, 1) IS NULL') }
 
   validates :slug, uniqueness: { allow_nil: true }
   validates :name, presence: true,

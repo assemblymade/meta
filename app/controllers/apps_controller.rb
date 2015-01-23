@@ -2,6 +2,8 @@ class AppsController < ApplicationController
   respond_to :html, :json
 
   def index
+    @showcases = Showcase.active.order(:slug)
+
     respond_to do |format|
       format.json do
         @products = if params[:search].present?

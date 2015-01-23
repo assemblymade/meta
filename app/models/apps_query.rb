@@ -1,5 +1,12 @@
 class AppsQuery
-  def initialize(user, filter, topic)
+  FILTER_MINE = 'mine'
+  FILTER_LIVE = 'live'
+  FILTER_PUBLIC = 'public'
+
+  ORDER_NEW = 'new'
+  ORDER_TREND = 'trend'
+
+  def initialize(user = nil, filter = nil, topic = nil)
     @user = user
     @filter = filter
     @topic = topic
@@ -17,9 +24,9 @@ class AppsQuery
 
   def filter_clause
     case
-    when @filter == 'mine'
+    when @filter == FILTER_MINE
       Product.where(user: @user)
-    when @filter == 'live'
+    when @filter == FILTER_LIVE
       Product.public_products.live
     when @topic.present?
       Product.public_products.with_mark(@topic)
@@ -30,7 +37,7 @@ class AppsQuery
 
   def sort_order
     case @filter
-    when 'new'
+    when ORDER_NEW
       Product.order(created_at: :desc)
     else
       Product.ordered_by_trend

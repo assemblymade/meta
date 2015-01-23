@@ -653,6 +653,7 @@ ActiveRecord::Schema.define(version: 20150123204157) do
     t.datetime "last_checked_btc"
     t.datetime "issued_coins"
     t.text     "try_url"
+    t.string   "topics",                                                                    array: true
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
@@ -687,15 +688,19 @@ ActiveRecord::Schema.define(version: 20150123204157) do
     t.datetime "updated_at"
   end
 
-  create_table "showcases", id: :uuid, force: :cascade do |t|
-    t.uuid     "product_id"
-    t.uuid     "wip_id"
-    t.datetime "showcased_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "email_upcoming_sent_at"
-    t.datetime "email_public_sent_at"
+  create_table "showcase_entries", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.uuid     "showcase_id", null: false
+    t.uuid     "product_id",  null: false
   end
+
+  create_table "showcases", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string   "slug",       null: false
+    t.datetime "ended_at"
+  end
+
+  add_index "showcases", ["ended_at"], name: "index_showcases_on_ended_at", using: :btree
 
   create_table "status_messages", id: :uuid, force: :cascade do |t|
     t.uuid     "product_id",             null: false
@@ -1102,4 +1107,6 @@ ActiveRecord::Schema.define(version: 20150123204157) do
 
   add_foreign_key "markings", "marks"
   add_foreign_key "news_feed_item_comments", "news_feed_items"
+  add_foreign_key "showcase_entries", "products"
+  add_foreign_key "showcase_entries", "showcases"
 end
