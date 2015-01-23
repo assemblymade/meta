@@ -7,7 +7,7 @@ class Attachment < ActiveRecord::Base
 
   has_many :deliverables
 
-  before_save :set_asset_path
+  before_validation :set_asset_path, on: :create
 
   validates :name, presence: true
 

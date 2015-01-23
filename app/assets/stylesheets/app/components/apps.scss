@@ -1,15 +1,31 @@
-.app {
+$app-top-height: 70px;
+
+.app-top {
+  height: $app-top-height - 7; // sorry about the -7
+}
+
+.app-main {
   min-height: 12rem
 }
 
+.app-logo {
+  margin-top: -$app-top-height;
+  img {
+    width: 60px;
+    height: 60px;
+    background-color: $white;
+    border: solid 1px $gray-6;
+  }
+}
+
 .app-title {
-  line-height: 22px;
+  line-height: 38px;
+  font-size: $font-size-large;
 }
 
 .app-pitch {
-  line-height: 14px;
-  font-size: 13px;
-  color: $gray-darker;
+  font-size: $font-size-large;
+  line-height: 1.2;
 }
 
 .big-block-button {
@@ -30,4 +46,12 @@
     font-weight: bold;
     opacity: 0.3;
   }
+}
+
+.pill-gray {
+  background-color: $gray-3;
+  border-radius:1rem;
+  font-size:13px;
+  line-height:2rem;
+  padding: 0 1.5rem;
 }

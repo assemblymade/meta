@@ -62,7 +62,7 @@ var Apps = React.createClass({
       return <Spinner />
     }
     return <div>
-      {this.renderAppsList(_(this.state.apps).first(2))}
+      {this.renderAppsList(_(this.state.apps).first(3))}
 
       <div className="col col-6 pr2 pb2">
         <a href={"/apps?topic=" + this.props.topics[0].slug} className="big-block-button">
@@ -78,26 +78,15 @@ var Apps = React.createClass({
         </a>
       </div>
 
-      {this.renderAppsList(_(this.state.apps).rest(2))}
+      {this.renderAppsList(_(this.state.apps).rest(3))}
     </div>
   },
 
   renderAppsList: function(apps) {
-    return <div className="clearfix mt2">
-      {_(apps).eachSlice(2).map(rows =>
-        <div className="mnx2 pb3 clearfix">
-          <div className="col col-4 pr2">
-            <div className="app bg-white rounded shadow p3">
-              <App {...rows[0]} />
-            </div>
-          </div>
-          {rows[1] ?
-            <div className="col col-4 pl2">
-              <div className="app bg-white rounded shadow p3">
-                <App {...rows[1]} />
-              </div>
-            </div>
-            : null }
+    return <div className="clearfix mt2 mxn2">
+      {_(apps).map(app =>
+        <div className="col col-4 px2 mb3">
+          <App {...app} />
         </div>
       )}
     </div>

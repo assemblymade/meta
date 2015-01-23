@@ -70,11 +70,12 @@ ActiveRecord::Schema.define(version: 20150122210550) do
 
   create_table "attachments", id: :uuid, force: :cascade do |t|
     t.uuid     "user_id"
-    t.string   "asset_path",   limit: 255
-    t.string   "name",         limit: 255
-    t.string   "content_type", limit: 255
+    t.string   "asset_path",      limit: 255
+    t.string   "name",            limit: 255
+    t.string   "content_type",    limit: 255
     t.integer  "size"
     t.datetime "created_at"
+    t.string   "dominant_colors",             array: true
   end
 
   create_table "auto_tip_contracts", force: :cascade do |t|

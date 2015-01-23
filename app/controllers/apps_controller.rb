@@ -7,7 +7,7 @@ class AppsController < ApplicationController
         @products = if params[:search].present?
           Search::ProductSearch.new(params[:search]).results
         else
-          AppsQuery.new(current_user, params[:filter], params[:topic]).perform
+          AppsQuery.new(current_user, params[:filter], params[:topic]).perform.limit(27)
         end
 
         respond_with @products, each_serializer: AppSerializer
