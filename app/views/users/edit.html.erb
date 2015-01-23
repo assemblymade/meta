@@ -172,7 +172,7 @@
               </tr>
 
               <% (@balance.balances + @balance.withdrawals).sort_by{|e| -(e.try(:end_at) || e.created_at).to_time.to_i }.each do |entry| %>
-              <%= render 'users/user/balance_entries/balance_entry', balance_entry: entry %>
+                <%= render entry %>
               <% end %>
               <tr>
                 <td colspan="4" class="right-align bold">Total:</td>
