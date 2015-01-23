@@ -386,6 +386,7 @@ class User < ActiveRecord::Base
   def mark_names=(new_mark_names)
     new_marks = new_mark_names.map { |name| Mark.where(name: name.downcase).first_or_create }
     self.marks = new_marks
+    self.top_products = []
   end
 
   private

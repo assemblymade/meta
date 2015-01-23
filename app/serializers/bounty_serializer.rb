@@ -120,10 +120,6 @@ class BountySerializer < ApplicationSerializer
     product_wip_path(product, bounty)
   end
 
-  def locker
-    User.find_by(id: bounty.locked_by)
-  end
-
   def news_feed_item_id
     object.news_feed_item.try(:id)
   end

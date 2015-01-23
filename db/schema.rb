@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150122210550) do
+ActiveRecord::Schema.define(version: 20150123163508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -448,6 +448,12 @@ ActiveRecord::Schema.define(version: 20150122210550) do
     t.uuid     "target_id"
   end
 
+  add_index "news_feed_item_comments", ["created_at"], name: "index_news_feed_item_comments_on_created_at", using: :btree
+  add_index "news_feed_item_comments", ["deleted_at"], name: "index_news_feed_item_comments_on_deleted_at", using: :btree
+  add_index "news_feed_item_comments", ["news_feed_item_id"], name: "index_news_feed_item_comments_on_news_feed_item_id", using: :btree
+  add_index "news_feed_item_comments", ["target_id"], name: "index_news_feed_item_comments_on_target_id", using: :btree
+  add_index "news_feed_item_comments", ["user_id"], name: "index_news_feed_item_comments_on_user_id", using: :btree
+
   create_table "news_feed_item_posts", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "news_feed_item_id"
     t.text     "title"
@@ -474,6 +480,9 @@ ActiveRecord::Schema.define(version: 20150122210550) do
     t.integer  "comments_count",                default: 0
   end
 
+  add_index "news_feed_items", ["product_id", "target_type", "archived_at", "last_commented_at"], name: "index_news_feed_items_for_dashboard", using: :btree
+  add_index "news_feed_items", ["product_id"], name: "index_news_feed_items_on_product_id", using: :btree
+  add_index "news_feed_items", ["target_id", "target_type"], name: "index_news_feed_items_on_target_id_and_target_type", using: :btree
   add_index "news_feed_items", ["target_id"], name: "index_news_feed_items_on_target_id", unique: true, using: :btree
 
   create_table "newsletters", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -796,6 +805,7 @@ ActiveRecord::Schema.define(version: 20150122210550) do
     t.string   "transaction_type", limit: 255
   end
 
+  add_index "transaction_log_entries", ["wallet_id", "product_id", "cents"], name: "transaction_log_entries_index_for_dashboard", using: :btree
   add_index "transaction_log_entries", ["wallet_id", "product_id"], name: "index_transaction_log_entries_on_wallet_id_and_product_id", using: :btree
   add_index "transaction_log_entries", ["wallet_id"], name: "index_transaction_log_entries_on_wallet_id", using: :btree
 

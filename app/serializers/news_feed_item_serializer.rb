@@ -3,7 +3,7 @@ class NewsFeedItemSerializer < ApplicationSerializer
 
   attributes :heartable_type, :hearts_count
 
-  has_one :product, serializer: ProductSerializer
+  has_one :product
   has_one :target
   has_one :user
   has_one :last_comment
@@ -12,20 +12,8 @@ class NewsFeedItemSerializer < ApplicationSerializer
     object.target.try(:comments_count) || object.comments_count
   end
 
-  def last_comment
-    NewsFeedItemCommentSerializer.new(object.last_comment)
-  end
-
   def layout
     object.target_type
-  end
-
-  def product
-    Product.find(object.product_id) if object.try(:product_id)
-  end
-
-  def target
-    object.target_type.try(:constantize).try(:find, object.target_id)
   end
 
   def url
@@ -33,7 +21,7 @@ class NewsFeedItemSerializer < ApplicationSerializer
   end
 
   def user
-    User.find(object.source_id)
+    object.source
   end
 
   def heartable_type
