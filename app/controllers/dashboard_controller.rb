@@ -11,7 +11,7 @@ class DashboardController < ApplicationController
       QueryMarks.new.assign_top_products_for_user(10, current_user, product_vectors, user_vector)
     end
 
-    dashboard = DashboardQuery.call(current_user, params.fetch(:filter, 'interests'))
+    dashboard = DashboardQuery.call(current_user, filter_param)
 
     @news_feed_items = dashboard.news_feed_items
     @user_bounties = dashboard.user_bounties
@@ -21,11 +21,15 @@ class DashboardController < ApplicationController
   end
 
   def news_feed_items
-    dashboard = DashboardQuery.call(current_user, params.fetch(:filter, 'interests'))
+    dashboard = DashboardQuery.call(current_user, filter_param)
 
     render json: dashboard.news_feed_items,
       each_serializer: NewsFeedItemSerializer,
       serializer: PaginationSerializer,
       root: :news_feed_items
+  end
+
+  def filter_param
+    params.fetch(:filter, 'interests')
   end
 end

@@ -34,7 +34,7 @@
         <div className="clearfix">
           <a className="block left clearfix" href="#" id="bounty-amount-link" onClick={this.toggle}>
             <div className="left">
-              <AppCoins n={this.props.contracts.earnable} />
+              <AppCoins n={this.props.earnable_coins_cache} />
             </div>
             <div className="left yellow ml1">
               <Icon icon="chevron-down" />

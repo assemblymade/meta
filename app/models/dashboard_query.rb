@@ -29,7 +29,7 @@ class DashboardQuery
     @news_feed_items ||= NewsFeedItem.
       where(product_id: products.pluck(:id)).
       where(target_type: 'Wip').
-      includes(:source, last_comment: :user).
+      includes(:source, :hearts, last_comment: [:user, :hearts], target_task: [:tags, :product]).
       for_feed.
       page(page)
   end

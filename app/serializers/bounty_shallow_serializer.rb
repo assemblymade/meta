@@ -5,7 +5,7 @@ class BountyShallowSerializer < ApplicationSerializer
 
   has_one :locker
 
-  has_one :product
+  has_one :product, serializer: ProductShallowSerializer
 
   has_one :user
 

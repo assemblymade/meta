@@ -3,13 +3,13 @@ class NewsFeedItemSerializer < ApplicationSerializer
 
   attributes :heartable_type, :hearts_count
 
-  has_one :product
+  has_one :product, serializer: ProductShallowSerializer
   has_one :target
   has_one :user
   has_one :last_comment
 
-  def comments_count
-    object.target.try(:comments_count) || object.comments_count
+  def target
+    object.target_type == 'Wip' ? object.target_task : object.target
   end
 
   def layout
@@ -17,7 +17,7 @@ class NewsFeedItemSerializer < ApplicationSerializer
   end
 
   def url
-    product_update_path(product, object)
+    product_update_path(object.product_id, object)
   end
 
   def user
@@ -26,5 +26,11 @@ class NewsFeedItemSerializer < ApplicationSerializer
 
   def heartable_type
     'NewsFeedItem'
+  end
+
+  cached
+
+  def cache_key
+    object
   end
 end

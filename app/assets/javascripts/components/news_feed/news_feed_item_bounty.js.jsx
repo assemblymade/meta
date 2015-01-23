@@ -34,7 +34,7 @@ module.exports = React.createClass({
             <div className="lh0_9 pb2">
               <div key={"bounty-value-" + bounty.id}>
                 <span className="mr2 fs2" key={'mr2' + bounty.id}>
-                  <AppCoins n={bounty.contracts.earnable} />
+                  <AppCoins n={bounty.earnable_coins_cache} />
                 </span>
               </div>
             </div>

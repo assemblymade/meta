@@ -5,6 +5,8 @@ class NewsFeedItem < ActiveRecord::Base
   include Kaminari::ActiveRecordModelExtension
 
   belongs_to :target, polymorphic: true
+  belongs_to :target_task, class_name: 'Task', foreign_key: 'target_id'
+
   belongs_to :product
   belongs_to :source, class: User
 
