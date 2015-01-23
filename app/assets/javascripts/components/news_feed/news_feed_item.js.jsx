@@ -17,6 +17,7 @@ var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
 var NewsFeedItemModal = require('./news_feed_item_modal.js.jsx');
 var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
 var SubscriptionsStore = require('../../stores/subscriptions_store');
+var SvgIcon = require('../ui/svg_icon.js.jsx')
 var Tag = require('../tag.js.jsx');
 var Tile = require('../tile.js.jsx');
 var Update = require('../update.js.jsx')
@@ -115,9 +116,8 @@ var NewsFeedItem = React.createClass({
         {this.props.productPage ? null : this.renderSource()}
         {this.renderTarget()}
         {this.props.enableModal && this.state.modalShown ? this.renderModal() : null}
-        {this.renderMeta()}
-        {this.renderUserSource()}
-        {this.renderLove()}
+        {this.renderTags()}
+        {this.renderDetails()}
         {this.renderFooter()}
         {this.renderComments()}
       </Tile>
@@ -146,10 +146,13 @@ var NewsFeedItem = React.createClass({
 
   renderComments: function() {
     var comment = this.props.last_comment
+
     if (comment) {
-      return <div className="px3">
-        <ActivityFeedComment author={comment.user} body={comment.markdown_body} heartable={false} />
-      </div>
+      return (
+        <div className="px3 border-top">
+          <ActivityFeedComment author={comment.user} body={comment.markdown_body} heartable={false} />
+        </div>
+      )
     }
   },
 
@@ -168,6 +171,85 @@ var NewsFeedItem = React.createClass({
     }
   },
 
+  renderTags: function() {
+    var target = this.props.target
+    var tags = target && (target.tags || target.marks);
+
+    if (tags && tags.length) {
+      tagItems = _.map(tags, function(tag) {
+        return (
+          <div className="inline-block" key={tag.id}>
+            <Tag tag={tag} />
+          </div>
+        )
+      })
+
+      return (
+        <div className="px3 pb3">
+          {tagItems}
+        </div>
+      );
+    }
+  },
+
+  renderDetails: function() {
+    var target = this.props.target;
+
+    var bountyValue = this.renderBountyValue();
+    var commentsCount = this.renderCommentsCount();
+    var share = this.renderShare();
+    var heart = this.renderHeart();
+
+    return (
+      <div className="border-top clearfix">
+        {bountyValue}
+
+        <div className="right gray-2 h6 mt0 mb0" style={{ lineHeight: '24px' }}>
+          {commentsCount}
+          {share}
+          {heart}
+        </div>
+      </div>
+    )
+  },
+
+  renderBountyValue: function() {
+    var target = this.props.target;
+
+    if (target && target.type == 'task') {
+      return (
+        <div className="px3 left h4 mt0 mb0" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
+          <AppCoins n={target.earnable_coins_cache} />
+        </div>
+      )
+    }
+  },
+
+  renderCommentsCount: function() {
+    var commentsCount = this.props.comments_count
+
+    return (
+      <div className="px3 inline-block" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem', fill: '#C2C7D0' }}>
+        <SvgIcon type="comment" />
+        <span className="ml1">
+          {commentsCount} {commentsCount === 1 ? 'Comment' : 'Comments'}
+        </span>
+      </div>
+    )
+  },
+
+  // TODO
+  renderShare: function() {
+  },
+
+  renderHeart: function() {
+    return (
+      <div className="px3 inline-block border-left" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem', fill: '#C2C7D0' }}>
+        <Heart size="medium" heartable_id={this.props.id} heartable_type="NewsFeedItem" />
+      </div>
+    )
+  },
+
   renderFooter: function() {
     if (this.props.showAllComments) {
       return (
@@ -177,39 +259,6 @@ var NewsFeedItem = React.createClass({
             {this.renderSubscribeButton()}
             {this.renderEditButton()}
           </ul>
-        </div>
-      );
-    }
-  },
-
-  renderLove: function() {
-    return <div className="px3 py2 border-top border-bottom">
-      <Heart size="small" heartable_id={this.props.id} heartable_type="NewsFeedItem" />
-    </div>
-  },
-
-  renderMeta: function() {
-    var target = this.props.target
-    var tags = target && (target.tags || target.marks);
-
-    if (tags) {
-      var tagItems = null;
-      var baseUrl = target.url;
-
-      if (baseUrl && tags.length) {
-        tagItems = _.map(tags, function(tag) {
-          var url = baseUrl.split('/').slice(0, -1).join('/') + '?state=open&tag=' + tag.name;
-
-          return (
-            <div className="inline-block" key={tag.id}>
-              <Tag tag={tag} />
-            </div>
-          )
-        })
-      }
-      return (
-        <div className="px3 pb3">
-          {tagItems}
         </div>
       );
     }
@@ -260,19 +309,14 @@ var NewsFeedItem = React.createClass({
   renderSource: function() {
     var product = this.props.product
 
-    if (typeof product === "undefined" || product === null) {
-      return null;
+    if (!product) {
+      return;
     }
 
     return (
-      <a className="block px3 py2 clearfix border-bottom" href={product.url}>
-        <div className="left mr1">
-          <AppIcon app={product} size={36} />
-        </div>
-        <div className="overflow-hidden" style={{ lineHeight: '16px' }}>
-          <div className="h6 mt0 mb0 black">{product.name}</div>
-          <div className="h6 mt0 mb0 gray-2">{product.pitch}</div>
-        </div>
+      <a href={product.url} className="block border-bottom px3" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
+        <AppIcon app={product} size={24} style={{ display: 'inline' }} />
+        <span className="h6 mt0 mb0 black bold ml1">{product.name}</span>
       </a>
     );
   },
@@ -350,31 +394,6 @@ var NewsFeedItem = React.createClass({
             triggerModal={triggerModal} />;
       }
     }
-  },
-
-  renderUserSource: function() {
-    var user = this.props.user;
-    var target = this.props.target;
-
-    if (target && target.type === 'team_membership') {
-      return null;
-    }
-
-    return (
-      <div className="px3 py2 border-top mb0 mt0">
-        <div style={{marginBottom: "-3px"}}>
-          <div className="inline-block valign-top">
-            <div className="left mr1">
-              <Avatar user={user} size={18} />
-            </div>
-          </div>
-          <div className="inline-block valign-top gray-2 fs3">
-            <span className="black bold">{user.username}</span>
-            {' '} created this {this.targetNoun(target && target.type)}
-          </div>
-        </div>
-      </div>
-    );
   },
 
   targetNoun: function(type) {

@@ -45,16 +45,23 @@ var Heart = React.createClass({
       'action-icon': true,
       gray: !this.state.user_heart,
       'inline-block': true,
-      _mr0_25: true,
       red: this.state.user_heart
     });
 
+    var count = null
+
+    if (heartsCount > 0) {
+      count = (
+        <span className="h6 mt2 mb0 gray-2 ml1">{heartsCount}</span>
+      )
+    }
+
     return (
-      <a className="inline-block valign-top mr1 fs6 gray no-focus" href="javascript:void(0);" onClick={this.handleClick}>
+      <a className="inline-block valign-top fs6 gray no-focus" href="javascript:void(0);" onClick={this.handleClick}>
         <div className={classes}>
           <SvgIcon type="heart" />
         </div>
-        <span className="mt2 gray-2">{heartsCount > 0 ? heartsCount : null}</span>
+        {count}
       </a>
     );
   },
