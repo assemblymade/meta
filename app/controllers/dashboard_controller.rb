@@ -11,6 +11,7 @@ class DashboardController < ApplicationController
     @user_bounties = dashboard.user_bounties
     @heartables = dashboard.heartables
     @user_hearts = dashboard.user_hearts
+    @products = dashboard.followed_products
   end
 
   def news_feed_items

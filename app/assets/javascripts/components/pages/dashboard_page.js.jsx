@@ -27,7 +27,7 @@ var DashboardPage = React.createClass({
       newsFeedItems: [],
       lockedBounties: [],
       reviewingBounties: [],
-      products: [],
+      followedProducts: [],
       interests: this.props.initialInterests,
       loading: false,
       showAll: this.props.initialShowAll,
@@ -65,7 +65,7 @@ var DashboardPage = React.createClass({
   renderProduct: function() {
     var filter = this.props.filter
 
-    var product = _.find(this.props.followedProducts, function(product) {
+    var product = _.find(this.state.followedProducts, function(product) {
       return product.slug == filter
     })
 
@@ -110,7 +110,7 @@ var DashboardPage = React.createClass({
   renderNav: function() {
     var filter = this.props.filter
     var showAll = this.state.showAll
-    var followedProducts = showAll ? this.props.followedProducts : this.props.followedProducts.slice(0, 5)
+    var followedProducts = showAll ? this.state.followedProducts : this.state.followedProducts.slice(0, 5)
     var followingNavItem = null
     var divider = null
     var showAllLink = null
@@ -120,7 +120,7 @@ var DashboardPage = React.createClass({
       divider = <NavItem divider={true} />
     }
 
-    if (this.props.followedProducts.length > 5 && !showAll) {
+    if (this.state.followedProducts.length > 5 && !showAll) {
       var click = function(event) {
         event.stopPropagation()
         event.preventDefault()
@@ -423,7 +423,7 @@ var DashboardPage = React.createClass({
       reviewingBounties: UserBountiesStore.getReviewingBounties(),
       newsFeedItems: NewsFeedItemsStore.getNewsFeedItems(),
       loading: NewsFeedItemsStore.getLoading(),
-      products: ProductsStore.getProducts()
+      followedProducts: ProductsStore.getProducts()
     })
   },
 

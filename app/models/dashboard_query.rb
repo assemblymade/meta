@@ -18,7 +18,8 @@ class DashboardQuery
       news_feed_items: find_news_feed_items,
       user_bounties: find_user_bounties,
       heartables: find_heartables,
-      user_hearts: find_user_hearts
+      user_hearts: find_user_hearts,
+      followed_products: find_followed_products
     )
   end
 
@@ -76,5 +77,9 @@ class DashboardQuery
     else
       Product.where(slug: filter)
     end
+  end
+
+  def find_followed_products
+    user.followed_products.ordered_by_trend
   end
 end
