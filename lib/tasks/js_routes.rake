@@ -52,6 +52,7 @@ ROUTES = [
   'discussion_comments',
   'heartables_lovers',
   'idea',
+  'idea_mark',
   'ideas',
   'new_idea',
   'notifications',

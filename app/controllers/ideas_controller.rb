@@ -11,7 +11,15 @@ class IdeasController < ProductController
 
     find_idea!
 
-    respond_with IdeaSerializer.new(@idea)
+    respond_with({
+      idea: IdeaSerializer.new(@idea),
+      topics: Idea::TOPIC_NAMES.map.with_index do |name, i|
+        {
+          name: name,
+          slug: Idea::TOPIC_SLUGS[i]
+        }
+      end
+    })
   end
 
   def create
@@ -107,7 +115,7 @@ class IdeasController < ProductController
     find_idea!
     authorize! :update, @idea
 
-    @idea.update_attributes(idea_params)
+    @idea.update(idea_params)
 
     respond_to do |format|
       format.json  { render json: IdeaSerializer.new(@idea), status: 200 }
@@ -129,7 +137,13 @@ class IdeasController < ProductController
   end
 
   def idea_params
-    params.require(:idea).permit([:name, :body, :founder_preference, :flagged_at])
+    params.require(:idea).permit([
+      :name,
+      :body,
+      :founder_preference,
+      :flagged_at,
+      :topics => Idea::TOPIC_SLUGS
+    ])
   end
 
   def filter_params

@@ -27,10 +27,15 @@ function _showEditIdea(idea) {
   });
 }
 
-function _showIdeaAdmin(idea) {
+function _showIdeaAdmin(data) {
   Dispatcher.dispatch({
     type: ActionTypes.IDEA_RECEIVE,
-    idea: idea
+    idea: data.idea
+  });
+
+  Dispatcher.dispatch({
+    type: ActionTypes.IDEA_TOPICS_RECEIVE,
+    topics: data.topics
   });
 }
 

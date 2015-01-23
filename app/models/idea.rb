@@ -38,6 +38,19 @@ class Idea < ActiveRecord::Base
   DEFAULT_TILTING_THRESHOLD = 10
   EPOCH_START = Time.new(2013, 6, 6)
 
+  TOPIC_NAMES = [
+    "Art & Design",
+    "Education",
+    "Entertainment & Games",
+    "Family & Lifestyle",
+    "Mobile",
+    "Productivity & Tools",
+    "SaaS",
+    "Social"
+  ]
+
+  TOPIC_SLUGS = TOPIC_NAMES.map{ |name| name.downcase.gsub(/ /, "-") }
+
   def slug_candidates
     [
       :name,

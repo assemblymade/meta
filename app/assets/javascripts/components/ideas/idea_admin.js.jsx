@@ -1,17 +1,8 @@
 var IdeaContainer = require('./idea_container.js.jsx');
+var IdeaAdminActionCreators = require('../../actions/idea_admin_action_creators.js');
+var IdeaAdminStore = require('../../stores/idea_admin_store');
 var IdeaStore = require('../../stores/idea_store');
-var IdeaActionCreators = require('../../actions/idea_action_creators.js');
 
-var TOPICS = [
-  "Productivity & Tools",
-  "SaaS",
-  "Mobile",
-  "Social",
-  "Entertainment & Games",
-  "Family & Lifestyle",
-  "Art & Design",
-  "Education"
-];
 
 var IdeaAdmin = React.createClass({
   propTypes: {
@@ -24,32 +15,58 @@ var IdeaAdmin = React.createClass({
   },
 
   componentDidMount() {
+    IdeaAdminStore.addChangeListener(this.onIdeaAdminChange);
     IdeaStore.addChangeListener(this.onIdeaChange);
   },
 
   componentWillUnmount() {
+    IdeaAdminStore.removeChangeListener(this.onIdeaAdminChange);
     IdeaStore.removeChangeListener(this.onIdeaChange);
   },
 
   getInitialState() {
     return {
-      idea: IdeaStore.getIdea()
+      idea: IdeaStore.getIdea(),
+      availableTopics: IdeaAdminStore.getAvailableTopics()
     };
   },
 
   handleTopicSelected(topic, e) {
     var idea = this.state.idea;
+    var topics = idea.topics;
 
-    idea.topics[topic] = !idea.topics[topic];
+    for (var t in topics) {
+      if (topics.hasOwnProperty(t) && t !== topic) {
+        topics[t] = false;
+      }
+    }
+
+    topics[topic] = true;
+    idea.topics = topics;
 
     this.setState({
       idea: idea
     });
+
+    var updateIdea = {
+      idea: {
+        topics: idea.topics
+      },
+      id: idea.id
+    };
+
+    IdeaAdminActionCreators.updateIdea(updateIdea);
   },
 
   onIdeaChange() {
     this.setState({
       idea: IdeaStore.getIdea()
+    });
+  },
+
+  onIdeaAdminChange() {
+    this.setState({
+      availableTopics: IdeaAdminStore.getAvailableTopics()
     });
   },
 
@@ -73,14 +90,14 @@ var IdeaAdmin = React.createClass({
     var idea = this.state.idea;
     var ideaTopics = idea.topics;
 
-    return TOPICS.map((topic) => {
+    return this.state.availableTopics.map((topic) => {
       return (
         <div className="form-group gray-1 mb0">
           <label>
-            <input type="checkbox"
-                checked={idea[topic]}
-                onChange={this.handleTopicSelected.bind(this, topic)} />
-            {' ' + topic}
+            <input type="radio"
+                checked={ideaTopics[topic.slug]}
+                onChange={this.handleTopicSelected.bind(this, topic.slug)} />
+            {' ' + topic.name}
           </label>
         </div>
       );
@@ -100,7 +117,7 @@ var IdeaAdmin = React.createClass({
         idea.flagged_at = new Date()
       }
 
-      IdeaActionCreators.updateIdeaClicked(idea);
+      IdeaAdminActionCreators.updateIdea(idea);
     }
 
     return (
