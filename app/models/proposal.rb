@@ -41,6 +41,18 @@ class Proposal < ActiveRecord::Base
     self.vote_ratio > 0.5
   end
 
+  def update_state
+    if self.won? and !self.expired?
+      self.update!({state: "passed"})
+    elsif !self.won? and !self.expired?
+      self.update!({state: "open"})
+    elsif !self.won? and !self.expired? and self.state != "passed"
+      self.update({state: "failed"})
+    elsif self.expired? and self.state=="open"
+      self.update({state: "expired"})
+    end
+  end
+
   def win_criteria_text #update this also with win criteria
     "/ 50 %"
   end

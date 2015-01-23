@@ -11,25 +11,25 @@ class ChoicesController < ProductController
     @voter = current_user
     @proposal = Proposal.find(params[:proposal])
 
-    if @voter.can_vote?(@proposal.product)
-      if !@proposal.user_vote_status(@voter)
-        weight = @proposal.user_weight(@voter)
-        type = ""
-        Choice.create!({
-          value: 1.0,  #binary for YES
-          weight: weight,
-          type: type,
-          proposal: @proposal,
-          user: @voter
-          })
-      else
-        @proposal.choices.where(user: @voter).delete_all
-      end
+    if !@proposal.user_vote_status(@voter)
+      weight = @proposal.user_weight(@voter)
+      type = ""
+      @proposal.choices.create!({
+        value: 1.0,  #binary for YES
+        weight: weight,
+        type: type,
+        user: @voter
+        })
+    else
+      @proposal.choices.where(user: @voter).delete_all
     end
+    @proposal.update_state
+    @proposal.reload
 
     render json: {
       progress: @proposal.status,
-      approved: @proposal.user_vote_status(current_user)
+      approved: @proposal.user_vote_status(current_user),
+      state: @proposal.state
     }
 
   end

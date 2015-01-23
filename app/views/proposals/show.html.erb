@@ -7,7 +7,13 @@
 <div class="sheet-body">
   <div class="row">
     <div class="col-md-12 col-xs-12">
-      <%= react_component('Proposal', newsFeedItem: @proposal.news_feed_item, user: UserSerializer.new(@proposal.user), proposal: ProposalSerializer.new(@proposal), user_vote_state: @proposal.user_vote_status(current_user)) %>
+      <%= react_component(
+      'Proposal',
+      newsFeedItem: @proposal.news_feed_item,
+      user: UserSerializer.new(@proposal.user),
+      proposal: ProposalSerializer.new(@proposal),
+      user_vote_state: @proposal.user_vote_status(current_user)
+      ) %>
     </div>
   </div>
 </div>

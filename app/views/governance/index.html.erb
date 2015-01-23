@@ -4,11 +4,12 @@
 
 <%= render 'people/nav' %>
 
-
-<div class="sheet-body">
-  <div class="row">
-    <div class="col-md-12 col-xs-12">
-      <%= react_component('Governance', product: ProductGovernanceSerializer.new(@product).as_json) %>
+<% if current_user.is_staff? %>
+  <div class="sheet-body">
+    <div class="row">
+      <div class="col-md-12 col-xs-12">
+        <%= react_component('Governance', product: ProductGovernanceSerializer.new(@product).as_json) %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>

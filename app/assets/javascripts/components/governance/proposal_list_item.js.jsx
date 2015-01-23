@@ -1,6 +1,6 @@
 var Avatar = require('../ui/avatar.js.jsx');
 var Icon = require('../icon.js.jsx');
-var Love = require('../love.js.jsx');
+var Heart = require('../heart.js.jsx');
 var ListItemMixin = require('../../mixins/list_item_mixin.js.jsx');
 var NewsFeedItemModal = require('../news_feed/news_feed_item_modal.js.jsx');
 var Button = require('../ui/button.js.jsx')

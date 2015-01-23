@@ -9,8 +9,10 @@
     <li class="<%= nav_active_class(:people_contracts) %>">
       <a href="<%= product_contracts_path(@product) %>">Contracts</a>
     </li>
-    <li class="<%= nav_active_class(:people_governance) %>">
-      <a href="<%= product_governance_index_path(@product) %>">Governance</a>
-    </li>
+    <% if current_user.is_staff? %>
+      <li class="<%= nav_active_class(:people_governance) %>">
+        <a href="<%= product_governance_index_path(@product) %>">Governance</a>
+      </li>
+    <% end %>
   </ul>
 </div>
