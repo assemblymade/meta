@@ -2,8 +2,8 @@
   <%= initial_store_data(
     'UserBountiesStore',
     {
-      lockedBounties: ActiveModel::ArraySerializer.new(@user_bounties[:lockedBounties], each_serializer: BountySerializer),
-      reviewingBounties: ActiveModel::ArraySerializer.new(@user_bounties[:reviewingBounties], each_serializer: BountySerializer),
+      lockedBounties: ActiveModel::ArraySerializer.new(@user_bounties[:lockedBounties], each_serializer: BountyShallowSerializer),
+      reviewingBounties: ActiveModel::ArraySerializer.new(@user_bounties[:reviewingBounties], each_serializer: BountyShallowSerializer),
     }.as_json
   ) %>
 <% end %>
