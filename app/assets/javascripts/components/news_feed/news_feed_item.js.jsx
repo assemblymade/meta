@@ -148,7 +148,7 @@ var NewsFeedItem = React.createClass({
     var comment = this.props.last_comment
     if (comment) {
       return <div className="px3">
-        <ActivityFeedComment author={comment.user} body={comment.body} heartable={false} />
+        <ActivityFeedComment author={comment.user} body={comment.markdown_body} heartable={false} />
       </div>
     }
   },
