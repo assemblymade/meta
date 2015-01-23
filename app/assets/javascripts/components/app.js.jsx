@@ -2,6 +2,7 @@ var Button = require('./ui/button.js.jsx')
 var routes = require('../routes')
 var SingleLineList = require('./ui/single_line_list.js.jsx')
 var Thumbnail = require('./thumbnail.js.jsx')
+var Tile = require('./ui/tile.js.jsx')
 var Label = require('./ui/label.js.jsx')
 
 var App = React.createClass({
@@ -25,27 +26,28 @@ var App = React.createClass({
       return <Label name={tag} />
     })
 
-    return <a className="block clearfix bg-white rounded shadow" style={{minHeight: 120}} href={this.appPath()}>
-      <div className="border-bottom p3 right-align">
-        {this.appButton()}
+    return <a className="block" href={this.appPath()}>
+      <Tile>
+        <div className="border-bottom p3 right-align">
+          {this.appButton()}
 
-        <div className="left bg-white rounded border-inset-dark">
-          <Thumbnail size={66} src={logoUrl} />
-        </div>
-      </div>
-
-      <div className="p3 mt2">
-        <h4 className="regular mt0 mb0 gray-2">{name}</h4>
-
-        <div style={{minHeight: '6rem'}}>
-          <p className="h4 mt0 mb0 bold black">{this.pitch()}</p>
+          <div className="left bg-white rounded border-inset-dark">
+            <Thumbnail size={66} src={logoUrl} />
+          </div>
         </div>
 
-        <div className="mt1">
-          <SingleLineList items={tags} />
-        </div>
-      </div>
+        <div className="p3 mt2">
+          <h4 className="regular mt0 mb0 gray-2">{name}</h4>
 
+          <div style={{minHeight: '6rem'}}>
+            <p className="h4 mt0 mb0 bold black">{this.pitch()}</p>
+          </div>
+
+          <div className="mt1">
+            <SingleLineList items={tags} />
+          </div>
+        </div>
+      </Tile>
     </a>
   },
 
