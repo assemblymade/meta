@@ -1,9 +1,9 @@
-const ActionTypes = window.CONSTANTS.ActionTypes;
-const Dispatcher = window.Dispatcher;
-const NProgress = require('nprogress');
-const page = require('page');
-const qs = require('qs');
-const url = require('url');
+var ActionTypes = window.CONSTANTS.ActionTypes;
+var Dispatcher = window.Dispatcher;
+var NProgress = require('nprogress');
+var page = require('page');
+var qs = require('qs');
+var url = require('url');
 
 class Router {
   constructor(actionType, routes) {
@@ -32,7 +32,7 @@ class Router {
   }
 
   _getAndDispatch(component, callback) {
-    let self = this;
+    var self = this;
 
     return _.debounce((context) => {
       NProgress.start();
@@ -42,9 +42,9 @@ class Router {
   }
 
   _route(route) {
-    let path = route[0]
-    let component = route[1]
-    let callback = route[2]
+    var path = route[0]
+    var component = route[1]
+    var callback = route[2]
 
     page(path, this._getAndDispatch(component, callback))
   }
