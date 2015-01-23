@@ -318,7 +318,7 @@ var DashboardPage = React.createClass({
       <div>
         {items.map(function(item) {
           return (
-            <div>
+            <div className="mb2">
               <NewsFeedItem {...item} />
             </div>
           )
@@ -405,7 +405,7 @@ var DashboardPage = React.createClass({
             {nav}
           </div>
           <div className="col col-6 px2 mb4">
-            <h6 className="gray-3 caps mt2 mb2">What's Happening</h6>
+            <h6 className="gray-3 caps mt2 mb2">What&#8217;s Happening</h6>
             {newsFeedItems}
           </div>
           <div className="col col-4 px2">
