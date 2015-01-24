@@ -34,7 +34,7 @@ var IdeaStartConversation = React.createClass({
       idea: IdeaStore.getIdea(),
       isDrawerOpen: false,
       question: '',
-      showWarning: true
+      showWarning: false
     };
   },
 
@@ -145,7 +145,12 @@ var IdeaStartConversation = React.createClass({
             </div>
 
             <div className="right">
-              <Button type="primary" action={!this.state.showWarning && this.onPostQuestionClick}>
+              <Button type="primary"
+                  action={
+                    !this.state.showWarning &&
+                    this.state.question &&
+                    this.onPostQuestionClick
+              }>
                 <span className="title">Submit idea</span>
               </Button>
             </div>
