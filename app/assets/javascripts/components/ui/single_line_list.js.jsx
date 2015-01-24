@@ -22,7 +22,7 @@ var SingleLineList = React.createClass({
 
     shadowStyle = {
       width: height,
-      background: 'linear-gradient(90deg, transparent, white)'
+      background: 'linear-gradient(90deg, rgba(255, 255, 255, 0), white)'
     }
 
     return <div className="relative mxn1 overflow-hidden" style={{height: height, whiteSpace: 'nowrap'}}>
