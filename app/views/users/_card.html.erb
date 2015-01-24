@@ -2,7 +2,7 @@
   <div class="center p3">
 
     <div class="mx-auto mb2" style="width:120px">
-      <%= avatar_tag(user, 120) %>
+      <%= react_component 'Avatar', user: UserSerializer.new(user), size: 120 %>
     </div>
 
     <h3 class="black mt0 mb0"><strong><%= user.username %></strong></h3>
