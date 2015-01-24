@@ -31,6 +31,8 @@ namespace :ideas do
               heartable: idea.news_feed_item
             )
           end
+
+          idea.greenlight! if idea.should_greenlight?
         rescue => e
           puts "Failed to make product for #{product.slug}"
           puts e.inspect
