@@ -1,14 +1,34 @@
 class ProposalsController < ProductController
   respond_to :html, :json
 
+  STANDARD_PROPOSAL_DURATION = 30.days
+
   before_action :set_product
   before_action :authenticate_user!
 
   def index
-
   end
 
   def create
+    puts params
+    recipient = User.find_by(username: params['recipient'])
+
+    date = params['date'].to_i.days.from_now
+    if recipient
+      author_user = current_user
+      product = @product
+      total_coins = params['coins']
+      intervals = 1
+      start_date = 0.days.from_now
+      expiration_date = date
+      name = params['name']
+      description = params['description']
+      proposal_duration = STANDARD_PROPOSAL_DURATION
+      recipient_user = recipient
+      Governance.new.create_vesting_proposal(author_user, product, total_coins, intervals, start_date, expiration_date, name, description, proposal_duration, recipient_user)
+    end
+    puts "DINGOS IN OUTBACK MATE"
+    redirect_to product_governance_index_path(@product)
 
   end
 
@@ -29,7 +49,7 @@ class ProposalsController < ProductController
   end
 
   def edit
-    @proposal = Proposal.find(params[:id])
+
   end
 
 end

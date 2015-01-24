@@ -6,7 +6,6 @@ class ChoicesController < ProductController
   end
 
   def create
-
     #USE CURRENT USER
     @voter = current_user
     @proposal = Proposal.find(params[:proposal])

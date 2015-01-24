@@ -31,14 +31,24 @@ var Governance = React.createClass({
   },
 
   renderText: function() {
+    var link = "/"+this.props.product.slug + "/proposals/"
+    console.log(link)
+
     return (
       <div className="h4 center px3 py3" style={{ paddingTop: '1rem' }}>
         <div className="black">
           Create a New Proposal
         </div>
-        <div className="px3 py3">
-          <button className = "btn btn-info">Vesting Contract</button>
+        <div className="px3 mb2">
+
+          <form action={link}>
+            <input type="submit" className = "btn btn-info" value="Vesting Contract"></input>
+          </form>
+
         </div>
+        <label className="h6 py2 center">
+          Pay someone on a schedule for miscellaneous work.
+        </label>
         <div className="px3 py3">
           <button className = "btn">Others Coming Soon</button>
         </div>
