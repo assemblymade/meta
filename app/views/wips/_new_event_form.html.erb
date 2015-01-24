@@ -8,7 +8,7 @@
   <div id="new-comment" class="media js-new-event alpha">
 
     <div class="pull-left sm-show">
-      <%= react_component 'Avatar', user: UserSerializer.new(current_user), size: 30 %>
+      <%= avatar_tag(current_user, 30) %>
     </div>
 
     <div style="padding-left: 60px">

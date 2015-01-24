@@ -2,38 +2,27 @@ var Vignette = require('./vignette.js.jsx')
 
 var Avatar = React.createClass({
   propTypes: {
-    avatar_url: React.PropTypes.string,
-    size: React.PropTypes.oneOfType([
-            React.PropTypes.number,
-            React.PropTypes.string
-          ]),
+    size: React.PropTypes.number.isRequired,
     user: React.PropTypes.shape({
             username: React.PropTypes.string,
             avatar_url: React.PropTypes.string
-          }),
-    style: React.PropTypes.object
+          }).isRequired
   },
 
   getDefaultProps: function() {
     return {
-      size: 24,
-      style: {}
+      size: 24
     }
   },
 
   render: function() {
-    var username, _ref
-
-    var size = this.props.size.toString()
-    var username =  (_ref = this.props.user) != null ? _ref.username : void 0
-
+    var size = this.props.size
     return (
       <Vignette shape="circle" width={size} height={size}>
         <img src={this.avatarUrl()}
              height={size}
              width={size}
-             style={this.props.style}
-             alt={username} />
+             alt={this.altText()} />
       </Vignette>
     )
   },
@@ -48,6 +37,11 @@ var Avatar = React.createClass({
     }
 
     return this.props.user.avatar_url
+  },
+
+  altText() {
+    var _ref
+    return  (_ref = this.props.user) != null ? _ref.username : void 0
   }
 })
 

@@ -63,7 +63,7 @@ var Navbar = React.createClass({
 
         <li className="left dropdown hidden-xs">
           <a className="block dropdown-toggle px1" style={divStyle} key={'navbar dropdown'} onClick={this.toggleDropdown} href="javascript:;">
-            <Avatar user={appUser} size="27" />
+            <Avatar user={appUser} size={27} />
             <span className="visible-xs-inline ml1">{appUser.username}</span>
           </a>
           {userDropdownMenu}

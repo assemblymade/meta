@@ -38,7 +38,7 @@
               <label class="control-label">Avatar</label>
               <div class="clearfix">
                 <div class="left mr3">
-                  <%= react_component 'Avatar', user: UserSerializer.new(@user), size: 48 %>
+                  <%= avatar_tag(@user, 48) %>
                 </div>
 
                 <p class="gray-1 overflow-hidden">Assembly uses <a target="_blank" href="http://gravatar.com/">Gravatar</a> (globally recognized avatars). If you head over there and create an account with the same email address as your Assembly account, you'll be able to update your avatar.</p>

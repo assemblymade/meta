@@ -100,7 +100,7 @@ var PersonPicker = require('./person_picker.js.jsx');
             {this.rows()}
 
             <tr>
-              <td><Avatar user={this.state.potentialUser} alwaysDefault="true" /></td>
+              <td><Avatar user={this.state.potentialUser} /></td>
               <td colSpan="3">
                 <PersonPicker ref="picker" url="/_es"
                               onUserSelected={this.handleUserSelected}

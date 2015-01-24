@@ -9,7 +9,7 @@
       return (
         <div className="left mr1">
           <a href={user.url} title={'@' + user.username}>
-            <Avatar size="30" user={user} />
+            <Avatar size={30} user={user} />
           </a>
         </div>
       );

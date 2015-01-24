@@ -93,12 +93,14 @@ var PostListIem = React.createClass({
     var user = post.user;
 
     return (
-      <div className="h6 px3 py2 b0 mt0 border-top">
-        <Avatar user={user} size={24} style={{ display: 'inline-block' }} />
+      <div className="h6 px3 py2 b0 mt0 border-top clearfix">
+        <div className="left mr2">
+          <Avatar user={user} size={24} />
+        </div>
 
-        <span className="gray-2 ml2">
+        <div className="overflow-hidden gray-2">
           <a href={user.url}>@{user.username}</a> wrote this post {moment(post.created_at).fromNow()}
-        </span>
+        </div>
       </div>
     );
   }

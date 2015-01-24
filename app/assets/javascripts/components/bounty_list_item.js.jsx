@@ -160,16 +160,19 @@ var BountyListItem = React.createClass({
     var user = bounty.locker
 
     return (
-      <div className="px3 py2 border-top h6 mb0 mt0">
-        <Avatar user={user} size={18} style={{ display: 'inline-block' }} />
-        {' '}
-        <a href={user.url} className="bold black">
-          {user.username}
-        </a>
-        {' '}
-        <span className="gray-2">
-          has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
-        </span>
+      <div className="px3 py2 border-top h6 mb0 mt0 clearfix">
+        <div className="left mr1">
+          <Avatar user={user} size={18} />
+        </div>
+        <div className="overflow-hidden">
+          <a href={user.url} className="bold black">
+            {user.username}
+          </a>
+          {' '}
+          <span className="gray-2">
+            has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
+          </span>
+        </div>
       </div>
     )
   },
