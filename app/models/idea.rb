@@ -6,11 +6,12 @@ class Idea < ActiveRecord::Base
 
   friendly_id :slug_candidates, use: :slugged
 
+  belongs_to :product
   belongs_to :user
+
   has_many :markings, as: :markable
   has_many :marks, through: :markings
   has_one :news_feed_item, foreign_key: 'target_id'
-  has_one :product
 
   delegate :news_feed_item_comments, to: :news_feed_item
 
@@ -18,6 +19,7 @@ class Idea < ActiveRecord::Base
                    length: { minimum: 2, maximum: 255 },
                    exclusion: { in: %w(admin about script if owner core start-conversation product) }
   validates :tilting_threshold, presence: true
+  validate :idea_and_product_have_same_user
 
   before_validation :set_tilting_threshold!, on: :create
 
@@ -65,6 +67,14 @@ class Idea < ActiveRecord::Base
     ]
   end
 
+  def idea_and_product_have_same_user
+    if product
+      user == product.user
+    else
+      true
+    end
+  end
+
   def self.create_with_discussion(user, idea_params)
     transaction do
       idea = user.ideas.create(idea_params)
@@ -80,11 +90,6 @@ class Idea < ActiveRecord::Base
   # this is for heart emails, but I think any 'thread' should have a title
   def title
     name
-  end
-
-  # ideas will belongs_to a product soon
-  def product
-    nil
   end
 
   def comments

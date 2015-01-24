@@ -195,7 +195,7 @@ var IdeaShow = React.createClass({
             </div>
 
             <div className="right mr2">
-              <a href={"/new?pitch=" + idea.raw_body}>
+              <a href={"/new?pitch=" + idea.raw_body + '&idea_id=' + idea.id}>
                 <Button type="primary" action={function() {}}>
                   <span className="text-white bold">
                     Start building

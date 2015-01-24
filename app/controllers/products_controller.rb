@@ -28,6 +28,12 @@ class ProductsController < ProductController
   end
 
   def create
+    if idea_id = params[:product][:idea_id]
+      @idea = Idea.find(idea_id)
+
+      return render action: :new, layout: 'application' unless @idea.user == current_user
+    end
+
     @product = create_product_with_params
     if @product.valid?
       respond_with(@product, location: product_welcome_path(@product))
@@ -35,6 +41,11 @@ class ProductsController < ProductController
       Karma::Kalkulate.new.award_for_product_to_stealth(@product)
 
       @product.retrieve_key_pair
+
+      if @idea
+        @idea.update(product: @product)
+      end
+
       schedule_greet
       schedule_one_hour_checkin
     else
