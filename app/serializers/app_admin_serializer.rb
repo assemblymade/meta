@@ -11,7 +11,7 @@ class AppAdminSerializer < ApplicationSerializer
   end
 
   def current_showcase
-    object.showcases.active
+    object.showcases.active.first.try(:slug)
   end
 
 end

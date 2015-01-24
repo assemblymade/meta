@@ -1,5 +1,7 @@
 class Admin::AppsController < AdminController
   def index
+    @showcases = Showcase.active
+    @topics = Topic.all
     @products = Product.all.includes(showcase_entries: :showcase)
 
     if params[:q].present?
@@ -21,13 +23,11 @@ class Admin::AppsController < AdminController
 
   def update
     @product = Product.find(params[:id])
-
     @product.update!(app_params)
-
     render json: @product, serializer: AppAdminSerializer
   end
 
   def app_params
-    params.permit(:tags_string)
+    params.permit(:tags_string, :topic, :showcase)
   end
 end

@@ -5,5 +5,7 @@
   sortCol: params[:sort],
   sortAsc: params[:direction] == 'asc',
   showRanked: params[:showranked] == 'true',
-  totalPages: @products.total_pages
+  showcases: @showcases.map(&:slug),
+  totalPages: @products.total_pages,
+  topics: @topics.map(&:slug)
 %>

@@ -37,19 +37,23 @@ var AdminApps = React.createClass({
             <TableSortHeader width={150} onClick={this.handleSortToggled('name')} asc={this.sortOrder('name')} label="Name" />
             <TableSortHeader width={300} onClick={this.handleSortToggled('pitch')} asc={this.sortOrder('pitch')} label="Pitch" />
             <TableSortHeader width={150} onClick={this.handleSortToggled('created_at')} asc={this.sortOrder('created_at')} label="Created" />
-            <TableSortHeader width={150} onClick={this.handleSortToggled('tags')} asc={this.sortOrder('tags')} label="Tags" />
-            <TableSortHeader width={150} onClick={this.handleSortToggled('topic')} asc={this.sortOrder('topic')} label="Topic" align="right" />
-            <TableSortHeader width={150} onClick={this.handleSortToggled('showcase')} asc={this.sortOrder('showcase')} label="Showcase" align="right" />
+            <TableSortHeader width={300} onClick={this.handleSortToggled('tags')} asc={this.sortOrder('tags')} label="Tags" />
+            <TableSortHeader width={150} onClick={this.handleSortToggled('topic')} asc={this.sortOrder('topic')} label="Topic" />
+            <TableSortHeader width={150} onClick={this.handleSortToggled('showcase')} asc={this.sortOrder('showcase')} label="Showcase" />
           </tr>
         </thead>
 
         <tbody>
-          {_.values(this.state.rows).map(function(row) {
-            return DataRow(React.addons.update(row, {
-              key: { $set: row.id },
-              onChange: { $set: this.handleTagsChanged(row.id) }
-            }))
-          }.bind(this))}
+          {_.values(this.state.rows).map(row => <DataRow
+                key={row.id}
+                showcases={this.props.showcases}
+                topics={this.props.topics}
+                onTagsChange={this.handleTagsChanged(row.id)}
+                onTopicChange={this.handleTopicChanged(row.id)}
+                onShowcaseChange={this.handleShowcaseChanged(row.id)}
+                {...row} />
+            )
+          }
         </tbody>
       </table>
 
@@ -98,23 +102,55 @@ var AdminApps = React.createClass({
       var rows = this.state.rows
       rows[id].editState = 'saving'
       rows[id].search_tags = tags.split(',')
-      this.setState({
-        rows: rows
-      })
+      this.setState({ rows: rows })
 
       var success = function(idea) {
         rows[id].editState = 'saved'
-        this.setState({
-          rows: rows
-        })
+        this.setState({ rows: rows })
       }
       var error = function() {
         rows[id].editState = 'error'
-        this.setState({
-          rows: rows
-        })
+        this.setState({ rows: rows })
       }
       this.patch('/admin/apps/' + id, { tags_string: tags }, success.bind(this), error.bind(this))
+    }.bind(this)
+  },
+
+  handleTopicChanged: function(id) {
+    return function(topic) {
+      var rows = this.state.rows
+      rows[id].editState = 'saving'
+      rows[id].topic = topic
+      this.setState({ rows: rows })
+
+      var success = function() {
+        rows[id].editState = 'saved'
+        this.setState({ rows: rows })
+      }
+      var error = function() {
+        rows[id].editState = 'error'
+        this.setState({ rows: rows })
+      }
+      this.patch('/admin/apps/' + id, { topic: topic }, success.bind(this), error.bind(this))
+    }.bind(this)
+  },
+
+  handleShowcaseChanged: function(id) {
+    return function(showcase) {
+      var rows = this.state.rows
+      rows[id].editState = 'saving'
+      rows[id].showcase = showcase
+      this.setState({ rows: rows })
+
+      var success = function() {
+        rows[id].editState = 'saved'
+        this.setState({ rows: rows })
+      }
+      var error = function() {
+        rows[id].editState = 'error'
+        this.setState({ rows: rows })
+      }
+      this.patch('/admin/apps/' + id, { showcase: showcase }, success.bind(this), error.bind(this))
     }.bind(this)
   },
 
@@ -176,25 +212,41 @@ var DataRow = React.createClass({
         <input type="text" className="form-control"
                 value={this.state.dirty ? this.state.pendingTags : this.props.search_tags.join(',')}
                 style={{ backgroundColor: bgColor }}
-                onChange={this.handleChange}
-                onBlur={this.persistChange}
+                onChange={this.handleTagsChange}
+                onBlur={this.persistTagsChange}
         />
       </td>
-      <td>{this.props.topic}</td>
-      <td>{this.props.showcase}</td>
+      <td>
+        <select value={this.props.topic} onChange={this.handleTopicChange}>
+          {_([''].concat(this.props.topics)).map(t => <option>{t}</option>)}
+        </select>
+      </td>
+      <td>
+        <select value={this.props.current_showcase} onChange={this.handleShowcaseChange}>
+          {_([''].concat(this.props.showcases)).map(t => <option>{t}</option>)}
+        </select>
+      </td>
     </tr>
   },
 
-  handleChange: function(e) {
+  handleTagsChange: function(e) {
     this.setState({
       dirty: true,
       pendingTags: e.target.value
     })
   },
 
-  persistChange: function() {
+  handleTopicChange: function(e) {
+    this.props.onTopicChange(e.target.value)
+  },
+
+  handleShowcaseChange: function(e) {
+    this.props.onShowcaseChange(e.target.value)
+  },
+
+  persistTagsChange: function() {
     if (this.state.dirty && (this.state.pendingTags != this.props.tags)) {
-      this.props.onChange(this.state.pendingTags)
+      this.props.onTagsChange(this.state.pendingTags)
       this.setState({pendingTags: null, dirty: false})
     }
   }

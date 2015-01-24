@@ -2,7 +2,7 @@
 
 <%= render 'shared/navbar' %>
 
-<% if @showcases.map(&:slug).include?(params[:showcase]) %>
+<% if @showcases && @showcases.map(&:slug).include?(params[:showcase]) %>
   <div class="container">
     <div class="clearfix mxn2 py2">
       <div class="rounded text-white bg-gray-2 p3">
@@ -23,7 +23,8 @@
 <%= react_component 'Apps',
       search: params[:search],
       filter: params[:filter],
-      topics: (@showcases.map(&:slug).map{|slug|
+      topics: @topics,
+      showcases: (@showcases ? @showcases.map(&:slug).map{|slug|
         I18n.t(slug, scope: :showcases).merge(slug: slug)
-      })
+      } : nil)
 %>

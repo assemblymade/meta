@@ -63,21 +63,7 @@ var Apps = React.createClass({
     }
     return <div>
       {this.renderAppsList(_(this.state.apps).first(3))}
-
-      <div className="col col-6 pr2 pb2">
-        <a href={"/apps?topic=" + this.props.topics[0].slug} className="big-block-button">
-          <div className="h7">Top Trending</div>
-          {this.props.topics[0].hero_title}
-        </a>
-      </div>
-
-      <div className="col col-6 pl2 pb2">
-        <a href={"/apps?topic=" + this.props.topics[1].slug} className="big-block-button">
-          <div className="h7">Top Trending</div>
-          {this.props.topics[1].hero_title}
-        </a>
-      </div>
-
+      {this.renderShowcases()}
       {this.renderAppsList(_(this.state.apps).rest(3))}
     </div>
   },
@@ -89,6 +75,27 @@ var Apps = React.createClass({
           <App {...app} />
         </div>
       )}
+    </div>
+  },
+
+  renderShowcases: function() {
+    if (!this.props.showcases) {
+      return null
+    }
+    return <div>
+      <div className="col col-6 pr2 pb2">
+        <a href={"/apps?showcase=" + this.props.showcases[0].slug} className="big-block-button">
+          <div className="h7">Top Trending</div>
+          {this.props.showcases[0].hero_title}
+        </a>
+      </div>
+
+      <div className="col col-6 pl2 pb2">
+        <a href={"/apps?showcase=" + this.props.showcases[1].slug} className="big-block-button">
+          <div className="h7">Top Trending</div>
+          {this.props.showcases[1].hero_title}
+        </a>
+      </div>
     </div>
   },
 

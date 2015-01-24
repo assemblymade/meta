@@ -6,10 +6,12 @@ class AppsQuery
   ORDER_NEW = 'new'
   ORDER_TREND = 'trend'
 
-  def initialize(user = nil, filter = nil, topic = nil)
+  attr_reader :params
+
+  def initialize(user = nil, params)
     @user = user
-    @filter = filter
-    @topic = topic
+    @params = params.symbolize_keys
+    puts "filter: #{params}"
   end
 
   def perform
@@ -24,19 +26,21 @@ class AppsQuery
 
   def filter_clause
     case
-    when @filter == FILTER_MINE
+    when params[:filter] == FILTER_MINE
       Product.where(user: @user)
-    when @filter == FILTER_LIVE
+    when params[:filter] == FILTER_LIVE
       Product.public_products.live
-    when @topic.present?
-      Product.public_products.with_mark(@topic)
+    when params[:topic].present?
+      Product.public_products.tagged_with(params[:topic])
+    when params[:showcase].present?
+      Product.joins(:showcases).where(showcases: {slug: params[:showcase]})
     else
       Product.public_products
     end
   end
 
   def sort_order
-    case @filter
+    case params[:filter]
     when ORDER_NEW
       Product.order(created_at: :desc)
     else

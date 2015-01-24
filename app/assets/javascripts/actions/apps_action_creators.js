@@ -42,7 +42,7 @@ var AppsActionCreators = {
 
   },
 
-  filterSelected: function(filter, topic) {
+  filterSelected: function(params) {
     Dispatcher.dispatch({
       type: ActionTypes.APPS_START_SEARCH
     });
@@ -51,7 +51,7 @@ var AppsActionCreators = {
       method: 'GET',
       dataType: 'json',
       url: routes.apps_path() + '.json',
-      data: { filter: filter, topic: topic },
+      data: params,
       success: function(response) {
         Dispatcher.dispatch({
           type: ActionTypes.APPS_RECEIVE,

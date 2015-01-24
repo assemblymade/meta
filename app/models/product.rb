@@ -558,6 +558,14 @@ class Product < ActiveRecord::Base
     self.tags = new_tags_string.split(', ')
   end
 
+  def topic=(new_topic)
+    self.topics = [new_topic]
+  end
+
+  def showcase=(showcase_slug)
+    Showcase.find_by!(slug: showcase_slug).add!(self)
+  end
+
   def assembly?
     slug == 'asm'
   end
