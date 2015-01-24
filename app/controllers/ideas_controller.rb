@@ -41,19 +41,20 @@ class IdeasController < ProductController
   end
 
   def index
-    ideas = FilterIdeasQuery.call(filter_params)
-    total_pages = (ideas.count / IDEAS_PER_PAGE.to_f).ceil
+    @ideas = FilterIdeasQuery.call(filter_params).
+      page(params[:page]).per(IDEAS_PER_PAGE)
+
+    total_pages = @ideas.total_pages
+
     @stores[:pagination_store] = {
       current_page: params[:page] || 1,
       total_pages: total_pages
     }
 
-    @heartables = ideas.map(&:news_feed_item)
+    @heartables = @ideas.map(&:news_feed_item)
     @user_hearts = if signed_in?
       Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
     end
-
-    @ideas = ideas.page(params[:page]).per(IDEAS_PER_PAGE)
 
     respond_with({
       heartables: @heartables,
