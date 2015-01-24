@@ -1,0 +1,44 @@
+.vignette {
+  position: relative;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-width: 1px;
+    border-style: solid;
+  }
+
+  > img {
+    display: block;
+  }
+}
+
+.vignette--dark:after {
+  border-color: rgba(black, .1);
+}
+
+.vignette--light:after {
+  border-color: rgba(white, .2);
+}
+
+.vignette--rounded {
+  &,
+  > img,
+  &:after {
+    border-radius: $border-radius;
+  }
+}
+
+.vignette--circle {
+  &,
+  > img,
+  &:after {
+    border-radius: 50%;
+  }
+}
