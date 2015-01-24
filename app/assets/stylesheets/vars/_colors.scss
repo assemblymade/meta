@@ -11,17 +11,10 @@ $gray-3: #C2C7D0;
 $gray-2: #8B909A;
 $gray-1: #666D78;
 
-$gray-lighter: $gray-6;
-$gray-light:   $gray-5;
-$gray:         $gray-3;
-$gray-dark:    $gray-2;
-$gray-darker:  $gray-1;
-
 $gray-green:   #678b92;
 
 $green:        #33D6A6;
 $green-dark:   #2ec095;
-$aqua:         #53cbdd;
 $cyan:         #5bc0de;
 $blue:         #338EDA;
 $red:          #EC3750;
@@ -31,26 +24,16 @@ $coin-yellow:  #ecbd00;
 $facebook:      #3B5998;
 $twitter:       #55ACEE;
 
-// accent-colors
-$accent-brown: #7f704d;
-$accent-green: #89b87a;
-$accent-teal: #478385;
-$accent-blue: #157db8;
-$accent-purple: #764785;
-$accent-lavender: #808fb2;
-$accent-rose: #b87c7a;
-$accent-orange: #ea8247;
-
 // brand vars
 $brand-primary: $blue;
 $brand-success: $green;
 $brand-info:    $cyan;
 $brand-warning: $yellow;
 $brand-danger:  $red;
-$brand-muted:   $gray-darker;
+$brand-muted:   $gray-1;
 
 $brand-bg:       #FAFAFA;
-$brand-border:   darken($gray-lighter, 10%);
+$brand-border:   darken($gray-6, 10%);
 $brand-divider:  darken($brand-bg, 5%);
 $brand-shadow:   rgba(100, 100, 100, 0.2);
 
@@ -69,3 +52,4 @@ $green-light:   lighten($green, 10%);
 $purple-light:  lighten($purple, 10%);
 $yellow-light:  lighten($yellow, 10%);
 $red-light:     lighten($red, 10%);
+$brand-shadow-light: rgba(100, 100, 100, 0.15)

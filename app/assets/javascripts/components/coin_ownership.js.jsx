@@ -3,7 +3,7 @@
 var CONSTANTS = window.CONSTANTS;
 // var Dispatcher = require('../dispatcher');
 var CoinOwnershipStore = require('../stores/coin_ownership_store');
-var Avatar = require('./avatar.js.jsx');
+var Avatar = require('./ui/avatar.js.jsx');
 var PersonPicker = require('./person_picker.js.jsx');
 
 (function() {
@@ -269,7 +269,7 @@ var PersonPicker = require('./person_picker.js.jsx');
               </div>
             </td>
             <td>
-              <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
+              <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted red-hover">
                 <span className="icon icon-close"></span>
                 <span className="sr-only">Remove</span>
               </a>
@@ -299,7 +299,7 @@ var PersonPicker = require('./person_picker.js.jsx');
               </div>
             </td>
             <td>
-              <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
+              <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted red-hover">
                 <span className="icon icon-close"></span>
                 <span className="sr-only">Remove</span>
               </a>

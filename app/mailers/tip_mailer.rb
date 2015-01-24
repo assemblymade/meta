@@ -16,6 +16,8 @@ class TipMailer < BaseMailer
     # TODO: we'll fix this when there is a dedicated page for the tip/activity
     # to link people to
     @url = case @via.class.base_class.to_s
+    when NewsFeedItemComment.to_s
+      url_for(@tip.via.url_params)
     when Event.to_s
       product_wip_url(@product, @via.wip)
     when Activity.to_s

@@ -117,7 +117,7 @@
 
           <div className="h6 mt2 mb0">
             <strong>Examples: </strong>
-            <span className="gray-dark">
+            <span className="gray-2">
               {this.selectedStepExamples()}
             </span>
           </div>

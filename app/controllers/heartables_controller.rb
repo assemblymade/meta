@@ -15,7 +15,7 @@ class HeartablesController < ApplicationController
 
     @heart = heartable.hearts.create(user: current_user)
     if @heart.valid?
-      TrackEngagement.perform_async(
+      TrackInfluenced.perform_async(
         current_user.id,
         @heart.created_at.to_i,
         'Heart',
@@ -61,6 +61,14 @@ class HeartablesController < ApplicationController
     render json: {
       user_hearts: ActiveModel::ArraySerializer.new(@user_hearts),
       recent_hearts: ActiveModel::ArraySerializer.new(@hearts)
+    }
+  end
+
+  def lovers
+    @lovers = Heart.includes(:user).where(heartable_id: params[:heartable_id]).map(&:user)
+
+    render json: {
+      lovers: ActiveModel::ArraySerializer.new(@lovers)
     }
   end
 

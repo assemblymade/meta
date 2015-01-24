@@ -70,22 +70,15 @@ function confirmComment(data) {
     }
   }
 
-  var optimisticComment = data.comment;
+  var confirmedComment = data.comment;
 
-  if (optimisticComment) {
+  if (confirmedComment) {
     if (_comments.confirmed[thread]) {
-      _comments.confirmed[thread].push(optimisticComment);
+      _comments.confirmed[thread].push(confirmedComment);
     } else {
-      _comments.confirmed[thread] = [optimisticComment];
+      _comments.confirmed[thread] = [confirmedComment];
     }
   }
-
-  // NewsFeedItemStore.emitChange();
-
-  // // FIXME: (pletcher) There shouldn't be side effects like this in the store.
-  // //        Instead, initialize the store with the comments from the server
-  // //        and keep all of them here
-  // _comments.confirmed[thread] = [];
 }
 
 function optimisticallyAddComment(comment) {

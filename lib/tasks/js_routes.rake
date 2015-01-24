@@ -47,13 +47,20 @@ EOS
 end
 
 ROUTES = [
+  'apps',
+  'discussion_comment',
+  'discussion_comments',
+  'heartables_lovers',
+  'idea',
+  'idea_mark',
+  'ideas',
+  'new_idea',
   'notifications',
+  'product',
   'product_follow',
   'product_post',
   'product_unfollow',
   'product_update',
-  'product_update_comment',
-  'product_update_comments',
   'product_update_subscribe',
   'product_update_unsubscribe',
   'product_wip_close',
@@ -66,7 +73,9 @@ def routes
   Rails.application.reload_routes!
   Rails.application.routes.routes.map do |route|
     if ROUTES.include?(route.name)
-      {name: route.name, path: route.path.spec.to_s.split("(")[0]}
+      path = route.path.spec.to_s.split("(")[0]
+      puts "#{route.name.rjust(40)}   #{path}"
+      {name: route.name, path: path}
     end
 
   end.compact

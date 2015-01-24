@@ -3,6 +3,8 @@
 (function() {
   var AppCoins = require('./app_coins.js.jsx')
   var BountyBreakdown = require('./bounty_breakdown.js.jsx');
+  var Icon = require('./ui/icon.js.jsx')
+
   var BountyValuation = React.createClass({
     propTypes: {
       contracts: React.PropTypes.object.isRequired,
@@ -11,7 +13,8 @@
       maxOffer: React.PropTypes.number,
       averageBounty: React.PropTypes.number,
       coinsMinted: React.PropTypes.number,
-      profitLastMonth: React.PropTypes.number
+      profitLastMonth: React.PropTypes.number,
+      steps: React.PropTypes.array
     },
 
     getInitialState: function() {
@@ -22,17 +25,24 @@
 
     renderLightbox: function() {
       if (this.state.shown) {
-        return <BountyBreakdown {...this.props} onHidden={this.handleHide} steps={this.props.steps} />
+        return <BountyBreakdown {...this.props} onHidden={this.handleHide} />
       }
     },
 
     render: function() {
       return (
-        <div>
-          <a href="#" id="bounty-amount-link" onClick={this.toggle}>
-            <AppCoins n={this.props.contracts.earnable} />
-            {' '}
-            <span className="icon icon-chevron-down text-coins"></span>
+        <div className="clearfix">
+          <a className="block left clearfix" href="#" id="bounty-amount-link" onClick={this.toggle}>
+            <div className="left">
+              <AppCoins n={this.props.earnable_coins_cache} />
+            </div>
+            <div className="left yellow ml1">
+              <Icon icon="chevron-down" />
+            </div>
+          </a>
+
+          <a className="block right ml2 gray-4 gray-2-hover" href="/help/revenue">
+            <Icon icon="question-circle" />
           </a>
 
           {this.renderLightbox()}

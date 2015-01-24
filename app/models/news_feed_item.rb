@@ -5,6 +5,8 @@ class NewsFeedItem < ActiveRecord::Base
   include Kaminari::ActiveRecordModelExtension
 
   belongs_to :target, polymorphic: true
+  belongs_to :target_task, class_name: 'Task', foreign_key: 'target_id'
+
   belongs_to :product
   belongs_to :source, class: User
 
@@ -12,6 +14,7 @@ class NewsFeedItem < ActiveRecord::Base
   has_many :followers, through: :followings, source: :user
   has_many :hearts, as: :heartable, after_add: [:follow_author, :hearted]
   has_many :comments, class_name: 'NewsFeedItemComment', after_add: :comment_added
+  has_one :last_comment, -> { order('news_feed_item_comments.created_at DESC').limit(1) }, class_name: 'NewsFeedItemComment'
 
   validates :target, presence: true
 
@@ -27,6 +30,12 @@ class NewsFeedItem < ActiveRecord::Base
 
   scope :unarchived_items, -> { where(archived_at: nil) }
 
+  scope :for_feed, -> {
+    public_items.
+      unarchived_items.
+      order(last_commented_at: :desc)
+  }
+
   def self.create_with_target(target)
     create!(
       product: target.try(:product),
@@ -39,16 +48,16 @@ class NewsFeedItem < ActiveRecord::Base
     self.source_id # currently this is always a user, might be polymorphic in the future
   end
 
-  def last_comment
-    comments.order(created_at: :desc).first
-  end
-
   def hearted(o)
     target.try(:hearted)
   end
 
   def unhearted
     target.try(:unhearted)
+  end
+
+  def product?
+    !!target.try(:product)
   end
 
   def events

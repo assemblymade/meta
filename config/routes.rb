@@ -13,7 +13,7 @@ ASM::Application.routes.draw do
   end
 
   authenticated do
-    get '/', to: redirect('/discover')
+    get '/', to: redirect('/dashboard')
   end
 
   root :to => 'pages#home'
@@ -43,8 +43,6 @@ ASM::Application.routes.draw do
   get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
   get '/activity'         => 'activity#index',    as: :activity
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
-  get '/interests'        => 'pages#interests',   as: :interests
-  get '/suggestions'      => 'pages#suggestions', as: :suggestions
 
   # Readraptor proxy. Remove this when javascript clients can talk directly to RR
   get '/_rr/articles/:id' => 'readraptor#show', as: :readraptor_article
@@ -54,8 +52,13 @@ ASM::Application.routes.draw do
 
   get '/styleguide' => 'pages#styleguide'
 
+  resources :apps, only: [:index] do
+  end
+
   resources :ideas do
-    resources :idea_comments, only: [:index, :create], as: :comments, path: 'comments'
+    get '/start-conversation', on: :member, action: :start_conversation
+    get '/admin', on: :member, action: :admin
+    patch '/admin', on: :member, action: :admin_update
     patch :mark
   end
 
@@ -91,9 +94,8 @@ ASM::Application.routes.draw do
       get   '/welcome/thanks', action: :show
     end
 
-    get '/dashboard' => 'dashboard#activity', as: :dashboard
-    get '/dashboard/activity' => 'dashboard#activity', as: :activity_dashboard
-    get '/dashboard/bounties' => 'dashboard#bounties', as: :bounties_dashboard
+    get '/dashboard' => 'dashboard#index', as: :dashboard
+    get '/dashboard/:filter' => 'dashboard#index', as: :dashboard_filter
 
     # settings
     get    '/settings' => 'users#edit', as: :edit_user
@@ -142,6 +144,7 @@ ASM::Application.routes.draw do
   post 'heartables/love', as: :love
   post 'heartables/unlove', as: :unlove
   get  'heartables/hearts'
+  get  'heartables/:heartable_id/lovers', controller: :heartables, action: :lovers, as: :heartables_lovers
 
   resources :stories, only: [:show]
 
@@ -182,17 +185,18 @@ ASM::Application.routes.draw do
 
   # Admin
   namespace :admin do
-    resources :bitcoin, only: [:index]
+    resources :apps, only: [:index, :update]
     resources :asset_history, only: [:index]
-    resources :user_books, only: [:index]
+    resources :bitcoin, only: [:index]
+    resources :bounties, only: [:index] do
+      get :graph_data
+    end
     resources :karma, only: [:index]
     resources :karmahistory, only: [:index]
     resources :leaderboard, only: [:index]
+    resources :ownership, only: [:index, :update]
     resources :tags, only: [:index]
-    resources :bounties, only: [:index]
-    namespace :bounties do
-      get :graph_data
-    end
+    resources :user_books, only: [:index]
     resources :profit_reports, path: 'profit-reports', only: [:index, :show]
     resources :product_rankings, path: 'products', only: [:index, :update]
     resources :withdrawals, only: [:index] do
@@ -273,6 +277,15 @@ ASM::Application.routes.draw do
 
   # legacy
   get '/meta/chat', to: redirect(path: '/chat/general')
+
+  # FIXME: Fix news_feed_items_controller to allow missing product
+  get '/news_feed_items' => 'dashboard#news_feed_items'
+
+  resources :discussions, only: [] do
+    resources :comments, only: [:index, :create, :update]
+  end
+
+  resource :user, only: [:update]
 
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do

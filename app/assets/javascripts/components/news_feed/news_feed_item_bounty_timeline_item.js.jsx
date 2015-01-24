@@ -1,6 +1,5 @@
-/** @jsx React.DOM */
-
-var Avatar = require('../avatar.js.jsx');
+var Avatar = require('../ui/avatar.js.jsx');
+var Heart = require('../heart.js.jsx');
 
 module.exports = React.createClass({
   displayName: 'NewsFeedItemBountyTimelineItem',
@@ -100,7 +99,7 @@ module.exports = React.createClass({
                 </li>
 
                 <li className="left mr1">
-                  <Love heartable_type='NewsFeedItemComment' heartable_id={this.props.news_feed_item_comment_id} />
+                  <Heart size="small" heartable_type='NewsFeedItemComment' heartable_id={this.props.news_feed_item_comment_id} />
                 </li>
               </ul>
 

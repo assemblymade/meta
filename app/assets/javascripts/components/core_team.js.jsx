@@ -148,7 +148,7 @@
 
             <td className="text-right">
               <input type="hidden" value={this.props.user.email} name="core_team[]" />
-              <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
+              <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted red-hover">
                 <span className="icon icon-close"></span>
                 <span className="sr-only">Remove</span>
               </a>
@@ -163,7 +163,7 @@
 
             <td className="text-right">
               <input type="hidden" value={this.props.user.id} name="core_team[]" />
-              <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted link-hover-danger">
+              <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted red-hover">
                 <span className="icon icon-close"></span>
                 <span className="sr-only">Remove</span>
               </a>

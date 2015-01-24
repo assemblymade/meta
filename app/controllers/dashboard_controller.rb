@@ -1,48 +1,35 @@
 class DashboardController < ApplicationController
-  respond_to :html
+  before_action :authenticate_user!
 
-  def activity
-    authenticate_user!
+  respond_to :html, :json
 
-    @stories = NewsFeed.new(current_user).page(params[:top_id])
-    @users = @stories.map(&:activities).flatten.map(&:actor).flatten.uniq
-
-    respond_with @stories
-  end
-
-  def bounties
-    authenticate_user!
-
-    default_filters = {
-      user: 'assigned',
-      state: true,
-      sort: ['commented', 'awarded'].exclude?(params[:user]) && 'newest'
-    }.with_indifferent_access
-
-    filters = default_filters.merge(params.slice(:user, :state))
-    query = FilterWipsQuery.call(Task.all, current_user, filters)
-    @wips = PaginatingDecorator.new(query)
-
-    set_empty_state if @wips.empty?
-
-    respond_with @wips
-  end
-
-  def set_empty_state
-    @empty_state_link_location = discover_path
-
-    if params[:user].blank?
-      @empty_state_text = "You aren't working on any bounties"
-      @empty_state_link_text = 'Find a bounty to work on'
-    elsif params[:user] == 'started'
-      @empty_state_text = "You haven't created any bounties"
-      @empty_state_link_text = 'Find a project and create a bounty'
-    elsif params[:user] == 'commented'
-      @empty_state_text = "You haven't commented on any bounties"
-      @empty_state_link_text = 'Read the most active bounties'
-    elsif params[:user] == 'awarded'
-      @empty_state_text = "You haven't been awarded any bounties"
-      @empty_state_link_text = 'Find a bounty to work on'
+  def index
+    # FIXME: Have an object to the heavy lifting here
+    if current_user.top_products.empty?
+      product_vectors = QueryMarks.new.get_all_product_vectors
+      user_vector = QueryMarks.new.mark_vector_for_object(current_user)
+      QueryMarks.new.assign_top_products_for_user(10, current_user, product_vectors, user_vector)
     end
+
+    dashboard = DashboardQuery.call(current_user, filter_param)
+
+    @news_feed_items = dashboard.news_feed_items
+    @user_bounties = dashboard.user_bounties
+    @heartables = dashboard.heartables
+    @user_hearts = dashboard.user_hearts
+    @products = dashboard.followed_products
+  end
+
+  def news_feed_items
+    dashboard = DashboardQuery.call(current_user, filter_param)
+
+    render json: dashboard.news_feed_items,
+      each_serializer: NewsFeedItemSerializer,
+      serializer: PaginationSerializer,
+      root: :news_feed_items
+  end
+
+  def filter_param
+    params.fetch(:filter, 'interests')
   end
 end

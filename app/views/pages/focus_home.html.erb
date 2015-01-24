@@ -1,4 +1,4 @@
-<% cache([:focus_home], expires_in: 1.hour) do %>
+<% cache([:focus_home3], expires_in: 1.hour) do %>
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -28,7 +28,7 @@
 		</head>
 
 		<body id="skrollr-body">
-			<%= track 'home.viewed' %>
+			<%= track_engaged 'home' %>
 
 				<header class="global">
 					<div class="contain">
@@ -149,7 +149,7 @@
 				</section>
 
         <% ab_test('community_section_converts_best', 'yes', 'no') do |does_it| %>
-          
+
           <% if does_it == 'yes' %>
     				<section class="community">
     					<div class="contain">
@@ -295,20 +295,26 @@
 					</div>
 				</footer>
 
+      <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+
 			<%= javascript_include_tag 'focus_home' %>
 
 	    <%= render 'shared/facebook' %>
 
 	    <%= render 'shared/analytics' %>
-	    <% analytics_track_events %>
+			<%= render 'analytics/identify' %>
+			<% analytics_track_events %>
 
-	    <% unless Rails.env.development? %>
-	      <%= render 'shared/perfect_audience' %>
-	    <% end %>
-	    <%= render 'shared/inspectlet' %>
-	    <%= render 'shared/bugs' %>
-	    <%= render 'shared/twitter' %>
-	    <%= yield(:javascript) %>
+			<% unless Rails.env.development? %>
+				<%= render 'shared/perfect_audience' %>
+			<% end %>
+			<%= render 'shared/inspectlet' %>
+			<%= render 'shared/bugs' %>
+			<%= render 'shared/twitter' %>
+
+			<%= yield :javascript %>
+
+			<%= render 'shared/track_page_viewed' %>
 		</body>
 	</html>
 <% end %>

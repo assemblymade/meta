@@ -1,4 +1,5 @@
 <% title 'Bounties' %>
+<%= track_engaged 'hot.bounties' %>
 <% activate_nav! :platform_discover %>
 <% activate_nav! :discover_bounties %>
 
@@ -7,7 +8,7 @@
 <div class="mt0 mb3 bg-white">
   <div class="container">
     <h2 class="mt0 mb0 py4">
-      <span class="gray mr2">
+      <span class="gray-2 mr2">
         <%= inline_react_component 'Icon', icon: 'coffee' %>
       </span>
       Hot <%= @filter.titleize %> Bounties

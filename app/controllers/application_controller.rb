@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :strip_auth_token
   before_action :strip_invite_token
   before_action :strip_promo_token
+  before_action :initialize_stores
   after_action  :set_request_info!,   if: :signed_in?
   after_action  :claim_invite,        if: :signed_in?
 
@@ -26,7 +27,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def after_sign_up_path_for_user
-    url_for(controller: '/surveys', action: 'new')
+    dashboard_path
   end
 
   def after_sign_out_path_for_user
@@ -34,9 +35,12 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for_user
-    session[:previous_url] || discover_path
+    session[:previous_url] || dashboard_path
   end
 
+  def initialize_stores
+    @stores ||= {}
+  end
 
   def strip_auth_token
     if params[:auth_token].present? && request.headers['Content-Type'] != 'application/json'

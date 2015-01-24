@@ -5,10 +5,13 @@ var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
 var ActivityFeedComment = require('../activity_feed_comment.js.jsx');
 var BountyStore = require('../../stores/bounty_store');
 var Comment = require('../comment.js.jsx');
+var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
 var DiscussionActionCreators = require('../../actions/discussion_action_creators');
 var DiscussionStore = require('../../stores/discussion_store');
 var Dispatcher = window.Dispatcher;
-var Icon = require('../icon.js.jsx');
+var Drawer = require('../ui/drawer.js.jsx');
+var Icon = require('../ui/icon.js.jsx');
+var IdeaSharePanel = require('../ideas/idea_share_panel.js.jsx');
 var NewComment = require('./new_comment.js.jsx');
 var NewsFeedItemBountyClose = require('./news_feed_item_bounty_close.js.jsx');
 var NewsFeedItemBountyCommentReference = require('./news_feed_item_bounty_comment_reference.js.jsx');
@@ -22,6 +25,7 @@ var ProductStore = require('../../stores/product_store');
 var ReadReceipts = require('../read_receipts.js.jsx');
 var Routes = require('../../routes');
 var Spinner = require('../spinner.js.jsx');
+var SvgIcon = require('../ui/svg_icon.js.jsx');
 var UserStore = require('../../stores/user_store');
 
 var NewsFeedItemComments = React.createClass({
@@ -30,7 +34,8 @@ var NewsFeedItemComments = React.createClass({
   propTypes: {
     commentable: React.PropTypes.bool,
     item: React.PropTypes.object.isRequired,
-    showAllComments: React.PropTypes.bool
+    showAllComments: React.PropTypes.bool,
+    showQuestionButtons: React.PropTypes.bool
   },
 
   componentDidMount: function() {
@@ -113,6 +118,13 @@ var NewsFeedItemComments = React.createClass({
     });
   },
 
+  getDefaultProps: function() {
+    return {
+      commentable: false,
+      showQuestionButtons: false
+    };
+  },
+
   getDiscussionState: function(e) {
     var itemId = this.props.item.id;
     var comments = DiscussionStore.getComments(itemId);
@@ -134,12 +146,6 @@ var NewsFeedItemComments = React.createClass({
     });
   },
 
-  getDefaultProps: function() {
-    return {
-      commentable: false
-    };
-  },
-
   getInitialState: function() {
     var item = this.props.item;
     var showAllComments = this.props.showAllComments;
@@ -152,28 +158,50 @@ var NewsFeedItemComments = React.createClass({
       showCommentsAfter = 0;
     }
 
-    var slug = _reach(this.props, 'item.product.slug') || ProductStore.getSlug();
-
-    var url = Routes.product_update_comments_path({
-      product_id: slug,
-      update_id: _reach(this.props, 'item.id'),
-    });
-
     return {
       comments: lastComment ? [lastComment] : [],
       events: [],
       numberOfComments: item.comments_count,
       optimisticComments: [],
       showCommentsAfter: showCommentsAfter,
-      url: url
+      showSharePanel: false,
+      url: Routes.discussion_comments_path({discussion_id: this.props.item.id})
     };
+  },
+
+  handleAnswerQuestionClick: function(username, e) {
+    e.stopPropagation();
+
+    var $commentBox = $(this.refs['new-comment'].getDOMNode());
+
+    $('html, body').animate({
+      scrollTop: $commentBox.offset().top
+    }, 'fast');
+
+    $('#event_comment_body').focus();
+
+    var item = this.props.item;
+    var thread = item.id;
+    var text = '@' + username + ', ';
+
+    NewCommentActionCreators.updateComment(thread, text);
+  },
+
+  handleShareQuestionClick: function(e) {
+    e.stopPropagation();
+
+    this.setState({
+      showSharePanel: !this.state.showSharePanel
+    });
   },
 
   render: function() {
     return (
-      <div className="_pl2 _pr3 _mq-600_px2 _mq-600_pr4">
+      <div>
         {this.renderComments()}
-        {this.renderNewCommentForm()}
+        <div className="py3">
+          {this.renderNewCommentForm()}
+        </div>
       </div>
     );
   },
@@ -208,6 +236,7 @@ var NewsFeedItemComments = React.createClass({
   },
 
   renderConfirmedComments: function() {
+    var showAllComments = this.props.showAllComments;
     var renderIfAfter = this.state.showCommentsAfter;
     var comments = this.state.comments.concat(this.state.events).sort(_sort);
     var awardUrl;
@@ -220,8 +249,8 @@ var NewsFeedItemComments = React.createClass({
 
     var self = this;
 
-    return comments.map(function(comment, i) {
-      if (!self.props.showAllComments) {
+    var renderedComments = comments.map(function(comment, i) {
+      if (!showAllComments) {
         if (comment.type !== 'news_feed_item_comment') {
           return null;
         }
@@ -234,15 +263,35 @@ var NewsFeedItemComments = React.createClass({
       }
 
       if (new Date(comment.created_at) >= renderIfAfter) {
-        var editUrl = Routes.product_update_comment_path({
-          product_id: _reach(self.props, 'item.product.id'),
-          update_id: _reach(self.props, 'item.id'),
+        var editUrl = Routes.discussion_comment_path({
+          discussion_id: self.props.item.id,
           id: comment.id
         });
 
         return parseEvent(comment, awardUrl, editUrl);
       }
     });
+
+    if (showAllComments &&
+        this.props.showQuestionButtons &&
+        comments.length === 1 &&
+        comments[0].body.indexOf('?') > -1) {
+      var comment = comments[0];
+      var questionButtons = (
+        <div className="clearfix mb3 ml4">
+          <div className="left">
+            <button className="pill-button pill-button-theme-white pill-button-border pill-button-shadow mr3"
+                onClick={this.handleAnswerQuestionClick.bind(this, comment.user.username)}>
+              <span style={{ fontSize: '1.2rem', lineHeight: '2rem' }}>Answer this question</span>
+            </button>
+          </div>
+        </div>
+      );
+
+      renderedComments.push(questionButtons);
+    }
+
+    return renderedComments;
   },
 
   renderLoadMoreButton: function() {
@@ -251,13 +300,12 @@ var NewsFeedItemComments = React.createClass({
     }
 
     var numberOfComments = this.state.numberOfComments;
-    var target = this.props.item.target;
 
     if (numberOfComments > this.state.comments.length) {
       return (
-        <a className="block mt2 fs3 gray-dark clickable"
+        <a className="block mt2 fs3 gray-2 clickable"
             onClick={this.triggerModal}>
-          <span className="pr2 gray fs5">
+          <span className="pr2 gray-2 fs5">
             <Icon icon="comment" />
           </span>
           View all {numberOfComments} comments
@@ -276,7 +324,7 @@ var NewsFeedItemComments = React.createClass({
           canContainWork={item.target && item.target.type.indexOf('task') > -1}
           url={url}
           thread={item.id}
-          user={window.app.currentUser()} />
+          ref="new-comment" />
     }
   },
 
@@ -318,7 +366,14 @@ var NewsFeedItemComments = React.createClass({
 
   renderRuler: function() {
     if (this.state.comments.length > 0) {
-      return <hr className="mb0 mt3 border-gray-5 _mrn3 _mln3" />;
+      var classes = React.addons.classSet({
+        mb0: true,
+        mt3: true,
+        'border-gray-5': true,
+        _mrn4: true,
+        _mln4: true,
+      });
+      return <hr className={classes} />;
     }
   },
 

@@ -18,12 +18,6 @@ var NewsFeed = React.createClass({
   },
 
   componentDidMount: function() {
-    window.analytics.track(
-      'news_feed_item.viewed', {
-        product: (window.app.currentAnalyticsProduct())
-      }
-    );
-
     this.initializeEagerFetching();
   },
 
@@ -38,10 +32,10 @@ var NewsFeed = React.createClass({
       var count = this.countFor(filter);
 
       return (
-        <span className="gray-darker text-large">
+        <span className="gray-1 text-large">
           There are about
           <span className="bold">
-            {' '}<span className="text-info">{count}</span> {filter}
+            {' '}<span className="green">{count}</span> {filter}
           </span>
           {' '} bounties
         </span>
@@ -130,13 +124,7 @@ var NewsFeed = React.createClass({
         style = { marginTop: '-1rem' }
       }
 
-      return (
-        <div className="row">
-          <div className="col-xs-12">
-            {this.renderItems()}
-          </div>
-        </div>
-      );
+      return <div>{this.renderItems()}</div>
     }
 
     return (
@@ -169,7 +157,7 @@ var NewsFeed = React.createClass({
       <div className="well text-center">
         There hasn't been any activity yet. Why not <a href="/chat/meta">jump into chat</a> to see where you can help?
       </div>
-    );
+    ); // '
   },
 
   renderFilterListItem: function(filter) {

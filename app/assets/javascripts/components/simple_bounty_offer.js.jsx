@@ -3,8 +3,7 @@
 
   var SimpleBountyOffer = React.createClass({
     getInitialState: function() {
-      var steps = this.steps || this.suggestions();
-
+      var steps = this.props.steps || this.suggestions();
       var offer = steps[2]
 
       if(this.props.onChange) {
@@ -12,7 +11,8 @@
       }
 
       return {
-        offer: steps[2]
+        offer: steps[2],
+        steps: steps
       }
     },
 
@@ -24,19 +24,14 @@
         return scale * Math.pow(i, 2)
       })
 
-      // Cache steps on the component -- this is a little janky
-      this.steps = steps;
-
       return steps;
     },
 
     renderSuggestionList: function() {
-      var steps = this.steps || this.suggestions();
-
-      return steps.map(function(suggestion) {
+      return this.state.steps.map(function(suggestion) {
         return (
           <li className="left center" style={{ width: '20%' }}>
-            <div className="text-coins bold h4 align-center">
+            <div className="text-coins bold h4 center">
               <span className="icon icon-app-coin"></span>
               {' '}
               {numeral(suggestion).format('0,0')}
@@ -47,11 +42,9 @@
     },
 
     render: function() {
-      var steps = this.steps || this.suggestions();
-
       return (
         <div>
-          <BountyValuationSlider steps={steps} onChange={this.handleChange} />
+          <BountyValuationSlider steps={this.state.steps} onChange={this.handleChange} />
           <input name="earnable" type="hidden" value={this.state.offer} />
         </div>
       )

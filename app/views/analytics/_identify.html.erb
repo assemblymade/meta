@@ -1,18 +1,17 @@
+<% # Order is important. Alias => Identify => Track %>
 <script>
-  analytics.identify(
-    <%== current_user.id.to_json %>,
-    <%== UserAnalyticsSerializer.new(current_user).to_json %>
-  );
-
-  <% if !current_user.staff? %>
-    var productAnalytics = <%== (@product ? ProductAnalyticsSerializer.new(@product) : {}).to_json %>;
-
-    analytics.track('visited', _.extend({
-      path: window.location.pathname,
-      referrer: document.referrer,
-      title: document.title,
-      search: window.location.search
-    }, productAnalytics));
+  <% if flash[:signed_up] %>
+    analytics.alias(<%= current_user.id.to_json.html_safe %>);
   <% end %>
 
+  <% if signed_in? %>
+    analytics.identify(
+      <%== current_user.id.to_json %>,
+      <%== UserAnalyticsSerializer.new(current_user).to_json %>
+    );
+  <% end %>
+
+  <% if flash[:signed_up] %>
+    analytics.track('user.created');
+  <% end %>
 </script>

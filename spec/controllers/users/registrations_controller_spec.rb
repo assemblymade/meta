@@ -20,7 +20,7 @@ describe Users::RegistrationsController do
 
       it "redirects to the discover products page by default" do
         post(:create, user: user_attributes)
-        expect(response).to redirect_to(new_survey_path)
+        expect(response).to redirect_to(dashboard_path)
       end
     end
   end

@@ -1,8 +1,8 @@
-<div class="dropdown align-right">
+<div class="dropdown right-align">
   <% if @milestone %>
     <a href="<%= product_project_path(@product, @milestone)%>"><%= @milestone.wip.title %></a>
   <% elsif can?(:edit, @wip) %>
-    <a class="js-add link-hover-success" data-toggle="dropdown" href="#" data-placement="top" title="Add&nbsp;to&nbsp;Project">
+    <a class="js-add green-hover" data-toggle="dropdown" href="#" data-placement="top" title="Add&nbsp;to&nbsp;Project">
       <i class="icon-folder" style="margin-right: 2px;"></i> Project
     </a>
     <% content_for :javascript do %>

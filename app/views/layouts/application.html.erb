@@ -7,11 +7,14 @@
 
     <title><%= yield(:title) %></title>
     <meta name="description" content="<%= yield(:description) %>">
+    <%= yield(:head) %>
 
     <%= csrf_meta_tags %>
     <meta name="pusher-key" content="<%= Pusher.key %>" >
     <meta name="attachment-upload-url" content="<%= ATTACHMENT_UPLOAD_URL %>" >
     <meta name="read-raptor-url" content='<%= ENV["READRAPTOR_URL"] %>'>
+    <meta name="firesize-url" content='<%= ENV["FIRESIZE_URL"] %>'>
+    <meta name="es-url" content='<%= File.join(root_url, '_es') %>'>
 
     <% if signed_in? %>
       <meta name="user-username" content="<%= current_user.username %>" >
@@ -30,20 +33,14 @@
   </head>
   <body class="<%= yield(:body_class) %> bg-gray-6">
     <%= render 'shared/stores' %>
-
     <%= yield %>
-
     <%= javascript_include_tag 'application' %>
     <%= javascript_include_tag 'https://d3dy5gmtp8yhk7.cloudfront.net/2.2/pusher.min.js' %>
     <%= render 'shared/facebook' %>
     <%= render 'shared/live_chat' %>
-
     <%= render 'shared/analytics' %>
-    <% analytics_track_events %>
 
-    <% if signed_in? && flash[:signed_up] %>
-      <%= render 'users/signed_up' %>
-    <% end %>
+    <%= render 'analytics/identify' %>
 
     <% if signed_in? %>
       <script>
@@ -60,9 +57,10 @@
           })
         }
       </script>
-      <%= render 'analytics/identify' %>
       <%= track_readraptor(@stories_to_mark_as_read) if @stories_to_mark_as_read %>
     <% end %>
+
+    <% analytics_track_events %>
 
     <% unless Rails.env.development? %>
       <%= render 'shared/perfect_audience' %>
@@ -72,5 +70,7 @@
     <%= render 'shared/twitter' %>
 
     <%= yield :javascript %>
+
+    <%= render 'shared/track_page_viewed' %>
   </body>
 </html>

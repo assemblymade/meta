@@ -10,6 +10,5 @@ describe Activity do
       activity = Activity.create!(actor: actor, subject: subject, target: target)
       activity.run_callbacks(:commit)
     }.to change(TrackActivityCreated.jobs, :size).by(1)
-
   end
 end

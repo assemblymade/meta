@@ -1,4 +1,5 @@
 <% title "What's happening in #{params[:filter] || 'the community'}" %>
+<%= track_engaged 'discover.bounties' %>
 <% provide(:description, "All recent #{params[:filter]} activity across the community built Assembly products.") %>
 <% activate_nav! :platform_updates %>
 

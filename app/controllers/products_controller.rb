@@ -105,23 +105,19 @@ class ProductsController < ProductController
                   reject{|nfi| nfi.target.is_a? Discussion }
 
     @news_feed_items = query.map do |nfi|
-      Rails.cache.fetch([nfi, :json]) do
+      Rails.cache.fetch([nfi, 'v2', :json]) do
         NewsFeedItemSerializer.new(nfi).as_json
       end
     end
 
-    @heartables = (@news_feed_items + @news_feed_items.map{|p| p[:last_comment]}).
-            map(&:as_json).
-            compact.
-            map(&:stringify_keys).
-            map{|h| h.slice('heartable_id', 'heartable_type', 'hearts_count') }.to_a
+    @heartables = (@news_feed_items + @news_feed_items.map{|p| p[:last_comment]}).compact
 
     if signed_in?
-      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['heartable_id']})
+      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['id']})
     end
 
     respond_to do |format|
-      format.html { render 'products/new_show', layout: 'product' }
+      format.html { render }
       format.json {
         render json: {
           user_hearts: @user_hearts,
@@ -307,6 +303,7 @@ class ProductsController < ProductController
       :tags_string,
       :poster,
       :homepage_url,
+      :try_url,
       :you_tube_video_url,
       :terms_of_service,
       {:tags => []}

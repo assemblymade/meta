@@ -6,9 +6,9 @@ GIT
 
 GIT
   remote: git://github.com/norman/friendly_id.git
-  revision: 57baa3549a5d5b1ee0cc9b6a803c59d9de0e7d59
+  revision: 2e7baba1df23ab1fcd9f286f3a16924837920de4
   specs:
-    friendly_id (5.0.3)
+    friendly_id (5.1.0)
       activerecord (>= 4.0.0)
 
 GIT
@@ -18,6 +18,16 @@ GIT
   specs:
     active_model_serializers (0.8.3)
       activemodel (>= 3.0)
+
+GIT
+  remote: git://github.com/reactjs/react-rails.git
+  revision: 579a91a917b9577a16938d4ab4a097ab394d9282
+  specs:
+    react-rails (1.0.0.pre)
+      connection_pool
+      execjs
+      rails (>= 3.1)
+      react-source (~> 0.12)
 
 GEM
   remote: https://rubygems.org/
@@ -89,7 +99,12 @@ GEM
       xpath (~> 2.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    chunky_png (1.3.3)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
     cliver (0.3.2)
+    cocaine (0.5.5)
+      climate_control (>= 0.0.3, < 1.0)
     codeclimate-test-reporter (0.3.0)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
@@ -97,6 +112,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    color (1.7.1)
     connection_pool (2.1.0)
     countries (0.9.3)
       currencies (~> 0.4.2)
@@ -199,7 +215,7 @@ GEM
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    json (1.8.1)
+    json (1.8.2)
     jwt (0.1.8)
       multi_json (>= 1.5)
     kaminari (0.15.1)
@@ -239,7 +255,11 @@ GEM
     method_source (0.8.2)
     mime-types (2.4.3)
     mini_portile (0.6.2)
-    minitest (5.5.0)
+    minitest (5.5.1)
+    miro (0.3.0)
+      cocaine
+      color
+      oily_png
     multi_fetch_fragments (0.0.17)
     multi_json (1.10.1)
     multi_xml (0.5.5)
@@ -256,6 +276,8 @@ GEM
       jwt (~> 0.1.4)
       multi_json (~> 1.0)
       rack (~> 1.2)
+    oily_png (1.1.2)
+      chunky_png (~> 1.3.1)
     omniauth (1.1.4)
       hashie (>= 1.2, < 3)
       rack
@@ -309,7 +331,7 @@ GEM
     rack-streaming-proxy (2.0.1)
       rack (>= 1.4)
       servolux (~> 0.10)
-    rack-test (0.6.2)
+    rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.0)
       actionmailer (= 4.2.0)
@@ -323,7 +345,6 @@ GEM
       railties (= 4.2.0)
       sprockets-rails
     rails-assets-backbone (1.0.0)
-    rails-assets-basscss (4.1.2)
     rails-assets-dropzone (3.9.0)
     rails-assets-es5-shim (4.0.3)
     rails-assets-ink (1.0.5)
@@ -366,11 +387,7 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    react-rails (0.12.0.0)
-      execjs
-      rails (>= 3.1)
-      react-source (= 0.12)
-    react-source (0.12.0)
+    react-source (0.12.2)
     redcarpet (3.1.2)
     redis (3.2.0)
     redis-namespace (1.5.1)
@@ -414,12 +431,13 @@ GEM
     safe_yaml (1.0.4)
     sanitize (2.1.0)
       nokogiri (>= 1.4.4)
-    sass (3.2.19)
-    sass-rails (4.0.3)
+    sass (3.4.10)
+    sass-rails (5.0.1)
       railties (>= 4.0.0, < 5.0)
-      sass (~> 3.2.0)
-      sprockets (~> 2.8, <= 2.11.0)
-      sprockets-rails (~> 2.0)
+      sass (~> 3.1)
+      sprockets (>= 2.8, < 4.0)
+      sprockets-rails (>= 2.0, < 4.0)
+      tilt (~> 1.1)
     sequenced (1.5.0)
       activerecord (>= 3.0)
       activesupport (>= 3.0)
@@ -441,7 +459,7 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
-    skylight (0.4.3)
+    skylight (0.5.2)
       activesupport (>= 3.0.0)
     slop (3.4.7)
     sparkr (0.4.1)
@@ -453,7 +471,7 @@ GEM
     spring (1.1.3)
     spring-commands-rspec (1.0.2)
       spring (>= 0.9.1)
-    sprockets (2.11.0)
+    sprockets (2.12.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -557,6 +575,7 @@ DEPENDENCIES
   machinist (~> 2)
   markerb
   memcachier
+  miro
   multi_fetch_fragments
   mustache
   newrelic_rpm
@@ -575,7 +594,6 @@ DEPENDENCIES
   rack-streaming-proxy
   rails (= 4.2.0)
   rails-assets-backbone (= 1.0.0)
-  rails-assets-basscss (= 4.1.2)
   rails-assets-dropzone (= 3.9.0)
   rails-assets-es5-shim (= 4.0.3)
   rails-assets-ink (= 1.0.5)
@@ -593,7 +611,7 @@ DEPENDENCIES
   rails-assets-underscore (= 1.7.0)
   rails_12factor
   rails_stdout_logging
-  react-rails (~> 0.12.0.0)
+  react-rails (~> 1.0.0.pre)!
   redcarpet
   redis
   responders (~> 2.0.0)
@@ -607,7 +625,7 @@ DEPENDENCIES
   sequenced (~> 1.5.0)
   sidekiq
   simplecov
-  skylight (~> 0.4.2)
+  skylight (~> 0.5)
   sparkr
   split
   spring-commands-rspec

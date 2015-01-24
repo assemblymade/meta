@@ -1,3 +1,6 @@
+var Heart = require('../components/heart.js.jsx');
+var Label = require('../components/ui/label.js.jsx');
+
 var ListItemMixin = {
   onModalHidden: function() {
     this.setState({
@@ -21,7 +24,7 @@ var ListItemMixin = {
 
     return (
       <div className="px3 py2 border-top mb0 mt0">
-        <Love heartable_type='NewsFeedItem' heartable_id={heartableId} />
+        <Heart size="small" heartable_type='NewsFeedItem' heartable_id={heartableId} />
       </div>
     )
   },
@@ -31,8 +34,8 @@ var ListItemMixin = {
 
     return tags.map(function(tag) {
       return (
-        <a className="fs1 caps gray-2 mr2 pointer" href={tag.url} key={'post-tag-' + tag.name}>
-          #{tag.name}
+        <a className="mr2" href={tag.url} key={'post-tag-' + tag.name}>
+          <Label name={tag.name} />
         </a>
       )
     });

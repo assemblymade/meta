@@ -30,13 +30,33 @@
 .spinner-rects {
   margin: 100px auto;
   width: 50px;
-  height: 30px;
+  height: 50px;
   text-align: center;
   font-size: 10px;
+
+  .rect1 {
+    background-color: rgba(17, 161, 183, 1);
+  }
+
+  .rect2 {
+    background-color: rgba(239, 84, 68, 1);
+  }
+
+  .rect3 {
+    background-color: rgba(146, 186, 59, 1);
+  }
+
+  .rect4 {
+    background-color: rgba(68, 72, 81, 1);
+  }
+
+  .rect5 {
+    background-color: rgba(249, 201, 50, 1);
+  }
 }
 
 .spinner-rects > div {
-  background-color: #333;
+  border-radius: 8px;
   height: 100%;
   width: 6px;
   margin: 1px;

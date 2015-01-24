@@ -12,7 +12,11 @@ class NewsFeedItemCommentSerializer < ApplicationSerializer
   end
 
   def markdown_body
-    product_markdown(object.product, body)
+    if object.product
+      product_markdown(object.product, body)
+    else
+      markdown(body)
+    end
   end
 
   def heartable_id

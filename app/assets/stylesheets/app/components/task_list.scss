@@ -6,7 +6,7 @@ $task-list-complete-bg: lighten($body-bg, 2%);
 .task-list {
   padding: 5px 0;
   margin: 0;
-  border: 1px solid $gray-lighter;
+  border: 1px solid $gray-6;
   border-top-left-radius: $border-radius-base;
   border-top-right-radius: $border-radius-base;
   box-shadow: 0 1px 0 $brand-shadow;
@@ -160,7 +160,7 @@ $task-list-complete-bg: lighten($body-bg, 2%);
   background-repeat: no-repeat;
 
   .task-list-item-title {
-    color: $gray;
+    color: $gray-2;
   }
 }
 
