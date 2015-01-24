@@ -17,16 +17,14 @@ var Drawer = React.createClass({
 
   render() {
     return (
-      <div className="drawer">
-        <ReactCSSTransitionGroup component="div" transitionName="drawer">
-          {
-            this.props.open &&
-            <div className="drawer-inner" key="drawer-inner">
-              {this.props.children}
-            </div>
-          }
-        </ReactCSSTransitionGroup>
-      </div>
+      <ReactCSSTransitionGroup component="div" transitionName="drawer">
+        {
+          this.props.open &&
+          <div className="drawer-inner" key="drawer-inner">
+            {this.props.children}
+          </div>
+        }
+      </ReactCSSTransitionGroup>
     );
   }
 });

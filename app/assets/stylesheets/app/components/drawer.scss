@@ -4,10 +4,6 @@
  *        so that React can listen to the `transitionend` event.
  */
 
-.drawer {
-  overflow-y: hidden;
-}
-
 .drawer-enter {
   max-height: 0px;
   opacity: 0.01;

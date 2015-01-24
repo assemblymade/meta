@@ -312,7 +312,7 @@ var IdeaShow = React.createClass({
         </div>
 
         <div className="clearfix">
-          <Drawer height={120} open={this.state.isHowItWorksDrawerOpen}>
+          <Drawer open={this.state.isHowItWorksDrawerOpen}>
             <div className="px3 gray-2">
               <div className="px3">
                 {this.renderExplanationHeading()}
@@ -327,7 +327,7 @@ var IdeaShow = React.createClass({
         </div>
 
         <div className="clearfix">
-          <Drawer open={this.state.isSocialDrawerOpen} height={140}>
+          <Drawer open={this.state.isSocialDrawerOpen}>
             <IdeaSharePanel idea={idea} size="large" message={shareMessage} />
           </Drawer>
         </div>

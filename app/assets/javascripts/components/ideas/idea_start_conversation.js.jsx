@@ -101,7 +101,7 @@ var IdeaStartConversation = React.createClass({
 
         <form>
           <div className="form-group px4 mb0">
-            <Drawer open={this.state.isDrawerOpen} height={120}>
+            <Drawer open={this.state.isDrawerOpen}>
               <div className="px3 gray-1">
                 <p className="px3">
                   After you submit your idea, you'll hash out the specifics of your
