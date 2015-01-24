@@ -75,7 +75,7 @@ var App = React.createClass({
     var tryUrl = this.props.app.try_url
 
     if (tryUrl) {
-      return <div className="inline-block h5 mt0 mb0 bold px2 bg-yellow black" style={{borderRadius: '99px', fontSize: 11}}>
+      return <div className="inline-block h5 mt0 mb0 bold px2 bg-green white" style={{borderRadius: '99px', fontSize: 11}}>
         Live
       </div>
     } else {
