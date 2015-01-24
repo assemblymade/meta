@@ -8,7 +8,7 @@
     <%= f.text_area :body, class: 'form-control', rows: 12 %>
   </div>
   <div class="form-actions">
-    <p class="text-muted">
+    <p class="gray-2">
       The next newsletter will be sent in <%= time_ago_in_words(@newsletter.next_published_at) %>.
     </p>
     <%= f.submit 'Preview & queue newsletter', class: %w(btn btn-primary) %>
@@ -27,7 +27,7 @@
   <tbody>
     <% @newsletters.each do |newsletter| %>
       <tr class="
-          <%= 'text-muted' if newsletter.cancelled? %>
+          <%= 'gray-2' if newsletter.cancelled? %>
           <%= 'active' if newsletter.published? %>
         ">
         <td><strong><%= newsletter.subject %></strong></td>

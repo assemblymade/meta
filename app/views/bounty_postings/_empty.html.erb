@@ -1,7 +1,7 @@
 <% if partner?(@product) %>
   <div class="well dotted">
-    <p class="text-center">
-      <h4 class="text-muted text-center">
+    <p class="center">
+      <h4 class="gray-2 center">
         Feature a bounty
       </h4>
       <span data-react-class="CreateBountyButton" data-react-props="<%= new_bounty_props(@product).merge(
@@ -14,8 +14,8 @@
   </div>
 <% else %>
   <div class="well dotted">
-    <p class="text-center">
-      <h4 class="text-muted text-center">
+    <p class="center">
+      <h4 class="gray-2 center">
         This space is reserved!
       </h4>
       Until the partners of this product feature a bounty here

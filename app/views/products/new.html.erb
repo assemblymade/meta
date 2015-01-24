@@ -5,9 +5,9 @@
 <!-- TODO Deprecate. Pages now use gray bg. (chrislloyd) -->
 <style>body { background-color: white !important; }</style>
 
-<div class="jumbotron text-center omega">
+<div class="jumbotron center omega">
   <h1>
-    It's business time<a class="text-muted" href="https://www.youtube.com/watch?v=AqZcYPEszN8#t=63">.</a>
+    It's business time<a class="gray-2" href="https://www.youtube.com/watch?v=AqZcYPEszN8#t=63">.</a>
   </h1>
 </div>
 
@@ -21,28 +21,28 @@
           <ul class="nav nav-pills nav-justified">
             <li>
               <a href="#story">
-                <span class="text-muted">1.</span>
+                <span class="gray-2">1.</span>
                 &nbsp;&nbsp;&nbsp;
                 <strong>Story</strong>
               </a>
             </li>
             <li>
               <a href="#core-team">
-                <span class="text-muted">2.</span>
+                <span class="gray-2">2.</span>
                 &nbsp;&nbsp;&nbsp;
                 <strong>Core Team</strong>
               </a>
             </li>
             <li>
               <a href="#ownership-and-coins">
-                <span class="text-muted">3.</span>
+                <span class="gray-2">3.</span>
                 &nbsp;&nbsp;&nbsp;
                 <strong>Ownership &amp; Coins</strong>
               </a>
             </li>
             <li>
               <a href="#financials">
-                <span class="text-muted">4.</span>
+                <span class="gray-2">4.</span>
                 &nbsp;&nbsp;&nbsp;
                 <strong>Financials</strong>
               </a>
@@ -52,7 +52,7 @@
           <hr id="story">
 
 
-          <h6 class="text-muted">Story</h6>
+          <h6 class="gray-2">Story</h6>
 
           <%= form_for @product, html: {class: 'form'} do |f| %>
             <%= form_group @product, :name do %>
@@ -87,7 +87,7 @@
 
             <!--
             <hr id="core-team">
-            <h6 class="text-muted">Code</h6>
+            <h6 class="gray-2">Code</h6>
 
             <div class="form-group">
               <div class="row">
@@ -98,15 +98,15 @@
                       <td>
                         <label for="chrislloyd-brains">chrislloyd/brains</label>
                       </td>
-                      <td class="text-right">
+                      <td class="right-align">
                         <input type="checkbox" id="chrislloyd-brains">
                       </td>
                     </tr>
-                    <tr class="text-muted">
+                    <tr class="gray-2">
                       <td>
                         <label for="chrislloyd-helpful-web">chrislloyd/helpful-web</label>
                       </td>
-                      <td class="text-right">
+                      <td class="right-align">
                         Linked to <a href="#">Helpful</a>
                       </td>
                     </tr>
@@ -114,7 +114,7 @@
                       <td>
                         <label for="chrislloyd-poacher">chrislloyd/poacher</a>
                       </td>
-                      <td class="text-right">
+                      <td class="right-align">
                         <input type="checkbox" id="chrislloyd-poacher">
                       </td>
                     </tr>
@@ -133,7 +133,7 @@
 
 
             <hr id="core-team">
-            <h6 class="text-muted">Core Team</h6>
+            <h6 class="gray-2">Core Team</h6>
 
             <div class="form-group">
               <div class="row">
@@ -150,7 +150,7 @@
             </div>
 
             <hr id="ownership-and-coins">
-            <h6 class="text-muted">Coins &amp; Ownership</h6>
+            <h6 class="gray-2">Coins &amp; Ownership</h6>
 
             <div class="row">
               <div class="col-md-8">
@@ -171,7 +171,7 @@
             </div>
 
             <hr id="financials">
-            <h6 class="text-muted">Financials</h6>
+            <h6 class="gray-2">Financials</h6>
 
             <div class="row">
               <div class="col-md-8">
@@ -184,7 +184,7 @@
                     </tr>
                     <tr class="active">
                       <td>Initial Account Balance:</td>
-                      <td class="text-right"><strong>$0</strong></td>
+                      <td class="right-align"><strong>$0</strong></td>
                     </tr>
                   </tbody>
                 </table>
@@ -201,7 +201,7 @@
 
             <div class="form-actions">
               <div class="row">
-                <div class="col-md-8 text-left" style="margin-top:6px">
+                <div class="col-md-8 left-align" style="margin-top:6px">
                   By creating this product, you agree to Assembly's <a href="<%= tos_path %>">Terms of Service</a>.
                 </div>
                 <div class="col-md-4">

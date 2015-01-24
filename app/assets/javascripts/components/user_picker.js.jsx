@@ -72,7 +72,7 @@
             <div className="overflow-hidden">
               @{this.props.user.username}
               {' '}
-              <span className="text-muted">{this.props.user.name}</span>
+              <span className="gray-2">{this.props.user.name}</span>
             </div>
           </a>
         </li>

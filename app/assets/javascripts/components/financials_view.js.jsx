@@ -67,16 +67,16 @@
         <div>
           <ul className="list-inline omega">
             <li>
-              <span className="bg-success"></span>
-              <span className="text-success">Payout</span>
+              <span className="bg-green"></span>
+              <span className="green">Payout</span>
             </li>
             <li>
-              <span className="bg-warning"></span>
-              <span className="text-warning">Assembly</span>
+              <span className="bg-yellow"></span>
+              <span className="yellow">Assembly</span>
             </li>
             <li>
-              <span className="bg-primary"></span>
-              <span className="text-primary">Expenses</span>
+              <span className="bg-blue"></span>
+              <span className="blue">Expenses</span>
             </li>
           </ul>
         </div>
@@ -182,16 +182,16 @@
             <thead>
               <tr>
                 <th></th>
-                <th className="text-left">
+                <th className="left-align">
                   Total revenue
                 </th>
-                <th className="text-right">
+                <th className="right-align">
                   Expenses
                 </th>
-                <th className="text-right">
+                <th className="right-align">
                   Assembly
                 </th>
-                <th className="text-right">
+                <th className="right-align">
                   App Coin holders
                 </th>
               </tr>
@@ -232,9 +232,9 @@
         <tr style={{cursor: 'pointer'}} onMouseOver={this.monthChanged(month)} key={month}>
           <td id={'financials-' + month}>{moment(month).format('MMM YYYY')}</td>
           <td>{'$' + numeral(total / 100.0).format('0,0')}</td>
-          <td className="text-right">{'$' + numeral(expenses / 100.0).format('0,0')}</td>
-          <td className={"text-right"}>{'$' + numeral(assembly / 100.0).format('0,0')}</td>
-          <td className={"text-right"}>{'$' + numeral((community - assembly) / 100.0).format('0,0')}</td>
+          <td className="right-align">{'$' + numeral(expenses / 100.0).format('0,0')}</td>
+          <td className={"right-align"}>{'$' + numeral(assembly / 100.0).format('0,0')}</td>
+          <td className={"right-align"}>{'$' + numeral((community - assembly) / 100.0).format('0,0')}</td>
         </tr>
       );
     },

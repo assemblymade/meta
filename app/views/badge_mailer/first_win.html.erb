@@ -17,11 +17,11 @@
                   </tr>
                 </table>
 
-                <h1 class="text-center">
+                <h1 class="center">
                   You just earned your first <%= @product.name %> coins.
                 </h1>
 
-                <p class="text-center">
+                <p class="center">
                   <a href="<%= user_url(@awarder) %>">@<%= @awarder.username %></a>
                   awarded your recent work on <strong><%= @product.name %></strong> which minted you <strong><%= number_with_delimiter @wip.value %> coins</strong> - because it was awesome.<br>
                 </p>
@@ -40,7 +40,7 @@
 
                 <br>
                 <br>
-                <p class="text-center">
+                <p class="center">
                   <a href="<%= help_url(:revenue) %>">Learn more about coins.</a>
                 </p>
               </td>

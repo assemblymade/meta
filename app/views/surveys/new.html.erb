@@ -8,10 +8,10 @@
 
       <br>
 
-      <div class="text-center">
+      <div class="center">
         <h1 style="font-size:48px">This is happening!</h1>
 
-        <p class="large text-muted">We currently have heaps of products being built in different stages from idea to launched product. There's a lot to sort through to find a product you're stoked to work on. If you take 3.14 seconds to answer a quick question below we'll be able to better fit you with the right products.</p>
+        <p class="large gray-2">We currently have heaps of products being built in different stages from idea to launched product. There's a lot to sort through to find a product you're stoked to work on. If you take 3.14 seconds to answer a quick question below we'll be able to better fit you with the right products.</p>
 
       </div>
 
@@ -27,7 +27,7 @@
             <label>
               <%= check_box_tag 'user[interested_tags][]', 'design',  current_user.interested_tags.include?('design') %>
               <strong>Design</strong>
-              <span class="text-muted">Interfaces, Information/Architecture, Brand, Logos, Icons</span>
+              <span class="gray-2">Interfaces, Information/Architecture, Brand, Logos, Icons</span>
             </label>
           </div>
 
@@ -35,7 +35,7 @@
             <label>
               <%= check_box_tag 'user[interested_tags][]', 'strategy',  current_user.interested_tags.include?('strategy') %>
               <strong>Strategy</strong>
-              <span class="text-muted">Planning, Metrics, Partnerships</span>
+              <span class="gray-2">Planning, Metrics, Partnerships</span>
             </label>
           </div>
 
@@ -43,7 +43,7 @@
             <label>
               <%= check_box_tag 'user[interested_tags][]', 'frontend', current_user.interested_tags.include?('frontend') %>
               <strong>Frontend Dev</strong>
-              <span class="text-muted">HTML, CSS, SCSS, Javascript</span>
+              <span class="gray-2">HTML, CSS, SCSS, Javascript</span>
             </label>
           </div>
 
@@ -51,7 +51,7 @@
             <label>
               <%= check_box_tag 'user[interested_tags][]', 'backend',  current_user.interested_tags.include?('backend') %>
               <strong>Backend Dev</strong>
-              <span class="text-muted">Ruby on Rails, Python, PHP, Go</span>
+              <span class="gray-2">Ruby on Rails, Python, PHP, Go</span>
             </label>
           </div>
 
@@ -59,7 +59,7 @@
             <label>
               <%= check_box_tag 'user[interested_tags][]', 'marketing',  current_user.interested_tags.include?('marketing') %>
               <strong>Marketing</strong>
-              <span class="text-muted">Social, Growth, Emails</span>
+              <span class="gray-2">Social, Growth, Emails</span>
             </label>
           </div>
 
@@ -67,7 +67,7 @@
             <label>
               <%= check_box_tag 'user[interested_tags][]', 'writing', current_user.interested_tags.include?('writing') %>
               <strong>Writing</strong>
-              <span class="text-muted">Blogging, Copywriting, Content Strategy</span>
+              <span class="gray-2">Blogging, Copywriting, Content Strategy</span>
             </label>
           </div>
 
@@ -75,7 +75,7 @@
             <label>
               <%= check_box_tag 'user[interested_tags][]', 'airguitar',  current_user.interested_tags.include?('airguitar') %>
               <strong>Air Guitar</strong>
-              <span class="text-muted">and other Air Instruments</span>
+              <span class="gray-2">and other Air Instruments</span>
             </label>
           </div>
         </div><!-- 1. What kinds of stuff do you like to do? -->
@@ -88,7 +88,7 @@
       <br>
       <hr style="">
 
-      <p class="text-muted">or maybe you just want to <a class="bold" href="<%= start_idea_path %>" onclick="javascript:window.analytics.track('surveys.show.exit.clicked');" style="font-weight:bold;text-decoration:underline">start a product</a> or you're all <a href="<%= discover_path %>" style="font-weight:bold;text-decoration:underline" onclick="javascript:window.analytics.track('surveys.show.exit.clicked');">&ldquo;Geez man! Just let me dive in!!&rdquo;</a></p>
+      <p class="gray-2">or maybe you just want to <a class="bold" href="<%= start_idea_path %>" onclick="javascript:window.analytics.track('surveys.show.exit.clicked');" style="font-weight:bold;text-decoration:underline">start a product</a> or you're all <a href="<%= discover_path %>" style="font-weight:bold;text-decoration:underline" onclick="javascript:window.analytics.track('surveys.show.exit.clicked');">&ldquo;Geez man! Just let me dive in!!&rdquo;</a></p>
 
 
     </div>

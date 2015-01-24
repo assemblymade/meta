@@ -9,7 +9,7 @@
 
     <ul class="list-piped">
       <li>
-        <a class="<%= 'bg-primary' if params[:state] == '' %>" href="<%= scoped_product_bounties_path(@product, state: '') %>">
+        <a class="<%= 'bg-blue' if params[:state] == '' %>" href="<%= scoped_product_bounties_path(@product, state: '') %>">
           <%= @product.tasks.open.count %>
           open
         </a>

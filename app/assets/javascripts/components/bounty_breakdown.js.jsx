@@ -119,7 +119,7 @@
           <div className="col-xs-7">
             <div className="h6 gray-2 mt0 mb1">Votes</div>
 
-            <ul className="list-unstyled">
+            <ul className="list-reset">
               {this.state.offers.map(function(offer) {
                 return (
                   <li>

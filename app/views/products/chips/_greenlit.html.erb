@@ -8,7 +8,7 @@
       <h4 class="alpha omega"><%= product.name %></h4>
       <p class="omega"><%= product.pitch %></p>
     </div>
-    <div class="col-sm-6 text-right">
+    <div class="col-sm-6 right-align">
       <ul class="list-inline omega">
         <% product.followers.limit(6).each do |user| %>
           <li>
@@ -19,7 +19,7 @@
           <span class="badge">+ <%= product.followers.count %></span>
         </li>
       </ul>
-      <p class="text-muted small omega">
+      <p class="gray-2 small omega">
         Started <%= product.created_at.strftime("%B %d, %Y") %>
       </p>
     </div>

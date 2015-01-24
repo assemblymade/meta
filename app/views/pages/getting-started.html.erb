@@ -123,11 +123,11 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th class="text-left">Partner</th>
-                  <th class="text-right">
+                  <th class="left-align">Partner</th>
+                  <th class="right-align">
                     Coins
                   </th>
-                  <th class="text-right">
+                  <th class="right-align">
                     Ownership
                   </th>
                 </tr>
@@ -143,11 +143,11 @@
                         <strong><%= user.username %></strong>
                       </a>
                     </td>
-                    <td class="text-right">
+                    <td class="right-align">
                       <%= react_component 'AppCoins', n: cents %>
                     </td>
                     <% if @product.for_profit? %>
-                      <td class="text-right">
+                      <td class="right-align">
                         <%= number_to_percentage(cents / @ownership.total_cents.to_d * 100, precision: 2) %>
                       </td>
                     <% end %>

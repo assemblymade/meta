@@ -2,9 +2,9 @@
 
 <br>
 
-<h6 class="omega text-muted">Nice work!</h6>
-<h1 class="alpha text-success">You're almost there</h1>
-<p class="lead text-muted">
+<h6 class="omega gray-2">Nice work!</h6>
+<h1 class="alpha green">You're almost there</h1>
+<p class="lead gray-2">
   <strong><%= @product.name %></strong> is currently <strong>stealth</strong>, meaning it is only visible to people you share it with. Before you can start publicly building a team, you need to fill in some more details and submit your product for approval.
 </p>
 
@@ -15,7 +15,7 @@
 
 <div class="row">
   <div class="col-md-4">
-    <h6 class="text-muted omega">Step 1</h6>
+    <h6 class="gray-2 omega">Step 1</h6>
     <h2 class="alpha">Define some work</h2>
     <p>
       Bounties are how other people can get involved in your product. A great bounty clearly defines a goal and gives someone all the information they need to reach it.
@@ -38,7 +38,7 @@
       }.to_json %>"></div>
     <% else %>
       <div class="btn btn-default btn-block disabled">
-        <span class="text-success">
+        <span class="green">
           <span class="glyphicon glyphicon-ok-sign"></span>
           Done!
         </span>
@@ -47,13 +47,13 @@
 
     <hr class="border-bottom">
 
-    <p class="small text-muted">
+    <p class="small gray-2">
       <i>Tip:</i> You can feature up to 3 bounties. This highlights it as the most important thing that somebody can tackle.
     </p>
   </div>
 
   <div class="col-md-4">
-    <h6 class="text-muted omega">Step 2</h6>
+    <h6 class="gray-2 omega">Step 2</h6>
     <h2 class="alpha">Share your progress</h2>
     <p>Everybody is curious to see the progress of your product. Write updates to keep them in the loop with the product's progress. People love updates that are fun, short and have engaging visuals.</p>
     <p>Stuck for ideas? Introduce your product up to this point in a more personal way. Tell everybody <em>your</em> story.</p>
@@ -62,7 +62,7 @@
       <a class="btn btn-success btn-block" href="<%= new_product_post_path(@product) %>">Write an update</a>
     <% else %>
       <div class="btn btn-default btn-block disabled">
-        <span class="text-success">
+        <span class="green">
           <span class="glyphicon glyphicon-ok-sign"></span>
           Done!
         </span>
@@ -71,13 +71,13 @@
 
     <hr class="border-bottom">
 
-    <p class="small text-muted">
+    <p class="small gray-2">
       <i>Tip:</i> Updates are emailed to everybody who follows your product. Derble chack ur smelling!
     </p>
   </div>
 
   <div class="col-md-4">
-    <h6 class="text-muted omega">Step 3</h6>
+    <h6 class="gray-2 omega">Step 3</h6>
     <h2 class="alpha">Start building</h2>
     <p>
       People are much more likely to be excited about your product when they can see some evidence of progress. Create a repository so the design and development of your product can start.
@@ -93,7 +93,7 @@
       </a>
     <% else %>
       <a class="btn btn-default btn-block disabled" href="#">
-        <span class="text-success">
+        <span class="green">
           <span class="glyphicon glyphicon-ok-sign"></span>
           Done!
         </span>
@@ -102,7 +102,7 @@
 
     <hr class="border-bottom">
 
-    <p class="small text-muted">
+    <p class="small gray-2">
       <i>Tip:</i> Repositories store all the source code and design of a product and are the lifeblood of a software product.
     </p>
   </div>
@@ -113,7 +113,7 @@
 
 <br>
 
-<h6 class="text-muted omega">Final Step</h6>
+<h6 class="gray-2 omega">Final Step</h6>
 <h2 class="alpha">Submitting for approval</h2>
 
 <div class="row">
@@ -139,7 +139,7 @@
         <p class="text-large">
           <a href="<%= user_path('awwstn') %>">awwstn</a> will be reviewing your product.
         </p>
-        <p class="text-muted">
+        <p class="gray-2">
           Please, feel free to <%= mail_to 'austin.smith@assembly.com', 'email @awwstn', subject: @product.name, body: product_url(@product) %> if you have any questions about your product or the submission process.
         </p>
       </div>
@@ -149,8 +149,8 @@
 
     <div class="row">
       <div class="col-md-6">
-        <h6 class="alpha omega">We <span class="text-success">like</span></h6>
-        <ul class="list-unstyled text-muted small">
+        <h6 class="alpha omega">We <span class="green">like</span></h6>
+        <ul class="list-reset gray-2 small">
           <li>Interesting new ideas</li>
           <li>Spelling &amp; grammar</li>
           <li>Engaged founders</li>
@@ -158,8 +158,8 @@
         </ul>
       </div>
       <div class="col-md-6">
-        <h6 class="alpha omega">We <span class="text-danger">dislike</span></h6>
-        <ul class="list-unstyled text-muted small">
+        <h6 class="alpha omega">We <span class="red">dislike</span></h6>
+        <ul class="list-reset gray-2 small">
           <li>People looking for free work</li>
           <li>Jerks</li>
         </ul>
@@ -176,7 +176,7 @@
   <a class="btn btn-lg btn-default disabled" href="#">Submit for approval</a>
   <br>
   <br>
-  <p class="text-warning">(You need to complete the 3 steps above before you can submit your product for approval)</a>
+  <p class="yellow">(You need to complete the 3 steps above before you can submit your product for approval)</a>
 <% else %>
   <%= button_to 'Submit for approval', product_launch_path(@product), class: 'btn btn-lg btn-success', method: 'patch' %>
 <% end %>

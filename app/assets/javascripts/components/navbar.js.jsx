@@ -38,7 +38,7 @@ var Navbar = React.createClass({
           <TitleNotificationsCount />
         </li>
 
-        <li className="left navbar-item-muted sm-show px1">
+        <li className="left sm-show px1">
           <ChatNotificationsToggler
             icon="comment"
             href='#notifications'
@@ -49,7 +49,7 @@ var Navbar = React.createClass({
               username={appUser.username} />
         </li>
 
-        <li className="left navbar-item-muted sm-show px1">
+        <li className="left sm-show px1">
           <DropdownNotificationsToggler
               icon="bell"
               href='#stories'

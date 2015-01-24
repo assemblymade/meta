@@ -34,7 +34,7 @@ var Share = React.createClass({
   popover: function() {
     return (
       <Popover placement="top" positionTop={60} title={this.props.title} onClick={this.toggleModal}>
-        <ul className='list list-unstyled'>
+        <ul className='list list-reset'>
           <li style={{ marginBottom: 10 }}>
             <div className='row'>
               <div className='col-md-6'>

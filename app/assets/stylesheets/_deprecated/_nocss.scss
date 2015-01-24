@@ -384,11 +384,11 @@ $px4:   4px;
 // -- alignment
 .#{$pre}margin-align-right { margin-right:$r0; margin-left:auto; }
 .#{$pre}margin-align-center { margin-right:auto; margin-left:auto; }
-.#{$pre}margin-align-left { margin-right:auto; margin-left:$r0; }
+.#{$pre}margin-left-align { margin-right:auto; margin-left:$r0; }
 
 .#{$pre}text-align-right   { text-align:right }
 .#{$pre}text-align-center  { text-align:center }
-.#{$pre}text-align-left    { text-align:left }
+.#{$pre}text-left-align    { text-align:left }
 
 .#{$pre}valign-top     { vertical-align:top }
 .#{$pre}valign-middle  { vertical-align:middle }

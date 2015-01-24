@@ -16,7 +16,7 @@
         <%= sanitize (result.try(:highlight).try(:title) ? result.highlight.title.join.html_safe : result.title), tags: %w(mark) %>
       <% end %>
     </strong>
-    <span class="pull-right small text-muted">#<%= result.number %></span>
+    <span class="pull-right small gray-2">#<%= result.number %></span>
 
     <% if fragments = result.try(:highlight) && result.try(:highlight)['comments.sanitized_body'] %>
       <% fragments.each do |match| %>

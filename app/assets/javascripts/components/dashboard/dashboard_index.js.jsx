@@ -289,7 +289,7 @@ var DashboardIndex = React.createClass({
       return (
         <div>
           <Tile>
-            <div className="px4 py3 text-center">
+            <div className="px4 py3 center">
               <h1 className="mt0 mb0">Hey there @{user.username}!</h1>
               <p className="gray-1">Looks like you're new around here.</p>
               <p className="gray-2"><strong>Tell us what you're into below</strong> and we show you where to get started. </p>
@@ -309,7 +309,7 @@ var DashboardIndex = React.createClass({
           </Tile>
 
           <Tile>
-            <div className="px3 py3 border-top text-center">
+            <div className="px3 py3 border-top center">
               {this.renderSubmit()}
             </div>
           </Tile>

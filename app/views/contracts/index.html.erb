@@ -77,7 +77,7 @@
       <% active.each do |contract| %>
         <% can_update = current_user_on_core_team || current_user.id == contract.user_id %>
 
-        <tr class="<%= 'text-muted' if contract.deleted_at? %>">
+        <tr class="<%= 'gray-2' if contract.deleted_at? %>">
           <td>
             <time class="timestamp" datetime="<%= contract.created_at.iso8601 %>"></time>
           </td>
@@ -106,13 +106,13 @@
               <a id="edit-contract-<%= contract.user.username %>"
                   style="cursor: pointer"
                   data-path="<%= product_contract_path(@product, contract) %>"
-                  class="edit-contract text-danger">Edit</a>
+                  class="edit-contract red">Edit</a>
               <a id="end-contract-<%= contract.user.username %>"
                   style="cursor: pointer"
                   data-path="<%= product_contract_path(@product, contract) %>"
-                  class="end-contract text-danger">End</a>
+                  class="end-contract red">End</a>
               <a id="confirm-contract-change-<%= contract.user.username %>"
-                  class="text-danger"
+                  class="red"
                   style="cursor: pointer; visibility: hidden;">Confirm</a>
             <% else %>
               <time class="timestamp" datetime="<%= contract.deleted_at.iso8601 unless contract.deleted_at.nil? %>"></time>
@@ -138,7 +138,7 @@
       </thead>
 
       <% ended.each do |contract| %>
-        <tr class="<%= 'text-muted' if contract.deleted_at? %>">
+        <tr class="<%= 'gray-2' if contract.deleted_at? %>">
           <td>
             <time class="timestamp" datetime="<%= contract.created_at.iso8601 %>"></time>
           </td>

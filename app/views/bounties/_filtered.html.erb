@@ -41,13 +41,13 @@
       <li class="list-group-item">
         <div class="row">
           <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-1">
-            <div class="text-center">
-              <p class="text-muted text-large">
+            <div class="center">
+              <p class="gray-2 text-large">
                 <%= @empty_state_text %>
               </p>
 
               <% if @empty_state_link_location && @empty_state_link_text %>
-                <a class="btn btn-primary text-center" href="<%= @empty_state_link_location %>" style={{ 'margin-top': 12 }}>
+                <a class="btn btn-primary center" href="<%= @empty_state_link_location %>" style={{ 'margin-top': 12 }}>
                   <%= @empty_state_link_text %>
                 </a>
               <% end %>

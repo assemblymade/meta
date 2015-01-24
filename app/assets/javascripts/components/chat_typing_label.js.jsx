@@ -8,7 +8,7 @@
 
     render: function() {
       return <div>
-        <span className="text-small text-muted">{this.message()}</span>
+        <span className="text-small gray-2">{this.message()}</span>
       </div>
     },
 

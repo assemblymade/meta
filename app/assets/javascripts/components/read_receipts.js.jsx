@@ -20,7 +20,7 @@ var ReadReceipts = React.createClass({
       return <span />
     }
 
-    return <span className="text-muted text-small" style={{ marginLeft: "5px"}}>
+    return <span className="gray-2 text-small" style={{ marginLeft: "5px"}}>
       seen by {this.state.readers.length} {app.pluralized(this.state.readers.length, 'person', 'people')}
     </span>
   },

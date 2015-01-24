@@ -168,7 +168,7 @@ input[type=week] {
 }
 
 .list-grid {
-  // @extend .list-unstyled;
+  // @extend .list-reset;
   @include clearfix;
 
   > li {

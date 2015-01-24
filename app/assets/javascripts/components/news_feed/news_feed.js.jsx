@@ -133,7 +133,7 @@ var NewsFeed = React.createClass({
         {this.spinner()}
 
         <div className="container" key="news-feed-container">
-          <div className="py1 text-center" key="news-feed-filter-count">
+          <div className="py1 center" key="news-feed-filter-count">
             {this.displayCount()}
           </div>
           <div className="clearfix mxn2" ref="masonryContainer" key="news-feed-items">
@@ -154,7 +154,7 @@ var NewsFeed = React.createClass({
 
   renderEmpty: function() {
     return (
-      <div className="well text-center">
+      <div className="well center">
         There hasn't been any activity yet. Why not <a href="/chat/meta">jump into chat</a> to see where you can help?
       </div>
     ); // '

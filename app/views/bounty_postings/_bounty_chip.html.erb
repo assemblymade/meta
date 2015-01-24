@@ -9,12 +9,12 @@
   <a href="<%= product_wip_path(bounty.product, bounty) %>">
     <h4 class="alpha omega"><%= bounty.title %></h4>
     <ul class="list-inline">
-      <li class="text-warning">
+      <li class="yellow">
         <span class="icon icon-app-coin"></span>
         <span class="js-coins"><%= number_with_delimiter(WipContracts.new(bounty, @auto_tip_contracts).earnable_cents.floor) %></span>
       </li>
 
-      <li class="text-muted">
+      <li class="gray-2">
         Created by @<%= bounty.user.username %>
       </li>
     </ul>

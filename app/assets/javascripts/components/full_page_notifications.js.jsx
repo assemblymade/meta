@@ -67,15 +67,15 @@ var FullPageNotifications = React.createClass({
                 <strong>Get notified about products you follow</strong>
               </h3>
 
-              <p className="text-muted omega">
+              <p className="gray-2 omega">
                 Looks like you don't have any notifications yet. Get involved
                 with the rest of our community. Follow some products,
                 start a discussion, leave a comment or submit some work.
                 You'll be notified next time someone responds.
               </p>
 
-              <div className="text-center">
-                <a className="btn btn-primary text-center" href="/discover" style={{ marginTop: 12 }}>
+              <div className="center">
+                <a className="btn btn-primary center" href="/discover" style={{ marginTop: 12 }}>
                   Find products to follow
                 </a>
               </div>
@@ -92,15 +92,15 @@ var FullPageNotifications = React.createClass({
         </div>
 
         <div className='list-group-item-text'>
-          <p className="text-muted omega">
+          <p className="gray-2 omega">
             Looks like you don't have any notifications yet. Get involved
             with the rest of our community. Follow some products,
             start a discussion, leave a comment or submit some work.
             You'll be notified next time someone responds.
           </p>
 
-          <div className="text-center">
-            <a className="btn btn-primary text-center" href="/discover" style={{ marginTop: 12 }}>
+          <div className="center">
+            <a className="btn btn-primary center" href="/discover" style={{ marginTop: 12 }}>
               Find products to follow
             </a>
           </div>
@@ -176,7 +176,7 @@ var Entry = React.createClass({
     var bodyPreview = this.props.story.body_preview;
 
     return (
-      <p className='text-muted' style={{ textOverflow: 'ellipsis' }}>
+      <p className='gray-2' style={{ textOverflow: 'ellipsis' }}>
         {bodyPreview}
       </p>
     );
@@ -207,7 +207,7 @@ var Entry = React.createClass({
 
               &nbsp;
 
-              <span className='text-muted text-small'>
+              <span className='gray-2 text-small'>
                 {this.timestamp()}
               </span>
             </div>
@@ -225,7 +225,7 @@ var Entry = React.createClass({
                 <strong>{actors}</strong> {this.body()}
               </a>
 
-              <span className='text-small text-muted'>
+              <span className='text-small gray-2'>
                 {this.preview()}
               </span>
             </div>

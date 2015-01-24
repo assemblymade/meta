@@ -116,7 +116,7 @@
           </div>
 
           <FormGroup>
-            <div className="form-group text-muted omega">
+            <div className="form-group gray-2 omega">
               <label>
                 {this.props.addonText + this.state.inputPreview}
               </label>

@@ -31,8 +31,8 @@
                      src={avatarUrl(this.props.currentUser, 48)} />
               </td>
               <td>{atUsername(this.props.currentUser)}</td>
-              <td className="text-right">
-                <span className="text-muted">(you)</span>
+              <td className="right-align">
+                <span className="gray-2">(you)</span>
               </td>
             </tr>
             {this.rows()}
@@ -43,7 +43,7 @@
                               onUserSelected={this.handleUserSelected}
                               onValidUserChanged={this.handleValidUserChanged} />
               </td>
-              <td className="text-right">
+              <td className="right-align">
                 {this.addButton()}
               </td>
             </tr>
@@ -55,14 +55,14 @@
     addButton: function() {
       if (this.state.potentialUser) {
         return (
-          <a className="text-success" href="#" onClick={this.addUserClicked}>
+          <a className="green" href="#" onClick={this.addUserClicked}>
             <span className="icon icon-plus-circled"></span>
             <span className="sr-only">Add</span>
           </a>
         )
       } else {
         return (
-          <span className="text-success">
+          <span className="green">
             <span className="icon icon-plus-circled"></span>
             <span className="sr-only">Add</span>
           </span>
@@ -124,7 +124,7 @@
 
     avatar: function(user) {
       if (user && user.email) {
-        return <span className="text-muted glyphicon glyphicon-envelope"></span>
+        return <span className="gray-2 glyphicon glyphicon-envelope"></span>
       } else {
         return <img className="avatar img-circle" height="24" src={avatarUrl(user)} width="24" />
       }
@@ -143,12 +143,12 @@
       if (this.props.user.email) {
         return (
           <tr>
-            <td><span className="text-muted glyphicon glyphicon-envelope"></span></td>
+            <td><span className="gray-2 glyphicon glyphicon-envelope"></span></td>
             <td>{this.props.user.email}</td>
 
-            <td className="text-right">
+            <td className="right-align">
               <input type="hidden" value={this.props.user.email} name="core_team[]" />
-              <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted red-hover">
+              <a href="#" onClick={preventDefault(this.props.onRemove)} className="gray-2 red-hover">
                 <span className="icon icon-close"></span>
                 <span className="sr-only">Remove</span>
               </a>
@@ -161,9 +161,9 @@
             <td><img className="avatar" src={avatarUrl(this.props.user, 48)} width={24} height={24}/></td>
             <td>@{this.props.user.username}</td>
 
-            <td className="text-right">
+            <td className="right-align">
               <input type="hidden" value={this.props.user.id} name="core_team[]" />
-              <a href="#" onClick={preventDefault(this.props.onRemove)} className="text-muted red-hover">
+              <a href="#" onClick={preventDefault(this.props.onRemove)} className="gray-2 red-hover">
                 <span className="icon icon-close"></span>
                 <span className="sr-only">Remove</span>
               </a>

@@ -1,3 +1,37 @@
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+}
+
+h1, .h1 {
+  font-size: 42px; // 30px/48px
+  line-height: 48px;
+}
+
+h2, .h2 {
+  font-size: 30px; // 30px/36px
+  line-height: 36px;
+}
+
+h3, .h3 {
+  font-size: 24px; // 24px/30px
+  line-height: 30px;
+}
+
+h4, .h4 {
+  font-size: 18px; // 18px/24px
+  line-height: 24px;
+}
+
+h5, .h5 {
+  font-size: 15px; // 16px/24px
+  line-height: 24px;
+}
+
+h6, .h6 {
+  font-size: 13px; // 14px/18px
+  line-height: 18px;
+}
+
 @media #{$breakpoint-sm} {
   .sm-right-align { text-align: right !important }
   .sm-center { text-align: center !important }

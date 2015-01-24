@@ -5,7 +5,7 @@
     render: function() {
       var contracts = this.props.contracts
       return (
-        <ul className="list-unstyled">
+        <ul className="list-reset">
           {contracts.author ? <BountyContract
             tooltip={"Tip to @" + contracts.author.username + "for creating this Bounty"}
             label="Bounty Author"

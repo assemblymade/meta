@@ -167,7 +167,7 @@
 
           if (c.user_id === member.user.id) {
             return (
-              <span className="text-muted">{'Core team since ' + _parseDate(c.created_at)}</span>
+              <span className="gray-2">{'Core team since ' + _parseDate(c.created_at)}</span>
             )
           }
         }
@@ -176,7 +176,7 @@
 
     hasBio: function(user) {
       return (
-        <p className="text-muted text-small">
+        <p className="gray-2 text-small">
           {user.bio ? user.bio : ''}
         </p>
       )
@@ -261,7 +261,7 @@
 
     saveButton: function() {
       return (
-        <div className="text-right" style={{'margin-top':'16px'}}>
+        <div className="right-align" style={{'margin-top':'16px'}}>
           <a className="btn btn-default btn-sm" onClick={this.makeUneditable} style={{'margin-right' : '8px'}}>Cancel</a>
           <a className="btn btn-primary btn-sm" onClick={this.updateBio}>Save</a>
         </div>

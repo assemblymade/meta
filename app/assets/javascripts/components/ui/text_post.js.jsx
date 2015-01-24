@@ -36,9 +36,9 @@ module.exports = React.createClass({
           <span className="gray-2 visible-hover">posted {moment(this.props.timestamp).fromNow()}</span>
         </div>
 
-        <h1 className="mt0 mb0" style={{ lineHeight: '36px' }}>
+        <h2 className="mt0 mb0" style={{ lineHeight: '36px' }}>
           {this.props.title}
-        </h1>
+        </h2>
 
         <div className="py1 mb2">
           <SingleLineList items={_.map(this.props.labels, function(label) {

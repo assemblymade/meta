@@ -6,10 +6,10 @@
       <div class="sheet">
         <div class="sheet-body">
 
-          <div class="text-center">
+          <div class="center">
             <h1 class="omega">Join Assembly</h1>
             <p>Woo! Glad you're joining the community. Just fill in some details for your new account below and you can jump right in.</p>
-            <p class="text-muted">
+            <p class="gray-2">
               <a href="<%= new_user_session_path %>">Already a member? Sign in.</a>
             </p>
           </div>
@@ -26,7 +26,7 @@
             <%= hidden_field_tag 'user[follow_product]' %>
 
             <% if f.object.facebook_uid.blank? %>
-              <div class="text-center">
+              <div class="center">
                 <a class="btn btn-facebook btn-lg" href="<%= user_omniauth_authorize_path(:facebook) %>">Supersonic sign up with Facebook</a>
               </div>
 
@@ -42,7 +42,7 @@
                   </div>
 
                   <div class="col-xs-10">
-                    <span class="text-muted">Using Facebook account:</span>
+                    <span class="gray-2">Using Facebook account:</span>
                     <h4 class="alpha omega"><%= f.object.name %></h4>
                   </div>
                 </div>
@@ -85,13 +85,13 @@
               </p>
             </div>
 
-            <div class="text-center">
-              <button class="btn btn-default btn-lg" type="submit"><span class="text-success">Join Assembly</span></button>
+            <div class="center">
+              <button class="btn btn-default btn-lg" type="submit"><span class="green">Join Assembly</span></button>
             </div>
 
           <% end %>
 
-          <p class="text-center small text-muted">
+          <p class="center small gray-2">
             <br>
             By signing up, you agree to Assembly's <a href="<%= tos_path %>">Terms of Service</a>.
           </p>

@@ -44,7 +44,7 @@
               </div>
               <span>@{user.username}</span>
               {' '}
-              <span className="text-muted">{user.name}</span>
+              <span className="gray-2">{user.name}</span>
             </a>
           </li>
         )
