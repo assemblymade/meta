@@ -52,8 +52,7 @@ ASM::Application.routes.draw do
 
   get '/styleguide' => 'pages#styleguide'
 
-  resources :apps, only: [:index] do
-  end
+  get '/discover(.:format)' => 'apps#index', as: :discover
 
   resources :ideas do
     get '/start-conversation', on: :member, action: :start_conversation
@@ -61,15 +60,6 @@ ASM::Application.routes.draw do
     patch '/admin', on: :member, action: :admin_update
     patch :mark
   end
-
-  get '/discover(/:action)', controller: 'discover',
-                             as: :discover,
-                             defaults: {
-                               action: 'index'
-                             },
-                             constraints: {
-                               action: /bounties|updates|team_building|greenlit|profitable/
-                             }
 
   devise_for :users,
     :skip => [:registrations, :sessions, :confirmations],
@@ -86,12 +76,6 @@ ASM::Application.routes.draw do
     controller 'users/registrations' do
       get  '/signup', action: :new, as: :new_user_registration
       post '/signup', action: :create, as: :user_registration
-    end
-
-    controller :surveys do
-      get   '/welcome', action: :new, as: :new_survey
-      patch '/welcome', action: :create
-      get   '/welcome/thanks', action: :show
     end
 
     get '/dashboard' => 'dashboard#index', as: :dashboard

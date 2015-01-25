@@ -9,13 +9,13 @@ exports.apps_path = function(options){
       op_params.push([key, options.data[key]].join('='));
     }
     var params = options.params;
-    return '/apps?' + op_params.join('&');
+    return '/discover?' + op_params.join('&');
   } else if(options && options.params) {
     var params = options.params;
-    return '/apps'
+    return '/discover'
   } else {
     var params = options;
-    return '/apps'
+    return '/discover'
   }
 }
 

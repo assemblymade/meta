@@ -33,7 +33,7 @@
                 </p>
 
                 <p className="mb0">
-                  <a className="bold" href="/discover">Find products</a> to work on. Earn ownership when you complete <a className="bold" href="/discover/bounties">bounties</a>.
+                  <a className="bold" href={this.props.appsPath}>Find products</a> to work on. Earn ownership when you complete bounties.
                 </p>
               </div>
             </div>
