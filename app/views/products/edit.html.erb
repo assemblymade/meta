@@ -239,7 +239,7 @@
       <tbody>
         <% @product.core_team_memberships.each do |membership| %>
           <tr>
-            <td><%= avatar_tag(membership.user, 24, style: 'margin-right:5px') %></td>
+            <td><%= avatar_tag(membership.user, 24) %></td>
             <td><%= membership.user.username %></td>
             <td class="gray-2 right-align">
               <%= time_ago_in_words(membership.created_at) %> ago
