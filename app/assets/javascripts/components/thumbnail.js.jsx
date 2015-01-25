@@ -1,14 +1,15 @@
+var PixelDensity = 2
+
 var Thumbnail = React.createClass({
 
   propTypes: {
     src: React.PropTypes.string.isRequired,
-    size: React.PropTypes.number
+    width: React.PropTypes.number.isRequired,
+    height: React.PropTypes.number.isRequired
   },
 
   getDefaultProps: function() {
-    var defaults = {
-      size: 100
-    }
+    var defaults = {}
 
     var firesizeEl = document.getElementsByName('firesize-url')
     if (firesizeEl[0]) {
@@ -18,11 +19,18 @@ var Thumbnail = React.createClass({
   },
 
   render: function() {
-    var size = this.props.size;
+    var width = this.props.width
+    var height = this.props.height
+    return <img {...this.props}
+                src={this.src()}
+                width={width}
+                height={height} />
+  },
 
-    return (
-      <img src={this.props.basePath + '/' + size + 'x' + size + '/g_center/' + this.props.src} style={{ maxHeight: size }} />
-    )
+  src() {
+    var width = this.props.width * PixelDensity
+    var height = this.props.height * PixelDensity
+    return this.props.basePath + '/' + width + 'x' + height + '/g_center/' + this.props.src
   }
 })
 

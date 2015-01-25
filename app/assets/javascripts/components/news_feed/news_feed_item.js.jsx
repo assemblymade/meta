@@ -331,9 +331,13 @@ var NewsFeedItem = React.createClass({
     }
 
     return (
-      <a href={product.url} className="block border-bottom px3" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
-        <AppIcon app={product} size={24} style={{ display: 'inline' }} />
-        <span className="h6 mt0 mb0 black bold ml1">{product.name}</span>
+      <a href={product.url} className="block clearfix border-bottom px3 py2">
+        <div className="left mr2">
+          <AppIcon app={product} size={18} />
+        </div>
+        <div className="overflow-hidden">
+          <h6 className="black mt0 mb0">{product.name}</h6>
+        </div>
       </a>
     );
   },

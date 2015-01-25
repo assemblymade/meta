@@ -1,7 +1,7 @@
 var Button = require('./ui/button.js.jsx')
 var routes = require('../routes')
 var SingleLineList = require('./ui/single_line_list.js.jsx')
-var Thumbnail = require('./thumbnail.js.jsx')
+var AppIcon = require('./app_icon.js.jsx')
 var Tile = require('./ui/tile.js.jsx')
 var Label = require('./ui/label.js.jsx')
 
@@ -32,7 +32,7 @@ var App = React.createClass({
           {this.appButton()}
 
           <div className="left bg-white rounded border-inset-dark">
-            <Thumbnail size={66} src={logoUrl} />
+            <AppIcon app={this.props.app} size={66} />
           </div>
         </div>
 

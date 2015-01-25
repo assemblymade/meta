@@ -1,28 +1,28 @@
+var Thumbnail = require('./thumbnail.js.jsx')
+var Vignette = require('./ui/vignette.js.jsx')
+
 var AppIcon = React.createClass({
 
   propTypes: {
     app: React.PropTypes.object.isRequired,
-    size: React.PropTypes.number,
-    style: React.PropTypes.object
+    size: React.PropTypes.number.isRequired
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
-      size: 24,
-      style: {}
+      size: 24
     }
   },
 
   render: function() {
     var logoUrl = this.props.app.logo_url
     var size = this.props.size
-    var style = this.props.style
 
-    return <img className="app-icon"
-        src={logoUrl}
-        height={size}
-        width={size}
-        style={style} />
+    return (
+      <Vignette shape="rounded" width={size} height={size}>
+        <Thumbnail src={logoUrl} width={size} height={size} />
+      </Vignette>
+    )
   }
 
 })

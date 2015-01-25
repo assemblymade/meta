@@ -62,7 +62,7 @@ module.exports = React.createClass({
       var thumbs = _.map(thumbnails, function(thumb, i) {
         return (
           <span className="px2" key={'thumb-' + i}>
-            <Thumbnail src={thumb} size={100} />
+            <Thumbnail src={thumb} width={100} height={100} />
           </span>
         );
       });
