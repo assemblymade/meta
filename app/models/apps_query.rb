@@ -11,7 +11,6 @@ class AppsQuery
   def initialize(user = nil, params)
     @user = user
     @params = params.symbolize_keys
-    puts "filter: #{params}"
   end
 
   def perform
