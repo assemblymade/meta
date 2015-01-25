@@ -3,8 +3,7 @@ var BountyCard = require('../bounty_card.js.jsx')
 var BountiesStore = require('../../stores/bounties_store.js')
 var DashboardStore = require('../../stores/dashboard_store.js')
 var Heart = require('../heart.js.jsx')
-var Nav = require('../nav.js.jsx')
-var NavItem = require('../nav_item.js.jsx')
+var Nav = require('../ui/nav.js.jsx')
 var NewsFeedItemsStore = require('../../stores/news_feed_items_store.js')
 var NewsFeedItemsActionCreators = require('../../actions/news_feed_items_action_creators.js')
 var ProductsStore = require('../../stores/products_store.js')
@@ -118,8 +117,8 @@ var DashboardIndex = React.createClass({
     var showAllLink = null
 
     if (followedProducts.length) {
-      followingNavItem = <NavItem label="Following" href='/dashboard/following' active={filter == 'following'} />
-      divider = <NavItem divider={true} />
+      followingNavItem = <Nav.Item label="Following" href='/dashboard/following' active={filter == 'following'} />
+      divider = <Nav.Divider />
     }
 
     if (this.state.followedProducts.length > 5 && !showAll) {
@@ -130,19 +129,19 @@ var DashboardIndex = React.createClass({
         this.setState({ showAll: true })
       }.bind(this)
 
-      showAllLink = <NavItem label="Show all" onClick={click} small={true} />
+      showAllLink = <Nav.Item label="Show all" onClick={click} small={true} />
     }
 
     return (
-      <Nav>
-        <NavItem label="Everything"      href='/dashboard/all'       active={filter == 'all'} />
-        <NavItem label="Your interests"  href='/dashboard/interests' active={filter == 'interests'} />
+      <Nav direction="stacked">
+        <Nav.Item label="Everything"      href='/dashboard/all'           active={filter == 'all'} />
+        <Nav.Item label="Your interests"  href='/dashboard/interests' active={filter == 'interests'} />
         {followingNavItem}
 
         {divider}
 
         {followedProducts.map(function(product) {
-          return <NavItem label={product.name} href={'/dashboard/' + product.slug } active={filter == product.slug} small={true} />
+          return <Nav.Item label={product.name} href={'/dashboard/' + product.slug } active={filter == product.slug} small={true} />
         })}
 
         {showAllLink}

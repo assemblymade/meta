@@ -1,0 +1,47 @@
+.new-nav {
+  list-style: none;
+  padding-left: 0;
+
+  > .new-nav-item {
+    > a {
+      color: $gray-1;
+      display: block;
+      padding: .5rem 1rem;
+      border-radius: $border-radius-base;
+
+      &:hover {
+        background-color: $gray-5;
+      }
+    }
+  }
+
+  > .new-nav-item--active > a {
+    color: $black;
+    font-weight: bold;
+  }
+
+  > .new-nav-item--small > a {
+    font-size: $font-size-h6;
+  }
+
+  > .new-nav-divider {
+    background-color: $gray-4;
+  }
+}
+
+.new-nav--horizontal {
+  > .new-nav-item {
+  }
+  > .new-nav-divider {
+  }
+}
+
+.new-nav--stacked {
+  > .new-nav-item {
+  }
+  > .new-nav-divider {
+    margin-top:    1rem;
+    margin-bottom: 1rem;
+    height: 1px;
+  }
+}
