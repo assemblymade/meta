@@ -2,23 +2,21 @@
 <%= track_engaged 'assets' %>
 <% activate_nav! :assets %>
 
-<div class="row">
-  <% if @assets.empty? %>
-    <div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
-      <div class="well well-lg omega">
-        <h3 class="alpha"><strong>Share Assets</strong></h3>
-        <p class="gray-2 omega">
-          Upload images, zip files, PSDs with the rest of the team building <%= @product.name %>.
-        </p>
-      </div>
-    </div>
-  <% else %>
+<% if @assets.empty? %>
+  <div class="well well-lg omega">
+    <h3 class="alpha"><strong>Share Assets</strong></h3>
+    <p class="gray-2 omega">
+      Upload images, zip files, PSDs with the rest of the team building <%= @product.name %>.
+    </p>
+  </div>
+<% else %>
+  <div class="clearfix mxn3">
     <% @assets.each do |asset| %>
-      <div class="col-sm-6 col-md-3">
+      <div class="sm-col sm-col-6 md-col-3 px3">
         <%= render 'assets/asset', asset: asset %>
       </div>
     <% end %>
-  <% end %>
-</div>
+  </div>
 
-<%= paginate @assets, theme: 'twitter-bootstrap-3' %>
+  <%= paginate @assets, theme: 'twitter-bootstrap-3' %>
+<% end %>
