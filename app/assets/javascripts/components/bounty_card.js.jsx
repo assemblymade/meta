@@ -1,6 +1,7 @@
 var AppIcon = require('./app_icon.js.jsx')
 var Icon = require('./ui/icon.js.jsx')
 var Tile = require('./ui/tile.js.jsx')
+var ProductTile = require('./product_tile.js.jsx')
 
 var BountyCard = React.createClass({
   propTypes: {
@@ -97,11 +98,7 @@ var BountyCard = React.createClass({
     var locker = this.renderLocker()
 
     return (
-      <Tile>
-        <div className="py2 border-bottom" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
-          {product}
-        </div>
-
+      <ProductTile product={this.props.bounty.product}>
         <div className="py2" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
           <a className="blue block h5 mt0 mb0" href={bounty.url}>
             {bounty.title}
@@ -111,7 +108,7 @@ var BountyCard = React.createClass({
         </div>
 
         {locker}
-      </Tile>
+      </ProductTile>
     )
   }
 })
