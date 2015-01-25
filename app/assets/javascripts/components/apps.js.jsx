@@ -41,7 +41,7 @@ var Apps = React.createClass({
     filtersDropdownMenu = (
       <DropdownMenu position="right">
         {_(this.props.topics).map(f =>
-          <DropdownMenu.Item label={f.name} action={"/apps?topic=" + f.slug} />
+          <DropdownMenu.Item label={f.name} action={"/discover?topic=" + f.slug} />
         )}
       </DropdownMenu>
     )
@@ -55,7 +55,7 @@ var Apps = React.createClass({
             <div className="item">
               <Nav orientation="horizontal">
                 {_(filters).map(f =>
-                  <Nav.Item href={"/apps?filter=" + f[0]} label={f[1]} />
+                  <Nav.Item href={"/discover?filter=" + f[0]} label={f[1]} />
                 )}
                 <Nav.Divider />
                 <Nav.Item label="Filters" dropdownMenu={filtersDropdownMenu} />
@@ -100,18 +100,23 @@ var Apps = React.createClass({
     if (!this.props.showcases) {
       return null
     }
-    return <div>
-      <div className="col col-6 pr2 pb2">
-        <a href={"/apps?showcase=" + this.props.showcases[0].slug} className="big-block-button">
-          <div className="h7">Top Trending</div>
-          {this.props.showcases[0].hero_title}
+
+    return <div className="clearfix mxn2">
+      <div className="sm-col sm-col-6 p2">
+        <a href={"/discover?topic=" + this.props.topics[0].slug} className="block center rounded white white-hover py4" style={{
+            background: 'linear-gradient(#364d70, #5e0f4c)'
+          }}>
+          <h4 className="mt1 mb1" style={{color: 'rgba(255,255,255,0.6)'}}>Top Trending</h4>
+          <h4 className="mt1 mb1">{this.props.topics[0].hero_title}</h4>
         </a>
       </div>
 
-      <div className="col col-6 pl2 pb2">
-        <a href={"/apps?showcase=" + this.props.showcases[1].slug} className="big-block-button">
-          <div className="h7">Top Trending</div>
-          {this.props.showcases[1].hero_title}
+      <div className="sm-col sm-col-6 p2">
+        <a href={"/discover?topic=" + this.props.topics[1].slug} className="block center rounded white white-hover py4" style={{
+            background: 'linear-gradient(#5fb384, #084557)'
+          }}>
+          <h4 className="mt1 mb1" style={{color: 'rgba(255,255,255,0.6)'}}>Top Trending</h4>
+          <h4 className="mt1 mb1">{this.props.topics[1].hero_title}</h4>
         </a>
       </div>
     </div>
