@@ -1,6 +1,7 @@
 .new-nav {
   list-style: none;
   padding-left: 0;
+  margin-bottom: 0;
 
   > .new-nav-item {
     > a {
@@ -8,11 +9,12 @@
       display: block;
       padding: .5rem 1rem;
       border-radius: $border-radius-base;
-
-      &:hover {
-        background-color: $gray-5;
-      }
     }
+  }
+
+  > .new-nav-item > a:hover,
+  > .new-nav-item--hover {
+    background-color: $gray-5;
   }
 
   > .new-nav-item--active > a {
@@ -30,15 +32,24 @@
 }
 
 .new-nav--horizontal {
+  @include clearfix();
+
   > .new-nav-item {
+    float: left;
   }
+
   > .new-nav-divider {
+    float: left;
+    width: 1px;
+    // This makes @chrislloyd a sad panda, but the alternatives
+    // are worse. Nav can't be used with all `small` items now.
+    height: 3rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
 }
 
 .new-nav--stacked {
-  > .new-nav-item {
-  }
   > .new-nav-divider {
     margin-top:    1rem;
     margin-bottom: 1rem;

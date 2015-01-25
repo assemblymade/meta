@@ -133,7 +133,7 @@ var DashboardIndex = React.createClass({
     }
 
     return (
-      <Nav direction="stacked">
+      <Nav orientation="stacked">
         <Nav.Item label="Everything"      href='/dashboard/all'           active={filter == 'all'} />
         <Nav.Item label="Your interests"  href='/dashboard/interests' active={filter == 'interests'} />
         {followingNavItem}

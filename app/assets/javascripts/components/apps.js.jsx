@@ -1,8 +1,10 @@
 var AppsStore = require('../stores/apps_store')
 var App = require('./app.js.jsx')
+var ButtonDropdown = require('./ui/button_dropdown.js.jsx')
 var DropdownMenu = require('./ui/dropdown_menu.js.jsx')
 var DropdownMixin = require('../mixins/dropdown_mixin.js.jsx')
 var Icon = require('./ui/icon.js.jsx')
+var Nav  = require('./ui/nav.js.jsx')
 var ProductSearch = require('./product_search.js.jsx')
 var Spinner = require('./spinner.js.jsx')
 
@@ -35,6 +37,15 @@ var Apps = React.createClass({
   },
 
   render: function() {
+
+    filtersDropdownMenu = (
+      <DropdownMenu position="right">
+        {_(this.props.topics).map(f =>
+          <DropdownMenu.Item label={f.name} action={"/apps?topic=" + f.slug} />
+        )}
+      </DropdownMenu>
+    )
+
     return <section className="tile-grid tile-grid-ideas">
       <div className="clearfix">
       </div>
@@ -42,13 +53,13 @@ var Apps = React.createClass({
         <div className="header py4">
           <nav className="tile-grid-nav">
             <div className="item">
-              <ul className="nav nav-pills">
-                {_(filters).map(f => <li>
-                    <a href={"/apps?filter=" + f[0]}>{f[1]}</a>
-                  </li>
+              <Nav orientation="horizontal">
+                {_(filters).map(f =>
+                  <Nav.Item href={"/apps?filter=" + f[0]} label={f[1]} />
                 )}
-                {this.renderTopics()}
-              </ul>
+                <Nav.Divider />
+                <Nav.Item label="Filters" dropdownMenu={filtersDropdownMenu} />
+              </Nav>
             </div>
 
             <div className="item">
@@ -104,27 +115,6 @@ var Apps = React.createClass({
         </a>
       </div>
     </div>
-  },
-
-  renderTopics: function() {
-    var dropdownMenu
-
-    if (this.isDropdownOpen()) {
-      dropdownMenu = (
-        <DropdownMenu position="right">
-          {_(this.props.topics).map(f =>
-            <DropdownMenu.Item label={f.name} action={"/apps?topic=" + f.slug} />
-          )}
-        </DropdownMenu>
-      )
-    }
-
-    return <li className="dropdown">
-      <a href="javascript:void(0)" onClick={this.toggleDropdown}>
-        Topics <Icon icon="chevron-down" />
-      </a>
-      {dropdownMenu}
-    </li>
   },
 
   getInitialState: function() {
