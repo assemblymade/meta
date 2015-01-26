@@ -46,33 +46,29 @@ var Apps = React.createClass({
       </DropdownMenu>
     )
 
-    return <section className="tile-grid tile-grid-ideas">
-      <div className="clearfix">
-      </div>
-      <div className="container main">
-        <div className="header py4">
-          <nav className="tile-grid-nav">
-            <div className="item">
-              <Nav orientation="horizontal">
-                {_(filters).map(f =>
-                  <Nav.Item href={"/discover?filter=" + f[0]} label={f[1]} />
-                )}
-                <Nav.Divider />
-                <Nav.Item label="Filters" dropdownMenu={filtersDropdownMenu} />
-              </Nav>
-            </div>
+    return (
+      <div className="container">
+        <div className="clearfix py4">
+          <div className="sm-col sm-col-8">
+            <Nav orientation="horizontal">
+              {_(filters).map(f =>
+                <Nav.Item href={"/discover?filter=" + f[0]} label={f[1]} />
+              )}
+              <Nav.Divider />
+              <Nav.Item label="Filters" dropdownMenu={filtersDropdownMenu} />
+            </Nav>
+          </div>
 
-            <div className="item">
-              <form action="/apps">
-                <input type="search" className="form-control form-control-search" placeholder="Search all products" name="search" defaultValue={this.props.search} />
-              </form>
-            </div>
-          </nav>
+          <div className="sm-col sm-col-4">
+            <form action="/apps">
+              <input type="search" className="form-control form-control-search" placeholder="Search all products" name="search" defaultValue={this.props.search} />
+            </form>
+          </div>
         </div>
 
         {this.renderApps()}
       </div>
-    </section>
+    )
   },
 
   renderApps: function() {
