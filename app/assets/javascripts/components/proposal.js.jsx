@@ -187,7 +187,6 @@ var Proposal = React.createClass({
         data: choicedata,
       success: function(data) {
         proposalComponent.setState({percent: data.progress, approved: data.approved, state: data.state})
-        console.log(data.progress)
       }});
 
 

@@ -6,12 +6,31 @@ var Tile = require('./tile.js.jsx')
 var ProgressBar = require('./progress_bar.js.jsx')
 var Button = require('./ui/button.js.jsx')
 var MarkdownEditor = require('./markdown_editor.js.jsx');
+var DatePicker = require('react-datepicker-component/DatePicker.jsx')
+var DatePickerInput = require('react-datepicker-component/DatePickerInput.jsx')
+var NewComment = require('./news_feed/new_comment.js.jsx');
+var NewCommentStore = require('../stores/new_comment_store');
 
 var ProposalMake = React.createClass({
   displayName: 'ProposalMake',
   propTypes: {
     user: React.PropTypes.object,
-    product: React.PropTypes.object
+    product: React.PropTypes.object,
+    contract_type: React.PropTypes.string
+  },
+
+  componentDidMount() {
+    NewCommentStore.addChangeListener(this.descriptionUpdate);
+  },
+
+  componentWillUnmount() {
+    NewCommentStore.removeChangeListener(this.descriptionUpdate);
+  },
+
+  descriptionUpdate: function() {
+    var description = NewCommentStore.getComment("ProposalDescription")
+    this.state['description'] = description
+    console.log(this.state)
   },
 
   getInitialState: function() {
@@ -25,9 +44,38 @@ var ProposalMake = React.createClass({
     };
   },
 
+  introText: function() {
+    if (this.props.contract_type === "vesting")
+      return (
+        <div className = "py2">
+          <Tile>
+            <h4>Vesting Contract</h4>
+            <div className="row">
+              <div className = "col-md-10 col-md-offset-1">
+                Schedule a payment of coins to a specific user for a specific purpose.  As an example, a user
+                could be paid for recurring support with a vesting schedule of coins.  Instead of separate bounties
+                for each task, a vesting schedule can capture a broad range of small activities.
+              </div>
+            </div>
+
+            <div className = "row">
+              <div  className = "col-md-10 col-md-offset-1">
+                Each proposal must meet a high bar before it is enacted; More than 50% of participants, weighted by ownership,
+                must sign-off on any given proposal.  We think a high threshold should protect owners from abuse.
+            </div>
+          </div>
+          </Tile>
+        </div>
+      )
+
+  },
+
   renderTitle: function() {
     return (
-      <h1 className="mt0">Create a new Proposal</h1>
+      <div>
+        <h1 className="mt0">Create a new Proposal</h1>
+        {this.introText()}
+      </div>
     )
   },
 
@@ -45,12 +93,45 @@ var ProposalMake = React.createClass({
   handleTextChange: function(stateProp) {
     return function(event) {
       var state = {};
-
-      console.log(state)
       state[stateProp] = event.target.value;
       this.setState(state);
       console.log(this.state)
     }.bind(this);
+  },
+
+  renderUserPicker: function() {
+    return (
+      <div>
+        <TypeaheadUserInput autofocus="autofocus"
+          className="form-control"
+          data-validate-length="2"
+          type="text"
+          required="true"
+          onTextChange={this.handleTextChange('recipient')} />
+      </div>
+    )
+  },
+
+  renderDescriptionBox: function() {
+    return (
+      <div>
+        <NewComment canContainWork={false}
+          dropzoneInnerText={false}
+          hideAvatar={true}
+          hideButtons={true}
+          placeholder={''}
+          thread={"ProposalDescription"}
+          url="/proposals/not-applicable" />
+      </div>
+    )
+  },
+
+  renderDatePicker: function(){
+    return (
+      <div>
+        <input type="date" onChange = {this.handleTextChange('date')}/>
+      </div>
+    )
   },
 
   renderBoxes: function() {
@@ -69,7 +150,7 @@ var ProposalMake = React.createClass({
               <label className="control-label">
                 Proposal Description
               </label>
-              <input className="form-control" type="text" onChange={this.handleTextChange('description')}></input>
+              {this.renderDescriptionBox()}
             </div>
 
             <div className="form-group form-group-lg">
@@ -77,7 +158,7 @@ var ProposalMake = React.createClass({
                 Vesting Recipient Username
               </label>
               <div>
-                <input className="form-control" type="text" onChange={this.handleTextChange('recipient')}></input>
+               {this.renderUserPicker()}
               </div>
             </div>
 
@@ -85,14 +166,16 @@ var ProposalMake = React.createClass({
               <label className="control-label">
                 Coins to Award
               </label>
-              <div><input className="form-control" type="text" onChange={this.handleTextChange('coins')}></input></div>
+              <div><input className="form-control" type="number" onChange={this.handleTextChange('coins')}></input></div>
             </div>
 
             <div className="form-group form-group-lg">
               <label className="control-label">
                 Award in X Days
               </label>
-              <div><input className="form-control" type="text" onChange={this.handleTextChange('date')}></input></div>
+              <div>
+                {this.renderDatePicker()}
+              </div>
             </div>
 
             {this.acceptButton()}
@@ -135,7 +218,6 @@ var ProposalMake = React.createClass({
   toggle_create: function(e) {
     e.preventDefault()
     var the_url = ""
-    console.log(the_url)
     var proposaldata = {name: this.state.name, description: this.state.description, recipient: this.state.recipient, coins: this.state.coins, date: this.state.date}
 
     var proposalComponent = this
@@ -148,8 +230,6 @@ var ProposalMake = React.createClass({
         console.log(proposaldata)
       }});
     }
-
-
 });
 
 module.exports = window.ProposalMake = ProposalMake;
