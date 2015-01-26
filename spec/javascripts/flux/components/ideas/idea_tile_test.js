@@ -18,7 +18,9 @@ describe('IdeaTile', function() {
   };
 
   it('renders a small tile with an idea', function() {
+    jest.dontMock(appFile('components/ui/footer.js.jsx'));
     jest.dontMock(appFile('components/ui/small_tile.js.jsx'));
+
     var IdeaTile = require(appFile('components/ideas/idea_tile.js.jsx'));
     var ideaTile = TestUtils.renderIntoDocument(
       <IdeaTile idea={idea} />
