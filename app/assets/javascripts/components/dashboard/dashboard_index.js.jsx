@@ -118,7 +118,7 @@ var DashboardIndex = React.createClass({
 
     if (followedProducts.length) {
       followingNavItem = <Nav.Item label="Following" href='/dashboard/following' active={filter == 'following'} />
-      divider = <Nav.Divider />
+      divider = <Nav.Divider class />
     }
 
     if (this.state.followedProducts.length > 5 && !showAll) {
@@ -133,19 +133,25 @@ var DashboardIndex = React.createClass({
     }
 
     return (
-      <Nav orientation="stacked">
-        <Nav.Item label="Everything"      href='/dashboard/all'           active={filter == 'all'} />
-        <Nav.Item label="Your interests"  href='/dashboard/interests' active={filter == 'interests'} />
-        {followingNavItem}
+      <div>
+        <Nav orientation="stacked">
+          <Nav.Item label="Everything"      href='/dashboard/all'           active={filter == 'all'} />
+          <Nav.Item label="Your interests"  href='/dashboard/interests' active={filter == 'interests'} />
+          {followingNavItem}
+        </Nav>
 
-        {divider}
+        <div className="md-show">
+          <Nav orientation="stacked">
+            {divider}
 
-        {followedProducts.map(function(product) {
-          return <Nav.Item label={product.name} href={'/dashboard/' + product.slug } active={filter == product.slug} small={true} />
-        })}
+            {followedProducts.map(function(product) {
+              return <Nav.Item label={product.name} href={'/dashboard/' + product.slug } active={filter == product.slug} small={true} />
+            })}
 
-        {showAllLink}
-      </Nav>
+            {showAllLink}
+          </Nav>
+        </div>
+      </div>
     )
   },
 
@@ -402,17 +408,17 @@ var DashboardIndex = React.createClass({
     return (
       <div className="container clearfix mt1">
         <div className="mxn2">
-          <div className="col col-2 px2">
+          <div className="md-col md-col-2 px2">
             <div style={{ marginTop: 42 }}></div>
             {nav}
           </div>
-          <div className="col col-6 px2 mb4">
-            <h6 className="gray-3 caps mt2 mb2">What&#8217;s Happening</h6>
-            {newsFeedItems}
-          </div>
-          <div className="col col-4 px2">
+          <div className="md-col md-col-right md-col-4 px2">
             {product}
             {bounties}
+          </div>
+          <div className="md-col md-col-6 px2 mb4">
+            <h6 className="gray-3 caps mt2 mb2">What&#8217;s Happening</h6>
+            {newsFeedItems}
           </div>
         </div>
       </div>
