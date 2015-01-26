@@ -425,7 +425,7 @@ var DashboardIndex = React.createClass({
 
     this.setState({
       filter: dashboard.filter,
-      initialInterests: dashboard.initial_interests,
+      interests: dashboard.initial_interests,
       marks: dashboard.marks,
       followedProducts: ProductsStore.getProducts(),
       loading: NewsFeedItemsStore.getLoading(),

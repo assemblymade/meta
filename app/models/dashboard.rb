@@ -19,7 +19,7 @@ CURATED_MARKS = {
 class Dashboard
   DEFAULT_FILTER = 'interests'
 
-  attr_accessor :filter, :user, :marks, :initial_interests
+  attr_accessor :filter, :user
 
   include ActiveModel::SerializerSupport
 

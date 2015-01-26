@@ -16,9 +16,9 @@ class DashboardController < ApplicationController
   end
 
   def news_feed_items
-    dashboard = DashboardQuery.call(current_user, filter_param)
+    query = DashboardQuery.new(current_user, filter_param, params[:page])
 
-    render json: dashboard.news_feed_items,
+    render json: query.find_news_feed_items,
       each_serializer: NewsFeedItemSerializer,
       serializer: PaginationSerializer,
       root: :news_feed_items

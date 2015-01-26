@@ -3,10 +3,6 @@ require 'ostruct'
 class DashboardQuery
   attr_accessor :user, :filter, :page
 
-  def self.call(user, filter, page = 1)
-    new(user, filter).find_dashboard
-  end
-
   def initialize(user, filter, page = 1)
     self.user = user
     self.filter = filter
