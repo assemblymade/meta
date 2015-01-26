@@ -23,7 +23,7 @@
 
 <%= react_component 'Apps',
       search: params[:search],
-      filter: params[:filter],
+      filter: params[:filter] || 'trending',
       topics: @topics,
       showcases: (@showcases ? @showcases.map(&:slug).map{|slug|
         I18n.t(slug, scope: :showcases).merge(slug: slug)

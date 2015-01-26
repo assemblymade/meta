@@ -1105,7 +1105,6 @@ ActiveRecord::Schema.define(version: 20150123204157) do
     t.datetime "created_at"
   end
 
-  add_foreign_key "markings", "marks"
   add_foreign_key "news_feed_item_comments", "news_feed_items"
   add_foreign_key "showcase_entries", "products"
   add_foreign_key "showcase_entries", "showcases"
