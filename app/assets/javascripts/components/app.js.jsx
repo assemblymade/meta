@@ -1,10 +1,6 @@
-var ActivityGraph = require('./activity_graph.js.jsx')
 var Button = require('./ui/button.js.jsx')
-var Color = require('color')
 var routes = require('../routes')
 var Thumbnail = require('./thumbnail.js.jsx')
-
-// window.ColorThief = require('color-thief')
 
 var App = React.createClass({
   getDefaultProps: function() {
@@ -43,23 +39,6 @@ var App = React.createClass({
         </div>
       </div>
     </div>
-  },
-
-  cardColorStyle: function() {
-    var colors = ['rgba(207, 214, 219, 0.1)', 'rgba(207, 214, 219, 0.05)']
-    if (this.props.dominant_colors && this.props.dominant_colors.length > 0) {
-      var funColor = _(this.props.dominant_colors).find(c => Color(c).whiteness() < 70) || this.props.dominant_colors[0]
-      colors = [
-        Color(funColor).alpha(0.10).rgbString(),
-        Color(funColor).alpha(0.05).rgbString()
-      ]
-    }
-
-    return {
-      'background': 'linear-gradient(45deg, ' +
-                      colors[0] + ', ' +
-                      colors[1] + ') #fefefe'
-    }
   },
 
   pitch: function() {
