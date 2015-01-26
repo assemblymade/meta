@@ -59,10 +59,12 @@ var Idea = React.createClass({
         <Footer>
           <div className="action-bar">
             <div className="item">
-              <div className="details-group">
-                <a href={user.url} className="inline-block">
-                  <Avatar user={user} />
-                  <span>{user.username}</span>
+              <div className="px3 py2 bg-white">
+                <a className="block clearfix h6 mt0 mb0 black bold" href={user.url}>
+                  <div className="left mr1">
+                    <Avatar user={user} size={18} />
+                  </div>
+                  <div className="overflow-hidden">{user.username}</div>
                 </a>
               </div>
             </div>
