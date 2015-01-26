@@ -49,7 +49,7 @@ var Apps = React.createClass({
     return (
       <div className="container">
         <div className="clearfix py2 md-py3 lg-py4">
-          <div className="sm-col sm-col-8">
+          <div className="sm-col sm-col-8 mb2 sm-mb0">
             <Nav orientation="horizontal">
               {_(filters).map(f =>
                 <Nav.Item href={"/discover?filter=" + f[0]} label={f[1]} />
