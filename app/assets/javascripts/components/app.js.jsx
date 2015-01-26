@@ -65,7 +65,7 @@ var App = React.createClass({
     var searchTags = this.props.app.search_tags
 
     if (searchTags.length == 0) {
-      return ['DefaultTag']
+      return []
     }
 
     return searchTags
