@@ -66,7 +66,7 @@ var BountyCard = React.createClass({
     }
 
     return (
-      <div className="p2 border-top h6 mt0 mb0">
+      <div className="py2 border-top h6 mt0 mb0" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
         <Avatar user={locker} size={18} style={{ display: 'inline-block' }} />
         <a href={locker.url} className="bold black ml1">
           {locker.username}
@@ -88,11 +88,11 @@ var BountyCard = React.createClass({
 
     return (
       <Tile>
-        <div className="p2 border-bottom">
+        <div className="py2 border-bottom" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
           {product}
         </div>
 
-        <div className="p2">
+        <div className="py2" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
           <a className="blue block h5 mt0 mb0" href={bounty.url}>
             {bounty.title}
           </a>

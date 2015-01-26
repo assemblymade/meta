@@ -19,6 +19,23 @@ exports.apps_path = function(options){
   }
 }
 
+exports.idea_mark_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/ideas/' + params.idea_id + '/mark?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/ideas/' + params.idea_id + '/mark'
+  } else {
+    var params = options;
+    return '/ideas/' + params.idea_id + '/mark'
+  }
+}
+
 exports.ideas_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -324,4 +341,3 @@ exports.product_path = function(options){
     return '/' + params.id + ''
   }
 }
-

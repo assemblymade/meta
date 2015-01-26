@@ -1,11 +1,7 @@
 en:
   showcases:
-    saas:
-      name: SaaS
-      hero_title: SaaS Products
-      description: Charge businesses by the month!
+    logos:
+      hero_title: Apps ready for logos & branding
 
-    mobile:
-      name: Mobile
-      hero_title: Mobile Apps
-      description: Like angry birds
+    growth:
+      hero_title: Apps ready for growth & marketing

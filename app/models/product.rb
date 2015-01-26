@@ -28,6 +28,7 @@ class Product < ActiveRecord::Base
   belongs_to :logo, class_name: 'Asset', foreign_key: 'logo_id'
 
   has_one :product_trend
+  has_one :idea
 
   has_many :activities
   has_many :assets
@@ -56,7 +57,8 @@ class Product < ActiveRecord::Base
   has_many :profit_reports
   has_many :proposals
   has_many :rooms
-  has_many :showcases
+  has_many :showcase_entries
+  has_many :showcases, through: :showcase_entries
   has_many :status_messages
   has_many :stream_events
   has_many :subscribers
@@ -112,6 +114,7 @@ class Product < ActiveRecord::Base
   scope :profitable,   -> { public_products.where(state: 'profitable') }
   scope :live,         -> { where.not(try_url: nil) }
   scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
+  scope :untagged, -> { where('array_length(tags, 1) IS NULL') }
 
   validates :slug, uniqueness: { allow_nil: true }
   validates :name, presence: true,
@@ -555,6 +558,14 @@ class Product < ActiveRecord::Base
 
   def tags_string=(new_tags_string)
     self.tags = new_tags_string.split(', ')
+  end
+
+  def topic=(new_topic)
+    self.topics = [new_topic]
+  end
+
+  def showcase=(showcase_slug)
+    Showcase.find_by!(slug: showcase_slug).add!(self)
   end
 
   def assembly?

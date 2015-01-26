@@ -5,7 +5,7 @@ namespace :payments do
 
     csv = CSV.generate do |csv|
       csv << ['Requested At', 'Paid At', 'Username', 'Email', 'Total Requested', 'Amount Withheld', 'Amount Paid']
-      User::Withdrawal.paid.where('amount_withheld > 0').order(:created_at).each do |w|
+      User::Withdrawal.paid.order(:created_at).each do |w|
         csv << [
           w.created_at.iso8601,
           w.payment_sent_at.iso8601,

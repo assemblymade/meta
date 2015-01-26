@@ -10,7 +10,7 @@ class FilterIdeasQuery
   end
 
   def clauses
-    [by_user, filter_by, sort_by, with_mark].compact
+    [by_user, filter_by, sort_by, with_mark, without_flag].compact
   end
 
   def filter
@@ -50,5 +50,9 @@ class FilterIdeasQuery
     return unless options[:mark]
 
     Idea.with_mark(options[:mark])
+  end
+
+  def without_flag
+    Idea.where(flagged_at: nil)
   end
 end

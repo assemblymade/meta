@@ -287,7 +287,7 @@ namespace :bounties do
   task check_locked_bounties: :environment do
     Task.where('locked_at is not null').each do |task|
       now = Time.now
-      task_expiration = task.locked_at + 60.hours
+      task_expiration = task.locked_at + 59.hours
 
       if now > task_expiration
         begin

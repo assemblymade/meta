@@ -206,13 +206,14 @@
       });
 
       return <th style={{"width": this.props.width}} className={classes}>
-        <a href="#" onClick={this.props.onClick} className="text-stealth-link">
-          {this.props.label}
-          <SortArrow asc={this.props.asc} />
-        </a>
+      <a href="#" onClick={this.props.onClick} className="text-stealth-link">
+      {this.props.label}
+      <SortArrow asc={this.props.asc} />
+      </a>
       </th>
     }
   })
+
 
   if (typeof module !== 'undefined') {
     module.exports = ProductRankings;

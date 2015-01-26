@@ -186,18 +186,18 @@ ASM::Application.routes.draw do
 
   # Admin
   namespace :admin do
-    resources :bitcoin, only: [:index]
+    resources :apps, only: [:index, :update]
     resources :asset_history, only: [:index]
-    resources :user_books, only: [:index]
+    resources :bitcoin, only: [:index]
+    resources :bounties, only: [:index] do
+      get :graph_data
+    end
     resources :karma, only: [:index]
     resources :karmahistory, only: [:index]
     resources :leaderboard, only: [:index]
-    resources :tags, only: [:index]
     resources :ownership, only: [:index, :update]
-    resources :bounties, only: [:index]
-    namespace :bounties do
-      get :graph_data
-    end
+    resources :tags, only: [:index]
+    resources :user_books, only: [:index]
     resources :profit_reports, path: 'profit-reports', only: [:index, :show]
     resources :product_rankings, path: 'products', only: [:index, :update]
     resources :withdrawals, only: [:index] do

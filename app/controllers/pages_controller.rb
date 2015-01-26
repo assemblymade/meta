@@ -18,13 +18,3 @@ class PagesController < ApplicationController
     end
   end
 end
-
-class TaskGroup < Struct.new(:marks, :tasks)
-  def title
-    if marks.one?
-      "Because you selected \"#{marks.first.name.upcase}\""
-    else
-      "Special for you"
-    end
-  end
-end

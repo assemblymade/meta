@@ -3,40 +3,34 @@ class NewsFeedItemSerializer < ApplicationSerializer
 
   attributes :heartable_type, :hearts_count
 
-  has_one :product, serializer: ProductSerializer
+  has_one :product, serializer: ProductShallowSerializer
   has_one :target
   has_one :user
   has_one :last_comment
 
-  def comments_count
-    object.target.try(:comments_count) || object.comments_count
-  end
-
-  def last_comment
-    NewsFeedItemCommentSerializer.new(object.last_comment)
+  def target
+    object.target_type == 'Wip' ? object.target_task : object.target
   end
 
   def layout
     object.target_type
   end
 
-  def product
-    Product.find(object.product_id) if object.try(:product_id)
-  end
-
-  def target
-    object.target_type.try(:constantize).try(:find, object.target_id)
-  end
-
   def url
-    product_update_path(product, object)
+    product_update_path(object.product_id, object)
   end
 
   def user
-    User.find(object.source_id)
+    object.source
   end
 
   def heartable_type
     'NewsFeedItem'
+  end
+
+  cached
+
+  def cache_key
+    object
   end
 end

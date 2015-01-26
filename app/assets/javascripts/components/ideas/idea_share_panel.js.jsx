@@ -165,7 +165,7 @@ var IdeaSharePanel = React.createClass({
       </h5>,
 
       <p className="gray-2" key="explanation-body">
-        Every day we green light the most loved ideas on Assembly.
+        Every day we greenlight the most loved ideas on Assembly.
         They are then made into real products by you and the community.
       </p>
     ];

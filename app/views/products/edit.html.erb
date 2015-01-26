@@ -38,6 +38,14 @@
           </div>
 
           <div class="form-group">
+            <%= f.label :pitch, 'Five word pitch', class: 'form-label' %>
+            <%= f.text_field :pitch, class: 'form-control' %>
+            <p class="help-block">
+              If you had 30 seconds to describe your business to a friend, what would you say? Use simple, direct words.
+            </p>
+          </div>
+
+          <div class="form-group">
             <%= f.label :you_tube_video_url, 'Pitch video link', class: 'form-label' %>
             <%= f.url_field :you_tube_video_url, class: 'form-control', maxlength: 255 %>
             <p class="help-block">

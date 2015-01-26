@@ -9,5 +9,4 @@
 
 //= require ./constants
 //= require ./dispatcher
-//= require ./components
 //= require ./application

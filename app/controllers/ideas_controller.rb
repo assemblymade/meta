@@ -11,7 +11,22 @@ class IdeasController < ProductController
 
     find_idea!
 
-    respond_with IdeaSerializer.new(@idea)
+    respond_with({
+      categories: Idea::CATEGORY_NAMES.map.with_index { |name, i|
+        {
+          name: name,
+          slug: Idea::CATEGORY_SLUGS[i]
+        }
+      },
+
+      idea: IdeaSerializer.new(@idea),
+      topics: Idea::TOPIC_NAMES.map.with_index { |name, i|
+        {
+          name: name,
+          slug: Idea::TOPIC_SLUGS[i]
+        }
+      }
+    })
   end
 
   def create
@@ -26,19 +41,20 @@ class IdeasController < ProductController
   end
 
   def index
-    ideas = FilterIdeasQuery.call(filter_params)
-    total_pages = (ideas.count / IDEAS_PER_PAGE.to_f).ceil
+    @ideas = FilterIdeasQuery.call(filter_params).
+      page(params[:page]).per(IDEAS_PER_PAGE)
+
+    total_pages = @ideas.total_pages
+
     @stores[:pagination_store] = {
       current_page: params[:page] || 1,
       total_pages: total_pages
     }
 
-    @heartables = ideas.map(&:news_feed_item)
+    @heartables = @ideas.map(&:news_feed_item)
     @user_hearts = if signed_in?
       Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
     end
-
-    @ideas = ideas.page(params[:page]).per(IDEAS_PER_PAGE)
 
     respond_with({
       heartables: @heartables,
@@ -107,7 +123,7 @@ class IdeasController < ProductController
     find_idea!
     authorize! :update, @idea
 
-    @idea.update_attributes(idea_params)
+    @idea.update(idea_params)
 
     respond_to do |format|
       format.json  { render json: IdeaSerializer.new(@idea), status: 200 }
@@ -129,7 +145,14 @@ class IdeasController < ProductController
   end
 
   def idea_params
-    params.require(:idea).permit([:name, :body, :founder_preference])
+    params.require(:idea).permit([
+      :name,
+      :body,
+      :flagged_at,
+      :founder_preference,
+      :topics => [],
+      :categories => []
+    ])
   end
 
   def filter_params

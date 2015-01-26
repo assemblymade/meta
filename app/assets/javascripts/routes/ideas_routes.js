@@ -27,10 +27,16 @@ function _showEditIdea(idea) {
   });
 }
 
-function _showIdeaAdmin(idea) {
+function _showIdeaAdmin(data) {
   Dispatcher.dispatch({
     type: ActionTypes.IDEA_RECEIVE,
-    idea: idea
+    idea: data.idea
+  });
+
+  Dispatcher.dispatch({
+    type: ActionTypes.IDEA_ADMIN_RECEIVE,
+    categories: data.categories,
+    topics: data.topics
   });
 }
 

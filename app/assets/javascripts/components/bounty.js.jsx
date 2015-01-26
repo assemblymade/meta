@@ -331,17 +331,17 @@ var Bounty = React.createClass({
       if (this.state.worker.id == currentUser.id) {
         if (bounty.state == "reviewing") {
           return <Button>Core Team review requested</Button>
-        } else {
-          return (
-            <Button action={this.requestReview}>Request Core Team review</Button>
-          )
         }
-      } else {
-        return <Button><Icon icon="lock" /> Locked for {formatShortTime(this.state.lockUntil)}</Button>
+
+        return (
+          <Button action={this.requestReview}>Request Core Team review</Button>
+        );
       }
-    } else {
-      return <Button action={this.startWork} type="primary">Work on this bounty</Button>
+
+      return <Button><Icon icon="lock" /> Locked for {formatShortTime(this.state.lockUntil)}</Button>
     }
+
+    return <Button action={this.startWork} type="primary">Work on this bounty</Button>
   },
 
   reopenBounty: function(e) {
@@ -358,7 +358,7 @@ var Bounty = React.createClass({
 
     this.setState({
       worker: currentUser && currentUser.attributes,
-      lockUntil: moment().add(60, 'hours').add(1, 'second')
+      lockUntil: moment().add(60, 'hours')
     });
   },
 

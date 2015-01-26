@@ -34,7 +34,7 @@ var IdeaStartConversation = React.createClass({
       idea: IdeaStore.getIdea(),
       isDrawerOpen: false,
       question: '',
-      showWarning: true
+      showWarning: false
     };
   },
 
@@ -101,7 +101,7 @@ var IdeaStartConversation = React.createClass({
 
         <form>
           <div className="form-group px4 mb0">
-            <Drawer open={this.state.isDrawerOpen} height={120}>
+            <Drawer open={this.state.isDrawerOpen}>
               <div className="px3 gray-1">
                 <p className="px3">
                   After you submit your idea, you'll hash out the specifics of your
@@ -145,7 +145,12 @@ var IdeaStartConversation = React.createClass({
             </div>
 
             <div className="right">
-              <Button type="primary" action={!this.state.showWarning && this.onPostQuestionClick}>
+              <Button type="primary"
+                  action={
+                    !this.state.showWarning &&
+                    this.state.question &&
+                    this.onPostQuestionClick
+              }>
                 <span className="title">Submit idea</span>
               </Button>
             </div>

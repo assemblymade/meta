@@ -56,6 +56,9 @@
 
           <%= form_for @product, html: {class: 'form'} do |f| %>
             <%= form_group @product, :name do %>
+              <% if params[:idea_id] %>
+                <input name="product[idea_id]" type="hidden" value="<%= params[:idea_id] %>">
+              <% end %>
               <%= f.label :name, class: 'control-label' %>
               <div class="row">
                 <div class="col-md-8">

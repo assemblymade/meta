@@ -48,7 +48,7 @@ if (dataTag) {
   if (query.search) {
     AppsActionCreators.search(query.search)
   } else {
-    AppsActionCreators.filterSelected(query.filter, query.topic)
+    AppsActionCreators.filterSelected(query)
   }
 }
 

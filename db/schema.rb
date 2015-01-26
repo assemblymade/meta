@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20150122210550) do
+=======
+ActiveRecord::Schema.define(version: 20150123204157) do
+>>>>>>> 504788817c308aafe58ff86f63714049ebc50b2f
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "uuid-ossp"
@@ -70,11 +74,12 @@ ActiveRecord::Schema.define(version: 20150122210550) do
 
   create_table "attachments", id: :uuid, force: :cascade do |t|
     t.uuid     "user_id"
-    t.string   "asset_path",   limit: 255
-    t.string   "name",         limit: 255
-    t.string   "content_type", limit: 255
+    t.string   "asset_path",      limit: 255
+    t.string   "name",            limit: 255
+    t.string   "content_type",    limit: 255
     t.integer  "size"
     t.datetime "created_at"
+    t.string   "dominant_colors",             array: true
   end
 
   create_table "auto_tip_contracts", force: :cascade do |t|
@@ -320,8 +325,14 @@ ActiveRecord::Schema.define(version: 20150122210550) do
     t.datetime "greenlit_at"
     t.boolean  "founder_preference"
     t.integer  "tilting_threshold"
+<<<<<<< HEAD
     t.json     "topics",                         default: {}
     t.datetime "flagged_at"
+=======
+    t.datetime "flagged_at"
+    t.text     "topics",                         default: [],                                 array: true
+    t.text     "categories",                     default: [],                                 array: true
+>>>>>>> 504788817c308aafe58ff86f63714049ebc50b2f
   end
 
   add_index "ideas", ["flagged_at"], name: "index_ideas_on_flagged_at", using: :btree
@@ -457,6 +468,9 @@ ActiveRecord::Schema.define(version: 20150122210550) do
     t.uuid     "target_id"
   end
 
+  add_index "news_feed_item_comments", ["news_feed_item_id", "created_at"], name: "index_news_feed_item_comments_for_dashboard", using: :btree
+  add_index "news_feed_item_comments", ["user_id"], name: "index_news_feed_item_comments_on_user_id", using: :btree
+
   create_table "news_feed_item_posts", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "news_feed_item_id"
     t.text     "title"
@@ -483,6 +497,9 @@ ActiveRecord::Schema.define(version: 20150122210550) do
     t.integer  "comments_count",                default: 0
   end
 
+  add_index "news_feed_items", ["product_id", "target_type", "archived_at", "last_commented_at"], name: "index_news_feed_items_for_dashboard", using: :btree
+  add_index "news_feed_items", ["product_id"], name: "index_news_feed_items_on_product_id", using: :btree
+  add_index "news_feed_items", ["target_id", "target_type"], name: "index_news_feed_items_on_target_id_and_target_type", using: :btree
   add_index "news_feed_items", ["target_id"], name: "index_news_feed_items_on_target_id", unique: true, using: :btree
 
   create_table "newsletters", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -655,6 +672,7 @@ ActiveRecord::Schema.define(version: 20150122210550) do
     t.datetime "last_checked_btc"
     t.datetime "issued_coins"
     t.text     "try_url"
+    t.string   "topics",                                                                    array: true
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
@@ -701,15 +719,19 @@ ActiveRecord::Schema.define(version: 20150122210550) do
     t.datetime "updated_at"
   end
 
-  create_table "showcases", id: :uuid, force: :cascade do |t|
-    t.uuid     "product_id"
-    t.uuid     "wip_id"
-    t.datetime "showcased_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "email_upcoming_sent_at"
-    t.datetime "email_public_sent_at"
+  create_table "showcase_entries", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.uuid     "showcase_id", null: false
+    t.uuid     "product_id",  null: false
   end
+
+  create_table "showcases", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string   "slug",       null: false
+    t.datetime "ended_at"
+  end
+
+  add_index "showcases", ["ended_at"], name: "index_showcases_on_ended_at", using: :btree
 
   create_table "status_messages", id: :uuid, force: :cascade do |t|
     t.uuid     "product_id",             null: false
@@ -798,6 +820,8 @@ ActiveRecord::Schema.define(version: 20150122210550) do
     t.uuid     "product_id"
   end
 
+  add_index "top_products", ["user_id"], name: "index_top_products_on_user_id", using: :btree
+
   create_table "transaction_log_entries", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "product_id",                   null: false
     t.uuid     "work_id"
@@ -817,6 +841,7 @@ ActiveRecord::Schema.define(version: 20150122210550) do
     t.string   "transaction_type", limit: 255
   end
 
+  add_index "transaction_log_entries", ["wallet_id", "product_id", "cents"], name: "transaction_log_entries_index_for_dashboard", using: :btree
   add_index "transaction_log_entries", ["wallet_id", "product_id"], name: "index_transaction_log_entries_on_wallet_id_and_product_id", using: :btree
   add_index "transaction_log_entries", ["wallet_id"], name: "index_transaction_log_entries_on_wallet_id", using: :btree
 
@@ -1127,4 +1152,6 @@ ActiveRecord::Schema.define(version: 20150122210550) do
 
   add_foreign_key "markings", "marks"
   add_foreign_key "news_feed_item_comments", "news_feed_items"
+  add_foreign_key "showcase_entries", "products"
+  add_foreign_key "showcase_entries", "showcases"
 end

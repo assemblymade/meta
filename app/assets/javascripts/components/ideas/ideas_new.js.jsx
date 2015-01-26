@@ -48,7 +48,7 @@ var IdeasNew = React.createClass({
           </div>
         </div>
 
-        <Drawer open={this.state.isDrawerOpen} height={100}>
+        <Drawer open={this.state.isDrawerOpen}>
           <div className="px3 gray-1">
             <p className="px3">
               After you submit your idea, you'll hash out the specifics of your
