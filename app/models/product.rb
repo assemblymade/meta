@@ -617,7 +617,7 @@ class Product < ActiveRecord::Base
       root: false,
       only: [:slug, :name, :pitch, :poster],
       methods: [:tech, :hidden, :sanitized_description, :suggest]
-    ).merge(marks: mark_weights, logo_url: full_logo_url)
+    ).merge(marks: mark_weights, logo_url: full_logo_url, search_tags: tags)
   end
 
   def mark_weights
