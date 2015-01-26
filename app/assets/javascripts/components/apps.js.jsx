@@ -6,8 +6,10 @@ var DropdownMixin = require('../mixins/dropdown_mixin.js.jsx')
 var Icon = require('./ui/icon.js.jsx')
 var Jumbotron = require('./ui/jumbotron.js.jsx')
 var Nav  = require('./ui/nav.js.jsx')
+var PaginationLinks = require('./pagination_links.js.jsx')
 var ProductSearch = require('./product_search.js.jsx')
 var Spinner = require('./spinner.js.jsx')
+var Url = require('url')
 
 var filters = [
   ['trending', 'Trending'],
@@ -38,6 +40,7 @@ var Apps = React.createClass({
 
   getDefaultProps() {
     return {
+      page: 1,
       filter: 'trending'
     }
   },
@@ -91,6 +94,7 @@ var Apps = React.createClass({
     return <div>
       {this.renderAppsList(_(this.state.apps).first(3))}
       {this.renderAppsList(_(this.state.apps).rest(3))}
+      <PaginationLinks page={this.props.page} pages={this.props.total_pages} onPageChanged={this.handlePageChanged} />
     </div>
   },
 
@@ -128,6 +132,13 @@ var Apps = React.createClass({
         </a>
       </div>
     </div>
+  },
+
+  handlePageChanged: function(page) {
+    // this will go away once we harness the power of Routercles
+    var url = Url.parse(window.location.href, true)
+    url.query.page = page
+    window.location = Url.format({protocol: url.protocol, host: url.host, pathname: url.pathname, query: url.query})
   },
 
   getInitialState: function() {

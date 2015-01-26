@@ -24,6 +24,8 @@
 <%= react_component 'Apps',
       search: params[:search],
       filter: params[:filter] || 'trending',
+      page: params[:page] || 1,
+      total_pages: @total_pages,
       topics: @topics,
       showcases: (@showcases ? @showcases.map(&:slug).map{|slug|
         I18n.t(slug, scope: :showcases).merge(slug: slug)
