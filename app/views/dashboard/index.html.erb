@@ -1,10 +1,7 @@
 <% title 'Dashboard' %>
+<%= track_engaged 'dashboard' %>
+
 <% activate_nav! :dashboard %>
 
 <%= render 'shared/navbar' %>
-
-<%= react_component 'DashboardPage', {
-  filter: params.fetch(:filter, 'interests'),
-  marks: CuratedMark::CURATED_MARKS,
-  initialInterests: current_user.marks.pluck(:name)
-} %>
+<%= react_component 'DashboardApp' %>

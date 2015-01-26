@@ -1,6 +1,7 @@
 var AppIcon = require('../app_icon.js.jsx')
 var BountyCard = require('../bounty_card.js.jsx')
 var BountiesStore = require('../../stores/bounties_store.js')
+var DashboardStore = require('../../stores/dashboard_store.js')
 var Heart = require('../heart.js.jsx')
 var Nav = require('../nav.js.jsx')
 var NavItem = require('../nav_item.js.jsx')
@@ -13,117 +14,26 @@ var Spinner = require('../spinner.js.jsx')
 var SvgIcon = require('../ui/svg_icon.js.jsx')
 var Tile = require('../ui/tile.js.jsx')
 
-var Markdown = require('../markdown.js.jsx')
-
-var NewsFeedItemBro = React.createClass({
-  getDefaultProps: function() {
-    return {
-    }
-  },
-
-  renderTarget: function() {
-    var bounty = this.props.target
-
-    return (
-      <div className="p3">
-        <a className="h4 mt0 mb0 blue bold" href={bounty.url}>
-          {bounty.title}
-        </a>
-
-        <div className="mt2">
-          <div>
-            <Markdown content={bounty.short_description} normalized={true} />
-          </div>
-        </div>
-      </div>
-    )
-  },
-
-  renderDetails: function() {
-    var bounty = this.props.target
-
-    return (
-      <div className="border-top clearfix">
-        <div className="px3 left h4 mt0 mb0" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
-          <AppCoins n={bounty.contracts.earnable} />
-        </div>
-
-        <div className="right gray-3 h6 mt0 mb0 bold" style={{ lineHeight: '24px' }}>
-          <div className="px3 inline-block" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem', fill: '#C2C7D0' }}>
-            <SvgIcon type="comment" className="bg-gray-3" />
-            <span className="ml1">{bounty.comments_count} {bounty.comments_count === 1 ? 'Comment' : 'Comments'}</span>
-          </div>
-
-          <div className="px3 inline-block border-left" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem', fill: '#C2C7D0' }}>
-            <SvgIcon type="share" className="bg-gray-3" />
-          </div>
-
-          <div className="px3 inline-block border-left" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem', fill: '#C2C7D0' }}>
-            <Heart heartable_id={this.props.id} heartable_type="NewsFeedItem" size="medium" />
-          </div>
-        </div>
-      </div>
-    )
-  },
-
-  renderLastComment() {
-    var comment = this.props.last_comment
-
-    return (
-      <div className="border-top" style={{ paddingLeft: '1.5rem' }}>
-        <div className="timeline">
-          <NewsFeedItemComments item={this.props} />
-        </div>
-      </div>
-    )
-  },
-
-  render: function() {
-    if (this.props.target.type != 'task') {
-      return <div />
-    }
-
-    var product = this.renderProduct()
-    var target = this.renderTarget()
-    var details = this.renderDetails()
-    var lastComment = this.renderLastComment()
-
-    return (
-      <Tile>
-        {product}
-        {target}
-        {details}
-        {lastComment}
-      </Tile>
-    )
-  }
-})
-
-var DashboardPage = React.createClass({
-  getDefaultProps: function() {
-    return  {
-      filter: 'interests',
-      initialShowAll: false,
-      initialInterests: [],
-      marks: {}
-    }
-  },
-
+// TODO: Add navigate func prop
+var DashboardIndex = React.createClass({
   getInitialState: function() {
     return {
-      newsFeedItems: [],
-      lockedBounties: [],
-      reviewingBounties: [],
+      currentUser: UserStore.getUser(),
+      filter: null,
       followedProducts: [],
-      interests: this.props.initialInterests,
+      interests: [],
       loading: false,
-      showAll: this.props.initialShowAll,
+      lockedBounties: [],
+      marks: [],
+      newsFeedItems: [],
+      reviewingBounties: [],
       selected: [],
-      currentUser: UserStore.getUser()
+      showAll: false,
     }
   },
 
   componentDidMount: function() {
+    DashboardStore.addChangeListener(this.getStateFromStore)
     NewsFeedItemsStore.addChangeListener(this.getStateFromStore)
     ProductsStore.addChangeListener(this.getStateFromStore)
     UserBountiesStore.addChangeListener(this.getStateFromStore)
@@ -134,6 +44,7 @@ var DashboardPage = React.createClass({
   },
 
   componentWillUnmount: function() {
+    DashboardStore.addChangeListener(this.getStateFromStore)
     NewsFeedItemsStore.removeChangeListener(this.getStateFromStore)
     ProductsStore.removeChangeListener(this.getStateFromStore)
     UserBountiesStore.removeChangeListener(this.getStateFromStore)
@@ -150,7 +61,7 @@ var DashboardPage = React.createClass({
   },
 
   renderProduct: function() {
-    var filter = this.props.filter
+    var filter = this.state.filter
 
     var product = _.find(this.state.followedProducts, function(product) {
       return product.slug == filter
@@ -195,7 +106,7 @@ var DashboardPage = React.createClass({
   },
 
   renderNav: function() {
-    var filter = this.props.filter
+    var filter = this.state.filter
     var showAll = this.state.showAll
     var followedProducts = showAll ? this.state.followedProducts : this.state.followedProducts.slice(0, 5)
     var followingNavItem = null
@@ -242,7 +153,7 @@ var DashboardPage = React.createClass({
   },
 
   renderMarks: function(section) {
-    var marks = this.props.marks[section]
+    var marks = this.state.marks[section]
 
     return (
       <div >
@@ -365,7 +276,7 @@ var DashboardPage = React.createClass({
   renderNewsFeedItems: function() {
     var items = this.state.newsFeedItems
     var spinner = this.renderSpinner()
-    var filter = this.props.filter
+    var filter = this.state.filter
     var interests = this.state.interests
     var user = this.state.currentUser
 
@@ -505,20 +416,25 @@ var DashboardPage = React.createClass({
   },
 
   getStateFromStore: function() {
+    var dashboard = DashboardStore.getDashboard()
+
     this.setState({
-      lockedBounties: UserBountiesStore.getLockedBounties(),
-      reviewingBounties: UserBountiesStore.getReviewingBounties(),
-      newsFeedItems: NewsFeedItemsStore.getNewsFeedItems(),
+      filter: dashboard.filter,
+      initialInterests: dashboard.initial_interests,
+      marks: dashboard.marks,
+      followedProducts: ProductsStore.getProducts(),
       loading: NewsFeedItemsStore.getLoading(),
-      followedProducts: ProductsStore.getProducts()
+      lockedBounties: UserBountiesStore.getLockedBounties(),
+      newsFeedItems: NewsFeedItemsStore.getNewsFeedItems(),
+      reviewingBounties: UserBountiesStore.getReviewingBounties(),
     })
   },
 
   params: function() {
     return {
-      filter: this.props.filter
+      filter: this.state.filter
     }
   }
 })
 
-window.DashboardPage = module.exports = DashboardPage
+module.exports = window.DashboardIndex = DashboardIndex

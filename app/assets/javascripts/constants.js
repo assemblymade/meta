@@ -139,6 +139,9 @@
       COMMENT_UPDATE_FAILED: null,
       COMMENT_UPDATE_RECEIVED: null,
 
+      DASHBOARD_ROUTE_CHANGED: null,
+      DASHBOARD_RECEIVE: null,
+
       DISCUSSION_RECEIVE: null,
 
       IDEA_RECEIVE: null,

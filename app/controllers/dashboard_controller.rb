@@ -11,13 +11,16 @@ class DashboardController < ApplicationController
       QueryMarks.new.assign_top_products_for_user(10, current_user, product_vectors, user_vector)
     end
 
-    dashboard = DashboardQuery.call(current_user, filter_param)
+    query = DashboardQuery.call(current_user, filter_param)
 
-    @news_feed_items = dashboard.news_feed_items
-    @user_bounties = dashboard.user_bounties
-    @heartables = dashboard.heartables
-    @user_hearts = dashboard.user_hearts
-    @products = dashboard.followed_products
+    @news_feed_items = query.news_feed_items
+    @user_bounties = query.user_bounties
+    @heartables = query.heartables
+    @user_hearts = query.user_hearts
+    @products = query.followed_products
+
+    dashboard = Dashboard.new(current_user, params[:filter])
+    respond_with dashboard, root: :dashboard
   end
 
   def news_feed_items
