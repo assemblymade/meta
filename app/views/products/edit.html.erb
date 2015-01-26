@@ -59,13 +59,15 @@
             <%= f.url_field :homepage_url, class: 'form-control', placeholder: "eg: https://#{@product.slug}.com", maxlength: 255 %>
           </div>
 
-          <div class="form-group">
-            <%= f.label :try_url, 'Product Try URL', class: 'form-label' %>
-            <%= f.url_field :try_url, class: 'form-control', placeholder: "eg: https://#{@product.slug}.com?utm=assembly", maxlength: 255 %>
-            <p class="help-block">
-              Once you've added this link your product will show up as Live.
-            </p>
-          </div>
+          <% if signed_in? && current_user.staff? %>
+            <div class="form-group">
+              <%= f.label :try_url, 'Product Try URL', class: 'form-label' %>
+              <%= f.url_field :try_url, class: 'form-control', placeholder: "eg: https://#{@product.slug}.com?utm=assembly", maxlength: 255 %>
+              <p class="help-block">
+                Once you've added this link your product will show up as Live.
+              </p>
+            </div>
+          <% end %>
 
 
         </div>
