@@ -221,7 +221,7 @@ var DashboardIndex = React.createClass({
     var text = null
     var padding = null
     var click = function() {}
-    var navigation = this.props.navigation
+    var navigate = this.props.navigate
 
     if (selectionsNeeded <= 0) {
       text = 'Yay! Take a look at your suggestions'
@@ -240,7 +240,7 @@ var DashboardIndex = React.createClass({
             }
           },
           success: function() {
-            navigation(null, '/dashboard/interests')
+            navigate('/dashboard/interests')
           }
         })
       }.bind(this)
