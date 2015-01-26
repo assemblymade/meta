@@ -85,7 +85,7 @@ var Apps = React.createClass({
   renderAppsList: function(apps) {
     return <div className="clearfix mxn2">
       {_(apps).map(app =>
-        <div className="sm-col sm-col-4 px2 mb3">
+        <div className="sm-col sm-col-4 px0 sm-px2 mb3">
           <App app={app} />
         </div>
       )}
