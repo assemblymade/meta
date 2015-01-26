@@ -39,7 +39,7 @@ class window.ChatView extends Backbone.View
       $(@).remove()
 
     tsContainer = $('<div class="timeline-insert js-timestamp">&nbsp;</div>').insertBefore('.timeline-item:last')
-    lastTime = @collection.last().get('created')
+    lastTime = @collection.last().get('created_at')
     React.render(Timestamp({time: lastTime}), tsContainer[0])
 
   onCollectionAdd: (model, collection, info) =>
@@ -83,7 +83,7 @@ class window.ChatView extends Backbone.View
   optimisticallyCreateActivity: (comment) ->
     activity = new Activity(
       type: 'activities/chat'
-      created: (new Date()).toISOString()
+      created_at: (new Date()).toISOString()
       actor:  app.currentUser().attributes
       subject: {
         body: comment.get('body')
@@ -131,7 +131,7 @@ class window.ChatView extends Backbone.View
         @displayLoadMore = datas.length >= @pageSize
         @render()
         @preserveScrollPosition =>
-          for data in _.sortBy(datas, (data) -> data['created']).reverse()
+          for data in _.sortBy(datas, (data) -> data['created_at']).reverse()
             @collection.unshift(data)
     )
 

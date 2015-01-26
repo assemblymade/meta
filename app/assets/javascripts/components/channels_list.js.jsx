@@ -38,7 +38,7 @@
         <div>
           {rooms.map(function(roomId){
             var room = this.state.rooms[roomId],
-                hasUnread = room.updated > room.last_read_at,
+                hasUnread = room.updated_at > room.last_read_at,
                 isActive = this.props.currentRoom === roomId
 
             var classes = React.addons.classSet({
@@ -64,7 +64,7 @@
       var rooms = this.state.rooms
       if (rooms && _.keys(rooms).length > 0) {
         var unreadRecentRoomIds = _.sortBy(_.keys(rooms), function(roomId){
-          var unread = rooms[roomId].updated > rooms[roomId].last_read_at
+          var unread = rooms[roomId].updated_at > rooms[roomId].last_read_at
           return -rooms[roomId].last_read_at * (unread ? 2 : 1)
         })
 

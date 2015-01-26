@@ -207,7 +207,7 @@ var DataRow = React.createClass({
         </strong>
       </td>
       <td>{this.props.pitch}</td>
-      <td><Timestamp time={this.props.created} /></td>
+      <td><Timestamp time={this.props.created_at} /></td>
       <td className="text-right">
         <input type="text" className="form-control"
                 value={this.state.dirty ? this.state.pendingTags : this.props.search_tags.join(',')}

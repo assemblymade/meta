@@ -1,25 +1,25 @@
 class ApplicationSerializer < ActiveModel::Serializer
-
-  attributes :type, :id
-  attributes :created, :created_at, :updated, :updated_at
+  attributes :id, :type, :created_at, :updated_at
 
   def type
     object.class.name.underscore
   end
 
-  def created
-    object.created_at.try(:iso8601)
+  def id
+    return unless object.respond_to?(:id)
+
+    object.id
   end
 
   def created_at
-    object.created_at
-  end
+    return unless object.respond_to?(:created_at)
 
-  def updated
-    object.updated_at.try(:iso8601) if object.respond_to?(:updated_at)
+    object.created_at.try(:iso8601)
   end
 
   def updated_at
-    object.updated_at if object.respond_to?(:updated_at)
+    return unless object.respond_to?(:updated_at)
+
+    object.updated_at.try(:iso8601)
   end
 end

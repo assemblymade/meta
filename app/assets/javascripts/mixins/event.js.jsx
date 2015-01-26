@@ -1,7 +1,7 @@
 (function() {
   var EventMixin = {
     timestamp: function(story) {
-      return moment(story || this.props.story.created).format("ddd, hA")
+      return moment(story || this.props.story.created_at).format("ddd, hA")
     },
 
     subjectMap: {

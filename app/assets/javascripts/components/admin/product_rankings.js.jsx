@@ -159,7 +159,7 @@
           </strong>
         </td>
         <td>{this.props.pitch}</td>
-        <td><Timestamp time={this.props.created} /></td>
+        <td><Timestamp time={this.props.created_at} /></td>
         <td><Timestamp time={this.props.last_activity_at} /></td>
         <td className="text-right">{this.props.watchings_count}</td>
         <td className="text-right">{this.props.open_tasks_count}</td>

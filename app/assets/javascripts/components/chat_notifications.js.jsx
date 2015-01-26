@@ -18,7 +18,7 @@
         var label = entry.product_name ? entry.product_name : 'Community Chat';
         var badge = null;
 
-        if (entry.updated > entry.last_read_at) {
+        if (entry.updated_at > entry.last_read_at) {
           badge = <span
               className="indicator indicator-danger pull-right"
               style={{ 'position': 'relative', 'top': '10px' }} />;
@@ -256,8 +256,8 @@
       for (var i = 0; i < values.length; i++) {
         var entry = values[i];
 
-        entry.readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
-        entry.lastUpdated = - entry.updated
+        entry.readState = entry.updated_at > entry.last_read_at ? 'A' : 'Z';
+        entry.lastUpdated = - entry.updated_at
         entry.sortIndex = this.state.sortKeys.indexOf(entry.id);
 
         if (entry.sortIndex === -1) {
