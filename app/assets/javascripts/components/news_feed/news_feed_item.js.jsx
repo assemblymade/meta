@@ -232,7 +232,9 @@ var NewsFeedItem = React.createClass({
       <div className="px3 inline-block" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem', fill: '#C2C7D0' }}>
         <SvgIcon type="comment" />
         <span className="ml1">
-          {commentsCount} {commentsCount === 1 ? 'Comment' : 'Comments'}
+          <a href={this.props.target.url} className="gray-1">
+            {commentsCount} {commentsCount === 1 ? 'Comment' : 'Comments'}
+          </a>
         </span>
       </div>
     )
