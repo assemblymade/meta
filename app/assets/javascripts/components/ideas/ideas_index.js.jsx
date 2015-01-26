@@ -1,6 +1,7 @@
 var Button = require('../ui/button.js.jsx');
 var Footer = require('../ui/footer.js.jsx');
 var IdeaTile = require('./idea_tile.js.jsx');
+var IdeaAdminStore = require('../../stores/idea_admin_store');
 var IdeasStore = require('../../stores/ideas_store');
 var NewIdeaModal = require('./new_idea_modal.js.jsx');
 var Pagination = require('../pagination/pagination.js.jsx');
@@ -86,31 +87,7 @@ var IdeasIndex = React.createClass({
                       </a>
                     </li>
 
-                    <li className="dropdown" key="filter-dropdown">
-                      <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                        Topics <span className="caret"></span>
-                      </a>
-                      <ul className="dropdown-menu" role="menu">
-                        <li key="dropdown-design">
-                          <a href="/ideas?mark=design"
-                            onClick={navigate.bind(null, '/ideas?mark=design')}>
-                            Design
-                          </a>
-                        </li>
-                        <li key="dropdown-saas">
-                          <a href="/ideas?mark=saas"
-                            onClick={navigate.bind(null, '/ideas?mark=saas')}>
-                            SaaS
-                          </a>
-                        </li>
-                        <li key="dropdown-b2b">
-                          <a href="/ideas?mark=b2b"
-                            onClick={navigate.bind(null, '/ideas?mark=b2b')}>
-                            B2B
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
+                    {this.renderTopics()}
                   </ul>
                 </div>
               </nav>
@@ -180,6 +157,33 @@ var IdeasIndex = React.createClass({
             onClick={navigate.bind(null, '/ideas?user=' + username)}>
             My Ideas
           </a>
+        </li>
+      );
+    }
+  },
+
+  renderTopics() {
+    var availableTopics = IdeaAdminStore.getAvailableTopics();
+
+    if ((availableTopics || []).length > 0) {
+      var topics = availableTopics.map((topic) => {
+        return (
+          <li key={topic.slug}>
+            <a href={'/ideas?topic=' + topic.slug}>
+              {topic.name}
+            </a>
+          </li>
+        );
+      });
+
+      return (
+        <li className="dropdown" key="filter-dropdown">
+          <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+            Topics <span className="caret"></span>
+          </a>
+          <ul className="dropdown-menu" role="menu">
+            {topics}
+          </ul>
         </li>
       );
     }

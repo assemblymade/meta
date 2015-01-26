@@ -35,6 +35,7 @@ class Idea < ActiveRecord::Base
     all.sort_by(&:percentile).
     take(percentile * all.count/100)
   }
+  scope :with_topic, -> (topic) { where("? = ANY(topics)", topic) }
 
   HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
   DEFAULT_TILTING_THRESHOLD = 10
