@@ -48,7 +48,7 @@ var Apps = React.createClass({
 
     return (
       <div className="container">
-        <div className="clearfix py4">
+        <div className="clearfix py2 md-py3 lg-py4">
           <div className="sm-col sm-col-8">
             <Nav orientation="horizontal">
               {_(filters).map(f =>
