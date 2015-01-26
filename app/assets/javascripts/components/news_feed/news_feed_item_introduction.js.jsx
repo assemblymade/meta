@@ -25,20 +25,25 @@ module.exports = React.createClass({
     var target = this.props.target;
 
     return (
-      <a className="block p3 center" href={this.props.url} onClick={this.handleClick}>
-        <div className="h4 black mt0 mb0">Welcome @{user.username}</div>
-        <div className="h5 gray-2 mt0 mb0">to {product.name}</div>
-
-        <div className="py2 mx-auto mb2" style={{width: 144}}>
-          <Avatar user={user} size={144} />
+      <div className="p3 center">
+        <div className="h4 black mt0 mb0">
+          Welcome <a href={user.url}>@{user.username}</a>
+        </div>
+        <div className="h5 gray-2 mt0 mb0">
+          to <a href={product.url}>{product.name}</a>
         </div>
 
-        <div className="h5 bold mt0 mb0 gray-1">{user.username}:</div>
+        <a href={this.props.url} onClick={this.handleClick}>
+          <div className="py2 mx-auto mb2" style={{width: 144}}>
+            <Avatar user={user} size={144} />
+          </div>
+          <div className="h5 bold mt0 mb0 gray-1">{user.username}:</div>
 
-        <div className="gray-1">
-          {target.bio}
-        </div>
-      </a>
+          <div className="gray-1">
+            {target.bio}
+          </div>
+        </a>
+      </div>
     );
   },
 
@@ -49,11 +54,13 @@ module.exports = React.createClass({
 
     return (
       <span className="block p3 center">
-        <div className="h4 black mt0 mb0">Welcome
-          {' '} <a href={user.url}>@{user.username}</a>
+        <div className="h4 black mt0 mb0">
+          Welcome <a href={user.url}>@{user.username}</a>
         </div>
 
-        <div className="h5 gray-2 mt0 mb0">to {product.name}</div>
+        <div className="h5 gray-2 mt0 mb0">
+          to <a href={product.url}>{product.name}</a>
+        </div>
 
         <div className="py2 mx-auto mb2" style={{width: 144}}>
           <Avatar user={user} size={144} />
