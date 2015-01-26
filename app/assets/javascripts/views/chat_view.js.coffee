@@ -62,7 +62,12 @@ class window.ChatView extends Backbone.View
     if index == 0
       @ch.stream.prepend(view.el)
     else
-      @$(".timeline-item:nth-child(#{index})").after(view.el)
+      # dodgy hack because of the timestamp in the DOM
+      el = @$(".timeline-item:nth-child(#{index})")
+      if el.length == 0
+        el = @$(".timeline-item:nth-child(#{index + 1})")
+
+      el.after(view.el)
 
     view.render()
     @renderTimestamp() if @collection.any()
