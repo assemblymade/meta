@@ -28,7 +28,12 @@ var Lovers = React.createClass({
     var heartable = LoveStore.get(this.props.heartable_id)
     var hearts = (heartable.hearts || [])
     var lovers = _(hearts).reduce(function(memo, h) {
-      memo.push(h.user)
+      // FIXME: (pletcher) This is a temporary fix so that
+      // avatars don't stop rendering
+      if (h.user) {
+        memo.push(h.user)
+      }
+
       return memo
     }, [])
 
