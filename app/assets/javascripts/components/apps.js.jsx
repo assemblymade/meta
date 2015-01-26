@@ -64,7 +64,7 @@ var Apps = React.createClass({
 
             <div className="item">
               <form action="/apps">
-                <input type="text" className="form-control form-control-search" placeholder="Search Apps" name="search" defaultValue={this.props.search} />
+                <input type="search" className="form-control form-control-search" placeholder="Search all products" name="search" defaultValue={this.props.search} />
               </form>
             </div>
           </nav>
