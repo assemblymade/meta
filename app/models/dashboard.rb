@@ -35,4 +35,32 @@ class Dashboard
   def initial_interests
     user.marks.pluck(:name)
   end
+
+  def news_feed_items
+    dashboard_query.find_news_feed_items
+  end
+
+  def user_locked_bounties
+    dashboard_query.find_user_locked_bounties
+  end
+
+  def user_reviewing_bounties
+    dashboard_query.find_user_reviewing_bounties
+  end
+
+  def heartables
+    dashboard_query.find_heartables
+  end
+
+  def user_hearts
+    dashboard_query.find_user_hearts
+  end
+
+  def followed_products
+    dashboard_query.find_followed_products
+  end
+
+  def dashboard_query
+    @dashboard_query ||= DashboardQuery.new(user, filter)
+  end
 end

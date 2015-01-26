@@ -13,16 +13,6 @@ class DashboardQuery
     self.page = page
   end
 
-  def find_dashboard
-    OpenStruct.new(
-      news_feed_items: find_news_feed_items,
-      user_bounties: find_user_bounties,
-      heartables: find_heartables,
-      user_hearts: find_user_hearts,
-      followed_products: find_followed_products
-    )
-  end
-
   def find_news_feed_items
     products = find_products
 
@@ -32,13 +22,6 @@ class DashboardQuery
       includes(:source, :hearts, last_comment: [:user, :hearts], target_task: [:tags, :product]).
       for_feed.
       page(page)
-  end
-
-  def find_user_bounties
-    {
-      lockedBounties: find_user_locked_bounties,
-      reviewingBounties: find_user_reviewing_bounties
-    }
   end
 
   def find_user_locked_bounties

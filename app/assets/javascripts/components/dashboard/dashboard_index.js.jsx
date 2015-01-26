@@ -118,7 +118,7 @@ var DashboardIndex = React.createClass({
     var showAllLink = null
 
     if (followedProducts.length) {
-      followingNavItem = <NavItem label="What you follow" href='/dashboard/following' active={filter == 'following'} />
+      followingNavItem = <NavItem label="Following" href='/dashboard/following' active={filter == 'following'} />
       divider = <NavItem divider={true} />
     }
 
