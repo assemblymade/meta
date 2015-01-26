@@ -16,6 +16,10 @@ var Tile = require('../ui/tile.js.jsx')
 
 // TODO: Add navigate func prop
 var DashboardIndex = React.createClass({
+  propTypes: {
+    navigate: React.PropTypes.func.isRequired,
+  },
+
   getInitialState: function() {
     return {
       currentUser: UserStore.getUser(),
@@ -131,7 +135,7 @@ var DashboardIndex = React.createClass({
 
     return (
       <Nav>
-        <NavItem label="Everything"      href='/dashboard/all'           active={filter == 'all'} />
+        <NavItem label="Everything"      href='/dashboard/all'       active={filter == 'all'} />
         <NavItem label="Your interests"  href='/dashboard/interests' active={filter == 'interests'} />
         {followingNavItem}
 
@@ -217,6 +221,7 @@ var DashboardIndex = React.createClass({
     var text = null
     var padding = null
     var click = function() {}
+    var navigation = this.props.navigation
 
     if (selectionsNeeded <= 0) {
       text = 'Yay! Take a look at your suggestions'
@@ -235,7 +240,7 @@ var DashboardIndex = React.createClass({
             }
           },
           success: function() {
-            window.location = '/dashboard/interests'
+            navigation(null, '/dashboard/interests')
           }
         })
       }.bind(this)
