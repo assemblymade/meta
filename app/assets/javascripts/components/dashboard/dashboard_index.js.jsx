@@ -118,7 +118,7 @@ var DashboardIndex = React.createClass({
 
     if (followedProducts.length) {
       followingNavItem = <Nav.Item label="Following" href='/dashboard/following' active={filter == 'following'} />
-      divider = <Nav.Divider class />
+      divider = <Nav.Divider />
     }
 
     if (this.state.followedProducts.length > 5 && !showAll) {
@@ -135,7 +135,7 @@ var DashboardIndex = React.createClass({
     return (
       <div>
         <Nav orientation="stacked">
-          <Nav.Item label="Everything"      href='/dashboard/all'           active={filter == 'all'} />
+          <Nav.Item label="Everything"      href='/dashboard/all'       active={filter == 'all'} />
           <Nav.Item label="Your interests"  href='/dashboard/interests' active={filter == 'interests'} />
           {followingNavItem}
         </Nav>
