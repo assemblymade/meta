@@ -59,6 +59,6 @@ class DashboardQuery
   end
 
   def find_followed_products
-    user.followed_products.ordered_by_trend
+    user.followed_products.order(name: :asc)
   end
 end
