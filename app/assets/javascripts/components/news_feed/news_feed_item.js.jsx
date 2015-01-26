@@ -226,15 +226,30 @@ var NewsFeedItem = React.createClass({
   },
 
   renderCommentsCount: function() {
-    var commentsCount = this.props.comments_count
+    var _commentsCount = function() {
+      var commentsCount = this.props.comments_count
+      var target = this.props.target;
+
+      if (this.props.target && this.props.target.url) {
+        return (
+          <a href={this.props.target.url} className="gray-1">
+            {commentsCount} {commentsCount === 1 ? 'Comment' : 'Comments'}
+          </a>
+        );
+      }
+
+      return (
+        <span>
+          {commentsCount} {commentsCount === 1 ? 'Comment' : 'Comments'}
+        </span>
+      );
+    }.bind(this);
 
     return (
       <div className="px3 inline-block" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem', fill: '#C2C7D0' }}>
         <SvgIcon type="comment" />
         <span className="ml1">
-          <a href={this.props.target.url} className="gray-1">
-            {commentsCount} {commentsCount === 1 ? 'Comment' : 'Comments'}
-          </a>
+          {_commentsCount()}
         </span>
       </div>
     )
