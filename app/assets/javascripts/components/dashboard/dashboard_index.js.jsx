@@ -111,7 +111,7 @@ var DashboardIndex = React.createClass({
   renderNav: function() {
     var filter = this.state.filter
     var showAll = this.state.showAll
-    var followedProducts = showAll ? this.state.followedProducts : this.state.followedProducts.slice(0, 5)
+    var followedProducts = showAll ? this.state.followedProducts : this.state.followedProducts.slice(0, 8)
     var followingNavItem = null
     var divider = null
     var showAllLink = null
@@ -121,7 +121,7 @@ var DashboardIndex = React.createClass({
       divider = <Nav.Divider />
     }
 
-    if (this.state.followedProducts.length > 5 && !showAll) {
+    if (this.state.followedProducts.length > 8 && !showAll) {
       var click = function(event) {
         event.stopPropagation()
         event.preventDefault()
