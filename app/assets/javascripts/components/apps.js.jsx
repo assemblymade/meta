@@ -85,7 +85,7 @@ var Apps = React.createClass({
   renderAppsList: function(apps) {
     return <div className="clearfix mxn2">
       {_(apps).map(app =>
-        <div className="sm-col sm-col-4 p2">
+        <div className="sm-col sm-col-4 px2 mb3">
           <App app={app} />
         </div>
       )}
@@ -98,7 +98,7 @@ var Apps = React.createClass({
     }
 
     return <div className="clearfix mxn2">
-      <div className="sm-col sm-col-6 p2">
+      <div className="sm-col sm-col-6 px2 mb3">
         <a href={"/discover?topic=" + this.props.topics[0].slug} className="block center rounded white white-hover py4" style={{
             background: 'linear-gradient(#364d70, #5e0f4c)'
           }}>
@@ -107,7 +107,7 @@ var Apps = React.createClass({
         </a>
       </div>
 
-      <div className="sm-col sm-col-6 p2">
+      <div className="sm-col sm-col-6 px2 mb3">
         <a href={"/discover?topic=" + this.props.topics[1].slug} className="block center rounded white white-hover py4" style={{
             background: 'linear-gradient(#5fb384, #084557)'
           }}>
