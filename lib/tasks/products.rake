@@ -43,7 +43,7 @@ namespace :products do
   end
 
   task :tag_with_repo_languages => :environment do
-    Product.where(slug: 'gamamia').each do |p|
+    Product.all.each do |p|
       languages = {}
       marks = {}
 
