@@ -153,6 +153,10 @@ button, .button {
     }
   }
 }
+.pill-button-medium {
+  font-size:1.5rem;
+  padding: 0.9rem 3rem 1rem;
+}
 // general
 .pill-button-shadow {
   box-shadow: 0px 1px 3px -1px rgba(50, 50, 50, 0.1);
@@ -281,7 +285,6 @@ button, .button {
   }
 }
 
-
 // --
 
 .button {
@@ -338,4 +341,10 @@ button, .button {
 .button-block {
   text-align: center;
   display: block;
+}
+
+// For the about page
+.svg-icon-play-btn {
+  width: 4rem;
+  fill:$white;
 }
