@@ -34,15 +34,20 @@ var Heart = React.createClass({
     }
 
     var icon = <Icon icon="heart" />
-    var toggler = <IconToggler on={this.state.user_heart} icon={icon} action={this.handleClick} color="red" />
+    if (!UserStore.isSignedIn()) {
+      return icon
+    }
 
+    var toggler = <IconToggler on={this.state.user_heart} icon={icon} action={this.handleClick} color="red" />
     return <IconWithNumber icon={toggler} n={heartsCount} />
   },
 
   renderMedium: function() {
     var heartsCount = this.state.hearts_count || 0;
     var classes = React.addons.classSet({
+      'heart-medium': true,
       'action-icon': true,
+      'hover-red': UserStore.isSignedIn(),
       gray: !this.state.user_heart,
       'inline-block': true,
       red: this.state.user_heart
@@ -56,12 +61,20 @@ var Heart = React.createClass({
       )
     }
 
+    var heartWithCount = <div>
+      <div className={classes}>
+        <SvgIcon type="heart" />
+      </div>
+      {count}
+    </div>
+
+    if (!UserStore.isSignedIn()) {
+      return heartWithCount
+    }
+
     return (
       <a className="inline-block valign-top fs6 gray no-focus" href="javascript:void(0);" onClick={this.handleClick}>
-        <div className={classes}>
-          <SvgIcon type="heart" />
-        </div>
-        {count}
+        {heartWithCount}
       </a>
     );
   },
@@ -71,6 +84,12 @@ var Heart = React.createClass({
     // Dammit, JavaScript
     if (heartsCount == null) {
       return <div />
+    }
+
+    if (!UserStore.isSignedIn()) {
+      return <div className={"heart-circle heart-circle-green"}>
+        <SvgIcon type="heart" />
+      </div>
     }
 
     return (
