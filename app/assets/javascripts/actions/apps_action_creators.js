@@ -14,6 +14,7 @@ var AppsActionCreators = {
 
     client.search({
       index: 'products',
+      size: 100,
       body: {
         query: {
           multi_match: {

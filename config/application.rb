@@ -43,6 +43,8 @@ module ASM
     config.middleware.insert_before ActionDispatch::Static,
                                     Rack::CrossOriginAssets
 
+    config.middleware.use "EsProxy"
+
     config.action_mailer.default_options = {
       from: "Assembly <notifications@assemblymail.com>"
     }
