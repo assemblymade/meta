@@ -18,23 +18,33 @@ namespace :ideas do
         begin
           idea = Idea.create_with_discussion(
             product.user,
-            name: product.name,
-            body: product.pitch,
+            name: product.pitch,
+            body: product.description,
             created_at: product.created_at,
+            flagged_at: product.flagged_at,
             founder_preference: true
           )
 
+          if (idea.body.nil?)
+            idea.update(flagged_at: Time.now)
+            next
+          end
+
           product.team_memberships.each do |membership|
-            Heart.create!(
-              created_at: membership.created_at,
-              user: membership.user,
-              heartable: idea.news_feed_item
+            heart = idea.news_feed_item.hearts.create!(
+              user_id: membership.user_id
             )
+
+            heart.update_column('created_at', membership.created_at)
           end
 
           idea.greenlight! if idea.should_greenlight?
+
+          if idea.hearts_count == 0
+            idea.update(flagged_at: Time.now)
+          end
         rescue => e
-          puts "Failed to make product for #{product.slug}"
+          puts "Failed to make idea for #{product.slug}"
           puts e.inspect
         end
       end

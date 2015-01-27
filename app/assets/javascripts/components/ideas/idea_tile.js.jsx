@@ -51,9 +51,7 @@ var Idea = React.createClass({
             <a href={idea.url}> {idea.name}</a>
           </div>
 
-          <div className="content">
-            <p dangerouslySetInnerHTML={{ __html: idea.short_body }} />
-          </div>
+          <p dangerouslySetInnerHTML={{ __html: idea.short_body }} />
         </div>
 
         <Footer>

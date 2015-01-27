@@ -28,7 +28,7 @@ class IdeaSerializer < ApplicationSerializer
   end
 
   def short_body
-    truncate_html(markdown(object.body), length: 150)
+    truncate_html(markdown(object.body), length: 120)
   end
 
   def url

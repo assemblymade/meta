@@ -77,7 +77,7 @@ class Idea < ActiveRecord::Base
   end
 
   def self.create_with_discussion(user, idea_params)
-    transaction do
+    idea = transaction do
       idea = user.ideas.create(idea_params)
       idea.push_to_news_feed
       idea
@@ -106,8 +106,8 @@ class Idea < ActiveRecord::Base
   end
 
   def update_news_feed_item
-    if self.news_feed_item
-      self.news_feed_item.update(updated_at: Time.now)
+    if news_feed_item
+      news_feed_item.update(updated_at: Time.now)
     end
   end
 
