@@ -113,12 +113,12 @@ var IdeaShow = React.createClass({
           <div className="container clearfix">
             <div className="left">
               <h4 className="mt2 mb2">
-                Band together to build the app ideas people love.
+                Band together to build the product ideas people love.
               </h4>
             </div>
             <div className="right py1">
               <Button type="primary" action={navigate.bind(null, '/ideas/new')}>
-                Add your app idea
+                Add your product idea
               </Button>
             </div>
           </div>
@@ -198,7 +198,7 @@ var IdeaShow = React.createClass({
           <div className="clearfix border-bottom border-top border-2px py2">
             <div className="left mt1 px4">
               <span className="gray-1">
-                This app idea has been greenlit!
+                This idea has been greenlit!
               </span>
             </div>
 

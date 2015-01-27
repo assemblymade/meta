@@ -35,13 +35,13 @@ var IdeaContainer = React.createClass({
           <div className={leftColumnClasses}>
             <h4 className="mt2 mb2">
               <a href="/ideas" className="bold">
-                &#8592; All app ideas
+                &#8592; All product ideas
               </a>
             </h4>
           </div>
 
           <div className={rightColumnClasses}>
-            <h5 className="mt2 mb2">Other app ideas</h5>
+            <h5 className="mt2 mb2">Other product ideas</h5>
           </div>
         </div>
 

@@ -17,7 +17,7 @@ var NewIdeaModal = React.createClass({
       var title = (
         <div className="clearfix mb2">
           <div className="left px2">
-            <h4 className="mb0 mt0">What's your app idea?</h4>
+            <h4 className="mb0 mt0">What's your big idea?</h4>
           </div>
 
           <div className="right px2">
