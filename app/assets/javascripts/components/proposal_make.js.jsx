@@ -30,7 +30,6 @@ var ProposalMake = React.createClass({
   descriptionUpdate: function() {
     var description = NewCommentStore.getComment("ProposalDescription")
     this.state['description'] = description
-    console.log(this.state)
   },
 
   getInitialState: function() {
@@ -97,16 +96,13 @@ var ProposalMake = React.createClass({
       var state = {};
       state[stateProp] = event.target.value;
       this.setState(state);
-      console.log(this.state)
     }.bind(this);
   },
 
   handleUsernameSelection: function(username) {
-    var state = {}
-    state['recipient'] = username
-    this.setState(state)
-    console.log(this.state)
-    console.log(username)
+    this.setState({
+      recipient: username
+    });
   },
 
   renderUserPicker: function() {
@@ -130,7 +126,7 @@ var ProposalMake = React.createClass({
           hideAvatar={true}
           hideButtons={true}
           placeholder={''}
-          thread={"ProposalDescription"}
+          thread="ProposalDescription"
           url="/proposals/not-applicable" />
       </div>
     )
@@ -237,9 +233,7 @@ var ProposalMake = React.createClass({
       url: the_url,
       json: true,
       data: proposaldata,
-      success: function(data) {
-        console.log(proposaldata)
-      }});
+      });
     }
 });
 

@@ -16,12 +16,12 @@ var Governance = React.createClass({
   render: function() {
     if (this.props.product.proposals.length > 0) {
       return (
-        <div>
-          <div className="py2 col-xs-8 r768_pr0">
+        <div clasName="row">
+          <div className="py2 col-md-8">
             <ProposalList proposals={this.props.product.proposals} product={this.props.product} />
           </div>
 
-          <div className = "col-xs-4 r768_pr0">
+          <div className = "py2 col-md-4">
             <Tile>
               {this.renderText()}
             </Tile>

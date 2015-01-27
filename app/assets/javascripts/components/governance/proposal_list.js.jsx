@@ -4,8 +4,7 @@ var ProposalList = React.createClass({
   displayName: 'ProposalList',
 
   propTypes: {
-    proposals: React.PropTypes.array.isRequired,
-    product: React.PropTypes.object
+    proposals: React.PropTypes.array.isRequired
   },
 
   render: function() {
