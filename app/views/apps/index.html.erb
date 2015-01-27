@@ -24,7 +24,7 @@
 <%= react_component 'Apps',
       search: params[:search],
       filter: params[:filter] || 'trending',
-      page: params[:page] || 1,
+      page: [params[:page].to_i, 1].max,
       total_pages: @total_pages,
       topics: @topics,
       showcases: (@showcases ? @showcases.map(&:slug).map{|slug|
