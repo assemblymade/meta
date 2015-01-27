@@ -57,14 +57,14 @@ var App = React.createClass({
     if (pitch.length > this.props.maxPitchLength) {
       return pitch.substring(0, this.props.maxPitchLength-3) + '...'
     }
-    
+
     return pitch
   },
 
   searchTags: function() {
     var searchTags = this.props.app.search_tags
 
-    if (searchTags.length == 0) {
+    if (!searchTags || searchTags.length == 0) {
       return []
     }
 
