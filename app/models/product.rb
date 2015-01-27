@@ -560,7 +560,7 @@ class Product < ActiveRecord::Base
   end
 
   def tags_string=(new_tags_string)
-    self.tags = new_tags_string.split(', ')
+    self.tags = new_tags_string.split(',').map(&:strip)
   end
 
   def topic=(new_topic)
