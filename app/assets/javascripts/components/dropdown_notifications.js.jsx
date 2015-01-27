@@ -10,7 +10,7 @@
 
   var UserStore = require('../stores/user_store')
   var StoryStore = require('../stores/story_store')
-  var StoryActionCreators = require('../actions/story_action_creators')
+  var StoryActions = require('../actions/story_actions')
 
   var DropdownNotifications = React.createClass({
     render: function() {
@@ -87,12 +87,12 @@
     },
 
     markAllAsRead: function() {
-      StoryActionCreators.markAllAsRead(this.state.stories)
+      StoryActions.markAllAsRead(this.state.stories)
       this.optimisticallyMarkAllAsRead();
     },
 
     markAsRead: function(story) {
-      StoryActionCreators.markAsRead(story)
+      StoryActions.markAsRead(story)
     },
 
     optimisticallyMarkAllAsRead: function() {

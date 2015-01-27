@@ -1,6 +1,7 @@
 <% title @product.name %>
 <% description @product.pitch %>
 <% activate_nav! :product %>
+<%= track_engaged 'product.activity' %>
 
 <div class="clearfix mxn3">
   <div class="sm-col-right sm-col-4 px3">
@@ -73,7 +74,7 @@
         </div>
       </div>
     <% end %>
-    
+
     <div class="px3">
       <% if @product_marks.count > 0 %>
         <h6 class="mt0 py2 mb0 gray-2">Product Tags</h6>

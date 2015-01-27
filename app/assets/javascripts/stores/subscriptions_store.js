@@ -1,5 +1,5 @@
 var Store = require('./es6_store')
-var SubscriptionActionCreators = require('../actions/story_action_creators')
+var SubscriptionActionCreators = require('../actions/story_actions')
 
 var _dispatchToken,
     _subscribables = {}
