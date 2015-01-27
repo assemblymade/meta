@@ -1,6 +1,7 @@
 class ProposalSerializer < ApplicationSerializer
   attributes :name, :description, :status
   attributes :news_feed_item_id, :url, :comments_count, :state, :status, :contracts, :time_left_text
+  attributes :short_body
 
   has_one :user
   has_many :contracts
@@ -20,6 +21,10 @@ class ProposalSerializer < ApplicationSerializer
 
   def news_feed_item_id
     object.news_feed_item.id
+  end
+
+  def short_body
+    truncate_html(markdown(object.description), length: 250)
   end
 
 end

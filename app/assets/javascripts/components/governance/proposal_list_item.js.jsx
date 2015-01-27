@@ -33,7 +33,7 @@ var ProposalListIem = React.createClass({
                 {this.renderProgress()}
               </div>
               <div className = "row">
-                {this.vote_state()}
+                {this.voteState()}
               </div>
             </div>
           </div>
@@ -48,7 +48,7 @@ var ProposalListIem = React.createClass({
     );
   },
 
-  vote_state: function() {
+  voteState: function() {
     if (this.props.proposal.state==="open") {
       return (
         <div className="bg-blue white ml4 mr4 py2 rounded bold center">Open</div>
@@ -92,14 +92,12 @@ var ProposalListIem = React.createClass({
 
   renderSummary: function() {
     var proposal = this.props.proposal;
-    var d = proposal.description
-    if (d.length > max_description_length) {
-      d=d.slice(0,max_description_length)+"...."
-    }
+    var desc = proposal.short_body
+
     if (proposal.description) {
       return (
         <div className="h5 gray-dark">
-          {d}
+          {desc}
         </div>
       );
     }
@@ -123,7 +121,9 @@ var ProposalListIem = React.createClass({
 
     return (
       <div className="h6 px3 py2 b0 mt0 border-top">
-        <Avatar user={user} size={24} style={{ display: 'inline-block' }} />
+        <div style={{ display: 'inline-block' }} >
+          <Avatar user={user} size={24} />
+        </div>
 
         <span className="gray-dark ml2">
           <a href={user.url}>@{user.username}</a> created this proposal {moment(proposal.created_at).fromNow()}

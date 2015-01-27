@@ -13,12 +13,12 @@ var Proposal = React.createClass({
     newsFeedItem: React.PropTypes.object,
     user: React.PropTypes.object,
     proposal: React.PropTypes.object,
-    user_vote_state: React.PropTypes.bool
+    userVoteState: React.PropTypes.bool
   },
 
   getInitialState: function() {
     return {
-      approved: this.props.user_vote_state,
+      approved: this.props.userVoteState,
       percent: this.props.proposal.status,
       state: this.props.proposal.state
     };
@@ -36,8 +36,8 @@ var Proposal = React.createClass({
     var text = this.state.approved ? 'Unvote' : 'Approve'
     var css = this.state.approved ? 'btn btn-danger' : 'btn btn-success'
 
-    if (this.props.proposal.state==="open")
-      {return (
+    if (this.props.proposal.state==="open") {
+      return (
         <button className = {css} onClick={this.toggle_vote}>
         {text}
       </button>
@@ -58,23 +58,23 @@ var Proposal = React.createClass({
     var css = ""
     var text = ""
     if (state === "open") {
-      css = "btn btn-default center py3"
+      css = "bg-blue white center py3 bold px2"
       text = "Open"
     }
     else if (state === "failed") {
-      css = "btn btn-danger center py3"
+      css = "bg-red white center py3 bold px2"
       text = "Failed"
     }
     else if (state === "passed") {
-      css = "btn btn-success center py3"
+      css = "bg-green white center bold px2 py3"
       text = "Passed"
     }
     return (
       <div>
         <div className="row">
-          <button className = {css} disabled>
+          <div className={css}>
             {text}
-          </button>
+          </div>
         </div>
         <div className="row bold">
           {this.props.proposal.time_left_text}

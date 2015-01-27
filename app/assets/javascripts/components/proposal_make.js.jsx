@@ -29,7 +29,7 @@ var ProposalMake = React.createClass({
 
   descriptionUpdate: function() {
     var description = NewCommentStore.getComment("ProposalDescription")
-    this.state['description'] = description
+    this.setState({description: description})
   },
 
   getInitialState: function() {
