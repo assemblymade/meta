@@ -2,7 +2,7 @@ class Admin::AppsController < AdminController
   def index
     @showcases = Showcase.active
     @topics = Topic.all
-    @products = Product.all.includes(showcase_entries: :showcase)
+    @products = Product.all.includes(showcase_entries: :showcase).where(flagged_at: nil)
 
     if params[:q].present?
       @products = @products.where("name ilike ?", "%#{params[:q]}%")
@@ -10,9 +10,6 @@ class Admin::AppsController < AdminController
       @products = @products.ordered_by_trend
       if params[:onlyuntagged] == 'true'
         @products = @products.untagged
-      end
-      if params[:unflagged] == 'true'
-        @products = @products.where(flagged_at: nil)
       end
     end
 
