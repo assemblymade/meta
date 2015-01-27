@@ -1,4 +1,6 @@
 class ProposalSerializer < ApplicationSerializer
+  include MarkdownHelper
+  include TruncateHtmlHelper
   attributes :name, :description, :status
   attributes :news_feed_item_id, :url, :comments_count, :state, :status, :contracts, :time_left_text
   attributes :short_body
@@ -24,6 +26,7 @@ class ProposalSerializer < ApplicationSerializer
   end
 
   def short_body
+    #object.description
     truncate_html(markdown(object.description), length: 250)
   end
 
