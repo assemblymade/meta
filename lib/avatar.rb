@@ -13,7 +13,7 @@ class Avatar < Struct.new(:user)
   def self.url_from_email(email, size=nil)
     digest = Digest::MD5.hexdigest(email)
     query = {
-      d: 'https://assembly.com/assets/avatars/default.png'
+      d: 'https://assembly.com/assets/default_avatar.png'
     }
 
     query[:s] = size if size

@@ -16,19 +16,19 @@ describe('ChatNotifications', function() {
     chatRooms = {
       foo: {
         id: 'foo',
-        updated: moment().unix(),
+        updated_at: moment().unix(),
         last_read_at: 123,
         label: 'foo'
       },
       bar: {
         id: 'bar',
-        updated: moment().unix(),
+        updated_at: moment().unix(),
         last_read_at: 456,
         label: 'bar'
       },
       baz: {
         id: 'baz',
-        updated: moment().unix() - 100,
+        updated_at: moment().unix() - 100,
         last_read_at: moment().unix(),
         label: 'baz'
       }
@@ -39,21 +39,17 @@ describe('ChatNotifications', function() {
 
     ChatNotificationsStore.getChatRooms.mockReturnValue(chatRooms);
 
-    // Not sure if this kind of mock is an antipattern.
-    // Having to do this to get tests to pass might suggest that
-    // we need to move the getUnreadCount functions to the components
-    // rather than keeping them in the store.
     ChatNotificationsStore.getUnreadCount.mockImplementation(function(acknowledgedAt) {
       var count = _.countBy(
         chatRooms,
         function(entry) {
-          var updated = entry.updated > entry.last_read_at;
+          var updated_at = entry.updated_at > entry.last_read_at;
 
           if (acknowledgedAt) {
-            return updated && entry.updated > acknowledgedAt;
+            return updated_at && entry.updated_at > acknowledgedAt;
           }
 
-          return updated;
+          return updated_at;
         }
       );
 
@@ -97,7 +93,7 @@ describe('ChatNotifications', function() {
 
     chatRooms.buzz = {
       id: 'buzz',
-      updated: moment().unix(),
+      updated_at: moment().unix(),
       last_read_at: moment().unix() - 100,
       label: 'buzz'
     };

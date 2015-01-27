@@ -1,5 +1,5 @@
 class ProductShallowSerializer < ApplicationSerializer
-  attributes :name, :slug, :logo_url, :url
+  attributes :name, :pitch, :slug, :logo_url, :url, :wips_count, :partners_count
 
   def logo_url
     image_url = if object.logo.present?
@@ -20,5 +20,4 @@ class ProductShallowSerializer < ApplicationSerializer
   def cache_key
     object
   end
-
 end

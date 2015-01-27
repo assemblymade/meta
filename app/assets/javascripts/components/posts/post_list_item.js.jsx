@@ -1,7 +1,7 @@
-var Avatar = require('../avatar.js.jsx');
-var Icon = require('../icon.js.jsx');
+var Avatar = require('../ui/avatar.js.jsx');
+var Icon = require('../ui/icon.js.jsx');
 var ListItemMixin = require('../../mixins/list_item_mixin.js.jsx');
-var Love = require('../love.js.jsx');
+var Heart = require('../heart.js.jsx');
 var NewsFeedItemModal = require('../news_feed/news_feed_item_modal.js.jsx');
 
 var PostListIem = React.createClass({
@@ -36,7 +36,7 @@ var PostListIem = React.createClass({
           {this.renderSummary()}
         </div>
 
-        <div className="px3 mb1 mt0 gray-dark">
+        <div className="px3 mb1 mt0 gray-2">
           {this.renderComments(post.comments_count)}
           {this.renderTags(post.marks)}
         </div>
@@ -69,7 +69,7 @@ var PostListIem = React.createClass({
 
     if (post.summary) {
       return (
-        <div className="h5 mt0 mb2 gray-dark">
+        <div className="h5 mt0 mb2 gray-2">
           {post.summary}
         </div>
       );
@@ -93,12 +93,14 @@ var PostListIem = React.createClass({
     var user = post.user;
 
     return (
-      <div className="h6 px3 py2 b0 mt0 border-top">
-        <Avatar user={user} size={24} style={{ display: 'inline-block' }} />
+      <div className="h6 px3 py2 b0 mt0 border-top clearfix">
+        <div className="left mr2">
+          <Avatar user={user} size={24} />
+        </div>
 
-        <span className="gray-dark ml2">
+        <div className="overflow-hidden gray-2">
           <a href={user.url}>@{user.username}</a> wrote this post {moment(post.created_at).fromNow()}
-        </span>
+        </div>
       </div>
     );
   }

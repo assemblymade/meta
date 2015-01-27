@@ -15,7 +15,7 @@
             <div class="progress progress-sm mb2">
               <div class="progress-bar bg-green" style="width:<%= product.team_building_percentage %>%"></div>
             </div>
-            <p class="mb0 small mid-gray">
+            <p class="mb0 small gray-3">
               This product
               <% if product.bio_memberships_count >= 10 %>
                 has
@@ -40,14 +40,14 @@
 
   <div class="p3">
     <div class="mt0 mb0 blue"><%= product.name %></div>
-    <p class="gray-darker h6 mt0 mb3 full-width" style="height:3rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; text-overflow:-o-ellipsis-lastline;">
+    <p class="gray-1 h6 mt0 mb3 full-width" style="height:3rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; text-overflow:-o-ellipsis-lastline;">
       <%= product.pitch %>
     </p>
 
     <div class="clearfix">
       <ul class="list-reset mb0 overflow-hidden full-width" style="height:1.5rem">
         <li class="left">
-          <div class="badge bg-light-gray block" style="padding-top:0;padding-bottom:0;line-height:1.5rem">
+          <div class="badge bg-gray-4 block" style="padding-top:0;padding-bottom:0;line-height:1.5rem">
             <span class="icon icon-users"></span>
             <%= product.visible_watchers.count %>
           </div>
@@ -62,7 +62,7 @@
     </div>
   </div>
 
-  <a class="block border-top center py2 text-success bold" href="<%= product_wips_path(product) %>">
+  <a class="block border-top center py2 green bold" href="<%= product_wips_path(product) %>">
     Find Bounties
   </a>
 

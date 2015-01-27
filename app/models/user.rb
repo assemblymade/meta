@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
   has_many :product_logos
   has_many :followed_products, through: :watchings, source: :watchable, source_type: Product
   has_many :followed_tags, through: :watchings, source: :watchable, source_type: Wip::Tag
+  has_many :locked_wips, class_name: 'Wip', foreign_key: 'locked_by'
   has_many :wips
   has_many :wip_workers, :class_name => 'Wip::Worker'
   has_many :wips_working_on, ->{ where(state: Task::IN_PROGRESS) }, :through => :wip_workers, :source => :wip
@@ -43,6 +44,8 @@ class User < ActiveRecord::Base
   has_many :ideas
   has_many :top_bountys
   has_many :top_products
+  has_many :markings, as: :markable
+  has_many :marks, through: :markings
 
   has_one :payment_option
   has_one :chronicle
@@ -160,38 +163,6 @@ class User < ActiveRecord::Base
 
   def karma_total
     Deed.where(user_id: self.id).sum(:karma_value)
-  end
-
-  def marks
-    wips_won = self.wips_won
-    results = {}
-    wips_won.each do |w|
-      marks = w.marks
-      marks.each do |m|
-        mark_name = m.name
-        if results.has_key?(mark_name)
-          results[mark_name] = results[mark_name] + 1
-        else
-          results[mark_name] = 1
-        end
-      end
-    end
-    results = Hash[results.sort_by{|k, v| v}.reverse]
-  end
-
-  def mark_fractions
-    marks = self.marks
-    answer = {}
-    sum_marks = marks.values.sum.to_f
-
-    if sum_marks == 0
-      sum_marks = 1
-    end
-
-    marks.each do |k, v|
-      answer[k] = (v.to_f / sum_marks).round(3)
-    end
-    return answer
   end
 
   def create_identity
@@ -410,6 +381,12 @@ class User < ActiveRecord::Base
     newcluster = self.best_cluster
     newcluster.add_user(self)
     newcluster
+  end
+
+  def mark_names=(new_mark_names)
+    new_marks = new_mark_names.map { |name| Mark.where(name: name.parameterize).first_or_create }
+    self.marks = new_marks
+    self.top_products = []
   end
 
   private

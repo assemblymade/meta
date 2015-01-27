@@ -25,11 +25,11 @@ describe('ChatNotificationsStore', function() {
         readraptor_url: '/clever_girl'
       },
       789: {
-        updated: 789,
+        updated_at: 789,
         last_read_at: 123
       },
       456: {
-        updated: 456,
+        updated_at: 456,
         last_read_at: 123
       }
     }

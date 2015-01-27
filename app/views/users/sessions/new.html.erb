@@ -1,4 +1,5 @@
 <% title 'Sign in' %>
+<%= track_engaged('session.new') %>
 
 <div class="container">
   <div class="row">
@@ -6,9 +7,9 @@
 
       <div class="sheet">
         <div class="sheet-body">
-          <div class="text-center">
+          <div class="center">
             <h1 class="omega">Welcome back to Assembly!</h1>
-            <p class="text-muted">
+            <p class="gray-2">
               <a href="<%= new_user_registration_path %>">Don't have an account?</a>
             </p>
           </div>

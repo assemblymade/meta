@@ -7,6 +7,9 @@
       <li class="<%= "active" if controller_active?(:withdrawals) %>">
         <%= link_to 'Withdrawals', admin_withdrawals_path %>
       </li>
+      <li class="<%= "active" if controller_active?(:apps) %>">
+        <%= link_to 'Apps', admin_apps_path %>
+      </li>
       <li class="<%= "active" if product_rankings_controller? %>">
         <%= link_to 'Products', admin_product_rankings_path %>
       </li>
@@ -39,6 +42,9 @@
       </li>
       <li class="<%= "active" if controller_active?(:user_books) %>">
         <%= link_to 'User Books', '/admin/user_books' %>
+      </li>
+      <li class="<%= "active" if controller_active?(:ownership) %>">
+        <%= link_to 'Ownership', '/admin/ownership' %>
       </li>
       <li class="<%= "active" if controller_active?(:asset_history) %>">
         <%= link_to 'Asset History', '/admin/asset_history' %>

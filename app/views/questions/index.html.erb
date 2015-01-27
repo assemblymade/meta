@@ -21,7 +21,7 @@
     <div class="clearfix mxn4">
       <div class="md-col md-col-8 px4">
 
-            <ul class="list-unstyled">
+            <ul class="list-reset">
               <% @faq_group.questions.each do |question| %>
                 <li class="question">
                   <%= link_to question[:name], anchor: question[:anchor] %>
@@ -39,7 +39,7 @@
         <ul class="list-reset">
           <% @faq_groups.each do |faq_group| %>
             <li>
-              <a class="block gray-darker py1 <%= 'bold blue' if @faq_group.slug == faq_group.slug %>" href="<%= help_path(faq_group) %>"><%= faq_group.name %></a>
+              <a class="block gray-1 py1 <%= 'bold blue' if @faq_group.slug == faq_group.slug %>" href="<%= help_path(faq_group) %>"><%= faq_group.name %></a>
             </li>
           <% end %>
         </ul>

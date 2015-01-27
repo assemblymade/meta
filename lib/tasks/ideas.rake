@@ -7,8 +7,47 @@ namespace :ideas do
     }
     Idea.all.each do |idea|
       rand(0..10).times {
-        idea.news_feed_item.comments.create(user: User.sample, body: rand_words(20, 50)) 
+        idea.news_feed_item.comments.create(user: User.sample, body: rand_words(20, 50))
       }
+    end
+  end
+
+  task migrate_products: :environment do
+    Product.find_each do |product|
+      if product.idea.nil?
+        begin
+          idea = Idea.create_with_discussion(
+            product.user,
+            name: product.pitch,
+            body: product.description,
+            created_at: product.created_at,
+            flagged_at: product.flagged_at,
+            founder_preference: true
+          )
+
+          if (idea.body.nil?)
+            idea.update(flagged_at: Time.now)
+            next
+          end
+
+          product.team_memberships.each do |membership|
+            heart = idea.news_feed_item.hearts.create!(
+              user_id: membership.user_id
+            )
+
+            heart.update_column('created_at', membership.created_at)
+          end
+
+          idea.greenlight! if idea.should_greenlight?
+
+          if idea.hearts_count == 0
+            idea.update(flagged_at: Time.now)
+          end
+        rescue => e
+          puts "Failed to make idea for #{product.slug}"
+          puts e.inspect
+        end
+      end
     end
   end
 

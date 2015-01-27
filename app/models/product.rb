@@ -12,6 +12,8 @@ class Product < ActiveRecord::Base
 
   DEFAULT_BOUNTY_SIZE=10000
   PITCH_WEEK_REQUIRED_BUILDERS=10
+  DEFAULT_IMAGE_PATH='/assets/app_icon.png'
+  MARK_SEARCH_THRESHOLD=0.10
 
   extend FriendlyId
 
@@ -26,7 +28,9 @@ class Product < ActiveRecord::Base
   belongs_to :logo, class_name: 'Asset', foreign_key: 'logo_id'
 
   has_one :product_trend
+  has_one :idea
 
+  has_many :activities
   has_many :assets
   has_many :auto_tip_contracts
   has_many :chat_rooms
@@ -52,7 +56,8 @@ class Product < ActiveRecord::Base
   has_many :posts
   has_many :profit_reports
   has_many :rooms
-  has_many :showcases
+  has_many :showcase_entries
+  has_many :showcases, through: :showcase_entries
   has_many :status_messages
   has_many :stream_events
   has_many :subscribers
@@ -66,6 +71,7 @@ class Product < ActiveRecord::Base
   has_many :wip_activities, through: :wips, source: :activities
   has_many :wips
   has_many :work
+  has_many :ownership_statuses
 
   PRIVATE = ((ENV['PRIVATE_PRODUCTS'] || '').split(','))
 
@@ -92,7 +98,7 @@ class Product < ActiveRecord::Base
   }
   scope :advertisable,     -> { where(can_advertise: true) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
-  scope :ordered_by_trend, -> { joins(:product_trend).order('product_trends.score DESC').select('products.*, product_trends.score') }
+  scope :ordered_by_trend, -> { joins(:product_trend).order('product_trends.score DESC') }
   scope :public_products,  -> { where.not(id: Product.private_ids).where(flagged_at: nil).advertisable.where.not(state: ['stealth', 'reviewing']) }
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :since,            ->(time) { where('created_at >= ?', time) }
@@ -105,7 +111,9 @@ class Product < ActiveRecord::Base
   scope :team_building, -> { public_products.where(state: 'team_building') }
   scope :greenlit,     -> { public_products.where(state: 'greenlit') }
   scope :profitable,   -> { public_products.where(state: 'profitable') }
+  scope :live,         -> { where.not(try_url: nil) }
   scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
+  scope :untagged, -> { where('array_length(tags, 1) IS NULL') }
 
   validates :slug, uniqueness: { allow_nil: true }
   validates :name, presence: true,
@@ -495,7 +503,7 @@ class Product < ActiveRecord::Base
     elsif poster
       poster_image.url
     else
-      '/assets/app_icon.png'
+      DEFAULT_IMAGE_PATH
     end
   end
 
@@ -551,6 +559,14 @@ class Product < ActiveRecord::Base
     self.tags = new_tags_string.split(', ')
   end
 
+  def topic=(new_topic)
+    self.topics = [new_topic]
+  end
+
+  def showcase=(showcase_slug)
+    Showcase.find_by!(slug: showcase_slug).add!(self)
+  end
+
   def assembly?
     slug == 'asm'
   end
@@ -587,10 +603,48 @@ class Product < ActiveRecord::Base
     indexes :pitch,       analyzer: 'snowball'
     indexes :description, analyzer: 'snowball'
     indexes :tech,        analyzer: 'keyword'
+
+    indexes :marks do
+      indexes :name
+      indexes :weight, type: 'float'
+    end
+
+    indexes :suggest, type: 'completion', payloads: true, index_analyzer: 'simple', search_analyzer: 'simple'
   end
 
   def as_indexed_json(options={})
-    as_json(root: false, methods: [:tech, :hidden, :sanitized_description], only: [:slug, :name, :pitch, :poster])
+    as_json(
+      root: false,
+      only: [:slug, :name, :pitch, :poster],
+      methods: [:tech, :hidden, :sanitized_description, :suggest]
+    ).merge(marks: mark_weights, logo_url: full_logo_url, search_tags: tags)
+  end
+
+  def mark_weights
+    markings.sort_by{|marking| -marking.weight }.
+             take(5).
+             map{|marking| { weight: marking.weight, name: marking.mark.name } }
+  end
+
+  def suggest
+    {
+      input: [name, pitch] + name.split(' ') + pitch.split(' '),
+      output: id,
+      weight: product_trend.try(:score).to_i,
+      payload: {
+        id: id,
+        slug: slug,
+        name: name,
+        pitch: pitch,
+        logo_url: full_logo_url,
+      }
+    }
+  end
+
+  def full_logo_url
+    # this is a hack to get a full url into elasticsearch, so firesize can resize it correctly.
+    # DEFAULT_IMAGE_PATH is a relative image path
+    logo_url == DEFAULT_IMAGE_PATH ? File.join(Rails.application.routes.url_helpers.root_url, DEFAULT_IMAGE_PATH) : logo_url
   end
 
   def tech

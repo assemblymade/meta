@@ -136,7 +136,7 @@
   var Tippers = React.createClass({
     render: function() {
       return (
-        <span className="text-muted">&mdash; tipped by &nbsp;
+        <span className="gray-2">&mdash; tipped by &nbsp;
           <ul className="list-inline-media">
             {_.map(this.props.tips, this.row)}
           </ul>

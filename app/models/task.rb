@@ -1,9 +1,12 @@
 class Task < Wip
+  belongs_to :locker, class_name: 'User', foreign_key: 'locked_by'
+
   has_many :deliverables, foreign_key: 'wip_id'
   alias_method :design_deliverables, :deliverables
 
   has_many :code_deliverables, foreign_key: 'wip_id'
   has_many :copy_deliverables, foreign_key: 'wip_id'
+  has_many :hearts, foreign_key: 'heartable_id'
   has_many :offers, foreign_key: "bounty_id"
   has_many :wip_workers, class_name: 'Wip::Worker', foreign_key: 'wip_id', inverse_of: :wip
   has_many :votes, :as => :voteable, :after_add => :vote_added
@@ -175,9 +178,13 @@ class Task < Wip
 
   def start_work!(worker)
     self.workers << worker unless self.workers.include?(worker)
-    Analytics.track(user_id: worker.id, event: 'product.wip.start_work', properties: WipAnalyticsSerializer.new(self, scope: worker).as_json)
+    Analytics.track(
+      user_id: worker.id,
+      event: 'product.wip.start_work',
+      properties: WipAnalyticsSerializer.new(self, scope: worker).as_json
+    )
     allocate!(worker) unless self.workers.count > 1
-    lock_bounty!(worker)
+    lock_bounty!(worker) if self.locked_at.nil?
   end
 
   def stop_work!(worker)

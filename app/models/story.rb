@@ -12,7 +12,7 @@ class Story < ActiveRecord::Base
   delegate :url_params, to: :subject, allow_nil: true
 
   PUBLISHABLE_VERBS = [
-    "Award", "Close", "Comment", "Introduce", "Start"
+    "Award", "Close", "Comment", "Introduce", "Post", "Start"
   ].each_with_object({}) {|keys, h| h[keys] = true }
 
   PUBLISHABLE_ACTIVITIES = [
@@ -24,6 +24,8 @@ class Story < ActiveRecord::Base
   end
 
   def self.should_publish?(activity)
+    # puts ">>>>> should publish? #{[activity.verb, to_noun(activity.subject), to_noun(activity.target)]}"
+
     return false unless activity.actor.flagged_at.nil?
     return true if PUBLISHABLE_VERBS.include?(activity.verb)
 

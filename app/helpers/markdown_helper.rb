@@ -4,37 +4,29 @@ module MarkdownHelper
   DEFAULT_FILTERS = [
     TextFilters::MarkdownFilter,
     HTML::Pipeline::SanitizationFilter,
-    TextFilters::ImgThumbnailFilter
+    TextFilters::ImgThumbnailFilter,
+    TextFilters::UserMentionFilter,
+    HTML::Pipeline::EmojiFilter,
+    TextFilters::NoFollowLinksFilter
   ]
 
   PRODUCT_FILTERS = [
     TextFilters::MarkdownFilter,
     HTML::Pipeline::SanitizationFilter,
-    TextFilters::UserMentionFilter,
     TextFilters::ShortcutFilter,
     TextFilters::AssetInlineFilter,
     TextFilters::ImgThumbnailFilter,
+    TextFilters::UserMentionFilter,
     HTML::Pipeline::EmojiFilter,
+    TextFilters::NoFollowLinksFilter
   ]
 
   def markdown(text)
-    @default_pipeline ||= HTML::Pipeline.new(DEFAULT_FILTERS)
-    @default_pipeline.call(text)[:output].to_s.html_safe
-  end
-
-  def idea_markdown(text)
-    @comment_pipeline ||= HTML::Pipeline.new(PRODUCT_FILTERS,
+    @default_pipeline ||= HTML::Pipeline.new(DEFAULT_FILTERS,
       asset_root: 'https://a248.e.akamai.net/assets.github.com/images/icons',
-      whitelist: html_whitelist,
-      firesize_url: ENV['FIRESIZE_URL'],
-      users_base_url: File.join(EXTENDER.root_url, 'users'))
-    begin
-      result = @comment_pipeline.call(text)
-      result[:output].to_s.html_safe
-    rescue => e
-      Rails.logger.error("pipeline=#{e.message} text=#{text}")
-      text
-    end
+      users_base_url: File.join(EXTENDER.root_url, 'users')
+    )
+    @default_pipeline.call(text)[:output].to_s.html_safe
   end
 
   # this is used in mailers, so use full urls
@@ -74,38 +66,10 @@ module MarkdownHelper
   end
 
   def html_whitelist
-    {
-      :elements => %w(
-        h1 h2 h3 h4 h5 h6 h7 h8 br b i strong em a pre code img tt
-        div ins del sup sub p ol ul table thead tbody tfoot blockquote
-        dl dt dd kbd q samp var hr ruby rt rp li tr td th s strike
-        iframe
-      ),
-      :remove_contents => ['script'],
-      :attributes => {
-        'a' => ['href'],
-        'img' => ['src'],
-        'iframe' => %w(src webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder),
-        'div' => ['itemscope', 'itemtype'],
-        :all  => ['abbr', 'accept', 'accept-charset',
-                  'accesskey', 'action', 'align', 'alt', 'axis',
-                  'border', 'cellpadding', 'cellspacing', 'char',
-                  'charoff', 'charset', 'checked', 'cite',
-                  'clear', 'cols', 'colspan', 'color',
-                  'compact', 'coords', 'datetime', 'dir',
-                  'disabled', 'enctype', 'for', 'frame',
-                  'headers', 'height', 'hreflang',
-                  'hspace', 'ismap', 'label', 'lang',
-                  'longdesc', 'maxlength', 'media', 'method',
-                  'multiple', 'name', 'nohref', 'noshade',
-                  'nowrap', 'prompt', 'readonly', 'rel', 'rev',
-                  'rows', 'rowspan', 'rules', 'scope',
-                  'selected', 'shape', 'size', 'span',
-                  'start', 'summary', 'tabindex', 'target',
-                  'title', 'type', 'usemap', 'valign', 'value',
-                  'vspace', 'width', 'itemprop']
-      }
-    }
+    whitelist = HTML::Pipeline::SanitizationFilter::WHITELIST.dup
+    whitelist[:elements] << 'iframe'
+    whitelist[:attributes]['iframe'] = %w(src webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder)
+    whitelist
   end
 
 end

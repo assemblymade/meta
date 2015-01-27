@@ -1,7 +1,7 @@
 <% if !signed_in? && cookies['dismissed-welcome'].nil? %>
   <div data-react-class="WelcomeBanner"
       data-react-props="<%= {
-        discoverBountiesPath: discover_path(:bounties),
+        appsPath: discover_path,
         userPath: (dismiss_welcome_banner_path(current_user) if current_user)
       }.to_json %>">
   </div>

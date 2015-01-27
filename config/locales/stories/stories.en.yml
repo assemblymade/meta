@@ -20,6 +20,10 @@ en:
           other: "%{title} #%{number} "
           owner: "%{title} #%{number}"
 
+        idea:
+          other: 'an idea'
+          owner: 'your idea'
+
         post:
           other: 'a post'
           owner: 'a post you wrote'
@@ -44,6 +48,10 @@ en:
         discussion:
           other: "%{title} #%{number} "
           owner: "%{title} #%{number}"
+
+        idea:
+          other: '%{title}'
+          owner: '%{title}'
 
         post:
           other: '%{title}'

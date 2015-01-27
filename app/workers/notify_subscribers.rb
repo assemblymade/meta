@@ -5,7 +5,7 @@ class NotifySubscribers
     nfi = comment.news_feed_item
 
     thread_subscriber_ids = (nfi.followers.reject(&:mail_never?).map(&:id) - [comment.user_id])
-    product_subscriber_ids = (nfi.product.followers.reject(&:mail_never?).map(&:id) - thread_subscriber_ids - [comment.user_id])
+    product_subscriber_ids = nfi.product? ? (nfi.product.followers.reject(&:mail_never?).map(&:id) - thread_subscriber_ids - [comment.user_id]) : nil
 
     if thread_subscriber_ids.any?
       # webhook will call back in 1 minute if the comment hasn't been read
@@ -20,7 +20,7 @@ class NotifySubscribers
       )
     end
 
-    if product_subscriber_ids.any?
+    if product_subscriber_ids.try(:any?)
       # the email tag and no callback means they will end up in the daily digest
       [nil, :email].each do |tag|
         ReadRaptor::RegisterArticleWorker.perform_async(

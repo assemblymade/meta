@@ -1,4 +1,5 @@
 <% title 'Plan', @product.name %>
+<%= track_engaged 'product.plan' %>
 
 <div class="clearfix">
   <div class="sm-col-8 mx-auto">
@@ -37,14 +38,14 @@
       <% else %>
 
         <% if @product.user == current_user %>
-          <p class="lead text-center">
+          <p class="lead center">
             This space reserved for a kick ass description.
           </p>
-          <p class="text-center">
+          <p class="center">
             <a href="<%= edit_product_path(@product) %>">Update your idea</a>
           </p>
         <% else %>
-          <p class="lead text-center">
+          <p class="lead center">
             Looks like <%= @product.name %> is just getting started! Check back later and there should be some more details
           </p>
         <% end %>

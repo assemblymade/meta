@@ -1,73 +1,66 @@
-/** @jsx React.DOM */
-
 var CONSTANTS = window.CONSTANTS;
 var ChatNotificationsStore = require('../stores/chat_notifications_store');
 var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
 var LocalStorageMixin = require('../mixins/local_storage');
+var moment = require('moment');
 
-(function() {
-  var CN = CONSTANTS.CHAT_NOTIFICATIONS;
+var CN = CONSTANTS.CHAT_NOTIFICATIONS;
 
-  var ChatNotificationsToggler = React.createClass({
-    mixins: [DropdownTogglerMixin, LocalStorageMixin],
+var ChatNotificationsToggler = React.createClass({
+  mixins: [DropdownTogglerMixin, LocalStorageMixin],
 
-    acknowledge: function() {
-      var timestamp = moment().unix();
+  acknowledge: function() {
+    var timestamp = moment().unix();
 
-      localStorage.chatAck = timestamp;
+    localStorage.chatAck = timestamp;
 
-      this.setState({
-        acknowledgedAt: timestamp
-      });
+    this.setState({
+      acknowledgedAt: timestamp
+    });
 
-      Dispatcher.dispatch({
-        action: CN.ACTIONS.ACKNOWLEDGE,
-        data: timestamp,
-        sync: true
-      });
-    },
+    Dispatcher.dispatch({
+      action: CN.ACTIONS.ACKNOWLEDGE,
+      data: timestamp,
+      sync: true
+    });
+  },
 
-    badgeCount: function() {
-      return this.shouldRead() ? ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt) : 0;
-    },
+  badgeCount: function() {
+    return this.shouldRead() ? ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt) : 0;
+  },
 
-    componentDidMount: function() {
-      ChatNotificationsStore.addChangeListener(this.getNotifications);
-    },
+  componentDidMount: function() {
+    ChatNotificationsStore.addChangeListener(this.getNotifications);
+  },
 
-    componentWillUnmount: function() {
-      ChatNotificationsStore.removeChangeListener(this.getNotifications);
-    },
+  componentWillUnmount: function() {
+    ChatNotificationsStore.removeChangeListener(this.getNotifications);
+  },
 
-    getDefaultProps: function() {
-      return {
-        title: document.title
-      };
-    },
+  getDefaultProps: function() {
+    return {
+      title: document.title
+    };
+  },
 
-    getInitialState: function() {
-      return {
-        chatRooms: null,
-        acknowledgedAt: this.storedAck('chatAck')
-      };
-    },
+  getInitialState: function() {
+    return {
+      chatRooms: null,
+      acknowledgedAt: this.storedAck('chatAck')
+    };
+  },
 
-    getNotifications: function() {
-      this.setState({
-        chatRooms: ChatNotificationsStore.getChatRooms()
-      });
-    },
+  getNotifications: function() {
+    this.setState({
+      chatRooms: ChatNotificationsStore.getChatRooms()
+    });
+  },
 
-    shouldRead: function() {
-      var chatRoom = ChatNotificationsStore.mostRecentlyUpdatedChatRoom();
+  shouldRead: function() {
+    var chatRoom = ChatNotificationsStore.mostRecentlyUpdatedChatRoom();
 
-      return chatRoom && chatRoom.updated > chatRoom.last_read_at;
-    }
-  });
-
-  if (typeof module !== 'undefined') {
-    module.exports = ChatNotificationsToggler;
+    return chatRoom && chatRoom.updated_at > chatRoom.last_read_at;
   }
+})
 
-  window.ChatNotificationsToggler = ChatNotificationsToggler;
-})();
+module.exports = window.ChatNotificationsToggler = ChatNotificationsToggler;

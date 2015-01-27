@@ -8,17 +8,17 @@
 
     <div class="row">
       <div class="col-md-8 col-xs-12 col-md-offset-2">
-        <div class="well well-lg text-center">
+        <div class="well well-lg center">
           <h3 class="alpha">
             This product hasn't earned any revenue yet.
           </h3>
-          <p class="text-muted">
+          <p class="gray-2">
             Once <%= @product.name %> starts charging customers and earning
             revenue, you'll be able to see the details on this page. You can
             track expenses, determine profits, and, most importantly, see your
             royalties as a partner.
           </p>
-          <div class="text-center">
+          <div class="center">
             <a class="btn btn-primary" href="<%= product_partners_path(@product) %>" style="margin-top:12px;">See who owns <%= @product.name %></a>
           </div>
         </div>
@@ -50,12 +50,12 @@
     <thead>
       <tr>
         <th></th>
-        <th class="text-left">Revenue</th>
-        <th class="text-right">Expenses</th>
-        <th class="text-right">
+        <th class="left-align">Revenue</th>
+        <th class="right-align">Expenses</th>
+        <th class="right-align">
           <span data-toggle="tooltip" title="Assembly keeps 10% of the royalty to cover operating costs">Platform Cost <span class="icon icon-question"></span></span>
         </th>
-        <th class="text-right">
+        <th class="right-align">
           <span data-toggle="tooltip" title="Royalties paid out to <%= @product.name %> partners">Partners Royalty <span class="icon icon-question"></span></span>
         </th>
       </tr>
@@ -63,11 +63,11 @@
     <tbody>
       <% @product.profit_reports.order(end_at: :desc).each do |report| %>
         <tr style="cursor:pointer;">
-          <td class="text-muted" id="financials-<%= report.end_at.strftime("%Y-%m-%d") %>"><%= l report.end_at, format: :month %></td>
+          <td class="gray-2" id="financials-<%= report.end_at.strftime("%Y-%m-%d") %>"><%= l report.end_at, format: :month %></td>
           <td><%= currency report.revenue, precision: 2 %></td>
-          <td class="text-right"><%= currency -report.expenses, precision: 2 %></td>
-          <td class="text-right"><%= currency -report.fee, precision: 2 %></td>
-          <td class="text-right"><%= currency report.profit - report.fee, precision: 2 %></td>
+          <td class="right-align"><%= currency -report.expenses, precision: 2 %></td>
+          <td class="right-align"><%= currency -report.fee, precision: 2 %></td>
+          <td class="right-align"><%= currency report.profit - report.fee, precision: 2 %></td>
         </tr>
       <% end %>
     </tbody>
@@ -94,15 +94,15 @@
     <tbody>
       <% @product.expense_claims.each do |claim| %>
         <tr>
-          <td><span class="text-muted"><%= l claim.created_at, format: :friendly %></span></td>
+          <td><span class="gray-2"><%= l claim.created_at, format: :friendly %></span></td>
           <td>
             <%= user_link_username(claim.user) %>
           </td>
           <td>
             <%= claim.description %>
           </td>
-          <td><span class="text-muted small">PENDING</span></td>
-          <td class="text-right"><%= currency claim.total %></td>
+          <td><span class="gray-2 small">PENDING</span></td>
+          <td class="right-align"><%= currency claim.total %></td>
         </tr>
       <% end %>
     </tbody>

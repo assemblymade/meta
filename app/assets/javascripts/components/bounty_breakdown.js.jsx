@@ -30,14 +30,14 @@
               How many coins is this bounty worth?
             </div>
 
-            <div className="gray-dark h6 mt1 mb0">
+            <div className="gray-2 h6 mt1 mb0">
               {this.renderSubHeading()}
             </div>
           </div>
 
           <div style={{ minWidth: '300px' }}>
             <div className="border-bottom px3 py2">
-              <a onClick={this.handleShowDetailsClicked} className="h6 mt0 mb0 gray-dark bg-white right" href="#">
+              <a onClick={this.handleShowDetailsClicked} className="h6 mt0 mb0 gray-2 bg-white right" href="#">
                 {this.state.showingDetails ? 'Hide' : 'Show'} details
               </a>
 
@@ -101,7 +101,7 @@
 
       return (
         <li className="left ml1">
-          <span className="badge bg-light-gray">
+          <span className="badge bg-gray-4">
             <span className="icon icon-users"></span>
             + {this.state.offers.length - 5}
           </span>
@@ -117,9 +117,9 @@
       return (
         <div className="row mt2 mb2">
           <div className="col-xs-7">
-            <div className="h6 gray-dark mt0 mb1">Votes</div>
+            <div className="h6 gray-2 mt0 mb1">Votes</div>
 
-            <ul className="list-unstyled">
+            <ul className="list-reset">
               {this.state.offers.map(function(offer) {
                 return (
                   <li>
@@ -131,7 +131,7 @@
                     {' '}
                     by <a href={offer.user.url}>@{offer.user.username}</a>
                     {' '}
-                    <span className="h6 gray-dark">
+                    <span className="h6 gray-2">
                       (owns {numeral(offer.influence).format('0%')})
                     </span>
                   </li>
@@ -141,7 +141,7 @@
           </div>
 
           <div className="col-xs-5">
-            <div className="h6 gray-dark mt0 mb1">Tip Contracts</div>
+            <div className="h6 gray-2 mt0 mb1">Tip Contracts</div>
             {BountyContracts({contracts: this.props.contracts, product: this.props.product})}
           </div>
         </div>

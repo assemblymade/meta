@@ -26,7 +26,7 @@ var FormGroup = require('./form_group.js.jsx');
         <form onSubmit={this.handleSubmit}>
           <div className="p3">
             <h2 className="alpha">Ask a friend</h2>
-            <p className="text-muted">Know somebody who could help with this? Anybody can help out, all you need to do is ask.</p>
+            <p className="gray-2">Know somebody who could help with this? Anybody can help out, all you need to do is ask.</p>
 
             <div className="alert alert-info alert-dismissable" role="alert" style={{ display: this.state.alertDisplay }}>
               Sweet! We've invited {this.state.usernameOrEmail} to help out.
@@ -50,7 +50,7 @@ var FormGroup = require('./form_group.js.jsx');
               <label>Leave a tip</label>
               <p className="help-block">Start off on the right foot; generosity always pays off.</p>
 
-              <div className="btn-group text-center" data-toggle="buttons" style={{width:'100%'}}>
+              <div className="btn-group center" data-toggle="buttons" style={{width:'100%'}}>
                 <label className="btn btn-default active" style={{width:'34%'}}>
                   <input type="radio" name="invite[tip_cents]" value="10" defaultChecked={true} />
                   <span className="icon icon-app-coin text-coins"></span><span className="text-coins">10</span>

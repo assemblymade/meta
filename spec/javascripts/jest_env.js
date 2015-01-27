@@ -43,3 +43,9 @@ global.visibility = function() {};
 global.Notify = function() {};
 global.Notify.isSupported = function() { return true; };
 global.Notify.needsPermission = function() { return true; };
+
+global.ZeroClipboard = function() {
+  return {
+    on: function() {}
+  };
+};

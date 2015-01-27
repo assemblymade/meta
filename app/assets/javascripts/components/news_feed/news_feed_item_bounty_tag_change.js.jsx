@@ -1,5 +1,5 @@
-var Avatar = require('../avatar.js.jsx');
-var Icon = require('../icon.js.jsx');
+var Avatar = require('../ui/avatar.js.jsx');
+var Icon = require('../ui/icon.js.jsx');
 var NewsFeedItemEvent = require('./news_feed_item_event.js.jsx');
 
 var NewsFeedBountyItemTagChange = React.createClass({
@@ -19,7 +19,7 @@ var NewsFeedBountyItemTagChange = React.createClass({
     return (
       <NewsFeedItemEvent>
         <a href={actor.url}>
-          <Avatar user={actor} style={{ display: 'inline-block' }} /> {actor.username}
+          <Avatar user={actor} /> {actor.username}
           {' '}<span style={{ fontWeight: 400 }}>changed the tags.</span>
         </a>
       </NewsFeedItemEvent>

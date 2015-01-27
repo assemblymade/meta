@@ -20,7 +20,7 @@
     },
 
     render: function() {
-      <span className="text-muted" data-toggle="tooltip" title="You have 3 featured Bounties. Close or unfeature one of them to feature this">There are no available spots to feature this</span>
+      <span className="gray-2" data-toggle="tooltip" title="You have 3 featured Bounties. Close or unfeature one of them to feature this">There are no available spots to feature this</span>
 
       return this.props.spotsAvailable > 0 ? this.button() : this.info()
     },
@@ -35,7 +35,7 @@
     },
 
     info: function() {
-      return <span className="text-muted" data-toggle="tooltip" title="You have 3 featured Bounties. Close or unfeature one of them to feature this">There are no available spots to feature this</span>
+      return <span className="gray-2" data-toggle="tooltip" title="You have 3 featured Bounties. Close or unfeature one of them to feature this">There are no available spots to feature this</span>
     },
 
     createPosting: function() {

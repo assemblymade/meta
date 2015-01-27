@@ -1,0 +1,35 @@
+<% title "Apps" %>
+<% activate_nav! :discover %>
+
+<%= render 'shared/navbar' %>
+
+<% if @showcases && @showcases.map(&:slug).include?(params[:showcase]) %>
+  <div class="container">
+    <div class="clearfix mxn2 py2">
+      <div class="rounded text-white bg-gray-2 p3">
+        <div class="clearfix">
+          <div class="col col-8">
+            <span class="caps mt0 mb0">Trending</span>
+            <h2 class="mt0"><%= t "#{params[:showcase]}.hero_title", scope: :showcases %></h2>
+          </div>
+          <div class="col col-4">
+            <span class="right mb0" style="font-size: 28px; margin-top: 22px"><%= @products_count %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= react_component 'Apps',
+      search: params[:search],
+      filter: params[:filter] || 'trending',
+      page: [params[:page].to_i, 1].max,
+      total_pages: @total_pages,
+      topics: @topics,
+      showcases: (@showcases ? @showcases.map(&:slug).map{|slug|
+        I18n.t(slug, scope: :showcases).merge(slug: slug)
+      } : nil)
+%>
+
+<%= render 'shared/footer' %>

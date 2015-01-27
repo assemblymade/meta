@@ -98,7 +98,7 @@
       return (
         <div>
           <div className="slider" onClick={this.handleClick}>
-            <ul className="slider-steps list-unstyled" style={{ width: 100 + this.stepPosition() + '%', marginLeft: -this.stepPosition()/2 + '%', padding: '0 17px' }}>
+            <ul className="slider-steps list-reset" style={{ width: 100 + this.stepPosition() + '%', marginLeft: -this.stepPosition()/2 + '%', padding: '0 17px' }}>
               {this.props.steps.map(function(step) {
                 return (
                   <li style={{ width: this.stepWidth() + '%' }} key={step}>
@@ -117,7 +117,7 @@
 
           <div className="h6 mt2 mb0">
             <strong>Examples: </strong>
-            <span className="gray-dark">
+            <span className="gray-2">
               {this.selectedStepExamples()}
             </span>
           </div>

@@ -1,3 +1,14 @@
+// -- SVG Icons ----------
+
+.svg-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1.5rem;
+}
+
+
+// -- Font Icons ----------
+
 @font-face {
   font-family: "assembly-icons";
   src: // Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+
@@ -21,7 +32,7 @@
 
   &.dropdown-glyph {
     // vertical-align: text-bottom;
-    color: $gray;
+    color: $gray-2;
     top: -1px;
   }
 }
@@ -170,7 +181,7 @@ you can use the generic selector below, but it's slower:
   top: -2px;
 
   &.dropdown-glyph {
-    color: $gray;
+    color: $gray-2;
   }
 }
 

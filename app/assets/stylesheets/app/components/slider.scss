@@ -1,5 +1,5 @@
 .slider {
-  background-color: $gray-lighter;
+  background-color: $gray-6;
   border-radius: 7px;
   height: 14px;
   margin-top: 30px;
@@ -27,7 +27,7 @@
   cursor: pointer;
 
   &:before {
-    background-color: darken($gray-lighter, 20%);
+    background-color: darken($gray-6, 20%);
     border-radius: 50%;
     content: '';
     height: 6px;
@@ -57,7 +57,7 @@
 
     &:before {
       bottom: -6px;
-      color: $gray-light;
+      color: $gray-5;
       content: '|';
       font-size: 6px;
       left: 50%;

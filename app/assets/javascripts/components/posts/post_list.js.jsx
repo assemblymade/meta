@@ -25,7 +25,7 @@ var PostList = React.createClass({
       var product = ProductStore.getProduct().name;
 
       return [
-        <h4 className="text-muted" key="heading">
+        <h4 className="gray-2" key="heading">
           There don't seem to be any posts here
         </h4>,
 

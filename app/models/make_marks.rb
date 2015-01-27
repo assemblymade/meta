@@ -33,7 +33,12 @@ class MakeMarks
       if into_existing_mark = Mark.find_by(name: into_existing_mark_name)
         old_markings = Marking.where(mark_id: destroyed_mark.id)
         old_markings.each do |o|
-          o.update!({mark_id: into_existing_mark.id})
+          # whatupdave added: if the new marking already exists, destroy this one
+          if Marking.find_by(markable_id: o.markable_id, mark_id: into_existing_mark.id)
+            o.destroy
+          else
+            o.update!({mark_id: into_existing_mark.id})
+          end
         end
         destroyed_mark.destroy
       end

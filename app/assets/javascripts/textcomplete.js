@@ -35,7 +35,7 @@ $.applyTextcomplete = function($element) {
         templateString.push(' ');
 
         if(detail) {
-          templateString.push('<span class="text-muted">');
+          templateString.push('<span class="gray-2">');
           templateString.push(detail);
           templateString.push('</span>');
         }

@@ -1,4 +1,5 @@
 <% title "Bounties", @product.name %>
+<%= track_engaged 'bounties' %>
 <% activate_nav! :bounties %>
 
 <%= react_component 'BountyIndex', {

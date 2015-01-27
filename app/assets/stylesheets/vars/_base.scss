@@ -110,7 +110,7 @@ $btn-facebook-color:  white;
 $btn-facebook-bg:     $facebook;
 $btn-facebook-border: darken($btn-facebook-bg, 5%);
 
-$btn-link-disabled-color: $gray-darker;
+$btn-link-disabled-color: $gray-1;
 
 
 // Forms
@@ -129,10 +129,10 @@ $input-height-base:  ($line-height-computed + ($padding-base-vertical * 2) + 2);
 $input-height-large: (ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2);
 $input-height-small: (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2);
 
-$legend-color:        $gray-dark;
+$legend-color:        $gray-2;
 $legend-border-color: #e5e5e5;
 
-$input-group-addon-bg:           $gray-darker;
+$input-group-addon-bg:           $gray-1;
 $input-group-addon-border-color: $input-border;
 
 
@@ -143,16 +143,16 @@ $dropdown-border:          rgba(0,0,0,.15);
 $dropdown-fallback-border: #ccc;
 $dropdown-divider-bg:      #e5e5e5;
 
-$dropdown-link-color:       $gray-dark;
-$dropdown-link-hover-color: darken($gray-dark, 5%);
+$dropdown-link-color:       $gray-2;
+$dropdown-link-hover-color: darken($gray-2, 5%);
 $dropdown-link-hover-bg:    #f5f5f5;
 
 $dropdown-link-active-color: $component-active-color;
 $dropdown-link-active-bg:    $component-active-bg;
 
-$dropdown-link-disabled-color: $gray-darker;
+$dropdown-link-disabled-color: $gray-1;
 
-$dropdown-header-color: $gray-darker;
+$dropdown-header-color: $gray-1;
 
 $dropdown-glyph-margin: 10px;
 
@@ -185,21 +185,21 @@ $navbar-padding-horizontal:  floor(($grid-gutter-width / 2));
 $navbar-padding-vertical:    12px;
 $navbar-collapse-max-height: 340px;
 
-$navbar-default-color:  $gray-dark;
+$navbar-default-color:  $gray-2;
 $navbar-default-bg:     white;
 $navbar-default-border: none;
 
 // Navbar links
-$navbar-default-link-color:          $gray-dark;
-$navbar-default-link-hover-color:    $gray-dark;
+$navbar-default-link-color:          $gray-2;
+$navbar-default-link-hover-color:    $gray-2;
 $navbar-default-link-hover-bg:       white;
-$navbar-default-link-active-color:   $gray-darker;
+$navbar-default-link-active-color:   $gray-1;
 $navbar-default-link-active-bg:      transparent;
-$navbar-default-link-disabled-color: $gray;
+$navbar-default-link-disabled-color: $gray-2;
 $navbar-default-link-disabled-bg:    transparent;
 
 // Navbar brand label
-$navbar-default-brand-color:       $gray-darker;
+$navbar-default-brand-color:       $gray-1;
 $navbar-default-brand-hover-color: $red;
 $navbar-default-brand-hover-bg:    transparent;
 
@@ -210,7 +210,7 @@ $navbar-default-toggle-border-color: #ddd;
 
 // Inverted navbar
 // Reset inverted navbar basics
-$navbar-inverse-color:  $gray-darker;
+$navbar-inverse-color:  $gray-1;
 $navbar-inverse-bg:     $black;
 $navbar-inverse-border: darken($navbar-inverse-bg, 2%);
 
@@ -248,8 +248,8 @@ $navbar-inverse-toggle-border-color: #333;
 $nav-link-padding:  6px 15px;
 $nav-link-hover-bg: $brand-bg;
 
-$nav-disabled-link-color:       $gray-darker;
-$nav-disabled-link-hover-color: $gray-darker;
+$nav-disabled-link-color:       $gray-1;
+$nav-disabled-link-hover-color: $gray-1;
 
 $nav-open-link-hover-color: #fff;
 
@@ -259,7 +259,7 @@ $nav-tabs-border-color: $brand-divider;
 $nav-tabs-link-hover-border-color: rgba(100,100,100, 0.0725);
 
 $nav-tabs-active-link-hover-bg:           transparent;
-$nav-tabs-active-link-hover-color:        $gray;
+$nav-tabs-active-link-hover-color:        $gray-2;
 $nav-tabs-active-link-hover-border-color: $brand-primary;
 
 $nav-tabs-justified-link-border-color:        #ddd;
@@ -285,7 +285,7 @@ $pagination-active-color:  white;
 $pagination-active-bg:     $brand-primary;
 $pagination-active-border: $brand-primary;
 
-$pagination-disabled-color:  $gray-darker;
+$pagination-disabled-color:  $gray-1;
 $pagination-disabled-bg:     #fff;
 $pagination-disabled-border: #ddd;
 
@@ -362,7 +362,7 @@ $popover-arrow-outer-fallback-color: $brand-divider;
 
 // Labels
 
-$label-default-bg: $gray-darker;
+$label-default-bg: $gray-1;
 $label-primary-bg: $brand-primary;
 $label-success-bg: $brand-success;
 $label-info-bg:    $brand-info;
@@ -423,7 +423,7 @@ $alert-danger-border: $state-danger-border;
 
 // Progress bars
 
-$progress-bg:        $gray-darker;
+$progress-bg:        $gray-5;
 $progress-bar-color: #fff;
 
 $progress-bar-bg:         $brand-primary;
@@ -445,8 +445,8 @@ $list-group-active-bg:         $component-active-bg;
 $list-group-active-border:     $list-group-active-bg;
 $list-group-active-text-color: lighten($list-group-active-bg, 40%);
 
-$list-group-disabled-color:      $gray-darker;
-$list-group-disabled-bg:         $gray-darker;
+$list-group-disabled-color:      $gray-1;
+$list-group-disabled-bg:         $gray-1;
 $list-group-disabled-text-color: $list-group-disabled-color;
 
 $list-group-link-color:         #555;
@@ -465,7 +465,7 @@ $panel-border-radius:   $border-radius-base;
 $panel-inner-border: $brand-divider;
 $panel-footer-bg:    #f9fafa;
 
-$panel-default-text:       $gray-dark;
+$panel-default-text:       $gray-2;
 $panel-default-border:     $panel-inner-border;
 $panel-default-heading-bg: #f9fafa;
 
@@ -511,7 +511,7 @@ $well-border: $brand-border;
 
 $badge-color:            #fff;
 $badge-link-hover-color: #fff;
-$badge-bg:               lighten($gray-darker, 20%);
+$badge-bg:               lighten($gray-1, 20%);
 
 $badge-active-color: $link-color;
 $badge-active-bg:    #fff;
@@ -561,7 +561,7 @@ $kbd-color: #fff;
 $kbd-bg:    #333;
 
 $pre-bg:                    #f5f5f5;
-$pre-color:                 $gray-dark;
+$pre-color:                 $gray-2;
 $pre-border-color:          #ccc;
 $pre-scrollable-max-height: 340px;
 
@@ -569,9 +569,9 @@ $pre-scrollable-max-height: 340px;
 // Type
 
 $text-muted:               $brand-muted;
-$abbr-border-color:        $gray-darker;
+$abbr-border-color:        $gray-1;
 $headings-small-color:     $brand-muted;
-$blockquote-small-color:   $gray-darker;
+$blockquote-small-color:   $gray-1;
 $blockquote-font-size:     $font-size-base * 1.15;
 $blockquote-border-color:  $brand-info;
 $blockquote-border-width:  4px;

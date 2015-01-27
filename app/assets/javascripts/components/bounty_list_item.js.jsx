@@ -1,7 +1,10 @@
+var AppCoins = require('./app_coins.js.jsx');
 var BountyActionCreators = require('../actions/bounty_action_creators.js');
-var Coins = require('./coins.js.jsx');
+var Heart = require('./heart.js.jsx');
+var IconWithNumber = require('./ui/icon_with_number.js.jsx')
 var ListItemMixin = require('../mixins/list_item_mixin.js.jsx');
 var NewsFeedItemBountyModal = require('./news_feed/news_feed_item_bounty_modal.js.jsx');
+
 
 var BountyListItem = React.createClass({
 
@@ -108,19 +111,21 @@ var BountyListItem = React.createClass({
               <div className="mt0 mb1 mtn1 h4 fw-500 clickable">
                 {this.renderTitle()}
               </div>
-              <div className="lh0_9">
-                <span className="mr2 fs2">
-                  <Coins coins={this.props.bounty.earnable_coins_cache} />
-                </span>
-                <span className="gray mr2 fs3 fw_600">
-                  {this.renderComments(bounty.comments_count)}
-                </span>
-                <span className="mt0 mb0 fs1">
+              <div className="clearfix h6 mt0 mb0 gray-3 mxn1">
+                <div className="left px1">
+                  <AppCoins n={this.props.bounty.earnable_coins_cache} />
+                </div>
+                <div className="left px1 bold">
+                  <IconWithNumber icon={<Icon icon="comment" />} n={bounty.comments_count} />
+                </div>
+                <div className="left px1 bold">
+                  <Heart size="small" heartable_id={this.props.bounty.news_feed_item_id} heartable_type="NewsFeedItem" />
+                </div>
+                <div className="left px1">
                   {this.renderTags(bounty.tags)}
-                </span>
+                </div>
               </div>
             </div>
-            {this.renderLove(this.props.bounty.news_feed_item_id)}
             {this.renderLocker()}
           </div>
           {this.renderHandle()}
@@ -155,16 +160,19 @@ var BountyListItem = React.createClass({
     var user = bounty.locker
 
     return (
-      <div className="px3 py2 border-top h6 mb0 mt0">
-        <Avatar user={user} size={18} style={{ display: 'inline-block' }} />
-        {' '}
-        <a href={user.url} className="bold black">
-          {user.username}
-        </a>
-        {' '}
-        <span className="gray-dark">
-          has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
-        </span>
+      <div className="px3 py2 border-top h6 mb0 mt0 clearfix">
+        <div className="left mr1">
+          <Avatar user={user} size={18} />
+        </div>
+        <div className="overflow-hidden">
+          <a href={user.url} className="bold black">
+            {user.username}
+          </a>
+          {' '}
+          <span className="gray-2">
+            has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
+          </span>
+        </div>
       </div>
     )
   },
@@ -191,7 +199,7 @@ var BountyListItem = React.createClass({
     return (
       <a href={bounty.url}>
         {bounty.title} {' '}
-        <span className="gray-dark fs4">
+        <span className="gray-2 fs4">
           #{bounty.number}
         </span>
       </a>

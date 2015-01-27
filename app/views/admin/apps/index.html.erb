@@ -1,0 +1,11 @@
+<% title ['Products', 'Apps'] %>
+
+<%= react_component 'AdminApps',
+  page: params[:page],
+  sortCol: params[:sort],
+  sortAsc: params[:direction] == 'asc',
+  showRanked: params[:showranked] == 'true',
+  showcases: @showcases.map(&:slug),
+  totalPages: @products.total_pages,
+  topics: @topics.map(&:slug)
+%>

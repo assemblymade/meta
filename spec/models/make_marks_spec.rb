@@ -25,7 +25,8 @@ describe MakeMarks do
     Marking.create!({markable: user.user_identity, mark_id: firstmark.id, weight: 1.0})
     Marking.create!({markable: user.user_identity, mark_id: secondmark.id, weight: 1.0})
     MakeMarks.new.merge_marks('pommern', 'tyrol')
-    expect(firstmark.markings.count).to eq(2)
+    expect(firstmark.markings.count).to eq(1)
+    expect(firstmark.markings.first.mark.name).to eq('tyrol')
   end
 
   it 'mark with vector additively' do

@@ -11,7 +11,7 @@
     render: function() {
       return (
         <span id='logo-upload'
-              className='img-shadow js-dropzone-select'
+              className='border js-dropzone-select'
               style={{cursor: 'pointer'}}
               onMouseEnter={this.onMouseEnter}
               onMouseLeave={this.onMouseLeave}>

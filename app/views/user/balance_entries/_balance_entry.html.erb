@@ -1,0 +1,26 @@
+<% report = balance_entry.profit_report %>
+<% c = 'gray-2' if balance_entry.pending? %>
+
+<tr>
+  <td class="gray-3">
+    <%= report.end_at.strftime('%b %Y') %></a>
+  </td>
+  <td>
+    <a class="<%= c %>" href="<%= product_financials_path(report.product) %>"><%= report.product.name %>
+  </td>
+  <td class="<%= c %>">
+    <%= number_with_delimiter(balance_entry.coins) %>
+    (<%= number_to_percentage balance_entry.coins / report.coins.to_f * 100, precision: 2 %>)
+  </td>
+  <td class="<%= c %>">
+    <%= number_to_currency report.earnable / 100.0, precision: 2 %>
+  </td>
+  <td class="<%= c %>">
+    <%= number_to_currency balance_entry.earnings / 100.0, precision: 2 %>
+  </td>
+  <td>
+    <% if balance_entry.pending? %>
+      <span class="label label-warning" title="Income is available 30 days after end of month" data-toggle="tooltip">Pending</span>
+    <% end %>
+  </td>
+</tr>

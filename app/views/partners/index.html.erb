@@ -1,4 +1,6 @@
 <% title @product.stakeholders, @product.name %>
+<% track_engaged 'partners' %>
+
 <% activate_nav! :people %>
 <% activate_nav! :people_ownership %>
 
@@ -21,8 +23,8 @@
       <table class="table">
         <thead>
           <tr>
-            <th class="text-left">Partner</th>
-            <th class="text-right">
+            <th class="left-align">Partner</th>
+            <th class="right-align">
               <% if @product.for_profit? %>
                 Coins
               <% else %>
@@ -30,7 +32,7 @@
               <% end %>
             </th>
 
-            <th class="text-right">
+            <th class="right-align">
               <% if @product.for_profit? %>
                 Ownership
               <% else %>
@@ -51,11 +53,11 @@
                   <%= user.username %>
                 </a>
               </td>
-              <td class="text-right">
+              <td class="right-align">
                 <span class="icon icon-app-coin text-coins"></span>
                 <%= number_with_delimiter(cents) %>
               </td>
-              <td class="text-right">
+              <td class="right-align">
                 <% if cents / @total_cents.to_d < 0.0001 %>
                   &lt; 0.01%
                 <% else %>
@@ -65,13 +67,13 @@
             </tr>
           <% end %>
 
-          <!-- <tr class="active text-muted">
+          <!-- <tr class="active gray-2">
             <td>Unvested</td>
-            <td class="text-right">
+            <td class="right-align">
               <span class="icon icon-app-coin text-coins"></span>
               9,800,390
             </td>
-            <td class="text-right">-</td>
+            <td class="right-align">-</td>
           </tr> -->
 
         </tbody>
@@ -83,7 +85,7 @@
       <h3 class="alpha">
         <strong>Become a <%= @product.name %> partner</strong>
       </h3>
-      <p class="text-muted">
+      <p class="gray-2">
         Partners have stake in a product's monthly revenue. Become a partner by earning app coins when you complete tasks with bounties or receive tips from the community for being an inspirational community member. <a href="/help/profits#profits-2">Learn more in the FAQ</a>.
       </p>
 

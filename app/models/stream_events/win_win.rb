@@ -11,7 +11,7 @@ module StreamEvents
         <a class="long-link" href="#{product_wip_path(task.product, task)}">
           #{h(task.title)}
         </a>
-        <a class="text-muted" href="#{product_wip_path(task.product, task)}">
+        <a class="gray-2" href="#{product_wip_path(task.product, task)}">
           ##{task.number}
         </a>
       HTML

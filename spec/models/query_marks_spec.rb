@@ -39,7 +39,7 @@ describe QueryMarks do
 
   it 'update markings on object from vector' do
     QueryMarks.new.update_markings_to_vector_for_object(product2, vector1)
-    expect(product2.mark_vector).to eq(vector1)
+    expect(product2.mark_vector).to match_array(vector1)
   end
 
   it 'get all wip vectors' do

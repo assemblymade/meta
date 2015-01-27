@@ -1,3 +1,11 @@
+/* ADMIN NAVBAR */
+.navbar-inverse .navbar-nav > li > a {
+  color: #8d939e
+}
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+  color: #fff;
+}
+
 /* BOUNTIES DASHBOARD */
 
 .charts_container {
@@ -30,7 +38,7 @@ h5 {
   position: relative;
 }
 .rickshaw_graph svg {
-  display: block; 
+  display: block;
   overflow: hidden;
 }
 
@@ -177,7 +185,7 @@ h5 {
 .rickshaw_graph .y_ticks.glow text {
   fill: black;
   color: black;
-  text-shadow: 
+  text-shadow:
     -1px 1px 0 rgba(255, 255, 255, 0.1),
     1px -1px 0 rgba(255, 255, 255, 0.1),
     1px 1px 0 rgba(255, 255, 255, 0.1),
@@ -191,7 +199,7 @@ h5 {
 .rickshaw_graph .y_ticks.inverse text {
   fill: white;
   color: white;
-  text-shadow: 
+  text-shadow:
     -1px 1px 0 rgba(0, 0, 0, 0.8),
     1px -1px 0 rgba(0, 0, 0, 0.8),
     1px 1px 0 rgba(0, 0, 0, 0.8),
@@ -316,7 +324,7 @@ h5 {
   color: white;
   background: #404040;
   display: inline-block;
-  padding: 12px 5px; 
+  padding: 12px 5px;
   border-radius: 2px;
   position: relative;
 }
@@ -384,4 +392,3 @@ h5 {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 3px;
 }
-

@@ -28,6 +28,12 @@ class ProductsController < ProductController
   end
 
   def create
+    if idea_id = params[:product][:idea_id]
+      @idea = Idea.find(idea_id)
+
+      return render action: :new, layout: 'application' unless @idea.user == current_user
+    end
+
     @product = create_product_with_params
     if @product.valid?
       respond_with(@product, location: product_welcome_path(@product))
@@ -35,6 +41,11 @@ class ProductsController < ProductController
       Karma::Kalkulate.new.award_for_product_to_stealth(@product)
 
       @product.retrieve_key_pair
+
+      if @idea
+        @idea.update(product: @product)
+      end
+
       schedule_greet
       schedule_one_hour_checkin
     else
@@ -105,23 +116,19 @@ class ProductsController < ProductController
                   reject{|nfi| nfi.target.is_a? Discussion }
 
     @news_feed_items = query.map do |nfi|
-      Rails.cache.fetch([nfi, :json]) do
+      Rails.cache.fetch([nfi, 'v2', :json]) do
         NewsFeedItemSerializer.new(nfi).as_json
       end
     end
 
-    @heartables = (@news_feed_items + @news_feed_items.map{|p| p[:last_comment]}).
-            map(&:as_json).
-            compact.
-            map(&:stringify_keys).
-            map{|h| h.slice('heartable_id', 'heartable_type', 'hearts_count') }.to_a
+    @heartables = (@news_feed_items + @news_feed_items.map{|p| p[:last_comment]}).compact
 
     if signed_in?
-      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['heartable_id']})
+      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['id']})
     end
 
     respond_to do |format|
-      format.html { render 'products/new_show', layout: 'product' }
+      format.html { render }
       format.json {
         render json: {
           user_hearts: @user_hearts,
@@ -307,6 +314,7 @@ class ProductsController < ProductController
       :tags_string,
       :poster,
       :homepage_url,
+      :try_url,
       :you_tube_video_url,
       :terms_of_service,
       {:tags => []}

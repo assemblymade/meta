@@ -8,7 +8,7 @@
       }
 
       return this.props.tags.map(function(tag) {
-        return ( 
+        return (
           <div className="table-cell">
             <a className="tag mr1 inline">
               {tag.type}:{tag.value}
@@ -77,7 +77,7 @@
         <div>
           <div className="table mb0">
             <div className="table-cell full-width">
-              <input type="text" value={this.props.value} onChange={this.props.onChange} className="no-border full-width" style={{ padding: 0 }} />
+              <input type="text" value={this.props.value} onChange={this.props.onChange} className="full-width" style={{ padding: 0 }} />
             </div>
           </div>
           {this.renderSuggestion()}

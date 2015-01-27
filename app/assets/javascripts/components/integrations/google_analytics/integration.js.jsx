@@ -17,7 +17,7 @@
 
     check: function() {
       if (this.state.activated) {
-        return <span className="px1 glyphicon glyphicon-ok text-success" />
+        return <span className="px1 glyphicon glyphicon-ok green" />
       }
 
       return <span />;
@@ -96,7 +96,7 @@
           <td>
             {this.integrationLink()}
           </td>
-          <td className="text-muted">
+          <td className="gray-2">
             {this.props.description}
           </td>
           {this.configureColumn()}

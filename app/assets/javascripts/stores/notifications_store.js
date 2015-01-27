@@ -106,7 +106,7 @@ var ReadTimesMixin = require('../mixins/read_times');
       }
 
       stories.sort(function(a, b) {
-        return (b.updated - a.updated);
+        return (b.updated_at - a.updated_at);
       });
 
       return stories;
@@ -125,7 +125,7 @@ var ReadTimesMixin = require('../mixins/read_times');
             //   'updated > last_read_at', entry.updated > entry.last_read_at,
             //   'updated > timestamp', entry.updated > timestamp)
 
-            return entry.updated > entry.last_read_at && entry.updated > timestamp;
+            return entry.updated_at > entry.last_read_at && entry.updated_at > timestamp;
           }
         }
       );

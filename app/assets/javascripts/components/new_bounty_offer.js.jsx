@@ -13,9 +13,9 @@
 
     descriptionClasses: function(factor) {
       return classSet({
-        'text-success': (factor <= 0.9),
-        'text-primary': (factor > 0.9 && factor < 1.1),
-        'text-warning': (factor > 1.1)
+        'green': (factor <= 0.9),
+        'blue': (factor > 0.9 && factor < 1.1),
+        'yellow': (factor > 1.1)
       });
     },
 
@@ -33,14 +33,14 @@
 
     render: function() {
       return <div>
-        <div className="clearfix text-muted text-small row">
+        <div className="clearfix gray-2 text-small row">
           <span className="col-md-6">Simple</span>
-          <span className="col-md-6 text-right">Complex</span>
+          <span className="col-md-6 right-align">Complex</span>
         </div>
         <input type="range" min="0" max="100" onChange={this.handleOfferChanged} defaultValue={initialVal} />
         <div className="row">
 
-          <span className="text-right text-small col-md-12">
+          <span className="right-align text-small col-md-12">
             <span className="text-coins text-small" style={{"margin-right": "5px"}}>
               <span className="icon icon-app-coin"></span>
               {numeral(this.props.newOffer).format('0,0')}

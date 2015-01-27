@@ -80,7 +80,7 @@
           return (
             <ul className="dropdown-menu" style={{ minWidth: '380px', width: '380px' }}>
               <li style={{ overflowY: 'scroll', minHeight: '60px' }}>
-                <div className="text-center" style={{ paddingTop: '15px' }}>
+                <div className="center" style={{ paddingTop: '15px' }}>
                   There don't seem to be any notifications here just yet.
                 </div>
               </li>

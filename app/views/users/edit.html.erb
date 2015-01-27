@@ -1,125 +1,201 @@
 <% title 'Settings' %>
 <%= render 'shared/navbar' %>
 
-<div class="page page-flat">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3 col-xs-3">
-        <%= render 'users/card', user: @user %>
+<div class="container">
+  <div class="clearfix mxn3 py4">
+
+    <div class="col col-3 px3">
+      <div class="mb3">
+        <ul class="nav nav-stacked nav-pills">
+          <li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
+          <li><a href="#account" data-toggle="tab">Account Settings</a></li>
+          <li><a href="#notifications" data-toggle="tab">Notifications</a></li>
+          <li><a href="#payments" data-toggle="tab">Payments</a></li>
+        </ul>
       </div>
 
-      <div class="col-md-9 col-xs-9">
-        <div class="page-header">
-          <h2 class="page-header-title">Profile Settings</h2>
-        </div>
+      <div class="mb3">
+        <h6 class="caps gray-3 px2 mt0 mb2">Products</h6>
 
-        <%= form_for @user, html: {class: 'form form-horizontal'} do |f| %>
-          <div class="form-group">
-            <label class="control-label col-xs-2">Profile Picture</label>
-            <div class="col-xs-8">
-              <p>Assembly uses <a target="_blank" href="http://gravatar.com/">Gravatar</a> (globally recognized avatars). If you head over there and create an account with the same email address as your Assembly account, you'll be able to update your avatar.</p>
+        <ul class="nav nav-stacked nav-pills">
+          <% @user.core_products.each do |product| %>
+            <li class="new-nav-item-small"><a href="<%= edit_product_path(product) %>"><%= product.name %></a></li>
+          <% end %>
+        </ul>
+      </div>
+
+
+
+    </div>
+
+    <div class="col col-9 px3">
+
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="profile">
+
+          <%= form_for @user, html: {class: 'form'} do |f| %>
+            <div class="form-group">
+              <label class="control-label">Avatar</label>
+              <div class="clearfix">
+                <div class="left mr3">
+                  <%= avatar_tag(@user, 48) %>
+                </div>
+
+                <p class="gray-1 overflow-hidden">Assembly uses <a target="_blank" href="http://gravatar.com/">Gravatar</a> (globally recognized avatars). If you head over there and create an account with the same email address as your Assembly account, you'll be able to update your avatar.</p>
+              </div>
             </div>
-          </div>
 
-          <div class="form-group">
-            <%= f.label :username, class: 'control-label col-xs-2' %>
-            <div class="col-xs-8">
+            <div class="form-group">
+              <%= f.label :username, class: 'control-label' %>
               <%= f.text_field :username, autocomplete: 'off', class: 'form-control' %>
             </div>
-          </div>
 
-          <div class="form-group">
-            <%= f.label :location, class: 'control-label col-xs-2' %>
-            <div class="col-xs-8">
+            <div class="form-group">
+              <%= f.label :location, class: 'control-label' %>
               <%= f.text_field :location, autocomplete: 'off', class: 'form-control' %>
             </div>
-          </div>
 
-          <div class="form-group">
-            <%= f.label :email, class: 'control-label col-xs-2' %>
-            <div class="col-xs-8">
+            <div class="form-group">
+              <%= f.label :email, class: 'control-label' %>
               <%= f.text_area :email, placeholder: 'Email', autocomplete: 'off', rows: 1, class: 'form-control' %>
             </div>
-          </div>
 
-          <div class="form-group">
-            <%= f.label :bio, class: 'control-label col-xs-2' %>
-            <div class="col-xs-8">
+            <div class="form-group">
+              <%= f.label :bio, class: 'control-label' %>
               <%= f.text_area :bio, placeholder: 'Short bio', autocomplete: 'off', rows: 4, class: 'form-control' %>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label class="control-label col-xs-2">
-              Digests
-            </label>
+            <div class="right-align">
+              <%= f.submit 'Update profile', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
 
-            <div class="col-xs-10">
+
+        <div role="tabpanel" class="tab-pane" id="account">
+          <%= form_for @user, html: {class: 'form'} do |f| %>
+            <div class="form-group">
+              <%= f.label :password, 'Password', class: 'control-label' %>
+              <%= f.password_field :password, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :password_confirmation, 'Confirm', class: 'control-label' %>
+              <%= f.password_field :password_confirmation, class: 'form-control' %>
+            </div>
+
+            <div class="right-align">
+              <%= f.submit 'Update account', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+
+
+        <div role="tabpanel" class="tab-pane" id="notifications">
+          <%= form_for @user, html: {class: 'form'} do |f| %>
+            <div class="form-group">
+              <label class="control-label">
+                Digests
+              </label>
+
               <div class="radio">
                 <%= f.label :mail_preference_immediate do %>
-                  <%= f.radio_button :mail_preference, :immediate %>
-                  Immediately when things happen
+                <%= f.radio_button :mail_preference, :immediate %>
+                Immediately when things happen
                 <% end %>
               </div>
 
               <div class="radio">
                 <%= f.label :mail_preference_daily do %>
-                  <%= f.radio_button :mail_preference, :daily %>
-                  As a daily digest
+                <%= f.radio_button :mail_preference, :daily %>
+                As a daily digest
                 <% end %>
               </div>
 
               <div class="radio">
                 <%= f.label :mail_preference_never do %>
-                  <%= f.radio_button :mail_preference, :never %>
-                  Never
+                <%= f.radio_button :mail_preference, :never %>
+                Never
                 <% end %>
               </div>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label class="control-label col-xs-2">Payment</label>
-            <div class="col-xs-10">
-              <a class="btn btn-default" href="<%= users_payment_option_path %>">
-                Update bank details
-              </a>
+            <div class="right-align">
+              <%= f.submit 'Update notifications', class: 'btn btn-primary' %>
             </div>
-          </div>
+          <% end %>
+        </div>
 
-          <div class="form-group">
-            <label class="control-label col-xs-2">Tax Info</label>
-            <div class="col-xs-10">
-              <a class="btn btn-default" href="<%= users_tax_info_path %>">
-                Update Tax Info
-              </a>
+
+        <div role="tabpanel" class="tab-pane" id="payments">
+
+          <a class="btn btn-default" href="<%= users_payment_option_path %>">
+            Update bank details
+          </a>
+
+          <a class="btn btn-default" href="<%= users_tax_info_path %>">
+            Update Tax Info
+          </a>
+
+          <%= render 'shared/flash' %>
+
+          <% if @balance.available_to_payout > 0 %>
+          <div class="pull-right">
+            <%= button_to "Withdraw #{currency @balance.available_to_payout}", withdraw_users_balance_path, class: 'btn btn-default' %>
+            <% if @balance.available_to_withhold > 0 %>
+            <small class="gray-2"><%= currency @balance.available_to_withhold %> will be withheld for US taxes</small>
+            <% end %>
+          </div>
+          <% end %>
+
+          <% if @balance.balances.any? %>
+            <h4>
+              Available Earnings: <%= currency @balance.available_earnings %>
+              <% if @balance.available_to_withhold > 0 %>
+                <small class="gray-2"><%= currency @balance.available_to_withhold %> will be withheld for US taxes</small>
+              <% end %>
+            </h4>
+            <h4>Total Withdrawn: <%= currency @balance.previously_paidout %></h4>
+
+            <% if @balance.previously_withheld > 0 %>
+              <h4>Total Withheld: <%= currency @balance.previously_withheld %></h4>
+            <% end %>
+
+            <table class="table">
+              <tr>
+                <th></th>
+                <th></th>
+                <th>Your Coins</th>
+                <th>Product Income</th>
+                <th>Your Earnings</th>
+                <th></th>
+              </tr>
+
+              <% (@balance.balances + @balance.withdrawals).sort_by{|e| -(e.try(:end_at) || e.created_at).to_time.to_i }.each do |entry| %>
+                <%= render entry %>
+              <% end %>
+              <tr>
+                <td colspan="4" class="right-align bold">Total:</td>
+                <td><%= currency(@balance.final_earnings) %></td>
+              </tr>
+            </table>
+
+          <% else %>
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <div class="well well-lg omega">
+                  <p class="gray-2 omega">
+                    You will earn a balance once you've worked on a profitable product
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+          <% end %>
 
-
-          <div class="form-group">
-            <%= f.label :password, 'Password', class: 'control-label col-xs-2' %>
-            <div class="col-xs-8">
-              <%= f.password_field :password, class: 'form-control' %>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :password_confirmation, 'Confirm', class: 'control-label col-xs-2' %>
-            <div class="col-xs-8">
-              <%= f.password_field :password_confirmation, class: 'form-control' %>
-            </div>
-          </div>
-
-          <div class="form-actions">
-            <%= f.submit 'Update profile', class: %w(btn btn-primary) %>
-          </div>
-
-        <% end %>
-
-
-
+        </div>
       </div>
+
+
     </div>
   </div>
 </div>

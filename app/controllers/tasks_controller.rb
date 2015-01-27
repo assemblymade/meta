@@ -67,7 +67,7 @@ class TasksController < WipsController
         project.tasks << @bounty
       end
 
-      @activity = Activities::Start.publish!(
+      @activity = Activities::Post.publish!(
         actor: current_user,
         subject: @bounty,
         target: @product,

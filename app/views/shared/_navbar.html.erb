@@ -17,22 +17,10 @@
 
     <div class="collapse navbar-collapse" id="platform-navbar-collapse">
 
-      <% if user_signed_in? %>
-        <%= render 'shared/search' %>
-      <% end %>
-
       <ul class="nav navbar-nav">
 
         <li class="<%= nav_active_class(:discover) %>">
-          <a href="<%= discover_path %>">Products</a>
-        </li>
-
-        <li class="<%= nav_active_class(:platform_updates) %>">
-          <a href="<%= discover_path(:updates) %>">What’s Happening</a>
-        </li>
-
-        <li class="<%= nav_active_class(:discover_bounties) %>">
-          <a href="<%= discover_path(:bounties) %>">Hot Bounties</a>
+          <a href="<%= discover_path %>">Discover</a>
         </li>
 
         <% if current_user.try(:staff?) %>
@@ -83,6 +71,7 @@
               chatPath: chat_rooms_path,
               userPath: user_path(current_user),
               editUserPath: edit_user_path,
+              dashboardPath: dashboard_path,
               balancePath: users_balance_path,
               destroyUserSessionPath: destroy_user_session_path
             }.to_json %>"></div>

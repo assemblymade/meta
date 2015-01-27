@@ -8,7 +8,7 @@ describe PostMailer do
     let(:mail) { PostMailer.created(post.id, user.id) }
 
     it 'renders the subject' do
-      expect(mail.subject).to eql("#{post.title}")
+      expect(mail.subject).to eql("[#{product.name}] #{post.title}")
     end
 
     it 'sets unsubscribe tag' do

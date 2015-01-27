@@ -11,7 +11,7 @@ class Wip < ActiveRecord::Base
 
   belongs_to :closer, class_name: 'User'
   belongs_to :flagged_by, class_name: 'User'
-  belongs_to :product, :touch => (update_parent_product_for_caching = true)
+  belongs_to :product, :touch => (update_parent_product_for_caching = true), counter_cache: true
   belongs_to :user
 
   has_many :comments, class_name: 'Event::Comment'
@@ -365,10 +365,6 @@ class Wip < ActiveRecord::Base
 
   def chat?
     !chat_room.nil?
-  end
-
-  def comments_count
-    comments.count
   end
 
   def to_partial_path

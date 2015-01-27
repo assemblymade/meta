@@ -1,0 +1,50 @@
+<h4>Product Ops</h4>
+
+<ul class="list-inline">
+  <li class="<%= 'bold' if params[:filter].blank? || params[:filter] == 'greenlit' %>"><%= link_to 'greenlit', "?filter=greenlit" %></li>
+  <li class="<%= 'bold' if params[:filter] == 'teambuilding' %>"><%= link_to 'teambuilding', "?filter=teambuilding" %></li>
+  <li class="<%= 'bold' if params[:filter] == 'reviewing' %>"><%= link_to 'reviewing', "?filter=reviewing" %></li>
+  <li class="<%= 'bold' if params[:filter] == 'all' %>"><%= link_to 'all', "?filter=all" %></li>
+</ul>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Age</th>
+      <th>Domain</th>
+      <th>iOS App</th>
+      <th>Android App</th>
+      <th>Inbound Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |p| %>
+      <tr>
+        <td>
+          <%= p.name %>
+        </td>
+        <td>
+          <%= distance_of_time_in_words(Time.now-p.created_at) %>
+        </td>
+        <td>
+          <% p.ownership_statuses.where(asset: 'domain').each do |os| %>
+            <%= react_component("OwnershipState", {ownership_status: os, url: admin_ownership_path(os)}) %>
+          <% end %>
+          <%= p.homepage_url.blank? ? "-" : p.homepage_url %>
+        </td>
+        <td>
+          -
+        </td>
+        <td>
+          -
+        </td>
+        <td>
+          -
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @products, theme: 'twitter-bootstrap-3' %>

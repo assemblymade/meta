@@ -1,5 +1,5 @@
 var AppCoins = require('../app_coins.js.jsx')
-var Avatar = require('../avatar.js.jsx')
+var Avatar = require('../ui/avatar.js.jsx')
 var Markdown = require('../markdown.js.jsx')
 var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx')
 var NewsFeedItemModalMixin = require('../../mixins/news_feed_item_modal_mixin');
@@ -16,58 +16,44 @@ module.exports = React.createClass({
   mixins: [NewsFeedItemModalMixin],
 
   render: function() {
-    var item = this.props.item;
-    var bounty = item.target;
-    var product = item.product;
-    var user = item.user;
+    var bounty = this.props.item.target;
+    var key = 'nfbi-' + bounty.id;
+
+    var title = this.renderTitle();
+    var body = this.renderBody();
 
     return (
-      <div className="table mb0">
-        <div className="table-cell">
-          <div className="px3 pt3 pb3" onClick={this.handleClick} key={'nfbi-' + bounty.id}>
-            <div className="mt0 mb1 mtn1 h4 fw-500 clickable">
-              <a href={bounty.url} key={"bounty-link-" + bounty.id}>
-                {bounty.title}
-                {' '} <span className="gray-dark fs4">#{bounty.number}</span>
-              </a>
-            </div>
-            <div className="lh0_9 pb2">
-              <div key={"bounty-value-" + bounty.id}>
-                <span className="mr2 fs2" key={'mr2' + bounty.id}>
-                  <AppCoins n={bounty.contracts.earnable} />
-                </span>
-              </div>
-            </div>
-            <div className="mt1 gray-darker fs4 break-word" key={'nfbi-body-' + bounty.id} onClick={this.showBounty}>
-              <Markdown content={bounty.short_description} normalized={true} />
-              {this.thumbnails()}
-            </div>
-          </div>
-        </div>
+      <div className="p3" onClick={this.handleClick} key={key}>
+        {title}
+        {body}
       </div>
     );
   },
 
-  tags: function() {
-    var item = this.props.item;
-    var bounty = item.target;
-    var product = item.product;
+  renderTitle: function() {
+    var bounty = this.props.item.target;
 
-    return _.map(bounty.tags, function(tag) {
-      var name = tag.name;
-
-      return (
-        <a className="mr1"
-            href={product.url + '/bounties?state=open&tag=' + name}
-            style={{ color: '#6e6e6e' }}
-            key={bounty.id + '-' + key}>
-          {name}
-        </a>
-      );
-    }.bind(this));
+    return (
+      <a className="h4 mt0 mb0 blue bold" href={bounty.url}>
+        {bounty.title}
+      </a>
+    )
   },
 
-  thumbnails: function() {
+  renderBody: function() {
+    var bounty = this.props.item.target;
+
+    var thumbnails = this.renderThumbnails();
+
+    return (
+      <div className="mt2">
+        <Markdown content={bounty.short_description} normalized={true} />
+        {thumbnails}
+      </div>
+    )
+  },
+
+  renderThumbnails: function() {
     var item = this.props.item;
     var bounty = item.target;
     var thumbnails = bounty.thumbnails;
@@ -76,14 +62,14 @@ module.exports = React.createClass({
       var thumbs = _.map(thumbnails, function(thumb, i) {
         return (
           <span className="px2" key={'thumb-' + i}>
-          <Thumbnail src={thumb} size={100} />
+            <Thumbnail src={thumb} width={100} height={100} />
           </span>
         );
       });
 
       return (
         <div className="clearfix" key={'thumbs-container-' + bounty.id}>
-          <div className="gray py1">Images</div>
+          <div className="gray-2 py1">Images</div>
           {thumbs}
         </div>
       );

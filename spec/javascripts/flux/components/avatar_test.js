@@ -1,9 +1,10 @@
 /** @jsx React.DOM */
 
-jest.dontMock(pathToFile('components/avatar.js.jsx'));
+jest.dontMock(pathToFile('components/ui/avatar.js.jsx'));
+jest.dontMock(pathToFile('components/ui/vignette.js.jsx'));
 
 describe('Avatar', function() {
-  var Avatar = require(pathToFile('components/avatar.js.jsx'));
+  var Avatar = require(pathToFile('components/ui/avatar.js.jsx'));
 
   it('renders a default avatar', function() {
     var avatar = TestUtils.renderIntoDocument(
@@ -15,7 +16,7 @@ describe('Avatar', function() {
       'img'
     );
 
-    expect(img.getDOMNode().src).toContain('/assets/avatars/default.png');
+    expect(img.getDOMNode().src).toContain('/assets/default_avatar.png');
   });
 
   it('renders a user avatar', function() {

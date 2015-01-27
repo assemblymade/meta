@@ -8,7 +8,8 @@
       positionTop: React.PropTypes.number,
       arrowOffsetLeft: React.PropTypes.number,
       arrowOffsetTop: React.PropTypes.number,
-      title: React.PropTypes.renderable
+      title: React.PropTypes.node,
+      onClick: React.PropTypes.func
     },
 
     getDefaultProps: function () {
@@ -41,6 +42,9 @@
 
       return (
         <div className={React.addons.classSet(classes)} style={style}>
+          <span style={{ position: 'absolute', right: 5, cursor: 'pointer' }}  onClick={this.props.onClick ? this.props.onClick : function() {}}>
+            <Icon icon="close" />
+          </span>
           <div className="arrow" style={arrowStyle} />
           {this.props.title ? this.renderTitle() : null}
           <div className="popover-content">
@@ -52,7 +56,7 @@
 
     renderTitle: function() {
       return (
-        <h3 className="popover-title">{this.props.title}</h3>
+        <h5 className="popover-title">{this.props.title}</h5>
       );
     }
   });

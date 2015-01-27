@@ -1,7 +1,7 @@
 module Search
   class TechFilter < SearchFilter
     attr_reader :tags
-  
+
     def self.all
       [
         ['Ruby', 'ruby', %w(ruby rails Ruby Rails)],
@@ -15,7 +15,7 @@ module Search
         new(*args)
       end
     end
-  
+
     def initialize(name, slug, tags)
       super(name, slug)
       @tags = tags

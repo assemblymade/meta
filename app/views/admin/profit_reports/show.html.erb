@@ -39,7 +39,7 @@
   </thead>
 
   <% @report.user_balances.sort_by{|r| -r.earnings }.each do |balance| %>
-    <% c = 'text-muted' if balance.user.staff? %>
+    <% c = 'gray-2' if balance.user.staff? %>
     <tr>
       <td class="<%= c %>"><%= balance.user.username %></td>
       <td class="<%= c %>"><%= number balance.coins %></td>

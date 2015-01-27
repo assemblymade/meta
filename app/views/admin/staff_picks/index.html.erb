@@ -27,22 +27,22 @@
       <td><%= showcase.product.pitch %></td>
       <td>
         <% if showcase.product.updated_at >= 1.week.ago %>
-          <span class="glyphicon glyphicon-ok text-success"></span>
+          <span class="glyphicon glyphicon-ok green"></span>
         <% end %>
       </td>
       <td>
         <% if showcase.product.poster.present? %>
-          <span class="glyphicon glyphicon-ok text-success"></span>
+          <span class="glyphicon glyphicon-ok green"></span>
         <% end %>
       </td>
       <td>
         <% if showcase.product.description.present? %>
-          <span class="glyphicon glyphicon-ok text-success"></span>
+          <span class="glyphicon glyphicon-ok green"></span>
         <% end %>
       </td>
       <td>
         <% if showcase.product.showcases.count <= 1 %>
-          <span class="glyphicon glyphicon-ok text-success"></span>
+          <span class="glyphicon glyphicon-ok green"></span>
         <% end %>
       </td>
       <td>
