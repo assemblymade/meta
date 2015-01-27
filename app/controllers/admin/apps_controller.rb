@@ -11,6 +11,9 @@ class Admin::AppsController < AdminController
       if params[:onlyuntagged] == 'true'
         @products = @products.untagged
       end
+      if params[:unflagged] == 'true'
+        @products = @products.where(flagged_at: nil)
+      end
     end
 
     @products = @products.page(params[:page]).per(200)
