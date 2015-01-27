@@ -39,7 +39,7 @@ var ProposalMake = React.createClass({
       name: "",
       description: "",
       recipient: "",
-      coins: "",
+      coins: 1000,
       date: ""
     };
   },
@@ -47,23 +47,25 @@ var ProposalMake = React.createClass({
   introText: function() {
     if (this.props.contract_type === "vesting")
       return (
-        <div className = "py2">
+        <div className = "py3">
           <Tile>
-            <h4>Vesting Contract</h4>
-            <div className="row">
-              <div className = "col-md-10 col-md-offset-1">
-                Schedule a payment of coins to a specific user for a specific purpose.  As an example, a user
-                could be paid for recurring support with a vesting schedule of coins.  Instead of separate bounties
-                for each task, a vesting schedule can capture a broad range of small activities.
+            <div className = "py2 px3">
+              <h4>Vesting Contract</h4>
+              <div className="row">
+                <div className = "col-md-10 col-md-offset-1">
+                  Schedule a payment of coins to a specific user for a specific purpose.  As an example, a user
+                  could be paid for recurring support with a vesting schedule of coins.  Instead of separate bounties
+                  for each task, a vesting schedule can capture a broad range of small activities.
+                </div>
+              </div>
+
+              <div className = "row mt1">
+                <div  className = "col-md-10 col-md-offset-1">
+                  Each proposal must meet a high bar before it is enacted; More than 50% of participants, weighted by ownership,
+                  must sign-off on any given proposal.  We think a high threshold should protect owners from abuse.
+                </div>
               </div>
             </div>
-
-            <div className = "row">
-              <div  className = "col-md-10 col-md-offset-1">
-                Each proposal must meet a high bar before it is enacted; More than 50% of participants, weighted by ownership,
-                must sign-off on any given proposal.  We think a high threshold should protect owners from abuse.
-            </div>
-          </div>
           </Tile>
         </div>
       )
@@ -81,10 +83,10 @@ var ProposalMake = React.createClass({
 
   renderHelp: function() {
     return (
-      <div className = "py2 bg-white rounded shadow mb2">
+      <div className = "py1 px3 bg-white rounded shadow">
         <Tile>
-          <h4>Propose a resolution for the product</h4>
-          Owners can vote on new product initiatives.
+          <h4>Propose a Resolution</h4>
+          Owners can vote on new product initiatives.  Their votes are weighted by ownership.
         </Tile>
       </div>
     )
@@ -99,6 +101,14 @@ var ProposalMake = React.createClass({
     }.bind(this);
   },
 
+  handleUsernameSelection: function(username) {
+    var state = {}
+    state['recipient'] = username
+    this.setState(state)
+    console.log(this.state)
+    console.log(username)
+  },
+
   renderUserPicker: function() {
     return (
       <div>
@@ -107,7 +117,7 @@ var ProposalMake = React.createClass({
           data-validate-length="2"
           type="text"
           required="true"
-          onTextChange={this.handleTextChange('recipient')} />
+          onTextChange={this.handleUsernameSelection} />
       </div>
     )
   },
@@ -166,7 +176,7 @@ var ProposalMake = React.createClass({
               <label className="control-label">
                 Coins to Award
               </label>
-              <div><input className="form-control" type="number" onChange={this.handleTextChange('coins')}></input></div>
+              <div><input className="form-control" value={this.state.coins} type="number" onChange={this.handleTextChange('coins')}></input></div>
             </div>
 
             <div className="form-group form-group-lg">
@@ -207,9 +217,10 @@ var ProposalMake = React.createClass({
             </div>
           </div>
         </div>
-
-        <div className="col-md-3 col-md-offset-1">
-          {this.renderHelp()}
+        <div className="col-md-3 col-md-offset-1 mt3">
+          <div className = "row">
+            {this.renderHelp()}
+          </div>
         </div>
       </div>
     );

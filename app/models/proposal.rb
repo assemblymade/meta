@@ -98,13 +98,25 @@ class Proposal < ActiveRecord::Base
 
   def time_left_text
     days = ((self.expiration - Time.now)/86400).to_i
+    if days < 0
+      days = -days
+    end
+    s = ""
     if days == 0
       days = ((self.expiration - Time.now)/3600).to_i
-      s = "#{days} hours left"
+      days = days.to_s + " hours"
     else
-      s = "#{days} days left to vote"
+      days = days.to_s + " days"
     end
-    s
+
+    if self.state=="open"
+      days = "Expires " + days + " from now"
+    elsif self.state=="failed" || "expired"
+      days = "Expired " + days + " ago"
+    elsif self.state == "passed"
+      days = ""
+    end
+    days
   end
 
   def push_to_news_feed

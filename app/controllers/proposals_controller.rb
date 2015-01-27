@@ -11,9 +11,12 @@ class ProposalsController < ProductController
 
   def create
     puts params
-    recipient = User.find_by(username: params['recipient'])
+    params['recipient'].slice!(0)
+    username = params['recipient']
+    puts username
+    recipient = User.find_by(username: username)
 
-    date = params['date'].to_i.days.from_now
+    date = DateTime.parse(params['date'])
     if recipient
       author_user = current_user
       product = @product

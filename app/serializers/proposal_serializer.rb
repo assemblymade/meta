@@ -1,6 +1,6 @@
 class ProposalSerializer < ApplicationSerializer
   attributes :name, :description, :status
-  attributes :news_feed_item_id, :url, :comments_count, :state, :status, :contracts
+  attributes :news_feed_item_id, :url, :comments_count, :state, :status, :contracts, :time_left_text
 
   has_one :user
   has_many :contracts

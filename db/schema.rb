@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20150122210550) do
-=======
 ActiveRecord::Schema.define(version: 20150123204157) do
->>>>>>> 504788817c308aafe58ff86f63714049ebc50b2f
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "uuid-ossp"
@@ -325,14 +321,9 @@ ActiveRecord::Schema.define(version: 20150123204157) do
     t.datetime "greenlit_at"
     t.boolean  "founder_preference"
     t.integer  "tilting_threshold"
-<<<<<<< HEAD
-    t.json     "topics",                         default: {}
-    t.datetime "flagged_at"
-=======
     t.datetime "flagged_at"
     t.text     "topics",                         default: [],                                 array: true
     t.text     "categories",                     default: [],                                 array: true
->>>>>>> 504788817c308aafe58ff86f63714049ebc50b2f
   end
 
   add_index "ideas", ["flagged_at"], name: "index_ideas_on_flagged_at", using: :btree

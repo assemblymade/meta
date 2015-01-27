@@ -70,9 +70,17 @@ var Proposal = React.createClass({
       text = "Passed"
     }
     return (
-      <button className = {css} disabled>
-        {text}
-      </button>
+      <div>
+        <div className="row">
+          <button className = {css} disabled>
+            {text}
+          </button>
+        </div>
+        <div className="row bold">
+          {this.props.proposal.time_left_text}
+        </div>
+      </div>
+
       )
   },
 

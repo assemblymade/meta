@@ -5,6 +5,8 @@ var ListItemMixin = require('../../mixins/list_item_mixin.js.jsx');
 var NewsFeedItemModal = require('../news_feed/news_feed_item_modal.js.jsx');
 var Button = require('../ui/button.js.jsx')
 
+var max_description_length = 300;
+
 var ProposalListIem = React.createClass({
   displayName: 'ProposalListItem',
 
@@ -57,7 +59,12 @@ var ProposalListIem = React.createClass({
     }
     else if (this.props.proposal.state === "passed") {
       return (
-        <div className = "bg-green while px2 py1 rounded bold center">Passed</div>
+        <div className = "bg-green white px2 py1 rounded bold center">Passed</div>
+      )
+    }
+    else if (this.props.proposal.state === "expired") {
+      return (
+        <div className = "bg-black white px2 py1 rounded bold center">Expired</div>
       )
     }
 
@@ -82,11 +89,14 @@ var ProposalListIem = React.createClass({
 
   renderSummary: function() {
     var proposal = this.props.proposal;
-
+    var d = proposal.description
+    if (d.length > max_description_length) {
+      d=d.slice(0,max_description_length)+"...."
+    }
     if (proposal.description) {
       return (
         <div className="h5 gray-dark">
-          {proposal.description}
+          {d}
         </div>
       );
     }

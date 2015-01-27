@@ -2,8 +2,8 @@ namespace :es do
   desc 'Import models into elasticsearch'
   task :import => :environment do
     [
-      # Wip.includes(:comments, :product),
-      # User,
+      Wip.includes(:comments, :product),
+      User,
       Product.includes(:product_trend, markings: :mark)
     ].each do |model|
       model.__elasticsearch__.create_index! force: true
