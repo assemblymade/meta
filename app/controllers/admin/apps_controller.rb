@@ -23,7 +23,11 @@ class Admin::AppsController < AdminController
 
   def update
     @product = Product.find(params[:id])
-    @product.update!(app_params)
+    if !@product.showcase_entries.empty? && app_params[:showcase].blank?
+      @product.showcase_entries.map(&:destroy)
+    else
+      @product.update!(app_params)
+    end
     render json: @product, serializer: AppAdminSerializer
   end
 
