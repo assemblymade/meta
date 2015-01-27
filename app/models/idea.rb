@@ -139,14 +139,14 @@ class Idea < ActiveRecord::Base
   end
 
   def hearted
-    save_score
+    add_score
   end
 
   def unhearted
-    save_score
+    decrement_score(current_user)
   end
 
-  def save_score
+  def add_score
     lovescore = 0
 
     news_feed_item.hearts.where('created_at > ?', last_score_update).each do |h|
@@ -161,6 +161,23 @@ class Idea < ActiveRecord::Base
     })
 
     greenlight! if should_greenlight?
+  end
+
+  def hearted_on(user)
+    hearts = self.news_feed_item.hearts.where(user_id: user.id)
+    if hearts.length > 0
+      hearts.first.created_at
+    else
+      None
+    end
+  end
+
+  def decrement_score(user)
+    time_since = hearted_on(user) - EPOCH_START
+    love_lost = 2 ** (time_since.to_f / HEARTBURN.to_f)
+    lovescore = self.score - love_lost
+    update!({last_score_update: DateTime.now,
+      score: lovescore})
   end
 
   def url_params
