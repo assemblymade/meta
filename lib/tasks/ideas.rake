@@ -26,13 +26,18 @@ namespace :ideas do
             product_id: product.id
           )
 
-          if idea.body.nil?
+          if product.flagged_at
+            idea.update(flagged_at: product.flagged_at)
+            next
+          end
+
+          if idea.body.nil? || idea.body.empty?
             idea.update(flagged_at: Time.now)
             next
           end
 
-          if product.flagged_at
-            idea.update(flagged_at: product.flagged_at)
+          if idea.name.split(' ').count >= 20
+            idea.update(flagged_at: Time.now)
             next
           end
 
