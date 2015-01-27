@@ -307,7 +307,8 @@ var NewsFeedItem = React.createClass({
                             productSlug={product.slug} />
       break
     case 'team_membership':
-      modalTarget = <Introduction {...item} />
+      item.bio = target.bio;
+      modalTarget = <Introduction introduction={item} />
       break
     default:
       modalTarget = <NewsFeedItem {...item}
@@ -318,9 +319,11 @@ var NewsFeedItem = React.createClass({
       break
     }
 
-    return <Lightbox onHidden={this.onModalHidden} showControlledOuside={true} size="modal-lg">
-      <Discussion target={modalTarget} newsFeedItem={item} />
-    </Lightbox>
+    return (
+      <Lightbox onHidden={this.onModalHidden} showControlledOuside={true} size="modal-lg">
+        <Discussion target={modalTarget} newsFeedItem={item} />
+      </Lightbox>
+    );
   },
 
   renderSource: function() {
@@ -371,7 +374,6 @@ var NewsFeedItem = React.createClass({
   renderTarget: function() {
     var product = this.props.product;
     var target = this.props.target;
-    var user = this.props.user;
     var triggerModal = this.triggerModal;
 
     if (target) {
