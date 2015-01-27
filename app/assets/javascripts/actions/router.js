@@ -31,7 +31,7 @@ class Router {
     page.stop();
   }
 
-  _getAndDispatch(component, callback) {
+  _get(component, callback) {
     var self = this;
 
     return _.debounce((context) => {
@@ -46,7 +46,7 @@ class Router {
     var component = route[1]
     var callback = route[2]
 
-    page(path, this._getAndDispatch(component, callback))
+    page(path, this._get(component, callback))
   }
 };
 
@@ -54,10 +54,23 @@ module.exports = Router;
 
 function _callAndDispatch(actionType, component, context, callback) {
   $.getJSON(window.location, { cache: false }).
-  done(callback).
-  done(function(data) {
+  always(() => {
     NProgress.done();
-
+  }).
+  fail((jqXhr, _, errorString) => {
+    switch (jqXhr.status) {
+      case 401:
+        window.location.pathname = '/signup';
+        break;
+      case 500:
+        window.location.pathname = '/500';
+        break;
+      default:
+        // what should we do here?
+    }
+  }).
+  done(callback).
+  done((data) => {
     Dispatcher.dispatch({
       type: actionType,
       component: component,
