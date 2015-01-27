@@ -4,6 +4,7 @@
   var Lightbox = require('./lightbox.js.jsx')
   var NewComment = require('./news_feed/new_comment.js.jsx');
   var UserStore = require('../stores/user_store');
+  var TagAutocomplete = require('./tag_autocomplete.js.jsx');
 
   var CreateBounty = React.createClass({
     displayName: 'CreateBounty',
@@ -91,6 +92,7 @@
               <TextInput width="125px" size="small" label="Add tag" prepend="#" prompt="Add" />
 
               <h6>Suggested tags</h6>
+              <TagAutocomplete />
               <TagList tags={window.app.suggestedTags()} destination={false} />
 
             </div>
