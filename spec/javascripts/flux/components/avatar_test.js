@@ -16,7 +16,7 @@ describe('Avatar', function() {
       'img'
     );
 
-    expect(img.getDOMNode().src).toContain('/assets/avatars/default.png');
+    expect(img.getDOMNode().src).toContain('/assets/default_avatar.png');
   });
 
   it('renders a user avatar', function() {

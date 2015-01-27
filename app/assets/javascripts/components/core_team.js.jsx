@@ -10,7 +10,7 @@
     if (user) {
       return user.avatar_url + '?s=' + 48
     } else {
-      return '/assets/avatars/default.png'
+      return '/assets/default_avatar.png'
     }
   }
 

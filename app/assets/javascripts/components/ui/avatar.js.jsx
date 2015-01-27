@@ -33,7 +33,7 @@ var Avatar = React.createClass({
     }
 
     if (!this.props.user || !this.props.user.avatar_url || this.props.alwaysDefault) {
-      return '/assets/avatars/default.png'
+      return '/assets/default_avatar.png'
     }
 
     return this.props.user.avatar_url
