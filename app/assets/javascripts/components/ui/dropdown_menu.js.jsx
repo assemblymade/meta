@@ -55,8 +55,8 @@ var DropdownMenu = React.createClass({
   render: function() {
     var cs = React.addons.classSet({
       'new-dropdown-menu': true,
-      'new-dropdown-menu-left': this.props.position === 'left',
-      'new-dropdown-menu-right': this.props.position === 'right'
+      'new-dropdown-menu--left': this.props.position === 'left',
+      'new-dropdown-menu--right': this.props.position === 'right'
     })
 
     return (
