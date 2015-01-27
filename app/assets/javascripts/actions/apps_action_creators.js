@@ -13,7 +13,6 @@ var AppsActionCreators = {
     });
 
     client.search({
-      size: 100,
       index: 'products',
       body: {
         query: {
