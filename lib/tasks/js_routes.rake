@@ -47,7 +47,7 @@ EOS
 end
 
 ROUTES = [
-  'apps',
+  'discover',
   'discussion_comment',
   'discussion_comments',
   'heartables_lovers',
@@ -55,6 +55,9 @@ ROUTES = [
   'idea_mark',
   'ideas',
   'new_idea',
+  'new_product_post',
+  'new_product_asset',
+  'new_user_session',
   'notifications',
   'product',
   'product_follow',

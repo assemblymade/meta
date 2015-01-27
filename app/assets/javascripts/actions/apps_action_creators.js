@@ -50,7 +50,7 @@ var AppsActionCreators = {
     $.ajax({
       method: 'GET',
       dataType: 'json',
-      url: routes.apps_path() + '.json',
+      url: routes.discover_path() + '.json',
       data: params,
       success: function(response) {
         Dispatcher.dispatch({
