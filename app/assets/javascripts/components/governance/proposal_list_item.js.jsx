@@ -4,6 +4,7 @@ var Heart = require('../heart.js.jsx');
 var ListItemMixin = require('../../mixins/list_item_mixin.js.jsx');
 var NewsFeedItemModal = require('../news_feed/news_feed_item_modal.js.jsx');
 var Button = require('../ui/button.js.jsx')
+var ProgressBar = require('../ui/progress_bar.js.jsx')
 
 var max_description_length = 300;
 
@@ -71,19 +72,21 @@ var ProposalListIem = React.createClass({
   },
 
   renderProgress: function() {
-    var my_style = "progress-info";
+    var my_style = "";
     if (this.props.proposal.state === "passed"){
-      my_style = "progress-success";
+      my_style = "success";
     }
     else if (this.props.proposal.state === "failed") {
-      my_style = "progress-danger";
+      my_style = "danger";
     }
     else if (this.props.proposal.state === "closed") {
-      my_style = "progress-success";
+      my_style = "success";
     }
-
+    else if(this.props.proposal.state === "expired") {
+      my_style = "gray"
+    }
     return (
-      <ProgressBar percent={this.props.proposal.status} style = {my_style} />
+      <ProgressBar progress={this.props.proposal.status} threshold = {50} type = {my_style} />
     )
   },
 

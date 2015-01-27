@@ -3,7 +3,7 @@ var Spinner = require('./spinner.js.jsx');
 var TextPost = require('./ui/text_post.js.jsx')
 var UserStore = require('../stores/user_store')
 var Tile = require('./tile.js.jsx')
-var ProgressBar = require('./progress_bar.js.jsx')
+var ProgressBar = require('./ui/progress_bar.js.jsx')
 var Button = require('./ui/button.js.jsx')
 var Heart = require('./heart.js.jsx')
 
@@ -123,16 +123,33 @@ var Proposal = React.createClass({
       )
     }
     else {
-      return (
-        <div>
-        </div>
-      )
+
     }
 
     },
 
+    renderProgress: function() {
+      var my_style = "";
+      if (this.props.proposal.state === "passed"){
+        my_style = "success"
+      }
+      else if (this.props.proposal.state === "failed") {
+        my_style = "danger"
+      }
+      else if (this.props.proposal.state === "closed") {
+        my_style = "success";
+      }
+      else if(this.props.proposal.state === "expired") {
+        my_style = "gray"
+      }
+      return (
+        <div>
+          <ProgressBar progress={this.state.percent} threshold = {50} type = {my_style} />
+        </div>
+      )
+    },
+
   renderProposal: function() {
-    var my_style = 'progress-success';
     var progress_style = {
       position: 'relative',
       top: "50%",
@@ -151,7 +168,7 @@ var Proposal = React.createClass({
 
             <div className="col-md-4" style = {progress_style} >
               <div className="row">
-                <ProgressBar percent={this.state.percent} style = {my_style} />
+                {this.renderProgress()}
               </div>
               <div className = "row">
                 <div className = "col-md-offset-3">
