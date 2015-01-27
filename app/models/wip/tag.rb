@@ -23,8 +23,12 @@ class Wip::Tag < ActiveRecord::Base
     name
   end
 
-  def self.suggested_tags
-    QueryMarks.new.leading_marks_systemwide(13).keys
+  def self.suggested_tags(current_user = nil)
+    if current_user && current_user.staff?
+      Dashboard::CURATED_MARKS.values.flatten.map(&:parameterize)
+    else
+      QueryMarks.new.leading_marks_systemwide(13).keys
+    end
   end
 
 end
