@@ -17,7 +17,7 @@ class Idea < ActiveRecord::Base
 
   validates :name, presence: true,
                    length: { minimum: 2, maximum: 255 },
-                   exclusion: { in: %w(admin about script if owner core start-conversation product) }
+                   exclusion: { in: Product::EXCLUSIONS }
   validates :tilting_threshold, presence: true
   validate :idea_and_product_have_same_user
 

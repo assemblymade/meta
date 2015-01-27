@@ -46,8 +46,7 @@ var IdeaProgressBar = React.createClass({
     var progress = this.state.progress;
 
     return (
-      <ProgressBar progress={progress}
-          type={(this.state.heartsCount > idea.tilting_threshold || idea.greenlit_at) ? 'success' : 'gray'} />
+      <ProgressBar progress={progress} type="success" />
     );
   },
 

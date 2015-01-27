@@ -5,8 +5,8 @@ class IdeaSerializer < ApplicationSerializer
   attributes :body, :categories, :comments_count, :created_at, :flagged_at,
     :founder_preference, :greenlit_at, :hearts_count,
     :heart_distance_from_percentile, :id, :name, :news_feed_item, :path,
-    :percentile, :raw_body, :score, :short_body, :tilting_threshold, :topics,
-    :url
+    :percentile, :product, :raw_body, :score, :short_body, :tilting_threshold,
+    :topics, :url
 
   has_one :product
   has_one :user

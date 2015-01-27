@@ -115,9 +115,13 @@ class Product < ActiveRecord::Base
   scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
   scope :untagged, -> { where('array_length(tags, 1) IS NULL') }
 
-  validates :slug, uniqueness: { allow_nil: true }
+  EXCLUSIONS = %w(admin about script if owner core start-conversation product ideas)
+
+  validates :slug, uniqueness: { allow_nil: true },
+                   exclusion: { in: EXCLUSIONS }
   validates :name, presence: true,
-                   length: { minimum: 2, maximum: 255 }
+                   length: { minimum: 2, maximum: 255 },
+                   exclusion: { in: EXCLUSIONS }
   validates :pitch, presence: true,
                     length: { maximum: 255 }
 
