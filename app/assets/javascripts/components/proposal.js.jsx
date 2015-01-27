@@ -44,7 +44,7 @@ var Proposal = React.createClass({
       )}
     else
       {
-        css = 'btn btn-info'
+        css = 'btn btn-info py1'
         return (
           <button className = {css} disabled>
             Voting Closed
