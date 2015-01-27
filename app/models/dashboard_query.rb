@@ -3,24 +3,10 @@ require 'ostruct'
 class DashboardQuery
   attr_accessor :user, :filter, :page
 
-  def self.call(user, filter, page = 1)
-    new(user, filter).find_dashboard
-  end
-
   def initialize(user, filter, page = 1)
     self.user = user
     self.filter = filter
     self.page = page
-  end
-
-  def find_dashboard
-    OpenStruct.new(
-      news_feed_items: find_news_feed_items,
-      user_bounties: find_user_bounties,
-      heartables: find_heartables,
-      user_hearts: find_user_hearts,
-      followed_products: find_followed_products
-    )
   end
 
   def find_news_feed_items
@@ -32,13 +18,6 @@ class DashboardQuery
       includes(:source, :hearts, last_comment: [:user, :hearts], target_task: [:tags, :product]).
       for_feed.
       page(page)
-  end
-
-  def find_user_bounties
-    {
-      lockedBounties: find_user_locked_bounties,
-      reviewingBounties: find_user_reviewing_bounties
-    }
   end
 
   def find_user_locked_bounties
@@ -80,6 +59,6 @@ class DashboardQuery
   end
 
   def find_followed_products
-    user.followed_products.ordered_by_trend
+    user.followed_products.order(name: :asc)
   end
 end

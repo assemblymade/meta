@@ -1,14 +1,43 @@
-@media #{$breakpoint-sm} {
-  .sm-right-align { text-align: right !important }
-  .sm-center { text-align: center !important }
+* {
+  -webkit-font-smoothing: antialiased;
 }
 
-@media #{$breakpoint-md} {
-  .md-right-align { text-align: right !important }
-  .md-center { text-align: center !important }
+body {
+  font-family: $font-family-sans-serif;
+  line-height: $line-height-base;
+  font-size: 1.25rem;
 }
 
-@media #{$breakpoint-lg} {
-  .lg-right-align { text-align: right !important }
-  .lg-center { text-align: center !important }
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 42px;
+  line-height: 48px;
+}
+
+h2 {
+  font-size: 30px;
+  line-height: 36px;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+h4 {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+h5 {
+  font-size: 15px;
+  line-height: 24px;
+}
+
+h6 {
+  font-size: 13px;
+  line-height: 18px;
 }

@@ -19,7 +19,7 @@ var AppsActionCreators = {
         query: {
           multi_match: {
             query: search,
-            fields: [ 'name.raw^2', 'name', 'pitch', 'marks.name', 'sanitized_description' ],
+            fields: [ 'name.raw^2', 'name', 'pitch', 'marks.name', 'search_tags'],
             operator: 'or',
             fuzziness: 1
           }

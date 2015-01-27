@@ -59,13 +59,15 @@
             <%= f.url_field :homepage_url, class: 'form-control', placeholder: "eg: https://#{@product.slug}.com", maxlength: 255 %>
           </div>
 
-          <div class="form-group">
-            <%= f.label :try_url, 'Product Try URL', class: 'form-label' %>
-            <%= f.url_field :try_url, class: 'form-control', placeholder: "eg: https://#{@product.slug}.com?utm=assembly", maxlength: 255 %>
-            <p class="help-block">
-              Once you've added this link your product will show up as Live.
-            </p>
-          </div>
+          <% if signed_in? && current_user.staff? %>
+            <div class="form-group">
+              <%= f.label :try_url, 'Product Try URL', class: 'form-label' %>
+              <%= f.url_field :try_url, class: 'form-control', placeholder: "eg: https://#{@product.slug}.com?utm=assembly", maxlength: 255 %>
+              <p class="help-block">
+                Once you've added this link your product will show up as Live.
+              </p>
+            </div>
+          <% end %>
 
 
         </div>
@@ -82,7 +84,7 @@
                   alt: @product.name
                 }.to_json %>">
             </div>
-            <p class="text-muted text-center">Square (1:1) images only, please.</p>
+            <p class="gray-2 center">Square (1:1) images only, please.</p>
           </div>
         </div>
 
@@ -233,15 +235,15 @@
       <thead>
         <tr>
           <th colspan="2">User</th>
-          <th class="text-right">Joined</th>
+          <th class="right-align">Joined</th>
         </tr>
       </thead>
       <tbody>
         <% @product.core_team_memberships.each do |membership| %>
           <tr>
-            <td><%= avatar_tag(membership.user, 24, style: 'margin-right:5px') %></td>
+            <td><%= avatar_tag(membership.user, 24) %></td>
             <td><%= membership.user.username %></td>
-            <td class="text-muted text-right">
+            <td class="gray-2 right-align">
               <%= time_ago_in_words(membership.created_at) %> ago
             </td>
           </tr>
@@ -268,7 +270,7 @@
   <div class="tab-pane" id="integrations">
     We're working on automating integrations. If you just can't wait, or if you just want a taste of what's to come, you can set up a MailChimp webhook for
     <%= @product.name %>'s email signups by pointing MailChimp to the following URL:
-    <div class="text-center well">
+    <div class="center well">
       https://mailchimp.assembly.com/products/<%= @product.slug %>/activities?token=<%= @product.authentication_token %>
     <div>
   </div>

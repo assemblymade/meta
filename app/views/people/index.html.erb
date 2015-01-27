@@ -13,36 +13,6 @@
 
 <%= render 'people/nav' %>
 
-<% if signed_in? && !current_user.staff? %>
-  <% product_membership = current_user.team_memberships.find_by(product: @product) %>
-
-  <% if product_membership.nil? || product_membership.bio.nil? %>
-    <div class="sheet-body">
-      <h2 style="font-weight: 300;">Want to be part of <%= @product.name %>, why not introduce yourself?</h2>
-      <div class="row">
-        <div class="col-md-9">
-          <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
-
-            <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-            <input name="_method" value="patch" type="hidden">
-
-            <div class="form-group">
-              <textarea name="membership[bio]" id="bio-editor" class="form-control bio-editor" rows="4" id="self-introduction" placeholder="Hi everyone, I'm Maeby! I love coding in VB6, and I develop apps for IE7 and Windows ME. When I'm not hacking, I like to dabble in design: gradients and 3D effects are my jam! I'm excited to dive in and get to know you all!"></textarea>
-            </div>
-            <button type="submit" id="join-intro-button" class="btn btn-primary">Introduce yourself</button>
-          </form>
-        </div>
-        <div class="col-md-3">
-          <small class="help-block" style="margin-top: 0px;">
-            What skills can you contribute, how much time do you have, and what are you looking to get out of the experience?
-          </small>
-        </div>
-      </div>
-    </div>
-    <hr>
-  <% end %>
-<% end %>
-
 <div data-react-class="People" data-react-props="<%= {
   interestFilters: product_membership_interests(@product, false),
   memberships: ActiveModel::ArraySerializer.new(@memberships),
@@ -54,20 +24,18 @@
 
 
 <% cache @product do %>
-  <div class="row">
-    <div class="col-md-9 hidden-xs">
-      <div className="list-group list-group-breakout list-group-padded">
-        <h4>Followers</h4>
+  <div class="sm-show">
+    <div className="list-group list-group-breakout list-group-padded">
+      <h4>Followers</h4>
 
-        <% @followers.each do |follower| %>
-          <span style="display: inline-block; margin-bottom: 3px;">
-            <a href="<%= user_path(follower) %>">
-              <img class="avatar img-circle" src="<%= follower.avatar_url %>" height="30px" width="30px" title="@<%= follower.username %>">
-            </a>
-          </span>
+      <% @followers.each do |follower| %>
+        <span style="display: inline-block; margin-bottom: 3px;">
+          <a href="<%= user_path(follower) %>">
+            <img class="avatar img-circle" src="<%= follower.avatar_url %>" height="30px" width="30px" title="@<%= follower.username %>">
+          </a>
+        </span>
 
-        <% end %>
-      </div>
+      <% end %>
     </div>
   </div>
 <% end %>

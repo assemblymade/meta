@@ -226,13 +226,30 @@ var NewsFeedItem = React.createClass({
   },
 
   renderCommentsCount: function() {
-    var commentsCount = this.props.comments_count
+    var _commentsCount = function() {
+      var commentsCount = this.props.comments_count
+      var target = this.props.target;
+
+      if (this.props.target && this.props.target.url) {
+        return (
+          <a href={this.props.target.url} className="gray-1">
+            {commentsCount} {commentsCount === 1 ? 'Comment' : 'Comments'}
+          </a>
+        );
+      }
+
+      return (
+        <span>
+          {commentsCount} {commentsCount === 1 ? 'Comment' : 'Comments'}
+        </span>
+      );
+    }.bind(this);
 
     return (
       <div className="px3 inline-block" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem', fill: '#C2C7D0' }}>
         <SvgIcon type="comment" />
         <span className="ml1">
-          {commentsCount} {commentsCount === 1 ? 'Comment' : 'Comments'}
+          {_commentsCount()}
         </span>
       </div>
     )
@@ -314,9 +331,13 @@ var NewsFeedItem = React.createClass({
     }
 
     return (
-      <a href={product.url} className="block border-bottom px3" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
-        <AppIcon app={product} size={24} style={{ display: 'inline' }} />
-        <span className="h6 mt0 mb0 black bold ml1">{product.name}</span>
+      <a href={product.url} className="block clearfix border-bottom px3 py2">
+        <div className="left mr2">
+          <AppIcon app={product} size={18} />
+        </div>
+        <div className="overflow-hidden">
+          <h6 className="black mt0 mb0">{product.name}</h6>
+        </div>
       </a>
     );
   },

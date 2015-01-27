@@ -38,7 +38,7 @@
               <label class="control-label">Avatar</label>
               <div class="clearfix">
                 <div class="left mr3">
-                  <%= react_component 'Avatar', user: UserSerializer.new(@user), size: 48 %>
+                  <%= avatar_tag(@user, 48) %>
                 </div>
 
                 <p class="gray-1 overflow-hidden">Assembly uses <a target="_blank" href="http://gravatar.com/">Gravatar</a> (globally recognized avatars). If you head over there and create an account with the same email address as your Assembly account, you'll be able to update your avatar.</p>
@@ -143,7 +143,7 @@
           <div class="pull-right">
             <%= button_to "Withdraw #{currency @balance.available_to_payout}", withdraw_users_balance_path, class: 'btn btn-default' %>
             <% if @balance.available_to_withhold > 0 %>
-            <small class="text-muted"><%= currency @balance.available_to_withhold %> will be withheld for US taxes</small>
+            <small class="gray-2"><%= currency @balance.available_to_withhold %> will be withheld for US taxes</small>
             <% end %>
           </div>
           <% end %>
@@ -152,7 +152,7 @@
             <h4>
               Available Earnings: <%= currency @balance.available_earnings %>
               <% if @balance.available_to_withhold > 0 %>
-                <small class="text-muted"><%= currency @balance.available_to_withhold %> will be withheld for US taxes</small>
+                <small class="gray-2"><%= currency @balance.available_to_withhold %> will be withheld for US taxes</small>
               <% end %>
             </h4>
             <h4>Total Withdrawn: <%= currency @balance.previously_paidout %></h4>
@@ -184,7 +184,7 @@
             <div class="row">
               <div class="col-md-6 col-md-offset-3">
                 <div class="well well-lg omega">
-                  <p class="text-muted omega">
+                  <p class="gray-2 omega">
                     You will earn a balance once you've worked on a profitable product
                   </p>
                 </div>

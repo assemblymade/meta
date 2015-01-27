@@ -62,7 +62,7 @@
     body: function() {
       var classes = React.addons.classSet({
         "activity-content markdown markdown-normalized": true,
-        "text-muted": (typeof this.props.entry.message_html === 'undefined')
+        "gray-2": (typeof this.props.entry.message_html === 'undefined')
       })
 
       var message = this.props.entry.message_html || this.props.entry.message

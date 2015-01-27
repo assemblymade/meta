@@ -210,7 +210,7 @@ var NewComment = React.createClass({
     }
 
     return (
-      <div className="text-right">
+      <div className="right-align">
         <Button action={this.submitComment} submit>Leave a comment</Button>
       </div>
     )

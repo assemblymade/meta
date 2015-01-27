@@ -45,65 +45,65 @@ var Idea = React.createClass({
     var user = idea.user;
 
     return (
-      <div className="item" key={idea.id}>
-        <SmallTile>
-          <div className="main">
-            <div className="xh4">
-              <a href={idea.url}> {idea.name}</a>
-            </div>
-
-            <div className="content">
-              <p dangerouslySetInnerHTML={{ __html: idea.short_body }} />
-            </div>
+      <SmallTile>
+        <div className="main">
+          <div className="xh4">
+            <a href={idea.url}> {idea.name}</a>
           </div>
 
-          <Footer>
-            <div className="action-bar">
-              <div className="item">
-                <div className="details-group">
-                  <a href={user.url} className="inline-block">
-                    <Avatar user={user} />
-                    <span>{user.username}</span>
+          <div className="content">
+            <p dangerouslySetInnerHTML={{ __html: idea.short_body }} />
+          </div>
+        </div>
+
+        <Footer>
+          <div className="action-bar">
+            <div className="item">
+              <div className="px3 py2 bg-white">
+                <a className="block clearfix h6 mt0 mb0 black bold" href={user.url}>
+                  <div className="left mr1">
+                    <Avatar user={user} size={18} />
+                  </div>
+                  <div className="overflow-hidden">{user.username}</div>
+                </a>
+              </div>
+            </div>
+
+            <div className="mxn3">
+              <Drawer open={this.state.isDrawerOpen}>
+                <IdeaSharePanel idea={idea} />
+              </Drawer>
+            </div>
+
+            <div className="item">
+              <div className="action-group">
+                <div className="item">
+                  <a href={idea.url} className="comment-count">
+                    <SvgIcon type="comment" />
+                    {idea.comments_count} {idea.comments_count === 1 ? 'Comment' : 'Comments'}
                   </a>
                 </div>
-              </div>
 
-              <div className="mxn3">
-                <Drawer open={this.state.isDrawerOpen}>
-                  <IdeaSharePanel idea={idea} />
-                </Drawer>
-              </div>
-
-              <div className="item">
-                <div className="action-group">
-                  <div className="item">
-                    <a href={idea.url} className="comment-count">
-                      <SvgIcon type="comment" />
-                      {idea.comments_count} {idea.comments_count === 1 ? 'Comment' : 'Comments'}
-                    </a>
-                  </div>
-
-                  <div className="item">
-                    <a href="javascript:void(0);" onClick={this.handleShareClick}>
-                      <SvgIcon type="share" />
-                    </a>
-                  </div>
-
-                  <div className="item">
-                    <Heart size="medium" heartable_id={item.id} heartable_type="NewsFeedItem" />
-                  </div>
+                <div className="item">
+                  <a href="javascript:void(0);" onClick={this.handleShareClick}>
+                    <SvgIcon type="share" />
+                  </a>
                 </div>
-              </div>
 
-              <div className="item">
-                <div className="py3 px3">
-                  <IdeaProgressBar idea={idea} />
+                <div className="item">
+                  <Heart size="medium" heartable_id={item.id} heartable_type="NewsFeedItem" />
                 </div>
               </div>
             </div>
-          </Footer>
-        </SmallTile>
-      </div>
+
+            <div className="item">
+              <div className="py3 px3">
+                <IdeaProgressBar idea={idea} />
+              </div>
+            </div>
+          </div>
+        </Footer>
+      </SmallTile>
     );
   }
 });

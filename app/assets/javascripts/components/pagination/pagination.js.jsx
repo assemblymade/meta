@@ -5,10 +5,12 @@ var Pagination = React.createClass({
   displayName: 'Pagination',
 
   propTypes: {
-    actionCall: React.PropTypes.func.isRequired
+    actionCall: React.PropTypes.func.isRequired,
+    maxPages: React.PropTypes.number,
+    pageBuffer: React.PropTypes.number
   },
 
-  changePage: function(page) {
+  changePage(page) {
     return function() {
       PaginationActionCreators.changePage(
         this.props.actionCall,
@@ -17,36 +19,44 @@ var Pagination = React.createClass({
     }.bind(this);
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     PaginationStore.addChangeListener(this.updateState);
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     PaginationStore.removeChangeListener(this.updateState);
   },
 
-  getInitialState: function() {
+  getDefaultProps() {
+    return {
+      maxPages: 4
+    };
+  },
+
+  getInitialState() {
     return {
       currentPage: PaginationStore.getCurrentPage(),
       totalPages: PaginationStore.getTotalPages()
     };
   },
 
-  render: function() {
+  render() {
     if (this.state.totalPages === 1) {
       return null;
     }
 
     return (
-      <ul className="pagination">
-        {this.renderPreviousButton()}
-        {this.renderPageButtons()}
-        {this.renderNextButton()}
-      </ul>
-    )
+      <nav>
+        <ul className="pagination">
+          {this.renderPreviousButton()}
+          {this.renderPageButtons()}
+          {this.renderNextButton()}
+        </ul>
+      </nav>
+    );
   },
 
-  renderNextButton: function() {
+  renderNextButton() {
     var currentPage = this.state.currentPage;
 
     var classes = React.addons.classSet({
@@ -62,30 +72,67 @@ var Pagination = React.createClass({
     );
   },
 
-  renderPageButtons: function() {
+  renderPageButtons() {
     var currentPage = this.state.currentPage;
+    var maxPages = this.props.maxPages;
     var totalPages = this.state.totalPages;
+
     var pageButtons = [];
 
     for (var i = 1; i <= totalPages; i++) {
-      pageButtons.push(
-        <li className={currentPage === i ? 'active' : ''} key={'page' + i}>
-          <a href="javascript:void(0);" onClick={this.changePage(i)}>{i}</a>
-        </li>
-      )
+      if (totalPages > maxPages) {
+        if (i < maxPages) {
+          pageButtons.push(
+            <li className={currentPage === i ? 'active' : ''} key={'page' + i}>
+              <a href="javascript:void(0);" onClick={this.changePage(i)}>{i}</a>
+            </li>
+          );
+        } else if (i >= maxPages && i === currentPage) {
+          pageButtons.push(
+            <li className={currentPage === i ? 'active' : ''} key={'page' + i}>
+              <a href="javascript:void(0);" onClick={this.changePage(i)}>{i}</a>
+            </li>
+          );
+
+          if (i !== totalPages) {
+            pageButtons.push(
+              <li key={'page-ellipsis' + i}>
+                <a>&hellip;</a>
+              </li>
+            );
+          }
+        } else if (i === maxPages) {
+          pageButtons.push(
+            <li key={'page-ellipsis' + i}>
+              <a>&hellip;</a>
+            </li>
+          );
+        } else if (i === totalPages) {
+          pageButtons.push(
+            <li className={currentPage === i ? 'active' : ''} key={'page' + i}>
+              <a href="javascript:void(0);" onClick={this.changePage(i)}>{i}</a>
+            </li>
+          );
+        }
+      } else {
+        pageButtons.push(
+          <li className={currentPage === i ? 'active' : ''} key={'page' + i}>
+            <a href="javascript:void(0);" onClick={this.changePage(i)}>{i}</a>
+          </li>
+        );
+      }
     }
 
     return pageButtons;
   },
 
-  renderPreviousButton: function() {
+  renderPreviousButton() {
     var currentPage = this.state.currentPage;
 
     var classes = React.addons.classSet({
       disabled: currentPage === 1
     });
 
-    // TODO: Change these to Links when we've migrated to ReactRouter
     return (
       <li className={classes} key="previous">
         <a href="javascript:void(0);" onClick={this.changePage(currentPage - 1)}>
@@ -95,7 +142,7 @@ var Pagination = React.createClass({
     );
   },
 
-  updateState: function() {
+  updateState() {
     this.setState({
       currentPage: PaginationStore.getCurrentPage(),
       totalPages: PaginationStore.getTotalPages()

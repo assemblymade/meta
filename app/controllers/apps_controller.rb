@@ -1,6 +1,8 @@
 class AppsController < ApplicationController
   respond_to :html, :json
 
+  PER_PAGE=30
+
   def index
     if params[:search].blank? && params[:topic].blank? && params[:showcase].blank?
       @showcases = Showcase.active.order(:slug)
@@ -13,14 +15,16 @@ class AppsController < ApplicationController
         @products = if params[:search].present?
           Search::ProductSearch.new(params[:search]).results
         else
-          AppsQuery.new(current_user, params).perform.page(params[:page]).per(30)
+          @apps = AppsQuery.new(current_user, params).perform.page(params[:page]).per(PER_PAGE)
         end
 
-        respond_with @products, each_serializer: AppSerializer
+        respond_with(@apps, each_serializer: AppSerializer)
       end
       format.html do
         if params[:search].blank?
+
           @products_count = AppsQuery.new(current_user, params).perform.count
+          @total_pages = (@products_count / PER_PAGE.to_f).ceil
         end
       end
     end

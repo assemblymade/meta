@@ -1,12 +1,19 @@
-var AppsStore = require('../stores/apps_store')
 var App = require('./app.js.jsx')
+var AppsStore = require('../stores/apps_store')
+var ButtonDropdown = require('./ui/button_dropdown.js.jsx')
+var DropdownMenu = require('./ui/dropdown_menu.js.jsx')
+var DropdownMixin = require('../mixins/dropdown_mixin.js.jsx')
+var Icon = require('./ui/icon.js.jsx')
+var Jumbotron = require('./ui/jumbotron.js.jsx')
+var Nav = require('./ui/nav.js.jsx')
+var PaginationLinks = require('./pagination_links.js.jsx')
 var ProductSearch = require('./product_search.js.jsx')
 var Spinner = require('./spinner.js.jsx')
+var Url = require('url')
 
 var filters = [
-  ['mine', 'My Apps'],
-  ['live', 'Live'],
   ['trending', 'Trending'],
+  ['live', 'Live'],
   ['new', 'New'],
 ]
 
@@ -25,36 +32,59 @@ _.mixin({
 });
 
 var Apps = React.createClass({
+  mixins: [DropdownMixin],
+
   propTypes: {
     search: React.PropTypes.string.isRequired
   },
 
+  getDefaultProps() {
+    return {
+      page: 1,
+      filter: 'trending'
+    }
+  },
+
   render: function() {
-    return <section className="tile-grid tile-grid-ideas">
-      <div className="container main">
-        <div className="header">
-          <nav className="tile-grid-nav">
-            <div className="item">
-              <ul className="nav nav-pills">
-                {_(filters).map(f => <li>
-                    <a href={"/apps?filter=" + f[0]}>{f[1]}</a>
-                  </li>
+
+    filtersDropdownMenu = (
+      <DropdownMenu position="right">
+        {_(this.props.topics).map(f =>
+          <DropdownMenu.Item label={f.name} action={"/discover?topic=" + f.slug} />
+        )}
+      </DropdownMenu>
+    )
+
+    return (
+      <div>
+        <Jumbotron bg="ideas/ideas-header-bg-lg.jpg">
+          <div className="center white">
+            <h1 className="mt0 mb2">Find a product you'd like to work on,</h1>
+            <h3 className="regular mt0 mb0">or <a className="underline white white-hover" href="/start">start your own</a> that others can work on with you.</h3>
+          </div>
+        </Jumbotron>
+
+        <div className="container">
+          <div className="clearfix py2 md-py3 lg-py4">
+            <div className="sm-col sm-col-8 mb2 sm-mb0">
+              <Nav orientation="horizontal">
+                {_(filters).map(f =>
+                  <Nav.Item href={"/discover?filter=" + f[0]} label={f[1]} active={this.props.filter === f[0]} />
                 )}
-                {this.renderTopics()}
-              </ul>
+              </Nav>
             </div>
 
-            <div className="item">
-              <form action="/apps">
-                <input type="text" className="form-control" placeholder="Search Apps" name="search" defaultValue={this.props.search} />
+            <div className="sm-col sm-col-4">
+              <form action="/discover">
+                <input type="search" className="form-control form-control-search" placeholder="Search all products" name="search" defaultValue={this.props.search} />
               </form>
             </div>
-          </nav>
-        </div>
+          </div>
 
-        {this.renderApps()}
+          {this.renderApps()}
+        </div>
       </div>
-    </section>
+    )
   },
 
   renderApps: function() {
@@ -63,16 +93,16 @@ var Apps = React.createClass({
     }
     return <div>
       {this.renderAppsList(_(this.state.apps).first(3))}
-      {this.renderShowcases()}
       {this.renderAppsList(_(this.state.apps).rest(3))}
+      <PaginationLinks page={this.props.page} pages={this.props.total_pages} onPageChanged={this.handlePageChanged} />
     </div>
   },
 
   renderAppsList: function(apps) {
-    return <div className="clearfix mt2 mxn2">
+    return <div className="clearfix mxn2">
       {_(apps).map(app =>
-        <div className="col col-4 px2 mb3">
-          <App {...app} />
+        <div className="sm-col sm-col-4 px0 sm-px2 mb3">
+          <App app={app} />
         </div>
       )}
     </div>
@@ -82,35 +112,33 @@ var Apps = React.createClass({
     if (!this.props.showcases) {
       return null
     }
-    return <div>
-      <div className="col col-6 pr2 pb2">
-        <a href={"/apps?showcase=" + this.props.showcases[0].slug} className="big-block-button">
-          <div className="h7">Top Trending</div>
-          {this.props.showcases[0].hero_title}
+
+    return <div className="clearfix mxn2">
+      <div className="sm-col sm-col-6 px2 mb3">
+        <a href={"/discover?showcase=" + this.props.topics[0].slug} className="block center rounded white white-hover py4" style={{
+            background: 'linear-gradient(#364d70, #5e0f4c)'
+          }}>
+          <h4 className="mt1 mb1" style={{color: 'rgba(255,255,255,0.6)'}}>Top Trending</h4>
+          <h4 className="mt1 mb1">{this.props.topics[0].hero_title}</h4>
         </a>
       </div>
 
-      <div className="col col-6 pl2 pb2">
-        <a href={"/apps?showcase=" + this.props.showcases[1].slug} className="big-block-button">
-          <div className="h7">Top Trending</div>
-          {this.props.showcases[1].hero_title}
+      <div className="sm-col sm-col-6 px2 mb3">
+        <a href={"/discover?showcase=" + this.props.topics[1].slug} className="block center rounded white white-hover py4" style={{
+            background: 'linear-gradient(#5fb384, #084557)'
+          }}>
+          <h4 className="mt1 mb1" style={{color: 'rgba(255,255,255,0.6)'}}>Top Trending</h4>
+          <h4 className="mt1 mb1">{this.props.topics[1].hero_title}</h4>
         </a>
       </div>
     </div>
   },
 
-  renderTopics: function() {
-    return <li className="dropdown">
-      <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-        Topics <span className="caret"></span>
-      </a>
-      <ul className="dropdown-menu" role="menu">
-        {_(this.props.topics).map(f => <li>
-          <a href={"/apps?topic=" + f.slug}>{f.name}</a>
-          </li>
-        )}
-      </ul>
-    </li>
+  handlePageChanged: function(page) {
+    // this will go away once we harness the power of Routercles
+    var url = Url.parse(window.location.href, true)
+    url.query.page = page
+    window.location = Url.format({protocol: url.protocol, host: url.host, pathname: url.pathname, query: url.query})
   },
 
   getInitialState: function() {

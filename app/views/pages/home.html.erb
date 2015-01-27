@@ -26,7 +26,7 @@
       </div>
     </div><!-- .navbar -->
 
-    <div class="container text-center">
+    <div class="container center">
       <h1 class="masthead-title" style="font-size:48px">Build, launch, and grow a product<br>with talented people around the world.</h1>
       <a class="play-button" href="#" data-toggle="modal" data-target="#video-modal">
         <%= image_tag 'play.png' %>
@@ -65,8 +65,8 @@
   <% end %>
 
   <div class="container">
-    <div class="row">
-      <div class="col-sm-6 col-sm-offset-3">
+    <div class="clearfix">
+      <div class="col-6 mx-auto">
         <p class="large">
           <strong>Work together.</strong>
           Products on Assembly aren't like traditional companies. They don't have investors, shareholders, or even employees. Instead, a global community creates and owns them, together.
@@ -84,8 +84,8 @@
 
         <br>
 
-        <div class="row">
-          <div class="col-sm-8 col-sm-offset-2">
+        <div class="clearfix">
+          <div class="col-8 mx-auto">
             <a class="btn btn-primary btn-block btn-lg" href="<%= new_user_registration_path %>">
               Get started
             </a>
@@ -103,16 +103,16 @@
   <hr>
   <br>
 
-  <p class="text-center text-muted text-large" style="margin-bottom:48px">
+  <p class="center gray-2 text-large" style="margin-bottom:48px">
     Just have a question? <a href="mailto:assembly@helpful.io" data-helpful="assembly">Ask away!</a>
     <script src="https://assets.helpful.io/assets/widget.js"></script>
   </p>
 
-  <ul class="list-inline well text-center" style="border: none; margin-bottom: 0">
-    <li><a class="text-muted" href="<%= about_path %>">About</a></li>
-    <li><a class="text-muted" href="http://blog.assembly.com">Blog</a></li>
-    <li><a class="text-muted" href="<%= faq_path %>">FAQs</a></li>
-    <li><a class="text-muted" href="<%= tos_path %>">Terms</a></li>
-    <li><a class="text-muted" href="mailto:assembly@helpful.io">Contact Us</a></li>
+  <ul class="list-inline well center" style="border: none; margin-bottom: 0">
+    <li><a class="gray-2" href="<%= about_path %>">About</a></li>
+    <li><a class="gray-2" href="http://blog.assembly.com">Blog</a></li>
+    <li><a class="gray-2" href="<%= faq_path %>">FAQs</a></li>
+    <li><a class="gray-2" href="<%= tos_path %>">Terms</a></li>
+    <li><a class="gray-2" href="mailto:assembly@helpful.io">Contact Us</a></li>
   </ul>
 </div>

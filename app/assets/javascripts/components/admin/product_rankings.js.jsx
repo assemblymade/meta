@@ -159,12 +159,12 @@
           </strong>
         </td>
         <td>{this.props.pitch}</td>
-        <td><Timestamp time={this.props.created} /></td>
+        <td><Timestamp time={this.props.created_at} /></td>
         <td><Timestamp time={this.props.last_activity_at} /></td>
-        <td className="text-right">{this.props.watchings_count}</td>
-        <td className="text-right">{this.props.open_tasks_count}</td>
+        <td className="right-align">{this.props.watchings_count}</td>
+        <td className="right-align">{this.props.open_tasks_count}</td>
         <td><ProductState state={this.state.state} url={'/admin/products/' + this.props.id} /></td>
-        <td className="text-right">
+        <td className="right-align">
           <input type="text" className="form-control" value={this.state.dirty ? this.state.pendingQualityScore : this.props.quality} style={{ backgroundColor: bgColor }}
             onChange={this.handleChange}
             onBlur={this.persistChange}
@@ -202,7 +202,7 @@
   var TableSortHeader = React.createClass({
     render: function() {
       var classes = React.addons.classSet({
-        'text-right': (this.props.align == 'right')
+        'right-align': (this.props.align == 'right')
       });
 
       return <th style={{"width": this.props.width}} className={classes}>

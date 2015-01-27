@@ -39,8 +39,10 @@
   <% locker = User.find_by(id: bounty.locked_by) %>
 
   <% if locker %>
-    <div class="px3 py2 border-top h6 mb0 mt0">
-      <%= avatar_tag(locker, 18, class: 'avatar img-circle inline mr1') %>
+    <div class="px3 py2 border-top h6 mb0 mt0 clearfix">
+      <div class="left mr1">
+        <%= avatar_tag(locker, 18) %>
+      </div>
 
       <a href="<%= user_path(locker) %>" class="bold black">
         <%= locker.username %>

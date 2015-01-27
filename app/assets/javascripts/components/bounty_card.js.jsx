@@ -1,6 +1,7 @@
 var AppIcon = require('./app_icon.js.jsx')
 var Icon = require('./ui/icon.js.jsx')
 var Tile = require('./ui/tile.js.jsx')
+var ProductTile = require('./product_tile.js.jsx')
 
 var BountyCard = React.createClass({
   propTypes: {
@@ -18,9 +19,13 @@ var BountyCard = React.createClass({
     var product = this.props.bounty.product
 
     return (
-      <a href={product.url} className="block">
-        <AppIcon app={product} size={24} style={{ display: 'inline' }} />
-        <span className="h6 mt0 mb0 black bold ml1">{product.name}</span>
+      <a href={product.url} className="block clearfix">
+        <div className="left mr2">
+          <AppIcon app={product} size={18} />
+        </div>
+        <div className="overflow-hidden">
+          <h6 className="mt0 mb0 black">{product.name}</h6>
+        </div>
       </a>
     )
   },
@@ -46,9 +51,11 @@ var BountyCard = React.createClass({
           </div>
         </div>
 
-        <div className="h6 mt0 mb0">
-          <Avatar user={bounty.user} size={18} style={{ display: 'inline-block' }} />
-          <a href={bounty.user.url} className="bold black ml1">
+        <div className="h6 mt0 mb0 clearfix">
+          <div className="left mr1">
+            <Avatar user={bounty.user} size={18} />
+          </div>
+          <a href={bounty.user.url} className="block overflow-hidden bold black ml1">
             {bounty.user.username}
           </a>
         </div>
@@ -66,15 +73,19 @@ var BountyCard = React.createClass({
     }
 
     return (
-      <div className="py2 border-top h6 mt0 mb0" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
-        <Avatar user={locker} size={18} style={{ display: 'inline-block' }} />
-        <a href={locker.url} className="bold black ml1">
-          {locker.username}
-        </a>
-        {' '}
-        <span className="gray-2">
-          has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
-        </span>
+      <div className="p2 border-top h6 mt0 mb0 clearfix">
+        <div className="left">
+          <Avatar user={locker} size={18} />
+        </div>
+        <div className="overflow-hidden">
+          <a href={locker.url} className="bold black ml1">
+            {locker.username}
+          </a>
+          {' '}
+          <span className="gray-2">
+            has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
+          </span>
+        </div>
       </div>
     )
   },
@@ -87,11 +98,7 @@ var BountyCard = React.createClass({
     var locker = this.renderLocker()
 
     return (
-      <Tile>
-        <div className="py2 border-bottom" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
-          {product}
-        </div>
-
+      <ProductTile product={this.props.bounty.product}>
         <div className="py2" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
           <a className="blue block h5 mt0 mb0" href={bounty.url}>
             {bounty.title}
@@ -101,7 +108,7 @@ var BountyCard = React.createClass({
         </div>
 
         {locker}
-      </Tile>
+      </ProductTile>
     )
   }
 })

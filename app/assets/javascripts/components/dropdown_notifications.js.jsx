@@ -111,7 +111,7 @@
       var body_preview = story.body_preview;
 
       return (
-        <span className='text-muted' style={{
+        <span className='gray-2' style={{
           textOverflow: 'ellipsis',
           'overflow': 'hidden',
           whiteSpace: 'nowrap',

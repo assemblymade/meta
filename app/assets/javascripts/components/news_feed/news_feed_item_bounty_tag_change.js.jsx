@@ -19,7 +19,7 @@ var NewsFeedBountyItemTagChange = React.createClass({
     return (
       <NewsFeedItemEvent>
         <a href={actor.url}>
-          <Avatar user={actor} style={{ display: 'inline-block' }} /> {actor.username}
+          <Avatar user={actor} /> {actor.username}
           {' '}<span style={{ fontWeight: 400 }}>changed the tags.</span>
         </a>
       </NewsFeedItemEvent>

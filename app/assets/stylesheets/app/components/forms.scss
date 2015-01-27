@@ -24,6 +24,13 @@ input[type=radio], input[type=checkbox] {
   }
 }
 
+.form-control-search {
+  border-radius: 999px;
+  // @chrislloyd this value is over-ridden in main.scss. When that is
+  // gone can remove the !important.
+  padding: .5rem 2rem !important;
+}
+
 .markdown-editor-control {
   position: relative;
 
@@ -46,86 +53,5 @@ input[type=radio], input[type=checkbox] {
     bottom: 0;
     left: 0;
     right: 0;
-  }
-}
-
-.input-group-search {
-  > .control-label {
-    background-color: #dbdee3; // gray-5
-    border-bottom-left-radius: 2rem;
-    border-top-left-radius: 2rem;
-    color: $gray-2;
-    font-size: 13px;
-    font-weight: normal;
-    line-height: 19px;
-    left: 0;
-    padding: 7px 1rem 6px 18px;
-    position: absolute;
-    width: 110px;
-    z-index: 3;
-    -webkit-transition:all 0.15s ease-in-out;
-    transition:all 0.15s ease-in-out;
-    & + .form-control {
-      padding-left: 129px;
-      height: 32px;
-      font-size: 13px;
-      line-height: 21px;
-      color:#8b909a;
-      width: 320px;
-      -webkit-transition:all 0.15s ease-in-out;
-      transition:all 0.15s ease-in-out;
-    }
-  }
-
-  > .form-control {
-    background-color: #F4F4F5; // gray-6
-    border: 1px solid white;
-    border: none;
-    border-radius: 2rem !important;
-    box-shadow: none;
-    padding-left: 18px;
-    padding-right: 1rem;
-    height: 32px;
-    font-size: 13px;
-    line-height: 21px;
-    -webkit-transition:all 0.15s ease-in-out;
-    transition:all 0.15s ease-in-out;
-
-    &:focus {
-      box-shadow: 0 0 0 1px $blue;
-      -webkit-transition:all 0.15s ease-in-out;
-      transition:all 0.15s ease-in-out;
-    }
-
-    & + .form-control-feedback {
-      color: #688c93; // gray-3
-    }
-
-    &:focus + .form-control-feedback {
-      color: $blue;
-      -webkit-transition:all 0.15s ease-in-out;
-      transition:all 0.15s ease-in-out;
-    }
-  }
-
-  > .form-control-feedback {
-    line-height: 2.7rem;
-    height: 32px;
-    width: 3rem;
-    position: absolute;
-    top: 0 !important; // needs to be here for responsive styling
-    right: 2px !important;
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-    filter: FlipH;
-    z-index: 2;
-  }
-}
-
-@-moz-document url-prefix() {
-  .input-group-search {
-    > .control-label {
-      padding-top: 6px;
-    }
   }
 }

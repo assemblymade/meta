@@ -1,11 +1,13 @@
 var CONSTANTS = window.CONSTANTS
 var ActionTypes = CONSTANTS.ActionTypes
-// var Dispatcher = require('../dispatcher');
+// var Dispatcher = require('../dispatcher')
 var Store = require('./es6_store')
+var url = require('url')
+var qs = require('qs')
 
-var parsedUri = parseUri(window.location) || {};
-var query = parsedUri.query || {};
-var currentPage = query.page || 1
+var parsedUri = url.parse(window.location.toString())
+var query = qs.parse(parsedUri.query || {})
+var currentPage = parseInt(query.page || 1, 10)
 var totalPages = 1
 
 class PaginationStore extends Store {
@@ -39,7 +41,7 @@ var store = new PaginationStore()
 
 var dataTag = document.getElementById('PaginationStore')
 if (dataTag) {
-  var data = JSON.parse(dataTag.innerHTML);
+  var data = JSON.parse(dataTag.innerHTML)
 
   Dispatcher.dispatch({
     type: ActionTypes.PAGINATION_TOTAL_PAGES_RECEIVE,

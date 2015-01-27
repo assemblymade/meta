@@ -34,7 +34,7 @@ var chatActionCreators = {
           //   actor: rawMember.info,
           //   // TODO: change 'type' to 'verb'
           //   type: 'activities/join',
-          //   created: moment().toISOString()
+          //   created_at: moment().toISOString()
           // });
           //
           // activityStream.add(activity);

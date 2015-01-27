@@ -9,7 +9,7 @@ var Update = React.createClass({
 
   propTypes: {
     update: React.PropTypes.shape({
-      created: React.PropTypes.string,
+      created_at: React.PropTypes.string,
       markdown_body: React.PropTypes.string,
       marks: React.PropTypes.array,
       title: React.PropTypes.string,
@@ -54,7 +54,7 @@ var Update = React.createClass({
       <div>
         <div className="p4">
           <TextPost author={update.user}
-              timestamp={update.created}
+              timestamp={update.created_at}
               title={update.title}
               body={update.markdown_body}
               labels={update.marks} />

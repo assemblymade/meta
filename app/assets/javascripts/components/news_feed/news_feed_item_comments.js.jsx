@@ -343,7 +343,7 @@ var NewsFeedItemComments = React.createClass({
   },
 
   renderOptimisticEvent: function(type) {
-    var createdAt = new Date(Date.now() + 500);
+    var created_at = new Date(Date.now() + 500);
 
     // when we get the event back in the confirmation, set the award_url
     // so that the buttons show up
@@ -351,8 +351,8 @@ var NewsFeedItemComments = React.createClass({
       type: type,
       actor: UserStore.getUser(),
       // award_url: this.props.url + '/award',
-      created_at: createdAt,
-      id: createdAt.toISOString()
+      created_at: created_at,
+      id: created_at.toISOString()
     }
   },
 

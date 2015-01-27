@@ -205,9 +205,11 @@ var DataRow = React.createClass({
         <strong>
           <a href={this.props.url} target="_blank" tabIndex="-1">{this.props.name}</a>
         </strong>
+        <br />
+        <a href={this.props.url + "/admin"} target="_blank">flag</a>
       </td>
       <td>{this.props.pitch}</td>
-      <td><Timestamp time={this.props.created} /></td>
+      <td><Timestamp time={this.props.created_at} /></td>
       <td className="text-right">
         <input type="text" className="form-control"
                 value={this.state.dirty ? this.state.pendingTags : this.props.search_tags.join(',')}

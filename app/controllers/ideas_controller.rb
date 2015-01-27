@@ -12,20 +12,9 @@ class IdeasController < ProductController
     find_idea!
 
     respond_with({
-      categories: Idea::CATEGORY_NAMES.map.with_index { |name, i|
-        {
-          name: name,
-          slug: Idea::CATEGORY_SLUGS[i]
-        }
-      },
-
+      categories: categories,
       idea: IdeaSerializer.new(@idea),
-      topics: Idea::TOPIC_NAMES.map.with_index { |name, i|
-        {
-          name: name,
-          slug: Idea::TOPIC_SLUGS[i]
-        }
-      }
+      topics: topics
     })
   end
 
@@ -57,8 +46,10 @@ class IdeasController < ProductController
     end
 
     respond_with({
+      categories: categories,
       heartables: @heartables,
       ideas: ActiveModel::ArraySerializer.new(@ideas),
+      topics: topics,
       total_pages: total_pages,
       user_hearts: @user_hearts
     })
@@ -90,8 +81,8 @@ class IdeasController < ProductController
       end
     end
 
-    related_ideas = Idea.with_mark(@marks.first).limit(2)
-    related_ideas = related_ideas.empty? ? Idea.limit(2) : related_ideas
+    related_ideas = Idea.with_mark(@marks.first).where.not(id: @idea.id).limit(2)
+    related_ideas = related_ideas.empty? ? Idea.where.not(id: @idea.id).limit(2) : related_ideas
 
     respond_with({
       idea: IdeaSerializer.new(@idea),
@@ -140,6 +131,24 @@ class IdeasController < ProductController
 
   private
 
+  def categories
+    Idea::CATEGORY_NAMES.map.with_index { |name, i|
+      {
+        name: name,
+        slug: Idea::CATEGORY_SLUGS[i]
+      }
+    }
+  end
+
+  def topics
+    Idea::TOPIC_NAMES.map.with_index { |name, i|
+      {
+        name: name,
+        slug: Idea::TOPIC_SLUGS[i]
+      }
+    }
+  end
+
   def find_idea!
     @idea = Idea.friendly.find(params[:id])
   end
@@ -156,6 +165,6 @@ class IdeasController < ProductController
   end
 
   def filter_params
-    params.permit([:filter, :mark, :sort, :user])
+    params.permit([:filter, :mark, :sort, :topic, :user])
   end
 end

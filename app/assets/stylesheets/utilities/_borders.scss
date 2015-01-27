@@ -1,0 +1,35 @@
+@each $prefix, $breakpoint in $breakpoints {
+  @media #{$breakpoint} {
+    .#{$prefix}-rounded {
+      border-radius: $border-radius;
+    }
+
+    .#{$prefix}-circle {
+      border-radius: 50%;
+    }
+
+    .#{$prefix}-pill {
+      border-radius: 9999px;
+    }
+
+    .#{$prefix}-rounded-top {
+      border-radius: $border-radius $border-radius 0 0;
+    }
+
+    .#{$prefix}-rounded-right {
+      border-radius: 0 $border-radius $border-radius 0;
+    }
+
+    .#{$prefix}-rounded-bottom {
+      border-radius: 0 0 $border-radius $border-radius;
+    }
+
+    .#{$prefix}-rounded-left {
+      border-radius: $border-radius 0 0 $border-radius;
+    }
+
+    .#{$prefix}-not-rounded {
+      border-radius: 0;
+    }
+  }
+}

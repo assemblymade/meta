@@ -1,11 +1,21 @@
 <% title 'Introduction', '@'+@membership.user.username %>
 
-<div class="px2 col-md-8 col-md-offset-2">
-  <%= react_component 'NewsFeedItem',
-        NewsFeedItemSerializer.new(@news_feed_item).as_json.merge(
-          commentable: true,
-          enableModal: false,
-          productPage: true,
-          showAllComments: true
-  ) %>
-</div>
+<div id="discussion-el"></div>
+<% content_for :javascript do %>
+  <script>
+    var introductionElement = React.createElement(Introduction, <%= {
+      introduction: {
+        user: AvatarSerializer.new(@news_feed_item.source),
+        product: @news_feed_item.product,
+        bio: @news_feed_item.target.bio
+      }
+    }.to_json.html_safe %>)
+
+    var discussionElement = React.createElement(Discussion, {
+      target: introductionElement,
+      newsFeedItem: <%= NewsFeedItemSerializer.new(@news_feed_item).to_json.html_safe %>
+    })
+
+    React.render(discussionElement, document.getElementById('discussion-el'))
+  </script>
+<% end %>

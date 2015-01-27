@@ -1,6 +1,6 @@
 class AppAdminSerializer < ApplicationSerializer
 
-  attributes :name, :pitch, :slug, :search_tags, :topic, :current_showcase
+  attributes :name, :pitch, :slug, :search_tags, :topic, :current_showcase, :url
 
   def search_tags
     object.tags
@@ -12,6 +12,10 @@ class AppAdminSerializer < ApplicationSerializer
 
   def current_showcase
     object.showcases.active.first.try(:slug)
+  end
+
+  def url
+    "/#{object.slug}"
   end
 
 end

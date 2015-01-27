@@ -22,18 +22,7 @@
 
 // -- Base Component ------------
 .tile-grid {
-  //@import 'app/temp/style-guide-updates';  // < details: https://assembly.com/meta/bounties/1038
-  //
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
-  background-color: $white;
-  > .container  {
-    // @extend .text-2;
-    //
-    > .main {
-      overflow: hidden;
-    }
-  }
+  
   .footer {
     // bootstrap overwrite
     margin:0;
@@ -193,11 +182,4 @@
       box-shadow: 0px 1px 1px 0px $brand-shadow-light;
     }
   }
-}
-
-// -- Delta's ------------
-//
-// http://assembly.com/ideas
-.tile-grid-ideas {
-  background-color: $gray-6;
 }

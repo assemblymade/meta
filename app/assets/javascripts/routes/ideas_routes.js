@@ -41,8 +41,10 @@ function _showIdeaAdmin(data) {
 }
 
 function _showIdeas(data) {
+  var categories = data.categories;
   var heartables = data.heartables;
   var ideas = data.ideas;
+  var topics = data.topics;
   var totalPages = data.total_pages;
   var userHearts = data.user_hearts;
 
@@ -67,6 +69,12 @@ function _showIdeas(data) {
   Dispatcher.dispatch({
     type: ActionTypes.LOVE_RECEIVE_USER_HEARTS,
     userHearts: userHearts
+  });
+
+  Dispatcher.dispatch({
+    type: ActionTypes.IDEA_ADMIN_RECEIVE,
+    categories: categories,
+    topics: topics
   });
 }
 

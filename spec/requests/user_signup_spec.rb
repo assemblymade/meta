@@ -10,7 +10,7 @@ describe 'User signup' do
   end
 
   it 'creates a user and redirects to the previous page' do
-    get '/discover/updates'
+    get discover_path
     post "/signup", user: { username: 'lumpy', email: 'lumpy@spaceprincesses.com', password: 'whatevers' }
 
     expect(assigns(:user).username).to eq('lumpy')

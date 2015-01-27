@@ -180,7 +180,7 @@ var IdeaSharePanel = React.createClass({
 
   small() {
     return (
-      <div className="clearfix bg-gray-6 text-center">
+      <div className="clearfix bg-gray-6 center">
         <a href="javascript:void(0);" onClick={this.handleTwitterClick}>
           <CircleIcon icon="twitter" />
         </a>

@@ -30,13 +30,13 @@ var moment = require('moment');
       var count = _.countBy(
         _chatRooms,
         function(entry) {
-          var updated = entry.updated > entry.last_read_at;
+          var updated_at = entry.updated_at > entry.last_read_at;
 
           if (acknowledgedAt) {
-            return updated && entry.updated > acknowledgedAt;
+            return updated_at && entry.updated_at > acknowledgedAt;
           }
 
-          return updated;
+          return updated_at;
         }
       );
 
@@ -132,7 +132,7 @@ var moment = require('moment');
             return room.id !== (app.chatRoom || {}).id;
           }
         ),
-        func.dot('updated')
+        func.dot('updated_at')
       );
     }
   });
@@ -145,7 +145,7 @@ var moment = require('moment');
     switch(payload.type) {
       case ActionTypes.PUSHER_USER_ACTION:
         if (payload.event == 'chat-added') {
-          _chatRooms['chat_' + payload.payload.chat_room].updated = payload.payload.updated
+          _chatRooms['chat_' + payload.payload.chat_room].updated_at = payload.payload.updated_at
         }
         _notificationsStore.emitChange()
         break;

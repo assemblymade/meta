@@ -102,8 +102,8 @@ var AssetThumbnail = React.createClass({
       mt0: true,
       ml2: true,
       right: true,
-      'text-success': this.state.uploaded,
-      'text-danger': this.state.error
+      'green': this.state.uploaded,
+      'red': this.state.error
     });
 
     if (this.state.error) {
@@ -139,7 +139,7 @@ var ImageLightbox = React.createClass({
 
   footer: function() {
     return <a href={this.props.src} target="_blank">
-      {this.props.name} <span className="glyphicon glyphicon-new-window text-muted" />
+      {this.props.name} <span className="glyphicon glyphicon-new-window gray-2" />
     </a>
   }
 })

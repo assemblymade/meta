@@ -97,31 +97,7 @@
     }
   }
 }
-.details-group {
-  padding: 1rem 2rem;
-  //
-  > a:first-child {
-    display:inline-block;
-    font-weight: bold;
-    color: $black;
-    //
-    & {
-      font-size: 1.1rem;
-    }
-    img {
-      display:inline-block;
-      width: 1.5rem;
-      height: auto;
-      border-radius:50%;
-      background: $black;
-    }
-    span {
-      margin-left: 0.5rem;
-      display:inline-block;
-      vertical-align: middle;
-    }
-  }
-}
+
 a.comment-count {
   display: inline-block;
   vertical-align: middle;

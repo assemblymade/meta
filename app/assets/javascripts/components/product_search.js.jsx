@@ -7,7 +7,7 @@ var ProductSearch = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
 
   render: function() {
-    return <div className="text-left relative">
+    return <div className="left-align relative">
       <div className="form-group">
 
         <input type="text" className="form-control" placeholder="Search Apps"

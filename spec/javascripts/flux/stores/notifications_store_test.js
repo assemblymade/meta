@@ -28,15 +28,15 @@ describe('NotificationsStore', function() {
     it('returns the number of unread stories', function() {
       var stories = [
         {
-          updated: 123,
+          updated_at: 123,
           last_read_at: 123
         },
         {
-          updated: 789,
+          updated_at: 789,
           last_read_at: 123
         },
         {
-          updated: 456,
+          updated_at: 456,
           last_read_at: 123
         }
       ];

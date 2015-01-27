@@ -33,13 +33,13 @@
                       <td class="wrapper last">
                         <table class="six columns hide-for-small">
                           <tr>
-                            <td class="text-right right-text-pad header-date">
+                            <td class="right-align right-text-pad header-date">
                               <%# TODO Remove when everything is BaseMailer %>
                               <% @date ||= Date.today %>
                               <span class="header-date-day">
                                 <%= @date.strftime('%A').upcase %>
                               </span>
-                              <span class="text-muted">
+                              <span class="gray-2">
                                 <%= @date.strftime('%B %-d, %Y').upcase %>
                               </span>
                             </td>
@@ -72,7 +72,7 @@
                           <% end %>
                         </p>
                         <p>
-                          <strong class="text-muted">Assembly Made, Inc.</strong>,
+                          <strong class="gray-2">Assembly Made, Inc.</strong>,
                           3030A 16th Street,
                           San Francisco, 94103,
                           California, USA

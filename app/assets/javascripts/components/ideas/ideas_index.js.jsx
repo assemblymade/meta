@@ -1,7 +1,11 @@
 var Button = require('../ui/button.js.jsx');
+var DropdownMenu = require('../ui/dropdown_menu.js.jsx')
 var Footer = require('../ui/footer.js.jsx');
 var IdeaTile = require('./idea_tile.js.jsx');
+var IdeaAdminStore = require('../../stores/idea_admin_store');
 var IdeasStore = require('../../stores/ideas_store');
+var IdeaTile = require('./idea_tile.js.jsx');
+var Nav = require('../ui/nav.js.jsx')
 var NewIdeaModal = require('./new_idea_modal.js.jsx');
 var Pagination = require('../pagination/pagination.js.jsx');
 var UserStore = require('../../stores/user_store');
@@ -53,6 +57,8 @@ var IdeasIndex = React.createClass({
       ideasGridStyle.textAlign = 'left !important';
     }
 
+    var topicsDropdownMenu = this.renderTopics()
+
     return (
       <main role="main">
         {this.renderHeader()}
@@ -60,71 +66,29 @@ var IdeasIndex = React.createClass({
         <section className="tile-grid tile-grid-ideas" key="ideas-grid">
           <div className="container">
             <div className="header">
-              <nav className="tile-grid-nav">
-                <div className="item">
-                  <ul className="nav nav-pills">
-                    {this.renderMyIdeas()}
 
-                    <li key="filter-trending">
-                      <a href="/ideas?filter=trending"
-                        onClick={navigate.bind(null, '/ideas?filter=trending')}>
-                        Trending
-                      </a>
-                    </li>
+              <div className="py4">
+                <Nav>
+                  {this.renderMyIdeas()}
+                  <Nav.Item label="Trending" href="/ideas?filter=trending" onClick={navigate.bind(null, '/ideas?filter=trending')} />
+                  <Nav.Item label="New" href="/ideas?filter=newness" onClick={navigate.bind(null, '/ideas?filter=newness')} />
+                  <Nav.Item label="Greenlit" href="/ideas?filter=greenlit" onClick={navigate.bind(null, '/ideas?filter=greenlit')} />
+                  <Nav.Divider />
+                  <Nav.Item label="Topics" dropdownMenu={topicsDropdownMenu} />
+                </Nav>
+              </div>
 
-                    <li key="filter-newness">
-                      <a href="/ideas?sort=newness"
-                        onClick={navigate.bind(null, '/ideas?sort=newness')}>
-                        New
-                      </a>
-                    </li>
-
-                    <li key="filter-greenlit">
-                      <a href="/ideas?filter=greenlit"
-                        onClick={navigate.bind(null, '/ideas?filter=greenlit')}>
-                        Greenlit
-                      </a>
-                    </li>
-
-                    <li className="dropdown" key="filter-dropdown">
-                      <a className="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                        Topics <span className="caret"></span>
-                      </a>
-                      <ul className="dropdown-menu" role="menu">
-                        <li key="dropdown-design">
-                          <a href="/ideas?mark=design"
-                            onClick={navigate.bind(null, '/ideas?mark=design')}>
-                            Design
-                          </a>
-                        </li>
-                        <li key="dropdown-saas">
-                          <a href="/ideas?mark=saas"
-                            onClick={navigate.bind(null, '/ideas?mark=saas')}>
-                            SaaS
-                          </a>
-                        </li>
-                        <li key="dropdown-b2b">
-                          <a href="/ideas?mark=b2b"
-                            onClick={navigate.bind(null, '/ideas?mark=b2b')}>
-                            B2B
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-              </nav>
               <div className="main" key="main-ideas">
-                <div className="grid fixed-small" style={ideasGridStyle}>
+                <div className="clearfix mxn2" style={ideasGridStyle}>
                   {this.renderIdeas()}
                 </div>
               </div>
             </div>
 
             <Footer>
-              <nav>
+              <div className="center">
                 <Pagination actionCall={navigate} />
-              </nav>
+              </div>
             </Footer>
           </div>
         </section>
@@ -160,11 +124,12 @@ var IdeasIndex = React.createClass({
 
   renderIdeas() {
     var ideas = this.state.ideas;
-    var IdeaFactory = React.createFactory(IdeaTile);
 
     if (ideas.length) {
       return ideas.map((idea) => {
-        return IdeaFactory({ idea: idea, key: idea.id });
+        return <div className="sm-col sm-col-4 p2" key={idea.id}>
+          <IdeaTile idea={idea} />
+        </div>
       });
     }
   },
@@ -174,13 +139,27 @@ var IdeasIndex = React.createClass({
     var username = this.props.currentUser.username;
 
     if (username) {
+      var url = "/ideas?user=" + username
       return (
-        <li>
-          <a href="javascript:void(0);"
-            onClick={navigate.bind(null, '/ideas?user=' + username)}>
-            My Ideas
-          </a>
-        </li>
+        <Nav.Item label="My ideas" href={url} onClick={navigate.bind(null, url)} />
+      )
+    }
+  },
+
+  renderTopics() {
+    var availableTopics = IdeaAdminStore.getAvailableTopics();
+
+    if ((availableTopics || []).length > 0) {
+      var topics = availableTopics.map((topic) => {
+        return (
+          <DropdownMenu.Item label={topic.name} key={topic.slug} action={'/ideas?topic=' + topic.slug} />
+        );
+      });
+
+      return (
+        <DropdownMenu>
+            {topics}
+        </DropdownMenu>
       );
     }
   }

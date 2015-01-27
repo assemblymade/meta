@@ -22,7 +22,7 @@
 
                       <%= @membership.bio %> <span style="color:#999"> – <a href="<%= user_url(@new_member) %>">@<%=@new_member.username %></a></span>
                       <% @membership.team_membership_interests.each do |i| %>
-                        <span class="text-muted">#<%= i.interest.slug %></span>
+                        <span class="gray-2">#<%= i.interest.slug %></span>
                       <% end %>
                     </td>
                   </tr>

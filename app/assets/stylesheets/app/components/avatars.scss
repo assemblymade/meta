@@ -1,9 +1,3 @@
-.avatar {
-  @extend .img-circle;
-  background-color: $body-bg;
-  display: block;
-}
-
 .avatar-comment {
   @include clip-path(polygon(10px 0px, 160px 0px, 160px 150px, 95px 150px, 85px 170px, 75px 150px, 10px 150px));
   height: 170px;

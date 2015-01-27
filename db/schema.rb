@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150123204157) do
+ActiveRecord::Schema.define(version: 20150126214402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "uuid-ossp"
@@ -664,6 +664,7 @@ ActiveRecord::Schema.define(version: 20150123204157) do
     t.datetime "issued_coins"
     t.text     "try_url"
     t.string   "topics",                                                                    array: true
+    t.integer  "wips_count",                                    default: 0,    null: false
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree

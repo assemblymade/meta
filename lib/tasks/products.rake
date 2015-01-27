@@ -41,4 +41,33 @@ namespace :products do
       end
     end
   end
+
+  task :tag_with_repo_languages => :environment do
+    Product.all.each do |p|
+      languages = {}
+      marks = {}
+
+      p.repos.each do |r|
+        new_languages = Github::Worker.new.get("repos/#{r.full_name}/languages")
+        languages.merge!(new_languages){|k, o, n| o + n }
+      end
+
+      languages.reject!{|k, v| v.is_a?(String)}
+      next if languages.empty?
+
+      total_lines = languages.values.sum
+
+      languages.each do |k, v|
+        marks[k] = v/total_lines.to_f
+      end
+
+      p.update_attribute(:tags, p.tags.map(&:downcase))
+
+      marks.each do |m, w|
+        next if w < 0.1 || p.tags.map(&:downcase).include?(m.downcase)
+        p.update_attribute(:tags, p.tags << m.downcase)
+      end
+    end
+  end
+
 end
