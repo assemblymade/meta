@@ -38,6 +38,12 @@ ASM::Application.routes.draw do
   get '/home'             => 'pages#home',        as: :home
   get '/about'            => 'pages#about',       as: :about
   get '/terms'            => 'pages#tos',         as: :tos
+  get '/core-team'        => 'pages#core_team',   as: :core_team
+  get '/badges'           => 'pages#badges',      as: :badges
+  get '/pitchweek'        => 'pages#pitch_week',  as: :pitch_week
+  get '/sabbaticals'      => 'pages#sabbaticals', as: :sabbaticals
+  get '/activity'         => 'activity#index',    as: :activity
+
   get '/getting-started'  => 'pages#getting-started', as: :getting_started
 
   # Readraptor proxy. Remove this when javascript clients can talk directly to RR

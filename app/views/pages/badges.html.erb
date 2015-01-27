@@ -1,0 +1,47 @@
+<% title 'Assembly Badges' %>
+<%= render 'shared/navbar' %>
+
+<div class="page">
+
+<% badges = [
+  [ { name: "Flag",
+    desc: "The original swag flag",
+    minHeight: "41px;",
+    width: "25%",
+    type: "flag",
+    defaultWidth: "61px",
+    defaultHeight: "38px",
+    imageURL: asset_url("flag.svg") },
+    { name: "Flag and Text",
+      desc: "Freedom flag",
+      minHeight: "41px;",
+      width: "100%",
+      type: "flag_with_text",
+      defaultWidth: "243px",
+      defaultHeight: "41px",
+      imageURL: asset_url("badges/flag_text.svg"),
+      transparentImageURL: asset_url("badges/flag_text_transparent.svg") }],
+    [ { name: "Dark banner",
+      desc: "Resizeable banner",
+      width: "100%",
+      type: "dark_banner",
+      defaultWidth: "243px",
+      defaultHeight: "34px",
+      imageURL: asset_url("badges/dark_badge.svg"),
+      transparentImageURL: asset_url("badges/dark_text_transparent.svg") },
+      { name: "Light banner",
+        desc: "Resizeable banner",
+        width: "100%",
+        type: "light_banner",
+        defaultWidth: "243px",
+        defaultHeight: "34px",
+        imageURL: asset_url("badges/light_badge.svg"),
+        transparentImageURL: asset_url("badges/light_text_transparent.svg") }] ] %>
+
+  <%= react_component 'BadgePage', {
+    badges: badges
+    } %>
+
+</div>
+
+<%= render 'shared/footer' %>
