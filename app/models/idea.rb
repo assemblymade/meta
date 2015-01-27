@@ -77,14 +77,24 @@ class Idea < ActiveRecord::Base
   end
 
   def hearted
-    save_score
+    add_score
   end
 
-  def unhearted
-    save_score
+  def unhearted(user)
+    decrement_score(user)
   end
 
-  def save_score
+  def hearted_on(user)
+    my_heart = self.news_feed_item.hearts.where(user_id: user.id)
+    if my_heart.length > 0
+      my_heart = my_heart.first
+      my_heart.created_at
+    else
+      None
+    end
+  end
+
+  def add_score
     lovescore = self.score
     heartburn = 30.days.to_i  #period for 100% inflation, equivalent to half-life
     epoch_start = DateTime.new(2013,6,6).to_i
@@ -96,6 +106,10 @@ class Idea < ActiveRecord::Base
     end
     self.update!({last_score_update: DateTime.now, score: lovescore})
     lovescore
+  end
+
+  def decrement_score
+
   end
 
   def url_params
