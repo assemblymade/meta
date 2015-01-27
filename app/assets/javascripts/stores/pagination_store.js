@@ -6,7 +6,7 @@ var url = require('url')
 var qs = require('qs')
 
 var parsedUri = url.parse(window.location.toString())
-var query = qs.parse(parsedUri.query || {})
+var query = qs.parse(parsedUri.query) || {}
 var currentPage = parseInt(query.page || 1, 10)
 var totalPages = 1
 
