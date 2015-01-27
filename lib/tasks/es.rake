@@ -4,7 +4,7 @@ namespace :es do
     client = Elasticsearch::Model.client
     [
       # [Wip, Wip.includes(:comments, :product)],
-      [User],
+      [User, User],
       [Product, Product.includes(:product_trend, markings: :mark)]
     ].each do |model, query|
       model.__elasticsearch__.create_index! force: true
