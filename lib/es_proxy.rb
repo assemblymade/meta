@@ -1,7 +1,7 @@
 class EsProxy < Rack::Proxy
   def initialize(app)
     @app = app
-    @es_url = URI.parse(ENV['ELASTICSEARCH_URL'])
+    @es_url = URI.parse(ENV['ELASTICSEARCH_URL'] || 'http://localhost:9200')
   end
 
   def call(env)
