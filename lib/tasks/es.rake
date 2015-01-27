@@ -1,20 +1,27 @@
 namespace :es do
   desc 'Import models into elasticsearch'
   task :import => :environment do
+    client = Elasticsearch::Model.client
     [
-      Wip.includes(:comments, :product),
-      User,
-      Product.includes(:product_trend, markings: :mark)
-    ].each do |model|
+      # [Wip, Wip.includes(:comments, :product)],
+      [User],
+      [Product, Product.includes(:product_trend, markings: :mark)]
+    ].each do |model, query|
       model.__elasticsearch__.create_index! force: true
-      model.import
+      i = 0
+      total = model.count
+      query.find_each do |m|
+        puts "#{i.to_s.rjust(6)} / #{total}  #{model} #{m.id}"
+        client.index  index: model.index_name, type: model.name.downcase, id: m.id, body: m.as_indexed_json
+        i += 1
+      end
     end
   end
 
   desc 'Drop elasticsearch indexes'
   task :drop => :environment do
     [
-      Wip,
+      # Wip,
       User,
       Product
     ].each do |model|
