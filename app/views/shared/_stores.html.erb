@@ -14,3 +14,7 @@
 <%= render partial: 'users/user_subscriptions' %>
 <%= render partial: 'wips/bounties_store' %>
 <%= render partial: 'wips/people_store' %>
+
+<% initial_stores.each do |store, data| %>
+  <%= initial_store_data(store, data) %>
+<% end %>

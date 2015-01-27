@@ -211,6 +211,8 @@
 
       SUB_RECEIVE_USER_SUBSCRIPTIONS: null,
 
+      TAGS_RECEIVE: null,
+
       USER_RECEIVE: null,
       USER_SIGNED_IN: null,
 

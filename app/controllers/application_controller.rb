@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :strip_invite_token
   before_action :strip_promo_token
   before_action :initialize_stores
+  before_action :set_suggested_tags
   after_action  :set_request_info!,   if: :signed_in?
   after_action  :claim_invite,        if: :signed_in?
 
@@ -40,6 +41,23 @@ class ApplicationController < ActionController::Base
 
   def initialize_stores
     @stores ||= {}
+  end
+
+  def initial_stores
+    @_stores.transform_keys { |name| "#{name.to_s.classify}Store" }
+  end
+  helper_method :initial_stores
+
+  def stores(new_stores)
+    @_stores ||= {}
+    @_stores = @_stores.merge(new_stores)
+  end
+
+  # TODO move tags out of dashboard
+  def set_suggested_tags
+    tags = Dashboard::CURATED_MARKS.values.flatten.map(&:parameterize)
+
+    stores(tags: { tags: tags })
   end
 
   def strip_auth_token
