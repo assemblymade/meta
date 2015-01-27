@@ -86,9 +86,9 @@ var IdeasIndex = React.createClass({
             </div>
 
             <Footer>
-              <nav>
+              <div className="center">
                 <Pagination actionCall={navigate} />
-              </nav>
+              </div>
             </Footer>
           </div>
         </section>
