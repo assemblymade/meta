@@ -105,6 +105,7 @@ var Apps = React.createClass({
     }
     return <div>
       {this.renderAppsList(_(this.state.apps).first(3))}
+      {this.renderShowcases()}
       {this.renderAppsList(_(this.state.apps).rest(3))}
       <PaginationLinks page={this.props.page} pages={this.props.total_pages} onPageChanged={this.handlePageChanged} />
     </div>
