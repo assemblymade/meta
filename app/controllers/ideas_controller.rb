@@ -81,8 +81,8 @@ class IdeasController < ProductController
       end
     end
 
-    related_ideas = Idea.with_mark(@marks.first).where.not(id: @idea.id).limit(2)
-    related_ideas = related_ideas.empty? ? Idea.where.not(id: @idea.id).limit(2) : related_ideas
+    related_ideas = FilterIdeasQuery.call(mark: @marks.first).where.not(id: @idea.id).limit(2)
+    related_ideas = related_ideas.empty? ? FilterIdeasQuery.call.where.not(id: @idea.id).limit(2) : related_ideas
 
     respond_with({
       idea: IdeaSerializer.new(@idea),
