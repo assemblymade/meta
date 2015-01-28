@@ -41,15 +41,16 @@ var SwagType = React.createClass({
       return (
         <div className={this.state.colwidth ? ("col-md-" + this.state.colwidth) : null} onClick={this.handleClick}>
           <div className={classes}>
-            <h5 style={{margin: "10px"}}>{this.state.item.name}</h5>
+            <h5 className="gray-2 m1 center">{this.state.item.name}</h5>
+            <hr className="mt0" />
             <div style={{ margin: this.state.item.margin || "15px 5px 0px",
               textAlign: "center",
               minHeight: this.state.item.minHeight}}>
               <img width={this.state.item.width || "40px"} src={this.state.item.imageURL || defaultImage} />
             </div>
-            {this.state.item.desc ? (<div className="caption">
+          <div className="caption">
             <p className="help-block">{this.state.item.desc}</p>
-          </div>) : null }
+          </div>
         </div>
       </div>
     )
