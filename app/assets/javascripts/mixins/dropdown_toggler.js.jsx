@@ -11,9 +11,11 @@ var DropdownTogglerMixin = {
     }
 
     return (
-      <a className="block dropdown-toggle py2" href={this.props.href} data-toggle="dropdown" onClick={this.acknowledge}>
+      <a className="block dropdown-toggle py2"
+          href={this.props.href}
+          data-toggle="dropdown"
+          onClick={this.acknowledge}>
         <Jewel icon={this.props.icon} n={total} />
-
       </a>
     )
   }

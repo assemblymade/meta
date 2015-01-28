@@ -4,7 +4,6 @@ jest.dontMock(pathToFile('mixins/local_storage.js'));
 
 describe('ChatNotificationsToggler', function() {
   var chatRooms;
-  var Toggler;
   var ChatNotificationsStore;
 
   beforeEach(function() {
@@ -12,7 +11,6 @@ describe('ChatNotificationsToggler', function() {
     global.moment = require.requireActual('moment');
     global.Dispatcher = require(pathToFile('dispatcher.js'));
 
-    Toggler = require(pathToFile('components/chat_notifications_toggler.js.jsx'));
     ChatNotificationsStore = require(pathToFile('stores/chat_notifications_store.js'));
 
     chatRooms = {
@@ -58,6 +56,8 @@ describe('ChatNotificationsToggler', function() {
   });
 
   it('instantiates a dropdown toggler with default state', function() {
+    var Toggler = require(pathToFile('components/chat_notifications_toggler.js.jsx'));
+
     var toggler = TestUtils.renderIntoDocument(
       <Toggler iconClass="icon icon-bubbles" href="/chat" label="bubbles" />
     );
@@ -67,7 +67,10 @@ describe('ChatNotificationsToggler', function() {
     expect(toggler.props.title).toEqual('');
   });
 
-  xit('acknowledges a click', function() {
+  it('acknowledges a click', function() {
+    jest.dontMock('moment');
+
+    var Toggler = require(pathToFile('components/chat_notifications_toggler.js.jsx'));
     var toggler = TestUtils.renderIntoDocument(
       <Toggler iconClass="icon icon-bubbles" href="/chat" label="bubbles" />
     );
@@ -77,22 +80,27 @@ describe('ChatNotificationsToggler', function() {
     expect(toggler.state.acknowledgedAt).toBeCloseTo(moment().unix(), 2);
   });
 
-  xit('returns the badge count', function() {
+  it('adds the bg-red class if it has notifications', function() {
+    jest.dontMock(appFile('mixins/dropdown_toggler.js.jsx'));
+    jest.dontMock(appFile('components/ui/jewel.js.jsx'));
+
+    var Toggler = require(pathToFile('components/chat_notifications_toggler.js.jsx'));
     var toggler = TestUtils.renderIntoDocument(
       <Toggler iconClass="icon icon-bubbles" href="/chat" label="bubbles" />
     );
 
     expect(toggler.badgeCount()).toEqual(2);
 
-    var badge = TestUtils.findRenderedDOMComponentWithClass(
+    var badge = TestUtils.scryRenderedDOMComponentsWithClass(
       toggler,
-      'indicator-danger'
-    ).getDOMNode();
+      'bg-red'
+    );
 
-    expect(badge).toBeTruthy();
+    expect(badge.length).toEqual(1);
   });
 
-  xit('clears the badge count based on acknowledgedAt', function() {
+  it('clears the badge count based on acknowledgedAt', function() {
+    var Toggler = require(pathToFile('components/chat_notifications_toggler.js.jsx'));
     var toggler = TestUtils.renderIntoDocument(
       <Toggler iconClass="icon icon-bubbles" href="/chat" label="bubbles" />
     );

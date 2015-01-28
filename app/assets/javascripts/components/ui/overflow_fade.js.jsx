@@ -2,7 +2,7 @@ var OverflowFade = React.createClass({
 
   propTypes: {
     dimension: React.PropTypes.oneOf(['horizontal', 'vertical']),
-      width: React.PropTypes.string,
+    width: React.PropTypes.string,
     height: React.PropTypes.string,
   },
 

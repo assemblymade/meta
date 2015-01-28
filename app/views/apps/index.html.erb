@@ -9,13 +9,10 @@
       search: params[:search],
       filter: params[:filter] || 'trending',
       page: [params[:page].to_i, 1].max,
-      search:      params[:search],
-      filter:      params[:filter] || 'trending',
-      showcase:    (showcase.nil? ? nil : ShowcaseSerializer.new(showcase) ),
-      page:        [params[:page].to_i, 1].max,
+      showcase: (showcase.nil? ? nil : ShowcaseSerializer.new(showcase) ),
       total_pages: @total_pages,
-      topics:      @topics,
-      showcases:   @showcases.map {|s| ShowcaseSerializer.new(s) }
+      topics: @topics,
+      showcases: @showcases.map {|s| ShowcaseSerializer.new(s) }
 %>
 
 <%= render 'shared/footer' %>
