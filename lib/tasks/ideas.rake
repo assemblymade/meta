@@ -58,6 +58,8 @@ namespace :ideas do
           idea.greenlight! if idea.should_greenlight?
           idea.greenlight! if product.greenlit_at
 
+          idea.news_feed_item.update_column('last_commented_at', product.created_at)
+
           if idea.hearts_count == 0
             idea.update(flagged_at: Time.now)
           end

@@ -24,7 +24,7 @@ class Idea < ActiveRecord::Base
   before_validation :set_tilting_threshold!, on: :create
 
   after_commit :ensure_news_feed_item, on: :create
-  after_commit :update_news_feed_item
+  after_commit :update_news_feed_item, on: :update
 
   scope :by, -> (user) { where(user_id: user.id) }
   scope :hearts, -> { includes(:news_feed_item).order('news_feed_items.hearts_count DESC') }

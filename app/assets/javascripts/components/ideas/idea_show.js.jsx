@@ -287,21 +287,6 @@ var IdeaShow = React.createClass({
     }
   },
 
-  renderFastTrackPrompt() {
-    var idea = this.state.idea;
-    var now = Date.now();
-
-    if ((new Date(idea.created_at) + TWO_DAYS) < now &&
-        idea.hearts_count > 1 &&
-        idea.user.id === UserStore.getId()) {
-      return (
-        <div className="px3">
-          Psst! Wanna fast-track your idea to a product?
-        </div>
-      );
-    }
-  },
-
   renderHeader() {
     var idea = this.state.idea;
     var shareMessage = 'We need help with ' + idea.name + '! via @asm';
@@ -347,7 +332,6 @@ var IdeaShow = React.createClass({
                 Then the community has the opportunity to build this idea into
                 a product &mdash; together.
               </p>
-              {this.renderFastTrackPrompt()}
             </div>
           </Drawer>
         </div>
