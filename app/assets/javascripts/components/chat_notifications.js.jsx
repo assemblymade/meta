@@ -4,6 +4,7 @@
   var CONSTANTS = window.CONSTANTS;
 
   var ChatNotificationStore = require('../stores/chat_notifications_store');
+  var NotificationStore = require('../stores/notifications_store');
   var DesktopNotifications = require('./desktop_notifications.js.jsx');
   // var Dispatcher = require('../dispatcher');
   var LocalStorageMixin = require('../mixins/local_storage.js');
@@ -18,7 +19,7 @@
         var label = entry.product_name ? entry.product_name : 'Community Chat';
         var badge = null;
 
-        if (entry.updated_at > entry.last_read_at) {
+        if (entry.updated > entry.last_read_at) {
           badge = <span
               className="indicator indicator-danger pull-right"
               style={{ 'position': 'relative', 'top': '10px' }} />;

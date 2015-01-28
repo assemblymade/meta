@@ -1,7 +1,6 @@
 // var Dispatcher = require('../dispatcher');
 var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
 var LocalStorageMixin = require('../mixins/local_storage');
-var NotificationsStore = require('../stores/notifications_store');
 var StoryActions = require('../actions/story_actions')
 var StoryStore = require('../stores/story_store')
 
