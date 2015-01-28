@@ -26,11 +26,6 @@ namespace :ideas do
             product_id: product.id
           )
 
-          if product.flagged_at
-            idea.update(flagged_at: product.flagged_at)
-            next
-          end
-
           if idea.body.nil? || idea.body.empty?
             idea.update(flagged_at: Time.now)
             next
