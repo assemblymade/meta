@@ -22,10 +22,16 @@ namespace :ideas do
             body: product.description,
             created_at: product.created_at,
             flagged_at: product.flagged_at,
-            founder_preference: true
+            founder_preference: true,
+            product_id: product.id
           )
 
-          if (idea.body.nil?)
+          if idea.body.nil? || idea.body.empty?
+            idea.update(flagged_at: Time.now)
+            next
+          end
+
+          if idea.name.split(' ').count >= 20
             idea.update(flagged_at: Time.now)
             next
           end
@@ -39,6 +45,7 @@ namespace :ideas do
           end
 
           idea.greenlight! if idea.should_greenlight?
+          idea.greenlight! if product.greenlit_at
 
           if idea.hearts_count == 0
             idea.update(flagged_at: Time.now)

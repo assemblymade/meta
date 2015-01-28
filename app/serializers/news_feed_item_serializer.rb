@@ -17,7 +17,7 @@ class NewsFeedItemSerializer < ApplicationSerializer
   end
 
   def url
-    product_update_path(object.product_id, object)
+    product_update_path(product.slug, object)
   end
 
   def user

@@ -1,6 +1,6 @@
 var PusherStore = require('../stores/pusher_store')
 var Store = require('./es6_store')
-var StoryActionCreators = require('../actions/story_action_creators')
+var StoryActions = require('../actions/story_actions')
 var UserStore = require('./user_store')
 
 var _dispatchToken,
@@ -30,7 +30,7 @@ class StoryStore extends Store {
             _stories[story.id] = story
             _stories[story.id].last_read_at = 0
           })
-          StoryActionCreators.fetchReadState(this.getStoryKeys())
+          StoryActions.fetchReadState(this.getStoryKeys())
           this.emitChange()
           break
 
@@ -50,7 +50,7 @@ class StoryStore extends Store {
 
         case ActionTypes.PUSHER_USER_ACTION:
           if (action.event == 'story-added') {
-            StoryActionCreators.fetchStories()
+            StoryActions.fetchStories()
             this.emitChange()
           }
           break;
@@ -90,8 +90,8 @@ class StoryStore extends Store {
     var timestamp = this.getAcknowledgedAt()
 
     return _(_stories).filter((s) =>
-                          s.updated_at > s.last_read_at &&
-                          s.updated_at > timestamp)
+      moment(s.updated_at).unix() > s.last_read_at &&
+      moment(s.updated_at).unix() > timestamp)
   }
 
   getUnviewedCount() {
@@ -99,8 +99,4 @@ class StoryStore extends Store {
   }
 }
 
-var store = new StoryStore()
-
-StoryActionCreators.fetchStories()
-
-module.exports = store
+module.exports = new StoryStore()

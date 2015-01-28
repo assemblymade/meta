@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="426px" height="60px" viewBox="0 0 426 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.1.1 (8761) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Group" sketch:type="MSLayerGroup">
+            <rect id="Rectangle-1" fill="#353941" sketch:type="MSShapeGroup" x="0" y="0" width="426" height="60"></rect>
+            <path d="M206.661068,19.1797718 C205.101932,17.7264468 202.947438,17 200.197137,17 C199.436103,17 198.659473,17.1260009 197.867699,17.3777868 C197.075699,17.6297886 196.339075,17.9698183 195.658055,18.3974445 C194.976582,18.8250707 194.390719,19.2265906 193.899336,19.6015726 C193.408404,19.9765546 192.941884,20.3750539 192.5,20.7968548 C192.05789,20.3750539 191.59137,19.9765546 191.100438,19.6015726 C190.609281,19.2265906 190.023192,18.8252865 189.341719,18.3974445 C188.660247,17.9696025 187.923623,17.6297886 187.131849,17.3777868 C186.340075,17.1260009 185.563445,17 184.802411,17 C182.052336,17 179.897842,17.7266625 178.338705,19.1797718 C176.779568,20.632881 176,22.6484633 176,25.2265187 C176,26.0116508 176.144432,26.8205159 176.432842,27.652251 C176.721253,28.4842019 177.049897,29.1933883 177.418096,29.7791629 C177.786295,30.3649374 178.203767,30.9362564 178.670288,31.4929041 C179.136808,32.0495517 179.477658,32.4333797 179.692384,32.6441722 C179.90711,32.8551805 180.075952,33.0075035 180.198685,33.1013569 L191.689692,43.6834876 C191.910747,43.8944959 192.180849,44 192.5,44 C192.819151,44 193.089253,43.8944959 193.310308,43.6834876 L204.783007,33.1363092 C207.594336,30.4529654 209,27.8162248 209,25.2263029 C209,22.6480318 208.220432,20.6326653 206.661068,19.1797718 Z" id="Shape" fill="#E93A53" sketch:type="MSShapeGroup"></path>
+            <text id="Built-with" sketch:type="MSTextLayer" font-family="Helvetica Neue" font-size="28" font-weight="normal" fill="#FFFFFF">
+                <tspan x="42" y="39">Built with</tspan>
+            </text>
+            <text id="on-Assembly" sketch:type="MSTextLayer" font-family="Helvetica Neue" font-size="28" font-weight="normal" fill="#FFFFFF">
+                <tspan x="227" y="39">on Assembly</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

@@ -1,15 +1,14 @@
 // var Dispatcher = require('../dispatcher');
 var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
 var LocalStorageMixin = require('../mixins/local_storage');
-var NotificationsStore = require('../stores/notifications_store');
-var StoryActionCreators = require('../actions/story_action_creators')
+var StoryActions = require('../actions/story_actions')
 var StoryStore = require('../stores/story_store')
 
 var DropdownNotificationsToggler = React.createClass({
   mixins: [DropdownTogglerMixin, LocalStorageMixin],
 
   acknowledge: function() {
-    StoryActionCreators.acknowledge();
+    StoryActions.acknowledge();
   },
 
   badge: function(total) {
@@ -22,6 +21,7 @@ var DropdownNotificationsToggler = React.createClass({
 
   componentDidMount: function() {
     StoryStore.addChangeListener(this._onChange);
+    StoryActions.fetchStories()
   },
 
   componentWillUnmount: function() {

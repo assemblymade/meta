@@ -1,6 +1,8 @@
 var CONSTANTS = window.CONSTANTS;
 var ProductFollowersStore = require('../stores/product_followers_store');
 var ProductActionCreators = require('../actions/product_action_creators');
+var UserActions = require('../actions/user_actions')
+var UserStore = require('../stores/user_store')
 
 module.exports = React.createClass({
   displayName: 'ProductFollowers',
@@ -25,6 +27,10 @@ module.exports = React.createClass({
   },
 
   handleClick: function() {
+    if (!UserStore.isSignedIn()) {
+      UserActions.newSession()
+      return
+    }
     if (this.state.following) {
       ProductActionCreators.unfollowClicked(this.props.product_id)
     } else {

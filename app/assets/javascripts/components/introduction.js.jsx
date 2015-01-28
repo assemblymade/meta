@@ -5,9 +5,13 @@ var Introduction = React.createClass({
 
   propTypes: {
     introduction: React.PropTypes.shape({
-      user: React.PropTypes.object,
-      product: React.PropTypes.object,
-      bio: React.PropTypes.string
+      user: React.PropTypes.shape({
+        username: React.PropTypes.string.isRequired
+      }).isRequired,
+      product: React.PropTypes.shape({
+        name: React.PropTypes.string.isRequired
+      }).isRequired,
+      bio: React.PropTypes.string.isRequired
     }).isRequired
   },
 

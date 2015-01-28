@@ -8,6 +8,6 @@ class TeamMembershipSerializer < ApplicationSerializer
   end
 
   def url
-    product_people_path(object.product)
+    product_team_membership_path(object.product, object)
   end
 end

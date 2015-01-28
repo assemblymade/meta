@@ -79,7 +79,7 @@ var IdeaStartConversation = React.createClass({
     });
 
     return (
-      <IdeaContainer navigate={this.props.navigate} showRelatedIdeas={false}>
+      <IdeaContainer showRelatedIdeas={false}>
         <div className="clearfix py2">
           <div className="left ml4">
             <h4 className="mb0 mt0">Asking a first question gets things going.</h4>

@@ -14,6 +14,7 @@ var AppsActionCreators = {
 
     client.search({
       index: 'products',
+      size: 100,
       body: {
         query: {
           multi_match: {
@@ -49,7 +50,7 @@ var AppsActionCreators = {
     $.ajax({
       method: 'GET',
       dataType: 'json',
-      url: routes.apps_path() + '.json',
+      url: routes.discover_path() + '.json',
       data: params,
       success: function(response) {
         Dispatcher.dispatch({

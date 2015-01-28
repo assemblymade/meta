@@ -121,7 +121,7 @@ var IdeaAdmin = React.createClass({
     var idea = this.state.idea;
 
     return (
-      <IdeaContainer navigate={this.props.navigate} showRelatedIdeas={false}>
+      <IdeaContainer showRelatedIdeas={false}>
         <div className="px4 py2">
           <h5>Topics</h5>
           {this.renderTopics()}

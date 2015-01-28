@@ -6,7 +6,7 @@ if ($('meta[name=read-raptor-url]')) {
   rrUrl = $('meta[name=read-raptor-url]').attr('content')
 }
 
-var StoryActionCreators = {
+var StoryActions = {
   acknowledge: function() {
     Dispatcher.dispatch({
       type: ActionTypes.STORY_ACKNOWLEDGE_STORIES,
@@ -79,4 +79,4 @@ var StoryActionCreators = {
 
 }
 
-module.exports = StoryActionCreators
+module.exports = StoryActions

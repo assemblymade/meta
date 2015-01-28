@@ -10,7 +10,6 @@ var Discussion = React.createClass({
 
   render: function() {
     var item = this.props.newsFeedItem
-    var bounty = this.props.target
 
     return (
       <Tile>

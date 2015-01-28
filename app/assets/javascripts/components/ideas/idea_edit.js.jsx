@@ -32,10 +32,10 @@ var IdeaEdit = React.createClass({
 
     render() {
       return (
-        <IdeaContainer navigate={this.props.navigate} showRelatedIdeas={false}>
+        <IdeaContainer showRelatedIdeas={false}>
           <div className="clearfix py2">
             <div className="left px2">
-              <h4 className="mb0 mt0">What's your app idea?</h4>
+              <h4 className="mb0 mt0">Edit your idea</h4>
             </div>
 
             <div className="right px2">

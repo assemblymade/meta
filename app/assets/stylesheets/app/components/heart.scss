@@ -28,3 +28,9 @@
     }
   }
 }
+
+.heart-medium.hover-red:hover {
+  .svg-icon-heart .path1, .svg-icon-heart .path2 {
+    fill:$red;
+  }
+}
