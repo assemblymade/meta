@@ -48,9 +48,6 @@
     NOTIFICATIONS: {
       ACTIONS: {
         ACKNOWLEDGE: 'notifications:acknowledge',
-        FETCH_STORIES: 'notifications:fetchStories',
-        FETCH_MORE_STORIES: 'notifications:fetchMoreStories',
-        MARK_AS_READ: 'notifications:markAsRead',
         MARK_ALL_AS_READ: 'notifications:markAllAsRead',
         MARK_STORY_AS_READ: 'notifications:markStoryAsRead'
       },

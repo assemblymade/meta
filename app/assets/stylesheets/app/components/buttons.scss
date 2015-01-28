@@ -322,7 +322,7 @@ button, .button {
   &:active,
   &.active {
     color: white;
-    background-color: $green-dark;
+    background-color: darken($green, 10%);
   }
 }
 

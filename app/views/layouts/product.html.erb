@@ -12,6 +12,14 @@
   <script>
     window.app.product = new Product(<%= json @product, scope: current_user %>)
     window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);
+
+    $(document).ready(function() {
+      React.render(React.createElement(CreateProductItem, {
+        product: { slug: <%== @product.slug.to_json %> },
+        activeMenuItem: "<%= nav_active?(:posts) ? "post" : (nav_active?(:assets) ? "asset" : "bounty") %>"
+      }), document.getElementById('new-el'))
+    })
+
   </script>
 <% end %>
 
@@ -47,7 +55,7 @@
       <div class="block full-width pb2 r768_table r600_pb0">
         <div class="primary block full-width center py2 valign-mid r768_table-cell r768_left-align">
           <div class="app-icon-container center valign-top r768_table-cell r768_pr4">
-            <a class="block" href="<%= product_path(@product) %>">
+            <a class="block mx-auto mb2 sm-mb0" href="<%= product_path(@product) %>" style="max-width:96px">
               <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 96 %>
             </a>
           </div>
@@ -156,18 +164,6 @@
 
 
           <div id="new-el"></div>
-
-          <% content_for :javascript do %>
-            <script>
-              $(document).ready(function() {
-                React.render(React.createElement(CreateProductItem, {
-                  product: { slug: <%== @product.slug.to_json %> },
-                  activeMenuItem: "<%= nav_active?(:posts) ? "post" : (nav_active?(:assets) ? "asset" : "bounty") %>"
-                }), document.getElementById('new-el'))
-              })
-
-            </script>
-          <% end %>
         </div>
 
       </div>
@@ -246,6 +242,5 @@
 <% end %>
 
 <%= render 'shared/footer' %>
-
 
 <% parent_layout 'application' %>

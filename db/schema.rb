@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150126214402) do
+ActiveRecord::Schema.define(version: 20150128213925) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "uuid-ossp"
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "pg_stat_statements"
-  enable_extension "uuid-ossp"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -231,8 +231,10 @@ ActiveRecord::Schema.define(version: 20150126214402) do
     t.datetime "updated_at"
     t.uuid     "event_id"
     t.uuid     "attachments",             default: [],              array: true
+    t.datetime "deleted_at"
   end
 
+  add_index "events", ["deleted_at"], name: "index_events_on_deleted_at", using: :btree
   add_index "events", ["type", "wip_id"], name: "index_events_on_type_and_wip_id", using: :btree
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
   add_index "events", ["wip_id", "number"], name: "index_events_on_wip_id_and_number", unique: true, using: :btree
@@ -324,8 +326,10 @@ ActiveRecord::Schema.define(version: 20150126214402) do
     t.datetime "flagged_at"
     t.text     "topics",                         default: [],                                 array: true
     t.text     "categories",                     default: [],                                 array: true
+    t.datetime "deleted_at"
   end
 
+  add_index "ideas", ["deleted_at"], name: "index_ideas_on_deleted_at", using: :btree
   add_index "ideas", ["flagged_at"], name: "index_ideas_on_flagged_at", using: :btree
 
   create_table "integrations", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -665,9 +669,11 @@ ActiveRecord::Schema.define(version: 20150126214402) do
     t.text     "try_url"
     t.string   "topics",                                                                    array: true
     t.integer  "wips_count",                                    default: 0,    null: false
+    t.datetime "deleted_at"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
+  add_index "products", ["deleted_at"], name: "index_products_on_deleted_at", using: :btree
   add_index "products", ["profitable_at"], name: "index_products_on_profitable_at", using: :btree
   add_index "products", ["repos"], name: "index_products_on_repos", using: :btree
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true, using: :btree
@@ -721,6 +727,7 @@ ActiveRecord::Schema.define(version: 20150126214402) do
     t.datetime "created_at", null: false
     t.string   "slug",       null: false
     t.datetime "ended_at"
+    t.string   "background"
   end
 
   add_index "showcases", ["ended_at"], name: "index_showcases_on_ended_at", using: :btree
@@ -1118,8 +1125,10 @@ ActiveRecord::Schema.define(version: 20150126214402) do
     t.uuid     "locked_by"
     t.integer  "priority"
     t.integer  "hearts_count",                     default: 0,       null: false
+    t.datetime "deleted_at"
   end
 
+  add_index "wips", ["deleted_at"], name: "index_wips_on_deleted_at", using: :btree
   add_index "wips", ["flagged_at"], name: "index_wips_on_flagged_at", using: :btree
   add_index "wips", ["product_id", "number"], name: "index_wips_on_product_id_and_number", unique: true, using: :btree
   add_index "wips", ["product_id", "priority"], name: "index_wips_on_product_id_and_priority", using: :btree

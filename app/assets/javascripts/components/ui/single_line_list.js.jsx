@@ -1,4 +1,5 @@
 var Label = require('./label.js.jsx')
+var OverflowFade = require('./overflow_fade.js.jsx')
 
 var SingleLineList = React.createClass({
 
@@ -20,15 +21,13 @@ var SingleLineList = React.createClass({
       return <div className="inline-block px1">{item}</div>
     })
 
-    shadowStyle = {
-      width: height,
-      background: 'linear-gradient(90deg, rgba(255, 255, 255, 0), white)'
-    }
-
-    return <div className="relative mxn1 overflow-hidden" style={{height: height, whiteSpace: 'nowrap'}}>
-      {items}
-      <div className="absolute top-0 right-0 bottom-0" style={shadowStyle}></div>
-    </div>
+    return (
+      <OverflowFade dimension="horizontal" width="100%" height={height} >
+        <div className="mxn1" style={{whiteSpace: 'nowrap'}}>
+          {items}
+        </div>
+      </OverflowFade>
+    )
   }
 })
 

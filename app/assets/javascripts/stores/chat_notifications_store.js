@@ -30,13 +30,13 @@ var moment = require('moment');
       var count = _.countBy(
         _chatRooms,
         function(entry) {
-          var updated_at = entry.updated_at > entry.last_read_at;
+          var updated = entry.updated > entry.last_read_at;
 
           if (acknowledgedAt) {
-            return updated_at && entry.updated_at > acknowledgedAt;
+            return updated && entry.updated > acknowledgedAt;
           }
 
-          return updated_at;
+          return updated;
         }
       );
 
@@ -132,7 +132,7 @@ var moment = require('moment');
             return room.id !== (app.chatRoom || {}).id;
           }
         ),
-        func.dot('updated_at')
+        func.dot('updated')
       );
     }
   });

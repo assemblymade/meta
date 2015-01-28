@@ -46,8 +46,25 @@ var Apps = React.createClass({
   },
 
   render: function() {
+    var header
+    var showcase = this.props.showcase
 
-    filtersDropdownMenu = (
+    if (!showcase) {
+      header = <Jumbotron bg="ideas/ideas-header-bg-lg.jpg">
+        <div className="center white">
+          <h1 className="mt0 mb2">Find a product you'd like to work on,</h1>
+          <h3 className="regular mt0 mb0">or <a className="underline white white-hover" href="/start">start your own</a> that others can work on with you.</h3>
+        </div>
+      </Jumbotron>
+    } else {
+      header = <div className="container py3 px4 bg-white white rounded mt4" style={{background: showcase.background}}>
+        <h5 className="mt0 mb0 caps white" style={{color: 'rgba(255,255,255,.6)'}}>Trending</h5>
+        <h2 className="mt0 mb0">{showcase.name}</h2>
+      </div>
+    }
+
+
+    var filtersDropdownMenu = (
       <DropdownMenu position="right">
         {_(this.props.topics).map(f =>
           <DropdownMenu.Item label={f.name} action={"/discover?topic=" + f.slug} />
@@ -57,12 +74,7 @@ var Apps = React.createClass({
 
     return (
       <div>
-        <Jumbotron bg="ideas/ideas-header-bg-lg.jpg">
-          <div className="center white">
-            <h1 className="mt0 mb2">Find a product you'd like to work on,</h1>
-            <h3 className="regular mt0 mb0">or <a className="underline white white-hover" href="/start">start your own</a> that others can work on with you.</h3>
-          </div>
-        </Jumbotron>
+        {header}
 
         <div className="container">
           <div className="clearfix py2 md-py3 lg-py4">
@@ -93,6 +105,7 @@ var Apps = React.createClass({
     }
     return <div>
       {this.renderAppsList(_(this.state.apps).first(3))}
+      {this.renderShowcases()}
       {this.renderAppsList(_(this.state.apps).rest(3))}
       <PaginationLinks page={this.props.page} pages={this.props.total_pages} onPageChanged={this.handlePageChanged} />
     </div>
@@ -109,27 +122,27 @@ var Apps = React.createClass({
   },
 
   renderShowcases: function() {
-    if (!this.props.showcases) {
+    if (!this.props.showcases || this.props.showcase) {
       return null
+    }
+
+    var renderShowcase = function(showcase) {
+      return (
+        <a href={"/discover?showcase=" + showcase.slug} className="block center rounded white white-hover py4 bg-gray-5" style={{
+            background: showcase.background
+          }}>
+          <h4 className="mt1 mb1" style={{color: 'rgba(255,255,255,0.6)'}}>Top Trending</h4>
+          <h4 className="mt1 mb1">{showcase.name}</h4>
+        </a>
+      )
     }
 
     return <div className="clearfix mxn2">
       <div className="sm-col sm-col-6 px2 mb3">
-        <a href={"/discover?showcase=" + this.props.topics[0].slug} className="block center rounded white white-hover py4" style={{
-            background: 'linear-gradient(#364d70, #5e0f4c)'
-          }}>
-          <h4 className="mt1 mb1" style={{color: 'rgba(255,255,255,0.6)'}}>Top Trending</h4>
-          <h4 className="mt1 mb1">{this.props.topics[0].hero_title}</h4>
-        </a>
+        {renderShowcase(this.props.showcases[0])}
       </div>
-
       <div className="sm-col sm-col-6 px2 mb3">
-        <a href={"/discover?showcase=" + this.props.topics[1].slug} className="block center rounded white white-hover py4" style={{
-            background: 'linear-gradient(#5fb384, #084557)'
-          }}>
-          <h4 className="mt1 mb1" style={{color: 'rgba(255,255,255,0.6)'}}>Top Trending</h4>
-          <h4 className="mt1 mb1">{this.props.topics[1].hero_title}</h4>
-        </a>
+        {renderShowcase(this.props.showcases[1])}
       </div>
     </div>
   },

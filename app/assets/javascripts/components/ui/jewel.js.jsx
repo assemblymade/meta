@@ -1,8 +1,6 @@
 var IconWithNumber = require('./icon_with_number.js.jsx')
 
 module.exports = React.createClass({
-  displayName: 'Jewel',
-
   propTypes: {
     icon: React.PropTypes.string.isRequired,
     n: React.PropTypes.number.isRequired,

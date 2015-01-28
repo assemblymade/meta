@@ -2,7 +2,6 @@ var RelatedIdeas = require('./related_ideas.js.jsx');
 
 var IdeaContainer = React.createClass({
   propTypes: {
-    navigate: React.PropTypes.func.isRequired,
     showRelatedIdeas: React.PropTypes.bool
   },
 
@@ -13,7 +12,6 @@ var IdeaContainer = React.createClass({
   },
 
   render() {
-    var navigate = this.props.navigate;
     var showRelatedIdeas = this.props.showRelatedIdeas;
     var leftColumnClasses = React.addons.classSet({
       col: showRelatedIdeas,

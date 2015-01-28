@@ -4,10 +4,7 @@ class AppsController < ApplicationController
   PER_PAGE=30
 
   def index
-    if params[:search].blank? && params[:topic].blank? && params[:showcase].blank?
-      @showcases = Showcase.active.order(:slug)
-    end
-
+    @showcases = Showcase.active.order(:slug)
     @topics = Topic.all
 
     respond_to do |format|

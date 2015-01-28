@@ -59,7 +59,7 @@ var ChatNotificationsToggler = React.createClass({
   shouldRead: function() {
     var chatRoom = ChatNotificationsStore.mostRecentlyUpdatedChatRoom();
 
-    return chatRoom && chatRoom.updated_at > chatRoom.last_read_at;
+    return chatRoom && (chatRoom.updated > chatRoom.last_read_at);
   }
 })
 

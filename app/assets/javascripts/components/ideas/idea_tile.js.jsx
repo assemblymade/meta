@@ -1,14 +1,14 @@
 var Avatar = require('../ui/avatar.js.jsx');
 var Drawer = require('../ui/drawer.js.jsx');
-var Footer = require('../ui/footer.js.jsx');
 var Heart = require('../heart.js.jsx');
 var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
 var Markdown = require('../markdown.js.jsx');
+var OverflowFade = require('../ui/overflow_fade.js.jsx')
 var ProgressBar = require('../ui/progress_bar.js.jsx');
 var Share = require('../ui/share.js.jsx');
-var SmallTile = require('../ui/small_tile.js.jsx');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
+var Tile = require('../ui/tile.js.jsx');
 var UserStore = require('../../stores/user_store');
 
 var Idea = React.createClass({
@@ -46,63 +46,49 @@ var Idea = React.createClass({
     var user = idea.user;
 
     return (
-      <SmallTile>
-        <div className="main">
-          <div className="xh4">
-            <a href={idea.path}> {idea.name}</a>
+      <Tile>
+        <OverflowFade dimension="vertical" width="100%" height="16rem">
+          <div className="p3">
+            <a className="h4 mt0 mb2 block" href={idea.path}>{idea.name}</a>
+            <Markdown content={idea.short_body} normalized={true} />
+          </div>
+        </OverflowFade>
+
+        <a href={user.url} className="block clearfix h6 mt0 mb0 black bold px3 py2">
+          <div className="left mr1">
+            <Avatar user={user} size={18} />
+          </div>
+          <div className="overflow-hidden">
+            {user.username}
+          </div>
+        </a>
+
+        <Drawer open={this.state.isDrawerOpen}>
+          <IdeaSharePanel idea={idea} />
+        </Drawer>
+
+        <div className="clearfix gray-2 fill-gray-2 h6 border-top">
+          <a href={idea.path} className="py2 px3 block left gray-2 bold">
+            <span className="mr1 fill-gray-3"><SvgIcon type="comment" /></span>
+            {idea.comments_count} {idea.comments_count === 1 ? 'comment' : 'comments'}
+          </a>
+
+          <div className="border-left right p2">
+            <Heart size="medium" heartable_id={item.id} heartable_type="NewsFeedItem" />
           </div>
 
-          <Markdown content={idea.short_body} normalized={true} />
+          <a href="javascript:void(0);" onClick={this.handleShareClick} className="border-left p2 block right">
+            <SvgIcon type="share" />
+          </a>
         </div>
 
-        <Footer>
-          <div className="action-bar">
-            <div className="item">
-              <div className="px3 py2 bg-white">
-                <div className="clearfix h6 mt0 mb0">
-                  <div className="left mr1">
-                    <Avatar user={user} size={18} />
-                  </div>
-                  <a href={user.url} className="black bold">{user.username}</a>
-                </div>
-              </div>
-            </div>
-
-            <div className="mxn3">
-              <Drawer open={this.state.isDrawerOpen}>
-                <IdeaSharePanel idea={idea} />
-              </Drawer>
-            </div>
-
-            <div className="item">
-              <div className="action-group">
-                <div className="item">
-                  <a href={idea.path} className="comment-count">
-                    <SvgIcon type="comment" />
-                    {idea.comments_count} {idea.comments_count === 1 ? 'Comment' : 'Comments'}
-                  </a>
-                </div>
-
-                <div className="item">
-                  <a href="javascript:void(0);" onClick={this.handleShareClick}>
-                    <SvgIcon type="share" />
-                  </a>
-                </div>
-
-                <div className="item">
-                  <Heart size="medium" heartable_id={item.id} heartable_type="NewsFeedItem" />
-                </div>
-              </div>
-            </div>
-
-            <div className="item">
-              <div className="py3 px3">
-                <IdeaProgressBar idea={idea} />
-              </div>
-            </div>
+        <div className="border-top px3 py2">
+          <div className="mb2">
+            <IdeaProgressBar idea={idea} />
           </div>
-        </Footer>
-      </SmallTile>
+        </div>
+
+      </Tile>
     );
   }
 });

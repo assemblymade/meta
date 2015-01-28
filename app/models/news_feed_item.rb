@@ -52,8 +52,10 @@ class NewsFeedItem < ActiveRecord::Base
     target.try(:hearted)
   end
 
-  def unhearted
-    target.try(:unhearted)
+  def unhearted(heart)
+    if target.respond_to?(:unhearted)
+      target.unhearted(heart)
+    end
   end
 
   def product?

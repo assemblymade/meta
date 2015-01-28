@@ -90,8 +90,8 @@ class StoryStore extends Store {
     var timestamp = this.getAcknowledgedAt()
 
     return _(_stories).filter((s) =>
-                          s.updated_at > s.last_read_at &&
-                          s.updated_at > timestamp)
+      moment(s.updated_at).unix() > s.last_read_at &&
+      moment(s.updated_at).unix() > timestamp)
   }
 
   getUnviewedCount() {

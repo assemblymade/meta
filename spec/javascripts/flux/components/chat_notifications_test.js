@@ -16,19 +16,19 @@ describe('ChatNotifications', function() {
     chatRooms = {
       foo: {
         id: 'foo',
-        updated_at: moment().unix(),
+        updated: moment().unix(),
         last_read_at: 123,
         label: 'foo'
       },
       bar: {
         id: 'bar',
-        updated_at: moment().unix(),
+        updated: moment().unix(),
         last_read_at: 456,
         label: 'bar'
       },
       baz: {
         id: 'baz',
-        updated_at: moment().unix() - 100,
+        updated: moment().unix() - 100,
         last_read_at: moment().unix(),
         label: 'baz'
       }
@@ -43,13 +43,13 @@ describe('ChatNotifications', function() {
       var count = _.countBy(
         chatRooms,
         function(entry) {
-          var updated_at = entry.updated_at > entry.last_read_at;
+          var updated = entry.updated > entry.last_read_at;
 
           if (acknowledgedAt) {
-            return updated_at && entry.updated_at > acknowledgedAt;
+            return updated && entry.updated > acknowledgedAt;
           }
 
-          return updated_at;
+          return updated;
         }
       );
 
@@ -93,7 +93,7 @@ describe('ChatNotifications', function() {
 
     chatRooms.buzz = {
       id: 'buzz',
-      updated_at: moment().unix(),
+      updated: moment().unix(),
       last_read_at: moment().unix() - 100,
       label: 'buzz'
     };

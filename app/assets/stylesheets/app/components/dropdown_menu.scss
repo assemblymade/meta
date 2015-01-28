@@ -11,12 +11,14 @@ $dropdown-shadow-color: rgba(100, 100, 100, .1);
   min-width: 12rem;
 
   padding-left: 0;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
 
   margin-top: .5rem;
 
   list-style: none;
   background-color: white;
-  border-radius: 3px;
+  border-radius: $border-radius;
   background-clip: padding-box;
 
   text-align: left;
@@ -24,28 +26,45 @@ $dropdown-shadow-color: rgba(100, 100, 100, .1);
   box-shadow: 0 0 0 1px $dropdown-border-color,
               0 .25rem .5rem 0 $dropdown-shadow-color;
 
-  :first-child a {
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+  &:before {
+    top: -.5rem;
+    border-width: 0 .5rem .5rem .5rem;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent transparent darken($dropdown-border-color, 20%) transparent;
+    position: absolute;
+    content: "";
   }
 
-  :last-child a {
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
+  &:after {
+    top: calc(-.5rem + 1px);
+    border-width: 0 .5rem .5rem .5rem;
+    border-color: transparent transparent $white transparent;
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
   }
-
 }
 
-.new-dropdown-menu-left {
+.new-dropdown-menu--left {
   left: 0;
 
-  &:before {
-    left: 0;
+  &:before,
+  &:after {
+    left: 1rem;
   }
 }
 
-.new-dropdown-menu-right {
+.new-dropdown-menu--right {
   right: 0;
+
+  &:before,
+  &:after {
+    right: 1rem;
+  }
 }
 
 .new-dropdown-menu-item {

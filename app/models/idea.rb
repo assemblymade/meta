@@ -129,10 +129,15 @@ class Idea < ActiveRecord::Base
 
   def greenlight!
     update(greenlit_at: Time.now)
+    send_greenlit_notifications
   end
 
   def should_greenlight?
     hearts_count >= tilting_threshold
+  end
+
+  def send_greenlit_notifications
+    # no-op for now
   end
 
   def love
@@ -140,14 +145,14 @@ class Idea < ActiveRecord::Base
   end
 
   def hearted
-    save_score
+    add_score
   end
 
-  def unhearted
-    save_score
+  def unhearted(heart)
+    decrement_score(heart)
   end
 
-  def save_score
+  def add_score
     lovescore = 0
 
     news_feed_item.hearts.where('created_at > ?', last_score_update).each do |h|
@@ -162,6 +167,14 @@ class Idea < ActiveRecord::Base
     })
 
     greenlight! if should_greenlight?
+  end
+
+  def decrement_score(heart)
+    time_since = heart.created_at - EPOCH_START
+    love_lost = 2 ** (time_since.to_f / HEARTBURN.to_f)
+    lovescore = self.score - love_lost
+    update!({last_score_update: DateTime.now,
+      score: lovescore})
   end
 
   def url_params

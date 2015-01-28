@@ -1,6 +1,5 @@
 var Button = require('../ui/button.js.jsx');
 var DropdownMenu = require('../ui/dropdown_menu.js.jsx')
-var Footer = require('../ui/footer.js.jsx');
 var IdeaTile = require('./idea_tile.js.jsx');
 var IdeaAdminStore = require('../../stores/idea_admin_store');
 var IdeasStore = require('../../stores/ideas_store');
@@ -86,11 +85,9 @@ var IdeasIndex = React.createClass({
               </div>
             </div>
 
-            <Footer>
-              <div className="center">
-                <Pagination actionCall={navigate} />
-              </div>
-            </Footer>
+            <div className="center">
+              <Pagination actionCall={navigate} />
+            </div>
           </div>
         </section>
       </main>
