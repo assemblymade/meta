@@ -129,10 +129,15 @@ class Idea < ActiveRecord::Base
 
   def greenlight!
     update(greenlit_at: Time.now)
+    send_greenlit_notifications
   end
 
   def should_greenlight?
     hearts_count >= tilting_threshold
+  end
+
+  def send_greenlit_notifications
+    # no-op for now
   end
 
   def love

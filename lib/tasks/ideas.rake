@@ -36,12 +36,23 @@ namespace :ideas do
             next
           end
 
-          product.team_memberships.each do |membership|
-            heart = idea.news_feed_item.hearts.create!(
-              user_id: membership.user_id
-            )
+          hearts = (product.votes + product.watchings + product.team_memberships).map do |h|
+            next unless h.user_id
+            { user_id: h.user_id, created_at: h.created_at }
+          end
 
-            heart.update_column('created_at', membership.created_at)
+          hearts.each do |heart|
+            begin
+              next if Heart.where(user_id: heart[:user_id], heartable_id: idea.news_feed_item.id).any?
+              next if heart[:user_id].nil?
+              h = idea.news_feed_item.hearts.create!(
+                user_id: heart[:user_id]
+              )
+
+              h.update_column('created_at', heart[:created_at])
+            rescue => e
+              puts "Heart failed #{e}"
+            end
           end
 
           idea.greenlight! if idea.should_greenlight?
