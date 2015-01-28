@@ -1,11 +1,11 @@
 var Avatar = require('../ui/avatar.js.jsx');
-var Icon = require('../icon.js.jsx');
+var Icon = require('../ui/icon.js.jsx');
 var Heart = require('../heart.js.jsx');
 var ListItemMixin = require('../../mixins/list_item_mixin.js.jsx');
 var NewsFeedItemModal = require('../news_feed/news_feed_item_modal.js.jsx');
 var Button = require('../ui/button.js.jsx')
 var ProgressBar = require('../ui/progress_bar.js.jsx')
-
+var Tile = require('../ui/tile.js.jsx')
 var max_description_length = 300;
 
 var ProposalListIem = React.createClass({
@@ -97,7 +97,7 @@ var ProposalListIem = React.createClass({
     if (proposal.description) {
       return (
         <div className="h5 gray-dark">
-          {desc}
+          <Markdown content={proposal.short_body} normalized={true} />
         </div>
       );
     }

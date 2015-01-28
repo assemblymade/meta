@@ -26,7 +26,7 @@ var Proposal = React.createClass({
   render: function() {
     return (
       <div>
-        {this.renderProposal()}
+        {this.renderIntro()}
       </div>
     );
   },
@@ -211,8 +211,6 @@ var Proposal = React.createClass({
       success: function(data) {
         proposalComponent.setState({percent: data.progress, approved: data.approved, state: data.state})
       }});
-
-
     }
 
   });

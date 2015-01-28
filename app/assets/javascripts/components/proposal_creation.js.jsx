@@ -11,8 +11,8 @@ var DatePickerInput = require('react-datepicker-component/DatePickerInput.jsx')
 var NewComment = require('./news_feed/new_comment.js.jsx');
 var NewCommentStore = require('../stores/new_comment_store');
 
-var ProposalMake = React.createClass({
-  displayName: 'ProposalMake',
+var ProposalCreation = React.createClass({
+  displayName: 'ProposalCreation',
   propTypes: {
     user: React.PropTypes.object,
     product: React.PropTypes.object,
@@ -237,4 +237,4 @@ var ProposalMake = React.createClass({
     }
 });
 
-module.exports = window.ProposalMake = ProposalMake;
+module.exports = window.ProposalCreation = ProposalCreation;
