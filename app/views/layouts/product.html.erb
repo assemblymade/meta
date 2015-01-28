@@ -160,45 +160,10 @@
           <% content_for :javascript do %>
             <script>
               $(document).ready(function() {
-
-                var createBountyMenuItem = React.createElement(DropdownMenu.Item, {
-                  label: 'Create bounty',
-                  action: "javascript:showCreateBounty();void(0);"
-                })
-
-                var createPostMenuItem = React.createElement(DropdownMenu.Item, {
-                  label: 'Create post',
-                  action: <%= new_product_post_path(@product).to_json.html_safe %>
-                })
-
-                var createAssetMenuItem = React.createElement(DropdownMenu.Item, {
-                  label: 'Create asset',
-                  action: <%= new_product_asset_path(@product).to_json.html_safe %>
-                })
-
-                var menuItems = {
-                  bounty: createBountyMenuItem,
-                  post:   createPostMenuItem,
-                  asset:  createAssetMenuItem
-                }
-
-                var activeMenuItem = "<%= nav_active?(:posts) ? "post" : (nav_active?(:assets) ? "asset" : "bounty") %>";
-
-                var primaryAction = menuItems[activeMenuItem].props.action
-                var primaryLabel = menuItems[activeMenuItem].props.label
-                delete menuItems[activeMenuItem]
-
-                var dropdownMenu = React.createElement(DropdownMenu, {position: 'right'}, _.values(menuItems))
-
-                var buttonDropdown = React.createElement(ButtonDropdown, {
-                  type: 'primary',
-                  dropdownMenu: dropdownMenu,
-                  block: true,
-                  action: function() { window.location = primaryAction }
-                }, primaryLabel)
-
-                React.render(buttonDropdown, document.getElementById('new-el'))
-
+                React.render(React.createElement(CreateProductItem, {
+                  product: { slug: <%== @product.slug.to_json %> },
+                  activeMenuItem: "<%= nav_active?(:posts) ? "post" : (nav_active?(:assets) ? "asset" : "bounty") %>"
+                }), document.getElementById('new-el'))
               })
 
             </script>

@@ -4,7 +4,7 @@ var Avatar = require('./ui/avatar.js.jsx');
 var EventMixin = require('../mixins/event.js.jsx');
 var NotificationsStore = require('../stores/notifications_store');
 var Spinner = require('./spinner.js.jsx');
-var StoryActionCreators = require('../actions/story_action_creators')
+var StoryActions = require('../actions/story_actions')
 var StoryStore = require('../stores/story_store')
 var UserStore = require('../stores/user_store')
 
@@ -110,7 +110,7 @@ var FullPageNotifications = React.createClass({
   },
 
   handleMoreClicked: function() {
-    StoryActionCreators.fetchStories(StoryStore.getLastStory().id)
+    StoryActions.fetchStories(StoryStore.getLastStory().id)
   },
 
   // stores
@@ -156,7 +156,7 @@ var Entry = React.createClass({
   },
 
   markAsRead: function() {
-    StoryActionCreators.markAsRead(this.props.story)
+    StoryActions.markAsRead(this.props.story)
   },
 
   markAsReadButton: function() {

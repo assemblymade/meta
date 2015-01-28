@@ -2,7 +2,7 @@ class Admin::AppsController < AdminController
   def index
     @showcases = Showcase.active
     @topics = Topic.all
-    @products = Product.all.includes(showcase_entries: :showcase)
+    @products = Product.all.includes(showcase_entries: :showcase).where(flagged_at: nil)
 
     if params[:q].present?
       @products = @products.where("name ilike ?", "%#{params[:q]}%")
@@ -23,7 +23,11 @@ class Admin::AppsController < AdminController
 
   def update
     @product = Product.find(params[:id])
-    @product.update!(app_params)
+    if !@product.showcase_entries.empty? && app_params[:showcase].blank?
+      @product.showcase_entries.map(&:destroy)
+    else
+      @product.update!(app_params)
+    end
     render json: @product, serializer: AppAdminSerializer
   end
 

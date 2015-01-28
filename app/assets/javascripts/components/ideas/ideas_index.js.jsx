@@ -70,9 +70,10 @@ var IdeasIndex = React.createClass({
               <div className="py4">
                 <Nav>
                   {this.renderMyIdeas()}
-                  <Nav.Item label="Trending" href="/ideas?filter=trending" onClick={navigate.bind(null, '/ideas?filter=trending')} />
-                  <Nav.Item label="New" href="/ideas?filter=newness" onClick={navigate.bind(null, '/ideas?filter=newness')} />
-                  <Nav.Item label="Greenlit" href="/ideas?filter=greenlit" onClick={navigate.bind(null, '/ideas?filter=greenlit')} />
+                  <Nav.Item label="Trending" href="/ideas?sort=trending" />
+                  <Nav.Item label="Popular" href="/ideas?sort=hearts" />
+                  <Nav.Item label="New" href="/ideas?sort=newness" />
+                  <Nav.Item label="Greenlit" href="/ideas?filter=greenlit" />
                   <Nav.Divider />
                   <Nav.Item label="Topics" dropdownMenu={topicsDropdownMenu} />
                 </Nav>

@@ -1,8 +1,6 @@
 var RelatedIdeas = require('./related_ideas.js.jsx');
 
 var IdeaContainer = React.createClass({
-  displayName: 'IdeaContainer',
-
   propTypes: {
     navigate: React.PropTypes.func.isRequired,
     showRelatedIdeas: React.PropTypes.bool
@@ -36,16 +34,14 @@ var IdeaContainer = React.createClass({
         <div className="clearfix mxn2 py3">
           <div className={leftColumnClasses}>
             <h4 className="mt2 mb2">
-              <a href="/ideas"
-                className="bold"
-                onClick={navigate.bind(null, '/ideas')}>
-                &#8592; All app ideas
+              <a href="/ideas" className="bold">
+                &#8592; All product ideas
               </a>
             </h4>
           </div>
 
           <div className={rightColumnClasses}>
-            <h5 className="mt2 mb2">Other app ideas</h5>
+            <h5 className="mt2 mb2">Other product ideas</h5>
           </div>
         </div>
 

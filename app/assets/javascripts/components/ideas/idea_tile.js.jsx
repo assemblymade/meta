@@ -4,6 +4,7 @@ var Footer = require('../ui/footer.js.jsx');
 var Heart = require('../heart.js.jsx');
 var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
+var Markdown = require('../markdown.js.jsx');
 var ProgressBar = require('../ui/progress_bar.js.jsx');
 var Share = require('../ui/share.js.jsx');
 var SmallTile = require('../ui/small_tile.js.jsx');
@@ -48,24 +49,22 @@ var Idea = React.createClass({
       <SmallTile>
         <div className="main">
           <div className="xh4">
-            <a href={idea.url}> {idea.name}</a>
+            <a href={idea.path}> {idea.name}</a>
           </div>
 
-          <div className="content">
-            <p dangerouslySetInnerHTML={{ __html: idea.short_body }} />
-          </div>
+          <Markdown content={idea.short_body} normalized={true} />
         </div>
 
         <Footer>
           <div className="action-bar">
             <div className="item">
               <div className="px3 py2 bg-white">
-                <a className="block clearfix h6 mt0 mb0 black bold" href={user.url}>
+                <div className="clearfix h6 mt0 mb0">
                   <div className="left mr1">
                     <Avatar user={user} size={18} />
                   </div>
-                  <div className="overflow-hidden">{user.username}</div>
-                </a>
+                  <a href={user.url} className="black bold">{user.username}</a>
+                </div>
               </div>
             </div>
 
@@ -78,7 +77,7 @@ var Idea = React.createClass({
             <div className="item">
               <div className="action-group">
                 <div className="item">
-                  <a href={idea.url} className="comment-count">
+                  <a href={idea.path} className="comment-count">
                     <SvgIcon type="comment" />
                     {idea.comments_count} {idea.comments_count === 1 ? 'Comment' : 'Comments'}
                   </a>

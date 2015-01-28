@@ -2,7 +2,7 @@
 // rake js:routes
 
 var exports = module.exports = {};
-exports.apps_path = function(options){
+exports.discover_path = function(options){
   if (options && options.data) {
     var op_params = []
     for(var key in options.data){
@@ -84,6 +84,23 @@ exports.idea_path = function(options){
   } else {
     var params = options;
     return '/ideas/' + params.id + ''
+  }
+}
+
+exports.new_user_session_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/login?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/login'
+  } else {
+    var params = options;
+    return '/login'
   }
 }
 
@@ -223,6 +240,23 @@ exports.product_unfollow_path = function(options){
   }
 }
 
+exports.new_product_asset_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/assets/new?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/assets/new'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/assets/new'
+  }
+}
+
 exports.product_update_subscribe_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -308,6 +342,23 @@ exports.product_wip_reopen_path = function(options){
   }
 }
 
+exports.new_product_post_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/posts/new?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/posts/new'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/posts/new'
+  }
+}
+
 exports.product_post_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -341,3 +392,4 @@ exports.product_path = function(options){
     return '/' + params.id + ''
   }
 }
+

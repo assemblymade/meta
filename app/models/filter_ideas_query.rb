@@ -1,7 +1,7 @@
 class FilterIdeasQuery
   attr_accessor :options
 
-  def self.call(options)
+  def self.call(options={})
     new(options).filter
   end
 
@@ -40,9 +40,11 @@ class FilterIdeasQuery
   def sort_by
     case options[:sort]
     when 'newness'
-      Idea.order(created_at: :desc)
+      Idea.newness
+    when 'hearts'
+      Idea.hearts
     else
-      Idea.order(score: :desc)
+      Idea.trending
     end
   end
 

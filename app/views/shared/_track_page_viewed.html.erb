@@ -14,7 +14,7 @@
     }
   }
 
-  <% if !signed_in? || !current_user.staff? %>
+  <% if !staff? %>
     if (window._analyticsViewTarget) {
       var properties = _.extend(
         window._analyticsEngagedProperties || {},

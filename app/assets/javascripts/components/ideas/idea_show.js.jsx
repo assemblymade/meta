@@ -42,6 +42,7 @@ var IdeaShow = React.createClass({
 
   getInitialState() {
     return {
+      hideTimestamp: true,
       idea: IdeaStore.getIdea(),
       isSocialDrawerOpen: false,
       isHowItWorksDrawerOpen: false
@@ -112,12 +113,12 @@ var IdeaShow = React.createClass({
           <div className="container clearfix">
             <div className="left">
               <h4 className="mt2 mb2">
-                Band together to build the app ideas people love.
+                Band together to build the product ideas people love.
               </h4>
             </div>
             <div className="right py1">
               <Button type="primary" action={navigate.bind(null, '/ideas/new')}>
-                Add your app idea
+                Add your product idea
               </Button>
             </div>
           </div>
@@ -149,8 +150,15 @@ var IdeaShow = React.createClass({
     var idea = this.state.idea;
     var user = idea.user;
 
+    var timestampClasses = React.addons.classSet({
+      'gray-2': true,
+      'display-none': this.state.hideTimestamp
+    });
+
     return (
-      <div className="border-2px" style={{ paddingBottom: '1rem' }}>
+      <div className="border-2px" style={{ paddingBottom: '1rem' }}
+          onMouseOver={this._showTimestamp}
+          onMouseOut={this._hideTimestamp}>
         <div className="py3 px4">
           <h1 className="mt0 mb0">{idea.name}</h1>
 
@@ -161,7 +169,7 @@ var IdeaShow = React.createClass({
           <div className="clearfix mt3">
             <span className="left mr1"><Avatar user={user} /></span>
             <span className="bold">{user.username}</span>{' '}
-            <span className="gray-2">posted {moment(idea.created_at).fromNow()}</span>
+            <span className={timestampClasses}>posted {moment(idea.created_at).fromNow()}</span>
             {this.renderAdminRow()}
           </div>
         </div>
@@ -190,7 +198,7 @@ var IdeaShow = React.createClass({
           <div className="clearfix border-bottom border-top border-2px py2">
             <div className="left mt1 px4">
               <span className="gray-1">
-                This app idea has been greenlit!
+                This idea has been greenlit!
               </span>
             </div>
 
@@ -379,26 +387,46 @@ var IdeaShow = React.createClass({
     var idea = this.state.idea;
     var product = idea.product;
 
-    return (
-      <div className="clearfix border-bottom border-top border-2px py2">
-        <div className="left mt1 px4">
-          <span className="gray-1">
-            Sweet! <a href={product.url} className="black bold">{product.name}</a>{' '}
-            is live!
-          </span>
-        </div>
+    if (idea.hearts_count >= idea.tilting_threshold || idea.greenlit_at) {
+      return (
+        <div className="clearfix border-bottom border-top border-2px py2">
+          <div className="left mt1 px4">
+            <span className="gray-1">
+              Sweet! <a href={product.url} className="black bold">{product.name}</a>{' '}
+              is live!
+            </span>
+          </div>
 
-        <div className="right mr2">
-          <a href={product.url + '/bounties'}>
-            <Button type="primary" action={function() {}}>
+          <div className="right mr2">
+            <a href={product.url + '/bounties'}>
+              <Button type="primary" action={function() {}}>
+                <span className="text-white bold">
+                  Join the team
+                </span>
+              </Button>
+            </a>
+          </div>
+        </div>
+      );
+    } else if (UserStore.isCoreTeam() || UserStore.getId() === idea.user.id) {
+      return (
+        <div className="clearfix border-bottom border-top border-2px py2">
+          <div className="left mt1 px4">
+            <span className="gray-1">
+              Share this idea to get your <a href={product.url} className="black bold">product</a> greenlit!
+            </span>
+          </div>
+
+          <div className="right mr2">
+            <Button type="primary" action={this.handleShareClick}>
               <span className="text-white bold">
-                Join the team
+                Share this idea
               </span>
             </Button>
-          </a>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   },
 
   renderSubscriptionForm() {
@@ -430,6 +458,18 @@ var IdeaShow = React.createClass({
         </div>
       </div>
     );
+  },
+
+  _hideTimestamp(e) {
+    this.setState({
+      hideTimestamp: true
+    });
+  },
+
+  _showTimestamp(e) {
+    this.setState({
+      hideTimestamp: false
+    });
   }
 });
 
