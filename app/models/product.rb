@@ -83,6 +83,8 @@ class Product < ActiveRecord::Base
     @meta_id ||= Product.find_by(slug: 'meta').try(:id)
   end
 
+  default_scope -> { where(deleted_at: nil) }
+
   scope :featured,         -> {
     where.not(featured_on: nil).order(featured_on: :desc)
   }

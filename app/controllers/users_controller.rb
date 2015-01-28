@@ -72,7 +72,6 @@ class UsersController < ApplicationController
     @karma_total_history = @karma_total_history + @karma_history
 
     @karma_aggregate_data = Karma::Kronikler.new.aggregate_karma_info_per_user(@user.id)
-
   end
 
   def update
@@ -116,6 +115,13 @@ class UsersController < ApplicationController
     ReadRaptor::ReadArticle.perform_async(url)
 
     render json: url
+  end
+
+  def delete_account
+    authorize! :delete, User
+    @user = User.find_by!(username: params[:id])
+    @user.update!(deleted_at: Time.now)
+    DeleteUserAccount.perform_async(@user.id)
   end
 
   if Rails.env.development?

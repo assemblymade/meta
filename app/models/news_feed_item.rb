@@ -16,6 +16,8 @@ class NewsFeedItem < ActiveRecord::Base
   has_many :comments, class_name: 'NewsFeedItemComment', after_add: :comment_added
   has_one :last_comment, -> { order('news_feed_item_comments.created_at DESC').limit(1) }, class_name: 'NewsFeedItemComment'
 
+  default_scope -> { where(deleted_at: nil) }
+
   validates :target, presence: true
 
   before_validation :ensure_last_commented_at, on: :create

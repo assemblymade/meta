@@ -44,6 +44,8 @@ class Wip < ActiveRecord::Base
   after_commit :update_product_markings, on: :create
   after_update :update_elasticsearch
 
+  default_scope -> { where(deleted_at: nil) }
+
   scope :available,   ->{ where(state: 'open') }
   scope :by_product,  ->(product){ where(product_id: product.id) }
   scope :closed,      -> { where('closed_at is not null') }

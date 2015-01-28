@@ -17,22 +17,31 @@
           <br>
         <% end %>
 
-        <% if Rails.env.development? || (signed_in? && current_user.staff?) %>
-          <dl class="well well-sm small">
-            <dt>auth token</dt>
-            <dd><%= @user.authentication_token %> - <%=link_to('impersonate', "/discover?auth_token=#{@user.authentication_token}")%></dd>
-            <dt>email</dt>
-            <%= @user.email %>
-            <dt>last request</dt>
-            <%= time_ago_in_words(@user.last_request_at) %> ago
-            <dt>
+        <% if Rails.env.development? || staff? %>
+          <div class="well well-sm small">
+            <div><%= @user.email %></div>
+            <div>last request
+              <%= time_ago_in_words(@user.last_request_at) %> ago</div>
+            <div><%=link_to('Impersonate user', "/discover?auth_token=#{@user.authentication_token}")%></div>
+            <div>
               <% if @user.flagged_at %>
                 <a href="<%= unflag_user_path(@user) %>" data-method="patch">Unflag</a>
               <% else %>
                 <a href="<%= flag_user_path(@user) %>" data-method="patch">Flag</a>
               <% end %>
-            </dt>
-          </dl>
+            </div>
+            <div>
+              <% if @user.deleted_at %>
+                Account removed <%= time_ago_in_words(@user.deleted_at) %> ago
+              <% else %>
+                <%= react_component 'ConfirmActionButton',
+                              requireText: @user.username,
+                              buttonLabel: 'Delete user account',
+                              promptText: "This will delete everything! Type the user's username to confirm",
+                              action: delete_account_user_path(@user) %>
+              <% end %>
+            </div>
+          </div>
         <% end %>
 
       </div>

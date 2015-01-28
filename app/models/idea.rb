@@ -26,6 +26,8 @@ class Idea < ActiveRecord::Base
   after_commit :ensure_news_feed_item, on: :create
   after_commit :update_news_feed_item, on: :update
 
+  default_scope -> { where(deleted_at: nil) }
+
   scope :by, -> (user) { where(user_id: user.id) }
   scope :hearts, -> { includes(:news_feed_item).order('news_feed_items.hearts_count DESC') }
   scope :greenlit, -> { where.not(greenlit_at: nil) }

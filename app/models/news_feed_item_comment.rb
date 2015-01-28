@@ -9,6 +9,8 @@ class NewsFeedItemComment < ActiveRecord::Base
   validates :body, presence: true
   validates :news_feed_item, presence: true
 
+  default_scope -> { where(deleted_at: nil) }
+
   def self.publish_to_news_feed(target, event, body)
     if news_feed_item = NewsFeedItem.find_by(target: target)
       create!(
@@ -74,7 +76,7 @@ class NewsFeedItemComment < ActiveRecord::Base
     end
   end
 
-  def unhearted(heart)  
+  def unhearted(heart)
   end
 
 end
