@@ -18,8 +18,10 @@ $colors: (
   .#{$color}        { color: $hex }
   .bg-#{$color}     { background-color: $hex }
   .border-#{$color} { border-color: $hex }
+  .fill-#{$color}   { fill: $hex }
 
   .#{$color}-hover:hover        { color: $hex }
   .bg-#{$color}-hover:hover     { background-color: $hex }
   .border-#{$color}-hover:hover { border-color: $hex }
+  .fill-#{$color}-hover:hover   { fill: $hex }
 }
