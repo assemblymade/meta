@@ -113,6 +113,7 @@ class Product < ActiveRecord::Base
   scope :profitable,   -> { public_products.where(state: 'profitable') }
   scope :live,         -> { where.not(try_url: nil) }
   scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
+  scope :with_topic,   -> (topic) { where('topics @> ARRAY[?]::varchar[]', topic) }
   scope :untagged, -> { where('array_length(tags, 1) IS NULL') }
 
   EXCLUSIONS = %w(admin about script if owner core start-conversation product ideas)

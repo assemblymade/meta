@@ -30,7 +30,7 @@ class AppsQuery
     when params[:filter] == FILTER_LIVE
       Product.public_products.live
     when params[:topic].present?
-      Product.public_products.tagged_with(params[:topic])
+      Product.public_products.with_topic(params[:topic])
     when params[:showcase].present?
       Product.joins(:showcases).where(showcases: {slug: params[:showcase]})
     else
