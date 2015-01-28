@@ -45,7 +45,7 @@ var Lovers = React.createClass({
   },
 
   render: function() {
-    if (this.state.recentLovers.length < 1) {
+    if (this.state.recentLovers.length < 1 || this.state.hearts_count < 1) {
       return null;
     }
 
