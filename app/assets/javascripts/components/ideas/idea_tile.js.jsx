@@ -1,6 +1,5 @@
 var Avatar = require('../ui/avatar.js.jsx');
 var Drawer = require('../ui/drawer.js.jsx');
-var Footer = require('../ui/footer.js.jsx');
 var Heart = require('../heart.js.jsx');
 var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
