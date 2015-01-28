@@ -83,6 +83,8 @@ var Apps = React.createClass({
                 {_(filters).map(f =>
                   <Nav.Item href={"/discover?filter=" + f[0]} label={f[1]} active={this.props.filter === f[0]} />
                 )}
+                <Nav.Divider />
+                <Nav.Item label="Topics" dropdownMenu={filtersDropdownMenu} onClick={this.toggleDropdown} />
               </Nav>
             </div>
 
