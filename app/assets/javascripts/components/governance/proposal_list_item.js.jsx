@@ -21,7 +21,7 @@ var ProposalListIem = React.createClass({
     var proposal = this.props.proposal;
 
     return (
-      <div className="bg-white rounded shadow mb2">
+      <Tile>
         <div className="px3">
           <div className="row">
             <div className="col-md-7">
@@ -44,7 +44,7 @@ var ProposalListIem = React.createClass({
         </div>
         {this.renderLove(this.props.proposal.news_feed_item_id)}
         {this.renderUser()}
-      </div>
+      </Tile>
     );
   },
 

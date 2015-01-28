@@ -1,4 +1,3 @@
-var Accordion = require('./accordion.js.jsx');
 var Spinner = require('./spinner.js.jsx');
 var TextPost = require('./ui/text_post.js.jsx')
 var UserStore = require('../stores/user_store')
@@ -123,34 +122,33 @@ var Proposal = React.createClass({
       )
     }
     else {
-
-    }
-
+      return (
+        <div></div>
+      )
+      }
     },
 
     renderProgress: function() {
-      var my_style = "";
+      var myStyle = "";
       if (this.props.proposal.state === "passed"){
-        my_style = "success"
+        myStyle = "success"
       }
       else if (this.props.proposal.state === "failed") {
-        my_style = "danger"
+        myStyle = "danger"
       }
       else if (this.props.proposal.state === "closed") {
-        my_style = "success";
+        myStyle = "success";
       }
       else if(this.props.proposal.state === "expired") {
-        my_style = "gray"
+        myStyle = "gray"
       }
       return (
-        <div>
-          <ProgressBar progress={this.state.percent} threshold = {50} type = {my_style} />
-        </div>
+        <ProgressBar progress={this.state.percent} threshold = {50} type = {myStyle} />
       )
     },
 
   renderProposal: function() {
-    var progress_style = {
+    var progressStyle = {
       position: 'relative',
       top: "50%",
       transform: "translateY(120%)"
@@ -166,7 +164,7 @@ var Proposal = React.createClass({
               </div>
             </div>
 
-            <div className="col-md-4" style = {progress_style} >
+            <div className="col-md-4" style = {progressStyle} >
               <div className="row">
                 {this.renderProgress()}
               </div>

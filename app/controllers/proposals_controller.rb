@@ -30,7 +30,6 @@ class ProposalsController < ProductController
       recipient_user = recipient
       Governance.new.create_vesting_proposal(author_user, product, total_coins, intervals, start_date, expiration_date, name, description, proposal_duration, recipient_user)
     end
-    puts "DINGOS IN OUTBACK MATE"
     redirect_to product_governance_index_path(@product)
 
   end

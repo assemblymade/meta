@@ -715,6 +715,14 @@ class Product < ActiveRecord::Base
     majority_owner[1].to_f / total_coins.to_f >= 0.5
   end
 
+  def proposals_sorted
+    prod_proposals = Proposal.where(product: @product)
+    open_proposals = prod_proposals.where(state: "open").sort_by{|a| a.expiration}.reverse
+    passed_proposals = prod_proposals.where(state: "passed").sort_by{|a| a.expiration}.reverse
+    failed_proposals = prod_proposals.where(state: "failed").sort_by{|a| a.expiration}.reverse
+    expired_proposals = prod_proposals.where(state: "expired").sort_by{|a| a.expiration}.reverse
+  end
+
   protected
 
   def add_to_event_stream
