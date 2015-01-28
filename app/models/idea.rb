@@ -142,8 +142,8 @@ class Idea < ActiveRecord::Base
     add_score
   end
 
-  def unhearted
-    decrement_score(current_user)
+  def unhearted(heart)
+    decrement_score(heart)
   end
 
   def add_score
@@ -163,17 +163,8 @@ class Idea < ActiveRecord::Base
     greenlight! if should_greenlight?
   end
 
-  def hearted_on(user)
-    hearts = self.news_feed_item.hearts.where(user_id: user.id)
-    if hearts.length > 0
-      hearts.first.created_at
-    else
-      None
-    end
-  end
-
-  def decrement_score(user)
-    time_since = hearted_on(user) - EPOCH_START
+  def decrement_score(heart)
+    time_since = heart.created_at - EPOCH_START
     love_lost = 2 ** (time_since.to_f / HEARTBURN.to_f)
     lovescore = self.score - love_lost
     update!({last_score_update: DateTime.now,

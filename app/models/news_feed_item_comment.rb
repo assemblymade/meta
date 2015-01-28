@@ -73,4 +73,8 @@ class NewsFeedItemComment < ActiveRecord::Base
       TrackAcknowledgements.perform_async(news_feed_item.to_global_id, [self.user_id])
     end
   end
+
+  def unhearted(heart)  
+  end
+
 end
