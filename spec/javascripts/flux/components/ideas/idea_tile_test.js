@@ -18,6 +18,8 @@ describe('IdeaTile', function() {
   };
 
   it('renders a small tile with an idea', function() {
+    global.ReactUjs = { mountReactComponents: function() {} };
+    
     jest.dontMock(appFile('components/ui/footer.js.jsx'));
     jest.dontMock(appFile('components/ui/small_tile.js.jsx'));
 

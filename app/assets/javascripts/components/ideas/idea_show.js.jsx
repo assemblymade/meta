@@ -18,6 +18,8 @@ var ProgressBar = require('../ui/progress_bar.js.jsx');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
 var UserStore = require('../../stores/user_store');
 
+var TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
+
 var IdeaShow = React.createClass({
   propTypes: {
     navigate: React.PropTypes.func.isRequired,
@@ -124,7 +126,7 @@ var IdeaShow = React.createClass({
           </div>
         </div>
 
-        <IdeaContainer navigate={navigate}>
+        <IdeaContainer>
           {this.renderHeader()}
           {this.renderBody()}
         </IdeaContainer>
@@ -285,6 +287,21 @@ var IdeaShow = React.createClass({
     }
   },
 
+  renderFastTrackPrompt() {
+    var idea = this.state.idea;
+    var now = Date.now();
+
+    if ((new Date(idea.created_at) + TWO_DAYS) < now &&
+        idea.hearts_count > 1 &&
+        idea.user.id === UserStore.getId()) {
+      return (
+        <div className="px3">
+          Psst! Wanna fast-track your idea to a product?
+        </div>
+      );
+    }
+  },
+
   renderHeader() {
     var idea = this.state.idea;
     var shareMessage = 'We need help with ' + idea.name + '! via @asm';
@@ -330,6 +347,7 @@ var IdeaShow = React.createClass({
                 Then the community has the opportunity to build this idea into
                 a product &mdash; together.
               </p>
+              {this.renderFastTrackPrompt()}
             </div>
           </Drawer>
         </div>

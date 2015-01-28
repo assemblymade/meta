@@ -23,7 +23,8 @@ var Markdown = React.createClass({
 
   componentDidMount: function() {
     // render internal react_ujs components
-    var node = $(this.getDOMNode()).find('[data-react-class]')
+    var node = $(this.getDOMNode())
+    node = node && node.find('[data-react-class]')
     ReactUjs.mountReactComponents(node)
   },
 
