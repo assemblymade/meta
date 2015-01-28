@@ -72,6 +72,12 @@ var Apps = React.createClass({
       </DropdownMenu>
     )
 
+    var currentTopic = _.find(this.props.topics, function(topic) {
+      return topic.slug === this.props.topic
+    }, this)
+
+    var topicSelectLabel = (currentTopic != null ? currentTopic.name : "Topics")
+
     return (
       <div>
         {header}
@@ -81,10 +87,10 @@ var Apps = React.createClass({
             <div className="sm-col sm-col-8 mb2 sm-mb0">
               <Nav orientation="horizontal">
                 {_(filters).map(f =>
-                  <Nav.Item href={"/discover?filter=" + f[0]} label={f[1]} active={this.props.filter === f[0]} />
+                  <Nav.Item href={"/discover?filter=" + f[0]} label={f[1]} active={this.props.filter === f[0] && !this.props.topic} />
                 )}
                 <Nav.Divider />
-                <Nav.Item label="Topics" dropdownMenu={filtersDropdownMenu} onClick={this.toggleDropdown} />
+                <Nav.Item label={topicSelectLabel} dropdownMenu={filtersDropdownMenu} onClick={this.toggleDropdown} active={this.props.topic != null} />
               </Nav>
             </div>
 
@@ -124,7 +130,7 @@ var Apps = React.createClass({
   },
 
   renderShowcases: function() {
-    if (!this.props.showcases || this.props.showcase) {
+    if (!this.props.showcases || this.props.showcase || this.props.topic) {
       return null
     }
 
