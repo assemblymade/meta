@@ -227,9 +227,4 @@ class Idea < ActiveRecord::Base
   def hearts_count
     news_feed_item.hearts_count
   end
-
-  # used in i18n but we should probably rename to title for consistency
-  def title
-    self.name
-  end
 end
