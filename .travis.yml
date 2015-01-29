@@ -35,8 +35,6 @@ deploy:
     secure: V8u9b4ILMBW4EMofqRlm3XBgQIBM0P5Ewa4ETeKiESb0PwkGVw7KXIWW571pzXpw0+Z7aDNQlmAbF4OQljXasg4B+V0h69AvoEaXfOVhZPbdLn//zXdcbh71vV3bIhyOhXrWzbrhsVLuEgc5w1Wgq5bx4um5DVkPrIid0m0nyRk=
 notifications:
   slack:
-    on_success: change
-    on_failure: always
     secure: LwA/h6BTdQToj8xjvcdEXMHgM9XYOFhFsXkHCOfvsmowV0NNSAKK+CumSnmcnOlAP7E42MEd6aMEi3Rf+xHuYv6IbnFzUwiyh8856jtMUoWPeH2C8Aiin9/7Oe2JFHYWS0DNq2Pe4f/9Xri0luJWnCZsBZburRAbLDCM4mSc3vc=
 env:
   global:
