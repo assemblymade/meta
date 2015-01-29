@@ -26,7 +26,7 @@ var Proposal = React.createClass({
   render: function() {
     return (
       <div>
-        {this.renderIntro()}
+        {this.renderProposal()}
       </div>
     );
   },
