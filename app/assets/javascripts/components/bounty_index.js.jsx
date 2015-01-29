@@ -20,7 +20,7 @@
 
     getInitialState: function() {
       return {
-        value: 'is:open',
+        value: 'is:open ',
         sort: 'priority'
       }
     },

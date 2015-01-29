@@ -195,9 +195,10 @@ var BountyListItem = React.createClass({
 
   renderTitle: function() {
     var bounty = this.props.bounty
+    var classes = bounty.closed_at === null ? null : 'gray-2'
 
     return (
-      <a href={bounty.url}>
+      <a className={classes} href={bounty.url}>
         {bounty.title} {' '}
         <span className="gray-2 fs4">
           #{bounty.number}
