@@ -1,7 +1,7 @@
 <% heartables = if @heartables %>
-  <% @heartables.to_a.compact %>
+  <% @heartables %>
 <% elsif @news_feed_item %>
-  <% ([@news_feed_item] + @news_feed_item.comments).to_a.compact %>
+  <% ([@news_feed_item] + @news_feed_item.comments).compact %>
 <% end %>
 
 <!-- FIXME: Decide on one consistent way to send these down -->
