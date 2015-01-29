@@ -110,6 +110,7 @@ var ProposalCreation = React.createClass({
   },
 
   handleTextChange: function(stateProp) {
+    console.log(this.state)
     return function(event) {
       var state = {};
       state[stateProp] = event.target.value;
@@ -176,8 +177,6 @@ var ProposalCreation = React.createClass({
               </label>
               {this.renderDescriptionBox()}
             </div>
-
-
           </fieldset>
         </form>
 
@@ -247,6 +246,10 @@ var ProposalCreation = React.createClass({
     }
   },
 
+  setVesting: function() {
+    this.setState({contractType: "vesting"})
+  },
+
   renderContractLogic: function() {
     return (
       <Tile>
@@ -257,7 +260,7 @@ var ProposalCreation = React.createClass({
           <div>
             <span className="bold px2 py1">Type</span>
             <form className = "px2 py2" action="">
-              <input type="radio" name="contractType" value="payment">  Payment Schedule</input>
+              <input type="radio" name="contractType" value="payment" action={this.setVesting()}>  Payment Schedule</input>
             </form>
           </div>
           <div>

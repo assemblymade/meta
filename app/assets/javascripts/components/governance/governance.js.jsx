@@ -18,7 +18,7 @@ var Governance = React.createClass({
         <div>
           <div className="row">
             <div className="py2 col-md-8">
-              <ProposalList proposals={this.props.product.proposals} product={this.props.product} />
+              <ProposalList proposals={this.props.product.proposals} />
             </div>
             <div className = "py2 col-md-4">
               <Tile>
