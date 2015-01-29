@@ -39,7 +39,8 @@ var ProposalCreation = React.createClass({
       description: "",
       recipient: "",
       coins: 1000,
-      date: ""
+      date: "",
+      contractType: "vesting"
     };
   },
 
@@ -49,12 +50,11 @@ var ProposalCreation = React.createClass({
         <div className = "py3">
           <Tile>
             <div className = "py2 px3">
-              <h4>Vesting Contract</h4>
               <div className="row">
                 <div className = "col-md-10 col-md-offset-1">
-                  Schedule a payment of coins to a specific user for a specific purpose.  As an example, a user
-                  could be paid for recurring support with a vesting schedule of coins.  Instead of separate bounties
-                  for each task, a vesting schedule can capture a broad range of small activities.
+                  Proposals are forums for product owners to make decisions governing the fate of the product as a whole.
+                  Inside each proposal is one or more contracts: self-executing decisions on a product.  There are many different
+                  kinds of potential contracts; we'll be rolling out more contract types in the near future.
                 </div>
               </div>
 
@@ -74,7 +74,7 @@ var ProposalCreation = React.createClass({
   renderTitle: function() {
     return (
       <div>
-        <h1 className="mt0">Create a new Proposal</h1>
+        <h1 className="mt0">Propose a Contract</h1>
         {this.introText()}
       </div>
     )
@@ -82,10 +82,28 @@ var ProposalCreation = React.createClass({
 
   renderHelp: function() {
     return (
-      <div className = "py1 px3 bg-white rounded shadow">
+      <div className = "py1 px1 bg-white rounded shadow">
         <Tile>
-          <h4>Propose a Resolution</h4>
-          Owners can vote on new product initiatives.  Their votes are weighted by ownership.
+          <h4>Existing Contract Types</h4>
+          <ul>
+            <li>
+              <span className="bold">Payment Schedule</span>
+            </li>
+            <p>
+              Pay a contributor on a regular basis for recurring work.
+              For example, someone doing support could be paid regularly by a Payment Schedule Contract
+              without having to create and award numerous small bounties.
+            </p>
+          </ul>
+          <h4>Upcoming Contract Types</h4>
+          <ul>
+            <li className="bold">Elect Core Team Member</li>
+            <li className="bold">Remove Core Team Member</li>
+            <li className="bold">Mint New Coins</li>
+            <li className="bold">Pivot the Product</li>
+          </ul>
+
+
         </Tile>
       </div>
     )
@@ -107,7 +125,7 @@ var ProposalCreation = React.createClass({
 
   renderUserPicker: function() {
     return (
-      <div>
+      <div className = "col col-6 px2 py2">
         <TypeaheadUserInput autofocus="autofocus"
           className="form-control"
           data-validate-length="2"
@@ -159,34 +177,14 @@ var ProposalCreation = React.createClass({
               {this.renderDescriptionBox()}
             </div>
 
-            <div className="form-group form-group-lg">
-              <label className="control-label">
-                Vesting Recipient Username
-              </label>
-              <div>
-               {this.renderUserPicker()}
-              </div>
-            </div>
 
-            <div className="form-group form-group-lg">
-              <label className="control-label">
-                Coins to Award
-              </label>
-              <div><input className="form-control" value={this.state.coins} type="number" onChange={this.handleTextChange('coins')}></input></div>
-            </div>
-
-            <div className="form-group form-group-lg">
-              <label className="control-label">
-                Award in X Days
-              </label>
-              <div>
-                {this.renderDatePicker()}
-              </div>
-            </div>
-
-            {this.acceptButton()}
           </fieldset>
         </form>
+
+        <div>
+          {this.renderContractLogic()}
+        </div>
+
       </div>
     )
   },
@@ -199,6 +197,74 @@ var ProposalCreation = React.createClass({
       <button className = {css} onClick={this.toggle_create}>
         {text}
       </button>
+    )
+  },
+
+  renderContractOptions: function() {
+    if (this.state.contractType === "vesting") {
+      return (
+        <div>
+          <div className="clearfix">
+            <div className="col col-6">
+              <label className="control-label">
+                Vesting Recipient Username
+              </label>
+            </div>
+            <div className="col col-6">
+             {this.renderUserPicker()}
+            </div>
+          </div>
+
+          <div className="clearfix">
+            <div className="col-6 col">
+              <label className="control-label">
+                Coins to Award
+              </label>
+            </div>
+            <div className="col col-3">
+              <input className="form-control" value={this.state.coins} type="number" onChange={this.handleTextChange('coins')}></input>
+            </div>
+        </div>
+
+        <div className="clearfix">
+          <div className="form-group form-group-lg">
+              <label className="control-label">
+                Payment Date
+              </label>
+              <span>
+                {this.renderDatePicker()}
+              </span>
+            </div>
+            <div className="center py2 mb2">
+              {this.acceptButton()}
+            </div>
+
+        </div>
+
+      </div>
+
+      )
+    }
+  },
+
+  renderContractLogic: function() {
+    return (
+      <Tile>
+        <div className="px2 py1">
+          <div>
+            <h3 className="center py2">Contract Logic</h3>
+          </div>
+          <div>
+            <span className="bold px2 py1">Type</span>
+            <form className = "px2 py2" action="">
+              <input type="radio" name="contractType" value="payment">  Payment Schedule</input>
+            </form>
+          </div>
+          <div>
+            {this.renderContractOptions()}
+          </div>
+        </div>
+      </Tile>
     )
   },
 
