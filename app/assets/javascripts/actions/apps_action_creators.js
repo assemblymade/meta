@@ -29,7 +29,7 @@ var AppsActionCreators = {
             field_value_factor: {
               field: 'trend_score',
               modifier: 'log1p'
-            }
+            },
             boost_mode: 'sum'
           }
         },
