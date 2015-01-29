@@ -1,16 +1,17 @@
-var ActionTypes = window.CONSTANTS.ActionTypes
+var CONSTANTS = window.CONSTANTS // require('../constants')
+var ActionTypes = CONSTANTS.ActionTypes
 var Store = require('./es6_store')
 
 var currentComponent = null
 var currentContext = {}
 
-class DashboardRoutesStore extends Store {
+class RoutesStore extends Store {
   constructor() {
     super()
 
     this.dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
-        case ActionTypes.DASHBOARD_ROUTE_CHANGED:
+        case ActionTypes.ASM_APP_ROUTE_CHANGED:
           _setData(action)
           this.emitChange()
           break
@@ -27,7 +28,7 @@ class DashboardRoutesStore extends Store {
   }
 }
 
-module.exports = new DashboardRoutesStore()
+module.exports = new RoutesStore()
 
 function _setData(action) {
   currentComponent = action.component || currentComponent

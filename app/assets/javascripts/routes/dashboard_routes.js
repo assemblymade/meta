@@ -7,8 +7,7 @@ var routes = [
   ['/dashboard/:filter', require('../components/dashboard/dashboard_index.js.jsx'), _showDashboard]
 ]
 
-exports.routes = routes;
-exports.actionType = ActionTypes.DASHBOARD_ROUTE_CHANGED;
+module.exports = routes;
 
 function _showDashboard(data) {
   var dashboard = data.dashboard

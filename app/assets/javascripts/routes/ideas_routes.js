@@ -11,8 +11,7 @@ var routes = [
   ['/ideas/:id/start-conversation', require('../components/ideas/idea_start_conversation.js.jsx'), _showStartConversation],
 ];
 
-exports.routes = routes;
-exports.actionType = ActionTypes.IDEAS_ROUTE_CHANGED;
+module.exports = routes;
 
 function _showCreateIdea(data) {
   Dispatcher.dispatch({

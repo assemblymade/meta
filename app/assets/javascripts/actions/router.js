@@ -44,10 +44,9 @@ var _Router = new Router();
 
 var action, routes;
 for (var exported in allRoutes) {
-  actionType = allRoutes[exported].actionType;
-  routes = allRoutes[exported].routes;
+  routes = allRoutes[exported];
 
-  routes.forEach(_Router.route.bind(_Router, actionType));
+  routes.forEach(_Router.route.bind(_Router, ActionTypes.ASM_APP_ROUTE_CHANGED));
 }
 
 module.exports = _Router;
