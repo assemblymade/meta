@@ -8,7 +8,7 @@ var routes = [
 ]
 
 exports.routes = routes;
-exports.action = ActionTypes.DASHBOARD_ROUTE_CHANGED;
+exports.actionType = ActionTypes.DASHBOARD_ROUTE_CHANGED;
 
 function _showDashboard(data) {
   var dashboard = data.dashboard
