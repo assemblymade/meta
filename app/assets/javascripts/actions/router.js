@@ -1,4 +1,5 @@
 var ActionTypes = window.CONSTANTS.ActionTypes;
+var allRoutes = require('../routes/routes');
 var Dispatcher = window.Dispatcher;
 var NProgress = require('nprogress');
 var page = require('page');
@@ -6,14 +7,8 @@ var qs = require('qs');
 var url = require('url');
 
 class Router {
-  constructor(actionType, routes) {
-    this.actionType = actionType;
-    this.routes = routes;
-  }
-
   initialize() {
     page('*', _parse);
-    this.routes.forEach(this._route.bind(this));
     page.start();
   }
 
@@ -26,26 +21,36 @@ class Router {
     page.stop();
   }
 
-  _get(component, callback) {
+  _get(actionType, component, callback) {
     var self = this;
 
     return _.debounce((context) => {
       NProgress.start();
 
-      _callAndDispatch(self.actionType, component, context, callback);
+      _callAndDispatch(actionType, component, context, callback);
     }, 500);
   }
 
-  _route(route) {
+  route(actionType, route) {
     var path = route[0]
     var component = route[1]
     var callback = route[2]
 
-    page(path, this._get(component, callback))
+    page(path, this._get(actionType, component, callback))
   }
 };
 
-module.exports = Router;
+var _Router = new Router();
+
+var action, routes;
+for (var exported in allRoutes) {
+  actionType = allRoutes[exported].actionType;
+  routes = allRoutes[exported].routes;
+
+  routes.forEach(_Router.route.bind(_Router, actionType));
+}
+
+module.exports = _Router;
 
 function _callAndDispatch(actionType, component, context, callback) {
   $.getJSON(window.location, { cache: false }).

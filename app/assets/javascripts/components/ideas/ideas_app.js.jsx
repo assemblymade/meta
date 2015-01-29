@@ -1,17 +1,17 @@
 var IdeasIndex = require('./ideas_index.js.jsx');
-var IdeasRouter = require('../../actions/ideas_router');
+var Router = require('../../actions/router');
 var IdeasRoutesStore = require('../../stores/ideas_routes_store');
 var url = require('url');
 
 var IdeasApp = React.createClass({
   componentDidMount() {
     IdeasRoutesStore.addChangeListener(this.getComponentAndContext);
-    IdeasRouter.initialize();
+    Router.initialize();
   },
 
   componentWillUnmount() {
     IdeasRoutesStore.removeChangeListener(this.getComponentAndContext);
-    IdeasRouter.stop();
+    Router.stop();
   },
 
   getComponentAndContext() {
@@ -21,7 +21,7 @@ var IdeasApp = React.createClass({
     this.replaceState({
       component: <Component params={context.params}
           query={context.query}
-          navigate={IdeasRouter.navigate} />
+          navigate={Router.navigate} />
     });
   },
 

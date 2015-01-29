@@ -9,21 +9,16 @@ const routerPath = appFile('actions/router');
 const mockParse = function _parse() {};
 
 describe('Router', () => {
+  global.Dispatcher = require(appFile('dispatcher'));
   let page;
   let router;
 
   beforeEach(() => {
     page = require('page');
-    router = new (require(routerPath))('actionType', []);
-  });
-
-  it('instantiates a Router', () => {
-    expect(router instanceof require(routerPath)).toBe(true);
+    router = require(routerPath);
   });
 
   it('initializes `page`', () => {
-    router.navigate = jest.genMockFn();
-
     router.initialize();
 
     expect(page).toBeCalledWith('*', mockParse);
