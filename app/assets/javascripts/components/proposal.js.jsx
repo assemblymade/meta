@@ -171,6 +171,15 @@ var Proposal = React.createClass({
               </div>
             </div>
           </div>
+
+          <div className="px3 py2 border-top border-bottom">
+            <Heart heartable_id={this.props.newsFeedItem.id} heartable_type="NewsFeedItem" size="small"/>
+          </div>
+
+          <div className="border-top border-gray-5">
+            <NewsFeedItemComments commentable={true} item={this.props.newsFeedItem} showAllComments={true} />
+          </div>
+
         </Tile>
       </div>
     );
