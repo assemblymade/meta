@@ -122,6 +122,7 @@ class UsersController < ApplicationController
     @user = User.find_by!(username: params[:id])
     @user.update!(deleted_at: Time.now)
     DeleteUserAccount.perform_async(@user.id)
+    render nothing: true, status: 200
   end
 
   if Rails.env.development?
