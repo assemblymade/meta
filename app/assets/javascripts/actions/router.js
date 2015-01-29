@@ -14,12 +14,7 @@ class Router {
   initialize() {
     page('*', _parse);
     this.routes.forEach(this._route.bind(this));
-    page.start()
-
-    // The router will have fired before the component mounted, so we need
-    // to call `navigate` after mounting
-    var parsedUrl = url.parse(window.location.toString());
-    this.navigate(parsedUrl.path);
+    page.start();
   }
 
   navigate(url, e) {

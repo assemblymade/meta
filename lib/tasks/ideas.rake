@@ -71,6 +71,14 @@ namespace :ideas do
     end
   end
 
+  task unmigrate_products: :environment do
+    Idea.where.not(product_id: nil).each do |idea|
+      idea.news_feed_item.hearts.each(&:delete)
+      idea.news_feed_item.delete
+      idea.delete
+    end
+  end
+
   def rand_words(min=5, max=7)
     (0..rand(min..max)).map{
       ('a'..'z').to_a.shuffle[0,rand(2..8)].join
