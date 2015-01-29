@@ -1,9 +1,9 @@
 class ProductGovernanceSerializer < ApplicationSerializer
 
   has_many :proposals
-  attributes :slug, :name, :proposalsorted
+  attributes :slug, :name
 
-  def proposalsorted
+  def proposals
     object.proposals_sorted
   end
 

@@ -57,15 +57,15 @@ var Proposal = React.createClass({
     var css = ""
     var text = ""
     if (state === "open") {
-      css = "bg-blue white center py3 bold px2 col col-4 mx-auto"
+      css = "bg-blue white py1 bold px2 col col-4 mx-auto"
       text = "Open"
     }
     else if (state === "failed") {
-      css = "bg-red white center py3 bold px2 col col-4 mx-auto"
+      css = "bg-red white center py1 bold px2 col col-4 mx-auto"
       text = "Failed"
     }
     else if (state === "passed") {
-      css = "bg-green white center bold px2 py3 col col-4 mx-auto"
+      css = "bg-green white center bold px1 py2 col col-4 mx-auto"
       text = "Passed"
     }
     return (
@@ -75,7 +75,7 @@ var Proposal = React.createClass({
             {text}
           </div>
         </div>
-        <div className="clearfix bold">
+        <div className="clearfix mt2 bold">
           {this.props.proposal.time_left_text}
         </div>
       </div>
@@ -163,12 +163,12 @@ var Proposal = React.createClass({
               <div className="clearfix py3">
                 {this.renderProgress()}
               </div>
-              <div className="clearfix py3">
+              <div className="clearfix py2">
                 <div className="col col-4 mx-auto">
                   {this.renderSubmit()}
                 </div>
               </div>
-              <div className="clearfix py3 center">
+              <div className="clearfix py2 center">
                 <div className="center">
                   {this.renderState()}
                 </div>
@@ -191,7 +191,7 @@ var Proposal = React.createClass({
 
     toggle_vote: function(e) {
       e.preventDefault()
-
+      var newurl = "https://www.assembly.com/"+{proposal.product.slug}+"/governance"
       var choicedata = {proposal: this.props.proposal.id}
 
       var proposalComponent = this
@@ -201,7 +201,9 @@ var Proposal = React.createClass({
         json: true,
         data: choicedata,
       success: function(data) {
-        proposalComponent.setState({percent: data.progress, approved: data.approved, state: data.state})
+        proposalComponent.setState({percent: data.progress, approved: data.approved, state: data.state}
+          window.location.assign(newurl)
+        )
       }});
     }
 
