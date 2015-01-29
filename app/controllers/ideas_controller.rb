@@ -69,7 +69,7 @@ class IdeasController < ProductController
 
     @comments = ActiveModel::ArraySerializer.new(
       @idea.news_feed_item.comments.order('created_at asc'),
-      each_serializer: IdeaCommentSerializer
+      each_serializer: CommentSerializer
     ).as_json
 
     @marks = @idea.marks.map(&:name)
