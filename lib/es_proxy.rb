@@ -10,7 +10,7 @@ class EsProxy < Rack::Proxy
       new_path = URI.parse(request.path.sub(/^\/_es/, ''))
       env['PATH_INFO'] = new_path.path
       env['HTTP_HOST'] = @es_url.host
-      env['SERVER_PORT'] = 80
+      env['SERVER_PORT'] = @es_url.port
       # env['SERVER_PROTOCOL'] = @es_url.scheme
       perform_request(env)
     else

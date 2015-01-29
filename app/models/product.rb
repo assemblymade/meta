@@ -623,7 +623,7 @@ class Product < ActiveRecord::Base
     as_json(
       root: false,
       only: [:slug, :name, :pitch, :poster],
-      methods: [:tech, :hidden, :sanitized_description, :suggest]
+      methods: [:tech, :hidden, :sanitized_description, :suggest, :trend_score]
     ).merge(marks: mark_weights, logo_url: full_logo_url, search_tags: tags)
   end
 
@@ -633,11 +633,15 @@ class Product < ActiveRecord::Base
              map{|marking| { weight: marking.weight, name: marking.mark.name } }
   end
 
+  def trend_score
+    product_trend.try(:score).to_i
+  end
+
   def suggest
     {
       input: [name, pitch] + name.split(' ') + pitch.split(' '),
       output: id,
-      weight: product_trend.try(:score).to_i,
+      weight: trend_score,
       payload: {
         id: id,
         slug: slug,
