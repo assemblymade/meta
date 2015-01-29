@@ -244,8 +244,6 @@ ASM::Application.routes.draw do
     resources :textcompletes, only: [:index]
   end
 
-  get 'search' => 'search#index'
-
   post '/products' => 'products#create', as: :products
 
   get '/products/:id', to: redirect(ProductRedirector.new), as: :full_product
