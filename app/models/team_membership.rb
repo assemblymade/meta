@@ -5,6 +5,8 @@ class TeamMembership < ActiveRecord::Base
   has_many :team_membership_interests
   has_one :news_feed_item, foreign_key: 'target_id'
 
+  default_scope -> { where(deleted_at: nil) }
+
   scope :active, -> { where('deleted_at is null') }
   scope :core_team, -> { where('is_core is true') }
   scope :with_bios, -> { where.not(bio: [nil, '']) }
