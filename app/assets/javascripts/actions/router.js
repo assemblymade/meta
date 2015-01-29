@@ -21,38 +21,35 @@ class Router {
     page.stop();
   }
 
-  _get(actionType, component, callback) {
+  _get(component, callback) {
     var self = this;
 
     return _.debounce((context) => {
       NProgress.start();
 
-      _callAndDispatch(actionType, component, context, callback);
+      _callAndDispatch(component, context, callback);
     }, 500);
   }
 
-  route(actionType, route) {
+  route(route) {
     var path = route[0]
     var component = route[1]
     var callback = route[2]
 
-    page(path, this._get(actionType, component, callback))
+    page(path, this._get(component, callback))
   }
 };
 
 var _Router = new Router();
 
-var action, routes;
 for (var exported in allRoutes) {
-  routes = allRoutes[exported];
-
-  routes.forEach(_Router.route.bind(_Router, ActionTypes.ASM_APP_ROUTE_CHANGED));
+  allRoutes[exported].forEach(_Router.route.bind(_Router));
 }
 
 module.exports = _Router;
 
-function _callAndDispatch(actionType, component, context, callback) {
-  $.getJSON(window.location, { cache: false }).
+function _callAndDispatch(component, context, callback) {
+  $.getJSON(context.canonicalPath, { cache: false }).
   always(() => {
     NProgress.done();
   }).
@@ -70,8 +67,10 @@ function _callAndDispatch(actionType, component, context, callback) {
   }).
   done(callback).
   done((data) => {
+    TrackEngagement.track(context.canonicalPath, context);
+
     Dispatcher.dispatch({
-      type: actionType,
+      type: ActionTypes.ASM_APP_ROUTE_CHANGED,
       component: component,
       context: context
     });

@@ -24,6 +24,7 @@ module MarkdownHelper
   def markdown(text)
     @default_pipeline ||= HTML::Pipeline.new(DEFAULT_FILTERS,
       asset_root: 'https://a248.e.akamai.net/assets.github.com/images/icons',
+      firesize_url: ENV['FIRESIZE_URL'],
       users_base_url: File.join(EXTENDER.root_url, 'users')
     )
     @default_pipeline.call(text)[:output].to_s.html_safe

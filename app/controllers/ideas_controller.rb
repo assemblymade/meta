@@ -1,6 +1,6 @@
 class IdeasController < ProductController
   respond_to :html, :json
-  layout 'application'
+  layout 'ideas'
 
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :admin]
 
