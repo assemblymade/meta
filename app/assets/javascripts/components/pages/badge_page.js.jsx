@@ -176,7 +176,7 @@ var CodeBox = React.createClass({
   },
   codeString: function() {
     var imageURL = this.state.transparency ? (this.state.swag.transparentImageURL || this.state.swag.imageURL) : this.state.swag.imageURL
-    var imageString = this.state.imageString || "<img href='" +
+    var imageString = this.state.imageString || "<img src='" +
     imageURL + "' width=" + this.state.swag.defaultWidth + " height=" + this.state.swag.defaultHeight + " />"
     var codeString = "<a href='https://assembly.com/" + this.state.productSlug + "?utm_campaign=assemblage&utm_source=" + this.state.productSlug + "&utm_medium=flair_widget&utm_content=" + this.state.swag.type + "'>" + imageString + "</a>"
     return codeString
