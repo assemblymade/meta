@@ -21,30 +21,32 @@ var ProposalListIem = React.createClass({
     var proposal = this.props.proposal;
 
     return (
-      <Tile>
-        <div className="px3">
-          <div className="row">
-            <div className="col-md-7">
-              {this.renderTitle()}
-              {this.renderSummary()}
-            </div>
-            <div className="col-md-5">
-              <div className = "row py3">
-                {this.renderProgress()}
+      <div className="py2">
+        <Tile>
+          <div className="px3">
+            <div className="row">
+              <div className="col-md-7">
+                {this.renderTitle()}
+                {this.renderSummary()}
               </div>
-              <div className = "row">
-                {this.voteState()}
+              <div className="col-md-5">
+                <div className = "row py3">
+                  {this.renderProgress()}
+                </div>
+                <div className = "row">
+                  {this.voteState()}
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="px3 mb1 mt0 gray-dark">
-          {this.renderComments(proposal.comments_count)}
-        </div>
-        {this.renderLove(this.props.proposal.news_feed_item_id)}
-        {this.renderUser()}
-      </Tile>
+          <div className="px3 mb1 mt0 gray-dark">
+            {this.renderComments(proposal.comments_count)}
+          </div>
+          {this.renderLove(this.props.proposal.news_feed_item_id)}
+          {this.renderUser()}
+        </Tile>
+      </div>
     );
   },
 

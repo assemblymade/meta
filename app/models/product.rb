@@ -716,7 +716,7 @@ class Product < ActiveRecord::Base
   end
 
   def proposals_sorted
-    prod_proposals = Proposal.where(product: @product)
+    prod_proposals = Proposal.where(product: @product).where.not(state: "hidden")
     open_proposals = prod_proposals.where(state: "open").sort_by{|a| a.expiration}.reverse
     passed_proposals = prod_proposals.where(state: "passed").sort_by{|a| a.expiration}.reverse
     failed_proposals = prod_proposals.where(state: "failed").sort_by{|a| a.expiration}.reverse

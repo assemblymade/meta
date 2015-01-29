@@ -57,15 +57,15 @@ var Proposal = React.createClass({
     var css = ""
     var text = ""
     if (state === "open") {
-      css = "bg-blue white center py3 bold px2"
+      css = "bg-blue white center py3 bold px2 col col-4 mx-auto"
       text = "Open"
     }
     else if (state === "failed") {
-      css = "bg-red white center py3 bold px2"
+      css = "bg-red white center py3 bold px2 col col-4 mx-auto"
       text = "Failed"
     }
     else if (state === "passed") {
-      css = "bg-green white center bold px2 py3"
+      css = "bg-green white center bold px2 py3 col col-4 mx-auto"
       text = "Passed"
     }
     return (
@@ -148,49 +148,28 @@ var Proposal = React.createClass({
     },
 
   renderProposal: function() {
-    var progressStyle = {
-      position: 'relative',
-      top: "50%",
-      transform: "translateY(120%)"
-    }
-
     return (
       <div>
         <Tile>
-          <div className="row">
-            <div className="col-md-7">
+          <div className="clearfix">
+            <div className="col col-7">
               <div className="p4">
                 <TextPost author={this.props.user} timestamp={this.props.proposal.created} title={this.props.proposal.name} body={this.props.proposal.description} labels={[]} />
               </div>
             </div>
-
-            <div className="col-md-4" style = {progressStyle} >
-              <div className="row">
+            <div className="col col-4">
+              <div className="clearfix py3">
+              </div>
+              <div className="clearfix py3">
                 {this.renderProgress()}
               </div>
-              <div className = "row">
-                <div className = "col-md-offset-3">
-                  {this.renderSubmit()}
-                </div>
+              <div className="clearfix py3">
+                {this.renderSubmit()}
               </div>
-              <div className="row col-md-offset-3 py3">
+              <div className="clearfix py3 center">
                 {this.renderState()}
               </div>
             </div>
-          </div>
-
-          <div className="row py3">
-            <div className="col-md-6 col-md-offset-1">
-              {this.renderAgreements()}
-            </div>
-          </div>
-
-          <div className="px3 py2 border-top border-bottom">
-            <Heart heartable_id={this.props.newsFeedItem.id} heartable_type="NewsFeedItem" size="small"/>
-          </div>
-
-          <div className="border-top border-gray-5">
-            <NewsFeedItemComments commentable={true} item={this.props.newsFeedItem} showAllComments={true} />
           </div>
         </Tile>
       </div>

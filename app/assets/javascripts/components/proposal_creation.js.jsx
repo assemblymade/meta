@@ -152,6 +152,7 @@ var ProposalCreation = React.createClass({
   },
 
   renderDatePicker: function(){
+    console.log("something here")
     return (
       <div>
         <input type="date" onChange = {this.handleTextChange('date')}/>
@@ -247,7 +248,7 @@ var ProposalCreation = React.createClass({
   },
 
   setVesting: function() {
-    this.setState({contractType: "vesting"})
+
   },
 
   renderContractLogic: function() {
@@ -260,7 +261,7 @@ var ProposalCreation = React.createClass({
           <div>
             <span className="bold px2 py1">Type</span>
             <form className = "px2 py2" action="">
-              <input type="radio" name="contractType" value="payment" action={this.setVesting()}>  Payment Schedule</input>
+              <input type="radio" name="contractType" value="payment" action={this.setVesting()} checked="checked">  Payment Schedule</input>
             </form>
           </div>
           <div>
