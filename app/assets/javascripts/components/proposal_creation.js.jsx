@@ -82,9 +82,9 @@ var ProposalCreation = React.createClass({
 
   renderHelp: function() {
     return (
-      <div className = "py1 px1 bg-white rounded shadow">
-        <Tile>
-          <h4>Existing Contract Types</h4>
+      <div className = "py1 px1 rounded shadow gray-2">
+
+          <h5>Existing Contract Types</h5>
           <ul>
             <li>
               <span className="bold">Payment Schedule</span>
@@ -104,7 +104,6 @@ var ProposalCreation = React.createClass({
           </ul>
 
 
-        </Tile>
       </div>
     )
   },
@@ -126,14 +125,12 @@ var ProposalCreation = React.createClass({
 
   renderUserPicker: function() {
     return (
-      <div className = "col col-6 px2 py2">
-        <TypeaheadUserInput autofocus="autofocus"
+      <TypeaheadUserInput autofocus="autofocus"
           className="form-control"
           data-validate-length="2"
           type="text"
           required="true"
           onTextChange={this.handleUsernameSelection} />
-      </div>
     )
   },
 
@@ -205,40 +202,43 @@ var ProposalCreation = React.createClass({
       return (
         <div>
           <div className="clearfix">
-            <div className="col col-6">
+            <div className="col col-5 mt2">
               <label className="control-label">
-                Vesting Recipient Username
+                Recipient Username
               </label>
             </div>
-            <div className="col col-6">
+            <div className="col col-5 py1">
              {this.renderUserPicker()}
             </div>
           </div>
 
-          <div className="clearfix">
-            <div className="col-6 col">
+          <div className="clearfix mt3">
+            <div className="col-5 col mt1">
               <label className="control-label">
                 Coins to Award
               </label>
             </div>
-            <div className="col col-3">
+            <div className="col col-5">
               <input className="form-control" value={this.state.coins} type="number" onChange={this.handleTextChange('coins')}></input>
             </div>
         </div>
 
-        <div className="clearfix">
-          <div className="form-group form-group-lg">
+        <div className="clearfix mt3">
+          <div className="col col-5 mt1">
               <label className="control-label">
                 Payment Date
               </label>
-              <span>
-                {this.renderDatePicker()}
-              </span>
-            </div>
-            <div className="center py2 mb2">
-              {this.acceptButton()}
-            </div>
+          </div>
 
+          <div className="col col-5">
+            {this.renderDatePicker()}
+          </div>
+        </div>
+
+        <div className="clearfix py2">
+          <div className="center py2 mb2">
+            {this.acceptButton()}
+          </div>
         </div>
 
       </div>
@@ -254,17 +254,17 @@ var ProposalCreation = React.createClass({
   renderContractLogic: function() {
     return (
       <Tile>
-        <div className="px2 py1">
+        <div className="px2 mb1">
           <div>
             <h3 className="center py2">Contract Logic</h3>
           </div>
           <div>
             <span className="bold px2 py1">Type</span>
-            <form className = "px2 py2" action="">
+            <form className = "px2 py1" action="">
               <input type="radio" name="contractType" value="payment" action={this.setVesting()} checked="checked">  Payment Schedule</input>
             </form>
           </div>
-          <div>
+          <div className="mt2">
             {this.renderContractOptions()}
           </div>
         </div>

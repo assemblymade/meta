@@ -70,12 +70,12 @@ var Proposal = React.createClass({
     }
     return (
       <div>
-        <div className="row">
+        <div className="clearfix center">
           <div className={css}>
             {text}
           </div>
         </div>
-        <div className="row bold">
+        <div className="clearfix bold">
           {this.props.proposal.time_left_text}
         </div>
       </div>
@@ -157,17 +157,21 @@ var Proposal = React.createClass({
                 <TextPost author={this.props.user} timestamp={this.props.proposal.created} title={this.props.proposal.name} body={this.props.proposal.description} labels={[]} />
               </div>
             </div>
-            <div className="col col-4">
+            <div className="col col-4 mx-auto">
               <div className="clearfix py3">
               </div>
               <div className="clearfix py3">
                 {this.renderProgress()}
               </div>
               <div className="clearfix py3">
-                {this.renderSubmit()}
+                <div className="col col-4 mx-auto">
+                  {this.renderSubmit()}
+                </div>
               </div>
               <div className="clearfix py3 center">
-                {this.renderState()}
+                <div className="center">
+                  {this.renderState()}
+                </div>
               </div>
             </div>
           </div>
