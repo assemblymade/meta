@@ -1,9 +1,7 @@
-.assets-masthead {
-  background-color: #F55641;
-  color: white;
-}
-
 .jumbotron {
-  padding-left: 0;
-  padding-right: 0;
+  background-color: $gray-5;
+  background-image: url(image-path('ideas/ideas-header-bg.jpg'));
+  background-size: cover;
+  background-repeat: none;
+  background-position: 50%;
 }
