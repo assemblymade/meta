@@ -21,16 +21,12 @@ describe('Router', () => {
     expect(router instanceof require(routerPath)).toBe(true);
   });
 
-  it('initializes `page` and navigates to the current window.location', () => {
+  it('initializes `page`', () => {
     router.navigate = jest.genMockFn();
 
     router.initialize();
 
     expect(page).toBeCalledWith('*', mockParse);
-    expect(page.start).toBeCalled();
-    expect(router.navigate).toBeCalledWith(
-      url.parse(window.location.toString()).path
-    );
   });
 
   it('navigates using `page`', () => {
