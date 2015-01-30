@@ -28,6 +28,13 @@ var Proposal = React.createClass({
   componentDidMount: function() {
     ProposalActions.init(this.props.proposal.status, this.props.userVoteState, this.props.proposal.state)
     ProposalStore.addChangeListener(this.onChange)
+
+    this.setState({
+      approved: ProposalStore.getApproved(),
+      percent: ProposalStore.getPercent(),
+      state: ProposalStore.getState()
+    })
+
   },
 
   onChange: function() {
@@ -90,7 +97,7 @@ var Proposal = React.createClass({
             {text}
           </div>
         </div>
-        <div className="clearfix mt2 bold">
+        <div className="clearfix mt2 bold gray-2">
           {this.props.proposal.time_left_text}
         </div>
       </div>
@@ -139,11 +146,11 @@ var Proposal = React.createClass({
     else {
       return (
         <div></div>
-      )
-      }
+      )}
     },
 
     renderProgress: function() {
+      console.log('state', this.state.state)
       var myStyle = "";
       var state = this.state.state
       if (state === "passed"){
@@ -158,8 +165,8 @@ var Proposal = React.createClass({
       else if(state === "expired") {
         myStyle = "gray"
       }
-      else {
-        myStyle = "gray"
+      else if (state === "open") {
+        myStyle = "primary"
       }
       console.log()
       return (
@@ -184,7 +191,7 @@ var Proposal = React.createClass({
                 {this.renderProgress()}
               </div>
               <div className="clearfix py2">
-                <div className="col col-4 mx-auto">
+                <div className="col-4 mx-auto">
                   {this.renderSubmit()}
                 </div>
               </div>

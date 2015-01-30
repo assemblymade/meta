@@ -295,6 +295,7 @@ var ProposalCreation = React.createClass({
   toggle_create: function(e) {
     e.preventDefault()
     var the_url = ""
+    var new_url = "https://www.assembly.com/"+product.slug+"/governance/"
     var proposaldata = {name: this.state.name, description: this.state.description, recipient: this.state.recipient, coins: this.state.coins, date: this.state.date}
 
     var proposalComponent = this
@@ -304,6 +305,7 @@ var ProposalCreation = React.createClass({
       json: true,
       data: proposaldata,
       });
+      window.location = newurl
     }
 });
 

@@ -13,7 +13,6 @@ var Governance = React.createClass({
   },
 
   render: function() {
-    console.log(this.props.product.proposals_sorted)
     if (this.props.product.proposals.length > 0) {
       return (
         <div>
