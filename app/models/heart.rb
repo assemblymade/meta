@@ -14,7 +14,7 @@ class Heart < ActiveRecord::Base
   def self.store_data(heartables)
     heartables.map do |h|
       {
-        heartable_id: h.id,
+        id: h.id,
         heartable_type: h.class.name,
         hearts_count: h.hearts_count
       }

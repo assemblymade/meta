@@ -38,6 +38,8 @@ class LoveStore extends Store {
             {}
           );
 
+          console.log('initialized', _heartables)
+
           LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
           break
 

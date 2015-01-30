@@ -8,7 +8,7 @@ class ChoicesController < ProductController
   def create
     #USE CURRENT USER
     @voter = current_user
-    @proposal = Proposal.find(params[:proposal])
+    @proposal = Proposal.find(params[:proposal_id])
 
     if !@proposal.user_vote_status(@voter)
       weight = @proposal.user_weight(@voter)

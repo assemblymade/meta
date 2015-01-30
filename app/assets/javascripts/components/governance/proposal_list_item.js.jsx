@@ -19,7 +19,6 @@ var ProposalListIem = React.createClass({
 
   render: function() {
     var proposal = this.props.proposal;
-
     return (
       <div className="py2">
         <Tile>

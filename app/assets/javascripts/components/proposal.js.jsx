@@ -5,6 +5,8 @@ var Tile = require('./tile.js.jsx')
 var ProgressBar = require('./ui/progress_bar.js.jsx')
 var Button = require('./ui/button.js.jsx')
 var Heart = require('./heart.js.jsx')
+var ProposalActions = require('../actions/proposal_actions.js')
+var ProposalStore = require('../stores/proposal_store')
 
 var Proposal = React.createClass({
   displayName: 'Proposal',
@@ -17,10 +19,23 @@ var Proposal = React.createClass({
 
   getInitialState: function() {
     return {
-      approved: this.props.userVoteState,
-      percent: this.props.proposal.status,
-      state: this.props.proposal.state
+      approved: ProposalStore.getApproved(),
+      percent: ProposalStore.getPercent(),
+      state: ProposalStore.getState()
     };
+  },
+
+  componentDidMount: function() {
+    ProposalActions.init(this.props.proposal.status, this.props.userVoteState, this.props.proposal.state)
+    ProposalStore.addChangeListener(this.onChange)
+  },
+
+  onChange: function() {
+    this.setState({
+      approved: ProposalStore.getApproved(),
+      percent: ProposalStore.getPercent(),
+      state: ProposalStore.getState()
+    })
   },
 
   render: function() {
@@ -57,15 +72,15 @@ var Proposal = React.createClass({
     var css = ""
     var text = ""
     if (state === "open") {
-      css = "bg-blue white py1 bold px2 col col-4 mx-auto"
+      css = "bg-blue white py1 bold px2 col-4 mx-auto"
       text = "Open"
     }
     else if (state === "failed") {
-      css = "bg-red white center py1 bold px2 col col-4 mx-auto"
+      css = "bg-red white center py1 bold px2 col-4 mx-auto"
       text = "Failed"
     }
     else if (state === "passed") {
-      css = "bg-green white center bold px1 py2 col col-4 mx-auto"
+      css = "bg-green white center bold px1 py2 col-4 mx-auto"
       text = "Passed"
     }
     return (
@@ -130,18 +145,23 @@ var Proposal = React.createClass({
 
     renderProgress: function() {
       var myStyle = "";
-      if (this.props.proposal.state === "passed"){
+      var state = this.state.state
+      if (state === "passed"){
         myStyle = "success"
       }
-      else if (this.props.proposal.state === "failed") {
+      else if (state === "failed") {
         myStyle = "danger"
       }
-      else if (this.props.proposal.state === "closed") {
+      else if (state === "closed") {
         myStyle = "success";
       }
-      else if(this.props.proposal.state === "expired") {
+      else if(state === "expired") {
         myStyle = "gray"
       }
+      else {
+        myStyle = "gray"
+      }
+      console.log()
       return (
         <ProgressBar progress={this.state.percent} threshold = {50} type = {myStyle} />
       )
@@ -191,20 +211,7 @@ var Proposal = React.createClass({
 
     toggle_vote: function(e) {
       e.preventDefault()
-      var newurl = "https://www.assembly.com/"+{proposal.product.slug}+"/governance"
-      var choicedata = {proposal: this.props.proposal.id}
-
-      var proposalComponent = this
-      $.ajax({
-        method: 'POST',
-        url: "/choices",
-        json: true,
-        data: choicedata,
-      success: function(data) {
-        proposalComponent.setState({percent: data.progress, approved: data.approved, state: data.state}
-          window.location.assign(newurl)
-        )
-      }});
+      ProposalActions.vote(this.props.proposal.id)
     }
 
   });
