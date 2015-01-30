@@ -57,7 +57,6 @@ var Governance = React.createClass({
 
   renderText: function() {
     var link = "/"+this.props.product.slug + "/proposals/"
-    console.log(link)
 
     return (
       <div className="h4 center px3 py3" style={{ paddingTop: '1rem' }}>

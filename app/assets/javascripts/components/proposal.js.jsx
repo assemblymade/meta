@@ -150,7 +150,6 @@ var Proposal = React.createClass({
     },
 
     renderProgress: function() {
-      console.log('state', this.state.state)
       var myStyle = "";
       var state = this.state.state
       if (state === "passed"){
@@ -168,7 +167,6 @@ var Proposal = React.createClass({
       else if (state === "open") {
         myStyle = "primary"
       }
-      console.log()
       return (
         <ProgressBar progress={this.state.percent} threshold = {50} type = {myStyle} />
       )

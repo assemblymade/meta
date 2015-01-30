@@ -109,7 +109,6 @@ var ProposalCreation = React.createClass({
   },
 
   handleTextChange: function(stateProp) {
-    console.log(this.state)
     return function(event) {
       var state = {};
       state[stateProp] = event.target.value;
@@ -149,7 +148,6 @@ var ProposalCreation = React.createClass({
   },
 
   renderDatePicker: function(){
-    console.log("something here")
     return (
       <div>
         <input type="date" onChange = {this.handleTextChange('date')}/>
