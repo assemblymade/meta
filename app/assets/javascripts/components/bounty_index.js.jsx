@@ -101,7 +101,7 @@
       return (
         <div className="clearfix">
           {assets.map(function(asset) {
-            if (['png', 'gif'].indexOf(asset.attachment.extension) < 0) {
+            if (['jpg', 'png', 'gif'].indexOf(asset.attachment.extension) < 0) {
               return null
             }
 
