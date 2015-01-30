@@ -153,7 +153,7 @@ class Idea < ActiveRecord::Base
   end
 
   def add_score
-    lovescore = 0
+    lovescore = self.score
 
     news_feed_item.hearts.where('created_at > ?', last_score_update).each do |h|
       time_since = h.created_at - EPOCH_START
