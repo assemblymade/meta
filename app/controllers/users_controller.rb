@@ -75,6 +75,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    @balance = User::Balance.new(current_user)
     current_user.update(user_params)
     respond_with current_user
   end
