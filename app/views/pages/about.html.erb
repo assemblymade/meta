@@ -9,8 +9,8 @@
     <div class="main">
       <div class="container">
         <h1>
-          We are more than the next&nbsp;great&nbsp;idea.
-          <span class="line2">Together, we&nbsp;are Assembly.</span>
+          Together, we can think bigger, go further,
+          <span class="line2">be more powerful, and more driven.</span>
         </h1>
         <a href="http://vimeo.com/102253176" class="svg-play-button popup-video">
           <svg class="svg-icon svg-icon-play-btn" viewBox="0 0 32 32">
@@ -25,33 +25,26 @@
   <section class="dashboard circle-stats dashboard-about">
     <div class="main">
       <div class="container">
-        <div class="col-xs-6 col-sm-4 col-md-3">
+        <div class="col-xs-6 col-sm-4 col-md-4">
           <div class="chart" data-percent="77" data-scale-color="#ffb400"> <!-- percentage data benchmarked against past metric  -->
-            <h3 class="data">98</h3>
+            <h3 class="data"><%= Product.count %></h3>
           </div>
           <h4>Products</h4>
           <p>Ready for you to discover</p>
         </div>
-        <div class="col-xs-6 col-sm-4 col-md-3">
+        <div class="hidden-xs col-sm-4 col-md-4">
           <div class="chart" data-percent="32" data-scale-color="#ffb400">
-            <h3 class="data">107</h3>
+            <h3 class="data"><%= Task.open.count %></h3>
           </div>
           <h4>Bounties</h4>
           <p>Waiting for your expertise</p>
         </div>
-        <div class="hidden-xs visible-sm-inline-block visible-md-inline-block visible-lg-inline-block col-sm-4 col-md-3">
+        <div class="col-xs-6 col-sm-4 col-md-4">
           <div class="chart" data-percent="65" data-scale-color="#ffb400">
-            <h3 class="data">231</h3>
+            <h3 class="data">4.5M</h3>
           </div>
-          <h4>Core Members</h4>
-          <p>Making the magic happen</p>
-        </div>
-        <div class="hidden-xs visible-md-inline-block visible-lg-inline-block col-md-3">
-          <div class="chart" data-percent="75" data-scale-color="#ffb400">
-            <h3 class="data">212</h3>
-          </div>
-          <h4>New Users</h4>
-          <p>Building our community</p>
+          <h4>Customers</h4>
+          <p>Using Assembly products</p>
         </div>
       </div>
     </div>
@@ -207,11 +200,11 @@
           Assembly is a community for people with ideas.
         </h2>
         <p>
-          We connect you with others who share your interest and complement your skills so you can form distributed software companies. Everything on Assembly is created, operated, and owned by a global community of makers, together.
+          Assembly is for those who enjoy building software. We connect you with others who share your interest and complement your skills so you can form distributed software companies. Unlike traditional companies with shareholders and employees, everything on Assembly is created, operated, and owned by a global community of makers, together.
         </p>
-        <button type="button" class="_button pill-button pill-button-medium pill-button-theme-green pill-button-shadow pill-button-text-shadow pill-button-border">  <!-- namespace, same as above -->
+        <a href="<%= discover_path %>" class="_button pill-button pill-button-medium pill-button-theme-green pill-button-shadow pill-button-text-shadow pill-button-border">  <!-- namespace, same as above -->
           <span class="title">Get Started on Assembly</span>
-        </button>
+        </a>
       </div>
       <div class="footer">
         <ul class="flip-grid">
@@ -363,9 +356,7 @@
   <article class="general-copy general-copy-about">
     <div class="header">
       <div class="container">
-        <h2>
-          The Story of Assembly
-        </h2>
+        <h2>Our Story</h2>
       </div>
     </div>
     <div class="main">
@@ -377,14 +368,14 @@
           Software's ability to connect and empower people at the edges of a network by collapsing hierarchies can be felt by everyone. One of the oldest hierarchies is the Company; a group of people cooperating for a common goal and receiving some benefit from its success.
         </p>
         <h2 class="excerpt-header text-light" style="background:url(/assets/about/excerpt-header1.jpg) center left no-repeat; background-size:cover;">
-          Assembly challenges the traditional notions of a company by connecting global makers to an incentivized product development platform.
+          Build cool apps
         </h2>
         <p>
           With this vision <a href="">Chris</a>, <a href="">Dave</a> and <a href="">I</a> traveled to Ventura Beach in Southern California in late 2013. We isolated ourselves in a small rickety beachside villa that we rented on Airbnb to give us time to write down a set of beliefs and sketch out the initial concept of Assembly.
         </p>
         <figure class="col-xs-12 col-sm-6 left-offset caption-center">
           <img src="/assets/about/copy-img1.jpg">
-          <figcaption>Cool team? Coolest team.</figcaption>
+          <figcaption></figcaption>
         </figure>
         <h3 style="margin-top:3.5rem;">
           An Idea Was Born
@@ -410,7 +401,7 @@
           </figure>
           <figure class="hidden-xs visible-md-block visible-lg-block col-md-4 caption-right">
             <img src="/assets/about/copy-img3.jpg">
-            <figcaption>Assemblin’ is my biz and biz is good.</figcaption>
+            <figcaption></figcaption>
           </figure>
         </div>
         <p>
@@ -443,146 +434,50 @@
   <section class="quote-slider quote-slider-about">
     <div class="container">
       <div class="carousel">
-        <div class="item">
-          <div class="header">
-            <a class="quote-avatar" href="">
-              <img src="https://gravatar.com/avatar/aca8aad5245e144c9222102decb1776e?size=192px">
-            </a>
-            <p class="details">
-              <a href="">
-                @someDude
-              </a>
-              &nbsp;-&nbsp;
-              <a href="">
-                Jan 1 2014
-              </a>
-            </p>
-          </div>
-          <div class="main">
-            <h3>
-              @asm our neural pathways have become accustomed to your sensory input patterns. I will obey your orders and be First Officer.
-            </h3>
-          </div>
-        </div>
-        <div class="item">
-          <div class="header">
-            <a class="quote-avatar" href="">
-              <img src="https://gravatar.com/avatar/5e4575fdaacc879dc2199490417d170a?size=192px">
-            </a>
-            <p class="details">
-              <a href="">
-                @anotherDude
-              </a>
-              &nbsp;-&nbsp;
-              <a href="">
-                Mar 14 2014
-              </a>
-            </p>
-          </div>
-          <div class="main">
-            <h3>
-              Wow @asm This should be interesting. Captain, why are we out here chasing comets?
-            </h3>
-          </div>
-        </div>
-        <div class="item">
-          <div class="header">
-            <a class="quote-avatar" href="">
-              <img src="https://gravatar.com/avatar/e5d853ca2e434885a8c36c05bfb0a983?size=192px">
-            </a>
-            <p class="details">
-              <a href="">
-                @evenMoreDude
-              </a>
-              &nbsp;-&nbsp;
-              <a href="">
-                Jun 20 2014
-              </a>
-            </p>
-          </div>
-          <div class="main">
-            <h3>
-              @asm I'll alert the crew. Worf, It's better than music. It's jazz.
-            </h3>
-          </div>
-        </div>
-        <div class="item">
-          <div class="header">
-            <a class="quote-avatar" href="">
-              <img src="https://gravatar.com/avatar/e5d853ca2e434885a8c36c05bfb0a983?size=192px">
-            </a>
-            <p class="details">
-              <a href="">
-                @evenMoreDude
-              </a>
-              &nbsp;-&nbsp;
-              <a href="">
-                Jun 20 2014
-              </a>
-            </p>
-          </div>
-          <div class="main">
-            <h3>
-              @asm I'll alert the crew. Worf, It's better than music. It's jazz.
-            </h3>
-          </div>
-        </div>
-        <div class="item">
-          <div class="header">
-            <a class="quote-avatar" href="">
-              <img src="https://gravatar.com/avatar/e5d853ca2e434885a8c36c05bfb0a983?size=192px">
-            </a>
-            <p class="details">
-              <a href="">
-                @evenMoreDude
-              </a>
-              &nbsp;-&nbsp;
-              <a href="">
-                Jun 20 2014
-              </a>
-            </p>
-          </div>
-          <div class="main">
-            <h3>
-              @asm I'll alert the crew. Worf, It's better than music. It's jazz.
-            </h3>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <% [{
+              created_at: 'Jan 7 2015',
+              name: '@mappleton',
+              quote: "Dear Assembly. Thank you for building the internet's best learning & social platform. You increased my side-project excitement 156%.",
+              avatar: 'https://gravatar.com/avatar/9990431d03db3672803cf4bd8f639e0d?size=192px'
+            }, {
+              created_at: 'Jan 12 2015',
+              name: '@kenseals',
+              quote: 'Last night I dove into Assembly and contributed work on @helpful. Feeling really motivated to make stuff now. Thanks @asm.',
+              avatar: 'https://pbs.twimg.com/profile_images/456808785860771840/dZxRmTkq.jpeg'
+            }, {
+              created_at: 'Dec 29 2014',
+              name: '@intrications',
+              quote: "It's great to be able to collaborate with other people so easily. I've been a solo developer for 4 years so it makes a nice change.",
+              avatar: 'https://gravatar.com/avatar/d59f29ca6ca1c7713e77bec2f3a7eeec?size=192px'
+            }, {
+              created_at: 'Oct 13 2014',
+              name: 'Noel Sequeira',
+              quote: "I'm blown away by the quality of work that's being done. It's like when you learn about Wikipedia or Open Source for the first time, and are left scratching your head wondering how such amazing communities can even exist.",
+              avatar: 'https://d1015h9unskp4y.cloudfront.net/about-page/2428a4b.jpg'
+            }].each do |q| %>
 
-  <section class="accordion-grid-unit accordion-grid-unit-about">
-    <div class="header">
-      <div class="container">
-        <h2>
-          Our Core Tenets
-        </h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-        </p>
-      </div>
-    </div>
-    <div class="main">
-      <div class="container">
-        <div class="accordion-grid chunky blue">
-          <ul class="col-xs-12 col-s-6">
-            <li>
-              <img src="http://placehold.it/500x60/ffffff/cccccc">
-            <li>
-              <img src="http://placehold.it/500x60/ffffff/cccccc">
-            <li>
-              <img src="http://placehold.it/500x60/ffffff/cccccc">
-          </ul>
-          <ul class="col-xs-12 col-s-6">
-            <li>
-              <img src="http://placehold.it/500x60/ffffff/cccccc">
-            <li>
-              <img src="http://placehold.it/500x60/ffffff/cccccc">
-            <li>
-              <img src="http://placehold.it/500x60/ffffff/cccccc">
-          </ul>
-        </div>
+          <div class="item">
+            <div class="header">
+              <a class="quote-avatar" href="">
+                <img src="<%= q[:avatar] %>">
+              </a>
+              <p class="details">
+                <a href="">
+                  <%= q[:name] %>
+                </a>
+                &nbsp;-&nbsp;
+                <a href="">
+                  <%= q[:created_at] %>
+                </a>
+              </p>
+            </div>
+            <div class="main">
+              <h3>
+                <%= q[:quote] %>
+              </h3>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </section>
@@ -594,348 +489,31 @@
           <h2>
             The Team
           </h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-          </p>
         </div>
       </div>
       <div class="main">
         <div class="container">
           <div class="team-grid">
             <ul>
-              <li>
-                <a href="https://assembly.com/users/mdeiters">
-                  <img src="https://gravatar.com/avatar/680edc756e6522752cd6656eb0623750?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&s=240">
-                </a>
-                <div class="details">
-                  <a class="nametag" href="https://assembly.com/users/mdeiters">@mdeiters</a>
-                  <ul class="social-row">
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-twitter" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M25.7,12.5c0.8-0.6,1.6-1.3,2.2-2.3c-0.9,0.4-1.8,0.6-2.6,0.7c1-0.5,1.6-1.4,1.9-2.5c-0.9,0.5-1.9,0.9-2.8,1.1c-0.9-1-2-1.4-3.3-1.4c-1.3,0-2.3,0.4-3.2,1.3c-0.9,0.9-1.3,1.9-1.3,3.2c0,0.4,0,0.7,0.1,1c-3.8-0.2-6.9-1.8-9.3-4.7C7,9.6,6.8,10.3,6.8,11.1c0,1.6,0.7,2.9,2,3.8c-0.7,0-1.4-0.2-2-0.6v0c0,1.1,0.3,2,1,2.9c0.7,0.8,1.5,1.4,2.6,1.6c-0.3,0.1-0.7,0.1-1.2,0.1c-0.2,0-0.5,0-0.8-0.1c0.3,0.9,0.8,1.6,1.6,2.2c0.8,0.6,1.6,0.8,2.6,0.9C10.8,23.3,9,24,7,24c-0.3,0-0.6,0-1.1-0.1c2,1.3,4.3,2,6.9,2c2,0,3.8-0.4,5.5-1.2c1.7-0.8,3-1.8,4.1-3c1-1.3,1.9-2.6,2.4-4.1c0.6-1.5,0.9-3,0.9-4.5V12.5z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-facebook" viewBox="0 0 32 32">
-                          <path class="path1" d="M16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.9,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-4.4,1.6-8.1,4.7-11.2C7.9,1.6,11.6,0.1,16,0.1z M17.3,13.3v-2.9c0-0.6,0.1-1.1,0.3-1.4c0.2-0.3,0.6-0.4,1.3-0.4h2.2l0.2-3.8c-0.7-0.1-1.7-0.2-3-0.2c-1.8,0-3.2,0.5-4.2,1.4c-0.9,1-1.4,2.1-1.4,3.6v3.6H10v4h2.6v9.9h4.6v-9.9H21l0.3-3.9H17.3z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-instagram" viewBox="0 0 32 32">
-                          <path class="path1" d="M31.9,16c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-1.1,0.1-2.2,0.3-3.3h7.6c-0.4,1-0.7,2.1-0.7,3.3c0,2.4,0.8,4.4,2.5,6.1c1.7,1.7,3.7,2.5,6.1,2.5c2.4,0,4.4-0.8,6.1-2.5c1.7-1.7,2.5-3.7,2.5-6.1c0-1.2-0.2-2.3-0.7-3.3h7.6C31.8,13.7,31.9,14.8,31.9,16z M30.7,10h-8.5c-1.7-1.8-3.8-2.6-6.2-2.6S11.5,8.2,9.8,10H1.3c1.2-2.9,3.1-5.3,5.8-7.2s5.7-2.8,8.9-2.8c3.3,0,6.3,0.9,8.9,2.8C27.6,4.7,29.5,7.1,30.7,10z M11.8,11.7C13,10.6,14.4,10,16,10c1.6,0,3,0.6,4.2,1.7S22,14.3,22,16c0,1.6-0.6,3-1.7,4.2c-1.2,1.2-2.6,1.7-4.2,1.7c-1.7,0-3.1-0.6-4.2-1.7S10,17.6,10,16C10,14.3,10.6,12.9,11.8,11.7z"/>
-                        </svg>
-                      </a>
-                  </ul>
-                </div>
-              <li>
-                <a href="https://assembly.com/users/whatupdave">
-                  <img src="https://gravatar.com/avatar/bf8500ae75e57ebe06ef79dcc0bc5cf2?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&s=240">
-                </a>
-                <div class="details">
-                  <a class="nametag" href="https://assembly.com/users/whatupdave">@whatupdave</a>
-                  <ul class="social-row">
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-twitter" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M25.7,12.5c0.8-0.6,1.6-1.3,2.2-2.3c-0.9,0.4-1.8,0.6-2.6,0.7c1-0.5,1.6-1.4,1.9-2.5c-0.9,0.5-1.9,0.9-2.8,1.1c-0.9-1-2-1.4-3.3-1.4c-1.3,0-2.3,0.4-3.2,1.3c-0.9,0.9-1.3,1.9-1.3,3.2c0,0.4,0,0.7,0.1,1c-3.8-0.2-6.9-1.8-9.3-4.7C7,9.6,6.8,10.3,6.8,11.1c0,1.6,0.7,2.9,2,3.8c-0.7,0-1.4-0.2-2-0.6v0c0,1.1,0.3,2,1,2.9c0.7,0.8,1.5,1.4,2.6,1.6c-0.3,0.1-0.7,0.1-1.2,0.1c-0.2,0-0.5,0-0.8-0.1c0.3,0.9,0.8,1.6,1.6,2.2c0.8,0.6,1.6,0.8,2.6,0.9C10.8,23.3,9,24,7,24c-0.3,0-0.6,0-1.1-0.1c2,1.3,4.3,2,6.9,2c2,0,3.8-0.4,5.5-1.2c1.7-0.8,3-1.8,4.1-3c1-1.3,1.9-2.6,2.4-4.1c0.6-1.5,0.9-3,0.9-4.5V12.5z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-instagram" viewBox="0 0 32 32">
-                          <path class="path1" d="M31.9,16c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-1.1,0.1-2.2,0.3-3.3h7.6c-0.4,1-0.7,2.1-0.7,3.3c0,2.4,0.8,4.4,2.5,6.1c1.7,1.7,3.7,2.5,6.1,2.5c2.4,0,4.4-0.8,6.1-2.5c1.7-1.7,2.5-3.7,2.5-6.1c0-1.2-0.2-2.3-0.7-3.3h7.6C31.8,13.7,31.9,14.8,31.9,16z M30.7,10h-8.5c-1.7-1.8-3.8-2.6-6.2-2.6S11.5,8.2,9.8,10H1.3c1.2-2.9,3.1-5.3,5.8-7.2s5.7-2.8,8.9-2.8c3.3,0,6.3,0.9,8.9,2.8C27.6,4.7,29.5,7.1,30.7,10z M11.8,11.7C13,10.6,14.4,10,16,10c1.6,0,3,0.6,4.2,1.7S22,14.3,22,16c0,1.6-0.6,3-1.7,4.2c-1.2,1.2-2.6,1.7-4.2,1.7c-1.7,0-3.1-0.6-4.2-1.7S10,17.6,10,16C10,14.3,10.6,12.9,11.8,11.7z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-github" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M22,8V4.6c-0.7,0.6-1.9,0.9-3.9,1.1c-0.8-0.5-1.8-0.8-2.9-0.8c-1.5,0-2.8,0.5-3.8,1.5c-1,1-1.5,2.3-1.5,3.9c0,2.2,0.9,3.7,2.6,4.7c-0.4,0.3-0.7,0.7-0.9,1.2c-0.2,0.4-0.2,0.9-0.1,1.5c0.1,0.6,0.4,1.1,0.9,1.6c-0.9,0.4-1.6,0.9-2.1,1.6c-0.5,0.7-0.8,1.5-0.8,2.3c0,1.3,0.6,2.4,1.8,3.3c1.2,0.9,2.7,1.3,4.4,1.3c1.8,0,3.3-0.4,4.5-1.3c1.2-0.9,1.8-2,1.8-3.3c0-1.3-0.6-2.4-1.8-3.2c-1.2-0.9-2.6-1.3-4.3-1.4c-0.5-0.4-0.8-0.8-0.9-1.2c-0.1-0.4,0.1-1,0.4-1.6c1.5,0,2.7-0.6,3.7-1.6c1-1,1.5-2.3,1.5-3.8c0-0.9-0.1-1.6-0.4-2.3H22z M12.7,23.2c0-0.5,0.3-0.9,0.8-1.2s1.3-0.5,2.2-0.5c0.9,0,1.6,0.2,2.2,0.5c0.6,0.3,0.8,0.7,0.8,1.2c0,0.5-0.3,0.9-0.8,1.2c-0.6,0.3-1.3,0.5-2.2,0.5c-0.9,0-1.6-0.2-2.2-0.5C13,24.1,12.7,23.7,12.7,23.2z M13.8,8.2c0.4-0.5,0.8-0.7,1.4-0.7c0.6,0,1,0.2,1.4,0.7c0.4,0.5,0.5,1.1,0.5,1.9c0,0.8-0.2,1.5-0.6,2s-0.8,0.7-1.4,0.7c-0.6,0-1-0.2-1.4-0.7c-0.4-0.5-0.6-1.1-0.6-1.9S13.4,8.7,13.8,8.2z"/>
-                        </svg>
-                      </a>
-                  </ul>
-                </div>
-              <li>
-                <a href="https://assembly.com/users/chrislloyd">
-                  <img src="https://gravatar.com/avatar/08f077ea061585744ee080824f5a8e65?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&s=240">
-                </a>
-                <div class="details">
-                  <a class="nametag" href="https://assembly.com/users/chrislloyd">@chrislloyd</a>
-                  <ul class="social-row">
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-twitter" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M25.7,12.5c0.8-0.6,1.6-1.3,2.2-2.3c-0.9,0.4-1.8,0.6-2.6,0.7c1-0.5,1.6-1.4,1.9-2.5c-0.9,0.5-1.9,0.9-2.8,1.1c-0.9-1-2-1.4-3.3-1.4c-1.3,0-2.3,0.4-3.2,1.3c-0.9,0.9-1.3,1.9-1.3,3.2c0,0.4,0,0.7,0.1,1c-3.8-0.2-6.9-1.8-9.3-4.7C7,9.6,6.8,10.3,6.8,11.1c0,1.6,0.7,2.9,2,3.8c-0.7,0-1.4-0.2-2-0.6v0c0,1.1,0.3,2,1,2.9c0.7,0.8,1.5,1.4,2.6,1.6c-0.3,0.1-0.7,0.1-1.2,0.1c-0.2,0-0.5,0-0.8-0.1c0.3,0.9,0.8,1.6,1.6,2.2c0.8,0.6,1.6,0.8,2.6,0.9C10.8,23.3,9,24,7,24c-0.3,0-0.6,0-1.1-0.1c2,1.3,4.3,2,6.9,2c2,0,3.8-0.4,5.5-1.2c1.7-0.8,3-1.8,4.1-3c1-1.3,1.9-2.6,2.4-4.1c0.6-1.5,0.9-3,0.9-4.5V12.5z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-rss" viewBox="0 0 32 32">
-                          <path class="path1" d="M16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.9,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-4.4,1.6-8.1,4.7-11.2C7.9,1.6,11.6,0.1,16,0.1z M22.6,23.9h3.3c0-2.4-0.5-4.7-1.4-7c-0.9-2.2-2.2-4.1-3.8-5.7c-1.6-1.6-3.5-2.9-5.7-3.8C12.8,6.5,10.5,6,8.1,6v3.3c4,0,7.5,1.4,10.3,4.3C21.2,16.4,22.6,19.9,22.6,23.9z M16.7,23.9H20c0-3.3-1.2-6.1-3.5-8.4c-2.3-2.3-5.1-3.5-8.4-3.5v3.3c2.4,0,4.4,0.8,6.1,2.5C15.8,19.5,16.7,21.5,16.7,23.9z M8.8,23.1c0.5,0.5,1.1,0.8,1.9,0.8s1.4-0.3,1.9-0.8c0.5-0.5,0.8-1.1,0.8-1.9s-0.3-1.4-0.8-1.9c-0.5-0.5-1.1-0.8-1.9-0.8s-1.4,0.3-1.9,0.8c-0.5,0.5-0.8,1.1-0.8,1.9S8.3,22.6,8.8,23.1z"/>
-                        </svg>
-                      </a>
-                  </ul>
-                </div>
-              <li>
-                <a href="https://assembly.com/users/whale">
-                  <img src="https://gravatar.com/avatar/18f73808e44eaf9b99a1984d5ce46e92?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&s=240">
-                </a>
-                <div class="details">
-                  <a class="nametag" href="https://assembly.com/users/whale">@whale</a>
-                  <ul class="social-row">
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-twitter" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M25.7,12.5c0.8-0.6,1.6-1.3,2.2-2.3c-0.9,0.4-1.8,0.6-2.6,0.7c1-0.5,1.6-1.4,1.9-2.5c-0.9,0.5-1.9,0.9-2.8,1.1c-0.9-1-2-1.4-3.3-1.4c-1.3,0-2.3,0.4-3.2,1.3c-0.9,0.9-1.3,1.9-1.3,3.2c0,0.4,0,0.7,0.1,1c-3.8-0.2-6.9-1.8-9.3-4.7C7,9.6,6.8,10.3,6.8,11.1c0,1.6,0.7,2.9,2,3.8c-0.7,0-1.4-0.2-2-0.6v0c0,1.1,0.3,2,1,2.9c0.7,0.8,1.5,1.4,2.6,1.6c-0.3,0.1-0.7,0.1-1.2,0.1c-0.2,0-0.5,0-0.8-0.1c0.3,0.9,0.8,1.6,1.6,2.2c0.8,0.6,1.6,0.8,2.6,0.9C10.8,23.3,9,24,7,24c-0.3,0-0.6,0-1.1-0.1c2,1.3,4.3,2,6.9,2c2,0,3.8-0.4,5.5-1.2c1.7-0.8,3-1.8,4.1-3c1-1.3,1.9-2.6,2.4-4.1c0.6-1.5,0.9-3,0.9-4.5V12.5z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-instagram" viewBox="0 0 32 32">
-                          <path class="path1" d="M31.9,16c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-1.1,0.1-2.2,0.3-3.3h7.6c-0.4,1-0.7,2.1-0.7,3.3c0,2.4,0.8,4.4,2.5,6.1c1.7,1.7,3.7,2.5,6.1,2.5c2.4,0,4.4-0.8,6.1-2.5c1.7-1.7,2.5-3.7,2.5-6.1c0-1.2-0.2-2.3-0.7-3.3h7.6C31.8,13.7,31.9,14.8,31.9,16z M30.7,10h-8.5c-1.7-1.8-3.8-2.6-6.2-2.6S11.5,8.2,9.8,10H1.3c1.2-2.9,3.1-5.3,5.8-7.2s5.7-2.8,8.9-2.8c3.3,0,6.3,0.9,8.9,2.8C27.6,4.7,29.5,7.1,30.7,10z M11.8,11.7C13,10.6,14.4,10,16,10c1.6,0,3,0.6,4.2,1.7S22,14.3,22,16c0,1.6-0.6,3-1.7,4.2c-1.2,1.2-2.6,1.7-4.2,1.7c-1.7,0-3.1-0.6-4.2-1.7S10,17.6,10,16C10,14.3,10.6,12.9,11.8,11.7z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-github" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M22,8V4.6c-0.7,0.6-1.9,0.9-3.9,1.1c-0.8-0.5-1.8-0.8-2.9-0.8c-1.5,0-2.8,0.5-3.8,1.5c-1,1-1.5,2.3-1.5,3.9c0,2.2,0.9,3.7,2.6,4.7c-0.4,0.3-0.7,0.7-0.9,1.2c-0.2,0.4-0.2,0.9-0.1,1.5c0.1,0.6,0.4,1.1,0.9,1.6c-0.9,0.4-1.6,0.9-2.1,1.6c-0.5,0.7-0.8,1.5-0.8,2.3c0,1.3,0.6,2.4,1.8,3.3c1.2,0.9,2.7,1.3,4.4,1.3c1.8,0,3.3-0.4,4.5-1.3c1.2-0.9,1.8-2,1.8-3.3c0-1.3-0.6-2.4-1.8-3.2c-1.2-0.9-2.6-1.3-4.3-1.4c-0.5-0.4-0.8-0.8-0.9-1.2c-0.1-0.4,0.1-1,0.4-1.6c1.5,0,2.7-0.6,3.7-1.6c1-1,1.5-2.3,1.5-3.8c0-0.9-0.1-1.6-0.4-2.3H22z M12.7,23.2c0-0.5,0.3-0.9,0.8-1.2s1.3-0.5,2.2-0.5c0.9,0,1.6,0.2,2.2,0.5c0.6,0.3,0.8,0.7,0.8,1.2c0,0.5-0.3,0.9-0.8,1.2c-0.6,0.3-1.3,0.5-2.2,0.5c-0.9,0-1.6-0.2-2.2-0.5C13,24.1,12.7,23.7,12.7,23.2z M13.8,8.2c0.4-0.5,0.8-0.7,1.4-0.7c0.6,0,1,0.2,1.4,0.7c0.4,0.5,0.5,1.1,0.5,1.9c0,0.8-0.2,1.5-0.6,2s-0.8,0.7-1.4,0.7c-0.6,0-1-0.2-1.4-0.7c-0.4-0.5-0.6-1.1-0.6-1.9S13.4,8.7,13.8,8.2z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-dribbble" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.3,26.7c-2.8-3-4.2-6.6-4.2-10.8v-0.7c6.6-0.1,12.1-0.8,16.6-2.2c0.4,0.8,0.9,1.9,1.4,3.1c-0.5,0.1-0.9,0.3-1.2,0.4C11.8,18.2,7.6,21.6,4.3,26.7z M15.6,10.8c-4.1,1.2-9.2,1.9-15.2,2C0.9,10.3,2,8.1,3.6,6.1c1.6-2,3.5-3.5,5.8-4.6C11.7,4.5,13.8,7.6,15.6,10.8z M22.3,30.6c-2,0.9-4.1,1.3-6.3,1.3c-3.7,0-7-1.1-9.9-3.4c3.4-5.3,7.7-8.7,12.8-10.2C20.4,22,21.5,26.1,22.3,30.6z M18.2,9.9c-1.8-3.4-3.9-6.5-6.2-9.3c1.3-0.3,2.6-0.5,4-0.5c4.1,0,7.6,1.4,10.6,4.1C24.5,6.6,21.7,8.5,18.2,9.9z M31.9,15.9c-4-0.9-7.7-1.1-11.1-0.5c-0.2-0.5-0.7-1.6-1.5-3.3c3.7-1.5,6.6-3.5,9-6.2C30.6,8.7,31.8,12.1,31.9,15.9z M31.7,18.3c-0.3,2.2-1.1,4.3-2.3,6.2c-1.2,1.9-2.8,3.4-4.6,4.7c-0.8-4.1-1.8-8-3.1-11.5C24.8,17.3,28.2,17.5,31.7,18.3z"/>
-                        </svg>
-                      </a>
-                  </ul>
-                </div>
-              <li>
-                <a href="https://assembly.com/users/awwstn">
-                  <img src="https://gravatar.com/avatar/da9af1e89b5589cc2569c3b8ed1df59a?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&s=240">
-                </a>
-                <div class="details">
-                  <a class="nametag" href="https://assembly.com/users/awwstn">@awwstn</a>
-                  <ul class="social-row">
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-twitter" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M25.7,12.5c0.8-0.6,1.6-1.3,2.2-2.3c-0.9,0.4-1.8,0.6-2.6,0.7c1-0.5,1.6-1.4,1.9-2.5c-0.9,0.5-1.9,0.9-2.8,1.1c-0.9-1-2-1.4-3.3-1.4c-1.3,0-2.3,0.4-3.2,1.3c-0.9,0.9-1.3,1.9-1.3,3.2c0,0.4,0,0.7,0.1,1c-3.8-0.2-6.9-1.8-9.3-4.7C7,9.6,6.8,10.3,6.8,11.1c0,1.6,0.7,2.9,2,3.8c-0.7,0-1.4-0.2-2-0.6v0c0,1.1,0.3,2,1,2.9c0.7,0.8,1.5,1.4,2.6,1.6c-0.3,0.1-0.7,0.1-1.2,0.1c-0.2,0-0.5,0-0.8-0.1c0.3,0.9,0.8,1.6,1.6,2.2c0.8,0.6,1.6,0.8,2.6,0.9C10.8,23.3,9,24,7,24c-0.3,0-0.6,0-1.1-0.1c2,1.3,4.3,2,6.9,2c2,0,3.8-0.4,5.5-1.2c1.7-0.8,3-1.8,4.1-3c1-1.3,1.9-2.6,2.4-4.1c0.6-1.5,0.9-3,0.9-4.5V12.5z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-facebook" viewBox="0 0 32 32">
-                          <path class="path1" d="M16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.9,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-4.4,1.6-8.1,4.7-11.2C7.9,1.6,11.6,0.1,16,0.1z M17.3,13.3v-2.9c0-0.6,0.1-1.1,0.3-1.4c0.2-0.3,0.6-0.4,1.3-0.4h2.2l0.2-3.8c-0.7-0.1-1.7-0.2-3-0.2c-1.8,0-3.2,0.5-4.2,1.4c-0.9,1-1.4,2.1-1.4,3.6v3.6H10v4h2.6v9.9h4.6v-9.9H21l0.3-3.9H17.3z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-instagram" viewBox="0 0 32 32">
-                          <path class="path1" d="M31.9,16c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-1.1,0.1-2.2,0.3-3.3h7.6c-0.4,1-0.7,2.1-0.7,3.3c0,2.4,0.8,4.4,2.5,6.1c1.7,1.7,3.7,2.5,6.1,2.5c2.4,0,4.4-0.8,6.1-2.5c1.7-1.7,2.5-3.7,2.5-6.1c0-1.2-0.2-2.3-0.7-3.3h7.6C31.8,13.7,31.9,14.8,31.9,16z M30.7,10h-8.5c-1.7-1.8-3.8-2.6-6.2-2.6S11.5,8.2,9.8,10H1.3c1.2-2.9,3.1-5.3,5.8-7.2s5.7-2.8,8.9-2.8c3.3,0,6.3,0.9,8.9,2.8C27.6,4.7,29.5,7.1,30.7,10z M11.8,11.7C13,10.6,14.4,10,16,10c1.6,0,3,0.6,4.2,1.7S22,14.3,22,16c0,1.6-0.6,3-1.7,4.2c-1.2,1.2-2.6,1.7-4.2,1.7c-1.7,0-3.1-0.6-4.2-1.7S10,17.6,10,16C10,14.3,10.6,12.9,11.8,11.7z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-github" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M22,8V4.6c-0.7,0.6-1.9,0.9-3.9,1.1c-0.8-0.5-1.8-0.8-2.9-0.8c-1.5,0-2.8,0.5-3.8,1.5c-1,1-1.5,2.3-1.5,3.9c0,2.2,0.9,3.7,2.6,4.7c-0.4,0.3-0.7,0.7-0.9,1.2c-0.2,0.4-0.2,0.9-0.1,1.5c0.1,0.6,0.4,1.1,0.9,1.6c-0.9,0.4-1.6,0.9-2.1,1.6c-0.5,0.7-0.8,1.5-0.8,2.3c0,1.3,0.6,2.4,1.8,3.3c1.2,0.9,2.7,1.3,4.4,1.3c1.8,0,3.3-0.4,4.5-1.3c1.2-0.9,1.8-2,1.8-3.3c0-1.3-0.6-2.4-1.8-3.2c-1.2-0.9-2.6-1.3-4.3-1.4c-0.5-0.4-0.8-0.8-0.9-1.2c-0.1-0.4,0.1-1,0.4-1.6c1.5,0,2.7-0.6,3.7-1.6c1-1,1.5-2.3,1.5-3.8c0-0.9-0.1-1.6-0.4-2.3H22z M12.7,23.2c0-0.5,0.3-0.9,0.8-1.2s1.3-0.5,2.2-0.5c0.9,0,1.6,0.2,2.2,0.5c0.6,0.3,0.8,0.7,0.8,1.2c0,0.5-0.3,0.9-0.8,1.2c-0.6,0.3-1.3,0.5-2.2,0.5c-0.9,0-1.6-0.2-2.2-0.5C13,24.1,12.7,23.7,12.7,23.2z M13.8,8.2c0.4-0.5,0.8-0.7,1.4-0.7c0.6,0,1,0.2,1.4,0.7c0.4,0.5,0.5,1.1,0.5,1.9c0,0.8-0.2,1.5-0.6,2s-0.8,0.7-1.4,0.7c-0.6,0-1-0.2-1.4-0.7c-0.4-0.5-0.6-1.1-0.6-1.9S13.4,8.7,13.8,8.2z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-dribbble" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.3,26.7c-2.8-3-4.2-6.6-4.2-10.8v-0.7c6.6-0.1,12.1-0.8,16.6-2.2c0.4,0.8,0.9,1.9,1.4,3.1c-0.5,0.1-0.9,0.3-1.2,0.4C11.8,18.2,7.6,21.6,4.3,26.7z M15.6,10.8c-4.1,1.2-9.2,1.9-15.2,2C0.9,10.3,2,8.1,3.6,6.1c1.6-2,3.5-3.5,5.8-4.6C11.7,4.5,13.8,7.6,15.6,10.8z M22.3,30.6c-2,0.9-4.1,1.3-6.3,1.3c-3.7,0-7-1.1-9.9-3.4c3.4-5.3,7.7-8.7,12.8-10.2C20.4,22,21.5,26.1,22.3,30.6z M18.2,9.9c-1.8-3.4-3.9-6.5-6.2-9.3c1.3-0.3,2.6-0.5,4-0.5c4.1,0,7.6,1.4,10.6,4.1C24.5,6.6,21.7,8.5,18.2,9.9z M31.9,15.9c-4-0.9-7.7-1.1-11.1-0.5c-0.2-0.5-0.7-1.6-1.5-3.3c3.7-1.5,6.6-3.5,9-6.2C30.6,8.7,31.8,12.1,31.9,15.9z M31.7,18.3c-0.3,2.2-1.1,4.3-2.3,6.2c-1.2,1.9-2.8,3.4-4.6,4.7c-0.8-4.1-1.8-8-3.1-11.5C24.8,17.3,28.2,17.5,31.7,18.3z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-rss" viewBox="0 0 32 32">
-                          <path class="path1" d="M16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.9,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-4.4,1.6-8.1,4.7-11.2C7.9,1.6,11.6,0.1,16,0.1z M22.6,23.9h3.3c0-2.4-0.5-4.7-1.4-7c-0.9-2.2-2.2-4.1-3.8-5.7c-1.6-1.6-3.5-2.9-5.7-3.8C12.8,6.5,10.5,6,8.1,6v3.3c4,0,7.5,1.4,10.3,4.3C21.2,16.4,22.6,19.9,22.6,23.9z M16.7,23.9H20c0-3.3-1.2-6.1-3.5-8.4c-2.3-2.3-5.1-3.5-8.4-3.5v3.3c2.4,0,4.4,0.8,6.1,2.5C15.8,19.5,16.7,21.5,16.7,23.9z M8.8,23.1c0.5,0.5,1.1,0.8,1.9,0.8s1.4-0.3,1.9-0.8c0.5-0.5,0.8-1.1,0.8-1.9s-0.3-1.4-0.8-1.9c-0.5-0.5-1.1-0.8-1.9-0.8s-1.4,0.3-1.9,0.8c-0.5,0.5-0.8,1.1-0.8,1.9S8.3,22.6,8.8,23.1z"/>
-                        </svg>
-                      </a>
-                  </ul>
-                </div>
-              <li>
-                <a href="https://assembly.com/users/barisser">
-                  <img src="https://gravatar.com/avatar/7fc1b9a0478f691f7ccd659c8220f8fd?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&s=240">
-                </a>
-                <div class="details">
-                  <a class="nametag" href="https://assembly.com/users/barisser">@barisser</a>
-                  <ul class="social-row">
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-twitter" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M25.7,12.5c0.8-0.6,1.6-1.3,2.2-2.3c-0.9,0.4-1.8,0.6-2.6,0.7c1-0.5,1.6-1.4,1.9-2.5c-0.9,0.5-1.9,0.9-2.8,1.1c-0.9-1-2-1.4-3.3-1.4c-1.3,0-2.3,0.4-3.2,1.3c-0.9,0.9-1.3,1.9-1.3,3.2c0,0.4,0,0.7,0.1,1c-3.8-0.2-6.9-1.8-9.3-4.7C7,9.6,6.8,10.3,6.8,11.1c0,1.6,0.7,2.9,2,3.8c-0.7,0-1.4-0.2-2-0.6v0c0,1.1,0.3,2,1,2.9c0.7,0.8,1.5,1.4,2.6,1.6c-0.3,0.1-0.7,0.1-1.2,0.1c-0.2,0-0.5,0-0.8-0.1c0.3,0.9,0.8,1.6,1.6,2.2c0.8,0.6,1.6,0.8,2.6,0.9C10.8,23.3,9,24,7,24c-0.3,0-0.6,0-1.1-0.1c2,1.3,4.3,2,6.9,2c2,0,3.8-0.4,5.5-1.2c1.7-0.8,3-1.8,4.1-3c1-1.3,1.9-2.6,2.4-4.1c0.6-1.5,0.9-3,0.9-4.5V12.5z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-facebook" viewBox="0 0 32 32">
-                          <path class="path1" d="M16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.9,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-4.4,1.6-8.1,4.7-11.2C7.9,1.6,11.6,0.1,16,0.1z M17.3,13.3v-2.9c0-0.6,0.1-1.1,0.3-1.4c0.2-0.3,0.6-0.4,1.3-0.4h2.2l0.2-3.8c-0.7-0.1-1.7-0.2-3-0.2c-1.8,0-3.2,0.5-4.2,1.4c-0.9,1-1.4,2.1-1.4,3.6v3.6H10v4h2.6v9.9h4.6v-9.9H21l0.3-3.9H17.3z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-instagram" viewBox="0 0 32 32">
-                          <path class="path1" d="M31.9,16c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-1.1,0.1-2.2,0.3-3.3h7.6c-0.4,1-0.7,2.1-0.7,3.3c0,2.4,0.8,4.4,2.5,6.1c1.7,1.7,3.7,2.5,6.1,2.5c2.4,0,4.4-0.8,6.1-2.5c1.7-1.7,2.5-3.7,2.5-6.1c0-1.2-0.2-2.3-0.7-3.3h7.6C31.8,13.7,31.9,14.8,31.9,16z M30.7,10h-8.5c-1.7-1.8-3.8-2.6-6.2-2.6S11.5,8.2,9.8,10H1.3c1.2-2.9,3.1-5.3,5.8-7.2s5.7-2.8,8.9-2.8c3.3,0,6.3,0.9,8.9,2.8C27.6,4.7,29.5,7.1,30.7,10z M11.8,11.7C13,10.6,14.4,10,16,10c1.6,0,3,0.6,4.2,1.7S22,14.3,22,16c0,1.6-0.6,3-1.7,4.2c-1.2,1.2-2.6,1.7-4.2,1.7c-1.7,0-3.1-0.6-4.2-1.7S10,17.6,10,16C10,14.3,10.6,12.9,11.8,11.7z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-github" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M22,8V4.6c-0.7,0.6-1.9,0.9-3.9,1.1c-0.8-0.5-1.8-0.8-2.9-0.8c-1.5,0-2.8,0.5-3.8,1.5c-1,1-1.5,2.3-1.5,3.9c0,2.2,0.9,3.7,2.6,4.7c-0.4,0.3-0.7,0.7-0.9,1.2c-0.2,0.4-0.2,0.9-0.1,1.5c0.1,0.6,0.4,1.1,0.9,1.6c-0.9,0.4-1.6,0.9-2.1,1.6c-0.5,0.7-0.8,1.5-0.8,2.3c0,1.3,0.6,2.4,1.8,3.3c1.2,0.9,2.7,1.3,4.4,1.3c1.8,0,3.3-0.4,4.5-1.3c1.2-0.9,1.8-2,1.8-3.3c0-1.3-0.6-2.4-1.8-3.2c-1.2-0.9-2.6-1.3-4.3-1.4c-0.5-0.4-0.8-0.8-0.9-1.2c-0.1-0.4,0.1-1,0.4-1.6c1.5,0,2.7-0.6,3.7-1.6c1-1,1.5-2.3,1.5-3.8c0-0.9-0.1-1.6-0.4-2.3H22z M12.7,23.2c0-0.5,0.3-0.9,0.8-1.2s1.3-0.5,2.2-0.5c0.9,0,1.6,0.2,2.2,0.5c0.6,0.3,0.8,0.7,0.8,1.2c0,0.5-0.3,0.9-0.8,1.2c-0.6,0.3-1.3,0.5-2.2,0.5c-0.9,0-1.6-0.2-2.2-0.5C13,24.1,12.7,23.7,12.7,23.2z M13.8,8.2c0.4-0.5,0.8-0.7,1.4-0.7c0.6,0,1,0.2,1.4,0.7c0.4,0.5,0.5,1.1,0.5,1.9c0,0.8-0.2,1.5-0.6,2s-0.8,0.7-1.4,0.7c-0.6,0-1-0.2-1.4-0.7c-0.4-0.5-0.6-1.1-0.6-1.9S13.4,8.7,13.8,8.2z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-dribbble" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.3,26.7c-2.8-3-4.2-6.6-4.2-10.8v-0.7c6.6-0.1,12.1-0.8,16.6-2.2c0.4,0.8,0.9,1.9,1.4,3.1c-0.5,0.1-0.9,0.3-1.2,0.4C11.8,18.2,7.6,21.6,4.3,26.7z M15.6,10.8c-4.1,1.2-9.2,1.9-15.2,2C0.9,10.3,2,8.1,3.6,6.1c1.6-2,3.5-3.5,5.8-4.6C11.7,4.5,13.8,7.6,15.6,10.8z M22.3,30.6c-2,0.9-4.1,1.3-6.3,1.3c-3.7,0-7-1.1-9.9-3.4c3.4-5.3,7.7-8.7,12.8-10.2C20.4,22,21.5,26.1,22.3,30.6z M18.2,9.9c-1.8-3.4-3.9-6.5-6.2-9.3c1.3-0.3,2.6-0.5,4-0.5c4.1,0,7.6,1.4,10.6,4.1C24.5,6.6,21.7,8.5,18.2,9.9z M31.9,15.9c-4-0.9-7.7-1.1-11.1-0.5c-0.2-0.5-0.7-1.6-1.5-3.3c3.7-1.5,6.6-3.5,9-6.2C30.6,8.7,31.8,12.1,31.9,15.9z M31.7,18.3c-0.3,2.2-1.1,4.3-2.3,6.2c-1.2,1.9-2.8,3.4-4.6,4.7c-0.8-4.1-1.8-8-3.1-11.5C24.8,17.3,28.2,17.5,31.7,18.3z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-rss" viewBox="0 0 32 32">
-                          <path class="path1" d="M16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.9,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-4.4,1.6-8.1,4.7-11.2C7.9,1.6,11.6,0.1,16,0.1z M22.6,23.9h3.3c0-2.4-0.5-4.7-1.4-7c-0.9-2.2-2.2-4.1-3.8-5.7c-1.6-1.6-3.5-2.9-5.7-3.8C12.8,6.5,10.5,6,8.1,6v3.3c4,0,7.5,1.4,10.3,4.3C21.2,16.4,22.6,19.9,22.6,23.9z M16.7,23.9H20c0-3.3-1.2-6.1-3.5-8.4c-2.3-2.3-5.1-3.5-8.4-3.5v3.3c2.4,0,4.4,0.8,6.1,2.5C15.8,19.5,16.7,21.5,16.7,23.9z M8.8,23.1c0.5,0.5,1.1,0.8,1.9,0.8s1.4-0.3,1.9-0.8c0.5-0.5,0.8-1.1,0.8-1.9s-0.3-1.4-0.8-1.9c-0.5-0.5-1.1-0.8-1.9-0.8s-1.4,0.3-1.9,0.8c-0.5,0.5-0.8,1.1-0.8,1.9S8.3,22.6,8.8,23.1z"/>
-                        </svg>
-                      </a>
-                  </ul>
-                </div>
-              <li>
-                <a href="https://assembly.com/users/vanstee">
-                  <img src="https://gravatar.com/avatar/b84524b344a13ff9ddd30ba96b70ad5b?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&s=240">
-                </a>
-                <div class="details">
-                  <a class="nametag" href="https://assembly.com/users/vanstee">@vanstee</a>
-                  <ul class="social-row">
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-twitter" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M25.7,12.5c0.8-0.6,1.6-1.3,2.2-2.3c-0.9,0.4-1.8,0.6-2.6,0.7c1-0.5,1.6-1.4,1.9-2.5c-0.9,0.5-1.9,0.9-2.8,1.1c-0.9-1-2-1.4-3.3-1.4c-1.3,0-2.3,0.4-3.2,1.3c-0.9,0.9-1.3,1.9-1.3,3.2c0,0.4,0,0.7,0.1,1c-3.8-0.2-6.9-1.8-9.3-4.7C7,9.6,6.8,10.3,6.8,11.1c0,1.6,0.7,2.9,2,3.8c-0.7,0-1.4-0.2-2-0.6v0c0,1.1,0.3,2,1,2.9c0.7,0.8,1.5,1.4,2.6,1.6c-0.3,0.1-0.7,0.1-1.2,0.1c-0.2,0-0.5,0-0.8-0.1c0.3,0.9,0.8,1.6,1.6,2.2c0.8,0.6,1.6,0.8,2.6,0.9C10.8,23.3,9,24,7,24c-0.3,0-0.6,0-1.1-0.1c2,1.3,4.3,2,6.9,2c2,0,3.8-0.4,5.5-1.2c1.7-0.8,3-1.8,4.1-3c1-1.3,1.9-2.6,2.4-4.1c0.6-1.5,0.9-3,0.9-4.5V12.5z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-facebook" viewBox="0 0 32 32">
-                          <path class="path1" d="M16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.9,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-4.4,1.6-8.1,4.7-11.2C7.9,1.6,11.6,0.1,16,0.1z M17.3,13.3v-2.9c0-0.6,0.1-1.1,0.3-1.4c0.2-0.3,0.6-0.4,1.3-0.4h2.2l0.2-3.8c-0.7-0.1-1.7-0.2-3-0.2c-1.8,0-3.2,0.5-4.2,1.4c-0.9,1-1.4,2.1-1.4,3.6v3.6H10v4h2.6v9.9h4.6v-9.9H21l0.3-3.9H17.3z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-instagram" viewBox="0 0 32 32">
-                          <path class="path1" d="M31.9,16c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-1.1,0.1-2.2,0.3-3.3h7.6c-0.4,1-0.7,2.1-0.7,3.3c0,2.4,0.8,4.4,2.5,6.1c1.7,1.7,3.7,2.5,6.1,2.5c2.4,0,4.4-0.8,6.1-2.5c1.7-1.7,2.5-3.7,2.5-6.1c0-1.2-0.2-2.3-0.7-3.3h7.6C31.8,13.7,31.9,14.8,31.9,16z M30.7,10h-8.5c-1.7-1.8-3.8-2.6-6.2-2.6S11.5,8.2,9.8,10H1.3c1.2-2.9,3.1-5.3,5.8-7.2s5.7-2.8,8.9-2.8c3.3,0,6.3,0.9,8.9,2.8C27.6,4.7,29.5,7.1,30.7,10z M11.8,11.7C13,10.6,14.4,10,16,10c1.6,0,3,0.6,4.2,1.7S22,14.3,22,16c0,1.6-0.6,3-1.7,4.2c-1.2,1.2-2.6,1.7-4.2,1.7c-1.7,0-3.1-0.6-4.2-1.7S10,17.6,10,16C10,14.3,10.6,12.9,11.8,11.7z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-github" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M22,8V4.6c-0.7,0.6-1.9,0.9-3.9,1.1c-0.8-0.5-1.8-0.8-2.9-0.8c-1.5,0-2.8,0.5-3.8,1.5c-1,1-1.5,2.3-1.5,3.9c0,2.2,0.9,3.7,2.6,4.7c-0.4,0.3-0.7,0.7-0.9,1.2c-0.2,0.4-0.2,0.9-0.1,1.5c0.1,0.6,0.4,1.1,0.9,1.6c-0.9,0.4-1.6,0.9-2.1,1.6c-0.5,0.7-0.8,1.5-0.8,2.3c0,1.3,0.6,2.4,1.8,3.3c1.2,0.9,2.7,1.3,4.4,1.3c1.8,0,3.3-0.4,4.5-1.3c1.2-0.9,1.8-2,1.8-3.3c0-1.3-0.6-2.4-1.8-3.2c-1.2-0.9-2.6-1.3-4.3-1.4c-0.5-0.4-0.8-0.8-0.9-1.2c-0.1-0.4,0.1-1,0.4-1.6c1.5,0,2.7-0.6,3.7-1.6c1-1,1.5-2.3,1.5-3.8c0-0.9-0.1-1.6-0.4-2.3H22z M12.7,23.2c0-0.5,0.3-0.9,0.8-1.2s1.3-0.5,2.2-0.5c0.9,0,1.6,0.2,2.2,0.5c0.6,0.3,0.8,0.7,0.8,1.2c0,0.5-0.3,0.9-0.8,1.2c-0.6,0.3-1.3,0.5-2.2,0.5c-0.9,0-1.6-0.2-2.2-0.5C13,24.1,12.7,23.7,12.7,23.2z M13.8,8.2c0.4-0.5,0.8-0.7,1.4-0.7c0.6,0,1,0.2,1.4,0.7c0.4,0.5,0.5,1.1,0.5,1.9c0,0.8-0.2,1.5-0.6,2s-0.8,0.7-1.4,0.7c-0.6,0-1-0.2-1.4-0.7c-0.4-0.5-0.6-1.1-0.6-1.9S13.4,8.7,13.8,8.2z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-dribbble" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.3,26.7c-2.8-3-4.2-6.6-4.2-10.8v-0.7c6.6-0.1,12.1-0.8,16.6-2.2c0.4,0.8,0.9,1.9,1.4,3.1c-0.5,0.1-0.9,0.3-1.2,0.4C11.8,18.2,7.6,21.6,4.3,26.7z M15.6,10.8c-4.1,1.2-9.2,1.9-15.2,2C0.9,10.3,2,8.1,3.6,6.1c1.6-2,3.5-3.5,5.8-4.6C11.7,4.5,13.8,7.6,15.6,10.8z M22.3,30.6c-2,0.9-4.1,1.3-6.3,1.3c-3.7,0-7-1.1-9.9-3.4c3.4-5.3,7.7-8.7,12.8-10.2C20.4,22,21.5,26.1,22.3,30.6z M18.2,9.9c-1.8-3.4-3.9-6.5-6.2-9.3c1.3-0.3,2.6-0.5,4-0.5c4.1,0,7.6,1.4,10.6,4.1C24.5,6.6,21.7,8.5,18.2,9.9z M31.9,15.9c-4-0.9-7.7-1.1-11.1-0.5c-0.2-0.5-0.7-1.6-1.5-3.3c3.7-1.5,6.6-3.5,9-6.2C30.6,8.7,31.8,12.1,31.9,15.9z M31.7,18.3c-0.3,2.2-1.1,4.3-2.3,6.2c-1.2,1.9-2.8,3.4-4.6,4.7c-0.8-4.1-1.8-8-3.1-11.5C24.8,17.3,28.2,17.5,31.7,18.3z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-rss" viewBox="0 0 32 32">
-                          <path class="path1" d="M16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.9,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-4.4,1.6-8.1,4.7-11.2C7.9,1.6,11.6,0.1,16,0.1z M22.6,23.9h3.3c0-2.4-0.5-4.7-1.4-7c-0.9-2.2-2.2-4.1-3.8-5.7c-1.6-1.6-3.5-2.9-5.7-3.8C12.8,6.5,10.5,6,8.1,6v3.3c4,0,7.5,1.4,10.3,4.3C21.2,16.4,22.6,19.9,22.6,23.9z M16.7,23.9H20c0-3.3-1.2-6.1-3.5-8.4c-2.3-2.3-5.1-3.5-8.4-3.5v3.3c2.4,0,4.4,0.8,6.1,2.5C15.8,19.5,16.7,21.5,16.7,23.9z M8.8,23.1c0.5,0.5,1.1,0.8,1.9,0.8s1.4-0.3,1.9-0.8c0.5-0.5,0.8-1.1,0.8-1.9s-0.3-1.4-0.8-1.9c-0.5-0.5-1.1-0.8-1.9-0.8s-1.4,0.3-1.9,0.8c-0.5,0.5-0.8,1.1-0.8,1.9S8.3,22.6,8.8,23.1z"/>
-                        </svg>
-                      </a>
-                  </ul>
-                </div>
-              <li>
-                <a href="https://assembly.com/users/pletcher">
-                  <img src="https://gravatar.com/avatar/07af31f83a0d4ef6bd360bd14704408d?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&s=240">
-                </a>
-                <div class="details">
-                  <a class="nametag" href="https://assembly.com/users/pletcher">@pletcher</a>
-                  <ul class="social-row">
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-twitter" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M25.7,12.5c0.8-0.6,1.6-1.3,2.2-2.3c-0.9,0.4-1.8,0.6-2.6,0.7c1-0.5,1.6-1.4,1.9-2.5c-0.9,0.5-1.9,0.9-2.8,1.1c-0.9-1-2-1.4-3.3-1.4c-1.3,0-2.3,0.4-3.2,1.3c-0.9,0.9-1.3,1.9-1.3,3.2c0,0.4,0,0.7,0.1,1c-3.8-0.2-6.9-1.8-9.3-4.7C7,9.6,6.8,10.3,6.8,11.1c0,1.6,0.7,2.9,2,3.8c-0.7,0-1.4-0.2-2-0.6v0c0,1.1,0.3,2,1,2.9c0.7,0.8,1.5,1.4,2.6,1.6c-0.3,0.1-0.7,0.1-1.2,0.1c-0.2,0-0.5,0-0.8-0.1c0.3,0.9,0.8,1.6,1.6,2.2c0.8,0.6,1.6,0.8,2.6,0.9C10.8,23.3,9,24,7,24c-0.3,0-0.6,0-1.1-0.1c2,1.3,4.3,2,6.9,2c2,0,3.8-0.4,5.5-1.2c1.7-0.8,3-1.8,4.1-3c1-1.3,1.9-2.6,2.4-4.1c0.6-1.5,0.9-3,0.9-4.5V12.5z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-facebook" viewBox="0 0 32 32">
-                          <path class="path1" d="M16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.9,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-4.4,1.6-8.1,4.7-11.2C7.9,1.6,11.6,0.1,16,0.1z M17.3,13.3v-2.9c0-0.6,0.1-1.1,0.3-1.4c0.2-0.3,0.6-0.4,1.3-0.4h2.2l0.2-3.8c-0.7-0.1-1.7-0.2-3-0.2c-1.8,0-3.2,0.5-4.2,1.4c-0.9,1-1.4,2.1-1.4,3.6v3.6H10v4h2.6v9.9h4.6v-9.9H21l0.3-3.9H17.3z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-instagram" viewBox="0 0 32 32">
-                          <path class="path1" d="M31.9,16c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-1.1,0.1-2.2,0.3-3.3h7.6c-0.4,1-0.7,2.1-0.7,3.3c0,2.4,0.8,4.4,2.5,6.1c1.7,1.7,3.7,2.5,6.1,2.5c2.4,0,4.4-0.8,6.1-2.5c1.7-1.7,2.5-3.7,2.5-6.1c0-1.2-0.2-2.3-0.7-3.3h7.6C31.8,13.7,31.9,14.8,31.9,16z M30.7,10h-8.5c-1.7-1.8-3.8-2.6-6.2-2.6S11.5,8.2,9.8,10H1.3c1.2-2.9,3.1-5.3,5.8-7.2s5.7-2.8,8.9-2.8c3.3,0,6.3,0.9,8.9,2.8C27.6,4.7,29.5,7.1,30.7,10z M11.8,11.7C13,10.6,14.4,10,16,10c1.6,0,3,0.6,4.2,1.7S22,14.3,22,16c0,1.6-0.6,3-1.7,4.2c-1.2,1.2-2.6,1.7-4.2,1.7c-1.7,0-3.1-0.6-4.2-1.7S10,17.6,10,16C10,14.3,10.6,12.9,11.8,11.7z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-github" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M22,8V4.6c-0.7,0.6-1.9,0.9-3.9,1.1c-0.8-0.5-1.8-0.8-2.9-0.8c-1.5,0-2.8,0.5-3.8,1.5c-1,1-1.5,2.3-1.5,3.9c0,2.2,0.9,3.7,2.6,4.7c-0.4,0.3-0.7,0.7-0.9,1.2c-0.2,0.4-0.2,0.9-0.1,1.5c0.1,0.6,0.4,1.1,0.9,1.6c-0.9,0.4-1.6,0.9-2.1,1.6c-0.5,0.7-0.8,1.5-0.8,2.3c0,1.3,0.6,2.4,1.8,3.3c1.2,0.9,2.7,1.3,4.4,1.3c1.8,0,3.3-0.4,4.5-1.3c1.2-0.9,1.8-2,1.8-3.3c0-1.3-0.6-2.4-1.8-3.2c-1.2-0.9-2.6-1.3-4.3-1.4c-0.5-0.4-0.8-0.8-0.9-1.2c-0.1-0.4,0.1-1,0.4-1.6c1.5,0,2.7-0.6,3.7-1.6c1-1,1.5-2.3,1.5-3.8c0-0.9-0.1-1.6-0.4-2.3H22z M12.7,23.2c0-0.5,0.3-0.9,0.8-1.2s1.3-0.5,2.2-0.5c0.9,0,1.6,0.2,2.2,0.5c0.6,0.3,0.8,0.7,0.8,1.2c0,0.5-0.3,0.9-0.8,1.2c-0.6,0.3-1.3,0.5-2.2,0.5c-0.9,0-1.6-0.2-2.2-0.5C13,24.1,12.7,23.7,12.7,23.2z M13.8,8.2c0.4-0.5,0.8-0.7,1.4-0.7c0.6,0,1,0.2,1.4,0.7c0.4,0.5,0.5,1.1,0.5,1.9c0,0.8-0.2,1.5-0.6,2s-0.8,0.7-1.4,0.7c-0.6,0-1-0.2-1.4-0.7c-0.4-0.5-0.6-1.1-0.6-1.9S13.4,8.7,13.8,8.2z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-dribbble" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.3,26.7c-2.8-3-4.2-6.6-4.2-10.8v-0.7c6.6-0.1,12.1-0.8,16.6-2.2c0.4,0.8,0.9,1.9,1.4,3.1c-0.5,0.1-0.9,0.3-1.2,0.4C11.8,18.2,7.6,21.6,4.3,26.7z M15.6,10.8c-4.1,1.2-9.2,1.9-15.2,2C0.9,10.3,2,8.1,3.6,6.1c1.6-2,3.5-3.5,5.8-4.6C11.7,4.5,13.8,7.6,15.6,10.8z M22.3,30.6c-2,0.9-4.1,1.3-6.3,1.3c-3.7,0-7-1.1-9.9-3.4c3.4-5.3,7.7-8.7,12.8-10.2C20.4,22,21.5,26.1,22.3,30.6z M18.2,9.9c-1.8-3.4-3.9-6.5-6.2-9.3c1.3-0.3,2.6-0.5,4-0.5c4.1,0,7.6,1.4,10.6,4.1C24.5,6.6,21.7,8.5,18.2,9.9z M31.9,15.9c-4-0.9-7.7-1.1-11.1-0.5c-0.2-0.5-0.7-1.6-1.5-3.3c3.7-1.5,6.6-3.5,9-6.2C30.6,8.7,31.8,12.1,31.9,15.9z M31.7,18.3c-0.3,2.2-1.1,4.3-2.3,6.2c-1.2,1.9-2.8,3.4-4.6,4.7c-0.8-4.1-1.8-8-3.1-11.5C24.8,17.3,28.2,17.5,31.7,18.3z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-rss" viewBox="0 0 32 32">
-                          <path class="path1" d="M16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.9,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-4.4,1.6-8.1,4.7-11.2C7.9,1.6,11.6,0.1,16,0.1z M22.6,23.9h3.3c0-2.4-0.5-4.7-1.4-7c-0.9-2.2-2.2-4.1-3.8-5.7c-1.6-1.6-3.5-2.9-5.7-3.8C12.8,6.5,10.5,6,8.1,6v3.3c4,0,7.5,1.4,10.3,4.3C21.2,16.4,22.6,19.9,22.6,23.9z M16.7,23.9H20c0-3.3-1.2-6.1-3.5-8.4c-2.3-2.3-5.1-3.5-8.4-3.5v3.3c2.4,0,4.4,0.8,6.1,2.5C15.8,19.5,16.7,21.5,16.7,23.9z M8.8,23.1c0.5,0.5,1.1,0.8,1.9,0.8s1.4-0.3,1.9-0.8c0.5-0.5,0.8-1.1,0.8-1.9s-0.3-1.4-0.8-1.9c-0.5-0.5-1.1-0.8-1.9-0.8s-1.4,0.3-1.9,0.8c-0.5,0.5-0.8,1.1-0.8,1.9S8.3,22.6,8.8,23.1z"/>
-                        </svg>
-                      </a>
-                  </ul>
-                </div>
-              <li>
-                <a href="https://assembly.com/users/bshyong">
-                  <img src="https://gravatar.com/avatar/33a2311372ec07fb44651b687a68f2d7?d=https%3A%2F%2Fassembly.com%2Fassets%2Favatars%2Fdefault.png&s=240">
-                </a>
-                <div class="details">
-                  <a class="nametag" href="https://assembly.com/users/bshyong">@bshyong</a>
-                  <ul class="social-row">
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-twitter" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M25.7,12.5c0.8-0.6,1.6-1.3,2.2-2.3c-0.9,0.4-1.8,0.6-2.6,0.7c1-0.5,1.6-1.4,1.9-2.5c-0.9,0.5-1.9,0.9-2.8,1.1c-0.9-1-2-1.4-3.3-1.4c-1.3,0-2.3,0.4-3.2,1.3c-0.9,0.9-1.3,1.9-1.3,3.2c0,0.4,0,0.7,0.1,1c-3.8-0.2-6.9-1.8-9.3-4.7C7,9.6,6.8,10.3,6.8,11.1c0,1.6,0.7,2.9,2,3.8c-0.7,0-1.4-0.2-2-0.6v0c0,1.1,0.3,2,1,2.9c0.7,0.8,1.5,1.4,2.6,1.6c-0.3,0.1-0.7,0.1-1.2,0.1c-0.2,0-0.5,0-0.8-0.1c0.3,0.9,0.8,1.6,1.6,2.2c0.8,0.6,1.6,0.8,2.6,0.9C10.8,23.3,9,24,7,24c-0.3,0-0.6,0-1.1-0.1c2,1.3,4.3,2,6.9,2c2,0,3.8-0.4,5.5-1.2c1.7-0.8,3-1.8,4.1-3c1-1.3,1.9-2.6,2.4-4.1c0.6-1.5,0.9-3,0.9-4.5V12.5z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-facebook" viewBox="0 0 32 32">
-                          <path class="path1" d="M16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.9,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-4.4,1.6-8.1,4.7-11.2C7.9,1.6,11.6,0.1,16,0.1z M17.3,13.3v-2.9c0-0.6,0.1-1.1,0.3-1.4c0.2-0.3,0.6-0.4,1.3-0.4h2.2l0.2-3.8c-0.7-0.1-1.7-0.2-3-0.2c-1.8,0-3.2,0.5-4.2,1.4c-0.9,1-1.4,2.1-1.4,3.6v3.6H10v4h2.6v9.9h4.6v-9.9H21l0.3-3.9H17.3z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-instagram" viewBox="0 0 32 32">
-                          <path class="path1" d="M31.9,16c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-1.1,0.1-2.2,0.3-3.3h7.6c-0.4,1-0.7,2.1-0.7,3.3c0,2.4,0.8,4.4,2.5,6.1c1.7,1.7,3.7,2.5,6.1,2.5c2.4,0,4.4-0.8,6.1-2.5c1.7-1.7,2.5-3.7,2.5-6.1c0-1.2-0.2-2.3-0.7-3.3h7.6C31.8,13.7,31.9,14.8,31.9,16z M30.7,10h-8.5c-1.7-1.8-3.8-2.6-6.2-2.6S11.5,8.2,9.8,10H1.3c1.2-2.9,3.1-5.3,5.8-7.2s5.7-2.8,8.9-2.8c3.3,0,6.3,0.9,8.9,2.8C27.6,4.7,29.5,7.1,30.7,10z M11.8,11.7C13,10.6,14.4,10,16,10c1.6,0,3,0.6,4.2,1.7S22,14.3,22,16c0,1.6-0.6,3-1.7,4.2c-1.2,1.2-2.6,1.7-4.2,1.7c-1.7,0-3.1-0.6-4.2-1.7S10,17.6,10,16C10,14.3,10.6,12.9,11.8,11.7z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-github" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M22,8V4.6c-0.7,0.6-1.9,0.9-3.9,1.1c-0.8-0.5-1.8-0.8-2.9-0.8c-1.5,0-2.8,0.5-3.8,1.5c-1,1-1.5,2.3-1.5,3.9c0,2.2,0.9,3.7,2.6,4.7c-0.4,0.3-0.7,0.7-0.9,1.2c-0.2,0.4-0.2,0.9-0.1,1.5c0.1,0.6,0.4,1.1,0.9,1.6c-0.9,0.4-1.6,0.9-2.1,1.6c-0.5,0.7-0.8,1.5-0.8,2.3c0,1.3,0.6,2.4,1.8,3.3c1.2,0.9,2.7,1.3,4.4,1.3c1.8,0,3.3-0.4,4.5-1.3c1.2-0.9,1.8-2,1.8-3.3c0-1.3-0.6-2.4-1.8-3.2c-1.2-0.9-2.6-1.3-4.3-1.4c-0.5-0.4-0.8-0.8-0.9-1.2c-0.1-0.4,0.1-1,0.4-1.6c1.5,0,2.7-0.6,3.7-1.6c1-1,1.5-2.3,1.5-3.8c0-0.9-0.1-1.6-0.4-2.3H22z M12.7,23.2c0-0.5,0.3-0.9,0.8-1.2s1.3-0.5,2.2-0.5c0.9,0,1.6,0.2,2.2,0.5c0.6,0.3,0.8,0.7,0.8,1.2c0,0.5-0.3,0.9-0.8,1.2c-0.6,0.3-1.3,0.5-2.2,0.5c-0.9,0-1.6-0.2-2.2-0.5C13,24.1,12.7,23.7,12.7,23.2z M13.8,8.2c0.4-0.5,0.8-0.7,1.4-0.7c0.6,0,1,0.2,1.4,0.7c0.4,0.5,0.5,1.1,0.5,1.9c0,0.8-0.2,1.5-0.6,2s-0.8,0.7-1.4,0.7c-0.6,0-1-0.2-1.4-0.7c-0.4-0.5-0.6-1.1-0.6-1.9S13.4,8.7,13.8,8.2z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-dribbble" viewBox="0 0 32 32">
-                          <path class="path1" d="M4.3,26.7c-2.8-3-4.2-6.6-4.2-10.8v-0.7c6.6-0.1,12.1-0.8,16.6-2.2c0.4,0.8,0.9,1.9,1.4,3.1c-0.5,0.1-0.9,0.3-1.2,0.4C11.8,18.2,7.6,21.6,4.3,26.7z M15.6,10.8c-4.1,1.2-9.2,1.9-15.2,2C0.9,10.3,2,8.1,3.6,6.1c1.6-2,3.5-3.5,5.8-4.6C11.7,4.5,13.8,7.6,15.6,10.8z M22.3,30.6c-2,0.9-4.1,1.3-6.3,1.3c-3.7,0-7-1.1-9.9-3.4c3.4-5.3,7.7-8.7,12.8-10.2C20.4,22,21.5,26.1,22.3,30.6z M18.2,9.9c-1.8-3.4-3.9-6.5-6.2-9.3c1.3-0.3,2.6-0.5,4-0.5c4.1,0,7.6,1.4,10.6,4.1C24.5,6.6,21.7,8.5,18.2,9.9z M31.9,15.9c-4-0.9-7.7-1.1-11.1-0.5c-0.2-0.5-0.7-1.6-1.5-3.3c3.7-1.5,6.6-3.5,9-6.2C30.6,8.7,31.8,12.1,31.9,15.9z M31.7,18.3c-0.3,2.2-1.1,4.3-2.3,6.2c-1.2,1.9-2.8,3.4-4.6,4.7c-0.8-4.1-1.8-8-3.1-11.5C24.8,17.3,28.2,17.5,31.7,18.3z"/>
-                        </svg>
-                      </a>
-                    <li>
-                      <a href="#">
-                        <svg class="svg-icon svg-icon-rss" viewBox="0 0 32 32">
-                          <path class="path1" d="M16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.9,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16c0-4.4,1.6-8.1,4.7-11.2C7.9,1.6,11.6,0.1,16,0.1z M22.6,23.9h3.3c0-2.4-0.5-4.7-1.4-7c-0.9-2.2-2.2-4.1-3.8-5.7c-1.6-1.6-3.5-2.9-5.7-3.8C12.8,6.5,10.5,6,8.1,6v3.3c4,0,7.5,1.4,10.3,4.3C21.2,16.4,22.6,19.9,22.6,23.9z M16.7,23.9H20c0-3.3-1.2-6.1-3.5-8.4c-2.3-2.3-5.1-3.5-8.4-3.5v3.3c2.4,0,4.4,0.8,6.1,2.5C15.8,19.5,16.7,21.5,16.7,23.9z M8.8,23.1c0.5,0.5,1.1,0.8,1.9,0.8s1.4-0.3,1.9-0.8c0.5-0.5,0.8-1.1,0.8-1.9s-0.3-1.4-0.8-1.9c-0.5-0.5-1.1-0.8-1.9-0.8s-1.4,0.3-1.9,0.8c-0.5,0.5-0.8,1.1-0.8,1.9S8.3,22.6,8.8,23.1z"/>
-                        </svg>
-                      </a>
-                  </ul>
-                </div>
+              <% AssemblyTeam.all.each do |u| %>
+                <li>
+                  <a href="<%= user_url(u) %>">
+                    <img src="<%= u.avatar.url(400) %>">
+                  </a>
+                  <div class="details">
+                    <a class="nametag" href="<%= user_url(u) %>">@<%= u.username %></a>
+                    <ul class="social-row">
+                      <li>
+                        <a href="https://twitter.com/<%= u.twitter_nickname %>">
+                          <svg class="svg-icon svg-icon-twitter" viewBox="0 0 32 32">
+                            <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M25.7,12.5c0.8-0.6,1.6-1.3,2.2-2.3c-0.9,0.4-1.8,0.6-2.6,0.7c1-0.5,1.6-1.4,1.9-2.5c-0.9,0.5-1.9,0.9-2.8,1.1c-0.9-1-2-1.4-3.3-1.4c-1.3,0-2.3,0.4-3.2,1.3c-0.9,0.9-1.3,1.9-1.3,3.2c0,0.4,0,0.7,0.1,1c-3.8-0.2-6.9-1.8-9.3-4.7C7,9.6,6.8,10.3,6.8,11.1c0,1.6,0.7,2.9,2,3.8c-0.7,0-1.4-0.2-2-0.6v0c0,1.1,0.3,2,1,2.9c0.7,0.8,1.5,1.4,2.6,1.6c-0.3,0.1-0.7,0.1-1.2,0.1c-0.2,0-0.5,0-0.8-0.1c0.3,0.9,0.8,1.6,1.6,2.2c0.8,0.6,1.6,0.8,2.6,0.9C10.8,23.3,9,24,7,24c-0.3,0-0.6,0-1.1-0.1c2,1.3,4.3,2,6.9,2c2,0,3.8-0.4,5.5-1.2c1.7-0.8,3-1.8,4.1-3c1-1.3,1.9-2.6,2.4-4.1c0.6-1.5,0.9-3,0.9-4.5V12.5z"/>
+                          </svg>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              <% end %>
             </ul>
           </div>
         </div>
@@ -962,14 +540,12 @@
               <a href="https://twitter.com/asm">
                 <img src="/assets/about/social-icon-twitter.png">
               </a>
+            </li>
             <li>
               <a href="https://www.facebook.com/assemblymade">
                 <img src="/assets/about/social-icon-facebook.png">
               </a>
-            <li>
-              <a href="">
-                <img src="/assets/about/social-icon-insta.png">
-              </a>
+            </li>
           </ul>
           <div class="pill-bg"></div>
         </div>
@@ -1067,7 +643,7 @@
     //
     $quoteSliderCarousel.owlCarousel({
       singleItem: true,
-      autoPlay: true,
+      autoPlay: 10000,
       slideSpeed: 300,
       paginationSpeed: 400,
       navigation: false
