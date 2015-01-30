@@ -111,10 +111,18 @@ var Apps = React.createClass({
     if (this.state.apps == null) {
       return <Spinner />
     }
+
     return <div>
       {this.renderAppsList(_(this.state.apps).first(3))}
       {this.renderShowcases()}
-      {this.renderAppsList(_(this.state.apps).rest(3))}
+      {this.renderAppsList(this.state.apps.slice(2, 2 + 6))}
+
+      <div className="bg-white p3 center clearfix mb3 rounded shadow">
+          <strong>Don't know where to start?</strong> The community is fast-tracking <a href="/signupsumo">Signup Sumo</a> this week.
+      </div>
+
+      {this.renderAppsList(_(this.state.apps).last(9))}
+
       <PaginationLinks page={this.props.page} pages={this.props.total_pages} onPageChanged={this.handlePageChanged} />
     </div>
   },
