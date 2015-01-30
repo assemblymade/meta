@@ -69,5 +69,4 @@ namespace :products do
       end
     end
   end
-
 end

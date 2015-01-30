@@ -82,6 +82,8 @@ class ProductsController < ProductController
 
   def show
     return redirect_to(about_url) if @product.meta?
+    return staff_show if signed_in? && current_user.is_staff?
+
     page_views = TimedSet.new($redis, "#{@product.id}:show")
 
     if page_views.add(request.remote_ip)
@@ -131,11 +133,20 @@ class ProductsController < ProductController
       format.html { render }
       format.json {
         render json: {
-          user_hearts: @user_hearts,
-          items: @news_feed_items
+          items: @news_feed_items,
+          user_hearts: @user_hearts
         }
       }
     end
+  end
+
+  def staff_show
+    respond_with({
+      product: ProductSerializer.new(
+        @product,
+        scope: current_user
+      )
+    })
   end
 
   def plan

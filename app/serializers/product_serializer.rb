@@ -1,7 +1,9 @@
 class ProductSerializer < ApplicationSerializer
 
   attributes :url, :wips_url, :people_url
-  attributes :name, :pitch, :slug, :quality, :average_bounty, :logo_url, :can_update, :try_url, :wips_count, :partners_count
+  attributes :name, :pitch, :slug, :quality, :average_bounty, :logo_url
+  attributes :can_update, :try_url, :wips_count, :partners_count
+  attributes :top_marks, :homepage_url
 
   def logo_url
     object.full_logo_url
@@ -33,5 +35,9 @@ class ProductSerializer < ApplicationSerializer
 
   def current_user
     scope
+  end
+
+  def top_marks
+    object.marks.limit(4).map(&:name)
   end
 end

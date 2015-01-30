@@ -163,7 +163,7 @@
 
     onPush: function(fn) {
       if (window.pusher) {
-        channel = window.pusher.subscribe('@' + this.props.username);
+        let channel = window.pusher.subscribe('@' + this.props.username);
         channel.bind_all(fn);
       }
     },

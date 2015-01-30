@@ -9,9 +9,20 @@ var routes = [
   ['/ideas/:id/admin', require('../components/ideas/idea_admin.js.jsx'), _showIdeaAdmin],
   ['/ideas/:id/edit', require('../components/ideas/idea_edit.js.jsx'), _showEditIdea],
   ['/ideas/:id/start-conversation', require('../components/ideas/idea_start_conversation.js.jsx'), _showStartConversation],
+  ['/:id', require('../components/products/product_show.js.jsx'), _showProduct]
 ];
 
 module.exports = routes;
+
+// TODO: (pletcher) Figure out how to declare routes so that we
+// respect routing priority while maintaining route separation
+
+function _showProduct(data) {
+  Dispatcher.dispatch({
+    type: ActionTypes.PRODUCT_RECEIVE,
+    product: data.product
+  });
+}
 
 function _showCreateIdea(data) {
   Dispatcher.dispatch({

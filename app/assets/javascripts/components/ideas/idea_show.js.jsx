@@ -33,6 +33,10 @@ var IdeaShow = React.createClass({
   componentDidMount() {
     window.scrollTo(0, 0);
 
+    if (this.state.idea) {
+      document.title = "Ideas · " + this.state.idea.name;
+    }
+
     IdeaStore.addChangeListener(this.onIdeaChange);
     IdeaSharePanelStore.addChangeListener(this.onIdeaSharePanelChange);
   },
