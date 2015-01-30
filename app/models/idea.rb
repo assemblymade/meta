@@ -227,4 +227,21 @@ class Idea < ActiveRecord::Base
   def hearts_count
     news_feed_item.hearts_count
   end
+
+  def reconstitute_score
+    lovescore = 0
+
+    news_feed_item.hearts.each do |h|
+      time_since = h.created_at - EPOCH_START
+      multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
+      lovescore = lovescore + multiplier
+    end
+
+    update!({
+      last_score_update: DateTime.now,
+      score: lovescore
+    })
+  end
+
+
 end
