@@ -27,17 +27,19 @@
       <div class="container">
         <div class="col-xs-6 col-sm-4 col-md-4">
           <div class="chart" data-percent="77" data-scale-color="#ffb400"> <!-- percentage data benchmarked against past metric  -->
-            <h3 class="data"><%= Product.count %></h3>
+            <!-- <% cache(expires_in: 7.days) do %> -->
+              <h3 class="data"><%= Product.active_product_count %></h3>
+            <!-- <% end %> -->
           </div>
           <h4>Products</h4>
-          <p>Ready for you to discover</p>
+          <p>Being built by the community</p>
         </div>
         <div class="hidden-xs col-sm-4 col-md-4">
           <div class="chart" data-percent="32" data-scale-color="#ffb400">
             <h3 class="data"><%= Task.open.count %></h3>
           </div>
           <h4>Bounties</h4>
-          <p>Waiting for your expertise</p>
+          <p>Ready for your help</p>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-4">
           <div class="chart" data-percent="65" data-scale-color="#ffb400">
@@ -49,17 +51,18 @@
       </div>
     </div>
   </section>
+  
   <section class="flip-grid-unit flip-grid-unit-about">
     <div class="container">
       <div class="header">
         <ul class="flip-grid">
-          <li>
+          <li>            
             <a href="#">
               <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/c42357e4-fc7a-42f6-9414-fec079076fa3/logo.png">
             </a>
           <li>
             <a href="#">
-              <img src="https://gravatar.com/avatar/4ccbf04a5924cbacd9814ce74e9ad684?size=144px">
+              <img src="<%= asset_path('focus-home/community/line.jpeg') %>" alt="Line">
             </a>
           <li>
             <a href="#">
@@ -67,7 +70,7 @@
             </a>
           <li>
             <a href="#">
-              <img src="https://gravatar.com/avatar/2da61c5c94aefc6a20742e97d1abe6d4?size=144px">
+              <img src="<%= asset_path('focus-home/community/line.jpeg') %>" alt="Line">
             </a>
           <li>
             <a href="#">
@@ -117,6 +120,7 @@
             </a>
           <li>
             <a href="#">
+
               <img src="https://gravatar.com/avatar/0f43618f25d8806e99569fd56d513f0a?size=144px">
             </a>
           <li>
@@ -167,7 +171,8 @@
             </a>
           <li>
             <a href="#">
-              <img src="https://gravatar.com/avatar/81eb1f5770feac1f14dbb09ff3e788ff?size=144px">
+              <img src="<%= asset_path('focus-home/community/aaronrelph.png') %>" alt="Line">              
+              
             </a>
           <li>
             <a href="#">
@@ -175,6 +180,7 @@
             </a>
           <li>
             <a href="#">
+              
               <img src="https://gravatar.com/avatar/da9af1e89b5589cc2569c3b8ed1df59a?size=144px">
             </a>
           <li>
@@ -214,7 +220,7 @@
             </a>
           <li>
             <a href="#">
-              <img src="https://gravatar.com/avatar/4ccbf04a5924cbacd9814ce74e9ad684?size=144px">
+              <img src="<%= asset_path('focus-home/community/line.jpeg') %>" alt="Line">
             </a>
           <li>
             <a href="#">
@@ -230,7 +236,7 @@
             </a>
           <li>
             <a href="#">
-              <img src="https://gravatar.com/avatar/b84524b344a13ff9ddd30ba96b70ad5b?size=144px">
+              <img src="https://gravatar.com/avatar/9990431d03db3672803cf4bd8f639e0d?size=144px">
             </a>
           <li>
             <a href="#">
@@ -238,7 +244,8 @@
             </a>
           <li>
             <a href="#">
-              <img src="https://gravatar.com/avatar/e693eaa8252344248493b4a541ddce35?size=144px">
+              <img src="<%= asset_path('focus-home/community/iwasrobbed.jpeg') %>" alt="Line">
+              
             </a>
           <li>
             <a href="#">
@@ -246,6 +253,8 @@
             </a>
           <li>
             <a href="#">
+              
+              
               <img src="https://gravatar.com/avatar/08f077ea061585744ee080824f5a8e65?size=144px">
             </a>
         </ul>
@@ -256,6 +265,7 @@
             </a>
           <li>
             <a href="#">
+              
               <img src="https://gravatar.com/avatar/5e4575fdaacc879dc2199490417d170a?size=144px">
             </a>
           <li>
@@ -264,6 +274,7 @@
             </a>
           <li>
             <a href="#">
+              
               <img src="https://gravatar.com/avatar/d6fb638cd5649ea6473a15ee48602aef?size=144px">
             </a>
           <li>
@@ -272,6 +283,7 @@
             </a>
           <li>
             <a href="#">
+              
               <img src="https://gravatar.com/avatar/0f43618f25d8806e99569fd56d513f0a?size=144px">
             </a>
           <li>
@@ -280,7 +292,8 @@
             </a>
           <li>
             <a href="#">
-              <img src="https://gravatar.com/avatar/bf8500ae75e57ebe06ef79dcc0bc5cf2?size=144px">
+              <img src="https://gravatar.com/avatar/e693eaa8252344248493b4a541ddce35?size=144px">
+              
             </a>
           <li>
             <a href="#">
@@ -288,6 +301,7 @@
             </a>
           <li>
             <a href="#">
+              
               <img src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?size=144px">
             </a>
           <li>
@@ -411,7 +425,7 @@
     </div>
   </article>
 
-  <section class="full-slider full-slider-about">
+  <!-- <section class="full-slider full-slider-about">
     <div class="carousel">
       <div class="item">
         <img src="/assets/about/full-slide1.jpg">
@@ -430,6 +444,8 @@
       </div>
     </div>
   </section>
+ -->
+
 
   <section class="quote-slider quote-slider-about">
     <div class="container">
