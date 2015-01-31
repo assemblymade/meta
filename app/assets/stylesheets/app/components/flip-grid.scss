@@ -1,0 +1,144 @@
+/* >> Flip Grid & Flip Grid Unit Component >>>>>>>>>>>>>>>>>>>>
+=========================================== */
+
+/*
+
+## note - flip-grid can be used independent of flip-grid-unit
+
+-- HTML Pattern ----------------
+<section class="flip-grid-unit">
+  <div class="header">
+    <p>Section Header Content</p>
+  </div>
+  <div class="main">
+    <ul class="flip-grid">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+  <div class="footer">
+    <p>Section Footer Content</p>
+  </div>
+</section>
+*/
+
+// -- Base Components ------------
+.flip-grid-unit {
+  @import 'app/temp/style-guide-updates';  // < details: https://assembly.com/meta/bounties/1038
+  //
+  position: relative;
+  overflow: hidden;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background-color: $white;
+  @extend .text-2;
+  @media screen and (min-width: 768px) {
+    padding-top: 11rem;
+    padding-bottom: 11rem;
+  }
+  //
+  p {
+    @extend .text-2;
+  }
+  > .container  {
+    position: relative;
+    z-index: 5;
+    //
+    .footer { // bootstrap overwrite
+      margin:0;
+      padding:0;
+      border: none;
+    }
+    > .header, .footer {
+      position: absolute;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+            transform: translateY(-50%);
+      overflow: hidden;
+    }
+    > .header {
+      display: none;
+      @media screen and (min-width: 600px) {
+        display: block;
+        left: -116rem;
+        width: 108rem;
+        height: 36rem;
+        text-align: right;
+      }
+    }
+    > .footer {
+      display: none;
+      //
+      @media screen and (min-width: 600px) {
+        display: block;
+        left: 38.5rem;
+        width: 108rem;
+        height: 36rem;
+        margin-left: 4px;
+      }
+      @media screen and (min-width: 768px) {
+        left: 41rem;
+      }
+    }
+    > .main {
+      text-align: center;
+      @media screen and (min-width: 600px) {
+        max-width: 32rem;
+        text-align: left;
+      }
+      //
+      p {
+        margin-bottom:3.5rem;
+      }
+      button {
+        margin: 0 auto;
+        @media screen and (min-width: 600px) {
+          margin: 0;
+        }
+      }
+    }
+    h2 {
+      margin-top: 0;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+.flip-grid {
+  display: inline-block;
+  width: 36rem;
+  margin: 0 0 0 -4px;
+  padding: 0;
+  //
+  li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    //
+    &:hover {
+      background: $black;
+    }
+    img {
+      width: 12rem;
+    }
+  }
+  &:nth-child(even) {
+    position: relative;
+    top: -12rem;
+  }
+  a {
+    &:hover {
+      opacity: 0.25;
+    }
+  }
+}
+
+
+// -- Delta's ------------
+//
+// http://assembly.com/about
+

@@ -1,196 +1,692 @@
-<% title "Our Story" %>
-<% provide(:description, "Assembly is for those who enjoy building software. We connect you with others who share your interest and complement your skills so you can form distributed software companies. Unlike traditional companies with shareholders and employees, everything on Assembly is created, operated, and owned by a global community of makers, together.") %>
+<% title "About" %>
+<% provide(:description, "Assembly is for those who build products. We connect you with others who share interests and complement your skills. Unlike traditional companies with shareholders and employees, everything on Assembly is created, operated, and owned by a global community of makers, together.") %>
+
 <%= render 'shared/navbar' %>
 
-<div class="jumbotron">
-  <div class="container">
-    <h2 class="red">Together, we can think <em>bigger</em>, go <em>further</em>,<br>be more <em>powerful</em>, and more <em>driven</em>.</h2>
-  </div>
-</div>
+<main role="main">
 
-<div class="container">
-  <div class="row">
-
-    <div class="col-md-8 text-large">
-      <p class="lead text-large">
-        Assembly is for those who enjoy building software.
-We connect you with others who share your interest and complement your skills so you can form distributed software companies.
-Unlike traditional companies with shareholders and employees, everything on Assembly is created, operated, and owned by a global community of makers, together.
-      </p>
-
-      <h3 id="story">Our Story</h3>
-      <p>
-        The single biggest impact the internet has had is this: bringing people together to create things we couldn’t have created alone. We can see this everywhere, from Wikipedia and Linux to Tumblr and Kickstarter.
-      </p>
-
-      <p>
-        Software's ability to connect and empower people at the edges of a network by collapsing hierarchies can be felt by everyone. One of the oldest hierarchies is the Company; a group of people cooperating for a common goal and receiving some benefit from its success. We’re building Assembly to challenge the traditional notions of a “company” by leveraging the internet to connect makers around the world; making it possible for them to work side-by-side while having more autonomy, creative freedom, and a fuller share in the success of what they build.
-      </p>
-
-      <div class="row" style="margin-bottom:24px">
-        <div class="col-sm-4">
-          <img class="img-rounded" src="http://scontent-a-sjc.cdninstagram.com/hphotos-xpf1/t51.2885-15/10540246_350497958431852_1646285852_n.jpg" width="100%">
-        </div>
-        <div class="col-sm-4">
-          <img class="img-rounded" src="http://scontent-b-sjc.cdninstagram.com/hphotos-xap1/t51.2885-15/10546587_308496552644625_49564381_n.jpg" width="100%">
-        </div>
-        <div class="col-sm-4">
-          <img class="img-rounded" src="http://photos-a.ak.instagram.com/hphotos-ak-xap1/923742_555758104529432_1347471837_n.jpg"
-    width="100%">
-        </div>
+  <section class="_hero hero-about-top"> <!-- .hero namespace is being used by legacy code. refactor -->
+    <div class="main">
+      <div class="container">
+        <h1>
+          Together, we can think bigger, go further,
+          <span class="line2">be more powerful, and more driven.</span>
+        </h1>
+        <a href="http://vimeo.com/102253176" class="svg-play-button popup-video">
+          <svg class="svg-icon svg-icon-play-btn" viewBox="0 0 32 32">
+              <circle opacity="0.4" cx="16" cy="16" r="16"/>
+              <path class="path1" d="M20.9,18c-2.6,1.2-3.5,1.6-5.8,2.6c-2.1,1.2-3.1,1.1-3.1-0.9c0-2.3,0-5.1,0-7.4c0-1.7,0.6-2,2.6-0.9c2.2,1.1,4,2,6.2,3.1C23.3,15.6,23.3,16.7,20.9,18z"/>
+          </svg>
+        </a>
       </div>
-
-      <p>
-        With this vision <a href='https://assembly.com/users/chrislloyd'>Chris</a>, <a href='https://assembly.com/users/whatupdave'>Dave</a> and <a href='https://assembly.com/users/mdeiters'>I</a> travelled to Ventura Beach in Southern California in late 2013. We isolated ourselves in a small rickety beachside villa that we rented on Airbnb to give us time to write down a set of beliefs and sketch out the initial concept of Assembly.
-      </p>
-
-      <p>
-        We came up with <a href="#mission">our guiding principles</a>, which we felt were key to Assembly being a place where great products are built in this new way.
-      </p>
-
-      <p>
-        After our week on the beach, we returned to a small studio just off the main strip in the Castro neighborhood of San Francisco to start assembling. Though the product has changed much, our values have not. In the short year Assembly has been running, we've already seen 89 strangers come together to build and launch <a href='https://assembly.com/helpful'>a useful product</a>, middle schoolers coding next to seasoned designers, and paid out tens of thousands of dollars out to contributors on some of the early successful products.
-      </p>
-      <p>
-        Over the last year we've moved three times to new locations and the team has grown to be nearly as diverse as the Assembly community; including an engineer who studied the Latin American reception of ancient Greek tragedy, a physicist who studied nanometer scale biological self-assembly in confined lipid systems, and a writer who worked for <em>The Daily Show with Jon Stewart</em>.
-      </p>
-      <p>
-        Our current office is located in the heart of the Mission at 3030A 16th street in San Francisco. We welcome anyone working on Assembly products to come visit us to work on your project out of our office and let me make you a <a href='http://instagram.com/p/nJXMCnLXIk/'>latte</a>. We are also always looking for talented people to join our small team of makers.
-      </p>
-      <p>
-        I hope you like Assembly.
-        <br>
-        - @mdeiters
-      </p>
-
-
-      <h3 id="mission">Core tenets</h3>
-
-      <div class="row" style="margin-bottom:24px">
-        <div class="col-md-4">
-          <h4 class="green">Global Community</h4>
-          <p>
-            Assembly enables a global community of makers to drive all ideas, vision and execution of a software product
-          </p>
-        </div>
-
-        <div class="col-md-4">
-          <h4 class="green">Diversity</h4>
-          <p>
-            Everyone is invited to make an impact, have influence, and be able to share their best work
-          </p>
-        </div>
-
-        <div class="col-md-4">
-          <h4 class="green">Explicitness</h4>
-          <p>
-            Leadership and vision are modeled after open source's notion of a merit-based Core Team that is part of the community.
-          </p>
-        </div>
-
-        <div class="col-md-4">
-          <h4 class="green">No Surprises</h4>
-          <p>
-            Each product is radically transparent so everyone could can make thoughtful contributions.
-          </p>
-        </div>
-
-        <div class="col-md-4">
-          <h4 class="green">Liberty</h4>
-          <p>
-            Instead of employment contracts, people should be able to work when they want, how they want, and where they want.
-          </p>
-        </div>
-
-        <div class="col-md-4">
-          <h4 class="green">Shared ownership</h4>
-          <p>
-            Success is shared equitably. Each contribution should be rewarded with a fair amount of ownership stake as determined by the community.
-          </p>
-        </div>
-      </div>
-
-      <h3 id="team">The Team</h3>
-
-      <div class="clearfix">
-        <% Product.find_by_slug('meta').core_team.order('random()').each do |user| %>
-          <div class="col sm-col-3">
-            <a href="<%= user_path(user) %>" title="<%= user.bio %>">
-              <div class="img-overlay">
-                <%= image_tag(user.avatar.url(360), class: 'full-width') %>
-                <div class="img-overlay-content bold center" style="text-shadow: 0 1px 1px rgba(0,0,0,0.4)">
-                  <h5>@<%= user.username %></h5>
-                </div>
-              </div>
-            </a>
-          </div>
-        <% end %>
-      </div>
-
-      <!--
-      <h2>News &amp; Press</h2>
-      <hr>
-      <div class="row">
-        <div class="col-md-4">
-          <ul class="list-reset">
-            <li><a href="#">Logo</a></li>
-          </ul>
-        </div>
-        <div class="col-md-8">
-          <div class="row">
-            <% 6.times.each do %>
-              <div class="col-md-6">
-                <a href="#">
-                  <h4 class="green">NEW YORKER, October 2014</h4>
-                </a>
-                <p class="gray-2">
-                  Be prepared to have your mind blown by Assembly
-                </p>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-      -->
-
     </div>
+    <div class="dark-gradient"></div>
+  </section>
+  <section class="dashboard circle-stats dashboard-about">
+    <div class="main">
+      <div class="container">
+        <div class="col-xs-6 col-sm-4 col-md-4">
+          <div class="chart" data-percent="77" data-scale-color="#ffb400"> <!-- percentage data benchmarked against past metric  -->
+            <!-- <% cache(expires_in: 7.days) do %> -->
+              <h3 class="data"><%= Product.active_product_count %></h3>
+            <!-- <% end %> -->
+          </div>
+          <h4>Products</h4>
+          <p>Being built by the community</p>
+        </div>
+        <div class="hidden-xs col-sm-4 col-md-4">
+          <div class="chart" data-percent="32" data-scale-color="#ffb400">
+            <h3 class="data"><%= Task.open.count %></h3>
+          </div>
+          <h4>Bounties</h4>
+          <p>Ready for your help</p>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-4">
+          <div class="chart" data-percent="65" data-scale-color="#ffb400">
+            <h3 class="data">4.5M</h3>
+          </div>
+          <h4>Customers</h4>
+          <p>Using Assembly products</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="flip-grid-unit flip-grid-unit-about">
+    <div class="container">
+      <div class="header">
+        <ul class="flip-grid">
+          <li>            
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/c42357e4-fc7a-42f6-9414-fec079076fa3/logo.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="<%= asset_path('focus-home/community/line.jpeg') %>" alt="Line">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/9bbfc2ba-7d6a-4be6-9251-5e2685e3e61d/meowboard.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="<%= asset_path('focus-home/community/line.jpeg') %>" alt="Line">
+            </a>
+          <li>
+            <a href="#">
+              <img src="/assets/about/grid-logo.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/b84524b344a13ff9ddd30ba96b70ad5b?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/de9141ba-aef7-413f-a513-b96e345ccf7e/zenforms_assembly_avatar.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/e693eaa8252344248493b4a541ddce35?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/bc67326b-2958-48de-9b20-e45da949f6cf/flashdash.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/08f077ea061585744ee080824f5a8e65?size=144px">
+            </a>
+        </ul>
+        <ul class="flip-grid">
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/322269aa-a12b-47e4-b68d-229ad014b496/calmail.jpg">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/5e4575fdaacc879dc2199490417d170a?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/546a1faa-0fc0-493d-b0d3-b29e319a9e47/logo.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/d6fb638cd5649ea6473a15ee48602aef?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/a1af9019-332d-4f60-883c-c05734429833/logo-bg.png">
+            </a>
+          <li>
+            <a href="#">
 
-    <div class="col-md-3 col-md-offset-1">
-      <div class="asm-about-sidebar hidden-xs hidden-sm" role="complementary">
-        <ul class="nav nav-pills nav-stacked">
-          <li class="active"><a href="#story">Story</a></li>
-          <li><a href="#mission">Mission</a></li>
-          <li><a href="#team">The Team</a></li>
-          <!-- <li><a href="#">Investors</a></li> -->
-          <!-- <li><a href="#">News &amp; Press</a></li> -->
+              <img src="https://gravatar.com/avatar/0f43618f25d8806e99569fd56d513f0a?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/c0c26468-7de3-414a-b7b9-62f1a5b9b3fa/Gamamia_Logo_Square.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/bf8500ae75e57ebe06ef79dcc0bc5cf2?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/1e4aebe6-4771-45da-8805-693787bfe644/coderwall.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/1b1cd93a-f169-452e-a8b3-0c7da2b980b2/Gomad-iOS-icon-1024x1024.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/e5d853ca2e434885a8c36c05bfb0a983?size=144px">
+            </a>
+        </ul>
+        <ul class="flip-grid">
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/04751465-19df-466c-b258-7491e27f5fe7/firesize.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/9a69cfaaf977fa8b6a5486ecaaae7c5c?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/fccfd613-2acf-42bf-9142-cec07adba647/watchin.jpg">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/aca8aad5245e144c9222102decb1776e?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/58adc82f-b909-4d89-8fd0-276501c315a8/totroops_logo_dark.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="<%= asset_path('focus-home/community/aaronrelph.png') %>" alt="Line">              
+              
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/bcc65bca-5531-4914-8c03-08c47e2fd601/boxysquare.png">
+            </a>
+          <li>
+            <a href="#">
+              
+              <img src="https://gravatar.com/avatar/da9af1e89b5589cc2569c3b8ed1df59a?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/24f8d182-2441-4d5f-b8fa-ab2303d098d1/helpful.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/9a69cfaaf977fa8b6a5486ecaaae7c5c?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/a8316019-f181-4cb0-94ef-2ec404f00648/logo_square.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/aca8aad5245e144c9222102decb1776e?size=144px">
+            </a>
+        </ul>
+      </div>
+      <div class="main">
+        <h2>
+			Where we band together to build
+			products people love.
+        </h2>
+        <p>
+			We are developers, designers, writers, creatives, or marketers by trade. But we are makers at heart. 
+			
+			<!-- Assembly is where we band together to build.		 -->
+
+        </p>
+        <a href="<%= discover_path %>" class="_button pill-button pill-button-medium pill-button-theme-green pill-button-shadow pill-button-text-shadow pill-button-border">  <!-- namespace, same as above -->
+          <span class="title">Get Started</span>
+        </a>
+      </div>
+      <div class="footer">
+        <ul class="flip-grid">
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/c42357e4-fc7a-42f6-9414-fec079076fa3/logo.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="<%= asset_path('focus-home/community/line.jpeg') %>" alt="Line">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/9bbfc2ba-7d6a-4be6-9251-5e2685e3e61d/meowboard.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/2da61c5c94aefc6a20742e97d1abe6d4?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="/assets/about/grid-logo.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/9990431d03db3672803cf4bd8f639e0d?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/de9141ba-aef7-413f-a513-b96e345ccf7e/zenforms_assembly_avatar.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="<%= asset_path('focus-home/community/iwasrobbed.jpeg') %>" alt="Line">
+              
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/bc67326b-2958-48de-9b20-e45da949f6cf/flashdash.png">
+            </a>
+          <li>
+            <a href="#">
+              
+              
+              <img src="https://gravatar.com/avatar/08f077ea061585744ee080824f5a8e65?size=144px">
+            </a>
+        </ul>
+        <ul class="flip-grid">
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/322269aa-a12b-47e4-b68d-229ad014b496/calmail.jpg">
+            </a>
+          <li>
+            <a href="#">
+              
+              <img src="https://gravatar.com/avatar/5e4575fdaacc879dc2199490417d170a?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/546a1faa-0fc0-493d-b0d3-b29e319a9e47/logo.png">
+            </a>
+          <li>
+            <a href="#">
+              
+              <img src="https://gravatar.com/avatar/d6fb638cd5649ea6473a15ee48602aef?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/a1af9019-332d-4f60-883c-c05734429833/logo-bg.png">
+            </a>
+          <li>
+            <a href="#">
+              
+              <img src="https://gravatar.com/avatar/0f43618f25d8806e99569fd56d513f0a?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/c0c26468-7de3-414a-b7b9-62f1a5b9b3fa/Gamamia_Logo_Square.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/e693eaa8252344248493b4a541ddce35?size=144px">
+              
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/1e4aebe6-4771-45da-8805-693787bfe644/coderwall.png">
+            </a>
+          <li>
+            <a href="#">
+              
+              <img src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/1b1cd93a-f169-452e-a8b3-0c7da2b980b2/Gomad-iOS-icon-1024x1024.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/e5d853ca2e434885a8c36c05bfb0a983?size=144px">
+            </a>
+        </ul>
+        <ul class="flip-grid">
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/04751465-19df-466c-b258-7491e27f5fe7/firesize.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/9a69cfaaf977fa8b6a5486ecaaae7c5c?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/fccfd613-2acf-42bf-9142-cec07adba647/watchin.jpg">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/aca8aad5245e144c9222102decb1776e?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/58adc82f-b909-4d89-8fd0-276501c315a8/totroops_logo_dark.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/81eb1f5770feac1f14dbb09ff3e788ff?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/bcc65bca-5531-4914-8c03-08c47e2fd601/boxysquare.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/da9af1e89b5589cc2569c3b8ed1df59a?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/24f8d182-2441-4d5f-b8fa-ab2303d098d1/helpful.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/9a69cfaaf977fa8b6a5486ecaaae7c5c?size=144px">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/a8316019-f181-4cb0-94ef-2ec404f00648/logo_square.png">
+            </a>
+          <li>
+            <a href="#">
+              <img src="https://gravatar.com/avatar/aca8aad5245e144c9222102decb1776e?size=144px">
+            </a>
         </ul>
       </div>
     </div>
-  </div>
+  </section>
 
-</div>
+  <article class="general-copy general-copy-about">
+    <div class="header">
+      <div class="container">
+        <!-- <h2>Our Story</h2> -->
+      </div>
+    </div>
+    <div class="main">
+      <div class="container">
+        <p>
+          The single biggest impact the Internet has had is this: bringing people together to create things we couldn't have created alone. We can see this everywhere, from spaces like Wikipedia to the Open Source that runs most of the internet.
+        </p>
+        <p>
+Assembly is a platform that enables anyone anywhere to openly collaborate and build real businesses together, just like the Internet intended. We're excited about what can be achieved as a connected community of millions of talented driven people are innovating on products freely.
+        </p>
+
+        <h2 class="excerpt-header text-light" style="background:url(/assets/about/excerpt-header1.jpg) center left no-repeat; background-size:cover;">
+			Unlike traditional companies with shareholders and employees, everything on Assembly is created, operated, and owned by a global community of makers, together.
+			
+        </h2>
+        <p>
+          Assembly was built and launched in late 2013. In the short period Assembly has been running, we've already seen tens of thousands of strangers come together to build and launch products, middle schoolers coding next to seasoned designers, paid out thousands of dollars out to contributors on some of the early successful products, and seen millions of people use the products created by the community.		  
+        </p>
+        <figure class="col-xs-12 col-sm-6 left-offset caption-center">
+          <img src="/assets/about/copy-img1.jpg">
+          <figcaption></figcaption>
+        </figure>
+        <h3 style="margin-top:3.5rem;">
+			Our Values
+        </h3>
+        <!-- <p>
+          Acame up with our guiding principles, a set of ideals which we felt were key in defining Assembly as the place where great products could be built in this new way.
+        </p> -->
+		
+		<p>
+			Global Diversity.
+			<br>
+			Everyone is invited to make an impact, have influence, and be able to share their best work. Ideas, vision and execution are be driven by the community.
+		</p>
+		
+		<p>
+			Explicitness.
+			<br>
+			Leadership and vision are modeled after open source's notion of a merit-based Core Team that is part of the community.
+		</p>
+		
+		<p>
+			Liberty.
+			<br>
+		Instead of employment contracts, people should be able to work when they want, how they want, and where they want.
+		</p>
+		
+		<p>
+			Shared ownership.
+			<br>
+		Success is shared equitably. Each contribution should be rewarded with a fair amount of ownership stake as determined by the community.
+		</p>
+
+        <div class="row vertical-offset">
+          <figure class="col-xs-12 col-md-8">
+            <img src="/assets/about/copy-img2.jpg">
+          </figure>
+          <figure class="hidden-xs visible-md-block visible-lg-block col-md-4 caption-right">
+            <img src="/assets/about/copy-img3.jpg">
+            <figcaption></figcaption>
+          </figure>
+        </div>
+		<p>
+			We're commited to growing a team as diverse as our community. Those building Assembly include an engineer who studied the Latin American reception of ancient Greek tragedy, a physicist who studied nanometer scale biological self-assembly in confined lipid systems, and a writer who worked for The Daily Show with Jon Stewart. 
+		</p>
+        <p>
+          Our current office is located in the heart of the Mission at <a href="https://www.google.com/maps/place/3030+16th+St,+San+Francisco,+CA+94103/@37.7652736,-122.4203596,17z/data=!4m7!1m4!3m3!1s0x808f7e23bb16b375:0xe81c0361915e031b!2s3030+16th+St,+San+Francisco,+CA+94103!3b1!3m1!1s0x808f7e23bb16b375:0xe81c0361915e031b" target="_blank">3030A 16th street in San Francisco</a>. We welcome anyone working on Assembly products to come visit us to work on your project out of our office.
+        </p>
+      </div>
+    </div>
+  </article>
+
+  <!-- <section class="full-slider full-slider-about">
+    <div class="carousel">
+      <div class="item">
+        <img src="/assets/about/full-slide1.jpg">
+      </div>
+      <div class="item">
+        <img src="/assets/about/full-slide2.jpg">
+      </div>
+      <div class="item">
+        <img src="/assets/about/full-slide3.jpg">
+      </div>
+      <div class="item">
+        <img src="/assets/about/full-slide4.jpg">
+      </div>
+      <div class="item">
+        <img src="/assets/about/full-slide5.jpg">
+      </div>
+    </div>
+  </section>
+ -->
+
+
+  <section class="quote-slider quote-slider-about">
+    <div class="container">
+      <div class="carousel">
+        <% [{
+              created_at: 'Jan 7 2015',
+              name: '@mappleton',
+              quote: "Dear Assembly. Thank you for building the internet's best learning & social platform. You increased my side-project excitement 156%.",
+              avatar: 'https://gravatar.com/avatar/9990431d03db3672803cf4bd8f639e0d?size=192px'
+            }, {
+              created_at: 'Jan 12 2015',
+              name: '@kenseals',
+              quote: 'Last night I dove into Assembly and contributed work on @helpful. Feeling really motivated to make stuff now. Thanks @asm.',
+              avatar: 'https://pbs.twimg.com/profile_images/456808785860771840/dZxRmTkq.jpeg'
+            }, {
+              created_at: 'Dec 29 2014',
+              name: '@intrications',
+              quote: "It's great to be able to collaborate with other people so easily. I've been a solo developer for 4 years so it makes a nice change.",
+              avatar: 'https://gravatar.com/avatar/d59f29ca6ca1c7713e77bec2f3a7eeec?size=192px'
+            }, {
+              created_at: 'Oct 13 2014',
+              name: 'Noel Sequeira',
+              quote: "I'm blown away by the quality of work that's being done. It's like when you learn about Wikipedia or Open Source for the first time, and are left scratching your head wondering how such amazing communities can even exist.",
+              avatar: 'https://d1015h9unskp4y.cloudfront.net/about-page/2428a4b.jpg'
+            }].each do |q| %>
+
+          <div class="item">
+            <div class="header">
+              <a class="quote-avatar" href="">
+                <img src="<%= q[:avatar] %>">
+              </a>
+              <p class="details">
+                <a href="">
+                  <%= q[:name] %>
+                </a>
+                &nbsp;-&nbsp;
+                <a href="">
+                  <%= q[:created_at] %>
+                </a>
+              </p>
+            </div>
+            <div class="main">
+              <h3>
+                <%= q[:quote] %>
+              </h3>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-team">
+    <div class="team-grid-unit">
+      <div class="header">
+        <div class="container">
+          <h2>
+            The Team
+          </h2>
+        </div>
+      </div>
+      <div class="main">
+        <div class="container">
+          <div class="team-grid">
+            <ul>
+              <% AssemblyTeam.all.each do |u| %>
+                <li>
+                  <a href="<%= user_url(u) %>">
+                    <img src="<%= u.avatar.url(400) %>">
+                  </a>
+                  <div class="details">
+                    <a class="nametag" href="<%= user_url(u) %>">@<%= u.username %></a>
+                    <ul class="social-row">
+                      <li>
+                        <a href="https://twitter.com/<%= u.twitter_nickname %>">
+                          <svg class="svg-icon svg-icon-twitter" viewBox="0 0 32 32">
+                            <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M25.7,12.5c0.8-0.6,1.6-1.3,2.2-2.3c-0.9,0.4-1.8,0.6-2.6,0.7c1-0.5,1.6-1.4,1.9-2.5c-0.9,0.5-1.9,0.9-2.8,1.1c-0.9-1-2-1.4-3.3-1.4c-1.3,0-2.3,0.4-3.2,1.3c-0.9,0.9-1.3,1.9-1.3,3.2c0,0.4,0,0.7,0.1,1c-3.8-0.2-6.9-1.8-9.3-4.7C7,9.6,6.8,10.3,6.8,11.1c0,1.6,0.7,2.9,2,3.8c-0.7,0-1.4-0.2-2-0.6v0c0,1.1,0.3,2,1,2.9c0.7,0.8,1.5,1.4,2.6,1.6c-0.3,0.1-0.7,0.1-1.2,0.1c-0.2,0-0.5,0-0.8-0.1c0.3,0.9,0.8,1.6,1.6,2.2c0.8,0.6,1.6,0.8,2.6,0.9C10.8,23.3,9,24,7,24c-0.3,0-0.6,0-1.1-0.1c2,1.3,4.3,2,6.9,2c2,0,3.8-0.4,5.5-1.2c1.7-0.8,3-1.8,4.1-3c1-1.3,1.9-2.6,2.4-4.1c0.6-1.5,0.9-3,0.9-4.5V12.5z"/>
+                          </svg>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="_hero hero-about-bottom"> <!-- .hero namespace is being used by legacy code. refactor -->
+    <div class="main">
+      <div class="container">
+        <h1>
+          Let's Get to Know Each&nbsp;Other
+        </h1>
+        <p>
+          You seem like a super cool person. Don't be shy, give us a follow and we'll be friends in no&nbsp;time!
+        </p>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="container">
+        <div class="social-row">
+          <ul>
+            <li>
+              <a href="https://twitter.com/asm">
+                <img src="/assets/about/social-icon-twitter.png">
+              </a>
+            </li>
+            <li>
+              <a href="https://www.facebook.com/assemblymade">
+                <img src="/assets/about/social-icon-facebook.png">
+              </a>
+            </li>
+          </ul>
+          <div class="pill-bg"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 <%= render 'shared/footer' %>
 
+
 <% content_for :javascript do %>
-  <script>
-    var $body = $(document.body)
-    var $sideBar = $('.asm-about-sidebar')
-    $body.scrollspy({target: '.asm-about-sidebar'})
+<script>
+    // -- video modal
+    (function($) {
+    //   var modal = $('#video-modal'),
+    //       player = $f(modal.find('iframe')[0]);
 
-    var sideBarWidth = $sideBar.width()
-    $sideBar.width(sideBarWidth)
+    //   modal.on('shown.bs.modal', function() {
+    //     player.api('play');
+    //   });
+    //   modal.on('hide.bs.modal', function() {
+    //     player.api('pause');
+    //   });
 
-    var offsetTop      = $sideBar.offset().top
-    var sideBarMargin  = parseInt($sideBar.children(0).css('margin-top'), 10)
+    $('.popup-video').magnificPopup({
+        disableOn:700,
+        type:'iframe',
+        mainClass:'mfp-fade',
+        removalDelay:160,
+        preloader:!1,
+        fixedContentPos:!1
+    });
 
-    setTimeout(function () {
-      $sideBar.affix({
-        offset: {
-          bottom: $('.footer').outerHeight(true)
-        }
-      })
-    }, 100)
+     // $('.popup-video').magnificPopup();
 
-  </script>
+    })(jQuery);
+
+  // -- dashboard
+  (function($) {
+    var $chart = $('.circle-stats .chart');
+    //
+    $chart.easyPieChart({
+      size: '90',
+      lineWidth: '10',
+      trackColor: '#e5e7ea',
+      barColor: '#33d6a6',
+      easing: 'easeOutBounce',
+      scaleColor: false,
+      scaleLength: false,
+      onStep: function(from, to, percent) {
+        $(this.el).find('.percent').text(Math.round(percent));
+      }
+    });
+  })(jQuery);
+
+  // -- full slider
+  (function($) {
+    var $fullSlider = $('.full-slider-about'),
+        $fullSliderCarousel = $fullSlider.find('.carousel');
+    //
+    $fullSliderCarousel.owlCarousel({
+      singleItem: true,
+      slideSpeed: 300,
+      paginationSpeed: 400,
+      navigation: false,
+      afterInit: afterOWLinit,
+      afterUpdate: afterOWLinit
+    });
+    function afterOWLinit() {
+      $('.owl-controls .owl-page span').append('<a class="item-link" href="#"/>');
+      var pafinatorsLink = $('.owl-controls .item-link');
+      //
+      $.each(this.owl.userItems, function (i) {
+        $(pafinatorsLink[i])
+          .css({
+            'background': 'url(' + $(this).find('img').attr('src') + ') center center no-repeat',
+            '-webkit-background-size': 'cover',
+            '-moz-background-size': 'cover',
+            '-o-background-size': 'cover',
+            'background-size': 'cover'
+          })
+          .on('click', function(e) {
+            e.preventDefault();
+          });
+      });
+    }
+  })(jQuery);
+
+  // -- quote slider
+  (function($) {
+    var $quoteSlider = $('.quote-slider-about'),
+        $quoteSliderCarousel = $quoteSlider.find('.carousel');
+    //
+    $quoteSliderCarousel.owlCarousel({
+      singleItem: true,
+      autoPlay: 10000,
+      slideSpeed: 300,
+      paginationSpeed: 400,
+      navigation: false
+    });
+  })(jQuery);
+
+</script>
 <% end %>
