@@ -3,7 +3,7 @@ module Search
     include ActionView::Helpers::SanitizeHelper
 
     def sanitize(text)
-      HTMLEntities.new.decode(strip_tags(markdown(text))).strip
+      strip_tags(HTMLEntities.new.decode(strip_tags(markdown(text))).strip)
     end
 
     def markdown(text)
