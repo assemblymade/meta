@@ -19,6 +19,29 @@
       </a>
     <% end %>
 
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+          var data = google.visualization.arrayToDataTable(
+          <%= @karma_total_history.to_json.html_safe %>
+          );
+
+        var showEvery = parseInt(data.getNumberOfRows() / 4);
+        var options = {
+          title: 'Karma History',
+          isStacked: true,
+          hAxis: {title: 'Time',  titleTextStyle: {color: '#333'}, showTextEvery: showEvery,  textPosition: 'none'},
+          vAxis: {title: 'Karma', minValue: 0}
+        };
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+
+    </script>
+
+
     <div class="table-responsive">
       <table class="table">
         <thead>

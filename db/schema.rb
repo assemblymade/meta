@@ -127,6 +127,16 @@ ActiveRecord::Schema.define(version: 20150128213925) do
 
   add_index "chat_rooms", ["slug"], name: "index_chat_rooms_on_slug", unique: true, using: :btree
 
+  create_table "choices", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.float    "value"
+    t.float    "weight"
+    t.string   "type"
+    t.uuid     "proposal_id"
+    t.uuid     "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "chronicles", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "user_id"
     t.datetime "created_at"
@@ -679,6 +689,18 @@ ActiveRecord::Schema.define(version: 20150128213925) do
     t.integer "annuity",    default: 0, null: false
   end
 
+  create_table "proposals", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "state"
+    t.string   "contract_type"
+    t.datetime "expiration"
+    t.uuid     "product_id"
+    t.uuid     "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "rooms", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid    "product_id",  null: false
     t.integer "number",      null: false
@@ -988,6 +1010,20 @@ ActiveRecord::Schema.define(version: 20150128213925) do
     t.integer  "number",                     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "vestings", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "proposal_id"
+    t.datetime "start_date"
+    t.datetime "expiration_date"
+    t.integer  "intervals"
+    t.integer  "intervals_paid"
+    t.integer  "coins"
+    t.uuid     "user_id"
+    t.string   "state"
+    t.uuid     "product_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "viewings", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|

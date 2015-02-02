@@ -15,7 +15,7 @@ class Watching < ActiveRecord::Base
 
   after_commit -> { watchable.update_watchings_count! }
 
-  after_commit -> { AdjustMarkings.perform_async(self.user.id, "User",self.watchable.id, "Product", 1.0) }, on: :create
+  after_commit -> { AdjustMarkings.perform_async(self.user.id, "User", self.watchable.id, "Product", 1.0) }, on: :create
 
   def self.auto_watch!(user, watchable)
     return if unscoped.where(user: user, watchable: watchable).where('auto_subscribed_at is not null').any?

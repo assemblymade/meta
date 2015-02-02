@@ -1,0 +1,20 @@
+<% title 'Proposals' %>
+<% activate_nav! :people %>
+<% activate_nav! :people_governance %>
+
+<%= render 'people/nav' %>
+
+<div class="sheet-body">
+  <div class="row">
+    <div class="col-md-12 col-xs-12">
+      <%= react_component(
+      'ProposalCreation',
+      user: UserSerializer.new(current_user),
+      product: ProductGovernanceSerializer.new(@product),
+      contract_type: "vesting",
+      url: product_proposals_url
+      )
+      %>
+    </div>
+  </div>
+</div>

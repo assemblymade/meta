@@ -181,6 +181,9 @@
       POSTS_RECEIVE: null,
       PRODUCT_RECEIVE: null,
 
+      PROPOSAL_INIT: null,
+      PROPOSAL_VOTE: null,
+
       PRODUCT_FOLLOW_CLICKED: null,
       PRODUCT_FOLLOW_SUCCEEDED: null,
       PRODUCT_FOLLOW_FAILED: null,

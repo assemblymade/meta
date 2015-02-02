@@ -17,11 +17,13 @@ class User < ActiveRecord::Base
 
   has_many :assembly_assets
   has_many :awards, foreign_key: 'winner_id'
+  has_many :choices
   has_many :deeds
   has_many :events
   has_many :hearts
   has_many :products
   has_many :product_logos
+  has_many :proposals
   has_many :followed_products, through: :watchings, source: :watchable, source_type: Product
   has_many :followed_tags, through: :watchings, source: :watchable, source_type: Wip::Tag
   has_many :locked_wips, class_name: 'Wip', foreign_key: 'locked_by'
@@ -381,6 +383,12 @@ class User < ActiveRecord::Base
     newcluster = self.best_cluster
     newcluster.add_user(self)
     newcluster
+  end
+
+  #governance
+
+  def can_vote?(product)
+    TransactionLogEntry.product_balances(self).include?(product.id)
   end
 
   def mark_names=(new_mark_names)

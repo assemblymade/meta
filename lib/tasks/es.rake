@@ -3,10 +3,10 @@ namespace :es do
   task :import => :environment do
     client = Elasticsearch::Model.client
     [
-      # [Wip, Wip.includes(:comments, :product)],
-      [User, User],
-      [Product, Product.includes(:product_trend, markings: :mark)]
-    ].each do |model, query|
+      Wip.includes(:comments, :product),
+      User,
+      Product.includes(:product_trend, markings: :mark)
+    ].each do |model|
       model.__elasticsearch__.create_index! force: true
       i = 0
       total = model.count

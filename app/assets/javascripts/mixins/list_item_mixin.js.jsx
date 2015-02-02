@@ -21,7 +21,6 @@ var ListItemMixin = {
     if (!heartableId) {
       return;
     }
-
     return (
       <div className="px3 py2 border-top mb0 mt0">
         <Heart size="small" heartable_type='NewsFeedItem' heartable_id={heartableId} />
