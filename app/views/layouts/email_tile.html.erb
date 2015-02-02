@@ -46,8 +46,9 @@
              --><td align="right" style="width:67%; display:inline-block; text-align:right; padding-top:10px; padding-bottom:10px; line-height:20px">
                   <div style="display:inline-block; margin:0 0 0 auto; width:100%; text-align:right;">
                       <font class="h5 collapse grey-2">
-                          Friday's are so good.
-                        </font>
+                        <% @date ||= Date.today %>
+                        <%= @fun || "#{@date.strftime('%A')}s are so good." %>
+                      </font>
                     </div>
                 </td>
             </tr>

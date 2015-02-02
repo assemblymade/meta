@@ -17,6 +17,7 @@ class ChatMailer < BaseMailer
 
     mailgun_tag 'mentions'
 
+    @fun = 'You must be so popular'
     mail   to: @user.email,
       subject: "@#{@event.user.username} mentioned you in chat on ##{@chat_room.slug}"
   end
