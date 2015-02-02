@@ -47,7 +47,7 @@ var Contracts = React.createClass({
               <td>Tip Contract</td>
               <td>{a.created_on}</td>
               <td>TBD</td>
-              <td>Receives {a.amount*100}% of Coins awarded</td>
+              <td>Receives <b>{a.amount*100}%</b> of Coins awarded</td>
               <td>Grandfathered</td>
             </tr>
           )
@@ -66,7 +66,7 @@ var Contracts = React.createClass({
               <td>Tip Contract</td>
               <td>{a.created_on}</td>
               <td>Expired</td>
-              <td>Receives {a.amount*100}% of Coins awarded</td>
+              <td>Received <b>{a.amount*100}%</b> of Coins awarded</td>
               <td>Grandfathered</td>
             </tr>
           )
