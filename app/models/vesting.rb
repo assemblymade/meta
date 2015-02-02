@@ -33,5 +33,9 @@ class Vesting < ActiveRecord::Base
     end
   end
 
+  def expired?
+    self.expiration_date - Time.now < 0
+  end
+
 
 end

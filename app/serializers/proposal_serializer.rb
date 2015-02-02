@@ -3,7 +3,7 @@ class ProposalSerializer < ApplicationSerializer
   include TruncateHtmlHelper
   attributes :name, :description, :status
   attributes :news_feed_item_id, :url, :comments_count, :state, :status, :contracts, :time_left_text
-  attributes :short_body
+  attributes :short_body, :activeContracts, :closedContracts
 
   has_one :user
   has_many :contracts

@@ -724,6 +724,32 @@ class Product < ActiveRecord::Base
     open_proposals + passed_proposals + failed_proposals + expired_proposals
   end
 
+  def active_contracts
+    passed_proposals = self.proposals.where(state: ["passed", "expired"])
+    contracts = []
+    passed_proposals.each do |p|
+      p.contracts.each do |c|
+        if !c.expired?
+          contracts.append(c)
+        end
+      end
+    end
+    contracts
+  end
+
+  def expired_contracts
+    passed_proposals = self.proposals.where(state: ["passed", "expired"])
+    contracts = []
+    passed_proposals.each do |p|
+      p.contracts.each do |c|
+        if c.expired?
+          contracts.append(c)
+        end
+      end
+    end
+    contracts
+  end
+
   protected
 
   def add_to_event_stream

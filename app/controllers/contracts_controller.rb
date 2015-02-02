@@ -6,6 +6,10 @@ class ContractsController < ProductController
 
   def index
     find_product!
+
+    @active_contracts = @product.active_contracts
+    @closed_contracts = @product.expired_contracts
+
   end
 
   def create

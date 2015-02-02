@@ -1,6 +1,10 @@
 class VestingSerializer < ApplicationSerializer
 
-  attributes :user, :product, :vesting_date_formatted, :coins
+  attributes :user, :product, :vesting_date_formatted, :coins, :proposal
+
+  def proposal
+    ProposalSerializer.new(self.proposal)
+  end
 
   def user
     UserSerializer.new(object.user)

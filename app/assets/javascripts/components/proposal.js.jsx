@@ -112,7 +112,7 @@ var Proposal = React.createClass({
     return (
       <div>
         <h5>Vesting Schedule</h5>
-        <table class="table table-responsive table-hover" style={table_style}>
+        <table className="table table-responsive table-hover" style={table_style}>
           <thead>
             <tr>
               <th>Recipient</th>
