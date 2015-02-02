@@ -1,5 +1,5 @@
 module Financial
-  class Expense
-    
+  class History
+
   end
 end
