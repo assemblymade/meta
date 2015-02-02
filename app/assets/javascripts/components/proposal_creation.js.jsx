@@ -16,7 +16,8 @@ var ProposalCreation = React.createClass({
   propTypes: {
     user: React.PropTypes.object,
     product: React.PropTypes.object,
-    contract_type: React.PropTypes.string
+    contract_type: React.PropTypes.string,
+    url: React.PropTypes.string
   },
 
   componentDidMount() {
@@ -292,9 +293,11 @@ var ProposalCreation = React.createClass({
 
   toggle_create: function(e) {
     e.preventDefault()
-    var the_url = ""
-    var new_url = "https://www.assembly.com/"+product.slug+"/governance/"
+    newurl = this.props.product.url
+    console.log(newurl)
     var proposaldata = {name: this.state.name, description: this.state.description, recipient: this.state.recipient, coins: this.state.coins, date: this.state.date}
+    the_url = this.props.url
+    console.log(the_url)
 
     var proposalComponent = this
     $.ajax({
@@ -302,8 +305,11 @@ var ProposalCreation = React.createClass({
       url: the_url,
       json: true,
       data: proposaldata,
+      success: function() {
+        window.location = newurl
+      }
       });
-      window.location = newurl
+
     }
 });
 

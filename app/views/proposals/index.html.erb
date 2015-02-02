@@ -11,7 +11,9 @@
       'ProposalCreation',
       user: UserSerializer.new(current_user),
       product: ProductGovernanceSerializer.new(@product),
-      contract_type: "vesting")
+      contract_type: "vesting",
+      url: product_proposals_url
+      )
       %>
     </div>
   </div>

@@ -43,7 +43,7 @@ var Contracts = React.createClass({
         {
           _(this.props.activeTipContracts).map(a=>
             <tr>
-              <td>{a.username}</td>
+              <td><a href={a.username_link}>{a.username}</a></td>
               <td>Tip Contract</td>
               <td>{a.created_on}</td>
               <td>TBD</td>
@@ -62,7 +62,7 @@ var Contracts = React.createClass({
         {
           _(this.props.closedTipContracts).map(a=>
             <tr>
-              <td>{a.username}</td>
+              <td><a href={a.username_link}>{a.username}</a></td>
               <td>Tip Contract</td>
               <td>{a.created_on}</td>
               <td>Expired</td>
@@ -104,7 +104,7 @@ var Contracts = React.createClass({
       <div>
         <Tile>
         <div className="clearfix px2 py2">
-          <div className="col-10">
+          <div className="col-12">
             <h4>Active Contracts</h4>
             {this.renderActiveContracts()}
           </div>
@@ -113,7 +113,7 @@ var Contracts = React.createClass({
       <div className="clearfix py3 mt3"></div>
       <Tile>
         <div className="clearfix px2 py2">
-          <div className="col-10">
+          <div className="col-12">
             <h4>Expired Contracts</h4>
               {this.renderExpiredContracts()}
           </div>

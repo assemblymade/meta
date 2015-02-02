@@ -11,6 +11,7 @@ class ProposalsController < ProductController
 
   def create
     puts params
+    puts "Proposal Created"
     params['recipient'].slice!(0)
     username = params['recipient']
     puts username
