@@ -33,6 +33,7 @@ class ProductStore extends Store {
   getCoreTeamIds() {
     return _product.core_team
   }
+
 }
 
 var store = new ProductStore()

@@ -5,7 +5,6 @@ var ProposalActions = {
 
   vote: function(proposal_id) {
     var product_slug = ProductStore.getSlug()
-    var newurl = "https://www.assembly.com/"+{product_slug}+"/governance"
     var choicedata = {proposal_id: proposal_id}
 
     var proposalComponent = this
