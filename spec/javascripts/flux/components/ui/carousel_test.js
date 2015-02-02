@@ -11,6 +11,8 @@ describe('Carousel', function() {
     return false;
   };
 
+  global.Dispatcher = require(appFile('dispatcher'));
+
   it('does not render thumbnails if passed only one image src', function() {
     var Carousel = require(appFile('components/ui/carousel.js.jsx'));
     var carousel = TestUtils.renderIntoDocument(
@@ -50,12 +52,12 @@ describe('Carousel', function() {
       <Carousel images={['billy-bigelow.png', 'julie-jordan.png']} />
     );
 
-    var link = TestUtils.findRenderedDOMComponentWithTag(
+    var links = TestUtils.scryRenderedDOMComponentsWithTag(
       carousel,
       'a'
     );
 
-    TestUtils.Simulate.click(link);
+    TestUtils.Simulate.click(links[1]);
 
     expect(carousel.state.currentFocusIndex).toEqual(1);
 

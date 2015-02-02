@@ -5,7 +5,7 @@ class ProductsController < ProductController
 
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :follow, :unfollow, :announcements, :welcome]
   before_action :set_product,
-    only: [:show, :old, :edit, :update, :follow, :announcements, :unfollow, :metrics, :flag, :feature, :launch]
+    only: [:show, :activity, :old, :edit, :update, :follow, :announcements, :unfollow, :metrics, :flag, :feature, :launch]
 
   MARK_DISPLAY_LIMIT = 14
   PRODUCT_MARK_DISPLAY_LIMIT = 6
@@ -63,6 +63,10 @@ class ProductsController < ProductController
     find_product!
   end
 
+  def activity
+    show_product
+  end
+
   def flag
     return redirect_to(product_url(@product)) unless current_user && current_user.is_staff?
     if request.post?
@@ -84,63 +88,11 @@ class ProductsController < ProductController
     return redirect_to(about_url) if @product.meta?
     return staff_show if signed_in? && current_user.is_staff?
 
-    page_views = TimedSet.new($redis, "#{@product.id}:show")
-
-    if page_views.add(request.remote_ip)
-      Product.increment_counter(:view_count, @product.id)
-      page_views.drop_older_than(5.minutes)
-    end
-
-    #queue recording of view event as 'viewing'
-    # FIXME: This call is dominating the worker queue
-    # if current_user && @product
-    #   ViewWorker.perform_async(current_user.id, @product.id, "Product")
-    # end
-
-
-    @top_wip_tags = QueryMarks.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
-    @product_marks = @product.marks.pluck(:name).uniq
-
-    if @product_marks.count > PRODUCT_MARK_DISPLAY_LIMIT
-      @product_marks = @product_marks[0..PRODUCT_MARK_DISPLAY_LIMIT]
-    end
-
-    query = if params[:filter].present?
-      @mark_name = params[:filter]
-      MakeMarks.new.
-          news_feed_items_per_product_per_mark(@product, @mark_name)
-    else
-      @product.news_feed_items
-    end
-
-    query = query.unarchived_items.where.not(last_commented_at: nil).
-                  page(params[:page]).per(10).order(last_commented_at: :desc).
-                  reject{|nfi| nfi.target.is_a? Discussion }
-
-    @news_feed_items = query.map do |nfi|
-      Rails.cache.fetch([nfi, 'v2', :json]) do
-        NewsFeedItemSerializer.new(nfi).as_json
-      end
-    end
-
-    @heartables = (@news_feed_items + @news_feed_items.map{|p| p[:last_comment]}).compact
-
-    if signed_in?
-      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['id']})
-    end
-
-    respond_to do |format|
-      format.html { render }
-      format.json {
-        render json: {
-          items: @news_feed_items,
-          user_hearts: @user_hearts
-        }
-      }
-    end
+    show_product
   end
 
   def staff_show
+    @feature_flags[:product_show] = true
     respond_with({
       product: ProductSerializer.new(
         @product,
@@ -314,6 +266,63 @@ class ProductsController < ProductController
       flash[:new_product_callout] = true
     end
     product
+  end
+
+  def show_product
+    page_views = TimedSet.new($redis, "#{@product.id}:show")
+
+    if page_views.add(request.remote_ip)
+      Product.increment_counter(:view_count, @product.id)
+      page_views.drop_older_than(5.minutes)
+    end
+
+    #queue recording of view event as 'viewing'
+    # FIXME: This call is dominating the worker queue
+    # if current_user && @product
+    #   ViewWorker.perform_async(current_user.id, @product.id, "Product")
+    # end
+
+
+    @top_wip_tags = QueryMarks.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
+    @product_marks = @product.marks.pluck(:name).uniq
+
+    if @product_marks.count > PRODUCT_MARK_DISPLAY_LIMIT
+      @product_marks = @product_marks[0..PRODUCT_MARK_DISPLAY_LIMIT]
+    end
+
+    query = if params[:filter].present?
+      @mark_name = params[:filter]
+      MakeMarks.new.
+          news_feed_items_per_product_per_mark(@product, @mark_name)
+    else
+      @product.news_feed_items
+    end
+
+    query = query.unarchived_items.where.not(last_commented_at: nil).
+                  page(params[:page]).per(10).order(last_commented_at: :desc).
+                  reject{|nfi| nfi.target.is_a? Discussion }
+
+    @news_feed_items = query.map do |nfi|
+      Rails.cache.fetch([nfi, 'v2', :json]) do
+        NewsFeedItemSerializer.new(nfi).as_json
+      end
+    end
+
+    @heartables = (@news_feed_items + @news_feed_items.map{|p| p[:last_comment]}).compact
+
+    if signed_in?
+      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['id']})
+    end
+
+    respond_to do |format|
+      format.html { render 'show' }
+      format.json {
+        render json: {
+          items: @news_feed_items,
+          user_hearts: @user_hearts
+        }
+      }
+    end
   end
 
   def product_params

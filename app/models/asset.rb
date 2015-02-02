@@ -6,6 +6,7 @@ class Asset < ActiveRecord::Base
   belongs_to :attachment
 
   has_one :room, as: :target
+  has_one :screenshot
 
   delegate :url, to: :attachment
 end

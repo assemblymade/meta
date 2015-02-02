@@ -1,9 +1,20 @@
 class ProductSerializer < ApplicationSerializer
+  include MarkdownHelper
 
   attributes :url, :wips_url, :people_url
   attributes :name, :pitch, :slug, :quality, :average_bounty, :logo_url
-  attributes :can_update, :try_url, :wips_count, :partners_count
-  attributes :top_marks, :homepage_url
+  attributes :can_update, :try_url, :wips_count, :partners_count, :lead
+  attributes :top_marks, :homepage_url, :screenshots, :description, :description_html
+
+  has_many :most_active_contributors, serializer: UserSerializer
+
+  def description_html
+    product_markdown(object, description)
+  end
+
+  def lead
+    product_markdown(object, object.lead)
+  end
 
   def logo_url
     object.full_logo_url

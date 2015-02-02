@@ -83,7 +83,7 @@ var Update = React.createClass({
   },
 
   renderArchiveButton: function() {
-    if (!UserStore.isCoreTeam()) {
+    if (!ProductStore.isCoreTeam(UserStore.getUser())) {
       return;
     }
 
@@ -124,7 +124,7 @@ var Update = React.createClass({
 
   renderEditButton: function() {
     var update = this.props.update
-    if (UserStore.isCoreTeam() || update.user.id === UserStore.getId()) {
+    if (UserStore.isStaff() || update.user.id === UserStore.getId()) {
       return (
         <li>
           <a href={update.url + '/edit'}>Edit</a>

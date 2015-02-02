@@ -126,7 +126,7 @@ group :development do
   # gem 'sql-logging'
   # gem 'ruby-prof'
   # gem 'stackprof'
-  gem 'webshot'
+  # gem 'webshot'
 end
 
 group :test do

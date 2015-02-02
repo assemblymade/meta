@@ -56,7 +56,7 @@ var store = new BountiesStore()
 
 var dataTag = document.getElementById('BountiesStore')
 if (dataTag) {
-  data = JSON.parse(dataTag.innerHTML)
+  var data = JSON.parse(dataTag.innerHTML)
 
   Dispatcher.dispatch({
     type: ActionTypes.BOUNTIES_RECEIVE,

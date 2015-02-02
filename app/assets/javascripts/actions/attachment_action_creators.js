@@ -2,7 +2,6 @@
 
 var CONSTANTS = window.CONSTANTS
 var ActionTypes = CONSTANTS.ActionTypes
-var ProductStore = require('../stores/product_store')
 var uploadUrl = '/upload/attachments'
 
 class AttachmentActionCreators {
@@ -18,7 +17,7 @@ function _upload(commentId, file, done) {
     type: ActionTypes.ATTACHMENT_UPLOADING,
     commentId: commentId,
     text: '![Uploading... ' + file.name + ']()'
-  })
+  });
 
   $.ajax({
     url: uploadUrl,

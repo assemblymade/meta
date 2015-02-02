@@ -3,7 +3,7 @@
 <% activate_nav! :product %>
 <%= track_engaged 'product.activity' %>
 
-<% if signed_in? && current_user.is_staff?  %>
+<% if @feature_flags[:product_show]  %>
   <%= react_component 'AsmApp' %>
 <% else %>
 

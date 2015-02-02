@@ -253,6 +253,6 @@ module.exports = React.createClass({
   },
 
   currentUserIsCore: function() {
-    return UserStore.isCoreTeam();
+    return ProductStore.isCoreTeam(UserStore.getUser());
   }
 });

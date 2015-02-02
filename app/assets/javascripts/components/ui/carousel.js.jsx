@@ -1,8 +1,11 @@
 'use strict';
 
-const Carousel = React.createClass({
+let Carousel = React.createClass({
   propTypes: {
-    images: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+    images: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.string),
+      React.PropTypes.arrayOf(React.PropTypes.element)
+    ]).isRequired
   },
 
   getInitialState() {
@@ -47,14 +50,21 @@ const Carousel = React.createClass({
     let currentFocusIndex = this.state.currentFocusIndex;
     let images = this.props.images;
 
+    let image = images[currentFocusIndex];
+
     let style = {
       borderTopLeftRadius: 4,
       borderTopRightRadius: 4,
-      maxHeight: 480,
       width: '100%'
     };
 
-    return <img src={images[currentFocusIndex]} style={style} />;
+    if (typeof image === 'string') {
+      return <img src={image} style={style} />;
+    }
+
+    image.props.style = style;
+
+    return image;
   },
 
   renderThumbnails() {
@@ -67,21 +77,25 @@ const Carousel = React.createClass({
     let currentFocusIndex = this.state.currentFocusIndex;
     let style = {
       borderRadius: 4,
-      maxHeight: 80,
       maxWidth: 100,
+      overflowY: 'hidden',
       width: 100
     };
 
     let renderedImages = images.map((image, i) => {
-      if (i !== currentFocusIndex) {
-        return (
-          <div className="left mr2" style={style}>
-            <a href="javascript:void(0);" onClick={this.handleThumbnailClick.bind(this, i)}>
-              <img src={image} style={style} />
-            </a>
-          </div>
-        );
+      style.opacity = i === currentFocusIndex ? 0.5 : 1;
+
+      if (typeof image !== 'string' && i !== currentFocusIndex) {
+        _.extend(image.props.style, style);
       }
+
+      return (
+        <div className="left mr2" style={style} key={i}>
+          <a href="javascript:void(0);" onClick={this.handleThumbnailClick.bind(this, i)}>
+            {typeof image === 'string' ? <img src={image} style={style} /> : image}
+          </a>
+        </div>
+      );
     });
 
     return (

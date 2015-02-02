@@ -279,6 +279,7 @@ ASM::Application.routes.draw do
     match 'flag',    via: [:get, :post]
 
     get 'welcome'
+    get 'activity'
     get 'admin'
     post 'feature'
     post 'follow'
@@ -306,6 +307,7 @@ ASM::Application.routes.draw do
       patch :add
     end
 
+    resources :screenshots, only: [:create]
     resources :people, only: [:index, :create, :update, :destroy]
     resources :core_team_members, only: [:create]
 

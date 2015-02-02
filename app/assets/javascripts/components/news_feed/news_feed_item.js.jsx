@@ -16,6 +16,7 @@ var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx');
 var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
 var NewsFeedItemModal = require('./news_feed_item_modal.js.jsx');
 var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
+var ProductStore = require('../../stores/product_store');
 var SubscriptionsStore = require('../../stores/subscriptions_store');
 var SvgIcon = require('../ui/svg_icon.js.jsx')
 var Tag = require('../tag.js.jsx');
@@ -125,7 +126,7 @@ var NewsFeedItem = React.createClass({
   },
 
   renderArchiveButton: function() {
-    if (!UserStore.isCoreTeam()) {
+    if (!ProductStore.isCoreTeam(UserStore.getUser())) {
       return;
     }
 
@@ -157,7 +158,7 @@ var NewsFeedItem = React.createClass({
   },
 
   renderEditButton: function() {
-    if (UserStore.isCoreTeam() || this.props.user.id === UserStore.getId()) {
+    if (ProductStore.isCoreTeam(UserStore.getUser()) || this.props.user.id === UserStore.getId()) {
       var target = this.props.target;
 
       // only turn on for posts
@@ -174,6 +175,7 @@ var NewsFeedItem = React.createClass({
   renderTags: function() {
     var target = this.props.target
     var tags = target && (target.tags || target.marks);
+    var tagItems;
 
     if (tags && tags.length) {
       tagItems = _.map(tags, function(tag) {

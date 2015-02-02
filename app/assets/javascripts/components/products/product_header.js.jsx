@@ -67,7 +67,7 @@ var ProductHeader = React.createClass({
             </ul>
           </div>
 
-          <div className="right py1 px2">
+          <div className="right py1 px4">
             <ProductFollowers product_id={product.id} />
           </div>
         </div>
@@ -120,4 +120,4 @@ var ProductHeader = React.createClass({
   }
 });
 
-module.exports = ProductHeader;
+module.exports = window.ProductHeader = ProductHeader;

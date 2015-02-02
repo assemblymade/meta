@@ -1,13 +1,17 @@
-var Avatar = require('../ui/avatar.js.jsx');
-var Button = require('../ui/button.js.jsx');
-var Carousel = require('../ui/carousel.js.jsx');
-var Icon = require('../ui/icon.js.jsx');
-var ProductHeader = require('./product_header.js.jsx');
-var ProductStore = require('../../stores/product_store');
-var Tile = require('../ui/tile.js.jsx');
-var UserStore = require('../../stores/user_store');
+'use strict';
 
-var ProductShow = React.createClass({
+const Avatar = require('../ui/avatar.js.jsx');
+const Button = require('../ui/button.js.jsx');
+const Carousel = require('../ui/carousel.js.jsx');
+const Icon = require('../ui/icon.js.jsx');
+const ProductHeader = require('./product_header.js.jsx');
+const ProductScreenshotPlaceholder = require('./product_screenshot_placeholder.js.jsx');
+const ProductStore = require('../../stores/product_store');
+const Routes = require('../../routes');
+const Tile = require('../ui/tile.js.jsx');
+const UserStore = require('../../stores/user_store');
+
+let ProductShow = React.createClass({
   propTypes: {
     navigate: React.PropTypes.func.isRequired,
     params: React.PropTypes.oneOfType([
@@ -17,29 +21,46 @@ var ProductShow = React.createClass({
     query: React.PropTypes.object
   },
 
+  componentDidMount() {
+    ProductStore.addChangeListener(this.onProductChange);
+  },
+
+  componentWillUnmount() {
+    ProductStore.removeChangeListener(this.onProductChange);
+  },
+
   getInitialState() {
+    return this.getStateFromStore();
+  },
+
+  getStateFromStore() {
     return {
       product: ProductStore.getProduct()
-    }
+    };
+  },
+
+  onProductChange() {
+    this.setState(this.getStateFromStore());
   },
 
   render() {
-    var product = this.state.product;
-    var user = UserStore.getUser();
-    var leftColumnClasses = React.addons.classSet({
+    let product = this.state.product;
+    let slug = product.slug;
+    let user = UserStore.getUser();
+    let leftColumnClasses = React.addons.classSet({
       col: true,
       'col-9': true,
       'mx-auto': true,
       'px4': true
     });
 
-    var rightColumnClasses = React.addons.classSet({
+    let rightColumnClasses = React.addons.classSet({
       'col': true,
       'col-3': true,
       'px2': true
     });
 
-    var style = {
+    let style = {
       importantLinks: {
         borderColor: '#dbdee3'
       }
@@ -52,7 +73,7 @@ var ProductShow = React.createClass({
         <div className="clearfix px4">
           <div className={leftColumnClasses}>
             <div className="left mb2">
-              <a href="#" className="gray-2"><Icon icon="pencil" /> Edit product details</a>
+              <a href={Routes.edit_product_path({ id: slug })} className="gray-2"><Icon icon="pencil" /> Edit product details</a>
             </div>
           </div>
         </div>
@@ -60,82 +81,16 @@ var ProductShow = React.createClass({
         <div className="clearfix px4">
           <div className={leftColumnClasses}>
             <Tile>
-              <Carousel images={['http://placekitten.com/900/500', 'http://www.fillmurray.com/200/300', 'http://www.fillmurray.com/200/300']} />
+              {this.renderCarousel()}
 
               <div className="clearfix p4">
                 <h5 className="mt0 mb2" style={{ fontSize: 16 }}>
-                  Vestibulum id ligula porta felis euismod semper. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.
+                  {product.pitch}
                 </h5>
 
-                <p className="gray-1" style={{ fontSize: 16, lineHeight: '2.3rem' }}>
-                  Donec ullamcorper nulla non metus auctor fringilla. Nullam id dolor id nibh ultricies vehicula ut id elit. Donec ullamcorper nulla non metus auctor fringilla. Donec sed odio dui. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-                </p>
+                <p className="gray-1" style={{ fontSize: 16, lineHeight: '2.3rem' }} dangerouslySetInnerHTML={{ __html: product.description_html }} />
 
-                <div className="clearfix py1">
-                  <div className="col col-6" style={{ paddingRight: '4rem' }}>
-                    <h6 className="mt0 mb0">Goals</h6>
-                    <p className="gray-1">
-                      Aenean eu leo quam. Pellentesque ornare sem lacinia quam
-                      venenatis vestibulum. Vestibulum id ligula porta felis
-                      euismod semper. Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit.
-                    </p>
-                  </div>
-
-                  <div className="col col-6" style={{ paddingRight: '4rem' }}>
-                    <h6 className="mt0 mb0">Competing Products</h6>
-                    <p className="gray-1">
-                      Aenean eu leo quam. Pellentesque ornare sem lacinia quam
-                      venenatis vestibulum. Vestibulum id ligula porta felis
-                      euismod semper. Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="clearfix py1">
-                  <div className="col col-6" style={{ paddingRight: '4rem' }}>
-                    <h6 className="mt0 mb0">Key Features</h6>
-                    <p className="gray-1">
-                      Aenean eu leo quam. Pellentesque ornare sem lacinia quam
-                      venenatis vestibulum. Vestibulum id ligula porta felis
-                      euismod semper. Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit.
-                    </p>
-                  </div>
-
-                  <div className="col col-6" style={{ paddingRight: '4rem' }}>
-                    <h6 className="mt0 mb0">Competitive Advantage</h6>
-                    <p className="gray-1">
-                      Aenean eu leo quam. Pellentesque ornare sem lacinia quam
-                      venenatis vestibulum. Vestibulum id ligula porta felis
-                      euismod semper. Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="clearfix py1">
-                  <div className="col col-6" style={{ paddingRight: '4rem' }}>
-                    <h6 className="mt0 mb0">Target Audience</h6>
-                    <p className="gray-1">
-                      Aenean eu leo quam. Pellentesque ornare sem lacinia quam
-                      venenatis vestibulum. Vestibulum id ligula porta felis
-                      euismod semper. Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit.
-                    </p>
-                  </div>
-
-                  <div className="col col-6" style={{ paddingRight: '4rem' }}>
-                    <h6 className="mt0 mb0">Monetization Strategy</h6>
-                    <p className="gray-1">
-                      Aenean eu leo quam. Pellentesque ornare sem lacinia quam
-                      venenatis vestibulum. Vestibulum id ligula porta felis
-                      euismod semper. Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit.
-                    </p>
-                  </div>
-                </div>
+                {this.renderSubsections()}
               </div>
             </Tile>
           </div>
@@ -145,12 +100,8 @@ var ProductShow = React.createClass({
               {this.renderCommunityBuiltNotice()}
               <div className="border-bottom">
                 <div className="px3 py2">
-                  <h5 className="mt0 mb1">Build Kitten Mittens® with us!</h5>
-                  <span className="gray-1">
-                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus
-                    dolor auctor. Maecenas faucibus mollis interdum. Cras mattis
-                    consectetur purus sit amet fermentum.
-                  </span>
+                  <h5 className="mt0 mb1">Build {product.name} with us!</h5>
+                  <span className="gray-1" dangerouslySetInnerHTML={{ __html: product.lead }} />
                 </div>
               </div>
 
@@ -158,14 +109,15 @@ var ProductShow = React.createClass({
 
               <div className="bg-gray-6">
                 <div className="p3 center">
-                  <a href="#" className="block">
+                  <a href={Routes.product_wips_path({ product_id: slug })}
+                      className="block">
                     <Button type="default" action={function() {}}>
                       Build with us
                     </Button>
                   </a>
 
                   <div className="gray-2 py1">
-                    or <a href="#">See how Assembly works</a>
+                    or <a href="/help">See how Assembly works</a>
                   </div>
                 </div>
               </div>
@@ -177,45 +129,42 @@ var ProductShow = React.createClass({
 
             <div className="border-bottom py2" style={style.importantLinks}>
               <span className="mr2 gray-2">
-                <Icon icon="file" />
-              </span>
-              <a href="#" className="bold">Release 2.0 Milestone</a>
-            </div>
-
-            <div className="border-bottom py2" style={style.importantLinks}>
-              <span className="mr2 gray-2">
-                {/* there's a .user override in the Icon class */}
-                <span className="fa fa-user" />
-              </span>
-              <a href="#" className="bold">Latest community activity</a>
-            </div>
-
-            <div className="border-bottom py2" style={style.importantLinks}>
-              <span className="mr2 gray-2">
                 <Icon icon="comment" />
               </span>
-              <a href="#" className="bold">Say hi in chat</a>
+              <a href={Routes.product_chat_path({ product_id: slug })}
+                  className="bold">
+                Say hi in chat
+              </a>
             </div>
 
             <div className="border-bottom py2" style={style.importantLinks}>
               <span className="mr2 gray-2">
                 <Icon icon="warning" />
               </span>
-              <a href="#" className="bold">File a bug</a>
+              <a href={Routes.product_wips_path({ product_id: slug })}
+                  className="bold">
+                File a bug
+              </a>
             </div>
 
             <div className="border-bottom py2" style={style.importantLinks}>
               <span className="mr2 gray-2">
                 <Icon icon="question-circle" />
               </span>
-              <a href="#" className="bold">Ask a question</a>
+              <a href={Routes.product_posts_path({ product_id: slug })}
+                  className="bold">
+                Ask a question
+              </a>
             </div>
 
             <div className="py2">
               <span className="mr1 gray-2">
                 <Icon icon="code" />
               </span>
-              <a href="#" className="bold">Source code</a>
+              <a href={Routes.product_repos_path({ product_id: slug })}
+                  className="bold">
+                Source code
+              </a>
             </div>
           </div>
         </div>
@@ -223,8 +172,20 @@ var ProductShow = React.createClass({
     );
   },
 
+  renderCarousel() {
+    let images = this.wrapScreenshots() || [];
+
+    if (images.length) {
+      return <Carousel images={images} />;
+    }
+
+    if (ProductStore.isCoreTeam(UserStore.getUser())) {
+      return <ProductScreenshotPlaceholder />;
+    }
+  },
+
   renderCommunityBuiltNotice() {
-    var product = this.state.product;
+    let product = this.state.product;
 
     if (product.community_built) {
       return (
@@ -238,30 +199,100 @@ var ProductShow = React.createClass({
   },
 
   renderMostActiveUsers() {
-    var user = UserStore.getUser();
+    let product = this.state.product;
+    let contributors = product.most_active_contributors;
+    let renderedContributors = contributors.map((contributor) => {
+      return (
+        <span className="left mr1">
+          <a href={contributor.url}>
+            <Avatar user={contributor} />
+          </a>
+        </span>
+      );
+    });
 
     return (
       <div className="border-bottom">
         <div className="px3 py2">
           <h6 className="mt0 mb1">Most active members</h6>
           <div className="clearfix">
-            <span className="left mr2">
-              <Avatar user={user} />
-            </span>
-            <span className="left mr2">
-              <Avatar user={user} />
-            </span>
-            <span className="left mr2">
-              <Avatar user={user} />
-            </span>
-            <span className="left mr2">
-              <Avatar user={user} />
-            </span>
+            {renderedContributors}
           </div>
         </div>
       </div>
     );
+  },
+
+  renderSubsections() {
+    // still figuring out the design/UX for creating and editing these
+    // subsections
+    return null;
+
+    let product = this.state.product;
+    let subsections = product.subsections;
+    let headings = Object.keys(subsections);
+
+    let renderedSubsections = [];
+
+    for (let i = 0, l = headings.length; i < l; i += 2) {
+      let leftHeading = headings[i];
+      let rightHeading = headings[i + 1];
+      let leftBody = subsections[leftHeading];
+      let rightBody = subsections[rightHeading];
+
+      let renderedLeft = _subsection(leftHeading, leftBody);
+
+      let renderedRight;
+      if (rightHeading) {
+        renderedRight = _subsection(rightHeading, rightBody);
+      }
+
+      renderedSubsections.push(
+        <div className="clearfix py1">
+          {renderedLeft}
+          {renderedRight}
+        </div>
+      );
+    }
+
+    return renderedSubsections;
+  },
+
+  wrapScreenshots() {
+    let product = this.state.product;
+    let screenshots = product.screenshots;
+    let style = {
+      borderRadius: 4,
+      maxWidth: 100,
+      width: 100
+    };
+    let images;
+
+    if (screenshots.length) {
+      images = screenshots.map((src, i) => {
+        return <img src={src} style={style} key={product.id + '-screenshot-' + i} />;
+      });
+
+      if (ProductStore.isCoreTeam(UserStore.getUser())) {
+        images.push(
+          <ProductScreenshotPlaceholder key={product.id + 'placeholder'} />
+        );
+      }
+
+      return images;
+    }
   }
 });
+
+function _subsection(heading, body) {
+  return (
+    <div className="col col-6" style={{ paddingRight: '4rem' }}>
+      <h6 className="mt0 mb0">{heading}</h6>
+      <p className="gray-1">
+        {body}
+      </p>
+    </div>
+  );
+}
 
 module.exports = ProductShow;

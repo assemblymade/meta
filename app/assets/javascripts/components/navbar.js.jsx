@@ -6,13 +6,13 @@ var DropdownMixin = require('../mixins/dropdown_mixin.js.jsx')
 var DropdownNotifications = require('./dropdown_notifications.js.jsx');
 var DropdownNotificationsToggler = require('./dropdown_notifications_toggler.js.jsx');
 var TitleNotificationsCount = require('./title_notifications_count.js.jsx');
+var UserStore = require('../stores/user_store');
 
 var Navbar = React.createClass({
   mixins: [DropdownMixin],
 
   render: function() {
-    var appUser = window.app.currentUser().attributes;
-    var user = this.props.currentUser;
+    var appUser = UserStore.getUser();
     var divStyle = {
       padding: '11px 0 10px 7px'
     };

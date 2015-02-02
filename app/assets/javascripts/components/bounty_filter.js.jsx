@@ -35,7 +35,7 @@
             <span className="icon icon-chevron-down"></span>
           </a>
 
-          <ul className="dropdown-menu" style={{ 'margin-top': 14, 'margin-left': -24 }}>
+          <ul className="dropdown-menu" style={{ marginTop: 14, marginLeft: -24 }}>
             {filters.map(function(filter) {
               var onChange = function(event) {
                 this.props.onValueChange({

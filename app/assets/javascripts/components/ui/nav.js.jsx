@@ -14,7 +14,7 @@ var NavItem = React.createClass({
     onClick: React.PropTypes.func,
     label: React.PropTypes.string,
     small: React.PropTypes.bool,
-    dropdownMenu: React.PropTypes.instanceOf(DropdownMenu)
+    dropdownMenu: React.PropTypes.element
   },
 
   getDefaultProps() {

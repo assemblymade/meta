@@ -1,6 +1,7 @@
 // var Dispatcher = require('../dispatcher')
 var Store = require('./store')
 var ActionTypes = window.CONSTANTS.ActionTypes
+var Dispatcher = window.Dispatcher;
 
 var _dispatchToken;
 var _currentUser = null;
@@ -32,14 +33,14 @@ var UserStore = _.extend(Object.create(Store), {
     }
   },
 
-  isCoreTeam: function() {
-    return (_currentUser && (_currentUser.is_core || _currentUser.is_staff));
-  },
-
   isSignedIn: function() {
     return _currentUser !== null
+  },
+
+  isStaff: function() {
+    return _currentUser && _currentUser.is_staff;
   }
-})
+});
 
 UserStore.init()
 

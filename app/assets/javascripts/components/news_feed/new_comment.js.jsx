@@ -1,7 +1,8 @@
 var ActionTypes = window.CONSTANTS.ActionTypes;
 var BountyActionCreators = require('../../actions/bounty_action_creators');
-var Button = require('../ui/button.js.jsx')
+var Button = require('../ui/button.js.jsx');
 var CommentActionCreators = require('../../actions/comment_action_creators');
+var DraggingMixin = require('../../mixins/dragging_mixin');
 var DropzoneMixin = require('../../mixins/dropzone_mixin');
 var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
 var NewCommentStore = require('../../stores/new_comment_store');
@@ -37,7 +38,7 @@ var NewComment = React.createClass({
     user: React.PropTypes.object
   },
 
-  mixins: [DropzoneMixin],
+  mixins: [DraggingMixin, DropzoneMixin],
 
   buttonClasses: function(btnClass) {
     var classes = {
@@ -53,39 +54,10 @@ var NewComment = React.createClass({
   },
 
   componentDidMount: function() {
-    // based on Ben Alpert's (@spicyj) work at
-    // https://github.com/Khan/react-components/blob/master/js/window-drag.jsx
-
-    // `this._dragCollection` looks weird, but there's a bug in React that
-    // causes 'dragenter' to fire twice. By keeping track of elements where the
-    // event has fired (instead of the event itself -- see l. 60), we can
-    // correctly determine drag behavior.
-    this._dragCollection = [];
-
-    window.addEventListener("dragenter", this.onDragEnter);
-    window.addEventListener("dragleave", this.onDragLeave);
-    window.addEventListener("drop",      this.onDragLeave);
-
-    var domNode = this.getDOMNode();
-
-    domNode.addEventListener('dragenter', this.onDragEnter, false);
-    domNode.addEventListener('dragleave', this.onDragLeave, false);
-    domNode.addEventListener('drop', this.onDragLeave, false);
-
     NewCommentStore.addChangeListener(this.getCommentFromStore);
   },
 
   componentWillUnmount: function() {
-    window.removeEventListener("dragenter", this.onDragEnter);
-    window.removeEventListener("dragleave", this.onDragLeave);
-    window.removeEventListener("drop",      this.onDragLeave);
-
-    var domNode = this.getDOMNode();
-
-    domNode.removeEventListener('dragenter', this.onDragEnter, false);
-    domNode.removeEventListener('dragleave', this.onDragLeave, false);
-    domNode.removeEventListener('drop', this.onDragLeave, false);
-
     NewCommentStore.removeChangeListener(this.getCommentFromStore);
   },
 
@@ -106,30 +78,9 @@ var NewComment = React.createClass({
 
   getInitialState: function() {
     return {
-      dragging: false,
       rows: this.props.initialRows,
       text: this.props.initialText || ''
     };
-  },
-
-  onDragEnter: function(e) {
-    if (this._dragCollection.length === 0) {
-      this.setState({
-        dragging: true
-      });
-    }
-
-    this._dragCollection = _(this._dragCollection).union([e.target]);
-  },
-
-  onDragLeave: function(e) {
-    this._dragCollection = _(this._dragCollection).without(e.target);
-
-    if (this._dragCollection.length === 0) {
-      this.setState({
-        dragging: false
-      });
-    }
   },
 
   onKeyboardInteraction: function(e) {
