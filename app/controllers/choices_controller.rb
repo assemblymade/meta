@@ -30,13 +30,5 @@ class ChoicesController < ProductController
       approved: @proposal.user_vote_status(current_user),
       state: @proposal.state
     }
-
   end
-
-  def destroy
-  end
-
-  def update
-  end
-
 end

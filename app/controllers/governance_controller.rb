@@ -17,7 +17,4 @@ class GovernanceController < ProductController
     end
   end
 
-  def create
-
-  end
 end
