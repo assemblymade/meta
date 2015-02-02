@@ -26,9 +26,6 @@ var Contracts = React.createClass({
           </thead>
           <tbody>
             {
-            console.log(this.props.proposals)
-            }
-            {
               this.renderActiveTipContracts()
             }
           </tbody>
