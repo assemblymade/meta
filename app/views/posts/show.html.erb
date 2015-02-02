@@ -13,9 +13,8 @@
       %>)
 
       var discussionElement = React.createElement(Discussion, {
-        target: updateElement,
         newsFeedItem: <%= NewsFeedItemSerializer.new(@post.news_feed_item).to_json.html_safe %>,
-      })
+      }, updateElement)
 
       React.render(discussionElement, document.getElementById('discussion-el'))
     })
