@@ -41,7 +41,7 @@ var Governance = React.createClass({
             <div className = "col-md-8">
               <h3>There are no proposals yet for this product</h3>
             </div>
-            <div className = "col-md-3 col-md-offset-1">
+            <div className = "col-md-4">
               <Tile>
                 {this.renderText()}
               </Tile>

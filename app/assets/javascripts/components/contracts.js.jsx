@@ -7,7 +7,15 @@ var Contracts = React.createClass({
   propTypes: {
     proposals: React.PropTypes.array,
     activeTipContracts: React.PropTypes.array,
-    closedTipContracts: React.PropTypes.array
+    closedTipContracts: React.PropTypes.array,
+    activeVestings: React.PropTypes.array,
+    closedVestings: React.PropTypes.array
+  },
+
+  getInitialState: function() {
+    return {
+      contract_type: ""
+    };
   },
 
   renderActiveContracts: function() {
@@ -25,6 +33,9 @@ var Contracts = React.createClass({
             </tr>
           </thead>
           <tbody>
+            {
+              this.renderActiveVestings()
+            }
             {
               this.renderActiveTipContracts()
             }
@@ -88,12 +99,66 @@ var Contracts = React.createClass({
           </thead>
           <tbody>
             {
+              this.renderClosedVestings()
+            }
+            {
               this.renderClosedTipContracts()
             }
           </tbody>
         </table>
       </div>
     )
+  },
+
+  renderActiveVestings: function() {
+    return (
+      <div>
+        {
+          _(this.props.activeVestings).map(a=>
+            <tr>
+              <td><a href={"adsas"}>{a.user.username}</a></td>
+              <td>Payment Schedule</td>
+              <td>{a.created_on}</td>
+              <td>{a.vesting_date_formatted}</td>
+              <td>Receives <b>{a.coins}</b> Coins on {a.vesting_date_formatted}</td>
+              <td>{a.vote_status*100}%</td>
+            </tr>
+          )
+        }
+      </div>
+    )
+  },
+
+  renderClosedVestings: function() {
+    return (
+      <div>
+        {
+          _(this.props.closedVestings).map(a=>
+            <tr>
+              <td><a href={"adsas"}>{a.user.username}</a></td>
+              <td>Payment Schedule</td>
+              <td>{a.created_on}</td>
+              <td>{a.vesting_date_formatted}</td>
+              <td>Received <b>{a.coins}</b> Coins on {a.vesting_date_formatted}</td>
+              <td>{a.vote_status*100}%</td>
+            </tr>
+          )
+        }
+      </div>
+    )
+  },
+
+  renderHelp: function() {
+    if (this.state.contract_type === "vesting") {
+      return (
+        <div>
+          <Tile>
+            <b>Payment Schedules</b> are ways to pay users ahead of time for repeated work
+            that might not be suitable for bounties.
+          </Tile>
+        </div>
+      )
+    }
   },
 
   render: function() {

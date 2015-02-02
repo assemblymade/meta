@@ -41,6 +41,10 @@ class Proposal < ActiveRecord::Base
     self.vote_ratio > 0.5
   end
 
+  def passed?
+    self.state == "passed"
+  end
+
   def update_state
     if self.won? and !self.expired?
       self.update!({state: "passed"})
