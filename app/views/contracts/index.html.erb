@@ -11,7 +11,10 @@
         <%= react_component(
         'Contracts',
         #activeContracts: VestingSerializer.new(@active_contracts),
-        proposals: @product.proposals)
+        proposals: @product.proposals,
+        activeTipContracts: @activeTipContracts,
+        closedTipContracts: @closedTipContracts
+        )
         #closedContracts: VestingSerializer.new(@closed_contracts))
         %>
       </div>

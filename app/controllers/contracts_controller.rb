@@ -10,6 +10,9 @@ class ContractsController < ProductController
     @active_contracts = @product.active_contracts
     @closed_contracts = @product.expired_contracts
 
+    @activeTipContracts = @product.auto_tip_contracts.select{|a| a.active?}.map{|b| AutoTipContractSerializer.new(b)}
+    @closedTipContracts = @product.auto_tip_contracts.select{|a| !a.active?}.map{|b| AutoTipContractSerializer.new(b)}
+
   end
 
   def create

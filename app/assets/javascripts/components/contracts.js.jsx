@@ -5,7 +5,9 @@ var Tile = require('./ui/tile.js.jsx')
 var Contracts = React.createClass({
   displayName: 'Contracts',
   propTypes: {
-    proposals: React.PropTypes.array
+    proposals: React.PropTypes.array,
+    activeTipContracts: React.PropTypes.array,
+    closedTipContracts: React.PropTypes.array
   },
 
   renderActiveContracts: function() {
@@ -26,8 +28,49 @@ var Contracts = React.createClass({
             {
             console.log(this.props.proposals)
             }
+            {
+              this.renderActiveTipContracts()
+            }
           </tbody>
         </table>
+      </div>
+    )
+  },
+
+  renderActiveTipContracts: function() {
+    return (
+      <div>
+        {
+          _(this.props.activeTipContracts).map(a=>
+            <tr>
+              <td>{a.username}</td>
+              <td>Tip Contract</td>
+              <td>{a.created_on}</td>
+              <td>TBD</td>
+              <td>Receives {a.amount*100}% of Coins awarded</td>
+              <td>Grandfathered</td>
+            </tr>
+          )
+        }
+      </div>
+    )
+  },
+
+  renderClosedTipContracts: function() {
+    return (
+      <div>
+        {
+          _(this.props.closedTipContracts).map(a=>
+            <tr>
+              <td>{a.username}</td>
+              <td>Tip Contract</td>
+              <td>{a.created_on}</td>
+              <td>Expired</td>
+              <td>Receives {a.amount*100}% of Coins awarded</td>
+              <td>Grandfathered</td>
+            </tr>
+          )
+        }
       </div>
     )
   },
@@ -47,7 +90,9 @@ var Contracts = React.createClass({
             </tr>
           </thead>
           <tbody>
-
+            {
+              this.renderClosedTipContracts()
+            }
           </tbody>
         </table>
       </div>
