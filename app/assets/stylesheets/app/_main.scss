@@ -185,12 +185,6 @@ input[type=week] {
   font-size: $font-size-small;
 }
 
-@include text-emphasis-variant('.text-coins', $brand-coins);
-
-a.text-coins:hover {
-  color: #e3a400;
-}
-
 .text-stealth-link {
   &, &:hover {
     color: inherit

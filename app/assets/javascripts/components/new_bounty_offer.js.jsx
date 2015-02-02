@@ -41,7 +41,7 @@
         <div className="row">
 
           <span className="right-align text-small col-md-12">
-            <span className="text-coins text-small" style={{"margin-right": "5px"}}>
+            <span className="yellow text-small" style={{"margin-right": "5px"}}>
               <span className="icon icon-app-coin"></span>
               {numeral(this.props.newOffer).format('0,0')}
             </span>

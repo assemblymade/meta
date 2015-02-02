@@ -53,14 +53,14 @@ var FormGroup = require('./form_group.js.jsx');
               <div className="btn-group center" data-toggle="buttons" style={{width:'100%'}}>
                 <label className="btn btn-default active" style={{width:'34%'}}>
                   <input type="radio" name="invite[tip_cents]" value="10" defaultChecked={true} />
-                  <span className="icon icon-app-coin text-coins"></span><span className="text-coins">10</span>
+                  <span className="icon icon-app-coin yellow"></span><span className="yellow">10</span>
                 </label>
                 <label className="btn btn-default" style={{width:'33%'}}>
                   <input type="radio" name="invite[tip_cents]" value="100"/>
-                  <span className="icon icon-app-coin text-coins"></span><span className="text-coins">100</span>
+                  <span className="icon icon-app-coin yellow"></span><span className="yellow">100</span>
                 </label>
                 <label className="btn btn-default" style={{width:'33%'}}>
-                  <input type="radio" name="invite[tip_cents]" value="500"/> <span className="icon icon-app-coin text-coins"></span><span className="text-coins">500</span>
+                  <input type="radio" name="invite[tip_cents]" value="500"/> <span className="icon icon-app-coin yellow"></span><span className="yellow">500</span>
                 </label>
               </div>
             </FormGroup>

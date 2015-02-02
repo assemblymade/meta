@@ -45,7 +45,7 @@
                 <span className="mr1">
                   Current value
                 </span>
-                <span className="text-coins">
+                <span className="yellow">
                   <span className="icon icon-app-coin"></span>
                   {' '}
                   {numeral(this.props.contracts.earnable).format('0,0')}
@@ -123,7 +123,7 @@
               {this.state.offers.map(function(offer) {
                 return (
                   <li>
-                    <span className="text-coins mt0 mb0 bold no-wrap" style={{ display: 'inline-block', width: '65px' }}>
+                    <span className="yellow mt0 mb0 bold no-wrap" style={{ display: 'inline-block', width: '65px' }}>
                       <span className="icon icon-app-coin"></span>
                       {' '}
                       {numeral(offer.earnable).format('0,0')}
@@ -163,7 +163,7 @@
           Your vote
         </div>
 
-        <div className="left text-coins bold mt0 mb0 h1" style={{ lineHeight: '38px' }}>
+        <div className="left yellow bold mt0 mb0 h1" style={{ lineHeight: '38px' }}>
           <span className="icon icon-app-coin"></span>
           {' '}
           {numeral(this.state.offer).format('0,0')}

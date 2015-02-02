@@ -44,7 +44,7 @@
 
       return (
         <div className="js-tips" style={{opacity: opacity}}>
-          <div className={totalCents > 0 ? 'text-coins' : null}>
+          <div className={totalCents > 0 ? 'yellow' : null}>
             <a ref="button"
                 href="javascript:void(0);"
                 data-placement="top"

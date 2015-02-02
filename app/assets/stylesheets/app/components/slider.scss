@@ -9,7 +9,7 @@
 }
 
 .slider-bar {
-  background-color: $brand-coins;
+  background-color: $yellow;
   border-radius: 6px;
   float: left;
   height: 100%;
@@ -18,7 +18,7 @@
 
 .slider-cursor {
   border-radius: 50%;
-  border: 4px solid $brand-coins;
+  border: 4px solid $yellow;
   height: 26px;
   width: 26px;
   background-color: white;
@@ -44,7 +44,7 @@
 
   > li {
     background-color: transparent;
-    color: $brand-coins;
+    color: $yellow;
     float: left;
     font-size: 13px;
     font-weight: bold;
