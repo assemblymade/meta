@@ -17,11 +17,20 @@ var AppsActionCreators = {
       size: 100,
       body: {
         query: {
-          multi_match: {
-            query: search,
-            fields: [ 'name.raw^2', 'name', 'pitch', 'marks.name', 'search_tags'],
-            operator: 'or',
-            fuzziness: 1
+          function_score: {
+            query: {
+              multi_match: {
+                query: search,
+                fields: [ 'name.raw^2', 'name', 'pitch', 'marks.name', 'search_tags'],
+                operator: 'or',
+                fuzziness: 1
+              }
+            },
+            field_value_factor: {
+              field: 'trend_score',
+              modifier: 'log1p'
+            },
+            boost_mode: 'sum'
           }
         },
 

@@ -61,7 +61,7 @@ en:
         owner: '%{title}'
     idea:
       description:
-        owner: 'your idea %{title}'
+        owner: 'your idea %{name}'
     post:
       description:
         owner: '%{title}'

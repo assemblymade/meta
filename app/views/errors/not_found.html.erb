@@ -1,5 +1,5 @@
 <style>
-  html { 
+  html {
   background: url(<%= image_path("404/#{@background}.jpg") %>) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -19,11 +19,10 @@
       <div class="center">
         <div class="modal-body">
           <h3 <% if [3,5].include?(@background) %>style="color:#eee;"<% end %>>We still haven't found what you're looking for</h3>
-          <form action="<%= scoped_search_path %>">
+          <form action="<%= discover_path %>">
             <div class="form-group has-feedback">
               <div class="input-group-search">
-                <input type="search" name="q" value="<%= params[:q] %>" placeholder="Search" class="form-control" autocomplete="off">
-                <span class="icon icon-magnifier form-control-feedback"></span>
+                <input type="search" name="search" value="<%= params[:search] %>" placeholder="Search" class="form-control" autocomplete="off">
               </div>
               <input type="hidden" name="type" value="">
             </div>
@@ -34,4 +33,3 @@
     </div>
   </div>
 </div>
-

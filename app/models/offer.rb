@@ -15,6 +15,8 @@ class Offer < ActiveRecord::Base
 
   after_commit -> { bounty.update_coins_cache! }
 
+  default_scope -> { joins(:user).where(users: {deleted_at: nil}) }
+
   def influence
     partner = Partner.new(self.product, self.user)
 

@@ -50,8 +50,8 @@ en:
           owner: "%{title} #%{number}"
 
         idea:
-          other: '%{title}'
-          owner: '%{title}'
+          other: '%{name}'
+          owner: '%{name}'
 
         post:
           other: '%{title}'

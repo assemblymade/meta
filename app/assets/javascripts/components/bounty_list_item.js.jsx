@@ -104,7 +104,7 @@ var BountyListItem = React.createClass({
     }
 
     return (
-      <div className="bg-white rounded shadow mb2 js-bounty-list-item" style={style} data-bounty-id={bounty.id}>
+      <div className="bg-white rounded shadow mb2 js-bounty-list-item visible-hover-wrapper" style={style} data-bounty-id={bounty.id}>
         <div className="table mb0">
           <div className="table-cell">
             <div className="px3 pt3 pb3">
@@ -195,12 +195,14 @@ var BountyListItem = React.createClass({
 
   renderTitle: function() {
     var bounty = this.props.bounty
+    var classes = bounty.closed_at === null ? null : 'gray-2'
 
     return (
-      <a href={bounty.url}>
+      <a className={classes} href={bounty.url}>
         {bounty.title} {' '}
         <span className="gray-2 fs4">
           #{bounty.number}
+          <span className="gray-2 visible-hover fw-200"> posted {moment(bounty.created_at).fromNow()}</span>
         </span>
       </a>
     )

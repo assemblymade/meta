@@ -9,28 +9,19 @@ const routerPath = appFile('actions/router');
 const mockParse = function _parse() {};
 
 describe('Router', () => {
+  global.Dispatcher = require(appFile('dispatcher'));
   let page;
   let router;
 
   beforeEach(() => {
     page = require('page');
-    router = new (require(routerPath))('actionType', []);
+    router = require(routerPath);
   });
 
-  it('instantiates a Router', () => {
-    expect(router instanceof require(routerPath)).toBe(true);
-  });
-
-  it('initializes `page` and navigates to the current window.location', () => {
-    router.navigate = jest.genMockFn();
-
+  it('initializes `page`', () => {
     router.initialize();
 
     expect(page).toBeCalledWith('*', mockParse);
-    expect(page.start).toBeCalled();
-    expect(router.navigate).toBeCalledWith(
-      url.parse(window.location.toString()).path
-    );
   });
 
   it('navigates using `page`', () => {

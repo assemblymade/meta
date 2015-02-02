@@ -3,7 +3,7 @@ var Icon = require('./icon.js.jsx')
 var IconToggler = React.createClass({
 
   propTypes: {
-    on: React.PropTypes.bool.isRequired,
+    on: React.PropTypes.bool,
 
     icon: React.PropTypes.instanceOf(Icon).isRequired,
     action: React.PropTypes.func.isRequired,

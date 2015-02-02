@@ -15,6 +15,7 @@ class LoveStore extends Store {
       switch(action.type) {
         case ActionTypes.DISCUSSION_RECEIVE:
           setHeartables(action.comments);
+          console.log('setHeartables', action.comments)
           setUserHearts(action.userHearts);
           LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
           break
@@ -155,7 +156,7 @@ function setUserHearts(heartables) {
 }
 
 function _reduceHeartables(memo, h) {
-  memo[h.heartable_id] = h;
+  memo[h.heartable_id || h.id] = h;
   return memo;
 }
 

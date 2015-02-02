@@ -24,16 +24,19 @@ class CommentMailer < BaseMailer
     @user = User.find(user_id)
     @comment = NewsFeedItemComment.find(comment_id)
     @nfi = @comment.news_feed_item
-    @product = @nfi.product
 
     @target = target_name(@nfi)
+    context = ''
+    if @product = @nfi.product
+      context = " [#{@product.name}]"
+    end
 
     thread_parts = [@nfi.id]
     message_parts = [@comment.id]
     options = list_headers(NewsFeedItem.to_s, @nfi.id, @user.username, thread_parts, message_parts, url_for(@comment.url_params)).merge(
       from: from_address_for(@comment.user),
       to:   @user.email,
-      subject: "#{@target} in #{@product.name}"
+      subject: "Re: #{@target}#{context}"
     )
 
     mail(options) do |format|

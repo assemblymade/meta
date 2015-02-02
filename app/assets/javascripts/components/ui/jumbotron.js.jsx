@@ -5,13 +5,9 @@ var Jumbotron = React.createClass({
   },
 
   render() {
-    var bg = {
-      backgroundImage: "url(/assets/" + this.props.bg + ")"
-    }
-
     return (
-      <div className="bg-center bg-gray-5" style={bg}>
-        <div className="container px2" style={{padding: "10rem 2rem"}}>
+      <div className="jumbotron">
+        <div className="container px2" style={{paddingTop: '8rem', paddingBottom: '8rem'}}>
           {this.props.children}
         </div>
       </div>

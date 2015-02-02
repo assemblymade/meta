@@ -84,6 +84,8 @@ class Product < ActiveRecord::Base
     @meta_id ||= Product.find_by(slug: 'meta').try(:id)
   end
 
+  default_scope -> { where(deleted_at: nil) }
+
   scope :featured,         -> {
     where.not(featured_on: nil).order(featured_on: :desc)
   }
@@ -114,6 +116,7 @@ class Product < ActiveRecord::Base
   scope :profitable,   -> { public_products.where(state: 'profitable') }
   scope :live,         -> { where.not(try_url: nil) }
   scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
+  scope :with_topic,   -> (topic) { where('topics @> ARRAY[?]::varchar[]', topic) }
   scope :untagged, -> { where('array_length(tags, 1) IS NULL') }
 
   EXCLUSIONS = %w(admin about script if owner core start-conversation product ideas)
@@ -182,6 +185,10 @@ class Product < ActiveRecord::Base
     pluck('distinct unnest(tags)').sort_by{|t| t.downcase }
   end
 
+  def self.active_product_count
+    joins(:activities).where('activities.created_at > ?', 30.days.ago).group('products.id').having('count(*) > 5').count.count
+  end
+  
   def news_feed_items_with_mark(mark_name)
     QueryMarks.new.news_feed_items_per_product_per_mark(self, mark_name)
   end
@@ -621,7 +628,7 @@ class Product < ActiveRecord::Base
     as_json(
       root: false,
       only: [:slug, :name, :pitch, :poster],
-      methods: [:tech, :hidden, :sanitized_description, :suggest]
+      methods: [:tech, :hidden, :sanitized_description, :suggest, :trend_score]
     ).merge(marks: mark_weights, logo_url: full_logo_url, search_tags: tags)
   end
 
@@ -631,11 +638,15 @@ class Product < ActiveRecord::Base
              map{|marking| { weight: marking.weight, name: marking.mark.name } }
   end
 
+  def trend_score
+    product_trend.try(:score).to_i
+  end
+
   def suggest
     {
       input: [name, pitch] + name.split(' ') + pitch.split(' '),
       output: id,
-      weight: product_trend.try(:score).to_i,
+      weight: trend_score,
       payload: {
         id: id,
         slug: slug,

@@ -27,4 +27,4 @@ var Icon = React.createClass({
   }
 });
 
-module.exports = window.Icon = Icon
+module.exports = window.Icon = Icon;

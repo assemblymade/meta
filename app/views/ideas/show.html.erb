@@ -1,9 +1,6 @@
 <% title "Idea", @idea.name %>
-<% activate_nav! :ideas %>
 
-<%= render 'shared/navbar' %>
-<%= react_component 'IdeasApp' %>
-<%= render 'shared/footer' %>
+<%= react_component 'AsmApp' %>
 
 <% if signed_in? %>
   <img class="hidden" data-src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@idea).first, current_user.id).url %>" />

@@ -9,7 +9,6 @@ class PostsController < ProductController
 
     @posts = ActiveModel::ArraySerializer.new(posts)
     @heartables = query.map(&:news_feed_item)
-
     respond_with @posts, location: product_posts_path(@product)
   end
 

@@ -109,6 +109,8 @@
 
       ARCHIVED_NEWS_FEED_ITEMS_RECEIVE: null,
 
+      ASM_APP_ROUTE_CHANGED: null,
+
       ATTACHMENT_FAILED: null,
       ATTACHMENT_UPLOADED: null,
       ATTACHMENT_UPLOADING: null,
@@ -136,7 +138,6 @@
       COMMENT_UPDATE_FAILED: null,
       COMMENT_UPDATE_RECEIVED: null,
 
-      DASHBOARD_ROUTE_CHANGED: null,
       DASHBOARD_RECEIVE: null,
 
       DISCUSSION_RECEIVE: null,
@@ -145,7 +146,6 @@
       IDEA_UPDATED: null,
 
       IDEAS_RECEIVE: null,
-      IDEAS_ROUTE_CHANGED: null,
       IDEAS_NEW_IDEA_CREATED: null,
 
       IDEA_ADMIN_RECEIVE: null,

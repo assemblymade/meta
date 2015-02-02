@@ -24,7 +24,9 @@ class Idea < ActiveRecord::Base
   before_validation :set_tilting_threshold!, on: :create
 
   after_commit :ensure_news_feed_item, on: :create
-  after_commit :update_news_feed_item
+  after_commit :update_news_feed_item, on: :update
+
+  default_scope -> { where(deleted_at: nil) }
 
   scope :by, -> (user) { where(user_id: user.id) }
   scope :hearts, -> { includes(:news_feed_item).order('news_feed_items.hearts_count DESC') }
@@ -225,4 +227,21 @@ class Idea < ActiveRecord::Base
   def hearts_count
     news_feed_item.hearts_count
   end
+
+  def reconstitute_score
+    lovescore = 0
+
+    news_feed_item.hearts.each do |h|
+      time_since = h.created_at - EPOCH_START
+      multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
+      lovescore = lovescore + multiplier
+    end
+
+    update!({
+      last_score_update: DateTime.now,
+      score: lovescore
+    })
+  end
+
+
 end

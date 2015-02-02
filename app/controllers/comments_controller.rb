@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
   def index
     comments = ActiveModel::ArraySerializer.new(
       @discussion.comments.order(created_at: :asc),
-      each_serializer: IdeaCommentSerializer
+      each_serializer: CommentSerializer
     )
 
     events = ActiveModel::ArraySerializer.new(

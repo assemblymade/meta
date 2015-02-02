@@ -80,7 +80,7 @@ var App = React.createClass({
       </div>
     } else {
       return <div className="inline-block h5 mt0 mb0 bold px2 bg-gray-5 black" style={{borderRadius: '99px', fontSize: 11}}>
-        In progress
+        In development
       </div>
     }
   },

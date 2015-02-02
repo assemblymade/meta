@@ -9,6 +9,7 @@
       search: params[:search],
       filter: params[:filter] || 'trending',
       page: [params[:page].to_i, 1].max,
+      topic: params[:topic],
       showcase: (showcase.nil? ? nil : ShowcaseSerializer.new(showcase) ),
       total_pages: @total_pages,
       topics: @topics,

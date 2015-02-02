@@ -4,7 +4,6 @@
   var CONSTANTS = window.CONSTANTS;
 
   var ChatNotificationStore = require('../stores/chat_notifications_store');
-  var NotificationStore = require('../stores/notifications_store');
   var DesktopNotifications = require('./desktop_notifications.js.jsx');
   // var Dispatcher = require('../dispatcher');
   var LocalStorageMixin = require('../mixins/local_storage.js');

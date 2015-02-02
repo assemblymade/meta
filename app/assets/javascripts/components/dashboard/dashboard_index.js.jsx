@@ -1,6 +1,7 @@
 var AppIcon = require('../app_icon.js.jsx')
 var BountyCard = require('../bounty_card.js.jsx')
 var BountiesStore = require('../../stores/bounties_store.js')
+var Button = require('../ui/button.js.jsx')
 var DashboardStore = require('../../stores/dashboard_store.js')
 var Heart = require('../heart.js.jsx')
 var Nav = require('../ui/nav.js.jsx')
@@ -346,9 +347,7 @@ var DashboardIndex = React.createClass({
               <p className="gray-2 mb0">Products here are built and owned by the community. When you contribute to a product the community rewards you with an ownership stake in its success.</p>
             </div>
             <div className="p3 center" style={{ backgroundColor: '#f9f9f9' }}>
-              <a href="/discover/products" className="pill-button pill-button-theme-white pill-button-border pill-button-shadow bold" style={{ display: 'inline-block', lineHeight: '24px' }}>
-                Explore products
-              </a>
+              <Button action={function() {window.location = "/discover"}}>Explore products</Button>
 
               <div className="mt2 center">
                 or <a href="/start" className="mt3 center">start your own</a>

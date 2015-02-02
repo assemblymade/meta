@@ -107,6 +107,7 @@ ASM::Application.routes.draw do
     resources :users, only: [:show, :update] do
       patch :flag, on: :member
       patch :unflag, on: :member
+      patch :delete_account, on: :member
     end
 
     get '/users/:id/karma' => 'users#karma', :as => :user_karma
@@ -243,8 +244,6 @@ ASM::Application.routes.draw do
 
     resources :textcompletes, only: [:index]
   end
-
-  get 'search' => 'search#index'
 
   post '/products' => 'products#create', as: :products
 

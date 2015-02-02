@@ -58,6 +58,8 @@ namespace :ideas do
           idea.greenlight! if idea.should_greenlight?
           idea.greenlight! if product.greenlit_at
 
+          idea.news_feed_item.update_column('last_commented_at', product.created_at)
+
           if idea.hearts_count == 0
             idea.update(flagged_at: Time.now)
           end
@@ -66,6 +68,14 @@ namespace :ideas do
           puts e.inspect
         end
       end
+    end
+  end
+
+  task unmigrate_products: :environment do
+    Idea.where.not(product_id: nil).each do |idea|
+      idea.news_feed_item.hearts.each(&:delete)
+      idea.news_feed_item.delete
+      idea.delete
     end
   end
 

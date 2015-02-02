@@ -1,4 +1,5 @@
 var ActionTypes = window.CONSTANTS.ActionTypes;
+var allRoutes = require('../routes/routes');
 var Dispatcher = window.Dispatcher;
 var NProgress = require('nprogress');
 var page = require('page');
@@ -6,20 +7,9 @@ var qs = require('qs');
 var url = require('url');
 
 class Router {
-  constructor(actionType, routes) {
-    this.actionType = actionType;
-    this.routes = routes;
-  }
-
   initialize() {
     page('*', _parse);
-    this.routes.forEach(this._route.bind(this));
-    page.start()
-
-    // The router will have fired before the component mounted, so we need
-    // to call `navigate` after mounting
-    var parsedUrl = url.parse(window.location.toString());
-    this.navigate(parsedUrl.path);
+    page.start();
   }
 
   navigate(url, e) {
@@ -37,11 +27,11 @@ class Router {
     return _.debounce((context) => {
       NProgress.start();
 
-      _callAndDispatch(self.actionType, component, context, callback);
+      _callAndDispatch(component, context, callback);
     }, 500);
   }
 
-  _route(route) {
+  route(route) {
     var path = route[0]
     var component = route[1]
     var callback = route[2]
@@ -50,10 +40,16 @@ class Router {
   }
 };
 
-module.exports = Router;
+var _Router = new Router();
 
-function _callAndDispatch(actionType, component, context, callback) {
-  $.getJSON(window.location, { cache: false }).
+for (var exported in allRoutes) {
+  allRoutes[exported].forEach(_Router.route.bind(_Router));
+}
+
+module.exports = _Router;
+
+function _callAndDispatch(component, context, callback) {
+  $.getJSON(context.canonicalPath, { cache: false }).
   always(() => {
     NProgress.done();
   }).
@@ -71,8 +67,10 @@ function _callAndDispatch(actionType, component, context, callback) {
   }).
   done(callback).
   done((data) => {
+    TrackEngagement.track(context.canonicalPath, context);
+
     Dispatcher.dispatch({
-      type: actionType,
+      type: ActionTypes.ASM_APP_ROUTE_CHANGED,
       component: component,
       context: context
     });
