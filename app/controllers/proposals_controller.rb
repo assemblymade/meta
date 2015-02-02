@@ -10,11 +10,8 @@ class ProposalsController < ProductController
   end
 
   def create
-    puts params
-    puts "Proposal Created"
     params['recipient'].slice!(0)
     username = params['recipient']
-    puts username
     recipient = User.find_by(username: username)
 
     date = DateTime.parse(params['date'])

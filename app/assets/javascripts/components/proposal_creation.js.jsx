@@ -294,10 +294,8 @@ var ProposalCreation = React.createClass({
   toggle_create: function(e) {
     e.preventDefault()
     newurl = this.props.product.url
-    console.log(newurl)
     var proposaldata = {name: this.state.name, description: this.state.description, recipient: this.state.recipient, coins: this.state.coins, date: this.state.date}
     the_url = this.props.url
-    console.log(the_url)
 
     var proposalComponent = this
     $.ajax({
