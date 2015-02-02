@@ -22,7 +22,7 @@ class PartnersController < ProductController
     @auto_tips = Hash[AutoTipContract.active_at(@product, Time.now).pluck(:user_id, :amount).map{|user_id, amount| [User.find(user_id), amount] }]
 
 
-    @coin_history = 
+  
 
 
   end
