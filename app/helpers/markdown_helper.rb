@@ -52,6 +52,16 @@ module MarkdownHelper
     end
   end
 
+  def highlighted_mentions(text, user, product=nil)
+    highlighted_text = text.clone
+    TextFilters::UserMentionFilter.mentioned_usernames_in(text, product) do |username, mentioned_users|
+      if Array(mentioned_users).include?(user)
+        highlighted_text.gsub!("@#{username}", %Q{<span class="callout">@#{user.username}</span>}.html_safe)
+      end
+    end
+    highlighted_text
+  end
+
 # --
 
   def markdown_mtime(name)

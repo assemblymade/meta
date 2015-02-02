@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <%= stylesheet_link_tag 'email' %>
+
+<!--[if mso]>
+  <style type="text/css">
+    .office-gap, .office-gap-2 {width:25px; padding:0; padding-top:45px; margin:0; font-size: 0px; line-height:0px;}
+    .gap, .gap-2 {display:none;}
+  </style>
+<![endif]-->
+
+<!--[if gte mso 15]>
+  <style type="text/css">
+    table { font-size:1px; line-height:0; mso-margin-top-alt:1px; }
+  </style>
+  <![endif]-->
+
+</head>
+
+<body width="100%" topmargin="0" bgcolor="#f4f4f5" style="width:100%!important; height:100%; padding-left:0; padding-right:0; padding-top:0; padding-bottom:0; margin-left:0; margin-right:0; margin-top:0; margin-bottom:0; background-color: #f4f5f5; -webkit-font-smoothing:antialiased; -webkit-text-size-adjust:none;">
+
+<!-- header -->
+<div class="border-bottom-grey-4" style="width:100%;  margin:0 auto; padding:0; background-color:#ffffff;">
+<table bgcolor="#ffffff" align="center" border="0" cellpadding="0" cellspacing="0" style="display:block; margin:0 auto; width:100%;">
+<tbody align="center" style="display:block; margin:0 auto; width:100%;">
+<tr align="center" style="display:block; margin:0 auto; width:100%;">
+<td class="width-toggle" align="center" style="display:block; margin:0 auto;">
+<center>
+  <!-- inner / gutter -->
+    <div class="width-toggle" align="center" style="max-width:600px; margin:0 auto; padding-right:5px; padding-left:5px;">
+     <!-- header row -->
+       <table class="width-toggle" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="max-width:600px; display:block;">
+            <tbody class="width-toggle" style="display:block;">
+            <tr class="width-toggle" style="display:block;">
+              <!-- logo -->
+                <td style="width:32%; display:inline-block; padding-top:10px; padding-bottom:10px;">
+                  <div style="display:block; min-width:100%;">
+                        <a href="#">
+                            <img src="https://dl.dropboxusercontent.com/u/9519836/asm-mention-email/logo.gif" width="180" style="display: block; width:180px; max-width:100%" alt="" />
+                        </a>
+                    </div>
+                </td><!-- tagline --><!--
+             --><td align="right" style="width:67%; display:inline-block; text-align:right; padding-top:10px; padding-bottom:10px; line-height:20px">
+                  <div style="display:inline-block; margin:0 0 0 auto; width:100%; text-align:right;">
+                      <font class="h5 collapse grey-2">
+                          Friday's are so good.
+                        </font>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+       </table>
+    </div>
+</center>
+</tbody>
+</tr>
+</td>
+</table>
+</div>
+<!-- gap -->
+<!--[if mso]>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr><td class="office-gap">&nbsp;</td></tr>
+</table>
+<![endif]-->
+<div class="gap"></div>
+<!-- tile -->
+
+<%= yield %>
+
+<!-- gap -->
+<!--[if mso]>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr><td class="office-gap-2">&nbsp;</td></tr>
+</table>
+<![endif]-->
+<div class="gap-2"></div>
+ <!-- footer -->
+<center>
+  <!-- inner / gutter -->
+    <div class="width-toggle" style="max-width:600px; margin:0 auto;">
+      <!-- main row -->
+      <table class="width-toggle" align="center" border="0" cellpadding="0" cellspacing="0" style="max-width:600px; margin:0 auto;">
+        <tr>
+          <td style="width:2.5%"></td>
+          <td bgcolor="#f4f4f5" style="text-align:center;">
+                <p>
+                    You’re getting this email because you signed&nbsp;up&nbsp;for&nbsp;Assembly.
+                    <br />
+                    You can
+                    <% if @mailgun_tag %>
+                      <!-- FIXME: Add notification type name here -->
+                      Unsubscribe from
+                      <a href="%tag_unsubscribe_url%">emails like this</a>
+                      or
+                      <a href="%unsubscribe_url%" target="_blank">all emails</a>.
+                    <% else %>
+                      <a href="%unsubscribe_url%" target="_blank">Unsubscribe</a>.
+                    <% end %>
+                </p>
+                <br />
+                <p>
+                    <b>Assembly</b>. 3030A 16th Street, San Francisco, 94103, California, USA
+                </p>
+                <br />
+          </td>
+          <td style="width:2.5%"></td>
+        </tr>
+      </table>
+    </div>
+</center>
+<style type="text/css">
+/* oldschool fixes */
+.ReadMsgBody {width: 100%;}
+body {}
+span.yshortcuts { color:#000; background-color:none; border:none;}
+span.yshortcuts:hover,
+span.yshortcuts:active,
+span.yshortcuts:focus {color:#000; background-color:none; border:none;}
+</style>
+</body>
+</html>

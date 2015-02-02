@@ -31,6 +31,14 @@ class ChatRoom < ActiveRecord::Base
     end
   end
 
+  def full_slug
+    context = ''
+    if product
+      context = "#{product.name} "
+    end
+    "#{context}##{slug}"
+  end
+
   def product_name
     product && product.name
   end
