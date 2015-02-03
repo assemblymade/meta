@@ -27,20 +27,19 @@ var TipsUi = React.createClass({
       tooltip = "You can't tip yourself"
     }
 
-      return (
-        <div className="js-tips" style={{opacity: opacity}}>
-          <div className={totalCents > 0 ? 'yellow' : null}>
-            <a ref="button"
-                href="javascript:void(0);"
-                data-placement="top"
-                data-toggle="tooltip"
-                title={tooltip}
-                onClick={this.currentUserCanTip() ? this.handleClick : null}
-                style={{ color: totalCents > 0 ? '#f0ad4e' : '#d3d3d3' }}>
-              <span className="icon icon-app-coin"></span>
-              {this.renderTotalCents()}
-            </a>
-          </div>
+    return (
+      <div className="js-tips" style={{opacity: opacity}}>
+        <div className={totalCents > 0 ? 'yellow' : null}>
+          <a ref="button"
+              href="javascript:void(0);"
+              data-placement="top"
+              data-toggle="tooltip"
+              title={tooltip}
+              onClick={this.currentUserCanTip() ? this.handleClick : null}
+              style={{ color: totalCents > 0 ? '#f0ad4e' : '#d3d3d3' }}>
+            <span className="icon icon-app-coin"></span>
+            {this.renderTotalCents()}
+          </a>
         </div>
       </div>
     )
