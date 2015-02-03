@@ -141,11 +141,12 @@ let ProductShow = React.createClass({
                 <span className="mr3 gray-2">
                   <Icon icon="warning" />
                 </span>
-                <a href={Routes.new_product_wip_path({
+                <a href={Routes.product_wips_path({
                       params: {
                         product_id: slug
                       },
                       data: {
+                        modal: true,
                         tags: 'bug'
                       }
                     })}>

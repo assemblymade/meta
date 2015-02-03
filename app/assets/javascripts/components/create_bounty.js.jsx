@@ -123,7 +123,7 @@ var CreateBounty = React.createClass({
     ) || {}).tags;
 
     if (tags) {
-      return tags.split('&');
+      return tags.split(',');
     }
   }
 })
