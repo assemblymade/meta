@@ -22,7 +22,7 @@ var CommentAttachmentStore = _.extend(Object.create(Store), {
   },
 
   attachmentBelongsToProduct: function(attachmentUrl) {
-    attachmentPath = parseUri(attachmentUrl).path;
+    var attachmentPath = parseUri(attachmentUrl).path;
 
     if (attachmentPath) {
       return !!_initialAttachments[decodeURI(attachmentPath.slice(1))];
