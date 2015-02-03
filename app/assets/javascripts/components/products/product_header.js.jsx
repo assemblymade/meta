@@ -3,6 +3,7 @@ var Button = require('../ui/button.js.jsx');
 var Icon = require('../ui/icon.js.jsx');
 var Pill = require('../ui/pill.js.jsx');
 var ProductFollowers = require('../product_followers.js.jsx');
+var Routes = require('../../routes');
 var url = require('url');
 
 var ProductHeader = React.createClass({
@@ -22,53 +23,57 @@ var ProductHeader = React.createClass({
     var product = this.props.product;
 
     return (
-      <div className="bg-white shadow-light tranx_m md-mb3">
+      <div className="bg-white shadow-light">
         <div className="border-bottom border-gray">
-          <div className="px4">
-            <div className="block px4 full-width pb2 r768_table r600_pb0">
-              <div className="primary block full-width center py2 valign-mid r768_table-cell r768_left-align">
-                <div className="app-icon-container center valign-top r768_table-cell r768_pr4">
-                  <a className="block mx-auto mb2 sm-mb0" href={product.url} style={{ maxWidth: 96 }}>
-                    <AppIcon app={product} size={96} />
-                  </a>
-                </div>
-                <div className="block valign-top r768_table-cell">
-                  <h2 className="mt0 mb1">
+          <div className="container py3">
+            <div className="">
+              <div className="left">
+                <a className="block left mr3" href={product.url} style={{ maxWidth: 96 }}>
+                  <AppIcon app={product} size={96} />
+                </a>
+
+                <div className="overflow-hidden">
+                  <h2 className="mt0 mb1 ml0">
                     <a className="black" href={product.url}>{product.name}</a>
                   </h2>
-                  <h4 className="p0 m0 regular gray-2">
+                  <h4 className="m0 regular gray-2">
                     {product.pitch.substr(0, 60)}
                   </h4>
-                  <ul className="list-inline px0 py1">
+                  <ul className="list-inline px0 mt1 mb0">
                     {this.renderProductState()}
                     {this.renderTags()}
                   </ul>
                 </div>
               </div>
 
-              <div className="mcenter center valign-mid r768_table-cell r768_right-align"
-                  style={{ width: 300 }}>
+              <div className="right mt4">
                 {this.renderHomepageLink()}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="clearfix px4">
-          <div className="left px4">
-            <ul className="nav nav-tabs" style={{ textAlign: 'left' }}>
-              <li>
-                <a href={product.url}>Overview</a>
-              </li>
+        <div className="container">
+          <div className="clearfix">
+            <div className="left">
+              <ul className="nav nav-tabs" style={{ textAlign: 'left' }}>
+                <li>
+                  <a href={product.url}>Overview</a>
+                </li>
 
-              <li>
-                <a href={product.url + '/activity'}>Activity</a>
-              </li>
-            </ul>
-          </div>
+                <li>
+                  <a href={product.url + '/activity'}>Activity</a>
+                </li>
 
-          <div className="right py1 px4">
-            <ProductFollowers product_id={product.id} />
+                <li>
+                  <a href={product.url + '/bounties'}>Participate</a>
+                </li>
+              </ul>
+            </div>
+
+            <div className="right py1">
+              <ProductFollowers product_id={product.id} />
+            </div>
           </div>
         </div>
       </div>
@@ -83,7 +88,10 @@ var ProductHeader = React.createClass({
       return (
         <a href={homepageUrl}>
           <Button type="primary" action={function() {}}>
-            <span className="mr2">{encodeURI(url.parse(homepageUrl).hostname)}</span>
+            <a href={encodeURI(url.parse(homepageUrl))}
+                className="mr2 white">
+              {encodeURI(url.parse(homepageUrl).hostname)}
+            </a>
             <Icon icon="share" />
           </Button>
         </a>
@@ -96,8 +104,12 @@ var ProductHeader = React.createClass({
     var homepageUrl = product.homepage_url;
 
     var pill = homepageUrl ?
-      <Pill>In development</Pill> :
-      <Pill>In development</Pill>;
+      <Pill type="success">
+        <h6 className="inline mb0 mt0">Launched</h6>
+      </Pill> :
+      <Pill>
+        <h6 className="inline mb0 mt0">In development</h6>
+      </Pill>;
 
     return (
       <li>
@@ -110,7 +122,7 @@ var ProductHeader = React.createClass({
     var product = this.props.product;
     var marks = product.top_marks;
 
-    return marks && marks.map((mark) => {
+    return marks && marks.slice(0, 3).map((mark) => {
       return (
         <li className="gray-2">
           #{mark}
@@ -120,4 +132,4 @@ var ProductHeader = React.createClass({
   }
 });
 
-module.exports = window.ProductHeader = ProductHeader;
+module.exports = ProductHeader;

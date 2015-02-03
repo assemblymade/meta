@@ -49,15 +49,14 @@ let ProductShow = React.createClass({
     let user = UserStore.getUser();
     let leftColumnClasses = React.addons.classSet({
       col: true,
-      'col-9': true,
-      'mx-auto': true,
-      'px4': true
+      'col-8': true,
+      'px3': true
     });
 
     let rightColumnClasses = React.addons.classSet({
       'col': true,
-      'col-3': true,
-      'px2': true
+      'col-4': true,
+      'px3': true
     });
 
     let style = {
@@ -70,105 +69,107 @@ let ProductShow = React.createClass({
       <div>
         <ProductHeader product={product} />
 
-        <div className="clearfix px4">
-          <div className={leftColumnClasses}>
-            <div className="left mb2">
-              <a href={Routes.edit_product_path({ id: slug })}
-                  className="gray-2">
-                <Icon icon="pencil" /> Edit product details
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="clearfix px4">
-          <div className={leftColumnClasses}>
-            <Tile>
-
-              <Screenshots key="product-screenshots" />
-
-              <div className="clearfix p4">
-                <h5 className="mt0 mb2" style={{ fontSize: 16 }}>
-                  {product.pitch}
-                </h5>
-
-                <p className="gray-1" style={{ fontSize: 16, lineHeight: '2.3rem' }} dangerouslySetInnerHTML={{ __html: product.description_html }} />
-
-                {this.renderSubsections()}
-              </div>
-            </Tile>
+        <div className="container">
+          <div className="py2">
+            <a href={Routes.edit_product_path({ id: slug })}
+                className="gray-2">
+              <Icon icon="pencil" /> Edit product details
+            </a>
           </div>
 
-          <div className={rightColumnClasses}>
-            <Tile>
-              {this.renderCommunityBuiltNotice()}
-              <div className="border-bottom">
-                <div className="px3 py2">
-                  <h5 className="mt0 mb1">Build {product.name} with us!</h5>
-                  <span className="gray-1" dangerouslySetInnerHTML={{ __html: product.lead }} />
+          <div className="clearfix mxn3">
+            <div className={leftColumnClasses}>
+              <Tile>
+
+                <Screenshots key="product-screenshots" />
+
+                <div className="clearfix p4">
+                  <h5 className="mt0 mb2" style={{ fontSize: 16 }}>
+                    {product.pitch}
+                  </h5>
+
+                  <Markdown content={product.description_html} normalized={true} />
+
+                  {this.renderSubsections()}
                 </div>
-              </div>
+              </Tile>
+            </div>
 
-              {this.renderMostActiveUsers()}
-
-              <div className="bg-gray-6">
-                <div className="p3 center">
-                  <a href={Routes.product_wips_path({ product_id: slug })}
-                      className="block">
-                    <Button type="default" action={function() {}}>
-                      Build with us
-                    </Button>
-                  </a>
-
-                  <div className="gray-2 py1">
-                    or <a href="/help">See how Assembly works</a>
+            <div className={rightColumnClasses}>
+              <Tile>
+                {this.renderCommunityBuiltNotice()}
+                <div className="border-bottom">
+                  <div className="px3 py2">
+                    <h5 className="mt0 mb1">Build {product.name} with us!</h5>
+                    <span className="gray-1 markdown markdown-normalized"
+                        dangerouslySetInnerHTML={{ __html: product.lead }} />
                   </div>
                 </div>
+
+                {this.renderMostActiveUsers()}
+
+                <div className="bg-gray-6">
+                  <div className="p3 center">
+                    <a href={Routes.product_wips_path({ product_id: slug })}
+                        className="block">
+                      <Button type="default" action={function() {}}>
+                        Build with us
+                      </Button>
+                    </a>
+
+                    <div className="gray-2 py1">
+                      or <a href="/help">See how Assembly works</a>
+                    </div>
+                  </div>
+                </div>
+              </Tile>
+
+              <div className="border-bottom mt3" style={style.importantLinks}>
+                <h5>Important links</h5>
               </div>
-            </Tile>
 
-            <div className="border-bottom mt3" style={style.importantLinks}>
-              <h5>Important links</h5>
-            </div>
+              <div className="border-bottom py2" style={style.importantLinks}>
+                <span className="mr3 gray-2">
+                  <Icon icon="comment" />
+                </span>
+                <a href={Routes.product_chat_path({ product_id: slug })}>
+                  Say hi in chat
+                </a>
+              </div>
 
-            <div className="border-bottom py2" style={style.importantLinks}>
-              <span className="mr2 gray-2">
-                <Icon icon="comment" />
-              </span>
-              <a href={Routes.product_chat_path({ product_id: slug })}
-                  className="bold">
-                Say hi in chat
-              </a>
-            </div>
+              <div className="border-bottom py2" style={style.importantLinks}>
+                <span className="mr3 gray-2">
+                  <Icon icon="warning" />
+                </span>
+                <a href={Routes.new_product_wip_path({
+                      params: {
+                        product_id: slug
+                      },
+                      data: {
+                        tags: 'bug'
+                      }
+                    })}>
+                  File a bug
+                </a>
+              </div>
 
-            <div className="border-bottom py2" style={style.importantLinks}>
-              <span className="mr2 gray-2">
-                <Icon icon="warning" />
-              </span>
-              <a href={Routes.product_wips_path({ product_id: slug })}
-                  className="bold">
-                File a bug
-              </a>
-            </div>
+              <div className="border-bottom py2" style={style.importantLinks}>
+                <span className="mr3 gray-2">
+                  <Icon icon="question-circle" />
+                </span>
+                <a href={Routes.product_posts_path({ product_id: slug })}>
+                  Ask a question
+                </a>
+              </div>
 
-            <div className="border-bottom py2" style={style.importantLinks}>
-              <span className="mr2 gray-2">
-                <Icon icon="question-circle" />
-              </span>
-              <a href={Routes.product_posts_path({ product_id: slug })}
-                  className="bold">
-                Ask a question
-              </a>
-            </div>
-
-            <div className="py2">
-              <span className="mr1 gray-2">
-                <Icon icon="code" />
-              </span>
-              <a href={Routes.product_repos_path({ product_id: slug })}
-                  className="bold">
-                Source code
-              </a>
+              <div className="py2">
+                <span className="mr3 gray-2">
+                  <Icon icon="code" />
+                </span>
+                <a href={Routes.product_repos_path({ product_id: slug })}>
+                  Source code
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -206,9 +207,15 @@ let ProductShow = React.createClass({
     return (
       <div className="border-bottom">
         <div className="px3 py2">
-          <h6 className="mt0 mb1">Most active members</h6>
+          <h6 className="mt0 mb2">Most active members</h6>
           <div className="clearfix">
             {renderedContributors}
+          </div>
+          <div className="gray-3 mt2">
+            <a href={Routes.product_people_path({ product_id: product.slug })}
+                className="gray-3 underline">
+              <small>View all partners</small>
+            </a>
           </div>
         </div>
       </div>

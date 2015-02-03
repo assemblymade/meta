@@ -57,7 +57,7 @@ describe('Carousel', function() {
       'a'
     );
 
-    TestUtils.Simulate.click(links[1]);
+    TestUtils.Simulate.click(links[0]);
 
     expect(carousel.state.currentFocusIndex).toEqual(1);
 

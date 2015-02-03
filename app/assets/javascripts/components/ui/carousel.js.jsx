@@ -83,6 +83,10 @@ let Carousel = React.createClass({
     };
 
     let renderedImages = images.map((image, i) => {
+      if (images.length <= 2 && i === currentFocusIndex) {
+        return null;
+      }
+
       style.opacity = i === currentFocusIndex ? 0.5 : 1;
 
       if (typeof image !== 'string' && i !== currentFocusIndex) {
