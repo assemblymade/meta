@@ -8,4 +8,12 @@ class User::DebitPaymentOption < User::PaymentOption
     errors.add(:recipient_id, "error: #{e.message}")
     false
   end
+
+  def description
+    if bitcoin_address =~ /@/
+      "Paypal #{bitcoin_address}"
+    else
+      "Stripe #{recipient_id}"
+    end
+  end
 end
