@@ -20,12 +20,22 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var body = null
+    var body, labels
 
     if (this.props.body) {
       body = <Markdown content={this.props.body} normalized="true" />
     } else {
       body = <div className="gray-3">No description yet</div>
+    }
+
+    if (!_.isEmpty(this.props.labels)) {
+      labels = <ul className="list-reset clearfix mxn1 py1 mb2">
+        {_.map(this.props.labels, function(label) {
+          return <li className="left px1" key={label.name}>
+            <Label name={label.name} />
+          </li>
+        })}
+      </ul>
     }
 
     return (
@@ -36,15 +46,11 @@ module.exports = React.createClass({
           <span className="gray-2 visible-hover">posted {moment(this.props.timestamp).fromNow()}</span>
         </div>
 
-        <h2 className="mt0 mb0" style={{ lineHeight: '36px' }}>
+        <h2 className="mt0 mb2" style={{ lineHeight: '36px' }}>
           {this.props.title}
         </h2>
 
-        <div className="py1 mb2">
-          <SingleLineList items={_.map(this.props.labels, function(label) {
-            return <Label name={label.name} />
-          })} />
-        </div>
+        {labels}
 
         {body}
       </div>
