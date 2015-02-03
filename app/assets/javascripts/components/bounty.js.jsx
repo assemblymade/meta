@@ -76,7 +76,7 @@ var Bounty = React.createClass({
 
         {lockMessage}
 
-        <div className="p3 px4">
+        <div className="p4">
           <TextPost author={bounty.user} timestamp={bounty.created_at} title={bounty.title} labels={bounty.tags} body={bounty.markdown_description} />
         </div>
 
