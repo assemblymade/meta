@@ -1,4 +1,5 @@
 var RelatedIdeas = require('./related_ideas.js.jsx');
+var Tile = require('../ui/tile.js.jsx');
 
 var IdeaContainer = React.createClass({
   propTypes: {
@@ -45,9 +46,9 @@ var IdeaContainer = React.createClass({
 
         <div className="clearfix mxn2">
           <div className={leftColumnClasses}>
-            <div className="idea-item bg-white rounded shadow">
+            <Tile>
               {this.props.children}
-            </div>
+            </Tile>
           </div>
 
           <div className={rightColumnClasses}>

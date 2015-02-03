@@ -257,6 +257,40 @@ exports.new_product_asset_path = function(options){
   }
 }
 
+exports.product_screenshots_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/screenshots?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/screenshots'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/screenshots'
+  }
+}
+
+exports.product_people_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/people?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/people'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/people'
+  }
+}
+
 exports.product_update_subscribe_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -308,6 +342,23 @@ exports.product_update_path = function(options){
   }
 }
 
+exports.product_repos_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/repositories?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/repositories'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/repositories'
+  }
+}
+
 exports.product_wip_close_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -342,6 +393,40 @@ exports.product_wip_reopen_path = function(options){
   }
 }
 
+exports.product_wips_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/bounties?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/bounties'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/bounties'
+  }
+}
+
+exports.new_product_wip_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/bounties/new?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/bounties/new'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/bounties/new'
+  }
+}
+
 exports.product_tips_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -356,6 +441,23 @@ exports.product_tips_path = function(options){
   } else {
     var params = options;
     return '/' + params.product_id + '/tips'
+  }
+}
+
+exports.product_posts_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/posts?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/posts'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/posts'
   }
 }
 
@@ -390,6 +492,40 @@ exports.product_post_path = function(options){
   } else {
     var params = options;
     return '/' + params.product_id + '/posts/' + params.id + ''
+  }
+}
+
+exports.product_chat_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/chat?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/chat'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/chat'
+  }
+}
+
+exports.edit_product_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.id + '/edit?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.id + '/edit'
+  } else {
+    var params = options;
+    return '/' + params.id + '/edit'
   }
 }
 

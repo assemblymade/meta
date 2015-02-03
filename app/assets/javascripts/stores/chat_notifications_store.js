@@ -10,9 +10,10 @@ var moment = require('moment');
   var _sortKeys = [];
   var _optimisticChatRooms = {};
   var _store = Object.create(Store);
+  var noop = function() {};
 
   var _notificationsStore = _.extend(_store, ReadTimesMixin, {
-    'chat:acknowledge': this.noop,
+    'chat:acknowledge': noop,
 
     'chat:markRoomAsRead': function(payload) {
       xhr.noCsrfGet(payload.readraptor_url);

@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 (function() {
   var CONSTANTS = window.CONSTANTS;
 
@@ -163,7 +161,7 @@
 
     onPush: function(fn) {
       if (window.pusher) {
-        channel = window.pusher.subscribe('@' + this.props.username);
+        var channel = window.pusher.subscribe('@' + this.props.username);
         channel.bind_all(fn);
       }
     },

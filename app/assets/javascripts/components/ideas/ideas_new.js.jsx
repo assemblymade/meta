@@ -14,6 +14,10 @@ var IdeasNew = React.createClass({
     query: React.PropTypes.object
   },
 
+  componentDidMount() {
+    document.title = 'Ideas · New';
+  },
+
   getInitialState() {
     return {
       isDrawerOpen: false

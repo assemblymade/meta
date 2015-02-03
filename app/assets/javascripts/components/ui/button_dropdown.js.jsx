@@ -10,7 +10,7 @@ var ButtonDropdown = React.createClass({
   ],
 
   propTypes: {
-    dropdownMenu: React.PropTypes.instanceOf(DropdownMenu).isRequired,
+    dropdownMenu: React.PropTypes.element.isRequired,
     action: React.PropTypes.func
   },
 

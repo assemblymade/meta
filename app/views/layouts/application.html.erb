@@ -42,6 +42,19 @@
 
     <%= render 'analytics/identify' %>
 
+    <% analytics_track_events %>
+
+    <% unless Rails.env.development? %>
+      <%= render 'shared/perfect_audience' %>
+    <% end %>
+    <%= render 'shared/inspectlet' %>
+    <%= render 'shared/bugs' %>
+    <%= render 'shared/twitter' %>
+
+    <%= yield :javascript %>
+
+    <%= render 'shared/track_page_viewed' %>
+
     <script>
       window.app.setSuggestedTags(<%== Wip::Tag.suggested_tags(current_user) %>);
     </script>
@@ -62,18 +75,5 @@
       </script>
       <%= track_readraptor(@stories_to_mark_as_read) if @stories_to_mark_as_read %>
     <% end %>
-
-    <% analytics_track_events %>
-
-    <% unless Rails.env.development? %>
-      <%= render 'shared/perfect_audience' %>
-    <% end %>
-    <%= render 'shared/inspectlet' %>
-    <%= render 'shared/bugs' %>
-    <%= render 'shared/twitter' %>
-
-    <%= yield :javascript %>
-
-    <%= render 'shared/track_page_viewed' %>
   </body>
 </html>

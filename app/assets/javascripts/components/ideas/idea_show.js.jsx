@@ -33,6 +33,10 @@ var IdeaShow = React.createClass({
   componentDidMount() {
     window.scrollTo(0, 0);
 
+    if (this.state.idea) {
+      document.title = "Ideas · " + this.state.idea.name;
+    }
+
     IdeaStore.addChangeListener(this.onIdeaChange);
     IdeaSharePanelStore.addChangeListener(this.onIdeaSharePanelChange);
   },
@@ -135,9 +139,7 @@ var IdeaShow = React.createClass({
   },
 
   renderAdminRow() {
-    var currentUser = UserStore.getUser();
-
-    if (currentUser && currentUser.is_staff) {
+    if (UserStore.isStaff()) {
       var idea = this.state.idea;
 
       return (
@@ -410,7 +412,7 @@ var IdeaShow = React.createClass({
           </div>
         </div>
       );
-    } else if (UserStore.isCoreTeam() || UserStore.getId() === idea.user.id) {
+    } else if (UserStore.isStaff() || UserStore.getId() === idea.user.id) {
       return (
         <div className="clearfix border-bottom border-top border-2px py2">
           <div className="left mt1 px4">

@@ -29,7 +29,7 @@ module.exports = React.createClass({
       classes.push('bg-gray-2-hover')
     }
 
-    cs = React.addons.classSet.apply(null, classes)
+    var cs = React.addons.classSet.apply(null, classes)
 
     return (
       <div className={cs} style={styles}>

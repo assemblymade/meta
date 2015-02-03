@@ -31,7 +31,16 @@ class ProductStore extends Store {
   }
 
   getCoreTeamIds() {
-    return _product.core_team
+    return _product.core_team || []
+  }
+
+  isCoreTeam(currentUser) {
+    if (currentUser) {
+      return this.getCoreTeamIds().indexOf(currentUser.id) > -1 ||
+        currentUser.is_staff;
+    }
+
+    return false;
   }
 
 }

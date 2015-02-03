@@ -45,7 +45,9 @@ var NewsFeed = React.createClass({
     return <span className="text-large">&nbsp;</span>
   },
 
-  fetchMoreNewsFeedItems: _.debounce(this.eagerlyFetchMoreNewsFeedItems, 200),
+  fetchMoreNewsFeedItems: function() {
+    return _.debounce(this.eagerlyFetchMoreNewsFeedItems, 200);
+  },
 
   filterBy: function(filter, e) {
     this.setState({
@@ -142,7 +144,7 @@ var NewsFeed = React.createClass({
 
           <div className="mb4" key="news-feed-load-more">
             <a href="javascript:void(0);"
-                  onClick={this.fetchMoreNewsFeedItems}
+                  onClick={this.fetchMoreNewsFeedItems()}
                   className="btn btn-default btn-block" disabled={disabled}>
               {this.state.disabled ? <Spinner /> : 'Load more'}
             </a>

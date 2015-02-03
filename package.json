@@ -7,8 +7,8 @@
     "test": "npm run jest",
     "lint": "node_modules/.bin/jsxhint app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx",
     "postinstall": "npm run bundle",
-    "bundle": "node_modules/.bin/browserify -x app/assets/javascripts/dispatcher.js -x app/assets/javascripts/constants.js -r underscore -t [ reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js",
-    "watch": "node_modules/.bin/watchify -x app/assets/javascripts/dispatcher.js -x app/assets/javascripts/constants.js -r underscore -t [ reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js -v"
+    "bundle": "node_modules/.bin/browserify -x app/assets/javascripts/dispatcher.js -x app/assets/javascripts/constants.js -r underscore -t [ 6to5ify reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js",
+    "watch": "node_modules/.bin/watchify -x app/assets/javascripts/dispatcher.js -x app/assets/javascripts/constants.js -r underscore -t [ 6to5ify reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js -v"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
   },
   "homepage": "https://assembly.com",
   "dependencies": {
+    "6to5ify": "^4.0.0",
     "Set": "^0.4.1",
     "browserify": "^5.9.1",
     "elasticsearch": "^3.1.1",
@@ -44,8 +45,8 @@
     "nprogress": "^0.1.6",
     "page": "^1.5.0",
     "qs": "^2.3.3",
-    "react": "^0.12.0",
     "react-datepicker-component": "^1.0.2",
+    "react": "^0.12.2",
     "react-router": "^0.11.6",
     "react-spinner": "^0.1.9",
     "react-tools": "^0.12.0",

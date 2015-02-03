@@ -2,8 +2,8 @@ var ProductStore = require('../stores/product_store');
 var TipActions = require('../actions/tip_actions')
 var TipsStore = require('../stores/tips_store')
 
-COIN_INCREMENT = [1, 1, 1, 2, 5, 5, 5, 5, 25, 25, 25, 50]
-DEBOUNCE_TIMEOUT = 2000
+var COIN_INCREMENT = [1, 1, 1, 2, 5, 5, 5, 5, 25, 25, 25, 50]
+var DEBOUNCE_TIMEOUT = 2000
 
 var TipsUi = React.createClass({
   getInitialState: function() {

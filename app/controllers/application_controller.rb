@@ -6,7 +6,9 @@ class ApplicationController < ActionController::Base
   before_action :strip_auth_token
   before_action :strip_invite_token
   before_action :strip_promo_token
+  before_action :initialize_feature_flags
   before_action :initialize_stores
+
   after_action  :set_request_info!,   if: :signed_in?
   after_action  :claim_invite,        if: :signed_in?
 
@@ -36,6 +38,10 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for_user
     session[:previous_url] || dashboard_path
+  end
+
+  def initialize_feature_flags
+    @feature_flags ||= {}
   end
 
   def initialize_stores

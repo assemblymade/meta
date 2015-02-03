@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(version: 20150202220246) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "uuid-ossp"
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "pg_stat_statements"
-  enable_extension "uuid-ossp"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -718,6 +718,12 @@ ActiveRecord::Schema.define(version: 20150202220246) do
     t.datetime "updated_at"
   end
 
+  create_table "screenshots", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.datetime "created_at",             null: false
+    t.uuid     "asset_id",               null: false
+    t.integer  "position",   default: 0
+  end
+
   create_table "showcase_entries", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.datetime "created_at",  null: false
     t.uuid     "showcase_id", null: false
@@ -1154,6 +1160,7 @@ ActiveRecord::Schema.define(version: 20150202220246) do
 
   add_foreign_key "markings", "marks"
   add_foreign_key "news_feed_item_comments", "news_feed_items"
+  add_foreign_key "screenshots", "assets"
   add_foreign_key "showcase_entries", "products"
   add_foreign_key "showcase_entries", "showcases"
 end

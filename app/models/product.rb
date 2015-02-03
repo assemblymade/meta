@@ -57,6 +57,7 @@ class Product < ActiveRecord::Base
   has_many :profit_reports
   has_many :proposals
   has_many :rooms
+  has_many :screenshots, through: :assets
   has_many :showcase_entries
   has_many :showcases, through: :showcase_entries
   has_many :status_messages
@@ -188,7 +189,7 @@ class Product < ActiveRecord::Base
   def self.active_product_count
     joins(:activities).where('activities.created_at > ?', 30.days.ago).group('products.id').having('count(*) > 5').count.count
   end
-  
+
   def news_feed_items_with_mark(mark_name)
     QueryMarks.new.news_feed_items_per_product_per_mark(self, mark_name)
   end
@@ -229,6 +230,15 @@ class Product < ActiveRecord::Base
     end
     return answer
   end
+
+  def most_active_contributor_ids(limit=6)
+    activities.group('actor_id').order('count_id desc').limit(limit).count('id').keys
+  end
+
+  def most_active_contributors(limit=6)
+    User.where(id: most_active_contributor_ids(limit))
+  end
+
 
   def on_stealth_entry(prev_state, event, *args)
     update!(

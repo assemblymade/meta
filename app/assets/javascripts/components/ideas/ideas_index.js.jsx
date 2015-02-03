@@ -22,17 +22,13 @@ var IdeasIndex = React.createClass({
   },
 
   componentDidMount() {
+    document.title = 'Ideas';
+
     IdeasStore.addChangeListener(this.getIdeas);
   },
 
   componentWillUnmount() {
     IdeasStore.removeChangeListener(this.getIdeas);
-  },
-
-  getDefaultProps() {
-    return {
-      currentUser: UserStore.getUser() || {}
-    };
   },
 
   getIdeas() {
@@ -134,7 +130,8 @@ var IdeasIndex = React.createClass({
 
   renderMyIdeas() {
     var navigate = this.props.navigate;
-    var username = this.props.currentUser.username;
+    var user = UserStore.getUser()
+    var username = user && user.username;
 
     if (username) {
       var url = "/ideas?user=" + username
