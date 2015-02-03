@@ -31,6 +31,6 @@ class Users::BalancesController < ApplicationController
       UserBalanceMailer.delay(queue: 'mailer').withdrawal_created(@withdrawal.id)
       flash[:success] = "Great! Your withdrawal has been scheduled and you will be notified soon"
     end
-    redirect_to users_balance_path
+    redirect_to edit_user_path
   end
 end
