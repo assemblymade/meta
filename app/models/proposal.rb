@@ -46,13 +46,13 @@ class Proposal < ActiveRecord::Base
   end
 
   def update_state
-    if self.won? and !self.expired?
+    if self.won? && !self.expired?
       self.update!({state: "passed"})
-    elsif !self.won? and !self.expired?
+    elsif !self.won? && !self.expired?
       self.update!({state: "open"})
-    elsif !self.won? and !self.expired? and self.state != "passed"
+    elsif !self.won? && !self.expired? && self.state != "passed"
       self.update({state: "failed"})
-    elsif self.expired? and self.state=="open"
+    elsif self.expired? && self.state=="open"
       self.update({state: "expired"})
     end
   end
@@ -115,7 +115,7 @@ class Proposal < ActiveRecord::Base
 
     if self.state=="open"
       days = "Expires " + days + " from now"
-    elsif self.state=="failed" || "expired"
+    elsif self.state=="failed" || self.state=="expired"
       days = "Expired " + days + " ago"
     elsif self.state == "passed"
       days = ""
