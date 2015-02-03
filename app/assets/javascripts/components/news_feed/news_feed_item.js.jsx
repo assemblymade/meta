@@ -322,7 +322,7 @@ var NewsFeedItem = React.createClass({
     }
 
     return (
-      <Lightbox onHidden={this.onModalHidden} showControlledOuside={true} size="modal-lg">
+      <Lightbox onHidden={this.onModalHidden} showControlledOuside={true}>
         <Discussion newsFeedItem={item}>{modalTarget}</Discussion>
       </Lightbox>
     );
