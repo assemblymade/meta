@@ -21,6 +21,8 @@ class Tip < ActiveRecord::Base
 
     TrackVested.perform_async(to.id, product.id, created_at)
 
+    via.try(:tip_added)
+
     tip
   end
 

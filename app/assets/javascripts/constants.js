@@ -211,6 +211,9 @@
 
       SUB_RECEIVE_USER_SUBSCRIPTIONS: null,
 
+      TIP_OPTIMISTIC: null,
+      TIP_COMPLETED: null,
+
       USER_RECEIVE: null,
       USER_SIGNED_IN: null,
 

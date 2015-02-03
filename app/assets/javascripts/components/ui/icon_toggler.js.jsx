@@ -5,7 +5,7 @@ var IconToggler = React.createClass({
   propTypes: {
     on: React.PropTypes.bool,
 
-    icon: React.PropTypes.instanceOf(Icon).isRequired,
+    icon: React.PropTypes.object.isRequired,
     action: React.PropTypes.func.isRequired,
 
     color: React.PropTypes.string.isRequired

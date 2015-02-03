@@ -19,7 +19,8 @@ var DiscussionActionCreators = {
           comments: data.comments,
           events: data.events,
           itemId: itemId,
-          userHearts: data.user_hearts
+          userHearts: data.user_hearts,
+          userTips: data.user_tips,
         });
       },
 

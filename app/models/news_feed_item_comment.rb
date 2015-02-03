@@ -61,6 +61,10 @@ class NewsFeedItemComment < ActiveRecord::Base
     FindMentionedUsers.new.perform(body, news_feed_item.product) - [self.user]
   end
 
+  def tip_added
+    self.update!(tips_total: tips.sum(:cents))
+  end
+
   def tip_receiver
     user
   end

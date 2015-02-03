@@ -62,6 +62,7 @@ ROUTES = [
   'product',
   'product_follow',
   'product_post',
+  'product_tips',
   'product_unfollow',
   'product_update',
   'product_update_subscribe',

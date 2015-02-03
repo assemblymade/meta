@@ -16,17 +16,19 @@ class CommentsController < ApplicationController
       scope: current_user
     )
 
-    user_hearts = if signed_in?
-      Heart.where(user: current_user, heartable_id: comments.as_json.map{|h| h['heartable_id']})
-    else
-      []
+    user_hearts = []
+    user_tips = []
+    if signed_in?
+      user_hearts = Heart.where(user: current_user, heartable_id: comments.as_json.map{|h| h['heartable_id']})
+      user_tips = Hash[Tip.where(from_id: current_user.id, via: @discussion.comments).pluck(:via_id, :cents)]
     end
 
     respond_with({
       analytics: DiscussionAnalyticsSerializer.new(@discussion),
       comments: comments,
       events: events,
-      user_hearts: user_hearts
+      user_hearts: user_hearts,
+      user_tips: user_tips
     })
   end
 
