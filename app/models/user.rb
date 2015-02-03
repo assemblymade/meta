@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   has_many :wips_contributed_to, -> { where(events: { type: Event::MAILABLE }).group('wips.id').order('MAX(events.created_at) DESC') }, :through => :events, :source => :wip
   has_many :wips_awarded_to, through: :awards, source: :wip
   has_many :wips_commented_on, -> { where(events: { type: Event::Comment }).group('wips.id').order('MAX(events.created_at) DESC') }, :through => :events, :source => :wip
-  has_many :screenshots
+  has_many :screenshots, through: :assets
   has_many :stream_events, foreign_key: 'actor_id'
   has_many :saved_searches
   has_one  :tax_info

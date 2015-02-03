@@ -2,7 +2,13 @@ const ActionTypes = window.CONSTANTS.ActionTypes;
 const Dispatcher = window.Dispatcher;
 const ATTACHMENT_URL = '/upload/attachments';
 
-class ProductScreenshotActions {
+class ScreenshotActions {
+  handleSuccess() {
+    Dispatcher.dispatch({
+      type: ActionTypes.SCREENSHOT_SUCCESS
+    });
+  }
+
   uploadScreenshot(url) {
     return function(file, done) {
       _upload(url, file, done);
@@ -26,17 +32,13 @@ function _success(url, file, done) {
         }
       },
 
-      success: function(product) {
-        Dispatcher.dispatch({
-          type: ActionTypes.PRODUCT_RECEIVE,
-          product: product
-        });
-
-        Dispatcher.dispatch({
-          type: ActionTypes.PRODUCT_SCREENSHOT_UPLOADED,
-        });
-
+      success: function(screenshot) {
         done();
+
+        Dispatcher.dispatch({
+          type: ActionTypes.SCREENSHOT_UPLOADED,
+          screenshot: screenshot
+        });
       }
     });
   }
@@ -44,7 +46,7 @@ function _success(url, file, done) {
 
 function _upload(url, file, done) {
   Dispatcher.dispatch({
-    type: ActionTypes.PRODUCT_SCREENSHOT_UPLOADING
+    type: ActionTypes.SCREENSHOT_UPLOADING
   });
 
   $.ajax({
@@ -64,4 +66,4 @@ function _upload(url, file, done) {
   });
 }
 
-module.exports = new ProductScreenshotActions();
+module.exports = new ScreenshotActions();

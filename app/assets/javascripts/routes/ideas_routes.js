@@ -22,6 +22,11 @@ function _showProduct(data) {
     type: ActionTypes.PRODUCT_RECEIVE,
     product: data.product
   });
+
+  Dispatcher.dispatch({
+    type: ActionTypes.SCREENSHOTS_RECEIVE,
+    screenshots: data.screenshots
+  });
 }
 
 function _showCreateIdea(data) {

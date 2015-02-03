@@ -8,7 +8,7 @@ class ScreenshotsController < ProductController
     @asset = @product.assets.create!(asset_params.merge(user: current_user))
     @screenshot = Screenshot.create!(asset_id: @asset.id, position: position)
 
-    respond_with ProductSerializer.new(@product), status: 201, location: product_screenshots_path(@product)
+    respond_with ScreenshotSerializer.new(@screenshot), status: 201, location: product_screenshots_path(@product)
   end
 
   private

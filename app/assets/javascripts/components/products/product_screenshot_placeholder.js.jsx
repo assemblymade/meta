@@ -3,8 +3,8 @@
 const DraggingMixin = require('../../mixins/dragging_mixin');
 const Dropzone = window.Dropzone;
 const ProductStore = require('../../stores/product_store');
-const ProductScreenshotActions = require('../../actions/product_screenshot_actions');
-const ProductScreenshotStore = require('../../stores/product_screenshot_store');
+const ScreenshotActions = require('../../actions/screenshot_actions');
+const ScreenshotStore = require('../../stores/screenshot_store');
 const Routes = require('../../routes');
 
 let ProductScreenshotPlaceholder = React.createClass({
@@ -18,13 +18,14 @@ let ProductScreenshotPlaceholder = React.createClass({
     });
 
     this.dropzone = new Dropzone(this.getDOMNode(), {
-      accept: ProductScreenshotActions.uploadScreenshot(url),
+      accept: ScreenshotActions.uploadScreenshot(url),
       clickable: clickable && clickable.getDOMNode(),
       sending: this.onSending,
+      success: ScreenshotActions.handleSuccess,
       url: attachmentUploadUrlTag && attachmentUploadUrlTag.attr('content')
     });
 
-    ProductScreenshotStore.addChangeListener(this.onScreenshotChange);
+    ScreenshotStore.addChangeListener(this.onScreenshotChange);
 
     this.setState({
       height: window.getComputedStyle(clickable && clickable.getDOMNode()).height
@@ -33,7 +34,7 @@ let ProductScreenshotPlaceholder = React.createClass({
 
   componentWillUnmount() {
     this.dropzone = null;
-    ProductScreenshotStore.removeChangeListener(this.onScreenshotChange);
+    ScreenshotStore.removeChangeListener(this.onScreenshotChange);
   },
 
   getInitialState() {

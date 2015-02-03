@@ -2,12 +2,12 @@
 
 const Avatar = require('../ui/avatar.js.jsx');
 const Button = require('../ui/button.js.jsx');
-const Carousel = require('../ui/carousel.js.jsx');
 const Icon = require('../ui/icon.js.jsx');
 const ProductHeader = require('./product_header.js.jsx');
 const ProductScreenshotPlaceholder = require('./product_screenshot_placeholder.js.jsx');
 const ProductStore = require('../../stores/product_store');
 const Routes = require('../../routes');
+const Screenshots = require('./screenshots.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 const UserStore = require('../../stores/user_store');
 
@@ -73,7 +73,10 @@ let ProductShow = React.createClass({
         <div className="clearfix px4">
           <div className={leftColumnClasses}>
             <div className="left mb2">
-              <a href={Routes.edit_product_path({ id: slug })} className="gray-2"><Icon icon="pencil" /> Edit product details</a>
+              <a href={Routes.edit_product_path({ id: slug })}
+                  className="gray-2">
+                <Icon icon="pencil" /> Edit product details
+              </a>
             </div>
           </div>
         </div>
@@ -81,7 +84,8 @@ let ProductShow = React.createClass({
         <div className="clearfix px4">
           <div className={leftColumnClasses}>
             <Tile>
-              {this.renderCarousel()}
+
+              <Screenshots key="product-screenshots" />
 
               <div className="clearfix p4">
                 <h5 className="mt0 mb2" style={{ fontSize: 16 }}>
@@ -172,18 +176,6 @@ let ProductShow = React.createClass({
     );
   },
 
-  renderCarousel() {
-    let images = this.wrapScreenshots() || [];
-
-    if (images.length) {
-      return <Carousel images={images} />;
-    }
-
-    if (ProductStore.isCoreTeam(UserStore.getUser())) {
-      return <ProductScreenshotPlaceholder />;
-    }
-  },
-
   renderCommunityBuiltNotice() {
     let product = this.state.product;
 
@@ -203,7 +195,7 @@ let ProductShow = React.createClass({
     let contributors = product.most_active_contributors;
     let renderedContributors = contributors.map((contributor) => {
       return (
-        <span className="left mr1">
+        <span className="left mr1" key={contributor.id}>
           <a href={contributor.url}>
             <Avatar user={contributor} />
           </a>
@@ -256,31 +248,6 @@ let ProductShow = React.createClass({
     }
 
     return renderedSubsections;
-  },
-
-  wrapScreenshots() {
-    let product = this.state.product;
-    let screenshots = product.screenshots;
-    let style = {
-      borderRadius: 4,
-      maxWidth: 100,
-      width: 100
-    };
-    let images;
-
-    if (screenshots.length) {
-      images = screenshots.map((src, i) => {
-        return <img src={src} style={style} key={product.id + '-screenshot-' + i} />;
-      });
-
-      if (ProductStore.isCoreTeam(UserStore.getUser())) {
-        images.push(
-          <ProductScreenshotPlaceholder key={product.id + 'placeholder'} />
-        );
-      }
-
-      return images;
-    }
   }
 });
 

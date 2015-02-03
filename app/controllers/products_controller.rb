@@ -97,6 +97,10 @@ class ProductsController < ProductController
       product: ProductSerializer.new(
         @product,
         scope: current_user
+      ),
+      screenshots: ActiveModel::ArraySerializer.new(
+        @product.screenshots.order(position: :asc).limit(6),
+        each_serializer: ScreenshotSerializer
       )
     })
   end

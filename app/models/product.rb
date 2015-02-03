@@ -57,7 +57,7 @@ class Product < ActiveRecord::Base
   has_many :profit_reports
   has_many :proposals
   has_many :rooms
-  has_many :screenshots
+  has_many :screenshots, through: :assets
   has_many :showcase_entries
   has_many :showcases, through: :showcase_entries
   has_many :status_messages
@@ -397,12 +397,6 @@ class Product < ActiveRecord::Base
 
   def count_contributors
     (wip_creator_ids | event_creator_ids).size
-  end
-
-  def screenshots
-    Screenshot.joins(:asset).where('assets.product_id = ?', id).
-      order(position: :desc).
-      limit(6).map(&:url)
   end
 
   def event_creator_ids
