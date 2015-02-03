@@ -8,7 +8,7 @@ var AppCoins = React.createClass({
 
   render: function() {
     return (
-      <span className="text-coins">
+      <span className="yellow">
         <IconWithNumber icon="app-coin" n={this.props.n} showZeros={true} />
       </span>
     )

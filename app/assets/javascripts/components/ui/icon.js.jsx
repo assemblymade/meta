@@ -7,7 +7,6 @@ var CustomIcons = [
   'document',
   'settings',
   'wallet',
-  'user',
   'logout',
   'field-guide'
 ]

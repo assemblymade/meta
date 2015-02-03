@@ -24,7 +24,7 @@ module CoinHelper
         content_tag(:span, nil, class: 'icon icon-app-coin'),
         content_tag(:span, text, class: 'js-coins')
       ].join.html_safe,
-      class: (product.for_profit? ? 'text-coins' : 'gray-2')
+      class: (product.for_profit? ? 'yellow' : 'gray-2')
     )
   end
 

@@ -4,7 +4,7 @@ namespace :payments do
     require 'csv'
 
     csv = CSV.generate do |csv|
-      csv << ['Requested At', 'Paid At', 'Username', 'Email', 'Total Requested', 'Amount Withheld', 'Amount Paid']
+      csv << ['Requested At', 'Paid At', 'Username', 'Email', 'Total Requested', 'Amount Withheld', 'Amount Paid', 'Payment method']
       User::Withdrawal.paid.order(:created_at).each do |w|
         csv << [
           w.created_at.iso8601,
@@ -13,7 +13,8 @@ namespace :payments do
           w.user.email,
           w.total_amount,
           w.amount_withheld,
-          w.total_amount - w.amount_withheld
+          w.total_amount - w.amount_withheld,
+          w.user.payment_option.description
         ]
       end
     end

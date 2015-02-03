@@ -55,6 +55,7 @@ class Product < ActiveRecord::Base
   has_many :pitch_week_applications
   has_many :posts
   has_many :profit_reports
+  has_many :proposals
   has_many :rooms
   has_many :showcase_entries
   has_many :showcases, through: :showcase_entries
@@ -716,6 +717,48 @@ class Product < ActiveRecord::Base
 
   def normalized_mark_vector()
     QueryMarks.new.normalize_mark_vector(self.mark_vector())
+  end
+
+  def majority_owner
+    total_coins = TransactionLogEntry.where(product: self).sum(:cents)
+    majority_owner = TransactionLogEntry.where(product: self).group('wallet_id').sum(:cents).sort_by{|k,v| -v}.first
+
+    majority_owner[1].to_f / total_coins.to_f >= 0.5
+  end
+
+  def proposals_sorted
+    prod_proposals = Proposal.where(product: self).where.not(state: "hidden")
+    open_proposals = prod_proposals.where(state: "open").sort_by{|a| a.expiration}.reverse
+    passed_proposals = prod_proposals.where(state: "passed").sort_by{|a| a.expiration}.reverse
+    failed_proposals = prod_proposals.where(state: "failed").sort_by{|a| a.expiration}.reverse
+    expired_proposals = prod_proposals.where(state: "expired").sort_by{|a| a.expiration}.reverse
+    open_proposals + passed_proposals + failed_proposals + expired_proposals
+  end
+
+  def active_contracts
+    passed_proposals = self.proposals.where(state: ["passed", "expired"])
+    contracts = []
+    passed_proposals.each do |p|
+      p.contracts.each do |c|
+        if !c.expired?
+          contracts.append(c)
+        end
+      end
+    end
+    contracts
+  end
+
+  def expired_contracts
+    passed_proposals = self.proposals.where(state: ["passed", "expired"])
+    contracts = []
+    passed_proposals.each do |p|
+      p.contracts.each do |c|
+        if c.expired?
+          contracts.append(c)
+        end
+      end
+    end
+    contracts
   end
 
   protected

@@ -23,12 +23,13 @@ var Heart = React.createClass({
       'medium': this.renderMedium,
       'large': this.renderLarge
     }
-    return sizes[this.props.size].call()
+    return sizes[this.props.size]()
   },
 
   renderSmall: function() {
     var heartsCount = this.state.hearts_count;
     // Dammit, JavaScript
+
     if (heartsCount == null) {
       return <div />
     }

@@ -12,9 +12,8 @@
     }.to_json.html_safe %>)
 
     var discussionElement = React.createElement(Discussion, {
-      target: introductionElement,
       newsFeedItem: <%= NewsFeedItemSerializer.new(@news_feed_item).to_json.html_safe %>
-    })
+    }, introductionElement)
 
     React.render(discussionElement, document.getElementById('discussion-el'))
   </script>

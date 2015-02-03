@@ -12,9 +12,6 @@ var TextPost = require('./ui/text_post.js.jsx')
 var ToggleButton = require('./toggle_button.js.jsx')
 var InviteFriendBounty = require('./invite_friend_bounty.js.jsx')
 
-// TODO (chrislloyd) hack to get it loading
-var Discussion = require('./ui/discussion.js.jsx')
-
 var CLOSED_STATES = ['closed', 'resolved']
 var ONE_HOUR = 60 * 60 * 1000
 

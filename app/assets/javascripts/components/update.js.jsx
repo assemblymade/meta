@@ -153,7 +153,7 @@ var Update = React.createClass({
     } else {
       NewsFeedItemActionCreators.subscribe(productSlug, itemId);
     }
-  },
+  }
 
 })
 

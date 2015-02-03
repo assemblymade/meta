@@ -31,7 +31,7 @@
       return this.state.steps.map(function(suggestion) {
         return (
           <li className="left center" style={{ width: '20%' }}>
-            <div className="text-coins bold h4 center">
+            <div className="yellow bold h4 center">
               <span className="icon icon-app-coin"></span>
               {' '}
               {numeral(suggestion).format('0,0')}

@@ -12,7 +12,7 @@ var NewComment = require('./news_feed/new_comment.js.jsx');
 var NewCommentActionCreators = require('../actions/new_comment_action_creators');
 var ProductStore = require('../stores/product_store');
 var Routes = require('../routes');
-var TipsUi = require('./tips_ui.js.jsx');
+var Tips = require('./tips_ui.js.jsx');
 var UserStore = require('../stores/user_store');
 
 module.exports = React.createClass({
@@ -223,11 +223,10 @@ module.exports = React.createClass({
     // TipsUi is causing display issues :(
     return (
       <span className="_pr0_75 _inline-block _h6" style={{height: '1.5rem'}}>
-        <TipsUi
+        <Tips
             viaType="NewsFeedItemComment"
             viaId={this.props.id}
-            recipient={this.props.author}
-            tips={this.props.tips} />
+            recipient={this.props.author} />
       </span>
     );
   },

@@ -281,4 +281,19 @@ class QueryMarks
       a.user_identity.assign_markings_from_scratch
     end
   end
+
+  def product_average
+    vector = []
+    Product.where(state: ['greenlit', 'profitable', 'team_building']).each do |p|
+      vector = add_mark_vectors(vector, p.mark_vector)
+    end
+    vector = normalize_mark_vector(vector)
+  end
+
+  def product_distinctiveness(product, average_vector)
+    vector = scale_mark_vector(average_vector, -1.0)
+    distinctiveness = add_mark_vectors(vector, normalize_mark_vector(product.mark_vector))
+    legible_mark_vector(distinctiveness.sort_by{|a| -a[1]**2})
+  end
+
 end

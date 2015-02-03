@@ -181,6 +181,9 @@
       POSTS_RECEIVE: null,
       PRODUCT_RECEIVE: null,
 
+      PROPOSAL_INIT: null,
+      PROPOSAL_VOTE: null,
+
       PRODUCT_FOLLOW_CLICKED: null,
       PRODUCT_FOLLOW_SUCCEEDED: null,
       PRODUCT_FOLLOW_FAILED: null,
@@ -207,6 +210,9 @@
       STORY_RECEIVE_STORIES: null,
 
       SUB_RECEIVE_USER_SUBSCRIPTIONS: null,
+
+      TIP_OPTIMISTIC: null,
+      TIP_COMPLETED: null,
 
       USER_RECEIVE: null,
       USER_SIGNED_IN: null,

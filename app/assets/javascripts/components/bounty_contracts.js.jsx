@@ -30,7 +30,7 @@
     render: function() {
       return (
         <li>
-          <span className="text-coins mt0 mb0" style={{ display: 'inline-block', width: '60px' }}>
+          <span className="yellow mt0 mb0" style={{ display: 'inline-block', width: '60px' }}>
             <span className="icon icon-app-coin"></span>
             {' '}
             {numeral(this.props.coins).format('0,0')}

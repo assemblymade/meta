@@ -20,6 +20,11 @@ class PartnersController < ProductController
     end.sort_by{|u, c| -c }
 
     @auto_tips = Hash[AutoTipContract.active_at(@product, Time.now).pluck(:user_id, :amount).map{|user_id, amount| [User.find(user_id), amount] }]
+
+
+  
+
+
   end
 
 end

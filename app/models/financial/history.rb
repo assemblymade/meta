@@ -1,6 +1,7 @@
 module Financial
   class History
 
+<<<<<<< HEAD
     def vested_coins_on_product(product)
 
     end
@@ -51,4 +52,7 @@ module Financial
     end
   end
 
+=======
+  end
+>>>>>>> fc39f984856accd858642ac7252141befb16acdd
 end

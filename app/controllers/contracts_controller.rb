@@ -6,6 +6,15 @@ class ContractsController < ProductController
 
   def index
     find_product!
+
+    @active_contracts = @product.active_contracts
+    @closed_contracts = @product.expired_contracts
+
+    @activeTipContracts = @product.auto_tip_contracts.select{|a| a.active?}.map{|b| AutoTipContractSerializer.new(b)}
+    @closedTipContracts = @product.auto_tip_contracts.select{|a| !a.active?}.map{|b| AutoTipContractSerializer.new(b)}
+
+    @activeVestings = @product.proposals.select(&:won?).map(&:vestings).flatten.select{|a| !a.expired?}.map{|b| VestingSerializer.new(b)}
+    @closedVestings = @product.proposals.select(&:won?).map(&:vestings).flatten.select(&:expired?).map{|b| VestingSerializer.new(b)}
   end
 
   def create
