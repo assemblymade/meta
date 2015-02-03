@@ -85,7 +85,6 @@ var ProductHeader = React.createClass({
     var homepageUrl = product.homepage_url;
 
     if (homepageUrl) {
-      console.log(url.parse(homepageUrl));
       return (
         <a href={homepageUrl}>
           <Button type="primary" action={function() {}}>
