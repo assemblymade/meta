@@ -243,5 +243,20 @@ class Idea < ActiveRecord::Base
     })
   end
 
+  def twitter_description
+    if self.body.length > 200
+      self.body[0..199]
+    else
+      self.body
+    end
+  end
+
+  def twitter_title
+    if self.name.length > 70
+      self.name[0..67]+".."
+    else
+      self.name
+    end
+  end
 
 end

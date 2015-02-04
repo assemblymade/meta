@@ -32,14 +32,12 @@ class Tweeter
     password = compute_password()
     url = "https://asm-tweeter.herokuapp.com/idea/"+password
     the_data = {}
-    the_data['idea_name'] = idea.name
+    the_data['idea_name'] = idea.twitter_title
     the_data['users'] = get_idea_participants(idea)
     the_data['url'] = IdeaSerializer.new(idea).url
     the_data['hashtags'] = get_idea_marks(idea)
     request :post, url, the_data
   end
-
-
 
   def request(method, url, body = {})
     resp = connection.send(method) do |req|
