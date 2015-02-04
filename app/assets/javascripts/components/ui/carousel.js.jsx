@@ -87,14 +87,12 @@ let Carousel = React.createClass({
         return null;
       }
 
-      style.opacity = i === currentFocusIndex ? 0.5 : 1;
-
       if (typeof image !== 'string' && i !== currentFocusIndex) {
         _.extend(image.props.style, style);
       }
 
       return (
-        <div className="left mr2" style={style} key={i}>
+        <div className="left sm-mr2" style={style} key={i}>
           <a href="javascript:void(0);" onClick={this.handleThumbnailClick.bind(this, i)}>
             {typeof image === 'string' ? <img src={image} style={style} /> : image}
           </a>

@@ -38,7 +38,9 @@ class ProductStore extends Store {
   isCoreTeam(currentUser) {
     if (currentUser) {
       return this.getCoreTeamIds().indexOf(currentUser.id) > -1 ||
-        currentUser.is_staff;
+        currentUser.is_staff ||
+        currentUser.staff ||
+        currentUser.is_core;
     }
 
     return false;
