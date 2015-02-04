@@ -9,14 +9,7 @@ class Tweeter
   end
 
   def get_idea_marks(idea)
-    # text = idea.body
-    # mark_vector = Interpreter.new.mark_vector_from_text(text)
-    # mark_vector = QueryMarks.new.legible_mark_vector(mark_vector).sort_by{|a, b| -b}
-    #
-    # top_marks = [mark_vector.first[0], mark_vector.second[0]]
-
     ["ideas"]
-
   end
 
   def compute_password
