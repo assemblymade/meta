@@ -86,15 +86,13 @@ var ProductHeader = React.createClass({
 
     if (homepageUrl) {
       return (
-        <a href={homepageUrl}>
-          <Button type="primary" action={function() {}}>
-            <a href={encodeURI(url.parse(homepageUrl).hostname)}
-                className="mr2 white">
-              {encodeURI(url.parse(homepageUrl).hostname)}
-            </a>
-            <Icon icon="share" />
-          </Button>
-        </a>
+        <Button type="primary" action={function() {}}>
+          <a href={url.parse(homepageUrl).href}
+              className="mr2 white">
+            {encodeURI(url.parse(homepageUrl).hostname)}
+          </a>
+          <Icon icon="share" />
+        </Button>
       );
     }
   },
@@ -103,13 +101,27 @@ var ProductHeader = React.createClass({
     var product = this.props.product;
     var homepageUrl = product.homepage_url;
 
-    var pill = homepageUrl ?
-      <Pill type="success">
-        <h6 className="inline mb0 mt0">Launched</h6>
-      </Pill> :
-      <Pill>
-        <h6 className="inline mb0 mt0">In development</h6>
-      </Pill>;
+    var pill;
+    if (homepageUrl) {
+      pill = (
+        <span className="gray-1">
+          <span className="mr1">
+            <Icon icon="rocket" />
+          </span>
+          <h6 className="inline mb0 mt0 gray-1">Launched</h6>
+        </span>
+      );
+    } else {
+      pill = (
+        <span className="gray-1">
+          <span className="mr1">
+            <Icon icon="wrench" />
+          </span>
+          <h6 className="inline mb0 mt0 gray-1">In development</h6>
+        </span>
+      );
+    }
+
 
     return (
       <li>
