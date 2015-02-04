@@ -19,6 +19,10 @@ module ApplicationHelper
       action_name == 'show'
   end
 
+  def idea_show_route?
+    controller_name == 'ideas' && action_name == 'show'
+  end
+
   def signin_page?
     controller_name == 'sessions' &&
       action_name == 'new'

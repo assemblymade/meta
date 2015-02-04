@@ -25,5 +25,9 @@
   <meta property="og:url" content="<%= product_url(@product) %>" />
   <meta property="og:image" content="<%= @product.hero_image_url %>" />
   <meta property="og:description" content="<%= @product.lead %>" />
-<% end %>
 
+<% elsif idea_show_route? %>
+  <meta name="twitter:creator" content="">
+  <meta name="twitter:description" content="">
+  <meta name="twitter: title" content="">
+<% end %>

@@ -2,9 +2,9 @@ class Tweeter
 
   def get_idea_participants(idea)
     if idea.user.twitter_nickname
-      [idea.user.twitter_nickname]
+      [idea.user.twitter_nickname, "asm"]
     else
-      []
+      ["asm"]
     end
   end
 
