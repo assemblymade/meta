@@ -14,5 +14,6 @@ describe 'showing all bounties' do
     visit product_wip_path(product, task)
 
     expect(page).to have_text('Design a new logo')
+    expect(page).to have_text('Work on this bounty')
   end
 end

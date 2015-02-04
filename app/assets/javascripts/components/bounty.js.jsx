@@ -1,16 +1,17 @@
-var AvatarWithUsername = require('./ui/avatar_with_username.js.jsx')
+var AvatarWithUsername = require('./ui/avatar_with_username.js.jsx');
 var BountyActionCreators = require('../actions/bounty_action_creators');
 var BountyStore = require('../stores/bounty_store');
-var Button = require('./ui/button.js.jsx')
+var Button = require('./ui/button.js.jsx');
 var formatShortTime = require('../lib/format_short_time.js');
-var Icon = require('./ui/icon.js.jsx');
 var Heart = require('./heart.js.jsx');
-var Trackable = require('./trackable.js.jsx')
-var routes = require('../routes')
-var SubscriptionsStore = require('../stores/subscriptions_store')
-var TextPost = require('./ui/text_post.js.jsx')
-var ToggleButton = require('./toggle_button.js.jsx')
-var InviteFriendBounty = require('./invite_friend_bounty.js.jsx')
+var Icon = require('./ui/icon.js.jsx');
+var InviteFriendBounty = require('./invite_friend_bounty.js.jsx');
+var routes = require('../routes');
+var SubscriptionsStore = require('../stores/subscriptions_store');
+var TextPost = require('./ui/text_post.js.jsx');
+var ToggleButton = require('./toggle_button.js.jsx');
+var Trackable = require('./trackable.js.jsx');
+var UserStore = require('../stores/user_store');
 
 var CLOSED_STATES = ['closed', 'resolved']
 var ONE_HOUR = 60 * 60 * 1000
@@ -309,7 +310,7 @@ var Bounty = React.createClass({
   },
 
   renderStartWorkButton: function() {
-    var currentUser = window.app.currentUser();
+    var currentUser = UserStore.getUser();
     var bounty = this.bounty();
 
     if (this.state.closed || bounty.state === 'closed') {
