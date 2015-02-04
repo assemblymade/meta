@@ -97,7 +97,8 @@ class window.Application
   currentProductBalance: ->
     if user = @currentUser()
       return 0 unless app.product
-      user.get('product_balance')[app.product.id]
+      product_balance = user.get('product_balance')
+      (product_balance && product_balance[app.product.id]) || 0
 
   mountReactComponents: (el)->
     for node in el.querySelectorAll('[data-react-class]')
