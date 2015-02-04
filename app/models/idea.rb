@@ -243,5 +243,12 @@ class Idea < ActiveRecord::Base
     })
   end
 
+  def twitter_description
+    self.body.truncate(199)
+  end
+
+  def twitter_title
+    self.name.truncate(69)
+  end
 
 end
