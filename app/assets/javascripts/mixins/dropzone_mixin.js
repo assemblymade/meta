@@ -1,8 +1,9 @@
-var ActionTypes               = window.CONSTANTS.ActionTypes;
-var AttachmentActionCreators  = require('../actions/attachment_action_creators');
-var AttachmentStore           = require('../stores/attachment_store');
-var Dropzone                  = window.Dropzone;
-var NewCommentActionCreators  = require('../actions/new_comment_action_creators');
+var ActionTypes = require('../constants').ActionTypes;
+var AttachmentActionCreators = require('../actions/attachment_action_creators');
+var AttachmentStore = require('../stores/attachment_store');
+var Dispatcher = require('../dispatcher');
+var Dropzone = window.Dropzone;
+var NewCommentActionCreators = require('../actions/new_comment_action_creators');
 var UploadingAttachmentsStore = require('../stores/uploading_attachments_store');
 
 var DropzoneMixin = {

@@ -1,12 +1,9 @@
-/** @jsx React.DOM */
-
 jest.dontMock(pathToFile('components/chat_notifications.js.jsx'));
 jest.dontMock(pathToFile('mixins/local_storage.js'));
 
 describe('ChatNotifications', function() {
   global.localStorage = {};
   global.moment = require.requireActual('moment');
-  global.Dispatcher = require(pathToFile('dispatcher.js'));
   global.ChatNotificationsStore = require(pathToFile('stores/chat_notifications_store.js'));
 
   var Chat = require(pathToFile('components/chat_notifications.js.jsx'));

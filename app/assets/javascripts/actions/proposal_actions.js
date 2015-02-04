@@ -1,4 +1,5 @@
-var ActionTypes = window.CONSTANTS.ActionTypes;
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher');
 var ProductStore = require('../stores/product_store.js')
 
 var ProposalActions = {

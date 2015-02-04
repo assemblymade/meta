@@ -1,10 +1,8 @@
-jest.dontMock(pathToFile('stores/archived_news_feed_items_store'));
-
-var ActionTypes = global.CONSTANTS.ActionTypes;
+jest.dontMock(appFile('stores/archived_news_feed_items_store'));
 
 describe('ArchivedNewsFeedItemsStore', function(){
-  var callback;
-  var ArchivedNewsFeedItemsStore;
+  var ActionTypes = require(appFile('constants')).ActionTypes;
+  var ArchivedNewsFeedItemsStore, callback, Dispatcher;
 
   beforeEach(function() {
     Dispatcher = require(pathToFile('dispatcher'));

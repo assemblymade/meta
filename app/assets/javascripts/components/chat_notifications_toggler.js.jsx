@@ -1,5 +1,6 @@
-var CONSTANTS = window.CONSTANTS;
+var CONSTANTS = require('../constants');
 var ChatNotificationsStore = require('../stores/chat_notifications_store');
+var Dispatcher = require('../dispatcher');
 var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
 var LocalStorageMixin = require('../mixins/local_storage');
 var moment = require('moment');

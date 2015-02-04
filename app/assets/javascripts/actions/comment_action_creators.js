@@ -1,7 +1,5 @@
-// var Dispatcher = require('../dispatcher')
-
-var CONSTANTS = window.CONSTANTS;
-var ActionTypes = CONSTANTS.ActionTypes;
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher')
 var UserStore = require('../stores/user_store');
 
 var CommentActionCreators = {

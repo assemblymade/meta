@@ -1,4 +1,5 @@
-var ActionTypes = window.CONSTANTS.ActionTypes;
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher');
 var routes = require('../routes')
 
 module.exports = {

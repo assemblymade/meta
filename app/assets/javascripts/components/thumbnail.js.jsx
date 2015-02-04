@@ -10,8 +10,7 @@ var Thumbnail = React.createClass({
 
   getDefaultProps: function() {
     var defaults = {}
-
-    var firesizeEl = document.getElementsByName('firesize-url')
+    var firesizeEl = document && document.getElementsByName('firesize-url')
     if (firesizeEl[0]) {
       defaults.basePath = firesizeEl[0].content
     }

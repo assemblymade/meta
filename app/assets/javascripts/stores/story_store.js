@@ -1,3 +1,5 @@
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher');
 var PusherStore = require('../stores/pusher_store')
 var Store = require('./es6_store')
 var StoryActions = require('../actions/story_actions')
@@ -11,8 +13,6 @@ var _dispatchToken,
 // this way we know if the read state has been validated since
 // by default we assume stories are unread
 var _readStateReadAt = null
-
-var ActionTypes = window.CONSTANTS.ActionTypes;
 
 class StoryStore extends Store {
   constructor() {

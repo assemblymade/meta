@@ -1,6 +1,5 @@
-var Dispatcher = window.Dispatcher
-var CONSTANTS = window.CONSTANTS
-var ActionTypes = CONSTANTS.ActionTypes
+var ActionTypes = require('../constants').ActionTypes
+var Dispatcher = require('../dispatcher');
 
 var routes = [
   ['/ideas', require('../components/ideas/ideas_index.js.jsx'), _showIdeas],

@@ -4,8 +4,8 @@
  * This store is for multiple screenshots
  */
 
-const ActionTypes = window.CONSTANTS.ActionTypes;
-const Dispatcher = window.Dispatcher;
+const ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher');
 const Store = require('./es6_store');
 
 let screenshots = [];

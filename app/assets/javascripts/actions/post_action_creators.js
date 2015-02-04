@@ -1,4 +1,5 @@
-var ActionTypes = window.CONSTANTS.ActionTypes;
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher');
 
 var PostActionCreators = {
   fetchPosts: function(path, productSlug) {

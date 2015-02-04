@@ -1,5 +1,6 @@
-var routes = require('../routes')
-var ActionTypes = window.CONSTANTS.ActionTypes
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher');
+var routes = require('../routes');
 
 var rrUrl = ''
 if ($('meta[name=read-raptor-url]')) {

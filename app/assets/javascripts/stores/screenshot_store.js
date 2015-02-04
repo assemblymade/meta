@@ -4,8 +4,8 @@
  * This store is for (uploading) a single screenshot
  */
 
-const ActionTypes = window.CONSTANTS.ActionTypes;
-const Dispatcher = window.Dispatcher;
+const ActionTypes = require('../constants').ActionTypes;
+const Dispatcher = require('../dispatcher');
 const Store = require('./es6_store');
 
 let uploading = false;

@@ -1,5 +1,6 @@
 var Store = require('./es6_store')
-var ActionTypes = window.CONSTANTS.ActionTypes
+var ActionTypes = require('../constants').ActionTypes
+var Dispatcher = require('../dispatcher');
 
 var _dispatchToken
 var _product = {}

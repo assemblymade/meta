@@ -1,6 +1,5 @@
-var CONSTANTS = window.CONSTANTS;
-var ActionTypes = CONSTANTS.ActionTypes;
-var Dispatcher = window.Dispatcher;
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher');
 var Routes = require('../routes');
 var page = require('page');
 

@@ -1,5 +1,5 @@
-var ActionTypes = window.CONSTANTS.ActionTypes;
-var Dispatcher = window.Dispatcher;
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher');
 var Routes = require('../routes');
 
 var LoversActionCreators = {

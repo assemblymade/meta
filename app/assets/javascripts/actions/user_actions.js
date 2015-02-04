@@ -1,4 +1,4 @@
-var routes = require('../routes')
+var routes = require('../routes');
 
 module.exports = {
   newSession: function() {

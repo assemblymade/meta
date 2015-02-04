@@ -1,6 +1,6 @@
-var CONSTANTS = window.CONSTANTS;
-// var Dispatcher = require('../dispatcher');
-var ActionTypes = CONSTANTS.ActionTypes;
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher');
+
 
 var PaginationActionCreators = {
   changePage: function(actionCall, page) {

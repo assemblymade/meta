@@ -1,4 +1,3 @@
-var CONSTANTS = window.CONSTANTS;
 var StoryStore = require('../stores/story_store');
 
 var TitleNotificationsCount = React.createClass({

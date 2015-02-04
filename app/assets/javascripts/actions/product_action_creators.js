@@ -1,6 +1,6 @@
-// var Dispatcher = require('../dispatcher')
-var ActionTypes = window.CONSTANTS.ActionTypes
-var routes = require('../routes')
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher');
+var routes = require('../routes');
 
 module.exports = {
   followClicked: function(product_id) {

@@ -1,8 +1,6 @@
-// var Dispatcher = require('../dispatcher')
-
-var CONSTANTS = window.CONSTANTS;
-var ActionTypes = CONSTANTS.ActionTypes;
+var ActionTypes = require('../constants').ActionTypes;
 var BountiesStore = require('../stores/bounties_store.js');
+var Dispatcher = require('../dispatcher');
 var ProductStore = require('../stores/product_store.js');
 var Routes = require('../routes');
 

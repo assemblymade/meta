@@ -1,18 +1,14 @@
-/** @jsx React.DOM */
+var Avatar = require('./ui/avatar.js.jsx')
+var UserLink = require('./user_link.js.jsx')
 
-(function() {
-  var Avatar = require('./ui/avatar.js.jsx')
-  var UserLink = require('./user_link.js.jsx')
-
-  var AvatarLink = React.createClass({
-    render: function() {
-      return UserLink(this.props, Avatar(this.props))
-    }
-  });
-
-  if (typeof module !== 'undefined') {
-    module.exports = AvatarLink
+var AvatarLink = React.createClass({
+  render: function() {
+    return (
+      <UserLink {...this.props}>
+        <Avatar user={this.props} />
+      </UserLink>
+    );
   }
+});
 
-  window.AvatarLink = AvatarLink
-})();
+module.exports = window.AvatarLink = AvatarLink;

@@ -9,7 +9,6 @@ describe('ChatNotificationsToggler', function() {
   beforeEach(function() {
     global.localStorage = {};
     global.moment = require.requireActual('moment');
-    global.Dispatcher = require(pathToFile('dispatcher.js'));
 
     ChatNotificationsStore = require(pathToFile('stores/chat_notifications_store.js'));
 
