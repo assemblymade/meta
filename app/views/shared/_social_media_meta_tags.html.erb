@@ -26,14 +26,12 @@
   <meta property="og:image" content="<%= @product.hero_image_url %>" />
   <meta property="og:description" content="<%= @product.lead %>" />
 
-<% elsif idea_show_route? %>
-  <% if @idea %>
-    <% if @idea.user.twitter_nickname %>
-      <meta name="twitter:creator" content="@<%= @idea.user.twitter_nickname %>">
-    <% else %>
-      <meta name="twitter:creator" content="@asm"
-    <% end %>
-    <meta name="twitter:description" content="<%= @idea.twitter_description %>">
-    <meta name="twitter: title" content="<%= @idea.twitter_title %>">
+<% elsif idea_show_route? && @idea %>
+  <% if @idea.user.twitter_nickname %>
+    <meta name="twitter:creator" content="@<%= @idea.user.twitter_nickname %>">
+  <% else %>
+    <meta name="twitter:creator" content="@asm">
   <% end %>
+  <meta name="twitter:description" content="<%= @idea.twitter_description %>">
+  <meta name="twitter: title" content="<%= @idea.twitter_title %>">
 <% end %>

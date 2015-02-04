@@ -1,6 +1,6 @@
 class Tweeter
 
-  def get_idea_participants(idea)
+  def idea_participants(idea)
     if idea.user.twitter_nickname
       [idea.user.twitter_nickname, "asm"]
     else
@@ -8,27 +8,26 @@ class Tweeter
     end
   end
 
-  def get_idea_marks(idea)
+  def idea_marks(idea)
     ["ideas"]
   end
 
   def compute_password
     a = Time.now.to_i.to_s
     code = ENV['TWEETER_PASSWORD'].to_s + a
-    puts code
     encoded = Digest::SHA256.new.hexdigest(code)
-    puts encoded
     encoded
   end
 
   def tweet_idea(idea)
-    password = compute_password()
+    password = compute_password
     url = "https://asm-tweeter.herokuapp.com/idea/"+password
-    the_data = {}
-    the_data['idea_name'] = idea.twitter_title
-    the_data['users'] = get_idea_participants(idea)
-    the_data['url'] = IdeaSerializer.new(idea).url
-    the_data['hashtags'] = get_idea_marks(idea)
+    the_data = {
+      idea_name: idea.twitter_title,
+      users: idea_participants(idea),
+      url: IdeaSerializer.new(idea).url,
+      hashtags: idea_marks(idea)
+    }
     request :post, url, the_data
   end
 
