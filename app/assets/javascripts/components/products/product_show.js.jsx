@@ -48,14 +48,16 @@ let ProductShow = React.createClass({
     let slug = product.slug;
     let user = UserStore.getUser();
     let leftColumnClasses = React.addons.classSet({
-      col: true,
-      'col-8': true,
-      'px3': true
+      'mb2': true,
+      'px3': true,
+      'sm-col': true,
+      'sm-col-8': true,
+      'sm-mb0': true
     });
 
     let rightColumnClasses = React.addons.classSet({
-      'col': true,
-      'col-4': true,
+      'md-col': true,
+      'md-col-4': true,
       'px3': true
     });
 
@@ -83,7 +85,7 @@ let ProductShow = React.createClass({
 
                 <Screenshots key="product-screenshots" />
 
-                <div className="clearfix p4">
+                <div className="clearfix p3 sm-p4">
                   <h5 className="mt0 mb2" style={{ fontSize: 16 }}>
                     {product.pitch}
                   </h5>
