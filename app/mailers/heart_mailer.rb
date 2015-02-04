@@ -24,7 +24,12 @@ class HeartMailer < BaseMailer
       "@#{@lovers[0].username} and #{@lovers.size - 1} others like"
     end
 
-    @fun = "It's in the air."
+    @fun = [
+      "It's in the air.",
+      "Everywhere I look around.",
+      "In the whisper of the trees.",
+      "In the rising of the sun.",
+    ].sample
 
     prevent_delivery_to_unsubscribed_users
 
