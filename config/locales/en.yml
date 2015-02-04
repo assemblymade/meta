@@ -54,20 +54,26 @@ en:
 
   models:
     comment:
+      title: '%{title}'
       description:
         owner: 'your comment on %{title}'
     discussion:
+      title: '%{title}'
       description:
         owner: '%{title}'
     idea:
+      title: '%{title}'
       description:
-        owner: 'your idea %{name}'
+        owner: 'your idea %{title}'
     post:
+      title: '%{title}'
       description:
         owner: '%{title}'
     team_membership:
+      title: '%{product_name} introduction'
       description:
         owner: 'your introduction'
     task:
+      title: '%{title}'
       description:
         owner: '%{title}'

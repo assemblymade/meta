@@ -21,11 +21,7 @@ module EmailCampaigns
 
           if oldest_unsent_heart.nil? || oldest_unsent_heart < 30.minutes.ago
 
-            # TODO: remove feature flag
-            if User.find(user_id).staff?
-              send[user_id] = unsent_hearts.map(&:id) if unsent_hearts.any?
-            end
-
+            send[user_id] = unsent_hearts.map(&:id) if unsent_hearts.any?
             unsent_hearts.each{|h| h.update! sent_at: Time.now }
           end
         end
