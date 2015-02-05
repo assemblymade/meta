@@ -23,7 +23,7 @@
 
                 <p class="center">
                   <a href="<%= user_url(@awarder) %>">@<%= @awarder.username %></a>
-                  awarded your recent work on <strong><%= @product.name %></strong> which minted you <strong><%= number_with_delimiter @wip.value %> coins</strong> - because it was awesome.<br>
+                  awarded your recent work on <strong><%= @product.name %></strong> which minted you <strong><%= number_with_delimiter @wip.earnable_coins_cache %> coins</strong> - because it was awesome.<br>
                 </p>
 
                 <br/>
