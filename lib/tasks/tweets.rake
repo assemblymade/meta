@@ -1,11 +1,8 @@
 namespace :tweeter do
   task :tweet_new_ideas => :environment do
-    Idea.where(last_tweeted_at: nil).each do |a|
-      time_difference = Time.now - a.created_at
-
-      if time_difference >= 24*3600
-        Tweeter.new.tweet_idea(a)
-      end
+    ONE_DAY = 24 * 60 * 60
+    Idea.where(last_tweeted_at: nil).where('created_at < ?', Time.now.to_i - ONE_DAY).each do |a|
+      Tweeter.new.tweet_idea(a)
     end
   end
 end
