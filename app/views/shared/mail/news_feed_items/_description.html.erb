@@ -1,3 +1,3 @@
 <a href="<%= url_for(description.url_params) %>">
-  <%= t "models.#{description.target.class.model_name.singular}.description.owner", title: description.target.try(:title) %>
+  <%= t "models.#{description.target.class.model_name.singular}.description.owner", description.target.attributes.symbolize_keys %>
 </a>

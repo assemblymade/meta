@@ -50,6 +50,10 @@ class NewsFeedItem < ActiveRecord::Base
     self.source_id # currently this is always a user, might be polymorphic in the future
   end
 
+  def user
+    self.source
+  end
+
   def hearted(o)
     target.try(:hearted)
   end

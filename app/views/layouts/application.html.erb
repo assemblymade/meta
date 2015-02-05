@@ -61,19 +61,33 @@
 
     <% if signed_in? %>
       <script>
-        window.app.setCurrentUser(<%= UserWithBalanceSerializer.new(current_user, scope:  current_user).to_json.html_safe %>);
+        // window.pusher needs to be defined before
+        // the content_for block executes
         if (typeof Pusher !== 'undefined') {
           window.pusher = new Pusher($('meta[name=pusher-key]').attr('content'), {
             authEndpoint: <%= webhooks_pusher_path.to_json.html_safe %>
           });
-
-          Dispatcher.dispatch({
-            type: 'PUSHER_INITIALIZED',
-            client: pusher
-          })
         }
       </script>
+
+      <% content_for :javascript do %>
+        <script>
+          window.app.setCurrentUser(<%= UserWithBalanceSerializer.new(current_user, scope:  current_user).to_json.html_safe %>);
+          if (window.pusher) {
+            Dispatcher.dispatch({
+              type: 'PUSHER_INITIALIZED',
+              client: pusher
+            })
+          }
+        </script>
+      <% end %>
       <%= track_readraptor(@stories_to_mark_as_read) if @stories_to_mark_as_read %>
     <% end %>
+
+    <% if signed_in? %>
+      <script src="https://assets.signupsumo.com/signups.js" data-token="-2Vhyz9Dk78ARgPrEHwW" data-auto="false"></script>
+      <script>SignupSumo.send(<%= current_user.email.to_json.html_safe %>)</script>
+    <% end %>
+
   </body>
 </html>

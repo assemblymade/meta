@@ -1,10 +1,12 @@
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher');
 var Store = require('./es6_store')
 var SubscriptionActionCreators = require('../actions/story_actions')
 
 var _dispatchToken,
     _subscribables = {}
 
-var ActionTypes = window.CONSTANTS.ActionTypes;
+var ActionTypes = require('../constants').ActionTypes;
 
 class SubscriptionsStore extends Store {
   constructor() {

@@ -1,4 +1,3 @@
-var CONSTANTS = window.CONSTANTS;
 var ProductFollowersStore = require('../stores/product_followers_store');
 var ProductActionCreators = require('../actions/product_action_creators');
 var UserActions = require('../actions/user_actions')

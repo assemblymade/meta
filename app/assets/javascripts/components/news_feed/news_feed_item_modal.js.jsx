@@ -19,7 +19,7 @@ var NewsFeedItemModal = React.createClass({
 
   render: function() {
     return (
-      <Lightbox size="modal-lg">
+      <Lightbox>
         {this.renderItem()}
       </Lightbox>
     );

@@ -1,7 +1,6 @@
-// var Dispatcher = require('../dispatcher')
 var Store = require('./store')
-var ActionTypes = window.CONSTANTS.ActionTypes
-var Dispatcher = window.Dispatcher;
+var ActionTypes = require('../constants').ActionTypes
+var Dispatcher = require('../dispatcher');
 
 var _dispatchToken;
 var _currentUser = null;
@@ -54,10 +53,15 @@ function _setUser(user) {
 
 var dataTag = document.getElementById('UserStore');
 if (dataTag) {
+  var user = JSON.parse(dataTag.innerHTML);
+
   Dispatcher.dispatch({
     type: ActionTypes.USER_RECEIVE,
-    user: JSON.parse(dataTag.innerHTML)
+    user: user
   });
+
+  // FIXME (pletcher) This is a hack for while we're still using a bit of Backbone
+  window.app.setCurrentUser(user);
 }
 
 module.exports = UserStore

@@ -1,5 +1,6 @@
 var EventEmitter = require('events').EventEmitter
-var ActionTypes = window.CONSTANTS.ActionTypes
+var ActionTypes = require('../constants').ActionTypes
+var Dispatcher = require('../dispatcher');
 
 var _dispatchToken
 var _currentChatRoomId

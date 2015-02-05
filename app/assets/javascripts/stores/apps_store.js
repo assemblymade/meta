@@ -1,5 +1,6 @@
-var ActionTypes = window.CONSTANTS.ActionTypes
+var ActionTypes = require('../constants').ActionTypes
 var AppsActionCreators = require('../actions/apps_action_creators')
+var Dispatcher = require('../dispatcher');
 var Store = require('./es6_store')
 var url = require('url')
 

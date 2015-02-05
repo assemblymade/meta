@@ -3,8 +3,8 @@ var Store = require('./es6_store')
 var _heartables = {}
 var _userHearts = {}
 
-// var Dispatcher = require('../dispatcher')
-var ActionTypes = window.CONSTANTS.ActionTypes;
+var Dispatcher = require('../dispatcher')
+var ActionTypes = require('../constants').ActionTypes;
 var LoveActionCreators = require('../actions/love_action_creators');
 
 class LoveStore extends Store {

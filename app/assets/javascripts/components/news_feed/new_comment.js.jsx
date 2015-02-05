@@ -1,4 +1,3 @@
-var ActionTypes = window.CONSTANTS.ActionTypes;
 var BountyActionCreators = require('../../actions/bounty_action_creators');
 var Button = require('../ui/button.js.jsx');
 var CommentActionCreators = require('../../actions/comment_action_creators');

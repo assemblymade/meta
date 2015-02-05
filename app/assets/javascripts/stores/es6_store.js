@@ -4,7 +4,7 @@
  */
 
 var EventEmitter = require('events').EventEmitter
-var CHANGE_EVENT = window.CONSTANTS.CHANGE_EVENT
+var CHANGE_EVENT = require('../constants').CHANGE_EVENT
 
 class Es6Store extends EventEmitter {
   constructor() {

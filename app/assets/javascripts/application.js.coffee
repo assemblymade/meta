@@ -25,8 +25,6 @@
 #= require_tree ./views
 #= require ./textcomplete
 #= require ./polyfills
-#= require ./constants
-#= require ./dispatcher
 #= require ./components
 
 class window.Application
@@ -35,11 +33,6 @@ class window.Application
   setCurrentUser: (user) ->
     @_currentUser = new User(user)
     @trigger 'change:currentUser', @_currentUser
-
-    Dispatcher.dispatch
-      type: 'USER_SIGNED_IN'
-      user: @_currentUser
-
     @_currentUser
 
   currentUser: ->
@@ -104,7 +97,8 @@ class window.Application
   currentProductBalance: ->
     if user = @currentUser()
       return 0 unless app.product
-      user.get('product_balance')[app.product.id]
+      product_balance = user.get('product_balance')
+      (product_balance && product_balance[app.product.id]) || 0
 
   mountReactComponents: (el)->
     for node in el.querySelectorAll('[data-react-class]')

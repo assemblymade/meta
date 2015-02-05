@@ -1,5 +1,6 @@
-var ActionTypes = window.CONSTANTS.ActionTypes
+var ActionTypes = require('../constants').ActionTypes
 var AttachmentStore = require('./attachment_store')
+var Dispatcher = require('../dispatcher');
 var Store = require('./es6_store')
 
 var _comments = {}

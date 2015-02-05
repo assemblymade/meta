@@ -1,5 +1,7 @@
-const ActionTypes = window.CONSTANTS.ActionTypes;
-const Dispatcher = window.Dispatcher;
+'use strict';
+
+const ActionTypes = require('../constants').ActionTypes;
+const Dispatcher = require('../dispatcher');
 const ATTACHMENT_URL = '/upload/attachments';
 
 class ScreenshotActions {

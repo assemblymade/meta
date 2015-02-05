@@ -1,5 +1,5 @@
-// var Dispatcher = require('../dispatcher')
-var ActionTypes = window.CONSTANTS.ActionTypes
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher')
 
 module.exports = {
   clickLove: function(heartable_type, heartable_id) {

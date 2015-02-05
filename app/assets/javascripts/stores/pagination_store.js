@@ -1,6 +1,5 @@
-var CONSTANTS = window.CONSTANTS
-var ActionTypes = CONSTANTS.ActionTypes
-// var Dispatcher = require('../dispatcher')
+var ActionTypes = require('../constants').ActionTypes
+var Dispatcher = require('../dispatcher')
 var Store = require('./es6_store')
 var url = require('url')
 var qs = require('qs')

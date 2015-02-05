@@ -1,9 +1,10 @@
-var ArchivedNewsFeedItemsStore = require('../stores/archived_news_feed_items_store')
+var ArchivedNewsFeedItemsStore = require('../stores/archived_news_feed_items_store');
 var Heart = require('./heart.js.jsx');
-var NewsFeedItemActionCreators = require('../actions/news_feed_item_action_creators')
-var SubscriptionsStore = require('../stores/subscriptions_store')
-var TextPost = require('./ui/text_post.js.jsx')
-var UserStore = require('../stores/user_store')
+var NewsFeedItemActionCreators = require('../actions/news_feed_item_action_creators');
+var ProductStore = require('../stores/product_store');
+var SubscriptionsStore = require('../stores/subscriptions_store');
+var TextPost = require('./ui/text_post.js.jsx');
+var UserStore = require('../stores/user_store');
 
 var Update = React.createClass({
 

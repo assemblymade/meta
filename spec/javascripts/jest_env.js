@@ -9,7 +9,6 @@ global.appFile = pathToFile;
 global._ = require('underscore');
 global.$ = require('jquery');
 
-require('../../app/assets/javascripts/lib/keymirror')
 global.CONSTANTS = require('../../app/assets/javascripts/constants')
 
 global.EventEmitter = require('events').EventEmitter

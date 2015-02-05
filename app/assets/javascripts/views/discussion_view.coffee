@@ -1,5 +1,4 @@
 #= require notify.js
-#= require ../dispatcher
 
 # this is the bounty/discussions view
 
@@ -28,7 +27,9 @@ class window.DiscussionView extends Backbone.View
     @listenTo(@model, 'change:state', @wipStateChanged)
     @listenTo(@model, 'change:own_comments', @ownCommentsChanged)
     @listenTo(app.wipEvents, 'add', @wipEventAdded)
-    @listenTo(app.wipEvents, 'sync', @wipEventServerCreated)
+    # FIXME (pletcher) It looks like this event isn't used; remove this
+    # line and the callback if that's the case
+    # @listenTo(app.wipEvents, 'sync', @wipEventServerCreated)
 
     @wipStateChanged()
     @ownCommentsChanged()

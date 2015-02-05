@@ -1,6 +1,6 @@
-var NewsFeedItemsStore = require ('../stores/news_feed_items_store.js')
-
-var ActionTypes = window.CONSTANTS.ActionTypes
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher');
+var NewsFeedItemsStore = require ('../stores/news_feed_items_store.js');
 
 module.exports = {
   retrieveNewsFeedItems: function(params) {

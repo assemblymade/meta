@@ -1,8 +1,9 @@
-// var Dispatcher = require('../dispatcher')
+'use strict';
 
-var CONSTANTS = window.CONSTANTS
-var ActionTypes = CONSTANTS.ActionTypes
-var uploadUrl = '/upload/attachments'
+const ActionTypes = require('../constants').ActionTypes;
+const Dispatcher = require('../dispatcher');
+
+const uploadUrl = '/upload/attachments'
 
 class AttachmentActionCreators {
   uploadAttachment(commentId) {

@@ -1,0 +1,15 @@
+<% nfi = entry.news_feed_item %>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%">
+  <tr>
+    <td style="width:20px;"></td>
+    <td class="collapse text-2" style="color: #353941;">
+      <span class="grey-2">
+        Your comment on
+      </span>
+      <a href="<%= url_for(nfi.target.url_params) %>" class="bold text-stealth-link">
+        <%= t "models.#{nfi.target.class.model_name.singular}.description.owner", TranslationSerializer.new(nfi.target).as_json %>
+      </a>
+    </td>
+  </tr>
+</table>

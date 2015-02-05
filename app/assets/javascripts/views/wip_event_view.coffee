@@ -1,6 +1,4 @@
 #= require_tree ../../../templates/events
-#= require ../dispatcher
-#= require ../constants
 #= require marked
 
 markdown = (text) ->

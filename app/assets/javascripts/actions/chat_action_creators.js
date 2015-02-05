@@ -1,5 +1,6 @@
-// var Dispatcher = require('../dispatcher')
-var ActionTypes = window.CONSTANTS.ActionTypes
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher')
+
 var alreadyJoined = {};
 
 var chatActionCreators = {

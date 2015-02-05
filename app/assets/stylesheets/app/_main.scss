@@ -42,13 +42,6 @@ a:focus {
 .img-rounded {
   border-radius: $border-radius-base;
 }
-.shadow {
-  box-shadow: 0px 1px 2px 0px $brand-shadow;
-}
-.shadow-light {
-  box-shadow: 0px 0px 1px 0px $brand-shadow;
-}
-
 
 // -- headers -------------------
 h1, h2, h3, h4, h5, h6 {

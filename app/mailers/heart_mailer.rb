@@ -1,5 +1,5 @@
 class HeartMailer < BaseMailer
-  layout 'email'
+  layout 'email_tile'
 
   helper :markdown
   helper :app_icon
@@ -11,8 +11,9 @@ class HeartMailer < BaseMailer
 
     @user = User.find(user_id)
     @hearts = Heart.find(heart_ids)
-    @heartables = @hearts.group_by(&:heartable).keys
+    @heartables = @hearts.group_by(&:heartable)
     @lovers = User.where(id: @hearts.group_by(&:user_id).keys)
+    @products = @heartables.keys.map(&:product).compact.uniq
 
     lovers_description = case @lovers.size
     when 1
@@ -22,6 +23,13 @@ class HeartMailer < BaseMailer
     else
       "@#{@lovers[0].username} and #{@lovers.size - 1} others like"
     end
+
+    @fun = [
+      "It's in the air.",
+      "Everywhere I look around.",
+      "In the whisper of the trees.",
+      "In the rising of the sun.",
+    ].sample
 
     prevent_delivery_to_unsubscribed_users
 

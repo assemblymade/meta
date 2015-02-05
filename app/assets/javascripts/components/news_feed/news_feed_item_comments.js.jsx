@@ -1,18 +1,16 @@
 // TODO This lib is in application.js (chrislloyd)
 // var marked = require('marked')
 
-var CONSTANTS = window.CONSTANTS.NEWS_FEED_ITEM;
 var ActivityFeedComment = require('../activity_feed_comment.js.jsx');
 var BountyStore = require('../../stores/bounty_store');
 var Comment = require('../comment.js.jsx');
-var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
 var DiscussionActionCreators = require('../../actions/discussion_action_creators');
 var DiscussionStore = require('../../stores/discussion_store');
-var Dispatcher = window.Dispatcher;
 var Drawer = require('../ui/drawer.js.jsx');
 var Icon = require('../ui/icon.js.jsx');
 var IdeaSharePanel = require('../ideas/idea_share_panel.js.jsx');
 var NewComment = require('./new_comment.js.jsx');
+var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
 var NewsFeedItemBountyClose = require('./news_feed_item_bounty_close.js.jsx');
 var NewsFeedItemBountyCommentReference = require('./news_feed_item_bounty_comment_reference.js.jsx');
 var NewsFeedItemBountyReopen = require('./news_feed_item_bounty_reopen.js.jsx');
@@ -384,11 +382,7 @@ var NewsFeedItemComments = React.createClass({
   }
 });
 
-if (typeof module !== 'undefined') {
-  module.exports = NewsFeedItemComments;
-}
-
-window.NewsFeedItemComments = module.exports;
+module.exports = window.NewsFeedItemComments = NewsFeedItemComments;
 
 function parseEvent(event, awardUrl, editUrl) {
   var renderedEvent;

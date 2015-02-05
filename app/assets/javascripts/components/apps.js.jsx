@@ -115,7 +115,7 @@ var Apps = React.createClass({
     return <div>
       {this.renderAppsList(_(this.state.apps).first(3))}
       {this.renderShowcases()}
-      {this.renderAppsList(this.state.apps.slice(2, 2 + 6))}
+      {this.renderAppsList(this.state.apps.slice(3, 3 + 6))}
 
       <div className="bg-white p3 center clearfix mb3 rounded shadow">
           <strong>Don't know where to start?</strong> The community is fast-tracking <a href="/signupsumo">Signup Sumo</a> this week.

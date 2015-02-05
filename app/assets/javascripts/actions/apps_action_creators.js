@@ -1,6 +1,7 @@
-var ActionTypes = window.CONSTANTS.ActionTypes;
-var elasticsearch = require('elasticsearch')
-var routes = require('../routes')
+var ActionTypes = require('../constants').ActionTypes;
+var Dispatcher = require('../dispatcher');
+var elasticsearch = require('elasticsearch');
+var routes = require('../routes');
 
 var AppsActionCreators = {
   search: function(search) {

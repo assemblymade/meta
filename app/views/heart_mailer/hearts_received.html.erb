@@ -1,59 +1,67 @@
-<table class="row">
-  <tr>
-    <td class="wrapper last">
-      <table class="twelve columns">
-        <tr>
-          <td>
-            <center>
-              <% @lovers.each do |lover| %>
-                <%= image_tag(lover.avatar.url(50), width: 50, height: 50, class: 'img-circle', style: 'display:inline-block;clear:none;float:none') %>
-              <% end %>
-            </center>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h1 class="center">
-              You got the love!
-            </h1>
-            <p class="center">
-              You've received some hearts on your recent Activity around Assembly. Check it out:
-            </p>
-          </td>
-        </tr>
+<center>
+  <!-- inner / gutter -->
+    <div class="width-toggle tile">
+     <!-- tile header -->
+       <table class="width-toggle" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+          <tbody class="width-toggle">
+            <tr class="width-toggle">
+              <td class="border-bottom-grey-4" style="padding-top:16px; padding-bottom:16px; padding-left:16px;">
+                <div style="display:inline-block; text-align:left;">
+                  <div class="h2 bold collapse" style="margin-bottom:4px">
+                    <font class="h2 bold collapse">
+                      You got some love
+                    </font>
+                  </div>
+                  <% if @products.any? %>
+                    <div class="h5 collapse grey-2">
+                      in <%= @products.map(&:name).to_sentence(last_word_connector: ' and ') %>
+                    </div>
+                  <% end %>
+                </div>
+              </td>
+          </tr>
+        </tbody>
       </table>
-    </td>
-  </tr>
-</table>
 
-<% @heartables.each do |heartable| %>
-  <table class="row">
-    <tr style="">
-      <td class="wrapper">
-        <table class="three columns hide-for-small">
-          <tr>
-            <td>
-              <% if !heartable.product.nil? %>
-                <%= app_icon(heartable.product, size: 30) %>
-                <span style="padding-left: 10px">
-                  <%= heartable.product.name %>
-                </span>
+       <!-- tile main -->
+      <table class="width-toggle" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="max-width:600px; display:block;">
+        <tbody class="width-toggle" style="display:block;">
+          <tr class="width-toggle" style="display:block;">
+            <td class="width-toggle" style="display:block;">
+
+              <% @heartables.each do |heartable, hearts| %>
+                <%= render 'emails/empty_spacer' %>
+                <%= render partial: "shared/mail/#{heartable.class.model_name.plural}/entry", object: heartable %>
+
+                <table class="border-bottom-grey-4" border="0" cellpadding="0" cellspacing="0" style="text-align:left; width:100%;padding-top:5px;padding-bottom:20px">
+                  <tr>
+                    <td style="width:20px;">
+                    <td class="text-2 grey-2">
+                      <%= image_tag('emails/heart_ec3750_64.png', width: '14', style: 'vertical-align:-2px') %>
+
+                      <span class="black">@<%= hearts.first.user.username %></span>
+                      <% if hearts.count == 1 %>
+                        likes this
+                      <% else %>
+                        and <%= pluralize(hearts.count - 1, 'other') %> like this
+                      <% end %>
+                    </td>
+                  </tr>
+                </table>
               <% end %>
+
             </td>
           </tr>
-        </table>
-      </td>
-      <td class="wrapper">
-        <table class="nine columns">
-          <tr>
-            <td>
-              <%= image_tag('emails/heart_ec3750_64.png', size: '16x16', style: 'padding-top: 4px;height:16px !important') %>
-              &nbsp;x&nbsp;<%= heartable.hearts_count %>
-              – <%= render partial: "shared/mail/#{heartable.class.model_name.plural}/description", object: heartable %>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-<% end %>
+        </tbody>
+       </table>
+    </div>
+</center>
+
+<!-- gap -->
+<!--[if mso]>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr><td class="office-gap-2">&nbsp;</td></tr>
+</table>
+<![endif]-->
+<div class="gap-2"></div>
+<!-- prefooter -->

@@ -11,8 +11,6 @@ var DropdownMixin = {
     this.unbindRootCloseHandlers()
   },
 
-  // --
-
   toggleDropdown: function() {
     return this.setDropdownState(!this.state.open)
   },
@@ -20,8 +18,6 @@ var DropdownMixin = {
   isDropdownOpen: function() {
     return this.state.open
   },
-
-  // --
 
   setDropdownState: function (isOpen, cb) {
     if (isOpen) {
