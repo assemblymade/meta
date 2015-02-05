@@ -297,6 +297,8 @@ button, .button {
   font-size: 13px;
   line-height: 2rem;
   border-radius: 999px;
+
+  text-align: center;
 }
 
 .button-default {
@@ -338,9 +340,10 @@ button, .button {
   cursor: default;
 }
 
-.button-block {
-  text-align: center;
+.button-block,
+button.button-block {
   display: block;
+  width: 100%;
 }
 
 // For the about page

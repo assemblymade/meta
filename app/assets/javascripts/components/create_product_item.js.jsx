@@ -44,8 +44,9 @@ var CreateProductItem = React.createClass({
     return <ButtonDropdown
       type='primary'
       dropdownMenu={dropdownMenu}
-      block={true}
-      action={this.handleClick(primaryAction)}>{primaryLabel}</ButtonDropdown>
+      action={this.handleClick(primaryAction)}>
+      {primaryLabel}
+    </ButtonDropdown>
   },
 
   handleClick: function(action) {
