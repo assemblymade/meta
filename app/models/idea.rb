@@ -184,7 +184,12 @@ class Idea < ActiveRecord::Base
   end
 
   def rank
-    Idea.where('score > ?', score).count + 1
+    # Scores are being stored as double precision floats in PG but
+    # Rails doesn't send through the correct precision float. Adding the
+    # Epsiilon helps differentiate the scores.
+    Idea.where(greenlit_at: nil, flagged_at: nil, deleted_at: nil)
+        .where('score > ?', score + 0.00000001)
+        .count + 1
   end
 
   def percentile

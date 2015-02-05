@@ -55,10 +55,6 @@ var IdeasIndex = React.createClass({
 
     var topicsDropdownMenu = this.renderTopics()
 
-
-    var sumo = this.props.signupSumo
-    var octo = this.props.octobox
-
     return (
       <main role="main  bg-white">
 
