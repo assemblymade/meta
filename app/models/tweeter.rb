@@ -28,6 +28,9 @@ class Tweeter
       url: IdeaSerializer.new(idea).url,
       hashtags: idea_marks(idea)
     }
+
+    idea.update!({last_tweeted_at: Time.now()})
+
     request :post, url, the_data
   end
 

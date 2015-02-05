@@ -251,4 +251,8 @@ class Idea < ActiveRecord::Base
     self.name.truncate(69)
   end
 
+  def tweet_creation
+    Tweeter.new.tweet_idea(self)
+  end
+
 end
