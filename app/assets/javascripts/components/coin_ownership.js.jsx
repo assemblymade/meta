@@ -1,10 +1,13 @@
-var CONSTANTS = require('../constants');
-var Dispatcher = require('../dispatcher');
-var CoinOwnershipStore = require('../stores/coin_ownership_store');
+var AppCoins = require('./app_coins.js.jsx')
 var Avatar = require('./ui/avatar.js.jsx');
+var CoinOwnershipStore = require('../stores/coin_ownership_store');
+var CoinOwnershipStore = require('../stores/coin_ownership_store');
+var CONSTANTS = require('../constants');
+var CONSTANTS = window.CONSTANTS;
+var Dispatcher = require('../dispatcher');
 var PersonPicker = require('./person_picker.js.jsx');
 
-var CO = CONSTANTS.COIN_OWNERSHIP;
+const CO = CONSTANTS.COIN_OWNERSHIP;
 
 function preventDefault(fn) {
   return function(e) {
@@ -53,62 +56,62 @@ var CoinOwnership = React.createClass({
     var creator = this.state.creator;
 
     return (
-      <table className="table">
-        <thead>
-          <tr>
-            <th colSpan="2">Partner</th>
-            <th className="right-align">Coins</th>
-            <th className="right-align" style={{width: 130}}>Ownership</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
+      <div>
+        <table className="table">
+          <thead>
+            <tr>
+              <th colSpan="2">Partner</th>
+              <th className="right-align">Coins</th>
+              <th className="right-align" style={{width: 130}}>Ownership</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr className="active">
-            <td>&nbsp;</td>
-            <td style={{'white-space':"nowrap"}}>Unallocated coins</td>
-            <td className="right-align">
-              <span className="icon icon-app-coin text-coins"></span>
-              {numeral(this.unallocatedCoins()).format('0,0')}
-            </td>
-            <td></td>
-            <td>&nbsp;</td>
-          </tr>
+            <tr className="active">
+              <td>&nbsp;</td>
+              <td style={{'white-space':"nowrap"}}>Unallocated coins</td>
+              <td className="right-align">
+                <AppCoins n={this.unallocatedCoins()} />
+              </td>
+              <td></td>
+              <td>&nbsp;</td>
+            </tr>
 
-          <tr className="">
-            <td><Avatar user={creator} /></td>
-            <td>
-              @{creator.username}
-            </td>
-            <td className="right-align">
-              <span style={{"white-space":"nowrap"}}>
-                <span className="icon icon-app-coin text-coins"></span>
-                {numeral(creator.coins).format('0,0')}
-              </span>
-            </td>
-            <td className="right-align">
-              <strong>{this.ownership(creator)}%</strong>
-            </td>
-            <td>
-              <span className="gray-2">(you)</span>
-            </td>
-          </tr>
+            <tr className="">
+              <td><Avatar user={creator} /></td>
+              <td>
+                @{creator.username}
+              </td>
+              <td className="right-align">
+                <span style={{"white-space":"nowrap"}}>
+                  <AppCoins n={creator.coins} />
+                </span>
+              </td>
+              <td className="right-align">
+                <strong>{this.ownership(creator)}%</strong>
+              </td>
+              <td>
+                <span className="gray-2">(you)</span>
+              </td>
+            </tr>
 
-          {this.rows()}
+            {this.rows()}
 
-          <tr>
-            <td><Avatar user={this.state.potentialUser} /></td>
-            <td colSpan="3">
-              <PersonPicker ref="picker" url="/_es"
-                            onUserSelected={this.handleUserSelected}
-                            onValidUserChanged={this.handleValidUserChanged} />
-            </td>
-            <td>
-              {this.addButton()}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            <tr>
+              <td><Avatar user={this.state.potentialUser} /></td>
+              <td colSpan="3">
+                <PersonPicker ref="picker" url="/_es"
+                              onUserSelected={this.handleUserSelected}
+                              onValidUserChanged={this.handleValidUserChanged} />
+              </td>
+              <td>
+                {this.addButton()}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     )
   },
 
@@ -117,7 +120,7 @@ var CoinOwnership = React.createClass({
       <a className="green"
           style={{cursor: 'pointer'}}
           onClick={this.state.potentialUser ? this.addUserClicked : ''}>
-        <span className="icon icon-plus-circled"></span>
+        <Icon icon="plus-circled" />
         <span className="sr-only">Add</span>
       </a>
     );
@@ -252,8 +255,7 @@ var OwnershipRow = React.createClass({
           </td>
           <td className="right-align">
             <span style={{'white-space':"nowrap"}}>
-              <span className="icon icon-app-coin text-coins"></span>
-              {numeral(user.coins).format('0,0')}
+              <AppCoins n={user.coins} />
             </span>
           </td>
           <td>
@@ -282,8 +284,7 @@ var OwnershipRow = React.createClass({
           </td>
           <td className="right-align">
             <span style={{'white-space':"nowrap"}}>
-              <span className="icon icon-app-coin text-coins"></span>
-              {numeral(user.coins).format('0,0')}
+              <AppCoins n={user.coins} />
             </span>
           </td>
           <td>
@@ -339,6 +340,6 @@ var OwnershipRow = React.createClass({
 
     this.props.onOwnershipChanged(val);
   }
-});
+})
 
-module.exports = window.CoinOwnership = CoinOwnership;
+module.exports = window.CoinOwnership = CoinOwnership
