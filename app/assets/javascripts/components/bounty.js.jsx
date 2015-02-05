@@ -79,8 +79,6 @@ var Bounty = React.createClass({
         <div className="p4">
           <TextPost author={bounty.user} timestamp={bounty.created_at} title={bounty.title} labels={bounty.tags} body={bounty.markdown_description} />
         </div>
-
-        {this.renderLove()}
       </div>
     );
   },

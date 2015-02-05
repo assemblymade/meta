@@ -1,7 +1,5 @@
 .timeline {
   position: relative;
-  padding-top: 1.5rem;
-  // padding-bottom: 3rem;
 
   &:before {
     content: "";
@@ -10,7 +8,7 @@
     bottom: 0;
     left: (30px - 4px) / 2;
     width: 4px;
-    background-color: $gray-5;
+    background-color: $gray-6;
     z-index: 0;
   }
 }

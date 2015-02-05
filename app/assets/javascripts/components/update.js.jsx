@@ -61,24 +61,13 @@ var Update = React.createClass({
               labels={update.marks} />
         </div>
 
-        <div className="px3 py2 border-top border-bottom">
-          <Heart size="small" heartable_id={this.props.newsFeedItem.id}
-              heartable_type="NewsFeedItem" />
+        <div className="card-footer px3 py2 clearfix">
+          <ul className="list-inline mt0 mb0 py1 right">
+            {this.renderArchiveButton()}
+            {this.renderSubscribeButton()}
+            {this.renderEditButton()}
+          </ul>
         </div>
-
-        {this.renderFooter()}
-      </div>
-    )
-  },
-
-  renderFooter: function() {
-    return (
-      <div className="card-footer px3 py2 clearfix">
-        <ul className="list-inline mt0 mb0 py1 right">
-          {this.renderArchiveButton()}
-          {this.renderSubscribeButton()}
-          {this.renderEditButton()}
-        </ul>
       </div>
     )
   },

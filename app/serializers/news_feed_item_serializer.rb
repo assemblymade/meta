@@ -17,7 +17,11 @@ class NewsFeedItemSerializer < ApplicationSerializer
   end
 
   def url
-    product_update_path(product.slug, object)
+    if object.product?
+      product_update_path(product.slug, object)
+    else
+      idea_path(object)
+    end
   end
 
   def user

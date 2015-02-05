@@ -40,7 +40,7 @@ module.exports = React.createClass({
 
     return (
       <div className="visible-hover-wrapper">
-        <div className="mb3 h6 mt0 mb0">
+        <div className="h6 mb3">
           <AvatarWithUsername user={this.props.author} size={18} />
           {' '}
           <span className="gray-2 visible-hover">posted {moment(this.props.timestamp).fromNow()}</span>
@@ -49,9 +49,8 @@ module.exports = React.createClass({
         <h2 className="mt0 mb2" style={{ lineHeight: '36px' }}>
           {this.props.title}
         </h2>
-
+        
         {labels}
-
         {body}
       </div>
     )
