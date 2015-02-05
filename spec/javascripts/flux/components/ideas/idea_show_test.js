@@ -6,7 +6,7 @@ describe('IdeaShow', function() {
   var noop = function() {};
   var _$;
 
-  global.Dispatcher = require(appFile('dispatcher'));
+  // global.Dispatcher = require(appFile('dispatcher'));
   global.ReactUjs = {
     mountReactComponents: noop
   };
@@ -20,6 +20,7 @@ describe('IdeaShow', function() {
         trigger: noop
       };
     };
+    global.moment = require('moment');
   });
 
   afterEach(function() {
@@ -34,7 +35,7 @@ describe('IdeaShow', function() {
 
     var main = TestUtils.scryRenderedDOMComponentsWithTag(ideaShow, 'div');
 
-    expect(main.length).toBe(0);
+    expect(ideaShow.render()).toBeNull();
   });
 
   describe('with idea', function() {
@@ -49,6 +50,9 @@ describe('IdeaShow', function() {
       user: {
         avatar_url: 'http://imgur.com/avatar.jpg',
         username: 'hover_boots'
+      },
+      product: {
+        url: '/test-idea'
       }
     };
 
@@ -61,10 +65,19 @@ describe('IdeaShow', function() {
         <IdeaShow navigate={noop} params={{}} query={{}} />
       );
 
-      var main = TestUtils.scryRenderedDOMComponentsWithTag(ideaShow, 'main');
+      expect(ideaShow.render()).not.toBeNull();
+    });
+
+    it('renders a show page with composite components if it gets an idea', function() {
+      var IdeaStore = require(appFile('stores/idea_store'));
+      IdeaStore.getIdea.mockReturnValueOnce(idea);
+
+      var IdeaShow = require(appFile('components/ideas/idea_show.js.jsx'));
+      var ideaShow = TestUtils.renderIntoDocument(
+        <IdeaShow navigate={noop} params={{}} query={{}} />
+      );
 
       expect(TestUtils.isCompositeComponent(ideaShow)).toBe(true);
-      expect(main.length).toBe(1);
     });
   });
 });
