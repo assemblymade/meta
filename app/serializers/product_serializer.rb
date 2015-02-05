@@ -32,6 +32,10 @@ class ProductSerializer < ApplicationSerializer
     product_path(object)
   end
 
+  def full_url
+    product_url(object)
+  end
+
   def wips_count
     object.wips.count
   end
