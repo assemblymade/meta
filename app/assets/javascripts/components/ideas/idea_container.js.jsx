@@ -32,11 +32,9 @@ var IdeaContainer = React.createClass({
       <div className="container">
         <div className="clearfix mxn2 py3">
           <div className={leftColumnClasses}>
-            <h4 className="mt2 mb2">
-              <a href="/ideas" className="bold">
-                &#8592; All product ideas
-              </a>
-            </h4>
+            <a href="/ideas" className="h6 block black">
+              &#8592; All product ideas
+            </a>
           </div>
 
           <div className={rightColumnClasses}>

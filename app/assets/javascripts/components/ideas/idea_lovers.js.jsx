@@ -19,7 +19,7 @@ var IdeaLovers = React.createClass({
 
   getDefaultProps() {
     return {
-      limit: 8
+      limit: 5
     };
   },
 
@@ -37,9 +37,9 @@ var IdeaLovers = React.createClass({
 
   render() {
     return (
-      <div className="clearfix">
+      <ul className="list-reset mb0 mxn1 clearfix">
         {this.renderLovers()}
-      </div>
+      </ul>
     )
   },
 
@@ -53,22 +53,17 @@ var IdeaLovers = React.createClass({
 
     var renderedLovers = lovers.slice(0, limit).map((lover) => {
       return (
-        <span className="left mr1" key={lover.id}>
-          <Avatar user={lover} size={20} />
-        </span>
+        <li className="left px1" key={lover.id}>
+          <Avatar user={lover} size={24} />
+        </li>
       );
     });
 
     if (lovers.length > limit) {
       renderedLovers.push(
-        <span className="bold bg-gray-3 center px1"
-          style={{
-            borderRadius: 8,
-            minWidth: 50,
-            height: 20,
-            color: 'white' }}>
-          + {lovers.length - limit}
-        </span>
+        <li className="right bold gray-2 px1">
+          +{lovers.length - limit}
+        </li>
       );
     }
 

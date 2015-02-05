@@ -2,216 +2,61 @@
 <% activate_nav! :platform_create %>
 <%= render 'shared/navbar' %>
 
-<!-- TODO Deprecate. Pages now use gray bg. (chrislloyd) -->
-<style>body { background-color: white !important; }</style>
-
-<div class="py4 center omega">
-  <h1>
-    It's business time<a class="gray-2" href="https://www.youtube.com/watch?v=AqZcYPEszN8#t=63">.</a>
-  </h1>
-</div>
-
 <div class="container">
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="sheet">
-        <div class="sheet-body">
+  <div class="clearfix">
+    <div class="col-8 mx-auto">
+      <div class="bg-white rounded shadow mt4 mb4 p4">
+
+        <h1 class="center yellow mb4">
+          <%= react_component 'Icon', icon: 'building' %>
+        </h1>
 
 
-          <ul class="nav nav-pills nav-justified">
-            <li>
-              <a href="#story">
-                <span class="gray-2">1.</span>
-                &nbsp;&nbsp;&nbsp;
-                <strong>Story</strong>
-              </a>
-            </li>
-            <li>
-              <a href="#core-team">
-                <span class="gray-2">2.</span>
-                &nbsp;&nbsp;&nbsp;
-                <strong>Core Team</strong>
-              </a>
-            </li>
-            <li>
-              <a href="#ownership-and-coins">
-                <span class="gray-2">3.</span>
-                &nbsp;&nbsp;&nbsp;
-                <strong>Ownership &amp; Coins</strong>
-              </a>
-            </li>
-            <li>
-              <a href="#financials">
-                <span class="gray-2">4.</span>
-                &nbsp;&nbsp;&nbsp;
-                <strong>Financials</strong>
-              </a>
-            </li>
-          </ul>
-
-          <hr id="story">
-
-
-          <h6 class="gray-2">Story</h6>
-
-          <%= form_for @product, html: {class: 'form'} do |f| %>
-            <%= form_group @product, :name do %>
-              <% if params[:idea_id] %>
-                <input name="product[idea_id]" type="hidden" value="<%= params[:idea_id] %>">
-              <% end %>
-              <%= f.label :name, class: 'control-label' %>
-              <div class="row">
-                <div class="col-md-8">
-                  <%= f.text_field :name, class: 'form-control', autofocus: true %>
-                </div>
-                <div class="col-md-4">
-                  <p class="help-block alpha">
-                    A name is important, but it can always change. If you have a codename already, use that, otherwise don't get too hung up on making it perfect.
-                  </p>
-                </div>
-              </div>
-            <% end %>
-
-            <%= form_group @product, :pitch do %>
-              <%= f.label :pitch, 'Five word pitch', class: 'control-label' %>
-              <div class="row">
-                <div class="col-md-8">
-                  <%= f.text_field :pitch, class: 'form-control', placeholder: @four_word_story_example, value: params[:pitch] || '' %>
-                </div>
-                <div class="col-md-4">
-                  <p class="help-block alpha">If you had 30 seconds to describe your product to a friend, what would you say? Use simple, direct words.</p>
-                </div>
-              </div>
-            <% end %>
-            <br>
-
-            <!--
-            <hr id="core-team">
-            <h6 class="gray-2">Code</h6>
-
-            <div class="form-group">
-              <div class="row">
-                <div class="col-md-8">
-
-                  <table class="table">
-                    <tr class="">
-                      <td>
-                        <label for="chrislloyd-brains">chrislloyd/brains</label>
-                      </td>
-                      <td class="right-align">
-                        <input type="checkbox" id="chrislloyd-brains">
-                      </td>
-                    </tr>
-                    <tr class="gray-2">
-                      <td>
-                        <label for="chrislloyd-helpful-web">chrislloyd/helpful-web</label>
-                      </td>
-                      <td class="right-align">
-                        Linked to <a href="#">Helpful</a>
-                      </td>
-                    </tr>
-                    <tr class="">
-                      <td>
-                        <label for="chrislloyd-poacher">chrislloyd/poacher</a>
-                      </td>
-                      <td class="right-align">
-                        <input type="checkbox" id="chrislloyd-poacher">
-                      </td>
-                    </tr>
-                  </table>
-
-                </div>
-
-                <div class="col-md-4">
-                  <p class="help-block alpha">
-                    Link at least one code repository on GitHub to get started. You can always link more repositories later.
-                  </p>
-                </div>
-              </div>
-            </div>
-            -->
-
-
-            <hr id="core-team">
-            <h6 class="gray-2">Core Team</h6>
-
-            <div class="form-group">
-              <div class="row">
-                <div class="col-md-8">
-                  <div data-react-class="CoreTeam" data-react-props="<%= {currentUser: serialize_hash(current_user)}.to_json %>"></div>
-                </div>
-
-                <div class="col-md-4">
-                  <p class="help-block alpha">
-                    The Core Team is like a board of directors. They shape the direction of the product. They can award bounties and work with the community to set priorities.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <hr id="ownership-and-coins">
-            <h6 class="gray-2">Coins &amp; Ownership</h6>
-
-            <div class="row">
-              <div class="col-md-8">
-                <div data-react-class="CoinOwnership"></div>
-              </div>
-
-              <div class="col-md-4">
-                <p class="help-block">
-                  Coins are how Assembly tracks ownership. Every product starts out with <%= number_with_delimiter(10_000_000) %> coins of which you can allocate 5% (<%= number_with_delimiter((10_000_000 * 0.05).to_i) %>) initially.
-                </p>
-                <p class="help-block">
-                  Profits are paid out to partners monthly based on their ownership.
-                </p>
-                <p class="help-block">
-                  Sharing ownership with other partners recognizes existing help and incentivizes future work.
-                </p>
-              </div>
-            </div>
-
-            <hr id="financials">
-            <h6 class="gray-2">Financials</h6>
-
-            <div class="row">
-              <div class="col-md-8">
-                <table class="table table-bordered">
-                  <tbody>
-                    <tr>
-                      <td colspan="2">
-                        Products get a <strong>virtual bank account</strong>. Its balance is 0 initially, but deposits come from the app's revenue. Partners are paid monthly from this account.
-                      </td>
-                    </tr>
-                    <tr class="active">
-                      <td>Initial Account Balance:</td>
-                      <td class="right-align"><strong>$0</strong></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="col-md-4">
-                <p class="help-block alpha">
-                  The core team decides how the business's money is spent.
-                </p>
-                <p class="help-block">
-                  Assembly pays all bills until a business is profitable.
-                </p>
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <div class="row">
-                <div class="col-md-8 left-align" style="margin-top:6px">
-                  By creating this product, you agree to Assembly's <a href="<%= tos_path %>">Terms of Service</a>.
-                </div>
-                <div class="col-md-4">
-                  <button class="btn btn-primary btn-block" data-disable-with="Starting...">Create Your Product</button>
-                </div>
-              </div>
-            </div>
-
+        <%= form_for @product, html: {class: 'form'} do |f| %>
+          <% if params[:idea_id] %>
+            <input name="product[idea_id]" type="hidden" value="<%= params[:idea_id] %>">
           <% end %>
-        </div>
+
+          <%= form_group @product, :name, class: 'mb3' do %>
+            <%= f.label :name, class: 'control-label' %>
+            <p class="h6 gray-2">
+              A name is important, but it can always change. If you have a codename already, use that, otherwise don't get too hung up on making it perfect.
+            </p>
+            <%= f.text_field :name, class: 'form-control', autofocus: true %>
+          <% end %>
+
+          <%= form_group @product, :pitch, class: 'mb3' do %>
+            <%= f.label :pitch, 'Five word pitch', class: 'control-label' %>
+            <p class="h6 gray-2">If you had 30 seconds to describe your product to a friend, what would you say? Use simple, direct words.</p>
+            <%= f.text_field :pitch, class: 'form-control', placeholder: @four_word_story_example, value: params[:pitch] || '' %>
+          <% end %>
+
+
+          <h5>Coins &amp; Ownership</h5>
+
+          <p class="h6 gray-2">
+            Coins are how Assembly tracks ownership. Every product starts out with <%= number_with_delimiter(10_000_000) %> coins of which you can allocate 5% (<%= number_with_delimiter((10_000_000 * 0.05).to_i) %>) initially.
+          </p>
+          <p class="h6 gray-2">
+            Profits are paid out to partners monthly based on their ownership.
+          </p>
+          <p class="h6 gray-2">
+            Sharing ownership with other partners recognizes existing help and incentivizes future work.
+          </p>
+
+          <%= react_component 'CoinOwnership' %>
+
+
+          <div class="left-align">
+
+            <div class="right ml3">
+              <button class="btn btn-primary btn-block" data-disable-with="Starting...">Create Your Product</button>
+            </div>
+
+            <p class="h6 gray-2 py1">By creating this product, you agree to Assembly's <a href="<%= tos_path %>">Terms of Service</a>.</p>
+          </div>
+
+        <% end %>
       </div>
     </div>
   </div>

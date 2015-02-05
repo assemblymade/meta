@@ -3,13 +3,15 @@ var Button = require('../ui/button.js.jsx');
 var Drawer = require('../ui/drawer.js.jsx');
 var Heart = require('../heart.js.jsx');
 var Icon = require('../ui/icon.js.jsx');
-var IdeaContainer = require('./idea_container.js.jsx');
+var Idea = require('../idea.js.jsx')
+var RelatedIdeas = require('./related_ideas.js.jsx');
 var IdeaLovers = require('./idea_lovers.js.jsx');
 var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
 var IdeaSharePanelStore = require('../../stores/idea_share_panel_store');
+var Discussion = require('../ui/discussion.js.jsx')
 var Markdown = require('../markdown.js.jsx');
 var moment = require('moment');
 var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
@@ -17,8 +19,20 @@ var NewsFeedItemComments = require('../news_feed/news_feed_item_comments.js.jsx'
 var ProgressBar = require('../ui/progress_bar.js.jsx');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
 var UserStore = require('../../stores/user_store');
+var LoveStore = require('../../stores/love_store');
+var TextPost = require('../ui/text_post.js.jsx')
+var Tile = require('../ui/tile.js.jsx')
 
 var TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
+
+function twitterUrl(url, message) {
+  return 'http://twitter.com/share?url=' +
+    url +
+    '&text=' +
+    message +
+    '&';
+}
+
 
 var IdeaShow = React.createClass({
   propTypes: {
@@ -34,24 +48,26 @@ var IdeaShow = React.createClass({
     window.scrollTo(0, 0);
 
     if (this.state.idea) {
-      document.title = "Ideas · " + this.state.idea.name;
+      document.title = this.state.idea.name;
     }
 
-    IdeaStore.addChangeListener(this.onIdeaChange);
+    IdeaStore.addChangeListener(this.onIdeaChange)
+    LoveStore.addChangeListener(this.onLoveChange)
     IdeaSharePanelStore.addChangeListener(this.onIdeaSharePanelChange);
   },
 
   componentWillUnmount() {
-    IdeaStore.removeChangeListener(this.onIdeaChange);
+    IdeaStore.removeChangeListener(this.onIdeaChange)
+    LoveStore.removeChangeListener(this.onLoveChange)
     IdeaSharePanelStore.removeChangeListener(this.onIdeaSharePanelChange);
   },
 
   getInitialState() {
     return {
-      hideTimestamp: true,
       idea: IdeaStore.getIdea(),
       isSocialDrawerOpen: false,
-      isHowItWorksDrawerOpen: false
+      isHowItWorksDrawerOpen: false,
+      heart: {}
     };
   },
 
@@ -86,10 +102,12 @@ var IdeaShow = React.createClass({
     });
   },
 
-  onIdeaSharePanelChange() {
-    this.setState({
-      isSocialDrawerOpen: IdeaSharePanelStore.isDrawerOpen()
-    });
+  onLoveChange: function() {
+    if (!_.isNull(this.state.idea)) {
+      this.setState({
+        heart: (LoveStore.get(this.state.idea.news_feed_item.id) || {})
+      })
+    }
   },
 
   onRelatedIdeasChange() {
@@ -98,14 +116,9 @@ var IdeaShow = React.createClass({
     });
   },
 
-  onQuestionMarkClick(e) {
-    this.setState({
-      isHowItWorksDrawerOpen: !this.state.isHowItWorksDrawerOpen
-    });
-  },
-
   render() {
-    var idea = this.state.idea;
+    var idea = this.state.idea
+    var nfi = idea.news_feed_item
 
     if (_.isEmpty(idea)) {
       return null;
@@ -114,7 +127,8 @@ var IdeaShow = React.createClass({
     var navigate = this.props.navigate;
 
     return (
-      <main role="main">
+      <div>
+
         <div className="subnav bg-white py3 md-show lg-show">
           <div className="container clearfix">
             <div className="left">
@@ -130,351 +144,118 @@ var IdeaShow = React.createClass({
           </div>
         </div>
 
-        <IdeaContainer>
-          {this.renderHeader()}
-          {this.renderBody()}
-        </IdeaContainer>
-      </main>
-    );
-  },
+        <div className="container">
 
-  renderAdminRow() {
-    if (UserStore.isStaff()) {
-      var idea = this.state.idea;
-
-      return (
-        <span className="right mt1">
-          <a href={idea.url + '/admin'}>Admin</a>
-        </span>
-      )
-    }
-  },
-
-  renderBody() {
-    var idea = this.state.idea;
-    var user = idea.user;
-
-    var timestampClasses = React.addons.classSet({
-      'gray-2': true,
-      'display-none': this.state.hideTimestamp
-    });
-
-    return (
-      <div className="border-2px" style={{ paddingBottom: '1rem' }}
-          onMouseOver={this._showTimestamp}
-          onMouseOut={this._hideTimestamp}>
-        <div className="py3 px4">
-          <h1 className="mt0 mb0">{idea.name}</h1>
-
-          <div className="mt3">
-            <Markdown content={idea.body} normalized={true} />
+          <div className="py3">
+            <a href="/ideas" className="h6 bold gray-2">
+              <Icon icon="chevron-left" /> All ideas
+            </a>
           </div>
 
-          <div className="clearfix mt3">
-            <span className="left mr1"><Avatar user={user} /></span>
-            <span className="bold">{user.username}</span>{' '}
-            <span className={timestampClasses}>posted {moment(idea.created_at).fromNow()}</span>
-            {this.renderAdminRow()}
+          <div className="clearfix mxn2">
+            <div className="col col-8 px2">
+              <Discussion newsFeedItem={idea.news_feed_item}>
+                <Idea idea={idea} />
+              </Discussion>
+            </div>
+
+            <div className="col col-4 px2">
+
+              <div className="mb3">
+                <Tile>
+                  <div className="p3">
+                    <div className="clearfix mb3">
+                      <div className="left center mr3">
+                        <div className="h1 yellow center">
+                          <Icon icon="lightbulb-o" />
+                        </div>
+                        <div className="h3 bold">
+                          #{idea.rank}
+                        </div>
+                      </div>
+                      <p className="overflow-hidden gray-2 mb0">
+                        This idea is on it’s way to being fast-tracked. Every Wednesday the most loved idea is selected to become a product and is built out by the community.
+                      </p>
+                    </div>
+
+                    <Heart size="button" heartable_id={nfi.id} heartable_type={nfi.heartable_type} />
+                  </div>
+
+                  <Drawer open={this.state.heart.user_heart}>
+                    <div className="p3 bg-gray-6 border-top border-gray-5">
+                      <div className="h6 center gray-2">
+                        Spread this idea to help it become reality
+                      </div>
+
+                      <ul className="h3 list-reset clearfix mxn1 mb0">
+                        <li className="left p1">
+                          <a className="gray-3 gray-2-hover bold" href="#" onClick={this.handleTwitterClick}>
+                            <Icon icon="twitter" />
+                          </a>
+                        </li>
+                        <li className="left p1">
+                          <a className="gray-3 gray-2-hover bold" href="#" onClick={this.handleFacebookClick}><Icon icon="facebook" /></a>
+                        </li>
+                        <li className="left p1">
+                          <a className="gray-3 gray-2-hover bold" href={this.mailToLink()}>
+                            <Icon icon="envelope" />
+                          </a>
+                        </li>
+                      </ul>
+
+                    </div>
+                  </Drawer>
+
+                </Tile>
+              </div>
+
+              <h6 className="mt3 mb3 gray-2">Related ideas</h6>
+
+              <RelatedIdeas />
+            </div>
           </div>
         </div>
 
-        <hr className="py0 mb0" style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
-
-        <div id="comments" className="px4">
-          <NewsFeedItemComments commentable={true}
-              dropzoneInnerText={false}
-              item={idea.news_feed_item}
-              showAllComments={true}
-              showQuestionButtons={true} />
-        </div>
       </div>
     );
   },
 
-  renderCreateProductRow() {
-    var idea = this.state.idea;
-    var ideaUser = idea.user;
-    var greenlit = idea.hearts_count >= idea.tilting_threshold || idea.greenlit_at;
+  // Stuff for the share thingy
 
-    if (greenlit) {
-      if (ideaUser.id === UserStore.getId()) {
-        return (
-          <div className="clearfix border-bottom border-top border-2px py2">
-            <div className="left mt1 px4">
-              <span className="gray-1">
-                This idea has been greenlit!
-              </span>
-            </div>
+  handleTwitterClick(e) {
+    e.preventDefault()
 
-            <div className="right mr2">
-              <a href={"/new?pitch=" + idea.raw_body + '&idea_id=' + idea.id}>
-                <Button type="primary" action={function() {}}>
-                  <span className="text-white bold">
-                    Start building
-                  </span>
-                </Button>
-              </a>
-            </div>
-          </div>
-        );
-      } else {
-        return (
-          <div className="clearfix border-bottom border-top border-2px py2">
-            <div className="left mt1 ml4">
-              <span className="gray-1">
-                We're waiting for {' '}
-                <a href={ideaUser.url} className="black bold">
-                  @{ideaUser.username}
-                </a> to turn this idea into a product.
-              </span>
-            </div>
-
-            <div className="right mr2">
-              <Button type="primary" action={this.handlePingClick}>
-                <span className="text-white bold">
-                  Ping them
-                </span>
-              </Button>
-            </div>
-          </div>
-        );
-      }
-    }
+    window.open(
+      twitterUrl(this.shareUrl(), this.state.idea.name),
+      'twitterwindow',
+      'height=450, width=550, top=' +
+        ($(window).height()/2 - 225) +
+        ', left=' +
+        $(window).width()/2 +
+        ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0'
+    )
   },
 
-  renderDiscoverBlocks() {
-    return (
-      <div className="clearfix mxn2 py2">
-        <a href="#" className="block col col-6 px2">
-          <div className="rounded text-white bg-gray-2 p3">
-            <div className="clearfix">
-              <div className="col col-8">
-                <h6 className="caps mt0 mb0" style={{ fontWeight: 'normal' }}>Trending</h6>
-                <span className="bold" style={{ fontSize: 18 }}>Design ideas</span>
-              </div>
-              <div className="col col-4">
-                <span className="right mt0 mb0" style={{ fontSize: 36, fontWeight: 200 }}>112</span>
-              </div>
-            </div>
-          </div>
-        </a>
+  handleFacebookClick(e) {
+    e.preventDefault()
 
-        <a href="#" className="block col col-6 px2">
-          <div className="rounded text-white bg-gray-2 p3">
-            <div className="clearfix">
-              <div className="col col-8">
-                <h6 className="caps mt0 mb0" style={{ fontWeight: 'normal' }}>Trending</h6>
-                <span className="bold" style={{ fontSize: 18 }}>Mobile ideas</span>
-              </div>
-              <div className="col col-4">
-                <span className="right mt0 mb0" style={{ fontSize: 36, fontWeight: 200 }}>112</span>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    );
+    FB.ui({
+      method: 'share',
+      display: 'popup',
+      href: this.shareUrl(),
+    })
   },
 
-  renderExplanationHeading() {
-    var idea = this.state.idea;
-    var heartsToGo = idea.tilting_threshold - idea.hearts_count;
-    if (heartsToGo > 0) {
-      return (
-        <h5 className="mb1 mt0">
-          This idea needs {heartsToGo} more
-          {heartsToGo === 1 ? ' heart' : ' hearts'} to be greenlit for development.
-        </h5>
-      );
-    }
+  shareUrl() {
+    return this.state.idea.url
   },
 
-  renderHeader() {
-    var idea = this.state.idea;
-    var shareMessage = 'We need help with ' + idea.name + '! via @asm';
-
-    return [
-      <div className="clearfix border-bottom border-2px" key="heart-and-idea">
-        <div className="center col col-2 px2">
-          <Heart
-            size="large"
-            heartable_id={idea.news_feed_item.id}
-            heartable_type="NewsFeedItem" />
-        </div>
-
-        <div className="col col-10">
-          <span className="right px4">
-            {this.renderHeartsToGo()}
-          </span>
-
-          <small className="left gray-2 bold mt1 mb1">
-            {idea.hearts_count} / {idea.tilting_threshold} hearts
-          </small>
-
-          <div className="clearfix mt3 mb1 py1 mr2">
-            <div className="col col-11">
-              <IdeaProgressBar idea={idea} />
-            </div>
-            <div className="col col-1 mb0 mt0 px2" style={{ color: '#fa7838', position: 'relative', top: '-5px' }}>
-              <span className="clickable" onClick={this.onQuestionMarkClick}>
-                <Icon icon="question-circle" />
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="clearfix">
-          <Drawer open={this.state.isHowItWorksDrawerOpen}>
-            <div className="px3 gray-2">
-              <div className="px3">
-                {this.renderExplanationHeading()}
-              </div>
-              <p className="px3">
-                Every day we greenlight the most loved ideas on Assembly.
-                Then the community has the opportunity to build this idea into
-                a product &mdash; together.
-              </p>
-            </div>
-          </Drawer>
-        </div>
-
-        <div className="clearfix">
-          <Drawer open={this.state.isSocialDrawerOpen}>
-            <IdeaSharePanel idea={idea} size="large" message={shareMessage} />
-          </Drawer>
-        </div>
-      </div>,
-
-      <div className="clearfix border-bottom border-2px mb0" key="comments-and-share">
-        <div className="left mt2 px4">
-          <IdeaLovers heartableId={idea.news_feed_item.id} />
-        </div>
-
-        <div className="right clearfix">
-          <div className="left mt2 mr3">
-            <a href="#comments" className="comment-count">
-              <SvgIcon type="comment" />
-              {idea.comments_count} {idea.comments_count === 1 ? 'comment' : 'comments'}
-            </a>
-          </div>
-          <div className="right p2 center border-2px border-left border-gray">
-            <a href="javascript:void(0);" className="action-icon gray" onClick={this.handleShareClick}>
-              <SvgIcon type="share" />
-            </a>
-          </div>
-        </div>
-      </div>,
-
-      idea.product ? this.renderProductRow() : this.renderCreateProductRow()
-    ];
-  },
-
-  renderHeartsToGo() {
-    var idea = this.state.idea;
-    var heartsToGo = idea.tilting_threshold - idea.hearts_count;
-    if (heartsToGo > 0) {
-      return (
-        <small className="right gray-3 mt1 mb1 mr2">
-          {heartsToGo} {heartsToGo === 1 ? 'heart' : 'hearts'} to go!
-        </small>
-      );
-    }
-
-    return (
-      <small className="right green mt1 mb1 mr2">
-        This idea has been greenlit!
-      </small>
-    );
-  },
-
-  renderProductRow() {
-    var idea = this.state.idea;
-    var product = idea.product;
-
-    if (idea.hearts_count >= idea.tilting_threshold || idea.greenlit_at) {
-      return (
-        <div className="clearfix border-bottom border-top border-2px py2">
-          <div className="left mt1 px4">
-            <span className="gray-1">
-              Sweet! <a href={product.url} className="black bold">{product.name}</a>{' '}
-              is live!
-            </span>
-          </div>
-
-          <div className="right mr2">
-            <a href={product.url + '/bounties'}>
-              <Button type="primary" action={function() {}}>
-                <span className="text-white bold">
-                  Join the team
-                </span>
-              </Button>
-            </a>
-          </div>
-        </div>
-      );
-    } else if (UserStore.isStaff() || UserStore.getId() === idea.user.id) {
-      return (
-        <div className="clearfix border-bottom border-top border-2px py2">
-          <div className="left mt1 px4">
-            <span className="gray-1">
-              Share this idea to get your <a href={product.url} className="black bold">product</a> greenlit!
-            </span>
-          </div>
-
-          <div className="right mr2">
-            <Button type="primary" action={this.handleShareClick}>
-              <span className="text-white bold">
-                Share this idea
-              </span>
-            </Button>
-          </div>
-        </div>
-      );
-    }
-  },
-
-  renderSubscriptionForm() {
-    return (
-      <div className="card bg-white">
-        <div className="clearfix overflow-hidden">
-          <div className="py2 col col-1 center">
-            <Icon icon="cloud" />
-          </div>
-
-          <div className="py2 col col-5">
-            <span className="mt2">Get updates on each day's top-ranking product ideas</span>
-          </div>
-
-          <div className="py2 col col-5">
-            <form className="form-inline">
-              <div className="form-group">
-                <input className="ml4 form-control input-sm left" ref="email" />
-                <button className="btn-primary pill-button pill-button-theme-white pill-button-border pill-button-shadow left ml2">
-                  <span className="py2">Join</span>
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <div className="py2 col col-1 border-left border-2px center">
-            <span>&times;</span>
-          </div>
-        </div>
-      </div>
-    );
-  },
-
-  _hideTimestamp(e) {
-    this.setState({
-      hideTimestamp: true
-    });
-  },
-
-  _showTimestamp(e) {
-    this.setState({
-      hideTimestamp: false
-    });
+  mailToLink() {
+    return "mailto:?subject=Check this out&body=Check out this on Assembly: " + this.shareUrl()
   }
+
+
+
 });
 
 module.exports = IdeaShow;

@@ -1,3 +1,4 @@
+var App = require('../app.js.jsx')
 var Button = require('../ui/button.js.jsx');
 var DropdownMenu = require('../ui/dropdown_menu.js.jsx')
 var IdeaTile = require('./idea_tile.js.jsx');
@@ -8,6 +9,12 @@ var Nav = require('../ui/nav.js.jsx')
 var NewIdeaModal = require('./new_idea_modal.js.jsx');
 var Pagination = require('../pagination/pagination.js.jsx');
 var UserStore = require('../../stores/user_store');
+var Jumbotron = require('../ui/jumbotron.js.jsx')
+
+
+var Sumo = {"id":"bc7e0ee3-b776-4a6b-97ac-327b726b7388","type":"product","created_at":"2014-11-06T00:36:30Z","updated_at":"2015-01-29T01:49:35Z","url":"/signupsumo","name":"Signup Sumo","pitch":"Instantly know when influential people use your product.","slug":"signupsumo","logo_url":"http://assembly.com/attachments/4a3ca4ca-7855-4979-978c-de08921a9527/signupsumo.png","try_url":null}
+
+
 
 var IdeasIndex = React.createClass({
   displayName: 'IdeasIndex',
@@ -46,17 +53,41 @@ var IdeasIndex = React.createClass({
   render() {
     var navigate = this.props.navigate;
 
-    var ideasGridStyle = {};
-
-    if (this.state.ideas.length === 1) {
-      ideasGridStyle.textAlign = 'left !important';
-    }
-
     var topicsDropdownMenu = this.renderTopics()
 
+
+    var sumo = this.props.signupSumo
+    var octo = this.props.octobox
+
     return (
-      <main role="main">
-        {this.renderHeader()}
+      <main role="main  bg-white">
+
+        <Jumbotron>
+          <h1 className="mt0 mb0 center white">Fast-track your ideas into reality</h1>
+        </Jumbotron>
+
+        <div className="container" style={{marginTop: '-2rem'}}>
+
+
+          <div className="clearfix p2 bg-white rounded shadow">
+            <div className="col col-4 py2 px3">
+              <h4 className="mt3 mb2">Each week the Assembly community fast-tracks the idea they love the most into a live product. Vote on the idea that you think would be a good candidate to fast-track.</h4>
+              <p className="gray-2">Do you have an idea that you'd like fast-tracked? <a href="/ideas/new">Submit it today</a>.</p>
+            </div>
+
+            <div className="col col-4 p2">
+              <h6 className="gray-2 center caps mt0 mb1">This week's product</h6>
+              <App app={Sumo} />
+            </div>
+
+            <div className="col col-4 p2" style={{opacity:0.4}}>
+              <h6 className="gray-2 center caps mt0 mb1">Last week's product</h6>
+              <App app={Sumo} />
+            </div>
+          </div>
+
+        </div>
+
 
         <section className="tile-grid tile-grid-ideas" key="ideas-grid">
           <div className="container">
@@ -64,20 +95,16 @@ var IdeasIndex = React.createClass({
 
               <div className="py4">
                 <Nav>
-                  {this.renderMyIdeas()}
+
                   <Nav.Item label="Trending" href="/ideas?sort=trending" />
-                  <Nav.Item label="Popular" href="/ideas?sort=hearts" />
                   <Nav.Item label="New" href="/ideas?sort=newness" />
-                  <Nav.Item label="Greenlit" href="/ideas?filter=greenlit" />
                   <Nav.Divider />
-                  <Nav.Item label="Topics" dropdownMenu={topicsDropdownMenu} />
+                  {this.renderMyIdeas()}
                 </Nav>
               </div>
 
               <div className="main" key="main-ideas">
-                <div className="clearfix mxn2" style={ideasGridStyle}>
-                  {this.renderIdeas()}
-                </div>
+                {this.renderIdeas()}
               </div>
             </div>
 
@@ -92,27 +119,15 @@ var IdeasIndex = React.createClass({
 
   renderHeader() {
     return (
-      <section className="_hero hero-ideas" key="ideas-header">
-        <div className="container">
-          <div className="header" key="hero-header">
-            <img src="../assets/ideas/ideas-header-morse.png" />
-          </div>
-          <div className="main" key="hero-main">
-            <h1>
+      <Jumbotron>
+        <div className="container center white">
+            <h1 className="mt0 mb0">
               The best product ideas &mdash; built by all of us.
             </h1>
             <Button type="primary" action={this.props.navigate.bind(null, '/ideas/new')}>Add your product idea</Button>
-          </div>
-          <div className="footer" key="hero-footer">
-            <p>
-              Get feedback on your ideas, as they gain momentum and popularity we'll greenlight the idea &mdash; ready to be built on Assembly.
-            </p>
-            <div className="text-3">
-              <a href="/help/basics">Learn more</a>
-            </div>
-          </div>
+
         </div>
-      </section>
+      </Jumbotron>
     );
   },
 
@@ -121,7 +136,7 @@ var IdeasIndex = React.createClass({
 
     if (ideas.length) {
       return ideas.map((idea) => {
-        return <div className="sm-col sm-col-4 p2" key={idea.id}>
+        return <div className="mb2" key={idea.id}>
           <IdeaTile idea={idea} />
         </div>
       });

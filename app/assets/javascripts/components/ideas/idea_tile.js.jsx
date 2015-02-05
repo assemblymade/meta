@@ -43,52 +43,39 @@ var Idea = React.createClass({
   render() {
     var idea = this.props.idea;
     var item = idea.news_feed_item;
-    var user = idea.user;
+    var user = idea.user
 
     return (
       <Tile>
-        <OverflowFade dimension="vertical" width="100%" height="16rem">
-          <div className="p3">
-            <a className="h4 mt0 mb2 block" href={idea.path}>{idea.name}</a>
-            <Markdown content={idea.short_body} normalized={true} />
-          </div>
-        </OverflowFade>
-
-        <a href={user.url} className="block clearfix h6 mt0 mb0 black bold px3 py2">
-          <div className="left mr1">
-            <Avatar user={user} size={18} />
-          </div>
-          <div className="overflow-hidden">
-            {user.username}
-          </div>
-        </a>
-
-        <Drawer open={this.state.isDrawerOpen}>
-          <IdeaSharePanel idea={idea} />
-        </Drawer>
-
-        <div className="clearfix gray-2 fill-gray-2 h6 border-top">
-          <a href={idea.path} className="py2 px3 block left gray-2 bold">
-            <span className="mr1 fill-gray-3"><SvgIcon type="comment" /></span>
-            {idea.comments_count} {idea.comments_count === 1 ? 'comment' : 'comments'}
-          </a>
-
-          <div className="border-left right p2">
+        <div className="clearfix px2 py1">
+          <div className="left px2 py3">
             <Heart size="medium" heartable_id={item.id} heartable_type="NewsFeedItem" />
           </div>
 
-          <a href="javascript:void(0);" onClick={this.handleShareClick} className="border-left p2 block right">
-            <SvgIcon type="share" />
-          </a>
-        </div>
+          <div className="right py2">
+            <a href={user.url} className="right p2">
+              <Avatar user={user} />
+            </a>
 
-        <div className="border-top px3 py2">
-          <div className="mb2">
-            <IdeaProgressBar idea={idea} />
+            <a href={idea.path} className="p2 block right gray-3 fill-gray-3 gray-2-hover fill-gray-2-hover bold">
+              <span className="mr1">
+                <Icon icon="comment" />
+              </span>
+              {idea.comments_count}
+            </a>
           </div>
-        </div>
 
+          <a className="block overflow-hidden p2" href={idea.url}>
+            <h4 className="mt0 mb0 black underline-hover">{idea.name}</h4>
+            <OverflowFade dimension="horizontal" width="100%" height="2rem">
+              <p className="h4 gray-2">{idea.raw_body}</p>
+            </OverflowFade>
+          </a>
+
+
+        </div>
       </Tile>
+
     );
   }
 });

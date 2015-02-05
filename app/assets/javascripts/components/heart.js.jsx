@@ -1,3 +1,4 @@
+var Button = require('./ui/button.js.jsx')
 var LoveStore = require('../stores/love_store')
 var LoveActionCreators = require('../actions/love_action_creators')
 var Icon = require('./ui/icon.js.jsx')
@@ -11,17 +12,23 @@ var Heart = React.createClass({
     size: React.PropTypes.oneOf([
       'small',
       'medium',
-      'large'
+      'button'
     ]),
     heartable_id: React.PropTypes.string.isRequired,
     heartable_type: React.PropTypes.string.isRequired
+  },
+
+  getDefaultProps: function() {
+    return {
+      size: 'medium'
+    }
   },
 
   render: function() {
     var sizes = {
       'small': this.renderSmall,
       'medium': this.renderMedium,
-      'large': this.renderLarge
+      'button': this.renderButton
     }
     return sizes[this.props.size]()
   },
@@ -80,7 +87,7 @@ var Heart = React.createClass({
     );
   },
 
-  renderLarge: function() {
+  renderButton: function() {
     var heartsCount = this.state.hearts_count;
     // Dammit, JavaScript
     if (heartsCount == null) {
@@ -88,16 +95,16 @@ var Heart = React.createClass({
     }
 
     if (!UserStore.isSignedIn()) {
-      return <div className={"heart-circle heart-circle-green"}>
-        <SvgIcon type="heart" />
-      </div>
+      return <Button block={true}>Sign in to love this idea</Button>
     }
 
-    return (
-      <div className={"pointer heart-circle heart-circle-" + (this.state.user_heart ? 'white' : 'green')} onClick={this.handleClick}>
-        <SvgIcon type="heart" />
-      </div>
-    );
+    if (this.state.user_heart) {
+      return <Button block={true}>Loved</Button>
+    } else {
+      return <Button block={true} type="primary" action={this.handleClick}>
+        Love this idea
+      </Button>
+    }
   },
 
   getInitialState: function() {

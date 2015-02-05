@@ -106,12 +106,10 @@ var IdeaSharePanel = React.createClass({
 
   large() {
     return (
-      <div className="clearfix border-top">
-        <div className="px4" key="share-text">
-          {this.renderText()}
-        </div>
+      <div>
+        {this.renderText()}
 
-        <div className="clearfix px4" key="share-buttons">
+        <div className="clearfix" key="share-buttons">
           <div className="left" key="social-buttons">
             <a href="javascript:void(0);" className="mr1" onClick={this.handleTwitterClick} key="twitter-button">
               <CircleIcon icon="twitter" margin={5} />
@@ -146,29 +144,17 @@ var IdeaSharePanel = React.createClass({
   renderText() {
     var idea = this.props.idea;
 
-    if (idea.hearts_count >= idea.tilting_threshold || idea.greenlit_at) {
-      return [
-        <h5 className="mb1 mt1 gray-2 green" key="explanation-heading">
-          Turn on the greenlight!
-        </h5>,
+    return <div>
+      <h5 className="mb1 mt1 gray-2">
+        We're almost there! Tell your friends to help this idea be
+        fast-tracked next Wednesday.
+      </h5>
 
-        <p className="gray-2" key="explanation-body">
-          This idea has been greenlit for development &mdash; tell your friends
-          to keep an eye out for its launch!
-        </p>
-      ];
-    }
-
-    return [
-      <h5 className="mb1 mt1 gray-2" key="explanation-heading">
-        We're almost there! Tell your friends to help greenlight this idea.
-      </h5>,
-
-      <p className="gray-2" key="explanation-body">
-        Every day we greenlight the most loved ideas on Assembly.
-        They are then made into real products by you and the community.
+      <p className="gray-2">
+        Every Wednesday we fast-track the most loved ideas on Assembly.
+        That idea then spends the next week being built into a <abbr title="Minimum Viable Product">MVP</abbr> by the community.
       </p>
-    ];
+    </div>
   },
 
   shortUrl() {
