@@ -94,7 +94,6 @@ var IdeasIndex = React.createClass({
 
                   <Nav.Item label="Trending" href="/ideas?sort=trending" />
                   <Nav.Item label="New" href="/ideas?sort=newness" />
-                  <Nav.Divider />
                   {this.renderMyIdeas()}
                 </Nav>
               </div>
@@ -146,9 +145,10 @@ var IdeasIndex = React.createClass({
 
     if (username) {
       var url = "/ideas?user=" + username
-      return (
+      return [
+        <Nav.Divider />,
         <Nav.Item label="My ideas" href={url} onClick={navigate.bind(null, url)} />
-      )
+      ]
     }
   },
 
