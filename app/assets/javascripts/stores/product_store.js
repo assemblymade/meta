@@ -30,7 +30,7 @@ class ProductStore extends Store {
 
   getProduct() {
     // return the raw JS object for now
-    return _product.toJS();
+    return (_product && _product.toJS()) || {};
   }
 
   getSlug() {
@@ -38,7 +38,9 @@ class ProductStore extends Store {
   }
 
   getCoreTeamIds() {
-    return _product.get('core_team').toJS() || []
+    var coreTeam = _product.get('core_team');
+
+    return (coreTeam && coreTeam.toJS()) || []
   }
 
   isCoreTeam(currentUser) {
