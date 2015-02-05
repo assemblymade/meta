@@ -1,20 +1,8 @@
 <!-- Twitter Cards -->
-
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@asm">
-
-<% if idea_show_route? && @idea %>
-  <% if @idea.user.twitter_nickname %>
-    <meta name="twitter:creator" content="@<%= @idea.user.twitter_nickname %>">
-  <% else %>
-    <meta name="twitter:creator" content="@asm">
-  <% end %>
-  <meta name="twitter:description" content="<%= @idea.twitter_description %>">
-  <meta name="twitter:title" content="<%= @idea.twitter_title %>">
-<% else %>
-  <meta name="twitter:title" content='<%= yield(:title) %>'>
-  <meta name="twitter:description" content="<%= yield(:description) %>">
-<% end %>
+<meta name="twitter:title" content='<%= yield(:title) %>'>
+<meta name="twitter:description" content="<%= yield(:description) %>">
 
 <!-- Facebook Open Graph -->
 <meta property="og:title" content="<%= yield(:title) %>" />
@@ -37,4 +25,13 @@
   <meta property="og:url" content="<%= product_url(@product) %>" />
   <meta property="og:image" content="<%= @product.hero_image_url %>" />
   <meta property="og:description" content="<%= @product.lead %>" />
+
+<% elsif idea_show_route? && @idea %>
+  <% if @idea.user.twitter_nickname %>
+    <meta name="twitter:creator" content="@<%= @idea.user.twitter_nickname %>">
+  <% else %>
+    <meta name="twitter:creator" content="@asm">
+  <% end %>
+  <meta name="twitter:description" content="<%= @idea.twitter_description %>">
+  <meta name="twitter:title" content="<%= @idea.twitter_title %>">
 <% end %>
