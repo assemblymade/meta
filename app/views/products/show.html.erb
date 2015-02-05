@@ -10,25 +10,24 @@
   <div class="clearfix mxn3">
     <div class="sm-col-right sm-col-4 px3">
       <div class="bg-white shadow rounded mb3">
-        <div class="p3">
-          <div class="clearfix">
-            <div class="h1 mt0 mb0 yellow left mr3">
-              <%= inline_react_component 'Icon', icon: 'lightbulb-o' %>
+        <% if signed_in? %>
+          <% product_membership = current_user.team_memberships.find_by(product: @product) %>
+          <% if product_membership.nil? || product_membership.bio.nil? %>
+            <div class="bg-white p3 rounded shadow mb3">
+              <div class="clearfix">
+                <h4 class="mt0 mb2">Hey <%= current_user.username %>!</h4>
+                <div class="right"></div>
+              </div>
+              <p>Ready to pitch in on <%= @product.name %>? Introduce yourself.</p>
+              <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                <input name="_method" value="patch" type="hidden">
+                <textarea class="form-control mb2" name="membership[bio]" rows="2" placeholder="What do you like to do? What is your favorite sandwich?"></textarea>
+                <button type="submit" class="btn btn-primary btn-block">Introduce yourself!</button>
+              </form>
             </div>
-            <h4 class="mt0 mb2 py2">The Big Idea</h6>
-          </div>
-          <% if @product.lead.present? %>
-            <div class="mb2">
-              <%= react_component 'Markdown', content: product_markdown(@product, @product.lead), normalized: true %>
-            </div>
-            <a href="<%= product_plan_path(@product) %>">Read more</a>
-          <% else %>
-            <p class="gray-2">Uh, there's nothing here yet. Grab a coffee, because this product is still percolating!</p>
-            <% if can?(:update, @product) %>
-              <a class="btn btn-primary btn-block" href="<%= edit_product_path(@product) %>">Add the plan</a>
-            <% end %>
           <% end %>
-        </div>
+        <% end %>
         <hr class="border-bottom mt0 mb0">
         <div class="stat-group p3 mb0">
           <div class="stat">
@@ -102,24 +101,6 @@
     </div>
 
     <div class="sm-col sm-col-8 px3">
-      <% if signed_in? %>
-        <% product_membership = current_user.team_memberships.find_by(product: @product) %>
-        <% if product_membership.nil? || product_membership.bio.nil? %>
-          <div class="bg-white p3 rounded shadow mb3">
-            <div class="clearfix">
-              <h4 class="mt0 mb2">Hey <%= current_user.username %>!</h4>
-              <div class="right"></div>
-            </div>
-            <p>Ready to pitch in on <%= @product.name %>? Introduce yourself.</p>
-            <form role="form" method="post" action="<%= product_person_path(@product, current_user) %>">
-              <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-              <input name="_method" value="patch" type="hidden">
-              <textarea class="form-control mb2" name="membership[bio]" rows="2" placeholder="What do you like to do? What is your favorite sandwich?"></textarea>
-              <button type="submit" class="btn btn-primary btn-block">Introduce yourself!</button>
-            </form>
-          </div>
-        <% end %>
-      <% end %>
 
       <% if @mark_name %>
         <div class="btn btn-default btn-block sm-col-3">

@@ -1,7 +1,6 @@
 var AppIcon = require('../app_icon.js.jsx');
 var Button = require('../ui/button.js.jsx');
 var Icon = require('../ui/icon.js.jsx');
-var Pill = require('../ui/pill.js.jsx');
 var ProductFollowers = require('../product_followers.js.jsx');
 var Routes = require('../../routes');
 var url = require('url');
@@ -39,10 +38,16 @@ var ProductHeader = React.createClass({
                   <h4 className="m0 regular gray-2">
                     {product.pitch.substr(0, 60)}
                   </h4>
-                  <ul className="list-inline px0 mt1 mb0">
-                    {this.renderProductState()}
-                    {this.renderTags()}
-                  </ul>
+
+                  <div className="clearfix">
+                    <div className="left mt1 mr1">
+                      {this.renderProductState()}
+                    </div>
+
+                    <ul className="left sm-show list-inline px0 mt1 mb0">
+                      {this.renderTags()}
+                    </ul>
+                  </div>
                 </div>
               </div>
 
@@ -66,12 +71,12 @@ var ProductHeader = React.createClass({
                 </li>
 
                 <li>
-                  <a href={product.url + '/bounties'}>Participate</a>
+                  <a href={product.url + '/bounties'}>Bounties</a>
                 </li>
               </ul>
             </div>
 
-            <div className="right py1">
+            <div className="sm-right center py1">
               <ProductFollowers product_id={product.id} />
             </div>
           </div>
@@ -101,33 +106,29 @@ var ProductHeader = React.createClass({
     var product = this.props.product;
     var homepageUrl = product.homepage_url;
 
-    var pill;
+    var status;
     if (homepageUrl) {
-      pill = (
+      status = (
         <span className="gray-1">
           <span className="mr1">
             <Icon icon="rocket" />
           </span>
-          <h6 className="inline mb0 mt0 gray-1">Launched</h6>
+          <h5 className="inline mb0 mt0 gray-1">Live</h5>
         </span>
       );
     } else {
-      pill = (
+      status = (
         <span className="gray-1">
           <span className="mr1">
             <Icon icon="wrench" />
           </span>
-          <h6 className="inline mb0 mt0 gray-1">In development</h6>
+          <h5 className="inline mb0 mt0 gray-1">In development</h5>
         </span>
       );
     }
 
 
-    return (
-      <li>
-        {pill}
-      </li>
-    );
+    return status;
   },
 
   renderTags() {

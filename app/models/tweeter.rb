@@ -21,7 +21,7 @@ class Tweeter
 
   def tweet_idea(idea)
     password = compute_password
-    url = "https://asm-tweeter.herokuapp.com/idea/"+password
+    url = "https://asm-tweeter.herokuapp.com/idea/" + password
     the_data = {
       idea_name: idea.twitter_title,
       users: idea_participants(idea),
@@ -44,12 +44,12 @@ class Tweeter
     begin
       JSON.load(resp.body)
     rescue => e
-      Rails.logger.info "[coins] #{e.message}"
+      Rails.logger.info "[twitter_bot] #{e.message}"
     end
   end
 
   def connection
-    Faraday.new(url: ENV.fetch("ASSEMBLY_COINS_URL")) do |faraday|
+    Faraday.new do |faraday|
       faraday.adapter  :net_http
     end
   end

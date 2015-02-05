@@ -41,6 +41,8 @@ let Screenshots = React.createClass({
     if (ProductStore.isCoreTeam(UserStore.getUser())) {
       return <ProductScreenshotPlaceholder />;
     }
+
+    return null;
   },
 
   wrapScreenshots() {
@@ -54,13 +56,13 @@ let Screenshots = React.createClass({
 
     if (screenshots.length) {
       images = screenshots.
-        map((screenshot, i) => {
+        map((screenshot) => {
           return <img className="mb1" src={screenshot.url} style={style} key={screenshot.id} />;
       });
 
       if (ProductStore.isCoreTeam(UserStore.getUser())) {
         images.push(
-          <ProductScreenshotPlaceholder key={'placeholder-' + images.length} />
+          <ProductScreenshotPlaceholder size="small" key={'placeholder-' + images.length} />
         );
       }
 

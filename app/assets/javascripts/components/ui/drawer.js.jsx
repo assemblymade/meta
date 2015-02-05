@@ -2,9 +2,12 @@
  * See drawer.scss for transitions
  */
 
+var PureRenderMixin = React.addons.PureRenderMixin;
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var Drawer = React.createClass({
+  mixins: [PureRenderMixin],
+
   propTypes: {
     open: React.PropTypes.bool
   },

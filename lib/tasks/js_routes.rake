@@ -65,6 +65,7 @@ ROUTES = [
   'product_chat',
   'product_follow',
   'product_people',
+  'product_person',
   'product_post',
   'product_posts',
   'product_repos',

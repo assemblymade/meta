@@ -66,12 +66,9 @@ var _Router = new Router();
 page('*', _parse);
 _blacklist();
 
-for (var exported in allRoutes) {
-  allRoutes[exported].forEach(_Router.route.bind(_Router));
-}
+allRoutes.forEach(_Router.route.bind(_Router));
 
 module.exports = _Router;
-
 
 // FIXME (pletcher): This is a hack while we still have pages that
 // won't render entirely client-side. We can gradually remove

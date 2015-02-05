@@ -84,8 +84,8 @@
       <%= track_readraptor(@stories_to_mark_as_read) if @stories_to_mark_as_read %>
     <% end %>
 
-    <% if signed_in? %>
-      <script src="https://assets.signupsumo.com/signups.js" data-token="-2Vhyz9Dk78ARgPrEHwW" data-auto="false"></script>
+    <% if ENV['SIGNUP_SUMO_TOKEN'] && signed_in? %>
+      <script src="https://assets.signupsumo.com/signups.js" data-token="<%= ENV['SIGNUP_SUMO_TOKEN'] %>" data-auto="false"></script>
       <script>SignupSumo.send(<%= current_user.email.to_json.html_safe %>)</script>
     <% end %>
 

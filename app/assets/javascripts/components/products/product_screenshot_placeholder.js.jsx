@@ -10,6 +10,10 @@ const Routes = require('../../routes');
 let ProductScreenshotPlaceholder = React.createClass({
   mixins: [DraggingMixin],
 
+  propTypes: {
+    size: React.PropTypes.oneOf(['small', 'large'])
+  },
+
   componentDidMount() {
     let attachmentUploadUrlTag = $('meta[name=attachment-upload-url]');
     let clickable = this.refs.clickable;
@@ -37,9 +41,16 @@ let ProductScreenshotPlaceholder = React.createClass({
     ScreenshotStore.removeChangeListener(this.onScreenshotChange);
   },
 
+  getDefaultProps() {
+    return {
+      size: 'large'
+    };
+  },
+
   getInitialState() {
     return {
-      text: "+"
+      text: this.props.size === 'large' ?
+        "Drag and drop an image here. 1024 x 768 pixels works best." : "+"
     };
   },
 
