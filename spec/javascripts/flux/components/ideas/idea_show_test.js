@@ -32,7 +32,7 @@ describe('IdeaShow', function() {
       <IdeaShow navigate={noop} params={{}} query={{}} />
     );
 
-    var main = TestUtils.scryRenderedDOMComponentsWithTag(ideaShow, 'main');
+    var main = TestUtils.scryRenderedDOMComponentsWithTag(ideaShow, 'div');
 
     expect(main.length).toBe(0);
   });

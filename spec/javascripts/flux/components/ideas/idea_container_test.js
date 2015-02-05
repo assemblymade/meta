@@ -37,9 +37,9 @@ describe('IdeaContainer', function() {
       </IdeaContainer>
     );
 
-    var anchor = TestUtils.findRenderedDOMComponentWithClass(
+    var anchor = TestUtils.findRenderedDOMComponentWithTag(
       ideaContainer,
-      'bold'
+      'a'
     );
 
     TestUtils.Simulate.click(anchor);

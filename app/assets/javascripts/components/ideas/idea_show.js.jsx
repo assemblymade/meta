@@ -118,11 +118,12 @@ var IdeaShow = React.createClass({
 
   render() {
     var idea = this.state.idea
-    var nfi = idea.news_feed_item
 
     if (_.isEmpty(idea)) {
       return null;
     }
+
+    var nfi = idea.news_feed_item
 
     var navigate = this.props.navigate;
 
