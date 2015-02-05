@@ -24,6 +24,7 @@ class Idea < ActiveRecord::Base
   before_validation :set_tilting_threshold!, on: :create
 
   after_commit :ensure_news_feed_item, on: :create
+  after_commit :tweet_creation, on: :create
   after_commit :update_news_feed_item, on: :update
 
   default_scope -> { where(deleted_at: nil) }
@@ -249,6 +250,10 @@ class Idea < ActiveRecord::Base
 
   def twitter_title
     self.name.truncate(69)
+  end
+
+  def tweet_creation
+    Tweeter.new.tweet_idea(self)
   end
 
 end
