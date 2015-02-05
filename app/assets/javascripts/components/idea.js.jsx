@@ -81,7 +81,7 @@ var Idea = React.createClass({
     if (!_.isNull(product)) {
       return (
         <div className="mt4">
-          <h6 className="mb2 center purple">This idea is in development:</h6>
+          <h6 className="mb2 center purple">Development of this idea has already started:</h6>
           <a className="block border rounded p2 mxn2 border-gray-5-hover shadow-hover" href={product.url}>
             <div className="left mr2">
               <AppIcon app={product} size={48} />

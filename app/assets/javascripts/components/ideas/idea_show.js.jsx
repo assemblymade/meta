@@ -131,12 +131,12 @@ var IdeaShow = React.createClass({
           <div className="container clearfix">
             <div className="left">
               <h4 className="mt2 mb2">
-                Band together to build the product ideas people love.
+                Turn ideas into great products with people around the world
               </h4>
             </div>
             <div className="right py1">
-              <Button type="primary" action={navigate.bind(null, '/ideas/new')}>
-                Add your product idea
+              <Button action={navigate.bind(null, '/ideas/new')}>
+                Start your product idea
               </Button>
             </div>
           </div>
