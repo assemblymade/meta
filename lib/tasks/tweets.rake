@@ -5,4 +5,9 @@ namespace :tweeter do
       Tweeter.new.tweet_idea(a)
     end
   end
+
+  task :tweet_hot_products => :environment do
+    Tweeter.new.tweet_hot_products(4)
+  end
+
 end
