@@ -4,7 +4,7 @@
 
 <%= render 'people/nav' %>
 
-<% if current_user.is_staff? %>
+<% if staff? %>
   <div class="sheet-body">
     <div class="row">
       <div class="col-md-12 col-xs-12">
@@ -22,4 +22,199 @@
       </div>
     </div>
   </div>
+
+<% else %>
+
+
+<% if current_user && @product.core_team?(current_user) %>
+  <button class="btn btn-success pull-right" data-toggle="modal" data-target="#new-contract-modal">
+    Create contract
+  </button>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="new-contract-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Create a new contract</h4>
+        </div>
+        <form role="form" method="post" action="<%= product_contracts_path(@product) %>">
+          <div class="modal-body">
+            <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+            <div class="form-group">
+              <!-- Person Picker -->
+              <label class="input-label">Holder</label>
+              <input value="@" name="contract[user]" type="text" class="form-control textcomplete" data-product-id="<%= @product.slug %>">
+            </div>
+
+            <div class="form-group">
+              <label class="input-label">Type</label>
+              <p class="form-control-static">Automatic tip when new coins minted</p>
+            </div>
+
+            <div class="form-group">
+              <label class="input-label">Amount</label>
+              <div data-react-class="ContractInput"
+                   data-react-props="<%= {
+                     startingAmount: '0',
+                     alwaysEditable: true,
+                     name: 'contract[amount]'
+                   }.to_json %>">
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Create contract</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+
+<div class="sheet-body">
+  <% current_user_on_core_team = @product.core_team?(current_user) %>
+  <% active, ended = @product.auto_tip_contracts.order(:deleted_at => :desc, created_at: :asc).partition{|p| p.deleted_at == nil } %>
+
+  <% if active.any? %>
+    <h3>Current contracts</h3>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Created</th>
+          <th>Holder</th>
+          <th>Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <% active.each do |contract| %>
+        <% can_update = current_user_on_core_team || current_user.id == contract.user_id %>
+
+        <tr class="<%= 'gray-2' if contract.deleted_at? %>">
+          <td>
+            <time class="timestamp" datetime="<%= contract.created_at.iso8601 %>"></time>
+          </td>
+          <td>
+            <a href="<%= user_path(contract.user) %>">@<%= contract.user.username %></a>
+          </td>
+          <td style="width: 15%; min-width: 50px;">
+            <% if contract.active? && can_update %>
+              <div data-react-class="ContractInput"
+                   data-react-props="<%= {
+                     alwaysEditable: false,
+                     user: contract.user,
+                     startingAmount: '%.2f' % (contract.amount * 100).to_f,
+                     contract: contract.as_json,
+                     updatePath: product_contract_path(contract.product, contract),
+                     confirmButton: "#confirm-contract-change-" + contract.user.username
+                   }.to_json %>">
+              </div>
+            <% else %>
+              <strong><%= number_to_percentage(contract.amount * 100, precision: 2) %></strong>
+              tip when coins are minted
+            <% end %>
+          </td>
+          <td>
+            <% if contract.active? && can_update %>
+              <a id="edit-contract-<%= contract.user.username %>"
+                  style="cursor: pointer"
+                  data-path="<%= product_contract_path(@product, contract) %>"
+                  class="edit-contract red">Edit</a>
+              <a id="end-contract-<%= contract.user.username %>"
+                  style="cursor: pointer"
+                  data-path="<%= product_contract_path(@product, contract) %>"
+                  class="end-contract red">End</a>
+              <a id="confirm-contract-change-<%= contract.user.username %>"
+                  class="red"
+                  style="cursor: pointer; visibility: hidden;">Confirm</a>
+            <% else %>
+              <time class="timestamp" datetime="<%= contract.deleted_at.iso8601 unless contract.deleted_at.nil? %>"></time>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+  <% if ended.any? %>
+
+    <h3>Old contracts</h3>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Ended</th>
+          <th>Holder</th>
+          <th>Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <% ended.each do |contract| %>
+        <tr class="<%= 'gray-2' if contract.deleted_at? %>">
+          <td>
+            <time class="timestamp" datetime="<%= contract.created_at.iso8601 %>"></time>
+          </td>
+          <td>
+            <a href="<%= user_path(contract.user) %>">@<%= contract.user.username %></a>
+          </td>
+          <td style="width: 15%; min-width: 50px;">
+            <% if contract.active? && can_update %>
+              <div data-react-class="ContractInput"
+                   data-react-props="<%= {
+                     alwaysEditable: false,
+                     user: contract.user,
+                     startingAmount: '%.2f' % (contract.amount * 100).to_f,
+                     contract: contract.as_json,
+                     updatePath: product_contract_path(contract.product, contract),
+                     confirmButton: "#confirm-contract-change-" + contract.user.username
+                   }.to_json %>">
+              </div>
+            <% else %>
+              <strong><%= number_to_percentage(contract.amount * 100, precision: 2) %></strong>
+              tip when coins are minted
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+</div>
+
+<% content_for :javascript do %>
+  <script>
+    $('#new-contract-modal').on('show.bs.modal', function(e) {
+      $('.textcomplete').each(function() {
+        $.applyTextcomplete($(this));
+      });
+    });
+
+    $('.end-contract').click(function(e) {
+      var path = $(this).data('path');
+
+      $.ajax({
+        url: path,
+        method: 'DELETE',
+        success: function() {
+          window.location.reload(true)
+        },
+        error: function(jqxhr, status) {
+          console.error(status);
+        }
+      });
+    });
+  </script>
+<% end %>
+
+
+
 <% end %>
