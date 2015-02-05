@@ -23,6 +23,7 @@
     "testDirectoryName": "spec/javascripts/flux",
     "unmockedModulePathPatterns": [
       "<rootDir>/app/assets/javascripts/constants",
+      "<rootDir>/node_modules/immutable",
       "<rootDir>/node_modules/keymirror",
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/underscore"

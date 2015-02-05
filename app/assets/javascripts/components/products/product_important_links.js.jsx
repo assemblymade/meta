@@ -1,3 +1,5 @@
+'use strict';
+
 const Icon = require('../ui/icon.js.jsx');
 const Routes = require('../../routes')
 
