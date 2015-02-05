@@ -38,9 +38,8 @@ class ProductStore extends Store {
   }
 
   getCoreTeamIds() {
-    var coreTeam = _product.get('core_team');
-
-    return (coreTeam && coreTeam.toJS()) || []
+    var product = _product && _product.toJS()
+    return (product && product.core_team) || []
   }
 
   isCoreTeam(currentUser) {
