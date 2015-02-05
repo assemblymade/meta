@@ -4,6 +4,7 @@ const Avatar = require('../ui/avatar.js.jsx');
 const Button = require('../ui/button.js.jsx');
 const Icon = require('../ui/icon.js.jsx');
 const ProductHeader = require('./product_header.js.jsx');
+const ProductImportantLinks = require('./product_important_links.js.jsx');
 const ProductScreenshotPlaceholder = require('./product_screenshot_placeholder.js.jsx');
 const ProductStore = require('../../stores/product_store');
 const Routes = require('../../routes');
@@ -126,53 +127,8 @@ let ProductShow = React.createClass({
                 </div>
               </Tile>
 
-              <div className="border-bottom mt3" style={style.importantLinks}>
-                <h5>Important links</h5>
-              </div>
+              <ProductImportantLinks product={product} />
 
-              <div className="border-bottom py2" style={style.importantLinks}>
-                <span className="mr3 gray-2">
-                  <Icon icon="comment" />
-                </span>
-                <a href={Routes.product_chat_path({ product_id: slug })}>
-                  Say hi in chat
-                </a>
-              </div>
-
-              <div className="border-bottom py2" style={style.importantLinks}>
-                <span className="mr3 gray-2">
-                  <Icon icon="warning" />
-                </span>
-                <a href={Routes.product_wips_path({
-                      params: {
-                        product_id: slug
-                      },
-                      data: {
-                        modal: true,
-                        tags: 'bug'
-                      }
-                    })}>
-                  File a bug
-                </a>
-              </div>
-
-              <div className="border-bottom py2" style={style.importantLinks}>
-                <span className="mr3 gray-2">
-                  <Icon icon="question-circle" />
-                </span>
-                <a href={Routes.product_posts_path({ product_id: slug })}>
-                  Ask a question
-                </a>
-              </div>
-
-              <div className="py2">
-                <span className="mr3 gray-2">
-                  <Icon icon="code" />
-                </span>
-                <a href={Routes.product_repos_path({ product_id: slug })}>
-                  Source code
-                </a>
-              </div>
             </div>
           </div>
         </div>

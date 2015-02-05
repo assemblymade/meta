@@ -1,7 +1,7 @@
 class ProductSerializer < ApplicationSerializer
   include MarkdownHelper
 
-  attributes :url, :wips_url, :people_url
+  attributes :url, :wips_url, :people_url, :is_member
   attributes :name, :pitch, :slug, :quality, :average_bounty, :logo_url
   attributes :can_update, :try_url, :wips_count, :partners_count, :lead
   attributes :top_marks, :homepage_url, :screenshots, :description, :description_html
@@ -42,6 +42,10 @@ class ProductSerializer < ApplicationSerializer
 
   def can_update
     Ability.new(current_user).can?(:update, object)
+  end
+
+  def is_member
+    object.team_memberships.where(user_id: current_user.try(:id)).any?
   end
 
   def current_user

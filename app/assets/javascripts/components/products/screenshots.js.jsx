@@ -41,6 +41,8 @@ let Screenshots = React.createClass({
     if (ProductStore.isCoreTeam(UserStore.getUser())) {
       return <ProductScreenshotPlaceholder />;
     }
+
+    return null;
   },
 
   wrapScreenshots() {

@@ -37,7 +37,9 @@ class Offer < ActiveRecord::Base
     return if bounty.product.core_team?(user) || bounty.offers.empty?
 
     if earnable > average_offer * 100
-      errors.add(amount, 'must be within reason')
+      # we need to wrap `amount` in a string so that
+      # it can be symbol-ified
+      errors.add("#{amount}", 'must be within reason')
     end
   end
 

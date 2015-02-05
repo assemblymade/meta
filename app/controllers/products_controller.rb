@@ -64,6 +64,7 @@ class ProductsController < ProductController
   end
 
   def activity
+    @feature_flags[:product_show] = true if signed_in? && current_user.is_staff?
     show_product
   end
 
@@ -303,8 +304,9 @@ class ProductsController < ProductController
     end
 
     query = query.unarchived_items.where.not(last_commented_at: nil).
-                  page(params[:page]).per(10).order(last_commented_at: :desc).
-                  reject{|nfi| nfi.target.is_a? Discussion }
+                  where.not(target_type: 'Discussion').
+                  page(params[:page]).per(10).order(last_commented_at: :desc)
+    total_pages = query.total_pages
 
     @news_feed_items = query.map do |nfi|
       Rails.cache.fetch([nfi, 'v2', :json]) do
@@ -322,7 +324,14 @@ class ProductsController < ProductController
       format.html { render 'show' }
       format.json {
         render json: {
+          heartables: @heartables,
           items: @news_feed_items,
+          page: params[:page],
+          pages: total_pages,
+          product: ProductSerializer.new(
+            @product,
+            scope: current_user
+          ),
           user_hearts: @user_hearts
         }
       }

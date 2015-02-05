@@ -4,6 +4,11 @@ var UserStore = require('../stores/user_store')
 
 var CreateProductItem = React.createClass({
   propTypes: {
+    activeMenuItem: React.PropTypes.oneOf([
+        'asset',
+        'bounty',
+        'post'
+    ]).isRequired,
     product: React.PropTypes.object.isRequired
   },
 

@@ -32,12 +32,14 @@ let IdeasHandlers = {
   },
 
   showIdeas(data) {
-    let categories = data.categories;
-    let heartables = data.heartables;
-    let ideas = data.ideas;
-    let topics = data.topics;
-    let totalPages = data.total_pages;
-    let userHearts = data.user_hearts;
+    let {
+      categories,
+      heartables,
+      ideas,
+      topics,
+      total_pages: totalPages,
+      user_hearts: userHearts
+    } = data;
 
     Dispatcher.dispatch({
       type: ActionTypes.IDEAS_RECEIVE,
