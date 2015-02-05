@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(version: 20150205012712) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "uuid-ossp"
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "pg_stat_statements"
+  enable_extension "uuid-ossp"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -620,33 +620,33 @@ ActiveRecord::Schema.define(version: 20150205012712) do
   add_index "product_trends", ["product_id"], name: "index_product_trends_on_product_id", unique: true, using: :btree
 
   create_table "products", id: :uuid, force: :cascade do |t|
-    t.string   "slug",                              limit: 255,                    null: false
-    t.string   "name",                              limit: 255,                    null: false
+    t.string   "slug",                              limit: 255,                null: false
+    t.string   "name",                              limit: 255,                null: false
     t.string   "pitch",                             limit: 255
     t.text     "description"
-    t.integer  "assembly_contribution",                         default: 0,        null: false
+    t.integer  "assembly_contribution",                         default: 0,    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.uuid     "user_id",                                                          null: false
+    t.uuid     "user_id",                                                      null: false
     t.text     "lead"
     t.integer  "view_count",                                    default: 0
     t.text     "suggested_perks"
     t.string   "poster",                            limit: 255
-    t.integer  "votes_count",                                   default: 0,        null: false
+    t.integer  "votes_count",                                   default: 0,    null: false
     t.uuid     "evaluator_id"
     t.datetime "greenlit_at"
     t.text     "free_perk"
-    t.integer  "watchings_count",                               default: 0,        null: false
-    t.text     "repos",                                                                         array: true
-    t.string   "authentication_token",              limit: 255,                    null: false
+    t.integer  "watchings_count",                               default: 0,    null: false
+    t.text     "repos",                                                                     array: true
+    t.string   "authentication_token",              limit: 255,                null: false
     t.datetime "featured_on"
-    t.string   "tags",                                          default: [],                    array: true
+    t.string   "tags",                                          default: [],                array: true
     t.boolean  "can_advertise",                                 default: true
     t.datetime "flagged_at"
     t.text     "flagged_reason"
     t.string   "homepage_url",                      limit: 255
     t.string   "you_tube_video_url",                limit: 255
-    t.integer  "commit_count",                                  default: 0,        null: false
+    t.integer  "commit_count",                                  default: 0,    null: false
     t.datetime "founded_at"
     t.datetime "public_at"
     t.uuid     "main_thread_id"
@@ -655,7 +655,7 @@ ActiveRecord::Schema.define(version: 20150205012712) do
     t.hstore   "info"
     t.integer  "quality"
     t.datetime "last_activity_at"
-    t.integer  "bio_memberships_count",                         default: 0,        null: false
+    t.integer  "bio_memberships_count",                         default: 0,    null: false
     t.datetime "started_building_at"
     t.datetime "live_at"
     t.integer  "partners_count"
@@ -669,10 +669,9 @@ ActiveRecord::Schema.define(version: 20150205012712) do
     t.datetime "last_checked_btc"
     t.datetime "issued_coins"
     t.text     "try_url"
-    t.string   "topics",                                                                        array: true
-    t.integer  "wips_count",                                    default: 0,        null: false
+    t.string   "topics",                                                                    array: true
+    t.integer  "wips_count",                                    default: 0,    null: false
     t.datetime "deleted_at"
-    t.integer  "total_coins",                                   default: 10000000
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
