@@ -33,7 +33,7 @@ var Discussion = React.createClass({
               </a>
             </li>
             <li className="left px2 py1 bold">
-              <Heart heartable_id={item.id} heartable_type={item.heartable_type} />
+              <Heart heartable_id={item.id} heartable_type="NewsFeedItem" />
             </li>
           </ul>
 

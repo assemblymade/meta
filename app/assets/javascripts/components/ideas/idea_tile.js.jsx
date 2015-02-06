@@ -66,9 +66,9 @@ var Idea = React.createClass({
           </div>
 
           <a className="block overflow-hidden p2" href={idea.url}>
-            <h4 className="mt0 mb0 black underline-hover">{idea.name}</h4>
+            <h4 className="mt0 mb1 black underline-hover">{idea.name}</h4>
             <OverflowFade dimension="horizontal" width="100%" height="2rem">
-              <p className="h4 gray-2">{idea.raw_body}</p>
+              <p className="gray-2">{idea.raw_body}</p>
             </OverflowFade>
           </a>
 

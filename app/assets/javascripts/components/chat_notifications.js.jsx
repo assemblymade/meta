@@ -81,7 +81,7 @@ var ChatNotifications = React.createClass({
     }));
   },
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     var _this = this;
 
     this.onPush(function(event, msg) {
@@ -98,6 +98,12 @@ var ChatNotifications = React.createClass({
 
     ChatNotificationsStore.addChangeListener(this.handleChatRoomsChanged);
     this.fetchNotifications();
+  },
+
+  componentWillUnmount: function() {
+    ChatNotificationsStore.removeChangeListener(
+      this.handleChatRoomsChanged
+    )
   },
 
   desktopNotify: function(event) {

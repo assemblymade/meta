@@ -10,7 +10,6 @@ var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
-var IdeaSharePanelStore = require('../../stores/idea_share_panel_store');
 var Discussion = require('../ui/discussion.js.jsx')
 var Markdown = require('../markdown.js.jsx');
 var moment = require('moment');
@@ -53,13 +52,11 @@ var IdeaShow = React.createClass({
 
     IdeaStore.addChangeListener(this.onIdeaChange)
     LoveStore.addChangeListener(this.onLoveChange)
-    IdeaSharePanelStore.addChangeListener(this.onIdeaSharePanelChange);
   },
 
   componentWillUnmount() {
     IdeaStore.removeChangeListener(this.onIdeaChange)
     LoveStore.removeChangeListener(this.onLoveChange)
-    IdeaSharePanelStore.removeChangeListener(this.onIdeaSharePanelChange);
   },
 
   getInitialState() {
@@ -134,12 +131,12 @@ var IdeaShow = React.createClass({
           <div className="container clearfix">
             <div className="left">
               <h4 className="mt2 mb2">
-                Band together to build the product ideas people love.
+                Turn ideas into great products with people around the world
               </h4>
             </div>
             <div className="right py1">
-              <Button type="primary" action={navigate.bind(null, '/ideas/new')}>
-                Add your product idea
+              <Button action={navigate.bind(null, '/ideas/new')}>
+                Start your product idea
               </Button>
             </div>
           </div>
@@ -173,13 +170,16 @@ var IdeaShow = React.createClass({
                         <div className="h3 bold">
                           #{idea.rank}
                         </div>
+                        <div className="h6 gray-2">
+                          of {idea.rank_total}
+                        </div>
                       </div>
                       <p className="overflow-hidden gray-2 mb0">
                         This idea is on it’s way to being fast-tracked. Every Wednesday the most loved idea is selected to become a product and is built out by the community.
                       </p>
                     </div>
 
-                    <Heart size="button" heartable_id={nfi.id} heartable_type={nfi.heartable_type} />
+                    <Heart size="button" heartable_id={nfi.id} heartable_type="NewsFeedItem" />
                   </div>
 
                   <Drawer open={this.state.heart.user_heart}>

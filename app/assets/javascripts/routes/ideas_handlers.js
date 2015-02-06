@@ -38,12 +38,16 @@ let IdeasHandlers = {
       ideas,
       topics,
       total_pages: totalPages,
-      user_hearts: userHearts
+      user_hearts: userHearts,
+      current_product: currentProduct,
+      last_product: lastProduct
     } = data;
 
     Dispatcher.dispatch({
       type: ActionTypes.IDEAS_RECEIVE,
-      ideas: ideas
+      ideas: ideas,
+      currentProduct: currentProduct,
+      lastProduct: lastProduct
     });
 
     Dispatcher.dispatch({

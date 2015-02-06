@@ -11,11 +11,6 @@ var Pagination = require('../pagination/pagination.js.jsx');
 var UserStore = require('../../stores/user_store');
 var Jumbotron = require('../ui/jumbotron.js.jsx')
 
-
-var Sumo = {"id":"bc7e0ee3-b776-4a6b-97ac-327b726b7388","type":"product","created_at":"2014-11-06T00:36:30Z","updated_at":"2015-01-29T01:49:35Z","url":"/signupsumo","name":"Signup Sumo","pitch":"Instantly know when influential people use your product.","slug":"signupsumo","logo_url":"http://assembly.com/attachments/4a3ca4ca-7855-4979-978c-de08921a9527/signupsumo.png","try_url":null}
-
-
-
 var IdeasIndex = React.createClass({
   displayName: 'IdeasIndex',
 
@@ -40,30 +35,39 @@ var IdeasIndex = React.createClass({
 
   getIdeas() {
     this.setState({
-      ideas: IdeasStore.getIdeas()
+      ideas: IdeasStore.getIdeas(),
+      lastProduct: IdeasStore.getLastProduct(),
+      currentProduct: IdeasStore.getCurrentProduct()
     });
   },
 
   getInitialState() {
     return {
-      ideas: IdeasStore.getIdeas()
+      ideas: IdeasStore.getIdeas(),
+      lastProduct: IdeasStore.getLastProduct(),
+      currentProduct: IdeasStore.getCurrentProduct()
     };
   },
 
   render() {
-    var navigate = this.props.navigate;
+    var currentApp, lastApp
+    var navigate = this.props.navigate
 
     var topicsDropdownMenu = this.renderTopics()
 
+    if (this.state.currentProduct) {
+      currentApp = <App app={this.state.currentProduct} />
+    }
 
-    var sumo = this.props.signupSumo
-    var octo = this.props.octobox
+    if (this.state.lastProduct) {
+      lastApp = <App app={this.state.lastProduct} />
+    }
 
     return (
       <main role="main  bg-white">
 
         <Jumbotron>
-          <h1 className="mt0 mb0 center white">Fast-track your ideas into reality</h1>
+          <h1 className="mt0 mb0 center white">The fast lane for bringing ideas to life</h1>
         </Jumbotron>
 
         <div className="container" style={{marginTop: '-2rem'}}>
@@ -77,12 +81,12 @@ var IdeasIndex = React.createClass({
 
             <div className="col col-4 p2">
               <h6 className="gray-2 center caps mt0 mb1">This week's product</h6>
-              <App app={Sumo} />
+              {currentApp}
             </div>
 
             <div className="col col-4 p2" style={{opacity:0.4}}>
               <h6 className="gray-2 center caps mt0 mb1">Last week's product</h6>
-              <App app={Sumo} />
+              {lastApp}
             </div>
           </div>
 
@@ -98,7 +102,6 @@ var IdeasIndex = React.createClass({
 
                   <Nav.Item label="Trending" href="/ideas?sort=trending" />
                   <Nav.Item label="New" href="/ideas?sort=newness" />
-                  <Nav.Divider />
                   {this.renderMyIdeas()}
                 </Nav>
               </div>
@@ -150,9 +153,10 @@ var IdeasIndex = React.createClass({
 
     if (username) {
       var url = "/ideas?user=" + username
-      return (
+      return [
+        <Nav.Divider />,
         <Nav.Item label="My ideas" href={url} onClick={navigate.bind(null, url)} />
-      )
+      ]
     }
   },
 

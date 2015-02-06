@@ -1,8 +1,13 @@
 var StoryStore = require('../stores/story_store');
 
 var TitleNotificationsCount = React.createClass({
-  componentWillMount: function() {
+
+  componentDidMount: function() {
     StoryStore.addChangeListener(this.setTitle);
+  },
+
+  componentWillUnmount: function() {
+    StoryStore.removeChangeListener(this.setTitle);
   },
 
   getDefaultProps: function() {
