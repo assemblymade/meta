@@ -15,11 +15,10 @@ describe('PostsStore', function(){
   it('gets posts for a given product', function(){
     callback({
       type: ActionTypes.POSTS_RECEIVE,
-      posts: [{ id: 'foo', body: 'bar' }],
-      product: 'meta'
+      posts: [{ id: 'foo', body: 'bar' }]
     });
 
-    var posts = PostsStore.getPosts('meta');
+    var posts = PostsStore.getPosts();
     expect(posts[0].id).toEqual('foo');
   });
 });

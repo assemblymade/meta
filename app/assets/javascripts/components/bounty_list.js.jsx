@@ -12,11 +12,11 @@ var BountyList = React.createClass({
   },
 
   componentDidMount: function() {
-    BountiesStore.addListener('change', this._onChange)
+    BountiesStore.addChangeListener(this._onChange)
   },
 
   componentWillUnmount: function() {
-    BountiesStore.removeListener('change', this._onChange)
+    BountiesStore.removeChangeListener(this._onChange)
   },
 
   renderBounties: function() {
@@ -29,7 +29,7 @@ var BountyList = React.createClass({
     return this.state.bounties.map(function(bounty) {
       if (bounty.placeholder) {
         return (
-          <div className="bg-gray-5 mb3 rounded" style={{ height: bounty.height }}></div>
+          <div className="bg-gray-5 mb3 rounded" style={{ height: bounty.height }} />
         )
       }
 
@@ -76,6 +76,6 @@ var BountyList = React.createClass({
   _onChange: function() {
     this.setState(this.getStateFromStore())
   }
-})
+});
 
 module.exports = BountyList

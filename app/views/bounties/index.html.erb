@@ -2,18 +2,4 @@
 <%= track_engaged 'bounties' %>
 <% activate_nav! :bounties %>
 
-<%= react_component 'BountyIndex', {
-  tags: Wip::Tag.suggested_tags,
-  pages: @bounties.page(1).total_pages,
-  product: ProductSerializer.new(@product, scope: current_user),
-  valuation: {
-    product: ProductSerializer.new(@product),
-    url: product_wips_path(@product),
-    maxOffer: (6 * @product.average_bounty).round(-4),
-    averageBounty: @product.average_bounty,
-    coinsMinted: @product.coins_minted,
-    profitLastMonth: @product.profit_last_month,
-    steps: BountyGuidance::Valuations.suggestions(@product),
-  },
-  assets: ActiveModel::ArraySerializer.new(@product.assets.order(created_at: :desc).limit(4), each_serialzier: AssetSerializer)
-} %>
+<%= react_component 'AsmApp' %>

@@ -1,34 +1,102 @@
-var AvatarWithUsername = require('./ui/avatar_with_username.js.jsx');
-var BountyActionCreators = require('../actions/bounty_action_creators');
-var BountyStore = require('../stores/bounty_store');
-var Button = require('./ui/button.js.jsx');
-var formatShortTime = require('../lib/format_short_time.js');
-var Heart = require('./heart.js.jsx');
-var Icon = require('./ui/icon.js.jsx');
-var InviteFriendBounty = require('./invite_friend_bounty.js.jsx');
-var routes = require('../routes');
-var SubscriptionsStore = require('../stores/subscriptions_store');
-var TextPost = require('./ui/text_post.js.jsx');
-var ToggleButton = require('./toggle_button.js.jsx');
-var Trackable = require('./trackable.js.jsx');
-var UserStore = require('../stores/user_store');
+'use strict';
 
-var CLOSED_STATES = ['closed', 'resolved']
-var ONE_HOUR = 60 * 60 * 1000
+const AvatarWithUsername = require('./ui/avatar_with_username.js.jsx');
+const BountyActionCreators = require('../actions/bounty_action_creators');
+const BountyStore = require('../stores/bounty_store');
+const Button = require('./ui/button.js.jsx');
+const formatShortTime = require('../lib/format_short_time.js');
+const Heart = require('./heart.js.jsx');
+const Icon = require('./ui/icon.js.jsx');
+const InviteFriendBounty = require('./invite_friend_bounty.js.jsx');
+const ProductStore = require('../stores/product_store');
+const routes = require('../routes');
+const SubscriptionsStore = require('../stores/subscriptions_store');
+const TextPost = require('./ui/text_post.js.jsx');
+const ToggleButton = require('./toggle_button.js.jsx');
+const Trackable = require('./trackable.js.jsx');
+const UserStore = require('../stores/user_store');
 
-var Bounty = React.createClass({
+const CLOSED_STATES = ['closed', 'resolved']
+const ONE_HOUR = 60 * 60 * 1000
 
+let Bounty = React.createClass({
   propTypes: {
     item: React.PropTypes.object.isRequired,
     noInvites: React.PropTypes.bool,
     showCoins: React.PropTypes.bool
   },
 
-  render: function() {
-    var bounty = this.bounty()
-    var currentUser = window.app.currentUser()
+  abandonWork(e) {
+    let stopWorkUrl = this.bounty().stop_work_url;
 
-    var valuation = null
+    BountyActionCreators.call(e, 'bounty.abandoned', stopWorkUrl);
+
+    this.setState({
+      worker: null,
+      lockUntil: null
+    });
+  },
+
+  closeBounty(e) {
+    e.stopPropagation();
+
+    BountyActionCreators.closeBounty(this.props.bounty.number);
+  },
+
+  componentDidMount() {
+    BountyStore.addChangeListener(this.getBounty);
+    SubscriptionsStore.addChangeListener(this.getSubscriptionState);
+  },
+
+  componentWillUnmount() {
+    BountyStore.removeChangeListener(this.getBounty);
+    SubscriptionsStore.removeChangeListener(this.getSubscriptionState);
+  },
+
+  extendWork(e) {
+    let lockUrl = this.bounty().lock_url;
+
+    BountyActionCreators.call(e, 'bounty.extended', lockUrl);
+
+    let extendUntil = moment().add(60 * ONE_HOUR);
+
+    this.setState({
+      lockUntil: extendUntil
+    });
+  },
+
+  getBounty() {
+    let bounty = BountyStore.getBounty();
+
+    this.setState({
+      bounty: bounty,
+      closed: bounty.state === 'closed'
+    });
+  },
+
+  getInitialState() {
+    let bounty = BountyStore.getBounty();
+
+    return {
+      bounty: bounty,
+      closed: (CLOSED_STATES.indexOf(bounty.state) !== -1 ? true : false),
+      worker: bounty.workers && bounty.workers[0],
+      lockUntil: moment(bounty.locked_at).add(60 * ONE_HOUR),
+      subscribed: SubscriptionsStore.get(this.props.item.id)
+    };
+  },
+
+  getSubscriptionState() {
+    this.setState({
+      subscribed: SubscriptionsStore.get(this.props.item.id)
+    });
+  },
+
+  render() {
+    let bounty = this.state.bounty;
+    let currentUser = UserStore.getUser();
+
+    let valuation = null
     if (this.props.showCoins) {
       valuation = (
         <div className="left px3 py2 border-right border-gray-5">
@@ -37,8 +105,9 @@ var Bounty = React.createClass({
       )
     }
 
-    var lockMessage = null
-    var worker = this.state.worker
+    let lockMessage = null
+    let worker = this.state.worker
+
     if (worker && !(this.state.closed || bounty.state === 'closed')) {
       if (currentUser && worker.id === currentUser.id) {
         lockMessage = (
@@ -77,92 +146,19 @@ var Bounty = React.createClass({
         {lockMessage}
 
         <div className="p4">
-          <TextPost author={bounty.user} timestamp={bounty.created_at} title={bounty.title} labels={bounty.tags} body={bounty.markdown_description} />
+          <TextPost author={bounty.user}
+            timestamp={bounty.created_at}
+            title={bounty.title}
+            labels={bounty.tags}
+            body={bounty.markdown_description} />
         </div>
       </div>
     );
   },
 
-  abandonWork: function(e) {
-    var stopWorkUrl = this.bounty().stop_work_url;
-
-    BountyActionCreators.call(e, 'bounty.abandoned', stopWorkUrl);
-
-    this.setState({
-      worker: null,
-      lockUntil: null
-    });
-  },
-
-  bounty: function() {
-    var propBounty = this.props.bounty;
-    var stateBounty = this.state && this.state.bounty || {};
-
-    return _.extend(propBounty, stateBounty);
-  },
-
-  closeBounty: function(e) {
-    e.stopPropagation();
-
-    BountyActionCreators.closeBounty(this.props.bounty.number);
-  },
-
-  componentDidMount: function() {
-    BountyStore.addChangeListener(this.getBountyState);
-    SubscriptionsStore.addChangeListener(this.getSubscriptionState);
-  },
-
-  componentWillUnmount: function() {
-    BountyStore.removeChangeListener(this.getBountyState);
-    SubscriptionsStore.removeChangeListener(this.getSubscriptionState);
-  },
-
-  extendWork: function(e) {
-    var lockUrl = this.bounty().lock_url;
-
-    BountyActionCreators.call(e, 'bounty.extended', lockUrl);
-
-    var extendUntil = moment().add(60 * ONE_HOUR);
-
-    this.setState({
-      lockUntil: extendUntil
-    });
-  },
-
-  getBountyState: function() {
-    var bounty = this.state.bounty;
-    var state = BountyStore.getState();
-
-    bounty.state = state || bounty.state;
-
-    this.setState({
-      bounty: bounty,
-      closed: state === 'closed'
-    });
-  },
-
-  getInitialState: function() {
-    var bounty = this.bounty();
-
-    return {
-      // :<
-      bounty: bounty,
-      closed: (CLOSED_STATES.indexOf(bounty.state) !== -1 ? true : false),
-      worker: bounty.workers && bounty.workers[0],
-      lockUntil: moment(bounty.locked_at).add(60 * ONE_HOUR),
-      subscribed: SubscriptionsStore.get(this.props.item.id)
-    };
-  },
-
-  getSubscriptionState: function() {
-    this.setState({
-      subscribed: SubscriptionsStore.get(this.props.item.id)
-    });
-  },
-
-  renderClosedNotice: function() {
-    var bounty = this.state.bounty;
-    var closed = bounty.state === 'resolved' || bounty.state === 'closed'
+  renderClosedNotice() {
+    let bounty = this.state.bounty;
+    let closed = bounty.state === 'resolved' || bounty.state === 'closed'
 
     if (!closed) {
       return
@@ -177,8 +173,8 @@ var Bounty = React.createClass({
     )
   },
 
-  renderDescription: function() {
-    var bounty = this.state.bounty;
+  renderDescription() {
+    let bounty = this.state.bounty;
 
     if (bounty.markdown_description) {
       return <Markdown content={bounty.markdown_description} normalized="true" />;
@@ -187,8 +183,8 @@ var Bounty = React.createClass({
     return <div className="gray">No description yet</div>;
   },
 
-  renderEditButton: function() {
-    var bounty = this.state.bounty;
+  renderEditButton() {
+    let bounty = this.state.bounty;
 
     if (bounty.can_update) {
       return (
@@ -199,10 +195,10 @@ var Bounty = React.createClass({
     }
   },
 
-  renderFlagButton: function() {
-    var bounty = this.state.bounty;
-    var currentUser = window.app.currentUser();
-    var isStaff = currentUser && currentUser.get('staff');
+  renderFlagButton() {
+    let bounty = this.state.bounty;
+    let currentUser = window.app.currentUser();
+    let isStaff = currentUser && currentUser.get('staff');
 
     if (isStaff) {
       return (
@@ -218,9 +214,10 @@ var Bounty = React.createClass({
     }
   },
 
-  renderFollowButton: function() {
-    var currentUser = window.app.currentUser();
-    var bounty = this.state.bounty;
+  renderFollowButton() {
+    let currentUser = UserStore.getUser();
+    let bounty = this.state.bounty;
+    let product = ProductStore.getProduct();
 
     if (currentUser) {
       return (
@@ -230,20 +227,20 @@ var Bounty = React.createClass({
             text={{ true: 'Unsubscribe', false: 'Subscribe' }}
             icon={{ true: '', false: '' }}
             classes={{ true: '', false: '' }}
-            href={{ true: routes.product_update_unsubscribe_path({ product_id: bounty.product.slug, update_id: this.props.item.id }),
-                   false: routes.product_update_subscribe_path({ product_id: bounty.product.slug, update_id: this.props.item.id }) }} />
+            href={{ true: routes.product_update_unsubscribe_path({ product_id: product.slug, update_id: this.props.item.id }),
+                   false: routes.product_update_subscribe_path({ product_id: product.slug, update_id: this.props.item.id }) }} />
         </li>
       );
     }
   },
 
-  renderInviteFriendButton: function() {
+  renderInviteFriendButton() {
     if (this.props.noInvites) {
       return null;
     }
 
-    var bounty = this.state.bounty;
-    var closed = bounty.state == 'resolved' || bounty.state == 'closed'
+    let bounty = this.state.bounty;
+    let closed = bounty.state == 'resolved' || bounty.state == 'closed'
 
     if (!closed) {
       return (
@@ -258,7 +255,7 @@ var Bounty = React.createClass({
     }
   },
 
-  renderLove: function() {
+  renderLove() {
     if (this.props.item) {
       return (
         <div className="px4 py2 mb0 mt0 border-top">
@@ -268,8 +265,8 @@ var Bounty = React.createClass({
     }
   },
 
-  renderOpenButton: function() {
-    var bounty = this.state.bounty;
+  renderOpenButton() {
+    let bounty = this.state.bounty;
 
     if (bounty.can_update) {
       return (
@@ -280,8 +277,8 @@ var Bounty = React.createClass({
     }
   },
 
-  renderOpenOrClosedButton: function() {
-    var bounty = this.state.bounty;
+  renderOpenOrClosedButton() {
+    let bounty = this.state.bounty;
 
     if (bounty.state !== 'closed' && !this.state.closed) {
       return <a href="javascript:void(0);" onClick={this.closeBounty}>Close</a>;
@@ -290,8 +287,8 @@ var Bounty = React.createClass({
     return <a href="javascript:void(0);" onClick={this.reopenBounty}>Reopen</a>;
   },
 
-  renderPopularizeButton: function() {
-    var item = this.props.item;
+  renderPopularizeButton() {
+    let item = this.props.item;
 
     if (item && window.app.staff()) {
       return (
@@ -307,9 +304,9 @@ var Bounty = React.createClass({
     }
   },
 
-  renderStartWorkButton: function() {
-    var currentUser = UserStore.getUser();
-    var bounty = this.bounty();
+  renderStartWorkButton() {
+    let currentUser = UserStore.getUser();
+    let bounty = this.state.bounty;
 
     if (this.state.closed || bounty.state === 'closed') {
       return (
@@ -340,15 +337,15 @@ var Bounty = React.createClass({
     return <Button action={this.startWork} type="primary">Work on this bounty</Button>
   },
 
-  reopenBounty: function(e) {
+  reopenBounty(e) {
     e.stopPropagation();
 
     BountyActionCreators.reopenBounty(this.state.bounty.number);
   },
 
-  startWork: function(e) {
-    var currentUser = window.app.currentUser();
-    var startWorkUrl = this.bounty().start_work_url;
+  startWork(e) {
+    let currentUser = window.app.currentUser();
+    let startWorkUrl = this.bounty().start_work_url;
 
     BountyActionCreators.call(e, 'bounty.started', startWorkUrl);
 
@@ -358,7 +355,7 @@ var Bounty = React.createClass({
     });
   },
 
-  requestReview: function() {
+  requestReview() {
     BountyActionCreators.submitWork(this.props.bounty.url + '/review')
   }
 })

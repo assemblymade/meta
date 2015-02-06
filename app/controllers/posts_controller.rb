@@ -2,14 +2,20 @@ class PostsController < ProductController
   respond_to :html, :json
 
   def index
+    @feature_flags[:product_show] = true if signed_in? && current_user.staff?
     find_product!
+
     query = @product.posts.order(created_at: :desc).includes(:news_feed_item)
 
     posts = Post.filter_with_params(query, params)
 
     @posts = ActiveModel::ArraySerializer.new(posts)
     @heartables = query.map(&:news_feed_item)
-    respond_with @posts, location: product_posts_path(@product)
+    respond_with({
+      heartables: @heartables,
+      posts: @posts,
+      product: ProductSerializer.new(@product, scope: current_user)
+    })
   end
 
   def new

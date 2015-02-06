@@ -120,8 +120,8 @@ let ProductShow = React.createClass({
                       </Button>
                     </a>
 
-                    <div className="gray-2 py1">
-                      or <a href="/help">See how Assembly works</a>
+                    <div className="gray-2 mt1">
+                      or <a href="/help">see how Assembly works</a>
                     </div>
                   </div>
                 </div>

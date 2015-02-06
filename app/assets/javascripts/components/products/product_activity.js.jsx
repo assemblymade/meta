@@ -1,13 +1,14 @@
 'use strict';
 
+const BountyMarksStore = require('../../stores/bounty_marks_store');
 const Button = require('../ui/button.js.jsx');
-const CreateProductItem = require('../create_product_item.js.jsx');
 const IntroductionActions = require('../../actions/introduction_actions');
 const IntroductionStore = require('../../stores/introduction_store');
 const NewsFeed = require('../news_feed/news_feed.js.jsx');
 const NewsFeedItemsStore = require('../../stores/news_feed_items_store');
 const ProductImportantLinks = require('./product_important_links.js.jsx');
 const ProductHeader = require('./product_header.js.jsx');
+const ProductMarksStore = require('../../stores/product_marks_store');
 const ProductStore = require('../../stores/product_store');
 const Routes = require('../../routes');
 const Tile = require('../ui/tile.js.jsx');
@@ -16,23 +17,38 @@ const UserStore = require('../../stores/user_store');
 let ProductActivity = React.createClass({
   mixins: [React.addons.PureRenderMixin],
 
+  propTypes: {
+    navigate: React.PropTypes.func.isRequired,
+    params: React.PropTypes.oneOfType([
+      React.PropTypes.array,
+      React.PropTypes.object
+    ]),
+    query: React.PropTypes.object
+  },
+
   componentDidMount() {
+    BountyMarksStore.addChangeListener(this.onBountyMarksChange);
     IntroductionStore.addChangeListener(this.onIntroductionChange);
     NewsFeedItemsStore.addChangeListener(this.onNewsFeedChange);
     ProductStore.addChangeListener(this.onProductChange);
+    ProductMarksStore.addChangeListener(this.onProductMarksChange);
   },
 
   componentWillUnmount() {
+    BountyMarksStore.removeChangeListener(this.onBountyMarksChange);
     IntroductionStore.removeChangeListener(this.onIntroductionChange);
     NewsFeedItemsStore.removeChangeListener(this.onNewsFeedChange);
     ProductStore.removeChangeListener(this.onProductChange);
+    ProductMarksStore.removeChangeListener(this.onProductMarksChange);
   },
 
   getInitialState() {
     return {
       introduction: IntroductionStore.getIntroduction(),
       items: NewsFeedItemsStore.getNewsFeedItems(),
-      product: ProductStore.getProduct()
+      product: ProductStore.getProduct(),
+      productMarks: ProductMarksStore.getMarks(),
+      bountyMarks: BountyMarksStore.getMarks()
     };
   },
 
@@ -47,6 +63,12 @@ let ProductActivity = React.createClass({
     let userId = UserStore.getId();
 
     IntroductionActions.submitIntroduction(slug, userId, introduction)
+  },
+
+  onBountyMarksChange() {
+    this.setState({
+      bountyMarks: BountyMarksStore.getMarks()
+    });
   },
 
   onIntroductionChange() {
@@ -65,6 +87,12 @@ let ProductActivity = React.createClass({
     this.setState({
       product: ProductStore.getProduct()
     });
+  },
+
+  onProductMarksChange() {
+    this.setState({
+      productMarks: ProductMarksStore.getMarks()
+    })
   },
 
   render() {
@@ -101,9 +129,8 @@ let ProductActivity = React.createClass({
                 {this.renderIntroductionForm()}
               </Tile>
 
-              {this.renderCreateBounty()}
-
-              <ProductImportantLinks product={product} />
+              {this.renderProductMarks()}
+              {this.renderBountyMarks()}
             </div>
           </div>
         </div>
@@ -111,10 +138,40 @@ let ProductActivity = React.createClass({
     );
   },
 
-  renderCreateBounty() {
+  renderBountyMarks() {
+    let bountyMarks = this.state.bountyMarks;
     let product = this.state.product;
 
-    return <CreateProductItem product={product} activeMenuItem="bounty" />;
+    if (bountyMarks.length) {
+      let renderedTags = bountyMarks.map((tag, i) => {
+        let tagName = tag[0];
+        let count = tag[1];
+
+        let href = Routes.product_wips_path({
+          params: {
+            product_id: product.slug
+          },
+          data: {
+            mark: tag
+          }
+        });
+
+        return (
+          <li key={tagName + '-' + i}>
+            <a href={href}>{tagName} ({count})</a>
+          </li>
+        );
+      });
+
+      return (
+        <div className="py2 px3">
+          <h6 className="gray-1">Bounty Tags</h6>
+          <ul className="list-reset">
+            {renderedTags}
+          </ul>
+        </div>
+      );
+    }
   },
 
   renderIntroductionForm() {
@@ -123,25 +180,48 @@ let ProductActivity = React.createClass({
 
     if (user && !product.is_member) {
       return (
-        <Tile>
-          <div className="p3">
-            <div className="clearfix">
-              <h4 className="mt0 mb2">Hey {user.username}!</h4>
-              <div className="right"></div>
+        <div className="mb2">
+          <Tile>
+            <div className="px3 py2">
+              <h5 className="mt0 mb1">Hey {user.username}!</h5>
+              <span className="gray-1 markdown markdown-normalized py1 mb2">
+                Ready to pitch in on {product.name}? Introduce yourself.
+              </span>
+
+              <textarea className="form-control mb2"
+                onChange={this.handleIntroductionChange}
+                placeholder="What do you like to do? What is your favorite sandwich?"
+                rows="2"
+                value={this.state.introduction}></textarea>
+              <div className="center">
+                <Button type="default" action={this.handleIntroductionSubmit}>
+                  Introduce yourself!
+                </Button>
+              </div>
             </div>
-            <p>Ready to pitch in on {product.name}? Introduce yourself.</p>
-            <textarea className="form-control mb2"
-              onChange={this.handleIntroductionChange}
-              placeholder="What do you like to do? What is your favorite sandwich?"
-              rows="2"
-              value={this.state.introduction}></textarea>
-            <div className="center">
-              <Button type="primary" action={this.handleIntroductionSubmit}>
-                Introduce yourself!
-              </Button>
-            </div>
-          </div>
-        </Tile>
+          </Tile>
+        </div>
+      );
+    }
+  },
+
+  renderProductMarks() {
+    let productMarks = this.state.productMarks;
+
+    if (productMarks.length) {
+      let renderedTags = productMarks.map((mark, i) => {
+        return (
+          <li key={mark + '-' + i}>{mark}</li>
+        );
+      });
+
+      return (
+        <div className="px3">
+          <h6 className="gray-1 mt0">Product Tags</h6>
+          <ul className="list-reset">
+            {renderedTags}
+          </ul>
+        </div>
       );
     }
   }

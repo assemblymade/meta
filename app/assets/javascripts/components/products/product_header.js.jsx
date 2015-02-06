@@ -1,11 +1,14 @@
-var AppIcon = require('../app_icon.js.jsx');
-var Button = require('../ui/button.js.jsx');
-var Icon = require('../ui/icon.js.jsx');
-var ProductFollowers = require('../product_followers.js.jsx');
-var Routes = require('../../routes');
-var url = require('url');
+'use strict';
 
-var ProductHeader = React.createClass({
+const AppIcon = require('../app_icon.js.jsx');
+const Button = require('../ui/button.js.jsx');
+const CreateProductItem = require('../create_product_item.js.jsx');
+const Icon = require('../ui/icon.js.jsx');
+const ProductFollowers = require('../product_followers.js.jsx');
+const Routes = require('../../routes');
+const url = require('url');
+
+let ProductHeader = React.createClass({
   propTypes: {
     product: React.PropTypes.shape({
       can_update: React.PropTypes.bool,
@@ -19,7 +22,11 @@ var ProductHeader = React.createClass({
   },
 
   render() {
-    var product = this.props.product;
+    let product = this.props.product;
+    let navStyle = {
+      paddingLeft: '0 !important',
+      paddingRight: '0 !important'
+    };
 
     return (
       <div className="bg-white shadow-light">
@@ -40,10 +47,6 @@ var ProductHeader = React.createClass({
                   </h4>
 
                   <div className="clearfix">
-                    <div className="left mt1 mr1">
-                      {this.renderProductState()}
-                    </div>
-
                     <ul className="left sm-show list-inline px0 mt1 mb0">
                       {this.renderTags()}
                     </ul>
@@ -51,8 +54,8 @@ var ProductHeader = React.createClass({
                 </div>
               </div>
 
-              <div className="right mt4">
-                {this.renderHomepageLink()}
+              <div className="right mt2">
+                {this.renderTryButton()}
               </div>
             </div>
           </div>
@@ -60,24 +63,33 @@ var ProductHeader = React.createClass({
 
         <div className="container">
           <div className="clearfix">
-            <div className="left">
-              <ul className="nav nav-tabs" style={{ textAlign: 'left' }}>
-                <li>
-                  <a href={product.url}>Overview</a>
+            <div className="left px1">
+              <ul className="nav nav-tabs">
+                <li className="mr3">
+                  <a style={navStyle} href={product.url}>Overview</a>
                 </li>
 
-                <li>
-                  <a href={product.url + '/activity'}>Activity</a>
+                <li className="mr3">
+                  <a style={navStyle} href={product.url + '/activity'}>Activity</a>
                 </li>
 
-                <li>
-                  <a href={product.url + '/bounties'}>Bounties</a>
+                <li className="mr3">
+                  <a style={navStyle} href={product.url + '/bounties'}>Bounties</a>
+                </li>
+
+                <li className="mr3">
+                  <a style={navStyle} href={product.url + '/posts'}>Discussions</a>
                 </li>
               </ul>
             </div>
 
-            <div className="sm-right center py1">
-              <ProductFollowers product_id={product.id} />
+            <div className="clearfix">
+              <div className="right py1">
+                <span className="h6 mr3">
+                  <ProductFollowers product_id={product.id} />
+                </span>
+                <CreateProductItem product={product} activeMenuItem="bounty" />
+              </div>
             </div>
           </div>
         </div>
@@ -85,28 +97,11 @@ var ProductHeader = React.createClass({
     );
   },
 
-  renderHomepageLink() {
-    var product = this.props.product;
-    var homepageUrl = product.homepage_url;
-
-    if (homepageUrl) {
-      return (
-        <Button type="primary" action={function() {}}>
-          <a href={url.parse(homepageUrl).href}
-              className="mr2 white">
-            {encodeURI(url.parse(homepageUrl).hostname)}
-          </a>
-          <Icon icon="share" />
-        </Button>
-      );
-    }
-  },
-
   renderProductState() {
-    var product = this.props.product;
-    var homepageUrl = product.homepage_url;
+    let product = this.props.product;
+    let homepageUrl = product.homepage_url;
 
-    var status;
+    let status;
     if (homepageUrl) {
       status = (
         <span className="gray-1">
@@ -127,21 +122,46 @@ var ProductHeader = React.createClass({
       );
     }
 
-
     return status;
   },
 
   renderTags() {
-    var product = this.props.product;
-    var marks = product.top_marks;
+    let product = this.props.product;
+    let marks = product.top_marks;
 
-    return marks && marks.slice(0, 3).map((mark) => {
+    return marks && marks.slice(0, 3).map((mark, i) => {
       return (
-        <li className="gray-2">
-          #{mark}
+        <li className="gray-2" key={mark + '-header-' + i}>
+          <small>#{mark.toUpperCase()}</small>
         </li>
       );
     });
+  },
+
+  renderTryButton() {
+    let product = this.props.product;
+    let homepageUrl = product.homepage_url;
+
+    if (homepageUrl) {
+      let href = url.parse(homepageUrl).href;
+
+      return (
+        <Button type="primary" action={function() { window.location = href }}>
+          <span className="mr1">
+            Try {product.name}
+          </span>
+          <span className="h6">
+            <Icon icon="chevron-right" />
+          </span>
+        </Button>
+      );
+    }
+
+    return (
+      <Button type="primary">
+        In development
+      </Button>
+    )
   }
 });
 

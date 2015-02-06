@@ -4,6 +4,8 @@ class TasksController < WipsController
   def index
     reject_blacklisted_users!
 
+    @feature_flags[:product_show] = true if signed_in? && current_user.staff?
+
     # TODO Figure out a better way to do this by manually setting params to FilterWipsQuery
     if params.fetch(:format, 'html') == 'html'
       params.merge!(sort: 'priority', state: 'open')
@@ -31,10 +33,40 @@ class TasksController < WipsController
           return
         end
 
-        render json: @bounties,
-          serializer: PaginationSerializer,
-          each_serializer: BountyListSerializer,
-          root: :bounties
+        response = Rails.cache.fetch([@bounties.first.id], expires_in: 5.minutes) do
+          {
+            tags: Wip::Tag.suggested_tags,
+            product: ProductSerializer.new(@product, scope: current_user),
+            valuation: {
+              product: ProductSerializer.new(@product),
+              url: product_wips_path(@product),
+              maxOffer: (6 * @product.average_bounty).round(-4),
+              averageBounty: @product.average_bounty,
+              coinsMinted: @product.coins_minted,
+              profitLastMonth: @product.profit_last_month,
+              steps: BountyGuidance::Valuations.suggestions(@product),
+            },
+            assets: ActiveModel::ArraySerializer.new(
+              @product.assets.order(created_at: :desc).limit(4),
+              each_serializer: AssetSerializer
+            )
+          }
+        end.merge(
+          bounties: ActiveModel::ArraySerializer.new(
+            @bounties,
+            each_serializer: BountyListSerializer
+          ),
+          heartables: @heartables,
+          meta: {
+            pagination: {
+              page: @bounties.current_page,
+              pages: @bounties.page(1).total_pages
+            }
+          },
+          user_hearts: @user_hearts
+        )
+
+        render json: response
       end
     end
   end
@@ -86,6 +118,7 @@ class TasksController < WipsController
   end
 
   def show
+    @feature_flags[:product_show] = true if signed_in? && current_user.staff?
     @bounty = @wip # fixme: legacy
 
     @milestone = MilestoneTask.where('task_id = ?', @bounty.id).first.try(:milestone)
@@ -106,9 +139,37 @@ class TasksController < WipsController
 
     respond_to do |format|
       format.html { render 'bounties/show' }
-      format.json { render json: {
-        bounty: TaskSerializer.new(@bounty, scope: current_user)
-      } }
+      format.json do
+        response = Rails.cache.fetch([@bounty.id], expires_in: 5.minutes) do
+          {
+            item: NewsFeedItemSerializer.new(@bounty.news_feed_item, scope: current_user),
+            tags: Wip::Tag.suggested_tags,
+            product: ProductSerializer.new(@product, scope: current_user),
+            valuation: {
+              product: ProductSerializer.new(@product),
+              url: product_wips_path(@product),
+              maxOffer: (6 * @product.average_bounty).round(-4),
+              averageBounty: @product.average_bounty,
+              coinsMinted: @product.coins_minted,
+              profitLastMonth: @product.profit_last_month,
+              steps: BountyGuidance::Valuations.suggestions(@product),
+            },
+            assets: ActiveModel::ArraySerializer.new(
+              @product.assets.order(created_at: :desc).limit(4),
+              each_serializer: AssetSerializer
+            )
+          }
+        end.merge(
+          bounty: BountySerializer.new(
+            @bounty,
+            scope: current_user
+          ),
+          heartables: @heartables,
+          user_hearts: @user_hearts
+        )
+
+        render json: response
+      end
     end
   end
 

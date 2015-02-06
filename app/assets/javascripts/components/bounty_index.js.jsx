@@ -1,6 +1,3 @@
-/** @jsx React.DOM */
-
-(function() {
   var Accordion = require('./accordion.js.jsx')
   var BountiesStore = require('../stores/bounties_store.js')
   var BountyActionCreators = require('../actions/bounty_action_creators.js')
@@ -11,8 +8,8 @@
 
   var BountyIndex = React.createClass({
     propTypes: {
-      tags: React.PropTypes.object,
-      assets: React.PropTypes.object,
+      tags: React.PropTypes.array,
+      assets: React.PropTypes.array,
       pages: React.PropTypes.number,
       product: React.PropTypes.object,
       valuation: React.PropTypes.object
@@ -82,9 +79,9 @@
     },
 
     renderTags: function() {
-      return this.props.tags.map(function(tag) {
+      return this.props.tags.map(function(tag, i) {
         return (
-          <li className="mb1 lh0_9">
+          <li className="mb1 lh0_9" key={tag + '-' + i}>
             <a href="#" className="pill-hover block pt1 pb1 pr3 pl3" onClick={this.addTag(tag)}>
               <span className="fs1 fw-500 caps">#{tag}</span>
             </a>
@@ -100,13 +97,13 @@
 
       return (
         <div className="clearfix">
-          {assets.map(function(asset) {
+          {assets.map(function(asset, i) {
             if (['jpg', 'png', 'gif'].indexOf(asset.attachment.extension) < 0) {
               return null
             }
 
             return (
-              <div className="sm-col sm-col-6 px1 mb1">
+              <div className="sm-col sm-col-6 px1 mb1" key={asset.name + '-' + i}>
                 <a href={assets_url} title={asset.name} className="block bg-gray-4 bg-size-cover bg-repeat-none bg-position-center" style={{backgroundImage: 'url('+asset.thumbnail_url+')', height: '80px'}}></a>
               </div>
             )
@@ -133,7 +130,7 @@
                   Getting Started
                 </div>
                 <div className="h6 m0 gray-1">
-                  Jump into some discussion in chat and introduce yourself to <a href={product.people_url}>@core</a>.
+                  Jump into chat and introduce yourself to <a href={product.people_url}>@core</a>.
                 </div>
               </div>
               <div className="col-xs-6 col-sm-12">
@@ -159,7 +156,7 @@
             <BountyList product={this.props.product} valuation={this.props.valuation} onPageChange={this.handlePageChange} draggable={this.draggable()} />
           </div>
         </div>
-      )
+      );
     },
 
     params: function(value, sort, page) {
@@ -192,7 +189,7 @@
     },
 
     draggable: function() {
-      if(!this.props.product.can_update) {
+      if (!this.props.product.can_update) {
         return false
       }
 
@@ -201,9 +198,4 @@
     }
   });
 
-  if (typeof module !== 'undefined') {
-    module.exports = BountyIndex
-  }
-
-  window.BountyIndex = BountyIndex
-})();
+module.exports = window.BountyIndex = BountyIndex;

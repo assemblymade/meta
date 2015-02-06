@@ -144,8 +144,7 @@ var BountyListItem = React.createClass({
       }
 
       return (
-        <div className={handleClasses.join(' ')} onMouseDown={this.handleMouseDown}>
-        </div>
+        <div className={handleClasses.join(' ')} onMouseDown={this.handleMouseDown} />
       )
     }
   },

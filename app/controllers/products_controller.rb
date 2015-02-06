@@ -324,6 +324,7 @@ class ProductsController < ProductController
       format.html { render 'show' }
       format.json {
         render json: {
+          bounty_marks: @top_wip_tags,
           heartables: @heartables,
           items: @news_feed_items,
           page: params[:page],
@@ -332,6 +333,7 @@ class ProductsController < ProductController
             @product,
             scope: current_user
           ),
+          product_marks: @product_marks,
           user_hearts: @user_hearts
         }
       }

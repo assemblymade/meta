@@ -11,6 +11,10 @@ class BountyStore extends Store {
 
     _dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
+        case ActionTypes.BOUNTY_RECEIVE:
+          _bounty = action.bounty;
+          this.emitChange();
+          break;
         case ActionTypes.BOUNTY_WORK_SUBMITTED:
           _submitWork()
           this.emitChange()
@@ -25,6 +29,10 @@ class BountyStore extends Store {
           break
       }
     })
+  }
+
+  getBounty() {
+    return _bounty;
   }
 
   getState() {

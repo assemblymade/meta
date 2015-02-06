@@ -14,14 +14,17 @@ var CreateProductItem = React.createClass({
 
   render: function() {
     var createBountyMenuItem = <DropdownMenu.Item
+          key="create bounty"
           label='Create bounty'
           action="javascript:showCreateBounty();void(0);" />
 
     var createPostMenuItem = <DropdownMenu.Item
+          key="create post"
           label='Create post'
           action={routes.new_product_post_path({product_id: this.props.product.slug})} />
 
     var createAssetMenuItem = <DropdownMenu.Item
+          key="create asset"
           label='Create asset'
           action={routes.new_product_asset_path({product_id: this.props.product.slug})} />
 
@@ -37,16 +40,21 @@ var CreateProductItem = React.createClass({
     var primaryLabel = menuItems[activeMenuItem].props.label
     delete menuItems[activeMenuItem]
 
-    var dropdownMenu = <DropdownMenu position='right'>
-      {_.values(menuItems)}
-    </DropdownMenu>
+    var dropdownMenu = (
+      <DropdownMenu position='right'>
+        {_.values(menuItems)}
+      </DropdownMenu>
+    );
 
-    return <ButtonDropdown
-      type='primary'
-      dropdownMenu={dropdownMenu}
-      action={this.handleClick(primaryAction)}>
-      {primaryLabel}
-    </ButtonDropdown>
+    return (
+      <ButtonDropdown
+          type='default'
+          dropdownMenu={dropdownMenu}
+          block={true}
+          action={this.handleClick(primaryAction)}>
+        {primaryLabel}
+      </ButtonDropdown>
+    );
   },
 
   handleClick: function(action) {

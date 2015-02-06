@@ -2,15 +2,14 @@ var ActionTypes = require('../constants').ActionTypes;
 var Dispatcher = require('../dispatcher');
 
 var PostActionCreators = {
-  fetchPosts: function(path, productSlug) {
+  fetchPosts: function(path) {
     $.ajax({
       method: 'GET',
       url: path,
-      success: function(posts) {
+      success: function(data) {
         Dispatcher.dispatch({
           type: ActionTypes.POSTS_RECEIVE,
-          posts: posts,
-          product: productSlug
+          posts: data.posts
         });
       },
       error: function(jqXhr, textStatus, error) {

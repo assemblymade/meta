@@ -12,5 +12,8 @@ module.exports = [
   ['/ideas/:id/edit', require('../components/ideas/idea_edit.js.jsx'), IdeasHandlers.showEditIdea],
   ['/ideas/:id/start-conversation', require('../components/ideas/idea_start_conversation.js.jsx'), IdeasHandlers.showStartConversation],
   ['/:id', require('../components/products/product_show.js.jsx'), ProductsHandlers.showProduct],
-  ['/:id/activity', require('../components/products/product_activity.js.jsx'), ProductsHandlers.showProductActivity]
+  ['/:product_id/activity', require('../components/products/product_activity.js.jsx'), ProductsHandlers.showProductActivity],
+  ['/:product_id/bounties', require('../components/products/product_bounties.js.jsx'), ProductsHandlers.showProductBounties],
+  ['/:product_id/bounties/:id', require('../components/products/product_bounty.js.jsx'), ProductsHandlers.showProductBounty],
+  ['/:product_id/posts', require('../components/products/product_posts.js.jsx'), ProductsHandlers.showProductPosts]
 ];

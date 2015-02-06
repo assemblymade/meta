@@ -10,7 +10,7 @@ var ListItemMixin = {
 
   renderComments: function(count) {
     return [
-      <Icon icon="comment" />,
+      <span className="gray-3"><Icon icon="comment" /></span>,
       <span className="px1" style={{marginLeft: '-2px'}}>
         {count}
       </span>
@@ -22,7 +22,7 @@ var ListItemMixin = {
       return;
     }
     return (
-      <div className="px3 py2 border-top mb0 mt0">
+      <div className="px3 py1 border-top mb0 mt0">
         <Heart size="small" heartable_type='NewsFeedItem' heartable_id={heartableId} />
       </div>
     )

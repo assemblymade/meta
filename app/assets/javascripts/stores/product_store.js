@@ -13,7 +13,7 @@ class ProductStore extends Store {
     _dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
         case ActionTypes.INTRODUCTION_RECEIVE:
-          _product.set('is_member', true);
+          _product = _product.set('is_member', true);
           this.emitChange()
           break
         case ActionTypes.PRODUCT_RECEIVE:

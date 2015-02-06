@@ -8,6 +8,7 @@ class TaskSerializer < ApplicationSerializer
     :short_description, :comments_count, :thumbnails, :push_channel, :steps,
     :offers_url, :contracts, :earnable_coins_cache
 
+  has_one :product
   has_many :tags
   has_many :invites
   has_many :offers

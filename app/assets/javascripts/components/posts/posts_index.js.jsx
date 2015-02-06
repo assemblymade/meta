@@ -6,10 +6,16 @@ var ProductStore = require('../../stores/product_store');
 var Spinner = require('../spinner.js.jsx');
 
 var PostsIndex = React.createClass({
-  displayName: 'PostsIndex',
+  propTypes: {
+    product: React.PropTypes.object
+  },
 
   componentDidMount: function() {
     PostsStore.addChangeListener(this.getPosts);
+  },
+
+  componentWillUnmount: function() {
+    PostsStore.removeChangeListener(this.getPosts);
   },
 
   fetchAnnouncements: function(e) {
@@ -30,24 +36,12 @@ var PostsIndex = React.createClass({
     if (product) {
       e.preventDefault();
 
-      PostActionCreators.fetchPosts(path, product.slug);
+      PostActionCreators.fetchPosts(path);
 
       this.setState({
         loading: true
       });
     }
-  },
-
-  getDefaultProps: function() {
-    var product = ProductStore.getProduct();
-
-    if (!product) {
-      return {}
-    }
-
-    return {
-      product: product
-    };
   },
 
   getInitialState: function() {
@@ -84,11 +78,11 @@ var PostsIndex = React.createClass({
                 Getting Started
               </div>
               <div className="h6 m0 gray-1">
-                Updates are a great way to keep new contributors up to date
-                with progress and new ways to help out. When you're ready,
-                we'll also email the entry to everyone following
-                {' '}<a href={product.url}>{product.name}</a>. You can include images and
-                use Markdown to make it more awesome.
+                Updates are a great way to keep new contributors up to date{' '}
+                with progress and new ways to help out. When you're ready,{' '}
+                we'll also email the entry to everyone following{' '}
+                <a href={product.url}>{product.name}</a>. You can include{' '}
+                images and use Markdown to make it more awesome.
               </div>
             </div>
 

@@ -46,7 +46,7 @@ var Heart = React.createClass({
       return icon;
     }
 
-    var toggler = <IconToggler on={this.state.user_heart} icon={icon} action={this.handleClick} color="red" />
+    var toggler = <IconToggler on={this.state.user_heart || false} icon={icon} action={this.handleClick} color="red" />
     return <IconWithNumber icon={toggler} n={heartsCount} />
   },
 

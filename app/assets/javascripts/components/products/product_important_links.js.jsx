@@ -23,6 +23,8 @@ let ProductImportantLinks = React.createClass({
           <h5>Important links</h5>
         </div>
 
+        {this.renderHomepageUrl()}
+
         <div className="border-bottom py2" style={style}>
           <span className="mr3 gray-2">
             <Icon icon="comment" />
@@ -68,6 +70,26 @@ let ProductImportantLinks = React.createClass({
         </div>
       </div>
     );
+  },
+
+  renderHomepageUrl() {
+    let product = this.props.product;
+    let style = {
+      borderColor: '#dbdee3'
+    };
+
+    if (product.homepage_url) {
+      return (
+        <div className="border-bottom py2" style={style}>
+          <span className="mr3 gray-2">
+            <Icon icon="home" />
+          </span>
+          <a href={product.homepage_url}>
+            Home
+          </a>
+        </div>
+      );
+    }
   }
 });
 

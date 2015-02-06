@@ -3,7 +3,7 @@ var ActionTypes = require('../constants').ActionTypes
 var Dispatcher = require('../dispatcher');
 
 var _dispatchToken
-var _posts = {}
+var _posts = []
 
 class PostsStore extends Store {
   constructor() {
@@ -12,15 +12,15 @@ class PostsStore extends Store {
     _dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
         case ActionTypes.POSTS_RECEIVE:
-          _posts[action.product] = action.posts
+          _posts = action.posts
           this.emitChange()
           break
       }
     })
   }
 
-  getPosts(productSlug) {
-    return _posts[productSlug] || []
+  getPosts() {
+    return _posts
   }
 }
 
@@ -32,9 +32,8 @@ if (dataTag) {
 
   Dispatcher.dispatch({
     type: ActionTypes.POSTS_RECEIVE,
-    posts: data.posts,
-    product: data.product
-  })
+    posts: data.posts
+  });
 }
 
 module.exports = store

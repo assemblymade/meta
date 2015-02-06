@@ -41,7 +41,7 @@ var PostListIem = React.createClass({
           {this.renderComments(post.comments_count)}
           {this.renderTags(post.marks)}
         </div>
-        <div className="py3">{this.renderLove(this.props.post.news_feed_item_id)}</div>
+        {this.renderLove(this.props.post.news_feed_item_id)}
         {this.renderUser()}
         {this.renderModal()}
       </div>
