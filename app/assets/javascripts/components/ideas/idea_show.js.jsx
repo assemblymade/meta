@@ -179,7 +179,7 @@ var IdeaShow = React.createClass({
                       </p>
                     </div>
 
-                    <Heart size="button" heartable_id={nfi.id} heartable_type={nfi.heartable_type} />
+                    <Heart size="button" heartable_id={nfi.id} heartable_type="NewsFeedItem" />
                   </div>
 
                   <Drawer open={this.state.heart.user_heart}>
