@@ -79,7 +79,6 @@ class User < ActiveRecord::Base
   after_commit -> { Indexer.perform_async(:index, User.to_s, self.id) }, on: :create
   after_commit :retrieve_key_pair, on: :create
   after_commit :create_identity, on: :create
-  after_commit :welcome_tweet, on: :create
 
   # default users to immediate email
   MAIL_DAILY = 'daily'
