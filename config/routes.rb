@@ -332,9 +332,8 @@ ASM::Application.routes.draw do
     resources :tasks, only: [:show, :new], path: 'bounties'
     resources :wips, only: [:index, :show, :new, :edit, :create, :update], controller: 'tasks', path: 'bounties' do
       get 'search', :on => :collection
+      get   'count', :on => :collection
 
-      # FIXME: (pletcher) these routes aren't particularly RESTful -- should
-      #         they be handled in query params instead?
       get   'checkin'
       patch 'start_work'
       patch 'stop_work'

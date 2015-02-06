@@ -27,7 +27,7 @@ let Bounty = React.createClass({
   },
 
   abandonWork(e) {
-    let stopWorkUrl = this.bounty().stop_work_url;
+    let stopWorkUrl = this.state.bounty.stop_work_url;
 
     BountyActionCreators.call(e, 'bounty.abandoned', stopWorkUrl);
 
@@ -40,7 +40,7 @@ let Bounty = React.createClass({
   closeBounty(e) {
     e.stopPropagation();
 
-    BountyActionCreators.closeBounty(this.props.bounty.number);
+    BountyActionCreators.closeBounty(this.state.bounty.number);
   },
 
   componentDidMount() {
@@ -54,7 +54,7 @@ let Bounty = React.createClass({
   },
 
   extendWork(e) {
-    let lockUrl = this.bounty().lock_url;
+    let lockUrl = this.state.bounty.lock_url;
 
     BountyActionCreators.call(e, 'bounty.extended', lockUrl);
 
@@ -345,7 +345,7 @@ let Bounty = React.createClass({
 
   startWork(e) {
     let currentUser = window.app.currentUser();
-    let startWorkUrl = this.bounty().start_work_url;
+    let startWorkUrl = this.state.bounty.start_work_url;
 
     BountyActionCreators.call(e, 'bounty.started', startWorkUrl);
 
@@ -356,7 +356,7 @@ let Bounty = React.createClass({
   },
 
   requestReview() {
-    BountyActionCreators.submitWork(this.props.bounty.url + '/review')
+    BountyActionCreators.submitWork(this.state.bounty.url + '/review')
   }
 })
 

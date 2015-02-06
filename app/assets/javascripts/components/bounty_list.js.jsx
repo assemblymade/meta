@@ -5,8 +5,6 @@ var PaginationLinks = require('./pagination_links.js.jsx')
 var Spinner = require('./spinner.js.jsx')
 
 var BountyList = React.createClass({
-  displayName: 'BountyList',
-
   getInitialState: function() {
     return this.getStateFromStore()
   },
@@ -21,7 +19,7 @@ var BountyList = React.createClass({
 
   renderBounties: function() {
     if (!this.state.bounties.length) {
-      return
+      return null;
     }
 
     var product = this.props.product
@@ -67,8 +65,6 @@ var BountyList = React.createClass({
   getStateFromStore: function() {
     return {
       bounties: BountiesStore.getBounties(),
-      page: BountiesStore.getPage(),
-      pages: BountiesStore.getPages(),
       loading: BountiesStore.getLoading()
     }
   },

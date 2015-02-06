@@ -1,6 +1,6 @@
-var routes = require('../routes')
-var UserActions = require('../actions/user_actions')
-var UserStore = require('../stores/user_store')
+var routes = require('../routes');
+var UserActions = require('../actions/user_actions');
+var UserStore = require('../stores/user_store');
 
 var CreateProductItem = React.createClass({
   propTypes: {

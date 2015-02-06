@@ -20,6 +20,8 @@ let ProductBounties = React.createClass({
   },
 
   componentDidMount() {
+    document.title = 'Bounties · ' + this.state.product.name;
+
     AssetsStore.addChangeListener(this.onAssetsChange);
     BountyMarksStore.addChangeListener(this.onBountyMarksChange);
     ProductStore.addChangeListener(this.onProductChange);

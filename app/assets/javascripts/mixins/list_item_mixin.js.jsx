@@ -10,8 +10,8 @@ var ListItemMixin = {
 
   renderComments: function(count) {
     return [
-      <span className="gray-3"><Icon icon="comment" /></span>,
-      <span className="px1" style={{marginLeft: '-2px'}}>
+      <span className="gray-3" key={'comment-icon-' + count}><Icon icon="comment" /></span>,
+      <span className="px1" style={{marginLeft: '-2px'}} key={'comment-count-' + count}>
         {count}
       </span>
     ];

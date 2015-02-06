@@ -15,6 +15,8 @@ let ProductPosts = React.createClass({
   },
 
   componentDidMount() {
+    document.title = 'Posts · ' + this.state.product.name;
+
     ProductStore.addChangeListener(this.onProductChange);
   },
 

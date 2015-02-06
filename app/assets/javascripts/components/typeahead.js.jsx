@@ -1,6 +1,6 @@
-var CONSTANTS = require('../constants');;
+var CONSTANTS = require('../constants');
 
-var TC = CONSTANTS.TYPEAHEAD;
+var TC = CONSTANTS.TEXT_COMPLETE;
 
 var Typeahead = React.createClass({
   mixins: [React.addons.LinkedStateMixin],

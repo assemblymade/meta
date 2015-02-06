@@ -26,13 +26,6 @@ class TasksController < WipsController
       end
 
       format.json do
-        # TODO (pletcher) move this call elsewhere
-        if params[:count]
-          tasks_count = { total: @product.tasks.where(state: ['open', 'awarded']).count }
-          render json: tasks_count
-          return
-        end
-
         response = Rails.cache.fetch([@bounties.first.id], expires_in: 5.minutes) do
           {
             tags: Wip::Tag.suggested_tags,
@@ -52,17 +45,13 @@ class TasksController < WipsController
             )
           }
         end.merge(
-          bounties: ActiveModel::ArraySerializer.new(
+          PaginationSerializer.new(
             @bounties,
-            each_serializer: BountyListSerializer
-          ),
+            each_serializer: BountyListSerializer,
+            root: :bounties
+          ).as_json
+        ).merge(
           heartables: @heartables,
-          meta: {
-            pagination: {
-              page: @bounties.current_page,
-              pages: @bounties.page(1).total_pages
-            }
-          },
           user_hearts: @user_hearts
         )
 
@@ -73,6 +62,11 @@ class TasksController < WipsController
 
   def new
     @bounty = wip_class.new(product: @product)
+  end
+
+  def count
+    tasks_count = { total: @product.tasks.where(state: ['open', 'awarded']).count }
+    render json: tasks_count
   end
 
   def create
@@ -140,6 +134,7 @@ class TasksController < WipsController
     respond_to do |format|
       format.html { render 'bounties/show' }
       format.json do
+        puts @bounty.news_feed_item.inspect
         response = Rails.cache.fetch([@bounty.id], expires_in: 5.minutes) do
           {
             item: NewsFeedItemSerializer.new(@bounty.news_feed_item, scope: current_user),

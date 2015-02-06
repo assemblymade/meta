@@ -1,14 +1,13 @@
 'use strict';
 
-const Bounty = require('../bounty.js.jsx');
-const BountyMarksStore = require('../../stores/bounty_marks_store');
 const Discussion = require('../ui/discussion.js.jsx');
 const NewsFeedItemStore = require('../../stores/news_feed_item_store');
+const PostStore = require('../../stores/post_store');
 const ProductHeader = require('./product_header.js.jsx');
 const ProductStore = require('../../stores/product_store');
-const ValuationStore = require('../../stores/valuation_store');
+const Update = require('../update.js.jsx');
 
-let ProductBounty = React.createClass({
+let ProductPost = React.createClass({
   mixins: [React.addons.PureRenderMixin],
   propTypes: {
     navigate: React.PropTypes.func.isRequired,
@@ -22,42 +21,39 @@ let ProductBounty = React.createClass({
   componentDidMount() {
     let {
       product: { name },
-      target: { number, title }
+      target: { title }
     } = this.state.item;
 
-    document.title = title + ' · #' + number + ' · ' + name;
+    document.title = title + ' · ' + name;
 
-    BountyMarksStore.addChangeListener(this.onBountyMarksChange);
     NewsFeedItemStore.addChangeListener(this.onNewsFeedItemChange);
+    PostStore.addChangeListener(this.onPostChange);
     ProductStore.addChangeListener(this.onProductChange);
-    ValuationStore.addChangeListener(this.onValuationChange);
   },
 
   componentWillUnmount() {
-    BountyMarksStore.removeChangeListener(this.onBountyMarksChange);
     NewsFeedItemStore.removeChangeListener(this.onNewsFeedItemChange);
+    PostStore.removeChangeListener(this.onPostChange);
     ProductStore.removeChangeListener(this.onProductChange);
-    ValuationStore.removeChangeListener(this.onValuationChange);
   },
 
   getInitialState() {
     return {
       item: NewsFeedItemStore.getItem(),
-      product: ProductStore.getProduct(),
-      tags: BountyMarksStore.getMarkNames(),
-      valuation: ValuationStore.getValuation()
+      post: PostStore.getPost(),
+      product: ProductStore.getProduct()
     };
-  },
-
-  onBountyMarksChange() {
-    this.setState({
-      tags: BountyMarksStore.getMarkNames(),
-    });
   },
 
   onNewsFeedItemChange() {
     this.setState({
       item: NewsFeedItemStore.getItem(),
+    });
+  },
+
+  onPostChange() {
+    this.setState({
+      post: PostStore.getPost()
     });
   },
 
@@ -67,32 +63,21 @@ let ProductBounty = React.createClass({
     });
   },
 
-  onValuationChange() {
-    this.setState({
-      valuation: ValuationStore.getValuation()
-    });
-  },
-
   render() {
     let {
       item,
-      product,
-      tags,
-      valuation
+      post,
+      product
     } = this.state;
-
-    if (!item) {
-      return null;
-    }
 
     return (
       <div>
         <ProductHeader product={product} />
         <div className="container mt3">
           <Discussion newsFeedItem={item}>
-            <Bounty item={item}
-                showCoins={product.slug !== 'meta'}
-                valuation={valuation} />
+            <Update newsFeedItem={item}
+                productSlug={product.slug}
+                update={post} />
           </Discussion>
         </div>
       </div>
@@ -100,4 +85,4 @@ let ProductBounty = React.createClass({
   }
 });
 
-module.exports = ProductBounty;
+module.exports = ProductPost;

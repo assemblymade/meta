@@ -152,8 +152,15 @@
             </span>
           </div>
           <div className="col-xs-12 col-sm-8 r768_pr0">
-            <BountyFilter {...bountyFilterProps} value={this.state.value} onValueChange={this.handleValueChange} sort={this.state.sort} onSortChange={this.handleSortChange} />
-            <BountyList product={this.props.product} valuation={this.props.valuation} onPageChange={this.handlePageChange} draggable={this.draggable()} />
+            <BountyFilter {...bountyFilterProps}
+                value={this.state.value}
+                onValueChange={this.handleValueChange}
+                sort={this.state.sort}
+                onSortChange={this.handleSortChange} />
+            <BountyList product={this.props.product}
+                valuation={this.props.valuation}
+                onPageChange={this.handlePageChange}
+                draggable={this.draggable()} />
           </div>
         </div>
       );

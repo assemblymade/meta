@@ -3,6 +3,7 @@
 const AppIcon = require('../app_icon.js.jsx');
 const Button = require('../ui/button.js.jsx');
 const CreateProductItem = require('../create_product_item.js.jsx');
+const CreateProductItemStore = require('../../stores/create_product_item_store');
 const Icon = require('../ui/icon.js.jsx');
 const ProductFollowers = require('../product_followers.js.jsx');
 const Routes = require('../../routes');
@@ -21,12 +22,34 @@ let ProductHeader = React.createClass({
     }).isRequired
   },
 
+  componentDidMount() {
+    CreateProductItemStore.addChangeListener(this.onActiveMenuItemChange);
+  },
+
+  componentWillUnmount() {
+    CreateProductItemStore.removeChangeListener(this.onActiveMenuItemChange);
+  },
+
+  getInitialState() {
+    return {
+      activeMenuItem: CreateProductItemStore.getActiveMenuItem()
+    };
+  },
+
+  onActiveMenuItemChange() {
+    this.setState({
+      activeMenuItem: CreateProductItemStore.getActiveMenuItem()
+    });
+  },
+
   render() {
     let product = this.props.product;
     let navStyle = {
       paddingLeft: '0 !important',
       paddingRight: '0 !important'
     };
+
+    console.log(this.state);
 
     return (
       <div className="bg-white shadow-light">
@@ -85,10 +108,10 @@ let ProductHeader = React.createClass({
 
             <div className="clearfix">
               <div className="right py1">
-                <span className="h6 mr3">
+                <span className="h6">
                   <ProductFollowers product_id={product.id} />
                 </span>
-                <CreateProductItem product={product} activeMenuItem="bounty" />
+                <CreateProductItem product={product} activeMenuItem={this.state.activeMenuItem} />
               </div>
             </div>
           </div>

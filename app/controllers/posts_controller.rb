@@ -58,6 +58,7 @@ class PostsController < ProductController
   end
 
   def show
+    @feature_flags[:product_show] = true if signed_in? && current_user.staff?
     find_product!
     find_post!
     find_heartables!
@@ -65,6 +66,15 @@ class PostsController < ProductController
     if Watching.watched?(current_user, @post.news_feed_item)
       @user_subscriptions = [@post.news_feed_item.id]
     end
+
+    respond_with({
+      heartables: @heartables,
+      item: NewsFeedItemSerializer.new(@post.news_feed_item),
+      post: PostSerializer.new(@post),
+      product: ProductSerializer.new(@product),
+      user_subscriptions: @user_subscriptions,
+      user_hearts: @user_hearts
+    })
   end
 
   def edit
