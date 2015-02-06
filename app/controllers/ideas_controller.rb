@@ -58,8 +58,8 @@ class IdeasController < ProductController
       topics: topics,
       total_pages: total_pages,
       user_hearts: @user_hearts,
-      current_product: current_product,
-      last_product: last_product
+      current_product: ProductSerializer.new(current_product),
+      last_product: ProductSerializer.new(last_product)
     })
   end
 
