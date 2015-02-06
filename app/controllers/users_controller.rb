@@ -177,4 +177,5 @@ protected
       @empty_state_text = "@#{@user.username} hasn't been awarded any bounties"
     end
   end
+
 end

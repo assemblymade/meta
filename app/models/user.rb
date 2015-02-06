@@ -386,6 +386,10 @@ class User < ActiveRecord::Base
     newcluster
   end
 
+  def welcome_tweet
+    Tweeter.new.tweet_welcome_user(self)
+  end
+
   #governance
 
   def can_vote?(product)

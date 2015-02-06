@@ -23,6 +23,10 @@ class WipSerializer < ActiveModel::Serializer
     product.name
   end
 
+  def full_url
+    product_wip_url(product, object)
+  end
+
   def url
     case wip.type
     when 'Discussion'
