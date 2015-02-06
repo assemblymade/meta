@@ -7,7 +7,11 @@ namespace :tweeter do
   end
 
   task :tweet_hot_products => :environment do
-    Tweeter.new.tweet_hot_products(4)
+
+    today = Time.now.utc.wday
+    if today == 2
+      Tweeter.new.tweet_hot_products(4)
+    end
   end
 
 end
