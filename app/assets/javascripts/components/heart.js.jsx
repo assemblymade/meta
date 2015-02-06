@@ -94,10 +94,6 @@ var Heart = React.createClass({
       return <div />
     }
 
-    if (!UserStore.isSignedIn()) {
-      return <Button block={true}>Sign in to love this idea</Button>
-    }
-
     if (this.state.user_heart) {
       return <Button block={true}>Loved</Button>
     } else {
@@ -126,6 +122,10 @@ var Heart = React.createClass({
       } else {
         LoveActionCreators.clickLove(this.props.heartable_type, this.props.heartable_id)
       }
+    } else {
+      // (@chrislloyd) horrible hack, couldn't think through how to do
+      // this with actions etc.
+      window.location = '/signup'
     }
   },
 
