@@ -7,6 +7,4 @@
 //= require underscore
 //= require nprogress
 
-//= require ./constants
-//= require ./dispatcher
 //= require ./application
