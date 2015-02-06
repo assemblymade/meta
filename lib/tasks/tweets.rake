@@ -13,5 +13,4 @@ namespace :tweeter do
       Tweeter.new.tweet_hot_products(4)
     end
   end
-
 end

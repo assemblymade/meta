@@ -177,4 +177,21 @@ protected
       @empty_state_text = "@#{@user.username} hasn't been awarded any bounties"
     end
   end
+
+  def suggestions
+    user_handle = params[:user_handle]
+    mark = params[:mark]
+
+    user = User.find_by(twitter_nickname: user_handle)
+    if user
+      bounty = TopBounty.where(user: user).sample(1)
+      answer = {}
+      answer['url'] =
+      answer['bounty_name'] =
+    end
+
+
+    format.json { render json: {}, status: 200 }
+  end
+
 end

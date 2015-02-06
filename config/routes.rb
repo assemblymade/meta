@@ -91,6 +91,8 @@ ASM::Application.routes.draw do
     get    '/settings/notifications' => "users/notifications#edit", :as => :settings_notifications
     patch  '/settings/notifications' => "users/notifications#update"
 
+    post '/suggestions' => 'users#suggestions'
+
     namespace :users, path: 'user' do
       resource :balance, only: [:show] { post :withdraw }
       resource :payment_option, only: [:show, :create, :update]

@@ -40,6 +40,49 @@ class Tweeter
     encoded
   end
 
+  def bounty_participants(bounty)
+    participants = []
+    if bounty.user.twitter_nickname
+      participants.append(bounty.user.twitter_nickname)
+    end
+    participants = participants + product_participants(bounty.product)
+    participants.uniq.take(3)
+  end
+
+  def bounty_hashtags(bounty)
+    QueryMarks.new.legible_mark_vector(bounty.mark_vector).sort_by{|a, b| -b}.map{|a, b| a}.take(4)
+  end
+
+  def worthy_bounties(n)
+    bounty_suggestion_fraction = 0.5
+    top_products = ProductStats.top_products_by_activity(limit: 12).select{|a, b| a != "meta"}.map{|a, b| Product.find_by(slug: a)}
+    top_bountys = top_products.map{|a| a.tasks}.flatten.select{|a| a.state == "open"}
+    top_bountys = top_bountys.select{|a| a.earnable_coins_cache}.sort_by{|a| -a.earnable_coins_cache}
+    top_bountys = top_bountys.take(top_bountys.count * bounty_suggestion_fraction)
+    top_bountys.sample(n).uniq
+  end
+
+  def promote_bounty(bounty)
+    password = compute_password
+    url = "https://asm-tweeter.herokuapp.com/bounties/promote/" + password
+    the_data = {
+      bounty_name: bounty.title,
+      authors: bounty_participants(bounty),
+      url: WipSerializer.new(bounty).full_url,
+      hashtags: bounty_hashtags(bounty),
+      product_name: bounty.product.name
+    }
+
+    request :post, url, the_data
+  end
+
+  def promote_worthy_bounties(n)
+    bounties = worthy_bounties(n)
+    bounties.each do |b|
+      promote_bounty(b)
+    end
+  end
+
   def tweet_idea(idea)
     password = compute_password
     url = "https://asm-tweeter.herokuapp.com/idea/" + password
