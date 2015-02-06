@@ -11,11 +11,6 @@ var Pagination = require('../pagination/pagination.js.jsx');
 var UserStore = require('../../stores/user_store');
 var Jumbotron = require('../ui/jumbotron.js.jsx')
 
-
-var Sumo = {"id":"bc7e0ee3-b776-4a6b-97ac-327b726b7388","type":"product","created_at":"2014-11-06T00:36:30Z","updated_at":"2015-01-29T01:49:35Z","url":"/signupsumo","name":"Signup Sumo","pitch":"Instantly know when influential people use your product.","slug":"signupsumo","logo_url":"https://d1015h9unskp4y.cloudfront.net/attachments/4a3ca4ca-7855-4979-978c-de08921a9527/signupsumo.png","try_url":null}
-
-var Giraff = {"id":"1096fde9-95ee-4450-b645-69432c85176c","type":"product","created_at":"2014-11-17T08:58:34Z","updated_at":"2015-01-29T00:01:56Z","url":"/giraff","name":"Giraff","pitch":"Tinder for GIFs ","slug":"giraff","logo_url":"https://d1015h9unskp4y.cloudfront.net/attachments/8fed45b9-b456-4ee7-a548-f7cd4afad6ec/girafflogo.png"}
-
 var IdeasIndex = React.createClass({
   displayName: 'IdeasIndex',
 
@@ -40,20 +35,33 @@ var IdeasIndex = React.createClass({
 
   getIdeas() {
     this.setState({
-      ideas: IdeasStore.getIdeas()
+      ideas: IdeasStore.getIdeas(),
+      lastProduct: IdeasStore.getLastProduct(),
+      currentProduct: IdeasStore.getCurrentProduct()
     });
   },
 
   getInitialState() {
     return {
-      ideas: IdeasStore.getIdeas()
+      ideas: IdeasStore.getIdeas(),
+      lastProduct: IdeasStore.getLastProduct(),
+      currentProduct: IdeasStore.getCurrentProduct()
     };
   },
 
   render() {
-    var navigate = this.props.navigate;
+    var currentApp, lastApp
+    var navigate = this.props.navigate
 
     var topicsDropdownMenu = this.renderTopics()
+
+    if (this.state.currentProduct) {
+      currentApp = <App app={this.state.currentProduct} />
+    }
+
+    if (this.state.lastProduct) {
+      lastApp = <App app={this.state.lastProduct} />
+    }
 
     return (
       <main role="main  bg-white">
@@ -73,12 +81,12 @@ var IdeasIndex = React.createClass({
 
             <div className="col col-4 p2">
               <h6 className="gray-2 center caps mt0 mb1">This week's product</h6>
-              <App app={Giraff} />
+              {currentApp}
             </div>
 
             <div className="col col-4 p2" style={{opacity:0.4}}>
               <h6 className="gray-2 center caps mt0 mb1">Last week's product</h6>
-              <App app={Sumo} />
+              {lastApp}
             </div>
           </div>
 
