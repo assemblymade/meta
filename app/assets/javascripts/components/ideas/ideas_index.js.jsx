@@ -59,7 +59,7 @@ var IdeasIndex = React.createClass({
       <main role="main  bg-white">
 
         <Jumbotron>
-          <h1 className="mt0 mb0 center white">Fast-track your ideas into reality</h1>
+          <h1 className="mt0 mb0 center white">The fast lane for bringing ideas to life</h1>
         </Jumbotron>
 
         <div className="container" style={{marginTop: '-2rem'}}>
