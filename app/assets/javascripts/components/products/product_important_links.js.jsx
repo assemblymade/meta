@@ -68,6 +68,15 @@ let ProductImportantLinks = React.createClass({
             Source code
           </a>
         </div>
+
+        <div className="py2">
+          <span className="mr3 gray-2">
+            <Icon icon="photo" />
+          </span>
+          <a href={Routes.product_assets_path({ product_id: slug })}>
+            Assets
+          </a>
+        </div>
       </div>
     );
   },

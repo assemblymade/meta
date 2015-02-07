@@ -62,6 +62,7 @@ ROUTES = [
   'new_user_session',
   'notifications',
   'product',
+  'product_assets',
   'product_chat',
   'product_follow',
   'product_people',

@@ -17,6 +17,12 @@ class TasksController < WipsController
       @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map(&:id))
     end
 
+    if params[:count]
+      tasks_count = { total: @product.tasks.where(state: ['open', 'awarded']).count }
+      render json: tasks_count
+      return
+    end
+
     respond_to do |format|
       format.html do
         expires_now
@@ -60,11 +66,6 @@ class TasksController < WipsController
 
   def new
     @bounty = wip_class.new(product: @product)
-  end
-
-  def count
-    tasks_count = { total: @product.tasks.where(state: ['open', 'awarded']).count }
-    render json: tasks_count
   end
 
   def create

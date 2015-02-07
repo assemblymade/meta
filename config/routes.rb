@@ -285,6 +285,7 @@ ASM::Application.routes.draw do
     post 'follow'
     post 'announcements'
     post 'unfollow'
+
     get 'log' => 'stakes#show'
     get 'search' => 'search#index'
     patch :launch
@@ -332,7 +333,6 @@ ASM::Application.routes.draw do
     resources :tasks, only: [:show, :new], path: 'bounties'
     resources :wips, only: [:index, :show, :new, :edit, :create, :update], controller: 'tasks', path: 'bounties' do
       get 'search', :on => :collection
-      get   'count', :on => :collection
 
       get   'checkin'
       patch 'start_work'
