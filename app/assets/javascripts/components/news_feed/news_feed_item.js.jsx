@@ -12,7 +12,6 @@ var Markdown = require('../markdown.js.jsx');
 var moment = require('moment');
 var NewsFeedItemActionCreators = require('../../actions/news_feed_item_action_creators');
 var NewsFeedItemBounty = require('./news_feed_item_bounty.js.jsx');
-var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx');
 var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
 var NewsFeedItemModal = require('./news_feed_item_modal.js.jsx');
 var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');

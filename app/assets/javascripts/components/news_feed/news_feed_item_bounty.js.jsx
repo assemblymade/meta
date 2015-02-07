@@ -1,7 +1,6 @@
 var AppCoins = require('../app_coins.js.jsx')
 var Avatar = require('../ui/avatar.js.jsx')
 var Markdown = require('../markdown.js.jsx')
-var NewsFeedItemBountyModal = require('./news_feed_item_bounty_modal.js.jsx')
 var NewsFeedItemModalMixin = require('../../mixins/news_feed_item_modal_mixin');
 var Thumbnail = require('../thumbnail.js.jsx')
 

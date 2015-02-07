@@ -28,7 +28,8 @@ let ProductsHandlers = {
       pages,
       product,
       product_marks: productMarks,
-      user_hearts: userHearts
+      user_hearts: userHearts,
+      valuation
     } = data;
 
     Dispatcher.dispatch({
@@ -64,6 +65,11 @@ let ProductsHandlers = {
     Dispatcher.dispatch({
       type: ActionTypes.PRODUCT_RECEIVE,
       product: product
+    });
+
+    Dispatcher.dispatch({
+      type: ActionTypes.VALUATION_RECEIVE,
+      valuation: valuation
     });
 
     _showCreateBounty();
