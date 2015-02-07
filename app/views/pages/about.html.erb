@@ -9,8 +9,7 @@
     <div class="main">
       <div class="container">
         <h1>
-          Together, we can think bigger, go further,
-          <span class="line2">be more powerful, and more driven.</span>
+          Together, we can think bigger, go further.
         </h1>
         <a href="http://vimeo.com/102253176" class="svg-play-button popup-video">
           <svg class="svg-icon svg-icon-play-btn" viewBox="0 0 32 32">
@@ -22,41 +21,34 @@
     </div>
     <div class="dark-gradient"></div>
   </section>
-  <section class="dashboard circle-stats dashboard-about">
-    <div class="main">
-      <div class="container">
-        <div class="col-xs-6 col-sm-4 col-md-4">
-          <div class="chart" data-percent="77" data-scale-color="#ffb400"> <!-- percentage data benchmarked against past metric  -->
-            <!-- <% cache(expires_in: 7.days) do %> -->
-              <h3 class="data"><%= Product.active_product_count %></h3>
-            <!-- <% end %> -->
-          </div>
+
+  <section class="bg-gray-6 py4">
+    <div class="container">
+      <div class="clearfix center">
+        <div class="col col-4">
+          <h2 class="mt0 green"><%= Product.active_product_count %></h2>
           <h4>Products</h4>
           <p>Being built by the community</p>
         </div>
-        <div class="hidden-xs col-sm-4 col-md-4">
-          <div class="chart" data-percent="32" data-scale-color="#ffb400">
-            <h3 class="data"><%= Task.open.count %></h3>
-          </div>
+        <div class="col col-4">
+          <h2 class="mt0 green"><%= Task.open.count %></h2>
           <h4>Bounties</h4>
           <p>Ready for your help</p>
         </div>
-        <div class="col-xs-6 col-sm-4 col-md-4">
-          <div class="chart" data-percent="65" data-scale-color="#ffb400">
-            <h3 class="data">4.5M</h3>
-          </div>
+        <div class="col col-4">
+          <h2 class="mt0 green">4.5M</h2>
           <h4>Customers</h4>
           <p>Using Assembly products</p>
         </div>
       </div>
     </div>
   </section>
-  
+
   <section class="flip-grid-unit flip-grid-unit-about">
     <div class="container">
       <div class="header">
         <ul class="flip-grid">
-          <li>            
+          <li>
             <a href="#">
               <img src="https://d8izdk6bl4gbi.cloudfront.net/340x340/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/c42357e4-fc7a-42f6-9414-fec079076fa3/logo.png">
             </a>
@@ -171,8 +163,8 @@
             </a>
           <li>
             <a href="#">
-              <img src="<%= asset_path('focus-home/community/aaronrelph.png') %>" alt="Line">              
-              
+              <img src="<%= asset_path('focus-home/community/aaronrelph.png') %>" alt="Line">
+
             </a>
           <li>
             <a href="#">
@@ -180,7 +172,7 @@
             </a>
           <li>
             <a href="#">
-              
+
               <img src="https://gravatar.com/avatar/da9af1e89b5589cc2569c3b8ed1df59a?size=144px">
             </a>
           <li>
@@ -207,8 +199,8 @@
 			products people love.
         </h2>
         <p>
-			We are developers, designers, writers, creatives, or marketers by trade. But we are makers at heart. 
-						
+			We are developers, designers, writers, creatives, or marketers by trade. But we are makers at heart.
+
 			<!-- Assembly is where we band together to build.		 -->
 
         </p>
@@ -249,7 +241,7 @@
           <li>
             <a href="#">
               <img src="<%= asset_path('focus-home/community/iwasrobbed.jpeg') %>" alt="Line">
-              
+
             </a>
           <li>
             <a href="#">
@@ -257,8 +249,8 @@
             </a>
           <li>
             <a href="#">
-              
-              
+
+
               <img src="https://gravatar.com/avatar/08f077ea061585744ee080824f5a8e65?size=144px">
             </a>
         </ul>
@@ -269,7 +261,7 @@
             </a>
           <li>
             <a href="#">
-              
+
               <img src="https://gravatar.com/avatar/5e4575fdaacc879dc2199490417d170a?size=144px">
             </a>
           <li>
@@ -278,7 +270,7 @@
             </a>
           <li>
             <a href="#">
-              
+
               <img src="https://gravatar.com/avatar/d6fb638cd5649ea6473a15ee48602aef?size=144px">
             </a>
           <li>
@@ -287,7 +279,7 @@
             </a>
           <li>
             <a href="#">
-              
+
               <img src="https://gravatar.com/avatar/0f43618f25d8806e99569fd56d513f0a?size=144px">
             </a>
           <li>
@@ -297,7 +289,7 @@
           <li>
             <a href="#">
               <img src="https://gravatar.com/avatar/e693eaa8252344248493b4a541ddce35?size=144px">
-              
+
             </a>
           <li>
             <a href="#">
@@ -305,7 +297,7 @@
             </a>
           <li>
             <a href="#">
-              
+
               <img src="https://gravatar.com/avatar/ce343ede8b5f01dd9d8882d57868f37a?size=144px">
             </a>
           <li>
@@ -371,197 +363,123 @@
     </div>
   </section>
 
-  <article class="general-copy general-copy-about">
-    <div class="header">
-      <div class="container">
+  <div class="bg-gray-6 py2 sm-py4">
+    <div class="clearfix">
+      <article class="sm-col-6 mx-auto px3">
         <h2>Our Story</h2>
-      </div>
-    </div>
-    <div class="main">
-      <div class="container">
-        <p>
-          The single biggest impact the Internet has had is this: bringing people together to create things we couldn't have created alone. We can see this everywhere, from spaces like Wikipedia to the Open Source that runs most of the internet.
-        </p>
-        <p>
-Assembly is a platform that enables anyone anywhere to openly collaborate and build real businesses together, just like the Internet intended. We're excited about what can be achieved as a connected community of millions of talented driven people are innovating on products freely.
-        </p>
+        <div class="">
+          <p>
+            The Internet has brought humanity together to create things we couldn't have created alone. We can see this everywhere, from Wikipedia to Open Source software.
+          </p>
+          <p>
+    Assembly is a platform that enables anyone, anywhere to openly collaborate and build real businesses together. This is how we create software the Internet age. We're excited about what can be achieved as a connected community of millions of talented driven people are innovating on products freely.
+          </p>
 
-        <h2 class="excerpt-header text-light" style="background:url(/assets/about/excerpt-header1.jpg) center left no-repeat; background-size:cover;">
-			Unlike traditional companies with shareholders and employees, everything on Assembly is created, operated, and owned by a global community of makers, together.
-			
-        </h2>
-        <p>
-          Assembly was built and launched in late 2013. In the short period Assembly has been running, we've already seen tens of thousands of strangers come together to build and launch products, middle schoolers coding next to seasoned designers, paid out thousands of dollars out to contributors on some of the early successful products, and seen millions of people use the products created by the community.		  
-        </p>
-        <figure class="col-xs-12 col-sm-6 left-offset caption-center">
-          <img src="/assets/about/copy-img1.jpg">
-          <figcaption></figcaption>
-        </figure>
-        <h3 style="margin-top:3.5rem;">
-			Our Values
-        </h3>
-        <!-- <p>
-          Acame up with our guiding principles, a set of ideals which we felt were key in defining Assembly as the place where great products could be built in this new way.
-        </p> -->
-		
-		<p>
-			<strong>Global Diversity.</strong>
-			<br>
-			Everyone is invited to make an impact, have influence, and be able to share their best work. Ideas, vision and execution are be driven by the community.
-		</p>
-		
-		<p>
-			<strong>Explicitness.</strong>
-			<br>
-			Leadership and vision are modeled after open source's notion of a merit-based Core Team that is part of the community.
-		</p>
-		
-		<p>
-			<strong>Liberty.</strong>
-			<br>
-		Instead of employment contracts, people should be able to work when they want, how they want, and where they want.
-		</p>
-		
-		<p>
-			<strong>Shared ownership.</strong>
-			<br>
-		Success is shared equitably. Each contribution should be rewarded with a fair amount of ownership stake as determined by the community.
-		</p>
+          <blockquote class="mt3 mb3 mxn4 py3 px4 white bg-cover bg-center" style="background-image:url(/assets/about/excerpt-header1.jpg);padding-top:12rem">
+            <p class="h3">
+              &ldquo;Unlike traditional companies with shareholders and employees, everything on Assembly is created, operated, and owned by a global community of makers, together.&rdquo;
+            </p>
+          </blockquote>
+          <p>
+            Assembly was built and launched in late 2013. In the short period Assembly has been running, we've already seen tens of thousands of strangers come together to build and launch products, middle schoolers coding next to seasoned designers, paid out thousands of dollars out to contributors on some of the early successful products, and seen millions of people use the products created by the community.
+          </p>
 
-        <div class="row vertical-offset">
-          <figure class="col-xs-12 col-md-8">
-            <img src="/assets/about/copy-img2.jpg">
-          </figure>
-          <figure class="hidden-xs visible-md-block visible-lg-block col-md-4 caption-right">
-            <img src="/assets/about/copy-img3.jpg">
-            <figcaption></figcaption>
-          </figure>
+          <div class="clear"></div>
+
+          <h3>Our Values</h3>
+
+          <div class="clearfix mb3 mxn2">
+
+          	<div class="sm-col sm-col-6 px2">
+          		<h4>Global Diversity</h4>
+          		Everyone is invited to make an impact, have influence, and be able to share their best work. Ideas, vision and execution are be driven by the community.
+          	</div>
+
+          	<div class="sm-col sm-col-6 px2">
+          		<h4>Explicitness</h4>
+          		Leadership and vision are modeled after open source's notion of a merit-based Core Team that is part of the community.
+          	</div>
+
+            <div class="clearfix"></div>
+
+          	<div class="sm-col sm-col-6 px2">
+          		<h4>Liberty</h4>
+            	Instead of employment contracts, people should be able to work when they want, how they want, and where they want.
+            </div>
+
+          	<div class="sm-col sm-col-6 px2">
+          		<h4>Shared ownership</h4>
+            	Success is shared equitably. Each contribution should be rewarded with a fair amount of ownership stake as determined by the community.
+            </div>
+          </div>
+
+          <div class="clearfix mxn4 mb3">
+            <div class="col col-8 bg-cover" style="background-image:url(<%= image_path('about/copy-img2.jpg') %>);height:20rem"></div>
+
+            <div class="col col-4 bg-cover" style="background-image:url(<%= image_path('about/copy-img3.jpg') %>);height:20rem"></div>
+          </div>
+
+        	<p>
+        		We're commited to growing a team as diverse as our community. Those building Assembly include an engineer who studied the Latin American reception of ancient Greek tragedy, a physicist who studied nanometer scale biological self-assembly in confined lipid systems, and a writer who worked for The Daily Show with Jon Stewart.
+        	</p>
+          <p>
+            Our current office is located in the heart of the Mission at <a href="https://www.google.com/maps/place/3030+16th+St,+San+Francisco,+CA+94103/@37.7652736,-122.4203596,17z/data=!4m7!1m4!3m3!1s0x808f7e23bb16b375:0xe81c0361915e031b!2s3030+16th+St,+San+Francisco,+CA+94103!3b1!3m1!1s0x808f7e23bb16b375:0xe81c0361915e031b" target="_blank">3030A 16th street in San Francisco</a>. We welcome anyone working on Assembly products to come visit us to work on your project out of our office.
+          </p>
         </div>
-        <!-- <h3 style="margin-top:3.5rem;">
-		  The Team
-        </h3> -->
-		<p>
-			We're commited to growing a team as diverse as our community. Those building Assembly include an engineer who studied the Latin American reception of ancient Greek tragedy, a physicist who studied nanometer scale biological self-assembly in confined lipid systems, and a writer who worked for The Daily Show with Jon Stewart. 
-		</p>
-        <p>
-          Our current office is located in the heart of the Mission at <a href="https://www.google.com/maps/place/3030+16th+St,+San+Francisco,+CA+94103/@37.7652736,-122.4203596,17z/data=!4m7!1m4!3m3!1s0x808f7e23bb16b375:0xe81c0361915e031b!2s3030+16th+St,+San+Francisco,+CA+94103!3b1!3m1!1s0x808f7e23bb16b375:0xe81c0361915e031b" target="_blank">3030A 16th street in San Francisco</a>. We welcome anyone working on Assembly products to come visit us to work on your project out of our office.
-        </p>
-      </div>
+      </article>
     </div>
-  </article>
+  </div>
 
-  <!-- <section class="full-slider full-slider-about">
+  <section class="bg-white py4 quote-slider quote-slider-about">
     <div class="carousel">
-      <div class="item">
-        <img src="/assets/about/full-slide1.jpg">
+
+      <div class="item mx-auto">
+        <blockquote class="twitter-tweet" data-align="center" data-width="480" lang="en"><p>Dear Assembly (<a href="https://twitter.com/asm">@asm</a>). Thank you for building the internet&#39;s best learning &amp; social platform. You increased my side-project excitement 156%.</p>&mdash; Maggie Appleton (@Mappletons) <a href="https://twitter.com/Mappletons/status/552806637418082305">January 7, 2015</a></blockquote>
       </div>
-      <div class="item">
-        <img src="/assets/about/full-slide2.jpg">
+
+      <div class="item mx-auto">
+        <blockquote class="twitter-tweet" data-align="center" data-width="480" lang="en"><p>Last night I dove into <a href="http://t.co/T5aLzesWO4">http://t.co/T5aLzesWO4</a> and contributed work on <a href="https://twitter.com/helpful">@helpful</a>. Feeling really motivated to make stuff now. Thanks <a href="https://twitter.com/asm">@asm</a>.</p>&mdash; Ken Seals (@kenseals) <a href="https://twitter.com/kenseals/status/554652184957435904">January 12, 2015</a></blockquote>
       </div>
-      <div class="item">
-        <img src="/assets/about/full-slide3.jpg">
+
+      <div class="item mx-auto">
+        <blockquote class="twitter-tweet" data-align="center" data-width="480" lang="en"><p>Just discovered <a href="http://t.co/NxjBAjq03r">http://t.co/NxjBAjq03r</a>. I feel like I&#39;ve been sucked into a vortex of mad scientists who only build awesome stuff. <a href="https://twitter.com/asm">@asm</a></p>&mdash; Mike Nelson (@mevlow) <a href="https://twitter.com/mevlow/status/563735831509098498">February 6, 2015</a></blockquote>
       </div>
-      <div class="item">
-        <img src="/assets/about/full-slide4.jpg">
+
+      <div class="item mx-auto">
+        <blockquote class="twitter-tweet" data-align="center" data-width="480" lang="en"><p>It&#39;s amazing how fast you learn a new programming language/platform when you&#39;re working on a real project <a href="https://twitter.com/hashtag/saveyoursideproject?src=hash">#saveyoursideproject</a> <a href="https://twitter.com/asm">@asm</a></p>&mdash; Nícolas Iensen (@nicolasiensen) <a href="https://twitter.com/nicolasiensen/status/559125237628174336">January 24, 2015</a></blockquote>
       </div>
-      <div class="item">
-        <img src="/assets/about/full-slide5.jpg">
-      </div>
+
     </div>
+
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   </section>
- -->
 
 
-  <section class="quote-slider quote-slider-about">
+  <!-- The Team -->
+
+  <div class="bg-gray-6 py4">
     <div class="container">
-      <div class="carousel">
-        <% [{
-              created_at: 'Jan 7 2015',
-              name: '@mappleton',
-              quote: "Dear Assembly. Thank you for building the internet's best learning & social platform. You increased my side-project excitement 156%.",
-              avatar: 'https://gravatar.com/avatar/9990431d03db3672803cf4bd8f639e0d?size=192px'
-            }, {
-              created_at: 'Jan 12 2015',
-              name: '@kenseals',
-              quote: 'Last night I dove into Assembly and contributed work on @helpful. Feeling really motivated to make stuff now. Thanks @asm.',
-              avatar: 'https://pbs.twimg.com/profile_images/456808785860771840/dZxRmTkq.jpeg'
-            }, {
-              created_at: 'Dec 29 2014',
-              name: '@intrications',
-              quote: "It's great to be able to collaborate with other people so easily. I've been a solo developer for 4 years so it makes a nice change.",
-              avatar: 'https://gravatar.com/avatar/d59f29ca6ca1c7713e77bec2f3a7eeec?size=192px'
-            }, {
-              created_at: 'Oct 13 2014',
-              name: 'Noel Sequeira',
-              quote: "I'm blown away by the quality of work that's being done. It's like when you learn about Wikipedia or Open Source for the first time, and are left scratching your head wondering how such amazing communities can even exist.",
-              avatar: 'https://d1015h9unskp4y.cloudfront.net/about-page/2428a4b.jpg'
-            }].each do |q| %>
-
-          <div class="item">
-            <div class="header">
-              <a class="quote-avatar" href="">
-                <img src="<%= q[:avatar] %>">
+      <h2 class="center">The Team</h2>
+      <div class="sm-col-8 mx-auto">
+        <div class="clearfix mxn3">
+          <% AssemblyTeam.all.shuffle.each do |user| %>
+            <div class="col col-6 sm-col-3 center p3">
+              <a href="<%= user_url(user) %>">
+                <div class="mx-auto mb2" style="width:96px">
+                  <%= react_component 'Avatar', user: AvatarSerializer.new(user), size: 96 %>
+                </div>
+                <span class="black bold"><%= user.username %></span>
               </a>
-              <p class="details">
-                <a href="">
-                  <%= q[:name] %>
-                </a>
-                &nbsp;-&nbsp;
-                <a href="">
-                  <%= q[:created_at] %>
-                </a>
-              </p>
-            </div>
-            <div class="main">
-              <h3>
-                <%= q[:quote] %>
-              </h3>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </section>
 
-  <section class="about-team">
-    <div class="team-grid-unit">
-
-      <div class="header">
-        <div class="container">
-          <h2>
-            The Team
-          </h2>
-        </div>
-      </div>
-      <div class="main">
-        <div class="container">
-          <div class="team-grid">
-            <ul>
-              <% AssemblyTeam.all.each do |u| %>
-                <li>
-                  <a href="<%= user_url(u) %>">
-                    <img src="<%= u.avatar.url(400) %>">
-                  </a>
-                  <div class="details">
-                    <a class="nametag" href="<%= user_url(u) %>">@<%= u.username %></a>
-                    <ul class="social-row">
-                      <li>
-                        <a href="https://twitter.com/<%= u.twitter_nickname %>">
-                          <svg class="svg-icon svg-icon-twitter" viewBox="0 0 32 32">
-                            <path class="path1" d="M4.8,4.7C7.9,1.6,11.6,0.1,16,0.1c4.4,0,8.1,1.6,11.2,4.7c3.1,3.1,4.7,6.8,4.7,11.2c0,4.4-1.6,8.1-4.7,11.2c-3.1,3.1-6.8,4.7-11.2,4.7c-4.4,0-8.1-1.6-11.2-4.7C1.7,24.1,0.1,20.3,0.1,16C0.1,11.6,1.7,7.8,4.8,4.7z M25.7,12.5c0.8-0.6,1.6-1.3,2.2-2.3c-0.9,0.4-1.8,0.6-2.6,0.7c1-0.5,1.6-1.4,1.9-2.5c-0.9,0.5-1.9,0.9-2.8,1.1c-0.9-1-2-1.4-3.3-1.4c-1.3,0-2.3,0.4-3.2,1.3c-0.9,0.9-1.3,1.9-1.3,3.2c0,0.4,0,0.7,0.1,1c-3.8-0.2-6.9-1.8-9.3-4.7C7,9.6,6.8,10.3,6.8,11.1c0,1.6,0.7,2.9,2,3.8c-0.7,0-1.4-0.2-2-0.6v0c0,1.1,0.3,2,1,2.9c0.7,0.8,1.5,1.4,2.6,1.6c-0.3,0.1-0.7,0.1-1.2,0.1c-0.2,0-0.5,0-0.8-0.1c0.3,0.9,0.8,1.6,1.6,2.2c0.8,0.6,1.6,0.8,2.6,0.9C10.8,23.3,9,24,7,24c-0.3,0-0.6,0-1.1-0.1c2,1.3,4.3,2,6.9,2c2,0,3.8-0.4,5.5-1.2c1.7-0.8,3-1.8,4.1-3c1-1.3,1.9-2.6,2.4-4.1c0.6-1.5,0.9-3,0.9-4.5V12.5z"/>
-                          </svg>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-              <% end %>
-            </ul>
-          </div>
+              <a href="https://twitter.com/<%= user.twitter_nickname %>">
+                <%= react_component 'Icon', icon: 'twitter' %>
+              </a>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
   <section class="_hero hero-about-bottom"> <!-- .hero namespace is being used by legacy code. refactor -->
     <div class="main">
@@ -604,26 +522,15 @@ Assembly is a platform that enables anyone anywhere to openly collaborate and bu
 <script>
     // -- video modal
     (function($) {
-    //   var modal = $('#video-modal'),
-    //       player = $f(modal.find('iframe')[0]);
 
-    //   modal.on('shown.bs.modal', function() {
-    //     player.api('play');
-    //   });
-    //   modal.on('hide.bs.modal', function() {
-    //     player.api('pause');
-    //   });
-
-    $('.popup-video').magnificPopup({
-        disableOn:700,
-        type:'iframe',
-        mainClass:'mfp-fade',
-        removalDelay:160,
-        preloader:!1,
-        fixedContentPos:!1
-    });
-
-     // $('.popup-video').magnificPopup();
+      $('.popup-video').magnificPopup({
+          disableOn:700,
+          type:'iframe',
+          mainClass:'mfp-fade',
+          removalDelay:160,
+          preloader:!1,
+          fixedContentPos:!1
+      });
 
     })(jQuery);
 

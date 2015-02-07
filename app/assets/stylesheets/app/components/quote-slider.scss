@@ -18,25 +18,12 @@
 
 // -- Base Component ------------
 .quote-slider {
-  @import 'app/temp/style-guide-updates';  // < details: https://assembly.com/meta/bounties/1038
-  //
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-  background: $white;
-  @extend .text-2;
-  //
-  p {
-    @extend .text-2;
-  }
   .carousel {
     position: relative;
     text-align: center;
   }
   .item {
-    padding: 0;
-    @media screen and (min-width: 1024px) {
-      padding: 0 14rem;
-    }
+    width: 480px
   }
   .header {
     color: $gray-3;
