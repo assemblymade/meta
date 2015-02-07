@@ -31,6 +31,12 @@
 .underline             { text-decoration:  underline }
 .underline-hover:hover { text-decoration: underline }
 
+.caps {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 80%;
+}
+
 @media #{$breakpoint-sm} {
   .sm-right-align { text-align: right }
   .sm-center      { text-align: center }
