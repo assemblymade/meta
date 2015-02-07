@@ -33,14 +33,13 @@ class ProductStats
     growthlist = a.sort_by{|a, b| -b[1]}  #sorting by absolute growth no proportional
   end
 
-  def self.hearts_on_date(time)
-    Heart.where('created_at < ?', time).group(:heartable_id).count.sort_by{|k, v| -v}
+  def self.hearts_since(time)
+    Heart.where('created_at > ?', time).group(:heartable_type).group(:heartable_id).count.sort_by{|k, v| -v}
   end
 
-  def self.hearts_diff(time_range)
-
-    first = Hash[self.hearts_on_date(Time.now - time_range).map{|a, b| [a, -b]}]
-    last = Hash[self.hearts_on_date(Time.now)]
-    diff = {}
+  def self.most_loved(top_n, time)
+    #news feed items only
+    self.hearts_since(time).select{|a, b| a[0] == "NewsFeedItem"}.take(top_n).map{|a, b| NewsFeedItem.find(a[1])}
   end
+
 end

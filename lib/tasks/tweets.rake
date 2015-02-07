@@ -18,4 +18,10 @@ namespace :tweeter do
     Tweeter.new.promote_worthy_bounties(bounties_to_promote)
   end
 
+  task :tweet_loved_nfis => :environment do
+    top_n = 4
+    time_period = 1.days.ago
+    Tweeter.new.tweet_loved_news_feed_items(top_n, time_period)
+  end
+
 end

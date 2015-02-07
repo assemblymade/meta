@@ -149,6 +149,47 @@ class Tweeter
     request :post, url, the_data
   end
 
+  def tweet_loved_news_feed_items(top_n, time_period)
+    most_loved = ProductStats.most_loved(top_n, time_period)
+    most_loved.each do |a|
+      tweet_loved_news_feed_item(a)
+    end
+  end
+
+  def tweet_loved_news_feed_item(news_feed_item)
+    password = compute_password
+    url = "https://asm-tweeter.herokuapp.com/love/" + password
+    participants = []
+    proceed = false
+
+    if news_feed_item.target_type == "Post"
+      title = news_feed_item.target.title
+      if news_feed_item.target.user.twitter_nickname
+        participants.append(news_feed_item.target.user.twitter_nickname)
+      end
+      link = ProductSerializer.new(news_feed_item.target).full_url
+      hashtags = []
+      proceed=true
+    elsif news_feed_item.target_type == "Idea"
+      idea = news_feed_item.target
+      title = news_feed_item.target.name
+      participants = idea_participants(idea)
+      link = IdeaSerializer.new(idea).url,
+      hashtags = idea_marks(idea)
+      proceed=true
+    end
+
+    if proceed
+      the_data = {
+        title: title,
+        authors: participants,
+        url: link,
+        hashtags: hashtags
+      }
+      request :post, url, the_data
+    end
+  end
+
   def request(method, url, body = {})
     resp = connection.send(method) do |req|
       req.url url
