@@ -2,7 +2,6 @@ class PostsController < ProductController
   respond_to :html, :json
 
   def index
-    @feature_flags[:product_show] = true if signed_in? && current_user.staff?
     find_product!
 
     query = @product.posts.order(created_at: :desc).includes(:news_feed_item)
@@ -23,6 +22,10 @@ class PostsController < ProductController
     authenticate_user!
 
     @post = @product.posts.new(author: current_user)
+
+    respond_with({
+      product: ProductSerializer.new(@product, scope: current_user)
+    })
   end
 
   def create
@@ -58,7 +61,6 @@ class PostsController < ProductController
   end
 
   def show
-    @feature_flags[:product_show] = true if signed_in? && current_user.staff?
     find_product!
     find_post!
     find_heartables!

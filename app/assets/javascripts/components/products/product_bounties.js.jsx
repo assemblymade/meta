@@ -5,6 +5,8 @@ const BountyIndex = require('../bounty_index.js.jsx');
 const BountyMarksStore = require('../../stores/bounty_marks_store');
 const ProductHeader = require('./product_header.js.jsx');
 const ProductStore = require('../../stores/product_store');
+const qs = require('qs');
+const url = require('url');
 const ValuationStore = require('../../stores/valuation_store');
 
 let ProductBounties = React.createClass({
@@ -21,6 +23,14 @@ let ProductBounties = React.createClass({
 
   componentDidMount() {
     document.title = 'Bounties · ' + this.state.product.name;
+
+    let query = qs.parse(
+      url.parse(window.location.toString()).query
+    );
+
+    if (query && query.modal) {
+      window.showCreateBounty && window.showCreateBounty();
+    }
 
     AssetsStore.addChangeListener(this.onAssetsChange);
     BountyMarksStore.addChangeListener(this.onBountyMarksChange);
@@ -79,12 +89,13 @@ let ProductBounties = React.createClass({
 
     return (
       <div>
-        <ProductHeader product={product} />
+        <ProductHeader />
+
         <div className="container mt3">
           <BountyIndex tags={tags}
-              product={product}
-              valuation={valuation}
-              assets={assets} />;
+                    product={product}
+                    valuation={valuation}
+                    assets={assets} />
         </div>
       </div>
     );

@@ -1,5 +1,6 @@
 var MasonryMixin = require('../../mixins/masonry_mixin.js');
 var NewsFeedItem = require('./news_feed_item.js.jsx');
+var NewsFeedItemsStore = require('../../stores/news_feed_items_store');
 var NewsFeedMixin = require('../../mixins/news_feed_mixin.js.jsx');
 var Spinner = require('../spinner.js.jsx');
 
@@ -18,6 +19,12 @@ var NewsFeed = React.createClass({
 
   componentDidMount: function() {
     this.initializeEagerFetching();
+
+    NewsFeedItemsStore.addChangeListener(this.onNewsFeedItemsChange);
+  },
+
+  componentWillUnmount: function() {
+    NewsFeedItemsStore.removeChangeListener(this.onNewsFeedItemsChange);
   },
 
   countFor: function(filter) {
@@ -77,12 +84,6 @@ var NewsFeed = React.createClass({
       'Mobile'
     ]);
 
-    // if (window.app.featureEnabled('hot-updates')) {
-    //   filters['Hot'] = 'hot';
-    // } else {
-    //   filters['Mobile'] = 'mobile';
-    // }
-
     return {
       filters: filters
     };
@@ -108,6 +109,12 @@ var NewsFeed = React.createClass({
   handleFilterMouseOut: function(filter, e) {
     this.setState({
       hoverFilter: null,
+    });
+  },
+
+  onNewsFeedItemsChange: function() {
+    this.setState({
+      items: NewsFeedItemsStore.getNewsFeedItems()
     });
   },
 
@@ -250,8 +257,4 @@ function lowerCaseAndReflect(array) {
   return map;
 }
 
-if (typeof module !== 'undefined') {
-  module.exports = NewsFeed;
-}
-
-window.NewsFeed = NewsFeed;
+module.exports = window.NewsFeed = NewsFeed;

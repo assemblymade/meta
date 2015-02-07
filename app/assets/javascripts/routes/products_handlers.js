@@ -15,10 +15,8 @@ let ProductsHandlers = {
       screenshots: data.screenshots
     });
 
-    Dispatcher.dispatch({
-      type: ActionTypes.CREATE_PRODUCT_ITEM_ACTIVE_ITEM_RECEIVE,
-      activeItem: 'bounty'
-    });
+    _showCreateBounty();
+    _setActiveTab('overview');
   },
 
   showProductActivity(data) {
@@ -68,10 +66,8 @@ let ProductsHandlers = {
       product: product
     });
 
-    Dispatcher.dispatch({
-      type: ActionTypes.CREATE_PRODUCT_ITEM_ACTIVE_ITEM_RECEIVE,
-      activeItem: 'bounty'
-    });
+    _showCreateBounty();
+    _setActiveTab('activity');
   },
 
   showProductBounties(data) {
@@ -131,10 +127,8 @@ let ProductsHandlers = {
       valuation: valuation
     });
 
-    Dispatcher.dispatch({
-      type: ActionTypes.CREATE_PRODUCT_ITEM_ACTIVE_ITEM_RECEIVE,
-      activeItem: 'bounty'
-    });
+    _showCreateBounty();
+    _setActiveTab('bounties');
   },
 
   showProductBounty(data) {
@@ -192,10 +186,22 @@ let ProductsHandlers = {
       valuation: valuation
     });
 
+    _showCreateBounty();
+    _setActiveTab('bounties');
+  },
+
+  showProductNewPost(data) {
+    let {
+      product
+    } = data;
+
     Dispatcher.dispatch({
-      type: ActionTypes.CREATE_PRODUCT_ITEM_ACTIVE_ITEM_RECEIVE,
-      activeItem: 'bounty'
+      type: ActionTypes.PRODUCT_RECEIVE,
+      product: product
     });
+
+    _showCreatePost();
+    _setActiveTab('updates');
   },
 
   showProductPost(data) {
@@ -236,10 +242,8 @@ let ProductsHandlers = {
       product: product
     });
 
-    Dispatcher.dispatch({
-      type: ActionTypes.CREATE_PRODUCT_ITEM_ACTIVE_ITEM_RECEIVE,
-      activeItem: 'post'
-    });
+    _showCreatePost();
+    _setActiveTab('updates');
   },
 
   showProductPosts(data) {
@@ -267,11 +271,30 @@ let ProductsHandlers = {
       product: product
     });
 
-    Dispatcher.dispatch({
-      type: ActionTypes.CREATE_PRODUCT_ITEM_ACTIVE_ITEM_RECEIVE,
-      activeItem: 'post'
-    });
+    _showCreatePost();
+    _setActiveTab('updates');
   }
 };
 
 module.exports = ProductsHandlers;
+
+function _setActiveTab(tabName) {
+  Dispatcher.dispatch({
+    type: ActionTypes.PRODUCT_HEADER_ACTIVE_TAB_CHANGE,
+    activeTab: tabName
+  });
+}
+
+function _showCreateBounty() {
+  Dispatcher.dispatch({
+    type: ActionTypes.CREATE_PRODUCT_ITEM_ACTIVE_ITEM_RECEIVE,
+    activeItem: 'bounty'
+  });
+}
+
+function _showCreatePost() {
+  Dispatcher.dispatch({
+    type: ActionTypes.CREATE_PRODUCT_ITEM_ACTIVE_ITEM_RECEIVE,
+    activeItem: 'post'
+  });
+}

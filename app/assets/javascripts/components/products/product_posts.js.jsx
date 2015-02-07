@@ -41,7 +41,7 @@ let ProductPosts = React.createClass({
 
     return (
       <div>
-        <ProductHeader product={product} />
+        <ProductHeader />
 
         <div className="container mt3">
           <PostsIndex product={product} />

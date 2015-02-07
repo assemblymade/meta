@@ -60,7 +60,6 @@ var Lightbox = React.createClass({
         <h4 className="mt0 mb0" id={this.props.title}>{this.props.title}</h4>
       </div>
     }
-    return null
   },
 
   footer: function() {
@@ -69,8 +68,7 @@ var Lightbox = React.createClass({
         {this.props.footer}
       </div>
     }
-    return null
   }
 })
 
-module.exports = Lightbox
+module.exports = window.Lightbox = Lightbox;

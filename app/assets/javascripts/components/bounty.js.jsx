@@ -21,6 +21,9 @@ const ONE_HOUR = 60 * 60 * 1000
 
 let Bounty = React.createClass({
   propTypes: {
+    bounty: React.PropTypes.shape({
+      user: React.PropTypes.object,
+    }),
     item: React.PropTypes.object.isRequired,
     noInvites: React.PropTypes.bool,
     showCoins: React.PropTypes.bool
@@ -94,6 +97,11 @@ let Bounty = React.createClass({
 
   render() {
     let bounty = this.state.bounty;
+
+    if (_.isEmpty(bounty)) {
+      bounty = this.props.bounty; // fail-over for modals :(
+    }
+
     let currentUser = UserStore.getUser();
 
     let valuation = null

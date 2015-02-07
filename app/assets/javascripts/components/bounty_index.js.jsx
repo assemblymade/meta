@@ -82,7 +82,7 @@
       return this.props.tags.map(function(tag, i) {
         return (
           <li className="mb1 lh0_9" key={tag + '-' + i}>
-            <a href="#" className="pill-hover block pt1 pb1 pr3 pl3" onClick={this.addTag(tag)}>
+            <a href="#" className="pill-hover block py1 px3" onClick={this.addTag(tag)}>
               <span className="fs1 fw-500 caps">#{tag}</span>
             </a>
           </li>

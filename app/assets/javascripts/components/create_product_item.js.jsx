@@ -1,3 +1,4 @@
+var page = require('page');
 var routes = require('../routes');
 var UserActions = require('../actions/user_actions');
 var UserStore = require('../stores/user_store');
@@ -16,7 +17,7 @@ var CreateProductItem = React.createClass({
     var createBountyMenuItem = <DropdownMenu.Item
           key="create bounty"
           label='Create bounty'
-          action="javascript:showCreateBounty();void(0);" />
+          action="javascript:window.showCreateBounty();void(0);" />
 
     var createPostMenuItem = <DropdownMenu.Item
           key="create post"
@@ -60,7 +61,7 @@ var CreateProductItem = React.createClass({
   handleClick: function(action) {
     return function() {
       if (UserStore.isSignedIn()) {
-        window.location = action
+        page(action);
       } else {
         UserActions.newSession()
       }

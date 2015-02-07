@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'showing all bounties' do
+describe 'showing bounty' do
   let!(:user) { User.make! }
   let!(:product) { Product.make! }
   let!(:chat_room) { ChatRoom.make!(slug: product.slug, product: product) }

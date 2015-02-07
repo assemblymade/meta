@@ -6,34 +6,37 @@ const CreateProductItem = require('../create_product_item.js.jsx');
 const CreateProductItemStore = require('../../stores/create_product_item_store');
 const Icon = require('../ui/icon.js.jsx');
 const ProductFollowers = require('../product_followers.js.jsx');
+const ProductHeaderStore = require('../../stores/product_header_store');
+const ProductStore = require('../../stores/product_store');
 const Routes = require('../../routes');
 const url = require('url');
 
 let ProductHeader = React.createClass({
-  propTypes: {
-    product: React.PropTypes.shape({
-      can_update: React.PropTypes.bool,
-      homepage_url: React.PropTypes.string,
-      id: React.PropTypes.string.isRequired,
-      name: React.PropTypes.string.isRequired,
-      pitch: React.PropTypes.string.isRequired,
-      slug: React.PropTypes.string.isRequired,
-      url: React.PropTypes.string.isRequired
-    }).isRequired
-  },
-
   componentDidMount() {
     CreateProductItemStore.addChangeListener(this.onActiveMenuItemChange);
+    ProductHeaderStore.addChangeListener(this.onProductHeaderChange);
+    ProductStore.addChangeListener(this.onProductChange);
   },
 
   componentWillUnmount() {
     CreateProductItemStore.removeChangeListener(this.onActiveMenuItemChange);
+    ProductHeaderStore.removeChangeListener(this.onProductHeaderChange);
+    ProductStore.removeChangeListener(this.onProductChange);
   },
 
   getInitialState() {
     return {
-      activeMenuItem: CreateProductItemStore.getActiveMenuItem()
+      activeMenuItem: CreateProductItemStore.getActiveMenuItem(),
+      activeTab: ProductHeaderStore.getActiveTab(),
+      product: ProductStore.getProduct()
     };
+  },
+
+  isActive(tabName) {
+    return React.addons.classSet({
+      mr3: true,
+      active: this.state.activeTab === tabName
+    });
   },
 
   onActiveMenuItemChange() {
@@ -42,14 +45,29 @@ let ProductHeader = React.createClass({
     });
   },
 
+  onProductChange() {
+    this.setState({
+      product: ProductStore.getProduct()
+    });
+  },
+
+  onProductHeaderChange() {
+    this.setState({
+      activeTab: ProductHeaderStore.getActiveTab()
+    });
+  },
+
   render() {
-    let product = this.props.product;
+    let product = this.state.product;
+
+    if (!product) {
+      return null;
+    }
+
     let navStyle = {
       paddingLeft: '0 !important',
       paddingRight: '0 !important'
     };
-
-    console.log(this.state);
 
     return (
       <div className="bg-white shadow-light">
@@ -77,7 +95,7 @@ let ProductHeader = React.createClass({
                 </div>
               </div>
 
-              <div className="right mt2">
+              <div className="sm-right-align sm-py3 center">
                 {this.renderTryButton()}
               </div>
             </div>
@@ -88,27 +106,27 @@ let ProductHeader = React.createClass({
           <div className="clearfix">
             <div className="left px1">
               <ul className="nav nav-tabs">
-                <li className="mr3">
+                <li className={this.isActive('overview')}>
                   <a style={navStyle} href={product.url}>Overview</a>
                 </li>
 
-                <li className="mr3">
+                <li className={this.isActive('activity')}>
                   <a style={navStyle} href={product.url + '/activity'}>Activity</a>
                 </li>
 
-                <li className="mr3">
+                <li className={this.isActive('bounties')}>
                   <a style={navStyle} href={product.url + '/bounties'}>Bounties</a>
                 </li>
 
-                <li className="mr3">
-                  <a style={navStyle} href={product.url + '/posts'}>Discussions</a>
+                <li className={this.isActive('updates')}>
+                  <a style={navStyle} href={product.url + '/posts'}>Updates</a>
                 </li>
               </ul>
             </div>
 
             <div className="clearfix">
-              <div className="right py1">
-                <span className="h6">
+              <div className="center sm-right-align py1">
+                <span className="h6 mr3">
                   <ProductFollowers product_id={product.id} />
                 </span>
                 <CreateProductItem product={product} activeMenuItem={this.state.activeMenuItem} />
@@ -121,7 +139,7 @@ let ProductHeader = React.createClass({
   },
 
   renderProductState() {
-    let product = this.props.product;
+    let product = this.state.product;
     let homepageUrl = product.homepage_url;
 
     let status;
@@ -149,7 +167,7 @@ let ProductHeader = React.createClass({
   },
 
   renderTags() {
-    let product = this.props.product;
+    let product = this.state.product;
     let marks = product.top_marks;
 
     return marks && marks.slice(0, 3).map((mark, i) => {
@@ -162,14 +180,14 @@ let ProductHeader = React.createClass({
   },
 
   renderTryButton() {
-    let product = this.props.product;
+    let product = this.state.product;
     let homepageUrl = product.homepage_url;
 
     if (homepageUrl) {
       let href = url.parse(homepageUrl).href;
 
       return (
-        <Button type="primary" action={function() { window.location = href }}>
+        <Button type="primary" action={function() { window.open(href, '_blank') }}>
           <span className="mr1">
             Try {product.name}
           </span>
@@ -188,4 +206,4 @@ let ProductHeader = React.createClass({
   }
 });
 
-module.exports = ProductHeader;
+module.exports = window.ProductHeader = ProductHeader;

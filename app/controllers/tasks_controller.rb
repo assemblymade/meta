@@ -4,8 +4,6 @@ class TasksController < WipsController
   def index
     reject_blacklisted_users!
 
-    @feature_flags[:product_show] = true if signed_in? && current_user.staff?
-
     # TODO Figure out a better way to do this by manually setting params to FilterWipsQuery
     if params.fetch(:format, 'html') == 'html'
       params.merge!(sort: 'priority', state: 'open')
@@ -112,7 +110,6 @@ class TasksController < WipsController
   end
 
   def show
-    @feature_flags[:product_show] = true if signed_in? && current_user.staff?
     @bounty = @wip # fixme: legacy
 
     @milestone = MilestoneTask.where('task_id = ?', @bounty.id).first.try(:milestone)
@@ -137,7 +134,6 @@ class TasksController < WipsController
         puts @bounty.news_feed_item.inspect
         response = Rails.cache.fetch([@bounty.id], expires_in: 5.minutes) do
           {
-            item: NewsFeedItemSerializer.new(@bounty.news_feed_item, scope: current_user),
             tags: Wip::Tag.suggested_tags,
             product: ProductSerializer.new(@product, scope: current_user),
             valuation: {
@@ -157,6 +153,10 @@ class TasksController < WipsController
         end.merge(
           bounty: BountySerializer.new(
             @bounty,
+            scope: current_user
+          ),
+          item: NewsFeedItemSerializer.new(
+            @bounty.news_feed_item,
             scope: current_user
           ),
           heartables: @heartables,

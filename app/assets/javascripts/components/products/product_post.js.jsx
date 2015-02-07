@@ -72,7 +72,8 @@ let ProductPost = React.createClass({
 
     return (
       <div>
-        <ProductHeader product={product} />
+        <ProductHeader />
+
         <div className="container mt3">
           <Discussion newsFeedItem={item}>
             <Update newsFeedItem={item}

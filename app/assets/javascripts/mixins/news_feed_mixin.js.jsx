@@ -1,5 +1,6 @@
-var Dispatcher = require('../dispatcher')
-var ActionTypes = require('../constants').ActionTypes
+var Dispatcher = require('../dispatcher');
+var ActionTypes = require('../constants').ActionTypes;
+var NewsFeedItemsActionCreators = require('../actions/news_feed_items_action_creators');
 
 var NewsFeedMixin = {
   eagerlyFetchMoreNewsFeedItems: function(e) {
@@ -13,10 +14,7 @@ var NewsFeedMixin = {
         url += '&filter=' + this.state.filter;
       }
 
-      window.xhr.get(
-        url,
-        this._handleMoreNewsFeedItems
-      );
+      NewsFeedItemsActionCreators.requestNextPage({})
     }.bind(this));
   },
 
@@ -38,34 +36,6 @@ var NewsFeedMixin = {
           self.farthestTraveled = distanceFromTop;
         }
       });
-    }
-  },
-
-  _handleMoreNewsFeedItems: function(err, results) {
-    if (err) {
-      return console.error(err);
-    }
-
-    var data;
-    try {
-      data = JSON.parse(results);
-    } catch (e) {
-      return console.error(e);
-    }
-
-    if (data && data.items.length) {
-      // TODO: this should happen in an action creator
-      Dispatcher.dispatch({
-        type: ActionTypes.NEWS_FEED_RECEIVE_RAW_ITEMS,
-        data: data
-      })
-
-      this.setState(React.addons.update(
-        this.state, {
-          items: { $push: data.items },
-          loading: { $set: false }
-        }
-      ));
     }
   }
 };

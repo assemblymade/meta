@@ -14,6 +14,46 @@ module ApplicationHelper
     controller_name == 'home'
   end
 
+  def client_side_route?
+    bounties_index_route? ||
+    bounty_show_route? ||
+    new_post_route? ||
+    posts_index_route? ||
+    post_show_route? ||
+    product_activity_route? ||
+    product_show_route?
+  end
+
+  def bounties_index_route?
+    controller_name == 'tasks' &&
+      action_name == 'index'
+  end
+
+  def bounty_show_route?
+    controller_name == 'tasks' &&
+      action_name == 'show'
+  end
+
+  def new_post_route?
+    controller_name == 'posts' &&
+      action_name == 'new'
+  end
+
+  def posts_index_route?
+    controller_name == 'posts' &&
+      action_name == 'index'
+  end
+
+  def post_show_route?
+    controller_name == 'posts' &&
+      action_name == 'show'
+  end
+
+  def product_activity_route?
+    controller_name == 'products' &&
+      action_name == 'activity'
+  end
+
   def product_show_route?
     controller_name == 'products' &&
       action_name == 'show'

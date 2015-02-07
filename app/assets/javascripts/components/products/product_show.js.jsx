@@ -70,10 +70,10 @@ let ProductShow = React.createClass({
 
     return (
       <div>
-        <ProductHeader product={product} />
+        <ProductHeader />
 
-        <div className="container">
-          <div className="py2">
+        <div className="container mt3">
+          <div className="py1">
             <a href={Routes.edit_product_path({ id: slug })}
                 className="gray-2">
               <Icon icon="pencil" /> Edit product details
@@ -102,7 +102,7 @@ let ProductShow = React.createClass({
               <Tile>
                 {this.renderCommunityBuiltNotice()}
                 <div className="border-bottom">
-                  <div className="px3 py2">
+                  <div className="p3">
                     <h5 className="mt0 mb1">Build {product.name} with us!</h5>
                     <span className="gray-1 markdown markdown-normalized"
                         dangerouslySetInnerHTML={{ __html: product.lead }} />

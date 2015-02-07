@@ -10,158 +10,41 @@
 
 <%= render 'shared/navbar' %>
 
-<% if @feature_flags[:product_show] %>
+<!-- Flashes! -->
+
+<% if current_user && @product.core_team?(current_user) && @product.stealth? %>
+  <%= render 'products/stealth_reminder' %>
+<% end %>
+
+<% if flash[:first_assets_granted] %>
+  <%= render 'products/assets_granted' %>
+<% end %>
+
+<% if flash[:assets_error] %>
+  <%= render 'products/assets_error' %>
+<% end %>
+
+<% if flash[:applied_for_pitch_week] %>
+  <%= render 'products/applied_for_pitch_week' %>
+<% end %>
+
+<% if flash[:no_bounty_description] %>
+  <%= render 'products/no_bounty_description' %>
+<% end %>
+
+<% if client_side_route? %>
   <%= yield %>
-<% else %> <!-- feature flag! -->
-  <% content_for :javascript do %>
-    <script>
-      window.app.product = new Product(<%= json @product, scope: current_user %>)
-      window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);
-
-      $(document).ready(function() {
-        React.render(React.createElement(CreateProductItem, {
-          product: { slug: <%== @product.slug.to_json %> },
-          activeMenuItem: "<%= nav_active?(:posts) ? "post" : (nav_active?(:assets) ? "asset" : "bounty") %>"
-        }), document.getElementById('new-el'))
-      })
-
-    </script>
-  <% end %>
-
-  <!-- Flashes! -->
-
-  <% if current_user && @product.core_team?(current_user) && @product.stealth? %>
-    <%= render 'products/stealth_reminder' %>
-  <% end %>
-
-  <% if flash[:first_assets_granted] %>
-    <%= render 'products/assets_granted' %>
-  <% end %>
-
-  <% if flash[:assets_error] %>
-    <%= render 'products/assets_error' %>
-  <% end %>
-
-  <% if flash[:applied_for_pitch_week] %>
-    <%= render 'products/applied_for_pitch_week' %>
-  <% end %>
-
-  <% if flash[:no_bounty_description] %>
-    <%= render 'products/no_bounty_description' %>
-  <% end %>
-
-  <!-- Back to our scheduled programming -->
-
-  <div class="product-header pt2 mb3 bg-white shadow-light tranx_m r600_mb6">
-    <div>
-      <div class="container px0 r768_pr1 r768_pl1">
-        <div class="block full-width pb2 r768_table r600_pb0">
-          <div class="primary block full-width center py2 valign-mid r768_table-cell r768_left-align">
-            <div class="app-icon-container center valign-top r768_table-cell r768_pr4">
-              <a class="block mx-auto mb2 sm-mb0" href="<%= product_path(@product) %>" style="max-width:96px">
-                <%= react_component 'AppIcon', app: ProductSerializer.new(@product), size: 96 %>
-              </a>
-            </div>
-            <div class="block valign-top r768_table-cell">
-              <h2 class="mt0 mb1">
-                <a class="black" href="<%= product_path(@product) %>"><%= @product.name %></a>
-              </h2>
-              <h4 class="p0 m0 regular gray-2">
-                <%= truncate(@product.pitch, length: 60, separator: ' ') %>
-              </h4>
-              <ul class="list-reset tranx_m r768_m0" style="margin-bottom:5px;">
-                <% if @product.homepage_url? %>
-                <li class="inline-block">
-                  <a href="<%= @product.homepage_url %>">
-                    <%= inline_react_component 'Icon', icon: 'globe' %>
-                    <%= URI(@product.homepage_url.downcase).host rescue 'invalid' %>
-                  </a>
-                </li>
-                <% end %>
-                <li class="inline-block ml1">
-                  <a href="<%= product_repos_path(@product) %>">
-                    <%= inline_react_component 'Icon', icon: 'github' %>
-                    Code
-                  </a>
-                </li>
-                <% if can?(:edit, @product) %>
-                <li class="inline-block ml1">
-                  <a href="<%= edit_product_path(@product) %>">
-                    <%= inline_react_component 'Icon', icon: 'gear' %>
-                    Edit product
-                  </a>
-                </li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-          <div data-label="secondary" class="mcenter center valign-mid r768_table-cell r768_right-align" style="width:200px">
-            <%= react_component('ProductFollowers', product_id: @product.id) %>
-          </div>
-        </div>
-        <!--  -->
-
-        <div class="tertiary clearfix mxn3">
-
-          <div class="sm-col sm-col-8 px3">
-
-            <ul class="nav nav-tabs r600_pl2 r600_float-left">
-              <li class="<%= nav_active_class(:product) %>">
-                <a class="px2 py2" href="<%= product_path(@product) %>">
-                  Activity
-                </a>
-              </li>
-
-              <li class="<%= nav_active_class(:bounties) %>">
-                <a class="px2 py2" href="<%= product_tasks_path(@product) %>">
-                  Bounties
-                </a>
-              </li>
-
-              <li class="<%= nav_active_class(:posts) %>">
-                <a class="px2 py2" href="<%= product_posts_path(@product) %>">
-                  Posts
-                </a>
-              </li>
-
-              <li class="<%= nav_active_class(:assets) %> none r768_inline-block">
-                <a class="px2 py2" href="<%= product_assets_path(@product) %>">
-                  Assets
-                </a>
-              </li>
-
-              <% if @product.chat_rooms.any? %>
-              <% chat_room = @product.chat_rooms.first %>
-              <li class="<%= nav_active_class(:chat) %>">
-                <a class="px2 py2" href="<%= chat_room_path(chat_room) %>">
-                  Chat
-                </a>
-              </li>
-              <% end %>
-            </ul>
-
-          </div><!-- .col -->
-
-          <div class="sm-col sm-col-4 px3 py1 center sm-right-align">
-
-
-
-            <div id="new-el"></div>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
+<% else %>
+  <div class="bg-white shadow-light" style="min-height: 120px;">
+    <%= react_component 'ProductHeader' %>
   </div>
 
-
-
-  <div class="container overflow-hidden">
+  <div class="container mt3">
     <%= yield %>
   </div>
-
 <% end %>
+
+<!-- Back to our scheduled programming -->
 
 <% unless current_user.nil? %>
   <div class="modal fade" id="edit-membership-modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -203,45 +86,38 @@
       </div>
     </form>
   </div>
-<% end %> <!-- End feature-flag -->
+<% end %>
 
 <div id="public-address-prompt"></div>
 <div id='create-bounty'></div>
 
 <% content_for :javascript do %>
   <script>
-    var showCreateBounty = function() {
+    window.app.product = new Product(<%= json @product, scope: current_user %>)
+    window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);
+
+    window.showCreateBounty = function() {
       window.analytics.track('product.wip.showed_bounty_modal', { product: "<%= @product.slug %>" });
       try {
         $('#create-bounty-modal').modal('show');
       } catch (e) {}
-        React.render(
-          CreateBounty({
-            id: 'create-bounty-modal',
-            product: { name: "<%= @product.name %>" },
-            url: "<%= product_wips_path(@product) %>",
-            maxOffer: <%= (6 * @product.average_bounty).round(-4) %>,
-            averageBounty: <%= @product.average_bounty %>,
-            coinsMinted: <%= @product.coins_minted %>,
-            profitLastMonth: <%= @product.profit_last_month %>,
-            steps: <%= BountyGuidance::Valuations.suggestions(@product) %>
-          }),
-          document.getElementById('create-bounty')
-        );
-      }
-  </script>
-  <script>
+      React.render(
+        CreateBounty({
+          id: 'create-bounty-modal',
+          product: { name: "<%= @product.name %>" },
+          url: "<%= product_wips_path(@product) %>",
+          maxOffer: <%= (6 * @product.average_bounty).round(-4) %>,
+          averageBounty: <%= @product.average_bounty %>,
+          coinsMinted: <%= @product.coins_minted %>,
+          profitLastMonth: <%= @product.profit_last_month %>,
+          steps: <%= BountyGuidance::Valuations.suggestions(@product) %>
+        }),
+        document.getElementById('create-bounty')
+      );
+    }
+
     $('#edit-membership-modal').on('shown.bs.modal', function() {
       $('#modal-bio-editor').attr('placeholder', app.defaultBio());
-    });
-  </script>
-  <script>
-    $(document).ready(function() {
-      var queryKey = window.parseUri(window.location).queryKey;
-
-      if (queryKey && queryKey.modal) {
-        showCreateBounty();
-      }
     });
   </script>
 <% end %>

@@ -1,5 +1,6 @@
 class ProductShallowSerializer < ApplicationSerializer
   attributes :name, :pitch, :slug, :logo_url, :url, :wips_count, :partners_count
+  attributes :homepage_url
 
   def logo_url
     image_url = if object.logo.present?
@@ -12,7 +13,7 @@ class ProductShallowSerializer < ApplicationSerializer
   end
 
   def url
-    product_path(object)
+    product_path(object) rescue nil
   end
 
   cached

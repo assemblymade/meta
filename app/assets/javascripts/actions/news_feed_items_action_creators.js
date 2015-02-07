@@ -41,6 +41,7 @@ module.exports = {
       dataType: 'json',
       data: params,
       success: function(data) {
+        console.log(data);
         Dispatcher.dispatch({
           type: ActionTypes.NEWS_FEED_ITEMS_RECEIVE,
           news_feed_items: items.concat(data.news_feed_items),

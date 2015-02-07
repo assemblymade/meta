@@ -12,6 +12,7 @@ const ProductMarksStore = require('../../stores/product_marks_store');
 const ProductStore = require('../../stores/product_store');
 const Routes = require('../../routes');
 const Tile = require('../ui/tile.js.jsx');
+const TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
 const UserStore = require('../../stores/user_store');
 
 let ProductActivity = React.createClass({
@@ -27,6 +28,8 @@ let ProductActivity = React.createClass({
   },
 
   componentDidMount() {
+    document.title = this.state.product.name;
+
     BountyMarksStore.addChangeListener(this.onBountyMarksChange);
     IntroductionStore.addChangeListener(this.onIntroductionChange);
     NewsFeedItemsStore.addChangeListener(this.onNewsFeedChange);
@@ -114,7 +117,7 @@ let ProductActivity = React.createClass({
 
     return (
       <div>
-        <ProductHeader product={product} />
+        <ProductHeader />
 
         <div className="container mt3">
           <div className="clearfix mxn3">
@@ -152,21 +155,23 @@ let ProductActivity = React.createClass({
             product_id: product.slug
           },
           data: {
-            mark: tag
+            mark: tagName
           }
         });
 
         return (
-          <li key={tagName + '-' + i}>
-            <a href={href}>{tagName} ({count})</a>
+          <li className="mb1 lh0_9" key={tagName + '-' + i}>
+            <a href={href} className="pill-hover block py1 px2">
+              <span className="fs1 fw-500 caps">#{tagName} ({count})</span>
+            </a>
           </li>
         );
       });
 
       return (
-        <div className="py2 px3">
+        <div className="px3">
           <h6 className="gray-1">Bounty Tags</h6>
-          <ul className="list-reset">
+          <ul className="list-reset mxn2">
             {renderedTags}
           </ul>
         </div>
@@ -184,15 +189,16 @@ let ProductActivity = React.createClass({
           <Tile>
             <div className="px3 py2">
               <h5 className="mt0 mb1">Hey {user.username}!</h5>
-              <span className="gray-1 markdown markdown-normalized py1 mb2">
+              <div className="gray-1 h6 markdown markdown-normalized py1 mb2">
                 Ready to pitch in on {product.name}? Introduce yourself.
-              </span>
+              </div>
 
-              <textarea className="form-control mb2"
+              <TypeaheadUserTextArea className="form-control mb2"
                 onChange={this.handleIntroductionChange}
                 placeholder="What do you like to do? What is your favorite sandwich?"
                 rows="2"
-                value={this.state.introduction}></textarea>
+                value={this.state.introduction}
+                style={{ fontSize: 13 }} />
               <div className="center">
                 <Button type="default" action={this.handleIntroductionSubmit}>
                   Introduce yourself!
@@ -211,7 +217,9 @@ let ProductActivity = React.createClass({
     if (productMarks.length) {
       let renderedTags = productMarks.map((mark, i) => {
         return (
-          <li key={mark + '-' + i}>{mark}</li>
+          <li className="mb1 lh0_9" key={mark + '-' + i}>
+            <span className="fs1 fw-500 gray-1 caps">{mark}</span>
+          </li>
         );
       });
 

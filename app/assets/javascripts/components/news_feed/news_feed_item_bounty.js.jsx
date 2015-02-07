@@ -19,13 +19,10 @@ module.exports = React.createClass({
     var bounty = this.props.item.target;
     var key = 'nfbi-' + bounty.id;
 
-    var title = this.renderTitle();
-    var body = this.renderBody();
-
     return (
       <div className="p3" onClick={this.handleClick} key={key}>
-        {title}
-        {body}
+        {this.renderTitle()}
+        {this.renderBody()}
       </div>
     );
   },

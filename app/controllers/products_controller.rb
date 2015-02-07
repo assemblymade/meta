@@ -64,7 +64,6 @@ class ProductsController < ProductController
   end
 
   def activity
-    @feature_flags[:product_show] = true if signed_in? && current_user.is_staff?
     show_product
   end
 
@@ -87,23 +86,8 @@ class ProductsController < ProductController
 
   def show
     return redirect_to(about_url) if @product.meta?
-    return staff_show if signed_in? && current_user.is_staff?
 
     show_product
-  end
-
-  def staff_show
-    @feature_flags[:product_show] = true
-    respond_with({
-      product: ProductSerializer.new(
-        @product,
-        scope: current_user
-      ),
-      screenshots: ActiveModel::ArraySerializer.new(
-        @product.screenshots.order(position: :asc).limit(6),
-        each_serializer: ScreenshotSerializer
-      )
-    })
   end
 
   def plan
@@ -334,6 +318,10 @@ class ProductsController < ProductController
             scope: current_user
           ),
           product_marks: @product_marks,
+          screenshots: ActiveModel::ArraySerializer.new(
+            @product.screenshots.order(position: :asc).limit(6),
+            each_serializer: ScreenshotSerializer
+          ),
           user_hearts: @user_hearts
         }
       }
