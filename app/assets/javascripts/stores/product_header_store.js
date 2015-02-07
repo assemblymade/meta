@@ -4,9 +4,9 @@ const ActionTypes = require('../constants').ActionTypes;
 const Dispatcher = require('../dispatcher');
 const Store = require('./es6_store');
 
-const VALID_ITEMS = ['activity', 'bounties', 'overview', 'updates']
+const VALID_ITEMS = ['activity', 'assets', 'bounties', 'overview', 'updates']
 
-let activeTab = 'overview';
+let activeTab = 'assets';
 
 class ProductHeaderStore extends Store {
   constructor() {

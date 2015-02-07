@@ -121,6 +121,10 @@ let ProductHeader = React.createClass({
                 <li className={this.isActive('updates')}>
                   <a style={navStyle} href={product.url + '/posts'}>Updates</a>
                 </li>
+
+                <li className={this.isActive('assets')}>
+                  <a style={navStyle} href={product.url + '/assets'}>Assets</a>
+                </li>
               </ul>
             </div>
 
