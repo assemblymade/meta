@@ -1,6 +1,7 @@
 var Dispatcher = require('../dispatcher');
 var ActionTypes = require('../constants').ActionTypes;
 var NewsFeedItemsActionCreators = require('../actions/news_feed_items_action_creators');
+var Routes = require('../routes');
 
 var NewsFeedMixin = {
   eagerlyFetchMoreNewsFeedItems: function(e) {
@@ -8,13 +9,9 @@ var NewsFeedMixin = {
       disableLoadMoreButton: true,
       page: (this.state.page || 1) + 1
     }, function() {
-      var url = window.location.pathname + '?page=' + this.state.page;
+      var url = this.props.url + '/updates';
 
-      if (this.state.filter) {
-        url += '&filter=' + this.state.filter;
-      }
-
-      NewsFeedItemsActionCreators.requestNextPage({})
+      NewsFeedItemsActionCreators.requestNextPage({ url: url })
     }.bind(this));
   },
 

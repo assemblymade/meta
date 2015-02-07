@@ -11,9 +11,20 @@ class NewsFeedItemsController < ProductController
   end
 
   def index
-    @news_feed_items = ActiveModel::ArraySerializer.new(
-      @product.news_feed_items.unarchived_items.order(updated_at: :desc)
-    ).as_json
+    respond_to do |format|
+      format.html do
+        @news_feed_items = ActiveModel::ArraySerializer.new(
+          @product.news_feed_items.unarchived_items.order(updated_at: :desc)
+        ).as_json
+      end
+
+      format.json do @product.news_feed_items
+        render json: @product.news_feed_items.page(params[:page]),
+          serializer: PaginationSerializer,
+          each_serializer: NewsFeedItemSerializer,
+          root: :news_feed_items
+      end
+    end
   end
 
   def update

@@ -36,12 +36,11 @@ module.exports = {
     params.page = page + 1
 
     $.ajax({
-      url: '/news_feed_items',
+      url: params.url || '/news_feed_items',
       type: 'GET',
       dataType: 'json',
       data: params,
       success: function(data) {
-        console.log(data);
         Dispatcher.dispatch({
           type: ActionTypes.NEWS_FEED_ITEMS_RECEIVE,
           news_feed_items: items.concat(data.news_feed_items),
