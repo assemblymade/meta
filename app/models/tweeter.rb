@@ -167,7 +167,7 @@ class Tweeter
       if news_feed_item.target.user.twitter_nickname
         participants.append(news_feed_item.target.user.twitter_nickname)
       end
-      link = ProductSerializer.new(news_feed_item.target).full_url
+      link = PostSerializer.new(news_feed_item.target).full_url
       hashtags = []
       proceed=true
     elsif news_feed_item.target_type == "Idea"
