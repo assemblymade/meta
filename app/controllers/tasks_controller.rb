@@ -131,7 +131,6 @@ class TasksController < WipsController
     respond_to do |format|
       format.html { render 'bounties/show' }
       format.json do
-        puts @bounty.news_feed_item.inspect
         response = Rails.cache.fetch([@bounty.id], expires_in: 5.minutes) do
           {
             tags: Wip::Tag.suggested_tags,
