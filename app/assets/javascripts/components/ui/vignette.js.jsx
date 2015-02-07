@@ -24,8 +24,8 @@ var Vignette = React.createClass({
     })
 
     var size = {
-      width:  this.props.width,
-      height: this.props.height
+      maxWidth:  this.props.width,
+      maxHeight: this.props.height
     }
 
     return <div className={cs} style={size}>

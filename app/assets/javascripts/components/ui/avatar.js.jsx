@@ -20,9 +20,11 @@ var Avatar = React.createClass({
     return (
       <Vignette shape="circle" width={size} height={size}>
         <img src={this.avatarUrl()}
-             height={size}
-             width={size}
-             alt={this.altText()} />
+             alt={this.altText()}
+             style={{
+               maxWidth: size,
+               maxHeight: size
+              }}/>
       </Vignette>
     )
   },
