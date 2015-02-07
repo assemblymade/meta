@@ -92,9 +92,7 @@ class Tweeter
       url: IdeaSerializer.new(idea).url,
       hashtags: idea_marks(idea)
     }
-
     idea.update!({last_tweeted_at: Time.now()})
-
     request :post, url, the_data
   end
 
@@ -136,6 +134,19 @@ class Tweeter
 
       request :post, url, the_data
     end
+  end
+
+  def tweet_love_idea(idea)
+    password = compute_password
+    url = "https://asm-tweeter.herokuapp.com/love/" + password
+    participants = idea_participants(idea)
+    the_data = {
+      title: idea.name,
+      authors: participants,
+      url: IdeaSerializer.new(idea).url,
+      hashtags: idea_marks(idea)
+    }
+    request :post, url, the_data
   end
 
   def request(method, url, body = {})

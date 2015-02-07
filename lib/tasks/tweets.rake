@@ -7,10 +7,15 @@ namespace :tweeter do
   end
 
   task :tweet_hot_products => :environment do
-
     today = Time.now.utc.wday
     if today == 2
       Tweeter.new.tweet_hot_products(4)
     end
   end
+
+  task :tweet_worth_bounties => :environment do
+    bounties_to_promote = 10
+    Tweeter.new.promote_worthy_bounties(bounties_to_promote)
+  end
+
 end
