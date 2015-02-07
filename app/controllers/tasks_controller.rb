@@ -30,7 +30,7 @@ class TasksController < WipsController
       end
 
       format.json do
-        response = Rails.cache.fetch([@bounties.first.id], expires_in: 5.minutes) do
+        response = Rails.cache.fetch([@product.id, 'tasks'], expires_in: 5.minutes) do
           {
             tags: Wip::Tag.suggested_tags,
             product: ProductSerializer.new(@product, scope: current_user),
