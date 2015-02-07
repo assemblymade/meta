@@ -60,7 +60,7 @@ let ProductImportantLinks = React.createClass({
           </a>
         </div>
 
-        <div className="py2">
+        <div className="border-bottom py2" style={style}>
           <span className="mr3 gray-2">
             <Icon icon="code" />
           </span>

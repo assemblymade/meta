@@ -207,7 +207,7 @@ var NewsFeed = React.createClass({
       });
 
       return (
-        <div className={classes} key={item.id}>
+        <div className={classes} key={'news-feed-' + item.id}>
           <NewsFeedItem {...item} productPage={productPage} />
         </div>
       )
