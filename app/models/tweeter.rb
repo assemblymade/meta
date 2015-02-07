@@ -139,9 +139,10 @@ class Tweeter
   def tweet_love_idea(idea)
     password = compute_password
     url = "https://asm-tweeter.herokuapp.com/love/" + password
+    participants = idea_participants(idea)
     the_data = {
-      title:
-      authors: idea_participants(idea),
+      title: idea.name,
+      authors: participants,
       url: IdeaSerializer.new(idea).url,
       hashtags: idea_marks(idea)
     }
