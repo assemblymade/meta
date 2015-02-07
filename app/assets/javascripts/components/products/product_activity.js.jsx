@@ -1,5 +1,6 @@
 'use strict';
 
+const Accordion = require('../accordion.js.jsx');
 const BountyMarksStore = require('../../stores/bounty_marks_store');
 const Button = require('../ui/button.js.jsx');
 const IntroductionActions = require('../../actions/introduction_actions');
@@ -128,10 +129,7 @@ let ProductActivity = React.createClass({
             </div>
 
             <div className={rightColumnClasses}>
-              <Tile>
-                {this.renderIntroductionForm()}
-              </Tile>
-
+              {this.renderIntroductionForm()}
               {this.renderProductMarks()}
               {this.renderBountyMarks()}
             </div>
@@ -161,20 +159,19 @@ let ProductActivity = React.createClass({
 
         return (
           <li className="mb1 lh0_9" key={tagName + '-' + i}>
-            <a href={href} className="pill-hover block py1 px2">
-              <span className="fs1 fw-500 caps">#{tagName} ({count})</span>
+            <a href={href} className="pill-hover block py1 px3">
+              <span className="fs1 fw-500 caps">#{tagName}</span>
             </a>
           </li>
         );
       });
 
       return (
-        <div className="px3">
-          <h6 className="gray-1">Bounty Tags</h6>
+        <Accordion title="Bounty Tags">
           <ul className="list-reset mxn2">
             {renderedTags}
           </ul>
-        </div>
+        </Accordion>
       );
     }
   },
@@ -218,18 +215,17 @@ let ProductActivity = React.createClass({
       let renderedTags = productMarks.map((mark, i) => {
         return (
           <li className="mb1 lh0_9" key={mark + '-' + i}>
-            <span className="fs1 fw-500 gray-1 caps">{mark}</span>
+            <span className="fs1 fw-500 gray-1 caps block py1 px2">#{mark}</span>
           </li>
         );
       });
 
       return (
-        <div className="px3">
-          <h6 className="gray-1 mt0">Product Tags</h6>
+        <Accordion title="Product Tags">
           <ul className="list-reset">
             {renderedTags}
           </ul>
-        </div>
+        </Accordion>
       );
     }
   }
