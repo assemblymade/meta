@@ -57,21 +57,19 @@ var Proposal = React.createClass({
     var text = this.state.approved ? 'Unvote' : 'Approve'
     var css = this.state.approved ? 'btn btn-danger' : 'btn btn-success'
 
-    if (this.props.proposal.state==="open") {
+    if (this.props.proposal.state === "open") {
       return (
-        <button className = {css} onClick={this.toggle_vote}>
-        {text}
-      </button>
-      )}
-    else
-      {
-        css = 'btn btn-info py1'
-        return (
-          <button className = {css} disabled>
-            Voting Closed
-          </button>
-        )
-      }
+        <button className={css} onClick={this.toggle_vote}>
+          {text}
+        </button>
+      )
+    } else {
+      return (
+        <button className="btn btn-info py1" disabled>
+          Voting Closed
+        </button>
+      )
+    }
   },
 
   renderState: function() {

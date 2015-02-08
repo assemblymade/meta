@@ -225,6 +225,7 @@ var DashboardIndex = React.createClass({
     var selectionsNeeded = 3 - selected.length
     var progress = null
     var text = null
+    var topics = null
     var padding = null
     var click = function() {}
     var navigate = this.props.navigate
