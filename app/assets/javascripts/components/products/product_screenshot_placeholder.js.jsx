@@ -67,6 +67,8 @@ let ProductScreenshotPlaceholder = React.createClass({
   },
 
   render() {
+    let large = this.props.size === 'large';
+
     let style = {
       container: {
         borderRadius: 4
@@ -76,10 +78,10 @@ let ProductScreenshotPlaceholder = React.createClass({
         backgroundColor: this.state.dragging ? '#c7c7c7' : '#ededed',
         border: '1px dashed #d3d3d3',
         cursor: 'pointer',
-        maxHeight: 400,
-        minHeight: 80,
-        height: this.state.height || 80,
-        width: '100%'
+        maxHeight: large ? 400 : 100,
+        minHeight: large ? 80 : 0,
+        height: large ? (this.state.height || 80) : '100%',
+        width: large ? '100%' : 100;
       },
 
       text: {

@@ -25,6 +25,13 @@ class AssetsController < ProductController
     respond_with @asset, location: product_assets_path(@product)
   end
 
+  def destroy
+    return head(:forbidden) unless can? :update, @product
+    Asset.find(params[:id]).delete!
+
+    redirect_to product_assets_path(@product)
+  end
+
   # private
 
   def asset_params

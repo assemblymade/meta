@@ -9,4 +9,12 @@ class Asset < ActiveRecord::Base
   has_one :screenshot
 
   delegate :url, to: :attachment
+
+  def delete!
+    if screenshot
+      Screenshot.delete(screenshot.id)
+    end
+
+    Asset.delete(self.id)
+  end
 end

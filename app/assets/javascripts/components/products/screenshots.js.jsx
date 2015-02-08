@@ -46,6 +46,7 @@ let Screenshots = React.createClass({
   },
 
   wrapScreenshots() {
+    let isCore = ProductStore.isCoreTeam(UserStore.getUser());
     let screenshots = this.state.screenshots;
     let style = {
       borderRadius: 4,
@@ -60,7 +61,7 @@ let Screenshots = React.createClass({
           return <img className="mb1" src={screenshot.url} style={style} key={screenshot.id} />;
       });
 
-      if (ProductStore.isCoreTeam(UserStore.getUser())) {
+      if (isCore) {
         images.push(
           <ProductScreenshotPlaceholder size="small" key={'placeholder-' + images.length} />
         );

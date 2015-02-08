@@ -79,7 +79,7 @@ let ProductHeader = React.createClass({
                   <AppIcon app={product} size={96} />
                 </a>
 
-                <div className="overflow-hidden">
+                <div className="inline-block">
                   <h2 className="mt0 mb1 ml0">
                     <a className="black" href={product.url}>{product.name}</a>
                   </h2>

@@ -1,7 +1,17 @@
 <% cache [asset] do %>
   <a class="deprecated-card" href="<%= asset.url %>">
 
-    <div class="deprecated-card-hero" style="background-image:url(<%= firesize(asset.url, '426x284', 'g_center')%>)"></div>
+    <div class="deprecated-card-hero hover-toggle-wrapper" style="background-image:url(<%= firesize(asset.url, '426x284', 'g_center')%>)">
+      <% if signed_in? && (asset.product.core_team?(current_user) || current_user.staff?) %>
+        <a href="<%= product_asset_path(asset.product, asset) %>"
+            class="hover-toggle-target"
+            data-method="DELETE"
+            data-confirm="Are you sure you want to delete this asset?"
+            style="position:relative; top: -25px; left: 90%; color: gray;">
+          <%= inline_react_component 'Icon', { icon: 'close' } %>
+        </a>
+      <% end %>
+    </div>
 
     <div class="deprecated-card-body">
 
