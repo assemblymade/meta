@@ -11,6 +11,8 @@ class Attachment < ActiveRecord::Base
 
   validates :name, presence: true
 
+  default_scope -> { where('attachments.deleted_at is null') }
+
   def assign_to_product!(product, user)
     asset_to_create = {
       attachment_id: self.id,

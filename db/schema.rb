@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150205012712) do
+ActiveRecord::Schema.define(version: 20150208042236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20150205012712) do
     t.uuid     "user_id",                   null: false
     t.string   "name",          limit: 255, null: false
     t.datetime "created_at",                null: false
+    t.datetime "deleted_at"
   end
 
   create_table "attachments", id: :uuid, force: :cascade do |t|
@@ -76,6 +77,7 @@ ActiveRecord::Schema.define(version: 20150205012712) do
     t.integer  "size"
     t.datetime "created_at"
     t.string   "dominant_colors",             array: true
+    t.datetime "deleted_at"
   end
 
   create_table "auto_tip_contracts", force: :cascade do |t|
@@ -723,6 +725,7 @@ ActiveRecord::Schema.define(version: 20150205012712) do
     t.datetime "created_at",             null: false
     t.uuid     "asset_id",               null: false
     t.integer  "position",   default: 0
+    t.datetime "deleted_at"
   end
 
   create_table "showcase_entries", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|

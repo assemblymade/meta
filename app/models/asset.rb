@@ -10,12 +10,14 @@ class Asset < ActiveRecord::Base
 
   delegate :url, to: :attachment
 
+  default_scope -> { where('assets.deleted_at is null') }
+
   def delete!
     Asset.transaction do
-      Screenshot.delete(screenshot.id) if screenshot
-      Attachment.delete(attachment.id) if attachment
+      screenshot.update(deleted_at: Time.now) if screenshot
+      attachment.update(deleted_at: Time.now) if attachment
 
-      Asset.delete(self.id)
+      update(deleted_at: Time.now)
     end
   end
 end
