@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "description": "Assembly Meta",
   "scripts": {
-    "jest": "node_modules/.bin/jest",
-    "test": "npm run jest",
+    "test": "node_modules/.bin/jest",
     "lint": "node_modules/.bin/jsxhint app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx",
     "postinstall": "npm run bundle",
     "bundle": "node_modules/.bin/browserify -t [ 6to5ify reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js",
