@@ -1,5 +1,5 @@
 <% cache [asset] do %>
-  <a class="deprecated-card" href="<%= asset.url %>">
+  <span class="deprecated-card">
 
     <div class="deprecated-card-hero hover-toggle-wrapper" style="background-image:url(<%= firesize(asset.url, '426x284', 'g_center')%>)">
       <% if signed_in? && (asset.product.core_team?(current_user) || current_user.staff?) %>
@@ -7,22 +7,24 @@
             class="hover-toggle-target"
             data-method="DELETE"
             data-confirm="Are you sure you want to delete this asset?"
-            style="position:relative; top: -25px; left: 90%; color: gray;">
+            style="position: relative; top: 0; left: 90%; color: gray;">
           <%= inline_react_component 'Icon', { icon: 'close' } %>
         </a>
       <% end %>
     </div>
 
     <div class="deprecated-card-body">
+      <a href="<%= asset.url %>">
+        <div class="summary">
 
-      <div class="summary">
-        <div class="summary-target omega" style="font-size: 14px; min-height: 48px;">
-          <%= asset.name %>
-          <% if asset.room %>
-            <span class="gray-2" style="margin-top: 8px;">#<%= asset.room.number %></span>
-          <% end %>
+          <div class="summary-target omega" style="font-size: 14px; min-height: 48px;">
+            <%= asset.name %>
+            <% if asset.room %>
+              <span class="gray-2" style="margin-top: 8px;">#<%= asset.room.number %></span>
+            <% end %>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
-  </a>
+  </span>
 <% end %>
