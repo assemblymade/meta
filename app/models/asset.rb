@@ -11,10 +11,11 @@ class Asset < ActiveRecord::Base
   delegate :url, to: :attachment
 
   def delete!
-    if screenshot
-      Screenshot.delete(screenshot.id)
-    end
+    Asset.transaction do
+      Screenshot.delete(screenshot.id) if screenshot
+      Attachment.delete(attachment.id) if attachment
 
-    Asset.delete(self.id)
+      Asset.delete(self.id)
+    end
   end
 end
