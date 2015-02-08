@@ -81,7 +81,7 @@ let ProductScreenshotPlaceholder = React.createClass({
         maxHeight: large ? 400 : 100,
         minHeight: large ? 80 : 0,
         height: large ? (this.state.height || 80) : '100%',
-        width: large ? '100%' : 100;
+        width: large ? '100%' : 100
       },
 
       text: {
