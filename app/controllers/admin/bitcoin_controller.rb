@@ -25,6 +25,13 @@ class Admin::BitcoinController < AdminController
     end
   end
 
+  def report
+    @payments = BtcPayment.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @payments.as_csv }
+    end
+  end
 
 
 end
