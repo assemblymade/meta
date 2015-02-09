@@ -21,7 +21,7 @@ Current USD Value:
   <br>
 <%= "#{@total_btc_paid_to_users} BTC" %>
 <br>
-<%= "$ #{@total_cash_value_of_btc_to_users.round(2)}  --  cash equivalent at time of payment" %> 
+<%= "$ #{@total_cash_value_of_btc_to_users.round(2)}  --  cash equivalent at time of payment" %>
 </h4>
 
 <table class="table table-striped">
@@ -39,7 +39,7 @@ Current USD Value:
     </tr>
   </thead>
   <tbody>
-    <% @payments.each do |p| %>
+    <% @payments.reverse.each do |p| %>
       <% if not p.btcusdprice_at_moment.nil? %>
         <tr>
           <td><%= p.created_at %></td>
