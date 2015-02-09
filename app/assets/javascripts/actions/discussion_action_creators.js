@@ -3,7 +3,7 @@ var Dispatcher = require('../dispatcher')
 var DiscussionStore = require('../stores/discussion_store');
 var Routes = require('../routes');
 
-var DiscussionActionCreators = {
+var DiscussionActionCreators = {  
   fetchCommentsFromServer: function(itemId) {
     var url = Routes.discussion_comments_path({
       discussion_id: itemId
@@ -23,7 +23,7 @@ var DiscussionActionCreators = {
           events: data.events,
           itemId: itemId,
           userHearts: data.user_hearts,
-          userTips: data.user_tips,
+          userTips: data.user_tips
         });
       },
 

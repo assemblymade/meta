@@ -76,7 +76,6 @@ let IdeasHandlers = {
   },
 
   showIdea(data) {
-    let comments = data.comments;
     let heartables = data.heartables;
     let idea = data.idea;
     let relatedIdeas = data.related_ideas;
@@ -85,17 +84,6 @@ let IdeasHandlers = {
     Dispatcher.dispatch({
       type: ActionTypes.IDEA_RECEIVE,
       idea: idea
-    });
-
-    Dispatcher.dispatch({
-      type: ActionTypes.RELATED_IDEAS_RECEIVE,
-      relatedIdeas: relatedIdeas
-    });
-
-    Dispatcher.dispatch({
-      type: ActionTypes.DISCUSSION_RECEIVE,
-      comments: comments,
-      itemId: idea.news_feed_item.id
     });
 
     Dispatcher.dispatch({
@@ -109,6 +97,11 @@ let IdeasHandlers = {
     Dispatcher.dispatch({
       type: ActionTypes.LOVE_RECEIVE_USER_HEARTS,
       userHearts: userHearts
+    });
+
+    Dispatcher.dispatch({
+      type: ActionTypes.RELATED_IDEAS_RECEIVE,
+      relatedIdeas: relatedIdeas
     });
   },
 

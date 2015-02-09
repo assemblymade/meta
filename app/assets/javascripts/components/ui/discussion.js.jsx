@@ -1,21 +1,29 @@
-var Tile = require('./tile.js.jsx')
-var NewFeedItemComments = require('../news_feed/news_feed_item_comments.js.jsx')
+var DiscussionActionCreators = require('../../actions/discussion_action_creators');
+var DiscussionStore = require('../../stores/discussion_store');
+var Heart = require('../heart.js.jsx');
+var Icon = require('./icon.js.jsx');
 var IdeaLovers = require('../ideas/idea_lovers.js.jsx');
-var Icon = require('./icon.js.jsx')
-var Heart = require('../heart.js.jsx')
-
-function twitterUrl(url, message) {
-  return 'http://twitter.com/share?url=' +
-    url +
-    '&text=' +
-    message +
-    '&';
-}
+var NewFeedItemComments = require('../news_feed/news_feed_item_comments.js.jsx');
+var Tile = require('./tile.js.jsx');
 
 var Discussion = React.createClass({
-
   propTypes: {
-    newsFeedItem: React.PropTypes.object.isRequired
+    newsFeedItem: React.PropTypes.shape({
+      comments_count: React.PropTypes.number.isRequired,
+      id: React.PropTypes.string.isRequired,
+      url: React.PropTypes.string
+    }).isRequired
+  },
+
+  componentDidMount() {
+    shouldFetchCommentsAndUpdate(this.props.newsFeedItem);
+  },
+
+  shouldComponentUpdate(nextProps) {
+    return shouldFetchCommentsAndUpdate(
+      this.props.newsFeedItem,
+      nextProps.newsFeedItem
+    );
   },
 
   render() {
@@ -44,7 +52,9 @@ var Discussion = React.createClass({
               </a>
             </li>
             <li className="left p1">
-              <a className="gray-3 gray-2-hover bold" href="#" onClick={this.handleFacebookClick}><Icon icon="facebook" /></a>
+              <a className="gray-3 gray-2-hover bold" href="#" onClick={this.handleFacebookClick}>
+                <Icon icon="facebook" />
+              </a>
             </li>
             <li className="left p1">
               <a className="gray-3 gray-2-hover bold" href={this.mailToLink()}>
@@ -61,7 +71,7 @@ var Discussion = React.createClass({
           </div>
         </div>
       </Tile>
-    )
+    );
   },
 
   handleTwitterClick(e) {
@@ -97,6 +107,32 @@ var Discussion = React.createClass({
     return "mailto:?subject=Check this out&body=Check out this on Assembly: " + this.shareUrl()
   }
 
-})
+});
 
 module.exports = window.Discussion = Discussion
+
+function twitterUrl(url, message) {
+  return 'http://twitter.com/share?url=' +
+    url +
+    '&text=' +
+    message +
+    '&';
+}
+
+function shouldFetchCommentsAndUpdate(item, nextItem) {
+  if (!nextItem) {
+    DiscussionActionCreators.fetchCommentsFromServer(item.id);
+    return true;
+  }
+
+  if (item.id !== nextItem.id) {
+    DiscussionActionCreators.fetchCommentsFromServer(nextItem.id);
+    return true;
+  }
+
+  if (item.comments_count !== nextItem.comments_count) {
+    return true;
+  }
+
+  return false;
+}

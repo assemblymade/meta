@@ -3,22 +3,21 @@ var Button = require('../ui/button.js.jsx');
 var Drawer = require('../ui/drawer.js.jsx');
 var Heart = require('../heart.js.jsx');
 var Icon = require('../ui/icon.js.jsx');
-var Idea = require('../idea.js.jsx')
-var RelatedIdeas = require('./related_ideas.js.jsx');
+var Idea = require('./idea.js.jsx')
 var IdeaLovers = require('./idea_lovers.js.jsx');
 var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
 var IdeaSharePanel = require('./idea_share_panel.js.jsx');
 var IdeaStore = require('../../stores/idea_store');
 var IdeaTile = require('./idea_tile.js.jsx');
-var Discussion = require('../ui/discussion.js.jsx')
+var Discussion = require('../ui/discussion.js.jsx');
+var LoveStore = require('../../stores/love_store');
 var Markdown = require('../markdown.js.jsx');
 var moment = require('moment');
 var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
-var NewsFeedItemComments = require('../news_feed/news_feed_item_comments.js.jsx');
 var ProgressBar = require('../ui/progress_bar.js.jsx');
+var RelatedIdeas = require('./related_ideas.js.jsx');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
 var UserStore = require('../../stores/user_store');
-var LoveStore = require('../../stores/love_store');
 var TextPost = require('../ui/text_post.js.jsx')
 var Tile = require('../ui/tile.js.jsx')
 
@@ -31,7 +30,6 @@ function twitterUrl(url, message) {
     message +
     '&';
 }
-
 
 var IdeaShow = React.createClass({
   propTypes: {
@@ -254,9 +252,6 @@ var IdeaShow = React.createClass({
   mailToLink() {
     return "mailto:?subject=Check this out&body=Check out this on Assembly: " + this.shareUrl()
   }
-
-
-
 });
 
 module.exports = IdeaShow;

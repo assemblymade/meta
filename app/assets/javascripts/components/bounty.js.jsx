@@ -352,7 +352,7 @@ let Bounty = React.createClass({
   },
 
   startWork(e) {
-    let currentUser = window.app.currentUser();
+    let currentUser = UserStore.getUser();
     let startWorkUrl = this.state.bounty.start_work_url;
 
     BountyActionCreators.call(e, 'bounty.started', startWorkUrl);

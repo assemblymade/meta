@@ -19,7 +19,6 @@ var NewsFeedItemBountyTagChange = require('./news_feed_item_bounty_tag_change.js
 var NewsFeedItemBountyTimelineItem = require('./news_feed_item_bounty_timeline_item.js.jsx');
 var NewsFeedItemBountyTitleChange = require('./news_feed_item_bounty_title_change.js.jsx');
 var NewsFeedItemBountyWin = require('./news_feed_item_bounty_win.js.jsx');
-var NewsFeedItemStore = require('../../stores/news_feed_item_store');
 var ProductStore = require('../../stores/product_store');
 var ReadReceipts = require('../read_receipts.js.jsx');
 var Routes = require('../../routes');
@@ -36,11 +35,6 @@ var NewsFeedItemComments = React.createClass({
   },
 
   componentDidMount: function() {
-    if (this.props.showAllComments) {
-      this.fetchCommentsFromServer();
-      NewsFeedItemStore.addChangeListener(this.fetchCommentsFromServer);
-    }
-
     if (_reach(this.props, 'item.target.type') === 'task') {
       BountyStore.addChangeListener(this.getBountyState);
     }
@@ -56,10 +50,6 @@ var NewsFeedItemComments = React.createClass({
         }, 500);
       }
     }
-  },
-
-  componentWillReceiveProps: function() {
-    this.fetchCommentsFromServer();
   },
 
   componentWillUnmount: function() {

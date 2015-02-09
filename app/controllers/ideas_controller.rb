@@ -75,11 +75,6 @@ class IdeasController < ProductController
   def show
     find_idea!
 
-    @comments = ActiveModel::ArraySerializer.new(
-      @idea.news_feed_item.comments.order('created_at asc'),
-      each_serializer: CommentSerializer
-    ).as_json
-
     @marks = @idea.marks.map(&:name)
 
     if nfi = @idea.news_feed_item
@@ -94,7 +89,6 @@ class IdeasController < ProductController
 
     respond_with({
       idea: IdeaSerializer.new(@idea),
-      comments: @comments,
       heartables: @heartables || [],
       related_ideas: ActiveModel::ArraySerializer.new(
         related_ideas,

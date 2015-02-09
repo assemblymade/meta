@@ -1,3 +1,4 @@
+var DiscussionStore = require('./discussion_store');
 var Store = require('./es6_store')
 
 var _heartables = {}

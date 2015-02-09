@@ -2,6 +2,7 @@
 
 const Bounty = require('../bounty.js.jsx');
 const BountyMarksStore = require('../../stores/bounty_marks_store');
+const BountyStore = require('../../stores/bounty_store');
 const Discussion = require('../ui/discussion.js.jsx');
 const NewsFeedItemStore = require('../../stores/news_feed_item_store');
 const ProductHeader = require('./product_header.js.jsx');
@@ -27,6 +28,7 @@ let ProductBounty = React.createClass({
 
     document.title = title + ' · #' + number + ' · ' + name;
 
+    BountyStore.addChangeListener(this.onBountyChange);
     BountyMarksStore.addChangeListener(this.onBountyMarksChange);
     NewsFeedItemStore.addChangeListener(this.onNewsFeedItemChange);
     ProductStore.addChangeListener(this.onProductChange);
@@ -34,6 +36,7 @@ let ProductBounty = React.createClass({
   },
 
   componentWillUnmount() {
+    BountyStore.removeChangeListener(this.onBountyChange);
     BountyMarksStore.removeChangeListener(this.onBountyMarksChange);
     NewsFeedItemStore.removeChangeListener(this.onNewsFeedItemChange);
     ProductStore.removeChangeListener(this.onProductChange);
@@ -42,11 +45,18 @@ let ProductBounty = React.createClass({
 
   getInitialState() {
     return {
+      bounty: BountyStore.getBounty(),
       item: NewsFeedItemStore.getItem(),
       product: ProductStore.getProduct(),
       tags: BountyMarksStore.getMarkNames(),
       valuation: ValuationStore.getValuation()
     };
+  },
+
+  onBountyChange() {
+    this.setState({
+      bounty: BountyStore.getBounty()
+    });
   },
 
   onBountyMarksChange() {
@@ -75,6 +85,7 @@ let ProductBounty = React.createClass({
 
   render() {
     let {
+      bounty,
       item,
       product,
       tags,

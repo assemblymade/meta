@@ -1,23 +1,20 @@
-var AppIcon = require('./app_icon.js.jsx')
-var TextPost = require('./ui/text_post.js.jsx')
-var UserStore = require('../stores/user_store')
-var Heart = require('./heart.js.jsx')
-var IdeaProgressBar = require('./ideas/idea_progress_bar.js.jsx')
-var IdeaSharePanel = require('./ideas/idea_share_panel.js.jsx');
-var Drawer = require('./ui/drawer.js.jsx')
-var IdeaLovers = require('./ideas/idea_lovers.js.jsx');
-var SvgIcon = require('./ui/svg_icon.js.jsx')
-var Button = require('./ui/button.js.jsx')
-var App = require('./app.js.jsx')
+var App = require('../app.js.jsx');
+var AppIcon = require('../app_icon.js.jsx');
+var Button = require('../ui/button.js.jsx');
+var Drawer = require('../ui/drawer.js.jsx');
+var Heart = require('../heart.js.jsx');
+var IdeaLovers = require('../ideas/idea_lovers.js.jsx');
+var IdeaProgressBar = require('../ideas/idea_progress_bar.js.jsx');
+var IdeaSharePanel = require('../ideas/idea_share_panel.js.jsx');
+var page = require('page');
+var SvgIcon = require('../ui/svg_icon.js.jsx');
+var TextPost = require('../ui/text_post.js.jsx');
+var UserStore = require('../../stores/user_store');
 
 var Idea = React.createClass({
   propTypes: {
     // (@chrislloyd) Sorry @pletcher!
     idea: React.PropTypes.object
-  },
-
-  getInitialState() {
-    return {}
   },
 
   render() {
@@ -26,18 +23,10 @@ var Idea = React.createClass({
     return (
       <div className="p4">
         <TextPost author={idea.user} title={idea.name} timestamp={idea.created_at} body={idea.body} />
-        {false && this.renderAdminRow()}
+        {this.renderAdminRow()}
         {this.renderProductRow()}
       </div>
     )
-  },
-
-  // --
-
-  onIdeaChange() {
-    this.setState({
-      idea: IdeaStore.getIdea()
-    });
   },
 
   renderAdminRow() {
@@ -64,7 +53,7 @@ var Idea = React.createClass({
 
           <div className="right mr2">
             <Button type="primary" action={function() {
-                window.location = '/create?pitch=' + idea.name + '&idea_id=' + idea.id
+                page('/create?pitch=' + idea.name + '&idea_id=' + idea.id);
               }}>
               Create a product
             </Button>
@@ -96,26 +85,27 @@ var Idea = React.createClass({
           </a>
         </div>
       );
-    } else {
-      if (idea.user.id === UserStore.getId()) {
-        return (
-          <div className="mt4">
-            <div className="p2 border rounded clearfix">
-              <div  className="right">
-                <Button action={function() { window.location = '/create?pitch=' + idea.name + '&idea_id=' + idea.id}}>
-                  Create a product
-                </Button>
-              </div>
-              <div className="overflow-hidden py1">
-                Are you ready to start building this idea?
-              </div>
+    }
+
+    if (idea.user.id === UserStore.getId()) {
+      return (
+        <div className="mt4">
+          <div className="p2 border rounded clearfix">
+            <div  className="right">
+              <Button action={function() {
+                  page('/create?pitch=' + idea.name + '&idea_id=' + idea.id);
+                }}>
+                Create a product
+              </Button>
+            </div>
+            <div className="overflow-hidden py1">
+              Are you ready to start building this idea?
             </div>
           </div>
-        )
-      }
+        </div>
+      )
     }
-  },
+  }
+});
 
-})
-
-module.exports = Idea
+module.exports = Idea;
