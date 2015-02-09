@@ -131,7 +131,9 @@ module.exports = React.createClass({
         <div className="h6 mt0 mb1">
           <a className="bold black black-hover" href={author.url}>{author.username}</a>
           {' '}
-          <a href={this.props.url} className="gray-2 gray-2-hover visible-hover">commented {moment(this.props.timestamp).fromNow()}</a>
+          <a href={this.props.url} className="gray-2 gray-2-hover visible-hover">
+            commented {moment(this.props.timestamp).fromNow()}
+          </a>
         </div>
 
         <div className={classes}>
@@ -189,11 +191,11 @@ module.exports = React.createClass({
   renderLove: function() {
     if (this.props.heartable) {
       return [
-        <div className="_inline-block _mb0_25 _h6 mr1 gray-2">
+        <div className="_inline-block _mb0_25 _h6 mr1 gray-2" key={'heart-' + this.props.id}>
           <Heart size="small" heartable_id={this.props.id} heartable_type='NewsFeedItemComment' />
         </div>,
 
-        <div className="_inline-block _h6">
+        <div className="_inline-block _h6" key={'lovers-' + this.props.id}>
           <Lovers heartable_id={this.props.id} />
         </div>
       ];

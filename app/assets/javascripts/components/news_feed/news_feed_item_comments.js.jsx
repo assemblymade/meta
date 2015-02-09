@@ -19,6 +19,7 @@ var NewsFeedItemBountyTagChange = require('./news_feed_item_bounty_tag_change.js
 var NewsFeedItemBountyTimelineItem = require('./news_feed_item_bounty_timeline_item.js.jsx');
 var NewsFeedItemBountyTitleChange = require('./news_feed_item_bounty_title_change.js.jsx');
 var NewsFeedItemBountyWin = require('./news_feed_item_bounty_win.js.jsx');
+var NewsFeedItemStore = require('../../stores/news_feed_item_store');
 var ProductStore = require('../../stores/product_store');
 var ReadReceipts = require('../read_receipts.js.jsx');
 var Routes = require('../../routes');
@@ -27,8 +28,6 @@ var SvgIcon = require('../ui/svg_icon.js.jsx');
 var UserStore = require('../../stores/user_store');
 
 var NewsFeedItemComments = React.createClass({
-  displayName: 'NewsFeedItemComments',
-
   propTypes: {
     commentable: React.PropTypes.bool,
     item: React.PropTypes.object.isRequired,
@@ -38,7 +37,8 @@ var NewsFeedItemComments = React.createClass({
 
   componentDidMount: function() {
     if (this.props.showAllComments) {
-      this.fetchCommentsFromServer({ stopPropagation: function() {} });
+      this.fetchCommentsFromServer();
+      NewsFeedItemStore.addChangeListener(this.fetchCommentsFromServer);
     }
 
     if (_reach(this.props, 'item.target.type') === 'task') {
@@ -52,10 +52,14 @@ var NewsFeedItemComments = React.createClass({
     if (window.location.hash) {
       if (this.state.comments.length > prevState.comments.length) {
         $(document.body).animate({
-          'scrollTop':   $('#' + window.location.hash.substring(1)).offset().top
+          'scrollTop':   ($('#' + window.location.hash.substring(1)).offset() || {}).top
         }, 500);
       }
     }
+  },
+
+  componentWillReceiveProps: function() {
+    this.fetchCommentsFromServer();
   },
 
   componentWillUnmount: function() {
@@ -67,12 +71,13 @@ var NewsFeedItemComments = React.createClass({
   },
 
   fetchCommentsFromServer: function(e) {
-    e.stopPropagation();
+    e && e.stopPropagation();
 
-    this.setState({ loading: true });
+    if (this.isMounted()) {
+      this.setState({ loading: true });
+    }
 
     DiscussionActionCreators.fetchCommentsFromServer(
-      this.state.url,
       this.props.item.id
     );
   },
@@ -81,6 +86,9 @@ var NewsFeedItemComments = React.createClass({
     var state = BountyStore.getState();
     var comments = this.state.comments;
 
+    // FIXME: (pletcher) We should probably not mutate the instance of
+    // NFIComments' state. Instead, we should request the new comments from the
+    // server and render them.
     switch (state) {
       case 'closed':
         var closedEvent = this.renderOptimisticClosedEvent();
@@ -134,6 +142,9 @@ var NewsFeedItemComments = React.createClass({
       return;
     }
 
+    // FIXME (pletcher): comments are taking too long to render, which makes for
+    // a weird 1-second-ish jump between when the spinner stops and when
+    // comments appear
     this.setState({
       comment: '',
       comments: comments.confirmed,
@@ -316,7 +327,11 @@ var NewsFeedItemComments = React.createClass({
     var item = this.props.item;
 
     if (this.props.commentable) {
-      var url = this.state.url;
+      // FIXME: (pletcher) We shouldn't be passing the url in as a prop
+      var url = Routes.discussion_comments_path({
+        discussion_id: item.id
+      });
+
       return <NewComment
           {...this.props}
           canContainWork={item.target && item.target.type.indexOf('task') > -1}

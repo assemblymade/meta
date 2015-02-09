@@ -1,9 +1,14 @@
 var ActionTypes = require('../constants').ActionTypes;
 var Dispatcher = require('../dispatcher')
 var DiscussionStore = require('../stores/discussion_store');
+var Routes = require('../routes');
 
 var DiscussionActionCreators = {
-  fetchCommentsFromServer: function(url, itemId) {
+  fetchCommentsFromServer: function(itemId) {
+    var url = Routes.discussion_comments_path({
+      discussion_id: itemId
+    });
+
     $.ajax({
       method: 'GET',
       headers: {
