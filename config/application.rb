@@ -1,7 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 
-require './lib/rack/cross_origin_assets'
 require './lib/mailgun/rails'
 
 # Require the gems listed in Gemfile, including any gems
@@ -40,9 +39,6 @@ module ASM
     config.autoload_paths << config.root.join('lib')
     config.autoload_paths << config.root.join('app', 'workers')
 
-    config.middleware.insert_before ActionDispatch::Static,
-                                    Rack::CrossOriginAssets
-
     config.middleware.use "EsProxy"
 
     config.action_mailer.default_options = {
@@ -59,5 +55,15 @@ module ASM
     end
 
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.middleware.insert_before 0, 'Rack::Cors' do
+      allow do
+        origins '*'
+
+        resource '/assets/*',
+          headers: :any,
+          methods: [:get, :options, :head]
+      end
+    end
   end
 end
