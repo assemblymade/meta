@@ -49,4 +49,8 @@ class PagesController < ApplicationController
       render
     end
   end
+
+  def core_team
+    redirect_to help_path(group: 'building', anchor: 'who-is-in-control')
+  end
 end
