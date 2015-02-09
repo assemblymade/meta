@@ -86,7 +86,6 @@ ASM::Application.configure do
   config.static_cache_control = "public, max-age=31536000"
 
   config.react.variant = :production
-  config.font_assets.origin = 'https://assembly.com'
 
   config.skylight.probes = %w(net_http excon redis)
 end
