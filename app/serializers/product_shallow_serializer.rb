@@ -3,13 +3,7 @@ class ProductShallowSerializer < ApplicationSerializer
   attributes :homepage_url
 
   def logo_url
-    image_url = if object.logo.present?
-      object.logo.url
-    elsif object.poster.present?
-      object.poster_image.url
-    else
-      '/assets/app_icon.png'
-    end
+    object.full_logo_url
   end
 
   def url
