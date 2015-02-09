@@ -15,6 +15,15 @@ var ToggleButton = React.createClass({
     return this.props.text[this.state.bool];
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    // FIXME: this is a super hacky way to update props
+    if (nextProps.bool !== this.props.bool) {
+      this.setState({
+        bool: nextProps.bool
+      });
+    }
+  },
+
   icon: function() {
     if(this.props.icon) {
       var iconClasses = ['icon', 'icon-left', 'icon-' + this.props.icon[this.state.bool]].join(' ');

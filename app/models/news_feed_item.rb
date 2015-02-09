@@ -87,7 +87,7 @@ class NewsFeedItem < ActiveRecord::Base
   def comment_added(o)
     update!(last_commented_at: o.created_at)
     [o.user, o.mentioned_users].flatten.uniq.each do |user|
-      Watching.watch!(user, self)
+      Watching.auto_watch!(user, self)
     end
   end
 

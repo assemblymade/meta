@@ -44,15 +44,22 @@ var CommentActionCreators = {
       url: commentUrl,
       json: true,
       data: { body: commentBody },
-      success: function(comment) {
+      success: function(data) {
         Dispatcher.dispatch({
           type: ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT,
           data: {
             thread: commentId,
             timestamp: timestamp,
-            comment: comment
+            comment: data.comment
           }
         });
+
+        if (data.subscribed) {
+          Dispatcher.dispatch({
+            type: ActionTypes.NEWS_FEED_ITEM_SUBSCRIBED,
+            itemId: commentId
+          });
+        }
       },
       error: function(jqXhr, textStatus, err) {
         // TODO: Handle errors -- maybe add a retry?

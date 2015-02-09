@@ -44,7 +44,10 @@ class CommentsController < ApplicationController
       @comment.track_acknowledgements!
     end
 
-    respond_with @comment, location: discussion_comments_path(@discussion)
+    respond_with({
+      comment: NewsFeedItemCommentSerializer.new(@comment),
+      subscribed: Watching.watched?(current_user, @comment.news_feed_item)
+    }, location: discussion_comments_path(@discussion))
   end
 
   def update
