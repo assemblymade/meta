@@ -24,6 +24,7 @@ var ReadReceipts = require('../read_receipts.js.jsx');
 var Routes = require('../../routes');
 var Spinner = require('../spinner.js.jsx');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
+var Timeline = require('../ui/timeline.js.jsx')
 var UserStore = require('../../stores/user_store');
 
 var NewsFeedItemComments = React.createClass({
@@ -218,18 +219,14 @@ var NewsFeedItemComments = React.createClass({
       return <div className="py2" />;
     }
 
-    var classes = React.addons.classSet({
-      timeline: this.props.showAllComments
-    });
-
     return (
       <div>
         {this.renderLoadMoreButton()}
-        <div className={classes}>
+        <Timeline>
           {confirmedComments}
           {optimisticComments}
           {this.renderRuler()}
-        </div>
+        </Timeline>
       </div>
     );
   },
