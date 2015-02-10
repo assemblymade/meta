@@ -1,0 +1,51 @@
+<% title @guide_group.name, 'Guides' %>
+<% provide(:description, "Frequently asked questions about #{@guide_group.name.downcase} on Assembly.") %>
+
+<!-- TODO Deprecate. Pages now use gray bg. (chrislloyd) -->
+<style>body { background-color: white !important; }</style>
+
+<%= render 'shared/navbar' %>
+
+<%# cache FaqGroup.cache_key(@guide_group) do %>
+  <div class="container">
+
+    <div class="border-bottom py3 mb4">
+      <ol class="breadcrumb mb2">
+        <li class="active">Guides</li>
+        <li></li>
+      </ol>
+      <h1 class="mt2 mb0"><%= @guide_group.name %></h1>
+    </div>
+
+    <div class="clearfix mxn4">
+      <div class="md-col md-col-8 px4">
+
+            <ul class="list-reset">
+              <% @guide_group.questions.each do |question| %>
+                <li class="question">
+                  <%= link_to question[:name], anchor: question[:anchor] %>
+                </li>
+              <% end %>
+            </ul>
+
+            <hr class="border-bottom mt4 mb4">
+
+            <%= @guide_group.body.html_safe %>
+
+      </div>
+
+      <div class="md-col md-col-4 px4">
+        <ul class="list-reset">
+          <% @guide_groups.each do |guide_group| %>
+            <li>
+              <a class="block gray-1 py1 <%= 'bold blue' if @guide_group.slug == guide_group.slug %>" href="<%= guides_path(guide_group) %>"><%= guide_group.name %></a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+<%# end %>
+
+<%= render 'shared/footer' %>
