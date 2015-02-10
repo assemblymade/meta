@@ -52,7 +52,7 @@ var Lovers = React.createClass({
     var lover = this.getFirstLover();
 
     return (
-      <div className="inline-block _pr0_75">
+      <div className="inline-block">
         <div className="inline-block valign-mid">
           {this.renderAvatar(lover)}
         </div>

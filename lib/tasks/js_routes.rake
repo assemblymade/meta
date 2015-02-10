@@ -47,6 +47,7 @@ EOS
 end
 
 ROUTES = [
+  'award_product_wip',
   'discover',
   'discussion_comment',
   'discussion_comments',

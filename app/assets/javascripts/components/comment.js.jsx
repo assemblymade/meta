@@ -7,6 +7,7 @@ var CommentStore = require('../stores/comment_store');
 var Icon = require('./ui/icon.js.jsx');
 var Heart = require('./heart.js.jsx');
 var Lovers = require('./lovers.js.jsx');
+var List = require('./ui/list.js.jsx')
 var Markdown = require('./markdown.js.jsx');
 var NewComment = require('./news_feed/new_comment.js.jsx');
 var NewCommentActionCreators = require('../actions/new_comment_action_creators');
@@ -97,13 +98,34 @@ module.exports = React.createClass({
       var awardUrl = this.props.awardUrl;
 
       return (
-        <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 gray-2 _h6"
-            href={awardUrl + '?event_id=' + id}
-            key={'award-' + id}
-            data-method="patch"
-            data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
-          Award
-        </a>
+        <List.Item>
+          <a className="gray-2 black-hover"
+              href={awardUrl + '?event_id=' + id}
+              data-method="patch"
+              data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
+            Award
+          </a>
+        </List.Item>
+      );
+    }
+  },
+
+  renderAwardAndCloseOption: function() {
+    var bounty = this.props.bounty
+    if (this.currentUserIsCore() && this.props.awardUrl) {
+      var id = this.props.id;
+      var username = this.props.author.username;
+      var awardUrl = this.props.awardUrl;
+
+      return (
+        <List.Item>
+          <a className="gray-2 black-hover"
+             href={awardUrl + '?event_id=' + id + '&close=true'}
+             data-method="patch"
+             data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
+            Award and close
+          </a>
+        </List.Item>
       );
     }
   },
@@ -123,6 +145,7 @@ module.exports = React.createClass({
     }
 
     var classes = React.addons.classSet({
+      'mb1': true,
       'gray-2': this.isOptimistic()
     });
 
@@ -140,12 +163,15 @@ module.exports = React.createClass({
           <Markdown content={body} normalized={true} wideQuotes={true} />
         </div>
 
-        <div className="inline-block _pt0_5">
-          {this.renderTips()}
-          {this.renderLove()}
-          {this.renderEditOption()}
-          {this.renderReply()}
-          {this.renderAwardOption()}
+        <div className="h6">
+          <List type="piped">
+            {this.renderTips()}
+            {this.renderLove()}
+            {this.renderEditOption()}
+            {this.renderReply()}
+            {this.renderAwardOption()}
+            {this.renderAwardAndCloseOption()}
+          </List>
         </div>
       </div>
     );
@@ -181,24 +207,28 @@ module.exports = React.createClass({
 
     if (UserStore.getId() === this.props.author.id) {
       return (
-        <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 gray-2 _h6" href="javascript:void(0);" onClick={this.triggerEditMode}>
-          Edit
-        </a>
+        <List.Item>
+          <a className="gray-2 black-hover" href="javascript:void(0);" onClick={this.triggerEditMode}>
+            Edit
+          </a>
+        </List.Item>
       );
     }
   },
 
   renderLove: function() {
     if (this.props.heartable) {
-      return [
-        <div className="_inline-block _mb0_25 _h6 mr1 gray-2" key={'heart-' + this.props.id}>
-          <Heart size="small" heartable_id={this.props.id} heartable_type='NewsFeedItemComment' />
-        </div>,
-
-        <div className="_inline-block _h6" key={'lovers-' + this.props.id}>
-          <Lovers heartable_id={this.props.id} />
-        </div>
-      ];
+      return (
+        <List.Item>
+          <div className="inline-block">
+            <Heart size="small" heartable_id={this.props.id} heartable_type='NewsFeedItemComment' />
+          </div>
+          {' '}
+          <div className="inline-block">
+            <Lovers heartable_id={this.props.id} />
+          </div>
+        </List.Item>
+      )
     }
   },
 
@@ -208,11 +238,13 @@ module.exports = React.createClass({
     }
 
     return (
-      <a className="_pl0_75 _pr0_75 _border-left1px border-gray-4 gray-2 _h6"
-          href="javascript:void(0);"
-          onClick={this.reply.bind(this, this.props.author)}>
-        Reply
-      </a>
+      <List.Item>
+        <a className="gray-2 black-hover"
+            href="javascript:void(0);"
+            onClick={this.reply.bind(this, this.props.author)}>
+          Reply
+        </a>
+      </List.Item>
     );
   },
 
@@ -224,12 +256,12 @@ module.exports = React.createClass({
 
     // TipsUi is causing display issues :(
     return (
-      <span className="_pr0_75 _inline-block _h6" style={{height: '1.5rem'}}>
+      <List.Item>
         <Tips
             viaType="NewsFeedItemComment"
             viaId={this.props.id}
             recipient={this.props.author} />
-      </span>
+      </List.Item>
     );
   },
 
