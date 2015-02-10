@@ -40,7 +40,7 @@ var Navbar = React.createClass({
 
         <li className="left sm-show px1">
           <ChatNotificationsToggler
-            icon="comment"
+            icon="comments"
             href='#notifications'
             label='Chat' />
 

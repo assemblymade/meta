@@ -27,7 +27,7 @@ let ProductImportantLinks = React.createClass({
 
         <div className="border-bottom py2" style={style}>
           <span className="mr3 gray-2">
-            <Icon icon="comment" />
+            <Icon icon="comments" />
           </span>
           <a href={Routes.product_chat_path({ product_id: slug })}>
             Chat
