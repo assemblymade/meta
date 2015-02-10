@@ -74,9 +74,9 @@ describe('ChatNotificationsToggler', function() {
       <Toggler iconClass="icon icon-bubbles" href="/chat" label="bubbles" />
     );
 
-    toggler.acknowledge();
-
-    expect(toggler.state.acknowledgedAt).toBeCloseTo(moment().unix(), 2);
+    expect(toggler.state.acknowledgedAt).toEqual(0)
+    toggler.acknowledge()
+    expect(toggler.state.acknowledgedAt).not.toEqual(0)
   });
 
   it('adds the bg-red class if it has notifications', function() {
