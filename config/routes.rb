@@ -175,7 +175,9 @@ ASM::Application.routes.draw do
   namespace :admin do
     resources :apps, only: [:index, :update]
     resources :asset_history, only: [:index]
-    resources :bitcoin, only: [:index]
+    resources :bitcoin, only: [:index] do
+      get '/report', action: :report
+    end
     get '/bitcoin/report' => 'bitcoin#report'
     resources :bounties, only: [:index] do
       get :graph_data
