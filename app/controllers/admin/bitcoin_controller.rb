@@ -1,9 +1,11 @@
 class Admin::BitcoinController < AdminController
 
+  require 'csv'
+
   def index
     @payment_btc_sum = BtcPayment.sum(:btc_change)
     payments_n = BtcPayment.count
-    @payments = BtcPayment.last(50)
+    @payments = BtcPayment.where('btc_change*btc_change > 1000000000000').sort_by{|a| a.created_at}.last(50)
 
     @total_btc_paid_to_users = BtcPayment.where(action: "Paid User").sum(:btc_change).to_f / 100000000 * -1
 
@@ -15,7 +17,21 @@ class Admin::BitcoinController < AdminController
 
   end
 
+  def show
+    @payments = BtcPayment.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @payments.as_csv }
+    end
+  end
 
+  def report
+    @payments = BtcPayment.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @payments.as_csv }
+    end
+  end
 
 
 end
