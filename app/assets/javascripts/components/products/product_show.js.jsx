@@ -3,10 +3,13 @@
 const Avatar = require('../ui/avatar.js.jsx');
 const Button = require('../ui/button.js.jsx');
 const Icon = require('../ui/icon.js.jsx');
+const IntroductionActions = require('../../actions/introduction_actions');
+const IntroductionStore = require('../../stores/introduction_store');
 const ProductHeader = require('./product_header.js.jsx');
 const ProductImportantLinks = require('./product_important_links.js.jsx');
 const ProductScreenshotPlaceholder = require('./product_screenshot_placeholder.js.jsx');
 const ProductStore = require('../../stores/product_store');
+const ProductSubsections = require('./product_subsections.js.jsx');
 const Routes = require('../../routes');
 const Screenshots = require('./screenshots.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
@@ -23,10 +26,14 @@ let ProductShow = React.createClass({
   },
 
   componentDidMount() {
+    document.title = this.state.product && this.state.product.name;
+
+    IntroductionStore.addChangeListener(this.onIntroductionChange);
     ProductStore.addChangeListener(this.onProductChange);
   },
 
   componentWillUnmount() {
+    IntroductionStore.removeChangeListener(this.onIntroductionChange);
     ProductStore.removeChangeListener(this.onProductChange);
   },
 
@@ -38,6 +45,21 @@ let ProductShow = React.createClass({
     return {
       product: ProductStore.getProduct()
     };
+  },
+
+  handleIntroductionSubmit() {
+    let introduction = IntroductionStore.getIntroduction();
+    let product = this.state.product;
+    let slug = product.slug;
+    let userId = UserStore.getId();
+
+    IntroductionActions.submitIntroduction(slug, userId, introduction)
+  },
+
+  onIntroductionChange() {
+    this.setState({
+      introduction: IntroductionStore.getIntroduction()
+    });
   },
 
   onProductChange() {
@@ -93,7 +115,9 @@ let ProductShow = React.createClass({
 
                   <Markdown content={product.description_html} normalized={true} />
 
-                  {this.renderSubsections()}
+                  <div className="mt4">
+                    <ProductSubsections />
+                  </div>
                 </div>
               </Tile>
             </div>
@@ -104,8 +128,7 @@ let ProductShow = React.createClass({
                 <div className="border-bottom">
                   <div className="p3">
                     <h5 className="mt0 mb1">Build {product.name} with us!</h5>
-                    <span className="gray-1 markdown markdown-normalized"
-                        dangerouslySetInnerHTML={{ __html: product.lead }} />
+                    {this.renderIntroductionForm()}
                   </div>
                 </div>
 
@@ -150,6 +173,36 @@ let ProductShow = React.createClass({
     }
   },
 
+  renderIntroductionForm() {
+    let product = this.state.product;
+    let user = UserStore.getUser();
+
+    if (user && !product.is_member) {
+      return (
+        <div className="mt2">
+          <div className="gray-1 h6 markdown markdown-normalized py1 mb2">
+            Ready to pitch in on {product.name}? Introduce yourself.
+          </div>
+
+          <TypeaheadUserTextArea className="form-control mb2"
+            onChange={this.handleIntroductionChange}
+            placeholder={"What kinds of problems do you like to solve? What skills can you contribute to " +
+              product.name + "? Are you a coder, a designer, a marketer, or simply a doer?"}
+            rows="2"
+            value={this.state.introduction}
+            style={{ fontSize: 13 }} />
+          <div className="center">
+            <Button type="default" action={this.handleIntroductionSubmit}>
+              Introduce yourself!
+            </Button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.renderProductLead();
+  },
+
   renderMostActiveUsers() {
     let product = this.state.product;
     let contributors = product.most_active_contributors;
@@ -166,7 +219,7 @@ let ProductShow = React.createClass({
     return (
       <div className="border-bottom">
         <div className="px3 py2">
-          <h6 className="mt0 mb2">Most active members</h6>
+          <h5 className="mt0 mb2">Most active members</h5>
           <div className="clearfix">
             {renderedContributors}
           </div>
@@ -181,51 +234,15 @@ let ProductShow = React.createClass({
     );
   },
 
-  renderSubsections() {
-    // still figuring out the design/UX for creating and editing these
-    // subsections
-    return null;
-
+  renderProductLead() {
     let product = this.state.product;
-    let subsections = product.subsections;
-    let headings = Object.keys(subsections);
 
-    let renderedSubsections = [];
-
-    for (let i = 0, l = headings.length; i < l; i += 2) {
-      let leftHeading = headings[i];
-      let rightHeading = headings[i + 1];
-      let leftBody = subsections[leftHeading];
-      let rightBody = subsections[rightHeading];
-
-      let renderedLeft = _subsection(leftHeading, leftBody);
-
-      let renderedRight;
-      if (rightHeading) {
-        renderedRight = _subsection(rightHeading, rightBody);
-      }
-
-      renderedSubsections.push(
-        <div className="clearfix py1">
-          {renderedLeft}
-          {renderedRight}
-        </div>
-      );
-    }
-
-    return renderedSubsections;
+    return (
+      <div className="h6">
+        <Markdown content={product.lead} normalize={true} />
+      </div>
+    );
   }
 });
-
-function _subsection(heading, body) {
-  return (
-    <div className="col col-6" style={{ paddingRight: '4rem' }}>
-      <h6 className="mt0 mb0">{heading}</h6>
-      <p className="gray-1">
-        {body}
-      </p>
-    </div>
-  );
-}
 
 module.exports = ProductShow;

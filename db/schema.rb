@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150208042236) do
+ActiveRecord::Schema.define(version: 20150210000653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -674,6 +674,7 @@ ActiveRecord::Schema.define(version: 20150208042236) do
     t.string   "topics",                                                                    array: true
     t.integer  "wips_count",                                    default: 0,    null: false
     t.datetime "deleted_at"
+    t.json     "subsections"
   end
 
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree

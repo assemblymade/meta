@@ -5,14 +5,24 @@ const Dispatcher = require('../dispatcher');
 
 let ProductsHandlers = {
   showProduct(data) {
+    let {
+      product,
+      screenshots
+    } = data;
+
     Dispatcher.dispatch({
       type: ActionTypes.PRODUCT_RECEIVE,
-      product: data.product
+      product: product
+    });
+
+    Dispatcher.dispatch({
+      type: ActionTypes.PRODUCT_SUBSECTIONS_RECEIVE,
+      subsections: product.subsections || {}
     });
 
     Dispatcher.dispatch({
       type: ActionTypes.SCREENSHOTS_RECEIVE,
-      screenshots: data.screenshots
+      screenshots: screenshots
     });
 
     _showCreateBounty();

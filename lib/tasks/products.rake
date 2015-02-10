@@ -69,4 +69,31 @@ namespace :products do
       end
     end
   end
+
+  task descriptions_to_updates: :environment do
+    Product.find_each do |product|
+      next if product.description.nil?
+
+      title = if Post.find_by(product_id: product.id, title: product.name)
+        "#{product.name} - Introduction"
+      else
+        product.name
+      end
+
+      product.posts.create!(
+        author_id: product.user_id,
+        title: title,
+        slug: "#{product.slug}-introduction",
+        body: product.description
+      )
+
+      post = Post.find_by(product_id: product.id, slug: product.slug)
+
+      post.update_column('created_at', product.created_at)
+      post.update_column('updated_at', product.created_at)
+      post.news_feed_item.update_column('created_at', product.created_at)
+      post.news_feed_item.update_column('updated_at', product.created_at)
+      post.news_feed_item.update_column('last_commented_at', product.created_at)
+    end
+  end
 end

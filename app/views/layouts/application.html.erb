@@ -56,7 +56,9 @@
     <%= render 'shared/track_page_viewed' %>
 
     <script>
-      window.app.setSuggestedTags(<%== Wip::Tag.suggested_tags(current_user) %>);
+      if (window.app && window.app.setSuggestedTags) {
+        window.app.setSuggestedTags(<%== Wip::Tag.suggested_tags(current_user) %>);
+      }
     </script>
 
     <% if signed_in? %>

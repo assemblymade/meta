@@ -39,10 +39,6 @@ class Post < ActiveRecord::Base
   ANNOUNCEMENT_MARK = 'announcement'
   DISCUSSION_MARK = 'discussion'
 
-  # def summary
-  #   super || body.split("\n").first
-  # end
-
   def self.filter_with_params(query, params)
     query = if params[:archived]
       query.archived

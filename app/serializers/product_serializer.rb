@@ -1,7 +1,7 @@
 class ProductSerializer < ApplicationSerializer
   include MarkdownHelper
 
-  attributes :url, :wips_url, :people_url, :is_member
+  attributes :url, :wips_url, :people_url, :is_member, :subsections
   attributes :name, :pitch, :slug, :quality, :average_bounty, :logo_url
   attributes :can_update, :try_url, :wips_count, :partners_count, :lead
   attributes :top_marks, :homepage_url, :screenshots, :description, :description_html

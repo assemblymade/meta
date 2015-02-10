@@ -45,9 +45,6 @@ class ProductsController < ProductController
       if @idea
         @idea.update(product: @product)
       end
-
-      schedule_greet
-      schedule_one_hour_checkin
     else
       render action: :new, layout: 'application'
     end
@@ -119,7 +116,19 @@ class ProductsController < ProductController
 
   def update
     authorize! :update, @product
-    @product.update_attributes!(product_params)
+
+    # since we don't know what the subsections hash
+    # will look like, we need to have this janky if-check
+    if params[:subsections]
+      if params[:subsections].blank?
+        @product.update(subsections: {})
+      else
+        @product.update(subsections: params[:subsections])
+      end
+    else
+      @product.update!(product_params)
+    end
+
     respond_with(@product)
   end
 
@@ -159,43 +168,6 @@ class ProductsController < ProductController
     respond_with @product, location: product_path(@product)
   end
 
-  def schedule_greet
-    message = "Hi there! I'm Kernel. #{@product.name} looks pretty sweet. If you need any help, message me at @kernel, and I'll get a human."
-    PostChatMessage.perform_async(@product.slug, message, false)
-  end
-
-  def schedule_introductory_bounty
-    CreateBounty.perform_async(@product.slug)
-  end
-
-  def schedule_one_hour_checkin
-    eligible_products = Product.public_products
-                       .joins(:product_trend)
-                       .where('votes_count >= ?', 10)
-                       .order('product_trends.score desc')
-                       .limit(100)
-
-    index = rand(eligible_products.count)
-    example_product = eligible_products[index]
-
-    message = if example_product
-      "Why not take a look at [#{example_product.name}](#{product_path(example_product)}) for some inspiration?"
-    else
-      "Why not take a look at [some of the other products](#{discover_path}) that people have built?"
-    end
-
-    PostChatMessage.perform_in(1.hour, @product.slug, message)
-  end
-
-  def schedule_one_day_checkin
-    CreateProject.perform_in(1.day, @product.slug)
-
-    first_milestone_number = (@product.milestones && @product.milestones.first && @product.milestones.first.number) || 1
-
-    message = "@core, I made something for you: [Launch Checklist](#{product_project_path(@product, first_milestone_number)}). You got this!"
-
-    PostChatMessage.perform_in(1.day, @product.slug, message)
-  end
   # private
 
   def create_product_chat(product)
