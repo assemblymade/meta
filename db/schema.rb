@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210000653) do
+ActiveRecord::Schema.define(version: 20150210224313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -483,7 +483,7 @@ ActiveRecord::Schema.define(version: 20150210000653) do
   create_table "news_feed_items", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "source_id"
     t.uuid     "product_id"
-    t.uuid     "target_id"
+    t.uuid     "target_id",                                 null: false
     t.string   "target_type",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
