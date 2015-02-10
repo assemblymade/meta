@@ -192,7 +192,8 @@ let ProductActivity = React.createClass({
 
               <TypeaheadUserTextArea className="form-control mb2"
                 onChange={this.handleIntroductionChange}
-                placeholder="What do you like to do? What is your favorite sandwich?"
+                placeholder={"What kinds of problems do you like to solve? What skills can you contribute to " +
+                  product.name + "? Are you a coder, a designer, a marketer, or simply a doer?"}
                 rows="2"
                 value={this.state.introduction}
                 style={{ fontSize: 13 }} />
