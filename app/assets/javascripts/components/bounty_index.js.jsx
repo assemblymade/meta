@@ -3,6 +3,7 @@
   var BountyActionCreators = require('../actions/bounty_action_creators.js')
   var BountyFilter = require('./bounty_filter.js.jsx')
   var BountyList = require('./bounty_list.js.jsx')
+  var Button = require('./ui/button.js.jsx')
   var PaginationLinks = require('./pagination_links.js.jsx')
   var Spinner = require('./spinner.js.jsx')
 
@@ -131,6 +132,14 @@
                 </div>
                 <div className="h6 m0 gray-1">
                   Jump into chat and introduce yourself to <a href={product.people_url}>@core</a>.
+                </div>
+
+                <div className="center mt2 border-top">
+                  <div className="mt2">
+                    <Button type="default" action={function() { window.open('chat', '_blank'); }}>
+                      Jump into chat
+                    </Button>
+                  </div>
                 </div>
               </div>
               <div className="col-xs-6 col-sm-12">

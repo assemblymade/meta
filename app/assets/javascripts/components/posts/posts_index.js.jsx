@@ -1,4 +1,5 @@
 var Accordion = require('../accordion.js.jsx');
+var Button = require('../ui/button.js.jsx');
 var PostActionCreators = require('../../actions/post_action_creators');
 var PostList = require('./post_list.js.jsx');
 var PostsStore = require('../../stores/posts_store');
@@ -82,7 +83,16 @@ var PostsIndex = React.createClass({
                 with progress and new ways to help out. When you're ready,{' '}
                 we'll also email the entry to everyone following{' '}
                 <a href={product.url}>{product.name}</a>. You can include{' '}
-                images and use Markdown to make it more awesome.
+                images and use Markdown to make it more awesome. Still have{' '}
+                questions? Jump into chat and ping @core.
+              </div>
+
+              <div className="center mt2 border-top">
+                <div className="mt2">
+                  <Button type="default" action={function() { window.open('chat', '_blank'); }}>
+                    Jump into chat
+                  </Button>
+                </div>
               </div>
             </div>
 
