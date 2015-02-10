@@ -31,6 +31,12 @@
             <%= f.text_field :pitch, class: 'form-control', placeholder: @four_word_story_example, value: params[:pitch] || '' %>
           <% end %>
 
+          <%= form_group @product, :description, class: 'mb3' do %>
+            <%= f.label :description, 'Blurb', class: 'control-label' %>
+            <p class="h6 gray-2">How did you come up with the idea? What makes it great? Describe your vision, the problem it's solving and your advantage over the competition.</p>
+            <%= f.text_area :description, class: 'form-control',  value: params[:blurb] || '', rows: 8 %>
+          <% end %>
+
 
           <h5>Coins &amp; Ownership</h5>
 
