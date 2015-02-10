@@ -30,7 +30,7 @@ let ProductImportantLinks = React.createClass({
             <Icon icon="comment" />
           </span>
           <a href={Routes.product_chat_path({ product_id: slug })}>
-            Say hi in chat
+            Chat
           </a>
         </div>
 
