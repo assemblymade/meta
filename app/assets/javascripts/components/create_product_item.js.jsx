@@ -1,5 +1,6 @@
 var page = require('page');
 var routes = require('../routes');
+var NewPostModal = require('./posts/new_post_modal.js.jsx');
 var UserActions = require('../actions/user_actions');
 var UserStore = require('../stores/user_store');
 
@@ -22,7 +23,7 @@ var CreateProductItem = React.createClass({
     var createPostMenuItem = <DropdownMenu.Item
           key="create post"
           label='Create post'
-          action={routes.new_product_post_path({product_id: this.props.product.slug})} />
+          action="javascript:window.showCreatePost();void(0);" />
 
     var createAssetMenuItem = <DropdownMenu.Item
           key="create asset"

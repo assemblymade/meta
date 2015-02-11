@@ -75,6 +75,16 @@ class Post < ActiveRecord::Base
     Marking.create!(markable: self, mark: Mark.find_or_create_by!(name: DISCUSSION_MARK), weight: 1.0)
   end
 
+  def mark_names
+    marks.map(&:name)
+  end
+
+  def mark_names=(names)
+    self.marks = Array.wrap(names).flatten.map do |n|
+      Mark.find_or_create_by!(name: n.strip)
+    end
+  end
+
   def push_to_news_feed
     NewsFeedItem.create_with_target(self)
   end

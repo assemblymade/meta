@@ -89,7 +89,7 @@
 <% end %>
 
 <div id="public-address-prompt"></div>
-<div id='create-bounty'></div>
+<div id="create-modal-placeholder"></div>
 
 <% content_for :javascript do %>
   <script>
@@ -103,6 +103,7 @@
       } catch (e) {}
       React.render(
         CreateBounty({
+          key: 'create-bounty-modal',
           id: 'create-bounty-modal',
           product: { name: "<%= @product.name %>" },
           url: "<%= product_wips_path(@product) %>",
@@ -112,9 +113,24 @@
           profitLastMonth: <%= @product.profit_last_month %>,
           steps: <%= BountyGuidance::Valuations.suggestions(@product) %>
         }),
-        document.getElementById('create-bounty')
+        document.getElementById('create-modal-placeholder')
       );
-    }
+    };
+
+    window.showCreatePost = function() {
+      try {
+        $('#new-post-modal').modal('show');
+      } catch (e) { console.log(e);}
+      React.render(
+        NewPostModal({ key: 'new-post-modal' }),
+        document.getElementById('create-modal-placeholder')
+      );
+
+      var modal = $('#new-post-modal').modal({ show: true })
+      modal.on('hide.bs.modal', function() {
+        React.unmountComponentAtNode(document.getElementById('create-modal-placeholder'))
+      });
+    };
 
     $('#edit-membership-modal').on('shown.bs.modal', function() {
       $('#modal-bio-editor').attr('placeholder', app.defaultBio());

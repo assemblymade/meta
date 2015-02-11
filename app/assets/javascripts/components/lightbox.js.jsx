@@ -8,7 +8,7 @@ var Lightbox = React.createClass({
     onHidden: React.PropTypes.func,
     showControlledOuside: React.PropTypes.bool,
     size: React.PropTypes.string,
-    title: React.PropTypes.oneOf([
+    title: React.PropTypes.oneOfType([
       React.PropTypes.string,
       React.PropTypes.element
     ])
