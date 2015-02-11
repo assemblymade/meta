@@ -49,7 +49,9 @@ let ProductNewPost = React.createClass({
 
           <div className="clearfix mxn2">
 
-            <NewPostForm />
+            <div className="col col-9 px2">
+              <NewPostForm />
+            </div>
 
             <div className="col col-3 px2">
               <div className="h6 mt0 mb0 gray-2">
