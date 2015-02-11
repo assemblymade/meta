@@ -187,9 +187,8 @@ var CONSTANTS = {
     PEOPLE_RECEIVE: null,
 
     POST_RECEIVE: null,
-
     POSTS_RECEIVE: null,
-    PRODUCT_RECEIVE: null,
+    POST_MARKS_RECEIVE: null,
 
     PROPOSAL_INIT: null,
     PROPOSAL_VOTE: null,
@@ -211,8 +210,7 @@ var CONSTANTS = {
     PRODUCT_UNFOLLOW_SUCCEEDED: null,
     PRODUCT_UNFOLLOW_FAILED: null,
 
-    PRODUCT_MARKS_RECEIVE: null,
-
+    PRODUCT_RECEIVE: null,
     PRODUCTS_RECEIVE: null,
 
     PRODUCTS_SEARCH_INVALIDATE: null,

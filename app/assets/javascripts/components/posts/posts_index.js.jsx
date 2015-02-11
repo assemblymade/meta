@@ -74,25 +74,6 @@ var PostsIndex = React.createClass({
       <div className="row">
         <div className="col-xs-12 col-sm-4 r768_float-right">
           <div className="col-sm-11 col-sm-push-1 p0">
-            <div className="bg-white rounded shadow pt3 pr3 pb4 pl3 mb2" style={{paddingLeft: '1.75rem'}}>
-              <div className="block h5 mt0 mb1 bold">
-                Getting Started with Updates
-              </div>
-              <div className="h6 m0 gray-1">
-                Catch up on the latest {product.name} updates, milestones, and other announcements here.
-                <br/><br/>
-                Jump into chat and ping <a href={product.people_url}>@core</a> if you have any questions.
-              </div>
-
-              <div className="center mt2 border-top">
-                <div className="mt2">
-                  <Button type="default" action={function() { window.open('chat', '_blank'); }}>
-                    Jump into chat
-                  </Button>
-                </div>
-              </div>
-            </div>
-
             <div className="col-xs-6 col-sm-12">
               <div className="pb1"> {/*Filters*/}
                 <Accordion title="Filters">

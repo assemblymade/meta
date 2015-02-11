@@ -31,11 +31,21 @@ class NewsFeedItem < ActiveRecord::Base
   }
 
   scope :unarchived_items, -> { where(archived_at: nil) }
+  scope :archived_items, -> { where.not(archived_at: nil) }
 
   scope :for_feed, -> {
     public_items.
       unarchived_items.
       order(last_commented_at: :desc)
+  }
+
+  scope :with_mark, -> (mark) {
+    joins('INNER JOIN markings ON news_feed_items.target_id = markings.markable_id').
+      where(markings: { mark_id: Mark.find_by(name: mark) })
+  }
+
+  scope :with_target_type, -> (type) {
+    where(target_type: type)
   }
 
   def self.create_with_target(target)
