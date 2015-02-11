@@ -66,7 +66,7 @@ class Post < ActiveRecord::Base
   end
 
   def mark_as_announcement
-    if self.product.core_team?(self.user)
+    if product.core_team?(user)
       Marking.create!(markable: self, mark: Mark.find_or_create_by!(name: ANNOUNCEMENT_MARK), weight: 1.0)
     end
   end
@@ -81,6 +81,7 @@ class Post < ActiveRecord::Base
 
   def mark_names=(names)
     self.marks = Array.wrap(names).flatten.map do |n|
+      raise "Cannot create an announcement" if n.strip == ANNOUNCEMENT_MARK && !product.core_team?(self.user)
       Mark.find_or_create_by!(name: n.strip)
     end
   end
