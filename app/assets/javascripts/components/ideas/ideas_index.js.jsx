@@ -84,7 +84,7 @@ var IdeasIndex = React.createClass({
               {currentApp}
             </div>
 
-            <div className="col col-4 p2" style={{opacity:0.4}}>
+            <div className="col col-4 p2">
               <h6 className="gray-2 center caps mt0 mb1">Last week's product</h6>
               {lastApp}
             </div>
