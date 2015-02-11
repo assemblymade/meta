@@ -1,6 +1,8 @@
 class GuidesGroup < StaticContentGroup
   GROUPS = [
-    ['platform',    'Assembly Platform']
+    ['platform',    'Assembly Platform'],
+    ['getting-started',    'Getting Started'],
+    ['building-products',    'Building Products']
   ]
 
   def self.all
