@@ -75,8 +75,9 @@ var IdeasIndex = React.createClass({
 
           <div className="clearfix p2 bg-white rounded shadow">
             <div className="col col-4 py2 px3">
-              <h4 className="mt3 mb2">Each week the Assembly community fast-tracks the idea they love the most into a live product. Vote on the idea that you think would be a good candidate to fast-track.</h4>
-              <p className="gray-2">Do you have an idea that you'd like fast-tracked? <a href="/ideas/new">Submit it today</a>.</p>
+              <h4 className="mt3 mb3">Each week the Assembly community fast-tracks the idea they love the most into a live product. Vote on the idea that you think would be a good candidate to fast-track.</h4>
+              <p className="gray-2 mb2">Do you have an idea that you'd like fast-tracked?</p>
+              <Button action="/ideas/new" block={true}>Submit your idea</Button>
             </div>
 
             <div className="col col-4 p2">
