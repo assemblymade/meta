@@ -136,15 +136,8 @@ let ProductShow = React.createClass({
 
                 <div className="bg-gray-6">
                   <div className="p3 center">
-                    <a href={Routes.product_wips_path({ product_id: slug })}
-                        className="block">
-                      <Button type="default" action={function() {}}>
-                        Build with us
-                      </Button>
-                    </a>
-
                     <div className="gray-2 mt1">
-                      or <a href="/help">see how Assembly works</a>
+                      <a href="/help">see how Assembly works</a>
                     </div>
                   </div>
                 </div>
