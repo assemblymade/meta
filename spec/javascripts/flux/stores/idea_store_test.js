@@ -1,7 +1,7 @@
 jest.dontMock(appFile('stores/idea_store'));
 
 describe('IdeaStore', function() {
-  var ActionTypes = global.CONSTANTS.ActionTypes;
+  var ActionTypes = require(appFile('constants')).ActionTypes;
   var IdeaStore;
   var callback;
 

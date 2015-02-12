@@ -132,7 +132,7 @@ let ProductShow = React.createClass({
                 <div className="bg-gray-6">
                   <div className="p3 center">
                     <div className="gray-2 mt1">
-                      <a href="/help">see how Assembly works</a>
+                      <a href="/help">See how Assembly works</a>
                     </div>
                   </div>
                 </div>

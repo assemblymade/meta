@@ -76,3 +76,18 @@ var AppsActionCreators = {
 };
 
 module.exports = AppsActionCreators;
+
+var dataTag = document.getElementById('AppsStore')
+if (dataTag) {
+  Dispatcher.dispatch({
+    type: ActionTypes.APPS_RECEIVE,
+    apps: JSON.parse(dataTag.innerHTML)
+  })
+} else {
+  var query = url.parse(window.location.href, true).query
+  if (query.search) {
+    AppsActionCreators.search(query.search)
+  } else {
+    AppsActionCreators.filterSelected(query)
+  }
+}
