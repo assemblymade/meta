@@ -2,6 +2,7 @@ var Button = React.createClass({
 
   propTypes: {
     action: React.PropTypes.oneOfType([
+      React.PropTypes.bool,
       React.PropTypes.func,
       React.PropTypes.string
     ]),

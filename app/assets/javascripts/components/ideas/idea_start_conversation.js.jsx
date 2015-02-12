@@ -140,7 +140,7 @@ var IdeaStartConversation = React.createClass({
           <div className="clearfix px4 py3">
             <div className="left mt1">
               <a href="javscript:void(0);" onClick={this.onBackClick}>
-                <Icon icon="arrow-left" /> Back
+                <Icon icon="chevron-left" /> Back
               </a>
             </div>
 
