@@ -168,6 +168,10 @@ ASM::Application.routes.draw do
   get '/help/:group', :to => 'questions#index', :as => :help
   get '/help' => redirect('/help/basics'), :as => :faq
 
+  # Guides
+  get '/guides/:group', :to => 'guides#index', :as => :guides
+  get '/guides', :to => 'guides#index'
+
   # redirect support-foo to helpful
   get '/support-foo', to: redirect('/helpful')
   get '/support-foo/*extra', to: redirect {|p, req| "/helpful/#{p[:extra]}" }
