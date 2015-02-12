@@ -4,7 +4,7 @@ A brand new product may start out with very few contributors.  It's probable tha
 
 - **How much should I allocate for new bounties?**
 
-See our section on <a href="">bounty valuations</a>
+See our section on <a href="valuing-bounties">bounty valuations</a>
 
 - **How should I value the product throughout its lifecycle? Early?  Middle?  Late Stage?**
 
@@ -24,7 +24,7 @@ Generally speaking, leaving a large portion of unvested coins might be wise.  Un
 
 # When to Award Coins
 
-Of course not!  A user must complete a bounty to the satisfaction of core team members.  When awarding a bounty, and for pricing one, as an owner you should ask yourself:
+A user must complete a bounty to the satisfaction of core team members.  When awarding a bounty, and for pricing one, as an owner you should ask yourself:
 - Is the product gaining in value?
 - Am I getting more value from this bounty than the extent of my ownership dilution?
 - Was the bounty clearly worded and precise?  How can I make the product's needs more clear?
@@ -33,7 +33,7 @@ If work is incomplete, gently inform the contributor.  Chances are that with a l
 
 # Valuing Bounties
 
-Bounties come with prices denominated in App Coins for the product they inhabit.  Determining the value of bounties is one of the most important parts of <a href="">Product Management</a> on Assembly.  
+Bounties come with prices denominated in App Coins for the product they inhabit.  Determining the value of bounties is one of the most important parts of product management on Assembly.  
 
 Assembly aims to provide product owners tools, and rights, for managing their product.  One of these rights is the ability to vote on a bounty price.  
 
@@ -80,7 +80,7 @@ What is the technical structure of the app that has been built
 short one, can dramatically simplify the process of bringing new
 potential contributors up to speed.
 
-It's also important to <a href="">market</a> your product to
+It's also important to <a href="marketing">market</a> your product to
 maintain awareness.  If no one knows about your product, then
 no one can help build it!  Here are a few things you can do
 to promote a product
