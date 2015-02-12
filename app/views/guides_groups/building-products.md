@@ -1,3 +1,5 @@
+
+
 # Accepting payments
 #### Assembly Payments / Stripe
 Assembly has built a proxy through Stripe that allows your product to collect revenue from customers. Using Assembly payments makes it easy for Assembly to distribute revenue to you and contributors on your product. Assembly will issue US citizens a 1099 if their share of the revenue exceeds a certain threshold as specified by the IRS.

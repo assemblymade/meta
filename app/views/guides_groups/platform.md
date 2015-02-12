@@ -1,3 +1,16 @@
+# How Work Happens
+
+Each product on Assembly has a Core Team. These people are the leaders of the product, handling things like vision, strategy, and execution.
+Any work that needs to happen on a product is assigned a bounty. This could be a  one-off development task, it could be a recurring support task, or it could be anything else a product needs.
+Anyone in the community can jump in and work on bounties, and if their work is up to the quality of the product the Core Team will award it, thus giving some number of App Coins to that user.
+
+# Core Team
+
+The Core Team consists of a product's leaders.  They have certain responsibilities, like guiding a product’s vision, managing quality control, keeping the momentum up, and crafting the roadmap.
+The Core Team also has certain privileges, like the ability to award bounties, collaborator privileges on GitHub, and the ability to create tip contracts.  
+Originally, each Core Team starts out as just the person who initially created the idea. That person can add anyone to the Core Team at any time.  
+To remove someone from the Core Team, there must be a vote.
+
 # Ownership
 
 Products are owned by the community.  Individual users earn ownership of products they work on through <a href="#">bounties</a> and <a href="#">other mechanisms</a>.  Different users will have different amounts of ownership.  Thus each product has its own ownership distribution.  
