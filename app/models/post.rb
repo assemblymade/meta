@@ -1,4 +1,4 @@
-  require 'activerecord/uuid'
+require 'activerecord/uuid'
 
 class Post < ActiveRecord::Base
   include ActiveRecord::UUID
