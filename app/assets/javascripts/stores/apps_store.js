@@ -1,7 +1,6 @@
 var ActionTypes = require('../constants').ActionTypes
 var Dispatcher = require('../dispatcher');
 var Store = require('./es6_store')
-var url = require('url')
 
 var _apps = null
 
@@ -27,7 +26,7 @@ class AppsStore extends Store {
           return
       }
       this.emitChange()
-    })
+    });
   }
 
   getApps() {

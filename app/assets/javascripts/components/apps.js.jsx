@@ -1,4 +1,5 @@
 var App = require('./app.js.jsx')
+var AppsActionCreators = require('../actions/apps_action_creators');
 var AppsStore = require('../stores/apps_store')
 var ButtonDropdown = require('./ui/button_dropdown.js.jsx')
 var DropdownMenu = require('./ui/dropdown_menu.js.jsx')
@@ -183,6 +184,7 @@ var Apps = React.createClass({
 
   componentDidMount: function() {
     AppsStore.addChangeListener(this._onChange)
+    AppsActionCreators.initialize();
   },
 
   componentWillUnmount: function() {
