@@ -1,3 +1,4 @@
+var App = require('../app.js.jsx')
 var AppIcon = require('../app_icon.js.jsx')
 var BountyCard = require('../bounty_card.js.jsx')
 var BountiesStore = require('../../stores/bounties_store.js')
@@ -10,6 +11,7 @@ var NewsFeedItemsActionCreators = require('../../actions/news_feed_items_action_
 var ProductsStore = require('../../stores/products_store.js')
 var UserBountiesStore = require('../../stores/user_bounties_store.js')
 var UserStore = require('../../stores/user_store.js')
+var ShowcaseBanner = require('../showcase_banner.js.jsx')
 var Spinner = require('../spinner.js.jsx')
 var SvgIcon = require('../ui/svg_icon.js.jsx')
 var Tile = require('../ui/tile.js.jsx')
@@ -33,6 +35,8 @@ var DashboardIndex = React.createClass({
       reviewingBounties: [],
       selected: [],
       showAll: false,
+      currentProduct: null,
+      recentProducts: []
     }
   },
 
@@ -41,6 +45,7 @@ var DashboardIndex = React.createClass({
     NewsFeedItemsStore.addChangeListener(this.getStateFromStore)
     ProductsStore.addChangeListener(this.getStateFromStore)
     UserBountiesStore.addChangeListener(this.getStateFromStore)
+    UserStore.addChangeListener(this.getStateFromStore)
 
     window.addEventListener('scroll', this.onScroll)
 
@@ -52,6 +57,7 @@ var DashboardIndex = React.createClass({
     NewsFeedItemsStore.removeChangeListener(this.getStateFromStore)
     ProductsStore.removeChangeListener(this.getStateFromStore)
     UserBountiesStore.removeChangeListener(this.getStateFromStore)
+    UserStore.removeChangeListener(this.getStateFromStore)
 
     window.removeEventListener('scroll', this.onScroll)
   },
@@ -399,26 +405,39 @@ var DashboardIndex = React.createClass({
     return bounties
   },
 
+  renderBanner: function() {
+    if (this.state.user) {
+      return <ShowcaseBanner
+        current={this.state.currentProduct}
+        recent={this.state.recentProducts}
+        user={this.state.user} />
+    }
+  },
+
   render: function() {
+    var banner = this.renderBanner()
     var nav = this.renderNav()
     var newsFeedItems = this.renderNewsFeedItems()
     var product = this.renderProduct()
     var bounties = this.renderBounties()
 
     return (
-      <div className="container clearfix mt1">
-        <div className="mxn2">
-          <div className="md-col md-col-2 px2">
-            <div style={{ marginTop: 42 }}></div>
-            {nav}
-          </div>
-          <div className="md-col md-col-right md-col-4 px2">
-            {product}
-            {bounties}
-          </div>
-          <div className="md-col md-col-6 px2 mb4">
-            <h6 className="gray-3 caps mt2 mb2">What&#8217;s Happening</h6>
-            {newsFeedItems}
+      <div>
+        {banner}
+        <div className="container clearfix mt1">
+          <div className="mxn2">
+            <div className="md-col md-col-2 px2">
+              <div style={{ marginTop: 42 }}></div>
+              {nav}
+            </div>
+            <div className="md-col md-col-right md-col-4 px2">
+              {product}
+              {bounties}
+            </div>
+            <div className="md-col md-col-6 px2 mb4">
+              <h6 className="gray-3 caps mt2 mb2">What&#8217;s Happening</h6>
+              {newsFeedItems}
+            </div>
           </div>
         </div>
       </div>
@@ -437,6 +456,9 @@ var DashboardIndex = React.createClass({
       lockedBounties: UserBountiesStore.getLockedBounties(),
       newsFeedItems: NewsFeedItemsStore.getNewsFeedItems(),
       reviewingBounties: UserBountiesStore.getReviewingBounties(),
+      currentProduct: dashboard.current_product,
+      recentProducts: dashboard.recent_products,
+      user: UserStore.getUser()
     })
   },
 

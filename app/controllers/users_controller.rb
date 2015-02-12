@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   respond_to :html, :json
 
-  before_action :set_user, only: [:update, :dismiss_welcome_banner, :flag, :unflag]
+  before_action :set_user, only: [:update, :dismiss_welcome_banner, :dismiss_showcase_banner, :flag, :unflag]
 
   def show
     set_user
@@ -82,6 +82,12 @@ class UsersController < ApplicationController
 
   def dismiss_welcome_banner
     @user.update(welcome_banner_dismissed_at: Time.now)
+
+    render nothing: true, status: 204
+  end
+
+  def dismiss_showcase_banner
+    @user.update(showcase_banner_dismissed_at: Time.now)
 
     render nothing: true, status: 204
   end

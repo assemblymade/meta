@@ -39,11 +39,11 @@ var App = React.createClass({
         <div className="p3 mt2">
           <h4 className="regular mt0 mb0 gray-2">{name}</h4>
 
-          <div style={{minHeight: '6rem'}}>
+          <div style={{minHeight: '4rem'}}>
             <p className="h4 mt0 mb0 bold black">{this.pitch()}</p>
           </div>
 
-          <div className="mt1">
+          <div className="mt2">
             <SingleLineList items={tags} />
           </div>
         </div>

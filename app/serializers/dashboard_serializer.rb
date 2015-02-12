@@ -15,4 +15,8 @@ class DashboardSerializer < ApplicationSerializer
 
   has_many :user_reviewing_bounties,
     serializer: BountyShallowSerializer
+
+  has_one :current_product
+
+  has_many :recent_products
 end

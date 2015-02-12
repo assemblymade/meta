@@ -45,11 +45,8 @@ class IdeasController < ProductController
       Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
     end
 
-    # Fun
-    current_product = Product.find('1096fde9-95ee-4450-b645-69432c85176c')
-
-    # Signup Sumo
-    last_product = Product.find('bc7e0ee3-b776-4a6b-97ac-327b726b7388')
+    current_product = SevenDayMVP.current
+    last_product = SevenDayMVP.recent.first
 
     respond_with({
       categories: categories,
